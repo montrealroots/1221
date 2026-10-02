@@ -39,8 +39,9 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { dateKey, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
+import { afterBusinessDays, daysOfAccount } from '../content/bankdays';
 import { FRAUD_LAW, SECURITY } from '../content/security';
-import { cardOf } from './credit';
+import { cardFor, cardOf } from './credit';
 import { accountNumber } from './banknumber';
 import { alertsOf } from './statements';
 
@@ -56,17 +57,15 @@ export const ESTIMATE_REFUND_DAYS = 10;
 export const REPLACED_KIND = 'card.replaced';
 export const REFUND_KIND = 'bank.fraud_refund';
 
-/** Business days as calendar days, a week's five in seven. */
-const calendarDays = (business: number) => Math.ceil(business * 7 / 5);
 
 function currentOf(sim: Simulation, person: Person): Account | undefined {
   const account = person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
   return account && !account.closedAt ? account : undefined;
 }
 
-/** The account a card draws on: the current account for the debit card, the card's own for the credit card. */
-export function cardAccount(sim: Simulation, person: Person, which: Which): Account | undefined {
-  return which === 'debit' ? currentOf(sim, person) : cardOf(sim, person);
+/** The account a card draws on: the current account for the debit card, the card's own for a credit card, the everyday one where none is named. */
+export function cardAccount(sim: Simulation, person: Person, which: Which, accountId?: string): Account | undefined {
+  return which === 'debit' ? currentOf(sim, person) : cardFor(sim, person, accountId);
 }
 
 function yearsFor(account: Account, which: Which): number {
@@ -124,7 +123,8 @@ function replace(sim: Simulation, account: Account, which: Which, why: NonNullab
   const rules = account.bankId ? SECURITY[account.bankId] : undefined;
   p.stopped = why;
   const days = rush ? rules?.rushDays ?? ESTIMATE_RUSH_DAYS : rules?.standardDays ?? ESTIMATE_DAYS;
-  p.replacementAt = sim.now + Math.max(1, calendarDays(days)) * MS_DAY;
+  const kept = daysOfAccount(account, sim.universe.people[account.ownerId ?? '']);
+  p.replacementAt = afterBusinessDays(sim.now, Math.max(1, days), kept.countryId, sim.homeZone, kept.regionId);
   sim.schedule({ at: p.replacementAt, kind: REPLACED_KIND, label: 'Your New Card Arrives', category: 'home', priority: 38, payload: { accountId: account.id, which } });
   return p.replacementAt;
 }
@@ -214,8 +214,8 @@ export function registerSecurity(sim: Simulation): void {
     somebodyElse(s, person);
   });
 
-  sim.onCommand<{ which: Which; locked: boolean }, { locked: boolean }>('card.lock', (p, { sim: s }) => {
-    const account = cardAccount(s, s.player, p.which);
+  sim.onCommand<{ which: Which; locked: boolean; accountId?: string }, { locked: boolean }>('card.lock', (p, { sim: s }) => {
+    const account = cardAccount(s, s.player, p.which, p.accountId);
     if (!account) throw new CommandError(p.which === 'debit' ? 'You have no current account.' : 'You don’t have a card.');
     if (account.bankId && SECURITY[account.bankId]?.lockInApp === false) throw new CommandError(`${account.institution ?? 'The bank'} locks a card only by phone.`);
     const plastic = plasticOf(s, account, p.which);
@@ -224,9 +224,9 @@ export function registerSecurity(sim: Simulation): void {
     return { locked: plastic.locked };
   });
 
-  sim.onCommand<{ which: Which; why: 'lost' | 'stolen' | 'damaged'; rush?: boolean }, { arrivesAt: Instant; fee: Money }>('card.report', (p, { sim: s }) => {
+  sim.onCommand<{ which: Which; why: 'lost' | 'stolen' | 'damaged'; rush?: boolean; accountId?: string }, { arrivesAt: Instant; fee: Money }>('card.report', (p, { sim: s }) => {
     const person = s.player;
-    const account = cardAccount(s, person, p.which);
+    const account = cardAccount(s, person, p.which, p.accountId);
     if (!account) throw new CommandError(p.which === 'debit' ? 'You have no current account.' : 'You don’t have a card.');
     if (!['lost', 'stolen', 'damaged'].includes(p.why)) throw new CommandError('Lost, stolen or damaged.');
     const plastic = plasticOf(s, account, p.which);
@@ -246,8 +246,8 @@ export function registerSecurity(sim: Simulation): void {
     return { arrivesAt, fee };
   });
 
-  sim.onCommand<Record<string, never>, { updated: boolean }>('card.update_billers', (_p, { sim: s }) => {
-    const card = cardOf(s, s.player);
+  sim.onCommand<{ accountId?: string }, { updated: boolean }>('card.update_billers', (p, { sim: s }) => {
+    const card = cardFor(s, s.player, p?.accountId);
     if (!card?.plastic?.billersStale) throw new CommandError('Your bills already have your card’s number.');
     delete card.plastic.billersStale;
     return { updated: true };
@@ -275,7 +275,8 @@ export function registerSecurity(sim: Simulation): void {
     const law = bank ? FRAUD_LAW[bank.iso] : undefined;
     one.reportedAt = s.now;
     one.carried = liabilityFor(s, account, one.which, one.amount, Math.floor((s.now - one.learnedAt) / MS_DAY));
-    const refundAt = s.now + calendarDays(law?.refundDays ?? ESTIMATE_REFUND_DAYS) * MS_DAY;
+    const kept = daysOfAccount(account, person);
+    const refundAt = afterBusinessDays(s.now, law?.refundDays ?? ESTIMATE_REFUND_DAYS, kept.countryId, s.homeZone, kept.regionId);
     s.schedule({ at: refundAt, kind: REFUND_KIND, label: 'A Refund From The Bank', category: 'home', priority: 38, payload: { personId: person.id, index: Number(p.index) } });
     // The card it was used on is stopped and replaced, free.
     if (!account.plastic?.stopped) replace(s, account, one.which, 'fraud', false);

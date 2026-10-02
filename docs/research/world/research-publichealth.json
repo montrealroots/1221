@@ -1,0 +1,180 @@
+{
+  "researchedOn": "2026-09-29",
+  "england": {
+    "prescriptions": {
+      "chargePerItem": {
+        "2026_27": { "amountGBP": 9.90, "effective": "2026-04-01 (freeze of the 2025/26 rate, announced 2025-11-21)", "source": "https://www.gov.uk/government/news/chancellor-freezes-charges-to-keep-prescriptions-under-a-tenner", "corroboration": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-04/HC12%20(V24)%2004.2026.pdf (HC12 'Effective from April 2026', p17: 'Charge for each prescribed item £9.90')" },
+        "2025_26": { "amountGBP": 9.90, "effective": "2025-04-01 (frozen at the 1 May 2024 rate)", "source": "https://media.nhsbsa.nhs.uk/press-releases/b2f6650c-c901-4d6b-afef-766fcb2eae11/nhs-prescription-charges-frozen-for-2025-26" }
+      },
+      "prepaymentCertificates": {
+        "threeMonthGBP": 32.05,
+        "twelveMonthGBP": 114.50,
+        "twelveMonthPayableBy": "10 monthly direct debit instalments",
+        "hrtPpc12MonthGBP": 19.80,
+        "appliesTo": "both 2025/26 and 2026/27 (frozen for 2026/27)",
+        "breakEven": "cheaper if paying for more than 3 items in 3 months or more than 11 items in 12 months",
+        "source": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-04/HC12%20(V24)%2004.2026.pdf",
+        "sourceAlso": "https://www.gov.uk/get-a-ppc",
+        "note": "HC12 p17 table is headed 'Rates of charges ... from April 2025' inside a leaflet marked 'Effective from April 2026'; the gov.uk 2025-11-21 release says both PPCs are frozen for 2026/27, so the figures are the same in both years."
+      },
+      "otherItems": { "supportStockingEachGBP": 9.90, "supportTightsPairGBP": 19.80, "source": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-04/HC12%20(V24)%2004.2026.pdf" },
+      "exempt": [
+        "under 16",
+        "16, 17 or 18 in full-time education",
+        "60 or over",
+        "valid medical exemption certificate (conditions: permanent fistula needing dressing/appliance; hypoadrenalism e.g. Addison's; diabetes insipidus/hypopituitarism; diabetes mellitus except diet-only; hypoparathyroidism; myasthenia gravis; myxoedema; epilepsy needing continuous anti-convulsive therapy; continuing physical disability preventing going out unaided; undergoing cancer treatment) - certificate lasts 5 years",
+        "valid maternity exemption certificate (pregnant or baby in last 12 months)",
+        "War Pension / Armed Forces Compensation Scheme exemption certificate, for the accepted disablement",
+        "valid 3 or 12 month PPC, or HRT PPC for listed HRT items",
+        "included in award of Pension Credit Guarantee Credit",
+        "income-related ESA",
+        "Universal Credit with no earnings or take-home pay of £435 or less in the latest assessment period (£935 with a child element or limited capability for work)",
+        "named on a valid HC2 certificate (NHS Low Income Scheme); HC3 gives partial help",
+        "NHS inpatient"
+      ],
+      "alwaysFreeItems": ["medication given in hospital or an NHS urgent treatment centre", "medication administered personally by a GP", "STI treatment", "tuberculosis treatment", "mental disorder medication under a supervised community treatment order", "prescribed contraceptives"],
+      "notExemptOnTheirOwn": "new style ESA or new style JSA",
+      "penaltyCharge": "five times the charge you should have paid, up to £100, plus the original charge",
+      "exemptionSource": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-04/HC12%20(V24)%2004.2026.pdf",
+      "exemptionEffective": "April 2026"
+    },
+    "dental": {
+      "2026_27": {
+        "band1GBP": 27.90, "band2GBP": 76.60, "band3GBP": 332.10, "urgentGBP": 27.90,
+        "effective": "2026-04-01 (unchanged from 2025/26)",
+        "source": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-03/NHS%20England%20dental%20charges%20poster%20-%20April%202026.pdf",
+        "sourceAlso": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-04/HC12%20(V24)%2004.2026.pdf (p18 'Rates of dental treatment charges from 1 April 2026')"
+      },
+      "2025_26": {
+        "band1GBP": 27.90, "band2GBP": 76.60, "band3GBP": 332.10, "urgentGBP": 27.90,
+        "effective": "2025-04-01",
+        "source": "https://www.legislation.gov.uk/uksi/2025/310/made",
+        "sourceAlso": "https://media.nhsbsa.nhs.uk/press-releases/c52e4da5-cf58-406c-b208-4335e5599319/nhs-dental-charges-from-1-april-2025",
+        "note": "Figures for 2025/26 were confirmed via NHSBSA search results and the nhs.uk band page (reviewed 13 March 2025); the press release body did not render when fetched."
+      },
+      "mechanics": [
+        "one charge per complete course of treatment, at the highest band needed",
+        "urgent/out-of-hours care costs one Band 1 charge even over several appointments",
+        "further treatment at the same band within two months is free",
+        "no charge if the dentist only issues a prescription or removes stitches",
+        "from 23 June 2026 contract changes: patients on the new complex-needs care pathway pay a single Band 2 charge unless Band 3 is also needed (per NHS England care pathways guidance; not independently verified)"
+      ],
+      "exempt": ["under 18", "18 in full-time education", "pregnant or baby in previous 12 months", "NHS inpatient treated by hospital dentist", "NHS Hospital Dental Service outpatient", "income-related ESA, Pension Credit Guarantee Credit, qualifying Universal Credit (£435/£935)", "HC2 certificate"],
+      "notExempt": "Age 60+ is NOT a dental exemption in England",
+      "exemptionSource": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-04/HC12%20(V24)%2004.2026.pdf"
+    },
+    "sightTests": {
+      "freeFor": [
+        "under 16",
+        "16, 17 or 18 in full-time education",
+        "60 or over",
+        "diagnosed glaucoma",
+        "told by an ophthalmologist you are at risk of glaucoma",
+        "40 or over and parent, sibling or child of a diagnosed glaucoma patient",
+        "diagnosed diabetic",
+        "registered severely sight-impaired/blind or sight-impaired/partially sighted",
+        "need complex lenses",
+        "income-related ESA, Pension Credit Guarantee Credit, qualifying Universal Credit (£435/£935)",
+        "named on HC2 certificate",
+        "prisoner on leave from prison (nhs.uk)",
+        "sight test done via a hospital eye department as part of managing an eye condition"
+      ],
+      "partialHelp": "HC3 certificate may help with the cost of a private sight test",
+      "effective": "April 2026",
+      "source": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-04/HC12%20(V24)%2004.2026.pdf",
+      "sourceAlso": "https://www.nhs.uk/nhs-services/opticians/free-nhs-eye-tests-and-optical-vouchers/"
+    },
+    "hospitalCareEntitlement": {
+      "test": "Free NHS hospital care depends on being 'ordinarily resident': 'living in the UK lawfully, voluntarily and for settled purposes'. Non-EEA nationals subject to immigration control must also have indefinite leave to remain (EEA/Swiss: settled or pre-settled status under EUSS). Nationality, tax paid or NI contributions do not decide it.",
+      "returningBritishCitizen": "Entitled from the day of arrival if returning to resume settled residence: 'British citizens and non-UK nationals with ILR (or equivalent) who are returning to resume properly settled residence in the UK will most likely meet the ordinary residence test from the date of their arrival.' No minimum qualifying period. Proof of eligibility (at least 2 documents) is asked for at first treatment.",
+      "returningImmediately": true,
+      "legalBasis": "National Health Service (Charges to Overseas Visitors) Regulations 2015",
+      "sourceOrdinaryResidence": "https://www.gov.uk/government/publications/nhs-cost-recovery-overseas-visitors/charging-overseas-visitors-in-england-guidance-for-providers-of-nhs-services",
+      "sourceOrdinaryResidenceUpdated": "2026-05-20",
+      "sourceReturning": "https://www.gov.uk/guidance/using-the-nhs-when-you-return-to-live-in-the-uk",
+      "freeToEveryone": "A&E (A&E department, walk-in centre, minor injuries unit, urgent care centre) and GP/nurse primary care consultations are free to all regardless of residence; charges apply to other hospital care for those not ordinarily resident and not exempt.",
+      "freeToEveryoneSource": "https://www.gov.uk/guidance/nhs-entitlements-migrant-health-guide (last updated 2023-10-02)"
+    },
+    "immigrationHealthSurcharge": {
+      "standardPerYearGBP": 1035,
+      "reducedPerYearGBP": 776,
+      "reducedAppliesTo": "students, student dependants, Youth Mobility Scheme applicants, and applicants under 18 at application",
+      "partYearRules": "half the yearly amount for 6 months or less (applying from inside the UK); a full year's amount for more than 6 months but under a year",
+      "effective": "2024-02-06 09:00 (rose from £624 and £470); still the rate on gov.uk as of 2026-09-29",
+      "whatItBuys": "use of the NHS in a similar way to an ordinarily resident person while the visa is valid, but prescription, dental and assisted-conception charges still apply",
+      "source": "https://www.gov.uk/healthcare-immigration-application/how-much-pay",
+      "sourceEffectiveDate": "https://www.legislation.gov.uk/uksi/2024/55/made",
+      "sourceEntitlement": "https://www.gov.uk/guidance/nhs-entitlements-migrant-health-guide"
+    }
+  },
+  "scotlandWalesNi": {
+    "prescriptions": {
+      "scotland": { "chargeGBP": 0, "since": "2011-04-01", "source": "https://www.nhsinform.scot/care-support-and-rights/nhs-services/pharmacy/prescription-charges-and-exemptions/", "note": "nhsinform returned 403 to direct fetch; figure taken from its indexed text 'From 1 April 2011 prescription charges have been abolished in Scotland.'" },
+      "wales": { "chargeGBP": 0, "since": "2007-04-01", "condition": "registered with a GP in Wales, dispensed by a pharmacist in Wales", "source": "https://www.gov.wales/free-prescriptions", "sinceSource": "https://www.gov.wales/free-prescriptions-are-long-term-investment-peoples-health-vaughan-gething-0", "note": "gov.wales page states 'first UK nation to abolish' and dispensing since 2007; exact date 1 April 2007 not quoted on the fetched page" },
+      "northernIreland": { "chargeGBP": 0, "since": "2010-04-01", "rule": "All prescriptions dispensed in Northern Ireland are free for everyone, including wigs and surgical appliances", "source": "https://www.nidirect.gov.uk/articles/prescriptions", "note": "abolition date 1 April 2010 not confirmed on the fetched source" }
+    },
+    "note": "Dental and sight-test charges differ by nation (e.g. Scotland has free NHS eye examinations for all) but were not researched here beyond prescriptions."
+  },
+  "ireland": {
+    "emergencyDepartmentCharge": {
+      "amountEUR": 100,
+      "rule": "charged once per illness/accident at first ED visit without a GP referral letter; no charge with GP referral; follow-up outpatient visits for the same episode not charged again",
+      "exemptions": ["medical card holders", "people admitted as in-patients from the ED", "prescribed infectious diseases incl. COVID-19", "children up to 6 weeks", "certain children's conditions listed in regulations", "children referred from child health clinics/school exams", "EU Regulations entitlement", "maternity services", "Hepatitis C Health Amendment Act card", "Redress Scheme participants"],
+      "source": "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/hospital-charges/",
+      "pageEdited": "2026-08-01",
+      "note": "The €80 figure in the brief is out of date; the ED charge is €100."
+    },
+    "injuryUnitChargeEUR": { "amountEUR": 75, "exempt": "medical card or GP referral letter", "source": "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/hospital-charges/", "pageEdited": "2026-08-01" },
+    "publicInpatientDailyCharge": {
+      "amountEUR": 0,
+      "status": "abolished 2023-04-17 (was €80/day)",
+      "source": "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/hospital-charges/",
+      "sourceAlso": "https://www.gov.ie/en/press-release/3f77b-minister-donnelly-welcomes-the-abolition-of-public-hospital-in-patient-charges/"
+    },
+    "publicOutpatient": { "amountEUR": 0, "rule": "free as a public patient on GP referral", "source": "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/hospital-charges/" },
+    "eligibility": "Ordinarily resident in Ireland -> public in-patient and out-patient services in public hospitals; non-residents not otherwise covered pay full bed cost plus consultant.",
+    "gpVisit": {
+      "regulated": false,
+      "typicalRangeEUR": [45, 65],
+      "rule": "No set fees; private unless holder of medical card or GP visit card. Adults over 70 and children under 8 get a GP visit card.",
+      "source": "https://www.citizensinformation.ie/en/health/health-services/gp-and-hospital-services/gps-and-private-patients/",
+      "pageEdited": "2024-06-19",
+      "note": "Range is Citizens Information's stated typical expectation, not a regulated price; page last edited June 2024."
+    },
+    "drugsPaymentScheme": {
+      "monthlyCapEUR": 80,
+      "unit": "per household (adult, partner, children/dependants) per calendar month",
+      "since": "2022-03-01",
+      "extra": "Since 2025-06-01, DPS registrants get free HRT at participating pharmacies",
+      "source": "https://www.citizensinformation.ie/en/health/drugs-and-medicines/drugs-payment-scheme/",
+      "pageEdited": "2026-07-16"
+    }
+  },
+  "mexico": {
+    "imssBienestar": {
+      "what": "IMSS-BIENESTAR (OPD) provides medical care, medicines and associated supplies free of charge to people without social security (no IMSS/ISSSTE etc.).",
+      "servicesDescribed": "públicos, universales y gratuitos",
+      "mexicoCityAdhered": true,
+      "mexicoCityAgreementSigned": "2023-06-15",
+      "agreementText": "Convenio de Coordinación ... para la prestación gratuita de servicios de salud, para las personas sin seguridad social en la Ciudad de México",
+      "cdmxNetwork": "214 clinics, 39 UNEMEs, 22 second-level and 12 third-level hospitals across 14 operative regions (secondary report; not confirmed on an official page)",
+      "registration": "registro.imssbienestar.gob.mx; needs CURP, face photo, valid official ID, email and/or phone",
+      "sources": [
+        "https://imssbienestar.gob.mx/",
+        "https://www.gob.mx/salud/prensa/172-gobierno-de-la-ciudad-de-mexico-firma-convenio-para-incorporacion-a-imss-bienestar?idiom=es",
+        "https://www.gob.mx/imss/prensa/firman-convenio-para-implementar-imss-bienestar-en-la-ciudad-de-mexico?idiom=es",
+        "https://registro.imssbienestar.gob.mx/"
+      ],
+      "costMXN": 0
+    }
+  },
+  "uncertain": [
+    "England 2025/26 dental figures rely on NHSBSA search snippets and the legislation title (SI 2025/310); the press-release body did not render. They match the April 2026 poster, which is consistent with a freeze.",
+    "HC12 p17 heads the prescription/PPC table 'from April 2025' although the leaflet is 'Effective from April 2026'; the gov.uk freeze announcement resolves this, but no single 2026 page was fetched that prints all three PPC figures under a 2026/27 heading.",
+    "Returning British citizen: guidance says 'will most likely meet the ordinary residence test from the date of their arrival' - a presumption, not an absolute; a return that is not 'properly settled' (e.g. a short visit) does not qualify.",
+    "Wales (1 April 2007) and Northern Ireland (1 April 2010) abolition dates are from general knowledge corroborated only loosely by the fetched official pages; Scotland's 1 April 2011 is from nhsinform's indexed text (direct fetch 403).",
+    "Ireland GP €45-€65 is an indicative range from a page last edited June 2024; GP fees are unregulated.",
+    "Mexico City hospital/clinic counts come from a secondary source; CDMX government pages refused connection.",
+    "Mexico: no official statement fetched on whether non-Mexicans or those without CURP can register in IMSS-Bienestar; left unconfirmed."
+  ]
+}

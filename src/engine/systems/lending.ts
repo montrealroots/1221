@@ -70,9 +70,11 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { drawFromBank } from './household';
 import { CommandError } from '../core/simulation';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
+import { exchange } from '../content/currency';
 import type { Person } from '../domain/model';
 import { addDays, addMonths, dateKey, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { clamp } from '../core/rng';
@@ -84,7 +86,8 @@ import { endTerm, idleAccounts } from './accountlife';
 import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, savingsNotice, settleFees, settleInterest, SAVINGS_NOTICE_KIND } from './banking';
 import { savingsLeftThisMonth } from './cash';
 import { homeOf } from './earnings';
-import { usBankHoliday } from '../content/usholidays';
+import { businessDay, businessDaysBetween as bankDaysBetween, daysOfAccount } from '../content/bankdays';
+import { markRecord } from './credit';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
 export const SWITCH_KIND = 'bank.switch_complete';
@@ -238,8 +241,13 @@ export function declines(sim: Simulation, person: Person, bank: Bank): boolean {
 }
 
 /** A person's debt in collections, where a bank charged one off. */
+/**
+ * The bank's own debt in collections, named for it. A mortgage's shortfall in
+ * collections is a collection agency's (`systems/homes.ts`): until
+ * 2026-09-28 this found either, and a bank's charge-off could post into it.
+ */
 export function collectionsOf(sim: Simulation, person: Person): Account | undefined {
-  return Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'loan' && a.category === COLLECTIONS);
+  return Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'loan' && a.category === COLLECTIONS && a.name.endsWith(', In Collections'));
 }
 
 export function lendingOf(bank: Bank | undefined): Lending {
@@ -439,6 +447,9 @@ export function chargeForItem(sim: Simulation, person: Person, item?: Money): vo
       return;
     }
     fee = terms;
+  } else if (terms.kind === 'arranged' && terms.perUse && current.overdraftPerUse && (current.overdraftLimit ?? 0) > 0) {
+    // Canada's pay-per-use: a fee each time the overdraft is created or grows, once a day at most where the bank says.
+    fee = { fee: terms.perUse.fee, ...(terms.perUse.oncePerDay ? { maxPerDay: 1 } : {}) };
   } else if (unarrangedOf(terms)?.fee !== undefined) {
     const past = unarrangedOf(terms)!;
     if (current.balance >= -(current.overdraftLimit ?? 0)) return;
@@ -466,22 +477,12 @@ export function chargeReturned(sim: Simulation, person: Person, short: Money): v
   const rule = bank?.returned;
   if (!current || !bank || !rule || short <= 0) return;
   if (rule.ifShortAtLeast !== undefined && short < inSaveMoney(sim, rule.ifShortAtLeast, bank.currency)) return;
-  if (current.returnedAt !== undefined && businessDaysBetween(sim, current.returnedAt, sim.now) < rule.gapDays) return;
+  const kept = daysOfAccount(current, person);
+  if (current.returnedAt !== undefined && bankDaysBetween(current.returnedAt, sim.now, kept.countryId, sim.homeZone, kept.regionId) < rule.gapDays) return;
   current.returnedAt = sim.now;
   charge(sim, current, inSaveMoney(sim, rule.fee, bank.currency), 'Returned payment fee', 'bank_fee', 'Bank Fees');
 }
 
-/** Monday-to-Friday days from one moment to another: only Canada's banks count them, for a returned payment's fee. */
-function businessDaysBetween(sim: Simulation, from: Instant, to: Instant): number {
-  let days = 0;
-  for (let at = addDays(from, 1, sim.homeZone); at <= to; at = addDays(at, 1, sim.homeZone)) {
-    const p = zonedParts(at, sim.homeZone);
-    const weekday = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
-    if (weekday !== 0 && weekday !== 6) days += 1;
-    if (days > 30) break;
-  }
-  return days;
-}
 
 /** A debit card purchase's fee, where the bank charges one and the age isn't spared. */
 export function chargeForPurchase(sim: Simulation, person: Person): void {
@@ -530,21 +531,11 @@ function scheduleLoan(sim: Simulation, loan: Account, after: Instant): void {
 
 /** Pays an amount from the bank, overdraft and all, and says what it couldn't. */
 function payFromBank(sim: Simulation, person: Person, amount: Money): { postings: { accountId: string; amount: Money }[]; short: Money } {
-  const postings: { accountId: string; amount: Money }[] = [];
-  let left = amount;
-  const current = currentOf(sim, person);
-  const saver = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'savings' && a.category !== 'term');
-  for (const account of [current, saver]) {
-    if (!account || left <= 0) continue;
-    const take = Math.min(left, Math.max(0, account.balance));
-    if (take > 0) { postings.push({ accountId: account.id, amount: -take }); left -= take; }
-  }
-  if (current && left > 0) {
-    const take = Math.min(left, overdraftHeadroom(sim, person));
-    if (take > 0) { postings.push({ accountId: current.id, amount: -take }); left -= take; }
-  }
-  return { postings, short: left };
+  // As every other payment is taken (`drawFromBank`): savings only where it's linked, and with its fee. Until
+  // 2026-09-28 a loan's took from savings whatever the setting, and skipped the fee and a German allowance.
+  return drawFromBank(sim, person, amount, true);
 }
+
 
 /** Moves one person's bank to another of their country's, now. */
 function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = false, secondChance = false): void {
@@ -659,8 +650,9 @@ function settlePendingItems(sim: Simulation, current: Account, bank: Bank, terms
   const today = dateKey(sim.now, sim.homeZone);
   const grace = terms.graceUpTo !== undefined ? inSaveMoney(sim, terms.graceUpTo, bank.currency) : 0;
   const keep: { day: string; count: number }[] = [];
+  const kept = daysOfAccount(current, sim.universe.people[current.ownerId ?? '']);
   for (const one of list) {
-    if (!nextBusinessDayOver(one.day, today, bank.iso === 'US')) { keep.push(one); continue; }
+    if (!nextBusinessDayOver(one.day, today, kept)) { keep.push(one); continue; }
     if (current.balance >= -grace) continue;
     const month = today.slice(0, 7);
     if (current.itemsMonth !== month) { current.itemsMonth = month; current.itemsMonthCount = 0; }
@@ -678,18 +670,16 @@ function settlePendingItems(sim: Simulation, current: Account, bank: Bank, terms
  * US bank a Federal Reserve holiday isn't one: the fees held over Thanksgiving
  * wait for the Friday. Until 2026-09-27 they came on the Thursday.
  */
-function nextBusinessDayOver(day: string, today: string, us: boolean): boolean {
-  return nextBusinessDay(day, us) < today;
+function nextBusinessDayOver(day: string, today: string, kept: { countryId: string; regionId?: string }): boolean {
+  return nextBusinessDay(day, kept.countryId, kept.regionId) < today;
 }
 
-/** The business day after a day, as its date key: a weekday, and at a US bank not a Federal Reserve holiday. */
-export function nextBusinessDay(day: string, us: boolean): string {
+/** The business day after a day, as its date key: a weekday the bank's country keeps no holiday on (`content/bankdays.ts`). */
+export function nextBusinessDay(day: string, countryId: string, regionId?: string): string {
   const [y, m, d] = day.split('-').map(Number) as [number, number, number];
-  for (let i = 1; i < 10; i += 1) {
-    const next = new Date(Date.UTC(y, m - 1, d + i));
-    const key = next.toISOString().slice(0, 10);
-    const weekday = next.getUTCDay();
-    if (weekday !== 0 && weekday !== 6 && !(us && usBankHoliday(key))) return key;
+  for (let i = 1; i < 15; i += 1) {
+    const key = new Date(Date.UTC(y, m - 1, d + i)).toISOString().slice(0, 10);
+    if (businessDay(countryId, key, regionId)) return key;
   }
   return day;
 }
@@ -753,7 +743,7 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   post(sim, `Charged off by ${bank.name}`, 'transfer', [{ accountId: current.id, amount: owed }, { accountId: debt.id, amount: -owed }]);
   for (const account of mine) { account.negativeSince = undefined; account.pendingItems = undefined; }
   if (person.credit) {
-    person.credit.score = Math.max(300, person.credit.score - ESTIMATE.chargeOffHit);
+    markRecord(person, ESTIMATE.chargeOffHit, sim.now, person.home?.cityId ?? person.currentLocationId, (saveCurrency(sim.universe) === 'MXN' ? owed : exchange(owed, saveCurrency(sim.universe), 'MXN') ?? owed) / 100);
     person.credit.late = [...person.credit.late, sim.now];
   }
   const owedTo = collectionsOf(sim, person)?.institution;
@@ -833,7 +823,7 @@ export function registerLending(sim: Simulation): void {
             commission = Math.min(commission, most - interest);
           }
           charge(s, current, interest, 'Overdraft interest', 'bank_fee', 'Overdraft Interest');
-          if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.monthlyFee !== undefined) {
+          if (terms.kind === 'arranged' && (current.overdraftLimit ?? 0) > 0 && terms.monthlyFee !== undefined && !current.overdraftPerUse) {
             charge(s, current, inSaveMoney(s, terms.monthlyFee, bank.currency), 'Overdraft fee', 'bank_fee', 'Bank Fees');
           }
           charge(s, current, commission, 'Overdraft commission', 'bank_fee', 'Bank Fees');
@@ -915,7 +905,10 @@ export function registerLending(sim: Simulation): void {
         { accountId: s.nominalAccount('expense', 'Loan Interest').id, amount: interest },
       ]);
     }
-    const due = Math.min(loan.loanPayment ?? 0, -loan.balance);
+    // The term's last payment is whatever is left, the pennies each month rounded included.
+    const monthsIn = Math.round((item.at - loan.openedAt) / (30.4375 * MS_DAY));
+    const last = loan.loanMonths !== undefined && monthsIn >= loan.loanMonths;
+    const due = last ? -loan.balance : Math.min(loan.loanPayment ?? 0, -loan.balance);
     const bank = payFromBank(s, person, due);
     const paid = due - bank.short;
     if (paid > 0) post(s, `Payment: ${loan.name}`, 'loan_payment', [{ accountId: loan.id, amount: paid }, ...bank.postings]);
@@ -923,7 +916,7 @@ export function registerLending(sim: Simulation): void {
     if (bank.short > 0 && person.credit) {
       // A missed payment goes on the record, as a late card payment does.
       person.credit.late = [...person.credit.late.filter((when) => s.now - when < 365 * MS_DAY), s.now];
-      person.credit.score = Math.max(300, person.credit.score - 50);
+      markRecord(person, 50, s.now, person.home?.cityId ?? person.currentLocationId);
       if (person.id === s.universe.playerId) {
         s.notify({
           category: 'bank', title: 'A Missed Loan Payment',
@@ -967,7 +960,7 @@ export function registerLending(sim: Simulation): void {
     return { paid, left: -debt.balance };
   });
 
-  sim.onCommand<{ limit: Money }, { limit: Money; rate?: number }>('bank.arrange_overdraft', (p, { sim: s }) => {
+  sim.onCommand<{ limit: Money; perUse?: boolean }, { limit: Money; rate?: number }>('bank.arrange_overdraft', (p, { sim: s }) => {
     const person = s.player;
     const current = currentOf(s, person);
     if (!current) throw new CommandError('There’s no current account to arrange one on.');
@@ -975,6 +968,7 @@ export function registerLending(sim: Simulation): void {
     if (limit === 0) {
       if (current.balance < 0) throw new CommandError('Pay the overdraft back before closing it.');
       current.overdraftLimit = undefined;
+      delete current.overdraftPerUse;
       return { limit: 0 };
     }
     const offer = overdraftOffer(s, person);
@@ -987,6 +981,9 @@ export function registerLending(sim: Simulation): void {
     const first = current.overdraftLimit === undefined;
     current.overdraftLimit = limit;
     current.overdraftRate = offer.rate;
+    const sold = lendingOf(bankById(current.bankId!)).overdraft;
+    if (p.perUse === true && sold?.kind === 'arranged' && sold.perUse) current.overdraftPerUse = true;
+    else delete current.overdraftPerUse;
     if (first) {
       current.overdraftSince = s.now;
       const bank = bankById(current.bankId!)!;

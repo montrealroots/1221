@@ -7,7 +7,8 @@
  * read from the bank's terms as the research quoted them, and from the
  * bank's own schedule of charges where the research's words left a figure
  * out (Butterfield's in Bermuda and the Cayman Islands, Swedbank
- * Lithuania's Youth Programme). A fee whose waiver is for someone SLATE doesn't have (a
+ * Lithuania's Youth Programme, and since 2026-09-28 Swedbank Latvia's
+ * packages). A fee whose waiver is for someone SLATE doesn't have (a
  * student, a state employee) is charged in full, as it would be to anyone
  * else, and its source says so.
  *
@@ -80,8 +81,8 @@ export const WORLD_FEES: Readonly<Record<string, { monthlyFee: Money; waiver?: P
     source: 'free in a month when at least the net minimum wage, HUF 214,662 in 2026, is paid in',
   },
   'LV|Swedbank': {
-    monthlyFee: 2_00,
-    source: 'free for some customers, on conditions the research couldn’t confirm, so it is charged',
+    monthlyFee: 1_70, waiver: { ageBelow: 26 },
+    source: 'the Pamata package, EUR 1.70 a month, free from 6 to 25 (swedbank.lv price list, in force from 1 June 2026); the Seniors program’s half off is only for who joined before September 2022. Until 2026-09-28 SLATE charged EUR 2.00 to everyone',
   },
   'LT|Swedbank': {
     monthlyFee: 1_70, waiver: { ageBelow: 26 }, reduced: { to: 1_10, depositsAtLeast: 1 },

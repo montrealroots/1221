@@ -42,11 +42,20 @@ import { addMonths, zonedParts } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CARDS } from '../content/cards';
-import { cardOf, cardRoom, cardTerms, type CardPlan, type CardTerms, type CardTransfer, type CreditState } from './credit';
+import { cardFor, cardRoom, cardTerms, stateOf, type CardPlan, type CardState, type CardTerms, type CardTransfer } from './credit';
+import { ENERGY } from './seasons';
+import { INTEREST_PLANS, planPayment } from '../content/plans';
+import { TELECOM_OF_BILLS } from './telecom';
 import { cashOwedOn } from './cash';
 
 /** The months a plan may run: the lengths Chase, Bank of America and the Canadian banks all offer. */
 export const PLAN_MONTHS = [3, 6, 12] as const;
+
+/** The months a card's plan may run: its bank's own where it charges interest or a fee by the length (`content/plans.ts`), else `PLAN_MONTHS`. */
+export function planMonthsOf(card: Account): number[] {
+  const own = card.bankId ? INTEREST_PLANS[card.bankId] : undefined;
+  return own ? Object.keys(own.months).map(Number) : [...PLAN_MONTHS];
+}
 
 /**
  * The bonus categories of the cards that have one on groceries or recurring
@@ -56,7 +65,25 @@ export const PLAN_MONTHS = [3, 6, 12] as const;
  * currency's hundredths.
  */
 export interface Bonus { rate: number; cap?: Money; after?: number }
-export const BONUSES: Readonly<Record<string, { per: 'quarter' | 'year' | 'cycle' | 'month'; food?: Bonus; bills?: Bonus; other?: Bonus; shared?: boolean }>> = {
+/** The phone and internet's share of SLATE's bills, which moved to `systems/telecom.ts` on 2026-10-01. */
+export { TELECOM_OF_BILLS };
+
+/**
+ * Korea's: its households spent ₩167,000 a month on communications against
+ * ₩337,000 on transport in 2025 (National Data Office, 가계동향조사, 26
+ * February 2026), so communications are 167/504 of the bills' part that
+ * isn't energy.
+ */
+export const KOREA_TELECOM_OF_BILLS = (1 - ENERGY.share) * (167 / 504);
+
+/** A bills bonus that is a rate on the phone's share, held to a cap on the bonus itself, as the spend that reaches it. */
+const onPhone = (rate: number, share: number, bonusCap: Money): Bonus => ({ rate: rate * share, cap: Math.round(bonusCap / (rate * share)), after: 0 });
+
+export const BONUSES: Readonly<Record<string, { per: 'quarter' | 'year' | 'cycle' | 'month'; food?: Bonus; bills?: Bonus; other?: Bonus; shared?: boolean; priorMonth?: readonly (readonly [Money, number])[] }>> = {
+  // 10% off the phone bill, ₩5,000 a month at most, in a month after one of ₩400,000 on the card (card.kbcard.com, My WE:SH).
+  'kr-kb-kookmin': { per: 'month', bills: onPhone(0.1, KOREA_TELECOM_OF_BILLS, 5_000_00), priorMonth: [[400_000_00, 1]] },
+  // 10% of the phone bill in points (₩1 each), to 5,000, 10,000 or 20,000 a month after one of ₩300,000, ₩500,000 or ₩1,000,000 (shinhancard.com, 처음).
+  'kr-shinhan': { per: 'month', bills: onPhone(0.1, KOREA_TELECOM_OF_BILLS, 5_000_00), priorMonth: [[300_000_00, 1], [500_000_00, 2], [1_000_000_00, 4]] },
   // 2% at grocery stores, on the first $2,500 of grocery and choice spending together a quarter; 1% on the rest.
   'us-bank-of-america': { per: 'quarter', food: { rate: 0.02, cap: 2_500_00, after: 0.01 } },
   // 2% on the first $6,000 of groceries, 1% after; 0.5% on the first $6,000 of the rest, 1% after.
@@ -70,8 +97,8 @@ export const BONUSES: Readonly<Record<string, { per: 'quarter' | 'year' | 'cycle
   // 2% on groceries, 1% on recurring payments, no cap; 0.5% else.
   'ca-cibc': { per: 'cycle', food: { rate: 0.02 }, bills: { rate: 0.01 } },
   // 1% at supermarkets, the whole cash back to $500 a month, which at 1% is $50,000 of groceries; nothing elsewhere but its named categories.
-  // Its 4% on telecoms isn't paid: SLATE's bills are one sum, and the phone's share of it isn't known.
-  'mx-santander': { per: 'month', food: { rate: 0.01, cap: 50_000_00, after: 0 }, bills: { rate: 0 }, other: { rate: 0 } },
+  // Its 4% on telecoms on the phone and internet's share of the bills (`TELECOM_OF_BILLS`); until 2026-09-28 it wasn't paid, that share unknown.
+  'mx-santander': { per: 'month', food: { rate: 0.01, cap: 50_000_00, after: 0 }, bills: { rate: 0.04 * TELECOM_OF_BILLS }, other: { rate: 0 } },
 };
 
 /** The period a bonus's cap runs over, as a key: a calendar quarter, year or month, or the statement cycle. */
@@ -87,18 +114,18 @@ function bonusPeriod(sim: Simulation, per: 'quarter' | 'year' | 'cycle' | 'month
 const NOT_PURCHASES = new Set(['interest', 'fees', 'cash', 'card-transfer', 'transfer', 'card-payment', 'rewards']);
 
 /** A transfer's rate today: its introductory rate while it runs, unless a US payment sixty days late ended it. */
-export function transferRate(sim: Simulation, credit: CreditState, one: CardTransfer): number {
+export function transferRate(sim: Simulation, credit: CardState, one: CardTransfer): number {
   return one.introUntil !== undefined && sim.now < one.introUntil && !credit.introLost ? one.introApr ?? one.apr : one.apr;
 }
 
 /** What the card owes on transfers, cut down to what it owes beyond cash advances. */
 export function transfersOwedOn(person: Person, card: Account): Money {
-  const owed = (person.credit?.transfers ?? []).reduce((sum, one) => sum + one.owed, 0);
+  const owed = person.credit ? (stateOf(person, card).transfers ?? []).reduce((sum, one) => sum + one.owed, 0) : 0;
   return Math.max(0, Math.min(owed, -card.balance - cashOwedOn(person, card)));
 }
 
 /** What's left to pay on the card's plans. */
-export function planLeftOf(credit: CreditState | undefined): Money {
+export function planLeftOf(credit: CardState | undefined): Money {
   return (credit?.plans ?? []).reduce((sum, one) => sum + one.left, 0);
 }
 
@@ -109,7 +136,7 @@ export function transferFee(terms: CardTerms, amount: Money): Money {
 
 /** What purchases owe that isn't in a plan, a transfer or a cash advance: what a plan can be made from. */
 export function planRoom(person: Person, card: Account): Money {
-  return Math.max(0, -card.balance - cashOwedOn(person, card) - transfersOwedOn(person, card) - planLeftOf(person.credit));
+  return Math.max(0, -card.balance - cashOwedOn(person, card) - transfersOwedOn(person, card) - planLeftOf(person.credit ? stateOf(person, card) : undefined));
 }
 
 /**
@@ -117,7 +144,7 @@ export function planRoom(person: Person, card: Account): Money {
  * month moved into what's due with its fee, and the cycle's purchases'
  * rewards counted.
  */
-export function statementOffers(sim: Simulation, card: Account, credit: CreditState, terms: CardTerms): void {
+export function statementOffers(sim: Simulation, card: Account, credit: CardState, terms: CardTerms): void {
   for (const one of credit.transfers ?? []) {
     const interest = Math.round(one.accrued);
     one.accrued = 0;
@@ -128,11 +155,14 @@ export function statementOffers(sim: Simulation, card: Account, credit: CreditSt
   credit.transfers = (credit.transfers ?? []).filter((one) => one.owed > 0);
   let planDue = 0;
   for (const plan of credit.plans ?? []) {
-    const month = Math.min(plan.left, plan.monthly);
+    // A plan charged as interest: the month's interest on what's left, and the rest of the equal month off it.
+    const interest = plan.apr ? Math.round(plan.left * plan.apr / 12) : 0;
+    const month = Math.min(plan.left, plan.apr ? Math.max(0, plan.monthly - interest) : plan.monthly);
     plan.left -= month;
     plan.monthsLeft -= 1;
+    if (interest > 0) sim.post({ memo: 'Plan interest', category: 'interest', postings: [{ accountId: sim.nominalAccount('expense', 'Card Interest').id, amount: interest }, { accountId: card.id, amount: -interest }] });
     if (plan.fee > 0) sim.post({ memo: 'Plan fee', category: 'fees', postings: [{ accountId: sim.nominalAccount('expense', 'Card Fees').id, amount: plan.fee }, { accountId: card.id, amount: -plan.fee }] });
-    planDue += month + plan.fee;
+    planDue += month + plan.fee + interest;
   }
   credit.plans = (credit.plans ?? []).filter((plan) => plan.left > 0 && plan.monthsLeft > 0);
   credit.statementPlanDue = planDue;
@@ -152,12 +182,34 @@ export function statementOffers(sim: Simulation, card: Account, credit: CreditSt
   credit.rewardsFrom = sim.now;
 }
 
+/** What went on a card in the last calendar month, as purchases. */
+export function lastMonthSpend(sim: Simulation, card: Account): Money {
+  const p = zonedParts(sim.now, sim.homeZone);
+  const month = p.month === 1 ? `${p.year - 1}-12` : `${p.year}-${String(p.month - 1).padStart(2, '0')}`;
+  let total = 0;
+  for (const t of sim.universe.transactions) {
+    if (NOT_PURCHASES.has(t.category)) continue;
+    const q = zonedParts(t.at, sim.homeZone);
+    if (`${q.year}-${String(q.month).padStart(2, '0')}` !== month) continue;
+    for (const one of t.postings) if (one.accountId === card.id && one.amount < 0) total -= one.amount;
+  }
+  return total;
+}
+
 /** A statement's rewards: each category at its bonus to the period's cap, the rate after past it, and the base rate where there's no bonus. */
-export function bonusRewards(sim: Simulation, card: Account, credit: CreditState, base: number, spent: { food: Money; bills: Money; other: Money }, from: number): Money {
+export function bonusRewards(sim: Simulation, card: Account, credit: CardState, base: number, spent: { food: Money; bills: Money; other: Money }, from: number): Money {
   const bonus = card.bankId ? BONUSES[card.bankId] : undefined;
   if (!bonus) return Math.round((spent.food + spent.bills + spent.other) * base);
   const currency = card.bankId ? bankById(card.bankId)?.currency ?? 'USD' : 'USD';
   const into = saveCurrency(sim.universe);
+  // A Korean card's bonus turns on last month's spending (전월실적), its caps by the tier reached; below the first, only the base rate.
+  let scale = 1;
+  if (bonus.priorMonth) {
+    const last = lastMonthSpend(sim, card);
+    const tier = [...bonus.priorMonth].reverse().find(([atLeast]) => last >= (exchange(atLeast, currency, into) ?? atLeast));
+    if (!tier) return Math.round((spent.food + spent.bills + spent.other) * base);
+    scale = tier[1];
+  }
   const period = bonusPeriod(sim, bonus.per, from);
   const used = (credit.bonusUsed ??= {});
   for (const key of Object.keys(used)) if (!key.endsWith(`@${period}`)) delete used[key];
@@ -167,7 +219,7 @@ export function bonusRewards(sim: Simulation, card: Account, credit: CreditState
     const b = bonus[kind];
     if (!b) { total += amount * base; continue; }
     if (b.cap === undefined) { total += amount * b.rate; continue; }
-    const cap = exchange(b.cap, currency, into) ?? b.cap;
+    const cap = (exchange(b.cap, currency, into) ?? b.cap) * scale;
     const key = `${bonus.shared ? 'all' : kind}@${period}`;
     const room = Math.max(0, cap - (used[key] ?? 0));
     const within = Math.min(amount, room);
@@ -182,8 +234,8 @@ export function bonusRewards(sim: Simulation, card: Account, credit: CreditState
  * balance moved onto it for the card's fee, and the old card closed.
  */
 export function transferOnArrival(sim: Simulation, person: Person, card: Account, old: Account): void {
-  const credit = person.credit!;
-  const terms = cardTerms(sim, card, credit.score);
+  const terms = cardTerms(sim, card, person.credit!.score);
+  const credit = stateOf(person, card);
   const owed = Math.max(0, -old.balance);
   if (!terms.transfer || owed <= 0) return;
   const fee = transferFee(terms, owed);
@@ -199,12 +251,12 @@ export function transferOnArrival(sim: Simulation, person: Person, card: Account
 }
 
 export function registerCardOffers(sim: Simulation): void {
-  sim.onCommand<{ amount: Money }, { fee: Money }>('card.money_transfer', (p, { sim: s }) => {
+  sim.onCommand<{ amount: Money; accountId?: string }, { fee: Money }>('card.money_transfer', (p, { sim: s }) => {
     const person = s.player;
-    const card = cardOf(s, person);
-    const credit = person.credit;
-    if (!card || !credit) throw new CommandError('You don’t have a card.');
-    const terms = cardTerms(s, card, credit.score);
+    const card = cardFor(s, person, p.accountId);
+    if (!card || !person.credit) throw new CommandError('You don’t have a card.');
+    const credit = stateOf(person, card);
+    const terms = cardTerms(s, card, person.credit.score);
     if (!terms.moneyTransferFee) throw new CommandError(`The ${card.name} doesn’t offer money transfers.`);
     const current = person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
     if (!current || current.closedAt) throw new CommandError('You need a current account for the money.');
@@ -219,27 +271,37 @@ export function registerCardOffers(sim: Simulation): void {
     return { fee };
   });
 
-  sim.onCommand<{ amount: Money; months: number }, { plan: CardPlan }>('card.plan', (p, { sim: s }) => {
+  sim.onCommand<{ amount: Money; months: number; accountId?: string }, { plan: CardPlan }>('card.plan', (p, { sim: s }) => {
     const person = s.player;
-    const card = cardOf(s, person);
-    const credit = person.credit;
-    if (!card || !credit) throw new CommandError('You don’t have a card.');
-    const terms = cardTerms(s, card, credit.score);
-    if (!terms.planFeeShare) throw new CommandError(`The ${card.name} has no plan SLATE has terms for.`);
+    const card = cardFor(s, person, p.accountId);
+    if (!card || !person.credit) throw new CommandError('You don’t have a card.');
+    const credit = stateOf(person, card);
+    const terms = cardTerms(s, card, person.credit.score);
+    const interestPlan = card.bankId ? INTEREST_PLANS[card.bankId] : undefined;
+    if (!terms.planFeeShare && !interestPlan) throw new CommandError(`The ${card.name} has no plan SLATE has terms for.`);
     const months = Math.round(Number(p.months));
-    if (!(PLAN_MONTHS as readonly number[]).includes(months)) throw new CommandError('A plan runs 3, 6 or 12 months.');
+    const lengths = planMonthsOf(card);
+    if (!lengths.includes(months)) throw new CommandError(`A plan runs ${lengths.join(', ')} months.`);
     const amount = Math.round(Number(p.amount));
     const room = planRoom(person, card);
     if (!(amount > 0) || amount > room) throw new CommandError(`Purchases owe ${formatMoney(room, saveCurrency(s.universe))} that can go into a plan.`);
-    const plan: CardPlan = { left: amount, monthly: Math.ceil(amount / months), fee: Math.round(amount * terms.planFeeShare), monthsLeft: months };
+    const bank = bankById(card.bankId ?? '');
+    const least = interestPlan?.min !== undefined && bank ? (exchange(interestPlan.min, bank.currency, saveCurrency(s.universe)) ?? interestPlan.min) : 0;
+    if (amount < least) throw new CommandError(`A plan takes ${formatMoney(least, saveCurrency(s.universe))} at least.`);
+    const term = interestPlan?.months[months];
+    const plan: CardPlan = term?.apr !== undefined
+      ? { left: amount, monthly: planPayment(amount, term.apr, months), fee: 0, monthsLeft: months, apr: term.apr }
+      : term?.fee !== undefined
+        ? { left: amount, monthly: Math.ceil(amount / months), fee: Math.round(amount * term.fee / months), monthsLeft: months }
+        : { left: amount, monthly: Math.ceil(amount / months), fee: Math.round(amount * terms.planFeeShare!), monthsLeft: months };
     credit.plans = [...(credit.plans ?? []), plan];
     return { plan };
   });
 
-  sim.onCommand<Record<string, never>, { redeemed: Money }>('card.redeem_rewards', (_p, { sim: s }) => {
+  sim.onCommand<{ accountId?: string }, { redeemed: Money }>('card.redeem_rewards', (p, { sim: s }) => {
     const person = s.player;
-    const card = cardOf(s, person);
-    const credit = person.credit;
+    const card = cardFor(s, person, p?.accountId);
+    const credit = card && person.credit ? stateOf(person, card) : undefined;
     const rewards = credit?.rewards ?? 0;
     if (!card || !credit || rewards <= 0) throw new CommandError('The card has no rewards to redeem.');
     s.post({ memo: 'Rewards redeemed', category: 'rewards', postings: [{ accountId: card.id, amount: rewards }, { accountId: s.nominalAccount('income', 'Card Rewards').id, amount: -rewards }] });
@@ -249,8 +311,8 @@ export function registerCardOffers(sim: Simulation): void {
 }
 
 /** A balance transfer asked for with an application: refused before the bank looks if the limit won't take it with its fee. */
-export function transferRefusal(sim: Simulation, person: Person, bankId: string, limit: Money): string | undefined {
-  const old = cardOf(sim, person);
+export function transferRefusal(sim: Simulation, person: Person, bankId: string, limit: Money, fromId?: string): string | undefined {
+  const old = cardFor(sim, person, fromId);
   if (!old) return 'You have no card to move a balance from.';
   if (old.bankId === bankId) return 'A balance moves onto a card at another bank.';
   const bank = bankById(bankId);

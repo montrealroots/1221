@@ -1,0 +1,485 @@
+{
+  "_meta": {
+    "retrieved": "2026-09-30",
+    "spelling": "American in our own words; source spellings kept inside quoted names and titles",
+    "fieldConventions": {
+      "sourceType": "'primary' when the page is the authority's or company's own publication of its own figure; 'secondary' otherwise (cost-guide sites, press, aggregators)",
+      "confirmed": "true when the figure was read on the source page or document itself during this session; false when it came only from a search-index snippet (usually because the page returned 403 to the fetcher) or when the figure had to be inferred from a misaligned table",
+      "null": "a value of null means no published figure was found; the note says what was looked for"
+    },
+    "currencyNote": "USD for US items, GBP for England, EUR for Ireland, CAD for Ontario and British Columbia"
+  },
+
+  "surveys": {
+    "newYorkCity": {
+      "angi": {
+        "surveyAllTypesLow": 901, "surveyAllTypesHigh": 6193, "surveyAllTypesAverage": 2590,
+        "oneAcreLow": 1500, "oneAcreHigh": 3500, "underOneAcreFrom": 500,
+        "boundaryLow": 1400, "boundaryHigh": 6000,
+        "topographicLow": 2000, "topographicHigh": 6500,
+        "mortgageLow": 1200, "mortgageHigh": 4500,
+        "hourlyPerWorkerLow": 100, "hourlyPerWorkerHigh": 160,
+        "currency": "USD",
+        "url": "https://www.angi.com/articles/how-much-does-land-survey-cost/ny/new-york",
+        "publisher": "Angi", "date": "2026 (page undated in index)", "sourceType": "secondary", "confirmed": false,
+        "note": "Page returned 403 to direct fetch; figures are from the search index's rendering of the page."
+      },
+      "surveyorPublished": {
+        "residentialSurveyStandardLow": 600, "residentialSurveyStandardHigh": 1500,
+        "boundaryLow": 1200, "boundaryHigh": 3500,
+        "currency": "USD",
+        "url": "https://www.islandwidelandsurveyors.com/property-survey-cost-in-nassau-county-ny-what-youll-actually-pay/",
+        "publisher": "Island-Wide Land Surveyors (Syosset, NY)", "date": "2026-07-06", "sourceType": "primary", "confirmed": true,
+        "note": "A Long Island surveying firm's own stated ranges, not a fixed price list. No NYC (five-borough) surveyor with a published fixed price list was found; NYC firms quote per job."
+      }
+    },
+    "losAngeles": {
+      "angi": {
+        "surveyAllTypesLow": 909, "surveyAllTypesHigh": 6248, "surveyAllTypesAverage": 2613,
+        "hourlyLow": 220, "hourlyHigh": 450,
+        "perAcreLow": 1500, "perAcreHigh": 3500, "underOneAcreFrom": 850,
+        "boundaryLow": 1200, "boundaryHigh": 5500,
+        "topographicLow": 2000, "topographicHigh": 6500,
+        "mortgageLow": 1500, "mortgageHigh": 4500,
+        "currency": "USD",
+        "url": "https://www.angi.com/articles/how-much-does-land-survey-cost/ca/los-angeles",
+        "publisher": "Angi", "date": "2026 (page undated in index)", "sourceType": "secondary", "confirmed": false,
+        "note": "From the search index's rendering of the page; direct fetch of Angi pages returned 403."
+      },
+      "countyRecordOfSurveyFees": {
+        "examinationFirstSheet": 745.20, "recordingFirstSheet": 13, "totalOneSheet": 758.20,
+        "examinationEachAdditionalSheet": 291.60, "recordingEachAdditionalSheet": 3,
+        "resubmittalPerSheet": 221.70, "cornerRecordEach": 18,
+        "currency": "USD", "effective": "2026-07-01", "indexation": "CPI-adjusted each July 1",
+        "legalBasis": "Los Angeles County Code 21.20.080",
+        "url": "https://dpw.lacounty.gov/smpm/landrecords/Notice_Regarding_Survey_Map_Checking_Fees.pdf",
+        "publisher": "Los Angeles County Department of Public Works", "date": "2026-07-01", "sourceType": "primary", "confirmed": true,
+        "note": "A government fee on top of the surveyor's own charge, owed only when a boundary survey sets monuments that must be filed as a Record of Survey (California Business and Professions Code 8762)."
+      },
+      "surveyorPublished": null,
+      "surveyorPublishedNote": "No California licensed surveyor with a published residential price list was found; firms quote per job. Cost-guide ranges (findlandsurveyor.com: LA County residential boundary $700-$1,400; California boundary $900-$3,500) exist but are secondary and unconfirmed."
+    },
+    "newHaven": {
+      "angi": null,
+      "angiNote": "Angi publishes no New Haven cost page; only a directory listing of surveyors.",
+      "connecticutSurveyorPublished": {
+        "boundaryStakeoutLow": 2800, "boundaryStakeoutHigh": 3200,
+        "zoningLocationSurveyLow": 3800, "zoningLocationSurveyHigh": 4200,
+        "appliesTo": "Residential properties of 2 acres or less",
+        "currency": "USD",
+        "url": "https://julianoassociates.com/survey-cost/",
+        "publisher": "Juliano Associates Engineers & Surveyors (Connecticut)", "date": "undated; site content last updated circa 2023", "sourceType": "primary", "confirmed": true,
+        "note": "A licensed Connecticut firm's own published ranges. Much higher than the aggregator figures below; a stakeout survey sets physical monuments, which the cheaper figures may not include."
+      },
+      "costGuide": {
+        "connecticutBoundaryLow": 600, "connecticutBoundaryHigh": 1200,
+        "newHavenCountyBoundaryLow": 650, "newHavenCountyBoundaryHigh": 1100,
+        "currency": "USD",
+        "url": "https://findlandsurveyor.com/guides/boundary-survey-cost-connecticut/",
+        "publisher": "FindLandSurveyor", "date": "2026", "sourceType": "secondary", "confirmed": false,
+        "note": "Search-snippet figures only."
+      }
+    },
+    "england": {
+      "rics": null,
+      "ricsNote": "RICS publishes no typical price for a land, boundary or topographical survey.",
+      "homeOwnersAlliance": null,
+      "homeOwnersAllianceNote": "HomeOwners Alliance publishes house (condition) survey costs, not land or topographical survey costs.",
+      "topographicalSurveyorPublished": {
+        "typicalResidentialSiteLow": 800, "typicalResidentialSiteHigh": 1200,
+        "largerParcelsLow": 2000, "largerParcelsHigh": 4000,
+        "vat": "excluded (+ VAT at 20%)",
+        "currency": "GBP",
+        "url": "https://www.ths-concepts.co.uk/how-much-does-a-topographical-land-survey-cost/",
+        "publisher": "THS Concepts (member of The Survey Association)", "date": "2026-01", "sourceType": "primary", "confirmed": true
+      },
+      "costGuide": {
+        "boundarySurveyLow": 300, "boundarySurveyHigh": 900, "boundarySurveyAverage": 600,
+        "topographicalSurveyLow": 400, "topographicalSurveyHigh": 1000,
+        "surveyorDayRateLow": 300, "surveyorDayRateHigh": 1000,
+        "drawingDayRateLow": 350, "drawingDayRateHigh": 650,
+        "currency": "GBP",
+        "url": "https://www.checkatrade.com/blog/cost-guides/land-survey-cost/",
+        "publisher": "Checkatrade", "date": "2026", "sourceType": "secondary", "confirmed": false,
+        "note": "Page returned 403; figures from the search index. The boundary figures may come from MyBuilder's boundary survey guide (https://www.mybuilder.com/architectural-services/price-guides/property-boundary-survey-cost), which the index merged with Checkatrade."
+      }
+    },
+    "ireland": {
+      "landRegistryCompliantMap": {
+        "house": 190, "apartment": 490,
+        "currency": "EUR",
+        "url": "https://www.propertymapsireland.com/",
+        "publisher": "Property Maps Ireland (Barna, Co. Galway, and Dublin 2)", "date": "undated", "sourceType": "primary", "confirmed": true,
+        "note": "A certified map suitable for Tailte Éireann registration, which is what a site split needs. Not a full on-site boundary survey."
+      },
+      "osiDigitalExtract": {
+        "low": 25.00, "high": 30.75, "currency": "EUR",
+        "url": "https://store.osi.ie/land-registry-compliant-map.html",
+        "publisher": "Tailte Éireann (formerly Ordnance Survey Ireland) online store", "date": "undated", "sourceType": "primary", "confirmed": false,
+        "note": "Search-snippet figure; the raw map extract a surveyor then certifies."
+      },
+      "onSiteSurveyDayRate": {
+        "low": 500, "high": 1000, "currency": "EUR", "unit": "per day on site (roughly one further day in the office per day on site)",
+        "url": "https://landandaerialsurveys.ie/services/topographical-surveys/",
+        "publisher": "Land & Aerial Surveys (citing the Society of Chartered Surveyors Ireland)", "date": "undated", "sourceType": "secondary", "confirmed": false,
+        "note": "Page returned 403; figure from the search index. No Irish surveyor with a fixed published price for a boundary survey was found."
+      }
+    }
+  },
+
+  "escrow": {
+    "losAngelesArea": {
+      "company": "Neighborhood Escrow (South Bay, Los Angeles County; established 1985)",
+      "baseFeeEachSide": 250,
+      "perThousandOfPrice": 2.00,
+      "minimumEscrowFee": 795,
+      "loanTieInFeeBuyer": 395,
+      "refinanceFlat": 795,
+      "formula": "each side: $250 + $2.00 per $1,000 of sale price; minimum $795",
+      "customarySplit": "In Los Angeles County the escrow fee is customarily split 50/50 between buyer and seller.",
+      "currency": "USD",
+      "url": "https://www.neighborhoodescrow.com/blog/2025/05/14/breaking-down-escrow-fees-in-southern-california-what-buyers-and-sellers-should-expect/",
+      "publisher": "Neighborhood Escrow", "date": "2025-05-14", "sourceType": "primary", "confirmed": true,
+      "note": "The company's own blog stating its own rates, not a formal filed rate sheet. Escrow L.A., Inc. (https://www.escrowla.com/costs) was checked and publishes no figures."
+    }
+  },
+
+  "canadaClosing": {
+    "ontario": {
+      "titleInsurance": {
+        "insurerPublishedTable": null,
+        "insurerPublishedTableNote": "FCT (https://fct.ca), Stewart Title Canada (https://www.stewart.ca/quote) and TitlePLUS (https://titleplus.ca/premium-calculator/) publish calculators, not rate tables; no premium figure appears on their pages.",
+        "examples": [
+          { "purchasePrice": 500000, "premium": 440 },
+          { "purchasePrice": 750000, "premium": 715 }
+        ],
+        "typicalRangeLow": 300, "typicalRangeHigh": 1000,
+        "coverage": "one-time owner-and-lender policy",
+        "currency": "CAD",
+        "url": "https://ownright.com/blog/real-estate-law/title-insurance-what-you-need-to-know",
+        "publisher": "Ownright (Ontario law firm), citing published 2025 Ontario residential rate sheets", "date": "2026-05-28", "sourceType": "secondary", "confirmed": true
+      },
+      "lawyerFlatFees": [
+        {
+          "firm": "Law Booth Professional Corporation (Mississauga)",
+          "cashPurchase": 895, "purchaseWithOneMortgage": 1095,
+          "hst": "extra (13%)",
+          "excludes": "land registration fees, title search fees, title insurance",
+          "url": "https://www.lawbooth.ca/legal-fees", "date": "undated", "sourceType": "primary", "confirmed": true
+        },
+        {
+          "firm": "Vanular Lawyers Professional Corporation (Pickering)",
+          "packagePrice": 1299, "appliesTo": "single-family resale up to $1,499,999",
+          "hst": "extra", "registrationFeeEach": 85,
+          "url": "https://www.vanulaw.com/resources/purchase-closing-costs-calculator/", "date": "undated", "sourceType": "primary", "confirmed": true,
+          "note": "Registration fee of $85 each for deed and mortgage, as the firm states it."
+        },
+        {
+          "firm": "Treadstone Law (Mississauga)",
+          "regularPrice": 1580.87, "promotionalPrice": 1354.87,
+          "hst": "included",
+          "excludes": "third-party disbursements and Land Transfer Tax, billed at cost",
+          "url": "https://treadstonelaw.ca/real-estate", "date": "2026", "sourceType": "primary", "confirmed": true
+        }
+      ],
+      "currency": "CAD"
+    },
+    "britishColumbia": {
+      "titleInsurance": {
+        "insurerPublishedTable": null,
+        "insurerPublishedTableNote": "Insurers publish calculators only.",
+        "examples": [
+          { "purchasePrice": 703000, "premium": 250, "propertyType": "condo" },
+          { "purchasePrice": 1500000, "premium": 700 },
+          { "purchasePrice": 1840700, "premium": 500, "propertyType": "detached" }
+        ],
+        "underOneMillionLow": 225, "underOneMillionHigh": 400,
+        "overTwoMillionLow": 800, "overTwoMillionHigh": 1200,
+        "currency": "CAD",
+        "url": "https://www.zealty.ca/blog/title-insurance-bc",
+        "publisher": "Zealty.ca", "date": "2026", "sourceType": "secondary", "confirmed": true,
+        "note": "The article's own examples are internally inconsistent: $1.5M gives about $700 while $1.84M gives about $500. Use the ranges and treat single examples with care."
+      },
+      "notaryFees": [
+        {
+          "firm": "Coquitlam Notary (Jennifer Kwok Notary Corporation)",
+          "purchaseWithMortgage": 1675, "purchaseNoMortgage": 1550, "strataSurcharge": 75, "saleWithOneMortgage": 1275,
+          "includes": "the notary's fee and 16 typical disbursements",
+          "excludes": "GST/PST on the fee, tax certificates, strata forms, survey certificates, title insurance, LTSA registration fees",
+          "url": "https://coquitlamnotary.com/price-list", "date": "undated; 'subject to change'", "sourceType": "primary", "confirmed": true
+        },
+        {
+          "firm": "Brenda Balogh, Yaletown Notary Public (Vancouver)",
+          "legalFeeLow": 800, "legalFeeHigh": 1200, "disbursementsApprox": 750,
+          "taxes": "extra on legal fee",
+          "url": "https://www.yaletownnotary.com/buyer-closing-costs", "date": "undated", "sourceType": "primary", "confirmed": true
+        },
+        {
+          "firm": "Juris Notary (Burnaby)",
+          "legalFeeLow": 500, "legalFeeHigh": 1000, "allInLow": 1200, "allInHigh": 1700,
+          "basis": "typical $700,000 Lower Mainland purchase with a mortgage",
+          "url": "https://jurisnotary.com/conveyancing-cost-purchasing-a-home/", "date": "2018-10-22", "sourceType": "primary", "confirmed": true,
+          "note": "Stale (2018); kept only as a floor."
+        }
+      ],
+      "currency": "CAD"
+    }
+  },
+
+  "subdivision": {
+    "newYorkCity": {
+      "fee": 73, "unit": "per new tax lot number",
+      "process": "Form RP-602 'Apportionment and Merger' to the Department of Finance Tax Map Office; after Finance approves, the Department of Buildings must also approve. Initial review is 30 business days.",
+      "currency": "USD",
+      "url": "https://www.nyc.gov/site/finance/property/property-dividing-and-merging-lots.page",
+      "publisher": "NYC Department of Finance", "date": "undated (read 2026-09-30)", "sourceType": "primary", "confirmed": true,
+      "note": "NYC has no City Planning 'subdivision' application for splitting an ordinary tax lot; a zoning-lot change is a DOB matter. Only the Finance fee is published."
+    },
+    "columbiaCountyNY": {
+      "municipality": "Town of Greenport, Columbia County, NY",
+      "minorSubdivisionPerLot": 250, "minorDefinition": "4 lots or fewer (sewered or not)",
+      "majorSubdivisionPerLot": 400, "majorDefinition": "5 lots or more",
+      "majorRecreationFeePerLot": 400,
+      "publicHearing": 50, "publicHearingNote": "plus actual cost of the advertisement",
+      "adoptedBy": "Town Board Resolution 98 of December 2018 and Resolution 34 of February 2019",
+      "currency": "USD",
+      "url": "https://drive.google.com/file/d/1SU1T-euHSLMCrKLcAHXngoW0kpKFO-IP/view",
+      "linkedFrom": "https://www.townofgreenportny.gov/departments-services/planning-board",
+      "publisher": "Town of Greenport Planning Board", "date": "2019-02", "sourceType": "primary", "confirmed": true,
+      "note": "The City of Hudson's fee schedule was not checked; Greenport surrounds Hudson."
+    },
+    "litchfieldCT": {
+      "perLotOneOrTwoLots": 250,
+      "perLotMoreThanTwoLots": 700,
+      "stateEnvironmentalQualityFundFee": 60, "stateFeeUnit": "per application",
+      "extra": "outside consulting fees may be charged",
+      "currency": "USD",
+      "url": "https://municipal-documents.s3.amazonaws.com/uploads/litchfield-ct/land-use/documents/generals/70/subdivision_application.pdf",
+      "publisher": "Town of Litchfield Planning and Zoning Commission", "date": "form revised 2011-09", "sourceType": "primary", "confirmed": true,
+      "note": "The only fee schedule the town publishes online is on this 2011 form. The subdivision regulations defer to a Town Ordinance 'Land Use Fee Schedule' that was not found online, so a newer amount may exist."
+    },
+    "kernCountyCA": {
+      "tentativeParcelMapTotal": 4908, "tentativeParcelMapPerLot": 75,
+      "components": { "planning": 1513, "environmentalHealth": 615, "publicWorks": "2,780 plus $75 per lot" },
+      "timeAndMaterials": "Some components are billed on time and materials beyond the listed amounts (notes a, h, 1, 4, 6, 7)",
+      "tentativeParcelMapPrelimReview": 1872,
+      "parcelMapWaiver": 2383, "lotLineAdjustment": 1248,
+      "effective": "2026-07-01",
+      "currency": "USD",
+      "url": "https://psbweb.co.kern.ca.us/planning/pdfs/land_dev_services_fee_schedule_jul2026.pdf",
+      "publisher": "Kern County Planning and Natural Resources Department (consolidated land development fee schedule)", "date": "2026-06-30", "sourceType": "primary", "confirmed": true,
+      "note": "Read from a table with crowded columns; the components listed add up to the stated total ($1,513 + $615 + $2,780 = $4,908)."
+    },
+    "losAngelesCity": {
+      "preliminaryParcelMapResidentialSingleUnitBase": 13204,
+      "preliminaryParcelMapResidentialMultiUnitBase": 13621,
+      "baseEffective": "2023-07-01 (Ordinance 188,063)",
+      "preliminaryParcelMapResidentialSingleUnitFY2024": 13666,
+      "preliminaryParcelMapResidentialMultiUnitFY2024": 14098,
+      "fy2024Effective": "2024-07-01 (CPI +3.50%)",
+      "finalParcelMap": 8240,
+      "parcelMapExemptionLotLineAdjustment": 2804,
+      "veryHighFireHazardSurcharge": "one third of the preliminary parcel map fee",
+      "legalBasis": "LAMC 19.02 B.1(a) (Chapter 1); the same base fees appear in the Chapter 1A Article 15 fee article",
+      "currency": "USD",
+      "url": "https://planning.lacity.gov/odocument/ca4fb8e8-1bb8-4f52-8203-4f93fcff93c8/2024_annual_fee_adjustment.pdf",
+      "secondaryUrl": "https://planning.lacity.gov/odocument/43f716cf-71fa-4cfc-9788-6f17c6e6c0fa/Art15-Fees_v2025.1.0._Adopted.pdf",
+      "publisher": "Los Angeles City Planning", "date": "2024-07-01", "sourceType": "primary", "confirmed": true,
+      "note": "Up to 4 lots. The City adjusted fees again on 2025-07-01 (reported at 3.0% to 3.4% CPI) and likely on 2026-07-01, but neither current schedule was found, so the FY2025-26 and FY2026-27 amounts are not given. A search result claiming '$8,000' for 19.02 B1(f) is not the preliminary parcel map fee and should not be used."
+    },
+    "kildareIreland": {
+      "planningFeePerHouse": 65,
+      "retentionPerHouse": "195, or 2.50 per square meter of gross floor space, whichever is greater",
+      "otherDevelopmentClass13": "80, or a per-0.1-hectare amount of site area, whichever is greater (per-area rate unreadable in the extracted table)",
+      "minimumFee": 34,
+      "maximumFeeOrdinary": 38000,
+      "legalBasis": "Planning and Development Regulations 2001-2025, Schedule 9",
+      "currency": "EUR",
+      "url": "https://kildarecoco.ie/Forms/Planning/PDRegsSCHEDULE%209.pdf",
+      "publisher": "Kildare County Council (reproducing the national Schedule 9)", "date": "2025", "sourceType": "primary", "confirmed": true,
+      "note": "Irish law has no separate 'subdivision' application or fee. Splitting a site to build is an application for permission for the house(s), at 65 euro each, plus a Land Registry compliant map and Tailte Éireann registration of the new folio."
+    },
+    "cavanMonaghanON": {
+      "countyConsentApplication": 1150, "countyConsentUnit": "per new lot, non-refundable",
+      "countyDeedStamping": 450,
+      "countyAmendedApplication": 250, "countyAdjournedApplication": 250, "countyChangeInCondition": 175,
+      "oltAppealFee": 400,
+      "countyUrl": "https://www.ptbocounty.ca/media/evgorw5q/land-severance-consent-guide.pdf",
+      "countyPublisher": "County of Peterborough Planning Department (Land Division Committee)",
+      "townshipSeveranceReview": 500,
+      "townshipPartLotControlExemption": "750 plus 100 for each additional parcel",
+      "townshipPlanOfSubdivision": "full cost recovery with a 15,000 deposit",
+      "townshipCashInLieuOfParkland": 1400, "townshipMergerAgreement": 400,
+      "townshipEffective": "2026-01-01 (By-law 2025-53)",
+      "townshipUrl": "https://www.cavanmonaghan.net/media/dfcdjcjx/finance-2025-14-att2-schedule-a-2026-user-fees-and-charges-by-law-no-2025-53-final-no-markups.pdf",
+      "townshipPublisher": "Township of Cavan Monaghan",
+      "currency": "CAD", "sourceType": "primary", "confirmed": true,
+      "note": "The County of Peterborough, not the township, is the consent authority for Cavan Monaghan (listed as a member municipality in the county guide). A severance therefore costs the county $1,150 plus $450 at deed stamping, plus the township's $500 review. The township table's columns were misaligned in extraction: the $500 is confirmed by search index as the consent review fee, and the plan-of-subdivision and part-lot-control amounts were assigned by position."
+    },
+    "sunshineCoastRegionalDistrictBC": {
+      "preApplicationUpToTwoAdditionalLots": 500,
+      "preApplicationMoreThanTwoAdditionalLots": 1000,
+      "baseFeeUpToTwoAdditionalLots": 5000,
+      "perAdditionalLotBeyondTwo": 1000,
+      "lotLineAdjustmentOrConsolidation": 2000,
+      "frontageWaiver": "2,000 plus 250 per additional lot",
+      "strataConversion": "3,000 plus 1,000 per additional lot or unit",
+      "refund": "50% of base and additional fee if withdrawn within 21 days",
+      "effective": "2025-01-01 (Planning and Development Procedures and Fees Bylaw 522, Schedule B)",
+      "currency": "CAD",
+      "url": "https://www.scrd.ca/planning-applications/",
+      "publisher": "Sunshine Coast Regional District", "date": "2025-01-01", "sourceType": "primary", "confirmed": true,
+      "note": "In SCRD electoral areas the provincial Approving Officer (Ministry of Transportation and Transit) approves rural subdivisions; the SCRD fee covers its own referral and review. Any provincial fee is separate and was not researched."
+    }
+  },
+
+  "overruns": {
+    "houzzRenovation2025": {
+      "shareExceededBudget": 0.37, "shareOnBudget": 0.35,
+      "shareChoseHigherEndMaterials": 0.35, "shareExpandedScope": 0.31,
+      "medianSpend": 20000, "p90Spend": 150000, "medianPlanned2026": 15000,
+      "medianOverageAmount": null,
+      "medianOverageNote": "Houzz does not publish how far over budget projects run (neither a median dollar nor a median percentage overage).",
+      "sample": "20,358 respondents; 10,176 renovating homeowners",
+      "currency": "USD",
+      "url": "https://www.houzz.com/magazine/2026-u-s-houzz-and-home-study-renovation-trends-stsetivw-vs~185090855",
+      "publisher": "Houzz (2026 U.S. Houzz & Home Study)", "date": "2026-04-22", "sourceType": "primary", "confirmed": true
+    },
+    "houzzRenovation2023": {
+      "shareExceededBudget": 0.39, "shareOnBudget": 0.34,
+      "url": "https://www.houzz.com/magazine/2023-u-s-houzz-and-home-study-renovation-trends-stsetivw-vs~166887998",
+      "publisher": "Houzz (2023 U.S. Houzz & Home Study)", "date": "2023", "sourceType": "primary", "confirmed": false,
+      "note": "Search-snippet figures."
+    },
+    "censusBuildTime2025": {
+      "allSingleFamilyMonthsPermitToCompletion": 8.8,
+      "monthsAuthorizationToStart": 1.4, "monthsStartToCompletion": 7.4,
+      "builtForSaleMonths": 7.4, "contractorBuiltMonths": 11.7, "ownerBuiltMonths": 14.3, "builtForRentMonths": 12.4,
+      "url": "https://eyeonhousing.org/2026/09/single-family-home-construction-time-declines-in-2025/",
+      "dataUrl": "https://www.census.gov/construction/nrc/pdf/avg_starttocomp.pdf",
+      "publisher": "NAHB Eye on Housing (Na Zhao), from Census Bureau Survey of Construction", "date": "2026-09-08", "sourceType": "secondary", "confirmed": true,
+      "note": "Durations, not overruns: the government publishes how long builds take, not how late they run against plan. Useful as the baseline a planned schedule can be compared with."
+    },
+    "nahb": null,
+    "nahbNote": "No NAHB statistic on the share of single-family builds that run over budget or over schedule was found. NAHB's Cost of Constructing a Home survey gives cost shares (construction 64.4% of sales price, finished lot 13.7%, 2024) but not overruns.",
+    "nacsbaSelfBuild2022": {
+      "shareOnOrSlightlyOverBudget": 0.85,
+      "averageContingency": 0.15,
+      "averageBuildBudget": 312000, "averagePlotPrice": 253000,
+      "topReasonForOverrun": "self builders choosing to improve the specification",
+      "currency": "GBP",
+      "url": "https://www.self-build.co.uk/why-self-building-your-home-is-best-uks-biggest-self-build-custom-build-survey/",
+      "reportUrl": "https://nacsba.org.uk/policy/csb-market-report/",
+      "publisher": "Build It (self-build.co.uk) reporting NaCSBA's 2022 Custom and Self Build Market Report", "date": "2022-05-20", "sourceType": "secondary", "confirmed": true,
+      "note": "About 15% therefore went more than slightly over. 'Slightly over' is not quantified beyond staying within the 15% contingency. No time-overrun figure was published."
+    },
+    "buildItSurvey": null,
+    "buildItSurveyNote": "No separate Build It reader survey with over-budget percentages was found; Build It's published figures are NaCSBA's (above).",
+    "inspectionFirstTimePassRates": null,
+    "inspectionFirstTimePassRatesNote": "No first-time inspection pass rate was found in published form for Seattle SDCI, Austin DSD, LADBS or any other municipality searched. Cities publish inspection volumes and turnaround times (for example, SDCI about 175,000 inspections a year), not pass shares. LA and San Francisco publish raw inspection result datasets on their open-data portals from which a rate could be computed, but none is published as a figure."
+  },
+
+  "warranties": {
+    "englandSelfBuild": {
+      "nhbc": null,
+      "nhbcNote": "NHBC publishes no price for self-build cover (its self-build product was 'Solo'). Forum reports of about 1,100-1,400 pounds date from 2005-2006 and are not usable.",
+      "premierGuarantee": null,
+      "premierGuaranteeNote": "No published price found.",
+      "labcWarranty": null,
+      "labcWarrantyNote": "LABC Warranty offers a non-binding self-build 'indication' by quote only; no price is published.",
+      "marketRange": {
+        "low": 1000, "high": 5000, "average": 2000,
+        "lateStartLoadings": { "atConcrete": 0.25, "atFirstFloorJoist": 0.50, "atWallPlate": 0.75, "structurallyComplete": 1.00 },
+        "currency": "GBP",
+        "url": "https://www.homebuilding.co.uk/advice/self-build-warranties",
+        "publisher": "Homebuilding & Renovating (Mark Brinkley)", "date": "2020-06-01", "sourceType": "secondary", "confirmed": true,
+        "note": "Six years old. Loadings are the extra premium charged when cover is bought after work has started."
+      },
+      "developerBuildmark": {
+        "low": 1500, "high": 3500, "currency": "GBP",
+        "url": "https://www.new-builds.co.uk/blog/new-build-warranty-costs-what-they-cover",
+        "publisher": "new-builds.co.uk", "date": "undated", "sourceType": "secondary", "confirmed": false,
+        "note": "What a developer typically pays NHBC per home, per search snippet; not published by NHBC."
+      }
+    },
+    "irelandHomeBond": {
+      "perHouseFee": null,
+      "perHouseFeeNote": "HomeBond publishes no registration or premium per house.",
+      "delegateFee": 250, "delegateFeeNote": "plus VAT, from 2023-09-01; a training-course fee, not a warranty premium",
+      "estimate150sqm": { "low": 2500, "high": 5000, "url": "https://planningpermissionireland.ie/self-build-hub/structural-warranty-ireland", "sourceType": "secondary", "confirmed": false },
+      "currency": "EUR",
+      "url": "https://www.homebond.ie/",
+      "publisher": "HomeBond", "date": "undated", "sourceType": "primary", "confirmed": false
+    },
+    "us210HomeBuyersWarranty": {
+      "costShareOfPrice": "less than 0.5% of the total purchase price including land (average)",
+      "paidBy": "builder",
+      "coverage": "1 year workmanship, 2 years distribution systems, 10 years structural",
+      "fixedEnrollmentFee": null,
+      "fixedEnrollmentFeeNote": "2-10 publishes no dollar enrollment fee. Reviews cite about $500-$1,000 per home (secondary, unconfirmed).",
+      "url": "https://www.2-10.com/builders-warranty/builder-faqs/",
+      "publisher": "2-10 Home Buyers Warranty", "date": "undated (read 2026-09-30)", "sourceType": "primary", "confirmed": true
+    },
+    "buildersRisk": {
+      "insureonCustomers": {
+        "averageMonthly": 105, "averageAnnual": 1259,
+        "annualRangeLow": 350, "annualRangeHigh": 7000,
+        "shareUnder100Monthly": 0.49, "share100to200Monthly": 0.26,
+        "statedShareOfCompletedValue": "1% to 4%",
+        "population": "Insureon small-business customers, typically fewer than five employees and under $200,000 revenue",
+        "currency": "USD",
+        "url": "https://www.insureon.com/small-business-insurance/builders-risk/cost",
+        "publisher": "Insureon (insurance agency; its own policy data)", "date": "2026-07-02", "sourceType": "primary", "confirmed": true
+      },
+      "ratePerThousand": null,
+      "ratePerThousandNote": "No insurer publishes a filed rate per $1,000 of construction value. Broker guides disagree widely: new construction at roughly $1-$4 per $1,000 of completed value (0.1%-0.4%), against Insureon's 1%-4%. The two cannot both be typical, so treat the rate as unpublished."
+    }
+  },
+
+  "conversions": {
+    "camden": {
+      "hourlyRate": 197.94,
+      "loftConversionUpTo60sqm": { "planCharge": 468.78, "inspectionCharge": 93.76, "total": 562.53 },
+      "loftConversionOver60sqm": "individually assessed (Schedule 3)",
+      "extensionIncludingBasement10to60sqm": { "planCharge": 625.18, "inspectionCharge": 125.04, "total": 750.22 },
+      "garageConversion": null,
+      "garageConversionNote": "Camden's garage-conversion row was not visible in any retrievable copy.",
+      "currency": "GBP",
+      "url": "https://www.camden.gov.uk/documents/d/guest/schedule-2-residential-costs",
+      "indexUrl": "https://www.camden.gov.uk/fee-charges-building-control",
+      "publisher": "London Borough of Camden, Building Control (Schedule 2, residential)", "date": "2026", "sourceType": "primary", "confirmed": false,
+      "note": "Camden's site blocks automated fetches (Cloudflare challenge); figures are from the search index's rendering of the 2026 Schedule 2. Whether VAT is included was not visible. Plan and inspection split as shown."
+    },
+    "havering": {
+      "garageConversionUpTo30sqm": { "total": 673, "fastTrack": 740 },
+      "loftOrExtensionUpTo30sqm": { "total": 859, "fastTrack": 945 },
+      "loftOrExtension30to60sqm": { "total": 1183, "fastTrack": 1301 },
+      "loftOrExtension60to100sqm": { "total": 1406, "fastTrack": 1547 },
+      "over100sqm": "cost-of-work table or individually assessed",
+      "basement": "charged as an extension by floor area (no separate basement row)",
+      "vat": "included at 20%; regularization is VAT-exempt but carries a 20% uplift, so the total is the same",
+      "sameChargeFor": "full plans, building notice, regularization and reversion",
+      "effective": "2026-04-01",
+      "currency": "GBP",
+      "url": "https://www.havering.gov.uk/downloads/file/7363/building-control-fees-2026-2027",
+      "publisher": "London Borough of Havering, Building Control", "date": "2026-04-01", "sourceType": "primary", "confirmed": true,
+      "note": "Second London borough, fully read. The table's two fee columns extracted out of line with the row labels; values were assigned in row order (five rows, five pairs), which gives rising fees by floor area as expected. The first row (£673/£740) is detached non-habitable buildings up to 40 sq m and the second is garage conversions; both show £673/£740."
+    }
+  },
+
+  "uncertain": [
+    "Angi city pages (NYC, Los Angeles) returned 403; their figures are from search-index renderings and are marked confirmed false.",
+    "Camden Schedule 2 figures are from a search-index rendering (the site blocks fetches); the garage conversion row is missing. Havering was fully read as a second London borough.",
+    "Havering's and Cavan Monaghan's fee tables extracted with misaligned columns; the values were assigned by row position and are noted as such.",
+    "Los Angeles preliminary parcel map: the latest confirmed figure is FY2024-25 ($13,666 single-unit). FY2025-26 and FY2026-27 CPI-adjusted figures exist but were not found.",
+    "Litchfield CT: the only published fee schedule is on a 2011 application form; the current Land Use Fee Schedule ordinance was not found online.",
+    "Kildare: the per-area rate for Schedule 9 class 13 was unreadable in the extracted table. It does not matter for a house site (65 euro per house).",
+    "Title insurance in Ontario and BC: insurers publish calculators, not tables; the examples are secondary. The BC examples from Zealty contradict each other.",
+    "No published first-time building inspection pass rate was found for any municipality.",
+    "No published median overage (how far over budget) for Houzz, NAHB or NaCSBA; only shares over budget.",
+    "No NHBC, Premier Guarantee, LABC Warranty or HomeBond self-build or per-home price is published.",
+    "Builder's risk rate per $1,000: sources disagree by an order of magnitude; left null.",
+    "Irish boundary survey: no fixed published price found; the 500-1,000 euro per day on-site rate is secondary and unconfirmed.",
+    "England: neither RICS nor HomeOwners Alliance publishes a land or topographical survey cost."
+  ]
+}

@@ -42,14 +42,26 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { UNION_HEALTH, rateOn } from '../content/career';
 import {
-  BENCHMARK, BENEFIT_STATE, CARE, CONNECTICUT_ENROLLMENT, CHARITY, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, ENROLLMENT, INSULIN, MEDICAL_CPI, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear, medicalGrowth,
+  BENCHMARK, BENEFIT_STATE, IRISH_CARE, NHS, CARE, CONNECTICUT_ENROLLMENT, CHARITY, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, ENROLLMENT, INSULIN, MEDICAL_CPI, MEDICAL_DEBT, PHARMACY, PLANS, POVERTY_LINE, PUBLIC_COVER, byYear, medicalGrowth,
   type BenefitState, type PlanDesign,
 } from '../content/safetynet';
 import { earningsOf, homeOf, quartersBefore } from './earnings';
 import { payFromCurrent } from './household';
 import { personalityOf } from './personality';
 import { clamp } from '../core/rng';
+import { bmiOf } from './body';
+import { ONSET, onsetYearly } from '../content/body';
 import { fluByWeek, weekOfYear } from './seasons';
+import { isoOfCountry } from './documents';
+import { nhsByRoute, residenceIn } from './residence';
+import { citizenOf, citizenshipsOf } from './documents';
+import { FAIR_PHARMACARE, ONTARIO_DRUGS } from '../content/cabenefits';
+import { eiWeek } from './eiself';
+import { laidUp } from './injury';
+import { clinicFor, clinicRefusal, selfPayAt } from './clinics';
+import { US_PHARMACIES, edMinutes, emergencyScale } from '../content/carevisits';
+import { careAway } from './travelinsurance';
+import { markRecord } from './credit';
 
 export const HEALTH_MONTH_KIND = 'health.month';
 export const HEALTH_WEEK_KIND = 'health.week';
@@ -60,14 +72,22 @@ export type DentalPlan = 'ca' | 'ny' | 'yale';
 export type Condition = 'depression' | 'asthma' | 'hypertension' | 'diabetes' | 'arthritis';
 export const CONDITION_LABEL: Record<Condition, string> = { depression: 'Depression', asthma: 'Asthma', hypertension: 'High Blood Pressure', diabetes: 'Diabetes', arthritis: 'Arthritis' };
 
-export interface MedicalBill { id: string; at: Instant; what: string; amount: Money; dueAt: Instant; paid?: boolean }
+export interface MedicalBill {
+  id: string; at: Instant; what: string; amount: Money; dueAt: Instant; paid?: boolean;
+  /** A hospital's bill, which its charity may take in, and the town it was billed in; and what an application for it came to. */
+  hospital?: boolean;
+  cityId?: string;
+  aid?: 'free' | 'discount' | 'refused' | 'screened';
+}
 
 export interface HealthRecord {
+  /** Their own doctor, a practice in the town they live in (`systems/clinics.ts`, from 2026-10-01). */
+  clinicId?: string;
   marketplace?: { from: Instant; until?: Instant; state: BenefitState };
   sag?: { from: Instant; until: Instant };
   equity?: { from: Instant; until: Instant };
   /** Medicaid, Medi-Cal or the Essential Plan, and when it's next renewed. */
-  program?: { kind: 'medicaid' | 'essential'; state: BenefitState; from: Instant; until?: Instant; renewAt: Instant; band: 'low' | 'high' };
+  program?: { kind: 'medicaid' | 'essential'; state: BenefitState; from: Instant; until?: Instant; renewAt: Instant; band: 'low' | 'high'; /** California's state-funded Medi-Cal for someone without satisfactory status: kept from before 2026 in full, or restricted to emergencies (`MEDI_CAL_UIS`). */ scope?: 'state' | 'restricted'; /** Its premium's months unpaid. */ unpaid?: number };
   cobra?: { plan: 'sag' | 'equity'; from: Instant; until: Instant; subsidized: boolean };
   /** A union plan lost, and until when COBRA may be elected. */
   cobraOffer?: { plan: 'sag' | 'equity'; lostAt: Instant; until: Instant };
@@ -85,8 +105,12 @@ export interface HealthRecord {
   spent: Record<string, Money>;
   deductible: Record<string, Money>;
   bills: MedicalBill[];
-  /** In hospital until. */
+  /** In hospital until: a stay, or an emergency department's hours. */
   inHospitalUntil?: Instant;
+  /** The American pharmacy their prescriptions are filled at (`US_PHARMACIES`, from 2026-10-01). */
+  pharmacy?: string;
+  /** An injury mending, or the last one (`systems/injury.ts`). */
+  injury?: import('./injury').Injury;
   /** Down with the flu until, and excused from classes for it (`school.call_in_sick`). */
   fluUntil?: Instant;
   /** The frailty band the year's odds of the end were last drawn at (`systems/birthdays.ts`). */
@@ -104,6 +128,8 @@ export interface HealthRecord {
   drawn?: boolean;
   /** What's been paid toward a plan's brand-drug deductible this year, and its admission copays. */
   rxDeductible?: Record<string, Money>;
+  /** A Canadian's drug plan paid toward, by program year or quarter (`canadianDrugShare`). */
+  caDrug?: Record<string, Money>;
   stayCopays?: Record<string, Money>;
 }
 
@@ -172,13 +198,58 @@ export function planKey(person: Person, at: Instant): string | undefined {
 /** The poverty line a month, in a year. */
 const povertyMonth = (year: number, into: string) => usd(byYear(POVERTY_LINE, year), into) / 12;
 
+/**
+ * Whether their status lets them have Medicaid: until 1 October 2026 SLATE
+ * asked none; from then, a US citizen, or five years with a green card
+ * (`systems/residence.ts`). An O-1's holder isn't among the groups the law
+ * names. In New York the Essential Plan's income band still reaches them,
+ * as SLATE had it, and rightly: it takes anyone lawfully present to 200% of
+ * the poverty line (NY State of Health, `research-sweep5.json`).
+ *
+ * California's state-funded Medi-Cal, from later on 2026-09-30, for someone
+ * without satisfactory immigration status (a citizen's, or a green card's
+ * after five years, here; an O-1's holder among those without), from DHCS's
+ * guidance as the research read it:
+ * - from 1 January 2026, a new adult applicant gets restricted scope only,
+ *   emergency care (and pregnancy, which SLATE's lives don't carry);
+ * - one enrolled before then keeps full scope while enrolled;
+ * - its non-emergency dental ends on 1 July 2026;
+ * - from 1 July 2027, $30 a month from 19 to 59, and after 90 days unpaid
+ *   it's restricted scope (ACWDL 25-33).
+ * Its three months' grace to re-enroll isn't kept. The federal work rule
+ * isn't asked of it: the state funds it.
+ */
+export const MEDI_CAL_UIS = { freezeFrom: Date.UTC(2026, 0, 1), dentalEnds: Date.UTC(2026, 6, 1), premiumFrom: Date.UTC(2027, 6, 1), premium: 30, ages: [19, 59] as const, unpaidMonths: 3 } as const;
+
+/** A citizen's status, or a green card's after five years: what Medicaid and Medi-Cal call satisfactory. */
+const satisfactory = (person: Person, at: Instant): boolean => {
+  if (citizenOf(person, 'US')) return true;
+  const card = residenceIn(person, 'US', at);
+  return card?.route === 'us-green-card' && at - (card.issuedAt ?? at) >= 5 * 365.2425 * MS_DAY;
+};
+
+/** Whether their cover is California's restricted scope: emergency care only. */
+export const restrictedScope = (person: Person, at: Instant): boolean => coverOn(person, at) === 'medicaid' && person.health?.program?.scope === 'restricted';
+export function medicaidStatus(person: Person, at: Instant): boolean {
+  if (at < Date.UTC(2026, 9, 1) || citizenOf(person, 'US')) return true;
+  const card = residenceIn(person, 'US', at);
+  return card?.route === 'us-green-card' && at - (card.issuedAt ?? at) >= 5 * 365.2425 * MS_DAY;
+}
+
 /** What program last month's income qualifies them for where they live: Medicaid, the Essential Plan, or none. */
-export function programFor(person: Person, at: Instant, into = 'USD'): { kind: 'medicaid' | 'essential'; band: 'low' | 'high' } | undefined {
+export function programFor(person: Person, at: Instant, into = 'USD'): { kind: 'medicaid' | 'essential'; band: 'low' | 'high'; scope?: 'state' | 'restricted' } | undefined {
   const state = BENEFIT_STATE[homeOf(person)];
   if (!state) return undefined;
   const income = earningsOf(person).months[lastMonthKey(at)] ?? 0;
   const ratio = income / povertyMonth(zonedParts(at, HOME).year, into);
-  if (ratio <= PUBLIC_COVER.medicaidShare) return { kind: 'medicaid', band: 'low' };
+  // California's state-funded Medi-Cal for someone without satisfactory status, from 2026 (`MEDI_CAL_UIS`).
+  if (state === 'ca' && ratio <= PUBLIC_COVER.medicaidShare && at >= MEDI_CAL_UIS.freezeFrom && !satisfactory(person, at)) {
+    const prog = person.health?.program;
+    const kept = prog && prog.kind === 'medicaid' && prog.state === 'ca' && prog.from < MEDI_CAL_UIS.freezeFrom && (prog.until === undefined || prog.until > at) && prog.scope !== 'restricted';
+    return { kind: 'medicaid', band: 'low', scope: kept ? 'state' : 'restricted' };
+  }
+  // From 1 October 2026 federal Medicaid is a citizen's, or a green card holder's after five years (Pub. L. 119-21 §71109).
+  if (ratio <= PUBLIC_COVER.medicaidShare && medicaidStatus(person, at)) return { kind: 'medicaid', band: 'low' };
   if (state === 'ny' && ratio <= PUBLIC_COVER.essentialShare) return { kind: 'essential', band: ratio <= PUBLIC_COVER.essentialCopaysFrom ? 'low' : 'high' };
   // Covered Connecticut reads the year before's poverty line, as the marketplace does.
   if (state === 'ct' && income / povertyMonth(zonedParts(at, HOME).year - 1, into) <= PUBLIC_COVER.coveredCtShare) return { kind: 'essential', band: 'low' };
@@ -281,8 +352,33 @@ const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'Ju
  * program comes up for renewal; the premiums fall due; and what covers them
  * is settled, with a month uncovered in California counted.
  */
+/**
+ * A condition that begins in the month: each not yet carried, at its yearly
+ * onset for their age, a twelfth of it, weighed by their weight's relative
+ * risk (`ONSET` in `content/body.ts`). Until 2026-09-28 a life carried
+ * only the conditions it was drawn with at twenty-seven, whatever it ate or
+ * however long it ran.
+ */
+export function onsetMonth(sim: Simulation, person: Person, at: Instant): Condition | undefined {
+  const h = healthOf(person);
+  if (!h.drawn) return undefined;
+  const age = (at - person.birthInstant) / (365.2425 * MS_DAY);
+  const bmi = person.body ? bmiOf(person.body) : 22.5;
+  const rng = sim.rng('health.onset', person.id, String(at));
+  for (const condition of Object.keys(ONSET.yearly) as (keyof typeof ONSET.yearly)[]) {
+    if (h.chronic?.[condition]) continue;
+    const chance = onsetYearly(condition, age, bmi) / 12;
+    if (rng.next() >= chance) continue;
+    (h.chronic ??= {})[condition] = { treated: true };
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: `Diagnosed: ${CONDITION_LABEL[condition]}`, body: `A doctor found it this month. Its care begins now, at what your plan leaves; Let It Go on Papers stops it.`, importance: 75, route: '/workspace/papers' });
+    return condition;
+  }
+  return undefined;
+}
+
 export function healthMonth(sim: Simulation, person: Person, at: Instant): void {
   const h = healthOf(person);
+  onsetMonth(sim, person, at);
   const cur = saveCurrency(sim.universe);
   const p = zonedParts(at, HOME);
   const record = earningsOf(person);
@@ -327,14 +423,23 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     else if (at >= prog.renewAt) {
       const still = programFor(person, at, cur);
       const work = lastMonthWork(person, at);
-      const worksEnough = prog.kind !== 'medicaid' || monthKey(at) < PUBLIC_COVER.workFrom.slice(0, 7) || work.hours >= PUBLIC_COVER.workHours || work.earnings >= usd(PUBLIC_COVER.workEarnings, cur);
+      const worksEnough = prog.kind !== 'medicaid' || prog.scope !== undefined || monthKey(at) < PUBLIC_COVER.workFrom.slice(0, 7) || work.hours >= PUBLIC_COVER.workHours || work.earnings >= usd(PUBLIC_COVER.workEarnings, cur);
       if (still?.kind === prog.kind && worksEnough) {
         prog.band = still.band;
+        if (still.scope) prog.scope = still.scope; else delete prog.scope;
         prog.renewAt = firstOf(p.year, p.month + renewMonths(at, prog.state));
       } else {
         prog.until = at;
         if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Ended At Renewal', body: !worksEnough ? `Medicaid now asks for ${PUBLIC_COVER.workHours} hours’ work or ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of earnings a month, and last month had neither.` : 'Last month’s income is over what it allows.', importance: 80, route: '/workspace/papers' });
       }
+    }
+  }
+  // California's premium on its state-funded Medi-Cal, from July 2027; 90 days unpaid and it's restricted scope.
+  if (prog && active(prog, at) && prog.scope === 'state' && at >= MEDI_CAL_UIS.premiumFrom) {
+    const age = (at - person.birthInstant) / (365.2425 * MS_DAY);
+    if (age >= MEDI_CAL_UIS.ages[0] && age < MEDI_CAL_UIS.ages[1] + 1) {
+      if (payFromCurrent(sim, person, usd(MEDI_CAL_UIS.premium * 100, cur), 'Medi-Cal premium', 'health')) prog.unpaid = 0;
+      else if ((prog.unpaid = (prog.unpaid ?? 0) + 1) >= MEDI_CAL_UIS.unpaidMonths) prog.scope = 'restricted';
     }
   }
   // The marketplace: a plan is the state's, and ends on leaving it.
@@ -366,7 +471,7 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
   if (debt && -debt.balance >= usd(MEDICAL_DEBT.reportAt, cur) && h.debtSince !== undefined && at - h.debtSince >= MEDICAL_DEBT.reportAfterDays * MS_DAY
     && !MEDICAL_DEBT.barredIn.includes(CITIES.get(home)?.parentId ?? '') && !h.reported && person.credit) {
     h.reported = true;
-    person.credit.score = Math.max(300, person.credit.score - MEDICAL_DEBT.recordHit);
+    markRecord(person, MEDICAL_DEBT.recordHit, at, home);
     if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Medical Debt Is On Your Record', body: 'Unpaid a year and over $500, it’s reported now.', importance: 80, route: '/workspace/papers' });
   }
 }
@@ -386,7 +491,10 @@ export function keepUp(sim: Simulation, person: Person, at: Instant): Money {
   for (const [condition, state] of Object.entries(h.chronic ?? {}) as [Condition, { treated: boolean; lapsed?: boolean; typeOne?: boolean }][]) {
     if (!state.treated) continue;
     let cost = 0;
-    if (condition === 'depression') {
+    if (condition === 'depression' && publicCareShareOf(person, 'visit', at, cur) === 0) {
+      // NHS Talking Therapies are free; the prescription is the NHS's charge.
+      cost += rxShareOf(person, false, at, cur);
+    } else if (condition === 'depression') {
       const plan = planOf(person, at);
       const session = plan ? usd(plan.visit, cur) : usd(grown(CITIES.get(homeOf(person))?.parentId === 'us-ny' ? CHRONIC.therapy['us-ny'] : CHRONIC.therapy.other, 'therapy', at), cur);
       cost += CHRONIC.therapyPerMonth * session + rxShareOf(person, false, at, cur);
@@ -414,6 +522,14 @@ export function medicalDebtOf(sim: Simulation, person: Person) {
 export type Care = 'visit' | 'urgent' | 'emergency' | 'stay' | 'rx-generic' | 'rx-brand' | 'cleaning' | 'filling' | 'exam' | 'glasses';
 const MEDICAL: readonly Care[] = ['visit', 'urgent', 'emergency', 'stay'];
 
+/** The last twelve months' income against the year's poverty line, which a hospital's charity reads. */
+export function incomeRatio(person: Person, at: Instant, into = 'USD'): number {
+  const months = earningsOf(person).months;
+  const since = at - 365 * MS_DAY;
+  const income = Object.entries(months).filter(([k]) => firstOf(Number(k.slice(0, 4)), Number(k.slice(5, 7))) >= since).reduce((s, [, v]) => s + v, 0);
+  return income / usd(byYear(POVERTY_LINE, zonedParts(at, HOME).year), into);
+}
+
 /**
  * What a piece of care leaves them to pay. Covered: the plan's copay, or for
  * a stay the deductible still owed and the plan's share of the rest, to what
@@ -422,23 +538,34 @@ const MEDICAL: readonly Care[] = ['visit', 'urgent', 'emergency', 'stay'];
  * by the last year's income against the poverty line.
  */
 export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): Money {
+  const nhs = publicCareShareOf(person, care, at, into);
+  if (nhs !== undefined) return nhs;
   if (care === 'rx-generic' || care === 'rx-brand') return rxShareOf(person, care === 'rx-brand', at, into);
   if (!MEDICAL.includes(care)) return teethAndEyesShareOf(person, care as 'cleaning' | 'filling' | 'exam' | 'glasses', at, into);
   const price = usd(grown(CARE.price[care as 'visit' | 'urgent' | 'emergency' | 'stay'], care as 'visit', at), into);
   const year = zonedParts(at, HOME).year;
-  const plan = planOf(person, at);
+  const hospital = care === 'emergency' || care === 'stay';
+  // Restricted scope pays an emergency and the stay it brings, nothing else.
+  const plan = restrictedScope(person, at) && !hospital ? undefined : planOf(person, at);
   const h = healthOf(person);
+  const state = CITIES.get(homeOf(person))?.parentId;
+  // The last year's income against the poverty line, which a hospital's charity reads.
+  const ratio = () => incomeRatio(person, at, into);
+  // Connecticut's hospital charity, for a patient paying for themselves, as a hospital screens one.
+  const ct = CHARITY.connecticut;
+  const helped = (owed: Money): Money => {
+    if (!hospital || state !== 'us-ct') return owed;
+    const r = ratio();
+    return r <= ct.freeTo ? 0 : r <= ct.discountTo ? Math.round(owed * (1 - ct.discount)) : owed;
+  };
   if (!plan) {
-    const hospital = care === 'emergency' || care === 'stay';
+    // Uninsured, a provider's own self-pay price where it publishes one (`systems/clinics.ts`).
+    const own = hospital ? undefined : selfPayAt(clinicFor(person, care as 'visit' | 'urgent'), into);
+    if (own !== undefined) return own;
     if (!hospital) return Math.round(price * CARE.uninsuredMarkup);
-    const months = earningsOf(person).months;
-    const since = at - 365 * MS_DAY;
-    const income = Object.entries(months).filter(([k]) => firstOf(Number(k.slice(0, 4)), Number(k.slice(5, 7))) >= since).reduce((s, [, v]) => s + v, 0);
-    const ratio = income / usd(byYear(POVERTY_LINE, year), into);
-    const state = CITIES.get(homeOf(person))?.parentId;
-    if (state === 'us-ny' && ratio < CHARITY.newYorkFreeBelow) return 0;
-    if (state === 'us-ca' && ratio < CHARITY.californiaDiscountBelow) return price;
-    return Math.round(price * CARE.uninsuredMarkup);
+    if (state === 'us-ny' && ratio() < CHARITY.newYorkFreeBelow) return 0;
+    if (state === 'us-ca' && ratio() < CHARITY.californiaDiscountBelow) return price;
+    return helped(Math.round(price * CARE.uninsuredMarkup));
   }
   let share: number;
   if (care === 'stay' && plan.stayCopay !== undefined) {
@@ -461,9 +588,156 @@ export function shareOf(person: Person, care: Care, at: Instant, into = 'USD'): 
 }
 
 /** A prescription at the counter: the plan's copay, the greater of its dollar and its share, after a brand's deductible; uninsured, the cash price. */
+/**
+ * The NHS's charge for a piece of care, for someone it treats as ordinarily
+ * resident, or nothing where it isn't theirs: free at the point of use for
+ * a doctor, the emergency department and a stay in hospital; England's
+ * charge per prescription item, and nothing in Scotland, Wales or Northern
+ * Ireland; the dental bands (a check-up and cleaning Band 1, a filling Band
+ * 2). A British or Irish citizen living in the UK is ordinarily resident at
+ * once, a returning resident among them (the Charges to Overseas Visitors
+ * guidance); anyone else there is on a visa whose Immigration Health
+ * Surcharge SLATE doesn't charge, and is billed as before. Until 2026-09-29
+ * a Londoner was billed American prices for every illness, uninsured, and a
+ * played British life ended £1.25 million in medical debt.
+ */
+export function publicCareShareOf(person: Person, care: Care, at: Instant, into = 'USD'): Money | undefined {
+  const city = CITIES.get(homeOf(person));
+  if (city?.countryId === 'ie') return irishShareOf(person, care, into);
+  if (city?.countryId === 'mx') return mexicanShareOf(person, care);
+  if (city?.countryId === 'ca') return canadianShareOf(person, care, at);
+  if (city?.countryId !== 'uk') return undefined;
+  const iso = isoOfCountry(person.citizenshipId);
+  // A visa's holder who paid the Immigration Health Surcharge is treated as ordinarily resident (`systems/residence.ts`, from 2026-09-30).
+  if (iso !== 'GB' && iso !== 'IE' && !citizenOf(person, 'GB') && !nhsByRoute(person, at)) return undefined;
+  const pounds = (x: number) => { const c = Math.round(x * 100); return into === 'GBP' ? c : exchange(c, 'GBP', into) ?? c; };
+  const england = city.parentId === 'uk-eng';
+  const age = (at - person.birthInstant) / (365.25 * MS_DAY);
+  if (care === 'rx-generic' || care === 'rx-brand') return england && age < NHS.prescriptionFreeFrom ? pounds(NHS.prescription) : 0;
+  // A check-up and cleaning is Band 1, a filling Band 2; an eye test and glasses are the optician's, paid for as before.
+  if (care === 'cleaning') return pounds(NHS.dental.band1);
+  if (care === 'filling') return pounds(NHS.dental.band2);
+  if (care === 'exam' || care === 'glasses') return undefined;
+  return 0;
+}
+
+/**
+ * Ireland's public care for someone living there (Citizens Information,
+ * researched 2026-09-29): a public hospital stay free, the €80 a day
+ * abolished on 17 April 2023; the emergency department €100 (waived with a
+ * GP's letter, which SLATE doesn't keep); a GP private, the middle of the €45
+ * to €65 Citizens Information gives, €55; an injury unit €75 for urgent
+ * care; and the Drugs Payment Scheme's €80 a month for the household's
+ * prescriptions, which SLATE holds a prescription to. An Irish, British or
+ * other EU citizen is eligible; a dentist and an optician are private, as
+ * before.
+ */
+function irishShareOf(person: Person, care: Care, into: string): Money | undefined {
+  const eligible = new Set(['IE', 'GB', 'DE', 'FR', 'ES', 'LV', 'IT', 'NL']);
+  if (!citizenshipsOf(person).some((c) => eligible.has(c))) return undefined;
+  const euros = (x: number) => { const c = Math.round(x * 100); return into === 'EUR' ? c : exchange(c, 'EUR', into) ?? c; };
+  if (care === 'stay') return 0;
+  if (care === 'emergency') return euros(IRISH_CARE.emergency);
+  if (care === 'urgent') return euros(IRISH_CARE.injuryUnit);
+  if (care === 'visit') return euros(IRISH_CARE.gp);
+  if (care === 'rx-generic' || care === 'rx-brand') return euros(IRISH_CARE.drugsCapMonthly);
+  return undefined;
+}
+
+/**
+ * Mexico's IMSS-Bienestar for a Mexican living there without social
+ * security, as an actor between engagements is: care, medicines and
+ * supplies free (Mexico City joined on 15 June 2023). A dentist and an
+ * optician are private, as before.
+ */
+function mexicanShareOf(person: Person, care: Care): Money | undefined {
+  if (!citizenOf(person, 'MX')) return undefined;
+  if (care === 'cleaning' || care === 'filling' || care === 'exam' || care === 'glasses') return undefined;
+  return 0;
+}
+
+/**
+ * Canada's public insurance for a citizen living there, from 2026-09-30: a
+ * doctor, the emergency department, urgent care and a stay in hospital cost
+ * nothing, under Ontario's OHIP and British Columbia's MSP alike. OHIP has
+ * had no waiting period since 2020 (ontario.ca, read 2026-09-30), and a
+ * Canadian-born resident waits for neither. Prescriptions are private for an
+ * adult, except under 25 in Ontario, where OHIP+ pays them all. Ontario's
+ * Drug Benefit for those over 65, Trillium's cap on high costs and BC's Fair
+ * PharmaCare weren't researched, and aren't kept. A dentist and an optician
+ * are private, as before. Until 2026-09-30 a Torontonian was billed American
+ * prices, uninsured, and a played life died at 87 owing $1,083,058 for
+ * medical care.
+ */
+function canadianShareOf(person: Person, care: Care, at: Instant): Money | undefined {
+  if (!citizenOf(person, 'CA')) return undefined;
+  if (care === 'cleaning' || care === 'filling' || care === 'exam' || care === 'glasses') return undefined;
+  if (care === 'rx-generic' || care === 'rx-brand') {
+    const age = (at - person.birthInstant) / (365.25 * MS_DAY);
+    return CITIES.get(homeOf(person))?.parentId === 'ca-08' && age < 25 ? 0 : undefined;
+  }
+  return 0;
+}
+
+/**
+ * A Canadian's share of a prescription under the province's plan, in `into`,
+ * or nothing where no plan takes them (`content/cabenefits.ts`):
+ * - Ontario from 65, the Drug Benefit: $100 a program year (August to July),
+ *   then up to $6.11 each; or up to $2 each, no deductible, on $25,480 or less.
+ * - Ontario under 65, Trillium: a quarter of 4% of last year's net income each
+ *   quarter of the program year, then up to $2 each. Under 25, OHIP+ pays all.
+ * - British Columbia, Fair PharmaCare: the deductible by income, then 30% of
+ *   each, to the family maximum, then nothing.
+ * Last year's acting is the income, SLATE keeping no other.
+ */
+function canadianDrugShare(person: Person, at: Instant, price: Money, into: string): Money | undefined {
+  if (!citizenOf(person, 'CA')) return undefined;
+  const city = CITIES.get(homeOf(person));
+  if (city?.countryId !== 'ca') return undefined;
+  const cad = (dollars: number) => { const c = Math.round(dollars * 100); return into === 'CAD' ? c : exchange(c, 'CAD', into) ?? c; };
+  const p = zonedParts(at, city.timeZone);
+  const earned = earningsOf(person).years[p.year - 1]?.acting ?? 0;
+  const income = (into === 'CAD' ? earned : exchange(earned, into, 'CAD') ?? earned) / 100;
+  const age = (at - person.birthInstant) / (365.2425 * MS_DAY);
+  const h = healthOf(person);
+  h.caDrug ??= {};
+  const spend = (key: string, deductible: Money, after: (rest: Money) => Money): Money => {
+    const spent = h.caDrug![key] ?? 0;
+    const toDeductible = Math.min(price, Math.max(0, deductible - spent));
+    const pay = toDeductible + after(price - toDeductible);
+    h.caDrug![key] = spent + pay;
+    return pay;
+  };
+  const programYear = p.month >= 8 ? p.year : p.year - 1;
+  if (city.parentId === 'ca-08') {
+    // Under 25, OHIP+ has paid it before the plan is asked (`canadianShareOf`).
+    if (age >= 65) {
+      if (income <= ONTARIO_DRUGS.lowIncome) return Math.min(price, cad(ONTARIO_DRUGS.lowCopay));
+      return spend(`odb-${programYear}`, cad(ONTARIO_DRUGS.deductible), (rest) => Math.min(rest, cad(ONTARIO_DRUGS.copay)));
+    }
+    const quarter = Math.floor(((p.month + 4) % 12) / 3);
+    return spend(`trillium-${programYear}-${quarter}`, cad((income * ONTARIO_DRUGS.trilliumShare) / 4), (rest) => Math.min(rest, cad(ONTARIO_DRUGS.trilliumCopay)));
+  }
+  if (city.parentId === 'ca-02') {
+    const row = FAIR_PHARMACARE.table.find(([from, to]) => income >= from && income <= to) ?? FAIR_PHARMACARE.table[FAIR_PHARMACARE.table.length - 1]!;
+    const most = cad(row[3]);
+    const key = `fpc-${p.year}`;
+    const spent = h.caDrug[key] ?? 0;
+    return spend(key, cad(row[2]), (rest) => Math.min(Math.round(rest * (1 - FAIR_PHARMACARE.share)), Math.max(0, most - spent - Math.min(price, Math.max(0, cad(row[2]) - spent)))));
+  }
+  return undefined;
+}
+
 export function rxShareOf(person: Person, brand: boolean, at: Instant, into = 'USD', cash?: Money): Money {
-  const price = cash ?? usd(grown(brand ? PHARMACY.price.brand : PHARMACY.price.generic, 'rx', at), into);
-  const key = planKey(person, at);
+  const nhs = cash === undefined ? publicCareShareOf(person, brand ? 'rx-brand' : 'rx-generic', at, into) : undefined;
+  if (nhs !== undefined) return nhs;
+  // A generic at the chosen chain's own cash price (`US_PHARMACIES`, from 2026-10-01), which a plan's copay is never more than; a brand's, and an unchosen pharmacy's, the median.
+  const chain = !brand && cash === undefined ? US_PHARMACIES.find((c) => c.id === healthOf(person).pharmacy) : undefined;
+  const price = cash ?? (chain ? usd(Math.round(chain.generic * 100), into) : usd(grown(brand ? PHARMACY.price.brand : PHARMACY.price.generic, 'rx', at), into));
+  // A Canadian's provincial drug plan, where one takes them (from later on 2026-09-30).
+  const provincial = cash === undefined ? canadianDrugShare(person, at, price, into) : undefined;
+  if (provincial !== undefined) return provincial;
+  const key = restrictedScope(person, at) ? undefined : planKey(person, at);
   const plan = key ? PHARMACY.plans[key] : undefined;
   if (!plan) return price;
   const year = zonedParts(at, HOME).year;
@@ -523,7 +797,10 @@ export function dentalPlanFor(person: Person, at: Instant): DentalPlan | undefin
 /** The dentist and the optician: what the plan pays of each, where it has them, or a stand-alone dental plan; otherwise the price. */
 export function teethAndEyesShareOf(person: Person, care: 'cleaning' | 'filling' | 'exam' | 'glasses', at: Instant, into = 'USD'): Money {
   const price = usd(grown(DENTAL_VISION.price[care], care === 'cleaning' || care === 'filling' ? 'dental' : 'vision', at), into);
-  const key = planKey(person, at);
+  // Restricted scope pays none of it; state-funded Medi-Cal no teeth but an emergency's from July 2026.
+  const prog = person.health?.program;
+  const noTeeth = (care === 'cleaning' || care === 'filling') && coverOn(person, at) === 'medicaid' && prog?.scope === 'state' && at >= MEDI_CAL_UIS.dentalEnds;
+  const key = restrictedScope(person, at) || noTeeth ? undefined : planKey(person, at);
   const plan = key ? DENTAL_VISION.plans[key] : undefined;
   const dental = person.health?.dental;
   // A dental plan of their own pays where the health plan pays nothing.
@@ -565,7 +842,8 @@ export function illnessWeek(sim: Simulation, person: Person, at: Instant): { car
   const asthma = person.health?.chronic?.asthma;
   const diabetes = person.health?.chronic?.diabetes;
   // Type 1 diabetes without insulin brings the emergency room four times as often.
-  const emergencies = CARE.perYear.emergency * (asthma && (!asthma.treated || asthma.lapsed) ? CHRONIC.untreated.asthmaEmergencies : 1)
+  // Where an emergency department sees less of what a family doctor could, fewer visits (`emergencyScale`, from 2026-10-02).
+  const emergencies = CARE.perYear.emergency * emergencyScale(homeOf(person)) * (asthma && (!asthma.treated || asthma.lapsed) ? CHRONIC.untreated.asthmaEmergencies : 1)
     * (diabetes?.typeOne && (!diabetes.treated || diabetes.lapsed) ? CHRONIC.untreated.diabetesEmergencies : 1);
   if (rng.next() < weekly(emergencies)) out.push({ care: 'emergency', what: 'The emergency room' });
   if (rng.next() < weekly(CARE.perYear.visit)) out.push({ care: 'visit', what: 'A doctor’s visit' });
@@ -602,10 +880,18 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
     w.energy = Math.max(0, w.energy - toll.energy * takes);
   }
   if (event.care === 'stay') h.inHospitalUntil = at + CARE.stayDays * MS_DAY;
+  // An emergency department keeps them its median time, missing what that time held (`edMinutes`, from 2026-10-01).
+  if (event.care === 'emergency') h.inHospitalUntil = Math.max(h.inHospitalUntil ?? 0, at + Math.round(edMinutes(homeOf(person)) * 60_000));
   if (event.flu) h.fluUntil = at + CARE.fluDays * MS_DAY;
   // A flu that isn't seen costs nothing.
   if (event.flu && event.care === 'visit') return undefined;
-  const amount = shareOf(person, event.care, at, cur);
+  let amount = shareOf(person, event.care, at, cur);
+  // Had in another country: travel insurance's, or a visitor's price in America (`systems/travelinsurance.ts`, from 2026-10-01).
+  if (MEDICAL.includes(event.care)) {
+    const care = event.care as 'visit' | 'urgent' | 'emergency' | 'stay';
+    const usUninsured = Math.round(usd(grown(CARE.price[care], care as 'visit', at), cur) * CARE.uninsuredMarkup);
+    amount = careAway(sim, person, care, amount, usUninsured, CARE.stayDays, canadianShareOf(person, care, at) !== undefined, at);
+  }
   const year = zonedParts(at, HOME).year;
   if (event.care === 'glasses') h.lastGlasses = year;
   if (planOf(person, at) && (MEDICAL.includes(event.care) || event.care.startsWith('rx'))) h.spent[year] = (h.spent[year] ?? 0) + amount;
@@ -627,15 +913,48 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
     sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Bill Due: ${event.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
     return bill;
   }
+  // Where it was had: a named practice, clinic or hospital in the town they're in (`systems/clinics.ts`).
+  const clinic = MEDICAL.includes(event.care) ? clinicFor(person, event.care as 'visit' | 'urgent' | 'emergency' | 'stay') : undefined;
+  if (clinic) event = { ...event, what: `${event.what}, ${clinic.name}` };
   if (person.id === sim.universe.playerId && MEDICAL.includes(event.care)) {
     sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: `${event.what}${event.care === 'stay' ? `, ${CARE.stayDays} days` : ''}. ${amount > 0 ? `Your share is ${formatMoney(amount, cur)}, due in ${MEDICAL_DEBT.dueDays} days.` : 'Nothing to pay.'}`, importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
   }
   if (amount <= 0) return undefined;
   h.seq = (h.seq ?? 0) + 1;
-  const bill: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY };
+  const hospital = event.care === 'emergency' || event.care === 'stay';
+  // An uninsured Connecticut patient's was screened for the charity at billing (`shareOf`).
+  const screened = hospital && !planOf(person, at) && CITIES.get(homeOf(person))?.parentId === 'us-ct';
+  const bill: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY, ...(hospital ? { hospital: true, cityId: homeOf(person) } : {}), ...(screened ? { aid: 'screened' as const } : {}) };
   h.bills.push(bill);
   h.bills = h.bills.slice(-40);
   sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${event.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
+  return bill;
+}
+
+/**
+ * Why a hospital bill can't be put in for Yale New Haven's financial
+ * assistance, or nothing where it can: a Connecticut hospital's, not yet
+ * due or applied for. Its policy helps an insured patient with what
+ * insurance leaves as it helps the uninsured, on the same incomes, but only
+ * on an application (`CHARITY.connecticut`); the uninsured's is applied
+ * at billing.
+ */
+export function aidRefusal(bill: MedicalBill, at: Instant): string | undefined {
+  if (!bill.hospital || CITIES.get(bill.cityId ?? '')?.parentId !== 'us-ct') return 'Only a Connecticut hospital’s bill.';
+  if (bill.paid || at >= bill.dueAt) return 'It’s settled or past due.';
+  if (bill.aid === 'screened') return 'The hospital’s charity is off it already.';
+  if (bill.aid) return 'You’ve applied for it.';
+  return undefined;
+}
+
+/** A bill for care that isn't one of the kinds `careFor` draws (an injury's): due in 30 days, a debt unpaid. */
+export function billCare(sim: Simulation, person: Person, what: string, amount: Money, at: Instant): MedicalBill {
+  const h = healthOf(person);
+  h.seq = (h.seq ?? 0) + 1;
+  const bill: MedicalBill = { id: `m${h.seq}`, at, what, amount, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY };
+  h.bills.push(bill);
+  h.bills = h.bills.slice(-40);
+  sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
   return bill;
 }
 
@@ -652,6 +971,8 @@ export function registerHealth(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     if (!person) return;
     for (const event of illnessWeek(s, person, item.at)) careFor(s, person, event, item.at);
+    // A self-employed Canadian's EI sickness benefit, for a week too sick to work (`systems/eiself.ts`).
+    eiWeek(s, person, item.at, laidUp(person, item.at + 3 * MS_DAY) || (person.health?.inHospitalUntil ?? 0) > item.at - 4 * MS_DAY);
     // Depression left alone weighs on morale.
     const depression = healthOf(person).chronic?.depression;
     if (depression && (!depression.treated || depression.lapsed)) person.wellbeing.morale = Math.max(0, person.wellbeing.morale - CHRONIC.untreated.moraleAWeek);
@@ -687,7 +1008,8 @@ export function registerHealth(sim: Simulation): void {
     const h = healthOf(person);
     if (may.program) {
       const band = programFor(person, s.now, cur)!.band;
-      h.program = { kind: may.program, state, from, band, renewAt: firstOf(p.year, p.month + 1 + renewMonths(s.now, state)) };
+      const scope = programFor(person, s.now, cur)!.scope;
+      h.program = { kind: may.program, state, from, band, renewAt: firstOf(p.year, p.month + 1 + renewMonths(s.now, state)), ...(scope ? { scope } : {}) };
     } else h.marketplace = { from, state };
     armHealth(s, person);
     return { from, kind: may.program ?? 'marketplace' };
@@ -719,6 +1041,21 @@ export function registerHealth(sim: Simulation): void {
     h.cobra = { plan: offer.plan, from: offer.lostAt, until: firstOf(end.year, end.month + COBRA.months), subsidized };
     delete h.cobraOffer;
     return { from: offer.lostAt, months };
+  });
+
+  sim.onCommand<{ chain: string }, { chain: string }>('health.choose_pharmacy', (p, { sim: s }) => {
+    const chain = US_PHARMACIES.find((c) => c.id === String(p?.chain));
+    if (!chain) throw new CommandError('There’s no such pharmacy.');
+    if (CITIES.get(homeOf(s.player))?.countryId !== 'us') throw new CommandError('A pharmacy’s own cash price is kept only in America.');
+    healthOf(s.player).pharmacy = chain.id;
+    return { chain: chain.id };
+  });
+
+  sim.onCommand<{ clinicId: string }, { clinicId: string }>('health.choose_clinic', (p, { sim: s }) => {
+    const no = clinicRefusal(s.player, String(p?.clinicId));
+    if (no) throw new CommandError(no);
+    healthOf(s.player).clinicId = String(p.clinicId);
+    return { clinicId: String(p.clinicId) };
   });
 
   sim.onCommand<{ condition: Condition; on: boolean }, { treated: boolean }>('health.treat', (p, { sim: s }) => {
@@ -756,6 +1093,20 @@ export function registerHealth(sim: Simulation): void {
     h.dental = { plan, from, ...(until ? { until } : {}), deductible: {}, paid: {} };
     armHealth(s, person);
     return { plan, ...(until ? { until } : {}) };
+  });
+
+  sim.onCommand<{ billId: string }, { aid: 'free' | 'discount' | 'refused'; amount: Money }>('health.apply_aid', (p, { sim: s }) => {
+    const person = s.player;
+    const bill = healthOf(person).bills.find((b) => b.id === p.billId);
+    if (!bill) throw new CommandError('There’s no such bill.');
+    const no = aidRefusal(bill, s.now);
+    if (no) throw new CommandError(no);
+    const r = incomeRatio(person, s.now, saveCurrency(s.universe));
+    const ct = CHARITY.connecticut;
+    bill.aid = r <= ct.freeTo ? 'free' : r <= ct.discountTo ? 'discount' : 'refused';
+    if (bill.aid === 'free') { bill.amount = 0; bill.paid = true; }
+    if (bill.aid === 'discount') bill.amount = Math.round(bill.amount * (1 - ct.discount));
+    return { aid: bill.aid, amount: bill.amount };
   });
 
   sim.onCommand<{ amount: Money }, { paid: Money }>('health.pay_bill', (p, { sim: s }) => {

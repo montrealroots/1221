@@ -115,6 +115,23 @@ export const PREMIUM_CREDIT = {
 } as const;
 
 /**
+ * The enhanced credits of 2021 to 2025 (ARPA §9661, extended by the IRA
+ * §12001): the applicable percentage 0% to 150% of the poverty line, rising
+ * to 2% at 200%, 4% at 250%, 6% at 300% and 8.5% at 400%, and 8.5% with no
+ * cutoff above. Read by Connecticut's 2026 Temporary Premium Assistance,
+ * which replaces what they would have paid: all of it from 100% to 200% of
+ * the poverty line, half from over 400% to 500%, for one year and no 2027
+ * design published (help.accesshealthct.com, premium assistance and state
+ * subsidy, December 2025).
+ */
+export const ENHANCED_CREDIT = {
+  bands: [[1.5, 0, 0], [2, 0, 0.02], [2.5, 0.02, 0.04], [3, 0.04, 0.06], [4, 0.06, 0.085]] as readonly (readonly [number, number, number])[],
+  above: 0.085,
+  connecticut: { year: 2026, full: [1, 2] as const, half: [4, 5] as const },
+  source: 'IRC §36B(b)(3)(A)(iii); https://help.accesshealthct.com/premium-assistance; https://help.accesshealthct.com/state-subsidy',
+} as const;
+
+/**
  * Open enrollment runs 1 November to 15 January; losing other cover opens 60
  * days to enroll. Cover starts on the first of the next month.
  */
@@ -281,9 +298,21 @@ export const PLANS_SOURCE = 'http://agency.accesshealthct.com/wp-content/uploads
 /**
  * Hospital bills to the uninsured. New York's hospitals charge nothing under
  * 200% of the poverty line; California's must discount care to 400%, which
- * SLATE takes as the commercial price, not the list.
+ * SLATE takes as the commercial price, not the list. Connecticut's, Yale New
+ * Haven's own policy (Financial Assistance Programs Policy 2296, May 2025;
+ * its values of 29 January 2026): free to 250% of the poverty line, and 67%
+ * off from 251% to 550%, which the state's law (Conn. Gen. Stat. §19a-673)
+ * binds at cost for the uninsured under 250%. Until 2026-09-28 a Connecticut
+ * patient was billed as if there were no such policy. SLATE applies it to
+ * the uninsured, as a hospital screens a patient paying for themselves, and
+ * to an insured patient's hospital bill on an application
+ * (`health.apply_aid`), as the policy asks.
  */
-export const CHARITY = { newYorkFreeBelow: 2, californiaDiscountBelow: 4, source: 'NY Public Health Law §2807-k(9-a); California Health and Safety Code §127400 et seq.' } as const;
+export const CHARITY = {
+  newYorkFreeBelow: 2, californiaDiscountBelow: 4,
+  connecticut: { freeTo: 2.5, discountTo: 5.5, discount: 0.67 },
+  source: 'NY Public Health Law §2807-k(9-a); California Health and Safety Code §127400 et seq.; https://www.ynhh.org/patients-visitors/billing-insurance/FAP-guidelines; https://www.cga.ct.gov/current/pub/chap_368z.htm',
+} as const;
 
 /**
  * A medical debt goes on a credit record only at $500 or more, unpaid, and a
@@ -359,7 +388,7 @@ export const ABROAD = {
     } as Readonly<Record<string, { brackets: readonly (readonly [number, number])[]; basicPersonal: Money; surtax?: readonly (readonly [number, number])[] }>>,
   },
   uk: {
-    rate: 0.2, treatyUsd: 20_000_00, payerThresholdGbp: 12_570_00,
+    rate: 0.2, treatyUsd: 20_000_00, payerThresholdGbp: 12_570_00, allowance: 12_570_00, taperFrom: 100_000_00,
     bands: [[37_700_00, 0.2], [125_140_00, 0.4], [Number.POSITIVE_INFINITY, 0.45]] as readonly (readonly [number, number])[],
     settleMonth: 1, settleDay: 31,
   },
@@ -492,7 +521,9 @@ export const DENTAL_VISION = {
  * isn't kept. Arthritis, 5.0%: a generic a month and two visits a year. Left
  * alone, SLATE's estimate: type 1 diabetes quadruples the emergencies and
  * both types wear the body down, and arthritis tires it. Obesity, 27.3%,
- * isn't modeled: SLATE has no weight.
+ * wasn't modeled until 2026-09-28, SLATE keeping no weight; since then a body
+ * has one (`systems/body.ts`), and a heavier one meets diabetes, high blood
+ * pressure and arthritis more as the years go (`onsetMonth`).
  */
 export const CHRONIC = {
   share: { depression: 0.25, asthma: 0.101, hypertension: 0.115, diabetes: 0.02, arthritis: 0.05 },
@@ -585,4 +616,55 @@ export const DENTAL_PLANS = {
   ny: { premium: 25_00, deductible: 50_00, preventive: 1, basic: 0.8, max: 1_500_00, label: 'NY State Of Health Adult Dental', yearly: false },
   yale: { premium: 312_72, deductible: 50_00, preventive: 1, basic: 0.8, max: 1_000_00, label: 'Yale Delta Dental Basic', yearly: true },
   source: 'https://www.coveredca.com (2026 dental standard benefit designs); https://info.nystateofhealth.ny.gov; https://yalehealth.yale.edu (student dental, 2026–27)',
+} as const;
+
+/**
+ * Universal Credit, 2026/27 (gov.uk and the DWP, researched 2026-09-29): the
+ * standard allowance a month for a single claimant, from the April uprating
+ * (£400.14 at 25 and over in 2025/26); the 55% taper, with no work allowance
+ * for a single claimant without children or a limited capability for work;
+ * capital ignored to £6,000, £4.35 a month for each £250 over it, and none
+ * over £16,000; the first payment seven days after the first month's
+ * assessment period; six nil awards close a claim. The London Local Housing
+ * Allowance is the median of its fourteen Broad Rental Market Areas' monthly
+ * rates, frozen from April 2024 into 2026/27: SLATE's London is one town, and
+ * the median is its reading of which area it is.
+ */
+export const UNIVERSAL_CREDIT = {
+  standard: [['2025-04-07', 400_14], ['2026-04-06', 424_90]] as RateSteps,
+  standardUnder25: [['2026-04-06', 338_58]] as RateSteps,
+  taper: 0.55,
+  capitalLower: 6_000,
+  capitalUpper: 16_000,
+  tariffPer250: 4.35,
+  payDaysAfter: 7,
+  nilsToClose: 6,
+  pensionAge: 66,
+  lhaLondon: { sharedRoom: 610.67, oneBed: 1_200 },
+  source: 'https://www.gov.uk/universal-credit; https://www.gov.uk/government/publications/universal-credit-local-housing-allowance-rates-2026-to-2027; ADM C1957–C1960',
+} as const;
+
+/**
+ * The NHS, 2026/27 (nhs.uk, gov.uk, the NHSBSA's HC12, researched
+ * 2026-09-29): care free at the point of use for someone ordinarily resident,
+ * a British citizen coming home to settle among them from the day they
+ * arrive; England's prescription charge a item, frozen at £9.90, and none at
+ * 60 or over, nor anywhere in Scotland, Wales or Northern Ireland; the dental
+ * bands, unchanged from 1 April 2025.
+ */
+export const NHS = {
+  prescription: 9.9,
+  prescriptionFreeFrom: 60,
+  dental: { band1: 27.9, band2: 76.6, band3: 332.1, urgent: 27.9 },
+  source: 'https://www.nhsbsa.nhs.uk/ (HC12, April 2026); https://www.gov.uk/guidance/nhs-entitlements-migrant-health-guide',
+} as const;
+
+/** Ireland's public care charges (Citizens Information, researched 2026-09-29), in euros. */
+export const IRISH_CARE = {
+  emergency: 100,
+  injuryUnit: 75,
+  /** The middle of the €45 to €65 a GP visit costs privately, from a page last edited June 2024: SLATE's reading. */
+  gp: 55,
+  drugsCapMonthly: 80,
+  source: 'https://www.citizensinformation.ie/en/health/health-services/hospital-services/hospital-charges/; https://www.citizensinformation.ie/en/health/drugs-and-medicines/drugs-payment-scheme/',
 } as const;

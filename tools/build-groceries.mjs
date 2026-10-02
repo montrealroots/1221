@@ -1,0 +1,229 @@
+// Builds src/engine/content/groceries.ts from docs/research/world/research-groceries.json
+// (and research-groceries2.json where it's there) and the recipes in
+// research-cooking-alcohol.json (Stage 4 of docs/BACKLOG.md, from 2026-10-01).
+//
+// Each product keeps its chain, exact name, size, regular price, where it's
+// kept and how long it keeps there (USDA FoodKeeper, from purchase). The food
+// it is, which a recipe's ingredient asks for, is read from its name: the last
+// food word in it, as a garment is read (tools/build-clothing.mjs). A recipe
+// keeps its source, servings, minutes and appliances, and each ingredient as
+// the food it is and how much; seasonings, spices, stock, water and the like
+// are taken as in the cupboard. An ingredient no shop here stocks is kept by
+// name, and the recipe isn't cooked where it can't be bought.
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+
+const OUT = 'src/engine/content/groceries.ts';
+const read = (f) => JSON.parse(readFileSync(`docs/research/world/${f}`, 'utf8'));
+const g = read('research-groceries.json');
+const more = existsSync('docs/research/world/research-groceries2.json') ? read('research-groceries2.json') : { products: [] };
+const recipesIn = read('research-cooking-alcohol.json').recipes;
+
+/** Food words, the key each names. Order doesn't matter: the last word in a name wins, the longer where two end together. */
+const KEYS = [
+  ['peanut-butter', /peanut butter|crema de cacahuate|crema mister cacahuate/],
+  ['pasta-sauce', /pasta sauce|marinara|bolognese sauce|passata|tomato sauce/],
+  ['tomatoes-canned', /(canned|tinned|chopped|diced) tomato(es)?|tomato pur[eé]e|tomato paste|tomate molido|pur[eé] de tomate|tomates? (en lata|picad)/],
+  ['tortilla', /tortillas?|masa harina|wraps?\b|maseca/],
+  ['milk', /\bmilk\b|buttermilk|leche/],
+  ['eggs', /\beggs?\b|huevos?/],
+  ['bread', /\bbread\b|\bloaf\b|\bbap\b|bread rolls?|breadcrumbs|baguette|\bpan\b|bolillo/],
+  ['butter', /\bbutter\b|lower-fat spread|margarine|mantequilla/],
+  ['cheese', /cheese|cheddar|queso/],
+  ['yogurt', /yogh?urt|yogur/],
+  ['rice', /\brice\b|arroz/],
+  ['pasta', /pasta|spaghetti|macaroni|noodles|penne|fusilli|fideos?/],
+  ['flour', /\bflour\b|harina/],
+  ['oil', /\boil\b|aceite/],
+  ['sugar', /\bsugar\b|az[uú]car/],
+  ['salt', /\bsalt\b|\bsal\b/],
+  ['chicken', /chicken|turkey|pollo|pechuga/],
+  ['beef', /beef|mince|steak|carne molida|\bres\b/],
+  ['bacon', /bacon|rashers?|tocino/],
+  ['sausage', /sausages?|salchichas?|chorizo/],
+  ['fish', /fish|tilapia|\bcod\b|salmon|haddock|pescado|filete/],
+  ['tuna', /tuna|at[uú]n/],
+  ['beans', /beans|chickpeas|garbanzo|lentils|dhal|dal\b|frijol(es)?/],
+  ['onion', /onions?|cebollas?/],
+  ['garlic', /garlic|\bajo\b/],
+  ['potato', /potato(es)?|\bpapas?\b/],
+  ['carrot', /carrots?|zanahorias?/],
+  ['lettuce', /lettuce|lechuga/],
+  ['apple', /\bapples?\b|manzanas?/],
+  ['banana', /bananas?|pl[aá]tanos?/],
+  ['orange', /\boranges?\b|naranjas?/],
+  ['lemon', /\blemons?\b|\blimes?\b|lim[oó]n(es)?/],
+  ['tomato', /tomato(es)?|jitomates?|tomates?/],
+  ['mushroom', /mushrooms?|champi[nñ]on(es)?/],
+  ['leek', /\bleeks?\b|poro/],
+  ['celery', /celery|apio/],
+  ['courgette', /courgettes?|zucchini|calabacitas?/],
+  ['pepper', /(bell|sweet|red|green|yellow) peppers?|peppers?\b(?! \()|pimientos?/],
+  ['chilli', /chill?i(es)?\b(?! powder)|jalape[nñ]os?|serrano/],
+  ['spinach', /spinach|espinacas?/],
+  ['broccoli', /broccoli|br[oó]coli/],
+  ['cabbage', /cabbage|col\b|repollo/],
+  ['cucumber', /cucumbers?|pepinos?/],
+  ['squash', /squash|butternut|calabaza/],
+  ['chayote', /chayotes?/],
+  ['swede', /\bswede\b|rutabaga/],
+  ['turnip', /turnips?|nabo/],
+  ['berries', /berries|blueberr|raspberr|strawberr|cherries|summer fruits|frutos rojos|fresas?/],
+  ['dried-fruit', /sultanas|raisins|dried (cranberries|apricots)|pasas/],
+  ['frozen-veg', /\bpeas\b|mixed vegetables|sweetcorn|sweet corn|\bcorn\b(?! flakes)|green beans|frozen vegetables|vegetable blend|peas (&|and) carrots|verduras|elote|ma[ií]z/],
+  ['oats', /\boats\b|porridge|oatmeal|avena/],
+  ['cereal', /cereal|corn ?flakes/],
+  ['coffee', /coffee|caf[eé]/],
+  ['tea', /\btea\b/],
+  ['juice', /juice|jugo/],
+  ['water', /\bwater\b|\bagua\b/],
+  ['beer', /\bbeer\b|lager|cerveza|\bale\b/],
+  ['wine', /\bwine\b|merlot|cabernet|pinot|\bvino\b|shiraz|sauvignon/],
+  ['pizza', /pizza/],
+  ['ready-meal', /lasagn[ae]|cottage pie|macaroni (&|and) cheese|hot pockets|shepherd'?s pie|enchiladas/],
+];
+
+/** Taken as in the cupboard: seasonings, spices, stock, water and the like. */
+const CUPBOARD = /^(salt|pepper)\b|\b(black|white|ground) pepper|salt and pepper|herbs?|oregano|cumin|chill?i powder|cayenne|turmeric|garam|paprika|cinnamon|\bginger\b|coriander|cilantro|parsley|chives|thyme|bay leaf|epazote|vanilla|stock|broth|bouillon|gravy|water\b|baking soda|mustard|soy sauce|curry paste|pesto|honey|mayonnaise|cornflour|wheat (germ|bran)|zest/;
+
+/** A name without what it's packed or flavored with: "tuna in spring water" is tuna, "soft cheese with garlic and herbs" cheese. */
+const headOf = (text) => String(text).toLowerCase().split(/ (?:in|with|en|con) /)[0];
+
+function keyOf(text) {
+  const t = headOf(text);
+  let best;
+  for (const [key, re] of KEYS) {
+    for (const m of t.matchAll(new RegExp(re.source, 'g'))) {
+      const end = m.index + m[0].length;
+      if (!best || end > best.end || (end === best.end && m[0].length > best.len)) best = { end, len: m[0].length, key };
+    }
+  }
+  return best?.key;
+}
+
+/** The FoodKeeper row for a food, by its key and category. */
+const SHELF_ROW = {
+  bread: 'bread', tortilla: 'flour tortillas', milk: 'milk', eggs: 'eggs in shell', butter: 'butter', cheese: 'hard cheese', yogurt: 'yogurt',
+  rice: 'white rice', pasta: 'dry pasta', flour: 'white flour', oil: 'vegetable or olive oil', sugar: 'granulated sugar', salt: 'table salt',
+  chicken: 'chicken breast', beef: 'ground beef', fish: 'lean fish', tuna: 'canned tuna', beans: 'canned goods, low acid', 'tomatoes-canned': 'canned goods, high acid',
+  tomato: 'tomatoes', onion: 'onions', potato: 'potatoes', carrot: 'carrots', lettuce: 'lettuce', apple: 'apples', banana: 'bananas',
+  'frozen-veg': 'frozen vegetables', pizza: 'frozen pizza', 'ready-meal': 'frozen entrees', cereal: 'ready-to-eat cereal', oats: 'oats',
+  coffee: 'coffee, commercial ground', tea: 'tea bags', 'peanut-butter': 'peanut butter', 'pasta-sauce': 'pasta sauce', juice: 'fruit juice',
+  water: 'bottled water', beer: 'beer', wine: 'wine',
+};
+const rowFor = (key) => (SHELF_ROW[key] ? g.shelfLife.find((s) => s.food.startsWith(SHELF_ROW[key])) : undefined);
+
+/**
+ * Where none is published (FoodKeeper gives milk only its use-by date, and
+ * has no row for the vegetables added later), SLATE's estimate by kind:
+ * fresh dairy a week, fresh meat and fish two days, produce a week, bread a
+ * week, anything frozen three months, a dry or canned good a year.
+ */
+const ESTIMATE = { dairy: 7, meat: 2, seafood: 2, produce: 7, bakery: 7, frozen: 90, pantry: 365, beverage: 365, 'ready-meal': 3, alcohol: null };
+
+function keepsFor(key, category, storage) {
+  const row = rowFor(key);
+  const pick = (...fields) => fields.map((f) => row?.[f]?.minDays).find((d) => typeof d === 'number');
+  // Kept cold, what keeps in the cupboard keeps at least as long: a chilled juice is FoodKeeper's carton juice.
+  const days = storage === 'freezer' ? pick('freezerFromPurchase', 'freezer') : storage === 'fridge' ? pick('fridgeFromPurchase', 'fridge', 'pantryFromPurchase', 'pantry') : pick('pantryFromPurchase', 'pantry');
+  if (days !== undefined) return { keepsDays: days, keepsEstimated: false, keepsSource: row.source };
+  // Sugar, salt, water, beer and wine keep: FoodKeeper gives them no limit.
+  if (['sugar', 'salt', 'water', 'beer', 'wine'].includes(key)) return { keepsDays: null, keepsEstimated: false, keepsSource: 'Keeps indefinitely' };
+  const est = storage === 'freezer' ? ESTIMATE.frozen : ESTIMATE[category] ?? 7;
+  return { keepsDays: est, keepsEstimated: true, keepsSource: 'SLATE’s estimate' };
+}
+
+const storageOf = (p, key) => p.storage ?? (p.category === 'frozen' ? 'freezer' : ['dairy', 'meat', 'seafood', 'ready-meal'].includes(p.category) ? 'fridge' : 'pantry');
+const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+
+const seen = new Set();
+const products = [];
+for (const p of [...g.products, ...(more.products ?? [])]) {
+  if (typeof p.price !== 'number' || !(p.price > 0)) continue;
+  const key = keyOf(p.name) ?? (p.category === 'ready-meal' ? 'ready-meal' : undefined);
+  if (!key) continue;
+  let id = `${p.chain}-${slug(p.name)}`.slice(0, 80);
+  for (let n = 2; seen.has(id); n += 1) id = `${p.chain}-${slug(p.name)}`.slice(0, 76) + `-${n}`;
+  seen.add(id);
+  const storage = storageOf(p, key);
+  // A dry pint of cherry or grape tomatoes is two cups, 298 g (USDA FoodData Central: 149 g a cup).
+  const pint = p.sizeUnit === 'ct' && p.sizeQty === 1 && /\bpint\b/i.test(`${p.size} ${p.name}`) && p.category === 'produce';
+  products.push({
+    id, chain: p.chain, market: p.market, name: p.name, category: p.category, food: key,
+    sizeQty: pint ? 298 : p.sizeQty, sizeUnit: pint ? 'g' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true,
+    storage, ...keepsFor(key, p.category, storage),
+    url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true,
+  });
+}
+const chainsWith = new Set(products.map((p) => p.chain));
+const chains = g.chains.filter((c) => chainsWith.has(c.id)).map((c) => ({ id: c.id, name: c.name, market: c.market, storesIn: c.storesIn ?? [], nearestTo: Object.keys(c.nearestTo ?? {}) }));
+
+/** A recipe's ingredient: the food it is where a shop could stock it, the cupboard's, or one no shop here stocks. */
+const NEEDS = { stove: 'stove', oven: 'oven', grill: 'grill', microwave: 'microwave', freezer: 'freezer', none: null, blender: 'blender', 'slow cooker': 'slow-cooker', 'rice cooker': 'rice-cooker' };
+const recipes = recipesIn.map((r) => {
+  const ingredients = r.ingredients.map((i) => {
+    const key = keyOf(i.food);
+    // A seasoning first: black pepper is the cupboard's, not a sweet pepper; stock is the cupboard's, not the beef it's made of.
+    if (CUPBOARD.test(headOf(i.food))) return { name: i.food, cupboard: true };
+    return { name: i.food, food: key ?? null, quantity: typeof i.quantity === 'number' ? i.quantity : null, unit: i.unit ?? null };
+  });
+  const minutes = typeof r.prepMinutes === 'number' || typeof r.cookMinutes === 'number' ? (r.prepMinutes ?? 0) + (r.cookMinutes ?? 0) : null;
+  return {
+    id: r.id, name: r.name, source: r.source, url: r.url, mealType: r.mealType ?? null, cuisine: r.cuisine ?? null,
+    servings: r.servings, minutes, appliances: (r.appliances ?? []).map((a) => NEEDS[a] ?? a).filter(Boolean),
+    ingredients, kcal: typeof r.caloriesPerServing === 'number' ? r.caloriesPerServing : null,
+    keepsDays: typeof r.keepsInFridgeDays === 'number' ? r.keepsInFridgeDays : null,
+  };
+});
+
+const body = `/**
+ * SLATE — groceries and recipes (Stage 4 of \`docs/BACKLOG.md\`), built by
+ * \`tools/build-groceries.mjs\` from \`docs/research/world/research-groceries*.json\`
+ * and the recipes in \`research-cooking-alcohol.json\`. Don't edit by hand;
+ * rebuild it.
+ *
+ * A product's price is its chain's regular shelf price as its own data feed
+ * listed it on the date given (\`confirmed\`), or a price tracker's where the
+ * chain blocked the read. With VAT or IVA in Britain, Ireland and Mexico;
+ * before any sales tax in America and Canada. How long it keeps where it's
+ * kept is USDA FoodKeeper's, from purchase, or SLATE's estimate where
+ * FoodKeeper gives none (\`keepsEstimated\`); null keeps indefinitely.
+ *
+ * A recipe is its source's: NHS Healthier Families, USDA MyPlate, safefood,
+ * Health Canada and a DIF school recetario. An ingredient is the food it is,
+ * the cupboard's, or one no shop here stocks (\`food: null\`).
+ */
+
+export type FoodUnit = 'g' | 'ml' | 'ct';
+export type Storage = 'pantry' | 'fridge' | 'freezer';
+
+export interface GroceryChain { id: string; name: string; market: string; storesIn: readonly string[]; nearestTo: readonly string[] }
+
+export interface GroceryProduct {
+  id: string; chain: string; market: string; name: string; category: string; food: string;
+  sizeQty: number; sizeUnit: FoodUnit; price: number; currency: string; taxIncluded: boolean;
+  storage: Storage; keepsDays: number | null; keepsEstimated: boolean; keepsSource: string;
+  url: string | null; date: string | null; confirmed: boolean;
+}
+
+export type Ingredient = { name: string; cupboard: true } | { name: string; food: string | null; quantity: number | null; unit: FoodUnit | null; cupboard?: undefined };
+
+export interface Recipe {
+  id: string; name: string; source: string; url: string; mealType: string | null; cuisine: string | null;
+  servings: number; minutes: number | null; appliances: readonly string[];
+  ingredients: readonly Ingredient[]; kcal: number | null; keepsDays: number | null;
+}
+
+export const GROCERY_CHAINS: readonly GroceryChain[] = ${JSON.stringify(chains)};
+
+// Parsed from strings: as literals, the lists are more than the typechecker will hold comfortably.
+export const GROCERY_PRODUCTS: readonly GroceryProduct[] = JSON.parse(${JSON.stringify(JSON.stringify(products))});
+
+export const RECIPES: readonly Recipe[] = JSON.parse(${JSON.stringify(JSON.stringify(recipes))});
+`;
+writeFileSync(OUT, body);
+const by = {};
+for (const p of products) by[p.market] = (by[p.market] ?? 0) + 1;
+console.log('chains', chains.length, 'products', products.length, by, 'recipes', recipes.length);
+const lacking = {};
+for (const r of recipes) for (const i of r.ingredients) if (!i.cupboard && !i.food) lacking[i.name] = (lacking[i.name] ?? 0) + 1;
+console.log('no shop stocks:', Object.keys(lacking).length, Object.keys(lacking).slice(0, 30).join(', '));

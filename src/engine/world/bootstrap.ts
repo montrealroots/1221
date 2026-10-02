@@ -29,6 +29,7 @@ import { citizenshipFor } from '../domain/citizenship';
 import { cleanPersonality, cleanPersonalityTraits, defaultPersonality } from '../systems/personality';
 import { ORIENTATION_2026, YALE_DRAMA } from '../content/school';
 import { PERFORMER_NOUN, impliedPerformerTitle, isPerformerTitle, type PerformerTitle } from '../core/performer';
+import { settle } from '../systems/body';
 
 export const APP_VERSION = '1.1.0';
 
@@ -49,6 +50,9 @@ export interface NewSaveConfig {
    * player's pick under they/them. Absent, the pronouns decide.
    */
   performerTitle?: PerformerTitle;
+  /** Height and weight as the player gives them, in centimetres and kilograms; absent, drawn from where they were born (`systems/body.ts`). */
+  heightCm?: number;
+  weightKg?: number;
   /** Local date of birth in the starting city's zone. */
   birthYear: number;
   birthMonth: number;
@@ -249,12 +253,11 @@ export function emptyUniverse(
     playerId,
     people: {},
     accounts: {}, transactions: [],
-    scheduled: [], history: [], decisions: {}, notifications: [],
+    scheduled: [], decisions: {}, notifications: [],
     preferences: {
-      reducedMotion: false, timeSpeed: 'live',
+      timeSpeed: 'live',
     },
     counters: {},
-    engineFailures: [],
   };
 }
 
@@ -368,6 +371,10 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     wokeWithDebt: 0,
     createdAt: now,
   };
+  // Their height and weight as they gave them, the life they start with holding it (`settle`).
+  if (config.heightCm && config.weightKg && config.heightCm >= 120 && config.heightCm <= 230 && config.weightKg >= 35 && config.weightKg <= 250) {
+    player.body = settle({ heightCm: config.heightCm, weightKg: config.weightKg }, player, now);
+  }
   universe.people[playerId] = player;
   idAlreadyIssued(universe, 'person', 1);
 

@@ -210,13 +210,18 @@ describe('alerts', () => {
 
   it('tell when a statement is ready, and stop when turned off', () => {
     const sim = lifeIn('is-39-mosfellsbr', {}, 'st-ready');
+    // Off by default since 2026-09-28, but for a statement with a payment due.
+    sim.execute({ kind: 'bank.set_alerts', payload: { statements: true } });
     sim.advanceBy(35 * MS_DAY);
     const ready = () => sim.universe.notifications.filter((n) => n.title.startsWith('Statement Ready')).length;
     const before = ready();
     expect(before).toBeGreaterThan(0);
     sim.execute({ kind: 'bank.set_alerts', payload: { statements: false } });
+    const notices = sim.universe.notifications.length;
     sim.advanceBy(35 * MS_DAY);
-    expect(ready()).toBe(before);
+    // Off, only a statement with a payment due still tells them.
+    expect(sim.universe.notifications.slice(notices).filter((n) => n.title.startsWith('Statement Ready')).every((n) => /to pay/.test(n.body))).toBe(true);
+    expect(ready()).toBeGreaterThanOrEqual(before);
   });
 
   it('refuses a line that isn’t an amount', () => {

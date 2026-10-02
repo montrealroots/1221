@@ -330,6 +330,16 @@ const CALIBRATED_IDS = new Set(CALIBRATED_CITIES.map((c) => c.id));
  * New Haven joined them on 2026-09-26, copied out of `public/geo/us.tsv`: a
  * new life begins at the drama school there (`content/school.ts`), and
  * Connecticut's towns aren't bundled.
+ *
+ * Belfast, Edinburgh and Toluca joined on 2026-09-29, copied out of
+ * `public/geo/uk.tsv` and `mx.tsv`: the Enterprise, LNER and El Insurgente
+ * run to them (`content/rail.ts`), and Belfast is where Northern Ireland's
+ * license path is reached.
+ *
+ * Hudson, Litchfield, Bakersfield, Naas, Millbrook and Sechelt joined on
+ * 2026-09-29, copied out of `public/geo/us.tsv`, `ie.tsv` and `ca.tsv`: a
+ * house built on farmland stands in its market's town (`content/land.ts`),
+ * not in the city the land was bought from.
  */
 const NEEDED_AT_BOOT: readonly RawCity[] = [
   {
@@ -354,6 +364,16 @@ const NEEDED_AT_BOOT: readonly RawCity[] = [
     population: 130_322,
     kind: '',
   },
+  { id: 'ca-02-victoria', name: 'Victoria', regionId: 'ca-02', countryId: 'ca', lat: 48.4359, lon: -123.3516, timeZone: 'America/Vancouver', population: 289_625, kind: 'a' },
+  { id: 'uk-nir-belfast', name: 'Belfast', regionId: 'uk-nir', countryId: 'uk', lat: 54.5968, lon: -5.9254, timeZone: 'Europe/London', population: 348_005, kind: 'a' },
+  { id: 'uk-sct-edinburgh', name: 'Edinburgh', regionId: 'uk-sct', countryId: 'uk', lat: 55.9521, lon: -3.1965, timeZone: 'Europe/London', population: 514_990, kind: 'a' },
+  { id: 'us-ny-hudson', name: 'Hudson', regionId: 'us-ny', countryId: 'us', lat: 42.2529, lon: -73.7910, timeZone: 'America/New_York', population: 6_436, kind: '' },
+  { id: 'us-ct-litchfield', name: 'Litchfield', regionId: 'us-ct', countryId: 'us', lat: 41.7473, lon: -73.1887, timeZone: 'America/New_York', population: 1_215, kind: '' },
+  { id: 'us-ca-bakersfield', name: 'Bakersfield', regionId: 'us-ca', countryId: 'us', lat: 35.3733, lon: -119.0187, timeZone: 'America/Los_Angeles', population: 373_640, kind: '' },
+  { id: 'ie-l-naas', name: 'Naas', regionId: 'ie-l', countryId: 'ie', lat: 53.2158, lon: -6.6669, timeZone: 'Europe/Dublin', population: 20_713, kind: '' },
+  { id: 'ca-08-millbrook', name: 'Millbrook', regionId: 'ca-08', countryId: 'ca', lat: 44.1501, lon: -78.4495, timeZone: 'America/Toronto', population: 1_695, kind: '' },
+  { id: 'ca-02-sechelt', name: 'Sechelt', regionId: 'ca-02', countryId: 'ca', lat: 49.4751, lon: -123.7590, timeZone: 'America/Vancouver', population: 8_832, kind: '' },
+  { id: 'mx-15-toluca', name: 'Toluca', regionId: 'mx-15', countryId: 'mx', lat: 19.2879, lon: -99.6532, timeZone: 'America/Mexico_City', population: 489_333, kind: 'a' },
 ];
 
 const BUNDLED_IDS = new Set(WORLD_CITIES.map((c) => c.id));

@@ -5,7 +5,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { openSlot, quickSave } from '@/engine';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
-import { LocalSaveAdapter } from '@/engine/persistence/local';
+import { LOCAL_STORE, LocalSaveAdapter, movingStore } from '@/engine/persistence/local';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 
 class MemoryStorage implements Storage {
@@ -220,14 +220,14 @@ describe('opening a slot', () => {
     const sim = quickSave({}, 'same-number');
     const slot = sim.universe.meta.slot;
     sim.universe.meta.schemaVersion = SAVE_SCHEMA_VERSION;
-    delete (sim.universe as unknown as Record<string, unknown>).history;
+    delete (sim.universe as unknown as Record<string, unknown>).notifications;
     await adapter.save(sim.universe);
 
     const opened = await openSlot(adapter, slot);
     if ('error' in opened) throw new Error(opened.error);
-    expect(opened.migration.steps).toContain('Created the history.');
-    expect(opened.universe.history).toEqual([]);
-    expect((await adapter.load(slot))!.history).toEqual([]);
+    expect(opened.migration.steps).toContain('Created the notifications.');
+    expect(opened.universe.notifications).toEqual([]);
+    expect((await adapter.load(slot))!.notifications).toEqual([]);
   });
 
   it('opens a current save without writing it again', async () => {
@@ -251,5 +251,39 @@ describe('opening a slot', () => {
     await adapter.save(sim.universe);
     const opened = await openSlot(adapter, sim.universe.meta.slot);
     expect('error' in opened && opened.error).toMatch(/newer version of SLATE/);
+  });
+});
+
+describe('where saves are kept', () => {
+  /** A store in memory, standing in for IndexedDB. */
+  const memoryStore = () => {
+    const map = new Map<string, string>();
+    return { map, store: { getItem: async (k: string) => map.get(k) ?? null, setItem: async (k: string, v: string) => { map.set(k, v); }, removeItem: async (k: string) => { map.delete(k); } } };
+  };
+  let legacy: MemoryStorage;
+  beforeEach(() => {
+    legacy = new MemoryStorage();
+    Object.defineProperty(globalThis, 'localStorage', { value: legacy, configurable: true, writable: true });
+  });
+  afterEach(() => {
+    Reflect.deleteProperty(globalThis, 'localStorage');
+  });
+
+  it('moves a save still in local storage across the first time it is read, and keeps new saves out of local storage', async () => {
+    // Until 2026-09-28 saves lived in local storage, where two long lives no longer fit.
+    const old = new LocalSaveAdapter(LOCAL_STORE);
+    await old.save(quickSave({}, 'moving').universe);
+    expect(legacy.getItem('slate.save.1')).not.toBeNull();
+    const primary = memoryStore();
+    const adapter = new LocalSaveAdapter(movingStore(primary.store, LOCAL_STORE));
+    const loaded = await adapter.load(1);
+    expect(loaded?.meta.slot).toBe(1);
+    expect(primary.map.has('slate.save.1')).toBe(true);
+    expect(legacy.getItem('slate.save.1')).toBeNull();
+    await adapter.save(loaded!);
+    expect(legacy.getItem('slate.save.1')).toBeNull();
+    expect(primary.map.has('slate.backup.1')).toBe(true);
+    await adapter.remove(1);
+    expect(primary.map.has('slate.save.1')).toBe(false);
   });
 });

@@ -262,11 +262,23 @@ describe('the form and the engine agree about what a plan has', () => {
     // the commitment while the player was standing in front of the question
     // about it, so pressing Don't Go answered "that's already settled".
     const CONTEXT = readFileSync(new URL('../src/app/game-context.tsx', import.meta.url), 'utf8');
-    const tick = CONTEXT.indexOf('setInterval');
+    const tick = CONTEXT.indexOf('const tick = () =>');
     expect(tick, 'the live clock is gone').toBeGreaterThan(-1);
-    const loop = CONTEXT.slice(tick, CONTEXT.indexOf('}, TICK_MS)', tick));
+    const loop = CONTEXT.slice(tick, CONTEXT.indexOf('setInterval(tick, TICK_MS)', tick));
     expect(loop, 'the live clock runs over what wants you').toContain('stopOnPlayerRequired: true');
     expect(loop, 'the live clock does not halt').toContain('halt(');
+  });
+
+  it('keeps the live clock to the wall clock, and catches up the moment the page is back', () => {
+    // performance.now() stops while a phone is locked or a machine sleeps,
+    // and the world fell behind real life by every minute of it.
+    const CONTEXT = readFileSync(new URL('../src/app/game-context.tsx', import.meta.url), 'utf8');
+    const tick = CONTEXT.indexOf('const tick = () =>');
+    const loop = CONTEXT.slice(tick, CONTEXT.indexOf('setInterval(tick, TICK_MS)', tick));
+    expect(loop, 'the world is timed by the page, not the wall').toContain('const wall = realNow()');
+    expect(loop).toContain('const elapsed = Math.max(0, wall - lastWall)');
+    expect(loop).toContain('stepper.feed(elapsed)');
+    expect(CONTEXT, 'a page back on screen waits for the next throttled tick').toContain("document.addEventListener('visibilitychange', shown)");
   });
 });
 

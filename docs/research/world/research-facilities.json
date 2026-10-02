@@ -1,0 +1,751 @@
+{
+  "meta": {
+    "title": "SLATE research: backyard/property facilities, room finishes, beds, permits, maintenance",
+    "retrieved": "2026-10-01",
+    "currency_note": "Figures are in the currency of the source market (USD unless marked GBP, EUR, CAD, MXN). Nothing has been converted.",
+    "method": "WebSearch + WebFetch. Each figure carries its source URL and a 'via' field: 'page' means the page itself was fetched and the figure read from it; 'search_summary' means the page blocked fetching (HomeGuide, Angi, Checkatrade, MyBuilder, HomeStars, Liverpool all returned HTTP 403) and the figure comes from the search engine's summary of the listed results, so it should be re-checked against the page before being treated as exact. Search summaries sometimes merge several results; where the summary did not make clear which listed page a figure came from, 'source' names the most likely page and 'note' says so.",
+    "reliability_rules": "No number was invented. Where a figure could not be found or verified it is null with a note. Retailer prices are a snapshot on the retrieval date and many were sale prices during September 2026 promotions; both sale and regular prices are kept where given.",
+    "slate_context": {
+      "file": "src/engine/content/homes.ts",
+      "observed": "Pool renovation 'pool' at usd 65_000 (60 days, lot 6_000); 'pool-renew' at usd 20_000; 'adu' (Backyard Cottage) at usd 162_000; decks 18_000 / 25_000. The 2026 sources below put a typical US in-ground pool around $66,000 average installed (search_summary, homeguide) which agrees with SLATE's 65_000."
+    },
+    "known_gaps": [
+      "HomeGuide, Angi, Checkatrade, MyBuilder and HomeStars block fetching; their figures are search_summary only.",
+      "No Irish (euro) installed-cost figures found for tennis courts, sports courts, putting greens, saunas, gyms or theaters. Only a 2016 Selfbuild.ie pool figure.",
+      "No Canadian installed-cost figures found for courts; Ontario pool figures only.",
+      "No Mexican installed-cost figures for any facility.",
+      "Ireland: exempted-development status of swimming pools and tennis/games courts not found in the 2001 Schedule 2 summaries or the July 2026 amendments; treated as null.",
+      "CDMX: Article 62 of the Reglamento de Construcciones (works not requiring manifestación) could not be read (PDF unreadable); pool status null.",
+      "Permit fees: only Toronto (unverified range) and CDMX (manifestación ranges) found; NYC, LA, New Haven, Vancouver fees not found as published figures.",
+      "Basketball half court official dimension: no governing body defines a 'half court'; half of NBA = 47x50 ft, half of FIBA = 14x15 m (arithmetic from full-court rules, flagged as derived).",
+      "Sleep Country Canada listing did not state the mattress size each price refers to."
+    ]
+  },
+
+  "facilities": {
+    "tennis_court": {
+      "dimensions": {
+        "doubles_ft": [78, 36],
+        "singles_ft": [78, 27],
+        "metric_m": [23.77, 10.97],
+        "recommended_total_area_ft": { "international_competition": [120, 60], "recreational_club": [114, 56] },
+        "run_back_ft_min": 21,
+        "run_off_side_ft_min": 12,
+        "governing_body": "ITF Rules of Tennis (court); ITF construction guidance (run-off is a recommendation, not part of the court)",
+        "sources": [
+          { "url": "https://pacecourt.com/tennis-court-size-in-feet-complete-dimensions-markings-layout-guide-2026/", "via": "search_summary", "date": "2026-10-01" },
+          { "url": "https://www.luckinpadel.com/blog/size-of-tennis-court-key-factors-to-consider-for-installation933", "via": "search_summary", "date": "2026-10-01" }
+        ],
+        "note": "78x36 ft / 23.77x10.97 m are the ITF Rules of Tennis figures; the run-off figures come from secondary guides citing ITF, not from an ITF document fetched here."
+      },
+      "surfaces": ["acrylic hard court on asphalt or post-tensioned concrete", "clay / Har-Tru (fast-dry)", "natural grass", "synthetic (artificial) grass", "rubber/cushioned acrylic", "porous macadam (UK)"],
+      "drainage": {
+        "slope": "Hard courts slope in one plane (side-to-side, end-to-end or corner-to-corner) at minimum 1 in in 10 ft (0.833%) and maximum 1%.",
+        "source": { "url": "https://pickletile.com/tennis-court-drainage/", "via": "search_summary", "date": "2026-10-01" },
+        "note": "Attributed to ASBA/USTA guidance by secondary sources; the ASBA manual itself is a paid publication and was not read. UK guidance favours porous surfaces (LTA porous court guidance note: https://www.lta.org.uk/4ad170/siteassets/about-lta/file/court-surfaces-guidance.pdf, not fetched)."
+      },
+      "lighting": {
+        "illuminance": { "class_I_professional_fc": 125, "class_II_college_fc": 50, "class_III_high_school_private_club_fc": 30, "class_IV_recreational_fc": 20 },
+        "note": "USTA/IES classes as summarised by search; the summary printed Class III as '30 lux', which is a unit error (30 fc is about 300 lux).",
+        "source": { "url": "https://sportlightsupply.com/ies-usta-standards-for-tennis-court-lighting/", "via": "search_summary", "date": "2026-10-01" },
+        "installed_cost_usd": {
+          "fixr_lighting_line_item": [2000, 5000],
+          "fixr_source": { "url": "https://www.fixr.com/costs/tennis-court-installation", "via": "page", "date": "2026-10-01" },
+          "commercial_led_system_per_court": [20000, 80000],
+          "commercial_source": { "url": "https://sportsvenuecalculator.com/knowledge/led-sports-lighting/how-much-does-led-tennis-court-lighting-cost/", "via": "search_summary", "date": "2026-10-01" },
+          "note": "Fixr's $2,000-$5,000 is a residential add-on line; full 4- or 6-pole LED systems to USTA levels are priced by lighting vendors far higher. The two are not the same product."
+        }
+      },
+      "installed_cost": {
+        "US_fixr": {
+          "total_usd_average": [45000, 80000],
+          "budget_min_usd": 25000,
+          "high_end_indoor_usd": 150000,
+          "by_surface_usd": {
+            "grass": [20000, 75000],
+            "synthetic_grass": [25000, 80000],
+            "asphalt": [40000, 80000],
+            "concrete": [45000, 80000],
+            "clay": [60000, 90000],
+            "acrylic": [65000, 100000],
+            "rubber": [75000, 100000]
+          },
+          "by_size_usd": { "singles_130x55ft": [45000, 80000], "doubles_130x70ft": [65000, 90000] },
+          "add_ons_usd": { "lighting": [2000, 5000], "fencing": [5000, 12000], "backboard": [5000, 10000], "net": [200, 300], "line_paint": [300, 600], "seating": [200, 2000], "landscaping": [500, 2500] },
+          "labor_usd": [30000, 35000],
+          "materials_usd": [10000, 50000],
+          "source": { "url": "https://www.fixr.com/costs/tennis-court-installation", "via": "page", "date": "2026-10-01" }
+        },
+        "US_homeguide": {
+          "per_sqft_usd": [5, 14],
+          "total_usd": [40000, 100000],
+          "range_extremes": "from $25,000 (clay) up to $115,000 (concrete)",
+          "per_sqft_by_layer_usd": { "clay_har_tru": [2.5, 9.5], "asphalt_paving": [5, 12], "concrete_slab": [5, 10], "artificial_grass": [10, 25], "acrylic_surface": [1, 3], "acrylic_with_rubberized_layers_max": 8 },
+          "source": { "url": "https://homeguide.com/costs/tennis-court-cost", "via": "search_summary", "date": "2026-10-01" }
+        },
+        "UK": {
+          "lta_block_of_4_courts_gbp": { "acrylic_clay": 200000, "porous_asphalt": 150000, "artificial_grass": 175000, "impervious_acrylic": 175000 },
+          "lta_note": "LTA lists these for a 4-court block; per-court figure would be roughly a quarter but the LTA page does not state a per-court figure, so none is given.",
+          "lta_source": { "url": "https://www.lta.org.uk/support-centre/venue-support/facilities-and-funding/facilities-support/how-much-does-it-cost-to-build-or-renovate-a-tennis-court/", "via": "page", "date": "2026-10-01" },
+          "checkatrade_average_gbp": 45000,
+          "checkatrade_by_product_gbp": { "pladek": 38500, "sporturf": 49500, "tenniturf": 49500 },
+          "checkatrade_source": { "url": "https://www.checkatrade.com/blog/cost-guides/cost-build-tennis-court/", "via": "search_summary", "date": "2026-10-01" },
+          "porous_macadam_gbp": [35000, 45000],
+          "artificial_grass_gbp": [50000, 60000],
+          "contractor_source": { "url": "https://www.allcourts.co.uk/news/how-much-does-it-cost-to-build-a-tennis-court/", "via": "search_summary", "date": "2026-10-01", "note": "Search summary did not make clear which of allcourts / edwardssports gave which range." }
+        },
+        "Ireland": null,
+        "Canada": null,
+        "Mexico": null
+      },
+      "annual_maintenance": { "usd": 1800, "source": { "url": "https://www.fixr.com/costs/tennis-court-installation", "via": "page", "date": "2026-10-01" } }
+    },
+
+    "pickleball_court": {
+      "dimensions": {
+        "court_ft": [20, 44],
+        "court_m": [6.10, 13.41],
+        "non_volley_zone_ft": 7,
+        "recommended_min_play_area_ft": [30, 60],
+        "orientation": "north-south outdoors",
+        "sources": [
+          { "url": "https://usapickleball.org/construction/", "via": "page", "date": "2026-10-01", "note": "Page gives 20x44 ft, 7 ft NVZ and north-south orientation; the 30x60 ft play area is from the USA Pickleball rulebook as summarised by search (pickleheads.com), not on this page." },
+          { "url": "https://www.pickleheads.com/blog/dimensions-of-a-pickleball-court", "via": "search_summary", "date": "2026-10-01" }
+        ]
+      },
+      "surfaces": ["acrylic over post-tensioned concrete", "acrylic over asphalt", "modular polypropylene tiles"],
+      "installed_cost": {
+        "US_homeguide": {
+          "per_sqft_usd": [11, 28],
+          "basis": "concrete pad topped with colored acrylic",
+          "source": { "url": "https://homeguide.com/costs/pickleball-court-cost", "via": "search_summary", "date": "2026-10-01" }
+        },
+        "US_angi": {
+          "total_usd": [20000, 50000],
+          "average_usd": 34000,
+          "source": { "url": "https://www.angi.com/articles/how-much-does-it-cost-to-build-a-pickleball-court.htm", "via": "search_summary", "date": "2026-10-01", "note": "Search summary did not name which listed page gave $20k-$50k/$34k; Angi is the most likely." }
+        },
+        "base_only_usd": { "concrete_per_sqft": [5, 10], "concrete_total": [9000, 18000], "asphalt_per_sqft": [3, 7], "asphalt_total": [5400, 12600], "source": { "url": "https://pickleballus.org/court/build/cost/", "via": "search_summary", "date": "2026-10-01" } },
+        "Ireland": null, "UK": null, "Canada": null, "Mexico": null
+      },
+      "lighting": null,
+      "annual_maintenance": null,
+      "resurfacing": { "per_court_recoat_usd": [5000, 12000], "with_crack_repair_usd": [8000, 15000], "interval_years": "3-5 (heavy use) to 5-8 (colour coat and restripe)", "source": { "url": "https://pickletile.com/pickleball-court-resurfacing/", "via": "search_summary", "date": "2026-10-01" } }
+    },
+
+    "basketball_court": {
+      "dimensions": {
+        "NBA_full_ft": [94, 50],
+        "NBA_full_m": [28.65, 15.24],
+        "FIBA_full_m": [28, 15],
+        "NCAA_high_school_full_ft_fixr": [84, 50],
+        "junior_full_ft_fixr": [74, 42],
+        "three_point": { "NBA_top_ft_in": "23'9\" (7.24 m)", "NBA_corner_ft": 22, "FIBA_m": 6.75 },
+        "half_court": {
+          "fixr_professional_ft": [47, 50],
+          "fixr_high_school_ft": [42, 50],
+          "fixr_junior_high_ft": [37, 42],
+          "homeguide_backyard_example_ft": [30, 30],
+          "note": "No governing body defines a half court; 47x50 ft is half an NBA court, 14x15 m is half a FIBA court (derived arithmetic)."
+        },
+        "sources": [
+          { "url": "https://en.wikipedia.org/wiki/Basketball_court", "via": "search_summary", "date": "2026-10-01" },
+          { "url": "https://www.fixr.com/costs/basketball-court-installation", "via": "page", "date": "2026-10-01" }
+        ]
+      },
+      "surfaces_per_sqft_installed_usd_fixr": { "vinyl": [2, 14], "asphalt": [4, 18], "concrete": [4, 20], "hardwood": [4.25, 26], "rubber": [5, 12], "laminate": [6, 14], "tiles": [8, 14] },
+      "installed_cost": {
+        "US_fixr": {
+          "half_court_usd": [15500, 40000],
+          "full_court_usd": [31000, 80000],
+          "national_average_usd": [30000, 60000],
+          "typical_usd": 46650,
+          "hoops_usd": { "portable": [140, 1800], "mounted": [200, 2100], "in_ground": [400, 3600] },
+          "lighting_usd": [2000, 4000],
+          "line_painting_usd": [200, 2000],
+          "source": { "url": "https://www.fixr.com/costs/basketball-court-installation", "via": "page", "date": "2026-10-01" }
+        },
+        "US_homeguide": {
+          "half_court_30x30_usd": [3600, 14400],
+          "per_sqft_usd": [4, 16],
+          "full_court_usd": [12400, 75200],
+          "source": { "url": "https://homeguide.com/costs/backyard-basketball-court-cost", "via": "search_summary", "date": "2026-10-01" }
+        },
+        "Ireland": null, "UK": null, "Canada": null, "Mexico": null
+      },
+      "drainage": "Same plane-slope practice as tennis/pickleball acrylic courts (see tennis_court.drainage).",
+      "resurfacing": { "rubberized_interval_years": [6, 8], "source": { "url": "https://www.fixr.com/costs/basketball-court-installation", "via": "page", "date": "2026-10-01" } }
+    },
+
+    "sport_futsal_court": {
+      "dimensions": {
+        "futsal_non_international_m": { "length": [25, 42], "width": [16, 25] },
+        "futsal_international_m": { "length": [38, 42], "width": [20, 25] },
+        "goal_m": [3, 2],
+        "line_width_cm": 8,
+        "surface_rule": "flat, smooth and non-abrasive, preferably wood or artificial material; concrete or tarmac should be avoided",
+        "source": { "url": "https://www.thefa.com/football-rules-governance/lawsandrules/laws/futsal/law-1---the-pitch", "via": "page", "date": "2026-10-01" },
+        "note": "40x20 m (the brief's '5-a-side' size) is a legal futsal pitch at both levels."
+      },
+      "installed_cost": {
+        "US_homeguide_sport_court_page": { "url": "https://homeguide.com/costs/sport-court-cost", "via": "blocked", "value": null, "note": "Page exists but returned 403 and search summary gave no figure." },
+        "modular_tile_per_sqft_usd_fixr": [8, 14],
+        "modular_tile_source": { "url": "https://www.fixr.com/costs/basketball-court-installation", "via": "page", "date": "2026-10-01", "note": "Fixr 'tiles' line on its basketball page, the nearest published figure for a multi-sport tile court." }
+      }
+    },
+
+    "soccer_field": {
+      "dimensions": {
+        "laws_of_the_game_general_m": { "length": [90, 120], "width": [45, 90] },
+        "international_m": { "length": [100, 110], "width": [64, 75] },
+        "fifa_recommended_m": [105, 68],
+        "fa_5v5_youth_yd": [40, 30],
+        "fa_5v5_youth_m": [36.58, 27.43],
+        "small_sided_5_a_side_commercial_m": [40, 20],
+        "sources": [
+          { "url": "https://en.wikipedia.org/wiki/Football_pitch", "via": "search_summary", "date": "2026-10-01" },
+          { "url": "https://www.harrodsport.com/advice-and-guides/football-pitch-dimensions-guide", "via": "search_summary", "date": "2026-10-01" }
+        ],
+        "note": "IFAB Law 1 ranges as summarised (the IFAB text itself also gives the international ranges in the table above). FA guidance for 5v5 is 40x30 yd, not 40x20 m; 40x20 m is the common commercial cage size and lies inside futsal's legal range. No governing body publishes 40x20 m as a 5-a-side standard; field kept for the brief's figure with this caveat."
+      },
+      "surfaces": ["natural grass (sod/seed)", "artificial turf with sand/rubber infill", "artificial turf without infill (small-sided)"],
+      "installed_cost": {
+        "artificial_turf_per_sqft_usd": [6.5, 15.0],
+        "residential_backyard_per_sqft_usd": [10, 15],
+        "small_project_under_400sqft_per_sqft_usd": [17, 25],
+        "drainage_base_per_sqft_usd": 4,
+        "source": { "url": "https://www.mightygrass.com/how-much-does-it-cost-to-install-artificial-turf/", "via": "search_summary", "date": "2026-10-01", "note": "Search summary merged several turf vendors (mightygrass, texas-tuff, aglgrass); verify per page." },
+        "natural_grass": null,
+        "Ireland": null, "UK": null, "Canada": null, "Mexico": null
+      },
+      "irrigation": "See facilities.irrigation."
+    },
+
+    "putting_green": {
+      "dimensions": "No governing-body size; sized to yard. Cost bands by size below.",
+      "installed_cost": {
+        "per_sqft_usd": [15, 40],
+        "small_100_400sqft": { "per_sqft_usd": [25, 40], "total_usd": [2500, 16000] },
+        "medium_401_2000sqft": { "per_sqft_usd": [20, 30], "total_usd": [8000, 60000] },
+        "large_2001_3000sqft": { "per_sqft_usd": [15, 25], "total_usd": [30000, 75000] },
+        "diy_kit_per_sqft_usd": [5, 20],
+        "source": { "url": "https://homeguide.com/costs/backyard-putting-green-cost", "via": "search_summary", "date": "2026-10-01", "note": "The size bands may come from a vendor page in the same result set (texas-tuff.com)." }
+      },
+      "annual_maintenance_usd": [250, 550],
+      "lifespan_years": [10, 20],
+      "maintenance_source": { "url": "https://www.lawnlogicturf.com/blog/backyard-putting-green-roi-cost-lifespan-value", "via": "search_summary", "date": "2026-10-01", "note": "Merged vendor sources; low confidence." }
+    },
+
+    "swimming_pool": {
+      "slate_current": { "pool_usd": 65000, "pool_renew_usd": 20000, "file": "src/engine/content/homes.ts" },
+      "US": {
+        "per_sqft_by_material_usd": { "vinyl": [130, 240], "fiberglass": [175, 330], "concrete": [200, 350] },
+        "per_sqft_material_source": { "url": "https://www.thisoldhouse.com/home-finances/inground-pool-cost", "via": "search_summary", "date": "2026-10-01", "note": "Search summary did not say which listed page gave these per-sqft bands." },
+        "per_sqft_overall_usd": [80, 250],
+        "total_usd": [25000, 100000],
+        "average_usd": 66000,
+        "by_material_total_usd": { "vinyl": [35000, 80000], "fiberglass": [45000, 100000], "concrete": [50000, 120000] },
+        "overall_source": { "url": "https://homeguide.com/costs/inground-pool-cost", "via": "search_summary", "date": "2026-10-01" },
+        "example_12x24ft_usd": { "vinyl": [25000, 40000], "fiberglass": [40000, 55000], "concrete": [50000, 70000] },
+        "note": "Pool-only, excluding decking and fencing."
+      },
+      "UK": {
+        "inground_fibreglass_gbp": [50000, 85000],
+        "inground_concrete_gbp": [60000, 110000],
+        "liner_8x4m_gbp": [15000, 35000],
+        "concrete_8x4m_gbp": [30000, 80000],
+        "average_outdoor_gbp": 135000,
+        "average_indoor_gbp": 152500,
+        "chemicals_per_year_gbp": 650,
+        "maintenance_per_month_gbp": [80, 250],
+        "source": { "url": "https://www.checkatrade.com/blog/cost-guides/swimming-pool-cost/", "via": "search_summary", "date": "2026-10-01", "note": "Summary merged Checkatrade with other UK guides (costwiseuk, myjobquote); the £135,000/£152,500 averages are the Checkatrade-attributed ones." }
+      },
+      "Ireland": {
+        "outdoor_from_eur": 35000,
+        "indoor_budget_incl_building_eur": 70000,
+        "source": { "url": "https://selfbuild.ie/advice/splashing-out-on-a-swimming-pool/", "via": "page", "date": "2026-10-01", "published": "2016-08-18" },
+        "note": "Ten years old; no current Irish figure found."
+      },
+      "Canada_Ontario": {
+        "vinyl_cad": [55000, 110000],
+        "fiberglass_cad": [65000, 120000],
+        "concrete_cad": [100000, 250000],
+        "gta_vinyl_cad": [50000, 80000],
+        "gta_fiberglass_cad": [60000, 95000],
+        "gta_concrete_cad": [85000, 150000],
+        "liner_replacement_cad": [3500, 7000],
+        "liner_interval_years": [8, 12],
+        "source": { "url": "https://www.homestars.com/gardening-outdoors/price-guides/inground-pool-cost", "via": "search_summary", "date": "2026-10-01", "note": "Summary merged HomeStars with Ontario pool-builder pages (actionhomeservices.ca, torontopool.ca); low confidence on attribution." }
+      },
+      "Mexico": null,
+      "barrier": "See permits.pool_barrier_rules."
+    },
+
+    "hot_tub": {
+      "installed_cost_usd": {
+        "typical_project": [3500, 16000],
+        "national_average": 8500,
+        "above_ground_install_labor": [150, 500],
+        "in_ground_average": 15000,
+        "in_ground_high": 35000,
+        "electrical_circuit": [800, 1600],
+        "sources": [
+          { "url": "https://homeguide.com/costs/hot-tub-installation-cost", "via": "search_summary", "date": "2026-10-01" },
+          { "url": "https://www.angi.com/articles/in-ground-hot-tub-cost.htm", "via": "search_summary", "date": "2026-10-01", "note": "In-ground $15,000 average / $35,000+ attributed to Angi." }
+        ]
+      },
+      "Ireland_hot_tub_from_eur": [4000, 5000],
+      "Ireland_source": { "url": "https://selfbuild.ie/advice/splashing-out-on-a-swimming-pool/", "via": "page", "date": "2026-10-01", "published": "2016-08-18" },
+      "annual_running_usd": { "energy": [240, 720], "chemicals": [100, 250], "filter_each": [20, 120], "filter_interval_years": [1, 2], "source": { "url": "https://homeguide.com/costs/cost-to-run-a-hot-tub", "via": "search_summary", "date": "2026-10-01" } }
+    },
+
+    "home_gym_room": {
+      "rubber_flooring": { "materials_per_sqft_usd": [3, 8], "installed_per_sqft_usd": [5, 10], "typical_150_200sqft_usd": [700, 2000], "source": { "url": "https://www.garagegymreviews.com/best-home-gym-flooring", "via": "search_summary", "date": "2026-10-01", "note": "Attribution within merged summary uncertain." } },
+      "conversion_usd": { "spare_room": [2000, 8000], "full_garage_or_basement_with_electrical_hvac": [20000, 40000], "source": { "url": "https://askdoss.com/home-gym-cost-equipment-flooring-and-setup-guide/", "via": "search_summary", "date": "2026-10-01", "note": "Low-authority source; no Angi/HomeGuide figure found." } },
+      "UK_garden_gym_gbp": { "garden_room_per_m2": [1200, 2500], "garden_gym_20m2": [24000, 32000], "source": { "url": "https://www.mybuilder.com/conservatories/price-guides/garden-room-cost", "via": "search_summary", "date": "2026-10-01", "note": "Summary merged MyBuilder with garden-room vendors." } }
+    },
+
+    "home_theater_room": {
+      "per_sqft_usd": [100, 250],
+      "average_usd": 25000,
+      "typical_usd": [10000, 60000],
+      "by_size_usd": { "100_200sqft": [2000, 5000], "200_400sqft": [5000, 20000], "400_800sqft": [15000, 50000], "800plus_sqft": [30000, 100000] },
+      "source": { "url": "https://www.angi.com/articles/home-theater-installation-cost.htm", "via": "search_summary", "date": "2026-10-01", "note": "Average and typical range attributed to Angi; size bands may be from a vendor in the same result set." }
+    },
+
+    "recording_rehearsal_studio": {
+      "soundproofing_per_sqft_usd": [10, 30],
+      "soundproofing_room_usd": [1400, 4300],
+      "acoustic_panels_material_per_sqft_usd": [2, 17],
+      "source": { "url": "https://homeguide.com/costs/cost-to-soundproof-a-room", "via": "search_summary", "date": "2026-10-01" },
+      "note": "This is soundproofing of an existing room. A decoupled room-within-a-room studio build was not priced by any consumer cost guide found; null."
+    },
+
+    "dance_studio_floor": {
+      "sprung_floor_installed_per_sqft_usd": [8, 15],
+      "permanent_floor_per_sqft_usd": [10, 13],
+      "all_purpose_system_avg_per_sqft_usd": 8.5,
+      "marley_surface_per_sqft_usd": [2, 5],
+      "diy_floating_subfloor_per_sqft_usd": 2.5,
+      "sources": [
+        { "url": "https://www.greatmats.com/sprung-dance-floor.php", "via": "search_summary", "date": "2026-10-01" },
+        { "url": "https://www.danceinforma.com/2020/12/02/professional-and-home-dance-floors-whats-the-cost/", "via": "search_summary", "date": "2026-10-01", "note": "2020 article." }
+      ]
+    },
+
+    "library": {
+      "built_in_shelving_per_linear_ft_usd": { "overall": [150, 1200], "premade_installed": [150, 300], "fully_custom": [400, 1200], "custom_hardwood": [500, 1000], "plywood": [150, 400], "hardwood_veneer_premium": [700, 1200] },
+      "average_project_usd": 3069,
+      "typical_project_usd": [1399, 4874],
+      "sources": [
+        { "url": "https://homeguide.com/costs/built-in-bookshelves-cost", "via": "search_summary", "date": "2026-10-01" },
+        { "url": "https://www.angi.com/articles/how-much-do-built-bookshelves-cost.htm", "via": "search_summary", "date": "2026-10-01", "note": "The $3,069 average / $1,399-$4,874 range is Angi's format." }
+      ]
+    },
+
+    "walk_in_closet": {
+      "per_linear_ft_usd_fixr": { "laminate": [125, 150], "melamine": [135, 175], "mdf": [140, 240], "plywood": [150, 500], "cedar": [200, 500], "natural_wood_veneer": [200, 1200] },
+      "walk_in_50_100sqft_usd_fixr": [5000, 10000],
+      "fixr_source": { "url": "https://www.fixr.com/costs/custom-closet-installation", "via": "page", "date": "2026-10-01" },
+      "angi_walk_in_usd": [1140, 9090],
+      "angi_source": { "url": "https://www.angi.com/articles/how-much-do-custom-closets-cost.htm", "via": "search_summary", "date": "2026-10-01" }
+    },
+
+    "sauna": {
+      "installed_usd": [3000, 10000],
+      "indoor_usd": [3000, 9000],
+      "outdoor_usd": [3000, 6000],
+      "labor_only_usd": [300, 2500],
+      "prefab_infrared_kit_usd": [1000, 1500],
+      "sources": [
+        { "url": "https://www.angi.com/articles/home-sauna-cost.htm", "via": "search_summary", "date": "2026-10-01" },
+        { "url": "https://homeguide.com/costs/sauna-cost", "via": "search_summary", "date": "2026-10-01" }
+      ]
+    },
+
+    "guesthouse": {
+      "per_sqft_usd": { "new_detached": [110, 250], "custom": [150, 250], "modular": [80, 160], "conversion": [20, 200] },
+      "examples_usd": { "400sqft": [55000, 110000], "600sqft_custom": [90000, 150000], "800sqft": [115000, 210000] },
+      "source": { "url": "https://homeguide.com/costs/cost-to-build-a-guest-house", "via": "search_summary", "date": "2026-10-01" },
+      "slate_compare": "SLATE 'adu' Backyard Cottage at 162_000 USD sits inside the 800 sq ft band."
+    },
+
+    "outdoor_court_lighting": {
+      "residential_line_item_usd": { "tennis_fixr": [2000, 5000], "basketball_fixr": [2000, 4000] },
+      "sources": [
+        { "url": "https://www.fixr.com/costs/tennis-court-installation", "via": "page", "date": "2026-10-01" },
+        { "url": "https://www.fixr.com/costs/basketball-court-installation", "via": "page", "date": "2026-10-01" }
+      ],
+      "full_led_pole_system_per_court_usd": [20000, 80000],
+      "full_system_source": { "url": "https://sportsvenuecalculator.com/knowledge/led-sports-lighting/how-much-does-led-tennis-court-lighting-cost/", "via": "search_summary", "date": "2026-10-01", "note": "Vendor calculator; other vendor figures in the same results ran to $218,606 per court. Low confidence." },
+      "planning_note": "England: floodlights are not listed in the Class E/Part 2 summaries found; treat as needing planning permission (unverified, null)."
+    },
+
+    "irrigation": {
+      "per_zone_usd": [590, 1340],
+      "per_zone_alt_usd": [600, 2000],
+      "per_sqft_usd": [0.88, 1.65],
+      "quarter_acre_total_usd": [3000, 10000],
+      "quarter_acre_zones": [4, 7],
+      "per_acre_usd": [8000, 20000],
+      "sources": [
+        { "url": "https://homeguide.com/costs/sprinkler-system-install-cost", "via": "search_summary", "date": "2026-10-01" },
+        { "url": "https://lawnlove.com/blog/sprinkler-system-cost/", "via": "search_summary", "date": "2026-10-01" }
+      ]
+    }
+  },
+
+  "rooms": {
+    "flooring_installed_per_sqft_usd": {
+      "hardwood": { "range": [14, 32], "labor_only": [3, 6], "materials_only": { "pine": [1.25, 2.10], "red_oak": [3, 5.75], "white_oak": [3.75, 7], "maple": [6.25, 10], "walnut": [8.25, 10.5], "teak": [8.75, 12.5] }, "source": { "url": "https://www.fixr.com/costs/hardwood-floor-installation", "via": "page", "date": "2026-10-01" } },
+      "lvp": { "range": [3, 16], "most_projects": [5, 12], "materials_only": [1.5, 10], "labor_only": [1.5, 6], "source": { "url": "https://www.fixr.com/costs/luxury-vinyl-plank-flooring", "via": "page", "date": "2026-10-01" } },
+      "tile": { "range": [8, 14], "average_200sqft_porcelain_total_usd": 3500, "materials_only": [1, 200], "source": { "url": "https://www.fixr.com/costs/install-tile-floor", "via": "page", "date": "2026-10-01" } },
+      "carpet": { "range": [1.36, 13.58], "national_average": 7.47, "materials_only": [1.11, 12.60], "padding": [0.35, 1.14], "labor": [0.74, 1.17], "source": { "url": "https://www.fixr.com/costs/carpet-installation", "via": "search_summary", "date": "2026-10-01" } },
+      "gym_rubber": "See facilities.home_gym_room.",
+      "sprung_dance": "See facilities.dance_studio_floor."
+    },
+    "wall_finishes": {
+      "paint_per_sqft_usd": { "walls_only": [1.5, 3.5], "walls_ceiling_trim": [3, 4] },
+      "paint_room_usd": { "national_average": 1200, "range": [990, 1320], "100sqft": [300, 400], "200sqft": [600, 800], "400sqft": [1200, 1600] },
+      "paint_source": { "url": "https://www.fixr.com/costs/paint-room", "via": "page", "date": "2026-10-01" },
+      "wallpaper_per_sqft_installed_usd": [3.7, 8.2],
+      "wallpaper_per_roll_hung_usd": [90, 150],
+      "wallpaper_material_per_roll_usd": { "peel_and_stick": [20, 45], "prepasted": [20, 80], "printed": [30, 50], "water_resistant": [45, 75], "textured": [50, 125], "embossed": [70, 105], "mylar": [80, 230] },
+      "wallpaper_source": { "url": "https://www.fixr.com/costs/wallpaper-installation", "via": "page", "date": "2026-10-01" }
+    },
+    "countertops_installed_per_sqft_usd": {
+      "granite": { "material_range": [40, 200], "exotic_max": 400, "install_avg": 30, "project_30sqft_avg_usd": 3500, "project_range_usd": [2500, 5000], "source": { "url": "https://www.fixr.com/costs/install-granite-countertop", "via": "page", "date": "2026-10-01" } },
+      "quartz": { "range": [50, 200], "project_35sqft_avg_usd": 3500, "project_range_usd": [2600, 4400], "source": { "url": "https://www.fixr.com/costs/install-quartz-countertop", "via": "page", "date": "2026-10-01" } },
+      "laminate": { "range": [15, 60], "average": 30, "project_35sqft_avg_usd": 1050, "project_range_usd": [525, 2100], "source": { "url": "https://www.fixr.com/costs/install-laminate-countertop", "via": "page", "date": "2026-10-01" } }
+    },
+    "cabinets_per_linear_ft_usd": {
+      "stock": [100, 300],
+      "semi_custom": [150, 650],
+      "custom": [500, 1200],
+      "install_labor": [50, 200],
+      "labor_share_of_total": "30%-50%",
+      "source": { "url": "https://www.fixr.com/costs/cabinets-installation", "via": "page", "date": "2026-10-01" }
+    },
+    "lighting_fixtures_usd": {
+      "recessed_existing_ceiling_per_light": [125, 300],
+      "recessed_new_construction_per_light": [65, 175],
+      "recessed_typical_per_fixture": 180,
+      "recessed_source": { "url": "https://homeguide.com/costs/cost-to-install-recessed-lighting", "via": "search_summary", "date": "2026-10-01" },
+      "chandelier_replace_existing": [100, 200],
+      "chandelier_new_location": [220, 3400],
+      "chandelier_source": { "url": "https://homeguide.com/costs/lighting-fixture-installation-cost", "via": "search_summary", "date": "2026-10-01", "note": "Summary merged several pages; attribution uncertain." }
+    },
+    "built_in_shelving_per_linear_ft_usd": "See facilities.library.built_in_shelving_per_linear_ft_usd.",
+    "closet_systems_per_linear_ft_usd": "See facilities.walk_in_closet."
+  },
+
+  "beds": {
+    "sizes": {
+      "US": {
+        "standard_body": "International Sleep Products Association (per secondary source)",
+        "inches": { "twin": [38, 75], "twin_xl": [38, 80], "full_double": [54, 75], "queen": [60, 80], "king": [76, 80], "california_king": [72, 84] },
+        "source": { "url": "https://amerisleep.com/blog/mattress-sizes-and-dimensions-chart/", "via": "search_summary", "date": "2026-10-01" }
+      },
+      "Canada": { "same_as": "US", "evidence": "IKEA Canada sells Twin/Full/Queen/King frames and mattresses (https://www.ikea.com/ca/en/cat/beds-bm003/, page, 2026-10-01)." },
+      "UK": {
+        "cm": { "single": [90, 190], "small_double": [120, 190], "double": [135, 190], "king": [150, 200], "super_king": [180, 200] },
+        "ikea_uk_extra": { "small_single": [80, 200], "junior": [90, 200] },
+        "note": "IKEA UK: 'We sell only UK mattress sizes' and does not stock European sizes.",
+        "source": { "url": "https://www.ikea.com/gb/en/rooms/bedroom/mattress-size-guide-pub63d34391/", "via": "page", "date": "2026-10-01" }
+      },
+      "Ireland": {
+        "cm": { "single": [90, 190], "small_double": [120, 190], "double": [135, 190], "king": [150, 200], "super_king": [180, 200] },
+        "feet": { "single": "3'0\" x 6'3\"", "double": "4'6\" x 6'3\"", "king": "5'0\" x 6'6\"", "super_king": "6'0\" x 6'6\"" },
+        "note": "Irish sizes are identical to UK.",
+        "source": { "url": "https://www.ikea.com/ie/en/rooms/bedroom/mattress-size-guide-pub63d34391/", "via": "page", "date": "2026-10-01" }
+      },
+      "EU_continental": {
+        "cm": { "small_single": [80, 200], "single": [90, 200], "double": [140, 200], "king": [160, 200], "super_king": [180, 200] },
+        "note": "All continental sizes are 200 cm long; UK/IE standard lengths are 190 cm for single/double.",
+        "source": { "url": "https://www.ikea.com/es/en/ideas/any-mattress-size-can-be-found-at-ikea-puba34e0110/", "via": "search_summary", "date": "2026-10-01" }
+      },
+      "Mexico": {
+        "cm": { "individual": [100, 190], "matrimonial": [135, 190], "queen": [150, 190], "king": [200, 190], "california_king": [213, 183] },
+        "crib_cm": [70, 132],
+        "sources": [
+          { "url": "https://luuna.mx/blog/tamanos-de-camas-y-colchones-en-mexico", "via": "page", "date": "2026-10-01" },
+          { "url": "https://www.heroesdeldescanso.mx/tamano-de-colchon", "via": "page", "date": "2026-10-01" }
+        ],
+        "note": "Two Mexican mattress makers agree on these figures, but the king (200x190) and California king (213x183) as written look like width/length or rounding anomalies versus US sizes (king 193x203, Cal king 183x213). Mexico has no single published national standard found; treat queen/king as uncertain. Matrimonial (135x190) is the best-selling size per luuna."
+      }
+    },
+    "compatibility_rules": [
+      { "rule": "A frame takes only the nominal mattress size of its own market; UK/IE 190 cm singles and doubles do not fit EU 200 cm frames, and vice versa.", "source": { "url": "https://www.ikea.com/gb/en/rooms/bedroom/mattress-size-guide-pub63d34391/", "via": "page", "date": "2026-10-01" } },
+      { "rule": "IKEA UK/IE pairing: single frame 90x190, double 135x190, king 150x200, super king 180x200, day bed 80x200, sofa bed 140x200, bunk/loft and children's 90x200, children's extendable 80x200.", "source": { "url": "https://www.ikea.com/ie/en/rooms/bedroom/mattress-size-guide-pub63d34391/", "via": "page", "date": "2026-10-01" } },
+      { "rule": "IKEA extendable-bed mattresses in North America and Mexico are 97x190 cm; cribs 70x132 cm; junior 70x160 cm.", "source": { "url": "https://www.ikea.com/ca/en/cat/mattresses-bm002/", "via": "page", "date": "2026-10-01" } },
+      { "rule": "US twin/Full share 75 in length; Twin XL/Queen/King share 80 in; California king is 4 in narrower and 4 in longer than king, so king bedding and frames do not fit Cal king.", "source": { "url": "https://amerisleep.com/blog/mattress-sizes-and-dimensions-chart/", "via": "search_summary", "date": "2026-10-01" } }
+    ],
+    "prices": {
+      "IKEA_US_usd": {
+        "frames": { "VIHALS_queen": 129, "VEVELSTAD_queen": 149, "TARVA_king": 189, "MELLGRUND_queen": 199, "STJARNO_queen": 229, "MALM_queen": 299, "MALM_high_2_storage_full": 369, "BRIMNES_storage_queen": 399, "MALM_storage_bed_queen": 599, "IDANAS_storage_queen": 849 },
+        "mattresses": { "AGOTNES_foam_twin": 89, "ASVANG_foam_twin": 129, "VESTEROY_queen": 299, "VALEVAG_queen": 399, "VAGSTRANDA_queen": 549 },
+        "sources": [
+          { "url": "https://www.ikea.com/us/en/cat/beds-bm003/", "via": "page", "date": "2026-10-01" },
+          { "url": "https://www.ikea.com/us/en/cat/mattresses-bm002/", "via": "page", "date": "2026-10-01" }
+        ]
+      },
+      "IKEA_Canada_cad": {
+        "frames": { "NEIDEN_twin": 79.99, "NEIDEN_full": 99, "TARVA_queen": 179, "VEVELSTAD_queen": 179, "SLATTUM_queen": 179, "MALM_queen": 299, "MALM_high_2_storage_queen": 429, "BRIMNES_storage_queen": 449, "IDANAS_storage_queen": 799 },
+        "mattresses": { "AGOTNES_foam_twin": 79.99, "ASVANG_foam_twin": 149, "VESTEROY_twin": 249, "ASBYGDA_foam_full": 379, "VALEVAG_full": 479, "AKREHAMN_foam_queen": 499, "ABROTTEN_foam_queen": 599, "VAGSTRANDA_queen": 699, "ANNELAND_hybrid_queen": 799 },
+        "sources": [
+          { "url": "https://www.ikea.com/ca/en/cat/beds-bm003/", "via": "page", "date": "2026-10-01" },
+          { "url": "https://www.ikea.com/ca/en/cat/mattresses-bm002/", "via": "page", "date": "2026-10-01" }
+        ]
+      },
+      "IKEA_UK_gbp": {
+        "frames": { "NEIDEN_single": 75, "NEIDEN_double": 89, "MALM_high_single_sale": 99, "MALM_high_single_regular": 119, "MALM_high_double_sale": 139, "MALM_high_double_regular": 179, "TARVA_double": 149, "MALM_high_2_storage_double_sale": 179, "MALM_high_2_storage_double_regular": 239, "MALM_ottoman_double": 399 },
+        "mattresses": { "range": [25, 799], "AFJALL_foam": 99, "VALEVAG_double_sale": 179, "VALEVAG_double_regular": 229 },
+        "sources": [
+          { "url": "https://www.ikea.com/gb/en/cat/beds-bm003/", "via": "page", "date": "2026-10-01" },
+          { "url": "https://www.ikea.com/gb/en/cat/mattresses-bm002/", "via": "page", "date": "2026-10-01" }
+        ]
+      },
+      "IKEA_Ireland_eur": {
+        "frames": { "NEIDEN_single": 79, "NEIDEN_double": 99, "MALM_high_single_sale": 129, "MALM_high_single_regular": 159, "MALM_high_double_sale": 179, "MALM_high_double_regular": 219, "TARVA_double": 199, "MALM_high_2_storage_king_sale": 289, "MALM_high_2_storage_king_regular": 379, "MALM_ottoman_double": 499 },
+        "mattresses": { "AGOTNES_foam_90x200": 65, "VESTEROY_single": 119, "VESTMARKA_double": 149, "VALEVAG_double": 229, "ABYGDA_foam_double": 249, "VAGSTRANDA_double": 449, "ANNELAND_hybrid_king": 699, "VATNESTROM_double": 850 },
+        "sources": [
+          { "url": "https://www.ikea.com/ie/en/cat/beds-bm003/", "via": "page", "date": "2026-10-01" },
+          { "url": "https://www.ikea.com/ie/en/cat/mattresses-bm002/", "via": "page", "date": "2026-10-01" }
+        ]
+      },
+      "IKEA_Mexico_mxn": {
+        "frames": { "NEIDEN_matrimonial": 2199, "SLATTUM_matrimonial": 3499, "SONGESAND_matrimonial": 4999, "TALLASEN_queen": 4999, "MALM_high_queen": 6499, "BRIMNES_storage_matrimonial": 7199, "SONGESAND_2_drawers_queen": 7999 },
+        "mattresses": { "AGOTNES_foam_individual": 1299, "ASVANG_foam_matrimonial": 2499, "ASBYGDA_foam_individual": 3499, "VESTEROY_individual": 3999, "ABROTTEN_foam_individual": 4999, "VALEVAG_matrimonial": 6999, "VAGSTRANDA_queen": 10999, "ANNELAND_king": 12999 },
+        "sources": [
+          { "url": "https://www.ikea.com/mx/es/cat/camas-bm003/", "via": "page", "date": "2026-10-01" },
+          { "url": "https://www.ikea.com/mx/es/cat/colchones-bm002/", "via": "page", "date": "2026-10-01" }
+        ],
+        "note": "IKEA Mexico's own cm dimensions for 'matrimonial/queen/king' were not stated on the listing."
+      },
+      "Casper_US_usd": {
+        "The_One_from_sale": 699, "The_One_comp_value": 874,
+        "Snug_sale": 499, "Snug_comp_value": 599,
+        "Dream_or_Snow_hybrid_from_sale": 1215, "Dream_or_Snow_comp_value": 1620,
+        "Dream_Max_or_Snow_Max_from_sale": 2040, "Max_comp_value": 2720,
+        "size_note": "'Starting from' prices; the listing did not say which size the starting price is.",
+        "source": { "url": "https://casper.com/mattresses/", "via": "page", "date": "2026-10-01" },
+        "Original_queen_list_usd": 1295,
+        "Original_queen_source": { "url": "https://www.tomsguide.com/reference/casper-mattress-pricing-sizes-how-to-buy", "via": "search_summary", "date": "2026-10-01", "note": "The Original no longer appears on casper.com's current listing." }
+      },
+      "Simba_UK_gbp_double": {
+        "Essential": { "full": 799, "sale": 599.25 },
+        "Hybrid": { "full": 999, "sale": 749.25 },
+        "Pro": { "full": 1399, "sale": 979.30 },
+        "Luxe": { "full": 1899, "sale": 1329.30 },
+        "Ultra": { "full": 2599, "sale": 1819.30 },
+        "source": { "url": "https://simbasleep.com/collections/mattresses", "via": "page", "date": "2026-10-01", "note": "September sale 'up to 30% off'." }
+      },
+      "Sleep_Country_Canada_cad": {
+        "Bloom_River": { "regular": 599, "sale": 407.15 },
+        "Sealy_Posturepedic_Z5_1": { "regular": 1349, "sale": 679.15 },
+        "Sealy_Posturepedic_Z5_2": { "regular": 1479, "sale": 1257.15 },
+        "Tempur_Prima": { "regular": 2999, "sale": 2549.15 },
+        "Tempur_ProAdapt": { "regular": 5999, "sale": 5099.15 },
+        "size_note": "Listing did not state the size these prices refer to.",
+        "source": { "url": "https://en.sleepcountry.ca/mattresses", "via": "page", "date": "2026-10-01" }
+      },
+      "Liverpool_Mexico_mxn_matrimonial": {
+        "Spring_Air_range": [5999, 15899],
+        "Sealy_range": [8290, 23999],
+        "Restonic_range": [5999.5, 21899],
+        "source": { "url": "https://www.liverpool.com.mx/tienda?s=colchones+matrimoniales", "via": "search_summary", "date": "2026-10-01", "note": "Liverpool returns 403 to fetch." }
+      },
+      "Coppel_Mexico_mxn": {
+        "matrimonial_mattresses": {
+          "Spring_Air_Gran_Atenas": { "sale": 4499, "regular": 7599 },
+          "Spring_Air_Mykonos": { "sale": 4899, "regular": 6499 },
+          "Spring_Air_Super_Value": { "sale": 5899, "regular": 7699 },
+          "Spring_Air_Sleeper": { "sale": 6499, "regular": 11799 },
+          "Spring_Air_Gibson": { "sale": 6999, "regular": 12749 },
+          "Spring_Air_World_Class": 7999
+        },
+        "matrimonial_bases": { "Roble": { "sale": 2699, "regular": 2899 }, "Galaxy": { "sale": 2899, "regular": 3099 }, "Universal": { "sale": 2899, "regular": 3099 }, "listing_range": [2249, 8999] },
+        "sources": [
+          { "url": "https://www.coppel.com/l/colchon-matrimonial-spring-air", "via": "search_summary", "date": "2026-10-01" },
+          { "url": "https://www.coppel.com/l/base-matrimonial", "via": "search_summary", "date": "2026-10-01" }
+        ]
+      }
+    }
+  },
+
+  "permits": {
+    "pool_barrier_rules": {
+      "US_model_codes": {
+        "rule": "ISPSC / IRC Appendix: barrier top at least 48 in above grade on the side away from the pool; max 2 in gap at grade; no opening passing a 4 in sphere; gates self-closing and self-latching, opening outward from the pool; latch release typically at 54 in.",
+        "source": { "url": "https://www.jaspector.com/codes/irc-2024/ch42-swimming-pools/pool-barrier-requirements-irc-2024/", "via": "search_summary", "date": "2026-10-01" }
+      },
+      "New_York_City": {
+        "rule": "4-foot fence all the way around in-ground pools with a closed, child-proof, self-closing gate; pool at least 5 ft from any lot line on lots 25 ft wide or more, 3 ft from side lot lines on narrower lots; no overhead conductors within 22.5 ft.",
+        "permit": "'You may need a permit to install a pool at a 1- or 2-family residential building.'",
+        "source": { "url": "https://portal.311.nyc.gov/article/?kanumber=KA-01375", "via": "page", "date": "2026-10-01" }
+      },
+      "Los_Angeles": {
+        "rule": "Swimming pools need a separate permit application; plans must show a 5 ft high enclosure fence with an outward-opening, self-closing, self-latching gate.",
+        "source": { "url": "https://www.jdesigns.com/blog/pool-permit-in-los-angeles-here-is-everything-you-need-to-know", "via": "search_summary", "date": "2026-10-01", "note": "Pool builder blog, not LADBS; LADBS standard-plan page https://dbs.lacity.gov/standard-plan-programs confirms pool standard plans exist." }
+      },
+      "New_Haven_CT": {
+        "rule": "All in-ground pools and above-ground pools deeper than 24 in need a building permit, site plan and electrical permit (Connecticut State Building Code, IRC-based, 48 in barrier).",
+        "source": { "url": "https://permitsguide.com/connecticut", "via": "search_summary", "date": "2026-10-01", "note": "Secondary guide; state code PDF https://portal.ct.gov/-/media/DAS/Office-of-State-Building-Inspector/2022-State-Codes/2022-CSBC-Final.pdf not read." }
+      },
+      "Toronto": {
+        "rule": "Municipal Code Chapter 447: pool enclosure minimum 1.2 m on single residential properties (1.8 m multi-residential/non-residential); chain-link mesh no greater than 38 mm; a pool enclosure permit is required, fee set in Chapter 441.",
+        "fee_cad": null,
+        "fee_note": "One search result gave $198.59 (possibly outdated) and a GTA range of $282-$485; neither verified against Chapter 441.",
+        "source": { "url": "https://www.primealux.ca/pool-fence-requirements-ontario/", "via": "search_summary", "date": "2026-10-01" }
+      },
+      "Vancouver_BC": {
+        "rule": "Vancouver Building By-law 9.8.8.1: pools deeper than 450 mm enclosed by a fence no less than 1.5 m high, no openings over 100 mm, no climbable member between 100 mm and 900 mm; self-closing gate with spring lock no less than 1,070 mm above grade, openable only from the pool side. In-ground pools need a building permit.",
+        "source": { "url": "https://vancouver.ca/files/cov/in-ground_swimming_pools.pdf", "via": "search_summary", "date": "2026-10-01", "note": "PDF returned 403 to fetch; text from search summary of the City's own document." },
+        "caution": "A search result at vancouver.municipal.codes (24 in / 5,000 gal exemption, 120 sq ft shed exemption) is Vancouver, Washington, not British Columbia, and is excluded."
+      },
+      "England": { "rule": "No statutory domestic pool fence height found in planning or Building Regulations guidance searched.", "value": null },
+      "Ireland": { "rule": null, "note": "Not found." },
+      "CDMX": { "rule": null, "note": "No pool-barrier article found in the Reglamento de Construcciones text that could be read." }
+    },
+    "by_jurisdiction": {
+      "New_York_City": {
+        "pool": "Permit may be required at 1-2 family homes (NYC311 wording); fence, setback and electrical rules above.",
+        "sports_court": null,
+        "accessory_structure": null,
+        "fees": null,
+        "source": { "url": "https://portal.311.nyc.gov/article/?kanumber=KA-01375", "via": "page", "date": "2026-10-01" }
+      },
+      "Los_Angeles": {
+        "pool": "Separate building permit required.",
+        "accessory_structure": "Exempt from building permit: one-story detached accessory structures used as tool/storage sheds, playhouses, shade structures and similar, not over 120 sq ft, height not over 12 ft (LA County wording), with no heating, plumbing or electrical; electrical/plumbing/mechanical in them need separate permits.",
+        "sports_court": null,
+        "fees": "Plan check fee is 90% of the building permit fee (LAMC 91.107.3.1.1); permit fee is from the valuation table. No dollar figure found.",
+        "sources": [
+          { "url": "https://dpw.lacounty.gov/building-and-safety/permits/workexempt", "via": "search_summary", "date": "2026-10-01", "note": "LA County (unincorporated), not City; the City's LABC 106.3 carries the same 120 sq ft exemption per up.codes." },
+          { "url": "https://up.codes/viewer/los_angeles/ca-building-code-2022/chapter/new_1/administration", "via": "search_summary", "date": "2026-10-01" },
+          { "url": "https://greendesignandbuild.com/ladbs-permit-costs/", "via": "search_summary", "date": "2026-10-01" }
+        ]
+      },
+      "New_Haven_CT": {
+        "pool": "Building permit, site plan and electrical permit for all in-ground pools.",
+        "accessory_structure": "No building permit for one-story detached sheds/playhouses of 200 sq ft or less; a zoning permit may still be required.",
+        "sports_court": null,
+        "fees": null,
+        "fee_note": "Each municipality sets its own fee schedule (posted at the building department, 200 Orange Street); not found online.",
+        "source": { "url": "https://permitsguide.com/shed/connecticut", "via": "search_summary", "date": "2026-10-01" }
+      },
+      "England": {
+        "regime": "Town and Country Planning (General Permitted Development) (England) Order 2015, Schedule 2 Part 1 Class E (buildings and enclosures incidental to the house) and Part 2 Class A (gates, fences, walls).",
+        "pool_sports_court_outbuilding": "Swimming pools, hot tubs, sauna cabins and enclosures including tennis courts fall within Class E if incidental to the house: single storey; max eaves 2.5 m; max height 4 m with dual-pitched roof, 3 m otherwise; 2.5 m max overall if within 2 m of the boundary; not forward of the principal elevation; together with other outbuildings and extensions not over 50% of the curtilage (excluding the original house).",
+        "fences": "Up to 2 m without permission; 1 m if adjacent to a highway used by vehicles (Part 2 Class A).",
+        "floodlights": null,
+        "building_regulations": "Not researched; outbuildings with sleeping accommodation or over 30 m2 fall under Building Regulations (not verified here).",
+        "fees": null,
+        "sources": [
+          { "url": "https://www.planninggeek.co.uk/gpdo/house/outbuildings/", "via": "search_summary", "date": "2026-10-01" },
+          { "url": "https://www.harperlatterarchitects.co.uk/post/uk-swimming-pool-planning-permission-explained", "via": "search_summary", "date": "2026-10-01" },
+          { "url": "https://planwatch.co.uk/guides/do-i-need-planning-permission-for-a-fence", "via": "search_summary", "date": "2026-10-01" }
+        ],
+        "note": "Class E does not apply to flats, listed buildings, or where Article 4 directions or conditions remove PD rights."
+      },
+      "Ireland": {
+        "regime": "Planning and Development Regulations 2001, Schedule 2 Part 1, as amended by SIs 338-344 of 2026 effective 29 July 2026.",
+        "class_3_garden_structures": "Sheds, garages, stores, greenhouses and similar: area raised from 25 m2 to 30 m2 by the 2026 regulations; max 4 m with tiled/slated pitched roof, 3 m otherwise; not forward of the front wall.",
+        "class_3A_rear_garden_dwelling": "New in 2026: min 32 m2, max combined 45 m2, heights 4 m pitched / 3 m other, at least 25 m2 private open space retained, time-limited to 31 December 2030.",
+        "boundary_walls_fences": "Up to 2 m at rear and sides; up to 1.2 m fronting a public road.",
+        "pool": null,
+        "tennis_or_games_court": null,
+        "pool_court_note": "Neither the 2026 amendment summary nor the exempted-development guides consulted mention swimming pools or courts; no exemption could be confirmed, so planning permission should be assumed until the full Schedule 2 is read (https://assets.gov.ie/static/documents/Exempted_Development_2001_regulations_-_Schedule_2.pdf, not fetched).",
+        "fees": null,
+        "sources": [
+          { "url": "https://www.kelleherassociates.ie/new-2026-planning-exemptions-regulations-come-into-effect/", "via": "page", "date": "2026-10-01" },
+          { "url": "https://www.planningcheck.ie/exempted-development-ireland", "via": "page", "date": "2026-10-01" }
+        ]
+      },
+      "Ontario_Toronto": {
+        "pool": "Pool enclosure permit required (Toronto Municipal Code Ch. 447); 1.2 m minimum enclosure on single residential lots.",
+        "accessory_structure": "Ontario Building Code: building permit needed for an accessory structure over 15 m2 (about 161 sq ft), or any with plumbing, or attached to another building; zoning still applies below that.",
+        "sports_court": null,
+        "fees_cad": null,
+        "sources": [
+          { "url": "https://www.primealux.ca/pool-fence-requirements-ontario/", "via": "search_summary", "date": "2026-10-01" },
+          { "url": "https://www.theshedcompany.ca/blog/what-size-shed-can-you-build-without-permit-in-ontario", "via": "search_summary", "date": "2026-10-01" }
+        ]
+      },
+      "BC_Vancouver": {
+        "pool": "Building permit required for in-ground pools; 1.5 m enclosure (VBBL 9.8.8.1).",
+        "accessory_structure": null,
+        "accessory_note": "City of Vancouver threshold not found; West Vancouver (a separate municipality) requires permits for most accessory buildings including pool-houses and sheds.",
+        "sports_court": null,
+        "fees_cad": null,
+        "sources": [
+          { "url": "https://vancouver.ca/files/cov/in-ground_swimming_pools.pdf", "via": "search_summary", "date": "2026-10-01" },
+          { "url": "https://westvancouver.ca/sites/default/files/media/documents/ZONING_BYLAW_4662_SECTION_130_GENERAL_REGULATIONS_FOR_RESIDENTIAL_ZONES_AND_USES_ONLY_1.pdf", "via": "search_summary", "date": "2026-10-01" }
+        ]
+      },
+      "CDMX": {
+        "regime": "Reglamento de Construcciones para el Distrito Federal; Manifestación de Construcción tipo A/B/C; Article 62 lists works needing neither manifestación nor licencia (reformed 4 Oct 2024 to a notice through the Digital Platform).",
+        "manifestacion_tipo_A": "Article 51: one single-family dwelling up to 120 m2 built (some 2026 guides say 200 m2), two levels, 5.5 m height; repairs/modifications; bardas (boundary walls) up to 2.50 m; openings up to 1.5 m; cisterns, septic tanks, drainage. Not available in risk zones or conservation land (tipo B instead).",
+        "pool": null,
+        "pool_note": "Article 62's list could not be read; whether a residential alberca is a tipo A work or an Article 62 work is unverified.",
+        "fees_mxn": { "registration_fixed": [340, 950], "analysis_per_m2": [17, 111], "extension": "25% of original fee", "modification": "20% of original fee", "source": { "url": "https://www.constructionsupplymagazine.com/blogs/construccion-1/manifestacion-de-construccion-a-b-y-c-en-cdmx-2026-costo-y-tiempos", "via": "page", "date": "2026-10-01", "note": "Secondary guide; figures not checked against the Código Fiscal de la CDMX 2026." } },
+        "tipo_A_conflict_note": "PAOT's consolidated text gives 120 m2; constructionsupplymagazine (2026) gives 200 m2. Unresolved.",
+        "sources": [
+          { "url": "https://paot.org.mx/centro/leyes-normas-htmls/reglamento-de-construcciones-1028.html", "via": "page", "date": "2026-10-01" },
+          { "url": "https://www.cdmx.gob.mx/public/InformacionTramite.xhtml?idTramite=675", "via": "search_summary", "date": "2026-10-01" }
+        ]
+      }
+    }
+  },
+
+  "maintenance": {
+    "tennis_court": {
+      "annual_usd": 1800,
+      "resurfacing_interval_years": [4, 8],
+      "synthetic_grass_replacement_years": [12, 20],
+      "resurfacing_cost_usd": { "national_average": 10000, "rubber": [2000, 10000], "clay": [2500, 3000], "acrylic": [4000, 10000], "concrete": [4000, 10000], "asphalt": [20000, 40000], "synthetic_grass": [25000, 80000] },
+      "source": { "url": "https://www.fixr.com/costs/tennis-court-resurfacing", "via": "page", "date": "2026-10-01" },
+      "acrylic_per_sqft_usd": [0.55, 1.5],
+      "acrylic_per_sqft_note": "for a 120x60 ft acrylic court, $4,000-$10,800; clay full rebuild every 5-7 years $5,000-$15,000; grass annual reseeding $10,000-$25,000",
+      "acrylic_per_sqft_source": { "url": "https://homeguide.com/costs/tennis-court-resurfacing-cost", "via": "search_summary", "date": "2026-10-01", "note": "Attribution within merged summary uncertain (HomeGuide/Angi/HomeAdvisor)." },
+      "UK_lta": { "repaint_interval_years": 5, "resurface_interval_years": [8, 10], "resurfacing_block_of_4_gbp": { "acrylic_clay": 17500, "porous_asphalt": 15000, "artificial_grass": 12500 }, "source": { "url": "https://www.lta.org.uk/support-centre/venue-support/facilities-and-funding/facilities-support/how-much-does-it-cost-to-build-or-renovate-a-tennis-court/", "via": "page", "date": "2026-10-01" }, "note": "Fetched text tied these to the 4-court table; whether resurfacing figures are per court or per block was not explicit." }
+    },
+    "pickleball_court": { "see": "facilities.pickleball_court.resurfacing" },
+    "basketball_court": { "rubberized_resurface_years": [6, 8], "source": { "url": "https://www.fixr.com/costs/basketball-court-installation", "via": "page", "date": "2026-10-01" } },
+    "swimming_pool": {
+      "US_service_per_year_usd": [960, 1800],
+      "US_service_per_month_usd": [80, 150],
+      "US_total_upkeep_per_year_usd": [3000, 6000],
+      "US_total_note": "Includes maintenance, minor repairs, electricity and water.",
+      "US_per_visit_angi_avg_usd": 236,
+      "US_per_visit_angi_range_usd": [116, 357],
+      "sources": [
+        { "url": "https://homeguide.com/costs/pool-maintenance-cost", "via": "search_summary", "date": "2026-10-01" },
+        { "url": "https://www.angi.com/articles/how-much-does-it-cost-maintain-swimming-pool.htm", "via": "search_summary", "date": "2026-10-01" }
+      ],
+      "resurfacing": {
+        "plaster_per_sqft_usd": [4, 8],
+        "plaster_life_years": 10,
+        "vinyl_liner_replacement_usd": [3000, 7500],
+        "vinyl_liner_interval_years": [5, 15],
+        "fiberglass_full_resurface_per_1000sqft_usd": 6500,
+        "typical_resurface_usd": [6000, 15000],
+        "source": { "url": "https://homeguide.com/costs/pool-resurfacing-cost", "via": "search_summary", "date": "2026-10-01", "note": "Merged summary across HomeGuide/Angi/armorthane." }
+      },
+      "UK": { "chemicals_per_year_gbp": 650, "maintenance_per_month_gbp": [80, 250], "source": { "url": "https://www.checkatrade.com/blog/cost-guides/swimming-pool-cost/", "via": "search_summary", "date": "2026-10-01" } },
+      "Canada_Ontario": { "liner_replacement_cad": [3500, 7000], "interval_years": [8, 12], "source": { "url": "https://www.homestars.com/gardening-outdoors/price-guides/inground-pool-cost", "via": "search_summary", "date": "2026-10-01" } }
+    },
+    "hot_tub": { "see": "facilities.hot_tub.annual_running_usd" },
+    "lawn_and_field": {
+      "mowing_per_visit_usd": [30, 85],
+      "mowing_quarter_acre_per_year_usd": [900, 2000],
+      "mowing_per_acre_per_visit_usd": [60, 200],
+      "source": { "url": "https://www.angi.com/articles/lawn-care-cost.htm", "via": "search_summary", "date": "2026-10-01", "note": "Merged with HomeGuide/LawnStarter in summary." },
+      "artificial_turf_field_annual_usd": null,
+      "natural_grass_sports_field_annual_usd": null,
+      "note": "No residential-scale figure found for maintaining a natural or synthetic football pitch."
+    },
+    "putting_green": { "see": "facilities.putting_green.annual_maintenance_usd" },
+    "irrigation_annual": null
+  }
+}

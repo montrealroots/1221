@@ -1,0 +1,243 @@
+{
+  "compiledOn": "2026-09-29",
+  "note": "Every figure below was read from the named source during this session unless it sits in `uncertain`. Derived shares are marked `derived: true` and show their arithmetic.",
+
+  "usPassports": {
+    "validPassportsInCirculation": {
+      "value": 183170240,
+      "unit": "valid US passport documents (books + cards), end of fiscal year",
+      "year": "FY2025 (ended 2025-09-30)",
+      "source": "https://travel.state.gov/content/travel/en/about-us/reports-and-statistics.html (table 'Valid Passports in Circulation by Fiscal Year (1989-2025)'; read from the Wayback copy of 2026-07-12 because the live page returns 403 to automated fetches)",
+      "statedDate": "FY2025; page snapshot 2026-07-12",
+      "caveat": "State's own note: 'a customer who has both a passport book and card has two valid passports. Some customers may also have two valid passport books.' So this counts documents, not people. State publishes no count of distinct holders."
+    },
+    "validPassportsInCirculationPriorYear": {
+      "value": 169915821,
+      "unit": "valid US passport documents",
+      "year": "FY2024",
+      "source": "https://travel.state.gov/content/travel/en/about-us/reports-and-statistics.html",
+      "statedDate": "FY2024"
+    },
+    "passportsIssuedFY2025": {
+      "value": 27348416,
+      "unit": "passports issued in FY2025 (includes 4,544,022 passport cards)",
+      "source": "https://travel.state.gov/content/travel/en/about-us/reports-and-statistics.html",
+      "statedDate": "FY2025"
+    },
+    "usResidentPopulation": {
+      "value": 341784857,
+      "unit": "persons, US resident population",
+      "year": "2025-07-01 (Census Vintage 2025)",
+      "source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/national/asrh/nc-est2025-agesex-res.csv (SEX=0, AGE=999, POPESTIMATE2025); landing page https://www.census.gov/data/tables/time-series/demo/popest/2020s-national-total.html",
+      "statedDate": "Vintage 2025, released January 2026"
+    },
+    "usResidentPopulation2024": {
+      "value": 340003797,
+      "unit": "persons",
+      "year": "2024-07-01 (Census Vintage 2025 series)",
+      "source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/national/asrh/nc-est2025-agesex-res.csv",
+      "statedDate": "Vintage 2025"
+    },
+    "documentsPerResident": {
+      "value": 0.536,
+      "unit": "valid passport documents per US resident",
+      "derived": true,
+      "arithmetic": "183,170,240 / 341,784,857 = 0.5359",
+      "source": "derived from the two rows above",
+      "statedDate": "FY2025 documents over 2025-07-01 population",
+      "caveat": "An upper bound on the share of residents holding a passport, not the share: book+card holders count twice, and the denominator includes non-citizens (who cannot hold a US passport). No official count of distinct holders or of citizens-with-passport was found."
+    }
+  },
+
+  "usDriversLicence20to24": {
+    "licensedDrivers20to24": {
+      "value": 17881504,
+      "unit": "licensed drivers aged 20-24 (male 9,234,136; female 8,631,909; the total exceeds their sum by 15,459, presumably drivers with sex not reported)",
+      "year": "2024",
+      "source": "https://www.fhwa.dot.gov/policyinformation/statistics/2024/dl20.cfm (Highway Statistics 2024, Table DL-20, 'Licensed Drivers: Distribution by Sex and Age Group Relative to Population')",
+      "statedDate": "table dated February 2026"
+    },
+    "percentOfAgeGroupLicensed": {
+      "value": 80.9,
+      "unit": "percent of population aged 20-24 holding a driver's licence (as stated by FHWA)",
+      "year": "2024",
+      "source": "https://www.fhwa.dot.gov/policyinformation/statistics/2024/dl20.cfm",
+      "statedDate": "February 2026"
+    },
+    "populationUsedByFHWA": {
+      "value": 22111217,
+      "unit": "US civilian population aged 20-24, 2024-07-01",
+      "year": "2024",
+      "source": "FHWA footnote names the denominator as Census SC-EST2024-AGESEX-CIV; summed from https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/state/asrh/sc-est2024-agesex-civ.csv (United States, SEX=0, AGE 20-24, POPEST2024_CIV)",
+      "statedDate": "Census Vintage 2024",
+      "check": "17,881,504 / 22,111,217 = 80.87%, which rounds to FHWA's stated 80.9%"
+    },
+    "neighbouringAgeGroups": {
+      "age19": { "value": 68.8, "unit": "percent licensed", "source": "https://www.fhwa.dot.gov/policyinformation/statistics/2024/dl20.cfm", "statedDate": "2024 data, February 2026" },
+      "age25to29": { "value": 89.3, "unit": "percent licensed", "source": "https://www.fhwa.dot.gov/policyinformation/statistics/2024/dl20.cfm", "statedDate": "2024 data, February 2026" }
+    }
+  },
+
+  "otherCountriesPassports": {
+    "englandAndWales": {
+      "atLeastOnePassport": {
+        "value": 51.6, "unit": "million usual residents (86.5%)",
+        "source": "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/internationalmigration/bulletins/internationalmigrationenglandandwales/census2021",
+        "statedDate": "Census day 2021-03-21; bulletin released 2022-11-02"
+      },
+      "noPassport": {
+        "value": 8.0, "unit": "million usual residents (13.5%)",
+        "source": "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/internationalmigration/bulletins/internationalmigrationenglandandwales/census2021",
+        "statedDate": "Census 2021"
+      },
+      "ukPassportHolders": {
+        "value": 45.7, "unit": "million usual residents (76.7%) holding a UK passport",
+        "source": "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/internationalmigration/bulletins/internationalmigrationenglandandwales/census2021",
+        "statedDate": "Census 2021"
+      },
+      "nonUkPassportHolders": {
+        "value": 5.9, "unit": "million usual residents (9.9%)",
+        "source": "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/internationalmigration/bulletins/internationalmigrationenglandandwales/census2021",
+        "statedDate": "Census 2021"
+      },
+      "scope": "England and Wales only; ONS does not cover Scotland (Census 2022, NRS) or Northern Ireland (Census 2021, NISRA). Dataset tables: TS005 https://www.ons.gov.uk/datasets/TS005/editions/2021"
+    },
+    "canada": {
+      "validPassportsInCirculation": {
+        "value": 27, "unit": "million, stated as 'over 27 million passports in circulation'",
+        "source": "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/transparency/transition-binders/deputy-minister-2026/passport-program.html",
+        "statedDate": "no as-at date given; page modified 2026-09-04 (same wording in the May 2025 minister binder, modified 2025-09-11)"
+      },
+      "shareHoldingValidPassport": {
+        "value": 67, "unit": "percent of all Canadians, stated as 'Approximately 67%'",
+        "source": "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/transparency/transition-binders/deputy-minister-2026/passport-program.html",
+        "statedDate": "no as-at date; page modified 2026-09-04"
+      },
+      "population": {
+        "value": 41798407, "unit": "persons, Canada total population",
+        "source": "https://www150.statcan.gc.ca/n1/daily-quotidien/260923/dq260923b-eng.htm",
+        "statedDate": "2026-07-01 estimate, released 2026-09-23"
+      },
+      "caveat": "27M / 41.8M = 64.6%, not 67%. IRCC's 67% presumably uses a citizen-only or older denominator; it does not say. Use IRCC's stated 67% as the official share and the 27M as a floor."
+    }
+  },
+
+  "usF1StudentVisa": {
+    "mrvFeeFVisa": {
+      "value": 185, "unit": "USD, non-petition-based nonimmigrant visa application (MRV) fee, applies to F",
+      "source": "Federal Register 2023-06290, 88 FR (2023-03-28), final rule effective 2023-05-30: https://www.federalregister.gov/documents/2023/03/28/2023-06290/schedule-of-fees-for-consular-services-nonimmigrant-and-special-visa-fees ; still current per State's 2026-06-09 rule (FR 2026-11513): 'The MRV fee was last updated in May 2023 and is currently set at $185'",
+      "statedDate": "effective 2023-05-30; confirmed current 2026-06-09"
+    },
+    "sevisI901FeeF1": {
+      "value": 350, "unit": "USD",
+      "source": "https://www.ice.gov/sevis/i901",
+      "statedDate": "page updated 2024-12-10"
+    },
+    "gracePeriodAfterProgram": {
+      "value": 60, "unit": "days (in force now)",
+      "source": "8 CFR 214.2(f)(5)(iv) as it read on 2026-09-01: https://www.ecfr.gov/api/versioner/v1/full/2026-09-01/title-8.xml?part=214&section=214.2 — 'an additional 60-day period to prepare for departure'",
+      "statedDate": "in force; see status note",
+      "status": "DHS's final rule (FR 2026-14439, published 2026-07-17, effective 2026-09-15) replaced duration of status with a fixed admission (max 4 years) and cut the grace period to 30 days; eCFR now prints the 30-day text. On 2026-09-14 the US District Court for the District of Massachusetts (Presidents' Alliance et al. v. DHS, Judge F. Dennis Saylor IV) granted a nationwide preliminary injunction barring DHS from implementing it, so D/S and the 60-day period remain in place while litigation continues. Sources: https://www.presidentsalliance.org/duration-of-status-litigation/ ; https://studyinthestates.dhs.gov/final-rule-establishing-a-fixed-time-period-of-admission-and-an-extension-of-stay-procedure-faq (describes the 30-day rule, updated 2026-08-31, predates the injunction)."
+    },
+    "gracePeriodUnderEnjoinedRule": {
+      "value": 30, "unit": "days (enjoined, not in force)",
+      "source": "https://www.federalregister.gov/documents/2026/07/17/2026-14439/establishing-a-fixed-time-period-of-admission-and-an-extension-of-stay-procedure-for-nonimmigrant",
+      "statedDate": "published 2026-07-17; enjoined 2026-09-14"
+    },
+    "optMonths": {
+      "value": 12, "unit": "months of practical training per degree level ('A student may be authorized 12 months of practical training, and becomes eligible for another 12 months ... when they change to a higher educational level'); must be completed within 14 months of program end",
+      "source": "8 CFR 214.2(f)(10) and (f)(10)(ii)(A)(3), eCFR current as of 2026-09-25: https://www.ecfr.gov/current/title-8/section-214.2",
+      "statedDate": "2026-09-25"
+    },
+    "stemOptExtensionMonths": {
+      "value": 24, "unit": "months, STEM degree extension of post-completion OPT (up to two lifetime)",
+      "source": "8 CFR 214.2(f)(10)(ii)(C): https://www.ecfr.gov/current/title-8/section-214.2",
+      "statedDate": "2026-09-25"
+    },
+    "i765FeeOnline": {
+      "value": 470, "unit": "USD, Form I-765 general filing (applies to OPT), online",
+      "source": "USCIS Form G-1055 Fee Schedule, Appendix C: https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf",
+      "statedDate": "G-1055 edition 09/09/26"
+    },
+    "i765FeePaper": {
+      "value": 520, "unit": "USD, Form I-765, paper",
+      "source": "https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf",
+      "statedDate": "G-1055 edition 09/09/26"
+    },
+    "i765OptPremiumProcessingFee": {
+      "value": 1780, "unit": "USD, optional Form I-907 for I-765 OPT / STEM OPT",
+      "source": "https://www.uscis.gov/newsroom/alerts/uscis-to-increase-premium-processing-fees ; G-1055 edition 09/09/26",
+      "statedDate": "effective 2026-03-01 (alert 2026-01-09)"
+    },
+    "i765OptPremiumProcessingTime": {
+      "value": 30, "unit": "business days",
+      "source": "https://www.uscis.gov/forms/all-forms/how-do-i-request-premium-processing",
+      "statedDate": "page updated 2026-03-23"
+    }
+  },
+
+  "usWorkAfterOpt": {
+    "i129FeeOPetition": {
+      "value": 1055, "unit": "USD, Form I-129 O petition (O-1 limited to one beneficiary per petition); O-1B arts and O-1B motion picture/TV use the same fee",
+      "source": "USCIS G-1055 Appendix A: https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf",
+      "statedDate": "G-1055 edition 09/09/26 (amount set by the fee rule effective 2024-04-01)"
+    },
+    "i129FeeOPetitionSmallEmployerOrNonprofit": {
+      "value": 530, "unit": "USD",
+      "source": "https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf",
+      "statedDate": "G-1055 edition 09/09/26"
+    },
+    "i129FeePPetition": {
+      "value": 1015, "unit": "USD, Form I-129 P petition (P-1, P-2, P-3; up to 25 beneficiaries)",
+      "source": "https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf",
+      "statedDate": "G-1055 edition 09/09/26"
+    },
+    "i129FeePPetitionSmallEmployerOrNonprofit": {
+      "value": 510, "unit": "USD",
+      "source": "https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf",
+      "statedDate": "G-1055 edition 09/09/26"
+    },
+    "asylumProgramFee": {
+      "regularPetitioner": { "value": 600, "unit": "USD", "source": "https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf", "statedDate": "G-1055 edition 09/09/26" },
+      "smallEmployer": { "value": 300, "unit": "USD (25 or fewer full-time-equivalent employees)", "source": "https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf", "statedDate": "G-1055 edition 09/09/26" },
+      "nonprofit": { "value": 0, "unit": "USD", "source": "https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf", "statedDate": "G-1055 edition 09/09/26" },
+      "appliesTo": "Form I-129 including O and P petitions, paid by the petitioning employer or agent"
+    },
+    "premiumProcessingFeeOandP": {
+      "value": 2965, "unit": "USD, Form I-907 for I-129 O-1, O-2, P-1, P-1S, P-2, P-2S, P-3, P-3S (was $2,805)",
+      "source": "https://www.uscis.gov/newsroom/alerts/uscis-to-increase-premium-processing-fees ; Federal Register 2026-00321 https://www.federalregister.gov/documents/2026/01/12/2026-00321/adjustment-to-premium-processing-fees",
+      "statedDate": "effective 2026-03-01"
+    },
+    "premiumProcessingTimeOandP": {
+      "value": 15, "unit": "business days",
+      "source": "https://www.uscis.gov/forms/all-forms/how-do-i-request-premium-processing",
+      "statedDate": "page updated 2026-03-23"
+    },
+    "o1MaxInitialPeriod": {
+      "value": 3, "unit": "years (petition validity 'not to exceed 3 years'); extensions in increments of up to 1 year",
+      "source": "8 CFR 214.2(o)(6)(iii)(A) and (o)(12)(ii): https://www.ecfr.gov/current/title-8/section-214.2",
+      "statedDate": "eCFR current as of 2026-09-25"
+    },
+    "p3MaxInitialPeriod": {
+      "value": 1, "unit": "year ('not to exceed 1 year'); extensions in 1-year increments",
+      "source": "8 CFR 214.2(p)(8)(iii)(C) and (p)(14)(ii)(B): https://www.ecfr.gov/current/title-8/section-214.2",
+      "statedDate": "eCFR current as of 2026-09-25"
+    },
+    "mrvFeePetitionBasedVisa": {
+      "value": 205, "unit": "USD, consular visa application fee for H, L, O, P, Q, R visas (paid by the worker at the consulate after petition approval)",
+      "source": "Federal Register 2023-06290: https://www.federalregister.gov/documents/2023/03/28/2023-06290/schedule-of-fees-for-consular-services-nonimmigrant-and-special-visa-fees",
+      "statedDate": "effective 2023-05-30"
+    }
+  },
+
+  "uncertain": [
+    "US share of citizens holding a passport: State counts documents (books and cards separately), not people, and publishes no holder count. 183.2M / 341.8M = 53.6% is an upper bound per resident, not the share. Secondary sources say 45-50% of Americans hold one; no official figure confirms that.",
+    "Australia: passports.gov.au, dfat.gov.au and anao.gov.au timed out from this machine, so no figure was read from an official page. Wikipedia, citing https://www.passports.gov.au/passport-facts-2024-25, gives '15 million' Australian passports in circulation (2025) and 'about 56% of the population'. Unverified; do not use as confirmed. Australian population (ABS) was also not retrieved.",
+    "UK-wide passport share: only England and Wales (ONS) was retrieved. Scotland (NRS Census 2022) and Northern Ireland (NISRA Census 2021) figures were not.",
+    "Canada: IRCC's 'over 27 million' and '67%' carry no as-at date and do not reconcile with StatCan's 41.8M population (27/41.8 = 64.6%).",
+    "USCIS normal (non-premium) processing time for Form I-765 OPT, category (c)(3)(B): egov.uscis.gov/processing-times is behind Cloudflare and was not readable. No figure given.",
+    "Visa Integrity Fee ($250, Pub. L. 119-21, July 2025): a secondary source says State has not begun collecting it; not confirmed from travel.state.gov (403). Not included in the F-1 or O/P totals.",
+    "G-1055 (edition 09/09/26) lists an 'Additional Form I-94 Fee: Pub. L. 119-21 Fee' of $24 near the I-129 rows; the PDF layout did not make clear whether it applies to every O/P petition or only to change/extension of status requesting an I-94. Not included.",
+    "Whether O and P I-129 petitions can be filed online at a lower fee: the G-1055 layout shows an online price only for some I-129 categories; the O and P amounts above are the paper/general fees."
+  ]
+}

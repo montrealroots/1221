@@ -1,0 +1,433 @@
+{
+  "meta": {
+    "title": "Hired household and personal services: eight SLATE cities",
+    "date_read_all": "2026-10-01",
+    "basis_legend": {
+      "page": "The figure was read from the provider's or authority's own page (fetched).",
+      "search-summary": "The figure came from a web-search result summary and the page itself was not fetched. Treat it as a lead and verify it before you rely on it."
+    },
+    "currency_notes": "All prices are in the local currency: USD for New York, Los Angeles and New Haven; GBP for London; EUR for Dublin; CAD for Toronto and Vancouver; MXN for Mexico City. Unless a note says so, sales tax, VAT, HST and GST are excluded where the provider says so and unknown otherwise.",
+    "rule": "No figure here was invented. Where nothing published was found, the value is null and a note says why."
+  },
+
+  "cities": {
+
+    "New York": {
+      "gardeners": [
+        {"company": "New Eco Landscapes (Brooklyn)", "prices": null, "note": "The maintenance page publishes no prices; it says to contact them. A search summary attributed '$495 one-time visit (4 man-hours)' and 'monthly from $350 (4 man-hours/visit)' to them, but the fetched page did not show these figures.", "source": "https://www.newecolandscapes.com/landscape-maintenance", "read": "2026-10-01", "basis": "page"},
+        {"company": "BK Bumpkin (Brooklyn garden design)", "site_visit_fee": 150, "unit": "USD per assessment visit", "source": "https://www.bkbumpkin.com/services", "read": "2026-10-01", "basis": "search-summary"},
+        {"company": null, "market_range": "yard maintenance about $100 per visit (range $80-$150) in Brooklyn", "source": "https://lawnbyseason.com/landscaping/cost/new-york/brooklyn-ny", "read": "2026-10-01", "basis": "search-summary", "note": "This is an aggregator estimate, not a named provider."}
+      ],
+      "chauffeurs_hourly": [
+        {"company": "Gotham Ride", "rates_usd_per_hour": {"Business Class Sedan (Mercedes E-Class)": 117, "Comfort Van (Toyota Sienna)": 124, "Business SUV (Chevrolet Suburban)": 173, "First Class SUV (Cadillac Escalade ESV)": 198, "First Class Sedan (Mercedes S-Class)": 211, "Business Sprinter": 371}, "minimum_hours": 2, "included": "TLC-licensed chauffeur, fuel, standard tolls, Wi-Fi, water; no surge pricing", "gratuity": "Online reservations automatically add a 15% gratuity", "cancellation": null, "lead_time": null, "cancellation_note": "Not published on the page.", "source": "https://gothamride.com/services/by-the-hour/", "read": "2026-10-01", "basis": "page"},
+        {"company": "Golden Class Limo (Long Island City)", "rates_usd_per_hour": {"Sedan": 85, "SUV": 95, "Sprinter": 110}, "minimum_hours": {"Sedan": 2, "SUV": 2, "Sprinter": 3}, "airport_example": "Sedan to LaGuardia: base $85 + congestion $2.75 + workers' comp $2.86 + tax $7.55 + toll $10.17 = $108.33", "cancellation": null, "source": "https://goldenclasslimo.com/rates/", "read": "2026-10-01", "basis": "page"}
+      ],
+      "designated_drivers": [
+        {"company": "Dryver (formerly BeMyDD) - drives you home in your own car", "rate_usd_per_hour": {"member": 39, "non_member": 55}, "minimum_hours": 2, "surge": "none", "cities": "Lists New York City, Long Island, Hamptons, Yonkers and Westchester among 79 US cities", "lead_time": "Books online or in the app 'in minutes'", "cancellation": null, "source": "https://www.dryver.com/designated-driver.html", "read": "2026-10-01", "basis": "page"}
+      ],
+      "property_managers": [
+        {"company": null, "market_range": "management 8%-12% of gross rent for condos; leasing 50%-100% of first month's rent or a flat $500-$1,000; renewal $150-$400", "source": "https://www.steadily.com/blog/rental-property-costs-new-york", "read": "2026-10-01", "basis": "search-summary", "note": "No NYC manager with a published single-unit fee schedule was found. Pages fetched from Landlord Management NY and Brick Underground gave market ranges only. Brick Underground (2023) covers building management: $500-$1,200 per apartment per year."},
+        {"rule": "FARE Act (Local Law 119 of 2024), in effect since 2025-06-11", "detail": "The party that hires the broker, usually the landlord, pays the broker's fee. A tenant cannot be charged the fee of a broker the landlord hired. Fees must be disclosed in listings and leases. DCWP enforces it.", "source": "https://www.nyc.gov/site/dca/about/FAQ-Broker-Fees.page", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "instructors": {
+        "personal_trainers": [
+          {"company": "Equinox (NYC)", "per_session_usd_by_tier": {"Tier 1": "120-135", "Tier 2": "135-150", "Tier 3": "155-185", "Tier 4": "170-200", "Tier X": "185-250+"}, "conditions": "Club membership is required; personal training is billed on top of dues", "cancellation": "24 hours' notice", "source": "https://equinomembershipprice.com/equinox-personal-training/", "read": "2026-10-01", "basis": "search-summary", "note": "This is a third-party site, not Equinox. Equinox does not publish PT prices publicly."}
+        ],
+        "driving_instructors": [
+          {"company": "Autonautics International Driving School", "single_lesson_45min_usd": {"Brooklyn": 50, "Staten Island": 55, "Manhattan": 65}, "highway_lesson_90min_usd": {"Brooklyn": 125, "Downtown Brooklyn/Staten Island": 135, "Manhattan/Queens": 155}, "packages_usd": {"Brooklyn": {"3": 270, "5": 425, "10": 670, "15": 915, "20": 1160}, "Staten Island": {"3": 285, "5": 450, "10": 750, "15": 990, "20": 1260}, "Manhattan": {"3": 370, "5": 555, "10": 875, "15": 1195, "20": 1515}}, "road_test_car_usd": {"Brooklyn/Staten Island": 120, "Manhattan": 175, "appointment_only": 50}, "five_hour_prelicensing_class_usd": 60, "validity": "1 year from purchase", "cancellation": "$25 fee without 24 hours' notice; road test non-refundable inside 48 hours", "payment": "In advance at booking", "source": "https://autonauticsdrivingschool.com/pricing/", "read": "2026-10-01", "basis": "page"},
+          {"company": "Telemundo Driving School", "package_5x45min_usd": 395, "includes": "5-hour course, road test appointment, car and driver for road test", "source": "https://telemundodrivingschool.com/driving-class-packages/", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "Himalayan Driving School (Queens)", "package_5x45min_usd": 350, "includes": "5-hour video course, DMV road test date, car for road test", "source": "https://www.himalayandrivingschool.com/price-list/", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "acting_voice_dialect_coaches": [
+          {"company": "The Acting Studio - New York (private coaching)", "rate_usd_per_hour": 95, "packages_usd": {"5 sessions": 425, "10 sessions": 800}, "specialties": "audition, scene study, voice/speech, accent reduction, singing, voice-over", "cancellation": "48 hours' notice required", "source": "https://www.actingstudio.com/acting-classes/actors/private-acting-coaching/", "read": "2026-10-01", "basis": "page"},
+          {"company": "Actors Technique NY", "rate_usd": {"Todd Etelson": 175, "coaching staff": 150}, "source": "https://actorstechniqueny.com/coaching-taping/", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "One on One NYC - High Stakes Audition Coaching", "rate_usd_per_hour": 250, "source": "https://www.oneononenyc.com/high-stakes-audition-coaching/", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "dance_teachers": [
+          {"company": "Broadway Dance Center (Children & Teens private lessons)", "private_usd": {"30 min": 80, "45 min": 105, "60 min": 130, "90 min": 180, "120 min": 245}, "semi_private_usd": {"45 min": 180, "60 min": 205, "90 min": 255, "120 min": 320}, "source": "https://broadwaydancecenter.com/children-teens/private-lessons", "read": "2026-10-01", "basis": "search-summary", "note": "These are youth-programme rates. Adult private rates were not found."}
+        ],
+        "music_teachers": [
+          {"company": "Lucy Moses School (Kaufman Music Center)", "price": null, "note": "The latest figure found was 2023-24: private lessons $1,800 per year ($900 per semester). No 2026 rate was found. Registration fees are $50 for the Young People's Division and $30 for the Adult Division (date unconfirmed).", "source": "https://www.kaufmanmusiccenter.org/lms/piano/", "read": "2026-10-01", "basis": "search-summary"}
+        ]
+      },
+      "trades": [
+        {"company": null, "market_range": "service call (trip) fee $75-$200, higher in Manhattan south of 96th St; scheduled work $66-$110/hr (avg $88); Manhattan routine $120-$200/hr; emergency $120-$165/hr plus a $150-$200 trip charge; union plumbers $250-$350/hr", "source": "https://plumbingnyc.com/nyc-plumbing-cost/", "read": "2026-10-01", "basis": "search-summary", "note": "No named NYC plumber, electrician or handyman with a published rate card was found."}
+      ],
+      "dog_walkers": [
+        {"company": "Wag!", "price_usd_30min_walk": "about 24 (most 22-28)", "source": "https://wagwalking.com/dog-walking/ny-new-york", "read": "2026-10-01", "basis": "search-summary"},
+        {"company": "Rover", "price_usd_30min_walk": "average 21.98 (18-25)", "source": "https://www.rover.com/blog/new-york-city-ny-dog-walking-price/", "read": "2026-10-01", "basis": "search-summary"}
+      ]
+    },
+
+    "Los Angeles": {
+      "gardeners": [
+        {"company": null, "market_range": "mow-edge-blow $35-$80 per visit; weekly service $75-$115 per week; monthly packages $120-$300; full service with fertilizing, weeds and irrigation $300-$500 per month; gardeners $35-$65/hr", "source": "https://www.paragonhomeservicesca.com/blog/lawn-care-los-angeles-cost-guide", "read": "2026-10-01", "basis": "search-summary", "note": "No named LA gardener with a published price list was found. LA's 'mow and blow' market is mostly informal, quoted crews."}
+      ],
+      "chauffeurs_hourly": [
+        {"company": "Continental Luxury Car Service", "rate_usd_per_hour_all_in": 138, "vehicle": "Cadillac Escalade ESV", "includes_gratuity": "20%", "minimum": "3 hours ($414)", "half_day_4_5h_usd": 575, "full_day_8_10h_usd": 1150, "cancellation": null, "source": "https://ridecontinental.com/hourly-chauffeur", "read": "2026-10-01", "basis": "page"},
+        {"company": "Five Diamonds Limousine", "rate_usd_per_hour": 100, "vehicle": "Cadillac Escalade ESV", "minimum_hours": 4, "source": "https://www.fivediamondslimo.com/fleet/cadillac-escalade-suv/", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "designated_drivers": [
+        {"company": "Dryver (formerly BeMyDD)", "rate_usd_per_hour": {"member": 39, "non_member": 55}, "minimum_hours": 2, "cities": "Los Angeles among the listed cities", "source": "https://www.dryver.com/designated-driver.html", "read": "2026-10-01", "basis": "page"}
+      ],
+      "property_managers": [
+        {"company": "PMI Los Angeles", "plans": {"Gold": {"management_pct": 6, "monthly_minimum_usd": 175, "leasing_fee": "greater of 50% of one month's rent or $1,500"}, "Platinum": {"management_pct": 8, "monthly_minimum_usd": 225, "leasing_fee": "greater of 50% of one month's rent or $1,500"}, "Diamond": {"management_pct": 10, "monthly_minimum_usd": 295, "leasing_fee": "$750 flat"}}, "other_fees_usd": {"lease_renewal": 195, "periodic_inspection": 195, "photos": 195, "video_walkthrough": 75, "warranty_dispatch_per_work_order": 35, "maintenance_markup": "10%"}, "multi_unit": "management fee scales from 7% down to 4%", "source": "https://www.losangelespmi.com/pricing", "read": "2026-10-01", "basis": "page"},
+        {"company": "Utopia Management", "management_pct": "8-10", "leasing": "free under full management", "source": "https://utopiamanagement.com/how-much-does-property-management-cost-in-los-angeles", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "instructors": {
+        "personal_trainers": [
+          {"company": null, "market_range": "one-to-one $75-$150/hr; experienced $150-$300; entry-level from $50", "source": "https://happytrainers.com/blog/personal-trainer-rates-in-los-angeles/", "read": "2026-10-01", "basis": "search-summary", "note": "No named LA studio with a published single-session rate was confirmed."}
+        ],
+        "driving_instructors": [
+          {"company": "Route 66 Driving School (5777 W Century Blvd)", "behind_the_wheel_usd": {"2 hours": 220, "4 hours": 400, "6 hours": 570, "10 hours": 850}, "dmv_test_package_usd": {"local": 275, "non_local": 325}, "online_drivers_ed_usd": 49.95, "cancellation": null, "source": "https://www.r66ds.com/rates.html", "read": "2026-10-01", "basis": "page", "note": "A search summary gave lower, older figures ($180 for 2 hours and so on). These are the figures on the page."},
+          {"company": "Coastline Academy (LA Westside)", "packages_usd": {"one 2-hour lesson": 209, "with home pickup": 229, "three 2-hour lessons": 599, "five 2-hour lessons": 979}, "source": "https://coastlineacademy.com/ca/location/Los-Angeles-Westside", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "acting_voice_dialect_coaches": [
+          {"company": "Braden Lynch Studio (Reseda)", "private_usd": {"per hour": 150, "per half hour": 75}, "self_tape": "$75 per half hour + $50 taping fee", "class": "$300 per four consecutive weekly classes", "on_set": "$600 half day / $1,000 full day", "overtime": "1.5x outside Mon-Fri 10am-5pm PT", "source": "https://www.bradenlynchstudio.com/rates", "read": "2026-10-01", "basis": "page"},
+          {"company": "The Actor's Dialect Coach (Scott Alan Moffitt; virtual, Pacific time)", "rate_usd_per_hour": 125, "after_hours_surcharge_usd": 50, "bulk_discount": "20% off when prepaying 5+ hours", "cancellation": "24 hours' notice; $20 late-change fee; no-show charged in full", "source": "https://www.actorsdialectcoach.com/f-a-q", "read": "2026-10-01", "basis": "page"}
+        ],
+        "dance_teachers": [
+          {"company": "Millennium Dance Complex (Studio City)", "private_from_usd": 70, "group_private": "$600 for 2-10 students, or $55 per person for 11+, for 1.5 hours", "drop_in_class_usd": 23, "source": "https://teachme.to/venues/dance/california/studio-city/millennium-dance-complex", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "music_teachers": [
+          {"company": "Angeles Academy of Music", "monthly_usd_weekly_30min": {"Westwood/Brentwood": 218, "Tarzana": 192}, "source": "https://www.angelesacademyofmusic.com/news/how-much-are-piano-lessons", "read": "2026-10-01", "basis": "search-summary"}
+        ]
+      },
+      "trades": [
+        {"company": null, "market_range": "plumber service call $75-$150 plus $95-$200/hr; master plumber $110-$225/hr; after-hours $200-$400/hr; handyman $75-$150/hr with a service-call minimum of $125-$175", "source": "https://hitechplumbingservicesinc.com/plumber-cost-los-angeles/", "read": "2026-10-01", "basis": "search-summary", "note": "Handyman figures come from https://goldkeyrepairs.com/blog/handyman-cost-los-angeles.html (search-summary). No named rate card was found."}
+      ],
+      "dog_walkers": []
+    },
+
+    "New Haven": {
+      "gardeners": [
+        {"company": "LawnGuru (app marketplace)", "per_cut_usd": {"starting": 44, "range": "44.17-61.33", "average": 52.75}, "recurring_discount": "20% off weekly recurring", "lead_time": "same-day available", "cancellation": "skip/pause available for recurring; no formal policy stated", "guarantee": "report within 3 days for re-service or refund", "source": "https://lawnguru.co/cities/new-haven-ct/lawn-mowing", "read": "2026-10-01", "basis": "page"},
+        {"company": null, "market_range": "1/8 acre $34-$46; 1/4 acre $46-$63; 1/2 acre $63-$80; 1 acre $98-$115 per cut", "source": "https://www.homeblue.com/lawn-mowing/new-haven-ct-lawn-mowing-prices.htm", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "chauffeurs_hourly": [
+        {"company": "Teddy's Limo (Norwalk and Farmington CT; serves HVN)", "rates_usd_per_hour": {"Sedan": 75, "SUV": 92, "Transit Van": 113, "Executive Sprinter": 130}, "minimum_usd": {"Sedan": 150, "SUV": 368, "Transit Van": 452, "Executive Sprinter": 520}, "fees": "Base fare excludes tip, tolls and surcharges; below 42nd St NYC +$10", "source": "https://teddyslimo.com/reservations/limo-prices/", "read": "2026-10-01", "basis": "page"},
+        {"company": "Detailed Drivers (New Haven)", "executive_sedan_from_usd_per_hour": 100, "s_class_from_usd_per_hour": 170, "source": "https://www.detaileddrivers.com/locations/connecticut/new-haven", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "designated_drivers": [],
+      "property_managers": [
+        {"company": "Nexus Property Management (New Haven County)", "management_single_family_pct": {"rent <= $850": 10, "$851-$1,200": 9, "rent >= $1,201": 8}, "management_multi_unit_pct": {"<= 6 units": 8, "7-35": 7, ">= 36": 6}, "leasing_fee": "greater of 50% of first month's rent or $450", "no_fees_for": "setup, lease renewal, admin, late-charge retention", "guarantee": "replaces a tenant who leaves within 90 days at no charge", "source": "https://www.nexuspropertymanagement.com/connecticut/hamden/price", "read": "2026-10-01", "basis": "page"},
+        {"company": "Ziprent", "management_usd_per_month": 150, "tenant_placement_usd": 1500, "source": "https://ziprent.com/property-management/new-haven/", "read": "2026-10-01", "basis": "search-summary", "note": "The page title says '$199 flat fee' while the summary says $150 a month. Unresolved."},
+        {"company": "New England Property Management LLC", "management_pct": 9, "leasing_fee": "one month's rent", "source": "https://www.newenglandpropertymanagementllc.com/new-haven-property-management", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "instructors": {
+        "personal_trainers": [
+          {"company": "North Haven Health & Racquet", "per_session_usd": {"30 min": 35, "60 min": 60}, "source": "https://nhhrct.com/personal-training/", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "driving_instructors": [
+          {"company": "Chase '2' Driving School (377 Main St, West Haven)", "eight_hour_safe_driving_course_usd": {"ages 16-17": 125, "ages 18+": 140}, "two_hour_behind_wheel_usd": 193, "two_hour_plus_road_test_16_21_usd": 343, "adult_packages_usd": {"8-hr course + 2-hr lesson": 515, "8-hr course + 4-hr lesson": 520, "8-hr course + 8-hr lesson": 900}, "teen_package_usd": 495, "cancellation": "24 hours' notice to avoid fees", "validity": "6 months for teen courses, 3 months for other packages", "source": "https://chase2driving.com/classes-fees.php", "read": "2026-10-01", "basis": "page"},
+          {"company": "New Haven Driving School", "eight_hour_adult_class_usd": 100, "adult_special_8hr_course_plus_4hr_driving_usd": 399, "source": "https://www.newhavendrivingschool.com/enroll_online", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "Crossroads Driving School", "one_on_one_usd_per_hour": 75, "38_hour_course_usd": 750, "source": "https://www.crdrivingschool.com/programs", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "acting_voice_dialect_coaches": [
+          {"company": null, "market_range": "private acting coach $50-$150+/hr; one local coach charges $135 for a first 1.5-hour session, then $80/hr or $45 per half hour", "source": "https://lessons.com/ct/new-haven/acting-classes/", "read": "2026-10-01", "basis": "search-summary", "note": "The coach was not named in the summary."}
+        ],
+        "dance_teachers": [],
+        "music_teachers": [
+          {"company": null, "market_range": "voice/singing lessons average $68 per hour in New Haven; tutors $55-$125/hr", "source": "https://lessonwithyou.com/singing-lessons-cost-new-haven-connecticut/", "read": "2026-10-01", "basis": "search-summary"}
+        ]
+      },
+      "trades": [
+        {"company": null, "market_range": "plumbers $45-$150/hr with a $50-$200 minimum call-out; electricians $50-$130/hr plus a $100-$200 service call; emergency plumbing averages $305-$440", "source": "https://homeguide.com/costs/plumber-cost", "read": "2026-10-01", "basis": "search-summary", "note": "These are national and New Haven aggregator figures. No named rate card was found."}
+      ],
+      "dog_walkers": []
+    },
+
+    "London": {
+      "gardeners": [
+        {"company": "Urban Gardeners (South East London)", "garden_maintenance_gbp": "83 first hour, 65 each further hour", "lawn_care_mowing_gbp": "80 first hour, 60 each further hour", "garden_clearance_gbp_per_hour": "85 (2-person team)", "ivy_removal_gbp_per_hour": "80-85", "patio_cleaning": "£4/m2, minimum £120", "note": "Prices are 'subject to change' and confirmed before work starts. No cancellation terms are published.", "source": "https://urbangardeners.co.uk/gardener-costs-in-south-east-london-how-much-will-you-spend/", "read": "2026-10-01", "basis": "page"},
+        {"company": "Fantastic Services", "team_of_two_gbp": "83 first hour, 65 each further hour", "green_waste": "one black bag included; extra bag £5; jumbo bag £55", "minimum_and_cancellation": null, "note": "The figures are identical to Urban Gardeners'. The Fantastic cost-guide page may be quoting a market example rather than its own tariff, so this is unresolved.", "source": "https://www.fantasticservices.com/cost-guides/gardening/", "read": "2026-10-01", "basis": "page"},
+        {"company": null, "market_range": "inner London £40-£62/hr; day rate £250-£350; outer boroughs about £35/hr", "source": "https://www.fantasticservices.com/cost-guides/gardening/gardener-cost/", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "chauffeurs_hourly": [
+        {"company": "Hadley Executive Chauffeurs", "rates_gbp_per_hour_plus_vat": {"Business Class (BMW i5)": 70, "First Class (S-Class/7 Series)": 85, "Premium SUV (Range Rover)": 150}, "minimum_hours": 4, "full_day": "about £680 + VAT for 8 hours in an S-Class", "employing_directly": "from £50,000 a year (salary, insurance, vehicle)", "source": "https://hadley.london/news/how-much-is-a-chauffeur-service-london/", "read": "2026-10-01", "basis": "page"},
+        {"company": "Car and Driver Hire London", "rates_gbp": {"Ford Galaxy": "full day (8h) 490; half day (4h) 290; extra hour 50", "Mercedes S-Class": "full day 550; half day 350; extra hour 50", "Range Rover Autobiography": "full day 550; half day 350; extra hour 60"}, "driver_only_in_customers_own_car": "£50/hr, minimum 8 hours", "cancellation": "14-day policy; late cancellation charged at 100%", "included": "unlimited miles and stops", "source": "https://www.caranddriverhirelondon.com/prices.php", "read": "2026-10-01", "basis": "page"}
+      ],
+      "designated_drivers": [
+        {"company": "Let Me Drive (driveuhome.co.uk, NW2)", "prices": null, "note": "Drives you home in your own car. Prices are by phone quote only and are not published.", "source": "https://www.driveuhome.co.uk/", "read": "2026-10-01", "basis": "page"},
+        {"company": "Car and Driver Hire London (driver only)", "rate_gbp_per_hour": 50, "minimum_hours": 8, "source": "https://www.caranddriverhirelondon.com/prices.php", "read": "2026-10-01", "basis": "page"}
+      ],
+      "property_managers": [
+        {"company": "Foxtons", "let_only": "13.2% incl. VAT (11% + VAT); renewals 12% (10% + VAT) for the first two years, then 8.4% (7% + VAT)", "management_added": {"1-2 properties": "7.2% (6% + VAT)", "3-4": "6% (5% + VAT)", "5+": "4.8% (4% + VAT)", "renewals": "4.8% (4% + VAT)"}, "short_lets": "31.2% (26% + VAT)", "fixed_fees_gbp": {"tenancy agreement long let": 450, "tenancy agreement short let": 225, "AML check": 30, "deposit registration": 50, "Section 21 notice": 150, "inspection": "120 + VAT", "gas safety": "150 + VAT", "EPC": "150 + VAT", "HMRC returns per person": 250, "licence application per person": 450}, "works_over_1000": "12% (10% + VAT)", "source": "https://www.foxtons.co.uk/landlord/property-management/fees", "read": "2026-10-01", "basis": "page"}
+      ],
+      "instructors": {
+        "personal_trainers": [
+          {"company": "PureGym (freelance PTs)", "per_session_gbp": "about 30-50", "source": "https://www.yourpersonaltraininguk.co.uk/news/how-much-is-a-personal-trainer-at-puregym", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "Third Space", "per_session_gbp": "from 85; about 140 reported at Mayfair", "source": "https://wharf-life.com/interviews/canary-wharf-personal-trainer-sessions-at-third-space-canary-wharf/", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "driving_instructors": [
+          {"company": "Licence2Drive (Richmond/Isleworth, West London)", "single_lesson_gbp": 45, "block_10h_gbp": 425, "transmission": "manual or automatic, same price", "cancellation": null, "source": "https://licence2drive.uk/pricing/", "read": "2026-10-01", "basis": "page", "note": "A search summary gave older figures (£42.50 manual, £400 for a 10-hour block). The page shows £45 and £425."},
+          {"company": "AA Driving School", "rate": null, "note": "Priced by postcode through the AA booking tool. A third party reports £42-£45/hr in London and the South East and a £6/hr discount for AA members on a first 6-hour block. No national rate is published.", "source": "https://drivinglessonscost.com/driving-school-comparison", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "A Class Learners", "cancellation": "48 hours' notice or the lesson is charged", "source": "https://www.aclasslearners.com/prices.html", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "acting_voice_dialect_coaches": [
+          {"company": "Rachel Coffey Coaching (dialect and voice)", "dialect_online_gbp": {"50 min": 135, "30 min follow-up": 80, "4-session package": 440}, "dialect_in_person_gbp": {"50 min": 185, "90 min": 285, "2 hours": 345}, "professional_actor_rates_gbp": {"online single": 65, "online 4-pack": 220, "in-person 1 hour": 135}, "voice_online_gbp": {"single 50 min": 135, "3-pack": 325}, "voice_in_person_3_pack_gbp": 585, "cancellation": null, "source": "https://www.rachelcoffeycoaching.com/actors-dialect", "read": "2026-10-01", "basis": "page"},
+          {"company": "Lakewood AMDC (Chris)", "rate_gbp": {"1 hour": 80, "90 min": 110}, "source": "https://www.lakewoodamdc.co.uk/dialect-coaching", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "dance_teachers": [
+          {"company": "Pineapple Dance Studios", "private_from_gbp": "150 (another listing says 165)", "note": "Price depends on headcount, duration and number of classes. Enquiries go to events@pineapple.uk.com.", "source": "https://www.pineapple.uk.com/pages/parties-events", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "music_teachers": [
+          {"company": "Sokol Piano Academy", "adult_gbp": {"half hour from": 105, "hour from": 125}, "source": "https://www.sokolpianoacademy.com/", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "Musicians' Union", "recommended_minimum_gbp_per_hour_2025_26": 44, "source": "https://www.lewisbollandmusic.com/honestlyjustplay/how-much-do-piano-lessons-cost-an-honest-guide", "read": "2026-10-01", "basis": "search-summary", "note": "Reported second-hand, not read from the MU page."}
+        ]
+      },
+      "trades": [
+        {"company": "Pimlico Plumbers", "published": "emergencies from £37.50 + VAT; 1-hour minimum, then 15-minute increments; 'same price every day'; materials extra", "hourly_rate": null, "note": "The rates page was not fetched. Third parties report £156/hr and £180/hr, which conflict, so treat both as unverified.", "source": "https://www.pimlicoplumbers.com/better-when-we-fix-it/", "read": "2026-10-01", "basis": "page"}
+      ],
+      "dog_walkers": [
+        {"company": null, "market_range": "London average about £17.50 per walk (£15-£20); solo 30 min £18-£30; group 60 min £15-£28", "source": "https://pettrader.co.uk/directory/dog-walkers/prices/london", "read": "2026-10-01", "basis": "search-summary"}
+      ]
+    },
+
+    "Dublin": {
+      "gardeners": [
+        {"company": "Grasshopper Services (North and South Dublin)", "mowing": "from about €30/hr (another passage says a flat rate of about €25/hr)", "strimming": "€17-€127 depending on garden size", "plans": "monthly and annual plans exist but are unpriced", "minimum_and_cancellation": null, "source": "https://www.grasshopperservices.ie/grass-cutting-cost-ireland/", "read": "2026-10-01", "basis": "page"},
+        {"company": "Call The Beaver", "prices": null, "note": "The fetch returned HTTP 403.", "source": "https://callthebeaver.ie/what-is-the-cost-of-garden-maintenance/", "read": "2026-10-01", "basis": "page"},
+        {"company": null, "market_range": "Dublin €25-€60/hr; estate-house lawn cut €35-€80 front and back; plans €100-€200+ per month", "source": "https://gardenmaintenance.ie/how-much-does-a-gardener-charge-in-ireland/", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "chauffeurs_hourly": [
+        {"company": "All City Chauffeurs", "rates_eur_per_hour": {"Mercedes E-Class": "70 (4h min, 40 km incl.)", "Mercedes S-Class": "80 (4h min, 45 km incl.)", "Mercedes V-Class": "90 (4h min, 50 km incl.)"}, "transfer_minimums_eur": {"E-Class": "120, then €2.25/km after 20 km", "S-Class": "150, €2.35/km", "V-Class": "150, €2.45/km"}, "cancellation": "free with 24 hours' notice", "tolls_extra": "Port Tunnel €10 peak/€3 off-peak; M50 €2.90; Eastlink €1.40", "source": "https://allcitychauffeurs.ie/our-pricing/", "read": "2026-10-01", "basis": "page"},
+        {"company": "Elite Chauffeurs", "rate_eur_per_hour": "from 70 (E-Class)", "minimum_hours": 2, "source": "https://elitechauffeurs.ie/", "read": "2026-10-01", "basis": "search-summary"},
+        {"company": "Ireland Executive Transfers", "rate_eur_per_hour": 130, "minimum_hours": 2, "source": "https://irelandexecutivetransfers.ie/prices-per-hour-hire/", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "designated_drivers": [
+        {"company": null, "prices": null, "note": "No Dublin (Ireland) service that drives you home in your own car with published prices was found. 'Jeevz Dublin' is Dublin, California, in USD, and was excluded."}
+      ],
+      "property_managers": [
+        {"company": "Property Vision", "letting_fee": "one month's rent + VAT (about 123% of a month's rent in total)", "management_fee": "€600 + VAT per month (flat)", "source": "https://propertyvision.ie/letting-agent-fees-dublin/", "read": "2026-10-01", "basis": "page", "note": "€600 a month flat is unusually high against the 6%-10% market. It is reported as the page states it."},
+        {"company": null, "market_range": "6%-10% of rent plus VAT (23%); letting fee often one month's rent; lease renewal about €100 + VAT", "source": "https://www.sckgroup.ie/letting-agent-fees-in-dublin/", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "instructors": {
+        "personal_trainers": [
+          {"company": "Bodycoach", "per_session_eur": 60, "source": "https://www.bodycoach.ie/price.html", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "Swan Leisure", "once_off_eur": 35, "packages_eur": {"10 x 30 min": 275, "10 x 50 min": 500}, "source": "https://www.swanleisure.ie/classes/personal-training", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "driving_instructors": [
+          {"company": "RSA School of Motoring (Dublin)", "single_lesson_eur": {"manual": 53.27, "automatic": 61.41}, "edt_12_lessons_eur": {"manual": 587.95, "automatic": 659.24}, "edt_6_lessons_eur": {"manual": 315.01, "automatic": 353.71}, "pretest_plus_car_hire_eur": {"manual": 183.63, "automatic": 193.81}, "vat": "included", "cancellation": null, "source": "https://www.rsaschoolofmotoring.ie/pricing", "read": "2026-10-01", "basis": "page", "note": "Ireland requires 12 Essential Driver Training (EDT) lessons for learners. The school's name resembles the Road Safety Authority's, but it is a private school."}
+        ],
+        "acting_voice_dialect_coaches": [
+          {"company": "Gaiety School of Acting", "one_to_one_eur_per_hour": 85, "package": "buy 5, get 1 free", "source": "https://gaietyschool.com/one-to-one-coaching/", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "dance_teachers": [
+          {"company": "Beyond Dance Dublin", "private_eur": {"solo 1 hour": 50, "couple": 90}, "source": "https://www.beyonddancedublin.com/private-classes", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "music_teachers": [
+          {"company": "Waltons New School of Music", "private_30min_term_fees_eur": {"first term": 360, "second term": 375, "third term": 295}, "discount": "10% for over-65s, unemployed and third-level students", "note": "The fees found are labelled 2024-25, and 2026-27 fees were not confirmed. Fees are pro-rated to the lessons remaining.", "source": "https://www.newschool.ie/tuition-options/", "read": "2026-10-01", "basis": "search-summary"}
+        ]
+      },
+      "trades": [
+        {"company": null, "market_range": "plumber call-out €60-€100 (typically about €95 incl. first hour); €60-€110/hr daytime; €115-€145 evenings and weekends; emergency €120-€250 first hour. Electrician call-out plus first hour €80-€150; €50-€90/hr", "source": "https://www.grafta.ie/resources/plumber-rates-ireland", "read": "2026-10-01", "basis": "search-summary", "note": "Cortech Plumbing (Tallaght) was fetched and publishes no own rates."}
+      ],
+      "dog_walkers": []
+    },
+
+    "Toronto": {
+      "gardeners": [
+        {"company": "Trim Gym Lawn Care (GTA)", "weekly_cut_cad": {"small <2,500 sq ft": 45, "medium 2,500-5,000": 60, "large 5,000+": "80+"}, "one_time_cut_cad": {"small <2,000": 70, "standard 2,000-4,000": 90, "large/corner": 115}, "monthly_plan_cad": "from 179", "spring_fall_cleanup_cad": {"small": 149, "medium": 225, "large": "349+"}, "fertilization_4_visits_cad": 299, "garden_maintenance_cad_per_hour": 50, "tax": "+13% HST", "season": "May 1-Oct 31", "lead_time": "quote response within 24 hours", "cancellation": "monthly plans: 'reasonable notice'; one-time: skip with 48 hours' notice", "source": "https://trimgymlawncare.ca/fall-cleanup-toronto", "read": "2026-10-01", "basis": "page"},
+        {"company": null, "market_range": "April-October contract $1,200-$1,800; weekly $45-$60 per cut on a typical detached lot", "source": "https://yardquote.ca/costs/lawn-care-cost-toronto/", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "chauffeurs_hourly": [
+        {"company": "Chauffeuropolis", "rates_cad_per_hour": {"Executive Sedan (Lexus ES/Cadillac XTS)": "100-125 (4h min)", "Cadillac Escalade ESV": "175 (5h min)", "Sprinter (14 pax)": "175 (5h min)", "S-Class/Maybach": 250}, "extras": "13% HST plus 15%-20% gratuity; portal-to-portal billing", "source": "https://chauffeuropolis.com/locations/hourly-rates-for-luxury-chauffeur-services-in-toronto/", "read": "2026-10-01", "basis": "page"},
+        {"company": "Keys to Us (personal driver in your own car)", "rate_cad_per_hour": 60, "minimum_hours": 3, "source": "http://www.keystous.ca/", "read": "2026-10-01", "basis": "page"}
+      ],
+      "designated_drivers": [
+        {"company": "Keys to Us (Toronto, York, Durham, Peel, Halton)", "base_cad_0_to_4_9km": "20, 25 or 30 depending on pickup area", "per_km": null, "food_stop": "$5 + wait time over 10 minutes", "hours": "Sun-Wed 8pm-3am; Thu 6pm-3am; Fri-Sat 5pm-4am", "cancellation": null, "source": "http://www.keystous.ca/", "read": "2026-10-01", "basis": "page"},
+        {"company": "SOBDRIVE", "flat_from_cad": 39.99, "source": "https://www.sobdrive.ca/toronto.html", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "property_managers": [
+        {"company": "Property Management Partners (Toronto)", "monthly_management": {"Standard": "6.9%", "Premium": "8.9%", "Premium Plus": "10.9%"}, "monthly_minimum_cad": 125, "leasing_fee_pct_of_annual_rent": {"Standard": 8.4, "Premium": 8.9, "Premium Plus": 10.9}, "hst_renewal_setup": null, "source": "https://propertymanagementpartners.ca/toronto-on-property-management-fees/", "read": "2026-10-01", "basis": "page"}
+      ],
+      "instructors": {
+        "personal_trainers": [
+          {"company": "Studio Fitness", "single_session_cad": 90, "package_per_session_cad": "75-80", "source": "https://www.studio-fitness.com/prices/", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "Atom Athletics", "from_cad_per_session": "84 + HST", "source": "https://atomathletics.ca/personal-trainer-cost-toronto/", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "driving_instructors": [
+          {"company": "Young Drivers of Canada (Toronto)", "single_90min_lesson_cad": 209, "packages_cad": {"3 lessons": 627, "5 lessons": 1040, "10 lessons": 2080}, "full_courses_cad": {"in-person (10 in-car hours)": 1789, "plus G2 road test (13.75 h)": 2239, "Premier G2 and G (27.25 h)": 3949}, "cancellation": null, "source": "https://yd.com/locations/on/toronto", "read": "2026-10-01", "basis": "page"}
+        ],
+        "acting_voice_dialect_coaches": [
+          {"company": "Milne Acting Studio (500 Queens Quay W)", "rates_cad": {"Brad Milne hour": "150 + HST (169.50)", "Brad Milne half hour": "81 + HST (91.53)", "Jason Weinberg hour": "110 + HST (124.30)", "Jason Weinberg half hour": "60 + HST (67.80)"}, "self_tape_cad": {"30 min": "45 + HST", "1 hour": "80 + HST"}, "cancellation": "refers to a separate policy page (not fetched)", "source": "https://milnestudio.ca/private-coaching-self-tapes/", "read": "2026-10-01", "basis": "page", "note": "A search summary gave older self-tape figures ($35/$60). The page shows $45/$80."}
+        ],
+        "dance_teachers": [
+          {"company": "Steps Dance Studio (salsa/bachata)", "private_cad_per_hour": {"senior instructor": 120, "featured instructors": 160}, "source": "https://www.stepsdancestudio.com/privates", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "Dance With Me Toronto", "private_cad": "95 per lesson incl. tax, per person or couple", "source": "https://dancewithmetoronto.com/rates", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "music_teachers": [
+          {"company": "Long & McQuade (Danforth lesson centre)", "per_30min_cad": "37-40 by teacher", "source": "https://www.long-mcquade.com/lessons/Ontario/Toronto/Danforth/", "read": "2026-10-01", "basis": "search-summary"}
+        ]
+      },
+      "trades": [
+        {"company": null, "market_range": "plumbers $120-$190/hr ($145-$200 downtown); emergency $200+; electricians about $92-$207/hr (avg $138); handymen $75-$150/hr, downtown first hour $150-$200 then $85-$120, with a $100-$200 minimum service call", "source": "https://urbantasker.com/blog/how-much-does-handyman-cost-in-greater-toronto-area-gta-ontario-canada", "read": "2026-10-01", "basis": "search-summary", "note": "Dr. Pipe was fetched and does not publish its own rates."}
+      ],
+      "dog_walkers": []
+    },
+
+    "Vancouver": {
+      "gardeners": [
+        {"company": "Harry's Lawn Care", "per_visit_cad": {"bi-weekly Enhanced": "65 (list 86.99)", "bi-weekly Premium": "117.35 (list 146.68)", "monthly Enhanced": "84 (list 94.50)", "monthly Premium": "195.25 (list 219.65)", "one-time Enhanced": 150, "one-time Premium": 350}, "add_on_cad_per_hour": {"tree trimming": 70, "hedge trimming": 70, "leaf removal": 75, "extra cut": 50}, "terms": "no contracts; cancel anytime by message; no cancellation fees; pay after service", "promotion": "season-quote discounts valid to 2026-04-15", "source": "https://harryslawncare.ca/lawn-care-prices/", "read": "2026-10-01", "basis": "page"},
+        {"company": "Terra Firma Lawn and Garden", "mowing_and_maintenance_cad_per_visit": "80-200", "source": "https://terrafirmalawnandgarden.ca/vancouver-landscaping-prices/", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "chauffeurs_hourly": [
+        {"company": "Time Limo", "rates_cad_per_hour": {"Executive Sedan": 110, "Executive SUV": 125, "Stretch Limousine": 150, "Party Bus 30 pax": "250-300"}, "minimum_hours": "2 (4 on busy Saturdays)", "extras": "about 30%: 15% gratuity, 10% fuel, 5% admin, plus taxes", "yvr_downtown_sedan_cad": 120, "source": "https://timelimo.com/limo-service-cost-vancouver/", "read": "2026-10-01", "basis": "page"}
+      ],
+      "designated_drivers": [
+        {"company": "SoberDrivers.ca", "pickup_cad": 30, "per_km_cad": 2.5, "source": "https://soberdrivers.ca/", "read": "2026-10-01", "basis": "search-summary"},
+        {"company": "My D Driver", "pickup_cad": 30, "per_km_cad": 2.5, "minimum": "10 km", "source": "https://myddriver.ca/vancouver/", "read": "2026-10-01", "basis": "search-summary"},
+        {"company": "NightCrew Designated Drivers", "pickup_cad": 25, "per_km_cad": 2.5, "minimum_fare_cad": 50, "source": "https://nightcrewdd.ca/designated-driving-service-vancouver-bc-canada/", "read": "2026-10-01", "basis": "search-summary"},
+        {"company": null, "extras": "stops $10 each (excluding gas fill-up); wait time $2.50 per minute; plus GST", "source": "https://discreetdesignateddriver.com/how-much-can-a-designated-driver-service-cost-in-vancouver/", "read": "2026-10-01", "basis": "search-summary", "note": "captainsdd.com did not resolve when fetched (DNS failure), so Captain's DD's reported $21 pickup and $2.40/km were not verified."}
+      ],
+      "property_managers": [
+        {"company": "Merestone Property Management", "management": "8.5% + GST monthly, charged only when rent is received", "placement": "50% of first month's rent + GST", "nr4_filing_cad": "300 + GST when applicable", "no_other_fees": "no sign-on, no maintenance markup, no vacancy fees", "source": "https://merestonepm.com/property-management-fees-services/", "read": "2026-10-01", "basis": "page"},
+        {"company": null, "market_range": "a common Greater Vancouver structure is 8.33% of rent + GST and half a month's rent + GST for placement; market 6%-12%", "source": "https://www.tenantpay.com/blog/how-much-do-canadian-property-managers-actually-charge", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "instructors": {
+        "personal_trainers": [
+          {"company": "Noble Wellness", "single_cad": 100, "packages_cad": {"5": 475, "10": 900, "15": 1275}, "source": "https://www.noblewellness.ca/personal-training-vancouver", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "Symmetrix", "single_55min_cad": 120, "package_per_credit_cad": {"12": 104, "24": 99}, "source": "https://www.symmetrix.ca/personal-trainer-vancouver", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "driving_instructors": [
+          {"company": "Solaris Driving School", "per_60min_lesson_cad": {"4-9 lessons": 95, "10-15 lessons": 90, "Gold (20 lessons)": 80}, "packages_cad": {"Starter 3 h": 285, "Gold 20 lessons + ICBC road test": 1600, "ICBC test package (3 lessons + test)": 430}, "extras": "GST and ICBC fees are extra; pickup at Broadway-City Hall SkyTrain", "validity": "6 months", "cancellation": "24 hours' written notice by email or a 50% fee; ICBC road test needs 72 hours to avoid ICBC's $25 penalty", "source": "https://solaris-vds.ca/prices.html", "read": "2026-10-01", "basis": "page"}
+        ],
+        "acting_voice_dialect_coaches": [
+          {"company": "Vancouver Acting Coach (Doralynn Mui)", "rate_cad": "75 per 1-hour session; $30 per extra half hour", "format": "mainly online; in-person on request at extra cost", "cancellation": "24+ hours full refund; inside 24 hours 50% refund; no-show no refund", "source": "https://www.vancouveractingcoach.ca/private-coaching", "read": "2026-10-01", "basis": "page"},
+          {"company": "SJR Studios (Sarah Jane Redmond)", "rate_cad": {"1 hour": 90, "half hour": 60}, "source": "https://sarahjaneredmond.com/coaching-for-actors-vancouver/", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "dance_teachers": [
+          {"company": "MADE Talents", "adult_private_from_cad": 80, "source": "https://www.madetalents.com/private-dance-class-vancouver", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "music_teachers": [
+          {"company": "Long & McQuade (Vancouver lesson centre)", "per_30min_cad": "33-35 by teacher", "source": "https://www.long-mcquade.com/lessons/British-Columbia/Vancouver/", "read": "2026-10-01", "basis": "search-summary"}
+        ]
+      },
+      "trades": [
+        {"company": "Vancouver City Plumbing", "regular_8am_4pm_cad": "125/hr; minimum $187.50 (1.5 h); $62.50 per extra 30 min", "after_4pm_cad": "250/hr; minimum $375 (1.5 h); $125 per extra 30 min", "holiday_dec23_jan1_cad": "233.33/hr; minimum $350", "helper_cad": "45/hr regular; 99/hr after hours", "gst": null, "source": "http://www.vancouvercityplumbing.ca/prices", "read": "2026-10-01", "basis": "page"},
+        {"company": null, "market_range": "plumbers $100-$200/hr, dispatch fee $80-$150; electricians $95-$135/hr, service call $150-$300", "source": "https://hydroproplumbing.ca/blog/plumber-cost-vancouver", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "dog_walkers": []
+    },
+
+    "Mexico City": {
+      "gardeners": [
+        {"company": null, "market_range": "MXN 69-116/hr (avg 89); basic visit for a small garden MXN 350-700; monthly service MXN 800-3,200; day rate MXN 300-800", "source": "https://www.cronoshare.com.mx/servicios/jardineros/ciudad-de-mexico", "read": "2026-10-01", "basis": "search-summary"},
+        {"company": "Habitissimo (marketplace aggregate, 2,075 quote requests)", "examples_mxn": {"monthly garden maintenance": 2460, "pruning 20 trees": 2800, "average job": 5040}, "source": "https://www.habitissimo.com.mx/presupuesto/jardineros/ciudad-de-mexico", "read": "2026-10-01", "basis": "page", "note": "No named CDMX gardener publishes prices. The trade is informal and quoted on site."}
+      ],
+      "chauffeurs_hourly": [
+        {"company": "Yo Manejo MX (Tizapán San Ángel)", "packages": "4, 8 and 12 hours", "prices": null, "note": "Prices are by quote only.", "source": "https://yomanejo.mx/chofer-privado/", "read": "2026-10-01", "basis": "page"},
+        {"company": "Safe Confidence (renta de auto con chofer)", "rates_mxn": {"Premium 3-5 pax": "5,400 city / 6,300 highway; extra hour 450", "SUV Premium 7 pax": "9,600 city / 11,600 highway; extra hour 550"}, "source": "https://safeconfidence.com.mx/servicios/renta-de-auto-con-chofer", "read": "2026-10-01", "basis": "search-summary", "note": "The base period these prices cover was not stated in the summary."},
+        {"company": null, "market_range": "MXN 500-1,000 per hour on average; from MXN 200-300/hr at the low end", "source": "https://www.cronoshare.com.mx/cuanto-cuesta/rentar-coche-conductor", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "designated_drivers": [
+        {"company": null, "prices": null, "note": "No CDMX conductor designado service with published prices was found."}
+      ],
+      "property_managers": [
+        {"company": "Homie", "model": "The owner page now advertises a guaranteed-rent model: 'no pagas comisión', rent paid on the 5th business day whether or not the unit is occupied, inflation-indexed, 5-year contract, up to 3 months' advance", "source": "https://homie.mx/marketing/landing/propietarios", "read": "2026-10-01", "basis": "page", "note": "A search summary described an older Homie model: one month's rent at letting, then 6.9% a month incl. IVA, minimum MXN 595. The current page did not show this."},
+        {"company": null, "market_range": "letting fee typically 100% of one month's rent once; management 5%-10% of monthly rent (another source says 8%-12%). No law fixes the rate.", "source": "https://www.liv.mx/es-MX/blog/administrar-propiedad-en-renta-mexico/", "read": "2026-10-01", "basis": "search-summary"}
+      ],
+      "instructors": {
+        "personal_trainers": [
+          {"company": null, "market_range": "MXN 500-1,200 per session (avg about 700-762); Polanco, Santa Fe and Condesa 1,000+; packages of 8-12 sessions at 10%-20% off", "source": "https://www.cronoshare.com.mx/cuanto-cuesta/entrenador-personal", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "driving_instructors": [
+          {"company": "Escuela Mexicana de Manejo (Tlalpan; Venustiano Carranza)", "weekday_courses_mxn": {"standard 5-20 practical hours": "1,899-6,999", "automatic 5-20 hours": "2,299-7,499"}, "weekend_courses_mxn": {"standard 5-12 hours": "2,199-4,499", "automatic 5-12 hours": "2,599-4,999"}, "includes": "6 theory hours free; SEMOVI-valid certificate; dual-brake insured cars", "home_pickup": "Coyoacán, Tlalpan and Xochimilco for an extra fee", "cancellation": null, "source": "https://escuelamexicanademanejo.mx/", "read": "2026-10-01", "basis": "page"},
+          {"company": "Escuela Panamericana de Manejo", "curso_ordinario_doble_10h_mxn": 2599, "source": "https://escuelapanamericanademanejo.com/", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "acting_voice_dialect_coaches": [
+          {"company": "Superprof CDMX listings (individual coaches)", "rates_mxn_per_hour": "200-500 (examples 200, 250, 350, 400, 500); average about 241", "packages": "one coach: 5 hours MXN 1,000; 10 hours MXN 2,500", "source": "https://www.superprof.mx/clases/actuacion/ciudad-de-mexico/", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "dance_teachers": [
+          {"company": "SIETEOCHO Dance Center", "class_mxn": "200 for a 2-hour class", "source": "https://dondeir.com/ciudad/aprende-a-bailar-donde-tomar-clases-de-salsa-y-bachata-en-cdmx/2025/01/", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "Studio Dance Evolution", "home_private_from_mxn_per_hour": 600, "source": "https://www.superprof.mx/blog/clases-baile-ciudad-mexico/", "read": "2026-10-01", "basis": "search-summary"}
+        ],
+        "music_teachers": [
+          {"company": "Musicando", "inscripcion_mxn": 1700, "mensualidad_mxn": 2500, "includes": "two classes a week (one group, one individual instrument)", "source": "https://www.musicando.com.mx/clases-piano.php", "read": "2026-10-01", "basis": "search-summary"},
+          {"company": "Ikalli Escuela de Música", "mensualidad_mxn": 1750, "includes": "8 hours a month in groups of up to 4", "source": "https://infoescuelas.com.mx/escuelas-de-musica-en-cdmx-ciudad-de-mexico/", "read": "2026-10-01", "basis": "search-summary"}
+        ]
+      },
+      "trades": [
+        {"company": null, "market_range": "plumber MXN 400-600/hr in CDMX (national 250-650); travel minimum MXN 150-300; electricians MXN 450-600/hr; electrician minimum visit MXN 500-1,000", "source": "https://homepro.com.mx/blog/costos-proyectos-plomeria-cdmx", "read": "2026-10-01", "basis": "search-summary", "note": "Electrician figures come from https://yacotice.com/blog/cuanto-cobrar-electricista-mexico (search-summary)."}
+      ],
+      "dog_walkers": []
+    }
+  },
+
+  "legal_minimums_and_employer_obligations": {
+    "United States (federal)": [
+      {"item": "Household employer FICA ('nanny tax') threshold 2026", "value": 3000, "unit": "USD cash wages to one household employee in the calendar year", "detail": "Covers housekeepers, nannies, private teachers and in-home caregivers. Employer and employee each owe 7.65% (6.2% Social Security + 1.45% Medicare), reported on Schedule H with Form 1040.", "source": "https://gtm.com/household/nanny-tax-threshold/", "read": "2026-10-01", "basis": "search-summary", "note": "Some older pages still show $2,800 for 2025."},
+      {"item": "FUTA trigger for household employers", "value": 1000, "unit": "USD cash wages to all household employees in any calendar quarter", "detail": "6% on the first $7,000 per employee, with up to a 5.4% credit for state UI.", "source": "https://beancount.io/blog/2026/05/10/schedule-h-nanny-tax-household-employers-social-security-medicare-futa-w2-domestic-worker-guide", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "Social Security wage base 2026", "value": 184500, "unit": "USD", "source": "https://beancount.io/blog/2026/05/10/schedule-h-nanny-tax-household-employers-social-security-medicare-futa-w2-domestic-worker-guide", "read": "2026-10-01", "basis": "search-summary"}
+    ],
+    "New York": [
+      {"item": "Minimum wage 2026 (NYC, Long Island, Westchester)", "value": 17.00, "unit": "USD per hour", "effective": "2026-01-01", "rest_of_state": 16.00, "source": "https://nyc-business.nyc.gov/nycbusiness/description/wage-regulations-in-new-york-state", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "Domestic Workers' Bill of Rights (since 2010-11-29)", "detail": "Overtime at 1.5x after 40 hours a week, or after 44 hours for live-in workers. A 24-hour day of rest each week; work on it is paid at overtime if the worker agrees to work. Three paid days of rest a year after one year with the same employer.", "source": "https://dol.ny.gov/system/files/documents/2021/12/facts-for-employers-of-domestic-workers_1.pdf", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "NY household employer unemployment insurance", "value": 500, "unit": "USD cash wages in a calendar quarter, after which the employer is liable from the first day of that quarter", "source": "https://www.tax.ny.gov/forms/publications/wt/nys50.htm", "read": "2026-10-01", "basis": "search-summary"}
+    ],
+    "California / Los Angeles": [
+      {"item": "California minimum wage 2026", "value": 16.90, "unit": "USD per hour", "effective": "2026-01-01", "source": "https://www.dwt.com/blogs/employment-labor-and-benefits/2025/12/california-minimum-wage-state-and-local-increases", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "City of Los Angeles minimum wage", "value": 18.42, "unit": "USD per hour", "effective": "2026-07-01", "previous": 17.87, "source": "https://wagesla.lacity.gov/sites/g/files/wph1941/files/2026-04/MWO-Notice-2026%208x11%20-%20English%20ADA260304.pdf", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "Domestic Worker Bill of Rights (AB 241; made permanent by SB 1015)", "detail": "Personal attendants (supervising, feeding or dressing a child, or an elderly or disabled person) get 1.5x over 9 hours a day or 45 hours a week. If more than 20% of a week goes on non-care chores, regular California overtime rules apply that week. Excludes family members, under-18 babysitters and casual babysitters.", "source": "https://www.dir.ca.gov/dlse/DomesticWorkerBillOfRights-FAQ.html", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "California EDD household employer", "detail": "$750+ cash wages in a quarter: register and withhold SDI. $1,000+ in a quarter: also pay UI and ETT.", "source": "https://edd.ca.gov/en/Payroll_Taxes/Household_Employer", "read": "2026-10-01", "basis": "search-summary"}
+    ],
+    "Connecticut / New Haven": [
+      {"item": "Connecticut minimum wage 2026", "value": 16.94, "unit": "USD per hour", "effective": "2026-01-01", "source": "https://portal.ct.gov/governor/news/press-releases/2025/09-2025/governor-lamont-announces-minimum-wage-will-increase", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "CT household employees", "detail": "Overtime at 1.5x over 40 hours in a 7-day week, but not for live-in employees. New-employer SUI rate is 1.9% on the first $27,000. A domestic worker paid $1,000+ in a 3-month period can claim UI. A Domestic Workers' Bill of Rights adds further requirements for employers of 3 or more domestic employees.", "source": "https://gtm.com/household/household-employment-in-connecticut/", "read": "2026-10-01", "basis": "search-summary"}
+    ],
+    "United Kingdom / London": [
+      {"item": "National Living Wage (21+)", "value": 12.71, "unit": "GBP per hour", "effective": "2026-04-01", "other_rates": {"18-20": 10.85, "under 18": 8.00, "apprentice": 8.00}, "source": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027", "read": "2026-10-01", "basis": "page"},
+      {"item": "Employer NI thresholds 2026-27", "values": {"Lower Earnings Limit": "£129/week", "Primary Threshold": "£242/week", "Secondary Threshold": "£96/week", "employer rate": "15% above the Secondary Threshold", "Employment Allowance": "£10,500 a year"}, "source": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027", "read": "2026-10-01", "basis": "page"},
+      {"item": "Hiring a nanny or domestic worker directly", "detail": "Register with HMRC as an employer and run PAYE before the first payday. A secondary source puts the trigger at paying at or above £96/week. Workplace pension auto-enrolment applies, with a 5% total minimum contribution reported.", "auto_enrolment_earnings_trigger": null, "note": "The auto-enrolment trigger was not read from a source. The HMRC rates page did not list it.", "source": "https://www.litrg.org.uk/employers/setting-employer/registering-employer", "read": "2026-10-01", "basis": "search-summary"}
+    ],
+    "Ireland / Dublin": [
+      {"item": "National minimum wage (20+)", "value": 14.15, "unit": "EUR per hour", "effective": "2026-01-01", "other_rates": {"19": 12.74, "18": 11.32, "under 18": 9.91}, "source": "https://www.citizensinformation.ie/en/employment/employment-rights-and-conditions/pay-and-employment/minimum-wage/", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "Registering as an employer of a domestic worker", "detail": "Register with Revenue if paying €40 a week or more. There is an exemption for a single domestic employee paid under €40 a week. The employer deducts PAYE, PRSI and USC and pays employer PRSI.", "source": "https://www.revenue.ie/en/self-assessment-and-self-employment/documents/form-premreg.pdf", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "Code of Practice for Protecting Persons Employed in Other People's Homes", "detail": "Domestic workers have the same rights as any employee. A written statement of core terms is due within 5 days. Board and lodging deductions must be stated in the contract. From 2026-01-01 the maximum deductions are €1.27 per hour worked for meals and €33.42 a week (€4.77 a day) for accommodation only.", "source": "https://www.citizensinformation.ie/en/employment/types-of-employment/domestic-workers-employment-rights/", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "Self-employed childminder exemption", "detail": "Income tax exemption on gross childminding income up to €15,000. PRSI still applies.", "source": "https://www.revenue.ie/en/tax-professionals/tdm/income-tax-capital-gains-tax-corporation-tax/part-07/07-01-29.pdf", "read": "2026-10-01", "basis": "search-summary"}
+    ],
+    "Ontario / Toronto": [
+      {"item": "General minimum wage", "value": 17.95, "unit": "CAD per hour", "effective": "2026-10-01", "previous": 17.60, "other_rates": {"student": 16.90, "homeworker": 19.70}, "source": "https://mathewsdinsdale.com/ontario-to-increase-minimum-wage-effective-october-1-2026/", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "Domestic workers under the ESA", "detail": "Domestic workers get the general minimum wage. Room and board may count toward minimum wage, but only if actually received: a private room $31.70/week, meals $2.55 each up to $53.55/week, or both $85.25/week. Homemakers are exempt from hours, overtime and rest rules but are paid for at most 12 hours a day.", "source": "https://www.ontario.ca/document/your-guide-employment-standards-act-0/domestic-workers", "read": "2026-10-01", "basis": "search-summary", "note": "The room-and-board dollar figures came via a summary that may predate 2026. Verify them on the Ontario page."},
+      {"item": "Canada household employer (CRA)", "detail": "If the caregiver, babysitter or domestic worker is an employee, withhold income tax, CPP and EI and issue a T4. The employer matches CPP and pays 1.4x the employee's EI premium. If the worker is self-employed, nothing is withheld and a T4A is issued. Either party may ask CRA for a CPP/EI ruling.", "source": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll/payroll-deductions-contributions/special-situations/employing-a-caregiver-baby-sitter-domestic-worker.html", "read": "2026-10-01", "basis": "search-summary"}
+    ],
+    "British Columbia / Vancouver": [
+      {"item": "General minimum wage", "value": 18.25, "unit": "CAD per hour", "effective": "2026-06-01", "previous": 17.85, "note": "The same increase applies to resident caretakers and live-in home-support workers.", "source": "https://news.gov.bc.ca/releases/2026LBR0021-000581", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "Domestic workers under the BC ESA", "detail": "A domestic worker (cooking, cleaning or childcare who lives in the employer's private residence) must be registered with the Employment Standards Branch within 30 days of hire. A signed written contract is required (ESA s.14) covering duties, hours, wage, pay schedule and any room and board charges.", "source": "https://www2.gov.bc.ca/gov/content/employment-business/employment-standards-advice/employment-standards/hiring/domestic-workers", "read": "2026-10-01", "basis": "search-summary"}
+    ],
+    "Mexico / Mexico City": [
+      {"item": "General minimum wage 2026 (zona general)", "value": 315.04, "unit": "MXN per day", "effective": "2026-01-01", "border_zone": 440.87, "monthly_equivalent_30_4_days": 9582.47, "source": "https://www.littler.com/news-analysis/asap/mexico-aumenta-el-salario-minimo-para-el-2026", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "Domestic workers' minimum wage 2026", "value": 342.47, "unit": "MXN per day (zona general)", "border_zone": 440.87, "previous_2025": 303.07, "source": "https://www.elcontribuyente.mx/2026/01/nuevo-salario-minimo-para-trabajadoras-del-hogar-en-2026/", "read": "2026-10-01", "basis": "page", "note": "The article does not cite the DOF directly. It conflicts with the IMSS-related reporting that uses the general minimum (315.04) as the contribution floor. Confirm against CONASAMI's DOF resolution of 2025-12-09."},
+      {"item": "IMSS registration of domestic workers", "detail": "Mandatory under the Ley del Seguro Social reform, in force since 2023-05-16 per reporting. Applies to work of more than 4 hours a day at one home on at least 3 days a week. The contribution base cannot be below the general minimum wage. Coverage includes medical care, work risks, disability, retirement savings and childcare. Registration can be done online. The fine for non-registration is MXN 2,346-41,058 (20-350 UMA, Art. 304-B LSS). About 1.8% of domestic workers are registered.", "source": "https://www.elimparcial.com/dinero/2026/05/30/imss-recuerda-que-asegurar-a-trabajadoras-del-hogar-es-obligatorio-y-advierte-multas-de-hasta-41-mil-pesos-para-empleadores-que-incumplan/", "read": "2026-10-01", "basis": "search-summary"},
+      {"item": "LFT employer obligations for domestic workers", "detail": "Aguinaldo of at least 15 days' wages by 20 December, pro-rated for a part year. Live-in workers get 9 consecutive hours of night rest, 3 hours of rest a day between shifts and 1.5 days of rest a week. Rights exist even without a written contract.", "source": "https://www.elimparcial.com/dinero/2026/09/30/la-ley-federal-del-trabajo-exige-a-patrones-pagar-el-aguinaldo-a-trabajadoras-del-hogar-antes-del-20-de-diciembre-con-un-monto-equivalente-a-por-lo-menos-15-dias-de-salario/", "read": "2026-10-01", "basis": "search-summary"}
+    ]
+  },
+
+  "tipping_norms": {
+    "United States": [
+      {"service": "Chauffeur", "norm": "15%-20% of the fare; 20% customary on hourly bookings", "source": "https://www.detaileddrivers.com/guides/tipping-a-chauffeur", "read": "2026-10-01", "basis": "search-summary", "note": "Some operators build it in: Gotham Ride adds 15% online, and Continental's LA rate includes 20%."},
+      {"service": "Gardener / landscaper", "norm": "10%-20% or $10-$50 for one-off jobs; for a regular crew, a holiday tip of about one visit's cost ($20-$30 per Care.com)", "source": "https://www.care.com/c/the-carecom-holiday-tipping-guide/", "read": "2026-10-01", "basis": "search-summary"},
+      {"service": "Personal trainer", "norm": "not expected; a holiday tip of about one session's cost", "source": "https://www.care.com/c/the-carecom-holiday-tipping-guide/", "read": "2026-10-01", "basis": "search-summary"}
+    ],
+    "United Kingdom": [{"service": "Chauffeur", "norm": "optional and not expected; 5%-10% for good service, up to 15% for exceptional", "source": "https://easychauffeurs.com/how-much-to-tip-a-chauffeur-uk/", "read": "2026-10-01", "basis": "search-summary"}],
+    "Ireland": [{"service": "Drivers", "norm": "common but not expected; round up or about 10%", "source": "https://www.theirishroadtrip.com/tipping-in-ireland/", "read": "2026-10-01", "basis": "search-summary"}],
+    "Canada": [{"service": "Limo / chauffeur", "norm": "15%-20%; several Toronto and Vancouver operators add gratuity automatically (Time Limo 15%)", "source": "https://www.toplimo.ca/blog/deciding-how-much-tip-for-limo-driver-your-ultimate-guide/", "read": "2026-10-01", "basis": "search-summary"}],
+    "Mexico": [{"service": "Service providers generally (propina)", "norm": "10%-15%; 15% is the safe default", "source": "https://naatikmexico.org/blog/a-guide-to-tipping-in-mexico", "read": "2026-10-01", "basis": "search-summary"}],
+    "gaps": "No published tipping norms were found for trades (plumbers, electricians, handymen), driving instructors, music or dance teachers in any city. In the UK and Ireland, tipping tradespeople is not a published norm. No Mexico-specific guidance was found per service."
+  },
+
+  "gaps": [
+    "NYC: no single-unit property manager with a published fee schedule; no named plumber, electrician or handyman rate card; no adult private dance rate (BDC's is youth); no 2026 music-school rate (Lucy Moses' latest found is 2023-24).",
+    "Los Angeles: no named gardener price list (the trade is informal); no named PT studio single rate confirmed; no named trades rate card.",
+    "New Haven: no designated-driver service; no named dance teacher; acting coach unnamed; no named trades rate card; Ziprent fee ($150 vs $199 a month) unresolved.",
+    "London: no designated-driver price published (Let Me Drive quotes by phone); Pimlico hourly rate unverified (£156 vs £180 reported); Fantastic Services and Urban Gardeners show identical £83/£65, so one may be quoting the other; no electrician rates; auto-enrolment trigger not sourced.",
+    "Dublin: no designated-driver service found; Call The Beaver page blocked (403); Waltons music fees are 2024-25; Property Vision's €600/month management is an outlier.",
+    "Toronto: Keys to Us publishes no per-km rate beyond the first 4.9 km; Dr. Pipe does not publish rates; Milne cancellation policy on a separate page not fetched; HST not stated for Property Management Partners.",
+    "Vancouver: Captain's DD site did not resolve; designated-driver figures are search summaries only; Vancouver City Plumbing does not state GST.",
+    "Mexico City: no named gardener, PT or trades company publishes prices (market ranges only); no conductor designado service found; Yo Manejo gives prices by quote only; Homie's pricing model changed (now guaranteed rent with no commission) and the old 6.9% figure is unconfirmed; the domestic-worker minimum of MXN 342.47/day needs checking against the DOF.",
+    "Booking lead time is rarely published anywhere. It was found only for LawnGuru (same day), Trim Gym (quote within 24 hours) and Dryver (minutes).",
+    "Dog walkers are covered only for NYC and London (market and platform rates).",
+    "Every 'search-summary' figure should be re-read from its page before it goes into game data."
+  ]
+}

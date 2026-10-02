@@ -1,0 +1,368 @@
+{
+  "_meta": {
+    "compiledOn": "2026-09-30",
+    "method": "Primary sources were downloaded and read directly where possible (DOF/Chamber of Deputies law text, Banxico Circular 27/2008 in the DOF, IRS Pub 510 and Form 720 instructions, 26 USC via Cornell LII, CRA pages, City of Toronto page, City of Vancouver 2026 fee schedule PDF via a Wayback copy, CDMX Consejeria Juridica consolidated Codigo Fiscal, TitlePLUS rate card PDF, Volaris ancillaries PDF, Enterprise location page). 'confirmed: true' means the figure was read on the cited page itself. Search-result snippets are marked confirmed: false.",
+    "blockedSites": [
+      "vancouver.ca and bylaws.vancouver.ca (Cloudflare 403; the fee schedule was read from a Wayback Machine copy of the same vancouver.ca URL)",
+      "britishairways.com (served a 'high demand' holding page to every request)",
+      "aeromexico.com and vuela.aeromexico.com ('site maintenance' page)",
+      "vivaaerobus.com (JavaScript-only shell, no content)",
+      "enterprise.com Tweed New Haven branch page (403 to direct fetch)"
+    ]
+  },
+
+  "mexicoCredit": {
+    "statute": {
+      "name": "Ley para Regular las Sociedades de Informacion Crediticia (LRSIC), articulo 23",
+      "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LRSIC.pdf",
+      "publisher": "Camara de Diputados del H. Congreso de la Union (Secretaria de Servicios Parlamentarios)",
+      "date": "Texto vigente; ultima reforma DOF 24-01-2024 (article 23 itself last amended DOF 23-01-2004 and 01-02-2008)",
+      "sourceType": "primary",
+      "confirmed": true,
+      "quote": [
+        "Articulo 23.- Las Sociedades estan obligadas a conservar los historiales crediticios que les sean proporcionados por los Usuarios, correspondientes a cualquier persona fisica o moral, al menos durante un plazo de setenta y dos meses.",
+        "Las Sociedades podran eliminar del historial crediticio del Cliente aquella informacion que refleje el cumplimiento de cualquier obligacion, despues de setenta y dos meses de haberse incorporado tal cumplimiento en dicho historial.",
+        "En caso de informacion que refleje el incumplimiento ininterrumpido de cualquier obligacion exigible asi como las claves de prevencion que les correspondan, las Sociedades deberan eliminarlas del historial crediticio del Cliente correspondiente, despues de setenta y dos meses de haberse incorporado el incumplimiento por primera vez en dicho historial.",
+        "En el caso de creditos en los que existan tanto incumplimientos como pagos, las Sociedades deberan eliminar la informacion de cada periodo de incumplimiento, en el plazo senalado en el parrafo anterior, contado a partir de la fecha en que se incorpore en el historial crediticio el primer incumplimiento de cada periodo.",
+        "En el caso de creditos en los cuales se registren incumplimientos y posteriormente un pago parcial del saldo insoluto, las Sociedades deberan eliminar la informacion relativa al credito asi como las claves de prevencion correspondientes, en el plazo senalado en el tercer parrafo de este articulo, contado a partir de la fecha en que se incorpore en el historial crediticio el primer incumplimiento.",
+        "En el caso de que el Cliente celebre un convenio de finiquito y pague lo establecido en este, el Usuario debera enviar a la Sociedad la informacion respectiva, a fin de que esta refleje que el pago se ha realizado, con la correspondiente clave de observacion. Las Sociedades deberan eliminar la informacion relativa a estos creditos, asi como las claves de observacion correspondientes, en el plazo senalado en el tercer parrafo de este articulo, contado a partir de la fecha en que se incorpore en el historial crediticio el primer incumplimiento.",
+        "Las Sociedades deberan eliminar la informacion relativa a creditos menores al equivalente a mil UDIS en los terminos que establezca el Banco de Mexico mediante disposiciones de caracter general; asimismo, en dichas disposiciones se podra determinar un monto y plazo de referencia para eliminar el registro de saldos residuales de cuantias minimas, el cual no podra ser superior a cuarenta y ocho meses.",
+        "Se exceptua a las Sociedades de la obligacion de eliminar la informacion relativa al incumplimiento ... cuando en la fecha en que corresponda eliminarla, el incumplimiento en el pago exigible este siendo objeto de juicio en tribunales. ... la Sociedad debera eliminar ... una vez transcurridos seis meses ... salvo que el Usuario acredite nuevamente que el juicio sigue pendiente de resolucion, en cuyo caso el mencionado plazo de seis meses se prorrogara por un periodo igual y asi sucesivamente"
+      ],
+      "note": "Accents were stripped from the quotation for file encoding; the wording is otherwise verbatim. The article itself sets only the 72-month rule and delegates the under-1,000-UDI tiers to Banxico. The 25/500/1,000 UDI tiers are in Banxico's Circular 27/2008, below."
+    },
+    "banxicoTiers": {
+      "name": "Banxico Circular 27/2008, Regla Decimosegunda (as published in the DOF)",
+      "url": "https://www.banxico.org.mx/marco-normativo/normativa-emitida-por-el-banco-de-mexico/circular-27-2008/%7BD6CCA1FD-CAD6-D0F5-766E-6AF2142AE981%7D.pdf",
+      "publisher": "Banco de Mexico (Diario Oficial de la Federacion, 1 July 2008)",
+      "date": "2008-07-01",
+      "sourceType": "primary",
+      "confirmed": true,
+      "quote": "I.- Si el saldo insoluto del principal es igual o menor al equivalente a veinticinco UDIS, transcurridos doce meses ...; II.- Si el saldo insoluto del principal es mayor al equivalente a veinticinco y hasta quinientas UDIS, transcurridos veinticuatro meses ...; III.- Si el saldo insoluto del principal es mayor al equivalente a quinientas y hasta mil UDIS, transcurridos cuarenta y ocho meses contados a partir de la fecha que ocurra primero, ya sea la fecha en la que el credito haya sido reportado por primera vez como vencido, o bien a partir de la ultima vez en que el Usuario haya actualizado el registro del credito.",
+      "tiers": [
+        { "balanceUdis": "<= 25", "retentionMonths": 12, "source": "Circular 27/2008 Regla Decimosegunda I" },
+        { "balanceUdis": "> 25 and <= 500", "retentionMonths": 24, "source": "Circular 27/2008 Regla Decimosegunda II" },
+        { "balanceUdis": "> 500 and <= 1,000", "retentionMonths": 48, "source": "Circular 27/2008 Regla Decimosegunda III" },
+        { "balanceUdis": "> 1,000", "retentionMonths": 72, "source": "LRSIC art. 23, third paragraph (72 months from first recorded default); extended in 6-month steps while the debt is in litigation" }
+      ],
+      "clock": "Runs from the earlier of the first report as past due or the lender's last update of the record (Circular). For > 1,000 UDIs, from the first recorded default (LRSIC art. 23).",
+      "preventionCodes": "Prevention codes (claves de prevencion, e.g. fraud) are deleted with the record only when the client's total unpaid principal with the same creditor is below 400,000 UDIs (Regla Decimosegunda, last paragraph).",
+      "udiConversion": "Balance is unpaid principal, excluding interest and fees. The 2008 text converts at the UDI of the first business day of the calendar year of deletion; a later Banxico draft (below) moves it to the first business day of the month of the first default.",
+      "laterDraft": {
+        "url": "https://www.banxico.org.mx/ConsultaRegulacionWeb/downloadFile?fileId=%7B5422F0FA-DF7D-93E7-800F-A4F6206D3BD5%7D",
+        "publisher": "Banco de Mexico (public-consultation draft of a restated Circular 27/2008, with industry comments)",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "The draft renumbers the rule as DECIMOCUARTA and keeps the same 12/24/48-month tiers at 25/500/1,000 UDIs. It adds DECIMOCUARTA (A): a debt of 25 to 1,000 UDIs that goes into default and is then paid off in full is deleted 12 months after the first default. I could not confirm whether or when this draft took effect, so treat it as pending."
+      }
+    },
+    "udiValue": {
+      "valueMxn": 8.834094,
+      "asOf": "2026-09-30",
+      "url": "https://www.dof.gob.mx/indicadores.php",
+      "publisher": "Diario Oficial de la Federacion (publishes Banxico's UDI values)",
+      "sourceType": "primary",
+      "confirmed": true,
+      "tierThresholdsInPesos": {
+        "25 UDIs": 220.85,
+        "500 UDIs": 4417.05,
+        "1000 UDIs": 8834.09,
+        "400000 UDIs": 3533637.6
+      },
+      "corroboration": "Secondary aggregators report 8.830224 on 2026-09-28 (calculadora-udi.com, not confirmed by me). Banxico's own SIE series SP68257 needs an API token, so I did not read it directly."
+    }
+  },
+
+  "transborderAirTax": {
+    "rules": {
+      "taxableTransportationDefinition": {
+        "url": "https://www.law.cornell.edu/uscode/text/26/4262",
+        "publisher": "Legal Information Institute (text of 26 U.S.C. 4262)",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "quote": "the term 'taxable transportation' means-(1) transportation by air which begins in the United States or in the 225-mile zone and ends in the United States or in the 225-mile zone ... [225-mile zone means] that portion of Canada and Mexico which is not more than 225 miles from the nearest point in the continental United States"
+      },
+      "pub510": {
+        "url": "https://www.irs.gov/pub/irs-pdf/p510.pdf",
+        "publisher": "Internal Revenue Service, Publication 510 (Rev. December 2025)",
+        "date": "2025-12",
+        "sourceType": "primary",
+        "confirmed": true,
+        "quote": "Taxable transportation is transportation by air that meets either of the following tests. - It begins and ends either in the United States or at any place in Canada or Mexico not more than 225 miles from the nearest point on the continental U.S. boundary (this is the 225-mile zone). - It's directly or indirectly from one port or station in the United States to another port or station in the United States, but only if it isn't a part of uninterrupted international air transportation."
+      },
+      "internationalFacilitiesExclusion": {
+        "url": "https://www.law.cornell.edu/uscode/text/26/4261",
+        "publisher": "Legal Information Institute (text of 26 U.S.C. 4261(c))",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "quote": "(c)(1) There is hereby imposed a tax of $12.00 on any amount paid (whether within or without the United States) for any transportation of any person by air, if such transportation begins or ends in the United States. (2) This subsection shall not apply to any transportation all of which is taxable under subsection (a) (determined without regard to sections 4281 and 4282).",
+        "paidOutsideUs": "(e)(2): 'In the case of amounts paid outside the United States for taxable transportation, the taxes imposed by subsections (a) and (b) shall apply only if such transportation begins and ends in the United States.'"
+      },
+      "rates2026": {
+        "url": "https://www.irs.gov/pub/irs-pdf/i720.pdf",
+        "publisher": "Internal Revenue Service, Instructions for Form 720 (Rev. June 2026)",
+        "date": "2026-06",
+        "sourceType": "primary",
+        "confirmed": true,
+        "percentageTax": 0.075,
+        "domesticSegmentFeeUsd": 5.30,
+        "internationalFacilitiesTaxUsd": 23.40,
+        "alaskaHawaiiFacilitiesTaxUsd": 11.70,
+        "quote": "The percentage tax is 7.5% of amounts paid for taxable transportation of persons by air. ... For calendar year 2026, the tax on the amount paid for each domestic segment of taxable transportation is $5.30. ... For calendar year 2026, the section 4261 excise tax on any amount paid for international air transportation, if the transportation begins or ends in the United States, is generally $23.40."
+      }
+    },
+    "newYorkToToronto": {
+      "answer": "Domestic treatment: 7.5% of the fare plus $5.30 per segment. The $23.40 international facilities tax does not apply.",
+      "reasoning": "Toronto (about 40 to 90 miles from the nearest point of New York state) and Vancouver (about 25 miles from Washington state) are both inside the 225-mile zone. A New York to Toronto flight begins in the US and ends in the zone, so it is 'taxable transportation' under 4262(a)(1). Because all of it is taxable under 4261(a), 4261(c)(2) switches off the international facilities tax.",
+      "caveat": "The IRS publications give the rule, not this worked example. The conclusion is my reading of 4261(c)(2) and 4262(a)(1). No IRS text I read names Toronto or Vancouver. The distances are approximate geography, not a published figure.",
+      "confirmed": false
+    },
+    "torontoToNewYork": {
+      "answer": "If the ticket is paid for in the US: the same 7.5% plus $5.30 per segment. If it is paid for outside the US (the usual case for a ticket bought in Canada): 4261(e)(2) switches off the 7.5% and segment taxes because the trip does not both begin and end in the US. So the trip is not 'all taxable under (a)', and the $23.40 international facilities tax applies.",
+      "confirmed": false,
+      "caveat": "This is my reading of 4261(c)(2) together with 4261(e)(2). I found no IRS example stating it for a zone-origin ticket paid abroad. Canada's Air Travellers Security Charge and airport improvement fees are separate and were not researched here."
+    },
+    "canadaGstHst": {
+      "answer": "Not zero-rated. A passenger flight from Ontario to the continental US, including a charter, is treated as supplied in a non-participating province and is taxed at 5% GST only, not 13% HST. Zero-rating applies only when the continuous journey begins or ends outside the 'taxation area' (Canada, the continental US and St. Pierre and Miquelon), for example Toronto to London or Toronto to Hawaii.",
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/gi-170/charter-flights-supplied-third-party-charterers.html",
+          "publisher": "Canada Revenue Agency, GST/HST Info Sheet GI-170 'Charter Flights Supplied to Third-Party Charterers'",
+          "date": "2015-05",
+          "sourceType": "primary",
+          "confirmed": true,
+          "quote": "If there is a termination or stopover outside Canada in respect of the continuous journey, then the supply of the passenger transportation service is considered to be made in a non-participating province, regardless of the province in which the continuous journey originates.",
+          "taxationArea": "Canada, the United States (except Hawaii) and the islands of St. Pierre and Miquelon"
+        },
+        {
+          "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/3-3-7/plc-spply-prvnc-trnsprttn.html",
+          "publisher": "Canada Revenue Agency, GST/HST Memorandum 3-3-7 'Place of Supply in a Province - Transportation'",
+          "date": "page modified 2026-04-09",
+          "sourceType": "primary",
+          "confirmed": true,
+          "quote": "Although the supply of the passenger transportation service is therefore made in a non-participating province, the supply is zero-rated under section 3 of Part VII of Schedule VI because the termination of the continuous journey is outside the taxation area. (Example 3, Toronto to London)"
+        }
+      ],
+      "rate": 0.05,
+      "legalBasis": "Excise Tax Act, Schedule VI, Part VII, section 3 (zero-rating outside the taxation area); place-of-supply rules for passenger transportation services"
+    }
+  },
+
+  "renovationPermits": {
+    "toronto": {
+      "url": "https://www.toronto.ca/services-payments/building-construction/building-permit/before-you-apply-for-a-building-permit/building-permit-fees/",
+      "publisher": "City of Toronto, Toronto Building",
+      "date": "fees effective 2026-01-01; page last modified 2026-06-19",
+      "sourceType": "primary",
+      "confirmed": true,
+      "formula": "Permit fee = SI x A, where SI = service index (CAD per m2) for the class of work and A = floor area in m2 of the work; minimum fee applies",
+      "minimumFeeCad": 214.79,
+      "serviceIndexCadPerM2": {
+        "singleFamilyDwellingsSemisTownhousesDuplexes_newOrAddition": 18.56,
+        "basementFinishingInDwellings_standalone": 6.20
+      },
+      "flatFeesCad": {
+        "residentialDecksPorchesCarports_standalone": 214.79,
+        "detachedGaragesAccessoryStructures_each": 214.79,
+        "hvacResidential": 270.64,
+        "furnaceBoilerReplacement": 214.79,
+        "plumbingPipingSingleFamily": 214.79
+      },
+      "examples": {
+        "40 m2 rear addition": "40 x 18.56 = 742.40 CAD",
+        "80 m2 basement finish": "80 x 6.20 = 496.00 CAD",
+        "10 m2 basement finish": "62.00, so the 214.79 minimum applies"
+      },
+      "note": "The house addition uses the Group C single-family index of 18.56. I did not read a separate 'interior alterations' index for houses off the page."
+    },
+    "vancouver": {
+      "url": "https://vancouver.ca/files/cov/vancouver-development-building-permit-fees.pdf",
+      "urlReadVia": "https://web.archive.org/web/2026id_/https://vancouver.ca/files/cov/vancouver-development-building-permit-fees.pdf (vancouver.ca returned 403)",
+      "publisher": "City of Vancouver, '2026 Schedule of Fees for Development & Building Related Permits' (Building By-law, Part A, section 1(a))",
+      "date": "2026 fees effective 2026-01-01",
+      "sourceType": "primary",
+      "confirmed": true,
+      "formula": "Fee = 217.00 CAD for the first $5,000 of estimated construction value (or any job up to $5,000) + 13.90 CAD for each $1,000 or part thereof from $5,000 up to $50,000 + 7.04 CAD for each $1,000 or part thereof above $50,000. The value is the construction valuation under Article 1.6.2.3 of the Building By-law.",
+      "brackets": [
+        { "valueCad": "<= 5,000", "feeCad": 217.00 },
+        { "valueCad": "5,000-50,000", "addPerThousandOrPartCad": 13.90 },
+        { "valueCad": "> 50,000", "addPerThousandOrPartCad": 7.04 }
+      ],
+      "examples": {
+        "100,000 CAD addition": "217.00 + 45 x 13.90 + 50 x 7.04 = 217.00 + 625.50 + 352.00 = 1,194.50 CAD",
+        "40,000 CAD basement suite": "217.00 + 35 x 13.90 = 703.50 CAD"
+      },
+      "note": "The PDF's text layer places the dollar column out of line with the labels. I matched 217.00, 13.90 and 7.04 to the three lines of clause 1(a) by their order in the column. The schedule says it is a guide and that the by-law governs. Plan-review, development-permit and other separate fees are not included. Do not confuse this with Vancouver, Washington, whose different 2026 table shows up in search results."
+    },
+    "mexicoCity": {
+      "url": "https://data.consejeria.cdmx.gob.mx/images/leyes/2025/2026/210126/CODIGO_FISCAL_DE_LA_CDMX_26.1.pdf",
+      "publisher": "Consejeria Juridica y de Servicios Legales de la Ciudad de Mexico (consolidated Codigo Fiscal de la Ciudad de Mexico)",
+      "date": "last reform G.O. CDMX 2025-12-19, in force 2026-01-01",
+      "sourceType": "primary",
+      "confirmed": true,
+      "article": "Articulo 185 - registro, analisis y estudio de manifestacion de construccion tipos A, B y C",
+      "formula": "Fee (MXN) = registration fee + (per-m2 analysis-and-study fee x m2 to be built). For an extension (ampliacion) or repair, both charges apply to the area being extended or repaired only. A modification costs 20% of the fees; an extension of the registration (prorroga) costs 25%.",
+      "residential": {
+        "tipoA": { "registroMxn": 447.00, "analisisPorM2Mxn": 23.00 },
+        "tipoB": { "registroMxn": 816.00, "analisisPorM2Mxn": 77.00 },
+        "tipoC": { "registroMxn": 1189.00, "analisisPorM2Mxn": 87.00 }
+      },
+      "nonResidential": {
+        "tipoB": { "registroMxn": 885.00, "analisisPorM2Mxn": 130.00 },
+        "tipoC": { "registroMxn": 1294.00, "analisisPorM2Mxn": 152.00 }
+      },
+      "quote": "Para el caso de construccion de ampliaciones y reparaciones, se pagara por el registro, analisis y estudio de manifestacion de construccion de que se trate, los derechos establecidos en los incisos A) y B) de este articulo, respecto de las areas que se pretenda ampliar o reparar.",
+      "example": "A 40 m2 house extension filed as Tipo A: 447 + 40 x 23 = 1,367 MXN",
+      "tipoAScope": {
+        "text": "Tipo A covers a single-family house of up to 200 m2 built, or an extension of a licensed single-family house as long as the total, extension included, does not exceed 200 m2 (Reglamento de Construcciones para el Distrito Federal, art. 51).",
+        "confirmed": false,
+        "note": "This is from memory of the Reglamento and was not read on a page in this session. The Iztapalapa one-stop-shop page (https://www.iztapalapa.cdmx.gob.mx/tramitesyservicios/vut.php?id=11, confirmed) cites 'Articulo 185, Inciso A), fraccion I, incisos a), b)' as the cost basis and says a site in a risk zone requires Tipo B instead."
+      },
+      "note": "'Licencia de construccion' in CDMX now means the 'licencia de construccion especial' (art. 186, e.g. demolition 23 MXN/m2), not ordinary house work. Separate impact charges (aprovechamientos, arts. 300-302) can apply to larger works and are not included."
+    }
+  },
+
+  "surveys": [
+    {
+      "jurisdiction": "Ontario (Toronto)",
+      "firm": "Protect Your Boundaries Inc. (member of the Association of Ontario Land Surveyors, per its own page)",
+      "url": "https://www.protectyourboundaries.ca/blog/post/price-of-surveys",
+      "date": "2015-09-23",
+      "sourceType": "primary",
+      "confirmed": true,
+      "priceCad": 1800,
+      "priceBasis": "from ('$1,800 and up')",
+      "quote": "In Toronto a new survey for a standard residential property will cost $1,800 and up, depending on the surveyor, how much research they will invest in, the size and shape of your lot and the specifics of what you need it for.",
+      "note": "This is the only price I found published by a licensed surveyor on its own page, and it is 11 years old. A BC firm (Nima Geomatics Land Surveying Ltd., BCLS, article dated 2026-08-26, https://ngls.ca/blog/how-much-does-a-land-survey-cost-canada-2026/) says outright that 'No surveying firm in Canada publicly lists prices'. It gives only general Canadian ranges, which it says are not quotes: property line locating 1,000-3,500 CAD, topographic site plan 1,500-5,000 CAD."
+    },
+    {
+      "jurisdiction": "California (Los Angeles)",
+      "priceUsd": null,
+      "confirmed": false,
+      "note": "No licensed surveyor's own published price was found. Aggregators (findlandsurveyor.com, Angi) give 700-2,500 USD for an LA County residential boundary survey. These are secondary figures and I did not read them on a page."
+    },
+    {
+      "jurisdiction": "British Columbia",
+      "priceCad": null,
+      "confirmed": true,
+      "note": "Empire Land Surveying's location-certificate page (https://www.empire-surveys.com/location-certificate) offers only a free quote and publishes no price."
+    },
+    {
+      "jurisdiction": "Ireland",
+      "priceEur": null,
+      "confirmed": true,
+      "note": "Property Boundaries Ireland (chartered boundary surveyor, SCSI/RICS; https://www.propertyboundaries.ie/services/) publishes no prices. An SCSI guide price of 350-800 EUR for a boundary check was seen only in a search snippet and not confirmed."
+    }
+  ],
+
+  "titleInsurance": {
+    "jurisdiction": "Ontario",
+    "insurer": "TitlePLUS (LAWPRO)",
+    "url": "https://titleplus.ca/wp-content/uploads/2025/03/Ontario-Residential-Premiums-March-2025.pdf",
+    "publisher": "TitlePLUS / Lawyers' Professional Indemnity Company",
+    "date": "effective 2025-03-01",
+    "sourceType": "primary",
+    "confirmed": true,
+    "resaleHouseOwnerPolicy": [
+      { "amountOfInsuranceCad": "up to 200,000", "premiumCad": 310.00 },
+      { "amountOfInsuranceCad": "200,001-500,000", "premiumCad": 385.74 },
+      { "amountOfInsuranceCad": "500,001-3,000,000", "premiumCad": "base price (up to 500k) + 0.90 per 1,000 thereafter" },
+      { "amountOfInsuranceCad": "3,000,001-5,000,000", "premiumCad": "base price (up to 500k) + 0.95 per 1,000 thereafter" }
+    ],
+    "newHouse": [
+      { "amountOfInsuranceCad": "up to 200,000", "premiumCad": 320.37 },
+      { "amountOfInsuranceCad": "200,001-500,000", "premiumCad": 338.89 },
+      { "amountOfInsuranceCad": "over 500,000", "premiumCad": "0.90 per 1,000 of the portion 500k-5M" }
+    ],
+    "resaleCondo": [
+      { "amountOfInsuranceCad": "up to 200,000", "premiumCad": 175.00 },
+      { "amountOfInsuranceCad": "200,001-500,000", "premiumCad": 195.00 },
+      { "amountOfInsuranceCad": "over 500,000", "premiumCad": "base + 0.90 per 1,000 to 3M, 0.95 per 1,000 to 5M" }
+    ],
+    "additionalPolicy": "50 CAD each (for example, a simultaneous lender policy)",
+    "tax": "8% PST is payable on all premiums and not included in above.",
+    "legalCounselFee": "A TitlePLUS legal counsel fee (150 CAD for a house, including tax) is included in the premium and deducted from the lawyer's invoice.",
+    "workedExample": {
+      "purchasePriceCad": 900000,
+      "premiumCad": 745.74,
+      "calc": "385.74 + (400 x 0.90) = 745.74; plus 8% PST 59.66 = 805.40 CAD",
+      "confirmed": "arithmetic from the confirmed rate card"
+    },
+    "currencyCaveat": "This was the newest Ontario residential rate card I could find (March 2025). Guessed 2026 file names returned 404. It may have been superseded; check the premium calculator at https://titleplus.ca/premium-calculator/."
+  },
+
+  "rentalWaivers": [
+    {
+      "location": "Enterprise Rent-A-Car, Toronto Pearson International Airport (YYZ), Mississauga ON",
+      "url": "https://www.enterprise.com/en/car-rental-locations/ca/on/toronto-pearson-international-airport-c2pa.html",
+      "publisher": "Enterprise Rent-A-Car (branch page)",
+      "date": "read 2026-09-30",
+      "sourceType": "primary",
+      "confirmed": true,
+      "damageWaiverCadPerDay": { "min": 31.99, "max": 36.99 },
+      "quote": "Damage Waiver ... ranges between $31.99 and $36.99 per day depending on the type of vehicle rented",
+      "otherFees": "Underage (21-24) surcharge 20 CAD/day; additional driver 10 CAD/day (spouse or domestic partner free); deposit 400-850 CAD. No airport concession fee was stated on the page."
+    },
+    {
+      "location": "Enterprise Rent-A-Car, Tweed New Haven Airport (HVN)",
+      "url": "https://www.enterprise.com/en/car-rental/locations/us/ct/tweed-airport-24qw.html",
+      "publisher": "Enterprise Rent-A-Car",
+      "sourceType": "primary",
+      "confirmed": false,
+      "damageWaiverUsdPerDay": { "min": 8.99, "max": 74.99 },
+      "note": "Seen only in a search-engine snippet attributed to the Enterprise New Haven pages. The page returned 403 to a direct fetch, and it is not certain the snippet came from the Tweed branch rather than a neighborhood branch."
+    },
+    {
+      "location": "Tweed New Haven Airport (HVN) concession recovery fee",
+      "concessionRecoveryFeePct": null,
+      "confirmed": false,
+      "note": "The Avis and Budget HVN pages (avis.com/en/locations/nam/us/ct/new-haven/hvn, budget.com/en/locations/us/ct/new-haven/hvn) show no fee figures without a live quote. Aggregators cite roughly 11%, which I did not confirm."
+    }
+  ],
+
+  "airlineChanges": {
+    "britishAirwaysWorldTraveller": {
+      "changeFee": null,
+      "confirmed": false,
+      "note": "britishairways.com served a 'high demand' holding page to every fetch, including the fares page, the service-fees page and the travel-partner long-haul fares page. Confirmed only in outline from search snippets: World Traveller fares are Basic, Standard, Select and Select Pro. Basic cannot be changed. Standard can be changed for a fee plus any fare difference, with the fee depending on route and conditions at booking. Select and Select Pro have no change fee. No current GBP amount for a Standard long-haul change could be read on a BA page."
+    },
+    "volarisDomestic": {
+      "url": "https://cms.volaris.com/globalassets/pdfs/esp/ancillariesandfees.es.pdf",
+      "publisher": "Volaris, 'Rutas nacionales en Mexico' ancillaries and fees table",
+      "date": "PDF created 2026-09-22",
+      "sourceType": "primary",
+      "confirmed": true,
+      "changeFeesMxn": {
+        "itineraryChangeMoreThan15DaysBeforeFlight": 850,
+        "itineraryChangeLessThan15DaysBeforeFlight": 1100,
+        "plus": "fare difference (nivelacion tarifaria)"
+      },
+      "nameChangeMxn": { "callCenterPreTrip": 1300, "webPreTrip": "up to 1,210" },
+      "comboFlexibilidadMxn": "up to 999 at purchase (allows changes without the change fee)",
+      "note": "The same fee applies before the trip (all channels) and at the airport. The table says the amounts are subject to change without notice."
+    },
+    "aeromexicoDomestic": {
+      "changeFeeMxn": null,
+      "confirmed": false,
+      "note": "aeromexico.com and vuela.aeromexico.com returned a maintenance page. Search snippets from vuela.aeromexico.com (Clasica fare) conflict. One says 700 MXN for 8+ days before departure and 1,000 MXN for 0-7 days. Another says 645/925 MXN in low season and 740/1,015 MXN in high season. Both mention a rule change for tickets bought before 23 April 2026. The Basica fare does not allow changes. None of this was verified on the page."
+    },
+    "vivaAerobusDomestic": {
+      "changeFeeMxn": null,
+      "confirmed": false,
+      "note": "The fee table is at https://www.vivaaerobus.com/mx/volar-con-viva/consulta-nuestros-cargos, but the site renders only through JavaScript and returned no readable content."
+    }
+  },
+
+  "uncertain": [
+    "US excise: the conclusions for New York-Toronto (domestic 7.5% + $5.30, no $23.40) and for Toronto-New York paid abroad ($23.40 only) are my reading of 26 USC 4261(c)(2), 4261(e)(2) and 4262(a)(1). The IRS texts read give the rules but no Canada or Mexico zone example.",
+    "Whether Toronto and Vancouver lie within 225 miles of the continental US is geography (they are well inside), not a published IRS list.",
+    "Banxico's draft restatement of Circular 27/2008 (DECIMOCUARTA, with a 12-month deletion for paid-off debts of 25-1,000 UDIs) may or may not be in force. The 2008 DOF tiers are confirmed.",
+    "Vancouver building permit amounts were read from a Wayback copy of vancouver.ca's 2026 schedule. The values were matched to their labels by column order because the text layer was misaligned.",
+    "Mexico City Tipo A scope (up to 200 m2) is from memory of the Reglamento de Construcciones art. 51 and was not read this session.",
+    "The TitlePLUS rate card is dated March 2025 and may have been updated since.",
+    "The only licensed-surveyor price found is a 2015 Toronto figure (from 1,800 CAD). None was found for Los Angeles, BC or Ireland.",
+    "Enterprise HVN damage waiver range (8.99-74.99 USD) and the HVN concession recovery fee were not confirmed.",
+    "British Airways, Aeromexico and Viva Aerobus change fees could not be read on the airlines' own pages."
+  ]
+}

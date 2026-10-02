@@ -246,6 +246,61 @@ function ageAtStart(config: NewSaveConfig): number {
 }
 
 /**
+ * Height and weight, in the units of where they were born: feet, inches and
+ * pounds for an American, centimeters and kilograms for everyone else. Left
+ * blank, the body is drawn from that country's adult averages
+ * (`systems/body.ts`).
+ */
+function BodyFields({ config, setConfig }: { config: NewSaveConfig; setConfig: (f: (c: NewSaveConfig) => NewSaveConfig) => void }) {
+  const imperial = countryOfPlace(config.homeRegionId) === 'us';
+  const cm = config.heightCm;
+  const kg = config.weightKg;
+  const feet = cm ? Math.floor(cm / 30.48) : undefined;
+  const inches = cm ? Math.round((cm / 2.54) - (feet ?? 0) * 12) : undefined;
+  const num = (v: string) => (v.trim() === '' ? undefined : Number(v));
+  const setHeight = (value: number | undefined) => setConfig((c) => ({ ...c, heightCm: value && value > 0 ? Math.round(value * 10) / 10 : undefined }));
+  const setWeight = (value: number | undefined) => setConfig((c) => ({ ...c, weightKg: value && value > 0 ? Math.round(value * 10) / 10 : undefined }));
+  return (
+    <>
+      <div className="field-row">
+        {imperial ? (
+          <>
+            <div className="field">
+              <label htmlFor="height-ft">Height (Feet)</label>
+              <input id="height-ft" type="number" min={4} max={7} value={feet ?? ''} onChange={(e) => { const f = num(e.target.value); setHeight(f === undefined ? undefined : (f * 12 + (inches ?? 0)) * 2.54); }} />
+            </div>
+            <div className="field">
+              <label htmlFor="height-in">Inches</label>
+              <input id="height-in" type="number" min={0} max={11} value={inches ?? ''} onChange={(e) => { const i = num(e.target.value) ?? 0; setHeight(((feet ?? 5) * 12 + i) * 2.54); }} />
+            </div>
+            <div className="field">
+              <label htmlFor="weight-lb">Weight (Pounds)</label>
+              <input id="weight-lb" type="number" min={80} max={550} value={kg ? Math.round(kg / 0.45359237) : ''} onChange={(e) => { const lb = num(e.target.value); setWeight(lb === undefined ? undefined : lb * 0.45359237); }} />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="field">
+              <label htmlFor="height-cm">Height (Centimeters)</label>
+              <input id="height-cm" type="number" min={120} max={230} value={cm ?? ''} onChange={(e) => setHeight(num(e.target.value))} />
+            </div>
+            <div className="field">
+              <label htmlFor="weight-kg">Weight (Kilograms)</label>
+              <input id="weight-kg" type="number" min={35} max={250} value={kg ?? ''} onChange={(e) => setWeight(num(e.target.value))} />
+            </div>
+            <div className="field">
+              <label htmlFor="bmi">Body Mass Index</label>
+              <input id="bmi" type="text" readOnly value={cm && kg ? (kg / (cm / 100) ** 2).toFixed(1) : ''} placeholder="From the two" />
+            </div>
+          </>
+        )}
+      </div>
+      <p className="xs dim" style={{ marginTop: 'var(--s2)' }}>Leave them blank to be drawn from where you were born.{imperial && cm && kg ? ` A body mass index of ${(kg / (cm / 100) ** 2).toFixed(1)}.` : ''} From here your weight follows what you eat against what you do.</p>
+    </>
+  );
+}
+
+/**
  * The word this character is billed with: settled by their pronouns where
  * their pronouns settle it, and otherwise the one they picked. Undefined only
  * while somebody on they/them has not picked yet, which the Identity step
@@ -371,7 +426,8 @@ function IdentityStep({ config, set, setConfig }: {
                   <p className="xs dim" style={{ marginTop: 4 }}>
                     He/Him settles this by itself, and so does She/Her. They/Them doesn’t, so the
                     choice is yours. Actor and Actress are two words for the same craft and the game
-                    treats them as equals. Pick the one you want to be called, and it will call you by it.
+                    treats them as equals. Pick the one you want to be called: the game calls you by it, and at
+                    school you’re cast in the parts a play writes for it, or for anyone.
                   </p>
                 </>
               )}
@@ -811,13 +867,23 @@ function StartingPointStep({ config, set, setConfig }: {
 
   return (
     <div className="col gap-5">
+      {/* The body as it is the day the life begins, with where it begins: until 2026-10-02 it was asked under Identity, beside a name. */}
+      <div className="card">
+        <div className="panel-head">
+          <div>
+            <h2>Your Body Today</h2>
+            <p className="muted small">Your height and weight as the life begins. From here they’re yours to change.</p>
+          </div>
+        </div>
+        <BodyFields config={config} setConfig={setConfig} />
+      </div>
       <div className="card">
         <div className="panel-head">
           <div>
             <h2>{config.school ? 'Where It Begins' : 'Where You Live'}</h2>
             <p className="muted small">
               {config.school
-                ? `A first-year in the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}: one of ${YALE_DRAMA.classSize} actors admitted this year, and the one the faculty wanted most from the auditions.`
+                ? `A first-year in the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program} at the ${YALE_DRAMA.name}: one of ${YALE_DRAMA.classSize} actors admitted this year, among the strongest of them but not ahead of everyone.`
                 : 'Where you are decides what things cost and whose holidays you keep.'}
             </p>
             {config.school && (

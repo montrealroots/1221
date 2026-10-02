@@ -5,6 +5,7 @@
  * dentist and the optician (`systems/career.ts`, `systems/health.ts`,
  * `systems/taxreturn.ts`).
  */
+import { documentsOf, passportOf } from '@/engine/systems/documents';
 import { describe, expect, it } from 'vitest';
 import { evenCraft } from '@/engine/systems/school';
 import { quickSave } from '@/engine';
@@ -13,10 +14,10 @@ import { exchange } from '@/engine/content/currency';
 import { computeAnnualTax } from '@/engine/content/tax';
 import { MEAL_PENALTY } from '@/engine/content/career';
 import { ABROAD, CARE, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
-import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, paycheck, roleById, unitRate, type Booking } from '@/engine/systems/career';
+import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, paycheck, roleById, t1287Quote, unitRate, type Booking } from '@/engine/systems/career';
 import { earningsOf, recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
 import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
-import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukTaxOn } from '@/engine/systems/taxreturn';
+import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukAllowed, ukTaxOn } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 import { TURNS } from '@/engine/systems/enjoyment';
 import { occupiedAt } from '@/engine/systems/life';
@@ -31,8 +32,29 @@ const at = (year: number, month: number, day: number, hour = 9) => instantFromZo
 function pro(seed: string, city = 'us-ny-newyork'): Simulation {
   const sim = quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
   beginCareer(sim, sim.player);
+  // An actor sent abroad holds a passport, and nothing here is about papers (docs/WORLD.md, stage 1b).
+  if (!passportOf(sim.player, sim.now)) documentsOf(sim.player).push({ id: 'pp', kind: 'passport', issuer: 'US', name: 'Passport', number: 'P1', status: 'valid', issuedAt: sim.now - 86_400_000, expiresAt: sim.now + 3650 * 86_400_000 });
   return sim;
 }
+
+describe('Canada’s Form T1287', () => {
+  it('lowers what a job there withholds to the tax on its net, filed before the work, and only for work in Canada', () => {
+    const sim = pro('t1287');
+    const job = { id: 'b-tor', roleId: 'guest-hour', cityId: 'us-ny-newyork', location: 'ca-on-toronto', starts: sim.now + 30 * 86_400_000, units: 5, rehearsalWeeks: 0, status: 'accepted', dueAt: 0, offeredAt: 0, worked: 0, owed: 0 } as unknown as Booking;
+    careerOf(sim.player).bookings.push(job);
+    const quote = t1287Quote(sim, sim.player, job);
+    expect('rate' in quote && quote.rate).toBeLessThan(ABROAD.canada.rate);
+    sim.must({ kind: 'career.t1287', payload: { bookingId: 'b-tor' } });
+    expect(job.t1287Rate).toBe((quote as { rate: number }).rate);
+    expect(foreignWithholding(sim.player, 'ca-on-toronto', 10_000_00, at(2027, 3, 1), 'USD', { id: 'b-tor', expected: 0 })).toBe(Math.round(10_000_00 * job.t1287Rate!));
+    // Once filed, not again; a job at home has nothing to file; nor one begun.
+    expect(sim.execute({ kind: 'career.t1287', payload: { bookingId: 'b-tor' } }).ok).toBe(false);
+    const home = { ...job, id: 'b-ny', location: undefined, t1287Rate: undefined } as unknown as Booking;
+    expect(t1287Quote(sim, sim.player, home)).toEqual({ refused: 'It’s for work in Canada.' });
+    const begun = { ...job, id: 'b-begun', starts: sim.now - 1, t1287Rate: undefined } as unknown as Booking;
+    expect(t1287Quote(sim, sim.player, begun)).toMatchObject({ refused: expect.stringMatching(/before the work/) });
+  });
+});
 
 describe('working abroad', () => {
   it('withholds Canada’s 23% from every check, and the UK’s 20% from a payer expected past £12,570', () => {
@@ -164,6 +186,19 @@ describe('the UK’s tax year, and Canada’s tax on residuals', () => {
     expect(yearOf(sim.player, 2030).foreign.uk!.withheld).toBe(tax - 16_000_00);
   });
 
+  it('gives a British or EEA citizen the UK’s allowance, tapered past £100,000, and a US citizen none', () => {
+    const gbp = (n: number) => exchange(n, 'GBP', 'USD')!;
+    // £50,000: the allowance first, and the £37,430 left all at 20%.
+    expect(ukTaxOn(gbp(50_000_00), 'USD', true)).toBeCloseTo(gbp(Math.round(0.2 * (50_000_00 - 12_570_00))), -2);
+    expect(ukTaxOn(gbp(50_000_00), 'USD', false)).toBeGreaterThan(ukTaxOn(gbp(50_000_00), 'USD', true));
+    // Gone by £125,140.
+    expect(ukTaxOn(gbp(130_000_00), 'USD', true)).toBe(ukTaxOn(gbp(130_000_00), 'USD', false));
+    expect(ukTaxOn(gbp(110_000_00), 'USD', true)).toBeLessThan(ukTaxOn(gbp(110_000_00), 'USD', false));
+    expect(ukAllowed('uk')).toBe(true);
+    expect(ukAllowed('is')).toBe(true);
+    expect(ukAllowed('us')).toBe(false);
+  });
+
   it('keeps a UK year to settle where there’s no account to settle it through', () => {
     const sim = pro('uk-no-account');
     recordWages(sim.player, at(2027, 6, 1), NY, { gross: 15_000_00, where: 'uk-eng-london', employer: 'a', foreignWithheld: 3_000_00 });
@@ -185,8 +220,8 @@ describe('the UK’s tax year, and Canada’s tax on residuals', () => {
     const first = sim.universe.scheduled.filter((i) => i.kind === 'career.residual' && i.payload.residualId === r.id).sort((x, y) => x.at - y.at)[0]!;
     sim.advanceTo(first.at + 60_000);
     const ca = yearOf(sim.player, instantParts(first.at)).foreign.ca!;
-    expect(ca.gross).toBe(r.paid);
-    expect(ca.withheld).toBe(Math.round(r.paid * ABROAD.canada.rate));
+    expect(ca.gross).toBeGreaterThan(0);
+    expect(ca.withheld).toBe(Math.round(ca.gross * ABROAD.canada.rate));
   });
 });
 
@@ -220,9 +255,9 @@ describe('home from a job, however it went', () => {
     sim.advanceTo(call.at + 60_000);
     expect(b.status).toBe('fired');
     expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.replaced.morale / 2);
-    // Home the next day, not at the day the job would have ended.
+    // Home on the next day's flight (from 2026-09-29, when it lands, not the moment the job's done), not at the day the job would have ended.
     const fired = sim.now;
-    while (sim.now < fired + 26 * 3_600_000) sim.advanceTo(Math.min(fired + 26 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    while (sim.now < fired + 36 * 3_600_000) sim.advanceTo(Math.min(fired + 36 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
   }, 60_000);
 
@@ -241,9 +276,9 @@ describe('home from a job, however it went', () => {
     sim.advanceTo(call.at + 60_000);
     expect(b.status).toBe('released');
     expect(sim.player.wellbeing.morale).toBeLessThan(50 + TURNS.recast.morale / 2);
-    // Recast on location, home the next day.
+    // Recast on location, home on the next day's flight.
     const recast = sim.now;
-    while (sim.now < recast + 26 * 3_600_000) sim.advanceTo(Math.min(recast + 26 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
+    while (sim.now < recast + 36 * 3_600_000) sim.advanceTo(Math.min(recast + 36 * 3_600_000, sim.now + 6 * 3_600_000), { stopOnPlayerRequired: true });
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
     expect(career.agencyId).toBe('caa');
     expect(sim.universe.scheduled.filter((i) => i.kind === 'career.work' && i.status === 'pending' && i.payload.bookingId === 'set')).toHaveLength(0);

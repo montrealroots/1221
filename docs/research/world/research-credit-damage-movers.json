@@ -1,0 +1,412 @@
+{
+  "_meta": {
+    "retrieved": "2026-09-30",
+    "purpose": "Real published figures for SLATE: credit-mark aging, holiday-let damage, mattress wear and removal, household moves and duty relief.",
+    "conventions": "Each figure carries source URL, publisher, date (as published; null when the page shows none), sourceType ('primary' = the body that sets the rule or collected the data; 'secondary' = a reproduction or third-party guide), and confirmed (true = read on the fetched page this session; false = seen only in a search snippet or a reproduction and not checked against the original). A figure nobody publishes is null with a note. American spelling in the notes; quotations keep their original spelling.",
+    "method": "Web search plus page fetches on 2026-09-30. Several PDFs (CFPB 2023 data point, Gross/Notowidigdo/Wang, Fed 2011 presentation) could not be text-extracted here; figures from those rely on the agency's HTML summary or a search snippet and are marked accordingly."
+  },
+
+  "creditAging": {
+    "principle": [
+      {
+        "claim": "The older a derogatory mark, the less it weighs; a 5-year-old collection hurts much less than a 5-month-old one.",
+        "quote": "the older they are the less impact they are going to have on your FICO® score. For example, a collection that is 5 years old will hurt much less than a collection that is 5 months old.",
+        "url": "https://www.myfico.com/credit-education/faq/negative-reasons/how-long-negative-information-remain-on-credit-report",
+        "publisher": "myFICO (FICO)", "date": null, "sourceType": "primary", "confirmed": true
+      },
+      {
+        "claim": "Collections' impact lessens gradually as they age; paid collections are ignored by FICO 9 and FICO 10.",
+        "quote": "As with any derogatory information, when reported, its impact on a FICO Score will gradually lessen over time as they age off the credit report.  /  Collections reported as paid in full are disregarded by FICO® Score 9 and the FICO® Score 10 suite.",
+        "url": "https://www.myfico.com/credit-education/faq/negative-reasons/collections-affect-credit",
+        "publisher": "myFICO (FICO)", "date": null, "sourceType": "primary", "confirmed": true
+      },
+      {
+        "claim": "Payment history is 35% of the FICO score; older problems count less.",
+        "quote": "The older a credit problem, the less it counts toward your credit score.",
+        "url": "https://www.myfico.com/credit-education/credit-scores/payment-history",
+        "publisher": "myFICO (FICO)", "date": null, "sourceType": "primary", "confirmed": true
+      },
+      {
+        "claim": "A recent late payment can hurt more than several old ones; getting current before charge-off lets the score recover.",
+        "quote": "a recent late payment, could be more damaging to your score than a number of late payments that happened a long time ago.",
+        "url": "https://www.myfico.com/credit-education/faq/negative-reasons/late-payments",
+        "publisher": "myFICO (FICO)", "date": null, "sourceType": "primary", "confirmed": true
+      },
+      {
+        "claim": "Experian (US): a default's impact lessens over time and when it drops off 'you might see another minor increase'; no point figure given.",
+        "quote": "Like all negative information, the default will naturally drop off your credit file after a period of time, at which point you might see another minor increase in your scores.",
+        "url": "https://www.experian.com/blogs/ask-experian/does-your-credit-score-go-up-when-a-default-is-removed/",
+        "publisher": "Experian (US)", "date": "2020-10-12", "sourceType": "primary", "confirmed": true
+      },
+      {
+        "claim": "Community observation only (not FICO's statement): single 30/60-day lates lose most of their weight around 2 years; 90+-day lates and collections keep most of it until they fall off at 7 years.",
+        "url": "https://ficoforums.myfico.com/t5/Rebuilding-Your-Credit/Late-Pays-Have-Diminishing-Impact/td-p/6623836",
+        "publisher": "myFICO Forums (user posts)", "date": null, "sourceType": "secondary", "confirmed": false,
+        "note": "User anecdote, explicitly because FICO keeps the aging curve proprietary. Useful as a shape, not a figure."
+      }
+    ],
+    "reportingPeriods": {
+      "US": {
+        "rule": "Most negative information up to 7 years; civil judgments 7 years or the statute of limitations if longer; bankruptcies up to 10 years (myFICO: Chapter 13 7 years, Chapter 7 10 years). Collections run 7 years from the original delinquency date.",
+        "urls": [
+          "https://www.consumerfinance.gov/ask-cfpb/how-long-does-information-stay-on-my-credit-report-en-323/",
+          "https://www.myfico.com/credit-education/faq/negative-reasons/how-long-negative-information-remain-on-credit-report"
+        ],
+        "publisher": "CFPB; myFICO", "date": null, "sourceType": "primary", "confirmed": true,
+        "note": "CFPB page seen via search snippet; the myFICO page was fetched."
+      },
+      "UK": {
+        "rule": "A default stays 6 years from the default date whether or not it is paid (paying marks it 'satisfied'). A CCJ stays 6 years from the judgment date; paid in full within one calendar month it is not registered at all.",
+        "quotes": [
+          "A default will stay on your credit file for six years from the date of default, regardless of whether you pay off the debt.",
+          "As your default ages, it may become less important to lenders.",
+          "A CCJ will stay on your credit report for six years from the date of the judgement.",
+          "If you pay the full amount within one calendar month of the CCJ being issued, it will not be recorded on the Register of Judgments, Orders and Fines."
+        ],
+        "urls": [
+          "https://www.experian.co.uk/consumer/guides/defaults.html",
+          "https://www.experian.co.uk/consumer/guides/ccjs.html",
+          "https://ico.org.uk/for-the-public/credit/"
+        ],
+        "publisher": "Experian UK; Information Commissioner's Office", "date": null, "sourceType": "primary", "confirmed": true,
+        "note": "The ICO page, as fetched, treats a debt staying longer than six years from the original default as unlikely to be fair (e.g., when a sold debt is re-recorded); it does not itself state a blanket retention period."
+      },
+      "IE": {
+        "rule": "Central Credit Register: information held 5 years after a loan is repaid, written off or discharged. If the borrower defaults and stops paying, the 5-year clock does not start and the loan keeps appearing.",
+        "quotes": [
+          "the credit information is held on the Central Credit Register for a period 5 years after the loan is repaid, written off or discharged.",
+          "If you default on your loan agreement and cease making payments then the 5 year period will not start to run."
+        ],
+        "url": "https://www.centralcreditregister.ie/borrower-area/retention-of-information/",
+        "publisher": "Central Bank of Ireland (Central Credit Register)", "date": null, "sourceType": "primary", "confirmed": true,
+        "note": "Covers loans of €500 or more under the Credit Reporting Act 2013 (per search snippet from CCPC; not fetched)."
+      }
+    },
+    "fico2011MortgageStudy": {
+      "title": "Research Looks at How Mortgage Delinquencies Affect Scores",
+      "url": "https://www.fico.com/blogs/research-looks-how-mortgage-delinquencies-affect-scores",
+      "publisher": "FICO (Banking Analytics Blog), author Joanne Gaskin",
+      "date": "2011-03-24",
+      "sourceType": "primary",
+      "confirmedPrimaryText": true,
+      "confirmedTable": false,
+      "primaryQuotes": [
+        "The magnitude of FICO® Score impact is highly dependent on the starting score.",
+        "While a score may begin to improve sooner, it could take up to 7-10 years to fully recover, assuming all other obligations are paid as agreed.",
+        "In general, the higher starting score, the longer it takes for the score to fully recover.",
+        "There's no significant difference in score impact between short sale/deed-in-lieu/settlement and foreclosure."
+      ],
+      "tableNote": "The table is an image on FICO's page and did not load. The rows below are assembled from reproductions: foreclosure/short-sale/bankruptcy rows fetched from bills.com and smartcredit.com (the latter a 2011-03-24 repost); the 30-day and 90-day rows from a search summary citing the same study. All reproductions agree where they overlap. Scores are the range after the event; profiles are hypothetical consumers with no other delinquencies.",
+      "reproductionUrls": [
+        "https://www.bills.com/learn/mortgages/mortgage-after-foreclosure",
+        "https://www.smartcredit.com/blog/fico-reveals-impact-of-mortgage-delinquencies",
+        "https://www.self.inc/blog/foreclosure-affects-credit"
+      ],
+      "scoreAfterEvent": {
+        "startingScore": [680, 720, 780],
+        "late30Days": ["600-620", "630-650", "670-690"],
+        "late90Days": ["600-620", "610-630", "650-670"],
+        "shortSaleDeedInLieuSettlementNoDeficiency": ["610-630", "605-625", "655-675"],
+        "shortSaleWithDeficiency": ["575-595", "570-590", "620-640"],
+        "foreclosure": ["575-595", "570-590", "620-640"],
+        "bankruptcy": ["530-550", "525-545", "540-560"]
+      },
+      "timeToFullyRecover": {
+        "startingScore": [680, 720, 780],
+        "late30Days": ["~9 months", "~2.5 years", "~3 years"],
+        "late90Days": ["~9 months", "~3 years", "~7 years"],
+        "shortSaleDeedInLieuSettlementNoDeficiency": ["~3 years", "~7 years", "~7 years"],
+        "shortSaleWithDeficiency": ["~3 years", "~7 years", "~7 years"],
+        "foreclosure": ["~3 years", "~7 years", "~7 years"],
+        "bankruptcy": ["~5 years", "~7-10 years", "~7-10 years"]
+      },
+      "confirmationByRow": {
+        "late30Days.score": "search summary only",
+        "late30Days.recovery": "fetched (smartcredit repost)",
+        "late90Days": "search summary only",
+        "shortSale/foreclosure/bankruptcy": "fetched (bills.com, smartcredit)"
+      },
+      "relatedNote": "A CBS MoneyWatch article (2011-04-28) on the same research names the starting scores as 650/720/780 rather than 680; every other reproduction and FICO's own post say 680."
+    },
+    "scoreChangeWhenMarkFallsOff": [
+      {
+        "event": "Last medical collection removed from the report",
+        "figure": "Average +25 points in the first quarter after removal; +21 for medical collections under $500, +32 for over $500.",
+        "url": "https://www.consumerfinance.gov/data-research/research-reports/consumer-credit-and-the-removal-of-medical-collections-from-credit-reports/",
+        "publisher": "Consumer Financial Protection Bureau", "date": "2023-04-26", "sourceType": "primary", "confirmed": true,
+        "note": "Sample drawn from credit records 2012-2020 (per search snippet). The fetched page does not say whether removals were by aging-off, payment or deletion, so this is the nearest published measure of 'a collection disappears', not a clean 7-year aging-off measure."
+      },
+      {
+        "event": "Chapter 7 bankruptcy flag removed at 10 years (FCRA)",
+        "figure": "About +15 points (616 to 631) in one study; about +10 points on a pre-removal mean of 596 in another; Chapter 13 flag removal about +12 points.",
+        "urls": [
+          "https://users.nber.org/~notom/research/Gross-Noto-Wang%20MPC%20over%20cycle%20jan2018.pdf",
+          "https://www.nber.org/system/files/working_papers/w22711/w22711.pdf"
+        ],
+        "publisher": "Gross, Notowidigdo & Wang (NBER working paper); Dobbie, Goldsmith-Pinkham, Mahoney & Song (NBER w22711 / Journal of Finance 2020)",
+        "date": "2018-01 (Gross et al. draft); 2020 (Dobbie et al., J. Finance)", "sourceType": "primary", "confirmed": false,
+        "note": "Numbers from a search summary; the PDFs could not be text-extracted here. The NY Fed abstract (sr795) confirms Chapter 13 flag removal 'leads to a large increase in credit limits' but gives no point figure."
+      },
+      {
+        "event": "Paid vs unpaid medical collections (predictive accuracy, not a drop-off)",
+        "figure": "Consumers whose collections were mostly medical performed like consumers scoring ~10 points higher; mostly paid medical collections, like ~20 points higher.",
+        "url": "https://files.consumerfinance.gov/f/201405_cfpb_report_data-point_medical-debt-credit-scores.pdf",
+        "publisher": "Consumer Financial Protection Bureau", "date": "2014-05", "sourceType": "primary", "confirmed": false,
+        "note": "Search snippet only."
+      },
+      {
+        "event": "Non-medical collection, charge-off or repossession falling off at 7 years",
+        "figure": null,
+        "note": "No FICO, VantageScore, CFPB or Experian publication found that gives a point figure for this. Experian says only 'a minor increase'. FICO's position is that most of the decay happens before the drop-off."
+      }
+    ]
+  },
+
+  "letDamage": {
+    "frequency": [
+      {
+        "figure": "About 0.02% of Airbnb reservations globally led to a property damage reimbursement of $1,000 or more.",
+        "quote": "approximately just 0.02 percent of reservations on Airbnb globally led to property damage reimbursement of $1000 or more.",
+        "url": "https://news.airbnb.com/an-update-on-our-work-to-crack-down-on-parties-and-disruptive-behavior/",
+        "publisher": "Airbnb Newsroom", "date": "2023-08-31", "sourceType": "primary", "confirmed": true,
+        "note": "The fetched page gave 2023-08-31; one secondary cites it as October 2024. The figure covers only large ($1,000+) reimbursed damage, not all claims."
+      },
+      {
+        "figure": "Damage claims on 0.71% of Airbnb bookings and 0.43% of Vrbo bookings; share of claimed amount recovered 56.75% (Airbnb) vs 68.29% (Vrbo).",
+        "url": "https://avadaproperties.com/airbnb-vrbo-damage-claims-statistics-and-assumptions/",
+        "publisher": "Avada Properties (property manager, Pigeon Forge and Gatlinburg, Tennessee)", "date": "2023-09-29",
+        "sourceType": "primary", "confirmed": true,
+        "note": "One manager's own data, 20,000+ bookings in one cabin market. No average dollar amounts published."
+      },
+      {
+        "figure": "Platform-wide claim frequency or average guest-damage claim cost from Airbnb, Vrbo, Proper or Steadily",
+        "value": null,
+        "note": "Not published. Proper publishes only claim-type and cost examples (below)."
+      }
+    ],
+    "claimCosts": [
+      {
+        "figure": "Average short-term rental sewer-backup claim in 2024: $18,000 (excluding lost rent). Paid examples: $130,000 guest-caused water damage (Newburyport, MA), $103,000 party damage, $50,000+ burst pipe.",
+        "urls": [
+          "https://www.proper.insure/blog/most-common-str-insurance-claims/",
+          "https://www.proper.insure/blog/real-short-term-rental-insurance-claims-examples/"
+        ],
+        "publisher": "Proper Insurance", "date": "2026-09-29 (page date as fetched)", "sourceType": "primary", "confirmed": true,
+        "note": "Proper says sewer backup/non-weather water is the most common STR claim (search snippet: 'more than 20%'); the fetched page's 22.6% figure is for all homeowners claims (Insurance Information Institute), not STRs. The $103,000 party example is from a search snippet."
+      }
+    ],
+    "airbnbProcess": {
+      "deadline": "Within 14 days of the responsible guest's checkout, file in the Resolution Center (help article 279); the Host Damage Protection terms say notify within 14 days of checkout and file payment requests within 30 days.",
+      "guestResponse": "The guest has 24 hours to respond. If they don't respond, decline, or pay only part, the host can escalate under Host damage protection and Airbnb reviews it.",
+      "howGuestIsCharged": "By booking, the guest authorizes Airbnb Payments to charge the booking payment method (or any method on file) for the Damage Report amount; Airbnb may also pursue the guest through collections or legal action.",
+      "cap": "US$3 million (AirCover for Hosts, Host damage protection).",
+      "exclusions": "Includes wear and tear/deterioration, acts of nature, mold, damage after checkout, linen stains except from pets or unauthorized guests.",
+      "urls": [
+        "https://www.airbnb.com/help/article/279",
+        "https://www.airbnb.com/help/article/2869",
+        "https://www.airbnb.com/help/article/2908"
+      ],
+      "publisher": "Airbnb", "date": "article 2869 last updated 2026-08-01", "sourceType": "primary", "confirmed": true,
+      "note": "'Or before the next guest checks in, whichever comes first' appears in secondary host guides, not in the fetched Airbnb pages; treat 14 days after checkout as the rule. Terms of Service charging language is from a search snippet of article 2908."
+    },
+    "vrboDeposit": {
+      "rule": "Amount set by the host; held as card on file, as an upfront refundable deposit, or replaced by purchased damage protection. Host has 14 days after checkout to claim; otherwise refunded after 14 days (plus up to 7 business days for the bank).",
+      "url": "https://help.vrbo.com/articles/How-do-damage-deposits-work",
+      "publisher": "Vrbo (Expedia Group)", "date": null, "sourceType": "primary", "confirmed": true,
+      "typicalAmount": {
+        "value": "$200-$500 (most hosts)",
+        "url": "https://www.lodgify.com/guides/vrbo/damage-desposit/",
+        "publisher": "Lodgify", "sourceType": "secondary", "confirmed": false,
+        "note": "Industry guide via search snippet; Vrbo publishes no typical amount. Same snippet: deposits of $5,000 or less are held as card on file, above that charged at booking — not confirmed on Vrbo's page."
+      }
+    }
+  },
+
+  "mattress": {
+    "sleepQualityVsAge": [
+      {
+        "study": "Jacobson, Boolani & Smith, 'Changes in back pain, sleep quality, and perceived stress after introduction of new bedding systems', J Chiropr Med 2009;8(1):1-8",
+        "design": "59 subjects, 28 nights on own bed (5+ years old) vs 28 nights on a new medium-firm bed; uncontrolled before/after, not blinded.",
+        "finding": "New beds improved sleep quality and reduced back discomfort and stress symptoms.",
+        "url": "https://www.sciencedirect.com/science/article/abs/pii/S1556370708001296",
+        "sourceType": "primary", "confirmed": false,
+        "note": "Details via search snippet (publisher page 403). This is the baseline the request asks to beat."
+      },
+      {
+        "study": "Jacobson et al. 2010, prescribed sleep surfaces (27 chiropractic patients, 21 days own bed then 12 weeks prescribed medium-firm)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/20579971/",
+        "sourceType": "primary", "confirmed": false,
+        "note": "Smaller than the 2009 study; same design weakness."
+      },
+      {
+        "study": "Radwan et al., 'Effect of different mattress designs on promoting sleep quality, pain reduction, and spinal alignment...: systematic review of controlled trials', Sleep Health 2015",
+        "finding": "Medium-firm and custom-inflated mattresses were best for sleep comfort, quality and spinal alignment.",
+        "url": "https://www.sleephealthjournal.org/article/S2352-7218(15)00140-0/abstract",
+        "sourceType": "primary", "confirmed": false,
+        "note": "Larger and controlled, but about mattress design/firmness, not age. Page returned 403; summary via search snippets."
+      },
+      {
+        "study": "Vlaović, Klarić & Domljan, 'Investigating the Impact of Long-Term Use on Mattress Firmness and Sleep Quality — Preliminary Results', Applied Sciences 2024, 14(21):10016",
+        "design": "Lab durability test (modified EN 1957) on two mattresses: polyurethane core and pocket spring.",
+        "finding": "Both kept firmness and support under simulated long use; PUR lost 3.79 mm height, pocket spring 2.86 mm; authors call for larger samples on sleep-comfort effects.",
+        "url": "https://www.mdpi.com/2076-3417/14/21/10016",
+        "sourceType": "primary", "confirmed": false,
+        "note": "n=2 mattresses, machine-tested; no human sleep data. Summary via search snippet (page 403)."
+      },
+      {
+        "conclusion": "No controlled or large study linking mattress age to sleep quality was found. The honest position is: Jacobson-style before/after studies say a new bed helps; controlled trials say firmness matters; nothing quantifies decline per year of age.",
+        "value": null
+      }
+    ],
+    "lifespans": {
+      "sleepFoundation": {
+        "byType": {
+          "innerspring": "5.5-6.5 years",
+          "foam": "6-7 years",
+          "latex": "7.5-8.5 years",
+          "hybrid": "6.5-7.5 years"
+        },
+        "general": "Most mattresses should last between 7 and 10 years.",
+        "url": "https://www.sleepfoundation.org/mattress-information/how-long-should-a-mattress-last",
+        "publisher": "Sleep Foundation (OneCare Media)", "date": "2025-07-15", "sourceType": "secondary", "confirmed": true,
+        "note": "The page's general 7-10 years sits above its own per-type averages (5.5-8.5). Another Sleep Foundation page says replace every 6-8 years. Sleep Foundation is a commercial review site, not a research body."
+      },
+      "consumerReports": {
+        "value": "Most mattresses stay in good condition 7-10 years (the typical warranty span); lab tests suggest 8-10 years. Consider replacing if over 40 and the mattress is 5-7 years old.",
+        "urls": [
+          "https://www.consumerreports.org/cro/news/2007/12/q-a-how-often-should-i-buy-a-new-mattress/index.htm",
+          "https://www.consumerreports.org/mattresses/signs-your-mattress-is-shot-when-to-replace-mattress/"
+        ],
+        "publisher": "Consumer Reports", "date": "2007-12 (Q&A); signs page undated", "sourceType": "primary", "confirmed": false,
+        "note": "Search snippets only."
+      },
+      "betterSleepCouncil": {
+        "value": "Evaluate your mattress for comfort and support about every seven years (not a hard rule).",
+        "url": "https://bettersleep.org/",
+        "publisher": "Better Sleep Council (consumer arm of the International Sleep Products Association, a mattress-industry trade group)",
+        "date": null, "sourceType": "primary", "confirmed": false,
+        "note": "Seen via secondary reproductions, not on a BSC page this session. Industry-funded. BedTimes (ISPA) reported in Feb 2023 that the actual replacement cycle fell to 8.3 years: https://bedtimesmagazine.com/2023/02/mattress-replacement-cycle-drops-to-8-3-years/ (not fetched)."
+      }
+    },
+    "warrantyIndentationThresholds": [
+      { "brand": "Saatva", "threshold": "greater than 1.5 inches", "terms": "Free replacement years 1-2; $149 repair fee from year 3; optional replacement at $99 + 50%/60%/80% of retail in years 3-5/6-10/11-15.", "url": "https://www.saatva.com/warranty", "sourceType": "primary", "confirmed": true },
+      { "brand": "Casper", "threshold": "greater than 1 inch", "terms": "10-year mattress warranty; requires proper support base.", "url": "https://casper.com/warranty/", "sourceType": "primary", "confirmed": true },
+      { "brand": "Tempur-Pedic", "threshold": "greater than 0.75 inch", "terms": "10-year limited warranty.", "url": "https://yawnder.com/tempur-pedic-mattress-warranty/", "sourceType": "secondary", "confirmed": false, "note": "Tempur's warranty page redirected to a claim form; figure from secondary guides." },
+      { "brand": "Purple", "threshold": "greater than 1 inch", "url": "https://yawnder.com/mattress-warranties-compared/", "sourceType": "secondary", "confirmed": false }
+    ],
+    "removalPrices": {
+      "US": [
+        { "retailer": "Mattress Firm", "price": "Free in California only (state program, one used mattress per new one, within 30 days)", "url": "https://www.mattressfirm.com/haulawayrequestform", "sourceType": "primary", "confirmed": true },
+        { "retailer": "Mattress Firm (outside California)", "price": "$99.99 setup plus removal; $149.99 for up to 3 mattresses", "url": "https://homeguide.com/costs/mattress-removal-cost", "sourceType": "secondary", "confirmed": false, "note": "Search snippet; not on a Mattress Firm page." },
+        { "retailer": "IKEA US", "price": "from $30 with an in-store mattress purchase and in-home delivery, select markets; not for online orders", "url": "https://www.ikea.com/us/en/customer-service/services/removal/", "sourceType": "primary", "confirmed": true, "note": "California, Connecticut, Oregon and Rhode Island require retailer take-back and charge a recycling fee at purchase." }
+      ],
+      "UK": [
+        { "retailer": "John Lewis", "price": "£39.95 (only when John Lewis's own crew delivers the new mattress)", "url": "https://www.johnlewis.com/our-services/home-furnishings", "sourceType": "primary", "confirmed": true },
+        { "retailer": "Dreams", "price": "£40 single; £60 double, king, super king", "url": "https://www.dreams.co.uk/help/recycling/take-old-bed-away", "sourceType": "primary", "confirmed": true },
+        { "retailer": "IKEA UK", "price": null, "note": "Launched Nov 2023 at £40 per item; page now says 'temporarily unavailable'.", "url": "https://www.ikea.com/gb/en/customer-service/services/removal/", "sourceType": "primary", "confirmed": true },
+        { "retailer": "Furniture Village", "price": "£70", "url": "https://www.which.co.uk/reviews/mattresses/article/how-to-dispose-of-a-mattress-avTxg0t48NMG", "sourceType": "secondary", "confirmed": false }
+      ],
+      "IE": [
+        { "retailer": "Dreams Ireland", "price": "€69 flat", "url": "https://www.dreams.ie/recycling-services", "sourceType": "primary", "confirmed": true },
+        { "retailer": "Harvey Norman Ireland", "price": "€50 per mattress, only with delivery of a new mattress", "url": "https://www.harveynorman.ie/corporate-information/mattress-recycling.html", "sourceType": "primary", "confirmed": false, "note": "Page returned 403; figure from search snippet." },
+        { "retailer": "EZ Living", "price": "€39-€45 by size", "url": null, "sourceType": "secondary", "confirmed": false, "note": "Search snippet only." },
+        { "retailer": "Council civic amenity site / bulky collection", "price": "€10-€25 drop-off; €25-€50 collection", "url": "https://www.mattressreviews.ie/mattress-disposal", "sourceType": "secondary", "confirmed": true, "note": "Aggregator guide; varies by council." }
+      ]
+    }
+  },
+
+  "movers": {
+    "dublinOneBedroom": [
+      {
+        "value": "Man-and-van rate card: first load for a 1-bed, two-man €105 (small van, 1h45 included), €145 (large, 2h), €185 (XL, 2h15); one-man €70/€100/€130. Extra time €12.50-€20 per 15 minutes (two-man); stairs €5-€15 per floor; €5 to cross the Liffey.",
+        "url": "https://www.manwithavandublin.ie/cost-of-removals/",
+        "publisher": "Man With A Van Dublin", "date": null, "sourceType": "primary", "confirmed": true
+      },
+      {
+        "value": "€300-€600 for a 1-bedroom apartment removal (full removal firm).",
+        "url": "https://movingcompanydublin.ie/house-removals-dublin-how-much-does-it-cost/",
+        "publisher": "Dublin Moving Company", "date": "© 2024, no article date", "sourceType": "primary", "confirmed": true
+      }
+    ],
+    "international": {
+      "UK_to_IE": {
+        "value": "£1,000-£1,400 for a 1-bedroom house, London to Dublin (full removal); shared loads 30-50% cheaper.",
+        "url": "https://sirelo.co.uk/moving-abroad/moving-to-ireland/",
+        "publisher": "Sirelo UK", "date": "2026-02", "sourceType": "secondary", "confirmed": true
+      },
+      "US_to_UK": {
+        "value": "Port-to-port 20ft container: New York-London $1,605, Houston-London $1,258, Los Angeles-London $3,775; air freight 100 kg ~$1,305-$1,372. Excludes door-to-door, packing and insurance.",
+        "url": "https://www.movehub.com/us/international-moving/united-kingdom/",
+        "publisher": "MoveHub", "date": "2024-10", "sourceType": "secondary", "confirmed": true,
+        "note": "No door-to-door 1-bedroom figure fetched; search snippets give $2,500-$3,700 for a 1-bed by container and $4,500-$6,500 all-in (unconfirmed)."
+      },
+      "US_to_IE": {
+        "value": "1-bedroom: $2,700-$3,700 from the East Coast (6-9 weeks), $3,200-$4,500 from the West Coast (7-10 weeks).",
+        "url": "https://sirelo.com/moving-abroad/moving-to-ireland/",
+        "publisher": "Sirelo", "date": null, "sourceType": "secondary", "confirmed": true
+      },
+      "US_to_CA": {
+        "value": "1-bedroom to Toronto: $3,375-$4,215.",
+        "url": "https://sirelo.com/moving-abroad/moving-to-canada/moving-to-toronto/",
+        "publisher": "Sirelo", "date": "c. 2024-04 (inferred)", "sourceType": "secondary", "confirmed": true,
+        "note": "Sirelo's main Canada page gives only 3-bedroom figures (e.g., East Coast to Toronto $2,400-$3,300 by road). Snippet: Vancouver 1-bed $1,550-$1,950 from Los Angeles, $3,270-$4,110 from New York (unconfirmed)."
+      },
+      "US_to_MX": {
+        "value": "1-bedroom door-to-door by road $4,500-$8,000; 20ft sea container $5,700-$8,200 (Charleston-Veracruz, Seattle/Tacoma-Manzanillo), including packing, freight, clearance and delivery, excluding duties, exams and storage.",
+        "url": "https://jordanrivermoving.com/moving-to-mexico/",
+        "publisher": "Jordan River Moving & Storage", "date": "2026-09-10", "sourceType": "secondary", "confirmed": true
+      }
+    },
+    "dutyRelief": {
+      "UK": {
+        "rule": "Transfer of Residence relief (form ToR1): resident outside the UK 12+ consecutive months; goods owned and used 6+ months; imported within 12 months of moving; not lent, pledged, hired or transferred for 12 months. Relieves import duty and import VAT. Excludes alcohol, tobacco, commercial vehicles, and goods from a second home.",
+        "url": "https://www.gov.uk/guidance/transfer-of-residence-to-great-britain",
+        "publisher": "HM Revenue & Customs (GOV.UK)", "date": "2025-11-12", "sourceType": "primary", "confirmed": true,
+        "note": "Applies to non-EU and, since Brexit, EU/Irish origins alike."
+      },
+      "IE": {
+        "rule": "Transfer of Residence relief (form C&E 1076): lived outside the EU 12+ continuous months; goods possessed and used 6+ months; duty and tax paid in the country of purchase; imported from 6 months before to 12 months after the move; dispose of them within 12 months and charges become due.",
+        "url": "https://www.revenue.ie/en/customs/individuals/transfer-residence/rules.aspx",
+        "publisher": "Revenue (Irish Tax and Customs)", "date": null, "sourceType": "primary", "confirmed": true,
+        "note": "Moves from within the EU need no relief (free circulation). A UK-to-Ireland move is now a non-EU import and needs the relief."
+      },
+      "US": {
+        "rule": "Household effects used abroad at least 1 year (need not be continuous or immediately precede import), not for sale or another person, enter free of duty and tax (19 CFR 148.52; HTSUS 9804.00.05; CBP Form 3299). Not allowed if they arrive 10+ years after the importer's last arrival (in no case after 25). Clothing, jewelry, cameras and vehicles are personal effects, not household effects.",
+        "url": "https://www.law.cornell.edu/cfr/text/19/148.52",
+        "publisher": "US Code of Federal Regulations (via Cornell LII); US Customs and Border Protection", "date": null, "sourceType": "primary", "confirmed": true,
+        "note": "Goods of US origin being brought back are generally duty-free on their own terms (American goods returned); not fetched."
+      },
+      "CA": {
+        "rule": "Settlers' effects (tariff item 9807.00.00, Form B4): a settler is someone establishing a Canadian residence for the first time for 12+ months; goods must be owned, possessed and used before arrival; sold or disposed of within 12 months, duties become payable; goods to follow must be listed on the original B4 (no time limit). Limited alcohol and tobacco allowances.",
+        "url": "https://www.cbsa-asfc.gc.ca/publications/dm-md/d2/d2-2-1-eng.html",
+        "publisher": "Canada Border Services Agency (Memorandum D2-2-1)", "date": "2010-05-04", "sourceType": "primary", "confirmed": true,
+        "note": "Former residents returning have a parallel exemption (not fetched)."
+      },
+      "MX": {
+        "rule": "Menaje de casa: duty-free import of used household goods for foreigners with temporary resident, temporary student resident or permanent resident status (not tourists), and for Mexicans returning after 6+ months abroad. Requires a consulate-certified inventory (appliances by brand, model and serial number). Consular fee at the Salt Lake City consulate: $195 for foreigners, $146 for Mexicans. Secondary sources: one-time use, single shipment, goods owned 6+ months, arriving within 6 months of the move; a customs broker (agente aduanal) files it.",
+        "urls": [
+          "https://consulmex.sre.gob.mx/saltlakecity/index.php/registro-civil-y-poderes-notariales/menaje-de-casa",
+          "https://jordanrivermoving.com/moving-to-mexico/"
+        ],
+        "publisher": "Consulate of Mexico in Salt Lake City (SRE); Jordan River Moving", "date": null, "sourceType": "primary", "confirmed": true,
+        "note": "Fees differ by consulate and year. The one-time and 6-month-arrival rules come from secondary sources and a search snippet of other consulates' pages; the fetched SLC page does not state them."
+      }
+    }
+  },
+
+  "uncertain": [
+    "FICO 2011 table: FICO's own page lost its chart images. Bankruptcy, foreclosure and short-sale rows were read on two reproductions that agree; the 30-day and 90-day score rows came only from a search summary. The 90-day recovery at 780 ('~7 years') came from the search summary alone.",
+    "No published point figure exists for how much a score rises when a non-medical collection, charge-off or repossession ages off at 7 years. The nearest measures are CFPB's +25 for removing the last medical collection (2023) and roughly +10 to +15 when a bankruptcy flag drops at 10 years (academic, not confirmed on the PDFs).",
+    "FICO's aging curve is proprietary. The '30-day late fades by about 2 years, severe marks keep most weight until 7' shape is forum observation only.",
+    "The Airbnb 0.02% statistic: the fetched page date was 2023-08-31; a secondary cites Oct 2024. It counts only $1,000+ reimbursements.",
+    "Only one operator's data (Avada, Tennessee cabins) gives an all-claims frequency (0.71% Airbnb, 0.43% Vrbo). No platform or insurer publishes a general rate or an average guest-damage claim amount.",
+    "The Airbnb rule 'or before the next guest checks in' is not on Airbnb's own current pages; the 14-days-after-checkout rule is.",
+    "Vrbo typical deposit ($200-$500) is an industry-guide figure, not Vrbo's.",
+    "Mattress age vs sleep quality: no controlled or large study found. Everything beyond Jacobson either concerns firmness or is a 2-sample lab test.",
+    "Sleep Foundation contradicts itself (7-10 years general vs 5.5-8.5 by type). The Better Sleep Council's 7-year guidance is industry-funded and was not read on its own page.",
+    "Tempur-Pedic 0.75-inch and Purple 1-inch thresholds were not read on the brands' own pages.",
+    "Mattress Firm's $99.99 removal fee outside California, Harvey Norman Ireland's €50 and EZ Living's €39-€45 are from snippets; the retailers' pages were blocked or not fetched.",
+    "International moving figures are broker and mover estimates (Sirelo, MoveHub, Jordan River), not tariffs; MoveHub's US-UK figures are port-to-port only.",
+    "Mexico menaje de casa: the one-shipment, six-month-arrival and six-month-ownership conditions were not confirmed on an official Mexican page this session."
+  ]
+}

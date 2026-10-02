@@ -29,8 +29,18 @@ import { PERFORMER_NOUN } from '@/engine/core/performer';
 
 export function GameShell() {
   const game = useGame();
-  const { sim, route, navigate, breadcrumbs, toasts } = game;
+  const { sim, route, navigate, breadcrumbs, toasts, recent, favourites, toggleFavourite } = game;
+  // Places kept from 2026-10-01: pinned ones, and the last few visited. Each was opened from its own gated button first.
+  const here = breadcrumbs[breadcrumbs.length - 1];
+  const pinned = favourites.some((f) => f.route === route);
   const [railOpen, setRailOpen] = useState(false);
+  // A search over the rail: what it lists, and the places already visited or pinned, each opened before from its own gated button.
+  const [find, setFind] = useState('');
+  const query = find.trim().toLowerCase();
+  const known: { route: string; label: string; detail?: string }[] = [...RAIL_DESTINATIONS.flatMap((g) => g.items), ...favourites, ...recent];
+  const recentShown = recent.filter((r) => r.route !== route && r.route !== '/home' && !favourites.some((f) => f.route === r.route)).slice(0, 5);
+  const found = query ? [...new Map(known.filter((d) => d.route !== '/home').map((d) => [d.route, d])).values()]
+    .filter((d) => `${d.label} ${d.detail ?? ''}`.toLowerCase().includes(query)) : [];
   const waiting = useWorld((s) => openDecisions(s).length);
   const unread = useWorld((s) => unreadNotifications(s).length);
 
@@ -43,6 +53,20 @@ export function GameShell() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [railOpen]);
+
+  // "/" anywhere outside a field opens the rail at its search, to go back to a place by name (from 2026-10-02).
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      const t = event.target as HTMLElement | null;
+      if (event.key !== '/' || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+      event.preventDefault();
+      setRailOpen(true);
+      window.setTimeout(() => document.getElementById('rail-find')?.focus(), 0);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   // A life that has ended opens onto how it ended, and nothing else.
   const ended = useWorld((s) => s.universe.meta.endedAt !== undefined);
@@ -119,7 +143,42 @@ export function GameShell() {
             </button>
           </div>
 
-          {RAIL_DESTINATIONS.map((group) => (
+          <div className="rail-group">
+            <label htmlFor="rail-find" className="sr-only">Find A Place</label>
+            <input id="rail-find" className="rail-find" value={find} placeholder="Find A Place ( / )" onChange={(e) => setFind(e.target.value)} />
+          </div>
+          {query && (
+            <div className="rail-group">
+              <div className="rail-group-label">Found</div>
+              {found.length === 0 ? <div className="rail-empty xs dim">None by that name yet</div> : found.map((item) => (
+                <button key={item.route} className="rail-item" aria-current={route === item.route ? 'page' : undefined} onClick={() => { go(item.route, item.label); setFind(''); }}>
+                  <span className="grow truncate">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          )}
+          {!query && favourites.length > 0 && (
+            <div className="rail-group">
+              <div className="rail-group-label">Pinned</div>
+              {favourites.map((item) => (
+                <button key={item.route} className="rail-item" aria-current={route === item.route ? 'page' : undefined} onClick={() => go(item.route, item.label)}>
+                  <span className="grow truncate">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          )}
+          {!query && recentShown.length > 0 && (
+            <div className="rail-group">
+              <div className="rail-group-label">Recent</div>
+              {recentShown.map((item) => (
+                <button key={item.route} className="rail-item" onClick={() => go(item.route, item.label)}>
+                  <span className="grow truncate">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {!query && RAIL_DESTINATIONS.map((group) => (
             <div key={group.label} className="rail-group">
               <div className="rail-group-label">{group.label}</div>
               {group.items.map((item) => (
@@ -160,6 +219,7 @@ export function GameShell() {
           <div className="main-inner">
             <GuideStrip />
             {breadcrumbs.length > 1 && (
+              <div className="crumb-row">
               <nav className="breadcrumbs" aria-label="Breadcrumb">
                 {breadcrumbs.map((crumb, index) => (
                   <span key={crumb.route + index} className="row gap-2">
@@ -172,6 +232,8 @@ export function GameShell() {
                   </span>
                 ))}
               </nav>
+              {route !== '/home' && here && <button type="button" className="btn btn-sm btn-ghost" aria-pressed={pinned} onClick={() => toggleFavourite(here)}>{pinned ? 'Unpin This Page' : 'Pin This Page'}</button>}
+              </div>
             )}
 
             <Screen route={route} />

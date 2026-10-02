@@ -1,0 +1,178 @@
+{
+  "_meta": {
+    "compiled": "2026-09-29",
+    "purpose": "Real published figures for SLATE vehicle use: annual distance driven, Mexico City car insurance, UK car finance rates.",
+    "conventions": "Each figure has value, unit, source, period, sourceType ('primary' = the statistical body or regulator's own publication, read directly; 'secondary' = a report of it by someone else, or a commercial source). Unconfirmable figures are null and explained in 'uncertain'. Nothing here is an estimate made by the compiler.",
+    "verifiedHow": "Primary figures marked 'readDirectly' were read from the source file itself (DfT NTS0901 ODS, BoE IADB CSV, FHWA VM-1 page, StatCan 53-223-X PDF, FCA annex PDF, CSO press statement, CONDUSEF press page). Others were seen only via search-result summaries and are flagged."
+  },
+  "mileage": {
+    "US": {
+      "perVehicle_lightDutyShortWheelbase": {
+        "value": 10812, "unit": "miles per vehicle per year", "period": "2024",
+        "source": "https://www.fhwa.dot.gov/policyinformation/statistics/2024/vm1.cfm",
+        "sourceType": "primary", "readDirectly": true,
+        "note": "FHWA Highway Statistics 2024, Table VM-1 (updated February 2026). Light duty short wheelbase = passenger cars and short pickups/SUVs/vans. Same table: light duty long wheelbase 10,707; motorcycles 2,401; all motor vehicles 11,071. Average fuel per LDV-SWB 423 gallons."
+      },
+      "perVehicle_lightDutyLongWheelbase": {
+        "value": 10707, "unit": "miles per vehicle per year", "period": "2024",
+        "source": "https://www.fhwa.dot.gov/policyinformation/statistics/2024/vm1.cfm",
+        "sourceType": "primary", "readDirectly": true
+      },
+      "perDriverByAge": {
+        "source": "https://www.fhwa.dot.gov/ohim/onh00/bar8.htm",
+        "sourceType": "primary", "readDirectly": true,
+        "period": null,
+        "unit": "miles per driver per year",
+        "note": "FHWA Office of Highway Policy Information, 'Average Annual Miles per Driver by Age Group'. The page carries no data year; it sits in the 'Our Nation's Highways 2000' section and is widely cited as current but is old (probably 1990s/2001 NPTS/NHTS-era survey data). Use for the age shape, not as a current level.",
+        "rows": [
+          { "age": "16-19", "male": 8206, "female": 6873, "total": 7624 },
+          { "age": "20-34", "male": 17976, "female": 12004, "total": 15098 },
+          { "age": "35-54", "male": 18858, "female": 11464, "total": 15291 },
+          { "age": "55-64", "male": 15859, "female": 7780, "total": 11972 },
+          { "age": "65+", "male": 10304, "female": 4785, "total": 7646 },
+          { "age": "all", "male": 16550, "female": 10142, "total": 13476 }
+        ]
+      }
+    },
+    "England": {
+      "perCar_allCars": {
+        "value": 7100, "unit": "miles per car per year", "period": "2025 (also 7,100 in 2024; 7,000 in 2023; 7,600 in 2019)",
+        "source": "https://assets.publishing.service.gov.uk/media/6a9ed42af36e1f225ecb7eab/nts0901.ods",
+        "sourceType": "primary", "readDirectly": true,
+        "note": "DfT National Travel Survey table NTS0901a, last updated 10 September 2026. England only (not GB) since 2013. Respondent-estimated annual mileage, household cars incl. company cars (96% private in 2025). Rounded to nearest 100 by DfT. Landing page: https://www.gov.uk/government/statistical-data-sets/nts09-vehicle-mileage-and-occupancy"
+      },
+      "perCar_byFuel_2025": {
+        "unit": "miles per car per year", "period": "2025",
+        "source": "https://assets.publishing.service.gov.uk/media/6a9ed42af36e1f225ecb7eab/nts0901.ods",
+        "sourceType": "primary", "readDirectly": true,
+        "values": { "petrol": 6200, "diesel": 8000, "hybrid": 8100, "plugInHybrid": null, "batteryElectric": 9400 },
+        "note": "Plug-in hybrid suppressed by DfT as low quality [u]."
+      },
+      "perCar_byPurpose_2025": {
+        "unit": "miles per car per year", "period": "2025",
+        "source": "https://assets.publishing.service.gov.uk/media/6a9ed42af36e1f225ecb7eab/nts0901.ods",
+        "sourceType": "primary", "readDirectly": true,
+        "values": { "business": 500, "commuting": 2200, "otherPrivate": 4500, "total": 7100 }
+      }
+    },
+    "Ireland": {
+      "perPrivateCar": {
+        "value": 15196, "unit": "km per private car per year", "period": "2023 (15,423 in 2022)",
+        "source": "https://www.cso.ie/en/csolatestnews/pressreleases/2025pressreleases/pressstatement-snapshotoftransportstatisticsinireland2025/",
+        "sourceType": "primary", "readDirectly": true,
+        "note": "CSO Snapshot of Transport Statistics in Ireland 2025. Derived by CSO from NCT/CVRT odometer readings. The Transport Omnibus ended with the 2021 edition (13,436 km per private car in 2021, a COVID year; 16,352 in 2019)."
+      },
+      "perVehicle_allVehicles": {
+        "value": 15854, "unit": "km per licensed vehicle per year", "period": "2023 (16,261 in 2022)",
+        "source": "https://www.cso.ie/en/csolatestnews/pressreleases/2024pressreleases/pressstatement-snapshotoftransportstatisticsinireland2024/",
+        "sourceType": "primary", "readDirectly": true
+      }
+    },
+    "Canada": {
+      "perVehicle_allVehicles": {
+        "value": 16249, "unit": "km per vehicle per year", "period": "2009",
+        "source": "https://www150.statcan.gc.ca/n1/pub/53-223-x/53-223-x2009000-eng.pdf",
+        "sourceType": "primary", "readDirectly": true,
+        "note": "Statistics Canada, Canadian Vehicle Survey: Annual 2009 (cat. 53-223-X), highlights: 'Canadians drove their vehicles, on average, 16,249 kilometres during the year.' All on-road vehicles incl. trucks. The CVS was discontinued after 2009; no national successor series found. Driver-age breakdown exists in archived CANSIM table 405-0070 (not retrieved)."
+      },
+      "perLightVehicle": {
+        "value": 15366, "unit": "km per light vehicle per year", "period": "2009",
+        "source": "https://oee.nrcan.gc.ca/publications/statistics/cvs/2009/chapter2.cfm",
+        "sourceType": "primary", "readDirectly": false,
+        "note": "NRCan 2009 Canadian Vehicle Survey Summary Report. NRCan server refused connection; figure seen only in search-result text of the NRCan page, which also gives 15,336 in another sentence. Range by province: Nova Scotia 17,427, British Columbia 12,892."
+      }
+    },
+    "Mexico": {
+      "perCar": {
+        "value": null, "unit": "km per car per year", "period": null, "source": null, "sourceType": null,
+        "note": "No official INEGI/SEMARNAT/CONUEE national vehicle-km per car series found. ITDP Mexico (https://mexico.itdp.org/wp-content/uploads/2023/01/Importancia-de-la-reduccion-del-uso-del-auto.pdf) states Mexico has no official historical VKT statistics. Commercial figures (15,000-20,000 km/yr; ~23.1 km/day in CDMX ≈ 8,400 km/yr, miituo) are not official."
+      }
+    }
+  },
+  "mexicoInsurance": {
+    "legalRequirementCDMX": {
+      "value": "Current civil-liability (responsabilidad civil) policy required for every motor vehicle",
+      "source": "https://www.milenio.com/politica/comunidad/multa-por-no-tener-seguro-de-auto-en-cdmx-de-cuanto-es",
+      "sourceType": "secondary", "readDirectly": true,
+      "period": "Reglamento de Tránsito de la Ciudad de México, art. 46; fine figures as of 2025",
+      "note": "Fine for private vehicles: 20, 30 or 40 UMA (MXN 2,262.80-4,525.60 at the 2025 UMA of 113.14/day); cancelled if a valid policy is shown within 45 days. Art. 46 text not read from the official Gaceta."
+    },
+    "federalMandatoryMinimumCover": {
+      "value": { "bodilyInjuryAndDeath": 100000, "propertyDamage": 50000 },
+      "unit": "MXN of cover per event",
+      "source": "https://www.condusef.gob.mx/?p=contenido&idc=772&idcat=1",
+      "sourceType": "primary", "readDirectly": "partly",
+      "period": "Ley de Caminos, Puentes y Autotransporte Federal art. 63 Bis; phased in 2014-2019",
+      "note": "CONDUSEF page (read) confirms the federal compulsory RC insurance, MXN 100,000 for injury and death from 2014, with property damage added from 2019. The MXN 50,000 property-damage minimum is from secondary sources (autofact, search summaries) and not read on CONDUSEF's page. Whether CDMX art. 46 imposes these same minimums was not confirmed in the regulation's text."
+    },
+    "cheapestRCPolicyNational": {
+      "value": 3436, "unit": "MXN per year", "period": "July 2024",
+      "source": "https://www.rastreator.mx/noticias/seguro-de-auto-de-responsabilidad-civil-mas-barato",
+      "sourceType": "secondary", "readDirectly": true,
+      "note": "Rastreator (2 Aug 2024) reporting CONDUSEF: cheapest RC-only car policy MXN 3,436 (Seguros Banorte). National, not CDMX-specific; reference-vehicle profile not stated in the report."
+    },
+    "averageRCPremium_commercialQuotes": {
+      "value": 6427.14, "unit": "MXN per year", "period": "2025",
+      "source": "https://www.rastreator.mx/seguros-de-auto/articulos-destacados/cuanto-cuesta-el-seguro-de-auto-en-mexico",
+      "sourceType": "secondary", "readDirectly": true,
+      "note": "From Rastreator's own comparison-site quotes (published 1 Dec 2025), not CONDUSEF or AMIS. Same source: limitada 7,755.05; amplia 12,900.52; amplia plus 14,153.05. Its CDMX sample (35-year-old married woman, 2024 Chevrolet Aveo) ran MXN 3,033 (RC) to 13,092 (amplia plus)."
+    },
+    "averageAnnualPremiumAllPolicies": {
+      "value": null, "unit": "MXN per insured vehicle per year",
+      "note": "AMIS publishes totals, not an average per policy. Total vehicle direct premiums 2024: MXN 193,217 million (residentes segment 118,102 million), per AMIS via https://revistamagazzine.com/proveedores/primas-de-seguro-vehicular-crecen-26-en-mexico-en-2024-amis/ (secondary). Insured units end-2025 ≈ 17.05 million per AMIS (search summary only, not read). A ratio of the two would be the compiler's derivation, mixing trucks with cars, so it is not given."
+    },
+    "shareOfFleetInsuredCDMX": {
+      "value": 44.4, "unit": "percent of registered vehicles", "period": "c. 2024",
+      "source": "https://www.elfinanciero.com.mx/monterrey/2024/12/11/lidera-nl-parque-vehicular-asegurado/",
+      "sourceType": "secondary", "readDirectly": false,
+      "note": "AMIS figure seen only in a search summary. National ≈ 30-35%."
+    }
+  },
+  "ukFinance": {
+    "boePersonalLoan10k_quoted": {
+      "value": 6.90, "unit": "percent per year (quoted rate)", "period": "August 2026 (July 2026: 6.85; Jan 2026: 6.38)",
+      "source": "https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Jan/2025&Dateto=now&SeriesCodes=IUMHPTL&CSVF=TN&UsingCodes=Y&VPD=Y&VFD=N",
+      "sourceType": "primary", "readDirectly": true,
+      "note": "BoE series IUMHPTL: sterling personal loan, £10K, to households, NSA. The series named in the brief, IUMBV34, is in fact the 2-year fixed 75% LTV mortgage rate (4.92% Aug 2026), not a personal-loan rate."
+    },
+    "boePersonalLoan5k_quoted": {
+      "value": 12.08, "unit": "percent per year (quoted rate)", "period": "August 2026",
+      "source": "https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Jan/2025&Dateto=now&SeriesCodes=IUMBX67&CSVF=TN&UsingCodes=Y&VPD=Y&VFD=N",
+      "sourceType": "primary", "readDirectly": true,
+      "note": "BoE series IUMBX67: sterling personal loan, £5K, to households."
+    },
+    "boeCreditCard_quoted": {
+      "value": 24.71, "unit": "percent per year", "period": "August 2026",
+      "source": "https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Jan/2025&Dateto=now&SeriesCodes=IUMCCTL&CSVF=TN&UsingCodes=Y&VPD=Y&VFD=N",
+      "sourceType": "primary", "readDirectly": true,
+      "note": "BoE series IUMCCTL: representative credit card lending rate. Included for context."
+    },
+    "motorFinanceAPR_newPCP": {
+      "value": 5, "unit": "percent APR (average)", "period": "2023 lender data (FCA survey), published 7 October 2025",
+      "source": "https://www.fca.org.uk/publication/consultation/cp25-27-technical-annex-2.pdf",
+      "sourceType": "primary", "readDirectly": true,
+      "note": "FCA CP25/27 Technical Annex 2: 'PCP is the most popular form of motor finance [on new vehicles] with an average APR of 5%'; weighted average APR in the new segment 5.9% in 2023; ~19% of new-car agreements 2019-2022 were 0% APR."
+    },
+    "motorFinanceAPR_usedHP": {
+      "value": 12, "unit": "percent APR (average)", "period": "2023 lender data (FCA survey), published 7 October 2025",
+      "source": "https://www.fca.org.uk/publication/consultation/cp25-27-technical-annex-2.pdf",
+      "sourceType": "primary", "readDirectly": true,
+      "note": "Used segment: 'HP is the most popular form ... average APR of 12%'; weighted average APR in the used segment 13%; weighted average maximum 28%. Sub-prime subset average APR 33% (range reported 6%-76%)."
+    },
+    "motorFinanceAPR_2026": {
+      "value": null, "unit": "percent APR",
+      "note": "No 2026 average motor-finance APR found. The FLA publishes volumes and values, not APRs. The closest 2026 official series is the BoE £10K personal-loan quoted rate above."
+    }
+  },
+  "uncertain": [
+    "US per-driver-by-age table (FHWA onh00/bar8.htm) has no data year on the page; it is old survey data, likely 1990s/2001. Use for shape by age and sex, not as a current level.",
+    "No US per-driver-by-age figure from recent NHTS (2022) was retrieved.",
+    "Canada: no national average-km series after the 2009 Canadian Vehicle Survey was found. The NRCan light-vehicle figure 15,366 km (2009) was not read directly; the NRCan page gives 15,336 in another sentence.",
+    "Mexico: no official average km per car per year exists (INEGI, SEMARNAT and CONUEE publish none found). Left null.",
+    "Ireland: a 2024 per-private-car figure was not found (latest confirmed is 2023: 15,196 km).",
+    "Mexico: no published average annual premium per private car from AMIS or CONDUSEF; only market totals and commercial quote averages. Left null.",
+    "Mexico City art. 46 minimum cover amounts (MXN 100,000 persons / 50,000 property) are confirmed only for the federal compulsory insurance (the persons figure via CONDUSEF); applying them to CDMX rests on secondary sources.",
+    "No CDMX-specific CONDUSEF price for minimum RC cover confirmed; a search summary cited MXN 757.52-3,607.59 for RESBA standardized basic policies in CDMX, but that was not read at source and is omitted from the figures.",
+    "UK: no 2026 average car-finance APR is published by FLA or BoE; the FCA figures relate to 2023 lending. A search summary claimed a BoE effective rate on new personal loans of 9.86% in July 2026; it did not appear in the BoE releases read and is omitted."
+  ]
+}

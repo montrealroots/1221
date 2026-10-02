@@ -1,0 +1,145 @@
+{
+  "_meta": {
+    "compiled": "2026-09-29",
+    "jurisdiction": "United Kingdom (new State Pension, people reaching State Pension age on or after 6 April 2016)",
+    "note": "Every figure was read from the cited official page on 2026-09-29. Anything not confirmed is null and listed under 'uncertain'."
+  },
+  "rates": {
+    "newStatePensionFullWeekly": {
+      "2026-27": { "gbp": 241.30, "effective": "2026-04-06", "source": "https://www.gov.uk/government/news/over-12-million-pensioners-to-receive-575-state-pension-boost" },
+      "2025-26": { "gbp": 230.25, "effective": "2025-04-07", "source": "https://www.gov.uk/government/publications/benefit-and-pension-rates-2026-to-2027/proposed-benefit-and-pension-rates-2026-to-2027" },
+      "upratingPercent2026": 4.8,
+      "upratingBasis": "Triple lock; 2026 increase followed average earnings growth (4.8%)",
+      "currentPageConfirms": { "text": "The full rate of new State Pension is £241.30 a week.", "source": "https://www.gov.uk/new-state-pension/what-youll-get" }
+    },
+    "basicStatePensionFullWeekly_forReference": {
+      "2026-27": { "gbp": 184.90, "effective": "2026-04-06", "source": "https://www.gov.uk/government/news/over-12-million-pensioners-to-receive-575-state-pension-boost" },
+      "2025-26": { "gbp": 176.45, "source": "https://www.gov.uk/government/news/over-12-million-pensioners-to-receive-575-state-pension-boost" }
+    }
+  },
+  "qualifyingYears": {
+    "minimumForAny": { "years": 10, "text": "You'll need 10 qualifying years on your National Insurance record to get any new State Pension.", "source": "https://www.gov.uk/new-state-pension/eligibility" },
+    "forFullRate": { "years": 35, "appliesTo": "NI record started after April 2016; those contracted out before April 2016 usually need more than 35", "source": "https://www.gov.uk/new-state-pension/what-youll-get" },
+    "proRata": {
+      "rule": "Between 10 and 35 qualifying years gives a proportion: full rate / 35 x qualifying years (each year worth 1/35 of the full rate).",
+      "perYearWeekly2026-27_derived": 6.89,
+      "derivation": "241.30 / 35 = 6.894; GOV.UK's explainer states 'about £6.89 a week' per qualifying year added after 5 April 2016",
+      "source": "https://www.gov.uk/government/publications/your-new-state-pension-explained/your-state-pension-explained",
+      "caveat": "Records with years before 6 April 2016 use a 'starting amount' (old-rules vs new-rules comparison, with contracted-out deduction or protected payment); the pure 1/35 rule applies cleanly only to post-2016 records.",
+      "effective": "2016-04-06 (Pensions Act 2014)"
+    }
+  },
+  "qualifyingYearRules": {
+    "employedAtOrAboveLEL": {
+      "lowerEarningsLimit2026-27": { "weekly": 129, "monthly": 559, "annual": 6708, "effective": "2026-04-06", "source": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" },
+      "primaryThreshold2026-27": { "weekly": 242, "source": "https://www.gov.uk/national-insurance/how-much-you-pay" },
+      "rule": "Earning from £129 to £242 a week from one job: no NI paid, but 'your contributions are treated as having been paid to protect your National Insurance record'. Earning above £242 pays Class 1 (8% to £967, 2% above).",
+      "source": "https://www.gov.uk/national-insurance"
+    },
+    "selfEmployed": {
+      "smallProfitsThreshold2026-27": { "annualGbp": 7105, "effective": "2026-04-06" },
+      "rule": "If profits are £7,105 or more a year, Class 2 contributions are treated as having been paid to protect the NI record. Below that, voluntary Class 2 can be paid.",
+      "voluntaryClass2Weekly2026-27": 3.65,
+      "source": "https://www.gov.uk/self-employed-national-insurance-rates"
+    },
+    "credits": {
+      "universalCredit": { "text": "If you receive Universal Credit, you get Class 3 credits automatically.", "source": "https://www.gov.uk/national-insurance-credits/eligibility" },
+      "others": [
+        "Jobseeker's Allowance: Class 1 credits automatically",
+        "Employment and Support Allowance: Class 1 credits automatically",
+        "Registered for Child Benefit for a child under 12 (even if not received): Class 3 credits automatically",
+        "Carer's Allowance / Carer Support Payment (Scotland): Class 1 credits automatically; caring 20+ hours a week without those can apply for Class 3 carer's credits"
+      ],
+      "source": "https://www.gov.uk/national-insurance-credits/eligibility"
+    },
+    "voluntary": "Voluntary Class 3 (or Class 2 where eligible) contributions also make a year qualifying; see 'voluntary'."
+  },
+  "pensionAge": {
+    "current": { "age": 66, "text": "State Pension age is currently 66 for men and women, set to rise to 67 between 2026 and 2028 and to 68 between 2044 and 2046.", "source": "https://www.gov.uk/government/collections/third-state-pension-age-review" },
+    "riseTo67_byDateOfBirth": {
+      "source": "https://www.gov.uk/government/publications/state-pension-age-timetable/state-pension-age-timetable",
+      "legislation": "Pensions Act 2014 (Table 4 of the timetable)",
+      "table": [
+        { "bornFrom": "1960-04-06", "bornTo": "1960-05-05", "age": "66 years 1 month" },
+        { "bornFrom": "1960-05-06", "bornTo": "1960-06-05", "age": "66 years 2 months" },
+        { "bornFrom": "1960-06-06", "bornTo": "1960-07-05", "age": "66 years 3 months" },
+        { "bornFrom": "1960-07-06", "bornTo": "1960-08-05", "age": "66 years 4 months" },
+        { "bornFrom": "1960-08-06", "bornTo": "1960-09-05", "age": "66 years 5 months" },
+        { "bornFrom": "1960-09-06", "bornTo": "1960-10-05", "age": "66 years 6 months" },
+        { "bornFrom": "1960-10-06", "bornTo": "1960-11-05", "age": "66 years 7 months" },
+        { "bornFrom": "1960-11-06", "bornTo": "1960-12-05", "age": "66 years 8 months" },
+        { "bornFrom": "1960-12-06", "bornTo": "1961-01-05", "age": "66 years 9 months" },
+        { "bornFrom": "1961-01-06", "bornTo": "1961-02-05", "age": "66 years 10 months" },
+        { "bornFrom": "1961-02-06", "bornTo": "1961-03-05", "age": "66 years 11 months" },
+        { "bornFrom": "1961-03-06", "bornTo": "1977-04-05", "age": "67" }
+      ],
+      "bornBefore_1960-04-06": "66",
+      "calendarDatesNote": "The GOV.UK table gives ages, not calendar dates. Date reached = date of birth + the stated age (derived, not quoted). E.g. born 6 April 1960 reaches SPA 6 May 2026; born 6 March 1961 reaches 67 on 6 March 2028."
+    },
+    "riseTo68": {
+      "scheduled": "2044-2046, for those born 6 April 1977 to 5 April 1978; 68th birthday for those born 6 April 1978 onward",
+      "source": "https://www.gov.uk/government/publications/state-pension-age-timetable/state-pension-age-timetable",
+      "reviewStatus": "Third State Pension age review launched July 2025 (independent report by Dr Suzy Morrissey plus GAD report); call for evidence closed 24 October 2025. No change to the 67 or 68 timetable was found on GOV.UK as of 2026-09-29.",
+      "reviewSource": "https://www.gov.uk/government/collections/third-state-pension-age-review"
+    }
+  },
+  "abroad": {
+    "payableAbroad": true,
+    "generalRule": { "text": "Although these benefits are payable anywhere abroad, they're not normally increased when pension rates go up in the UK.", "source": "https://www.gov.uk/government/publications/social-security-abroad-ni38/guidance-on-social-security-abroad-ni38" },
+    "annualIncreasePaidIn": {
+      "groups": "EEA countries, Switzerland, Gibraltar, and countries with a social security agreement providing for uprating",
+      "bilateralList": ["Barbados", "Bermuda", "Bosnia-Herzegovina", "Gibraltar", "Guernsey", "Isle of Man", "Israel", "Jamaica", "Jersey", "Kosovo", "Mauritius", "Montenegro", "North Macedonia", "Philippines", "Serbia", "Turkey", "USA"],
+      "usaUprated": true,
+      "source": "https://www.gov.uk/government/publications/state-pensions-annual-increases-if-you-live-abroad/countries-where-we-pay-an-annual-increase-in-the-state-pension"
+    },
+    "frozenElsewhere": "Elsewhere (e.g. Canada, Australia, New Zealand, South Africa, not on the list) the pension is frozen at the rate first paid abroad.",
+    "frozenElsewhereSource": "https://www.gov.uk/government/publications/state-pensions-annual-increases-if-you-live-abroad/countries-where-we-pay-an-annual-increase-in-the-state-pension"
+  },
+  "tax": {
+    "taxable": true,
+    "text": "Your taxable income includes 'the State Pension you get (either the basic State Pension or the new State Pension)'; you pay tax if total income exceeds your Personal Allowance.",
+    "source": "https://www.gov.uk/tax-on-pension/whats-taxed",
+    "paidGross": true,
+    "howTaxIsCollected": "The State Pension itself is paid without tax deducted. If you have a private/workplace pension, that provider 'will usually take off any tax you owe ... This includes any tax you owe on your State Pension' (via PAYE tax code). If State Pension is your only income and exceeds the Personal Allowance, HMRC sends a Simple Assessment bill.",
+    "howTaxIsCollectedSource": "https://www.gov.uk/tax-on-pension/how-your-tax-is-paid",
+    "paidGrossSource": "https://www.gov.uk/government/publications/your-new-state-pension-explained/your-state-pension-explained"
+  },
+  "voluntary": {
+    "class3Weekly": {
+      "2026-27": { "gbp": 18.40, "effective": "2026-04-06", "source": "https://www.gov.uk/voluntary-national-insurance-contributions/rates" },
+      "2025-26": null
+    },
+    "class2Weekly2026-27": { "gbp": 3.65, "source": "https://www.gov.uk/voluntary-national-insurance-contributions/rates" },
+    "backdating": {
+      "rule": "You can only pay voluntary contributions for the past 6 years. The deadline is 5 April each year.",
+      "example": "Gaps for 2025 to 2026 can be filled until 5 April 2032.",
+      "priceRule": "Paying for a previous year is at that year's original rate (GOV.UK page wording); a higher rate can apply if paid late after a certain point - not confirmed here.",
+      "source": "https://www.gov.uk/voluntary-national-insurance-contributions/deadlines"
+    },
+    "abroadFrom2026-04-06": {
+      "rule": "Voluntary Class 2 can no longer be paid for time abroad from 2026 to 2027. Class 3 for time abroad after 5 April 2026 requires having previously lived in the UK for 10 years in a row, or paid 10 years of qualifying NI contributions in total (previously 3 years).",
+      "source": "https://www.gov.uk/voluntary-national-insurance-contributions/if-you-live-or-work-abroad"
+    }
+  },
+  "totalization": {
+    "agreement": "UK-US social security agreement (The Social Security (United States of America) Order 1984, SI 1984/1817; amended by SI 1997/1778)",
+    "summary": "Prevents dual contribution liability and covers old-age pensions. For UK retirement-pension entitlement, each US quarter of coverage is treated as a 13-week contribution period, so US periods can be added to UK periods to meet UK entitlement conditions, subject to a UK minimum of one qualifying/reckonable year. The amount paid is still based on the UK record only (pro rata). UK State Pension paid to a US resident is uprated each year.",
+    "newStatePensionPageText": "Time spent making contributions in [EEA, Switzerland, social security agreement] countries can be added to the qualifying years in your UK National Insurance record; the payment amount remains based on the qualifying years in your UK record.",
+    "sources": [
+      "https://www.legislation.gov.uk/uksi/1984/1817",
+      "https://www.legislation.gov.uk/uksi/1997/1778/schedule/1",
+      "https://www.gov.uk/new-state-pension/living-and-working-overseas",
+      "https://www.gov.uk/government/publications/state-pensions-annual-increases-if-you-live-abroad/countries-where-we-pay-an-annual-increase-in-the-state-pension"
+    ],
+    "effective": "Agreement in force since 1 January 1985 (per SSA; SSA page returned 403, so this date was not confirmed here)"
+  },
+  "uncertain": [
+    "Class 3 weekly rate for 2025/26: not read from an official page (GOV.UK now shows only 2026/27), so it is null.",
+    "Exact 2025/26 effective date: the 2025/26 rates applied from April 2025 (the first payday in the week of 7 April 2025); the precise day was not confirmed from the source page.",
+    "SPA calendar dates are derived as date of birth + stated age; GOV.UK's Table 4 gives ages only.",
+    "Totalization: the SI 1997/1778 schedule text read by the fetch tool mixed Jersey/Guernsey articles; the 13-week-per-US-quarter rule and 'one qualifying year' UK minimum are as the tool reported them. The agreement's 1 January 1985 start date is from memory of SSA material and was not confirmed (ssa.gov returned 403).",
+    "Whether the 1/35 figure per year exactly matches GOV.UK: the explainer says 'about £6.89 a week, this is £230.25 divided by 35', which is internally inconsistent (230.25/35 = 6.58; 241.30/35 = 6.89). The £6.89 matches the 2026/27 rate.",
+    "Late-payment surcharge on back-paid Class 3 (higher rate if paid more than 2 years late) was not confirmed from the source page.",
+    "Third State Pension age review outcome: no published outcome found; could change the 67-to-68 timetable, not the 66-to-67 one already under way."
+  ]
+}

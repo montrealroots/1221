@@ -6,7 +6,7 @@
 
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel } from '@/ui/components/primitives';
+import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { CASH } from '@/engine/content/cash';
@@ -63,7 +63,7 @@ export function BankCash({ bankId }: { bankId: string }) {
       </div>
       {quote && (
         <p className="small" style={{ margin: 'var(--s2) 0' }}>
-          {quote.refused ?? `${quote.fee > 0 ? `${money(quote.fee)} for it` : 'Free'}${quote.ownerFee ? ', and the machine’s owner may add a fee of its own, which the screen shows before you take it; SLATE doesn’t know it' : ''}.`}
+          {quote.refused ?? `${quote.fee > 0 ? `${money(quote.fee)} for it` : 'Free'}${quote.ownerCharge ? `, and ${money(quote.ownerCharge)} to the machine’s owner, what one charges on average` : ''}${quote.ownerFee ? ', and the machine’s owner may add a fee of its own, which the screen shows before you take it; SLATE doesn’t know it' : ''}.`}
           {from === 'card' && cash && !quote.refused && ` It draws ${(cash.cashApr * 100).toFixed(2)}% a year from today, with no grace period.`}
         </p>
       )}
@@ -94,10 +94,10 @@ export function BankCash({ bankId }: { bankId: string }) {
           <Gated feature="cash.deposit" className="btn btn-sm" disabled={!inAmount} onClick={deposit}>Pay It In</Gated>
         </div>
       )}
-      <p className="xs dim" style={{ margin: 'var(--s2) 0 0' }}>
+      <Fine>
         {rules ? `Fees and limits from the bank: ${rules.source}.` : 'This bank’s cash fees weren’t found, so taking cash out here costs nothing.'}
         {cash?.estimated.includes('cashAdvance') ? ` The cash advance’s fee is SLATE’s estimate of a US card’s: ${Number((cash.cashFeeShare * 100).toFixed(2))}% or ${money(cash.cashFeeMin)}.` : ''}
-      </p>
+      </Fine>
     </Panel>
   );
 }

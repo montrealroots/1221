@@ -5,6 +5,11 @@
  * attention, how am I doing. A command surface, not a place to bury depth.
  */
 
+import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
+import { landValue, parcelsOf } from '@/engine/systems/land';
+import { inSaveMoney } from '@/engine/systems/banking';
+import { LAND_MARKETS } from '@/engine/content/land';
+import { journeysOf } from '@/engine/systems/journey';
 import { formatDaylight } from '@/engine/core/sun';
 import { RATES_NOTE, formatAtlasCompact} from '@/engine/content/currency';
 import { titleCaseLabel } from '@/engine/core/text';
@@ -12,7 +17,7 @@ import { placeProfile, placeKindLabel, formatPeople, type PlaceProfile } from '@
 import { WEATHER_EMOJI, forecastFor, weatherAt, weatherShort } from '@/engine/systems/weather';
 import { MS_DAY, WEEKDAY_NAMES, formatDateTime, zonedParts } from '@/engine/core/time';
 import { PERFORMER_NOUN } from '@/engine/core/performer';
-import { useState } from 'react';
+import { Children, useState, type ReactNode } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
@@ -20,12 +25,13 @@ import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calenda
 import { netWorth } from '@/engine/systems/finance';
 import { readiness, wellbeingSummary, EMPTY, OVERWROUGHT } from '@/engine/systems/life';
 import { CITIES } from '@/engine/content/geography';
+import { OWN_UNITS_IN, PORTABLE_LABEL, applianceCost, portableCost, portableRefusal, unitsRefusal, type Portable } from '@/engine/systems/appliances';
 import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { cardOf, cardTerms, scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
-import { HOUSING, SOFA, arrearsOf, billsOf, depositBack, moveCost, moveRefusal, rentOf, troubles } from '@/engine/systems/household';
+import { cardOf, cardsOf, cardTerms, scoreIsANumberIn, scoreWord, stateOf } from '@/engine/systems/credit';
+import { HOUSING, OWNED, SOFA, arrearsOf, billsOf, depositBack, moveCost, moveRefusal, rentOf, troubles } from '@/engine/systems/household';
 import { latePenalty } from '@/engine/systems/taxreturn';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
@@ -35,6 +41,18 @@ import { COVER_LABEL, coverOn } from '@/engine/systems/health';
 import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 import { resolveIncomeTaxLayers } from '@/engine/content/tax';
 import { homeOf } from '@/engine/systems/earnings';
+import { TIDY, cleanerCost, livingOf, placeOf, rentersPremium } from '@/engine/systems/dwelling';
+import { cleanOutfits, dryCleanDirty, garmentsOf, washableDirty } from '@/engine/systems/wardrobe';
+import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } from '@/engine/content/homes';
+import { alarmRefusal, alarmed } from '@/engine/systems/alarm';
+import { deviceCost, securityRefusal, type Device } from '@/engine/systems/homesecurity';
+import { chargerQuote } from '@/engine/systems/charging';
+import { billedApart, internetIn, internetShare, leavingCost, telecomOf } from '@/engine/systems/telecom';
+import { levelOf } from '@/engine/systems/people';
+import { kitchenStock } from '@/engine/systems/kitchen';
+import { mealsReady } from '@/engine/systems/pantry';
+import { groupLabelOf } from '@/ui/shell/destinations';
+import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
 export function Home() {
   const { sim, navigate, run } = useGame();
@@ -60,10 +78,18 @@ export function Home() {
       if (t.kind === 'landlord') said.push(`You owe your landlord ${m(t.amount)}.`);
       else if (t.kind === 'overdrawn') said.push(`Your current account is ${m(t.amount)} overdrawn.`);
       else if (t.kind === 'card') said.push(`Your card is nearly at its limit, owing ${m(t.amount)}.`);
-      else if (t.kind === 'card_behind') said.push(s.player.credit?.suspended ? `Your card is suspended, owing ${m(t.amount)}.` : `Your card is ${s.player.credit?.missed === 1 ? 'a payment' : `${s.player.credit?.missed} payments`} behind, owing ${m(t.amount)}.`);
+      else if (t.kind === 'card_behind') {
+        // The card named, where there's more than one.
+        const card = t.accountId ? s.universe.accounts[t.accountId] : undefined;
+        const state = card && s.player.credit ? stateOf(s.player, card) : s.player.credit;
+        const which = card && cardsOf(s, s.player).length > 1 ? `The ${card.name}` : 'Your card';
+        said.push(state?.suspended ? `${which} is suspended, owing ${m(t.amount)}.` : `${which} is ${state?.missed === 1 ? 'a payment' : `${state?.missed} payments`} behind, owing ${m(t.amount)}.`);
+      }
       else if (t.kind === 'return_late') said.push(`A tax return is past its day, unfiled, ${m(t.amount)} with its penalty so far.`);
       else if (t.kind === 'medical') said.push(`You owe ${m(t.amount)} for medical care.`);
       else if (t.kind === 'collections') said.push(`${m(t.amount)} is with collections.`);
+      else if (t.kind === 'home') said.push(`You’re behind on your homes, ${m(t.amount)} owed.`);
+      else if (t.kind === 'council') said.push(`You owe ${m(t.amount)} of council tax.`);
       else said.push(`You owe ${m(t.amount)} of income tax.`);
     }
     if (clash) said.push('Two things on your calendar in the next month want you at once.');
@@ -93,6 +119,14 @@ export function Home() {
     school: useFeature('ui.school').open,
     career: useFeature('ui.career').open,
     papers: useFeature('ui.papers').open,
+    travel: useFeature('ui.travel').open,
+    vehicles: useFeature('ui.vehicles').open,
+    land: useFeature('ui.land').open,
+    people: useFeature('ui.people').open,
+    food: useFeature('ui.food').open,
+    clothes: useFeature('ui.clothes').open,
+    routines: useFeature('ui.routines').open,
+    belongings: useFeature('ui.belongings').open,
   };
 
   return (
@@ -387,7 +421,7 @@ export function Home() {
                 <Stat
                   label="Sales Tax"
                   value={`${(place.salesTax * 100).toFixed(1)}%`}
-                  note={`Property ${(place.propertyTax * 100).toFixed(2)}%, on owners: you rent`}
+                  note={`Property ${(place.propertyTax * 100).toFixed(2)}%, on owners${player.home?.kind === 'owned' ? ', which you pay' : ': you rent'}`}
                   look={at('place', place.city.id)}
                 />
                 <Stat
@@ -473,47 +507,95 @@ export function Home() {
         </div>
       </div>
 
-      <div className="grid grid-3" style={{ marginBottom: 'var(--s5)' }}>
-        {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
+      {/*
+        Every place in the life opens from Home, under the group it belongs to,
+        the same groups the screens' eyebrows name (`ui/shell/destinations.ts`).
+        Until 2026-10-02 eight panels sat in one grid in no order, and the Home
+        panel carried five other places as buttons in its corner.
+      */}
+      <HomeGroup label={groupLabelOf('/workspace/people')} lead={!shows.home ? <LockedPanel feature="ui.home" title="Home" /> : (
         <Panel
-          title="Money"
+          title="Home"
           tight
-          look={at('networth', player.id)}
           actions={(
-            <Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Your Bank')}>
-              {primary?.institution ?? 'Your Bank'}
+            <Gated feature="ui.homes" className="btn btn-sm" onClick={() => navigate('/workspace/homes', 'Homes')}>
+              Homes
             </Gated>
           )}
         >
-          <LookRegion className="col gap-3">
-            <Stat
-              label={primary?.name ?? 'No account'}
-              value={<MoneyText amount={primary?.balance ?? 0} currency={cur} />}
-              note={`Your money is kept in ${cur}`}
-              look={primary ? at('account', primary.id) : undefined}
-            />
-            <Stat
-              label="Net Worth"
-              value={<MoneyText amount={worth.total} currency={cur} compact />}
-              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank and in hand${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}`}
-              look={at('networth', player.id)}
-            />
-            {worth.liabilities > 0 && (
-              <Stat
-                label="Owed"
-                value={<span className="mono negative">{formatMoney(worth.liabilities, cur, { cents: false })}</span>}
-                look={at('debt', player.id)}
-              />
-            )}
-            <CardSummary cur={cur} />
-          </LookRegion>
+          <div className="grid grid-2">
+            <div><YourHome cur={cur} /></div>
+            <div><YourPlace cur={cur} /></div>
+          </div>
+        </Panel>
+        )}>
+        {!shows.people ? <LockedPanel feature="ui.people" title="People" /> : (
+        <Panel
+          title="People"
+          tight
+          actions={(
+            <Gated feature="ui.people" className="btn btn-sm" onClick={() => navigate('/workspace/people', 'People')}>
+              People
+            </Gated>
+          )}
+        >
+          <YourPeople />
         </Panel>
         )}
-        {!shows.home ? <LockedPanel feature="ui.home" title="Home" /> : (
-        <Panel title="Home" tight>
-          <YourHome cur={cur} />
+        {!shows.food ? <LockedPanel feature="ui.food" title="Food" /> : (
+        <Panel
+          title="Food"
+          tight
+          actions={(
+            <Gated feature="ui.food" className="btn btn-sm" onClick={() => navigate('/workspace/food', 'Food')}>
+              Food
+            </Gated>
+          )}
+        >
+          <YourFood />
         </Panel>
         )}
+        {!shows.clothes ? <LockedPanel feature="ui.clothes" title="Clothes" /> : (
+        <Panel
+          title="Clothes"
+          tight
+          actions={(
+            <Gated feature="ui.clothes" className="btn btn-sm" onClick={() => navigate('/workspace/clothes', 'Clothes')}>
+              Clothes
+            </Gated>
+          )}
+        >
+          <YourClothes />
+        </Panel>
+        )}
+        {!shows.routines ? <LockedPanel feature="ui.routines" title="Routines" /> : (
+        <Panel
+          title="Routines"
+          tight
+          actions={(
+            <Gated feature="ui.routines" className="btn btn-sm" onClick={() => navigate('/workspace/routines', 'Routines')}>
+              Routines
+            </Gated>
+          )}
+        >
+          <YourRoutines />
+        </Panel>
+        )}
+        {!shows.belongings ? <LockedPanel feature="ui.belongings" title="Belongings" /> : (
+        <Panel
+          title="Belongings"
+          tight
+          actions={(
+            <Gated feature="ui.belongings" className="btn btn-sm" onClick={() => navigate('/workspace/belongings', 'Belongings')}>
+              Belongings
+            </Gated>
+          )}
+        >
+          <YourBelongings />
+        </Panel>
+        )}
+      </HomeGroup>
+      <HomeGroup label={groupLabelOf('/workspace/career')}>
         {player.school && (!shows.school ? <LockedPanel feature="ui.school" title="School" /> : (
         <Panel
           title="School"
@@ -540,23 +622,151 @@ export function Home() {
           <YourCareer cur={cur} />
         </Panel>
         ))}
-        {/* From school on: Yale Health, the returns and the bills run from the first term. Until 2026-09-27 it waited for the career. */}
-        {(player.career || player.school) && (!shows.papers ? <LockedPanel feature="ui.papers" title="Taxes And Cover" /> : (
+      </HomeGroup>
+      <HomeGroup label={groupLabelOf('/workspace/travel')}>
+        {(player.career || player.school) && (!shows.travel ? <LockedPanel feature="ui.travel" title="Travel" /> : (
         <Panel
-          title="Taxes And Cover"
+          title="Travel"
           tight
           actions={(
-            <Gated feature="ui.papers" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Taxes And Cover')}>
-              Taxes
+            <Gated feature="ui.travel" className="btn btn-sm" onClick={() => navigate('/workspace/travel', 'Travel')}>
+              Travel
+            </Gated>
+          )}
+        >
+          <YourTravel />
+        </Panel>
+        ))}
+        {(player.career || player.school) && (!shows.vehicles ? <LockedPanel feature="ui.vehicles" title="Cars" /> : (
+        <Panel
+          title="Cars"
+          tight
+          actions={(
+            <Gated feature="ui.vehicles" className="btn btn-sm" onClick={() => navigate('/workspace/vehicles', 'Cars')}>
+              Cars
+            </Gated>
+          )}
+        >
+          <YourCars />
+        </Panel>
+        ))}
+      </HomeGroup>
+      <HomeGroup label={groupLabelOf('/workspace/bank')}>
+        {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
+        <Panel
+          title="Money"
+          tight
+          look={at('networth', player.id)}
+          actions={(
+            <Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Your Bank')}>
+              {primary?.institution ?? 'Your Bank'}
+            </Gated>
+          )}
+        >
+          <LookRegion className="col gap-3">
+            <Stat
+              label={primary?.name ?? 'No account'}
+              value={<MoneyText amount={primary?.balance ?? 0} currency={cur} />}
+              note={`Your money is kept in ${cur}`}
+              look={primary ? at('account', primary.id) : undefined}
+            />
+            <Stat
+              label="Net Worth"
+              value={<MoneyText amount={worth.total} currency={cur} compact />}
+              note={`${formatMoney(worth.cash, cur, { cents: false })} in the bank and in hand${worth.held > 0 ? `, ${formatMoney(worth.held, cur, { cents: false })} held as a deposit` : ''}${worth.pension > 0 ? `, ${formatMoney(worth.pension, cur, { cents: false })} in a pension` : ''}${worth.home > 0 ? `, a home worth ${formatMoney(worth.home, cur, { cents: false })}` : ''}`}
+              look={at('networth', player.id)}
+            />
+            {worth.liabilities > 0 && (
+              <Stat
+                label="Owed"
+                value={<span className="mono negative">{formatMoney(worth.liabilities, cur, { cents: false })}</span>}
+                look={at('debt', player.id)}
+              />
+            )}
+            <CardSummary cur={cur} />
+          </LookRegion>
+        </Panel>
+        )}
+        {(player.career || player.school) && (!shows.land ? <LockedPanel feature="ui.land" title="Land" /> : (
+        <Panel
+          title="Land"
+          tight
+          actions={(
+            <Gated feature="ui.land" className="btn btn-sm" onClick={() => navigate('/workspace/land', 'Land')}>
+              Land
+            </Gated>
+          )}
+        >
+          <YourLand />
+        </Panel>
+        ))}
+      </HomeGroup>
+      <HomeGroup label={groupLabelOf('/workspace/papers')}>
+        {/* From school on: Yale Health, the returns and the bills run from the first term. Until 2026-09-27 it waited for the career. */}
+        {(player.career || player.school) && (!shows.papers ? <LockedPanel feature="ui.papers" title="Papers" /> : (
+        <Panel
+          title="Papers"
+          tight
+          actions={(
+            <Gated feature="ui.papers" className="btn btn-sm" onClick={() => navigate('/workspace/papers', 'Papers')}>
+              Papers
             </Gated>
           )}
         >
           <YourPapers cur={cur} />
         </Panel>
         ))}
-      </div>
+      </HomeGroup>
     </>
   );
+}
+
+/** A heading for one part of life, a panel that takes the whole row where one is given, and the rest laid out to fill each row; nothing at all where none of them is shown. */
+function HomeGroup({ label, lead, children }: { label: string; lead?: ReactNode; children: ReactNode }) {
+  const shown = Children.toArray(children);
+  if (shown.length === 0 && !lead) return null;
+  return (
+    <section className="home-group" aria-label={label}>
+      <h2 className="home-group-label">{label}</h2>
+      {lead && <div className="home-group-lead">{lead}</div>}
+      {shown.length > 0 && <div className="grid grid-3">{children}</div>}
+    </section>
+  );
+}
+
+/** Who you know: how many, the close ones, and who you’re seeing. */
+function YourPeople() {
+  const contacts = useWorld((s) => s.player.contacts ?? []);
+  const close = contacts.filter((c) => levelOf(c) === 'Close Friend').length;
+  const partner = contacts.find((c) => c.dating);
+  return <Stat label="Who You Know" value={String(contacts.length)} note={`${close} ${close === 1 ? 'close friend' : 'close friends'}${partner ? `; seeing ${partner.name}` : ''}`} />;
+}
+
+/** What there is to eat: meals ready, and the food fresh in the kitchen. */
+function YourFood() {
+  const ready = useWorld((s) => mealsReady(s, s.player).length);
+  const stock = useWorld((s) => kitchenStock(s, s.player).length);
+  return <Stat label="Ready To Eat" value={String(ready)} note={`${stock} ${stock === 1 ? 'thing' : 'things'} fresh in the kitchen`} tone={ready === 0 ? 'warning' : undefined} />;
+}
+
+/** What there is to wear: clean outfits, and what’s in the wash. */
+function YourClothes() {
+  const outfits = useWorld((s) => cleanOutfits(s, s.player));
+  const wash = useWorld((s) => washableDirty(s, s.player).length);
+  return <Stat label="Clean Outfits" value={String(outfits)} note={wash ? `${wash} ${wash === 1 ? 'garment' : 'garments'} to wash` : 'Nothing to wash'} tone={outfits <= 2 ? 'warning' : undefined} />;
+}
+
+/** The routines saved, by name. */
+function YourRoutines() {
+  const routines = useWorld((s) => s.player.routines ?? []);
+  return <Stat label="Saved" value={String(routines.length)} note={routines.length ? routines.map((r) => r.name).slice(0, 3).join(', ') : 'None saved yet'} />;
+}
+
+/** What you own besides clothes and food, and how much of it is at home. */
+function YourBelongings() {
+  const things = useWorld((s) => (s.player.items ?? []).filter((i) => !i.garment && !i.food));
+  const atHome = things.filter((i) => i.at.kind === 'home').length;
+  return <Stat label="Things You Own" value={String(things.length)} note={`${atHome} at home`} />;
 }
 
 /**
@@ -596,6 +806,48 @@ function YourSchool() {
  * Taxes and cover (`systems/health.ts`, `systems/taxreturn.ts`,
  * `systems/unemployment.ts`): what covers them, the next return, and a claim.
  */
+/** The cars they own, and when the first's registration is next due (`systems/vehicles.ts`). */
+function YourCars() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const owned = vehiclesOf(person).filter((v) => v.soldAt === undefined);
+  const first = owned[0];
+  const m = first ? modelById(first.modelId) : undefined;
+  return (
+    <div className="col gap-3">
+      <Stat label="Own" value={owned.length ? `${owned.length} ${owned.length === 1 ? 'Car' : 'Cars'}` : 'None'} note={m ? `${m.make} ${m.model}` : undefined} />
+      <Stat label="Registration" value={first ? formatDateTime(first.registrationDue, sim.zone).split(' at ')[0]! : '—'} note={first ? 'Next due' : undefined} />
+    </div>
+  );
+}
+
+/** The land they own, and what it's worth (`systems/land.ts`). */
+function YourLand() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const owned = parcelsOf(person).filter((p) => p.soldAt === undefined);
+  const cur = saveCurrency(sim.universe);
+  const worth = owned.reduce((a, p) => { const m = LAND_MARKETS[p.market]!; return a + inSaveMoney(sim, landValue(m, p.acres, sim.now), m.currency); }, 0);
+  return (
+    <div className="col gap-3">
+      <Stat label="Own" value={owned.length ? `${owned.length} ${owned.length === 1 ? 'Parcel' : 'Parcels'}` : 'None'} note={owned[0] ? LAND_MARKETS[owned[0].market]!.label : undefined} />
+      <Stat label="Worth" value={owned.length ? formatMoney(worth, cur, { cents: false }) : '—'} note={owned.some((p) => p.selling) ? 'Some of it for sale' : undefined} />
+    </div>
+  );
+}
+
+/** Where they are, and the next journey booked (`systems/journey.ts`). */
+function YourTravel() {
+  const person = useWorld((s) => s.player);
+  const next = journeysOf(person).filter((j) => j.status === 'booked' || j.status === 'underway').sort((a, b) => a.leaveAt - b.leaveAt)[0];
+  return (
+    <div className="col gap-3">
+      <Stat label="In" value={CITIES.get(person.currentLocationId)?.name ?? person.currentLocationId} />
+      <Stat label="Next Journey" value={next ? `To ${CITIES.get(next.toCity)?.name ?? next.toCity}` : 'None Booked'} note={next ? formatDateTime(next.leaveAt, CITIES.require(next.fromCity).timeZone) : undefined} />
+    </div>
+  );
+}
+
 function YourPapers({ cur }: { cur: string }) {
   const { sim } = useGame();
   const person = useWorld((s) => s.player);
@@ -645,6 +897,95 @@ function YourCareer({ cur }: { cur: string }) {
  * Work And Home until 2026-09-26, with the day job's week, extra shifts,
  * hours, quitting and looking for work above it; the job engine went.
  */
+/**
+ * The place they live as it is inside (`systems/dwelling.ts`): what kind of
+ * home, what it has, how many clean clothes are left and what's drying, how
+ * tidy it is, and a cleaner every week.
+ */
+const SECURITY_LABEL: Readonly<Record<Device, string>> = { windows: 'Fit Window Locks', timers: 'Buy Lamp Timers', lights: 'Fit An Outside Motion Light' };
+
+function YourPlace({ cur }: { cur: string }) {
+  const { run, toast } = useGame();
+  const place = useWorld((s) => placeOf(s, s.player));
+  const living = useWorld((s) => ({ ...livingOf(s.player) }));
+  const cleaner = useWorld((s) => cleanerCost(s, s.player));
+  // The wardrobe's state (`systems/wardrobe.ts`): whole clean outfits to hand, and what's in the wash, drying or for the dry cleaner.
+  const clothes = useWorld((s) => ({
+    outfits: cleanOutfits(s, s.player),
+    toWash: washableDirty(s, s.player).length,
+    toDryClean: dryCleanDirty(s, s.player).length,
+    drying: garmentsOf(s.player).filter((g) => (g.garment.dryUntil ?? 0) > s.now).length,
+  }));
+  const premium = useWorld((s) => rentersPremium(s, s.player));
+  const hasAlarm = useWorld((s) => alarmed(s.player));
+  const noAlarm = useWorld((s) => alarmRefusal(s.player));
+  const home = useWorld((s) => s.player.home);
+  const noUnits = useWorld((s) => unitsRefusal(s, s.player));
+  // A charger for an electric car, on a house they own that hasn't one (`systems/charging.ts`).
+  const charger = useWorld((s) => { const q = chargerQuote(s, s.player); return typeof q === 'string' ? undefined : q.cost; });
+  // Locks, a light and timers, where they're priced and the home could take them (`systems/homesecurity.ts`).
+  const security = useWorld((s) => (['windows', 'timers', 'lights'] as Device[]).flatMap((device) => {
+    const cost = deviceCost(s, s.player, device);
+    const no = securityRefusal(s.player, device);
+    return cost === undefined || (no && /has them|not a flat|landlord|of your own/.test(no)) ? [] : [{ device, cost, no }];
+  }));
+  // A machine offered where it's priced and the home lacks it: a dryer once there's a washer.
+  const portables = useWorld((s) => (['dishwasher', 'washer', 'dryer'] as Portable[]).flatMap((kind) => {
+    const cost = s.player.home ? portableCost(s, s.player.home.cityId, kind) : undefined;
+    const no = portableRefusal(s, s.player, kind);
+    return cost === undefined || (no && /has one|beside a washer/.test(no)) ? [] : [{ kind, cost, no }];
+  }));
+  const unitsCost = useWorld((s) => (s.player.home && OWN_UNITS_IN.has(CITIES.get(s.player.home.cityId)?.countryId ?? '') ? applianceCost(s, s.player.home.cityId, 'ac-units') : undefined));
+  if (!place || !home) return null;
+  const country = CITIES.get(home.cityId)?.countryId ?? 'us';
+  const f = place.fixtures;
+  const has = [f.bathtub ? 'Bath And Shower' : 'Shower', f.dishwasher ? 'Dishwasher' : 'No Dishwasher', LAUNDRY_LABEL[f.laundry], COOLING_LABEL[f.cooling], OUTDOOR_LABEL[f.outdoor], GYM_LABEL[f.gym]];
+  const kind = home.kind === 'sofa' ? 'A friend’s place' : place.shared ? `A room in a shared ${typeLabel(place.type, country, true).toLowerCase()}` : typeLabel(place.type, country, !place.owned);
+  return (
+    <div className="col gap-2 small">
+      <div>{kind} · {sizeText(place.size, country)}</div>
+      <div className="muted">{has.join(' · ')}</div>
+      <div className="stats">
+        <Stat label="Clean Outfits" value={`${clothes.outfits}`} note={clothes.drying > 0 ? `${clothes.drying} drying` : clothes.toWash > 0 ? `${clothes.toWash} to wash` : clothes.toDryClean > 0 ? `${clothes.toDryClean} for the dry cleaner` : 'All washed'} tone={clothes.outfits <= 2 ? 'warning' : undefined} />
+        {place.keeps && <Stat label="Tidy" value={`${Math.round(living.tidy)}`} note={living.tidy < TIDY.messy ? 'A mess, and it weighs on you' : living.cleaner ? 'A cleaner comes weekly' : 'Out of a hundred'} tone={living.tidy < TIDY.messy ? 'warning' : undefined} />}
+      </div>
+      {place.keeps && (home.kind === 'own' || home.kind === 'shared') && (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          {living.rentersInsurance
+            ? <Gated feature="home.renters_insurance" className="btn btn-sm btn-ghost" onClick={() => run('home.renters_insurance', { on: false })}>Cancel Renters Insurance</Gated>
+            : <Gated feature="home.renters_insurance" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.renters_insurance', { on: true }).ok) toast('Your things are insured.', 'positive'); }}>Get Renters Insurance ({formatMoney(premium, cur, { cents: false })} A Month)</Gated>}
+          {hasAlarm
+            ? <Gated feature="home.alarm" className="btn btn-sm btn-ghost" onClick={() => run('home.alarm', { on: false })}>Switch Off The Alarm</Gated>
+            : !noAlarm && <Gated feature="home.alarm" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.alarm', { on: true }).ok) toast('The alarm is fitted and monitored; your insurer takes its discount off.', 'positive'); }}>Fit A Burglar Alarm</Gated>}
+        </div>
+      )}
+      {place.keeps && home.kind !== 'sofa' && portables.length > 0 && (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          {portables.map(({ kind, cost, no }) => <Gated key={kind} feature="home.buy_portable" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_portable', { kind }).ok) toast('Yours, and it moves with you.', 'positive'); }}>{`Buy ${PORTABLE_LABEL[kind]} (${formatMoney(cost, cur, { cents: false })})`}</Gated>)}
+        </div>
+      )}
+      {place.keeps && home.kind !== 'sofa' && (security.length > 0 || charger !== undefined) && (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          {security.map(({ device, cost, no }) => <Gated key={device} feature="home.security" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.security', { device }).ok) toast(device === 'timers' ? 'Lamps on a timer, as if somebody were home.' : 'Fitted. A burglar has a harder way in.', 'positive'); }}>{`${SECURITY_LABEL[device]} (${formatMoney(cost, cur, { cents: false })})`}</Gated>)}
+          {charger !== undefined && <Gated feature="home.charger" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.charger', {}).ok) toast('Charged at home now, overnight, at the home’s price.', 'positive'); }}>{`Fit A Home Charger (${formatMoney(charger, cur, { cents: false })})`}</Gated>}
+        </div>
+      )}
+      {place.keeps && home.kind !== 'sofa' && place.fixtures.cooling === 'none' && unitsCost !== undefined && (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          <Gated feature="home.buy_units" className="btn btn-sm btn-ghost" disabled={Boolean(noUnits)} title={noUnits} onClick={() => { if (run('home.buy_units', {}).ok) toast('Yours, and they move with you.', 'positive'); }}>Buy Air Conditioning Units ({formatMoney(unitsCost, cur, { cents: false })})</Gated>
+        </div>
+      )}
+      {place.keeps && (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          {living.cleaner
+            ? <Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => run('home.cleaner', { on: false })}>Let The Cleaner Go</Gated>
+            : <Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.cleaner', { on: true }).ok) toast('A cleaner comes every Friday.', 'positive'); }}>Hire A Cleaner ({formatMoney(cleaner, cur, { cents: false })} A Week)</Gated>}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function YourHome({ cur }: { cur: string }) {
   const { sim, run, toast } = useGame();
   const [paying, setPaying] = useState('');
@@ -659,25 +1000,28 @@ function YourHome({ cur }: { cur: string }) {
   const away = useWorld((s) => (s.player.home && s.player.home.cityId !== s.player.currentLocationId ? s.player.home.cityId : undefined));
   const rent = useWorld((s) => rentOf(s, s.player));
   const bills = useWorld((s) => billsOf(s, s.player));
+  const council = useWorld((s) => Math.round(rentersCouncilTax(s, s.player) / 10));
+  const checking = useWorld((s) => Math.max(0, s.universe.accounts[s.player.primaryAccountId ?? '']?.balance ?? 0));
   // What leaves the bank, the old deposit back set against it, and why a move can't be made, as `move` has it.
   const costs = useWorld((s) => ({ shared: moveCost(s, s.player, 'shared') - depositBack(s, s.player), own: moveCost(s, s.player, 'own') - depositBack(s, s.player) }));
   const refused = useWorld((s) => ({ shared: moveRefusal(s, s.player, 'shared'), own: moveRefusal(s, s.player, 'own') }));
   const money = (cents: number) => formatMoney(cents, cur, { cents: false });
-  const homeLabel = home ? (home.kind === 'sofa' ? SOFA.label : HOUSING[home.kind].label) : 'Nowhere';
+  const homeLabel = home ? (home.kind === 'sofa' ? SOFA.label : home.kind === 'owned' ? OWNED.label : HOUSING[home.kind].label) : 'Nowhere';
   return (
     <div className="col gap-3">
       <Stat
         label="Where You Sleep"
         value={homeLabel}
-        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills)} a month on the first: ${money(rent)} rent and ${money(bills)} bills. Since ${formatDate(home!.since, sim.zone)}`}
+        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills + council)} a month on the first: ${money(rent)} rent and ${money(bills)} bills${council > 0 ? `, and ${money(council)} council tax, April to January` : ''}. Since ${formatDate(home!.since, sim.zone)}`}
       />
-      {home && home.kind !== 'sofa' && (
+      <InternetControl />
+      {home && home.kind !== 'sofa' && home.kind !== 'owned' && (
         <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
           <div className="field" style={{ margin: 0 }}>
             <label htmlFor="pay-landlord">{owed > 0 ? `Owed: ${money(owed)}` : ahead > 0 ? `Paid Ahead: ${money(ahead)}` : 'Pay The Landlord'} ({cur})</label>
             <input id="pay-landlord" inputMode="decimal" value={paying} onChange={(e) => setPaying(e.target.value)} />
           </div>
-          <Gated feature="home.pay_landlord" className="btn btn-sm" onClick={payLandlord} disabled={!paying}>Pay The Landlord</Gated>
+          <Gated feature="home.pay_landlord" className="btn btn-sm" onClick={payLandlord} disabled={!paying || centsFromTyped(paying) > checking}>Pay The Landlord</Gated>
         </div>
       )}
       {home?.noticeUntil !== undefined && (
@@ -685,23 +1029,23 @@ function YourHome({ cur }: { cur: string }) {
           A notice to pay or quit runs until {formatDate(home.noticeUntil, sim.zone)}. Get what you owe under a month’s rent by then.
         </div>
       )}
-      {away ? (
+      {home?.kind === 'owned' ? null : away ? (
         <div className="small muted">You’re away: a new home is found back in {CITIES.get(away)?.name ?? 'your town'}.</div>
       ) : (
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         {home?.kind !== 'shared' && (
           <Gated feature="home.move" className="btn btn-sm btn-ghost" disabled={Boolean(refused.shared)} onClick={() => run('home.move', { kind: 'shared' })}>
-            Move Into A Room ({money(costs.shared)})
+            Rent A Room ({money(costs.shared)} To Move In)
           </Gated>
         )}
         {home?.kind !== 'own' && (
           <Gated feature="home.move" className="btn btn-sm btn-ghost" disabled={Boolean(refused.own)} onClick={() => run('home.move', { kind: 'own' })}>
-            Get A Place Of Your Own ({money(costs.own)})
+            Rent A One-Bedroom ({money(costs.own)} To Move In)
           </Gated>
         )}
       </div>
       )}
-      {!away && (refused.own ?? refused.shared) && <div className="xs dim">{home?.kind === 'own' ? refused.shared : refused.own}</div>}
+      {!away && home?.kind !== 'owned' && (refused.own ?? refused.shared) && <div className="xs dim">{home?.kind === 'own' ? refused.shared : refused.own}</div>}
     </div>
   );
 }
@@ -715,14 +1059,23 @@ function YourHome({ cur }: { cur: string }) {
 function CardSummary({ cur }: { cur: string }) {
   const { sim } = useGame();
   const card = useWorld((s) => cardOf(s, s.player));
+  const cards = useWorld((s) => cardsOf(s, s.player));
   const credit = useWorld((s) => s.player.credit);
   if (!credit) return null;
   // Read as it’s read where they live, not where a job has them.
-  const record = scoreIsANumberIn(homeOf(sim.player)) ? String(credit.score) : scoreWord(credit.score);
+  const record = scoreIsANumberIn(homeOf(sim.player)) ? String(Math.round(credit.score)) : scoreWord(credit.score);
   const terms = card ? cardTerms(sim, card, credit.score) : undefined;
   return (
     <>
-      {card && terms && (
+      {cards.length > 1 && (
+        // Several, as one figure, as the bureaus read them together: until 2026-09-28 a person held one card.
+        <Stat
+          label="Credit Cards"
+          value={<span className="mono">{formatMoney(cards.reduce((sum, c) => sum + Math.max(0, -c.balance), 0), cur, { cents: false })}</span>}
+          note={`Owed of ${formatMoney(cards.reduce((sum, c) => sum + (c.creditLimit ?? 0), 0), cur, { cents: false })} in limits, on ${cards.length} cards`}
+        />
+      )}
+      {cards.length === 1 && card && terms && (
         <Stat
           label={terms.name}
           value={<span className="mono">{formatMoney(Math.max(0, -card.balance), cur, { cents: false })}</span>}
@@ -761,4 +1114,33 @@ function calledBy(person: { firstName: string; lastName: string; middleName?: st
   const full = [person.firstName, person.middleName, person.lastName].filter(Boolean).join(' ');
   const plain = `${person.firstName} ${person.lastName}`;
   return person.displayName && person.displayName !== full && person.displayName !== plain ? person.displayName : person.firstName;
+}
+
+/** The home's internet provider and the other offers in town (`systems/telecom.ts`). */
+function InternetControl() {
+  const { run, toast, sim } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const home = sim.player.home;
+  const [planId, setPlanId] = useState('');
+  if (!home || !billedApart(home.cityId) || internetShare(home.kind) === 0) return null;
+  const now = telecomOf(sim.player).internet;
+  const offers = internetIn(home.cityId);
+  const current = offers.find((x) => x.id === now?.planId && now?.cityId === home.cityId);
+  const others = offers.filter((x) => x.id !== current?.id);
+  const chosen = others.find((x) => x.id === planId) ?? others[0];
+  const priced = (x: (typeof offers)[number]) => `${x.provider}, ${x.plan}, ${formatMoney(Math.round(x.monthly * 100), x.currency)} A Month${x.months && x.after !== undefined ? ` For ${x.months} Months, Then ${formatMoney(Math.round(x.after * 100), x.currency)}` : ''}`;
+  const leaving = leavingCost(sim, sim.player, sim.now);
+  return (
+    <div className="field-row">
+      <span className="small">{current ? `Internet: ${priced(current)}` : `Internet: ${priced(offers[0]!)}, From The First`}</span>
+      {chosen && others.length > 1 && (
+        <select aria-label="Internet Offer" value={chosen.id} onChange={(e) => setPlanId(e.target.value)} style={{ width: 'auto' }}>
+          {others.map((x) => <option key={x.id} value={x.id}>{priced(x)}</option>)}
+        </select>
+      )}
+      {chosen && current && (
+        <Gated feature="home.internet" className="btn btn-sm btn-ghost" title={leaving > 0 ? `What's left of the contract, ${formatMoney(leaving, cur, { cents: false })}, is owed on leaving.` : `${chosen.source}.`} onClick={() => { if (run('home.internet', { planId: chosen.id }).ok) toast(`${chosen.provider} from now.`, 'positive'); }}>{`Switch To ${chosen.provider}`}</Gated>
+      )}
+    </div>
+  );
 }

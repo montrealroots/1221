@@ -1,0 +1,733 @@
+{
+  "_meta": {
+    "purpose": "Real, published figures for SLATE's construction stage: a player who owns a vacant parcel builds a house on it. Places: New York City (Brooklyn/Queens/Staten Island, R2), upstate New York farmland, New Haven CT (RS-2), rural Connecticut, Los Angeles (R1), rural California, London (Hackney/Croydon/Havering), rural England, Leinster (rural Ireland), Central East Ontario (rural), British Columbia South Coast (rural).",
+    "date": "2026-09-29",
+    "retrieved": "2026-09-29",
+    "method": "WebSearch to locate sources, then WebFetch or curl plus pdftotext/xlsx-cli to read the authority's own page, PDF or spreadsheet where it could be reached. confirmed:true means the figure was read from the fetched document itself; confirmed:false means it came only from a search snippet or a page that could not be opened (several authority sites returned HTTP 403). sourceType 'primary' is the authority's own page or document (statute, regulation, council schedule, statistics office); 'secondary' is press, a trade body, a vendor, a lender or a compiler. No figure here was invented; where nothing was published, value is null with a note. Currency is local: USD, GBP, EUR, CAD.",
+    "figureShape": "{value, unit, basis, source, date, sourceType, confirmed} plus an optional note"
+  },
+
+  "costs": {
+    "unitedStates": {
+      "nahbConstructionCostPerHome2024": {
+        "value": 428215, "unit": "USD per house", "basis": "NAHB Construction Cost Survey 2024: average total construction cost of a typical new single-family home (41 usable builder responses, national only, no regional breakdown). Excludes the finished lot ($91,057), financing, overhead, marketing, commission and profit.",
+        "source": "https://www.nahb.org/news-and-economics/housing-economics-plus/special-studies/special-studies-pages/cost-of-constructing-a-home-in-2024",
+        "date": "2025-01-20", "sourceType": "secondary", "confirmed": true,
+        "note": "NAHB is a trade association, so secondary. The survey itself warns that it is national only and that the sample is too small for a geographic breakdown."
+      },
+      "nahbAverageFinishedArea2024": {
+        "value": 2647, "unit": "sq ft", "basis": "Average finished area of the homes in the NAHB 2024 cost survey; average lot 20,907 sq ft.",
+        "source": "https://www.nahb.org/news-and-economics/housing-economics-plus/special-studies/special-studies-pages/cost-of-constructing-a-home-in-2024",
+        "date": "2025-01-20", "sourceType": "secondary", "confirmed": true
+      },
+      "nahbConstructionCostPerSqFt2024": {
+        "value": 161.77, "unit": "USD per sq ft of finished area", "basis": "Computed here: $428,215 / 2,647 sq ft. NAHB's own blog rounds it to about $162.",
+        "source": "https://www.nahb.org/news-and-economics/housing-economics-plus/special-studies/special-studies-pages/cost-of-constructing-a-home-in-2024",
+        "date": "2025-01-20", "sourceType": "secondary", "confirmed": true
+      },
+      "nahbSalePriceBreakdown2024": {
+        "value": {
+          "finishedLot": {"usd": 91057, "shareOfPrice": 0.137},
+          "construction": {"usd": 428215, "shareOfPrice": 0.644},
+          "financing": {"usd": 10220, "shareOfPrice": 0.015},
+          "overheadAndGeneral": {"usd": 38248, "shareOfPrice": 0.057},
+          "marketing": {"usd": 5633, "shareOfPrice": 0.008},
+          "salesCommission": {"usd": 18955, "shareOfPrice": 0.028},
+          "profit": {"usd": 72971, "shareOfPrice": 0.110},
+          "totalSalePrice": {"usd": 665298, "shareOfPrice": 1.0}
+        },
+        "unit": "USD and share of sale price", "basis": "NAHB Table 1, Part I.",
+        "source": "https://www.nahb.org/news-and-economics/housing-economics-plus/special-studies/special-studies-pages/cost-of-constructing-a-home-in-2024",
+        "date": "2025-01-20", "sourceType": "secondary", "confirmed": true
+      },
+      "nahbConstructionCostByStage2024": {
+        "value": {
+          "siteWork": {"usd": 32719, "share": 0.076, "includes": "building permit fees $7,640; impact fee $6,367; water and sewer fees and inspections $6,260; architecture and engineering $6,480; other $5,972"},
+          "foundations": {"usd": 44748, "share": 0.105},
+          "framing": {"usd": 70982, "share": 0.166},
+          "exteriorFinishes": {"usd": 57510, "share": 0.134},
+          "majorSystemsRoughIns": {"usd": 82319, "share": 0.192},
+          "interiorFinishes": {"usd": 103391, "share": 0.241},
+          "finalSteps": {"usd": 27710, "share": 0.065},
+          "other": {"usd": 8835, "share": 0.021},
+          "total": {"usd": 428215, "share": 1.0}
+        },
+        "unit": "USD and share of construction cost", "basis": "NAHB Table 1, Part II, eight stages. Stage totals sum to $428,214 (rounding). Line-item layout in the PDF was scrambled on extraction; the stage totals were checked by summing to the published total.",
+        "source": "https://www.nahb.org/news-and-economics/housing-economics-plus/special-studies/special-studies-pages/cost-of-constructing-a-home-in-2024",
+        "date": "2025-01-20", "sourceType": "secondary", "confirmed": true
+      },
+      "censusContractPricePerSqFt2025": {
+        "value": {
+          "median": {"unitedStates": 171.57, "northeast": 179.30, "midwest": 194.09, "south": 157.30, "west": 176.87},
+          "average": {"unitedStates": 198.33, "northeast": 246.26, "midwest": 202.13, "south": 179.96, "west": 213.85}
+        },
+        "unit": "USD per sq ft of floor area", "basis": "Census Bureau Survey of Construction, Characteristics of New Housing 2025: median and average contract price per square foot of new contractor-built single-family houses started in 2025. Contract price excludes the value of the improved lot. This is the case of a house built by a hired contractor on the owner's own land, which matches SLATE's vacant-parcel case. New York and Connecticut are in the Northeast region; California is in the West. No state or metro breakdown is published.",
+        "source": "https://www.census.gov/construction/chars/xls/contractpricesqft_cust.xls",
+        "date": "2026-07-01", "sourceType": "primary", "confirmed": true
+      },
+      "censusMedianContractPrice2025": {
+        "value": 404000, "unit": "USD", "basis": "Median contract price of the 131,000 contractor-built single-family houses started in 2025 (excludes lot).",
+        "source": "https://www.census.gov/construction/chars/highlights.html",
+        "date": "2026-07-01", "sourceType": "primary", "confirmed": true
+      },
+      "shareOfContractorBuiltAbove150PerSqFt2025": {
+        "value": {"unitedStates": 0.61, "northeast": 0.67, "midwest": 0.69, "south": 0.54, "west": 0.68},
+        "unit": "share of contractor-built houses started", "basis": "Census distribution by contract price per sq ft; top published bracket is $150 and over.",
+        "source": "https://www.census.gov/construction/chars/xls/contractpricesqft_cust.xls",
+        "date": "2026-07-01", "sourceType": "primary", "confirmed": true
+      },
+      "newYorkCityCostPerSqFt": {
+        "value": null, "unit": "USD per sq ft", "basis": "No free, authority-published construction cost per square foot for a one-family house in New York City was found. RSMeans location factors are sold, not published free. Use the Census Northeast figure and mark it as a regional stand-in.",
+        "source": null, "date": null, "sourceType": null, "confirmed": false
+      },
+      "losAngelesValuationPerSqFt": {
+        "value": {
+          "dwellingAverageTypeVStandard": 101, "dwellingGoodTypeVStandard": 137, "dwellingExceptionalTypeVorIII": 184,
+          "dwellingTractTypeVUnder2000sf": 95, "dwellingTractTypeVOver2000sf": 111, "dwellingTractTypeVOver4000sf": 130,
+          "dwellingGoodTypeVPreFab": 75
+        },
+        "unit": "USD per sq ft (permit valuation)", "basis": "LADBS Building Permit Valuation Table, effective August 17, 2015 (file dated 2017). This is the valuation LADBS uses to compute permit fees, not a market construction cost; it has not been updated since 2015 and understates 2026 costs.",
+        "source": "https://dbs.lacity.gov/sites/default/files/efs/forms/pc17/building-permit-valuation-table.pdf",
+        "date": "2015-08-17", "sourceType": "primary", "confirmed": true
+      },
+      "connecticutCostPerSqFt": {
+        "value": null, "unit": "USD per sq ft", "basis": "No state- or city-published construction cost per square foot found for New Haven or rural Connecticut. Use the Census Northeast figure as a regional stand-in.",
+        "source": null, "date": null, "sourceType": null, "confirmed": false
+      }
+    },
+    "unitedKingdom": {
+      "bcisOrRicsCostPerM2": {
+        "value": null, "unit": "GBP per m2", "basis": "BCIS (RICS) average build prices for estate housing and one-off houses are subscription data and could not be read. No UK government figure for house construction cost per m2 was found.",
+        "source": null, "date": null, "sourceType": null, "confirmed": false
+      },
+      "selfBuildCostPerM2Indicative": {
+        "value": {"low": 1700, "mid": 2200, "high": 2800}, "unit": "GBP per m2", "basis": "Indicative self-build range for a standard specification house, quoted by consumer sites as 'based on 2025 BCIS data'. Other compilers give £1,400 to £3,000 (2026) and £2,100 to £3,800 (2026). London and the South East are commonly quoted 20 to 50 percent higher.",
+        "source": "https://buildercalculator.uk/new-build-cost-calculator.html",
+        "date": "2026", "sourceType": "secondary", "confirmed": false,
+        "note": "Search-snippet level only; treat as a modeled estimate, not a published figure."
+      },
+      "rebuildCostPerM2Indicative": {
+        "value": {"terraced": [1700, 2050], "semiDetached": [1800, 2200], "detached": [1900, 2400]}, "unit": "GBP per m2", "basis": "Insurance rebuild base rates by type, quoted by a compiler as 'BCIS 2025'.",
+        "source": "https://www.propertypassport.uk/rebuild-cost-calculator",
+        "date": "2025", "sourceType": "secondary", "confirmed": false
+      }
+    },
+    "ireland": {
+      "scsiDeliveryCost3BedSemi2023": {
+        "value": {"national": 397000, "greaterDublinArea": 461000, "northwest": 354000, "excludingDublin": 386000},
+        "unit": "EUR per house (total delivery cost incl. VAT)", "basis": "SCSI 'The Real Cost of New Housing Delivery 2023': three-bed semi-detached house of 114 m2 in a privately built multi-unit scheme; 8,500 units across 80 sites. Hard (construction) costs are 53 percent nationally, soft costs (land, levies, fees, finance, margin, VAT) 47 percent. This is the latest edition for houses; SCSI's 2025 report covers apartments only.",
+        "source": "https://scsi.ie/the-scsi-publishes-the-real-cost-of-new-housing-delivery-2023/",
+        "date": "2023-12-07", "sourceType": "secondary", "confirmed": true
+      },
+      "scsiHardCost3BedSemi2023": {
+        "value": {"greaterDublinArea": 227814, "northwest": 198000}, "unit": "EUR per house", "basis": "House-building (hard) cost for the 114 m2 three-bed semi. GDA figure exact; Northwest approximate as reported. Per m2: GDA about €1,998; Northwest about €1,737 (computed here by dividing by 114 m2).",
+        "source": "https://scsi.ie/the-scsi-publishes-the-real-cost-of-new-housing-delivery-2023/",
+        "date": "2023-12-07", "sourceType": "secondary", "confirmed": true,
+        "note": "SCSI is the professional body for surveyors, so secondary. Figures are for scheme houses, not one-off rural self-builds; no published cost for a one-off rural house was found."
+      }
+    },
+    "canada": {
+      "altus2025CustomSingleFamily": {
+        "value": {"vancouver": [495, 1250], "calgary": [475, 1090], "edmonton": [475, 1090], "winnipeg": [470, 1050], "greaterTorontoArea": [520, 1130], "ottawa": [500, 1000], "montreal": [440, 875], "halifax": [345, 695], "stJohns": [350, 700]},
+        "unit": "CAD per sq ft (hard construction cost)", "basis": "Altus Group 2025 Canadian Cost Guide, private sector, 'Custom Built Single Family Residential'. Excludes site development and premiums for unique architecture.",
+        "source": "https://spearrealty.ca/wp-content/uploads/2025/09/2025-Canadian-Cost-Guide-Altus-Group-1.pdf",
+        "date": "2025-03-27", "sourceType": "secondary", "confirmed": true,
+        "note": "Read from a copy of the Altus PDF hosted by a realty firm."
+      },
+      "altus2025SingleFamilyUnfinishedBasement": {
+        "value": {"vancouver": [200, 320], "calgary": [175, 265], "edmonton": [170, 265], "winnipeg": [165, 250], "greaterTorontoArea": [200, 275], "ottawa": [140, 225], "montreal": [145, 205], "halifax": [140, 215], "stJohns": [150, 210]},
+        "unit": "CAD per sq ft", "basis": "Altus 2025, 'Single Family Residential with Unfinished Basement' (production/tract building).",
+        "source": "https://spearrealty.ca/wp-content/uploads/2025/09/2025-Canadian-Cost-Guide-Altus-Group-1.pdf",
+        "date": "2025-03-27", "sourceType": "secondary", "confirmed": true
+      },
+      "altus2026CustomSingleFamily": {
+        "value": {"vancouver": [490, 1250], "greaterTorontoArea": [500, 1130]},
+        "unit": "CAD per sq ft", "basis": "Altus 2026 Canadian Cost Guide (released 2026-04-23), custom built single family.",
+        "source": "https://www.altusgroup.com/press-releases/altus-group-releases-its-2026-canadian-cost-guide/",
+        "date": "2026-04-23", "sourceType": "secondary", "confirmed": false,
+        "note": "The press release did not show the table; the numbers come from a search snippet only. Central East Ontario and the BC South Coast outside Vancouver have no published Altus figure."
+      }
+    }
+  },
+
+  "sizes": {
+    "unitedStates": {
+      "medianSqFtCompleted2025": {
+        "value": {"unitedStates": 2142, "northeast": 2459, "midwest": 1969, "south": 2162, "west": 2090},
+        "unit": "sq ft", "basis": "Census, median floor area of new single-family houses completed in 2025 (all purposes).",
+        "source": "https://www.census.gov/construction/chars/xls/squarefeet_cust.xls",
+        "date": "2026-07-01", "sourceType": "primary", "confirmed": true
+      },
+      "averageSqFtCompleted2025": {
+        "value": {"unitedStates": 2378, "northeast": 2644, "midwest": 2240, "south": 2396, "west": 2336},
+        "unit": "sq ft", "basis": "Census, average floor area, same series.",
+        "source": "https://www.census.gov/construction/chars/xls/squarefeet_cust.xls",
+        "date": "2026-07-01", "sourceType": "primary", "confirmed": true
+      },
+      "contractorBuiltSqFt2025": {
+        "value": {"median": {"unitedStates": 2433, "northeast": 2495, "midwest": 2289, "south": 2482, "west": 2354}, "average": {"unitedStates": 2773, "northeast": 2867, "midwest": 2471, "south": 2865, "west": 2751}},
+        "unit": "sq ft", "basis": "Census, houses completed in 2025 that were built by a hired contractor on the owner's land.",
+        "source": "https://www.census.gov/construction/chars/xls/squarefeet_cust.xls",
+        "date": "2026-07-01", "sourceType": "primary", "confirmed": true
+      },
+      "ownerBuiltSqFt2025": {
+        "value": {"median": {"unitedStates": 1922, "northeast": 1721, "midwest": 1918, "south": 2113, "west": 1686}, "average": {"unitedStates": 2301, "northeast": 2062, "midwest": 2146, "south": 2424, "west": 2278}},
+        "unit": "sq ft", "basis": "Census, houses completed in 2025 that the owner built (acting as own general contractor).",
+        "source": "https://www.census.gov/construction/chars/xls/squarefeet_cust.xls",
+        "date": "2026-07-01", "sourceType": "primary", "confirmed": true
+      },
+      "completions2025": {
+        "value": 1005000, "unit": "single-family houses", "basis": "Census, single-family houses completed in 2025.",
+        "source": "https://www.census.gov/construction/chars/highlights.html",
+        "date": "2026-07-01", "sourceType": "primary", "confirmed": true
+      }
+    },
+    "england": {
+      "nationallyDescribedSpaceStandard": {
+        "value": {
+          "2b4p2storey": 79, "3b4p2storey": 84, "3b5p2storey": 93, "3b6p2storey": 102,
+          "4b5p2storey": 97, "4b6p2storey": 106, "4b7p2storey": 115, "4b8p2storey": 124,
+          "3b5p3storey": 99, "4b6p3storey": 112, "2b4p1storey": 70, "3b5p1storey": 86
+        },
+        "unit": "m2 gross internal area (minimum)", "basis": "Technical housing standards - nationally described space standard, Table 1. Applies only where a local authority has adopted it in its Local Plan (London Plan applies it across London).",
+        "source": "https://assets.publishing.service.gov.uk/media/6123c60e8fa8f53dd1f9b04d/160519_Nationally_Described_Space_Standard.pdf",
+        "date": "2015-03-27 (amended 2016-05-19)", "sourceType": "primary", "confirmed": true
+      }
+    },
+    "ireland": {
+      "scsiTypical3BedSemi": {
+        "value": 114, "unit": "m2", "basis": "Floor area of the three-bed semi-detached house SCSI costs in its 2023 report.",
+        "source": "https://scsi.ie/the-scsi-publishes-the-real-cost-of-new-housing-delivery-2023/",
+        "date": "2023-12-07", "sourceType": "secondary", "confirmed": true,
+        "note": "No published typical size for a one-off rural house was found."
+      }
+    },
+    "canada": {
+      "typicalSize": {
+        "value": null, "unit": "sq ft", "basis": "No CMHC or Statistics Canada published median floor area for new single-detached houses was found.",
+        "source": null, "date": null, "sourceType": null, "confirmed": false
+      }
+    }
+  },
+
+  "permitsAndFees": {
+    "newYorkCity": {
+      "newBuildingPermit1to3Family": {
+        "value": 0.06, "unit": "USD per sq ft of total floor area", "basis": "Admin Code Table 28-112.2, new building work permit for a one-, two- or three-family dwelling with no existing elements retained: $0.06 per sq ft or fraction, minimum $100 per structure; renewal $100. Local Law 56 of 2016 cut the rate from $0.12 to $0.06; DOB implemented it on March 5, 2018. Rates 'subject to increases as provided by department rules'.",
+        "source": "https://legistar.council.nyc.gov/View.ashx?GUID=B48FFCB3-3AB8-4FEA-8E54-8C9EA92E4534&ID=4550140&M=F",
+        "date": "2016 (in DOB systems 2018-03-05)", "sourceType": "primary", "confirmed": true
+      },
+      "minimumFilingFee2025": {
+        "value": 130, "unit": "USD", "basis": "Minimum fee on permit applications raised from $100 to $130 under Local Law 128 of 2024, effective December 21, 2025.",
+        "source": "https://www.nyc.gov/assets/buildings/pdf/dn-cost.pdf",
+        "date": "2025-12-21", "sourceType": "secondary", "confirmed": false,
+        "note": "Search snippet only; not read from the local law."
+      },
+      "certificateOfOccupancyFee": {
+        "value": null, "unit": "USD", "basis": "Admin Code §28-112.8 says the CO fee is 'as provided by rule'; the rule amount was not found.",
+        "source": "https://nycadmincode.readthedocs.io/t28/c01/art112/",
+        "date": null, "sourceType": "primary", "confirmed": false
+      }
+    },
+    "upstateNewYork": {
+      "buildingPermitFee": {
+        "value": null, "unit": null, "basis": "New York State has no statewide residential permit fee; each town sets its own under the Uniform Code (19 NYCRR Part 1203). No example town schedule was retrieved.",
+        "source": "https://dos.ny.gov/2021-12-10-full-text-rule-part-1203", "date": null, "sourceType": "primary", "confirmed": false
+      }
+    },
+    "losAngeles": {
+      "buildingPermitFeeTable1A": {
+        "value": [
+          {"from": 0, "to": 100, "fee": "none"},
+          {"from": 100.01, "to": 2000, "fee": "$65.00"},
+          {"from": 2000.01, "to": 20000, "fee": "$40.00 plus $1.25 per $100 of total valuation"},
+          {"from": 20000.01, "to": 50000, "fee": "$170.00 plus $6.00 per $1,000 of total valuation"},
+          {"from": 50000.01, "to": 100000, "fee": "$195.00 plus $5.50 per $1,000 of total valuation"},
+          {"from": 100000.01, "to": 500000, "fee": "$395.00 plus $3.50 per $1,000 of total valuation"},
+          {"from": 500000.01, "to": 1000000, "fee": "$520.00 plus $3.25 per $1,000 of total valuation"}
+        ],
+        "unit": "USD by project valuation", "basis": "LAMC §91.107 Table 1-A as summarized in the City's Housing Element 2021-2029 Appendix 2.4. Valuation comes from the LADBS valuation table (see costs). The table is indexed to CPI each July per snippets, so current amounts are likely higher.",
+        "source": "https://planning.lacity.gov/odocument/62df4599-b5b3-4ce9-880f-ec4de6b1a1c2/Appendix_2.4_-_Summary_of_Case_Filing_and_Building_Permitting_Fees_(Adopted).pdf",
+        "date": "2018-07-16 (LAMC 91.107 effective date shown)", "sourceType": "primary", "confirmed": true
+      },
+      "planCheckFee": {
+        "value": 0.90, "unit": "fraction of building permit fee", "basis": "Plan check for buildings = 90 percent of the Table 1-A permit fee (LAMC 91.107.3.1.1).",
+        "source": "https://planning.lacity.gov/odocument/62df4599-b5b3-4ce9-880f-ec4de6b1a1c2/Appendix_2.4_-_Summary_of_Case_Filing_and_Building_Permitting_Fees_(Adopted).pdf",
+        "date": "2018-07-16", "sourceType": "primary", "confirmed": true
+      },
+      "certificateOfOccupancyFee": {
+        "value": 150, "unit": "USD per unit", "basis": "LADBS Certificate of Occupancy fee.",
+        "source": "https://planning.lacity.gov/odocument/62df4599-b5b3-4ce9-880f-ec4de6b1a1c2/Appendix_2.4_-_Summary_of_Case_Filing_and_Building_Permitting_Fees_(Adopted).pdf",
+        "date": "2018-07-16", "sourceType": "primary", "confirmed": true
+      },
+      "affordableHousingLinkageFeeSingleFamily": {
+        "value": {"lowMarket": 8.31, "mediumMarket": 10.38, "mediumHighMarket": 12.46, "highMarket": 18.69},
+        "unit": "USD per sq ft", "basis": "Affordable Housing Linkage Fee for single-family detached homes by market area, schedule effective July 1, 2020. Adjusted annually; current-year amounts and exemptions were not retrieved.",
+        "source": "https://planning.lacity.gov/odocument/62df4599-b5b3-4ce9-880f-ec4de6b1a1c2/Appendix_2.4_-_Summary_of_Case_Filing_and_Building_Permitting_Fees_(Adopted).pdf",
+        "date": "2020-07-01", "sourceType": "primary", "confirmed": true
+      },
+      "schoolFeeLevel1Statutory": {
+        "value": 5.38, "unit": "USD per sq ft of assessable residential space", "basis": "State Allocation Board raised the Level 1 statutory maximum developer fee from $5.17 to $5.38 per sq ft (residential) and $0.87 (commercial) on January 28, 2026. Districts may levy up to this after their board adopts it.",
+        "source": "https://www.aalrr.com/newsroom-alerts-4204",
+        "date": "2026-01-28", "sourceType": "secondary", "confirmed": false,
+        "note": "The previous cap, $5.17, was confirmed in the LA County Office of Education bulletin (https://www.lacoe.edu/content/dam/lacoeedu/bulletin/6990.pdf, 2025-05-01, primary). LAUSD's own adopted rate could not be read (lausd.org returned 403)."
+      }
+    },
+    "california": {
+      "smipFeeCategory1": {
+        "value": 13.00, "unit": "USD per $100,000 of permit valuation", "basis": "Strong-Motion Instrumentation and Seismic Hazard Mapping fee, Category 1 (residential 1-3 stories): valuation x 0.00013; minimum $0.50.",
+        "source": "https://www.conservation.ca.gov/cgs/Documents/program-smi/SMIP_Fee_Schedule.pdf",
+        "date": "2014-07", "sourceType": "primary", "confirmed": true
+      },
+      "buildingStandardsAdministrationFee": {
+        "value": 4.00, "unit": "USD per $100,000 of valuation (minimum $1)", "basis": "Health and Safety Code §18931.6: fee on every building permit for the Building Standards Administration Special Revolving Fund.",
+        "source": "https://up.codes/s/california-building-standards-commission-administration-fee",
+        "date": null, "sourceType": "secondary", "confirmed": false
+      },
+      "ruralCountyPermitFee": {
+        "value": null, "unit": null, "basis": "No rural California county fee schedule was retrieved.", "source": null, "date": null, "sourceType": null, "confirmed": false
+      }
+    },
+    "newHaven": {
+      "buildingPermitFee": {
+        "value": {"first1000": 25.00, "perAdditional1000": 15.00, "processingFee": 10.00}, "unit": "USD", "basis": "City of New Haven: $25 for the first $1,000 of value plus $15 per additional $1,000, plus a $10 processing fee.",
+        "source": "https://www.newhavenct.gov/government/departments-divisions/office-of-building-inspection-enforcement/owner-info",
+        "date": null, "sourceType": "primary", "confirmed": false,
+        "note": "Search snippet only; the city site returned 403."
+      },
+      "stateEducationFee": {
+        "value": 0.26, "unit": "USD per $1,000 of construction value", "basis": "Connecticut General Statutes §29-252a / §29-263(b): state education fee assessed on every building permit, in effect since July 1, 1999.",
+        "source": "https://portal.ct.gov/das/oedm/code-training-and-education-fees-assessed-on-municipal-building-permits/faq",
+        "date": null, "sourceType": "primary", "confirmed": false,
+        "note": "Rate from search snippets of the CT DAS FAQ and several town fee pages; the DAS page itself did not show the rate when fetched."
+      }
+    },
+    "ruralConnecticut": {
+      "buildingPermitFee": {"value": null, "unit": null, "basis": "Set town by town; no rural town schedule was retrieved. The $0.26 per $1,000 state education fee applies everywhere.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+    },
+    "england": {
+      "planningFeeNewDwelling": {
+        "value": 610, "unit": "GBP per dwellinghouse", "basis": "Full application for the erection of fewer than 10 dwellinghouses, from 1 April 2026 (up from £588, CPI indexation of 3.8 percent). 10 to 50 dwellings: £659 each.",
+        "source": "https://ecab.planningportal.co.uk/uploads/english_application_fees.pdf",
+        "date": "2026-04-01", "sourceType": "secondary", "confirmed": true,
+        "note": "Planning Portal is the government's application service run as a joint venture; read from its fee schedule 'England - 1 April 2026 - V2026'."
+      },
+      "planningFeeOutlineDwellings": {
+        "value": 610, "unit": "GBP per 0.1 hectare (site under 0.5 ha)", "basis": "Outline application for dwellinghouses, from 1 April 2026.",
+        "source": "https://ecab.planningportal.co.uk/uploads/english_application_fees.pdf",
+        "date": "2026-04-01", "sourceType": "secondary", "confirmed": true
+      },
+      "buildingControlChargeNewDwellingHackney": {
+        "value": 1018.50, "unit": "GBP plus 20% VAT", "basis": "Hackney Building Control 2025/26 charge for one new-build dwelling (full plans or building notice).",
+        "source": "https://hackney.moderngov.co.uk/documents/s91541/Appendix%207%20-%20Proposed%20Fees%20Charges%202025-26%2024022025%20Cabinet.pdf",
+        "date": "2025-02-24", "sourceType": "primary", "confirmed": false,
+        "note": "Snippet only; the document returned 403. Building control charges are set by each council; Croydon's current schedule was not found."
+      },
+      "mayoralCil2": {
+        "value": {"band2Hackney": {"base": 60, "indexed2026": 72.73}, "band3CroydonHavering": {"base": 25, "indexed2026": 30.30}},
+        "unit": "GBP per m2 of net additional gross internal area", "basis": "Mayor of London CIL (MCIL2) from 1 April 2019: Band 1 £80, Band 2 £60 (includes Hackney), Band 3 £25 (includes Croydon and Havering). Indexed for permissions granted in 2026 using RICS CIL Index 400 over 330: Band 2 £72.73 (Haringey's 2026 summary), Band 3 £30.30 (Croydon's 2026 summary).",
+        "source": "https://www.croydon.gov.uk/sites/default/files/2025-12/cil-rate-2026-d1.pdf",
+        "date": "2025-12 (for 2026 consents)", "sourceType": "primary", "confirmed": true,
+        "note": "Band membership comes from a search snippet of the MCIL2 charging schedule; the Band 3 indexed rate for Croydon and Havering and the Band 2 indexed rate (Haringey) were read from council documents."
+      },
+      "croydonCil2026": {
+        "value": 209.61, "unit": "GBP per m2", "basis": "Croydon borough CIL, base £120 per m2 for residential outside the Metropolitan Centre, indexed for consents granted 1 Jan to 31 Dec 2026. Plus Mayoral CIL £30.30. A revised Croydon schedule was submitted for examination on 2025-11-28.",
+        "source": "https://www.croydon.gov.uk/sites/default/files/2025-12/cil-rate-2026-d1.pdf",
+        "date": "2025-12", "sourceType": "primary", "confirmed": true
+      },
+      "haveringCil2026": {
+        "value": {"zoneANorth": 151.52, "zoneBSouth": 66.67}, "unit": "GBP per m2", "basis": "Havering CIL residential rates for 2026 (base from 2019-09-01: £125 north, £55 south; zones divided by the A1306). Mayoral CIL on top at £25 base.",
+        "source": "https://www.havering.gov.uk/planning-3/planning-application-process-appeals/3",
+        "date": "2026", "sourceType": "primary", "confirmed": true
+      },
+      "hackneyCil": {
+        "value": {"zoneA": 190, "zoneB": 25, "zoneC": 55, "zoneD": 0}, "unit": "GBP per m2 (2015 base, not indexed)", "basis": "Hackney CIL residential zones, applied from 1 April 2015 (Zone A: Haggerston, Dalston, Hackney Central, Stoke Newington; B: Clapton, Homerton, Hackney Downs, Hackney Marshes; C: Clissold Park, Stamford Hill, Woodberry Down; D: Woodberry Down regeneration area). 2026 indexed rates not found.",
+        "source": "https://www.planningresource.co.uk/article/1337178/hackney-council-cil-charging-schedule-adopted",
+        "date": "2015", "sourceType": "secondary", "confirmed": false
+      },
+      "cilSelfBuildExemption": {
+        "value": true, "unit": "boolean", "basis": "Houses built by self-builders can claim relief from CIL (borough and Mayoral), if the claim is made and accepted before development commences. Missing the commencement notice brings a surcharge of 20 percent of the CIL due, up to £2,500.",
+        "source": "https://hackney.gov.uk/hcil/",
+        "date": null, "sourceType": "primary", "confirmed": true
+      },
+      "ruralEnglandCil": {"value": null, "unit": null, "basis": "Varies by district; many rural districts have no CIL. No example retrieved.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+    },
+    "ireland": {
+      "planningFeeHouse": {
+        "value": 65, "unit": "EUR", "basis": "Planning and Development Regulations 2001-2025, Schedule 9, Class 1, provision of a house. Retention: €195 or €2.50 per m2, whichever is greater.",
+        "source": "https://kildarecoco.ie/Forms/Planning/PDRegsSCHEDULE%209.pdf",
+        "date": "2025", "sourceType": "primary", "confirmed": true
+      },
+      "developmentContributionKildare": {
+        "value": 62, "unit": "EUR per m2", "basis": "Kildare Development Contribution Scheme 2023-2029, residential rate, from 1 January 2023 (read from the draft scheme). Extensions: first 40 m2 exempt, rest at the residential rate.",
+        "source": "https://consult.kildarecoco.ie/ga/system/files/materials/6682/DRAFT%20Development%20Contribution%20Scheme%202023%20-%2029.pdf",
+        "date": "2023-01-01", "sourceType": "primary", "confirmed": true,
+        "note": "The adopted scheme PDF (dated 24.06.25) is a scan with no text; the adopted rate and any indexation since were not confirmed."
+      },
+      "developmentContributionWaiver": {
+        "value": {"commenceBy": "2024-12-31", "completeBy": "2026-12-31"}, "unit": "dates", "basis": "Temporary waiver of section 48 development contributions for residential developments, including one-off rural and self-build houses, that commenced between 2023-04-25 and 2024-12-31 and complete by 2026-12-31. A house starting in 2026 does not qualify.",
+        "source": "https://housingireland.ie/government-extends-development-levy-waiver-and-uisce-eireann-rebate/",
+        "date": "2024-04", "sourceType": "secondary", "confirmed": true
+      },
+      "commencementNoticeFee": {
+        "value": 30, "unit": "EUR per building (per house in a housing development)", "basis": "Building Control Regulations 1997 as amended, Fifth Schedule; notice lodged on BCMS 14 to 28 days before work starts.",
+        "source": "https://www.meath.ie/council/council-services/planning-and-building/building-and-fire-regulations/commencement-and-7-days-notice",
+        "date": null, "sourceType": "primary", "confirmed": false
+      },
+      "certificateOfComplianceOnCompletionFee": {
+        "value": null, "unit": "EUR", "basis": "No lodgement fee for the Certificate of Compliance on Completion was found.", "source": null, "date": null, "sourceType": null, "confirmed": false
+      },
+      "uisceEireannConnectionCharge": {
+        "value": 2272, "unit": "EUR", "basis": "Standard water and wastewater connection charge for a single domestic dwelling.",
+        "source": "https://www.farmersjournal.ie/news/news/costly-development-levies-and-water-connection-charges-dropped-for-rural-houses-763096",
+        "date": null, "sourceType": "secondary", "confirmed": false,
+        "note": "Rural houses on a private well and septic tank do not connect."
+      }
+    },
+    "ontario": {
+      "buildingPermitCavanMonaghan2025": {
+        "value": 1.25, "unit": "CAD per sq ft (minimum $200)", "basis": "Township of Cavan Monaghan (Peterborough County) 2025 fees by-law 2024-68: new residential, commercial and industrial, including additions (walkout basements at a share of basement area). Alterations, renovations and relocations: $15 per $1,000 of value, minimum $200. Accessory and agricultural buildings and attached garages: $0.55 per sq ft, minimum $200.",
+        "source": "https://www.cavanmonaghan.net/media/2yykertb/schedule-a-2025-user-fees-and-charges-by-law-no-2024-68-final.pdf",
+        "date": "2025", "sourceType": "primary", "confirmed": true
+      },
+      "developmentChargeCavanMonaghanRural": {
+        "value": 8105, "unit": "CAD per single or semi-detached dwelling", "basis": "By-law 2022-43 Schedule B, grand total for the rural area (highways 2,990; fire 1,306; policing 37; parks and recreation 2,635; library 936; growth studies 201). Urban Millbrook adds water and wastewater for $29,488. Full calculated charges effective 2022-08-03 (schedule labeled effective 2023-08-03).",
+        "source": "https://www.cavanmonaghan.net/media/x3hkbclt/dc-by-law-2022-43-schedule-b-effective-aug-3-2023.pdf",
+        "date": "2023-08-03", "sourceType": "primary", "confirmed": true,
+        "note": "Column extraction was scrambled; the rural total was checked by summing the service rows. Any county-level charge and indexation after 2023 were not checked."
+      },
+      "tarionEnrolmentFee": {
+        "value": [
+          {"priceTo": 300000, "fee": 585}, {"priceTo": 400000, "fee": 725}, {"priceTo": 450000, "fee": 815}, {"priceTo": 500000, "fee": 890},
+          {"priceTo": 550000, "fee": 970}, {"priceTo": 600000, "fee": 1075}, {"priceTo": 650000, "fee": 1515}, {"priceTo": 700000, "fee": 1610},
+          {"priceTo": 750000, "fee": 1670}, {"priceTo": 800000, "fee": 1740}, {"priceTo": 850000, "fee": 1805}, {"priceTo": 900000, "fee": 1940},
+          {"priceTo": 950000, "fee": 2010}, {"priceTo": 1000000, "fee": 2075}, {"priceFrom": 4000000.01, "fee": 6055}
+        ],
+        "unit": "CAD per home, before 13% HST", "basis": "Tarion freehold enrolment fee schedule effective September 1, 2025, by estimated sale price. Includes a $300 capital replenishment amount. Paid by a registered builder.",
+        "source": "https://www.tarion.com/builders/enrolment-fees",
+        "date": "2025-09-01", "sourceType": "primary", "confirmed": true,
+        "note": "Whether a home an owner builds on their own land, or hires a contractor to build on it, must be enrolled was not confirmed. The HCRA regulatory fee is separate and was not found."
+      }
+    },
+    "britishColumbia": {
+      "buildingPermitSunshineCoastRD": {
+        "value": [
+          {"from": 0, "to": 10000, "fee": "$150 plus $11.00 per $1,000 over the first $1,000"},
+          {"from": 10001, "to": 50000, "fee": "$249 plus $11.25 per $1,000 over $10,000"},
+          {"from": 50001, "to": 3000000, "fee": "$699 plus $9.96 per $1,000 over $50,000"},
+          {"from": 3000001, "to": 10000000, "fee": "$30,081 plus $7.00 per $1,000 over $3,000,000"}
+        ],
+        "unit": "CAD by value of construction", "basis": "Sunshine Coast Regional District Building Bylaw No. 779, 2025, Appendix A (adopted December 11, 2025). Component fees extra (e.g. chimney or wood-burning appliance $85; hydronic heating first floor $85). Permit extension: $100 / $250 / $500 by original value. Special inspection $250; re-inspection beyond two visits charged.",
+        "source": "https://www.scrd.ca/wp-content/uploads/2025/12/SCRD-Building-Bylaw-No.-779-.pdf",
+        "date": "2025-12-11", "sourceType": "primary", "confirmed": true
+      },
+      "dccSunshineCoastRDWater": {
+        "value": 3632, "unit": "CAD per single-family dwelling unit", "basis": "SCRD Development Cost Charges Bylaw No. 693, 2015, Schedule A, Regional Water Service Area (Eastbourne $5,951; Egmont/Cove Cay $5,684). Applies only where the lot can be served by SCRD water; a rural lot on a private well pays none.",
+        "source": "https://www.scrd.ca/wp-content/uploads/2023/04/693-Development-Cost-Charges-Bylaw.pdf",
+        "date": "2015", "sourceType": "primary", "confirmed": true,
+        "note": "Later amendments were not checked."
+      },
+      "ownerBuilderAuthorizationFee": {
+        "value": 425, "unit": "CAD", "basis": "BC Housing Owner Builder Authorization application fee (plus passing the Owner Builder Authorization Exam). A search snippet also reports a separate $50 non-refundable application fee.",
+        "source": "https://www.bchousing.org/publications/Owner-Builder-FAQs.pdf",
+        "date": "2018-10", "sourceType": "primary", "confirmed": true,
+        "note": "The FAQ is dated October 2018; the current fee was not confirmed on the live page."
+      }
+    }
+  },
+
+  "durations": {
+    "unitedStates": {
+      "authorizationToCompletion2025": {
+        "value": {"allSingleFamily": 8.8, "authorizationToStart": 1.4, "startToCompletion": 7.4, "builtForSale": 7.4, "contractorBuilt": 11.7, "ownerBuilt": 14.3, "builtForRent": 12.4},
+        "unit": "months", "basis": "NAHB analysis of Census Survey of Construction data for 2025. The by-type figures are authorization to completion.",
+        "source": "https://eyeonhousing.org/2026/09/single-family-home-construction-time-declines-in-2025/",
+        "date": "2026-09-08", "sourceType": "secondary", "confirmed": true
+      },
+      "authorizationToCompletionByDivision2025": {
+        "value": {"newEngland": 13.5, "middleAtlantic": 12.6, "pacific": 10.3, "southAtlantic": 7.6},
+        "unit": "months", "basis": "Same NAHB analysis by Census division. New England (Connecticut) had the longest authorization-to-start wait, 1.8 months. New York is Middle Atlantic; California is Pacific.",
+        "source": "https://eyeonhousing.org/2026/09/single-family-home-construction-time-declines-in-2025/",
+        "date": "2026-09-08", "sourceType": "secondary", "confirmed": true
+      },
+      "censusStartToCompletion2022": {
+        "value": {
+          "unitedStates": {"total": 8.3, "builtForSale": 7.6, "contractorBuilt": 10.1, "ownerBuilt": 12.1},
+          "northeast": {"total": 10.7, "builtForSale": 9.7, "contractorBuilt": 11.8, "ownerBuilt": 13.3},
+          "west": {"total": 9.2, "builtForSale": 8.1, "contractorBuilt": 12.9, "ownerBuilt": 15.1}
+        },
+        "unit": "months, start to completion, single-unit buildings", "basis": "Census average length of time from start to completion; the downloadable series ends at 2022.",
+        "source": "https://www.census.gov/construction/nrc/xls/avg_starttocomp_cust.xls",
+        "date": "2023", "sourceType": "primary", "confirmed": true
+      },
+      "censusAuthorizationToStart2022": {
+        "value": {"unitedStates": {"total": 1.4, "builtForSale": 1.4, "contractorBuilt": 1.4, "ownerBuilt": 1.3}, "northeast": {"total": 2.0, "contractorBuilt": 2.2, "ownerBuilt": 2.9}, "west": {"total": 1.3, "contractorBuilt": 1.3, "ownerBuilt": 1.2}},
+        "unit": "months", "basis": "Census average length of time from authorization to start, single-unit buildings; series ends at 2022.",
+        "source": "https://www.census.gov/construction/nrc/xls/avg_authtostart_cust.xls",
+        "date": "2023", "sourceType": "primary", "confirmed": true
+      }
+    },
+    "unitedKingdom": {
+      "typicalBuildTime": {
+        "value": {"onSiteMonths": [6, 12]}, "unit": "months", "basis": "Commonly quoted on-site time for a standard three- or four-bed new build; 12 to 24 months from planning approval to practical completion. No government, NHBC or ONS statistic found.",
+        "source": "https://scenarioarchitecture.com/advice/how-long-does-it-take-to-build-a-house-uk",
+        "date": null, "sourceType": "secondary", "confirmed": false
+      },
+      "completionCertificateDeadline": {
+        "value": 8, "unit": "weeks", "basis": "Building Regulations 2010 reg. 17: the authority must give a completion certificate within eight weeks of receiving the completion notice.",
+        "source": "https://www.legislation.gov.uk/uksi/2010/2214/regulation/17",
+        "date": null, "sourceType": "primary", "confirmed": true
+      }
+    },
+    "ireland": {
+      "typicalBuildTime": {"value": null, "unit": "months", "basis": "No CSO or government statistic on time from commencement notice to completion for single houses was found. A secondary source describes commencements as leading completions by 12 to 24 months (all dwelling types).", "source": "https://www.castlethorn.ie/news-and-insights/2025-irish-housing-supply-forecast-esri-cso-data-digest", "date": null, "sourceType": "secondary", "confirmed": false},
+      "commencementNoticeWindow": {"value": {"minDaysBeforeStart": 14, "maxDaysBeforeStart": 28}, "unit": "days", "basis": "Commencement notice lodged on BCMS not less than 14 and not more than 28 days before work starts.", "source": "https://www.sdcc.ie/en/services/planning-building-control/building-control/submission-of-notices-and-applications/notices/commencement-notice-with-compliance-documentation/", "date": null, "sourceType": "primary", "confirmed": false}
+    },
+    "canada": {
+      "typicalBuildTime": {"value": null, "unit": "months", "basis": "No CMHC or Statistics Canada published average construction duration for single-detached houses by province was found.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+    }
+  },
+
+  "stagesAndPayments": {
+    "unitedStates": {
+      "stageShareOfConstructionCost": {
+        "value": {"siteWork": 0.076, "foundations": 0.105, "framing": 0.166, "exteriorFinishes": 0.134, "majorSystemsRoughIns": 0.192, "interiorFinishes": 0.241, "finalSteps": 0.065, "other": 0.021},
+        "unit": "share of construction cost", "basis": "NAHB 2024 stage breakdown. This is the most defensible published basis for a draw schedule: a lender's draw at each stage should roughly track the cost put in place.",
+        "source": "https://www.nahb.org/news-and-economics/housing-economics-plus/special-studies/special-studies-pages/cost-of-constructing-a-home-in-2024",
+        "date": "2025-01-20", "sourceType": "secondary", "confirmed": true
+      },
+      "lenderDrawScheduleExample": {
+        "value": {"closingOrLand": 0.10, "foundation": 0.15, "framing": 0.25, "mechanicalRoughIn": 0.25, "drywallAndCompletion": 0.25},
+        "unit": "share of loan", "basis": "A five-draw example quoted by construction-loan explainers; most loans use 4 to 6 draws. There is no standard official draw schedule.",
+        "source": "https://finance.yahoo.com/real-estate/articles/construction-loan-disbursement-works-130050272.html",
+        "date": null, "sourceType": "secondary", "confirmed": false
+      },
+      "newYorkRetainage": {
+        "value": 0.05, "unit": "maximum share of contract sum", "basis": "General Business Law §756-a/756-c as amended November 17, 2023: retainage capped at 5 percent on private construction contracts of $150,000 or more; released within 30 days of final approval. The Prompt Payment Act excludes contracts for an individual one-, two- or three-family dwelling and residential projects of 4,500 sq ft or less, so the cap does not bind a single-family house.",
+        "source": "https://law.justia.com/codes/new-york/gbs/article-35-e/756/",
+        "date": "2023-11-17", "sourceType": "primary", "confirmed": false,
+        "note": "Cap confirmed from a law-firm summary (Holland & Knight, fetched); the residential exclusion is from a search snippet of GBL §756."
+      },
+      "californiaRetention": {
+        "value": 0.05, "unit": "maximum share of each progress payment and of contract price", "basis": "Civil Code §8811 (SB 61), for private works contracts entered into on or after January 1, 2026. Does not apply to residential projects that are not mixed-use and are four stories or less, so a single-family house is outside the cap.",
+        "source": "https://www.stoel.com/insights/publications/new-california-law-limits-retention-on-private-construction-projects-to-5",
+        "date": "2026-01-01", "sourceType": "secondary", "confirmed": true,
+        "note": "The request named Civil Code §8812; the new cap is §8811. Existing §8812-8820 govern release of retention (prompt payment) rather than a cap."
+      }
+    },
+    "unitedKingdom": {
+      "selfBuildMortgageStages": {
+        "value": {"brickAndBlock": ["purchase of land", "preliminary costs and foundations", "wall plate level", "wind and watertight", "first fix and plastering", "second fix to completion"], "timberFrame": ["purchase of land", "preliminary costs and foundations", "timber frame kit erected", "wind and watertight", "first fix and plastering", "second fix to completion"]},
+        "unit": "named stages", "basis": "BuildStore's standard stage list. Advance-payment products lend up to 95 percent of plot and build cost; arrears products up to 85 percent, released after each stage is inspected. Suffolk Building Society: minimum two stages, maximum 80 percent LTV, arrears basis, stage-release fee for the valuer's visit. No per-stage percentages are published; they are set per project.",
+        "source": "https://www.buildstore.co.uk/mortgages-finance/project-types/self-build-mortgages/how-self-build-mortgages-work",
+        "date": null, "sourceType": "secondary", "confirmed": true
+      },
+      "jctRetention": {
+        "value": {"default": 0.03, "alternative": 0.05}, "unit": "share of contract value", "basis": "Most JCT forms default to 3 percent retention (some 5 percent), half released at practical completion and the rest after the rectification period. Government has proposed ending cash retentions.",
+        "source": "https://builduk.org/wp-content/uploads/2024/10/Minimum-Standards-on-Retention-Build-UK-July-2023.pdf",
+        "date": "2023-07", "sourceType": "secondary", "confirmed": false
+      }
+    },
+    "ireland": {
+      "selfBuildMortgageStages": {
+        "value": ["floor level (foundations certified)", "wall plate level", "roof level (shell or frame)", "first fix and plastering", "second fix to completion"],
+        "unit": "named stages", "basis": "Irish self-build mortgages draw down in 4 to 6 stages, each certified by an architect or engineer before the solicitor requests the next release; interest only on amounts drawn. No official percentages.",
+        "source": "https://alliedfinancial.ie/self-build-mortgage-ireland-everything-you-need-to-know/",
+        "date": null, "sourceType": "secondary", "confirmed": false
+      },
+      "retention": {"value": null, "unit": null, "basis": "No published standard retention for Irish residential contracts was found.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+    },
+    "canada": {
+      "drawSchedule": {"value": null, "unit": null, "basis": "No published standard draw schedule was found. Ontario and BC lien holdbacks (10 percent under both provinces' lien acts) were not researched in this pass.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+    }
+  },
+
+  "delaysAndOverruns": {
+    "renovationBudgetOverrun": {
+      "value": {"exceededBudget": 0.37, "onTarget": 0.35, "underBudget": 0.03}, "unit": "share of renovating homeowners", "basis": "2026 U.S. Houzz & Home Study (20,358 users, 10,176 renovating homeowners), for 2025 projects. Median renovation spend $20,000. Upgrading materials (35 percent) and expanding scope (31 percent) were among the reasons.",
+      "source": "https://www.houzz.com/magazine/2026-u-s-houzz-and-home-study-renovation-trends-stsetivw-vs~185090855",
+      "date": "2026-04-22", "sourceType": "secondary", "confirmed": true,
+      "note": "Renovations, not new builds."
+    },
+    "selfBuildContingencyUK": {
+      "value": 0.15, "unit": "share of budget", "basis": "NaCSBA Custom and Self Build Market Report 2022: average contingency 15 percent; average build budget £312,000.",
+      "source": "https://www.granddesignsmagazine.com/news/nacsba-custom-self-build-report-2022/",
+      "date": "2022", "sourceType": "secondary", "confirmed": false
+    },
+    "projectsRunningLate": {
+      "value": 0.351, "unit": "share of residential projects", "basis": "Reported from a 2022 'State of Residential Construction Industry' report; the original was not located.",
+      "source": "https://www.houzz.com/press/1004/Houzz-Survey-Shows-Majority-of-Homeowners-Continuing-With-2026-Renovation-Plans-Despite-Economic-Uncertainty",
+      "date": "2022", "sourceType": "secondary", "confirmed": false
+    },
+    "newBuildCostOverrunStatistic": {"value": null, "unit": null, "basis": "No government or statistics-office figure for cost overruns on new single-family houses was found in any of the four countries.", "source": null, "date": null, "sourceType": null, "confirmed": false},
+    "weatherDays": {"value": null, "unit": null, "basis": "No published statistic for weather days lost on residential sites was found.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+  },
+
+  "changeOrders": {
+    "averageShareOfContract": {
+      "value": 0.10, "unit": "share of total contract value", "basis": "Attributed to a Dodge Data & Analytics study: change orders average about 10 percent of contract value, up to 25 percent on some projects. Mostly commercial work; the original study was not located.",
+      "source": "https://www.rhumbix.com/blog/how-much-are-change-orders-costing-your-construction-business",
+      "date": null, "sourceType": "secondary", "confirmed": false
+    },
+    "residentialChangeOrderStatistic": {"value": null, "unit": null, "basis": "No NAHB, Census or government figure for change orders on single-family houses was found.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+  },
+
+  "inspectionsAndOccupancy": {
+    "newYorkCity": {
+      "value": {"inspections": ["footing and foundation", "framing", "insulation placement", "plumbing (progress and final)", "fuel gas", "oil-burning equipment where present", "electrical final", "final inspection (sign-off)"], "occupancyDocument": "Certificate of Occupancy, issued after the final inspection; as-built drawings required before sign-off"},
+      "unit": "list", "basis": "NYC DOB project requirements for 1- and 2-family buildings.",
+      "source": "https://www.nyc.gov/site/buildings/industry/project-requirements-registrant-alt-1-2-family-buildings-n-insp.page",
+      "date": null, "sourceType": "primary", "confirmed": true
+    },
+    "upstateNewYork": {
+      "value": {"inspections": ["work site before permit issuance", "footing and foundation", "preparation for concrete slab", "framing", "structural, electrical, plumbing, mechanical, fire-protection and similar service systems", "fire-resistant construction", "Energy Code items (insulation, fenestration, air leakage and others)", "final inspection after all permitted work"], "occupancyDocument": "Certificate of occupancy or certificate of compliance, issued only after the authority has inspected and found compliance"},
+      "unit": "list", "basis": "19 NYCRR §1203.3, minimum features of local code enforcement programs.",
+      "source": "https://www.law.cornell.edu/regulations/new-york/19-NYCRR-1203.3",
+      "date": null, "sourceType": "primary", "confirmed": false
+    },
+    "losAngeles": {
+      "value": {"inspections": ["foundation (before concrete)", "framing", "rough electrical, plumbing and mechanical", "insulation (before drywall)", "final"], "occupancyDocument": "Certificate of Occupancy issued by LADBS after final approval; a Temporary Certificate of Occupancy is available"},
+      "unit": "list", "basis": "LADBS inspection page says work is inspected and approved in succession (foundation, concrete, framing, ventilation, plumbing, electrical, roof) ending in a final inspection; the ordered list is from secondary guides.",
+      "source": "https://dbs.lacity.gov/services/inspection",
+      "date": null, "sourceType": "primary", "confirmed": true,
+      "note": "The exact ordered sequence is secondary (specta.build); LADBS itself confirms the inspection types and the final."
+    },
+    "connecticut": {
+      "value": {"inspections": null, "occupancyDocument": "Certificate of occupancy from the local building official; no building may be occupied until it is issued (CGS §29-265), and zoning sign-off is also required"},
+      "unit": "list", "basis": "CGS §29-265. The inspection stages are set by the State Building Code as administered locally; no New Haven list was retrieved.",
+      "source": "https://law.justia.com/codes/connecticut/title-29/chapter-541/section-29-265-formerly-sec-19-400/",
+      "date": null, "sourceType": "primary", "confirmed": false
+    },
+    "england": {
+      "value": {"notices": ["notice of intention to start: at least 2 days before work", "commencement confirmation: within 5 days after work is regarded as started", "stage notices only for stages the authority says in writing it intends to inspect, chosen by its risk assessment (the old fixed list of excavation, foundations, damp-proof course, oversite and drains is no longer statutory)", "completion notice: within 5 days after completion"], "occupancyDocument": "Completion certificate from the building control authority, due within 8 weeks of the completion notice (reg. 17); non-conclusive evidence of compliance"},
+      "unit": "list", "basis": "Building Regulations 2010 regs. 16 and 17, England, as amended in 2023.",
+      "source": "https://www.legislation.gov.uk/uksi/2010/2214/regulation/16",
+      "date": null, "sourceType": "primary", "confirmed": true
+    },
+    "ireland": {
+      "value": {"process": ["commencement notice with compliance documentation on BCMS 14 to 28 days before start (fee €30)", "assigned certifier and inspection plan under BC(A)R", "for a single dwelling on a single-unit development or a domestic extension the owner may instead lodge a Declaration of Intention to Opt Out of Statutory Certification (S.I. 365/2015, from 2015-09-01), but must still lodge drawings and comply"], "occupancyDocument": "Certificate of Compliance on Completion (CCC), lodged and placed on the statutory register before the building is occupied (not required where the owner opted out)"},
+      "unit": "list", "basis": "Building Control Regulations 1997-2015.",
+      "source": "https://www.irishstatutebook.ie/eli/2015/si/365/made/en/print",
+      "date": "2015-09-01", "sourceType": "primary", "confirmed": false
+    },
+    "ontario": {
+      "value": {"inspections": ["footings (forms and rebar in place, before concrete)", "foundation damp-proofing and drainage / weeping tile before backfill", "framing (before insulation)", "insulation and vapour barrier (before wallboard)", "air barrier (before cladding)", "plumbing ground work, rough-in and final", "HVAC rough-in and final", "fire and life safety", "occupancy inspection"], "occupancyDocument": "Occupancy permit; new houses must be inspected before occupancy"},
+      "unit": "list", "basis": "Greater Sudbury's summary of the Ontario Building Code prescribed notices (Division C, 1.3.5.1); the OBC text itself was not read.",
+      "source": "https://www.greatersudbury.ca/live/building-and-renovating/building-inspections/stages-of-construction-and-mandatory-inspections/",
+      "date": null, "sourceType": "primary", "confirmed": true,
+      "note": "A municipal page, primary for that municipality; the provincial text was not fetched."
+    },
+    "britishColumbia": {
+      "value": {"inspections": ["siting, footing and wall forms before concrete", "perimeter drain tile, damp-proofing, below-grade insulation and roof drainage before backfill", "building services", "under-slab plumbing, radon rough-in and ductwork", "ground preparation and under-slab insulation", "rough-in plumbing and hydronic piping under test", "framing, sheathing, fire-stopping, rough wiring, plumbing, heating, gas venting, doors and windows (before insulation)", "factory-built chimneys, fireplaces and solid-fuel appliances", "insulation, air and vapour barriers", "final: health and safety, energy and accessibility when substantially complete, before occupancy"], "occupancyDocument": "Final inspection notice; no one may occupy a building without one (partial occupancy possible)"},
+      "unit": "list", "basis": "SCRD Building Bylaw No. 779, s. 6.30 and Part 7; 24 hours' notice required for each inspection.",
+      "source": "https://www.scrd.ca/wp-content/uploads/2025/12/SCRD-Building-Bylaw-No.-779-.pdf",
+      "date": "2025-12-11", "sourceType": "primary", "confirmed": true
+    }
+  },
+
+  "warranties": {
+    "nhbcBuilderRegistration": {
+      "value": {"newBuilderApplication": 1348, "subsidiaryBuilderApplication": 936}, "unit": "GBP excluding VAT", "basis": "NHBC one-off builder registration fees; annual renewal each April by homes registered, plus a per-plot warranty fee quoted individually.",
+      "source": "https://www.nhbc.co.uk/warranties/builder-registration",
+      "date": null, "sourceType": "secondary", "confirmed": true
+    },
+    "nhbcBuildmarkPerPlot": {
+      "value": [1500, 3500], "unit": "GBP per home", "basis": "Typical developer cost of NHBC Buildmark cover, by size and value. NHBC does not publish a per-plot price.",
+      "source": "https://www.new-builds.co.uk/blog/new-build-warranty-costs-what-they-cover",
+      "date": null, "sourceType": "secondary", "confirmed": false
+    },
+    "ukSelfBuildStructuralWarranty": {
+      "value": {"typical": 2000, "range": [1000, 5000], "shareOfBuildCost": 0.01}, "unit": "GBP / share", "basis": "Self-build 10-year structural warranty, average about £2,000, often about 1 percent of build cost; late application adds 25 to 100 percent depending on stage reached.",
+      "source": "https://www.homebuilding.co.uk/advice/self-build-warranties",
+      "date": null, "sourceType": "secondary", "confirmed": false
+    },
+    "irelandHomeBond": {
+      "value": [2500, 5000], "unit": "EUR for a 150 m2 house", "basis": "HomeBond structural warranty (10-year) cost, paid in two stages; limits €30,000 deposit, €50,000 defects, €200,000 structural; €650 excess per claim.",
+      "source": "https://planningpermissionireland.ie/self-build-hub/structural-warranty-ireland",
+      "date": null, "sourceType": "secondary", "confirmed": false
+    },
+    "tarionEnrolment": {
+      "value": "see permitsAndFees.ontario.tarionEnrolmentFee", "unit": null, "basis": "Tarion freehold enrolment fee schedule effective 2025-09-01.", "source": "https://www.tarion.com/builders/enrolment-fees", "date": "2025-09-01", "sourceType": "primary", "confirmed": true
+    },
+    "bcHomeownerProtection2510": {
+      "value": {"labourAndMaterialsYears": 2, "buildingEnvelopeYears": 5, "structuralYears": 10}, "unit": "years", "basis": "Homeowner Protection Act: licensed residential builders must provide third-party home warranty insurance with 2-5-10 coverage. Owner builders are exempt from licensing and third-party warranty but personally carry the same statutory protection for 10 years to any buyer; hiring a builder or construction manager to run an owner-built project is an offence (penalties up to $25,000).",
+      "source": "https://www.bchousing.org/publications/Owner-Builder-FAQs.pdf",
+      "date": "2018-10", "sourceType": "primary", "confirmed": true
+    },
+    "bcResidentialBuilderLicence": {
+      "value": 600, "unit": "CAD", "basis": "BC Housing residential builder licence fee.", "source": "https://www.bchousing.org/licensing-consumer-services/builder-licensing/become-licensed-residential-builder", "date": null, "sourceType": "primary", "confirmed": false
+    },
+    "buildersRiskInsurance": {
+      "value": [0.01, 0.04], "unit": "share of total construction value", "basis": "Commonly quoted range for builder's risk on a new home; no regulator or trade-body published rate found.",
+      "source": "https://www.insureon.com/small-business-insurance/builders-risk/cost",
+      "date": null, "sourceType": "secondary", "confirmed": false
+    }
+  },
+
+  "renovation": {
+    "englandPermittedDevelopmentRearExtension": {
+      "value": {"detachedMaxDepthM": 4, "otherHousesMaxDepthM": 3, "maxHeightM": 4, "priorApprovalDetachedMaxDepthM": 8, "priorApprovalOtherMaxDepthM": 6},
+      "unit": "metres beyond the rear wall of the original house", "basis": "GPDO 2015 Schedule 2 Part 1 Class A: single-storey rear extension; the larger-home extension (neighbour consultation / prior approval) allows 8 m detached, 6 m other.",
+      "source": "https://assets.publishing.service.gov.uk/media/5d77afc8e5274a27cdb2c9e9/190910_Tech_Guide_for_publishing.pdf",
+      "date": "2019-09-10", "sourceType": "primary", "confirmed": false,
+      "note": "Limits from a search summary of the GOV.UK technical guidance; the PDF was not opened."
+    },
+    "englandHouseholderPlanningFee": {
+      "value": 548, "unit": "GBP", "basis": "Householder application (enlargement, improvement or alteration of a single dwelling), from 1 April 2026 (was £528).",
+      "source": "https://ecab.planningportal.co.uk/uploads/english_application_fees.pdf",
+      "date": "2026-04-01", "sourceType": "secondary", "confirmed": true
+    },
+    "englandLargerHomeExtensionPriorApprovalFee": {
+      "value": 249, "unit": "GBP", "basis": "Prior approval, larger home extension (Part 1 Class A), from 1 April 2026.",
+      "source": "https://ecab.planningportal.co.uk/uploads/english_application_fees.pdf",
+      "date": "2026-04-01", "sourceType": "secondary", "confirmed": true
+    },
+    "nycAlterationPermit1to3Family": {
+      "value": {"alt1Minimum": 170, "alt2Minimum": 130, "alt3Minimum": 130, "perThousandOver5000": 2.60},
+      "unit": "USD", "basis": "Admin Code Table 28-112.2 as amended by Local Law 56 of 2016: minimum filing fee covers the first $5,000 of alteration cost, plus $2.60 per $1,000 above (cut from $5.15). Renewal $100.",
+      "source": "https://legistar.council.nyc.gov/View.ashx?GUID=B48FFCB3-3AB8-4FEA-8E54-8C9EA92E4534&ID=4550140&M=F",
+      "date": "2016 (in DOB systems 2018-03-05)", "sourceType": "primary", "confirmed": true,
+      "note": "DOB's DOB NOW notice shows the same $170/$130 minimums and $2.60 per $1,000 for 1-3 family Alt filings."
+    },
+    "irelandExtensionPlanningFee": {
+      "value": 34, "unit": "EUR", "basis": "Schedule 9 Class 2: maintenance, improvement or other alteration of an existing house, including an extension. Retention €102 or €2.50 per m2, whichever is greater. Kildare exempts the first 40 m2 of a residential extension from development contributions.",
+      "source": "https://kildarecoco.ie/Forms/Planning/PDRegsSCHEDULE%209.pdf",
+      "date": "2025", "sourceType": "primary", "confirmed": true
+    },
+    "ukExtensionCostPerM2": {
+      "value": {"ukAverage": [1800, 3000], "londonAndSouthEastUplift": [0.30, 0.50]}, "unit": "GBP per m2; uplift share", "basis": "Federation of Master Builders guide (March 2026) citing HomeOwners Alliance for £1,800 to £3,000 per m2 and Architecture for London for a 30 to 50 percent London premium; Checkatrade quotes £2,400 per m2 average.",
+      "source": "https://www.fmb.org.uk/resource/single-storey-extension-costs-a-practical-guide-for-homeowners.html",
+      "date": "2026-03-04", "sourceType": "secondary", "confirmed": true
+    },
+    "ontarioAlterationPermit": {
+      "value": 15, "unit": "CAD per $1,000 of value (minimum $200)", "basis": "Cavan Monaghan 2025: alterations, renovations and relocations.",
+      "source": "https://www.cavanmonaghan.net/media/2yykertb/schedule-a-2025-user-fees-and-charges-by-law-no-2024-68-final.pdf",
+      "date": "2025", "sourceType": "primary", "confirmed": true
+    }
+  },
+
+  "uncertain": [
+    "No free, authority-published construction cost per square foot was found for New York City, Los Angeles, New Haven, rural Connecticut, upstate New York or rural California; RSMeans location factors are paid. Census publishes only the four regions (Northeast for NY and CT, West for CA).",
+    "BCIS/RICS build and rebuild costs per m2 for the UK are subscription data; the UK figures recorded are compiler estimates and were not confirmed.",
+    "The SCSI house-delivery cost is from its 2023 report (scheme houses, not one-off rural self-builds); no 2025 house edition and no one-off rural house cost were found.",
+    "The Altus 2026 custom single-family ranges are from a search snippet; the 2025 guide was read. No Altus figure exists for rural Central East Ontario or the BC South Coast outside Vancouver.",
+    "No CMHC or Statistics Canada figure for typical new house size or construction duration was found; no Irish typical house size for a one-off rural house either.",
+    "NYC's current minimum filing fee ($130 under Local Law 128 of 2024, effective 2025-12-21) and the NYC certificate of occupancy fee (set 'by rule') were not confirmed.",
+    "The LA building permit table is from the City's Housing Element appendix (LAMC 91.107 effective 2018-07-16); later CPI adjustments, the current Affordable Housing Linkage Fee amounts and exemptions, the Quimby/park fee and LAUSD's own adopted school-fee rate were not confirmed. The $5.38 Level 1 cap (2026-01-28) is from a law-firm alert only.",
+    "The California Building Standards Commission fee ($4 per $100,000, HSC 18931.6) was not read from the statute itself.",
+    "New Haven's permit fee ($25 first $1,000 plus $15 per $1,000, plus $10 processing) and the $0.26 per $1,000 Connecticut education fee were not read from the authority's own page (403 / rate not shown).",
+    "No example fee schedule was retrieved for an upstate New York town, a rural Connecticut town, a rural California county or a rural English district.",
+    "Hackney's 2025/26 building control charge for a new dwelling (£1,018.50 plus VAT) is snippet-only; Croydon's current building control charges were not found; Hackney's 2026 indexed local CIL rates were not found (only 2015 base rates, secondary).",
+    "Kildare's adopted 2023-2029 contribution rate (€62/m2 read from the draft) and any indexation were not confirmed because the adopted PDF is a scan. No Meath or Wicklow scheme was checked.",
+    "No Irish lodgement fee for the Certificate of Compliance on Completion was found; the €30 commencement notice fee and the €2,272 Uisce Éireann connection charge were not read from the regulations or Uisce Éireann's own schedule.",
+    "Whether Tarion enrolment applies to a house an owner has built on their own land was not confirmed; the HCRA regulatory fee was not found; Cavan Monaghan's development charge (2023 schedule) was not checked for later indexation or a Peterborough County charge.",
+    "The BC Housing owner-builder fee of $425 comes from a 2018 FAQ; the current fee and the separate $50 application fee were not confirmed. The $600 residential builder licence fee is snippet-only. SCRD's 2015 DCC bylaw was not checked for amendments.",
+    "No official or standard construction-loan draw schedule was found for the US, UK, Ireland or Canada; lender stage names are published but percentages are set per project. Canadian lien holdbacks were not researched.",
+    "The New York retainage cap does not reach a one- to three-family house (GBL 756 exclusion, from a snippet); California's new 5 percent cap (Civil Code 8811, not 8812) excludes non-mixed-use residential of four stories or less.",
+    "No government or statistics-office figure was found for cost overruns or schedule delays on new single-family houses, or for weather days lost, in any country; the Houzz figures cover renovations.",
+    "No published figure for change orders on residential construction was found; the 10 percent figure is attributed to a Dodge study through a vendor blog.",
+    "The Ontario inspection list is from a municipal summary, not the Building Code text; Connecticut's inspection stages were not found; the Irish BCAR and opt-out details and the upstate New York inspection list were not read from the fetched regulation text.",
+    "The England permitted-development depths (3 m / 4 m, 6 m / 8 m with prior approval) come from a summary of the GOV.UK technical guidance, not the PDF itself.",
+    "NHBC per-plot Buildmark prices, UK self-build warranty costs, HomeBond prices and builder's risk rates are all secondary or vendor figures; none of these providers publishes a rate card."
+  ]
+}

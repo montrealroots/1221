@@ -1,0 +1,2690 @@
+{
+  "meta": {
+    "compiled": "2026-09-30",
+    "markets": [
+      "nyc",
+      "connecticut",
+      "california_la",
+      "ontario_toronto",
+      "bc_vancouver",
+      "mexico_city",
+      "gb_london",
+      "ireland_dublin"
+    ],
+    "note": "confirmed=true only where the figure was read on the cited page; false = search snippet or secondary source."
+  },
+  "evs": {
+    "federal_us": {
+      "credit_30d": {
+        "status": "ended",
+        "value": 0,
+        "unit": "USD",
+        "currency": "USD",
+        "note": "New Clean Vehicle Credit not available for vehicles acquired after 2025-09-30 (One Big Beautiful Bill Act). A vehicle placed in service later qualifies only if acquired on or before 2025-09-30.",
+        "quote": "The New Clean Vehicle Credit is not available for vehicles acquired after Sept. 30, 2025.",
+        "url": "https://www.irs.gov/credits-deductions/credits-for-new-clean-vehicles-purchased-in-2023-or-after",
+        "publisher": "Internal Revenue Service",
+        "date": "2026-09-30",
+        "sourceType": "government",
+        "confirmed": true
+      },
+      "vehicles": {
+        "tesla_model_y_standard_rwd": {
+          "base_price": {
+            "value": 39990,
+            "unit": "USD",
+            "currency": "USD",
+            "includes": "vehicle only; excludes $1,390 destination and $250 order fee, and all taxes/registration",
+            "url": "https://www.edmunds.com/car-news/2026-tesla-model-y-pricing-guide.html",
+            "publisher": "Edmunds",
+            "date": "2026-09-30",
+            "sourceType": "press",
+            "confirmed": false
+          },
+          "price_with_destination_and_order_fee": {
+            "value": 41630,
+            "unit": "USD",
+            "currency": "USD",
+            "includes": "destination ($1,390) and order fee ($250); excludes sales tax, title, registration",
+            "url": "https://www.cars.com/articles/is-the-cheaper-2026-tesla-model-y-worth-your-consideration-516975/",
+            "publisher": "Cars.com",
+            "date": "2026-09-30",
+            "sourceType": "press",
+            "confirmed": true
+          },
+          "destination_fee": {
+            "value": 1390,
+            "unit": "USD",
+            "currency": "USD",
+            "url": "https://www.edmunds.com/car-news/2026-tesla-model-y-pricing-guide.html",
+            "publisher": "Edmunds",
+            "date": "2026-09-30",
+            "sourceType": "press",
+            "confirmed": false
+          },
+          "order_fee": {
+            "value": 250,
+            "unit": "USD",
+            "currency": "USD",
+            "url": "https://www.edmunds.com/car-news/2026-tesla-model-y-pricing-guide.html",
+            "publisher": "Edmunds",
+            "date": "2026-09-30",
+            "sourceType": "press",
+            "confirmed": false
+          },
+          "efficiency_epa": {
+            "value": 24,
+            "unit": "kWh/100 mi",
+            "mpge_combined": 138,
+            "range_mi": 321,
+            "note": "2026 Model Y Standard RWD (18in wheels). 19in wheels: 26 kWh/100 mi, 131 MPGe, 303 mi. Long Range RWD: 25 kWh/100 mi, 357 mi.",
+            "url": "https://www.fueleconomy.gov/feg/PowerSearch.do?action=noform&path=1&year1=2026&year2=2026&make=Tesla&baseModel=Model%20Y&srchtyp=ymm",
+            "publisher": "US DOE / EPA (fueleconomy.gov)",
+            "date": "2026-09-30",
+            "sourceType": "government",
+            "confirmed": true
+          },
+          "curb_weight": {
+            "value": 4061,
+            "unit": "lb",
+            "currency": null,
+            "url": "https://www.edmunds.com/tesla/model-y/2026/standard/features-specs/",
+            "publisher": "Edmunds (via search snippet)",
+            "date": "2026-09-30",
+            "sourceType": "press",
+            "confirmed": false,
+            "conflict": "EU/Irish sources give ~1,906-1,909 kg (~4,200 lb) kerb weight for the European Model Y Standard; EU kerb weight includes a 75 kg driver allowance."
+          }
+        },
+        "chevrolet_equinox_ev_lt_fwd": {
+          "base_price": {
+            "value": 34995,
+            "unit": "USD",
+            "currency": "USD",
+            "includes": "MSRP excluding $1,800 destination freight; excludes tax, title, license, dealer fees",
+            "url": "https://gmauthority.com/blog/2026/01/2026-chevy-equinox-ev-gets-msrp-drop-but-freight-charge-increase/",
+            "publisher": "GM Authority",
+            "date": "2026-01-11",
+            "sourceType": "press",
+            "confirmed": false,
+            "note": "34,995 derived from 36,795 minus 1,800; the 34,995 figure itself was read on cars.com specs page (confirmed there)."
+          },
+          "price_with_destination": {
+            "value": 36795,
+            "unit": "USD",
+            "currency": "USD",
+            "includes": "MSRP + $1,800 destination freight charge",
+            "url": "https://gmauthority.com/blog/2026/01/2026-chevy-equinox-ev-gets-msrp-drop-but-freight-charge-increase/",
+            "publisher": "GM Authority",
+            "date": "2026-01-11",
+            "sourceType": "press",
+            "confirmed": true,
+            "other_trims_with_destination": {
+              "LT1_AWD": 42095,
+              "LT2_FWD": 43595,
+              "LT2_AWD": 46895,
+              "RS_FWD": 45895,
+              "RS_AWD": 49195
+            }
+          },
+          "destination_fee": {
+            "value": 1800,
+            "unit": "USD",
+            "currency": "USD",
+            "note": "raised from $1,395",
+            "url": "https://gmauthority.com/blog/2026/01/2026-chevy-equinox-ev-gets-msrp-drop-but-freight-charge-increase/",
+            "publisher": "GM Authority",
+            "date": "2026-01-11",
+            "sourceType": "press",
+            "confirmed": true
+          },
+          "efficiency_epa": {
+            "value": 31,
+            "unit": "kWh/100 mi",
+            "mpge_combined": 108,
+            "range_mi": 319,
+            "note": "2026 Equinox EV FWD. AWD 11 kW charger: 33 kWh/100 mi, 103 MPGe, 307 mi; AWD 19 kW: 35 kWh/100 mi, 96 MPGe, 288 mi.",
+            "url": "https://www.fueleconomy.gov/feg/PowerSearch.do?action=noform&path=1&year1=2025&year2=2026&make=Chevrolet&baseModel=Equinox&srchtyp=ymm",
+            "publisher": "US DOE / EPA (fueleconomy.gov)",
+            "date": "2026-09-30",
+            "sourceType": "government",
+            "confirmed": true
+          },
+          "curb_weight": {
+            "value": null,
+            "unit": "lb",
+            "note": "One search snippet gave 5,070.6 lb for FWD; cars.com specs page showed N/A. Not verified; left null.",
+            "url": "https://www.cars.com/research/chevrolet-equinox_ev-2026/specs/",
+            "publisher": "Cars.com",
+            "date": "2026-09-30",
+            "sourceType": "press",
+            "confirmed": false
+          }
+        }
+      }
+    },
+    "nyc": {
+      "vehicle_prices": "Same national MSRPs as federal_us.vehicles (Tesla and GM price nationally); add NY state + NYC sales tax (8.875% combined) and DMV fees — not researched here.",
+      "incentives": {
+        "ny_drive_clean_rebate": {
+          "status": "active",
+          "amounts": {
+            "range_over_200_mi": 2000,
+            "range_40_to_199_mi": 1000,
+            "range_under_40_mi": 500,
+            "msrp_over_42000": 500
+          },
+          "unit": "USD",
+          "currency": "USD",
+          "applied": "point of sale at participating dealers",
+          "applies_to_models": "Model Y Standard (MSRP $39,990, 321 mi) and Equinox EV LT FWD (MSRP $34,995, 319 mi) would fall in the $2,000 tier by the published rules; per-model eligibility list and Tesla's participation not verified.",
+          "note": "Search results (coltura.org, recharged.com) report $30 million added in April 2026; not confirmed on NYSERDA page, which gives no end date.",
+          "url": "https://www.nyserda.ny.gov/All-Programs/Drive-Clean-Rebate-For-Electric-Cars-Program",
+          "publisher": "NYSERDA",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true
+        }
+      },
+      "ev_registration_fee": {
+        "value": 0,
+        "unit": "USD",
+        "currency": "USD",
+        "note": "No separate NY statewide EV registration surcharge; EVs pay standard weight-based registration plus MCTD supplement in NYC.",
+        "url": "https://carregistrationfee.com/articles/ev-registration-fees-by-state.html",
+        "publisher": "carregistrationfee.com (search snippet)",
+        "date": "2026-09-30",
+        "sourceType": "other",
+        "confirmed": false
+      }
+    },
+    "connecticut": {
+      "vehicle_prices": "Same national MSRPs as federal_us.vehicles; add CT sales tax (6.35%, 7.75% over $50,000) — not researched here.",
+      "incentives": {
+        "cheapr": {
+          "status": "active (no pause noted on DEEP page last updated 2025-10-01)",
+          "standard_rebate_new_bev": 1000,
+          "rebate_plus_new_bev_total": 4000,
+          "rebate_plus_used_bev": 5000,
+          "msrp_cap": 50000,
+          "msrp_cap_basis": "base MSRP, excluding destination and options",
+          "unit": "USD",
+          "currency": "USD",
+          "url": "https://portal.ct.gov/DEEP/Air/Mobile-Sources/CHEAPR/CHEAPR---Home",
+          "publisher": "Connecticut DEEP",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true
+        },
+        "cheapr_model_eligibility": {
+          "tesla_model_y_sr_lr": {
+            "standard": 1000,
+            "rebate_plus_new": 4000
+          },
+          "chevrolet_equinox_ev": {
+            "standard": 1000,
+            "rebate_plus_new": 4000
+          },
+          "unit": "USD",
+          "currency": "USD",
+          "note": "Page 'Content last updated September 19, 2025'.",
+          "url": "https://portal.ct.gov/deep/air/mobile-sources/cheapr/cheapr---new-eligible-vehicles",
+          "publisher": "Connecticut DEEP",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true
+        }
+      },
+      "ev_registration_fee": {
+        "value": 0,
+        "unit": "USD",
+        "currency": "USD",
+        "note": "No EV surcharge; EVs pay same $120 base registration (3-year? figure per source) as gas cars. HB 5568 (2026 session) would have set $345/3 yr for BEVs; reported as not passed.",
+        "url": "https://www.yankeeinstitute.org/2026/08/27/connecticut-pays-people-to-buy-evs-then-charges-them-no-extra-road-fee",
+        "publisher": "Yankee Institute (search snippet)",
+        "date": "2026-08-27",
+        "sourceType": "press",
+        "confirmed": false
+      }
+    },
+    "california_la": {
+      "vehicle_prices": "Same national MSRPs as federal_us.vehicles; add LA County sales tax (9.75% in City of LA) and DMV fees/VLF — not researched here.",
+      "incentives": {
+        "cvrp": {
+          "status": "ended (closed to new applications Nov 2023)",
+          "confirmed": false,
+          "note": "from task brief; not re-verified"
+        },
+        "myfirstev": {
+          "status": "active",
+          "launch": "2026-08-03 (per Governor's office/Wards snippets); ABC7 article dated 2026-08-09 says launched August 2026",
+          "amount_new": 3500,
+          "state_share_new": 1750,
+          "oem_share_new": 1750,
+          "amount_used": 1750,
+          "unit": "USD",
+          "currency": "USD",
+          "price_cap_new": 50000,
+          "price_cap_used": 25000,
+          "eligibility": "First-time ZEV buyers only (any previous EV ownership anywhere disqualifies); no income cap; caps waived for California-headquartered OEMs; point of sale at dealer.",
+          "funding": "$135.5 million state, one-time, matched by OEMs; must be spent by 2031-09-01",
+          "participating_oems_at_launch": [
+            "Hyundai",
+            "Lucid",
+            "Tesla"
+          ],
+          "coming_fall_2026": [
+            "Ford",
+            "Rivian",
+            "Chevrolet",
+            "Kia",
+            "others"
+          ],
+          "url": "https://ww2.arb.ca.gov/resources/fact-sheets/myfirstev-frequently-asked-questions",
+          "publisher": "California Air Resources Board",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true,
+          "secondary_url": "https://abc7.com/post/california-offers-new-tax-credit-worth-3500-drivers-switch-electric-vehicles/19653033/",
+          "note": "State/OEM $1,750 split and 2026-08-03 launch date from search snippets (gov.ca.gov, Wards), not fetched. Chevrolet participation as of 2026-09-30 unverified."
+        }
+      },
+      "ev_registration_fee": {
+        "road_improvement_fee": {
+          "value": 121,
+          "unit": "USD/year",
+          "currency": "USD",
+          "applies": "MY2020+ ZEVs at renewal; not assessed on the initial registration of a new ZEV bought from a licensed dealer",
+          "note": "Search snippets conflict: $118 (older schedule) vs $121 (current). Indexed annually to CPI each July.",
+          "url": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+          "publisher": "California DMV",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true
+        }
+      }
+    },
+    "canada_federal": {
+      "izev": {
+        "status": "replaced; paused January 2025, succeeded by EVAP",
+        "confirmed": false
+      },
+      "evap": {
+        "status": "active",
+        "start": "2026-02-16",
+        "end": "2031-03-31 or when funds run out",
+        "funding_total_cad": 2275000000,
+        "funding_remaining_cad_2026_09_01": 2000000000,
+        "bev_amount_by_year": {
+          "2026": 5000,
+          "2027": 4000,
+          "2028": 3000,
+          "2029": 3000,
+          "2030": 2000
+        },
+        "phev_amount_2026": 2500,
+        "unit": "CAD",
+        "currency": "CAD",
+        "price_cap": 50000,
+        "price_cap_note": "Final transaction value ≤ $50,000 (freight/PDI excluded, options count) unless made in Canada (no cap). Must be built in Canada or an FTA country; China-built excluded. One rebate per person over program life. Point of sale.",
+        "url": "https://tc.canada.ca/en/road-transportation/innovative-technologies/electric-vehicles/electric-vehicle-affordability-program",
+        "publisher": "Transport Canada",
+        "date": "2026-09-30",
+        "sourceType": "government",
+        "confirmed": true,
+        "confirmed_detail": "Start/end dates and funding confirmed on TC page; amounts, step-down, cap and FTA rule from search snippets (thinkev.ca, carnex, TurboTax) — not read on TC page.",
+        "model_eligibility": "Berlin-built Model Y RWD/Standard ($49,990) qualifies for full $5,000 if no tow package (~$1,300) pushes it over cap; Equinox EV LT FWD/AWD (Mexico-built, CUSMA) qualify; RS over cap. Sources: mobilesyrup.com 2026-03-13, thinkev.ca."
+      },
+      "vehicles": {
+        "tesla_model_y_standard_rwd": {
+          "base_price": {
+            "value": 49990,
+            "unit": "CAD",
+            "currency": "CAD",
+            "includes": "vehicle only; excludes freight/PDI (~$2,500 per tslna.com snippet, unconfirmed), GST/HST/PST",
+            "url": "https://electricautonomy.ca/automakers/passenger-electric-vehicles/2026-01-09/tesla-model-y-standard-available-in-canada-for-under-50k/",
+            "publisher": "Electric Autonomy Canada",
+            "date": "2026-01-09",
+            "sourceType": "press",
+            "confirmed": true
+          },
+          "freight_pdi": {
+            "value": 2500,
+            "unit": "CAD",
+            "currency": "CAD",
+            "url": "https://tslna.com/en/model-y-canada-guide/",
+            "publisher": "tslna.com",
+            "date": "2026-09-30",
+            "sourceType": "other",
+            "confirmed": false
+          },
+          "efficiency_nrcan": {
+            "value": 15.4,
+            "unit": "kWh/100 km combined",
+            "city": 14.6,
+            "highway": 16.3,
+            "le_per_100km_combined": 1.7,
+            "range_km": 463,
+            "annual_fuel_cost_cad": 554,
+            "url": "https://natural-resources.canada.ca/sites/admin/files/documents/2026-02/2026-Fuel-Consumption-Guide.pdf",
+            "publisher": "Natural Resources Canada (2026 Fuel Consumption Guide)",
+            "date": "2026-02",
+            "sourceType": "government",
+            "confirmed": true
+          }
+        },
+        "chevrolet_equinox_ev_lt_fwd": {
+          "base_price": {
+            "value": 46199,
+            "unit": "CAD",
+            "currency": "CAD",
+            "includes": "MSRP; source says LT FWD after $5,000 EVAP ≈ $41,199",
+            "url": "https://thinkev.ca/compare/chevrolet-equinox-ev-2026",
+            "publisher": "ThinkEV.ca",
+            "date": "2026-09-30",
+            "sourceType": "other",
+            "confirmed": false
+          },
+          "advertised_starting_price": {
+            "value": 49642,
+            "unit": "CAD",
+            "currency": "CAD",
+            "includes": "freight/PDI (~$2,600), $100 federal AC tax, up to $699 dealer fees (GM Canada all-in advertising)",
+            "url": "https://thinkev.ca/compare/chevrolet-equinox-ev-2026",
+            "publisher": "ThinkEV.ca (citing chevrolet.ca)",
+            "date": "2026-09-30",
+            "sourceType": "other",
+            "confirmed": true,
+            "conflict": "Dealer listings show LT MSRP $46,199 and $48,899."
+          },
+          "efficiency_nrcan": {
+            "value": 19.3,
+            "unit": "kWh/100 km combined",
+            "city": 17.9,
+            "highway": 21,
+            "le_per_100km_combined": 2.2,
+            "range_km": 513,
+            "annual_fuel_cost_cad": 695,
+            "url": "https://natural-resources.canada.ca/sites/admin/files/documents/2026-02/2026-Fuel-Consumption-Guide.pdf",
+            "publisher": "Natural Resources Canada (2026 Fuel Consumption Guide)",
+            "date": "2026-02",
+            "sourceType": "government",
+            "confirmed": true
+          }
+        }
+      }
+    },
+    "ontario_toronto": {
+      "provincial_incentive": {
+        "value": 0,
+        "note": "No Ontario EV purchase incentive (task brief; not re-verified).",
+        "confirmed": false
+      },
+      "sales_tax": {
+        "value": 13,
+        "unit": "% HST",
+        "confirmed": false,
+        "note": "tslna.com snippet: Model Y Standard ≈ $54,500 out the door in Ontario with 13% HST before EVAP."
+      },
+      "ev_registration_fee": {
+        "value": 0,
+        "note": "No EV-specific fee found.",
+        "confirmed": false
+      }
+    },
+    "bc_vancouver": {
+      "go_electric_passenger_rebate": {
+        "status": "paused (since 2025-05-15); not expected to return for passenger cars",
+        "former_amount_bev": 4000,
+        "unit": "CAD",
+        "currency": "CAD",
+        "note": "Go Electric reopened 2026-08-10 only for medium/heavy-duty commercial ZEVs (Class 2b-8), not passenger cars (7gen.com, confirmed). Official gov.bc.ca rebate site could not be fetched (expired certificate).",
+        "url": "https://tslna.com/en/vancouver-bc-tesla-buying-guide/",
+        "publisher": "tslna.com",
+        "date": "2026-09-30",
+        "sourceType": "other",
+        "confirmed": true
+      },
+      "commercial_go_electric_reopen": {
+        "date": "2026-08-10",
+        "url": "https://www.7gen.com/blog/go-electric-rebates-return-bc-2026/",
+        "publisher": "7Gen",
+        "sourceType": "other",
+        "confirmed": true
+      },
+      "sales_tax": {
+        "value": 12,
+        "unit": "% (5% GST + 7% PST) on vehicles under $75,000",
+        "note": "ZEVs get a higher PST luxury-surtax threshold than ICE vehicles; source says these rates are set to expire 2027-02-22.",
+        "url": "https://tslna.com/en/vancouver-bc-tesla-buying-guide/",
+        "publisher": "tslna.com",
+        "date": "2026-09-30",
+        "sourceType": "other",
+        "confirmed": true
+      },
+      "ev_registration_fee": {
+        "value": 0,
+        "note": "No BC EV-specific registration fee found (not directly verified).",
+        "confirmed": false
+      }
+    },
+    "mexico_city": {
+      "vehicles": {
+        "tesla_model_y_standard_rwd": {
+          "base_price": {
+            "value": 799000,
+            "unit": "MXN",
+            "currency": "MXN",
+            "includes": "not stated; Mexican retail prices are normally quoted with IVA included",
+            "other_trims": {
+              "Premium_AWD": 959000,
+              "Performance_AWD": 1129000
+            },
+            "range_km_epa_quoted": 517,
+            "url": "https://www.xataka.com.mx/automovil/model-standard-se-puede-comprar-mexico-tesla-barato-para-competir-autos-chinos",
+            "publisher": "Xataka México",
+            "date": "2026-01-10",
+            "sourceType": "press",
+            "confirmed": true,
+            "conflict": "Other sources give 799,900 MXN."
+          }
+        },
+        "chevrolet_equinox_ev": {
+          "base_price": {
+            "value": null,
+            "unit": "MXN",
+            "currency": "MXN",
+            "note": "Equinox EV is sold in Mexico (built in Ramos Arizpe, Coahuila) but prices conflict: 'desde $785,000' (Chevrolet per snippet), RS $890,400 (RS/RS Bitono), $900,000 (autocosmos RS). chevrolet.com.mx returned 403.",
+            "url": "https://www.autocosmos.com.mx/catalogo/vigente/chevrolet/equinox-ev",
+            "publisher": "Autocosmos México",
+            "date": "2026-09-30",
+            "sourceType": "press",
+            "confirmed": false
+          }
+        },
+        "byd_dolphin_mini_best_seller": {
+          "base_price": {
+            "value": 399800,
+            "unit": "MXN",
+            "currency": "MXN",
+            "includes": "list price, 300 km version; 380 km version 415,800 MXN",
+            "url": "https://www.eluniversal.com.mx/autopistas/cuanto-cuesta-el-byd-dolphin-mini-2026-mas-barato/",
+            "publisher": "El Universal",
+            "date": "2026-09-30",
+            "sourceType": "press",
+            "confirmed": false
+          }
+        }
+      },
+      "incentives": {
+        "isan_exemption": {
+          "status": "in force",
+          "rule": "Ley Federal del Impuesto sobre Automóviles Nuevos art. 8: sale/definitive import of automobiles propelled by rechargeable electric batteries is exempt (hybrids and hydrogen also covered per law; press says hybrids partially).",
+          "url": "https://www.motorpasion.com.mx/industria/como-se-calcula-cuando-se-paga-isan-mexico-impuesto-que-solo-se-libran-autos-electricos",
+          "publisher": "Motorpasión México",
+          "date": "2026-07-22",
+          "sourceType": "press",
+          "confirmed": true
+        },
+        "cdmx_tenencia": {
+          "status": "EVs exempt",
+          "note": "Sources conflict on the basis: some say 100% EVs are exempt regardless of value; others say via the general subsidy (invoice value ≤ 638,000 MXN incl. IVA, refrendo paid by 2026-03-31, no arrears). Under the general subsidy a 799,000 MXN Model Y would not qualify, so the EV-specific exemption matters. Código Fiscal CDMX article not identified.",
+          "url": "https://www.deceroacien.com.mx/tendencias/2026/1/16/los-autos-electricos-pagan-tenencia-refrendo-en-la-cdmx-este-2026-20277.html",
+          "publisher": "De Cero a 100",
+          "date": "2026-01-16",
+          "sourceType": "press",
+          "confirmed": true
+        },
+        "cdmx_refrendo_2026": {
+          "value": 760,
+          "unit": "MXN/year (approx.)",
+          "currency": "MXN",
+          "note": "Still payable by EVs; due by 2026-03-31.",
+          "url": "https://www.deceroacien.com.mx/tendencias/2026/1/16/los-autos-electricos-pagan-tenencia-refrendo-en-la-cdmx-este-2026-20277.html",
+          "publisher": "De Cero a 100",
+          "date": "2026-01-16",
+          "sourceType": "press",
+          "confirmed": true
+        },
+        "cdmx_ev_plates": {
+          "alta_de_placas_cost": 486,
+          "unit": "MXN",
+          "currency": "MXN",
+          "plate": "placas verdes (hybrid/electric)",
+          "benefits": [
+            "Hoy No Circula exempt (holograma Exento, indefinite for BEVs)",
+            "vehicle verification (verificación) exempt",
+            "tenencia exempt",
+            "ISAN exempt"
+          ],
+          "url": "https://segurointeligente.mx/blog/alta-de-vehiculos-hibridos-o-electricos/",
+          "publisher": "Seguro Inteligente",
+          "date": "2026-07-29",
+          "sourceType": "other",
+          "confirmed": true
+        },
+        "hoy_no_circula": {
+          "status": "BEVs permanently exempt (holograma Exento, free at verificentro); MHEVs lost exemption in 2026; HEV/PHEV Exento 6 yr + 6 yr renewal",
+          "url": "https://politica.expansion.mx/cdmx/2026/02/03/autos-hibridos-pierden-holograma-exento",
+          "publisher": "Expansión Política (search snippet)",
+          "date": "2026-02-03",
+          "sourceType": "press",
+          "confirmed": false
+        },
+        "parquimetro_discount": {
+          "value": null,
+          "note": "No source found for an EV parking-meter (ecoParq) discount in 2026.",
+          "confirmed": false
+        }
+      }
+    },
+    "gb_london": {
+      "vehicles": {
+        "tesla_model_y_standard_rwd": {
+          "base_price": {
+            "value": 41990,
+            "unit": "GBP",
+            "currency": "GBP",
+            "includes": "on the road (VAT, delivery, first registration fee, first-year VED)",
+            "wltp_range_mi": 314,
+            "ecg_eligible": false,
+            "url": "https://www.topgear.com/car-news/electric/tesla-model-y-standard-coming-uk-314-miles-range-ps41990",
+            "publisher": "Top Gear / Auto Express / What Car (search snippets)",
+            "date": "2025-12",
+            "sourceType": "press",
+            "confirmed": false
+          }
+        },
+        "chevrolet_equinox_ev": {
+          "sold": false
+        },
+        "ford_puma_gen_e_best_selling_grant_ev": {
+          "note": "Chosen as the UK EV proxy: Auto Express (2026-09-04) names it among top sellers and it gets the full £3,750 ECG. August 2026 monthly EV leader was Tesla Model 3 (1,296) per Carwow; YTD model ranking not confirmed.",
+          "base_price": {
+            "value": 26245,
+            "unit": "GBP",
+            "currency": "GBP",
+            "includes": "OTR, after £3,750 Electric Car Grant (OTR before grant £29,995; RRP £29,905 per snippet)",
+            "url": "https://www.ford.co.uk/cars/puma-gen-e",
+            "publisher": "Ford UK",
+            "date": "2026-09-30",
+            "sourceType": "maker",
+            "confirmed": true
+          },
+          "wltp_range_mi": {
+            "value": 259,
+            "url": "https://www.ford.co.uk/cars/puma-gen-e",
+            "publisher": "Ford UK",
+            "sourceType": "maker",
+            "confirmed": true
+          },
+          "efficiency_wltp": {
+            "value": null,
+            "unit": "Wh/km",
+            "note": "Ford page did not give consumption; EV Database real-world estimate 253 Wh/mi (not WLTP).",
+            "confirmed": false
+          },
+          "kerb_weight": {
+            "value": null,
+            "unit": "kg",
+            "confirmed": false
+          }
+        }
+      },
+      "incentives": {
+        "electric_car_grant": {
+          "status": "active; funded to FY2028-29 (subject to early closure)",
+          "band1": 3750,
+          "band2": 1500,
+          "unit": "GBP",
+          "currency": "GBP",
+          "price_cap": 37000,
+          "launched": "2025-07-16",
+          "funding_gbp": 650000000,
+          "applied": "discount by seller; buyer does not apply",
+          "model_bands": {
+            "Ford Puma Gen-E": "Band 1 £3,750",
+            "Kia EV3": "Band 2 £1,500",
+            "Vauxhall Frontera Electric": "Band 2 £1,500",
+            "Tesla Model Y / Model 3 / MG4": "not listed"
+          },
+          "url": "https://www.gov.uk/government/speeches/electric-car-grant-launched",
+          "model_list_url": "https://www.gov.uk/zero-emission-vehicle-grants/cars",
+          "publisher": "GOV.UK (DfT / OZEV)",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true,
+          "note": "Snippet claims higher trims of an eligible model up to £42,000 can get the grant if the base trim is under £37,000 — unconfirmed. Snippets differ on fund size (£640m vs £650m); gov.uk says £650m."
+        }
+      },
+      "ved": {
+        "first_year_rate": {
+          "value": 10,
+          "unit": "GBP",
+          "currency": "GBP"
+        },
+        "standard_rate_2026_27": {
+          "value": 200,
+          "unit": "GBP/year",
+          "currency": "GBP",
+          "note": "£210 by 12 monthly Direct Debits. 2025-26 was £195."
+        },
+        "expensive_car_supplement": {
+          "value": 440,
+          "unit": "GBP/year",
+          "currency": "GBP",
+          "applies": "years 2-6 on EVs with list price over £50,000 (threshold raised from £40,000 for zero-emission cars); ZEVs registered before 1 April 2025 exempt",
+          "note": "gov.uk page text ties the £50,000 threshold to EVs registered 1 April 2025 - 31 March 2026; press says threshold applies from April 2026. Wording ambiguous."
+        },
+        "url": "https://www.gov.uk/vehicle-tax-rate-tables",
+        "publisher": "GOV.UK (DVLA)",
+        "date": "2026-09-30",
+        "sourceType": "government",
+        "confirmed": true
+      }
+    },
+    "ireland_dublin": {
+      "vehicles": {
+        "tesla_model_y_standard_rwd": {
+          "base_price": {
+            "value": 42990,
+            "unit": "EUR",
+            "currency": "EUR",
+            "includes": "list price; source says effective ≈ €34,490 after €3,500 SEAI grant and €5,000 VRT relief",
+            "wltp_range_km": 534,
+            "kerb_weight_kg": 1909,
+            "url": "https://www.odo.ie/reviews/tesla-model-y-ireland",
+            "publisher": "odo.ie",
+            "date": "2026-04",
+            "sourceType": "other",
+            "confirmed": true,
+            "conflict": "A search snippet gave OTR €41,832 incl. VRT and delivery — inconsistent with the €42,990/€34,490 pair; unresolved."
+          },
+          "efficiency_wltp": {
+            "value": 13.1,
+            "unit": "kWh/100 km",
+            "note": "EU Model Y Standard RWD; kerb weight 1,906 kg",
+            "url": "https://evkx.net/models/tesla/model_y/model_y_standard/",
+            "publisher": "evkx.net (search snippet)",
+            "sourceType": "other",
+            "confirmed": false
+          }
+        },
+        "chevrolet_equinox_ev": {
+          "sold": false
+        },
+        "vw_id4_best_seller": {
+          "note": "VW ID.4 is Ireland's best-selling EV in 2026 YTD (SIMI via search snippets; not fetched).",
+          "base_price": {
+            "value": 35898,
+            "unit": "EUR",
+            "currency": "EUR",
+            "includes": "RRP including VRT relief and government (SEAI) grant",
+            "wltp_range_km": "347-566 depending on battery (52 or 77 kWh)",
+            "url": "https://www.volkswagen.ie/en/new-cars/ID4.html",
+            "publisher": "Volkswagen Ireland",
+            "date": "2026-09-30",
+            "sourceType": "maker",
+            "confirmed": true,
+            "conflict": "odo.ie snippet: Pure 52 kWh from €36,630 (≈ €33,130 after grant); Pro 77 kWh €39,530."
+          }
+        }
+      },
+      "incentives": {
+        "seai_purchase_grant": {
+          "value": 3500,
+          "unit": "EUR",
+          "currency": "EUR",
+          "status": "active through 2026 (per secondary sources)",
+          "note": "SEAI and gov.ie pages returned 403; amount from multiple secondary sources. €5,000 ICE2EV scrappage pilot opened and sold out on 2026-07-01.",
+          "url": "https://www.odo.ie/guides/ev-grants-ireland",
+          "publisher": "odo.ie / autoza.ie (search snippets)",
+          "date": "2026-09-30",
+          "sourceType": "other",
+          "confirmed": false
+        },
+        "vrt_relief": {
+          "value": 5000,
+          "unit": "EUR (max)",
+          "currency": "EUR",
+          "rule": "OMSP ≤ €40,000: up to €5,000; €40,000-€50,000: reduced (taper not stated); >€50,000: none",
+          "expiry": "registered before 2026-12-31",
+          "url": "https://www.revenue.ie/en/vrt/calculating-vrt/electric-vehicles.aspx",
+          "publisher": "Revenue Commissioners",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true
+        }
+      },
+      "motor_tax": {
+        "value": 120,
+        "unit": "EUR/year",
+        "currency": "EUR",
+        "note": "Flat lowest band for BEVs; no Budget 2026 change reported.",
+        "url": "https://autoza.ie/blog/motor-tax-ireland-2026-guide-all-bands-rates",
+        "publisher": "autoza.ie (search snippet)",
+        "date": "2026-09-30",
+        "sourceType": "other",
+        "confirmed": false
+      }
+    }
+  },
+  "homeCharging": {
+    "us_shared": {
+      "note": "Hardware prices below are US-national and apply to nyc, connecticut and california_la alike (pre-tax).",
+      "chargers": [
+        {
+          "item": "Tesla Wall Connector (NACS)",
+          "value": 585,
+          "unit": "per unit",
+          "currency": "USD",
+          "url": "https://teslanorth.com/2026/09/17/tesla-home-chargers-just-got-more-expensive-in-canada-and-the-u-s/",
+          "publisher": "Tesla North (reporting shop.tesla.com)",
+          "date": "2026-09-17",
+          "sourceType": "press",
+          "confirmed": true
+        },
+        {
+          "item": "Tesla Universal Wall Connector",
+          "value": 660,
+          "unit": "per unit",
+          "currency": "USD",
+          "url": "https://driveteslacanada.ca/news/tesla-wall-connector-prices-canada-universal/",
+          "publisher": "Drive Tesla Canada (reporting shop.tesla.com)",
+          "date": "2026-09-17",
+          "sourceType": "press",
+          "confirmed": true
+        },
+        {
+          "item": "ChargePoint Home Flex, NEMA 14-50 plug (J1772), Home Depot",
+          "value": 539,
+          "unit": "per unit",
+          "currency": "USD",
+          "url": "https://www.homedepot.com/p/ChargePoint-240-Volt-Home-Flex-Level-2-WiFi-NEMA-14-50-Plug-Electric-Vehicle-EV-Charger-CPH50-NEMA1450-L23-K/336574722",
+          "publisher": "The Home Depot",
+          "date": "2026-09-30",
+          "sourceType": "retailer",
+          "confirmed": false
+        },
+        {
+          "item": "ChargePoint Home Flex, NEMA 14-50 plug (NACS), Home Depot",
+          "value": 599,
+          "unit": "per unit",
+          "currency": "USD",
+          "url": "https://www.homedepot.com/p/ChargePoint-Home-Flex-Level-2-EV-Charger-NACS-NEMA-14-50-Outlet-Charge-Station-CPH50-NEMA14-50-L23-NACS/332904717",
+          "publisher": "The Home Depot",
+          "date": "2026-09-30",
+          "sourceType": "retailer",
+          "confirmed": false
+        }
+      ],
+      "installation": [
+        {
+          "item": "Qmerit Level 2 home install, average",
+          "value": 1700,
+          "unit": "per install",
+          "currency": "USD",
+          "url": "https://qmerit.com/faq/how-much-does-installation-cost/",
+          "publisher": "Qmerit",
+          "date": "2026-09-30",
+          "sourceType": "other",
+          "confirmed": true
+        },
+        {
+          "item": "Qmerit Level 2 home install, range low",
+          "value": 749,
+          "unit": "per install (starting price)",
+          "currency": "USD",
+          "url": "https://qmerit.com/faq/how-much-does-installation-cost/",
+          "publisher": "Qmerit",
+          "date": "2026-09-30",
+          "sourceType": "other",
+          "confirmed": true
+        },
+        {
+          "item": "Qmerit Level 2 home install, range high",
+          "value": 2500,
+          "unit": "per install",
+          "currency": "USD",
+          "url": "https://qmerit.com/faq/how-much-does-installation-cost/",
+          "publisher": "Qmerit",
+          "date": "2026-09-30",
+          "sourceType": "other",
+          "confirmed": true
+        },
+        {
+          "item": "Home Depot EV charger installation service, typical range",
+          "value": "899-1999",
+          "unit": "per install",
+          "currency": "USD",
+          "url": "https://www.homedepot.com/services/c/ev-charger-installation/602dbf444",
+          "publisher": "The Home Depot",
+          "date": "2026-09-30",
+          "sourceType": "retailer",
+          "confirmed": false
+        }
+      ]
+    },
+    "us_federal": {
+      "grants": [
+        {
+          "item": "Section 30C Alternative Fuel Vehicle Refueling Property Credit (home charger)",
+          "status": "ended",
+          "value": 0,
+          "unit": "credit for property placed in service after 2026-06-30",
+          "currency": "USD",
+          "detail": "Was 30% of equipment+installation, max $1,000 per item at main home, eligible census tracts only. OBBBA (P.L. 119-21) moved termination from 2032-12-31 to 2026-06-30: 'You can't claim the credit for alternative fuel vehicle refueling property placed in service after June 30, 2026.'",
+          "formerValue": 1000,
+          "url": "https://www.irs.gov/instructions/i8911",
+          "publisher": "Internal Revenue Service",
+          "date": "2025-12",
+          "sourceType": "government",
+          "confirmed": true
+        }
+      ]
+    },
+    "nyc": {
+      "chargers": "see us_shared",
+      "installation": "see us_shared (no NYC-specific published figure found)",
+      "grants": [
+        {
+          "item": "Con Edison home charger purchase/installation rebate",
+          "value": null,
+          "unit": null,
+          "currency": "USD",
+          "detail": "None published; Con Edison offers usage incentives only (SmartCharge New York). No NY State residential charger rebate found.",
+          "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-vehicle-rewards",
+          "publisher": "Con Edison",
+          "date": "2026-09-30",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "SmartCharge New York off-peak charging incentive (midnight-8am)",
+          "value": 0.1,
+          "unit": "per kWh",
+          "currency": "USD",
+          "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-vehicle-rewards",
+          "publisher": "Con Edison",
+          "date": "2026-09-30",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "SmartCharge New York summer peak avoidance (weekdays 2-6pm, Jun 1-Sep 30)",
+          "value": 35,
+          "unit": "per month (or per summer, by option)",
+          "currency": "USD",
+          "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-vehicle-rewards",
+          "publisher": "Con Edison",
+          "date": "2026-09-30",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "SmartCharge New York 3-month bonus",
+          "value": 25,
+          "unit": "per vehicle, once",
+          "currency": "USD",
+          "url": "https://www.coned.com/en/save-money/rebates-incentives-tax-credits/rebates-incentives-tax-credits-for-residential-customers/electric-vehicle-rewards",
+          "publisher": "Con Edison",
+          "date": "2026-09-30",
+          "sourceType": "utility",
+          "confirmed": true
+        }
+      ]
+    },
+    "connecticut": {
+      "chargers": "see us_shared",
+      "installation": "see us_shared",
+      "grants": [
+        {
+          "item": "Eversource/UI CT EV Charging Program: charger and wiring upgrade rebate (income-qualified <=300% FPL or HPLO area only, from 2026-01-01; requires 24-month Managed Charging enrollment; homes of 4 units or fewer)",
+          "value": 1500,
+          "unit": "maximum per household",
+          "currency": "USD",
+          "url": "https://www.eversource.com/docs/default-source/save-money-energy/ct-ev-comprehensive-program-manual.pdf?sfvrsn=4e37a8ef_7",
+          "publisher": "Eversource / United Illuminating",
+          "date": "2026-05-18",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "Non-income-qualified households: charger rebate",
+          "value": 0,
+          "unit": "per household",
+          "currency": "USD",
+          "detail": "Effective 2026-01-01 only income/HPLO-qualified customers may apply for charger and wiring rebates.",
+          "url": "https://www.eversource.com/docs/default-source/save-money-energy/ct-ev-comprehensive-program-manual.pdf?sfvrsn=4e37a8ef_7",
+          "publisher": "Eversource / United Illuminating",
+          "date": "2026-05-18",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "Managed Charging one-time enrollment incentive (not available to those taking the upfront rebate)",
+          "value": 100,
+          "unit": "once",
+          "currency": "USD",
+          "url": "https://www.eversource.com/docs/default-source/save-money-energy/ct-ev-comprehensive-program-manual.pdf?sfvrsn=4e37a8ef_7",
+          "publisher": "Eversource / United Illuminating",
+          "date": "2026-05-18",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "Managed Charging Baseline Tier",
+          "value": 120,
+          "unit": "per year, maximum",
+          "currency": "USD",
+          "url": "https://www.eversource.com/docs/default-source/save-money-energy/ct-ev-comprehensive-program-manual.pdf?sfvrsn=4e37a8ef_7",
+          "publisher": "Eversource / United Illuminating",
+          "date": "2026-05-18",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "Managed Charging Advanced Tier",
+          "value": 300,
+          "unit": "per year, maximum",
+          "currency": "USD",
+          "url": "https://www.eversource.com/docs/default-source/save-money-energy/ct-ev-comprehensive-program-manual.pdf?sfvrsn=4e37a8ef_7",
+          "publisher": "Eversource / United Illuminating",
+          "date": "2026-05-18",
+          "sourceType": "utility",
+          "confirmed": true
+        }
+      ]
+    },
+    "california_la": {
+      "chargers": "see us_shared",
+      "installation": "see us_shared",
+      "grants": [
+        {
+          "item": "LADWP Residential EV Charger Rebate (Level 2, purchase and installation)",
+          "value": 1000,
+          "unit": "maximum per household",
+          "currency": "USD",
+          "url": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/electric-vehicles/residential-ev-charger-rebate-program",
+          "publisher": "Los Angeles Department of Water and Power",
+          "date": "2026-09-30",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "LADWP income-qualified bonus (Senior Citizen/Disability Lifeline or EZ-SAVE)",
+          "value": 500,
+          "unit": "additional, maximum combined $1,500",
+          "currency": "USD",
+          "url": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/electric-vehicles/residential-ev-charger-rebate-program",
+          "publisher": "Los Angeles Department of Water and Power",
+          "date": "2026-09-30",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "LADWP dedicated EV meter rebate",
+          "value": 250,
+          "unit": "once",
+          "currency": "USD",
+          "url": "https://www.ladwp.com/residential-services/programs-and-rebates-residential/electric-vehicles/residential-ev-charger-rebate-program",
+          "publisher": "Los Angeles Department of Water and Power",
+          "date": "2026-09-30",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "SCE Charge Ready Home (panel upgrade + L2 install; income-qualified; SCE territory only, NOT City of LA which is LADWP)",
+          "value": 4200,
+          "unit": "maximum per household",
+          "currency": "USD",
+          "url": "https://energycenter.org/program/sce-charge-ready-home",
+          "publisher": "Center for Sustainable Energy",
+          "date": "2026-09-30",
+          "sourceType": "other",
+          "confirmed": false
+        }
+      ]
+    },
+    "ontario_toronto": {
+      "chargers": [
+        {
+          "item": "Tesla Wall Connector",
+          "value": 815,
+          "unit": "per unit",
+          "currency": "CAD",
+          "url": "https://teslanorth.com/2026/09/17/tesla-home-chargers-just-got-more-expensive-in-canada-and-the-u-s/",
+          "publisher": "Tesla North (reporting shop.tesla.com/en_ca)",
+          "date": "2026-09-17",
+          "sourceType": "press",
+          "confirmed": true
+        },
+        {
+          "item": "Tesla Universal Wall Connector",
+          "value": 945,
+          "unit": "per unit",
+          "currency": "CAD",
+          "url": "https://driveteslacanada.ca/news/tesla-wall-connector-prices-canada-universal/",
+          "publisher": "Drive Tesla Canada",
+          "date": "2026-09-17",
+          "sourceType": "press",
+          "confirmed": true
+        },
+        {
+          "item": "ChargePoint Home Flex hardwired (chargepoint.com CA store, sale; regular 559)",
+          "value": 499,
+          "unit": "per unit",
+          "currency": "CAD",
+          "url": "https://store.chargepoint.com/en-CA/chargers",
+          "publisher": "ChargePoint",
+          "date": "2026-09-30",
+          "sourceType": "maker",
+          "confirmed": false
+        },
+        {
+          "item": "ChargePoint Home Flex plug-in (chargepoint.com CA store)",
+          "value": 559,
+          "unit": "per unit",
+          "currency": "CAD",
+          "url": "https://store.chargepoint.com/en-CA/chargers",
+          "publisher": "ChargePoint",
+          "date": "2026-09-30",
+          "sourceType": "maker",
+          "confirmed": false
+        }
+      ],
+      "installation": [
+        {
+          "item": "Toronto Level 2 complete install incl. hardware, circuit, ESA permit (typical range)",
+          "value": "1800-2800",
+          "unit": "per install",
+          "currency": "CAD",
+          "url": "https://evchargerinstallationtoronto.ca/blog/ev-charger-installation-cost-toronto",
+          "publisher": "EV Charger Installation Toronto (installer)",
+          "date": "2026",
+          "sourceType": "other",
+          "confirmed": false
+        },
+        {
+          "item": "Toronto basic install labour only (existing panel capacity)",
+          "value": "1200-1800",
+          "unit": "per install",
+          "currency": "CAD",
+          "url": "https://evchargerinstallationtoronto.ca/blog/ev-charger-installation-cost-toronto",
+          "publisher": "EV Charger Installation Toronto (installer)",
+          "date": "2026",
+          "sourceType": "other",
+          "confirmed": false
+        }
+      ],
+      "grants": [
+        {
+          "item": "Ontario provincial residential charger rebate",
+          "value": null,
+          "unit": null,
+          "currency": "CAD",
+          "detail": "None found; installer/aggregator pages state no province-wide residential charger rebate in 2026.",
+          "url": "https://chargerfinder.ca/rebates/on/",
+          "publisher": "ChargerFinder",
+          "date": "2026",
+          "sourceType": "other",
+          "confirmed": false
+        },
+        {
+          "item": "Save on Energy Peak Perks (smart thermostats only; EV chargers not eligible devices)",
+          "value": 0,
+          "unit": "for EV chargers",
+          "currency": "CAD",
+          "url": "https://www.saveonenergy.ca/en/For-Your-Home/Peak-Perks",
+          "publisher": "Save on Energy (IESO)",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true
+        },
+        {
+          "item": "Toronto Hydro EV Smart Charging Pilot",
+          "value": null,
+          "unit": null,
+          "currency": "CAD",
+          "detail": "Page says 'The program has now concluded.'",
+          "url": "https://www.torontohydro.com/electric-vehicles/smart-charging",
+          "publisher": "Toronto Hydro",
+          "date": "2026-09-30",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "City of Toronto Home Energy Loan Program (low-interest financing, can include EV charging stations; a loan, not a rebate)",
+          "value": 125000,
+          "unit": "maximum loan",
+          "currency": "CAD",
+          "url": "https://www.torontohydro.com/for-home/savings-sustainability/offers-rebates",
+          "publisher": "Toronto Hydro / City of Toronto",
+          "date": "2026-09-30",
+          "sourceType": "utility",
+          "confirmed": false
+        }
+      ]
+    },
+    "bc_vancouver": {
+      "chargers": "Tesla and ChargePoint Canadian prices as in ontario_toronto (national pricing).",
+      "installation": [
+        {
+          "item": "Metro Vancouver installed Level 2 (charger, circuit, labour, permit, inspection)",
+          "value": "1200-3500",
+          "unit": "per install",
+          "currency": "CAD",
+          "url": "https://intelpower.ca/home-ev-charging-installation-cost-a/",
+          "publisher": "Intel Power Electric (installer)",
+          "date": "2026",
+          "sourceType": "other",
+          "confirmed": false
+        }
+      ],
+      "grants": [
+        {
+          "item": "CleanBC Go Electric home charger rebate, single-family/duplex/row home (50% of eligible costs, program open, via BC Hydro or FortisBC)",
+          "value": 350,
+          "unit": "maximum per home",
+          "currency": "CAD",
+          "url": "https://goelectricbc.gov.bc.ca/find-rebates/residential-charging/",
+          "publisher": "Government of British Columbia (Go Electric BC)",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true
+        },
+        {
+          "item": "CleanBC Go Electric home charger rebate, Indigenous applicants (75%)",
+          "value": 750,
+          "unit": "maximum per home",
+          "currency": "CAD",
+          "url": "https://goelectricbc.gov.bc.ca/find-rebates/residential-charging/",
+          "publisher": "Government of British Columbia (Go Electric BC)",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true
+        }
+      ],
+      "notes": "Tesla chargers ineligible for single-family rebate since 2025-03-12 (search snippet from pluginbc program guide; unconfirmed). Apply within 6 months of install; home built at least 6 months before install (confirmed). Apartment renters/owners go through the separate MURB program."
+    },
+    "mexico_city": {
+      "chargers": [
+        {
+          "item": "Tesla Wall Connector (shop.tesla.com/es_mx)",
+          "value": null,
+          "unit": "per unit",
+          "currency": "MXN",
+          "detail": "Tesla MX shop blocked fetch; third-party snippets give 10,500-10,990 MXN (unverified).",
+          "url": "https://shop.tesla.com/es_mx/product/wall-connector",
+          "publisher": "Tesla",
+          "date": "2026-09-30",
+          "sourceType": "maker",
+          "confirmed": false
+        },
+        {
+          "item": "Tesla Wall Connector, Amazon.com.mx listing",
+          "value": 14351.03,
+          "unit": "per unit",
+          "currency": "MXN",
+          "url": "https://www.amazon.com.mx/Tesla-Conector-Pared-Cargador-el%C3%A9ctrico/dp/B0BWSK35WH",
+          "publisher": "Amazon México",
+          "date": "2026-09-30",
+          "sourceType": "retailer",
+          "confirmed": false
+        }
+      ],
+      "installation": [
+        {
+          "item": "Instalaciones Eléctricas de México basic package 0-10 m (7,800 labour + 6,000 kit)",
+          "value": 13800,
+          "unit": "per install",
+          "currency": "MXN",
+          "url": "https://noticias.autocosmos.com.mx/2026/04/17/como-puedo-poner-un-cargador-de-auto-electrico-en-casa",
+          "publisher": "Autocosmos México",
+          "date": "2026-04-17",
+          "sourceType": "press",
+          "confirmed": true
+        },
+        {
+          "item": "ElectroVatio 5 m package",
+          "value": 7899,
+          "unit": "per install",
+          "currency": "MXN",
+          "url": "https://noticias.autocosmos.com.mx/2026/04/17/como-puedo-poner-un-cargador-de-auto-electrico-en-casa",
+          "publisher": "Autocosmos México",
+          "date": "2026-04-17",
+          "sourceType": "press",
+          "confirmed": true
+        },
+        {
+          "item": "ElectroVatio 20 m package",
+          "value": 18999,
+          "unit": "per install",
+          "currency": "MXN",
+          "url": "https://noticias.autocosmos.com.mx/2026/04/17/como-puedo-poner-un-cargador-de-auto-electrico-en-casa",
+          "publisher": "Autocosmos México",
+          "date": "2026-04-17",
+          "sourceType": "press",
+          "confirmed": true
+        },
+        {
+          "item": "UVI technical assessment for apartment buildings",
+          "value": 8000,
+          "unit": "once",
+          "currency": "MXN",
+          "url": "https://noticias.autocosmos.com.mx/2026/04/17/como-puedo-poner-un-cargador-de-auto-electrico-en-casa",
+          "publisher": "Autocosmos México",
+          "date": "2026-04-17",
+          "sourceType": "press",
+          "confirmed": true
+        }
+      ],
+      "grants": [
+        {
+          "item": "Federal/CDMX home charger rebate",
+          "value": null,
+          "unit": null,
+          "currency": "MXN",
+          "detail": "None found. CFE offers a separate (second) meter for EV charging so household stays on its domestic tariff rather than DAC; CFE procedure reported free.",
+          "url": "https://heraldodemexico.com.mx/economia/2025/6/18/cfe-asi-puedes-contratar-un-cargador-para-vehiculo-electrico-en-tu-domicilio-708271.html",
+          "publisher": "El Heraldo de México",
+          "date": "2025-06-18",
+          "sourceType": "press",
+          "confirmed": false
+        }
+      ]
+    },
+    "gb_london": {
+      "chargers": [
+        {
+          "item": "Ohme Home Pro incl. standard installation (maker)",
+          "value": 999,
+          "unit": "installed, from",
+          "currency": "GBP",
+          "url": "https://ohme-ev.com/product/ohme-home-pro/",
+          "publisher": "Ohme",
+          "date": "2026-09-30",
+          "sourceType": "maker",
+          "confirmed": true
+        },
+        {
+          "item": "myenergi zappi (unit)",
+          "value": 779,
+          "unit": "per unit, from, inc. VAT",
+          "currency": "GBP",
+          "url": "https://www.myenergi.com/product/zappi-ev-charger/",
+          "publisher": "myenergi",
+          "date": "2026-09-30",
+          "sourceType": "maker",
+          "confirmed": true
+        },
+        {
+          "item": "Octopus Charge untethered incl. standard installation",
+          "value": 1029,
+          "unit": "installed",
+          "currency": "GBP",
+          "url": "https://octopus.energy/octopus-charge/",
+          "publisher": "Octopus Energy",
+          "date": "2026-09-30",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "Octopus Charge tethered (5 m) incl. standard installation",
+          "value": 1129,
+          "unit": "installed",
+          "currency": "GBP",
+          "url": "https://octopus.energy/octopus-charge/",
+          "publisher": "Octopus Energy",
+          "date": "2026-09-30",
+          "sourceType": "utility",
+          "confirmed": true
+        },
+        {
+          "item": "Tesla Wall Connector Gen 3 (shop.tesla.com/en_gb)",
+          "value": 475,
+          "unit": "per unit",
+          "currency": "GBP",
+          "url": "https://teslacharger.co.uk/chargers/tesla-wall-connector/",
+          "publisher": "TeslaCharger.co.uk",
+          "date": "2026",
+          "sourceType": "other",
+          "confirmed": false
+        }
+      ],
+      "installation": [
+        {
+          "item": "Standard installation bundled free with Ohme Home Pro / Octopus Charge (see installed prices)",
+          "value": null,
+          "unit": null,
+          "currency": "GBP",
+          "url": "https://ohme-ev.com/product/ohme-home-pro/",
+          "publisher": "Ohme",
+          "date": "2026-09-30",
+          "sourceType": "maker",
+          "confirmed": true
+        }
+      ],
+      "grants": [
+        {
+          "item": "OZEV EV chargepoint grant for renters and flat owners (75% of buy+install, per socket; own private off-street parking; funding to 2027-03-31). Raised from £350 on 2026-04-01.",
+          "value": 500,
+          "unit": "maximum per socket",
+          "currency": "GBP",
+          "url": "https://www.gov.uk/electric-vehicle-chargepoint-grant-household",
+          "publisher": "GOV.UK (OZEV)",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true
+        },
+        {
+          "item": "OZEV grant for households with on-street parking (cross-pavement solution; one socket)",
+          "value": 500,
+          "unit": "maximum per socket",
+          "currency": "GBP",
+          "url": "https://www.gov.uk/guidance/changes-to-electric-vehicle-chargepoint-grant-schemes-from-1-april-2026",
+          "publisher": "GOV.UK (OZEV)",
+          "date": "2026-07-07",
+          "sourceType": "government",
+          "confirmed": true
+        },
+        {
+          "item": "Residential landlord chargepoint grant",
+          "value": 500,
+          "unit": "maximum per socket",
+          "currency": "GBP",
+          "url": "https://www.gov.uk/guidance/changes-to-electric-vehicle-chargepoint-grant-schemes-from-1-april-2026",
+          "publisher": "GOV.UK (OZEV)",
+          "date": "2026-07-07",
+          "sourceType": "government",
+          "confirmed": true
+        },
+        {
+          "item": "Residential landlord infrastructure grant",
+          "status": "closed to applications 2026-03-31",
+          "value": 0,
+          "unit": null,
+          "currency": "GBP",
+          "url": "https://www.gov.uk/guidance/changes-to-electric-vehicle-chargepoint-grant-schemes-from-1-april-2026",
+          "publisher": "GOV.UK (OZEV)",
+          "date": "2026-07-07",
+          "sourceType": "government",
+          "confirmed": true
+        },
+        {
+          "item": "Homeowners of houses with a driveway",
+          "value": 0,
+          "unit": null,
+          "currency": "GBP",
+          "detail": "Not eligible since 2022-04-01 (renters/flat owners/landlords only).",
+          "url": "https://www.gov.uk/electric-vehicle-chargepoint-grant-household",
+          "publisher": "GOV.UK (OZEV)",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": false
+        }
+      ]
+    },
+    "ireland_dublin": {
+      "chargers": [
+        {
+          "item": "myenergi zappi (unit)",
+          "value": 930,
+          "unit": "per unit, from, inc. VAT",
+          "currency": "EUR",
+          "url": "https://www.myenergi.com/ie/product/zappi-ev-charger/",
+          "publisher": "myenergi",
+          "date": "2026-09-30",
+          "sourceType": "maker",
+          "confirmed": true
+        },
+        {
+          "item": "Tesla Wall Connector (shop.tesla.com/en_ie)",
+          "value": 535,
+          "unit": "per unit",
+          "currency": "EUR",
+          "url": "https://shop.tesla.com/en_ie/product/wall-connector",
+          "publisher": "Tesla",
+          "date": "2026",
+          "sourceType": "maker",
+          "confirmed": false
+        },
+        {
+          "item": "Ohme Home Pro Ireland",
+          "value": null,
+          "unit": null,
+          "currency": "EUR",
+          "detail": "Ohme IE page shows 'Get a quote' only; no published price.",
+          "url": "https://ohme-ev.com/ie/product/ohme-home-pro/",
+          "publisher": "Ohme",
+          "date": "2026-09-30",
+          "sourceType": "maker",
+          "confirmed": true
+        }
+      ],
+      "installation": [
+        {
+          "item": "Standard 7 kW smart charger supplied and fitted, before grant",
+          "value": "800-1600",
+          "unit": "installed",
+          "currency": "EUR",
+          "url": "https://autoza.ie/blog/home-ev-charger-installation-cost-ireland-2026",
+          "publisher": "Autoza",
+          "date": "2026-09",
+          "sourceType": "other",
+          "confirmed": false
+        }
+      ],
+      "grants": [
+        {
+          "item": "SEAI EV Home Charger Grant (100% of costs up to cap; charger+install; SEAI-registered installer; reduced from €600 in Jan 2024)",
+          "value": 300,
+          "unit": "maximum per home",
+          "currency": "EUR",
+          "url": "https://ohme-ev.com/ie/product/ohme-home-pro/",
+          "publisher": "Ohme (restating SEAI)",
+          "date": "2026-09-30",
+          "sourceType": "maker",
+          "confirmed": true,
+          "primaryUrl": "https://www.seai.ie/grants/electric-vehicle-grants/electric-vehicle-charging/electric-vehicle-home-charger-grant",
+          "primaryConfirmed": false
+        },
+        {
+          "item": "SEAI Apartment Charging Grant: per charge point (plus up to 80% of shared infrastructure; applied via management company with SEAI-approved CPO)",
+          "value": 600,
+          "unit": "per charge point",
+          "currency": "EUR",
+          "url": "https://www.seai.ie/grants/electric-vehicle-grants/electric-vehicle-charging/apartment-charging-grant",
+          "publisher": "SEAI",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": false
+        },
+        {
+          "item": "SEAI Apartment Charging Grant: shared infrastructure share",
+          "value": 80,
+          "unit": "percent of eligible infrastructure costs, maximum",
+          "currency": null,
+          "url": "https://www.seai.ie/grants/electric-vehicle-grants/electric-vehicle-charging/apartment-charging-grant",
+          "publisher": "SEAI",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "tint": {
+    "nyc": {
+      "shopTint": [
+        {
+          "label": "Full Spectrum Tints, Silver package (carbon), 4 side windows + rear windshield, car/small-mid SUV",
+          "value": 250,
+          "unit": "per vehicle",
+          "currency": "USD",
+          "url": "https://fullspectrumtints.com/",
+          "publisher": "Full Spectrum Tints (135-41 121st St, Jamaica, Queens)",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "carbon"
+        },
+        {
+          "label": "Full Spectrum Tints, Gold package (ceramic), 4 sides + rear",
+          "value": 325,
+          "unit": "per vehicle",
+          "currency": "USD",
+          "url": "https://fullspectrumtints.com/",
+          "publisher": "Full Spectrum Tints",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "ceramic"
+        },
+        {
+          "label": "Full Spectrum Tints, Platinum package (ultra-nano ceramic), 4 sides + rear; front windshield add-on $200",
+          "value": 500,
+          "unit": "per vehicle",
+          "currency": "USD",
+          "url": "https://fullspectrumtints.com/",
+          "publisher": "Full Spectrum Tints",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "nano-ceramic"
+        },
+        {
+          "label": "Sound Design, sedan full car (ceramic available; 'prices vary')",
+          "value": 250,
+          "unit": "per vehicle",
+          "currency": "USD",
+          "url": "https://sounddesignny.com/window-tinting",
+          "publisher": "Sound Design (1579 Stillwell Ave, Bronx)",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "unspecified/ceramic available"
+        }
+      ],
+      "shopRemoval": null,
+      "law": {
+        "limit": "70% light transmittance: windshield (except top 6 in), front side windows; rear side windows on passenger cars; rear window unless dual outside mirrors (VTL 375(12-a)(b))",
+        "url": "https://www.nysenate.gov/legislation/laws/VAT/375",
+        "publisher": "New York State Senate (VTL 375)",
+        "date": "2026-09-30",
+        "sourceType": "government",
+        "confirmed": true,
+        "inspection": {
+          "text": "Effective January 1, 2017, examination of tinted/shaded windows is required during annual inspection; windshield and front side windows (and on passenger cars the rear side windows, and rear window unless dual mirrors) must pass at least 70% light. The DMV page does not describe the meter or the fail procedure explicitly.",
+          "url": "https://dmv.ny.gov/inspections/tinted-windows",
+          "publisher": "NY DMV",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true
+        },
+        "inspectionFee": {
+          "value": 37,
+          "unit": "maximum per inspection, light vehicle, station inside NY Metropolitan Area (safety $10 + OBDII emissions $27)",
+          "currency": "USD",
+          "components": {
+            "safetyGroup1": 10,
+            "obdIIEmissionsNYMA": 27,
+            "lowEnhancedOutsideNYMA": 11
+          },
+          "url": "https://dmv.ny.gov/forms/vs77.pdf",
+          "publisher": "NY DMV, form VS-77 (7/15), chart 'Effective January 1, 2011'",
+          "date": "2015-07",
+          "sourceType": "government",
+          "confirmed": true,
+          "reinspection": "Fee may be charged whether the vehicle passes or fails. A reinspection fee may be charged only when the motorist removes the vehicle from the station and returns. Within 30 days of rejection only the failed portion is re-inspected; after 30 days a full inspection. No free-reinspection window is stated."
+        },
+        "fine": {
+          "value": 150,
+          "unit": "maximum fine (not exceeding), or up to 30 days imprisonment, or both, under VTL 375(32)(a) general penalty; 375(12-a) sets no amount of its own",
+          "currency": "USD",
+          "url": "https://www.nysenate.gov/legislation/laws/VAT/375",
+          "publisher": "New York State Senate",
+          "date": "2026-09-30",
+          "sourceType": "government",
+          "confirmed": true,
+          "note": "Secondary sources add a state surcharge of $88 ($93 in town/village courts) - unconfirmed; 'per window' claims unconfirmed."
+        }
+      },
+      "tickets": {
+        "description": "Tickets for VTL 375-12A1..A4 (windshield, front side, rear side non-transparent; rear window reflective), counted by querying the NYS DMV ticket dataset through the data.ny.gov API. Issuance only (not convictions); excludes NYC misdemeanor/felony tickets; TSLED covers participating courts only. 2026 is partial (data posted 2026-09-06).",
+        "statewide": {
+          "2022": 92056,
+          "2023": 120139,
+          "2024": 111239,
+          "2025": 119808,
+          "2026_partial": 83487
+        },
+        "nycPoliceAgencies": {
+          "2022": 33920,
+          "2023": 42073,
+          "2024": 49710,
+          "2025": 43552,
+          "2026_partial": 25925
+        },
+        "byCodeAllYears": {
+          "37512A2_front_side": 322322,
+          "37512A1_windshield": 110225,
+          "37512A3_rear_side": 83703,
+          "37512A4_rear_reflective": 10479
+        },
+        "url": "https://data.ny.gov/Transportation/Window-Tint-Tickets-Select-Courts/8mg6-gx3g",
+        "publisher": "NYS DMV via Open Data NY",
+        "date": "2026-09-06",
+        "sourceType": "government",
+        "confirmed": true
+      }
+    },
+    "connecticut": {
+      "shopTint": [
+        {
+          "label": "M&M Auto Detailing, sedan all side/rear windows (Rayno Phantom ceramic)",
+          "low": 300,
+          "high": null,
+          "unit": "per vehicle, '& up'",
+          "currency": "USD",
+          "url": "https://mmautodetailing.com/detailing-services/car-window-tinting/",
+          "publisher": "M&M Auto Detailing (799 Hebron Ave, Glastonbury CT)",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "ceramic (Rayno Phantom S7)"
+        },
+        {
+          "label": "CT Ceramic Coatings, full sedan, CR Black nano film",
+          "value": 700,
+          "unit": "per vehicle",
+          "currency": "USD",
+          "url": "https://ctceramiccoating.com/window-tint/",
+          "publisher": "CT Ceramic Coatings (Windsor Locks CT)",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "CR Black nano"
+        },
+        {
+          "label": "CT Ceramic Coatings, full sedan, XR Plus nano ceramic",
+          "value": 850,
+          "unit": "per vehicle",
+          "currency": "USD",
+          "url": "https://ctceramiccoating.com/window-tint/",
+          "publisher": "CT Ceramic Coatings",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "nano-ceramic"
+        }
+      ],
+      "shopRemoval": {
+        "value": 85,
+        "unit": "per hour",
+        "currency": "USD",
+        "url": "https://mmautodetailing.com/detailing-services/car-window-tinting/",
+        "publisher": "M&M Auto Detailing (Glastonbury CT)",
+        "date": "2026-09-30",
+        "sourceType": "shop",
+        "confirmed": true
+      },
+      "law": {
+        "limit": "Front side windows and rear side/rearmost windows: total light transmission not less than 35% (plus or minus 3%); luminous reflectance 27% (front) / 21% (rear) plus or minus 3%; rearmost window exempt if dual outside mirrors; windshield film only on topmost portion (bottom edge 29 in above seat). After-factory tint requires a compliance sticker.",
+        "penalty": "Infraction for each offence; must remove material and report to the issuing police within 60 days to show compliance; failure plus a later violation leads to impound after notice and hearing (CGS 14-99g(f)).",
+        "url": "https://www.cga.ct.gov/current/pub/chap_246.htm",
+        "publisher": "Connecticut General Assembly, CGS 14-99g",
+        "date": "2026-09-30",
+        "sourceType": "government",
+        "confirmed": true,
+        "fine": {
+          "value": 136,
+          "unit": "total infraction amount for 14-99g(b) (snippet: $90 fine + $11 + $35)",
+          "currency": "USD",
+          "url": "https://www.jud.ct.gov/publications/Infractions.pdf",
+          "publisher": "Connecticut Judicial Branch, Infractions schedule (Chart A)",
+          "date": null,
+          "sourceType": "government",
+          "confirmed": false
+        }
+      },
+      "tickets": null
+    },
+    "california_la": {
+      "shopTint": [
+        {
+          "label": "Firm Detailing (mobile, LA/OC), carbon, all windows except front windshield",
+          "value": 285,
+          "unit": "per vehicle",
+          "currency": "USD",
+          "url": "https://www.firmdetailing.com/mobile-window-tint-los-angeles",
+          "publisher": "Firm Detailing",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "carbon"
+        },
+        {
+          "label": "Firm Detailing, ceramic, all windows except front windshield",
+          "value": 425,
+          "unit": "per vehicle",
+          "currency": "USD",
+          "url": "https://www.firmdetailing.com/mobile-window-tint-los-angeles",
+          "publisher": "Firm Detailing",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "ceramic"
+        },
+        {
+          "label": "CreaTint LA, sedan/coupe 5 windows ceramic, from",
+          "low": 250,
+          "high": null,
+          "unit": "per vehicle",
+          "currency": "USD",
+          "url": "https://creatintla.com/services/auto-window-tinting/",
+          "publisher": "CreaTint LA",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "ceramic"
+        },
+        {
+          "label": "Tint Spot (13131 Sherman Way, North Hollywood): standard from $170, ceramic from $299, 3M Ceramic IR from $400",
+          "low": 170,
+          "high": 400,
+          "unit": "per vehicle, 'from'",
+          "currency": "USD",
+          "url": "https://www.tint-spot.com/",
+          "publisher": "Tint Spot",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "standard/ceramic/3M Ceramic IR"
+        }
+      ],
+      "shopRemoval": null,
+      "law": {
+        "limit": "Front side windows: film must have min 88% VLT and the combined glazing must meet FMVSS 205's 70% minimum; windshield film only on the uppermost portion (29 in above seat), not red or amber; rear side and rear windows may be tinted given outside mirrors.",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=26708.",
+        "publisher": "California Legislative Information, Vehicle Code 26708",
+        "date": "2026-09-30",
+        "sourceType": "government",
+        "confirmed": true,
+        "fine": {
+          "value": 25,
+          "unit": "base fine, first offence (correctable fix-it); secondary sources say about $197 with assessments",
+          "currency": "USD",
+          "url": null,
+          "publisher": "secondary (law-firm blogs)",
+          "date": null,
+          "sourceType": "other",
+          "confirmed": false
+        }
+      },
+      "tickets": null
+    },
+    "ontario_toronto": {
+      "shopTint": [
+        {
+          "label": "Car Tint (mobile, GTA), sedan all sides + back window",
+          "low": 290,
+          "high": 700,
+          "unit": "per vehicle",
+          "currency": "CAD",
+          "url": "https://www.cartint.ca/collections/car-tint-price",
+          "publisher": "Car Tint - Window Tinting Toronto",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "dyed to nano-ceramic, range by film"
+        }
+      ],
+      "shopRemoval": [
+        {
+          "label": "Car Tint, sedan side windows + rear windshield removal",
+          "value": 150,
+          "unit": "per vehicle",
+          "currency": "CAD",
+          "url": "https://www.cartint.ca/products/window-tinting-removal",
+          "publisher": "Car Tint - Window Tinting Toronto",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true
+        },
+        {
+          "label": "Car Tint, single window removal",
+          "value": 50,
+          "unit": "per window",
+          "currency": "CAD",
+          "url": "https://www.cartint.ca/products/window-tinting-removal",
+          "publisher": "Car Tint - Window Tinting Toronto",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true
+        }
+      ],
+      "law": {
+        "limit": "HTA s.73(3): no colour coating on the windshield or windows directly left/right of the driver that substantially obscures the interior. Front side windows commonly stated as at least 70% light, and no aftermarket windshield tint since 1 Jan 2017 (secondary sources; e-Laws page did not render).",
+        "url": "https://www.ontario.ca/laws/statute/90h08",
+        "publisher": "Ontario e-Laws, Highway Traffic Act",
+        "date": null,
+        "sourceType": "government",
+        "confirmed": false,
+        "fine": {
+          "value": 85,
+          "unit": "set fine, 'Colour coating obscuring interior' s.73(3), item 200 (victim fine surcharge and costs not on this page)",
+          "currency": "CAD",
+          "url": "https://www.ontariocourts.ca/ocj/provincial-offences/set-fines/set-fines-i/schedule-43-last-updated-july-1-2026/",
+          "publisher": "Ontario Court of Justice, Schedule 43",
+          "date": "2026-07-01",
+          "sourceType": "government",
+          "confirmed": true,
+          "related": {
+            "73(2) drive with window or windshield coated, view obstructed": 85,
+            "73(1)(a) window obstructed": 85
+          }
+        }
+      },
+      "tickets": null
+    },
+    "bc_vancouver": {
+      "shopTint": [
+        {
+          "label": "Inspire Auto Studio (Richmond), sedan rear windows + rear glass, dyed",
+          "value": 299,
+          "unit": "per vehicle",
+          "currency": "CAD",
+          "url": "https://www.inspireautostudio.com/blog/window-tint-cost-vancouver",
+          "publisher": "Inspire Auto Studio (11460 Voyageur Way #8, Richmond BC)",
+          "date": "2026-04-22",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "dyed"
+        },
+        {
+          "label": "Inspire Auto Studio, sedan rear windows + rear glass, ceramic",
+          "value": 449,
+          "unit": "per vehicle",
+          "currency": "CAD",
+          "url": "https://www.inspireautostudio.com/blog/window-tint-cost-vancouver",
+          "publisher": "Inspire Auto Studio",
+          "date": "2026-04-22",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "ceramic"
+        },
+        {
+          "label": "Inspire Auto Studio, full vehicle surround (dyed $399 / ceramic $600); front sides are illegal in BC",
+          "low": 399,
+          "high": 600,
+          "unit": "per vehicle",
+          "currency": "CAD",
+          "url": "https://www.inspireautostudio.com/blog/window-tint-cost-vancouver",
+          "publisher": "Inspire Auto Studio",
+          "date": "2026-04-22",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "dyed/ceramic"
+        }
+      ],
+      "shopRemoval": null,
+      "law": {
+        "limit": "Material that reduces light transmitted shall not be placed on a windshield more than 75 mm below the top, or on any window other than a side window to the rear of the driver (MVA Regulations, Division 7 inspection standards, referencing s.7.05). So no aftermarket film on front side windows; rear side and rear windows allowed.",
+        "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/26_58_04",
+        "publisher": "BC Laws, Motor Vehicle Act Regulations (B.C. Reg. 26/58)",
+        "date": "2026-09-30",
+        "sourceType": "government",
+        "confirmed": true,
+        "fine": {
+          "value": 109,
+          "unit": "violation ticket, MVAR s.7.05(8), and/or vehicle inspection order",
+          "currency": "CAD",
+          "url": null,
+          "publisher": "secondary (tint-shop/law guides)",
+          "date": null,
+          "sourceType": "other",
+          "confirmed": false
+        }
+      },
+      "tickets": null
+    },
+    "mexico_city": {
+      "shopTint": [
+        {
+          "label": "Polarizado Autos CDMX, standard polarizado, full sedan",
+          "low": 1500,
+          "high": 3000,
+          "unit": "per vehicle",
+          "currency": "MXN",
+          "url": "https://polarizadoautoscdmx.com/cuanto-cuesta-el-polarizado-de-un-carro/",
+          "publisher": "Polarizado Autos CDMX (no address given)",
+          "date": null,
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "standard (dyed)"
+        },
+        {
+          "label": "Polarizado Autos CDMX, high-performance film, full sedan",
+          "low": 3000,
+          "high": 6000,
+          "unit": "per vehicle",
+          "currency": "MXN",
+          "url": "https://polarizadoautoscdmx.com/cuanto-cuesta-el-polarizado-de-un-carro/",
+          "publisher": "Polarizado Autos CDMX",
+          "date": null,
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "high-performance"
+        }
+      ],
+      "shopRemoval": null,
+      "law": {
+        "limit": "Reglamento de Transito CDMX art. 43 fr. VII: prohibited to install or use solar-control film (polarizado) or darkening of side or rear windows 'en un porcentaje mayor al 20%', except for medical reasons accredited before the Secretaria and noted on the tarjeta de circulacion.",
+        "fine": {
+          "uma": [
+            20,
+            25,
+            30
+          ],
+          "unit": "times UMA (reformed G.O. 4 Feb 2021)",
+          "mxnAt2026UMA": [
+            2346.2,
+            2932.75,
+            3519.3
+          ],
+          "umaDaily2026": 117.31,
+          "currency": "MXN",
+          "note": "UMA 2026 = 117.31 MXN/day, valid 1 Feb 2026 to 31 Jan 2027 (INEGI figure via press; not read on inegi.org.mx)",
+          "confirmed": false
+        },
+        "url": "http://legismex.mty.itesm.mx/estados/ley-df/DF-R-Transito2026_05.pdf",
+        "publisher": "Reglamento de Transito de la Ciudad de Mexico (compiled text, ultima reforma G.O. 6 mayo 2026; legismex mirror, Tec de Monterrey)",
+        "date": "2026-05-06",
+        "sourceType": "government",
+        "confirmed": true,
+        "ambiguity": "Press reads 'porcentaje mayor al 20%' as at most 20% darkening (about 80% VLT) on side/rear windows; the text does not state VLT explicitly."
+      },
+      "tickets": null
+    },
+    "gb_london": {
+      "shopTint": [
+        {
+          "label": "Select Tints (South East London), regular-size car (BMW 3/5, A4, Mondeo): two rear side windows + rear window",
+          "value": 160,
+          "unit": "per vehicle",
+          "currency": "GBP",
+          "url": "http://selecttints.co.uk/",
+          "publisher": "Select Tints",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "unspecified; 5%-50% shades, lifetime warranty"
+        },
+        {
+          "label": "Select Tints, regular-size car full tint (four side windows + rear window; front sides illegal below 70%)",
+          "value": 220,
+          "unit": "per vehicle",
+          "currency": "GBP",
+          "url": "http://selecttints.co.uk/",
+          "publisher": "Select Tints",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "unspecified"
+        },
+        {
+          "label": "Autossential (Welling/Woolwich/Croydon), saloon rear windows",
+          "value": 119.99,
+          "unit": "per vehicle",
+          "currency": "GBP",
+          "url": "https://www.autossential.com/window-tints",
+          "publisher": "Autossential",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "unspecified"
+        }
+      ],
+      "shopRemoval": null,
+      "law": {
+        "limit": "Vehicles first used on or after 1 April 1985: windscreen at least 75% light, front side windows at least 70%; earlier vehicles 70% for both. Police can issue a prohibition notice (no use until tint removed), a penalty notice or a court summons.",
+        "url": "https://www.gov.uk/tinted-vehicle-window-rules",
+        "publisher": "GOV.UK",
+        "date": "2026-09-30",
+        "sourceType": "government",
+        "confirmed": true,
+        "fine": {
+          "tiers": [
+            {
+              "condition": "front sides below 70% VLT",
+              "value": 50,
+              "points": 0,
+              "unit": "Traffic Offence Report, non-endorsable"
+            },
+            {
+              "condition": "below 25% VLT (dangerous condition)",
+              "value": 100,
+              "points": 3,
+              "unit": "fixed penalty / conditional offer"
+            }
+          ],
+          "extra": "Very dark front sides (below 25%) can also get an immediate prohibition.",
+          "currency": "GBP",
+          "url": "https://dev.saferessexroads.org/wp-content/uploads/2020/12/RP-FAQs-for-MOP-tinted-windows.pdf",
+          "publisher": "Safer Essex Roads Partnership / Essex Police road policing FAQ",
+          "date": "2020-12",
+          "sourceType": "government",
+          "confirmed": true,
+          "note": "Essex practice, not Metropolitan Police; GOV.UK gives no amount."
+        }
+      },
+      "tickets": null
+    },
+    "ireland_dublin": {
+      "shopTint": [
+        {
+          "label": "QZ Tints (2 Porters Rd, Blanchardstown, Dublin 15), half saloon (rear)",
+          "value": 160,
+          "unit": "per vehicle",
+          "currency": "EUR",
+          "url": "https://qztints.ie/car-tinting-prices/",
+          "publisher": "QZ Tints",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "unspecified"
+        },
+        {
+          "label": "QZ Tints, full saloon",
+          "value": 220,
+          "unit": "per vehicle",
+          "currency": "EUR",
+          "url": "https://qztints.ie/car-tinting-prices/",
+          "publisher": "QZ Tints",
+          "date": "2026-09-30",
+          "sourceType": "shop",
+          "confirmed": true,
+          "filmType": "unspecified"
+        }
+      ],
+      "shopRemoval": {
+        "value": 200,
+        "unit": "flat charge, old film removal",
+        "currency": "EUR",
+        "url": "https://southeastwindowtinting.ie/blog/how-much-does-it-cost-to-tint-car-windows-ireland",
+        "publisher": "South East Window Tinting (Gorey, Co. Wexford; not Dublin)",
+        "date": "2026-08-25",
+        "sourceType": "shop",
+        "confirmed": true
+      },
+      "law": {
+        "limit": "Windscreen and front side windows must transmit at least 65% light (Roadworthiness Testing, S.I. No. 415 of 2017) to pass the NCT; no limit on rear windows; no medical exemption at the NCT; gardai have roadside meters and both owner and driver can be charged.",
+        "url": "https://www.rsa.ie/road-safety/road-users/vehicle-components/vehicle-glass/window-tinting",
+        "publisher": "Road Safety Authority (search snippet; page returned 403)",
+        "date": null,
+        "sourceType": "government",
+        "confirmed": false,
+        "fine": {
+          "value": null,
+          "unit": "press report of a fixed charge 'resulting in a fine and penalty points'; amount not found",
+          "currency": "EUR",
+          "url": "https://www.agriland.ie/farming-news/gardai-stop-tractor-and-fine-driver-over-tinted-windows/",
+          "publisher": "Agriland.ie",
+          "date": null,
+          "sourceType": "press",
+          "confirmed": false
+        }
+      },
+      "tickets": null
+    }
+  },
+  "burglarySecurity": {
+    "us_national": {
+      "coversMarkets": [
+        "nyc",
+        "connecticut",
+        "california_la"
+      ],
+      "note": "Home Depot US online prices are national list prices; the same set serves NYC, Connecticut and Los Angeles. Sales tax is added at checkout and differs by market (not included). homedepot.com and angi.com returned HTTP 403 to WebFetch, so every figure here is from search-result snippets of the retailer's own product pages.",
+      "windowLock": {
+        "value": 2.93,
+        "unit": "per lock",
+        "currency": "USD",
+        "product": "Everbilt White Steel Window Sash Lock 20352",
+        "url": "https://www.homedepot.com/p/Everbilt-White-Steel-Window-Sash-Lock-20352/204760753",
+        "publisher": "The Home Depot",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": false,
+        "range": {
+          "low": 2.47,
+          "high": 6.47,
+          "note": "Everbilt sash locks, antique brass steel to solid brass"
+        }
+      },
+      "deadbolt": {
+        "value": 19.97,
+        "unit": "each",
+        "currency": "USD",
+        "product": "Kwikset 660 Satin Nickel Single Cylinder Deadbolt, SmartKey, T66015SMTCPK6V2",
+        "url": "https://www.homedepot.com/p/Kwikset-660-Satin-Nickel-Single-Cylinder-Deadbolt-featuring-SmartKey-Security-and-Microban-Technology-T66015SMTCPK6V2/317193991",
+        "publisher": "The Home Depot",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": false,
+        "range": {
+          "low": 16.97,
+          "high": 41.97,
+          "note": "Kwikset 660 finishes $16.97-$24.99; Kwikset 980 series 98015SMTCPK4V1 $41.97"
+        }
+      },
+      "lampTimer": {
+        "value": 5.96,
+        "unit": "each",
+        "currency": "USD",
+        "product": "Defiant 15 Amp 24-Hour Indoor Plug-In Mechanical Big Button Timer, White 49810DI",
+        "url": "https://www.homedepot.com/p/Defiant-15-Amp-24-Hour-Indoor-Plug-In-Mechanical-Big-Button-Timer-White-49810DI/203678109",
+        "publisher": "The Home Depot",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": false,
+        "alternates": [
+          {
+            "product": "Defiant 24-Hour Indoor Plug-In Basic Mechanical Timer TM-022",
+            "value": 6.98,
+            "url": "https://www.homedepot.com/p/Defiant-24-Hour-Indoor-Plug-In-Basic-Mechanical-Timer-TM-022/320487027",
+            "confirmed": false
+          }
+        ]
+      },
+      "motionSecurityLight": {
+        "value": 49.97,
+        "unit": "each",
+        "currency": "USD",
+        "product": "Defiant MaxDetect 240 Black Motion Sensing Wired Outdoor 2-Head LED Security Flood Light 1400 Lumens 17000018",
+        "url": "https://www.homedepot.com/p/Defiant-MaxDetect-240-Black-Motion-Sensing-Wired-Outdoor-2-Head-LED-Security-Flood-Light-1400-Lumens-17000018/324294064",
+        "publisher": "The Home Depot",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": false,
+        "alternates": [
+          {
+            "product": "Defiant 180 Black Motion Sensing Wired 2-Head LED Flood Light 1000 Lumens 17000019",
+            "value": 34.97,
+            "url": "https://www.homedepot.com/p/Defiant-180-Black-Motion-Sensing-Security-Light-Wired-Outdoor-2-Head-LED-Flood-Light-1000-Lumens-17000019/324293855",
+            "confirmed": false
+          },
+          {
+            "product": "Defiant DFI-5983-WH 2050 lm 180 degree motion LED flood",
+            "value": 49.48,
+            "url": "https://www.homedepot.com/p/Defiant-180-Degree-LED-Motion-Sensor-White-Outdoor-Security-Light-DFI-5983-WH/205937583",
+            "confirmed": false
+          }
+        ]
+      },
+      "fitting": {
+        "deadboltInstallProfessional": {
+          "value": null,
+          "low": 150,
+          "high": 250,
+          "unit": "per deadbolt installed, labour",
+          "currency": "USD",
+          "product": null,
+          "url": "https://www.angi.com/articles/how-much-does-it-cost-install-deadbolt-locks.htm",
+          "publisher": "Angi",
+          "date": "2026",
+          "sourceType": "trade",
+          "confirmed": false,
+          "note": "Snippet: professional deadbolt installation $150-$250; lock itself $10-$45 standard. Angi pages 403 to fetch."
+        },
+        "doorHardwareReplacementHomeDepotPro": {
+          "value": null,
+          "low": 75,
+          "high": 150,
+          "unit": "replace existing door hardware",
+          "currency": "USD",
+          "product": null,
+          "url": "https://www.homedepot.com/services/c/door-hardware-installation/7d3f00689",
+          "publisher": "The Home Depot (Pro Referral)",
+          "date": "2026-09-30",
+          "sourceType": "retailer",
+          "confirmed": false,
+          "note": "Snippet: replacing existing hardware $75-$150; prepping a new door $200-$400."
+        },
+        "locksmithAverageJob": {
+          "value": 163,
+          "low": 107,
+          "high": 242,
+          "unit": "per job",
+          "currency": "USD",
+          "product": null,
+          "url": "https://www.angi.com/articles/keys-home-locksmith-assistance-and-costs.htm",
+          "publisher": "Angi",
+          "date": "2026",
+          "sourceType": "trade",
+          "confirmed": false
+        }
+      },
+      "marketOverrides": {
+        "nyc": null,
+        "connecticut": null,
+        "california_la": null,
+        "note": "No market-specific retailer prices found; national online prices apply. No city-specific published locksmith labour figure was captured."
+      }
+    },
+    "canada": {
+      "coversMarkets": [
+        "toronto",
+        "vancouver"
+      ],
+      "note": "Canadian Tire and Home Depot Canada render prices by JavaScript; WebFetch returned only page templates or timed out, so product figures are from search snippets. Prices are national online prices before HST (ON 13%) / GST+PST (BC 5%+7%).",
+      "windowLock": {
+        "value": 5.99,
+        "unit": "each",
+        "currency": "CAD",
+        "product": "Hillman Decorative Crescent Sash Lock, For Wood Frame (0461910)",
+        "url": "https://www.canadiantire.ca/en/pdp/hillman-851833-crescent-type-sash-lock-assorted-0461910p.html",
+        "publisher": "Canadian Tire",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": false,
+        "alternates": [
+          {
+            "product": "Prime-Line Diecast White Finish Window Sash Lock (Home Depot Canada 1000161454)",
+            "value": 7.98,
+            "url": "https://www.homedepot.ca/product/prime-line-diecast-white-finish-window-sash-lock/1000161454",
+            "publisher": "The Home Depot Canada",
+            "confirmed": false,
+            "note": "Snippet ambiguous: also quoted $6.68 for model F 2533"
+          }
+        ]
+      },
+      "deadbolt": {
+        "value": 47.99,
+        "salePrice": 39.99,
+        "unit": "each",
+        "currency": "CAD",
+        "product": "Weiser Elements Round Deadbolt, single cylinder, SmartKey, Satin Nickel, ANSI Grade 3 (0467257)",
+        "url": "https://www.canadiantire.ca/en/pdp/weiser-single-cylinder-deadbolt-door-lock-0467257p.html",
+        "publisher": "Canadian Tire",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": false,
+        "note": "Regular $47.99, on sale $39.99 (17% off) per snippet. Kwikset-branded deadbolts not found at Canadian Tire; Weiser is Kwikset's Canadian brand."
+      },
+      "lampTimer": {
+        "value": 10.49,
+        "unit": "2-pack",
+        "currency": "CAD",
+        "product": "NOMA 24 Hour Indoor Mechanical Timer, 2-pk, 24 settings, 1 outlet (299-1629-0)",
+        "url": "https://www.canadiantire.ca/en/pdp/noma24-hour-indoor-mechanical-timer-2-ok-24-programmable-settings-1-outlets-white-2991629p.html",
+        "publisher": "Canadian Tire",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": false,
+        "note": "Snippet said out of stock at time of indexing; single-unit price not captured."
+      },
+      "motionSecurityLight": {
+        "value": 39.99,
+        "salePrice": 29.99,
+        "unit": "each",
+        "currency": "CAD",
+        "product": "NOMA Battery Operated Motion Sensor Dual LED Security Light, 600 lm, Black (1523123)",
+        "url": "https://www.canadiantire.ca/en/pdp/noma-battery-operated-motion-sensor-dual-led-security-light-600-lumens-black-1523123p.1523123.html",
+        "publisher": "Canadian Tire",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": false,
+        "alternates": [
+          {
+            "product": "NOMA LED 180 Degree Outdoor Solar Motion Sensor Light (0520995)",
+            "value": 69.99,
+            "url": "https://www.canadiantire.ca/en/pdp/noma-led-180-degree-outdoor-solar-motion-sensor-light-weather-resistant-0520995p.html",
+            "confirmed": false
+          }
+        ],
+        "note": "No wired PIR flood light price captured for Canada."
+      },
+      "fitting": {
+        "toronto_deadboltInstall": {
+          "value": null,
+          "low": 80,
+          "high": 200,
+          "unit": "per deadbolt installed, labour",
+          "currency": "CAD",
+          "product": null,
+          "url": "https://premiumlocksmith.ca/locksmith-price-list/",
+          "publisher": "Premium Locksmith (Toronto)",
+          "date": "2025-01-09",
+          "sourceType": "trade",
+          "confirmed": true,
+          "note": "Also on page: lock installation $80-$250+ per lock; rekey $80-$160 per lock; lockout $80-$200."
+        },
+        "vancouver_deadboltInstall": {
+          "value": null,
+          "low": 80,
+          "high": 160,
+          "unit": "standard deadbolt installed",
+          "currency": "CAD",
+          "product": null,
+          "url": "https://thelockdoc.ca/vancouver/rates/",
+          "publisher": "The Lock Doc (Vancouver)",
+          "date": "2026-09-30",
+          "sourceType": "trade",
+          "confirmed": false,
+          "note": "Snippet: standard deadbolt $80-$160, high-security/smart $180-$300; attribution between thelockdoc.ca and safeandsecurelocksmith.ca not verified. Another Vancouver provider: $65 weekday service call."
+        }
+      }
+    },
+    "gb_london": {
+      "note": "Screwfix prices are national and include VAT at 20%; London pays the same shelf price.",
+      "windowLock": {
+        "value": 6.99,
+        "unit": "each (1 key)",
+        "currency": "GBP",
+        "product": "Smith & Locke 53mm Window Swing Lock White, 7203P (wooden windows)",
+        "url": "https://www.screwfix.com/p/smith-locke-53mm-window-swing-lock-white/7203p",
+        "publisher": "Screwfix",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true,
+        "alternates": [
+          {
+            "product": "ERA 73mm PVCu Locking Window Snaplock White 9600T",
+            "value": 9.99,
+            "url": "https://www.screwfix.com/p/era-pvcu-locking-window-snaplock-white/9600t",
+            "confirmed": false
+          }
+        ]
+      },
+      "doorLock": {
+        "value": 14.99,
+        "unit": "each",
+        "currency": "GBP",
+        "product": "Smith & Locke Fire Rated Chrome BS 5-Lever Mortice Deadlock 65mm, 120PX",
+        "url": "https://www.screwfix.com/c/security-ironmongery/mortice-locks/cat810292?morticelocktype=deadlock&nooflevers=5_lever",
+        "publisher": "Screwfix",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true,
+        "alternates": [
+          {
+            "product": "ERA 5 Lever Chrome Mortice Deadlock 8777V",
+            "value": 16.99,
+            "confirmed": true
+          },
+          {
+            "product": "Yale Polished Chrome BS 5-Lever Mortice Deadlock 30963",
+            "value": 25.99,
+            "confirmed": true
+          }
+        ],
+        "note": "Read on Screwfix category listing; BS3621 not stated explicitly in the listing text beyond 'BS' in product names."
+      },
+      "lampTimer": {
+        "value": 7.99,
+        "unit": "each",
+        "currency": "GBP",
+        "product": "Masterplug TMS24 Mechanical Plug-In & Plug-Through Timer, 25518",
+        "url": "https://www.screwfix.com/p/masterplug-tms24-mechanical-plug-in-plug-through-timer/25518",
+        "publisher": "Screwfix",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true,
+        "alternates": [
+          {
+            "product": "Masterplug TCM24-XD compact timer 44241",
+            "value": 5.99,
+            "url": "https://www.screwfix.com/p/plug-in-compact-timer/44241",
+            "confirmed": false
+          }
+        ]
+      },
+      "pirSecurityLight": {
+        "value": 8.48,
+        "unit": "each",
+        "currency": "GBP",
+        "product": "LAP Weyburn Outdoor LED Floodlight With PIR Sensor Black 10W 1000lm, 433PG",
+        "url": "https://www.screwfix.com/c/electrical-lighting/floodlights/cat840908?sensortype=pir",
+        "publisher": "Screwfix",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true,
+        "alternates": [
+          {
+            "product": "LAP Weyburn PIR 20W 2000lm White 959PG",
+            "value": 10.18,
+            "confirmed": true
+          },
+          {
+            "product": "B&Q GoodHome Lucan LED PIR floodlight (from)",
+            "value": 13,
+            "url": "https://www.diy.com/departments/lighting/outdoor-lights/security-lighting/DIY579496.cat",
+            "publisher": "B&Q",
+            "confirmed": false
+          }
+        ]
+      },
+      "fitting": {
+        "replaceMorticeLock": {
+          "value": 140,
+          "low": 115,
+          "high": 165,
+          "unit": "per lock replaced (average and range)",
+          "currency": "GBP",
+          "product": null,
+          "url": "https://www.checkatrade.com/blog/cost-guides/locksmith-prices/",
+          "publisher": "Checkatrade",
+          "date": "2026",
+          "sourceType": "trade",
+          "confirmed": false,
+          "note": "Snippet: change Yale lock GBP90-120 (avg 100); change standard uPVC lock GBP100-150; change all locks (2 doors + windows) GBP400-600 (avg 500). Page 403 to fetch; national figures, London likely higher."
+        },
+        "locksmithHourly": {
+          "value": 65,
+          "unit": "per hour, from",
+          "currency": "GBP",
+          "product": null,
+          "url": "https://www.checkatrade.com/blog/cost-guides/locksmith-prices/",
+          "publisher": "Checkatrade",
+          "date": "2026",
+          "sourceType": "trade",
+          "confirmed": false
+        }
+      }
+    },
+    "ireland_dublin": {
+      "note": "Woodie's prices include VAT at 23%.",
+      "windowLock": {
+        "value": 19.99,
+        "unit": "each",
+        "currency": "EUR",
+        "product": "Yale White PVC Window Lock 8K123LK (SKU 1126782)",
+        "url": "https://www.woodies.ie/yale-white-pvc-window-lock-8k123lk-1126782",
+        "publisher": "Woodie's",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true
+      },
+      "doorLock": {
+        "value": 47.99,
+        "unit": "each",
+        "currency": "EUR",
+        "product": "Yale 5 Lever 3in Mortice Deadlock - Brass (1126766)",
+        "url": "https://www.woodies.ie/yale-5-lever-deadlock-3-brass-1126766",
+        "publisher": "Woodie's",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true,
+        "alternates": [
+          {
+            "product": "ERA 5 Lever Chrome Mortice Deadlock (Screwfix Ireland)",
+            "value": 22.55,
+            "url": "https://www.screwfix.ie/c/security-ironmongery/mortice-locks/cat810292?morticelocktype=deadlock&nooflevers=5_lever",
+            "publisher": "Screwfix Ireland",
+            "confirmed": false
+          }
+        ]
+      },
+      "lampTimer": {
+        "value": 15.49,
+        "unit": "pack of 3",
+        "currency": "EUR",
+        "product": "Masterplug 24 Hour Mechanical Timer - Pack of 3 (1098782)",
+        "url": "https://www.woodies.ie/masterplug-24-hour-mechanical-timer-pack-of-3-1098782",
+        "publisher": "Woodie's",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true,
+        "note": "About EUR5.16 per timer; single-unit price not found."
+      },
+      "pirSecurityLight": {
+        "value": 35,
+        "unit": "each",
+        "currency": "EUR",
+        "product": "Posta 30W LED Flood w/ PIR",
+        "url": "https://www.woodies.ie/lighting-lightbulbs/outdoor-lighting/security-lights",
+        "publisher": "Woodie's",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true,
+        "alternates": [
+          {
+            "product": "Noci 10W LED FloodLight IP65 3K with PIR",
+            "value": 36,
+            "url": "https://www.woodies.ie/noci-2-x-10w-led-flood-w-180deg-adj-pir-ip65-3k",
+            "confirmed": false
+          }
+        ]
+      },
+      "fitting": {
+        "fiveLeverDeadlockInstall": {
+          "value": 125,
+          "unit": "labour, per lock",
+          "currency": "EUR",
+          "product": null,
+          "url": "https://www.locksmiths365.ie/locksmith-price-list-ireland/",
+          "publisher": "Dublin locksmith price lists (attribution across locksmiths365.ie / locksmiths247.ie / newlock.ie not verified)",
+          "date": "2026-09-30",
+          "sourceType": "trade",
+          "confirmed": false,
+          "note": "Snippets: 5-lever deadlock installation EUR125; from EUR130; supply-and-fit EUR170; window locks PVC/timber EUR25 each; anti-snap cylinder from EUR110."
+        },
+        "locksmithAttendanceMinimum": {
+          "value": 120,
+          "unit": "labour/attendance, from",
+          "currency": "EUR",
+          "product": null,
+          "url": "https://www.dynolocks.ie/locksmith-prices/",
+          "publisher": "Dyno Locks (Dublin)",
+          "date": "2025",
+          "sourceType": "trade",
+          "confirmed": true,
+          "note": "Parts quoted separately."
+        }
+      }
+    },
+    "mexico_city": {
+      "note": "Home Depot México prices include IVA at 16%.",
+      "windowLock": {
+        "value": 165,
+        "unit": "each",
+        "currency": "MXN",
+        "product": "Veker Candado para Ventana Corrediza de 1 Pulgada, modelo 1217 (SKU 659400)",
+        "url": "https://www.homedepot.com.mx/p/veker-candado-para-ventana-corrediza-de-1-pulgada-1217-659400",
+        "publisher": "The Home Depot México",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true
+      },
+      "deadbolt": {
+        "value": 479,
+        "unit": "each",
+        "currency": "MXN",
+        "product": "Defiant Cerrojo Sencillo NS, DDB501SC-S/N (SKU 131098), ANSI Grade 3",
+        "url": "https://www.homedepot.com.mx/p/defiant-cerrojo-sencillo-ns-ddb501sc-s-n-131098",
+        "publisher": "The Home Depot México",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true,
+        "alternates": [
+          {
+            "product": "Defiant Cerrojo Cilindro Llave/Llave Negro Mate DDB401SC-M-B (205432)",
+            "value": 319,
+            "confirmed": false
+          },
+          {
+            "product": "Yale Cerrojo Sencillo LA MX81018 (584260)",
+            "value": 539,
+            "confirmed": false
+          }
+        ]
+      },
+      "lampTimer": {
+        "value": 145,
+        "unit": "each",
+        "currency": "MXN",
+        "product": "Defiant Temporizador Mecánico de 24 Horas (SKU 156601), 125 V 15 A",
+        "url": "https://www.homedepot.com.mx/p/defiant-temporizador-mecanico-de-24-horas-156601-156601",
+        "publisher": "The Home Depot México",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true
+      },
+      "motionSecurityLight": {
+        "value": 445,
+        "unit": "each",
+        "currency": "MXN",
+        "product": "Illux Luminaria eléctrica para muro con sensor, negro mate, SE-2103.NKT65 (SKU 210077), 19 W 1600 lm",
+        "url": "https://www.homedepot.com.mx/p/illux-lampara-de-sobreponer-en-muro-con-sensor-de-movimiento-142-x-109-x-164-cm-2-luces-negro-luz-fria-se-2103nkt65-210077",
+        "publisher": "The Home Depot México",
+        "date": "2026-09-30",
+        "sourceType": "retailer",
+        "confirmed": true,
+        "note": "Wired. Search snippet showed $499; fetched page showed $445. Solar alternates: Illux MS-4706.N60 $679, MS-3105.N $849 (unconfirmed)."
+      },
+      "fitting": {
+        "lockInstallBasic": {
+          "value": null,
+          "low": 600,
+          "high": 1500,
+          "unit": "basic lock installation/replacement",
+          "currency": "MXN",
+          "product": null,
+          "url": "https://www.cronoshare.com.mx/cuanto-cuesta/cerrajero",
+          "publisher": "Cronoshare México",
+          "date": "2026-01",
+          "sourceType": "trade",
+          "confirmed": true,
+          "note": "Also on page: labour about MXN800; simple lock change MXN200-800; hourly MXN80-100; travel MXN60. National, not CDMX-specific."
+        },
+        "cdmxChangeLocks": {
+          "value": null,
+          "low": 400,
+          "high": 900,
+          "unit": "change latches/locks, CDMX",
+          "currency": "MXN",
+          "product": null,
+          "url": "https://mexcerrajeros.com/servicios-y-precios-de-cerrajeros-en-mexico-2025/",
+          "publisher": "MexCerrajeros",
+          "date": "2025",
+          "sourceType": "other",
+          "confirmed": false
+        }
+      }
+    }
+  },
+  "uncertain": [
+    "[evs] US Model Y Standard: $39,990 base / $1,390 destination / $250 order fee from Edmunds snippets; only the $41,630 all-in figure was read (cars.com). tesla.com and edmunds returned 403.",
+    "[evs] Equinox EV curb weight not verified (snippet 5,070.6 lb FWD; left null).",
+    "[evs] NY Drive Clean: per-model eligibility and whether Tesla stores participate not verified; April 2026 $30M top-up only from snippets.",
+    "[evs] CT: no EV fee and HB 5568 failing are from snippets only.",
+    "[evs] California MyFirstEV: $1,750/$1,750 state/OEM split and 2026-08-03 launch date from snippets; Chevrolet participation by 2026-09-30 unknown. Road Improvement Fee $121 confirmed on DMV page, but snippets also cite $118 (earlier year).",
+    "[evs] Canada EVAP amounts, $50,000 cap and FTA/China rules from secondary sources, not read on Transport Canada's page (which confirmed dates and funding only).",
+    "[evs] Canadian Equinox EV price: $46,199 MSRP vs $48,899 dealer listing vs $49,642 all-in advertised; Model Y freight/PDI $2,500 unconfirmed.",
+    "[evs] BC: official Go Electric site unreachable (expired TLS certificate); paused status from secondary sources. PST ZEV threshold details and 2027-02-22 expiry unverified.",
+    "[evs] Ontario: no incentive and no EV fee assumed; not directly verified.",
+    "[evs] Mexico: Model Y price 799,000 vs 799,900 MXN; IVA inclusion not stated. Equinox EV Mexico base price unresolved (785,000 vs 890,400 vs 900,000). Dolphin Mini price from snippets only.",
+    "[evs] CDMX: whether BEV tenencia exemption is unconditional or via the ≤638,000 MXN subsidy is contested across sources; no Código Fiscal article identified. No evidence found of a parquímetro discount for EVs.",
+    "[evs] UK: Model Y £41,990 OTR from snippets (Top Gear 403). ECG £37,000 cap confirmed; £42,000 higher-trim allowance unconfirmed. UK best-selling EV YTD not confirmed; Ford Puma Gen-E used as proxy. Puma WLTP consumption and kerb weight not found.",
+    "[evs] UK ECS threshold wording on gov.uk ambiguous about the registration window for the £50,000 ZEV threshold; £440 supplement confirmed.",
+    "[evs] Ireland: SEAI €3,500 grant not read on SEAI/gov.ie (403). Model Y Irish price conflict (€42,990 list vs €41,832 OTR snippet). Motor tax €120 from snippets. VRT taper between €40k and €50k not published on Revenue page.",
+    "[evs] EU/UK WLTP efficiency for Model Y (13.1 kWh/100 km) from a snippet; UK WLTP range 314 mi vs EU 534 km (332 mi) differ, likely wheel/market spec.",
+    "[homeCharging] seai.ie and gov.ie returned 403 to fetch; the €300 home charger grant is confirmed only via Ohme IE and myenergi IE pages restating it, and the apartment grant (€600/charge point + up to 80% infrastructure) only via search snippets of seai.ie.",
+    "[homeCharging] shop.tesla.com (all locales) and tesla.com returned 403; US/CA prices are from two press articles dated 2026-09-17 citing the shop; UK £475 and IE €535 are unverified third-party/snippet figures; Mexico Tesla shop price not obtained (snippets 10,500-10,990 MXN, unverified).",
+    "[homeCharging] homedepot.com returned 403; ChargePoint Home Flex US $539/$599 and Home Depot install range $899-1,999 are search-snippet figures. ChargePoint CA store is JS-rendered; CAD 499 (sale)/559 are snippet figures.",
+    "[homeCharging] No ChargePoint Home Flex price found at Home Depot Canada or Canadian Tire.",
+    "[homeCharging] No Home Depot México charger listing with MXN price was retrievable; Mexico charger price rests on Amazon.com.mx snippet (14,351.03 MXN).",
+    "[homeCharging] Some Toronto installer pages claim a 'Toronto Hydro PeakSaver Plus' up-to-$1,000 charger rebate and a 'federal EVAP/iMHZEV up to $5,000' for chargers; neither was found on Toronto Hydro or government sources and both appear spurious (PeakSaver ended years ago; iZEV/iMHZEV are vehicle incentives). Treated as not in force.",
+    "[homeCharging] CT program end date: third-party snippet says 2026-12-31; not verified in the Eversource manual text extracted.",
+    "[homeCharging] Con Edison: no residential charger purchase rebate found; SmartCharge New York amounts confirmed but 'about $400/yr average' is Con Edison's own estimate.",
+    "[homeCharging] SCE Charge Ready Home ($4,200 income-qualified / $2,100 DAC) is from a search snippet and applies to SCE territory, not City of Los Angeles (LADWP).",
+    "[homeCharging] BC: Tesla Wall Connector ineligibility for single-family rebate since 2025-03-12 is from a search snippet of a program guide, not the live page.",
+    "[homeCharging] Mexico: CFE separate EV meter keeps household on domestic tariff; no specific EV tariff rate or deposit confirmed (one snippet cited a 2,721 MXN deposit, unverified).",
+    "[homeCharging] UK Ohme Home Pro unit-only price (~£450-539) and Tesla UK price not confirmed on maker pages.",
+    "[tint] NYC: no named NYC shop publishing a tint-removal price was found; left null.",
+    "[tint] NY inspection fee: VS-77 is revision 7/15 of a chart 'effective January 1, 2011' ($10 safety + $27 NYMA OBDII = $37 max). Not verified that no later fee change exists as of 2026. No free-reinspection window: a fee may be charged on return if the car left the station; within 30 days only the failed portion is retested.",
+    "[tint] NY fine: VTL 375(12-a) sets no amount; the $150 maximum comes from 375(32)(a). The $88/$93 mandatory surcharge and '$80-$150 per window' are from secondary sites, unconfirmed.",
+    "[tint] NY tickets: the data.ny.gov view 8mg6-gx3g returned all ticket codes (not only tint), so tint counts were computed by filtering codes 37512A1-A4 (excluding 37512A 'no/illegal windshield' and 37512AF funeral sign). TSLED covers participating courts only; NYC misdemeanor tickets excluded. 'nycPoliceAgencies' = police_agency beginning 'NEW YORK CITY'.",
+    "[tint] NY DMV tinted-windows page did not state the meter procedure explicitly; the meter detail is from secondary sources.",
+    "[tint] Connecticut $136 total infraction (14-99g(b)) is from a search snippet of the Judicial Branch infractions chart; the PDF could not be fetched (403).",
+    "[tint] California: $25 base fine / about $197 total is from law-firm blogs, unconfirmed. No published count of VC 26708 citations found (CA DOJ RIPA stop data might support one but was not queried). No LA shop publishing a removal price found.",
+    "[tint] Ontario: the 70% front-side rule and 2017 windshield ban are from secondary sources (e-Laws page did not render). Victim fine surcharge and costs on the $85 set fine not captured. No Toronto/Ontario count of s.73(3) tickets found.",
+    "[tint] BC: the $109 fine for MVAR 7.05(8) is from secondary sources; no Vancouver shop removal price found.",
+    "[tint] Mexico City: shop prices come from a generic-named site (Polarizado Autos CDMX) with no address or date; no removal price found. UMA 2026 (117.31) is from press/secondary, not read on INEGI. The '20%' in art. 43 is ambiguous between VLT and darkening.",
+    "[tint] UK: penalty tiers are Essex Police / Safer Essex Roads practice (2020), not Metropolitan Police London; other sources cite GBP 60 + 3 points. No London removal price found.",
+    "[tint] Ireland: the RSA page (65%, S.I. 415/2017) returned 403, so content is from a search snippet; no garda fine amount confirmed; the removal price is from a Wexford shop, not Dublin.",
+    "[burglarySecurity] All US figures (Home Depot, Angi) are from search snippets; homedepot.com and angi.com returned HTTP 403 to fetch. US prices treated as national for NYC, CT and LA; state/local sales tax excluded.",
+    "[burglarySecurity] No NYC-, CT- or LA-specific locksmith labour figure was captured; Angi national ranges only.",
+    "[burglarySecurity] Canadian Tire and Home Depot Canada render prices client-side; every Canada product figure is from a search snippet (confirmed false). The Canadian Tire timer 2-pack was shown as out of stock. No wired PIR flood light price captured for Canada.",
+    "[burglarySecurity] Home Depot Canada Prime-Line sash lock price is ambiguous in snippets ($6.68 vs $7.98).",
+    "[burglarySecurity] Vancouver deadbolt install range ($80-$160) attributed to thelockdoc.ca but the snippet source was not verified; the Toronto figure (Premium Locksmith) was read on the page, dated 2025-01-09.",
+    "[burglarySecurity] Checkatrade UK lock-fitting figures (mortice replace GBP115-165, avg 140; hourly from GBP65) are snippet-only and national, not London-specific.",
+    "[burglarySecurity] Screwfix mortice deadlocks were read from a category listing; BS3621 certification not explicitly stated in the listing text beyond 'BS' in product names.",
+    "[burglarySecurity] Ireland locksmith fitting prices (EUR125-170 for a 5-lever deadlock, EUR25 per window lock) are snippet-only and the publisher per figure is not verified; the Dyno Locks EUR120 minimum attendance was read on the page.",
+    "[burglarySecurity] Woodie's timer is a 3-pack (EUR15.49); no single-unit Irish timer price found.",
+    "[burglarySecurity] Home Depot México motion light: snippet $499 vs page $445; the page described the unit as 240 V, which is unusual for Mexico (127 V) and may be a listing error.",
+    "[burglarySecurity] Mexico locksmith figures are national (Cronoshare) or from a directory site (MexCerrajeros); no CDMX locksmith's own price page was read."
+  ]
+}

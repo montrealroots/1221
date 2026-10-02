@@ -1,0 +1,526 @@
+{
+  "_meta": {
+    "purpose": "Published real-world figures for SLATE upkeep systems: periodic vehicle inspections and retests, repair costs after a failed inspection, household removal (moving) costs, and mattress disposal fees, lifespan and replacement studies.",
+    "retrieved": "2026-09-29",
+    "conventions": "sourceType 'primary' = published by the authority or operator itself; 'secondary' = press, trade body, marketplace or aggregator. confirmed = true only when the figure was read directly from the cited page, file or PDF during this session; false when it came from a search-engine summary or a page that could not be opened, or when the figure is derived. Null values mean no published figure was found. Currency amounts are in the local currency as published.",
+    "notes": [
+      "DVSA figures were read straight from the GOV.UK CSV files (DVSA/MOT/01 and DVSA/MOT/03), last updated 2026-09-10.",
+      "The RSA's NCTS annual report PDFs and rsa.ie pages returned HTTP 403 to automated fetches; the 2024 figures come from search-engine extracts of the RSA PDF and agree with independent press reporting.",
+      "The NYS DEC 2024 report, the CT DEEP 2024 report, the CDMX Gaceta Oficial of 2026-01-02, the CarMD 2026 Vehicle Health Index and the Jacobson papers were downloaded and read in full text."
+    ]
+  },
+  "inspections": {
+    "gb_mot": {
+      "initialFailureRate": {
+        "value": 0.2751,
+        "period": "Financial year 2025 to 2026 (April 2025 to March 2026)",
+        "scope": "Classes 3 and 4 combined (cars, vans and passenger vehicles with up to 12 seats); DVSA does not publish class 4 separately in this data set",
+        "tests": 33310534,
+        "passedAfterRectificationAtStation": 1733209,
+        "fails": 7429798,
+        "finalFailureRate": 0.2230,
+        "finalFailureRateMeaning": "Excludes vehicles that passed after minor defects were fixed during the test",
+        "dangerousDefectShareOfTests": 0.0722,
+        "majorDefectShareOfTests": 0.2028,
+        "averageDefectsPerInitialFailure": 2.39,
+        "source": "DVSA, MOT testing data for Great Britain, DVSA/MOT/01 and DVSA/MOT/03",
+        "url": "https://www.gov.uk/government/statistical-data-sets/mot-testing-data-for-great-britain",
+        "fileUrls": [
+          "https://assets.publishing.service.gov.uk/media/6a6cbc31cceb23e8678977c3/dvsa-mot-01-mot-test-results-by-class-of-vehicle.csv",
+          "https://assets.publishing.service.gov.uk/media/6a6cbc4c8319ab05f7caa2e7/dvsa-mot-03-mot-class-3-and-4-vehicles-initial-failures-by-defect-category.csv"
+        ],
+        "publisher": "Driver and Vehicle Standards Agency (DVSA)",
+        "date": "2026-09-10",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "DVSA states this data set is not an official statistic. In DVSA/MOT/01 the dangerous-item columns of the 2025-26 class 3-4 total row appear shifted by one row, so the dangerous and major shares here are taken from DVSA/MOT/03, which is internally consistent."
+      },
+      "initialFailureRateHistory": [
+        { "period": "2024 to 2025", "initialFailureRate": 0.2808, "finalFailureRate": 0.2267, "tests": 33128617, "confirmed": true },
+        { "period": "2025 to 2026", "initialFailureRate": 0.2751, "finalFailureRate": 0.2230, "tests": 33310534, "confirmed": true },
+        { "period": "2026 to 2027 Q1 (April to June 2026)", "initialFailureRate": 0.2675, "finalFailureRate": 0.2172, "tests": 7808594, "confirmed": true }
+      ],
+      "initialFailureByDefectCategory2025_26": {
+        "note": "Share of class 3-4 tests with one or more failure items in the category (a failed test usually has several). Source DVSA/MOT/03.",
+        "lampsReflectorsElectrical": 0.1044,
+        "suspension": 0.0890,
+        "tyres": 0.0623,
+        "brakes": 0.0610,
+        "visibility": 0.0428,
+        "bodyChassisStructure": 0.0323,
+        "noiseEmissionsLeaks": 0.0308,
+        "steering": 0.0194,
+        "seatBeltsAndRestraints": 0.0095,
+        "roadWheels": 0.0038,
+        "vehicleIdentification": 0.0033,
+        "confirmed": true
+      },
+      "failureRateByVehicleAge": {
+        "primary": null,
+        "primaryNote": "DVSA does not publish a failure rate by vehicle age. It publishes the raw 'Anonymised MOT tests and results' records (data.gov.uk), from which an age breakdown can be computed but is not published.",
+        "secondary": {
+          "firstTimePassRateByAge": { "3yrs": 0.861, "4to7yrs": 0.784, "8to12yrs": 0.678, "13plusYrs": 0.592 },
+          "source": "MOT Checkup, The State of UK MOT 2026",
+          "url": "https://www.motcheckup.co.uk/research/state-of-uk-mot-2026",
+          "publisher": "MOT Checkup",
+          "date": "2026-05-18",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "Derived by a private site from DVSA's anonymised records; methodology and period not verifiable, and its label 'DVSA published' is inaccurate because DVSA does not publish these bands. Treat as an estimate."
+        }
+      },
+      "retestRules": {
+        "freePartialRetestIfLeftAtCentre": "No fee if the vehicle is left at the test center for repair and retested within 10 working days (partial retest).",
+        "freePartialRetestNextWorkingDay": "No fee if the vehicle is taken away and brought back to the same test center before the end of the next working day, for a partial retest of listed items only (such as lamps, mirrors, windshield, tires, seat belts and about 30 other items).",
+        "partialRetestFee": "If the vehicle is taken away for repair and returned within 10 working days, a partial retest applies and a partial retest fee can be charged; GOV.UK sets no fixed amount for it.",
+        "otherwise": "A full retest at the full MOT fee.",
+        "source": "GOV.UK, Getting an MOT: Retests",
+        "url": "https://www.gov.uk/getting-an-mot/retests",
+        "publisher": "GOV.UK (DVSA)",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "maxFee": {
+        "carGBP": 54.85,
+        "class4With9to12SeatsAndSeatbeltCheckGBP": 64.00,
+        "source": "GOV.UK, Getting an MOT: MOT test fees",
+        "url": "https://www.gov.uk/getting-an-mot/mot-test-fees",
+        "publisher": "GOV.UK (DVSA)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Maximum fees; test centers may charge less."
+      }
+    },
+    "ireland_nct": {
+      "fullTestPassRate2024": {
+        "value": 0.5057,
+        "quarterly": { "Q1": 0.5192, "Q2": 0.5016, "Q3": 0.5149, "Q4": 0.4838 },
+        "previousYear2023": 0.5276,
+        "inLaneRetestPassRate2024": 0.8723,
+        "source": "National Car Testing Service (NCTS) 2024 Annual Report",
+        "url": "https://www.rsa.ie/docs/default-source/about/2024-ncts-annual-report.pdf?sfvrsn=7d4d8dc4_1",
+        "publisher": "Road Safety Authority (RSA) / NCTS",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "The PDF returned HTTP 403 to direct fetches; figures come from a search-engine extract of this PDF. The full-year 50.57% agrees with press reporting of 50.6% for 2024. The in-lane retest pass rate is single-sourced from that extract."
+      },
+      "fullTestPassRate2025": {
+        "value": 0.492,
+        "testsApprox": 1740000,
+        "failDangerousShare": 0.076,
+        "failDangerousCount": 132964,
+        "source": "TheJournal.ie, reporting NCTS figures",
+        "url": "https://www.thejournal.ie/defective-cars-ireland-6916188-Jan2026/",
+        "publisher": "TheJournal.ie",
+        "date": "2026-01-02",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "note": "The pass rate was first below 50% in five years; it has fallen every year from 54.3% in 2022. No 2025 NCTS annual report PDF was found."
+      },
+      "passRateByVehicleAge": {
+        "value": null,
+        "note": "The NCTS annual reports are believed to include age breakdowns, but the PDFs could not be opened in this session."
+      },
+      "fees": {
+        "fullTestEUR": 60,
+        "retestEUR": 40,
+        "freeVisualRetest": "Retests that do not need test equipment are free.",
+        "effectiveFrom": "2025-01-01",
+        "lateCancellationOrNoShowEUR": 24,
+        "source": "NCTS, Frequently Asked Questions",
+        "url": "https://www.ncts.ie/about-the-test/faq/",
+        "publisher": "National Car Testing Service (Applus+ for the RSA)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "The request's '€28 retest' is out of date; the equipment retest has been €40 since 2025-01-01 (full test €60, up from €55)."
+      },
+      "retestWindow": {
+        "bookWithinDays": 21,
+        "completeWithinDays": 30,
+        "rule": "The retest must be booked within 21 days of the initial test and completed within 30 days, or a full test must be repeated and paid for.",
+        "source": "NCTS, Frequently Asked Questions",
+        "url": "https://www.ncts.ie/about-the-test/faq/",
+        "publisher": "NCTS",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "new_york_state": {
+      "failureRates2024": {
+        "period": "Calendar year 2024",
+        "initialSafetyFailureRate": { "NYMA": 0.0091, "Upstate": 0.0170, "TLC": 0.1997 },
+        "initialSafetyFailureRateLightDutyVehicles": { "NYMA": 0.0106, "Upstate": 0.0188 },
+        "initialOBDEmissionsFailureRate": { "NYMA": 0.0494, "Upstate": 0.0453, "TLC": 0.0705 },
+        "initialInspections": { "NYMA": 5707469, "Upstate": 6227318, "TLC": 84099 },
+        "reinspections": { "NYMA": 255993, "Upstate": 258874, "TLC": 21843 },
+        "nonDieselOBDFailureCombined": { "NYMA": 0.0493, "Upstate": 0.0448 },
+        "dieselOBDFailureCombined": { "NYMA": 0.1778, "Upstate": 0.1362 },
+        "emissionsWaiverRateNonDiesel": { "NYMA": 0.0051, "Upstate": 0.0047 },
+        "source": "New York State Enhanced Motor Vehicle I/M Program (NYVIP3), 2024 Annual I/M Report, Table II.B.2",
+        "url": "https://dec.ny.gov/sites/default/files/2026-06/eim2024report.pdf",
+        "publisher": "New York State Department of Environmental Conservation, Division of Air Resources",
+        "date": "2025-09",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "NYMA = New York Metropolitan Area; TLC = NYC Taxi and Limousine Commission inspections. The recorded safety failure rate is very low for private stations (about 1-2%), most likely because the network records the final result after repairs made during the visit; it should not be read as the share of cars that arrive with defects. That reading is our inference; the report does not say so."
+      },
+      "reinspectionRules": {
+        "rule": "If the vehicle is not removed from the station for repair, there is no charge for the reinspection. If it is removed for repair and brought back within 30 days (with a valid rejection notice), only the failed portion (safety or emissions) is reinspected and only that portion's fee may be charged. Otherwise a full inspection applies.",
+        "source": "15 NYCRR Part 79 (sections 79.20 and 79.24), as summarized by Cornell LII and DMV form CR-79",
+        "url": "https://www.law.cornell.edu/regulations/new-york/15-NYCRR-79.24",
+        "publisher": "New York State DMV (regulation)",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "Read from search-engine extracts of the regulation, not the full text. A secondary claim that a free reinspection is always given within 10 days at the same station was not found in DMV material; the 10 days on the DMV page is the inspection extension after a private purchase, not a retest window."
+      },
+      "inspectionFee": {
+        "value": null,
+        "note": "Fees vary by region and vehicle type and are set in DMV form VS-77 (https://dmv.ny.gov/forms/vs77.pdf), not read in this session. Secondary sources give $37 for a typical upstate car with OBD emissions."
+      }
+    },
+    "connecticut": {
+      "failureRates2024": {
+        "overallInitialEmissionsFailureRate": 0.082,
+        "firstRetestFailureRate": 0.073,
+        "initialFailByType": {
+          "obdGasolineCars": 0.0746,
+          "obdGasolineTrucks": 0.0924,
+          "obdDieselCars": 0.1915,
+          "obdDieselTrucks": 0.2475,
+          "obdHybridCars": 0.0498,
+          "allCars": 0.0740,
+          "allTrucks": 0.0929
+        },
+        "initialTests": { "carsPassed": 539033, "carsFailed": 43107, "trucksPassed": 399467, "trucksFailed": 40890 },
+        "waiverShareOfFailedVehicles": 0.0013,
+        "shareOfInitialFailuresWithNoPassOrWaiver": 0.339,
+        "source": "Evaluation of Connecticut's Inspection/Maintenance Program, 2024 Annual Report (prepared by dKC - de la Torre Klausmeier Consulting)",
+        "url": "https://portal.ct.gov/-/media/deep/air/mobile/emissions-testing/annual-im-report-2024_final.pdf",
+        "publisher": "Connecticut Department of Energy and Environmental Protection and Department of Motor Vehicles",
+        "date": "2025-12",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "The 2023 report gave 8.1% initial and 5.4% first-retest failure. The program's test contractor is Opus Inspection."
+      },
+      "retestRules": {
+        "freeRetests": 1,
+        "freeRetestWindowDays": 60,
+        "rule": "One free retest per test cycle at any test center, within 60 consecutive calendar days of the initial test. After that, another $20 test fee plus a $20 DMV late fee.",
+        "testFeeUSD": 20,
+        "lateFeeUSD": 20,
+        "source": "CT Emissions Program, My Vehicle Failed FAQs",
+        "url": "https://ctemissions.com/MyVehicleFailedFAQs",
+        "publisher": "Connecticut Emissions Program (CT DMV, operated by Opus Inspection)",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "mexico_city": {
+      "rejectionRate": {
+        "value": null,
+        "note": "SEDEMA publishes the raw monthly verification records as open data (data.sedema.cdmx.gob.mx, 'Bases de datos del Programa de Verificación Vehicular') but no published rejection (rechazo) rate was found. A rate could be computed from those files."
+      },
+      "reverificationRules": {
+        "freeEvenAttempt": "The 2nd, 4th, 6th and later even-numbered attempts are free, provided the attempt before was a rejection and the retest is at the same verification center. This applies in every regular period, including the 30-day period granted after paying a late-verification fine.",
+        "extensionAfterLateRejection": "If a rejection is issued in the last 7 calendar days of the vehicle's period at a center, the period can be extended by 15 calendar days without the late fine, at the same center.",
+        "rejectedAfterPassing": "A vehicle that already passed in the semester and then gets a rejection on a new test has 30 calendar days from the rejection to pass, and must follow Hoy No Circula as a hologram-2 vehicle meanwhile.",
+        "feeFormula": "5.625 times the UMA plus VAT (IVA), the same for every result type: holograms 0, 1, 2, rejection and technical evaluation.",
+        "source": "Gaceta Oficial de la Ciudad de México No. 1770, Programa de Verificación Vehicular Obligatoria, first half of 2026, sections 5.1.9, 7.1, 7.2 and 8.6.1.1",
+        "url": "https://proyectos.sedema.cdmx.gob.mx/datos/storage/app/media/gacetas/GOCDMX_26-01-02_DGCA.pdf",
+        "publisher": "Secretaría del Medio Ambiente (SEDEMA), Mexico City Government",
+        "date": "2026-01-02",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "verificationFeeMXN": {
+        "value": 765.45,
+        "derivation": "5.625 x UMA 2026 of MXN 117.31 = 659.87, plus 16% IVA = 765.45",
+        "confirmed": false,
+        "note": "Derived, not published as a peso figure. Several 2026 press articles quote MXN 738, which equals the formula at the 2025 UMA (113.14); the fee is updated by a SEDEMA notice after the UMA changes, so the amount actually charged in 2026 should be checked against that notice. The late-verification fine of MXN 2,346.20 reported in 2026 (20 UMA at 117.31) supports the 2026 UMA value."
+      }
+    }
+  },
+  "repairs": {
+    "uk_after_mot_failure": {
+      "averageRepairBillGBP": { "cars3to5yrs": 332, "cars6to8yrs": 425 },
+      "nationalChainAverageMotInvoiceGBP": 227,
+      "nationalChainChangeSince2022": 0.70,
+      "regionalGarageMotWithRepairsGBP": { "2023": 122, "2025": 183 },
+      "source": "BookMyGarage invoice analysis, reported by Motoring Research",
+      "url": "https://www.motoringresearch.com/car-news/mot-failure-repair-costs-increase/",
+      "publisher": "Motoring Research (data: BookMyGarage)",
+      "date": "2026-06-04",
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "Based on thousands of partner-garage invoices from 2022 to 2025. The figures include the MOT fee itself (capped at £54.85). DVSA publishes no repair-cost figure. The publication date was read by a summarizing fetch and may be approximate."
+    },
+    "us_check_engine_light": {
+      "averageRepairCostUSD": 554.01,
+      "laborUSD": 222.03,
+      "partsUSD": 331.98,
+      "year": 2025,
+      "changeFromPriorYear": 0.33,
+      "priorYear2024USD": 415.31,
+      "top5": [
+        { "repair": "Replace catalytic converter(s)", "averageUSD": 1510.88, "shareOfRepairs": 0.0743 },
+        { "repair": "Replace oxygen sensor(s)", "averageUSD": 286.87, "shareOfRepairs": 0.0668 },
+        { "repair": "Replace ignition coil(s) and spark plug(s)", "averageUSD": 480, "shareOfRepairs": null },
+        { "repair": "Replace mass airflow sensor", "averageUSD": 346, "shareOfRepairs": null },
+        { "repair": "Replace ignition coil(s)", "averageUSD": 256, "shareOfRepairs": null }
+      ],
+      "regionalLowestUSD": { "Midwest": 526 },
+      "averageVehicleAgeYears": 12.8,
+      "source": "2026 CarMD Vehicle Health Index",
+      "url": "https://cdn.shopify.com/s/files/1/0934/4067/1876/files/CarMD_APR26VHI_Final.pdf?v=1776298967",
+      "publisher": "CarMD LLC",
+      "date": "2026-04-22",
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "Covers check-engine-light repairs recommended in the US in calendar 2025, not inspection failures as such; it is the closest published figure for the cost of fixing an OBD emissions failure. CarMD is a diagnostics seller."
+    },
+    "ireland_after_nct_failure": { "value": null, "note": "No published average repair cost after an NCT failure was found." },
+    "mexico_after_rechazo": { "value": null, "note": "No published average repair cost after a verification rejection was found." }
+  },
+  "removals": {
+    "us": {
+      "localMove": {
+        "averageUSD": 1696,
+        "typicalRangeUSD": [876, 2548],
+        "definition": "Within 100 miles; national average based on 6,434 verified Angi projects in 2026",
+        "byHomeSizeUSD": {
+          "1bed": [250, 700],
+          "2bed": [500, 1200],
+          "3bed": [900, 2000],
+          "4bed": [1200, 3500],
+          "5bed": [3000, 4000]
+        },
+        "packingAverageUSD": 1000,
+        "packingRangeUSD": [280, 2200],
+        "note": "The bedroom ranges assume a crew of two to three movers. Packing is not included."
+      },
+      "longDistanceMove": {
+        "rangeUSD": [2700, 10000],
+        "definition": "Over 100 miles",
+        "byHomeSizeUSD": {
+          "1bed_2000lb": [700, 3000],
+          "2bed_5000lb": [1000, 6000],
+          "3bed_9000lb": [1400, 8000],
+          "4bed_12000lb": [1800, 10000],
+          "5bed_15000lb": [3000, 12000],
+          "6bed_18000lb": [4000, 15000]
+        },
+        "byMileageUSD": {
+          "250mi": { "1to2bed": [700, 2500], "3to5bed": [2000, 6000] },
+          "500mi": { "1to2bed": [1000, 3000], "3to5bed": [3500, 7500] },
+          "1000mi": { "1to2bed": [1400, 3500], "3to5bed": [4000, 8000] },
+          "2000mi_plus": { "1to2bed": [2000, 6000], "3to5bed": [6500, 9000] }
+        },
+        "perPoundUSD": [0.50, 0.80]
+      },
+      "source": "Angi, How Much Do Movers Cost?",
+      "url": "https://www.angi.com/articles/how-much-does-it-cost-hire-movers.htm",
+      "publisher": "Angi",
+      "date": "2026-09-17",
+      "sourceType": "secondary",
+      "confirmed": true,
+      "amsaLegacyFigure": {
+        "interstateAverageUSD": 4300,
+        "intrastateAverageUSD": 2300,
+        "basis": "Reported as about 7,400 lb; interstate distance about 1,000+ miles",
+        "publisher": "American Moving & Storage Association (now part of the American Trucking Associations' Moving & Storage Conference), as cited by third parties",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Widely cited but undated and not found on an AMSA page; likely several years old. Prefer the Angi figures."
+      }
+    },
+    "uk": {
+      "averageGBP": 1080,
+      "typicalRangeGBP": [959, 1612],
+      "byHomeSizeGBP": { "1bed": 466, "2bed": 834, "3bed": 1252, "4bed": 1803, "5bed": 2661 },
+      "distanceAdjustmentsGBP": { "upTo10mi": 0, "10to50mi": [75, 150], "50to150mi": [150, 300] },
+      "packingAddOnAverageGBP": 373,
+      "basis": "Verified data from 8,598 customer moves, 2022 to 2026; packing not included",
+      "source": "Konnect You (formerly Compare My Move), House removal costs UK",
+      "url": "https://www.konnectyou.com/guides/removals/removal-company-cost",
+      "publisher": "Konnect You (Compare My Move)",
+      "date": "2026-09-22",
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "comparemymove.com now redirects to konnectyou.com. A search extract describes the 3-bed figure as for a move of about 50 miles; the page itself treats the bedroom figures as local-move baselines with distance add-ons."
+    },
+    "ireland": {
+      "threeBedAverageEUR": 1700,
+      "homeSize": "3-bedroom house",
+      "source": "Getamover.ie, Cost of moving house",
+      "url": "https://www.getamover.ie/relocation-expenses/cost-of-moving-house/",
+      "publisher": "Getamover.ie",
+      "date": "2024-11-26",
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "Approximate figure, not a survey with a stated sample. A search extract attributed €1,885 to the same site, but the live page says about €1,700. Removal firms' own guides give €1,100 to €2,500 for a 3-bed move."
+    },
+    "canada": {
+      "localMoveRangeCAD": [600, 1700],
+      "localByHomeSizeCAD": { "1bedApt": [300, 900], "2bedApt": [600, 1150], "3bedHouse": [900, 1600], "4bedHouse": [1300, 3000] },
+      "hourlyTwoPersonCrewCAD": [120, 200],
+      "crossCanadaFullServiceCAD": [4000, 12000],
+      "crossCanadaByHomeSizeCAD": { "studio": [1800, 4000], "1bed": [2800, 6000], "2bed": [4200, 9000], "3bed": [6000, 12000], "4bedPlus": [9000, 15000] },
+      "crossCanada2bedAverageCAD": 4800,
+      "source": "HomeStars, Moving Costs in Canada (2026 Guide) and How Much Does It Cost to Move Across Canada? (2026)",
+      "url": "https://www.homestars.com/moving/price-guides/moving-cost",
+      "publisher": "HomeStars",
+      "date": "2026",
+      "sourceType": "secondary",
+      "confirmed": false,
+      "note": "HomeStars pages returned HTTP 403; figures are from search-engine extracts of those pages."
+    },
+    "mexico": {
+      "localMoveAverageMXN": 3515,
+      "localMoveRangeMXN": [1600, 6500],
+      "scope": "Local moves within Mexico City, all sizes pooled (from a few items to a whole household)",
+      "basis": "Quotes requested by about 7,119 users",
+      "source": "Habitissimo, Mudanza local en Ciudad de México: precio",
+      "url": "https://www.habitissimo.com.mx/presupuesto/mudanza-local/ciudad-de-mexico",
+      "publisher": "Habitissimo México",
+      "date": "2026",
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "The figure is live and changes; a search extract the same day showed MXN 3,444 (1,600 to 6,300). Not split by home size. No government (Profeco) average was found."
+    }
+  },
+  "mattress": {
+    "disposalFees": {
+      "ikeaUS": {
+        "removalFeeFromUSD": 30,
+        "conditions": "In-store purchase of a mattress or box spring with in-home delivery, in select markets only; not available with online orders. State recycling fees apply on top in CA, CT, OR and RI.",
+        "source": "IKEA US, Removal Services",
+        "url": "https://www.ikea.com/us/en/customer-service/services/removal/",
+        "publisher": "IKEA US",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "ikeaUK": {
+        "removalFeeGBP": null,
+        "status": "Temporarily unavailable (the service via The Mattress Recycling People is suspended); IKEA refers customers to local councils or charities.",
+        "priorFeeGBP": 40,
+        "priorFeeNote": "£40 per item, from a search extract of an earlier version of the page; not current.",
+        "source": "IKEA UK, Mattress removal and recycling",
+        "url": "https://www.ikea.com/gb/en/customer-service/services/removal/",
+        "publisher": "IKEA UK",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "californiaRecyclingFee": {
+        "perUnitUSD": 18.00,
+        "previousUSD": 16.00,
+        "effective": "2026-04-01",
+        "appliesTo": "Each mattress, futon and foundation sold in California, any size; collected by the retailer at sale",
+        "program": "Bye Bye Mattress, run by the Mattress Recycling Council under CalRecycle",
+        "source": "Mattress Recycling Council, 2026 California Mattress Recycling Fee Adjustment",
+        "url": "https://mattressrecyclingcouncil.org/2026-california-mattress-recycling-fee-adjustment/",
+        "publisher": "Mattress Recycling Council",
+        "date": "2025-12-16",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "connecticutRecyclingFee": {
+        "perUnitUSD": 19.50,
+        "previousUSD": 16.00,
+        "effective": "2026-10-01",
+        "appliesTo": "Each mattress and foundation sold for use in Connecticut",
+        "source": "Mattress Recycling Council, New Recycling Fee Set for Connecticut",
+        "url": "https://mattressrecyclingcouncil.org/new-recycling-fee-set-for-connecticut/",
+        "publisher": "Mattress Recycling Council",
+        "date": "2026-07-01",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "The $19.50 fee starts 2026-10-01, the day after retrieval; $16.00 applies until then. The $16.00 prior figure comes from IKEA US's help page, not from the MRC announcement."
+      },
+      "rhodeIslandRecyclingFee": {
+        "perUnitUSD": 22.50,
+        "previousUSD": 20.50,
+        "effective": "2026-01-01",
+        "legalBasis": "Rhode Island General Laws §23-90",
+        "source": "Mattress Recycling Council, 2026 Rhode Island Recycling Fee Adjustment",
+        "url": "https://mattressrecyclingcouncil.org/2026-rhode-island-recycling-fee-adjustment/",
+        "publisher": "Mattress Recycling Council",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "replacementGuidance": {
+      "intervalYears": [6, 8],
+      "detail": "Under normal conditions replace every 6 to 8 years; lower-quality innerspring and all-foam models wear out soonest, and latex lasts longest (upwards of 8 years). Signs include sagging, noise and waking with stiffness.",
+      "source": "Sleep Foundation, When Should You Replace Your Mattress?",
+      "url": "https://www.sleepfoundation.org/mattress-information/when-should-you-replace-your-mattress",
+      "publisher": "Sleep Foundation (OneCare Media)",
+      "date": "2025-07-15",
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "Guidance, not a measured study. Sleep Foundation earns affiliate revenue on mattress sales."
+    },
+    "replacementStudies": [
+      {
+        "citation": "Jacobson BH, Boolani A, Smith DB. Changes in back pain, sleep quality, and perceived stress after introduction of new bedding systems. J Chiropr Med. 2009;8(1):1-8. doi:10.1016/j.jcm.2008.09.002. PMID 19646380; PMC2697581.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2697581/",
+        "design": "59 healthy adults (30 women, 29 men) at Oklahoma State University, 28 nights in their own beds (average 9.5 years old) and then 28 nights on a new medium-firm innerspring bed; morning 10 cm visual analog scales.",
+        "findings": {
+          "backPainVAS": { "pre": 37.1, "postWeeks1to4": 19.3, "reduction": 0.48 },
+          "sleepQualityVAS": { "pre": 43.5, "postWeeks1to4": 21.0, "postWeek4": 17.4, "improvementAsStated": 0.55, "improvementRecomputed": 0.517 },
+          "sleepQualityGainWeek1ToWeek4": 0.242,
+          "stressFactor1PerceivedReduction": 0.195,
+          "stressFactor2PhysiologicReduction": 0.215,
+          "significance": "p < .01 for sleep quality and efficiency, pre versus post"
+        },
+        "publisher": "Journal of Chiropractic Medicine (Elsevier)",
+        "date": "2009-03",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "The paper says sleep quality improved by 55%, but its own arithmetic (22.5 / 43.5) gives 52%. Lower VAS = better on both scales. Funded by the Better Sleep Council, the consumer arm of the mattress industry's trade association. No control group; the change of bed was not blinded."
+      },
+      {
+        "citation": "Jacobson BH, Wallace TJ, Smith DB, Kolb T. Grouped comparisons of sleep quality for new and personal bedding systems. Appl Ergon. 2008;39(2):247-54. doi:10.1016/j.apergo.2007.04.002. PMID 17597575.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/17597575/",
+        "design": "62 adults (33 women, 29 men) with no sleep disorder, 28 days in own beds and 28 days in new medium-firm beds.",
+        "findings": {
+          "summary": "Significant improvement for all measures (back and shoulder pain, sleep quality, comfort, efficiency), growing over time; no differences by age, weight, height or BMI; lower-back pain was significantly worse (p < 0.01) on the cheapest category of old beds; average old bed age 9.5 years.",
+          "percentages": null
+        },
+        "publisher": "Applied Ergonomics (Elsevier)",
+        "date": "2008-03 (epub 2007-06-26)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Only the abstract was read; the abstract gives no percentage changes. The request dated this 2009, but it was published in 2008."
+      },
+      {
+        "citation": "Jacobson BH, Boolani A, Dunklee G, Shepardson A, Acharya H. Effect of prescribed sleep surfaces on back pain and sleep quality in patients diagnosed with low back and shoulder pain. Appl Ergon. 2010;42(1):91-7. doi:10.1016/j.apergo.2010.05.004. PMID 20579971.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/20579971/",
+        "design": "27 chiropractic patients with chronic low back pain, 21 days in own beds, then 12 weeks on medium-firm foam and latex mattresses layered for each person's main sleep position.",
+        "findings": {
+          "summary": "Significant pre-to-post differences for all variables; back pain and stiffness kept improving (p < 0.01 between the first post-test mean and weeks 4 and 8-12); fewer days a week of poor sleep and discomfort.",
+          "percentages": null
+        },
+        "publisher": "Applied Ergonomics (Elsevier)",
+        "date": "2010 (epub 2010-06-26)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Only the abstract was read; it gives no percentage changes."
+      }
+    ]
+  },
+  "uncertain": [
+    "NCT 2024 figures (50.57% full-test pass rate, 87.23% in-lane retest pass rate) come from search-engine extracts of the RSA PDF, which returned 403; the headline agrees with press reports but was not read directly.",
+    "NCT pass rate by vehicle age: not obtained (the report PDFs are blocked).",
+    "MOT failure by vehicle age: DVSA does not publish it; the only figures found are a private site's derivation (86.1% / 78.4% / 67.8% / 59.2% first-time pass by age band), unverifiable.",
+    "DVSA class 4 alone: not published; all figures are classes 3 and 4 combined (class 3 three-wheelers are a negligible share).",
+    "New York: reinspection rules come from extracts of 15 NYCRR 79, not the full regulation text. The recorded safety failure rate (0.9-1.9%) almost certainly understates defects found, because repairs during the visit are recorded as a pass; that reading is an inference.",
+    "New York inspection fee: not read from VS-77.",
+    "Mexico City: no published rejection rate; the 2026 peso fee (765.45) is derived from the Gaceta formula and the 2026 UMA, while press articles quote 738. Confirm against SEDEMA's 2026 fee notice.",
+    "Canada removal figures: HomeStars returned 403; search extracts only.",
+    "Ireland removal: a single approximate site figure (about €1,700 for a 3-bed), with no sample size.",
+    "AMSA $4,300 interstate / $2,300 intrastate: undated and cited only second-hand.",
+    "IKEA UK: the £40 mattress collection fee is historical; the service is currently suspended.",
+    "BookMyGarage MOT repair figures: the publication date (2026-06-04) came from a summarizing fetch.",
+    "Jacobson 2008 and 2010: no percentage changes appear in the abstracts; full texts not read."
+  ]
+}

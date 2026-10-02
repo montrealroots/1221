@@ -1,0 +1,643 @@
+{
+  "_meta": {
+    "retrieved": "2026-09-30",
+    "method": "Web search plus direct page reads (WebFetch). Figures are as printed on the cited page on the retrieval date. 'primary' means the lender, operator or tax authority itself published it; 'secondary' means a broker, marketplace, press outlet or guide. 'confirmed' is true only when the figure was read directly on the cited page; false when it came from a search-engine summary or the page could not be opened.",
+    "spelling": "American",
+    "caveats": [
+      "No figure here was invented. Where a lender or operator does not print a figure, the value is null with a note.",
+      "Broker hourly rates are asking or 'from' rates that exclude positioning, landing, handling, de-icing and taxes unless stated.",
+      "Marketplace listings (GetMyBoat, OnBoat, Viator) change daily; treat them as dated snapshots."
+    ]
+  },
+
+  "planeLoans": {
+    "exampleAircraft": "Used Cessna 172, roughly $120,000 purchase price (the price itself is the brief's assumption, not a sourced figure).",
+    "sources": [
+      {
+        "lender": "AOPA Aviation Finance",
+        "url": "https://finance.aopa.org/aviation-finance/types-of-finance/piston-aircraft",
+        "publisher": "AOPA Aviation Finance Company",
+        "date": null,
+        "dateNote": "The page says 'Currently, we are seeing...' with no as-of date.",
+        "sourceType": "primary",
+        "confirmed": true,
+        "singleEngine": {
+          "rateRangeApr": { "low": 6.99, "high": 9.99, "unit": "percent" },
+          "minDownPayment": { "aircraft1960AndNewer": 15, "aircraftOlderThan1960": 20, "unit": "percent" },
+          "termYears": { "min": 5, "max": 20 },
+          "termNote": "20-year term only on loans of $75,000 and above.",
+          "minModelYear": 1960
+        },
+        "multiEngine": {
+          "minDownPayment": { "low": 15, "high": 30, "unit": "percent" },
+          "maxTermYears": { "low": 10, "high": 15 },
+          "minModelYear": 1970
+        },
+        "creditScore": null,
+        "creditScoreNote": "Not printed on this page; see the AOPA Finance Q&A below."
+      },
+      {
+        "lender": "AOPA Aviation Finance (news)",
+        "url": "https://www.aopa.org/news-and-media/all-news/2026/january/22/aircraft-loan-interest-rates-decline",
+        "publisher": "AOPA (Aircraft Owners and Pilots Association)",
+        "date": "2026-01-22",
+        "sourceType": "primary",
+        "confirmed": true,
+        "statement": "Brian Macbean, AOPA Finance's director of credit and sales, said aircraft finance rates were in the low 6 percent range; AOPA Finance offers fixed rates on 5- to 20-year terms.",
+        "rateApprox": "low 6 percent",
+        "termYears": { "min": 5, "max": 20 }
+      },
+      {
+        "lender": "AOPA Aviation Finance (Q&A)",
+        "url": "https://finance.aopa.org/resources/2022/june/08/what-is-the-minimum-credit-score-requirement-to-get-a-loan-on-an-aircraft-i-own",
+        "publisher": "AOPA Aviation Finance Company (Adam Meredith)",
+        "date": "2022-06-08",
+        "sourceType": "primary",
+        "confirmed": true,
+        "creditScoreMinTypical": 700,
+        "statement": "Most lenders are looking for a minimum 700 credit score.",
+        "note": "Dated 2022; no newer AOPA figure found."
+      },
+      {
+        "lender": "FLYING Finance (broker/lender arm of FLYING Media)",
+        "url": "https://flyingfinance.com/aircraft-loan-rates/",
+        "publisher": "FLYING Finance",
+        "date": "2026-09 (page states rates as of mid-September 2026)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "startingRatesApr": {
+          "certifiedPiston": 6.96,
+          "mosaicLightSport": 7.66,
+          "experimentalKit": 7.73,
+          "turbopropAndJet": 7.08,
+          "unit": "percent, fixed for the term, 'starting' rates"
+        },
+        "maxAmortizationYears": 20,
+        "maxLoanToValue": {
+          "newCertified": 85,
+          "usedCertifiedUnder10Years": 82,
+          "vintageLegacy": { "low": 70, "high": 75 },
+          "unit": "percent"
+        },
+        "creditScore": {
+          "preferredTier": "720+",
+          "ratePressure": "below 680",
+          "hardMinimum": null,
+          "note": "No explicit minimum printed."
+        },
+        "examplePayments": [
+          { "aircraft": "Cirrus SR22T G6 (new)", "price": 785000, "down15pct": 117750, "termYears": 20, "monthlyApprox": 5070 },
+          { "aircraft": "Piper M350 (new)", "price": 1300000, "down15pct": 195000, "termYears": 20, "monthlyApprox": 8394 }
+        ],
+        "note": "A used 172 is older than 10 years, so it falls under the 'vintage/legacy' 70-75% LTV (25-30% down) band on this lender's own table, unless it is a post-2016 airframe."
+      },
+      {
+        "lender": "Alaska Air Group Credit Union",
+        "url": "https://aagcu.org/rates/",
+        "publisher": "Alaska Air Group Credit Union",
+        "date": "2026-09-01 (effective date on the page)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "aprAsLowAs": 6.99,
+        "maxTermMonths": 180,
+        "conditions": "Personal-use (non-revenue) aircraft; term based on amount financed.",
+        "downPayment": null,
+        "downPaymentNote": "Not printed."
+      },
+      {
+        "lender": "Wings Credit Union",
+        "url": "https://www.wingscu.com/rates/aircraft",
+        "publisher": "Wings Financial Credit Union",
+        "date": "2026-09-29 (effective date on the page)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "modelYearBand": "2021 and newer only (no band printed for older aircraft)",
+        "table": [
+          { "termMonths": 84, "aprAsLowAs": 7.74, "paymentPer1000": 15.46 },
+          { "termMonths": 120, "aprAsLowAs": 8.24, "paymentPer1000": 12.26, "minLoan": 25000 },
+          { "termMonths": 180, "aprAsLowAs": 8.74, "paymentPer1000": 9.99, "minLoan": 35000 }
+        ],
+        "conditions": "Includes a 0.50% discount for $1,000+/month direct deposit; applies to loans up to $100,000.",
+        "note": "Not directly usable for a used 172 (older model year)."
+      },
+      {
+        "lender": "Airfleet Capital",
+        "url": "https://airfleetcapital.com/blog/aircraft-loan-interest-rate/",
+        "publisher": "Airfleet Capital",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": false,
+        "minLoanAmount": 100000,
+        "downPaymentPct": 20,
+        "downPaymentCondition": "Private/Part 91 aircraft, model year 2004 and newer",
+        "maxTermYears": 20,
+        "rate": null,
+        "creditScore": null,
+        "note": "Figures come from a search-engine summary of Airfleet Capital's sample terms; the page body could not be read (truncated). Airfleet prints no current rate."
+      },
+      {
+        "lender": "BMO (successor to Bank of the West)",
+        "url": null,
+        "sourceType": "primary",
+        "confirmed": false,
+        "rate": null,
+        "note": "No published aircraft loan rate found. Bank of the West was absorbed into BMO in 2023; BMO quotes aircraft loans individually."
+      },
+      {
+        "lender": "Dougherty Funding",
+        "url": null,
+        "sourceType": "primary",
+        "confirmed": false,
+        "rate": null,
+        "note": "No published consumer aircraft loan rate found; not a published-rate lender."
+      },
+      {
+        "lender": "Aircraft Finance Corporation",
+        "url": null,
+        "sourceType": "primary",
+        "confirmed": false,
+        "rate": null,
+        "note": "No page printing its rates was found in search."
+      }
+    ],
+    "summaryForModel": {
+      "aprRangeUsedSingleEnginePiston2026": { "low": 6.96, "high": 9.99, "unit": "percent", "basis": "FLYING Finance starting rate Sept 2026 to top of AOPA Finance's printed range" },
+      "typicalTermYears": { "low": 15, "high": 20 },
+      "downPaymentPct": { "typical": 15, "olderAircraft": "20-30" },
+      "creditScore": { "commonMinimum": 700, "preferredTier": 720, "source": "AOPA Finance 2022 Q&A; FLYING Finance 2026" },
+      "note": "Rates are fixed; lenders set rate by credit, aircraft age, LTV and loan size."
+    }
+  },
+
+  "emptyLegs": {
+    "sources": [
+      {
+        "operator": "VistaJet",
+        "url": "https://www.vistajet.com/en-us/empty-legs/",
+        "publisher": "VistaJet",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true,
+        "discountPct": { "low": 25, "high": 75 },
+        "statements": {
+          "discount": "Sometimes up to 75% less than a regular private charter fare; 25-75% cheaper depending on the flight.",
+          "oneWay": "An empty leg is a one-way flight only; the return has to be booked separately.",
+          "fixed": "Aircraft type, departure date and time, and destination are predetermined.",
+          "cancellation": "If the original flight is canceled, the empty leg is no longer available and the passenger has to make other plans at the last minute; final details may not be known until just before departure."
+        }
+      },
+      {
+        "operator": "Paramount Business Jets (broker)",
+        "url": "https://www.paramountbusinessjets.com/empty-leg-flights",
+        "publisher": "Paramount Business Jets",
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": true,
+        "discountPct": { "low": 25, "high": 75 },
+        "statements": {
+          "discount": "Up to 75% off standard charter; typically 25-75% less than a standard one-way charter.",
+          "fixed": "The aircraft type is fixed and cannot be swapped.",
+          "booking": "Not bookable weeks ahead like airline seats; matches surface close in.",
+          "lastMinute": "Within 24 hours of a needed repositioning with no buyer, owners sometimes accept almost any reasonable offer."
+        }
+      },
+      {
+        "operator": "Clay Lacy Aviation / Jettly / Blade (search summaries)",
+        "urls": [
+          "https://www.claylacy.com/company/news-views/charter/empty-leg-charter-flights-round-trip-one-way/",
+          "https://jettly.com/post/private-jet-one-way",
+          "https://www.blade.com/empty-leg-flights"
+        ],
+        "sourceType": "primary",
+        "confirmed": false,
+        "statements": {
+          "discount": "25-75% off standard charter prices; one source says 25-50% vs a standard one-way charter is typical.",
+          "cancellation": "If the original charter client changes plans or cancels, the empty leg can be canceled too.",
+          "cancellationRate": "One guide cites a 10-15% cancellation rate (unattributed estimate)."
+        },
+        "note": "Blade's page returned 403; these statements come from search-engine summaries, so unconfirmed."
+      }
+    ],
+    "summaryForModel": {
+      "discountPct": { "low": 25, "high": 75 },
+      "oneWayOnly": true,
+      "fixedRouteTimeAircraft": true,
+      "cancelableIfPrimaryCharterChanges": true,
+      "cancellationRatePct": null,
+      "cancellationRateNote": "No operator publishes a cancellation rate; the 10-15% figure is an unattributed guide estimate."
+    }
+  },
+
+  "jetCharterAbroad": {
+    "uk": {
+      "hourlyRates": [
+        {
+          "source": "PrivateFly (Directional Aviation / Flexjet group broker)",
+          "url": "https://www.privatefly.com/aircraft-charter/hourly-rates-for-private-jets.html",
+          "date": null,
+          "sourceType": "secondary",
+          "confirmed": true,
+          "rates": [
+            { "aircraft": "Cessna Citation Mustang (very light jet, 4 seats)", "gbp": 1300, "eur": 1535, "usd": 2037 },
+            { "aircraft": "Beechcraft King Air 200 (turboprop, 8 seats)", "gbp": 1350, "eur": 1592, "usd": 2116 },
+            { "aircraft": "Cessna Citation XLS (midsize, 7 seats)", "gbp": 2684, "eur": 3166, "usd": 4207 },
+            { "aircraft": "Learjet 45 (8 seats)", "gbp": 2989, "eur": 3526, "usd": 4685 }
+          ],
+          "note": "Undated; PrivateFly says it tracks market pricing and quotes all-inclusive trip prices."
+        },
+        {
+          "source": "ACC Aviation (broker)",
+          "url": "https://accaviation.com/en-gb/news-insights/how-much-does-it-cost-to-charter-a-private-jet/",
+          "date": "2025-04-30",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "rates": [
+            { "category": "Very light jet", "gbpPerHour": 2200 },
+            { "category": "Light jet", "gbpPerHour": 2600 },
+            { "category": "Super light jet", "gbpPerHour": 3000 }
+          ],
+          "note": "Positioning, landing and other charges add 20-40% on top."
+        },
+        {
+          "source": "Air Charter Service (broker)",
+          "url": "https://www.aircharter.co.uk/about-us/news-features/blog/how-much-does-it-cost-to-charter-a-private-jet",
+          "date": "2023-04-07",
+          "sourceType": "secondary",
+          "confirmed": true,
+          "routePrices": [
+            { "route": "London Farnborough - Manchester", "aircraft": "Citation CJ1 (5 seats)", "gbpFrom": 6500 },
+            { "route": "Liverpool - Dublin", "aircraft": "Learjet 40 (7 seats)", "gbpApprox": 12500 },
+            { "route": "London Farnborough - Ibiza", "aircraft": "Embraer Phenom 300 (7 seats)", "gbpApprox": 15000 }
+          ],
+          "note": "One-way 'from' prices, 2023."
+        }
+      ],
+      "airPassengerDuty": {
+        "lightJetUnder5_7t": {
+          "apdPayable": false,
+          "statement": "APD applies only to fixed-wing aircraft of 5.7 tonnes or more; a light jet under 5.7 t MTOW (e.g., Citation Mustang, most CJ1-CJ2, Phenom 100) is outside APD.",
+          "sources": [
+            { "url": "https://www.gov.uk/guidance/air-passenger-duty-for-plane-operators", "publisher": "HM Revenue & Customs", "date": "2026-05-01 (last updated)", "sourceType": "primary", "confirmed": true, "text": "Registration is required to operate a fixed-wing plane from a UK airport that weighs 5.7 tonnes or more." },
+            { "url": "https://www.universalweather.com/blog/uk-apd-business-aviation-guide/", "publisher": "Universal Weather and Aviation", "date": "2025-12-05", "sourceType": "secondary", "confirmed": true, "text": "General exemption for aircraft under 5.7 metric tons (12,500 lb) MTOW." }
+          ]
+        },
+        "higherRateCurrent": {
+          "appliesTo": "Aircraft of 20 tonnes or more equipped to carry fewer than 19 passengers",
+          "ratesFrom2026_04_01Gbp": { "domestic": 142, "bandA": 142, "bandB": 1097, "bandC": 1141 },
+          "reducedFrom2026_04_01Gbp": { "domestic": 8, "bandA": 15, "bandB": 102, "bandC": 106 },
+          "standardFrom2026_04_01Gbp": { "domestic": 16, "bandA": 32, "bandB": 244, "bandC": 253 },
+          "url": "https://www.gov.uk/guidance/rates-and-allowances-for-air-passenger-duty",
+          "publisher": "HM Revenue & Customs",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "Universal Weather's Dec 2025 guide gives £84 for band A higher, which is the 2025-26 figure; the GOV.UK table read on 2026-09-30 shows £142 from 1 April 2026 (consistent with the Autumn Budget 2024's 13% rise plus a further 50% for private jets). Domestic APD is charged on the departing leg only for a UK return trip."
+        },
+        "changeFromApril2027": {
+          "statement": "From April 2027 the higher rate will apply to aircraft of 5.7 tonnes or more used as a private or business jet.",
+          "url": "https://www.gov.uk/government/publications/air-passenger-duty-and-private-jets",
+          "publisher": "HM Treasury / HMRC",
+          "date": "2026-07-13",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "Light jets under 5.7 t stay outside APD after the change."
+        }
+      },
+      "vat": {
+        "rule": "UK passenger transport is zero-rated only in an aircraft designed or adapted to carry not less than 10 passengers; smaller aircraft (all light jets) are standard-rated at 20% for UK domestic flights. International legs are zero-rated as international transport.",
+        "url": "https://library.croneri.co.uk/cxe/notice-744a",
+        "publisher": "HMRC VAT Notice 744A (as reproduced by Croner-i)",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Threshold confirmed from search summaries of Notice 744A; GOV.UK page not read directly. The international zero-rating clause is from general knowledge of Notice 744A and should be verified."
+      }
+    },
+    "ireland": {
+      "hourlyRates": [
+        {
+          "source": "Air Charter Advisors (US broker), Dublin page",
+          "url": "https://www.aircharteradvisors.com/private-jet-charter/ireland/dublin/",
+          "date": null,
+          "sourceType": "secondary",
+          "confirmed": true,
+          "currency": "USD",
+          "rates": [
+            { "category": "Very light jet", "low": 2500, "high": 3500 },
+            { "category": "Light jet", "low": 3500, "high": 4800 },
+            { "category": "Super light jet", "low": 4250, "high": 5250 }
+          ]
+        },
+        {
+          "source": "Search summary of Dublin broker pages (LunaJets and others)",
+          "url": "https://www.lunajets.com/en/private-jet-charter/fly-to-dublin",
+          "date": null,
+          "sourceType": "secondary",
+          "confirmed": false,
+          "currency": "EUR",
+          "lightJetPerHour": { "low": 2500, "high": 4000 },
+          "routeFrom": [ { "route": "London - Dublin", "eurFrom": 7400 }, { "route": "Frankfurt - Dublin", "eurFrom": 10900 } ],
+          "note": "From a search-engine summary; the page itself was not read."
+        }
+      ],
+      "westonAirport": {
+        "url": "https://www.westonairport.ie/business-aviation/private-charters/",
+        "note": "Weston Airport (EIWT) refers charter to a partner (stellaer.ie); no published price. Runway 1,338 m, suits light and midsize jets and turboprops.",
+        "sourceType": "primary",
+        "confirmed": false
+      },
+      "vat": {
+        "rule": "Passenger transport is exempt from VAT in Ireland.",
+        "url": "https://www.charteredaccountants.ie/taxsourcetotal/taxpoint/features/2010/02/2010-02-1.html",
+        "publisher": "Chartered Accountants Ireland",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "From a search summary; Revenue.ie not read directly. Ireland has had no air travel tax since April 2014."
+      }
+    },
+    "canada": {
+      "hourlyRates": [
+        {
+          "source": "Novajet (Canadian operator)",
+          "url": "https://www.novajet.com/knowledge-sharing/whats-hourly-cost-private-jet-canada-and-what-really-means/",
+          "date": "Undated article (June 27, recently updated)",
+          "sourceType": "primary",
+          "confirmed": true,
+          "currency": "CAD",
+          "rates": [
+            { "category": "Turboprop", "low": 2200, "high": 3000 },
+            { "category": "Light jet", "low": 3000, "high": 5000 },
+            { "category": "Midsize jet", "low": 5000, "high": 8000 },
+            { "category": "Super-midsize", "low": 7000, "high": 10000 },
+            { "category": "Heavy jet", "low": 10000, "high": 18000 }
+          ],
+          "note": "Flight time only; repositioning, landing, de-icing and HST (domestic) are extra."
+        },
+        {
+          "source": "Skyservice / Chartright / flyExclusive Canada",
+          "url": null,
+          "sourceType": "primary",
+          "confirmed": false,
+          "rates": null,
+          "note": "None of these operators prints an hourly rate; quote on request."
+        }
+      ],
+      "gstHst": {
+        "rule": "A charter flight supplied as passenger transportation is taxable at 5% GST, or HST at the rate of a participating province where the place of supply is there, or zero-rated when the origin, termination or any stopover of the continuous journey is outside Canada.",
+        "url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/gi-170/charter-flights-supplied-third-party-charterers.html",
+        "publisher": "Canada Revenue Agency (GST/HST Info Sheet GI-170)",
+        "date": "2015-05 (last revision)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "provincialRatesNote": "HST rates (e.g., Ontario 13%) were not read from a CRA page in this pass; British Columbia is not an HST province (5% GST)."
+      }
+    },
+    "mexico": {
+      "hourlyRates": [
+        {
+          "source": "Patriot Aviation Mexico (operator/broker)",
+          "url": "https://patriotaviation.mx/cuanto-cuesta-rentar-avion-privado/",
+          "date": "2026 (article titled 'Precios 2026')",
+          "sourceType": "primary",
+          "confirmed": true,
+          "currency": "USD",
+          "rates": [
+            { "category": "Light jet (e.g., Learjet 35A, 7 pax)", "from": 2500 },
+            { "category": "Midsize (Phenom 300)", "value": 3800 },
+            { "category": "Midsize (Challenger 601/604)", "value": 5600 },
+            { "category": "Heavy (Gulfstream G550)", "upTo": 8900 }
+          ],
+          "averageUsdPerHour": 4500,
+          "note": "Rates in USD, referential; IVA not addressed on the page. Rates in Mexico are commonly quoted in USD, not MXN."
+        },
+        {
+          "source": "El Universal (press)",
+          "url": "https://www.eluniversal.com.mx/consultas/blog/empresas-y-negocios/como-funciona-cuanto-cuesta-rentar-jet-privado-mexico/",
+          "date": "2026",
+          "sourceType": "secondary",
+          "confirmed": false,
+          "lightJetFromUsdPerHour": 4620,
+          "note": "From a search summary; says to confirm currency and applicable IVA in the final quote."
+        },
+        {
+          "source": "Jetcab",
+          "url": "https://jetcab.mx/renta-de-aviones-privados/",
+          "sourceType": "primary",
+          "confirmed": true,
+          "text": "From $1,800 USD per flight (base rate, subject to availability and season).",
+          "note": "Per flight, not per hour; IVA inclusion not stated."
+        }
+      ],
+      "iva": {
+        "domesticRatePct": 16,
+        "internationalRule": "For international air transport, only 25% of the service counts as supplied in Mexico and is taxed at 16%; the other 75% is at 0% (Ley del IVA art. 16 and art. 29).",
+        "effectiveInternationalPct": 4,
+        "url": "https://www.soyconta.com/iva-vuelos-nacionales-e-internacionales/",
+        "publisher": "SoyConta",
+        "date": "2023-09-14",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "note": "The domestic 16% is the general IVA rate; the page did not state it explicitly for domestic flights. The northern and southern border-region 8% IVA incentive may apply to some services; not researched for air charter."
+      }
+    }
+  },
+
+  "boatCharterAbroad": {
+    "london": [
+      {
+        "operator": "Thames RIB Experience",
+        "url": "https://thamesribexperience.com/the-experience/",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "GBP",
+        "privateBoat12Seats": [
+          { "trip": "Tower RIB Blast", "minutes": 20, "price": 399 },
+          { "trip": "Canary Wharf Experience", "minutes": 45, "price": 625 },
+          { "trip": "Ultimate Spy Experience", "minutes": 60, "price": 710 },
+          { "trip": "Thames Barrier Experience", "minutes": 70, "price": 799 }
+        ],
+        "crewIncluded": "Skipper and guide",
+        "gratuityMentioned": false
+      },
+      {
+        "operator": "Boating at Marlow (upper Thames, not central London)",
+        "url": "https://www.boatingatmarlow.co.uk/skippered_charter.php",
+        "sourceType": "primary",
+        "confirmed": false,
+        "currency": "GBP",
+        "price": { "firstHour": 325, "eachAdditionalHour": 175, "twoHours": 500 },
+        "note": "From a search summary; page not read directly."
+      }
+    ],
+    "dublinBay": [
+      {
+        "operator": "Irish Offshore Sailing (yacht Desert Star, Jeanneau Sun Fast 37, Dún Laoghaire)",
+        "url": "https://www.irishoffshoresailing.com/yacht-charter",
+        "date": "2012 season rates (stale)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "EUR",
+        "skipperedDayRate0900to1930": 750,
+        "note": "Only a full-day rate, and dated 2012. Clients feed the skipper."
+      },
+      {
+        "operator": "Click&Boat listing, Redbay Stormforce 8.4 RIB, Dún Laoghaire",
+        "url": "https://www.clickandboat.com/en/boat-rental/dublin/rib/redbay-stormforce-8-4-2jg9911",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "currency": "EUR",
+        "halfDay": 750,
+        "fullDay": 1100,
+        "note": "From a search summary; listing now returns 404."
+      },
+      {
+        "operator": "SamBoat listing, Bénéteau Antares 750 HB, Dún Laoghaire",
+        "url": "https://www.samboat.com/boat-rental/dun-laoghaire-rathdown/motor-boat/217867",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "currency": "EUR",
+        "threeHourCruiseFrom": 260,
+        "note": "From a search summary; not read directly."
+      },
+      {
+        "operator": "Goat Boat Tours / Go Sailing / Dublin Bay Cruises",
+        "urls": [ "https://dodublin.ie/dublin-activities/private-boat-hire-dublin/goat-boat-tours", "https://www.gosailing.ie/" ],
+        "sourceType": "primary",
+        "confirmed": true,
+        "price": null,
+        "note": "Goat Boat Tours offers private RIB hire from Coal Harbour, Dún Laoghaire, up to 11 guests with skipper, but prints no price (currently unavailable). Go Sailing (53.5 ft yacht) prints no private-hire price."
+      }
+    ],
+    "toronto": [
+      {
+        "operator": "Toronto Harbour Nautical Centre (Harbourfront Centre)",
+        "url": "https://harbourfrontcentre.com/program/thncx/boat-rentals/boat-rentals/",
+        "sourceType": "primary",
+        "confirmed": true,
+        "currency": "CAD",
+        "yachtCharters": [
+          { "boat": "Niagara 35", "weekday": { "2h": 355, "3h": 455, "4h": 530, "6h": 630 }, "weekend": { "2h": 395, "3h": 495, "4h": 575, "6h": 675 } },
+          { "boat": "Hunter 24", "weekday": { "2h": 300, "3h": 375, "4h": 450, "6h": 550 }, "weekend": { "2h": 340, "3h": 420, "4h": 490, "6h": 590 } }
+        ],
+        "skipperFeePerHour": { "low": 60, "high": 80 },
+        "note": "Charters listed as 'experience required'; a skipper is hired on top, so a 2-hour weekday Niagara 35 with skipper runs roughly $475-$515 before tax (derived, not printed). Season/year and tax not stated."
+      },
+      {
+        "operator": "GetMyBoat listing 'Sail in downtown Toronto' (Hunter 28, owner-captain)",
+        "url": "https://www.getmyboat.com/trips/2NJGv41a/",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "CAD (assumed from location; not stated)",
+        "threeHours1to6Guests": { "monThu": "450-650", "friSun": "550 + 150 per person" },
+        "captainIncluded": true
+      }
+    ],
+    "vancouver": [
+      {
+        "operator": "GetMyBoat captained sailboat listings, Vancouver",
+        "url": "https://www.getmyboat.com/boat-rental/sailboat-rental/Vancouver--British-Columbia--Canada/",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "currency": "Displayed currency not stated (likely CAD or USD by viewer locale)",
+        "listings": [
+          { "boat": "35 ft Allmand sailboat", "perHour": 127, "guests": 6 },
+          { "boat": "Dufour 38", "perHour": 176, "guests": 8 },
+          { "boat": "30 ft classic yacht", "perHour": 260, "guests": 4 },
+          { "boat": "Jeanneau 50 DS (English Bay)", "perHour": 353, "guests": 10 },
+          { "boat": "50 ft catamaran", "perHour": 388, "guests": 12 }
+        ],
+        "captainIncluded": true,
+        "note": "Minimum hours not shown on the index page."
+      },
+      {
+        "operator": "Viator: Private 3-Hour Sailing Charter in Vancouver (27 ft sailboat, English Bay)",
+        "url": "https://www.viator.com/en-CA/tours/Vancouver/Private-3-Hour-Sailing-Charter-in-Vancouver/d616-23166P1",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "priceFromUsd": 223,
+        "maxGuests": 6,
+        "note": "From a search summary; the page returned 403. The operator's own domain (sailinginvancouver.com) is now parked, so the product may be defunct."
+      },
+      {
+        "operator": "Cooper Boating (Granville Island)",
+        "url": "https://www.cooperboating.com/",
+        "sourceType": "primary",
+        "confirmed": false,
+        "price": null,
+        "note": "Offers skippered charters but prints no price."
+      }
+    ],
+    "gratuityCustom": {
+      "usCanada": {
+        "customary": true,
+        "typicalPct": { "low": 15, "high": 20 },
+        "sources": [
+          { "url": "https://onboat.co/product/classic-sailing-experience/", "publisher": "OnBoat Inc (Marina del Rey)", "sourceType": "primary", "confirmed": true, "text": "Gratuity not included; suggests 10-15% for excellent service, or no less than $100 per crew." },
+          { "url": "https://www.discoverboating.com/resources/charter-boat-tipping-etiquette", "publisher": "Discover Boating (NMMA)", "sourceType": "secondary", "confirmed": false, "text": "15-20% of the charter fee customary for day trips (search summary)." },
+          { "url": "https://www.yachtcharterfleet.com/advice/captain-and-crew-gratuities-tips-how-much", "publisher": "YachtCharterFleet", "sourceType": "secondary", "confirmed": false, "text": "MYBA guideline 5-15%; American crews expect no less than 15%, European crews usually 5-10% (search summary)." }
+        ]
+      },
+      "ukIreland": {
+        "customary": false,
+        "statement": "Tipping is optional and not built into prices; a small tip for a good guided tour is appreciated but not expected. Thames RIB Experience's price page mentions no gratuity.",
+        "sources": [
+          { "url": "https://www.theirishroadtrip.com/tipping-in-ireland/", "publisher": "The Irish Road Trip", "sourceType": "secondary", "confirmed": false, "text": "Ireland does not have an American-style tipping culture (search summary)." },
+          { "url": "https://www.firebirdtours.com/travel-tips/uk-ireland/tipping-etiquette", "publisher": "Firebird Tours", "sourceType": "secondary", "confirmed": false, "text": "For tours, tipping is at the customer's discretion (search summary)." }
+        ]
+      }
+    }
+  },
+
+  "marinaDelRey": {
+    "readDirectly": [
+      {
+        "operator": "OnBoat Inc (booking operator, Marina del Rey)",
+        "url": "https://onboat.co/product/classic-sailing-experience/",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true,
+        "trip": "The Classic Sailing Experience, 58 ft 1983 Hudson Force sailboat",
+        "priceUsd": 875,
+        "hours": 3,
+        "extraHourUsd": 175,
+        "maxGuests": 12,
+        "includes": "Yacht, captain, port fees, coastal cruising fuel",
+        "gratuity": "Not included; suggested 10-15%, or no less than $100 per crew member"
+      },
+      {
+        "operator": "OnBoat Inc, Marina del Rey index",
+        "url": "https://onboat.co/marina-del-rey/",
+        "sourceType": "primary",
+        "confirmed": true,
+        "listings": [
+          { "trip": "Dream Sailing", "priceUsd": 449.99, "hours": 2, "guests": 6, "captainIncluded": true },
+          { "trip": "Luxury Sail Experience", "priceUsd": 699.99, "hours": 3, "guests": 6, "captainIncluded": true },
+          { "trip": "Sonder (motor yacht)", "priceUsd": 540, "hours": 2, "guests": 12 },
+          { "trip": "Sundancer 340 (motor yacht)", "priceUsd": 649.99, "hours": 2, "guests": 6 },
+          { "trip": "Romantic Lagoon 380 (catamaran)", "priceUsd": 949.99, "hours": 3, "guests": 12 }
+        ]
+      }
+    ],
+    "notPublished": [
+      { "operator": "Marina del Rey Sportfishing", "url": "https://mdrsf.com/", "note": "Private charters on Tortuga, Tourist and Free Spirit for 1-24 guests, but no price printed; call (310) 822-3625." },
+      { "operator": "Paradise Bound Yacht Charters", "url": "https://paradiseboundyacht.com/Home", "note": "Site unreachable (connection refused) on 2026-09-30; a search snippet mentions a $55-per-person special with a 6-person minimum, unverified." },
+      { "operator": "Bluewater Sailing", "url": "https://bluewatersailing.com/charter/", "note": "Offers USCG-captained skippered charters but prints no price on its charter page." }
+    ]
+  },
+
+  "uncertain": [
+    "Aircraft Finance Corporation, BMO (ex-Bank of the West) and Dougherty publish no aircraft loan rates that could be found; left null.",
+    "Airfleet Capital's sample terms ($100k minimum, 20% down on 2004+ aircraft, 20 years) came from a search summary, not a page read.",
+    "AOPA Finance's 700 minimum-credit-score statement dates from 2022.",
+    "No operator publishes an empty-leg cancellation rate; the 10-15% figure is an unattributed guide estimate.",
+    "PrivateFly's hourly-rate page is undated; ACS's route prices are from April 2023.",
+    "UK APD: GOV.UK rate table shows the higher rate at £142 for both domestic and band A from 1 April 2026; the domestic higher figure should be re-checked against the GOV.UK table before use, since a secondary guide gave £84 for band A (a 2025-26 figure).",
+    "UK VAT at 20% on light-jet charter (under 10 seats) is inferred from Notice 744A's 10-passenger zero-rating threshold as reported in search summaries; the international-leg zero rating was not verified on GOV.UK in this pass.",
+    "Ireland: the VAT exemption for passenger transport comes from a secondary source; Revenue.ie not read.",
+    "Canada: no operator (Skyservice, Chartright, flyExclusive) prints hourly rates; Novajet's CAD bands are the only operator-published figures found. Provincial HST rates were not re-read.",
+    "Mexico: charter rates are published in USD, not MXN; no MXN hourly rate found. The border-region 8% IVA was not researched for air charter.",
+    "Dublin Bay: no current operator page prints a 2-4 hour skippered price; the best figures are marketplace snippets (€260 for 3 hours on a motorboat; €750 half day RIB) and a 2012 €750 skippered day rate.",
+    "Vancouver: marketplace listings only; display currency not stated; the Viator 3-hour product's operator domain is parked.",
+    "Toronto: Harbourfront's yacht charters are bareboat for experienced sailors with a separately hired skipper; the combined price is derived, not printed.",
+    "Paradise Bound Yacht Charters' site was unreachable; no price confirmed."
+  ]
+}

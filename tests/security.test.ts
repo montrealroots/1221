@@ -57,7 +57,9 @@ describe('locking a card', () => {
     sim.advanceBy(40 * MS_DAY);
     const bills = sim.universe.transactions.filter((t) => t.at >= from && t.category === 'bills');
     expect(bills.length).toBeGreaterThan(0);
-    expect(bills.every((t) => t.memo === 'Bills' && t.postings.some((p) => p.accountId === card.id))).toBe(true);
+    // The bills, and from 2026-10-01 the internet and the phone by their providers (`systems/telecom.ts`).
+    expect(bills.every((t) => /^(Bills|Internet, |Phone, )/.test(t.memo) && t.postings.some((p) => p.accountId === card.id))).toBe(true);
+    expect(bills.some((t) => t.memo.startsWith('Internet, '))).toBe(true);
   });
 });
 
@@ -71,8 +73,8 @@ describe('a card reported lost, stolen or damaged', () => {
     expect(answer.fee).toBe(SECURITY['mx-bbva']!.replaceFeeDebit);
     expect(before - account.balance).toBe(answer.fee);
     expect(account.plastic!.stopped).toBe('lost');
-    // Seven business days, the bank not saying.
-    expect(answer.arrivesAt - sim.now).toBe(10 * MS_DAY);
+    // Seven business days, the bank not saying: from a Monday, the Wednesday of the week after.
+    expect(answer.arrivesAt - sim.now).toBe(9 * MS_DAY);
     expect(run(sim, 'card.report', { which: 'debit', why: 'lost' }).ok).toBe(false);
     sim.advanceTo(answer.arrivesAt + 1000);
     expect(account.plastic!.stopped).toBeUndefined();
@@ -83,7 +85,7 @@ describe('a card reported lost, stolen or damaged', () => {
     const us = lifeIn('us-ny-newyork', 'us-chase', 'sec-rush');
     const rush = us.must<{ arrivesAt: number; fee: number }>({ kind: 'card.report', payload: { which: 'debit', why: 'stolen', rush: true } });
     expect(rush.fee).toBe(15_00);
-    expect(rush.arrivesAt - us.now).toBe(3 * MS_DAY);
+    expect(rush.arrivesAt - us.now).toBe(2 * MS_DAY);
     const gb = lifeIn('uk-eng-london', 'gb-lloyds', 'sec-rush-gb');
     expect(run(gb, 'card.report', { which: 'debit', why: 'lost', rush: true }).error).toMatch(/no rush/);
     const es = lifeIn('es-md-madrid', 'es-santander', 'sec-stolen');
@@ -134,6 +136,17 @@ describe('a new account number', () => {
 });
 
 describe('somebody else’s use', () => {
+  it('meets a Mexican cardholder at CONDUSEF’s average claim, now it’s published', () => {
+    expect(laws.MX!.avgLoss).toBe(4_285_00);
+    withLaw('MX', { fraudRate: 1 });
+    const sim = lifeIn('mx-cmx-mexicocity', 'mx-bbva', 'sec-mx-fraud');
+    const hit = fraudOn(sim, sim.player, sim.now);
+    expect(hit).toBeDefined();
+    // A quarter to seven quarters of the average.
+    expect(hit!.amount).toBeGreaterThanOrEqual(Math.round(4_285_00 * 0.25) - 1);
+    expect(hit!.amount).toBeLessThanOrEqual(Math.round(4_285_00 * 1.75) + 1);
+  });
+
   it('is stopped by a British bank at its share, and otherwise goes through, on the country’s rate', () => {
     withLaw('GB', { fraudRate: 1 });
     let stopped = 0;

@@ -1,0 +1,720 @@
+/**
+ * Homes (`systems/homes.ts`): the market in a town and its turnover; offers,
+ * counters, earnest money and the inspection; the lender; owning, paying,
+ * late fees and foreclosure; the parts that wear and fail; renovations;
+ * letting; borrowing against a home; council tax; selling; and what the
+ * return reads from all of it.
+ */
+
+import { readFileSync } from 'node:fs';
+import { describe, expect, it } from 'vitest';
+import { quickSave, migrate } from '@/engine';
+import { MS_DAY } from '@/engine/core/time';
+import type { Simulation } from '@/engine/core/simulation';
+import { COUNCIL_TAX, homeValueAt, PROJECTS } from '@/engine/content/homes';
+import { addCountryCities } from '@/engine/content/geography';
+import { rentOf } from '@/engine/systems/household';
+import { yearOf } from '@/engine/systems/earnings';
+import { figuresFor, latePenalty } from '@/engine/systems/taxreturn';
+import { exchange } from '@/engine/content/currency';
+import { saveCurrency } from '@/engine/core/money';
+import { depositCapMonths } from '@/engine/systems/household';
+import { PROPERTY_MANAGERS } from '@/engine/content/propertymanagers';
+import { lettingFee, managementFee, renewalFee } from '@/engine/systems/propertymanagers';
+import { fixturesOf, trainingAt } from '@/engine/systems/dwelling';
+import { lateDays, overrunOf } from '@/engine/systems/worksrisk';
+import { billsOf } from '@/engine/systems/household';
+import {
+  HOME, askingPrice, assessedValue, borrowRefusal, closingCost, councilBand, councilTaxYear, daysListed, equityRoom, homeValue, listingsIn,
+  lifeOf, livingIn, loanBalance, marketRent, projectBid, projectBids, projectCost, minimumDown, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
+  type Listing, type OwnedHome, renewTenancy } from '@/engine/systems/homes';
+
+function save(seed: string, city = 'us-ct-newhaven'): Simulation {
+  return quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+}
+
+/** Money into their current account, from outside the story. */
+/** Played on until the works are done, late as they run (`lateDays`, from 2026-10-02). */
+function finish(sim: Simulation, owned: OwnedHome): void {
+  for (let i = 0; i < 400 && owned.works.length > 0; i += 1) sim.advanceBy(MS_DAY);
+}
+
+function give(sim: Simulation, amount: number): void {
+  sim.post({ memo: 'Test money', category: 'test', postings: [{ accountId: sim.player.primaryAccountId!, amount }, { accountId: sim.nominalAccount('equity', 'Opening Balances').id, amount: -amount }] });
+}
+
+/** Everything out of the bank. */
+function empty(sim: Simulation): void {
+  for (const a of Object.values(sim.universe.accounts)) {
+    if (a.ownerId === sim.player.id && (a.kind === 'checking' || a.kind === 'savings') && a.balance > 0) {
+      sim.post({ memo: 'gone', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('equity', 'Opening Balances').id, amount: a.balance }] });
+    }
+  }
+}
+
+/** Two years of a steady income on the record a lender reads. */
+function earning(sim: Simulation, perMonth: number): void {
+  const months: Record<string, number> = {};
+  const now = new Date(sim.now);
+  for (let n = 1; n <= 24; n++) {
+    const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - n, 15));
+    months[`${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}`] = perMonth;
+  }
+  sim.player.earnings = { years: {}, quarters: {}, equityWeeks: [], months, ukYears: {} };
+}
+
+const house = (sim: Simulation, city = 'us-ct-newhaven'): Listing => listingsIn(sim, city).find((h) => h.type === 'house' && h.parts.roof !== undefined)!;
+
+/** An offer at the asking price, accepted. */
+function offer(sim: Simulation, listing: Listing, down: number, live = true, inspect = true): void {
+  const answer = sim.must<{ answer: string }>({ kind: 'home.offer', payload: { listingId: listing.id, price: askingPrice(sim, listing), down, live, inspect } });
+  expect(answer.answer).toBe('accepted');
+}
+
+function bought(seed: string, down: number, live = true): { sim: Simulation; owned: OwnedHome } {
+  const sim = save(seed);
+  earning(sim, 40_000_00);
+  const listing = house(sim);
+  give(sim, askingPrice(sim, listing) * 1.2);
+  sim.player.credit!.score = 780;
+  offer(sim, listing, down, live);
+  sim.advanceBy(HOME.closingDays * MS_DAY + MS_DAY);
+  const owned = sim.player.homes?.find((h) => h.listingId === listing.id);
+  expect(owned).toBeDefined();
+  return { sim, owned: owned! };
+}
+
+describe('the market', () => {
+  it('has fifty homes in a town, cheapest first, spread about Zillow’s typical value', () => {
+    const sim = save('homes-fifty');
+    const homes = listingsIn(sim, 'us-ct-newhaven');
+    expect(homes).toHaveLength(50);
+    for (let n = 1; n < 50; n++) expect(askingPrice(sim, homes[n]!)).toBeGreaterThanOrEqual(askingPrice(sim, homes[n - 1]!));
+    homes.forEach((h, n) => expect(h.rank).toBe(n + 1));
+    const typical = homeValueAt('us-ct-newhaven', 'USD');
+    expect(typical.kind).toBe('zillow');
+    const middle = (homes[24]!.value + homes[25]!.value) / 2;
+    expect(middle / typical.value).toBeGreaterThan(0.85);
+    expect(middle / typical.value).toBeLessThan(1.15);
+    expect(new Set(homes.map((h) => h.address)).size).toBe(50);
+    expect(['studio', 'condo']).toContain(homes[0]!.type);
+    expect(['house', 'estate']).toContain(homes[49]!.type);
+  });
+
+  it('turns over: homes sell and others come on, and one that sits is cut in price', () => {
+    const sim = save('homes-turnover');
+    const now = listingsIn(sim, 'us-ct-newhaven').map((h) => h.id);
+    const later = listingsIn(sim, 'us-ct-newhaven', sim.now + 130 * MS_DAY).map((h) => h.id);
+    expect(later.filter((id) => !now.includes(id)).length).toBeGreaterThan(40);
+    const one = listingsIn(sim, 'us-ct-newhaven')[20]!;
+    const at = one.listedAt + 70 * MS_DAY;
+    expect(daysListed(sim, one, at)).toBe(70);
+    const before = askingPrice(sim, one, one.listedAt + 59 * MS_DAY);
+    expect(askingPrice(sim, one, at) / before).toBeLessThan(0.975);
+  });
+
+  it('is the game’s own each save, at the town’s prices', () => {
+    const one = listingsIn(save('homes-a'), 'us-ct-newhaven');
+    const two = listingsIn(save('homes-b'), 'us-ct-newhaven');
+    expect(one.map((h) => h.address)).not.toEqual(two.map((h) => h.address));
+    expect(one[25]!.value / two[25]!.value).toBeGreaterThan(0.85);
+    expect(one[25]!.value / two[25]!.value).toBeLessThan(1.15);
+  });
+
+  it('prices from rent at an estimate outside America, and calls a flat a flat in London', () => {
+    expect(homeValueAt('uk-eng-london', 'GBP').kind).toBe('estimate');
+    const sim = save('homes-london', 'uk-eng-london');
+    expect(listingsIn(sim, 'uk-eng-london').some((h) => /^Flat \d+, /.test(h.address))).toBe(true);
+  });
+});
+
+describe('an offer', () => {
+  it('is turned down far under the asking price, countered near it, and the counter taken', () => {
+    const sim = save('homes-offer');
+    earning(sim, 40_000_00);
+    sim.player.credit!.score = 780;
+    const listing = house(sim);
+    const asking = askingPrice(sim, listing);
+    give(sim, asking);
+    expect(sim.must<{ answer: string }>({ kind: 'home.offer', payload: { listingId: listing.id, price: Math.round(asking * 0.7), down: 0.2, live: true, inspect: true } }).answer).toBe('rejected');
+    const under = Math.round(asking * (sellerFloor(sim, listing, true) - 0.02));
+    const counter = sim.must<{ answer: string; price?: number }>({ kind: 'home.offer', payload: { listingId: listing.id, price: under, down: 0.2, live: true, inspect: true } });
+    expect(counter.answer).toBe('countered');
+    expect(counter.price).toBeGreaterThan(under);
+    expect(sim.must<{ answer: string }>({ kind: 'home.offer', payload: { listingId: listing.id, price: counter.price, down: 0.2, live: true, inspect: true } }).answer).toBe('accepted');
+    expect(sim.player.buying?.price).toBe(counter.price);
+    expect(listingsIn(sim, 'us-ct-newhaven').some((h) => h.id === listing.id)).toBe(false);
+  });
+
+  it('puts earnest money in escrow, which comes back inside the inspection’s window and is kept after it', () => {
+    for (const late of [false, true]) {
+      const sim = save(`homes-earnest-${late}`);
+      earning(sim, 40_000_00);
+      sim.player.credit!.score = 780;
+      const listing = house(sim);
+      give(sim, askingPrice(sim, listing));
+      offer(sim, listing, 0.2);
+      const escrow = () => Object.values(sim.universe.accounts).find((a) => a.category === 'earnest')!;
+      expect(escrow().balance).toBe(Math.round(askingPrice(sim, listing) * HOME.earnest));
+      sim.advanceBy((late ? HOME.inspectionDays + 2 : HOME.reportDays + 1) * MS_DAY);
+      expect(sim.player.buying!.inspectedAt).toBeDefined();
+      const bank = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
+      const earnest = escrow().balance;
+      sim.must({ kind: 'home.cancel', payload: {} });
+      expect(sim.universe.accounts[sim.player.primaryAccountId!]!.balance - bank).toBe(late ? 0 : earnest);
+    }
+  });
+
+  it('needs two years’ income for a mortgage and a fair record, and 15% down on a home to let', () => {
+    const sim = save('homes-lender');
+    const listing = house(sim);
+    const asking = askingPrice(sim, listing);
+    give(sim, asking);
+    expect(offerRefusal(sim, sim.player, listing.id, asking, 0.2, true)).toMatch(/income/);
+    earning(sim, 40_000_00);
+    sim.player.credit!.score = 780;
+    expect(offerRefusal(sim, sim.player, listing.id, asking, 0.2, true)).toBeUndefined();
+    sim.player.credit!.score = 600;
+    expect(offerRefusal(sim, sim.player, listing.id, asking, 0.2, true)).toMatch(/credit record/);
+    sim.player.credit!.score = 780;
+    expect(offerRefusal(sim, sim.player, listing.id, asking, 0.1, false)).toMatch(/down payment/);
+    expect(offerFor(sim, sim.player, listing, 0.2, asking, false).rate).toBeGreaterThan(offerFor(sim, sim.player, listing, 0.2, asking, true).rate);
+  });
+
+  it('pays England’s stamp duty, with a first-time buyer’s relief', () => {
+    const sim = save('homes-sdlt', 'uk-eng-london');
+    expect(closingCost(sim, 'uk-eng-london', 400_000_00, true)).toBe(5_000_00 + 4_000_00);
+    expect(closingCost(sim, 'uk-eng-london', 400_000_00, false)).toBe(10_000_00 + 4_000_00);
+  });
+});
+
+describe('owning', () => {
+  it('closes into the home, ending the lease with the deposit back', () => {
+    const { sim, owned } = bought('homes-close', 0.2);
+    expect(livingIn(sim.player)?.id).toBe(owned.id);
+    expect(rentOf(sim, sim.player)).toBe(0);
+    expect(Object.values(sim.universe.accounts).filter((x) => x.ownerId === sim.player.id && x.category === 'deposit').every((x) => x.balance === 0)).toBe(true);
+  });
+
+  it('bought to let, leaves them where they live', () => {
+    const { sim, owned } = bought('homes-invest', 0.25, false);
+    expect(livingIn(sim.player)).toBeUndefined();
+    expect(sim.player.home?.kind).not.toBe('owned');
+    expect(owned.investment).toBe(true);
+  });
+
+  it('pays the mortgage on the first, principal off the loan, counted on the record and the return', () => {
+    const { sim, owned } = bought('homes-pay', 0.2);
+    const cash = bought('homes-pay', 1).sim;
+    const before = loanBalance(sim, owned);
+    sim.advanceBy(62 * MS_DAY);
+    cash.advanceBy(62 * MS_DAY);
+    expect(owned.owed.filter((one) => one.kind === 'mortgage')).toHaveLength(0);
+    expect(loanBalance(sim, owned)).toBeLessThan(before);
+    // Two payments on time, on the record, over the same months paid in cash.
+    expect(sim.player.credit!.score - cash.player.credit!.score).toBeGreaterThanOrEqual(2 * HOME.onTimeRise);
+    const year = new Date(sim.now).getUTCFullYear();
+    expect((yearOf(sim.player, year).homeInterest ?? 0) + (yearOf(sim.player, year - 1).homeInterest ?? 0)).toBeGreaterThan(0);
+  });
+
+  it('charges mortgage insurance under 20% down, and drops it at 78% of the price', () => {
+    const quoted = save('homes-pmi-quote');
+    const one = house(quoted);
+    expect(offerFor(quoted, quoted.player, one, 0.05).month.pmi).toBeGreaterThan(0);
+    expect(offerFor(quoted, quoted.player, one, 0.2).month.pmi).toBe(0);
+    const { sim, owned } = bought('homes-pmi', 0.05);
+    expect(owned.mortgage!.pmi).toBe(true);
+    const over = loanBalance(sim, owned) - Math.floor(owned.mortgage!.original * HOME.pmiEnds);
+    give(sim, over);
+    sim.must({ kind: 'home.pay_mortgage', payload: { homeId: owned.id, amount: over - 100 } });
+    expect(owned.mortgage!.pmi).toBe(true);
+    sim.must({ kind: 'home.pay_mortgage', payload: { homeId: owned.id, amount: 100 } });
+    expect(owned.mortgage!.pmi).toBe(false);
+  });
+
+  it('charges a fee at fifteen days, reports it at thirty, and forecloses', () => {
+    const { sim } = bought('homes-late', 0.05);
+    const broke = (days: number) => { for (let d = 0; d < days; d += 5) { empty(sim); sim.advanceBy(5 * MS_DAY); } };
+    empty(sim);
+    const score = sim.player.credit!.score;
+    broke(75);
+    const owned = sim.player.homes![0]!;
+    expect(owned.owed.some((one) => one.feeCharged)).toBe(true);
+    expect(owned.owed.some((one) => one.reported)).toBe(true);
+    expect(sim.player.credit!.score).toBeLessThan(score - HOME.reportedFall + 20);
+    broke(240);
+    expect(sim.player.homes).toHaveLength(0);
+    expect(sim.player.home?.kind).toBe('sofa');
+  }, 60_000);
+
+  it('taxes a California home on what it cost, grown at 2% at most, where the market grew faster', () => {
+    addCountryCities('us', readFileSync('public/geo/us.tsv', 'utf8'));
+    const sim = save('homes-prop13', 'us-ca-irvine');
+    earning(sim, 60_000_00);
+    const listing = listingsIn(sim, 'us-ca-irvine')[30]!;
+    give(sim, askingPrice(sim, listing) * 1.2);
+    sim.player.credit!.score = 780;
+    offer(sim, listing, 1);
+    sim.advanceBy(31 * MS_DAY);
+    const owned = sim.player.homes![0]!;
+    owned.boughtAt -= 10 * 365 * MS_DAY;
+    expect(assessedValue(sim, owned)).toBeLessThanOrEqual(Math.round(owned.price * 1.02 ** 11));
+    expect(assessedValue(sim, owned)).toBeGreaterThanOrEqual(Math.round(owned.price * 1.02 ** 9));
+    expect(assessedValue(sim, owned)).toBeLessThan(homeValue(sim, owned) * 0.7);
+  });
+});
+
+describe('upkeep', () => {
+  it('fails parts the more often the more worn they are', () => {
+    const { sim, owned } = bought('homes-wear', 1);
+    const year = new Date(sim.now).getUTCFullYear();
+    const parts = owned.facts.parts;
+    const count = (wear: number) => {
+      for (const p of Object.keys(parts) as (keyof typeof parts)[]) parts[p] = year - Math.round(lifeOf(owned.facts, p) * wear);
+      owned.owed = [];
+      for (let d = 0; d < 730; d++) upkeepDay(sim, sim.player, owned, sim.now + d * MS_DAY);
+      return owned.owed.filter((one) => one.kind === 'repair').length;
+    };
+    expect(count(1.6)).toBeGreaterThan(count(0.8) * 2);
+  });
+
+  it('pays the lender before a contractor when the bank holds enough for one', () => {
+    const { sim, owned } = bought('homes-order', 0.2);
+    sim.advanceBy(40 * MS_DAY);
+    empty(sim);
+    const payment = owned.mortgage!.payment;
+    owned.owed = [
+      { kind: 'repair', dueAt: sim.now - 5 * MS_DAY, amount: payment - 10_000, what: 'Your Roof Leaked' },
+      { kind: 'mortgage', dueAt: sim.now - MS_DAY, amount: payment, escrow: { tax: 0, insurance: 0, pmi: 0 } },
+    ];
+    give(sim, payment + 10_000);
+    sim.advanceBy(MS_DAY);
+    expect(owned.owed.map((one) => one.kind)).toEqual(['repair']);
+  });
+
+  it('fails worn parts over a year, and new ones not at all', () => {
+    const { sim, owned } = bought('homes-upkeep', 1);
+    const year = new Date(sim.now).getUTCFullYear();
+    const parts = owned.facts.parts;
+    for (const p of Object.keys(parts) as (keyof typeof parts)[]) parts[p] = year;
+    let fresh = 0;
+    for (let d = 0; d < 365; d++) fresh += upkeepDay(sim, sim.player, owned, sim.now + d * MS_DAY);
+    for (const p of Object.keys(parts) as (keyof typeof parts)[]) parts[p] = year - 40;
+    let worn = 0;
+    for (let d = 0; d < 365; d++) worn += upkeepDay(sim, sim.player, owned, sim.now + d * MS_DAY);
+    expect(worn).toBeGreaterThan(fresh);
+    expect(worn).toBeGreaterThan(0);
+  });
+});
+
+describe('renovating', () => {
+  it('adds what a job returns on a worn part, and next to nothing on a new one', () => {
+    const { sim, owned } = bought('homes-reno', 1);
+    const roof = PROJECTS.find((p) => p.id === 'roof-asphalt')!;
+    const year = new Date(sim.now).getUTCFullYear();
+    owned.facts.parts.roof = year - 30;
+    const worn = projectAdds(sim, owned, roof);
+    owned.facts.parts.roof = year;
+    expect(projectAdds(sim, owned, roof)).toBe(0);
+    owned.facts.parts.roof = year - 30;
+    give(sim, 100_000_00);
+    const value = homeValue(sim, owned);
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'roof-asphalt' } });
+    finish(sim, owned);
+    expect(owned.facts.parts.roof).toBeGreaterThanOrEqual(year);
+    expect(homeValue(sim, owned) - value).toBeGreaterThanOrEqual(worn * 0.99);
+  });
+
+  it('signs the cheapest of three bids, runs late and comes in over as drawn, the difference billed (from 2026-10-02)', () => {
+    // A seed whose roof runs late and comes in over.
+    let found: { sim: Simulation; owned: OwnedHome } | undefined;
+    for (let i = 0; i < 40 && !found; i += 1) {
+      const t = bought(`homes-risk-${i}`, 1);
+      const key = `${t.owned.id}:roof-asphalt:${t.sim.now}`;
+      if (lateDays(t.sim, key, t.owned.cityId, PROJECTS.find((p) => p.id === 'roof-asphalt')!.days) > 0 && overrunOf(t.sim, key, t.owned.cityId, 1_000_00) > 0) found = t;
+    }
+    const { sim, owned } = found!;
+    const roof = PROJECTS.find((p) => p.id === 'roof-asphalt')!;
+    owned.facts.parts.roof = new Date(sim.now).getUTCFullYear() - 30;
+    give(sim, 200_000_00);
+    const bids = projectBids(sim, owned, roof);
+    expect(bids[0]).toBe(projectBid(sim, owned, roof));
+    const started = sim.now;
+    const key = `${owned.id}:roof-asphalt:${started}`;
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'roof-asphalt' } });
+    expect(owned.works[0]!.cost).toBe(bids[0]);
+    const due = owned.works[0]!.doneAt;
+    const late = lateDays(sim, key, owned.cityId, roof.days);
+    const over = overrunOf(sim, key, owned.cityId, bids[0]!);
+    sim.advanceTo(due + 60_000);
+    expect(owned.works[0]!.doneAt).toBe(due + late * MS_DAY);
+    finish(sim, owned);
+    expect(owned.improvements.at(-1)!.cost).toBe(bids[0]! + over);
+    expect(sim.universe.transactions.some((t) => t.memo.includes('over the bid'))).toBe(true);
+  });
+
+  it('refinishes worn hardwood for more than it costs, as NAR finds, and new floors for next to nothing', () => {
+    const { sim, owned } = bought('homes-refinish', 1);
+    const refinish = PROJECTS.find((p) => p.id === 'floors-refinish')!;
+    const year = new Date(sim.now).getUTCFullYear();
+    owned.facts.parts.floors = year - 40;
+    expect(projectAdds(sim, owned, refinish)).toBeGreaterThan(projectCost(sim, owned, refinish));
+    owned.facts.parts.floors = year;
+    expect(projectAdds(sim, owned, refinish)).toBe(0);
+  });
+
+  it('opens and closes work by what the home has', () => {
+    const { sim, owned } = bought('homes-deck', 1);
+    give(sim, 100_000_00);
+    owned.facts.features = owned.facts.features.filter((f) => f !== 'deck');
+    delete owned.facts.parts.deck;
+    if (!owned.facts.features.includes('yard')) owned.facts.features.push('yard');
+    const deck = PROJECTS.find((p) => p.id === 'deck-wood')!;
+    const rebuild = PROJECTS.find((p) => p.id === 'deck-renew')!;
+    expect(projectRefusal(sim, sim.player, owned, rebuild)).toMatch(/deck/);
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'deck-wood' } });
+    finish(sim, owned);
+    expect(projectRefusal(sim, sim.player, owned, deck)).toMatch(/has a deck/);
+    expect(projectRefusal(sim, sim.player, owned, rebuild)).toBeUndefined();
+    owned.facts.baths = owned.facts.beds + 1;
+    expect(projectRefusal(sim, sim.player, owned, PROJECTS.find((p) => p.id === 'bath-add')!)).toMatch(/baths enough/);
+  });
+});
+
+describe('rooms and removals', () => {
+  it('makes a spare bedroom a home gym, which trains as a gym does and lets for more', () => {
+    const { sim, owned } = bought('homes-gym', 1);
+    give(sim, 100_000_00);
+    owned.facts.fixtures = { ...fixturesOf(sim, sim.player, owned.cityId, owned.facts, owned.id), gym: 'none' };
+    const gym = PROJECTS.find((p) => p.id === 'home-gym')!;
+    const beds = owned.facts.beds;
+    owned.facts.beds = 1;
+    expect(projectRefusal(sim, sim.player, owned, gym)).toBe('It has no spare bedroom.');
+    owned.facts.beds = Math.max(2, beds);
+    const rent = marketRent(sim, owned, 'main');
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'home-gym' } });
+    finish(sim, owned);
+    expect(owned.facts.fixtures!.gym).toBe('home');
+    expect(marketRent(sim, owned, 'main')).toBeGreaterThan(rent);
+    expect(trainingAt(sim, sim.player).where).toBe('gym');
+    expect(projectRefusal(sim, sim.player, owned, gym)).toBe('It has a gym already.');
+  });
+
+  it('takes out a pool, its upkeep gone from the bills and its part no longer wearing', () => {
+    const { sim, owned } = bought('homes-pool-out', 1);
+    give(sim, 100_000_00);
+    owned.facts.type = 'house';
+    if (!owned.facts.features.includes('pool')) owned.facts.features.push('pool');
+    owned.facts.parts.pool = 2000;
+    const removal = PROJECTS.find((p) => p.id === 'pool-removal')!;
+    const bills = billsOf(sim, sim.player);
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'pool-removal' } });
+    finish(sim, owned);
+    expect(owned.facts.features).not.toContain('pool');
+    expect(owned.facts.parts.pool).toBeUndefined();
+    expect(billsOf(sim, sim.player)).toBeLessThan(bills);
+    expect(projectRefusal(sim, sim.player, owned, removal)).toBe('It needs a pool.');
+  });
+
+  it('takes down a deck, and pulls down a garage', () => {
+    const { sim, owned } = bought('homes-deck-out', 1);
+    give(sim, 100_000_00);
+    owned.facts.type = 'house';
+    for (const one of ['deck', 'garage'] as const) if (!owned.facts.features.includes(one)) owned.facts.features.push(one);
+    owned.facts.parts.deck = 2010;
+    owned.facts.parts.garageDoor = 2010;
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'deck-removal' } });
+    sim.must({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'garage-demolition' } });
+    finish(sim, owned);
+    expect(owned.facts.features).not.toContain('deck');
+    expect(owned.facts.features).not.toContain('garage');
+    expect(owned.facts.parts.deck).toBeUndefined();
+    expect(owned.facts.parts.garageDoor).toBeUndefined();
+  });
+});
+
+describe('letting', () => {
+  it('finds a tenant, takes the deposit and the rent, and the return reads it', () => {
+    const { sim, owned } = bought('homes-let', 0.25, false);
+    sim.must({ kind: 'home.let', payload: { homeId: owned.id, rent: 2_000_00 } });
+    sim.advanceBy(120 * MS_DAY);
+    const t = owned.tenancies.find((one) => one.unit === 'main')!;
+    expect(t.status).toBe('let');
+    const deposit = sim.universe.accounts[t.depositAccountId!]!;
+    expect(deposit.balance).toBe(-2_000_00);
+    const got = Object.values(sim.player.earnings!.years).reduce((s, y) => s + (y.rentalRent ?? 0), 0);
+    expect(got).toBeGreaterThanOrEqual(2_000_00);
+  }, 60_000);
+
+  it('asks no more than the market bears, and not of a home they live in', () => {
+    const { sim, owned } = bought('homes-let-refuse', 0.2);
+    expect(sim.execute({ kind: 'home.let', payload: { homeId: owned.id, rent: 1_000_00 } }).ok).toBe(false);
+    const other = bought('homes-let-high', 0.25, false);
+    expect(other.sim.execute({ kind: 'home.let', payload: { homeId: other.owned.id, rent: 1_000_000_00 } }).ok).toBe(false);
+  });
+});
+
+describe('a letting agent', () => {
+  it('lets a home while you’re away, where letting it yourself waits for you to hand over the keys', () => {
+    const self = bought('homes-agent-self', 0.25, false);
+    self.sim.player.currentLocationId = 'us-ny-newyork';
+    self.sim.must({ kind: 'home.let', payload: { homeId: self.owned.id, rent: 2_000_00 } });
+    self.sim.advanceBy(200 * MS_DAY);
+    expect(self.owned.tenancies[0]!.status).toBe('advertised');
+    self.sim.player.currentLocationId = 'us-ct-newhaven';
+    self.sim.advanceBy(2 * MS_DAY);
+    expect(self.owned.tenancies[0]!.status).toBe('let');
+
+    const { sim, owned } = bought('homes-agent', 0.25, false);
+    sim.player.currentLocationId = 'us-ny-newyork';
+    sim.must({ kind: 'home.manager', payload: { homeId: owned.id, on: true } });
+    expect(owned.manager).toBe('nexus-new-haven');
+    sim.must({ kind: 'home.let', payload: { homeId: owned.id, rent: 2_000_00 } });
+    const before = sim.universe.transactions.length;
+    sim.advanceBy(200 * MS_DAY);
+    expect(owned.tenancies[0]!.status).toBe('let');
+    const fees = sim.universe.transactions.slice(before).filter((t) => t.memo.startsWith('Nexus Property Management'));
+    const paid = (memo: string) => fees.filter((t) => t.memo.includes(memo)).map((t) => t.postings.find((q) => q.amount > 0 && q.accountId !== sim.player.primaryAccountId)?.amount ?? 0);
+    // The greater of half the first month or $450; then 8% of a rent over $1,200 a month.
+    expect(paid('letting it')).toEqual([1_000_00]);
+    expect(paid('managing it').length).toBeGreaterThan(0);
+    expect(paid('managing it').every((x) => x === 160_00)).toBe(true);
+  }, 120_000);
+
+  it('charges its own terms: a least, a flat fee, a share by renewals, a year’s share to let', () => {
+    const { sim } = bought('homes-agent-terms', 0.25, false);
+    const t = (rent: number, renewals = 0) => ({ unit: 'main' as const, rent, status: 'let' as const, since: 0, renewals });
+    const usd = (n: number) => { const c = Math.round(n * 100); return saveCurrency(sim.universe) === 'USD' ? c : exchange(c, 'USD', saveCurrency(sim.universe))!; };
+    const m = (id: string) => PROPERTY_MANAGERS.find((x) => x.id === id)!;
+    expect(managementFee(sim, m('pmi-los-angeles'), t(usd(1_000)))).toBe(usd(175));
+    expect(managementFee(sim, m('pmi-los-angeles'), t(usd(5_000)))).toBe(usd(300));
+    expect(managementFee(sim, m('nexus-new-haven'), t(usd(800)))).toBe(usd(80));
+    expect(managementFee(sim, m('nexus-new-haven'), t(usd(1_000)))).toBe(usd(90));
+    expect(m('foxtons').share(2_000, 0)).toBeCloseTo(0.204, 9);
+    expect(m('foxtons').share(2_000, 2)).toBeCloseTo(0.168, 9);
+    expect(m('foxtons').share(2_000, 3)).toBeCloseTo(0.132, 9);
+    expect(m('property-vision').flat).toBeCloseTo(738, 9);
+    expect(m('pmp-toronto').letting(2_000)).toBeCloseTo(2_016, 9);
+    expect(lettingFee(sim, m('pmi-los-angeles'), t(usd(2_000)))).toBe(usd(1_500));
+    expect(renewalFee(sim, m('pmi-los-angeles'))).toBe(usd(195));
+  });
+
+  it('is hired where one publishes its fees, and let go', () => {
+    const { sim, owned } = bought('homes-agent-cmd', 0.25, false);
+    expect(sim.execute({ kind: 'home.manager', payload: { homeId: owned.id, on: false } }).error).toBe('No agent manages it.');
+    sim.must({ kind: 'home.manager', payload: { homeId: owned.id, on: true } });
+    expect(sim.execute({ kind: 'home.manager', payload: { homeId: owned.id, on: true } }).error).toBe('Nexus Property Management manages it already.');
+    sim.must({ kind: 'home.manager', payload: { homeId: owned.id, on: false } });
+    expect(owned.manager).toBeUndefined();
+    owned.cityId = 'us-ny-newyork';
+    expect(sim.execute({ kind: 'home.manager', payload: { homeId: owned.id, on: true } }).error).toBe('No agent there publishes its fees.');
+  });
+
+  it('charges a renewal’s fee, and counts the renewals its share reads', () => {
+    const { sim, owned } = bought('homes-agent-renew', 0.25, false);
+    owned.cityId = 'us-ca-losangeles';
+    owned.manager = 'pmi-los-angeles';
+    const t = { unit: 'main' as const, rent: 2_000_00, status: 'let' as const, since: sim.now, leaseEnds: sim.now };
+    const before = sim.universe.transactions.length;
+    renewTenancy(sim, sim.player, owned, t, 1_900_00);
+    expect(t).toMatchObject({ rent: 2_000_00, renewals: 1 });
+    const fee = sim.universe.transactions.slice(before).find((x) => x.memo.startsWith('PMI Los Angeles, a renewal'))!;
+    expect(fee.postings.find((q) => q.amount > 0)!.amount).toBe(renewalFee(sim, PROPERTY_MANAGERS[0]!));
+    renewTenancy(sim, sim.player, owned, t, 2_100_00);
+    expect(t).toMatchObject({ rent: 2_100_00, renewals: 2 });
+  });
+});
+
+describe('borrowing against it', () => {
+  it('lends to 80% of the value less the mortgage, and paid monthly', () => {
+    const { sim, owned } = bought('homes-heloc', 1);
+    const room = equityRoom(sim, owned);
+    expect(room).toBeLessThanOrEqual(homeValue(sim, owned) * HOME.equityCeiling - loanBalance(sim, owned));
+    expect(borrowRefusal(sim, sim.player, owned, room + 100_000_00)).toMatch(/80%/);
+    const amount = Math.min(room, 20_000_00);
+    sim.must({ kind: 'home.borrow', payload: { homeId: owned.id, amount } });
+    expect(owedOn(sim, owned.equity)).toBe(amount);
+    sim.advanceBy(40 * MS_DAY);
+    expect(owedOn(sim, owned.equity)).toBeLessThan(amount);
+  });
+});
+
+describe('council tax', () => {
+  it('bands a home by its 1991 value and takes a quarter off for somebody alone', () => {
+    const sim = save('homes-council', 'uk-eng-london');
+    expect(councilBand(sim, 0, 'uk-eng-london')).toBe(0);
+    const d = councilTaxYear(sim, 3, false);
+    expect(councilTaxYear(sim, 7, false) / d).toBeCloseTo(2, 5);
+    expect(councilTaxYear(sim, 3, true) / d).toBeCloseTo(1 - COUNCIL_TAX.livingAlone, 5);
+    expect(rentersCouncilTax(sim, sim.player)).toBeGreaterThan(0);
+    expect(rentersCouncilTax(save('homes-council-ny', 'us-ny-newyork'), save('homes-council-ny2', 'us-ny-newyork').player)).toBe(0);
+  });
+});
+
+describe('selling', () => {
+  it('closes forty-five days on, pays off the loan, and moves them into a rented home', () => {
+    const { sim, owned } = bought('homes-sell', 0.2);
+    const net = saleNet(sim, owned);
+    const checking = () => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
+    const before = checking();
+    sim.must({ kind: 'home.sell', payload: { homeId: owned.id, then: 'own' } });
+    sim.advanceBy((HOME.saleDays + 1) * MS_DAY);
+    expect(sim.player.homes).toHaveLength(0);
+    expect(sim.player.home?.kind).toBe('own');
+    expect(sim.universe.accounts[owned.mortgage!.accountId]!.balance).toBe(0);
+    expect(checking() - before).toBeGreaterThan(net * 0.8);
+  }, 60_000);
+
+  it('keeps a lived-in home’s gain free of tax after two years, and taxes a quick flip’s', () => {
+    const { sim, owned } = bought('homes-gain', 1);
+    owned.price = Math.round(owned.price / 3);
+    owned.boughtAt -= 3 * 365 * MS_DAY;
+    owned.occupied[0]!.from -= 3 * 365 * MS_DAY;
+    sim.must({ kind: 'home.sell', payload: { homeId: owned.id, then: 'own' } });
+    sim.advanceBy((HOME.saleDays + 1) * MS_DAY);
+    const year = new Date(sim.now).getUTCFullYear();
+    const y = yearOf(sim.player, year);
+    expect(y.homeGainExcluded ?? 0).toBeGreaterThan(0);
+    const flip = bought('homes-flip', 1, false);
+    // Worth half as much again as it cost, on the day.
+    flip.owned.improvements.push({ projectId: 'paint', at: flip.sim.now, value: Math.round(flip.owned.price / 2), cost: 0 });
+    flip.sim.must({ kind: 'home.sell', payload: { homeId: flip.owned.id } });
+    flip.sim.advanceBy((HOME.saleDays + 1) * MS_DAY);
+    const fy = yearOf(flip.sim.player, new Date(flip.sim.now).getUTCFullYear());
+    expect(fy.homeGainShort ?? 0).toBeGreaterThan(0);
+    expect(fy.homeGainExcluded ?? 0).toBe(0);
+    expect(figuresFor(flip.sim.player, new Date(flip.sim.now).getUTCFullYear()).income).toBeGreaterThanOrEqual(fy.homeGainShort ?? 0);
+  }, 60_000);
+});
+
+describe('the return', () => {
+  it('itemizes when a home’s interest and taxes beat the standard deduction, and not otherwise', () => {
+    const sim = save('homes-itemize');
+    const year = new Date(sim.now).getUTCFullYear();
+    const y = yearOf(sim.player, year);
+    y.acting = 150_000_00;
+    const plain = figuresFor(sim.player, year);
+    expect(plain.itemized).toBe(0);
+    y.homeInterest = 30_000_00;
+    y.homeTax = 8_000_00;
+    const itemized = figuresFor(sim.player, year);
+    expect(itemized.itemized).toBeGreaterThanOrEqual(38_000_00);
+    expect(itemized.federal).toBeLessThan(plain.federal);
+  });
+
+  it('allows a rental loss only to $25,000 less half of income over $100,000', () => {
+    const sim = save('homes-passive');
+    const year = new Date(sim.now).getUTCFullYear();
+    const y = yearOf(sim.player, year);
+    y.rentalRent = 10_000_00;
+    y.rentalCosts = 50_000_00;
+    y.acting = 90_000_00;
+    expect(figuresFor(sim.player, year).rental).toBe(-25_000_00);
+    y.acting = 140_000_00;
+    expect(figuresFor(sim.player, year).rental).toBe(-5_000_00);
+  });
+});
+
+describe('an older save', () => {
+  it('has its one home moved into the list of homes', () => {
+    const { sim } = bought('homes-migrate', 1);
+    const universe = structuredClone(sim.universe);
+    const person = universe.people[universe.playerId]! as unknown as Record<string, unknown>;
+    const [home] = person.homes as OwnedHome[];
+    person.owned = { ...home, id: undefined };
+    delete person.homes;
+    migrate(universe);
+    expect((universe.people[universe.playerId]!.homes ?? [])[0]?.id).toBe('home-1');
+  });
+});
+
+describe('the law, as it stands', () => {
+  it('adds England’s 5% on a home bought beside one already owned', () => {
+    const sim = save('homes-surcharge', 'uk-eng-london');
+    expect(closingCost(sim, 'uk-eng-london', 400_000_00, false, true) - closingCost(sim, 'uk-eng-london', 400_000_00, false)).toBe(20_000_00);
+  });
+
+  it('asks Canada’s 5% to C$500,000, 10% past it, 20% from C$1.5 million and on a home to let', () => {
+    const sim = quickSave({ startLocationId: 'ca-on-toronto', homeRegionId: 'ca-on-toronto', livesWhereBorn: true, wealth: 'wealthy' }, 'homes-ca');
+    const cad = (n: number) => exchange(n * 100, 'CAD', saveCurrency(sim.universe))!;
+    expect(minimumDown(sim, 'ca', cad(400_000), true)).toBeCloseTo(0.05, 3);
+    expect(minimumDown(sim, 'ca', cad(1_000_000), true)).toBeCloseTo(0.075, 3);
+    expect(minimumDown(sim, 'ca', cad(2_000_000), true)).toBe(0.2);
+    expect(minimumDown(sim, 'ca', cad(400_000), false)).toBe(0.2);
+    expect(minimumDown(sim, 'ie', 100_000_00, false)).toBe(0.3);
+  });
+
+  it('keeps depreciation taken while a home was let out of the gain kept free', () => {
+    const { sim, owned } = bought('homes-recapture', 1);
+    owned.price = Math.round(owned.price / 3);
+    owned.boughtAt -= 3 * 365 * MS_DAY;
+    owned.occupied[0]!.from -= 3 * 365 * MS_DAY;
+    owned.depreciated = 40_000_00;
+    sim.must({ kind: 'home.sell', payload: { homeId: owned.id, then: 'own' } });
+    sim.advanceBy((HOME.saleDays + 1) * MS_DAY);
+    const y = yearOf(sim.player, new Date(sim.now).getUTCFullYear());
+    expect((y.homeGain ?? 0) + (y.homeGainShort ?? 0) + (y.homeGain1250 ?? 0)).toBeGreaterThanOrEqual(40_000_00);
+  }, 60_000);
+
+  it('holds a late filing’s own penalty to 22.5%, with paying late running on to 25%', () => {
+    const due = Date.UTC(2027, 3, 15);
+    // Fourteen months late on $100,000: paying late 0.5% a month, 7%; filing late 4.5% a month for five, 22.5%.
+    expect(latePenalty(10_000_000, due, due + 400 * MS_DAY)).toBe(Math.round(10_000_000 * (0.225 + 0.07)));
+  });
+
+  it('holds a Northern Ireland landlord to a month’s deposit', () => {
+    addCountryCities('uk', readFileSync('public/geo/uk.tsv', 'utf8'));
+    expect(depositCapMonths('uk-nir-belfast')).toBe(1);
+  });
+});
+
+describe('a sale on the return', () => {
+  it('taxes the depreciation taken as income to 25%, apart from the rest of the gain', () => {
+    const flip = bought('homes-1250', 1, false);
+    flip.owned.boughtAt -= 3 * 365 * MS_DAY;
+    flip.owned.depreciated = 30_000_00;
+    flip.owned.improvements.push({ projectId: 'paint', at: flip.sim.now, value: Math.round(flip.owned.price / 2), cost: 0 });
+    flip.sim.must({ kind: 'home.sell', payload: { homeId: flip.owned.id } });
+    flip.sim.advanceBy((HOME.saleDays + 1) * MS_DAY);
+    const y = yearOf(flip.sim.player, new Date(flip.sim.now).getUTCFullYear());
+    expect(y.homeGain1250).toBe(30_000_00);
+    expect(y.homeGain ?? 0).toBeGreaterThan(0);
+  }, 60_000);
+
+  it('taxes recaptured depreciation at 25% in a high bracket, with the investment income tax on it', () => {
+    const sim = save('homes-1250-rate');
+    const year = new Date(sim.now).getUTCFullYear();
+    const y = yearOf(sim.player, year);
+    y.acting = 500_000_00;
+    const before = figuresFor(sim.player, year).gainTax ?? 0;
+    y.homeGain1250 = 100_000_00;
+    // 25% (the bracket is 35%) and 3.8%.
+    expect((figuresFor(sim.player, year).gainTax ?? 0) - before).toBeCloseTo(28_800_00, -3);
+  });
+
+  it('cuts the exclusion by the share of the years owned before they first lived in it', () => {
+    // Owned six years either way, the same gain: lived in all six, or only the last three.
+    const excluded = (letFirstYears: number) => {
+      const { sim, owned } = bought('homes-nonq', 1);
+      owned.price = Math.round(owned.price / 3);
+      owned.boughtAt -= 6 * 365 * MS_DAY;
+      owned.occupied[0]!.from = owned.boughtAt + letFirstYears * 365 * MS_DAY;
+      sim.must({ kind: 'home.sell', payload: { homeId: owned.id, then: 'own' } });
+      sim.advanceBy((HOME.saleDays + 1) * MS_DAY);
+      return yearOf(sim.player, new Date(sim.now).getUTCFullYear()).homeGainExcluded ?? 0;
+    };
+    expect(excluded(3)).toBeLessThan(excluded(0) * 0.75);
+  }, 120_000);
+
+  it('lets the losses held back go in full the year a let home is sold', () => {
+    const sim = save('homes-freed');
+    const year = new Date(sim.now).getUTCFullYear();
+    const before = yearOf(sim.player, year - 1);
+    before.rentalRent = 10_000_00; before.rentalCosts = 60_000_00; before.acting = 160_000_00;
+    const y = yearOf(sim.player, year);
+    y.rentalRent = 10_000_00; y.rentalCosts = 10_000_00; y.acting = 160_000_00;
+    expect(figuresFor(sim.player, year).rental).toBe(0);
+    y.rentalDisposed = 1;
+    expect(figuresFor(sim.player, year).rental).toBe(-50_000_00);
+  });
+});

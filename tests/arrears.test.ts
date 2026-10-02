@@ -26,7 +26,7 @@ import { CHEX, ESTIMATE, FRANCE, FRENCH_CARDS, cardCeilingRoom, chargeForItem, l
 import { spend } from '@/engine/systems/household';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { BREAK_NOTICE } from '@/engine/systems/accountlife';
-import { BONUSES, bonusRewards } from '@/engine/systems/cardoffers';
+import { BONUSES, KOREA_TELECOM_OF_BILLS, bonusRewards, lastMonthSpend } from '@/engine/systems/cardoffers';
 import { exchange } from '@/engine/content/currency';
 import type { CreditState } from '@/engine/systems/credit';
 
@@ -312,6 +312,36 @@ describe('the banks’ open rules', () => {
     expect(cardCeilingRoom(us, us.player)).toBeUndefined();
   });
 
+  it('in Canada: overdraft protection by the use instead of the month, once a day at TD, where the bank sells it so', () => {
+    const sim = lifeIn('ca-on-toronto', 'ca-td', 'ca-per-use', 'wealthy');
+    const acct = current(sim);
+    acct.overdraftLimit = 1_000_00;
+    acct.overdraftPerUse = true;
+    const fees = () => sim.universe.transactions.filter((t) => t.memo === 'Overdraft fee').length;
+    set(sim, acct, -50_00);
+    chargeForItem(sim, sim.player, 50_00);
+    set(sim, acct, -80_00);
+    chargeForItem(sim, sim.player, 30_00);
+    expect(fees()).toBe(1);
+    // RBC sells no pay-per-use: nothing by the use.
+    const rbc = lifeIn('ca-on-toronto', 'ca-rbc', 'ca-rbc-use', 'wealthy');
+    Object.assign(current(rbc), { overdraftLimit: 1_000_00, overdraftPerUse: true });
+    set(rbc, current(rbc), -50_00);
+    chargeForItem(rbc, rbc.player, 50_00);
+    expect(rbc.universe.transactions.filter((t) => t.memo === 'Overdraft fee')).toHaveLength(0);
+  });
+
+  it('in France: LCL’s 21.02% on an unauthorized overdraft, a day at a time, beside its commission', () => {
+    const sim = lifeIn('fr-idf-paris', 'fr-lcl', 'fr-lcl-rate');
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'savings') set(sim, a, 0);
+    const acct = current(sim);
+    set(sim, acct, -1_000_00);
+    acct.odAccrued = 0;
+    sim.advanceBy(86_400_000);
+    expect(acct.odAccrued).toBeGreaterThan(0);
+    expect(acct.odAccrued!).toBeCloseTo((-acct.balance) * 0.2102 / 365, -1);
+  });
+
   it('in the US: no fee on a small item, Bank of America’s two a day at most, and the tie order each bank posts in', () => {
     const chase = lifeIn('us-ny-newyork', 'us-chase', 'us-small');
     set(chase, current(chase), -200_00);
@@ -396,6 +426,21 @@ describe('a card’s bonus categories', () => {
   const card = (bankId: string) => ({ bankId } as unknown as Account);
   const cad = (c: number) => exchange(c, 'CAD', 'USD')!;
 
+  it('pays a Korean card’s phone-bill bonus only after a month of the spending it asks, its cap by the tier reached', () => {
+    const seoul = quickSave({ startLocationId: 'kr-11-seoul', homeRegionId: 'kr-11-seoul', livesWhereBorn: true, wealth: 'wealthy', bankId: 'kr-shinhan' }, 'kr-bonus');
+    const kb = Object.values(seoul.universe.accounts).find((a) => a.ownerId === seoul.player.id && a.kind === 'credit_card')!;
+    const bills = 3_000_000_00;
+    // Nothing on the card last month: no bonus.
+    expect(bonusRewards(seoul, kb, {} as CreditState, 0, { food: 0, bills, other: 0 }, 1)).toBe(0);
+    // ₩600,000 on it last month: the second tier, 10,000 points at most.
+    seoul.post({ memo: 'Groceries', category: 'food', postings: [{ accountId: kb.id, amount: -600_000_00 }, { accountId: seoul.nominalAccount('expense', 'Food').id, amount: 600_000_00 }] });
+    seoul.advanceBy(32 * 86_400_000);
+    expect(lastMonthSpend(seoul, kb)).toBe(600_000_00);
+    expect(bonusRewards(seoul, kb, {} as CreditState, 0, { food: 0, bills, other: 0 }, 2)).toBe(10_000_00);
+    // A small month's bill earns its 10% of the phone's share in full.
+    expect(bonusRewards(seoul, kb, {} as CreditState, 0, { food: 0, bills: 100_000_00, other: 0 }, 3)).toBe(Math.round(100_000_00 * 0.1 * KOREA_TELECOM_OF_BILLS));
+  });
+
   it('pays BMO’s 3% on groceries and 1% on bills to $500 a cycle each, and 0.5% past it and on the rest', () => {
     const credit = {} as CreditState;
     const got = bonusRewards(sim, card('ca-bmo'), credit, 0.005, { food: cad(800_00), bills: cad(200_00), other: 10_000 }, 1);
@@ -426,9 +471,10 @@ describe('a card’s bonus categories', () => {
     expect(bonusRewards(sim, card('ca-cibc'), {} as CreditState, 0.005, { food: big, bills: big, other: 100_00 }, 1)).toBe(Math.round(big * 0.02 + big * 0.01 + 100_00 * 0.005));
   });
 
-  it('pays a card without a bonus its base rate on everything, and Santander Mexico nothing outside its categories', () => {
+  it('pays a card without a bonus its base rate on everything, and Santander Mexico nothing outside its categories but the bills’ telecoms', () => {
     expect(bonusRewards(sim, card('us-chase'), {} as CreditState, 0.015, { food: 100_00, bills: 100_00, other: 100_00 }, 1)).toBe(450);
     expect(BONUSES['us-chase']).toBeUndefined();
-    expect(bonusRewards(sim, card('mx-santander'), {} as CreditState, 0.01, { food: 100_00, bills: 100_00, other: 100_00 }, 1)).toBe(100);
+    // 1% of the groceries, and 4% of the phone and internet's share of the bills, INEGI's 4.8 of 19.5 of what isn't energy.
+    expect(bonusRewards(sim, card('mx-santander'), {} as CreditState, 0.01, { food: 100_00, bills: 100_00, other: 100_00 }, 1)).toBe(100 + Math.round(100_00 * 0.04 * (84 / 180) * (4.8 / 19.5)));
   });
 });

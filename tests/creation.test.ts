@@ -22,6 +22,7 @@ import { CITIES } from '@/engine/content/geography';
 import { blockedTraitReason, latestBirthYear } from '@/ui/creation/CharacterCreation';
 import { settledTitle } from '@/engine/core/performer';
 import { ceilingAt } from '@/engine/content/lifespan';
+import { yearOf } from '@/engine/systems/earnings';
 
 const SOURCE = readFileSync(new URL('../src/ui/creation/CharacterCreation.tsx', import.meta.url), 'utf8');
 
@@ -323,5 +324,14 @@ describe('a save from before the job engine went', () => {
     expect(result.steps.join(' ')).toContain('Took the day job off 1 person, and 1 shift or payday off the calendar.');
     // Run again, it finds nothing to take.
     expect(migrate(universe).steps.join(' ')).not.toContain('Took the day job');
+  });
+
+  it('keeps acting’s pay record in a save of today, however often it is opened', () => {
+    // Until 2026-09-28 the pay record's being there was taken for the day job's, and every opening lost it.
+    const sim = createSave(1, 'pay-record', defaultConfig());
+    const player = sim.universe.people[sim.universe.playerId]!;
+    yearOf(player, 2027).acting = 1_234_00;
+    for (let i = 0; i < 2; i += 1) migrate(sim.universe);
+    expect(player.earnings?.years['2027']?.acting).toBe(1_234_00);
   });
 });

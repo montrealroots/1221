@@ -1,0 +1,4967 @@
+{
+  "meta": {
+    "title": "SLATE research: cooking, recipes and alcohol",
+    "compiled": "2026-10-01",
+    "rules": "Every figure carries a source URL. null means not found in a usable source; nothing is invented. Values marked \"from search summary\" were read from a search-engine summary of the page because the page itself refused the fetch (403); treat them as lower confidence.",
+    "recipeCount": 44,
+    "recipeCountsByMealType": {
+      "breakfast": 9,
+      "lunch": 10,
+      "dinner": 21,
+      "dessert": 3,
+      "side": 1
+    },
+    "recipeCountsByCuisine": {
+      "British": 19,
+      "Mexican": 7,
+      "North African": 1,
+      "Italian": 4,
+      "Chinese": 2,
+      "Indian": 2,
+      "American": 4,
+      "Irish": 3,
+      "Canadian": 2
+    },
+    "recipeFieldNotes": "Quantities in g, ml or ct (count); tsp = 5 ml, tbsp = 15 ml, 1 cup = 240 ml, 1 oz = 28.35 g, 1 lb = 453.6 g. quantity null means the page gave no amount (pinch, handful); the page wording is in original. cuisine and vegetarian are compiler labels, not stated by the sources. methodSummary is written fresh, not copied. keepsInFridgeDays defaults to FoodSafety.gov 3-4 days for cooked dishes when the recipe page is silent.",
+    "blockedSources": [
+      "myplate.gov (403)",
+      "safefood.net (403)",
+      "nhtsa.gov PDFs (403, used mirrors or search excerpts)",
+      "fsis.usda.gov (403)",
+      "citizensinformation.ie (403)",
+      "pmc.ncbi.nlm.nih.gov (captcha)"
+    ]
+  },
+  "recipes": [
+    {
+      "id": "easy-overnight-oats",
+      "name": "Easy Overnight Oats",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/easy-overnight-oats/",
+      "mealType": "breakfast",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 10,
+      "cookMinutes": 0,
+      "appliances": [
+        "none"
+      ],
+      "ingredients": [
+        {
+          "food": "porridge oats",
+          "quantity": 150,
+          "unit": "g",
+          "original": "150g high-fibre porridge oats"
+        },
+        {
+          "food": "dried cranberries",
+          "quantity": 25,
+          "unit": "g",
+          "original": "25g dried cranberries"
+        },
+        {
+          "food": "dried apricots",
+          "quantity": 50,
+          "unit": "g",
+          "original": "50g ready-to-eat apricots, chopped"
+        },
+        {
+          "food": "sultanas",
+          "quantity": 25,
+          "unit": "g",
+          "original": "25g sultanas"
+        },
+        {
+          "food": "unsweetened apple juice",
+          "quantity": 300,
+          "unit": "ml",
+          "original": "300ml unsweetened apple juice"
+        },
+        {
+          "food": "low-fat natural yoghurt",
+          "quantity": 120,
+          "unit": "ml",
+          "original": "8 tablespoons low-fat natural yoghurt"
+        },
+        {
+          "food": "blueberries",
+          "quantity": 100,
+          "unit": "g",
+          "original": "100g fresh or frozen blueberries"
+        },
+        {
+          "food": "raspberries",
+          "quantity": 100,
+          "unit": "g",
+          "original": "100g fresh or frozen raspberries"
+        }
+      ],
+      "caloriesPerServing": 294,
+      "methodSummary": "Soak the oats and dried fruit in apple juice in the fridge overnight, then split into bowls and top with yoghurt and berries.",
+      "storageNote": "Covered and refrigerated overnight before serving; no other storage advice given.",
+      "keepsInFridgeDays": null,
+      "keepsInFridgeNote": "No-cook or dessert recipe; the general cooked-leftovers rule does not apply and the page gives no figure unless storageNote says so.",
+      "reheat": null
+    },
+    {
+      "id": "porridge-with-yoghurt-and-berries",
+      "name": "Porridge With Yoghurt And Berries",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/porridge-with-yoghurt-and-berries/",
+      "mealType": "breakfast",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 5,
+      "cookMinutes": 10,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "porridge oats",
+          "quantity": 150,
+          "unit": "g",
+          "original": "150g porridge oats"
+        },
+        {
+          "food": "low-fat natural yoghurt",
+          "quantity": 120,
+          "unit": "ml",
+          "original": "8 tablespoons low-fat natural yoghurt"
+        },
+        {
+          "food": "frozen summer berries",
+          "quantity": 100,
+          "unit": "g",
+          "original": "100g defrosted frozen summer berries, or forest fruits"
+        }
+      ],
+      "caloriesPerServing": 207,
+      "methodSummary": "Simmer the oats in water in a saucepan, stirring, then serve topped with yoghurt and thawed berries.",
+      "storageNote": "Take the frozen fruit out of the freezer the night before so it thaws in time.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "healthier-full-english-breakfast",
+      "name": "Healthier Full English Breakfast",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/healthier-full-english-breakfast/",
+      "mealType": "breakfast",
+      "cuisine": "British",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 10,
+      "cookMinutes": 10,
+      "appliances": [
+        "grill",
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "back bacon",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 lean back bacon rashers, fat trimmed"
+        },
+        {
+          "food": "tomatoes",
+          "quantity": 8,
+          "unit": "ct",
+          "original": "8 tomatoes, halved"
+        },
+        {
+          "food": "closed-cup mushrooms",
+          "quantity": 250,
+          "unit": "g",
+          "original": "250g closed-cup mushrooms, washed and thickly sliced"
+        },
+        {
+          "food": "water",
+          "quantity": 50,
+          "unit": "ml",
+          "original": "50ml cold water"
+        },
+        {
+          "food": "reduced-salt and sugar baked beans",
+          "quantity": 420,
+          "unit": "g",
+          "original": "420g reduced-salt and sugar baked beans in tomato sauce"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 tsp vegetable oil"
+        },
+        {
+          "food": "eggs",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 eggs"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        }
+      ],
+      "caloriesPerServing": 262,
+      "methodSummary": "Grill the bacon and tomatoes, simmer the mushrooms in a little water, warm the beans, fry the eggs and finish them under the grill, then plate.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "breakfast-burritos",
+      "name": "Breakfast Burritos",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/breakfast-burritos/",
+      "mealType": "breakfast",
+      "cuisine": "Mexican",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 10,
+      "cookMinutes": 10,
+      "appliances": [
+        "stove",
+        "grill"
+      ],
+      "ingredients": [
+        {
+          "food": "wholewheat flour tortillas",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 soft wholewheat flour tortillas"
+        },
+        {
+          "food": "eggs",
+          "quantity": 6,
+          "unit": "ct",
+          "original": "6 eggs"
+        },
+        {
+          "food": "1% fat milk",
+          "quantity": 60,
+          "unit": "ml",
+          "original": "4 tablespoons 1%-fat milk"
+        },
+        {
+          "food": "tomatoes",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 tomatoes, finely chopped"
+        },
+        {
+          "food": "spring onions",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 spring onions, finely chopped"
+        },
+        {
+          "food": "bell pepper",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 pepper (any colour), deseeded and finely chopped"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons vegetable oil"
+        },
+        {
+          "food": "reduced-fat hard cheese",
+          "quantity": 40,
+          "unit": "g",
+          "original": "40g reduced-fat hard cheese, grated"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        }
+      ],
+      "caloriesPerServing": 229,
+      "methodSummary": "Cook a quarter of the beaten egg at a time in a pan, layer it in a tortilla with chopped veg and cheese, warm under the grill and roll up.",
+      "storageNote": "Can be wrapped in foil to serve later.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "super-scrambled-eggs",
+      "name": "Super Scrambled Eggs",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/super-scrambled-eggs/",
+      "mealType": "breakfast",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 5,
+      "cookMinutes": 10,
+      "appliances": [
+        "grill",
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "tomatoes",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 tomatoes, halved"
+        },
+        {
+          "food": "mushrooms",
+          "quantity": null,
+          "unit": null,
+          "original": "2 handfuls mushrooms (cup or button)"
+        },
+        {
+          "food": "wholemeal bread",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 slices wholemeal bread"
+        },
+        {
+          "food": "eggs",
+          "quantity": 8,
+          "unit": "ct",
+          "original": "8 eggs"
+        },
+        {
+          "food": "1% fat milk",
+          "quantity": 60,
+          "unit": "ml",
+          "original": "4 tablespoons 1%-fat milk"
+        },
+        {
+          "food": "lower-fat spread",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons lower-fat spread"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        }
+      ],
+      "caloriesPerServing": 255,
+      "methodSummary": "Grill the tomatoes and mushrooms and toast the bread, scramble the eggs with milk in a pan, and serve together.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "fruity-french-toast",
+      "name": "Fruity French Toast",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/fruity-french-toast/",
+      "mealType": "breakfast",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 10,
+      "cookMinutes": 5,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "fruit bread",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 slices fruit bread"
+        },
+        {
+          "food": "eggs",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 egg"
+        },
+        {
+          "food": "1% fat milk",
+          "quantity": 150,
+          "unit": "ml",
+          "original": "150ml 1% fat milk"
+        },
+        {
+          "food": "vanilla extract",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon vanilla extract"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 2.5,
+          "unit": "ml",
+          "original": "1/2 teaspoon vegetable oil"
+        },
+        {
+          "food": "bananas",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 bananas, peeled and sliced"
+        },
+        {
+          "food": "frozen summer berries",
+          "quantity": 200,
+          "unit": "g",
+          "original": "200g defrosted frozen summer berries, or forest fruits"
+        }
+      ],
+      "caloriesPerServing": 115,
+      "methodSummary": "Soak halved fruit-bread slices in egg, milk and vanilla, fry until golden on both sides, and top with banana and berries.",
+      "storageNote": "Works well with fruit bread that is 2-3 days old.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "shakshuka",
+      "name": "Egg Shakshuka",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/shakshuka/",
+      "mealType": "breakfast",
+      "cuisine": "North African",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 15,
+      "cookMinutes": 30,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "vegetable oil",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tablespoon vegetable oil"
+        },
+        {
+          "food": "yellow onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 yellow onion, finely chopped"
+        },
+        {
+          "food": "red bell pepper",
+          "quantity": 0.5,
+          "unit": "ct",
+          "original": "Half a red bell pepper, deseeded and finely chopped"
+        },
+        {
+          "food": "yellow bell pepper",
+          "quantity": 0.5,
+          "unit": "ct",
+          "original": "Half a yellow bell pepper, deseeded and finely chopped"
+        },
+        {
+          "food": "garlic cloves",
+          "quantity": 6,
+          "unit": "ct",
+          "original": "6 garlic cloves, chopped"
+        },
+        {
+          "food": "aubergine",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 aubergine, chopped"
+        },
+        {
+          "food": "canned chopped tomatoes",
+          "quantity": 800,
+          "unit": "g",
+          "original": "800g tinned chopped tomatoes"
+        },
+        {
+          "food": "tomato puree",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "2 tablespoons tomato purée"
+        },
+        {
+          "food": "ground cumin",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons ground cumin"
+        },
+        {
+          "food": "canned chickpeas",
+          "quantity": 400,
+          "unit": "g",
+          "original": "400g tinned chickpeas, drained"
+        },
+        {
+          "food": "salt",
+          "quantity": 2.5,
+          "unit": "ml",
+          "original": "0.5 teaspoon salt (optional)"
+        },
+        {
+          "food": "cayenne pepper",
+          "quantity": 2.5,
+          "unit": "ml",
+          "original": "0.5 teaspoon cayenne pepper"
+        },
+        {
+          "food": "spinach",
+          "quantity": 200,
+          "unit": "g",
+          "original": "200g spinach, washed and chopped"
+        },
+        {
+          "food": "eggs",
+          "quantity": 6,
+          "unit": "ct",
+          "original": "6 medium-sized eggs"
+        },
+        {
+          "food": "fresh coriander",
+          "quantity": 15,
+          "unit": "g",
+          "original": "15g fresh coriander to serve, chopped (optional)"
+        }
+      ],
+      "caloriesPerServing": 417,
+      "methodSummary": "Soften onion, peppers, garlic and aubergine, simmer with tomatoes and spices, add chickpeas and spinach, then poach eggs in wells in the sauce.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "squeezy-peasy-lemon-pancakes",
+      "name": "Squeezy-Peasy Lemon Pancakes",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/easy-sugar-and-lemon-pancakes/",
+      "mealType": "breakfast",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 5,
+      "cookMinutes": 15,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "plain flour",
+          "quantity": 125,
+          "unit": "g",
+          "original": "125g plain flour"
+        },
+        {
+          "food": "eggs",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 large egg"
+        },
+        {
+          "food": "1% fat milk",
+          "quantity": 300,
+          "unit": "ml",
+          "original": "300ml 1% fat milk"
+        },
+        {
+          "food": "water",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "2 tablespoons cold water (in method)"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons vegetable oil"
+        },
+        {
+          "food": "lemon",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 lemon (or orange), sliced into quarters"
+        },
+        {
+          "food": "caster sugar",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons caster sugar"
+        }
+      ],
+      "caloriesPerServing": 195,
+      "methodSummary": "Whisk a thin batter, cook eight thin pancakes in a lightly oiled pan, and serve two each with a little sugar and a lemon wedge.",
+      "storageNote": "The batter can be covered and chilled for up to 4 hours before cooking. Makes 8 pancakes, 2 per portion.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "tuna-and-bean-salad",
+      "name": "Tuna And Bean Salad",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/tuna-and-bean-salad/",
+      "mealType": "lunch",
+      "cuisine": "British",
+      "vegetarian": false,
+      "servings": 1,
+      "prepMinutes": 10,
+      "cookMinutes": 0,
+      "appliances": [
+        "none"
+      ],
+      "ingredients": [
+        {
+          "food": "olive oil",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "3 teaspoons olive oil"
+        },
+        {
+          "food": "lemon",
+          "quantity": 0.5,
+          "unit": "ct",
+          "original": "Juice of half a lemon"
+        },
+        {
+          "food": "dried mixed herbs",
+          "quantity": null,
+          "unit": null,
+          "original": "Large pinch of dried mixed herbs"
+        },
+        {
+          "food": "mustard powder",
+          "quantity": null,
+          "unit": null,
+          "original": "Large pinch of mustard powder"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "Large pinch of black pepper"
+        },
+        {
+          "food": "bell pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 slice of pepper, chopped"
+        },
+        {
+          "food": "spring onions",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 spring onions, sliced"
+        },
+        {
+          "food": "cucumber",
+          "quantity": null,
+          "unit": null,
+          "original": "3cm piece of cucumber, chopped"
+        },
+        {
+          "food": "canned mixed beans",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 heaped tablespoon canned mixed beans in water, drained"
+        },
+        {
+          "food": "canned tuna in spring water",
+          "quantity": 80,
+          "unit": "g",
+          "original": "Half a 160g can of tuna in spring water, drained"
+        },
+        {
+          "food": "wholemeal bread",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 thick slice of wholemeal bread and lower-fat spread"
+        },
+        {
+          "food": "lower-fat spread",
+          "quantity": null,
+          "unit": null,
+          "original": "1 thick slice of wholemeal bread and lower-fat spread"
+        }
+      ],
+      "caloriesPerServing": 325,
+      "methodSummary": "Shake up a lemon and herb dressing, toss it through chopped salad veg, beans and tuna, and serve with buttered wholemeal bread.",
+      "storageNote": "Double the recipe to use the whole can of tuna and keep the rest for the next day.",
+      "keepsInFridgeDays": null,
+      "keepsInFridgeNote": "No-cook or dessert recipe; the general cooked-leftovers rule does not apply and the page gives no figure unless storageNote says so.",
+      "reheat": null
+    },
+    {
+      "id": "classic-vegetable-soup",
+      "name": "Classic Vegetable Soup",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/easy-vegetable-soup/",
+      "mealType": "lunch",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 15,
+      "cookMinutes": 25,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "vegetable oil",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon vegetable oil"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 medium onion, peeled and chopped"
+        },
+        {
+          "food": "carrots",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 carrots, chopped"
+        },
+        {
+          "food": "leek",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 leek, sliced"
+        },
+        {
+          "food": "celery sticks",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 celery sticks, sliced"
+        },
+        {
+          "food": "canned chopped tomatoes",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 tin chopped tomatoes or 400g passata"
+        },
+        {
+          "food": "reduced-salt vegetable stock",
+          "quantity": 1000,
+          "unit": "ml",
+          "original": "1L reduced-salt vegetable stock"
+        },
+        {
+          "food": "tomato puree",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tablespoon tomato purée"
+        },
+        {
+          "food": "sugar snap peas",
+          "quantity": 50,
+          "unit": "g",
+          "original": "50g sugar snap peas or green beans, sliced"
+        },
+        {
+          "food": "frozen peas",
+          "quantity": 50,
+          "unit": "g",
+          "original": "50g frozen peas"
+        },
+        {
+          "food": "dried pasta",
+          "quantity": 40,
+          "unit": "g",
+          "original": "40g dried pasta shapes"
+        },
+        {
+          "food": "dried mixed herbs",
+          "quantity": 7.5,
+          "unit": "ml",
+          "original": "1.5 teaspoon dried mixed herbs"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        }
+      ],
+      "caloriesPerServing": 100,
+      "methodSummary": "Soften the onion, carrot, leek and celery, add tomatoes, stock, greens, peas, pasta and herbs, and simmer until the pasta is cooked.",
+      "storageNote": "Chill leftovers and keep in the fridge for up to 3 days, or freeze for up to 3 months.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "hearty-veg-and-lentil-soup",
+      "name": "Hearty Veg And Lentil Soup",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/vegetable-and-lentil-soup/",
+      "mealType": "lunch",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 15,
+      "cookMinutes": 30,
+      "appliances": [
+        "stove",
+        "blender"
+      ],
+      "ingredients": [
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 large onion, chopped"
+        },
+        {
+          "food": "carrots",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 carrots, chopped"
+        },
+        {
+          "food": "red bell pepper",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 red pepper, deseeded and chopped"
+        },
+        {
+          "food": "reduced-salt vegetable stock",
+          "quantity": 900,
+          "unit": "ml",
+          "original": "900ml reduced-salt vegetable stock"
+        },
+        {
+          "food": "dried red lentils",
+          "quantity": 50,
+          "unit": "g",
+          "original": "50g dried red lentils"
+        },
+        {
+          "food": "ground ginger",
+          "quantity": 1.25,
+          "unit": "ml",
+          "original": "Quarter teaspoon ground ginger (optional)"
+        },
+        {
+          "food": "low-fat natural yoghurt",
+          "quantity": 60,
+          "unit": "ml",
+          "original": "4 tablespoons low-fat natural yoghurt"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "Pinch of ground black pepper"
+        },
+        {
+          "food": "fresh chives",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons fresh chives (optional, to serve)"
+        },
+        {
+          "food": "wholemeal bread rolls",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 wholemeal bread rolls (optional, to serve)"
+        }
+      ],
+      "caloriesPerServing": 146,
+      "methodSummary": "Simmer the vegetables and lentils in stock until soft, blend smooth, and serve with a swirl of yoghurt.",
+      "storageNote": "Cool and keep covered for up to 3 days, or freeze for up to 3 months.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "mexican-bean-and-tomato-soup",
+      "name": "Mexican Bean And Tomato Soup",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/mexican-bean-and-tomato-soup/",
+      "mealType": "lunch",
+      "cuisine": "Mexican",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 10,
+      "cookMinutes": 25,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "vegetable oil",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons vegetable oil"
+        },
+        {
+          "food": "garlic cloves",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 garlic clove, peeled and crushed"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 small onion, chopped"
+        },
+        {
+          "food": "chilli powder",
+          "quantity": 2.5,
+          "unit": "ml",
+          "original": "½ teaspoon chilli powder or chilli flakes (optional)"
+        },
+        {
+          "food": "canned chopped tomatoes",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 tin chopped tomatoes"
+        },
+        {
+          "food": "reduced-salt vegetable stock",
+          "quantity": 850,
+          "unit": "ml",
+          "original": "850ml reduced-salt vegetable stock"
+        },
+        {
+          "food": "tomato puree",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tablespoon tomato purée"
+        },
+        {
+          "food": "canned mixed beans",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 tin mixed beans"
+        },
+        {
+          "food": "sweetcorn",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 tin or 1 medium-sized cob of sweetcorn"
+        },
+        {
+          "food": "fresh coriander",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tablespoon parsley or fresh coriander, chopped (optional)"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "Pinch of ground black pepper"
+        }
+      ],
+      "caloriesPerServing": 155,
+      "methodSummary": "Soften garlic and onion, add chilli and tomatoes, then stock, puree, beans and sweetcorn, and simmer uncovered before adding herbs.",
+      "storageNote": "Can be carried to school or work in a wide-necked flask.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "egg-mayonnaise-and-lettuce-bap",
+      "name": "Egg Mayonnaise And Lettuce Bap",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/egg-mayonnaise-and-lettuce-bap/",
+      "mealType": "lunch",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 1,
+      "prepMinutes": 10,
+      "cookMinutes": 12,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "eggs",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 egg"
+        },
+        {
+          "food": "reduced-calorie mayonnaise",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 level tablespoon reduced-calorie mayonnaise"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "Large pinch of black pepper"
+        },
+        {
+          "food": "wholemeal bap",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 large wholemeal bap"
+        },
+        {
+          "food": "lettuce",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "Small wedge of lettuce (2 tablespoons when shredded)"
+        }
+      ],
+      "caloriesPerServing": 344,
+      "methodSummary": "Hard-boil and cool the egg, mash it with mayonnaise and pepper, and fill a wholemeal bap with it and shredded lettuce.",
+      "storageNote": "The egg can be cooked the night before to save time in the morning.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "chicken-and-tomato-jacket-potato",
+      "name": "Chicken And Tomato Jacket Potato",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/chicken-and-tomato-jacket-potato/",
+      "mealType": "lunch",
+      "cuisine": "British",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 5,
+      "cookMinutes": 25,
+      "appliances": [
+        "microwave",
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "baking potatoes",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 baking potatoes (225g each)"
+        },
+        {
+          "food": "chicken breasts",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 boneless, skinless uncooked chicken breasts"
+        },
+        {
+          "food": "dried oregano",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon dried oregano"
+        },
+        {
+          "food": "tomatoes",
+          "quantity": 8,
+          "unit": "ct",
+          "original": "8 ripe tomatoes"
+        },
+        {
+          "food": "low-fat greek-style yoghurt",
+          "quantity": 150,
+          "unit": "g",
+          "original": "150g low-fat Greek-style natural yoghurt"
+        },
+        {
+          "food": "spring onions",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 spring onions, finely chopped"
+        },
+        {
+          "food": "red pesto",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon red pesto (optional)"
+        }
+      ],
+      "caloriesPerServing": 352,
+      "methodSummary": "Cook pricked potatoes in the microwave (or oven for about 1h15), pan-fry chicken chunks with oregano, mix with tomato, spring onion and yoghurt, and spoon over the potatoes.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "easy-spaghetti-bolognese",
+      "name": "Spaghetti bolognese",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/easy-spaghetti-bolognese/",
+      "mealType": "dinner",
+      "cuisine": "Italian",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 15,
+      "cookMinutes": 25,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "extra-lean beef mince",
+          "quantity": 300,
+          "unit": "g",
+          "original": "300g extra-lean minced beef"
+        },
+        {
+          "food": "canned chopped tomatoes",
+          "quantity": 400,
+          "unit": "g",
+          "original": "400g chopped tomatoes"
+        },
+        {
+          "food": "dried spaghetti",
+          "quantity": 300,
+          "unit": "g",
+          "original": "300g dried spaghetti"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 large onion, finely chopped"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 garlic cloves, crushed or finely chopped"
+        },
+        {
+          "food": "tomato puree",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "2 tablespoons tomato purée"
+        },
+        {
+          "food": "dried mixed herbs",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons dried mixed herbs"
+        },
+        {
+          "food": "red pepper",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 red pepper, deseeded and chopped"
+        },
+        {
+          "food": "mushrooms",
+          "quantity": null,
+          "unit": null,
+          "original": "3 handfuls mushrooms (cup or button), sliced"
+        },
+        {
+          "food": "carrot",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 carrot, finely chopped"
+        },
+        {
+          "food": "courgette",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 courgette, chopped"
+        },
+        {
+          "food": "reduced-salt stock",
+          "quantity": 150,
+          "unit": "ml",
+          "original": "150ml reduced-salt vegetable or chicken stock"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        }
+      ],
+      "caloriesPerServing": 431,
+      "methodSummary": "Brown the mince with onion, add everything but the pasta and simmer the sauce while the spaghetti boils separately.",
+      "storageNote": "The sauce can be made ahead and frozen in batches; thaw fully and reheat until steaming hot.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "chilli-con-carne",
+      "name": "Chilli con carne",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/chilli-con-carne/",
+      "mealType": "dinner",
+      "cuisine": "Mexican",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 10,
+      "cookMinutes": 25,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "extra-lean beef mince",
+          "quantity": 300,
+          "unit": "g",
+          "original": "300g extra-lean minced beef"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 large onion, finely chopped"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 garlic cloves, finely chopped"
+        },
+        {
+          "food": "canned chopped tomatoes",
+          "quantity": 400,
+          "unit": "g",
+          "original": "400g chopped tomatoes"
+        },
+        {
+          "food": "tomato puree",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "2 tablespoons tomato purée"
+        },
+        {
+          "food": "chilli powder",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons chilli powder"
+        },
+        {
+          "food": "ground cumin",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon ground cumin"
+        },
+        {
+          "food": "red pepper",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 red pepper, deseeded and chopped"
+        },
+        {
+          "food": "mushrooms",
+          "quantity": null,
+          "unit": null,
+          "original": "2 handfuls of cup or button mushrooms, sliced"
+        },
+        {
+          "food": "canned red kidney beans",
+          "quantity": 410,
+          "unit": "g",
+          "original": "410g red kidney beans, drained"
+        },
+        {
+          "food": "reduced-salt stock",
+          "quantity": 150,
+          "unit": "ml",
+          "original": "150ml reduced-salt vegetable or chicken stock"
+        },
+        {
+          "food": "easy-cook rice",
+          "quantity": 300,
+          "unit": "g",
+          "original": "300g easy-cook white or brown rice"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        }
+      ],
+      "caloriesPerServing": 488,
+      "methodSummary": "Brown the mince with onion and garlic, add the tomatoes, spices, vegetables, beans and stock, simmer, and serve over rice.",
+      "storageNote": "Freezes well, so suits batch cooking.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "classic-cottage-pie",
+      "name": "Classic cottage pie",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/classic-cottage-pie/",
+      "mealType": "dinner",
+      "cuisine": "British",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 15,
+      "cookMinutes": 30,
+      "appliances": [
+        "stove",
+        "grill"
+      ],
+      "ingredients": [
+        {
+          "food": "potatoes",
+          "quantity": 1000,
+          "unit": "g",
+          "original": "1kg potatoes, chopped into chunks"
+        },
+        {
+          "food": "extra-lean beef mince",
+          "quantity": 350,
+          "unit": "g",
+          "original": "350g extra-lean minced beef"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 small onion, finely chopped"
+        },
+        {
+          "food": "carrot",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 medium carrot, finely chopped"
+        },
+        {
+          "food": "courgette",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 courgette, finely chopped"
+        },
+        {
+          "food": "green beans",
+          "quantity": 100,
+          "unit": "g",
+          "original": "100g green beans, washed and chopped"
+        },
+        {
+          "food": "dried mixed herbs",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon dried mixed herbs"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        },
+        {
+          "food": "water",
+          "quantity": 450,
+          "unit": "ml",
+          "original": "450ml cold water"
+        },
+        {
+          "food": "reduced-salt gravy granules",
+          "quantity": 20,
+          "unit": "ml",
+          "original": "4 teaspoons reduced-salt gravy granules"
+        },
+        {
+          "food": "sweetcorn",
+          "quantity": 50,
+          "unit": "g",
+          "original": "50g sweetcorn (fresh, frozen or tinned)"
+        }
+      ],
+      "caloriesPerServing": 363,
+      "methodSummary": "Boil and mash the potatoes, simmer the browned mince with vegetables and herbs, thicken with gravy granules, top with mash and brown under the grill.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "homemade-fish-and-chips",
+      "name": "Good old fish and chips",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/homemade-fish-and-chips/",
+      "mealType": "dinner",
+      "cuisine": "British",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 10,
+      "cookMinutes": 40,
+      "appliances": [
+        "oven",
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "potatoes",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 potatoes, scrubbed, each cut into 8 wedges"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tablespoon vegetable oil"
+        },
+        {
+          "food": "dried breadcrumbs",
+          "quantity": 75,
+          "unit": "g",
+          "original": "75g dried white or wholemeal breadcrumbs"
+        },
+        {
+          "food": "egg",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 egg, beaten with 2 tbsp cold water"
+        },
+        {
+          "food": "white fish fillet",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 fillets skinless white fish, like haddock, cod or pollock"
+        },
+        {
+          "food": "mushy peas",
+          "quantity": 300,
+          "unit": "g",
+          "original": "300g mushy peas (optional)"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper (optional)"
+        }
+      ],
+      "caloriesPerServing": 402,
+      "methodSummary": "Oven-bake oiled potato wedges, then add breadcrumbed fish fillets to the oven partway through; warm mushy peas on the hob.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "mushroom-risotto",
+      "name": "Mushroom risotto",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/mushroom-risotto/",
+      "mealType": "dinner",
+      "cuisine": "Italian",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 15,
+      "cookMinutes": 30,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "vegetable oil",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon vegetable oil"
+        },
+        {
+          "food": "spring onion",
+          "quantity": 5,
+          "unit": "ct",
+          "original": "5 spring onions, washed, trimmed and chopped"
+        },
+        {
+          "food": "risotto rice",
+          "quantity": 300,
+          "unit": "g",
+          "original": "300g risotto rice (arborio or carnaroli work best)"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 garlic clove, peeled and crushed"
+        },
+        {
+          "food": "mushrooms",
+          "quantity": null,
+          "unit": null,
+          "original": "3 handfuls of cup or button mushrooms, washed and sliced"
+        },
+        {
+          "food": "reduced-salt vegetable stock",
+          "quantity": 900,
+          "unit": "ml",
+          "original": "900ml reduced-salt vegetable stock"
+        },
+        {
+          "food": "frozen peas",
+          "quantity": 75,
+          "unit": "g",
+          "original": "75g frozen peas, defrosted"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        }
+      ],
+      "caloriesPerServing": 317,
+      "methodSummary": "Soften spring onions, toast the rice, add garlic and mushrooms, then add hot stock gradually while stirring until creamy; finish with peas.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "pasta-carbonara",
+      "name": "Spaghetti carbonara",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/pasta-carbonara/",
+      "mealType": "dinner",
+      "cuisine": "Italian",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 10,
+      "cookMinutes": 15,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "dried spaghetti",
+          "quantity": 300,
+          "unit": "g",
+          "original": "300g dried spaghetti"
+        },
+        {
+          "food": "lean back bacon rasher",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 slices lean back-bacon rashers, cut into pieces"
+        },
+        {
+          "food": "spring onion",
+          "quantity": 5,
+          "unit": "ct",
+          "original": "5 spring onions, trimmed and finely chopped"
+        },
+        {
+          "food": "lower-fat soft cheese with garlic and herbs",
+          "quantity": 150,
+          "unit": "g",
+          "original": "150g lower-fat soft cheese with garlic and herbs"
+        },
+        {
+          "food": "egg",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 egg"
+        },
+        {
+          "food": "semi-skimmed milk",
+          "quantity": 150,
+          "unit": "ml",
+          "original": "150ml semi-skimmed milk"
+        },
+        {
+          "food": "reduced-fat hard cheese",
+          "quantity": 40,
+          "unit": "g",
+          "original": "40g reduced-fat hard cheese, finely grated"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon vegetable oil"
+        },
+        {
+          "food": "fresh parsley",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "2 tablespoons fresh parsley, chopped"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        }
+      ],
+      "caloriesPerServing": 409,
+      "methodSummary": "Boil the pasta, fry bacon with spring onions, beat soft cheese, egg, milk and cheese together, then heat gently with the drained pasta until thickened.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "turkey-stir-fry",
+      "name": "Turkey stir-fry",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/turkey-stir-fry/",
+      "mealType": "dinner",
+      "cuisine": "Chinese",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 15,
+      "cookMinutes": 10,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "dried egg noodles",
+          "quantity": 125,
+          "unit": "g",
+          "original": "125g dried egg noodles, medium or fine"
+        },
+        {
+          "food": "orange",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 small orange, juiced"
+        },
+        {
+          "food": "reduced-salt soy sauce",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tablespoon reduced-salt soy sauce"
+        },
+        {
+          "food": "cornflour",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tablespoon cornflour"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tablespoon vegetable oil"
+        },
+        {
+          "food": "skinless turkey breast",
+          "quantity": 350,
+          "unit": "g",
+          "original": "350g skinless turkey breast, cut into strips"
+        },
+        {
+          "food": "spring onion",
+          "quantity": 5,
+          "unit": "ct",
+          "original": "5 spring onions, thinly sliced"
+        },
+        {
+          "food": "pepper",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 pepper, any colour, deseeded and thinly sliced"
+        },
+        {
+          "food": "carrot",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 carrot, cut into thin strips"
+        },
+        {
+          "food": "celery stick",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 celery sticks, thinly sliced"
+        },
+        {
+          "food": "mushrooms",
+          "quantity": null,
+          "unit": null,
+          "original": "1 handful mushrooms (cup or button), sliced"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        }
+      ],
+      "caloriesPerServing": 301,
+      "methodSummary": "Soak the noodles, stir-fry turkey then the vegetables in a wok, thicken with an orange, soy and cornflour mix, and toss in the noodles.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "chicken-jalfrezi",
+      "name": "Chicken jalfrezi",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/chicken-jalfrezi/",
+      "mealType": "dinner",
+      "cuisine": "Indian",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 15,
+      "cookMinutes": 25,
+      "appliances": [
+        "stove",
+        "blender"
+      ],
+      "ingredients": [
+        {
+          "food": "rapeseed oil",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "30ml rapeseed oil"
+        },
+        {
+          "food": "boneless chicken",
+          "quantity": 700,
+          "unit": "g",
+          "original": "700g boneless chicken, cut into cubes"
+        },
+        {
+          "food": "onion",
+          "quantity": 3,
+          "unit": "ct",
+          "original": "3 medium onions, chopped"
+        },
+        {
+          "food": "bell pepper",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 bell peppers (any colour), chopped"
+        },
+        {
+          "food": "green chilli",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 green chillies, sliced"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 garlic cloves, finely chopped"
+        },
+        {
+          "food": "fresh ginger",
+          "quantity": 20,
+          "unit": "g",
+          "original": "20g fresh ginger, peeled and sliced into thin pieces"
+        },
+        {
+          "food": "canned chopped tomatoes",
+          "quantity": 400,
+          "unit": "g",
+          "original": "400g tin of chopped tomatoes"
+        },
+        {
+          "food": "salt",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon salt (optional)"
+        },
+        {
+          "food": "turmeric",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon turmeric powder"
+        },
+        {
+          "food": "cumin seeds",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 heaped teaspoon cumin seeds"
+        },
+        {
+          "food": "red chilli powder",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon red chilli powder"
+        },
+        {
+          "food": "garam masala",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon of garam masala"
+        },
+        {
+          "food": "ground coriander",
+          "quantity": 7.5,
+          "unit": "ml",
+          "original": "1.5 teaspoon coriander powder"
+        },
+        {
+          "food": "water",
+          "quantity": 250,
+          "unit": "ml",
+          "original": "250ml water"
+        },
+        {
+          "food": "fresh coriander",
+          "quantity": null,
+          "unit": null,
+          "original": "fresh coriander to serve, finely chopped (optional)"
+        }
+      ],
+      "caloriesPerServing": 334,
+      "methodSummary": "Sear the spiced chicken and set aside, fry onions then ginger, garlic and peppers, add blended tomatoes and spices, return the chicken with chillies and water and simmer covered.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "sweet-and-sour-chicken",
+      "name": "Sweet and sour chicken",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/sweet-and-sour-chicken/",
+      "mealType": "dinner",
+      "cuisine": "Chinese",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 20,
+      "cookMinutes": 30,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "easy-cook rice",
+          "quantity": 150,
+          "unit": "g",
+          "original": "150g easy-cook brown or white rice"
+        },
+        {
+          "food": "canned pineapple pieces in juice",
+          "quantity": 227,
+          "unit": "g",
+          "original": "227g pineapple pieces, in natural juice"
+        },
+        {
+          "food": "cornflour",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tablespoon cornflour"
+        },
+        {
+          "food": "tomato puree",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "2 tablespoons tomato purée"
+        },
+        {
+          "food": "reduced-salt soy sauce",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon reduced-salt soy sauce"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons vegetable oil"
+        },
+        {
+          "food": "skinless chicken breast or thigh",
+          "quantity": 300,
+          "unit": "g",
+          "original": "300g skinless chicken breast or thigh, cut into chunks"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 medium onion, thinly sliced"
+        },
+        {
+          "food": "pepper",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 pepper (any colour), deseeded and cut into chunks"
+        },
+        {
+          "food": "celery stick",
+          "quantity": 3,
+          "unit": "ct",
+          "original": "3 celery sticks, sliced"
+        },
+        {
+          "food": "tomato",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 medium tomatoes, cut into wedges"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper (optional)"
+        }
+      ],
+      "caloriesPerServing": 295,
+      "methodSummary": "Boil the rice, make a sauce from the pineapple juice, cornflour, purée and soy, stir-fry chicken then vegetables and pineapple, and thicken with the sauce.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "tasty-vegetarian-chilli",
+      "name": "Tasty vegetarian chilli",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/tasty-vegetarian-chilli/",
+      "mealType": "dinner",
+      "cuisine": "Mexican",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 10,
+      "cookMinutes": 30,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "vegetable oil",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons vegetable oil"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 garlic cloves, crushed"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 medium onion, chopped"
+        },
+        {
+          "food": "carrot",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 carrot, finely chopped"
+        },
+        {
+          "food": "red chilli",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 red chilli, deseeded and finely chopped"
+        },
+        {
+          "food": "vegetarian mince",
+          "quantity": 300,
+          "unit": "g",
+          "original": "300g vegetarian, or vegan mince"
+        },
+        {
+          "food": "canned red kidney beans",
+          "quantity": 420,
+          "unit": "g",
+          "original": "1 tin red kidney beans, in water (420g)"
+        },
+        {
+          "food": "canned chopped tomatoes",
+          "quantity": 400,
+          "unit": "g",
+          "original": "1 tin chopped tomatoes (400g)"
+        },
+        {
+          "food": "long grain brown rice",
+          "quantity": 200,
+          "unit": "g",
+          "original": "200g rice (easy-cook long grain brown rice, if possible)"
+        },
+        {
+          "food": "pepper",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 peppers, any colour, deseeded and chopped"
+        },
+        {
+          "food": "tomato puree",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons tomato purée"
+        },
+        {
+          "food": "reduced-salt vegetable stock",
+          "quantity": 100,
+          "unit": "ml",
+          "original": "100ml reduced-salt vegetable stock"
+        }
+      ],
+      "caloriesPerServing": 400,
+      "methodSummary": "Fry onion, carrot, garlic, chilli and peppers, add mince, beans, tomatoes, purée and stock, simmer part-covered while the rice boils.",
+      "storageNote": "Freezes well; leftovers can be reheated and used in a wrap or over a jacket potato.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "sausage-and-mash",
+      "name": "Old school sausage and mash",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/sausage-and-mash/",
+      "mealType": "dinner",
+      "cuisine": "British",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 20,
+      "cookMinutes": 25,
+      "appliances": [
+        "stove",
+        "grill"
+      ],
+      "ingredients": [
+        {
+          "food": "carrot",
+          "quantity": 300,
+          "unit": "g",
+          "original": "4 carrots (about 300g), chopped"
+        },
+        {
+          "food": "swede",
+          "quantity": 300,
+          "unit": "g",
+          "original": "300g swede or turnip, cut into chunks"
+        },
+        {
+          "food": "potatoes",
+          "quantity": 700,
+          "unit": "g",
+          "original": "700g potatoes, cut into chunks"
+        },
+        {
+          "food": "reduced-fat sausage",
+          "quantity": 8,
+          "unit": "ct",
+          "original": "8 reduced-fat sausages"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon vegetable oil"
+        },
+        {
+          "food": "red onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 large red onion, thinly sliced"
+        },
+        {
+          "food": "reduced-salt stock",
+          "quantity": 100,
+          "unit": "ml",
+          "original": "100ml reduced-salt vegetable or chicken stock"
+        },
+        {
+          "food": "water",
+          "quantity": 200,
+          "unit": "ml",
+          "original": "200ml cold water"
+        },
+        {
+          "food": "fresh parsley",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tablespoon fresh parsley, chopped"
+        },
+        {
+          "food": "dried mixed herbs",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon dried mixed herbs"
+        },
+        {
+          "food": "cornflour",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "2 tablespoons cornflour blended with 1 tbsp of cold water"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        }
+      ],
+      "caloriesPerServing": 320,
+      "methodSummary": "Boil and mash carrots, swede and potatoes, grill the sausages, and make an onion gravy thickened with cornflour in a frying pan.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "roast-dinner",
+      "name": "Roast chicken dinner",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/roast-dinner/",
+      "mealType": "dinner",
+      "cuisine": "British",
+      "vegetarian": false,
+      "servings": 6,
+      "prepMinutes": 20,
+      "cookMinutes": 90,
+      "appliances": [
+        "oven",
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "whole chicken",
+          "quantity": 2000,
+          "unit": "g",
+          "original": "1 whole 2kg chicken"
+        },
+        {
+          "food": "potatoes",
+          "quantity": 1200,
+          "unit": "g",
+          "original": "1.2kg potatoes, peeled and quartered"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon vegetable oil"
+        },
+        {
+          "food": "carrot",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 carrots, sliced"
+        },
+        {
+          "food": "leek",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 leeks, sliced"
+        },
+        {
+          "food": "savoy cabbage",
+          "quantity": 0.5,
+          "unit": "ct",
+          "original": "Half a savoy cabbage, sliced"
+        },
+        {
+          "food": "frozen peas",
+          "quantity": 150,
+          "unit": "g",
+          "original": "150g frozen peas"
+        },
+        {
+          "food": "reduced-salt gravy granules",
+          "quantity": 20,
+          "unit": "ml",
+          "original": "4 teaspoons reduced-salt gravy granules"
+        }
+      ],
+      "caloriesPerServing": 525,
+      "methodSummary": "Roast the chicken and, in a second tin, the potatoes; boil the vegetables near the end, rest the chicken under foil, make gravy and serve 150g skinless chicken each.",
+      "storageNote": "Leftover chicken can go into sandwiches, wraps, pizza or soup.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "panjabi-dhal",
+      "name": "Panjabi dhal",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/panjabi-dhal/",
+      "mealType": "dinner",
+      "cuisine": "Indian",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 5,
+      "cookMinutes": 25,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "red split lentils",
+          "quantity": 50,
+          "unit": "g",
+          "original": "50g red split lentils, washed and drained"
+        },
+        {
+          "food": "split mung dhal",
+          "quantity": 170,
+          "unit": "g",
+          "original": "170g split mung dhal, washed and drained"
+        },
+        {
+          "food": "water",
+          "quantity": 1500,
+          "unit": "ml",
+          "original": "1.5 litres water"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 large onion, finely chopped"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 garlic cloves, finely chopped"
+        },
+        {
+          "food": "green chilli",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 green chillies, finely chopped"
+        },
+        {
+          "food": "rapeseed oil",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "30ml rapeseed oil"
+        },
+        {
+          "food": "salt",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon salt (optional)"
+        },
+        {
+          "food": "turmeric",
+          "quantity": 7.5,
+          "unit": "ml",
+          "original": "1.5 teaspoons turmeric"
+        },
+        {
+          "food": "cumin seeds",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon cumin seeds"
+        },
+        {
+          "food": "fresh coriander",
+          "quantity": null,
+          "unit": null,
+          "original": "Fresh coriander, finely chopped (to serve)"
+        }
+      ],
+      "caloriesPerServing": 245,
+      "methodSummary": "Simmer the lentils with turmeric and salt, fry cumin, onion, garlic and chillies separately, stir that into the lentils, bring to the boil and top with coriander.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "salmon-and-broccoli-pasta",
+      "name": "Salmon and broccoli pasta",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/salmon-and-broccoli-pasta/",
+      "mealType": "dinner",
+      "cuisine": "Italian",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 15,
+      "cookMinutes": 15,
+      "appliances": [
+        "grill",
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "salmon fillet",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 salmon fillets"
+        },
+        {
+          "food": "wholemeal pasta",
+          "quantity": 250,
+          "unit": "g",
+          "original": "250g wholemeal pasta"
+        },
+        {
+          "food": "spring onion",
+          "quantity": 5,
+          "unit": "ct",
+          "original": "5 spring onions, washed and chopped"
+        },
+        {
+          "food": "broccoli",
+          "quantity": 400,
+          "unit": "g",
+          "original": "400g broccoli, broken into small florets"
+        },
+        {
+          "food": "peas",
+          "quantity": 100,
+          "unit": "g",
+          "original": "100g peas (fresh or frozen)"
+        },
+        {
+          "food": "lower-fat soft cheese",
+          "quantity": 150,
+          "unit": "g",
+          "original": "150g lower-fat soft cheese"
+        },
+        {
+          "food": "skimmed milk",
+          "quantity": 150,
+          "unit": "ml",
+          "original": "150ml skimmed milk"
+        },
+        {
+          "food": "lemon zest",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "Zest of 1 lemon"
+        },
+        {
+          "food": "fresh parsley or chives",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "2 tablespoons fresh parsley or chives, chopped"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        },
+        {
+          "food": "reduced-fat hard cheese",
+          "quantity": 20,
+          "unit": "ml",
+          "original": "4 teaspoons reduced-fat hard cheese, finely grated"
+        }
+      ],
+      "caloriesPerServing": 465,
+      "methodSummary": "Grill the salmon, boil pasta then add broccoli and spring onions, make a soft cheese and milk sauce with lemon zest, and fold in the flaked salmon.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "cherry-berry-crumble",
+      "name": "Cherry berry crumble",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/cherry-berry-crumble/",
+      "mealType": "dessert",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 6,
+      "prepMinutes": 10,
+      "cookMinutes": 30,
+      "appliances": [
+        "oven"
+      ],
+      "ingredients": [
+        {
+          "food": "frozen cherries",
+          "quantity": 200,
+          "unit": "g",
+          "original": "200g frozen cherries"
+        },
+        {
+          "food": "frozen summer fruits",
+          "quantity": 200,
+          "unit": "g",
+          "original": "200g frozen summer fruits"
+        },
+        {
+          "food": "plain flour",
+          "quantity": 150,
+          "unit": "g",
+          "original": "150g plain flour"
+        },
+        {
+          "food": "lower-fat spread",
+          "quantity": 75,
+          "unit": "g",
+          "original": "75g lower-fat spread"
+        },
+        {
+          "food": "porridge oats",
+          "quantity": 30,
+          "unit": "g",
+          "original": "30g porridge oats"
+        },
+        {
+          "food": "demerara sugar",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tablespoon demerara or granulated sugar"
+        },
+        {
+          "food": "low-fat plain yoghurt",
+          "quantity": 180,
+          "unit": "ml",
+          "original": "12 tablespoons low-fat, lower-sugar plain yoghurt, to serve"
+        }
+      ],
+      "caloriesPerServing": 252,
+      "methodSummary": "Put the frozen fruit in a dish, rub flour and spread into crumbs, stir in oats and sugar, scatter over and bake; serve with yoghurt.",
+      "storageNote": null,
+      "keepsInFridgeDays": null,
+      "keepsInFridgeNote": "No-cook or dessert recipe; the general cooked-leftovers rule does not apply and the page gives no figure unless storageNote says so.",
+      "reheat": null
+    },
+    {
+      "id": "banana-and-sultana-bread-and-butter-pudding",
+      "name": "Banana and sultana bread and butter pudding",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/banana-and-sultana-bread-and-butter-pudding/",
+      "mealType": "dessert",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 15,
+      "cookMinutes": 30,
+      "appliances": [
+        "oven"
+      ],
+      "ingredients": [
+        {
+          "food": "lower-fat spread",
+          "quantity": 25,
+          "unit": "g",
+          "original": "25g lower-fat spread"
+        },
+        {
+          "food": "white bread slice",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 slices white bread"
+        },
+        {
+          "food": "banana",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 bananas, sliced"
+        },
+        {
+          "food": "sultanas",
+          "quantity": 25,
+          "unit": "g",
+          "original": "25g sultanas or raisins"
+        },
+        {
+          "food": "egg",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 eggs"
+        },
+        {
+          "food": "1% fat milk",
+          "quantity": 450,
+          "unit": "ml",
+          "original": "450ml 1% fat milk"
+        },
+        {
+          "food": "vanilla extract",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon vanilla extract (optional)"
+        },
+        {
+          "food": "caster sugar",
+          "quantity": 10,
+          "unit": "g",
+          "original": "10g caster sugar"
+        }
+      ],
+      "caloriesPerServing": 270,
+      "methodSummary": "Layer buttered bread triangles with banana and sultanas in a greased dish, pour over a sweetened egg and milk custard, soak, then bake until set.",
+      "storageNote": null,
+      "keepsInFridgeDays": null,
+      "keepsInFridgeNote": "No-cook or dessert recipe; the general cooked-leftovers rule does not apply and the page gives no figure unless storageNote says so.",
+      "reheat": null
+    },
+    {
+      "id": "easy-frozen-banana-ice-cream",
+      "name": "Easy banana ice cream",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/easy-frozen-banana-ice-cream/",
+      "mealType": "dessert",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 5,
+      "cookMinutes": 0,
+      "appliances": [
+        "freezer",
+        "blender"
+      ],
+      "ingredients": [
+        {
+          "food": "banana",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 very ripe bananas"
+        }
+      ],
+      "caloriesPerServing": 65,
+      "methodSummary": "Slice ripe bananas, freeze them for at least two hours or overnight, then blend in a food processor until smooth.",
+      "storageNote": null,
+      "keepsInFridgeDays": null,
+      "keepsInFridgeNote": "No-cook or dessert recipe; the general cooked-leftovers rule does not apply and the page gives no figure unless storageNote says so.",
+      "reheat": null
+    },
+    {
+      "id": "macaroni-cheese-with-tomatoes",
+      "name": "Healthy mac and cheese",
+      "source": "NHS Healthier Families",
+      "url": "https://www.nhs.uk/healthier-families/recipes/macaroni-cheese-with-tomatoes/",
+      "mealType": "dinner",
+      "cuisine": "British",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": 15,
+      "cookMinutes": 35,
+      "appliances": [
+        "stove",
+        "oven"
+      ],
+      "ingredients": [
+        {
+          "food": "dried macaroni",
+          "quantity": 300,
+          "unit": "g",
+          "original": "300g macaroni"
+        },
+        {
+          "food": "lower-fat spread",
+          "quantity": 40,
+          "unit": "g",
+          "original": "40g lower-fat spread"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 small onion, finely chopped"
+        },
+        {
+          "food": "plain flour",
+          "quantity": 50,
+          "unit": "g",
+          "original": "50g plain flour"
+        },
+        {
+          "food": "semi-skimmed milk",
+          "quantity": 600,
+          "unit": "ml",
+          "original": "600ml semi-skimmed milk"
+        },
+        {
+          "food": "reduced-fat mature cheddar",
+          "quantity": 75,
+          "unit": "g",
+          "original": "75g reduced-fat mature Cheddar cheese, grated"
+        },
+        {
+          "food": "english mustard",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon English mustard"
+        },
+        {
+          "food": "ground black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 pinch ground black pepper"
+        },
+        {
+          "food": "tomato",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 large tomatoes, sliced"
+        }
+      ],
+      "caloriesPerServing": 517,
+      "methodSummary": "Boil the macaroni, make a cheese sauce with onion, flour, milk, cheddar and mustard, combine, top with tomato slices and cheese and bake.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "garden-chili",
+      "name": "Garden Chili",
+      "source": "USDA MyPlate Kitchen (recipe from Kansas State University Research and Extension, Fix it Fresh! series)",
+      "url": "https://web.archive.org/web/20241127082515/https://www.myplate.gov/recipes/garden-chili",
+      "mealType": "dinner",
+      "cuisine": "American",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": null,
+      "cookMinutes": null,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "lean ground beef",
+          "quantity": 340.2,
+          "unit": "g",
+          "original": "3/4 pound ground beef (lean, 10% fat)"
+        },
+        {
+          "food": "green bell pepper",
+          "quantity": 120,
+          "unit": "ml",
+          "original": "1/2 cup green pepper (chopped)"
+        },
+        {
+          "food": "onion",
+          "quantity": 0.5,
+          "unit": "ct",
+          "original": "1/2 large onion (chopped)"
+        },
+        {
+          "food": "celery",
+          "quantity": 120,
+          "unit": "ml",
+          "original": "1/2 cup celery (chopped)"
+        },
+        {
+          "food": "canned kidney beans",
+          "quantity": 160,
+          "unit": "ml",
+          "original": "2/3 cup kidney beans, canned, low-sodium (drained and rinsed)"
+        },
+        {
+          "food": "sweet corn",
+          "quantity": 120,
+          "unit": "ml",
+          "original": "1/2 cup corn (sweet)"
+        },
+        {
+          "food": "canned tomato sauce",
+          "quantity": 226.8,
+          "unit": "g",
+          "original": "1 can tomato sauce, low-sodium (8 oz)"
+        },
+        {
+          "food": "fresh tomatoes",
+          "quantity": 240,
+          "unit": "ml",
+          "original": "1 cup fresh tomatoes (chopped)"
+        },
+        {
+          "food": "black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "1 dash black pepper"
+        },
+        {
+          "food": "garlic powder",
+          "quantity": 2.5,
+          "unit": "ml",
+          "original": "1/2 teaspoon garlic powder"
+        },
+        {
+          "food": "chili powder",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons chili powder"
+        }
+      ],
+      "caloriesPerServing": 224,
+      "methodSummary": "Brown and drain the beef in a skillet, soften the pepper, onion and celery, add beans, corn, tomatoes and spices, then simmer on low for 20 minutes.",
+      "storageNote": "Cover and refrigerate leftovers within 2 hours.",
+      "keepsInFridgeDays": null,
+      "keepsInFridgeNote": "No-cook or dessert recipe; the general cooked-leftovers rule does not apply and the page gives no figure unless storageNote says so.",
+      "reheat": null
+    },
+    {
+      "id": "slow-cooker-beef-stew",
+      "name": "Slow Cooker Beef Stew",
+      "source": "USDA MyPlate Kitchen (recipe from Montana State University Extension Service)",
+      "url": "https://web.archive.org/web/20241127041130/https://www.myplate.gov/recipes/slow-cooker-beef-stew",
+      "mealType": "dinner",
+      "cuisine": "American",
+      "vegetarian": false,
+      "servings": 6,
+      "prepMinutes": null,
+      "cookMinutes": 480,
+      "appliances": [
+        "slow cooker"
+      ],
+      "ingredients": [
+        {
+          "food": "beef stew meat",
+          "quantity": 907.2,
+          "unit": "g",
+          "original": "2 pounds stew meat (cut into 1 inch cubes)"
+        },
+        {
+          "food": "all-purpose flour",
+          "quantity": 60,
+          "unit": "ml",
+          "original": "1/4 cup flour (all purpose)"
+        },
+        {
+          "food": "salt and pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "salt and pepper (optional, to taste)"
+        },
+        {
+          "food": "water",
+          "quantity": 480,
+          "unit": "ml",
+          "original": "2 cups water"
+        },
+        {
+          "food": "beef bouillon",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons beef bouillon (2 cubes)"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 garlic clove (finely chopped)"
+        },
+        {
+          "food": "carrot",
+          "quantity": 3,
+          "unit": "ct",
+          "original": "3 carrots (sliced)"
+        },
+        {
+          "food": "potato",
+          "quantity": 3,
+          "unit": "ct",
+          "original": "3 potatoes (diced)"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 onion (chopped)"
+        },
+        {
+          "food": "celery stalk",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 celery stalk (sliced)"
+        },
+        {
+          "food": "dried herbs",
+          "quantity": null,
+          "unit": null,
+          "original": "add herbs as desired (bay leaf, basil, oregano, etc.) (optional)"
+        }
+      ],
+      "caloriesPerServing": 275,
+      "methodSummary": "Coat the meat in seasoned flour in the slow cooker, add everything else, and cook covered 8 to 10 hours on low or 4 to 6 hours on high.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "black-beans",
+      "name": "Black Beans",
+      "source": "USDA MyPlate Kitchen (recipe from Kids a Cookin', Kansas Family Nutrition Program and the USDA Food Stamp Nutrition Education Program)",
+      "url": "https://web.archive.org/web/20241127041101/https://www.myplate.gov/recipes/black-beans",
+      "mealType": "dinner",
+      "cuisine": "American",
+      "vegetarian": true,
+      "servings": 4,
+      "prepMinutes": null,
+      "cookMinutes": null,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "canned black beans",
+          "quantity": 878.8,
+          "unit": "g",
+          "original": "2 cans (15.5 ounces each) low-sodium black beans"
+        },
+        {
+          "food": "onion",
+          "quantity": 0.5,
+          "unit": "ct",
+          "original": "1/2 medium onion"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 garlic cloves"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "2 tablespoons vegetable oil (or cooking oil of choice)"
+        },
+        {
+          "food": "ground cumin",
+          "quantity": 2.5,
+          "unit": "ml",
+          "original": "1/2 teaspoon ground cumin"
+        },
+        {
+          "food": "salt",
+          "quantity": 2.5,
+          "unit": "ml",
+          "original": "salt (1/2 teaspoon, optional)"
+        },
+        {
+          "food": "dried oregano",
+          "quantity": 1.25,
+          "unit": "ml",
+          "original": "1/4 teaspoon dried oregano (or fresh)"
+        }
+      ],
+      "caloriesPerServing": 269,
+      "methodSummary": "Mash one drained can of beans, sauté onion, garlic and cumin in oil, stir in both cans, bring to a boil and simmer uncovered 10 minutes with oregano.",
+      "storageNote": null,
+      "keepsInFridgeDays": null,
+      "keepsInFridgeNote": "No-cook or dessert recipe; the general cooked-leftovers rule does not apply and the page gives no figure unless storageNote says so.",
+      "reheat": null
+    },
+    {
+      "id": "overnight-oatmeal-berries",
+      "name": "Overnight Oatmeal with Berries",
+      "source": "USDA MyPlate Kitchen (USDA Center for Nutrition Policy and Promotion)",
+      "url": "https://web.archive.org/web/20241127025916/https://www.myplate.gov/recipes/overnight-oatmeal-berries",
+      "mealType": "breakfast",
+      "cuisine": "American",
+      "vegetarian": true,
+      "servings": 1,
+      "prepMinutes": 15,
+      "cookMinutes": 0,
+      "appliances": [
+        "none"
+      ],
+      "ingredients": [
+        {
+          "food": "low-fat milk",
+          "quantity": 120,
+          "unit": "ml",
+          "original": "1/2 cup low-fat milk (or less for thicker oatmeal)"
+        },
+        {
+          "food": "fat-free greek yogurt",
+          "quantity": 60,
+          "unit": "ml",
+          "original": "1/4 cup Greek yogurt, fat-free"
+        },
+        {
+          "food": "honey",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons honey"
+        },
+        {
+          "food": "ground cinnamon",
+          "quantity": 1.25,
+          "unit": "ml",
+          "original": "1/4 teaspoon cinnamon"
+        },
+        {
+          "food": "vanilla extract",
+          "quantity": 1.25,
+          "unit": "ml",
+          "original": "1/4 teaspoon vanilla extract"
+        },
+        {
+          "food": "rolled oats",
+          "quantity": 120,
+          "unit": "ml",
+          "original": "1/2 cup uncooked rolled oats"
+        },
+        {
+          "food": "frozen raspberries",
+          "quantity": 60,
+          "unit": "ml",
+          "original": "1/4 cup raspberries, frozen"
+        }
+      ],
+      "caloriesPerServing": 311,
+      "methodSummary": "Stir milk, yogurt, honey, cinnamon and vanilla in a lidded jar, mix in oats, fold in raspberries and refrigerate 8 hours to overnight; eat cold or warmed.",
+      "storageNote": null,
+      "keepsInFridgeDays": null,
+      "keepsInFridgeNote": "No-cook or dessert recipe; the general cooked-leftovers rule does not apply and the page gives no figure unless storageNote says so.",
+      "reheat": null
+    },
+    {
+      "id": "safefood-beef-stew",
+      "name": "Beef Stew",
+      "source": "safefood (Ireland)",
+      "url": "https://web.archive.org/web/20260413221702/https://www.safefood.net/recipes/beef-stew",
+      "mealType": "dinner",
+      "cuisine": "Irish",
+      "vegetarian": false,
+      "servings": 4,
+      "prepMinutes": 5,
+      "cookMinutes": 90,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "lean stewing beef",
+          "quantity": 675,
+          "unit": "g",
+          "original": "675 g lean stewing beef, diced"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 tsp (around 10 ml) vegetable oil"
+        },
+        {
+          "food": "beef stock cube",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 beef stock cube dissolved in 800 ml water or use homemade stock"
+        },
+        {
+          "food": "water",
+          "quantity": 800,
+          "unit": "ml",
+          "original": "1 beef stock cube dissolved in 800 ml water"
+        },
+        {
+          "food": "plain flour",
+          "quantity": 40,
+          "unit": "g",
+          "original": "40 g plain flour"
+        },
+        {
+          "food": "carrot",
+          "quantity": 5,
+          "unit": "ct",
+          "original": "5 medium carrots, peeled and chopped"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 medium onion, diced"
+        },
+        {
+          "food": "salt and pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "Salt and pepper, to season"
+        }
+      ],
+      "caloriesPerServing": 396,
+      "methodSummary": "Brown the seasoned beef, then the onion and carrot, make a flour-and-stock gravy in the pan, and simmer it all gently 1 to 1.5 hours; serve with boiled potatoes.",
+      "storageNote": "Leftovers can be frozen for another day.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "safefood-wholemeal-bread",
+      "name": "Wholemeal Bread",
+      "source": "safefood (Ireland), adapted from 101+ Square Meals",
+      "url": "https://web.archive.org/web/20260413214448/https://www.safefood.net/recipes/wholemeal-bread",
+      "mealType": "side",
+      "cuisine": "Irish",
+      "vegetarian": true,
+      "servings": 10,
+      "prepMinutes": 10,
+      "cookMinutes": 60,
+      "appliances": [
+        "oven"
+      ],
+      "ingredients": [
+        {
+          "food": "wholemeal flour",
+          "quantity": 425,
+          "unit": "g",
+          "original": "425g / 1lb of wholemeal flour"
+        },
+        {
+          "food": "wheat germ",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "1 dessertspoon of wheat-germ"
+        },
+        {
+          "food": "wheat bran",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "1 dessertspoon of bran"
+        },
+        {
+          "food": "buttermilk",
+          "quantity": 275,
+          "unit": "ml",
+          "original": "275ml / 1/2 pint of buttermilk"
+        },
+        {
+          "food": "baking soda",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon of bread soda"
+        },
+        {
+          "food": "brown sugar",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "1 teaspoon of brown sugar"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "2 teaspoons of polyunsaturated oil"
+        },
+        {
+          "food": "egg",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 medium egg"
+        }
+      ],
+      "caloriesPerServing": 170,
+      "methodSummary": "Mix everything into a wet soda-bread batter, pour into an oiled loaf tin, bake 15 minutes at 180C then 40 minutes more at 150C.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or oven",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "safefood-homemade-vegetable-soup",
+      "name": "Homemade Vegetable Soup",
+      "source": "safefood (Ireland)",
+      "url": "https://web.archive.org/web/20260416010209/https://www.safefood.net/recipes/lunch/homemade-vegetable-soup",
+      "mealType": "lunch",
+      "cuisine": "Irish",
+      "vegetarian": true,
+      "servings": 3,
+      "prepMinutes": null,
+      "cookMinutes": 60,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 medium onion, diced"
+        },
+        {
+          "food": "leek",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 leek"
+        },
+        {
+          "food": "carrot",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 medium sized carrots"
+        },
+        {
+          "food": "celery stalk",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 sticks celery"
+        },
+        {
+          "food": "turnip",
+          "quantity": 0.5,
+          "unit": "ct",
+          "original": "1/2 small turnip"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 clove garlic (crushed or finely chopped)"
+        },
+        {
+          "food": "fresh parsley and thyme",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tbsp of fresh parsley and thyme"
+        },
+        {
+          "food": "sunflower or olive oil",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "1 tbsp (about 15 ml) sunflower or olive oil"
+        },
+        {
+          "food": "margarine",
+          "quantity": 8,
+          "unit": "g",
+          "original": "1/2 tbsp (about 8 g) margarine"
+        },
+        {
+          "food": "boiling water",
+          "quantity": 850,
+          "unit": "ml",
+          "original": "850 ml boiling water with 1 vegetable stock cube"
+        },
+        {
+          "food": "vegetable stock cube",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "850 ml boiling water with 1 vegetable stock cube"
+        }
+      ],
+      "caloriesPerServing": 98,
+      "methodSummary": "Sweat the diced vegetables in oil and margarine 10 to 15 minutes, add garlic, herbs and stock, simmer about 25 minutes, and blend if a smooth soup is wanted.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "tinga-de-pollo-arroz-chicharos",
+      "name": "Tinga de Pollo y Arroz con Chícharos",
+      "source": "DIF Quintana Roo (Sistema para el Desarrollo Integral de la Familia del Estado de Quintana Roo), Programa de Alimentación Escolar Recetario 2024, published on vidasaludable.gob.mx",
+      "url": "https://vidasaludable.gob.mx/storage/recursos/recetarios/regionales/Re-Quintana_Roo_Recetario_Pae-C_2024_.pdf",
+      "mealType": "lunch",
+      "cuisine": "Mexican",
+      "vegetarian": false,
+      "servings": 10,
+      "prepMinutes": null,
+      "cookMinutes": null,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "masa harina (corn flour for tortillas)",
+          "quantity": 180,
+          "unit": "g",
+          "original": "Harina de maíz 180 g"
+        },
+        {
+          "food": "rice",
+          "quantity": 200,
+          "unit": "g",
+          "original": "Arroz 200 g"
+        },
+        {
+          "food": "shredded chicken breast",
+          "quantity": 380,
+          "unit": "g",
+          "original": "Pechuga de pollo deshebrada 380 g"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 50,
+          "unit": "ml",
+          "original": "Aceite 50 ml"
+        },
+        {
+          "food": "carrot",
+          "quantity": 400,
+          "unit": "g",
+          "original": "Zanahoria 400 g"
+        },
+        {
+          "food": "onion",
+          "quantity": 100,
+          "unit": "g",
+          "original": "Cebolla 100 g"
+        },
+        {
+          "food": "tomato",
+          "quantity": 350,
+          "unit": "g",
+          "original": "Tomate 350g"
+        },
+        {
+          "food": "canned peas",
+          "quantity": 150,
+          "unit": "g",
+          "original": "Chícharo envasado 150g/1lata"
+        },
+        {
+          "food": "sweet pepper",
+          "quantity": 50,
+          "unit": "g",
+          "original": "Chile dulce 50 g"
+        },
+        {
+          "food": "cabbage",
+          "quantity": 150,
+          "unit": "g",
+          "original": "Repollo 150 g"
+        },
+        {
+          "food": "cilantro",
+          "quantity": 50,
+          "unit": "g",
+          "original": "Cilantro 50 g"
+        },
+        {
+          "food": "salt",
+          "quantity": null,
+          "unit": null,
+          "original": "Sal, lo indispensable"
+        },
+        {
+          "food": "black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "Pimienta, lo indispensable"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "Ajo 4 dientes"
+        },
+        {
+          "food": "oregano leaves",
+          "quantity": 5,
+          "unit": "ct",
+          "original": "Orégano 5 hojas"
+        }
+      ],
+      "caloriesPerServing": null,
+      "methodSummary": "Fry onion, tomato and sweet pepper, stir in the shredded chicken and season; cook the rice with garlic, onion, squash, chayote and peas; serve with grated carrot and fresh corn tortillas made from masa.",
+      "storageNote": null,
+      "keepsInFridgeDays": null,
+      "keepsInFridgeNote": "No-cook or dessert recipe; the general cooked-leftovers rule does not apply and the page gives no figure unless storageNote says so.",
+      "reheat": null
+    },
+    {
+      "id": "potaje-de-lentejas-con-verduras",
+      "name": "Potaje de Lentejas con Verduras",
+      "source": "DIF Quintana Roo (Sistema para el Desarrollo Integral de la Familia del Estado de Quintana Roo), Programa de Alimentación Escolar Recetario 2024, published on vidasaludable.gob.mx",
+      "url": "https://vidasaludable.gob.mx/storage/recursos/recetarios/regionales/Re-Quintana_Roo_Recetario_Pae-C_2024_.pdf",
+      "mealType": "lunch",
+      "cuisine": "Mexican",
+      "vegetarian": true,
+      "servings": 10,
+      "prepMinutes": null,
+      "cookMinutes": 30,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "dried lentils",
+          "quantity": 350,
+          "unit": "g",
+          "original": "Lentejas 350 g"
+        },
+        {
+          "food": "canned mixed vegetables",
+          "quantity": 200,
+          "unit": "g",
+          "original": "Ensalada de verduras 200g/ 1lata"
+        },
+        {
+          "food": "masa harina (corn flour for tortillas)",
+          "quantity": 360,
+          "unit": "g",
+          "original": "Harina de maíz 360 g"
+        },
+        {
+          "food": "salt",
+          "quantity": null,
+          "unit": null,
+          "original": "Sal, lo indispensable"
+        },
+        {
+          "food": "black pepper",
+          "quantity": null,
+          "unit": null,
+          "original": "Pimienta, lo indispensable"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 50,
+          "unit": "ml",
+          "original": "Aceite 50 ml"
+        },
+        {
+          "food": "squash",
+          "quantity": 150,
+          "unit": "g",
+          "original": "Calabaza 150 g"
+        },
+        {
+          "food": "carrot",
+          "quantity": 300,
+          "unit": "g",
+          "original": "Zanahoria 300 g"
+        },
+        {
+          "food": "chayote",
+          "quantity": 150,
+          "unit": "g",
+          "original": "Chayote 150 g"
+        },
+        {
+          "food": "onion",
+          "quantity": 100,
+          "unit": "g",
+          "original": "Cebolla 100 g"
+        },
+        {
+          "food": "tomato",
+          "quantity": 200,
+          "unit": "g",
+          "original": "Tomate 200 g"
+        },
+        {
+          "food": "sweet pepper",
+          "quantity": 50,
+          "unit": "g",
+          "original": "Chile dulce 50 g"
+        },
+        {
+          "food": "mixed dried herbs",
+          "quantity": null,
+          "unit": null,
+          "original": "Hierbas de olor al gusto"
+        }
+      ],
+      "caloriesPerServing": null,
+      "methodSummary": "Boil the lentils until soft (about 30 to 40 minutes), add fried tomato and onion, herbs and diced squash, carrot and chayote, season, and serve with fresh corn tortillas.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "frijoles-charros-arroz-jardinera",
+      "name": "Frijoles Charros y Arroz a la Jardinera",
+      "source": "DIF Quintana Roo (Sistema para el Desarrollo Integral de la Familia del Estado de Quintana Roo), Programa de Alimentación Escolar Recetario 2024, published on vidasaludable.gob.mx",
+      "url": "https://vidasaludable.gob.mx/storage/recursos/recetarios/regionales/Re-Quintana_Roo_Recetario_Pae-C_2024_.pdf",
+      "mealType": "lunch",
+      "cuisine": "Mexican",
+      "vegetarian": true,
+      "servings": 10,
+      "prepMinutes": null,
+      "cookMinutes": 90,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "masa harina (corn flour for tortillas)",
+          "quantity": 180,
+          "unit": "g",
+          "original": "Harina de maíz 180 g"
+        },
+        {
+          "food": "canned mixed vegetables",
+          "quantity": 200,
+          "unit": "g",
+          "original": "Ensalada de verduras 200g/1 lata"
+        },
+        {
+          "food": "rice",
+          "quantity": 100,
+          "unit": "g",
+          "original": "Arroz 100g"
+        },
+        {
+          "food": "dried bayo beans",
+          "quantity": 350,
+          "unit": "g",
+          "original": "Frijol bayo 350g"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 50,
+          "unit": "ml",
+          "original": "Aceite 50 ml"
+        },
+        {
+          "food": "salt",
+          "quantity": null,
+          "unit": null,
+          "original": "Sal, lo indispensable"
+        },
+        {
+          "food": "tomato",
+          "quantity": 250,
+          "unit": "g",
+          "original": "Tomate 250 g"
+        },
+        {
+          "food": "onion",
+          "quantity": 50,
+          "unit": "g",
+          "original": "Cebolla 50 g"
+        },
+        {
+          "food": "sweet pepper",
+          "quantity": 50,
+          "unit": "g",
+          "original": "Chile dulce 50 g"
+        },
+        {
+          "food": "squash",
+          "quantity": 100,
+          "unit": "g",
+          "original": "Calabaza 100 g"
+        },
+        {
+          "food": "chayote",
+          "quantity": 50,
+          "unit": "g",
+          "original": "Chayote 50 g"
+        },
+        {
+          "food": "carrot",
+          "quantity": 200,
+          "unit": "g",
+          "original": "Zanahoria 200 g"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "Ajo 2 dientes"
+        },
+        {
+          "food": "epazote or mixed herbs",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "Epazote/ hierbas de olor 2 ramas"
+        }
+      ],
+      "caloriesPerServing": null,
+      "methodSummary": "Simmer the bayo beans with epazote, onion and garlic about 1.5 to 2 hours (soak overnight to shorten), cook the rice with garlic, onion and diced vegetables, and serve with grated carrot and corn tortillas.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "canada-turkey-chili",
+      "name": "Turkey Chili",
+      "source": "Health Canada, Canada's Food Guide",
+      "url": "https://www.canada.ca/en/health-canada/services/food-guide/eating-support/kitchen/recipes/turkey-chili.html",
+      "mealType": "dinner",
+      "cuisine": "Canadian",
+      "vegetarian": false,
+      "servings": 8,
+      "prepMinutes": 10,
+      "cookMinutes": 30,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "lean ground turkey",
+          "quantity": 500,
+          "unit": "g",
+          "original": "500 g (1 lb) lean ground turkey"
+        },
+        {
+          "food": "vegetable oil",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "10 mL (2 tsp) vegetable oil"
+        },
+        {
+          "food": "onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 onion, finely chopped"
+        },
+        {
+          "food": "green bell pepper",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 green pepper, chopped"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 cloves garlic, minced"
+        },
+        {
+          "food": "chili powder",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "15 mL (1 tbsp) chili powder"
+        },
+        {
+          "food": "dried oregano",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "10 mL (2 tsp) dried oregano"
+        },
+        {
+          "food": "ground cumin",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "5 mL (1 tsp) ground cumin"
+        },
+        {
+          "food": "jalapeño pepper",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 jalapeño pepper, seeded and minced"
+        },
+        {
+          "food": "canned diced tomatoes",
+          "quantity": 796,
+          "unit": "ml",
+          "original": "1 can (796 mL/28 oz) diced tomatoes"
+        },
+        {
+          "food": "canned red kidney beans",
+          "quantity": 540,
+          "unit": "ml",
+          "original": "1 can (540 mL/19 oz) red kidney beans, drained and rinsed"
+        },
+        {
+          "food": "lower sodium vegetable broth",
+          "quantity": 125,
+          "unit": "ml",
+          "original": "125 mL (1/2 cup) lower sodium vegetable broth or water"
+        },
+        {
+          "food": "tomato paste",
+          "quantity": 60,
+          "unit": "ml",
+          "original": "60 mL (1/4 cup) tomato paste"
+        },
+        {
+          "food": "bay leaf",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 bay leaves"
+        }
+      ],
+      "caloriesPerServing": null,
+      "methodSummary": "Brown the turkey to 74C and drain, sauté onion, pepper, garlic and spices, return the turkey with jalapeño, add tomatoes, beans, broth, paste and bay leaves, and simmer covered about 20 minutes.",
+      "storageNote": "Freeze into meal-sized portions for up to 3 months.",
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    },
+    {
+      "id": "canada-curried-vegetable-lentil-stew",
+      "name": "Curried Vegetable Lentil Stew",
+      "source": "Health Canada, Canada's Food Guide",
+      "url": "https://www.canada.ca/en/health-canada/services/food-guide/eating-support/kitchen/recipes/curried-vegetable-lentil-stew.html",
+      "mealType": "dinner",
+      "cuisine": "Canadian",
+      "vegetarian": true,
+      "servings": 6,
+      "prepMinutes": 15,
+      "cookMinutes": 25,
+      "appliances": [
+        "stove"
+      ],
+      "ingredients": [
+        {
+          "food": "vegetable oil",
+          "quantity": 10,
+          "unit": "ml",
+          "original": "10 mL (2 tsp) vegetable oil"
+        },
+        {
+          "food": "red onion",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 red onion, chopped"
+        },
+        {
+          "food": "garlic clove",
+          "quantity": 4,
+          "unit": "ct",
+          "original": "4 cloves garlic, minced"
+        },
+        {
+          "food": "fresh cilantro",
+          "quantity": 60,
+          "unit": "ml",
+          "original": "60 mL (1/4 cup) chopped fresh cilantro, divided"
+        },
+        {
+          "food": "fresh ginger",
+          "quantity": 15,
+          "unit": "ml",
+          "original": "15 mL (1 tbsp) minced fresh ginger or 5 mL (1 tsp) ground ginger"
+        },
+        {
+          "food": "mild curry paste",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "30 mL (2 tbsp) mild curry paste or powder"
+        },
+        {
+          "food": "garam masala",
+          "quantity": 5,
+          "unit": "ml",
+          "original": "5 mL (1 tsp) garam masala"
+        },
+        {
+          "food": "all-purpose flour",
+          "quantity": 30,
+          "unit": "ml",
+          "original": "30 mL (2 tbsp) all purpose flour"
+        },
+        {
+          "food": "lower sodium vegetable broth",
+          "quantity": 625,
+          "unit": "ml",
+          "original": "625 mL (2 1/2 cups) lower sodium vegetable broth"
+        },
+        {
+          "food": "yellow-fleshed potato",
+          "quantity": 2,
+          "unit": "ct",
+          "original": "2 yellow fleshed potatoes, diced"
+        },
+        {
+          "food": "red bell pepper",
+          "quantity": 1,
+          "unit": "ct",
+          "original": "1 red bell pepper, chopped"
+        },
+        {
+          "food": "green beans",
+          "quantity": 310,
+          "unit": "ml",
+          "original": "310 mL (2 1/4 cup) fresh or frozen green beans, chopped"
+        },
+        {
+          "food": "canned lentils",
+          "quantity": 540,
+          "unit": "ml",
+          "original": "1 can (540 mL/19 oz) lentils, drained and rinsed"
+        }
+      ],
+      "caloriesPerServing": null,
+      "methodSummary": "Soften onion, garlic, half the cilantro, ginger and spices in oil, stir in flour then broth, add potatoes, pepper, beans and lentils, and simmer covered about 20 minutes.",
+      "storageNote": null,
+      "keepsInFridgeDays": {
+        "min": 3,
+        "max": 4,
+        "basis": "FoodSafety.gov general guidance for cooked leftovers, not stated on the recipe page",
+        "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts"
+      },
+      "reheat": {
+        "method": "microwave or stove",
+        "until": "steaming hot throughout",
+        "basis": "NHS bolognese page advises reheating until steaming; general practice, not per-recipe source text"
+      }
+    }
+  ],
+  "cooking": {
+    "atusFoodPrepAndCleanup": {
+      "2024": {
+        "source": "BLS ATUS 2024 annual averages, Table 1",
+        "url": "https://blsmon1.bls.gov/news.release/atus.t01.htm",
+        "avgHoursPerDay": {
+          "all": 0.67,
+          "men": 0.46,
+          "women": 0.86
+        },
+        "percentEngaged": {
+          "all": 63.1,
+          "men": 54.2,
+          "women": 71.6
+        },
+        "hoursPerDayForThoseWhoEngaged": {
+          "all": 1.06,
+          "men": 0.86,
+          "women": 1.2
+        },
+        "weekdayVsWeekend": {
+          "weekdayHours": 0.65,
+          "weekendAndHolidayHours": 0.7,
+          "url": "https://blsmon1.bls.gov/news.release/atus.t02.htm",
+          "note": "from search summary of Table 2; not fetched directly"
+        }
+      },
+      "2025": {
+        "source": "BLS ATUS 2025 annual averages, Table 1",
+        "url": "https://www.bls.gov/news.release/atus.t01.htm",
+        "avgHoursPerDay": {
+          "all": 0.71,
+          "men": 0.51,
+          "women": 0.91
+        },
+        "percentEngaged": {
+          "all": 65.2
+        },
+        "hoursPerDayForThoseWhoEngaged": {
+          "all": 1.09,
+          "men": 0.88,
+          "women": 1.26
+        }
+      },
+      "note": "BLS American Time Use Survey, Table 1. 'Food preparation and cleanup' combines cooking, food presentation and kitchen clean-up (including washing dishes). Averages over all persons, including those who did none that day.",
+      "eatingAndDrinking2025": {
+        "avgHoursPerDay": {
+          "all": 1.21,
+          "men": 1.24,
+          "women": 1.18
+        },
+        "percentEngaged": 96.9,
+        "url": "https://www.bls.gov/news.release/atus.t01.htm"
+      },
+      "splitPrepVsCleanup": null,
+      "splitPrepVsCleanupNote": "ATUS publishes 'Food and drink preparation' and 'Kitchen and food clean-up' separately in its detailed A-1 tables, but those tables could not be retrieved (bls.gov/tus/tables pages returned only the landing page). Not found; do not invent a split."
+    },
+    "dishwashing": {
+      "handWashingMinutesPerLoad": null,
+      "handWashingNote": "No government per-load hand-washing time was found. The only official time figure is ENERGY STAR's annual saving below.",
+      "energyStarTimeSavedPerYearHours": 230,
+      "energyStarTimeSavedNote": "ENERGY STAR: using a certified dishwasher 'can save you over 230 hours of personal time over the course of a year' compared with hand washing (\"almost 10 days\").",
+      "energyStarWaterSavedVsHandGallonsPerYear": 8400,
+      "energyStarRunningCostUsdPerYear": {
+        "standard": 50,
+        "compact": 30
+      },
+      "energyStarUtilitySavingVsHandUsdPerYear": 220,
+      "energyStarLifetimeSavingVsHandUsd": 3300,
+      "energyStarEnergyVsHand": "less than half as much energy as washing by hand",
+      "energyStarEfficiencyVsStandardModels": {
+        "standardSize": {
+          "energyPct": 20,
+          "waterPct": 30
+        },
+        "compact": {
+          "energyPct": 30,
+          "waterPct": 43
+        }
+      },
+      "standardCapacityDefinition": "more than eight place settings and six serving pieces",
+      "dishwasherCycleMinutes": null,
+      "dishwasherCycleNote": "ENERGY STAR materials do not state a cycle duration; not found in an official source.",
+      "sources": [
+        "https://www.energystar.gov/products/dishwashers",
+        "https://www.energystar.gov/sites/default/files/2025-05/2025%20Dishwasher%20Messaging.pdf"
+      ]
+    },
+    "homeCookingFrequency": {
+      "source": "U.S. EIA, Today in Energy, 15 Aug 2022 (2020 RECS)",
+      "url": "https://www.eia.gov/todayinenergy/detail.php?id=53439",
+      "householdsCookingHotMealDailyPct": 79,
+      "householdsWithRangePct": 89,
+      "cooktopUsesPerWeek": 8,
+      "ovenUsesPerWeek": 3,
+      "householdsCookingWithNaturalGasPct": 38,
+      "coffeeMakerDailyPct": 56,
+      "instantPotWeeklyPct": 16,
+      "riceCookerUsePct": 13
+    },
+    "microwave": {
+      "source": "U.S. EIA, Today in Energy (2015 RECS)",
+      "url": "https://www.eia.gov/todayinenergy/detail.php?id=37552",
+      "householdsOwningPct": 96,
+      "ownersUsingWeeklyPct": 99,
+      "avgOperatingCostUsdPerYear": 17,
+      "avgCookingCostUsdPerYear": {
+        "electricity": 31,
+        "naturalGas": 34
+      }
+    },
+    "applianceEnergy": {
+      "electricOvenWatts": {
+        "min": 2000,
+        "max": 5000
+      },
+      "electricBurnerWatts": {
+        "min": 1000,
+        "max": 2500
+      },
+      "note": "Typical ranges from commercial energy sites (EnergySage, Direct Energy), not a government measurement; treat as estimates. The DOE Energy Saver appliance-wattage page returned 404. kWh per hour of use equals kW drawn while the element is on; ovens cycle their element, so real kWh per hour is below the rated wattage.",
+      "sources": [
+        "https://www.energysage.com/electricity/house-watts/how-many-watts-does-an-electric-oven-and-stove-use/",
+        "https://www.directenergy.com/en/learn/home-energy-management/how-much-energy-does-oven-and-electric-stove-use"
+      ],
+      "annualCookingKwhPerHousehold": null,
+      "annualCookingKwhNote": "A search summary attributed 290 kWh (electric cooktop) and 660 kWh (gas cooktop) per household for 2020 to RECS, but the EIA page fetched states no kWh, so this is left null."
+    },
+    "leftovers": {
+      "fridgeDays": {
+        "min": 3,
+        "max": 4
+      },
+      "freezerMonths": {
+        "min": 2,
+        "max": 6,
+        "appliesTo": "cooked meat or poultry leftovers"
+      },
+      "source": "FoodSafety.gov Cold Food Storage Chart (via search summary; fsis.usda.gov returned 403)",
+      "url": "https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts",
+      "fsisLeftovers": {
+        "fridgeDays": [
+          3,
+          4
+        ],
+        "freezerMonths": [
+          3,
+          4
+        ],
+        "refrigerateWithinHours": 2,
+        "discardIfLeftOutHours": 2,
+        "discardIfLeftOutAbove90FHours": 1,
+        "note": "From search results quoting the FSIS page and FSIS's own post; page returned 403."
+      },
+      "reheatNote": "USDA FSIS leftovers guidance (reheat to 165 F / 74 C) could not be fetched (403); not quoted here.",
+      "reheatUrl": "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/leftovers-and-food-safety"
+    }
+  },
+  "alcohol": {
+    "standardDrinks": [
+      {
+        "country": "US",
+        "gramsEthanol": 14,
+        "examples": "12 fl oz regular beer ~5%; 8-9 fl oz malt liquor ~7%; 5 fl oz table wine ~12%; 1.5 fl oz distilled spirits ~40%",
+        "source": "NIAAA, Understanding the Dangers of Alcohol Overdose (Apr 2021)",
+        "url": "https://www.niaaa.nih.gov/sites/default/files/publications/Alcohol_overdose.pdf",
+        "note": "Defined as any beverage containing 0.6 fl oz or 14 g of pure alcohol."
+      },
+      {
+        "country": "GB",
+        "gramsEthanol": 8,
+        "mlEthanol": 10,
+        "name": "unit",
+        "examples": "175 ml glass of 12% wine = 2.1 units; 25 ml single 40% spirit = 1 unit; 35 ml = 1.4 units; pint of strong lager = 3 units, lower-strength lager just over 2",
+        "source": "NHS, Calculating alcohol units",
+        "url": "https://www.nhs.uk/live-well/alcohol-advice/calculating-alcohol-units/",
+        "note": "NHS: one unit is around what the average adult can process in an hour."
+      },
+      {
+        "country": "IE",
+        "gramsEthanol": 10,
+        "examples": "half pint of beer; 100 ml glass of wine; pub measure of spirits (35.5 ml)",
+        "source": "HSE / Drinkaware Ireland",
+        "url": "https://drinkaware.ie/facts/drink-driving-in-ireland/",
+        "note": "Gram figure from HSE low-risk guidelines via search (https://www2.hse.ie/living-well/alcohol/health/improve-your-health/weekly-low-risk-alcohol-guidelines/); Drinkaware says it takes a minimum of one hour to process one standard drink."
+      },
+      {
+        "country": "CA",
+        "gramsEthanol": 13.45,
+        "mlEthanol": 17.05,
+        "examples": "341 ml (12 oz) 5% beer; 142 ml (5 oz) 12% wine; 43 ml (1.5 oz) 40% spirits",
+        "source": "Canada's Guidance on Alcohol and Health (CCSA, 2023) / Health Canada",
+        "url": "https://www.ccsa.ca/sites/default/files/2023-01/CCSA_Canadas_Guidance_on_Alcohol_and_Health_Final_Report_en.pdf",
+        "note": "Values from search summary of CCSA/Health Canada pages; risk is low at 2 or fewer drinks per week, moderate at 3-6, increasingly high at 7 or more."
+      },
+      {
+        "country": "MX",
+        "gramsEthanol": 13,
+        "mlEthanol": 16,
+        "examples": "355 ml beer can; 120 ml glass of wine; 45 ml shot of spirits",
+        "source": "NOM-142-SSA1/SCFI-2014 and NOM-047-SSA2-2015 (as reported by tragoestandar.org.mx / Wikipedia 'Trago estandar')",
+        "url": "https://es.wikipedia.org/wiki/Trago_est%C3%A1ndar",
+        "note": "From search summary; official NOM text not fetched."
+      }
+    ],
+    "widmark": {
+      "formula": "C = (A / (r * W)) - beta * t  where C = BAC, A = grams ethanol absorbed, W = body mass, r = Widmark factor, beta = elimination rate, t = hours since drinking began",
+      "rMale": 0.68,
+      "rMaleSd": 0.17,
+      "rFemale": 0.55,
+      "rFemaleSd": 0.11,
+      "rSource": {
+        "citation": "Posey D, Mozayani A. The estimation of blood alcohol concentration: Widmark revisited. Forensic Sci Med Pathol 2007;3:33-39 (reporting Widmark's original values)",
+        "url": "https://link.springer.com/article/10.1385/FSMP:3:1:33"
+      },
+      "eliminationRates": [
+        {
+          "gPerDlPerHour": 0.018,
+          "label": "Widmark's original average",
+          "range": [
+            0.009,
+            0.035
+          ],
+          "commonlyUsedRange": [
+            0.017,
+            0.02
+          ],
+          "source": "Posey & Mozayani 2007",
+          "url": "https://link.springer.com/article/10.1385/FSMP:3:1:33"
+        },
+        {
+          "gPerDlPerHour": 0.017,
+          "label": "NHTSA average for moderate drinkers",
+          "source": "NHTSA, Computing a BAC Estimate, Oct 1994",
+          "url": "https://www.craftbeer.com/attachments/0000/1170/Computing_a_BAC_Estimate.pdf"
+        },
+        {
+          "gPerDlPerHour": 0.02,
+          "label": "NHTSA 'above average': heavy drinkers (60+ drinks per month)",
+          "source": "NHTSA 1994",
+          "url": "https://www.craftbeer.com/attachments/0000/1170/Computing_a_BAC_Estimate.pdf"
+        },
+        {
+          "gPerDlPerHour": 0.012,
+          "label": "NHTSA 'below average' conservative figure (fewer than 20% of population this slow)",
+          "source": "NHTSA 1994",
+          "url": "https://www.craftbeer.com/attachments/0000/1170/Computing_a_BAC_Estimate.pdf"
+        }
+      ],
+      "populationRangeNHTSA": "below 0.010 to above 0.040 g/dL per hour",
+      "elimination0015Note": "The 0.015 g/dL/h figure is widely used by BAC calculators and is attributed to Jones (2010, Forensic Sci Int 200:1-20), but the primary text could not be retrieved, so it is not cited as verified. Verified figures are 0.017 (NHTSA average) and 0.018 (Widmark).",
+      "nhtsaBodyWaterMethod": {
+        "bodyWaterFractionMale": 0.58,
+        "bodyWaterFractionFemale": 0.49,
+        "bloodWaterFraction": 0.806,
+        "ethanolDensityGPerMl": 0.79,
+        "note": "NHTSA 1994 method (from Moskowitz, Appendix I of the 1992 Report to Congress): BAC (g/100 ml) = grams ethanol / (kg body mass * water fraction * 1000) * 0.806 * 100, minus metabolism counted from the start of drinking. NHTSA notes body-water percentage is not the same as Widmark's r. Worked example: 128 lb male, one 12 oz 4.5% beer gives peak 0.030; after 1 h at 0.012/h, 0.018.",
+        "url": "https://www.craftbeer.com/attachments/0000/1170/Computing_a_BAC_Estimate.pdf"
+      },
+      "bacUnits": "US BAC is g per 100 ml blood (or per 210 L breath); 0.08 = 80 mg/100 ml = 0.8 g/L. UK/IE breath limits are in micrograms per 100 ml breath; Mexico City breath limit in mg per litre of breath."
+    },
+    "drivingLimits": [
+      {
+        "jurisdiction": "US (all states except Utah)",
+        "bloodGPerDl": 0.08,
+        "under21": "zero-tolerance laws; typically 0.02 (e.g. NY 0.02-0.07); California 0.01",
+        "commercial": 0.04,
+        "sources": [
+          "https://www.ghsa.org/state-laws-issues/alcohol-impaired-driving",
+          "https://dmv.ny.gov/tickets/penalties-alcohol-or-drug-related-violations",
+          "https://www.dmv.ca.gov/portal/driver-education-and-safety/dmv-safety-guidelines-actions/driving-under-the-influence/"
+        ],
+        "note": "Commercial 0.04 from CA DMV page (implied); under-21 thresholds vary by state."
+      },
+      {
+        "jurisdiction": "US-UT",
+        "bloodGPerDl": 0.05,
+        "effective": "2018-12-30",
+        "note": "First and only US state below 0.08 (HB 155, Utah Code 41-6a-502).",
+        "sources": [
+          "https://rosap.ntl.bts.gov/view/dot/60428",
+          "https://highwaysafety.utah.gov/05-bac-law/"
+        ]
+      },
+      {
+        "jurisdiction": "US-NY",
+        "dwiGPerDl": 0.08,
+        "dwaiRange": "more than 0.05 but less than 0.07",
+        "aggravatedDwiGPerDl": 0.18,
+        "under21ZeroToleranceRange": "0.02 to 0.07",
+        "source": "NY DMV",
+        "url": "https://dmv.ny.gov/tickets/penalties-alcohol-or-drug-related-violations"
+      },
+      {
+        "jurisdiction": "US-CA",
+        "bloodGPerDl": 0.08,
+        "under21": 0.01,
+        "source": "California DMV",
+        "url": "https://www.dmv.ca.gov/portal/driver-education-and-safety/dmv-safety-guidelines-actions/driving-under-the-influence/"
+      },
+      {
+        "jurisdiction": "GB-ENG (also Wales, Northern Ireland)",
+        "bloodMgPer100ml": 80,
+        "breathUgPer100ml": 35,
+        "urineMgPer100ml": 107,
+        "learnerOrNovice": "no lower limit",
+        "sources": [
+          "https://www.gov.uk/drink-driving-penalties",
+          "https://www.mygov.scot/drink-drive-limit-scotland"
+        ],
+        "note": "Limits from search summary of mygov.scot comparing Scotland with rest of UK."
+      },
+      {
+        "jurisdiction": "GB-SCT",
+        "bloodMgPer100ml": 50,
+        "breathUgPer100ml": 22,
+        "urineMgPer100ml": 67,
+        "source": "mygov.scot",
+        "url": "https://www.mygov.scot/drink-drive-limit-scotland"
+      },
+      {
+        "jurisdiction": "IE",
+        "bloodMgPer100ml": 50,
+        "breathUgPer100ml": 22,
+        "urineMgPer100ml": 67,
+        "specifiedDrivers": {
+          "appliesTo": "learner, novice, professional/commercial",
+          "bloodMgPer100ml": 20,
+          "breathUgPer100ml": 9,
+          "urineMgPer100ml": 27
+        },
+        "source": "Drinkaware Ireland",
+        "url": "https://drinkaware.ie/facts/drink-driving-in-ireland/"
+      },
+      {
+        "jurisdiction": "CA (federal Criminal Code)",
+        "bloodMgPer100ml": 80,
+        "note": "Criminal offence at 80 mg/100 ml or more (s. 320.14(1)(b)).",
+        "url": "https://laws-lois.justice.gc.ca/eng/acts/c-46/section-320.19.html"
+      },
+      {
+        "jurisdiction": "CA-ON",
+        "warnRangeGPerDl": [
+          0.05,
+          0.079
+        ],
+        "zeroTolerance": "drivers 21 or under, and G1/G2/M1/M2 licence holders: no alcohol",
+        "source": "Ontario.ca, Impaired driving",
+        "url": "https://www.ontario.ca/page/impaired-driving"
+      },
+      {
+        "jurisdiction": "CA-BC",
+        "warnRangeGPerDl": [
+          0.05,
+          0.08
+        ],
+        "failGPerDl": 0.08,
+        "source": "RoadSafetyBC, Immediate Roadside Prohibition",
+        "url": "https://www2.gov.bc.ca/gov/content/transportation/driving-and-cycling/roadsafetybc/prohibitions/alcohol"
+      },
+      {
+        "jurisdiction": "MX-CMX (Mexico City)",
+        "bloodGPerL": 0.8,
+        "breathMgPerL": 0.4,
+        "publicAndCommercialTransport": "zero tolerance",
+        "legalBasis": "Reglamento de Transito de la Ciudad de Mexico, art. 50",
+        "sources": [
+          "https://www.infobae.com/mexico/2024/12/25/te-pasaste-de-copas-aqui-los-limites-y-las-sanciones-del-alcoholimetro-en-cdmx/",
+          "https://www.autofact.com.mx/blog/mi-carro/infracciones/alcoholimetro-cdmx"
+        ],
+        "note": "0.8 g/L blood equals 0.08 g/dL."
+      }
+    ],
+    "firstOffencePenalties": [
+      {
+        "jurisdiction": "US-NY",
+        "offence": "DWAI-alcohol (>0.05 <0.07)",
+        "fineUsd": [
+          300,
+          500
+        ],
+        "maxJail": "15 days",
+        "licence": "suspended 90 days",
+        "url": "https://dmv.ny.gov/tickets/penalties-alcohol-or-drug-related-violations"
+      },
+      {
+        "jurisdiction": "US-NY",
+        "offence": "DWI (0.08+)",
+        "fineUsd": [
+          500,
+          1000
+        ],
+        "maxJail": "1 year",
+        "licence": "revoked at least 6 months",
+        "url": "https://dmv.ny.gov/tickets/penalties-alcohol-or-drug-related-violations"
+      },
+      {
+        "jurisdiction": "US-NY",
+        "offence": "Aggravated DWI (0.18+)",
+        "fineUsd": [
+          1000,
+          2500
+        ],
+        "maxJail": "1 year",
+        "licence": "revoked at least 1 year",
+        "url": "https://dmv.ny.gov/tickets/penalties-alcohol-or-drug-related-violations"
+      },
+      {
+        "jurisdiction": "US-NY",
+        "offence": "Zero Tolerance, under 21 (0.02-0.07)",
+        "civilPenaltyUsd": 125,
+        "terminationFeeUsd": 100,
+        "licence": "suspended 6 months",
+        "url": "https://dmv.ny.gov/tickets/penalties-alcohol-or-drug-related-violations"
+      },
+      {
+        "jurisdiction": "US-CA",
+        "offence": "DUI first offence (VC 23152)",
+        "fineUsd": [
+          390,
+          1000
+        ],
+        "fineNote": "statutory base fine; penalty assessments added by courts are not included",
+        "jail": "96 hours (48 continuous) to 6 months",
+        "licence": "DMV administrative suspension 4 months with chemical test at 0.08+; 1 year if test refused",
+        "reissueFeeUsd": 125,
+        "urls": [
+          "https://law.justia.com/codes/california/code-veh/division-11-5/chapter-2/article-2/section-23536/",
+          "https://www.dmv.ca.gov/portal/driver-education-and-safety/dmv-safety-guidelines-actions/driving-under-the-influence/"
+        ]
+      },
+      {
+        "jurisdiction": "GB-ENG",
+        "offence": "Driving or attempting to drive above limit",
+        "maxPrison": "6 months",
+        "fine": "unlimited",
+        "ban": "at least 1 year (3 years if convicted twice in 10 years)",
+        "url": "https://www.gov.uk/drink-driving-penalties",
+        "sentencingGuideline": "Breath 36-59 ug: Band C fine starting point (range Band B-C), 12-16 month ban, per summaries of the Sentencing Council guideline (https://www.jmw.co.uk/articles/drink-driving/drink-driving-sentencing-guidelines)"
+      },
+      {
+        "jurisdiction": "GB-ENG",
+        "offence": "In charge of a vehicle above limit",
+        "maxPrison": "3 months",
+        "fineGbpMax": 2500,
+        "ban": "possible",
+        "url": "https://www.gov.uk/drink-driving-penalties"
+      },
+      {
+        "jurisdiction": "GB-ENG",
+        "offence": "Refusing to provide a specimen",
+        "maxPrison": "6 months",
+        "fine": "unlimited",
+        "ban": "at least 1 year",
+        "url": "https://www.gov.uk/drink-driving-penalties"
+      },
+      {
+        "jurisdiction": "GB-SCT",
+        "offence": "Drink driving",
+        "maxPrison": "6 months",
+        "fineGbpMax": 5000,
+        "ban": "minimum 12 months",
+        "url": "https://www.mygov.scot/drink-drive-limit-scotland",
+        "note": "From search summary of mygov.scot (page body did not load on fetch)."
+      },
+      {
+        "jurisdiction": "IE",
+        "offence": "Ordinary driver 50-80 mg",
+        "fixedChargeEur": 200,
+        "disqualification": "3 months",
+        "url": "https://drinkaware.ie/facts/drink-driving-in-ireland/"
+      },
+      {
+        "jurisdiction": "IE",
+        "offence": "Ordinary driver 80-100 mg",
+        "fixedChargeEur": 400,
+        "disqualification": "6 months",
+        "url": "https://drinkaware.ie/facts/drink-driving-in-ireland/"
+      },
+      {
+        "jurisdiction": "IE",
+        "offence": "Ordinary driver over 100 mg",
+        "court": true,
+        "fineEurMax": 5000,
+        "maxPrison": "6 months",
+        "disqualification": "1-6 years",
+        "url": "https://www.completecar.ie/features/post/11327/Irelands-drink-driving-rules-explained"
+      },
+      {
+        "jurisdiction": "IE",
+        "offence": "Specified (learner/novice/professional) driver 20-80 mg",
+        "fixedChargeEur": 200,
+        "disqualification": "3 months",
+        "url": "https://drinkaware.ie/facts/drink-driving-in-ireland/"
+      },
+      {
+        "jurisdiction": "IE",
+        "offence": "Refusing breath test",
+        "disqualification": "4 years first offence",
+        "url": "https://www.completecar.ie/features/post/11327/Irelands-drink-driving-rules-explained"
+      },
+      {
+        "jurisdiction": "CA (Criminal Code s.320.19)",
+        "offence": "Operating at 80+ mg/100 ml, first offence",
+        "minFineCad": {
+          "80to119": 1000,
+          "120to159": 1500,
+          "160plus": 2000
+        },
+        "maxImprisonment": "10 years on indictment; 2 years less a day on summary conviction",
+        "licence": "Ontario: suspension of at least 1 year after conviction (federal prohibition s.320.24 not fetched)",
+        "urls": [
+          "https://laws-lois.justice.gc.ca/eng/acts/c-46/section-320.19.html",
+          "https://www.ontario.ca/page/impaired-driving"
+        ]
+      },
+      {
+        "jurisdiction": "CA-ON",
+        "offence": "Warn range 0.05-0.079, first occurrence",
+        "suspension": "7 days immediate",
+        "penaltyCad": 250,
+        "program": "8-hour education course",
+        "url": "https://www.ontario.ca/page/impaired-driving",
+        "conflictNote": "Some secondary sites still say 3 days; ontario.ca says 7 days."
+      },
+      {
+        "jurisdiction": "CA-ON",
+        "offence": "Warn range, second occurrence",
+        "suspension": "14 days",
+        "penaltyCad": 350,
+        "url": "https://www.ontario.ca/page/impaired-driving"
+      },
+      {
+        "jurisdiction": "CA-ON",
+        "offence": "Warn range, third occurrence",
+        "suspension": "30 days",
+        "penaltyCad": 450,
+        "interlock": "6 months",
+        "url": "https://www.ontario.ca/page/impaired-driving"
+      },
+      {
+        "jurisdiction": "CA-ON",
+        "offence": "0.08+ administrative (roadside)",
+        "suspension": "90 days immediate",
+        "impound": "7 days",
+        "penaltyCad": 550,
+        "afterConviction": "licence suspension at least 1 year; ignition interlock at least 1 year",
+        "url": "https://www.ontario.ca/page/impaired-driving"
+      },
+      {
+        "jurisdiction": "CA-BC",
+        "offence": "IRP Warn, first (5-year window)",
+        "prohibition": "3 days",
+        "impound": "3 days",
+        "impoundFeesCad": "150+",
+        "penaltyCad": 200,
+        "reinstatementCad": 250,
+        "url": "https://www2.gov.bc.ca/gov/content/transportation/driving-and-cycling/roadsafetybc/prohibitions/alcohol"
+      },
+      {
+        "jurisdiction": "CA-BC",
+        "offence": "IRP Warn, second",
+        "prohibition": "7 days",
+        "impound": "7 days",
+        "impoundFeesCad": "230+",
+        "penaltyCad": 300,
+        "reinstatementCad": 250,
+        "url": "https://www2.gov.bc.ca/gov/content/transportation/driving-and-cycling/roadsafetybc/prohibitions/alcohol"
+      },
+      {
+        "jurisdiction": "CA-BC",
+        "offence": "IRP Warn, third",
+        "prohibition": "30 days",
+        "impound": "30 days",
+        "impoundFeesCad": "680+",
+        "penaltyCad": 400,
+        "reinstatementCad": 250,
+        "url": "https://www2.gov.bc.ca/gov/content/transportation/driving-and-cycling/roadsafetybc/prohibitions/alcohol"
+      },
+      {
+        "jurisdiction": "CA-BC",
+        "offence": "IRP Fail (0.08+) or refusal",
+        "prohibition": "90 days",
+        "impound": "30 days",
+        "impoundFeesCad": "680+",
+        "penaltyCad": 500,
+        "reinstatementCad": 250,
+        "url": "https://www2.gov.bc.ca/gov/content/transportation/driving-and-cycling/roadsafetybc/prohibitions/alcohol",
+        "note": "Table from search summary of the gov.bc.ca page; remedial program and interlock costs not retrieved."
+      },
+      {
+        "jurisdiction": "MX-CMX",
+        "offence": "Exceeding alcoholimetro limit",
+        "arrest": "20 to 36 hours administrative arrest, not commutable (Centro de Sancion Administrativa 'El Torito')",
+        "licencePoints": 6,
+        "impound": "vehicle sent to the depot (corralon)",
+        "fineMxn": 6224,
+        "fineNote": "Fine figure reported by Infobae (Dec 2024); other sources stress arrest is not commutable for a fine. Treat as unconfirmed.",
+        "url": "https://www.infobae.com/mexico/2024/12/25/te-pasaste-de-copas-aqui-los-limites-y-las-sanciones-del-alcoholimetro-en-cdmx/"
+      }
+    ],
+    "legalDrinkingAge": [
+      {
+        "country": "US",
+        "age": 21,
+        "basis": "National Minimum Drinking Age Act 1984 (23 U.S.C. 158)",
+        "url": "https://www.law.cornell.edu/uscode/text/23/158"
+      },
+      {
+        "country": "GB",
+        "age": 18,
+        "detail": "Under 18 may not buy alcohol; 16-17 accompanied by an adult may drink (not buy) beer, wine or cider with a meal; illegal to give alcohol to children under 5",
+        "url": "https://www.gov.uk/alcohol-young-people-law"
+      },
+      {
+        "country": "IE",
+        "age": 18,
+        "detail": "Sale or supply to under-18s prohibited (Intoxicating Liquor Act 1988); exception in a private residence with parental consent",
+        "url": "https://www.citizensinformation.ie/en/justice/criminal-law/criminal-offences/alcohol-and-the-law/",
+        "note": "From search summary; page returned 403 on fetch."
+      },
+      {
+        "country": "CA",
+        "age": null,
+        "byProvince": {
+          "AB": 18,
+          "MB": 18,
+          "QC": 18,
+          "BC": 19,
+          "ON": 19,
+          "SK": 19,
+          "NB": 19,
+          "NL": 19,
+          "NS": 19,
+          "PE": 19,
+          "NT": 19,
+          "NU": 19,
+          "YT": 19
+        },
+        "url": "https://en.wikipedia.org/wiki/Alcoholic_drinks_in_Canada",
+        "note": "Set by each province; from secondary summaries, not provincial statutes."
+      },
+      {
+        "country": "MX",
+        "age": 18,
+        "basis": "Ley General de Salud art. 220 prohibits selling or supplying alcohol to minors (age of majority 18)",
+        "url": "https://leyes-mx.com/ley_general_de_salud/220.htm"
+      }
+    ],
+    "effectsByBac": {
+      "nhtsa": {
+        "source": "NHTSA, The ABCs of BAC (DOT HS 809 844) / NHTSA drunk-driving page; text from search excerpts (PDF returned 403)",
+        "url": "https://www.nhtsa.gov/sites/nhtsa.gov/files/809844-theabcsofbac.pdf",
+        "bands": [
+          {
+            "bacGPerDl": 0.02,
+            "typical": "some loss of judgment; relaxation, slight body warmth, altered mood",
+            "driving": "decline in visual functions (rapid tracking of a moving target); decline in ability to perform two tasks at the same time (divided attention)"
+          },
+          {
+            "bacGPerDl": 0.05,
+            "typical": "exaggerated behavior, may have loss of small-muscle control (e.g., focusing eyes), impaired judgment, usually good feeling, lowered alertness, release of inhibition",
+            "driving": "reduced coordination, reduced ability to track moving objects, difficulty steering, reduced response to emergency driving situations"
+          },
+          {
+            "bacGPerDl": 0.08,
+            "typical": "muscle coordination becomes poor (balance, speech, vision, reaction time, hearing); harder to detect danger; judgment, self-control, reasoning and memory impaired",
+            "driving": "concentration, short-term memory loss, speed control, reduced information processing (signal detection, visual search), impaired perception"
+          },
+          {
+            "bacGPerDl": 0.1,
+            "typical": "clear deterioration of reaction time and control, slurred speech, poor coordination, slowed thinking",
+            "driving": "reduced ability to maintain lane position and brake appropriately"
+          },
+          {
+            "bacGPerDl": 0.15,
+            "typical": "far less muscle control than normal, vomiting may occur (unless high tolerance), major loss of balance",
+            "driving": "substantial impairment in vehicle control, attention to driving task, and necessary visual and auditory information processing"
+          }
+        ]
+      },
+      "niaaa": {
+        "source": "NIAAA, Understanding the Dangers of Alcohol Overdose (updated Apr 2021)",
+        "url": "https://www.niaaa.nih.gov/sites/default/files/publications/Alcohol_overdose.pdf",
+        "bands": [
+          {
+            "range": [
+              0,
+              0.05
+            ],
+            "label": "Mild impairment",
+            "effects": [
+              "mild speech, memory, attention, coordination, balance impairments",
+              "perceived beneficial effects such as relaxation",
+              "sleepiness can begin"
+            ]
+          },
+          {
+            "range": [
+              0.06,
+              0.15
+            ],
+            "label": "Increased impairment",
+            "effects": [
+              "perceived benefits give way to increasing intoxication",
+              "increased risk of aggression in some people",
+              "speech, memory, attention, coordination, balance further impaired",
+              "significant impairments in all driving skills",
+              "increased risk of injury to self and others",
+              "moderate memory impairments"
+            ]
+          },
+          {
+            "range": [
+              0.16,
+              0.3
+            ],
+            "label": "Severe impairment",
+            "effects": [
+              "speech, memory, coordination, attention, reaction time, balance significantly impaired",
+              "all driving-related skills dangerously impaired",
+              "judgment and decision-making dangerously impaired",
+              "blackouts",
+              "vomiting and other signs of alcohol overdose common",
+              "loss of consciousness"
+            ]
+          },
+          {
+            "range": [
+              0.31,
+              0.45
+            ],
+            "label": "Life threatening",
+            "effects": [
+              "loss of consciousness",
+              "danger of life-threatening alcohol overdose",
+              "significant risk of death in most drinkers due to suppression of vital life functions"
+            ]
+          }
+        ],
+        "bingeDefinition": "pattern bringing BAC to 0.08 g/dL or higher, typically 4 drinks (women) or 5 drinks (men) in about 2 hours",
+        "highIntensityDefinition": "two or more times the binge thresholds",
+        "overdoseSigns": [
+          "mental confusion, stupor",
+          "difficulty remaining conscious",
+          "vomiting",
+          "seizures",
+          "slow breathing (fewer than 8 breaths per minute)",
+          "irregular breathing (10 seconds or more between breaths)",
+          "slow heart rate",
+          "clammy skin",
+          "no gag reflex",
+          "extremely low body temperature, bluish skin or paleness"
+        ],
+        "bacKeepsRising": "BAC can continue to rise after drinking stops or the person is unconscious."
+      }
+    },
+    "hangoverAndSleep": {
+      "hangover": {
+        "source": "NIAAA, Hangovers fact sheet",
+        "url": "https://www.niaaa.nih.gov/publications/brochures-and-fact-sheets/hangovers",
+        "symptoms": [
+          "fatigue",
+          "weakness",
+          "thirst",
+          "headache",
+          "muscle aches",
+          "nausea",
+          "stomach pain",
+          "vertigo",
+          "sensitivity to light and sound",
+          "anxiety",
+          "irritability",
+          "sweating",
+          "increased blood pressure"
+        ],
+        "peaksWhen": "symptoms are worst when BAC returns to about zero",
+        "durationHours": "24 or longer",
+        "performance": "attention, decision-making and muscle coordination can be impaired; driving, operating machinery or caring for others can be affected"
+      },
+      "sleep": {
+        "niaaa": "people fall asleep faster after drinking but sleep is fragmented and they wake earlier",
+        "review": {
+          "citation": "Ebrahim IO, Shapiro CM, Williams AJ, Fenwick PB. Alcohol and sleep I: effects on normal sleep. Alcohol Clin Exp Res 2013;37(4):539-549",
+          "url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/acer.12006",
+          "findings": [
+            "at all doses, reduced sleep onset latency, more consolidated first half of sleep, more disruption in second half",
+            "first-half REM reduction significant at high doses; total-night REM % decreased at moderate and high doses",
+            "slow-wave sleep increased in first half of night"
+          ],
+          "caveat": "The review's methods were criticised (Pressman et al. 2015, Alcohol Clin Exp Res)."
+        }
+      }
+    },
+    "crashRiskByBac": {
+      "primary": {
+        "citation": "Compton RP, Berning A. Drug and Alcohol Crash Risk. NHTSA Traffic Safety Facts Research Note DOT HS 812 117, Feb 2015 (Virginia Beach case-control study; Lacey et al.)",
+        "url": "https://mddre.maryland.gov/wp-content/uploads/sites/17/2016/12/812117-Drug_and_Alcohol_Crash_Risk.pdf",
+        "measure": "relative risk of police-reported crash involvement vs BrAC 0.00, Table 8",
+        "table": [
+          {
+            "brac": 0,
+            "unadjusted": 1,
+            "adjustedAgeGender": 1
+          },
+          {
+            "brac": 0.01,
+            "unadjusted": 0.51,
+            "adjustedAgeGender": 0.54
+          },
+          {
+            "brac": 0.02,
+            "unadjusted": 0.82,
+            "adjustedAgeGender": 0.85
+          },
+          {
+            "brac": 0.03,
+            "unadjusted": 1.17,
+            "adjustedAgeGender": 1.2
+          },
+          {
+            "brac": 0.04,
+            "unadjusted": 1.57,
+            "adjustedAgeGender": 1.6
+          },
+          {
+            "brac": 0.05,
+            "unadjusted": 2.05,
+            "adjustedAgeGender": 2.07
+          },
+          {
+            "brac": 0.06,
+            "unadjusted": 2.61,
+            "adjustedAgeGender": 2.61
+          },
+          {
+            "brac": 0.07,
+            "unadjusted": 3.25,
+            "adjustedAgeGender": 3.22
+          },
+          {
+            "brac": 0.08,
+            "unadjusted": 3.98,
+            "adjustedAgeGender": 3.93
+          },
+          {
+            "brac": 0.09,
+            "unadjusted": 4.83,
+            "adjustedAgeGender": 4.73
+          },
+          {
+            "brac": 0.1,
+            "unadjusted": 5.79,
+            "adjustedAgeGender": 5.64
+          },
+          {
+            "brac": 0.11,
+            "unadjusted": 6.88,
+            "adjustedAgeGender": 6.67
+          },
+          {
+            "brac": 0.12,
+            "unadjusted": 8.11,
+            "adjustedAgeGender": 7.82
+          },
+          {
+            "brac": 0.13,
+            "unadjusted": 9.51,
+            "adjustedAgeGender": 9.11
+          },
+          {
+            "brac": 0.14,
+            "unadjusted": 11.07,
+            "adjustedAgeGender": 10.56
+          },
+          {
+            "brac": 0.15,
+            "unadjusted": 12.82,
+            "adjustedAgeGender": 12.18
+          },
+          {
+            "brac": 0.16,
+            "unadjusted": 14.78,
+            "adjustedAgeGender": 13.97
+          },
+          {
+            "brac": 0.17,
+            "unadjusted": 16.97,
+            "adjustedAgeGender": 15.96
+          },
+          {
+            "brac": 0.18,
+            "unadjusted": 19.4,
+            "adjustedAgeGender": 18.17
+          },
+          {
+            "brac": 0.19,
+            "unadjusted": 22.09,
+            "adjustedAgeGender": 20.6
+          },
+          {
+            "brac": 0.2,
+            "unadjusted": 25.08,
+            "adjustedAgeGender": 23.29,
+            "note": "0.20+"
+          }
+        ],
+        "alcoholAtOrAbove005NoDrugsAdjustedOR": 6.75,
+        "comparisonToBlomberg": "At 0.04 this model gives 1.60 vs 1.00 in Blomberg; at 0.10, 5.64 vs 2.66 in Blomberg; mostly within Blomberg's 95% CIs."
+      },
+      "blomberg": {
+        "citation": "Blomberg RD, Peck RC, Moskowitz H, Burns M, Fiorentino D. The Long Beach/Fort Lauderdale relative risk study. J Safety Res 2009;40:285-292 (final report 2005)",
+        "url": "https://www.researchgate.net/publication/26835668_The_Long_BeachFort_Lauderdale_relative_risk_study",
+        "fullTable": null,
+        "note": "Full table not retrieved. Values stated in NHTSA 812 117: RR 1.00 at 0.04 and 2.66 at 0.10. Secondary summaries (UNC School of Government) say nearly 3x at 0.08, ~20x at 0.15, 80x at 0.20 - not verified against the paper."
+      },
+      "druid": "DRUID pooled EU analysis (via NHTSA 812 117): BAC 0.08-0.12 = 5-30x; above 0.12 = 20-200x sober risk.",
+      "grandRapids": "Borkenstein et al. 1964 (Grand Rapids Study) first established the BAC-crash risk relationship; numeric table not retrieved."
+    },
+    "barPrices": {
+      "source": "Numbeo cost-of-living crowd-sourced data (estimate, not an official statistic)",
+      "accessed": "2026-10-01",
+      "cities": [
+        {
+          "city": "New York",
+          "currency": "USD",
+          "domesticDraftBeerPint": 8,
+          "importedBeer12oz": 10,
+          "marketBottleWineMidRange": 20,
+          "marketDomesticBeer500ml": 3.17,
+          "updated": "2026-10-01",
+          "url": "https://www.numbeo.com/cost-of-living/in/New-York"
+        },
+        {
+          "city": "Los Angeles",
+          "currency": "USD",
+          "domesticDraftBeerPint": 8,
+          "importedBeer12oz": 10,
+          "marketBottleWineMidRange": 15,
+          "marketDomesticBeer500ml": 3.01,
+          "updated": "2026-09-30",
+          "url": "https://www.numbeo.com/cost-of-living/in/Los-Angeles"
+        },
+        {
+          "city": "London",
+          "currency": "GBP",
+          "domesticDraftBeerPint": 7,
+          "importedBeer12oz": 6,
+          "marketBottleWineMidRange": 10,
+          "marketDomesticBeer500ml": 2.37,
+          "updated": "2026-09-29",
+          "url": "https://www.numbeo.com/cost-of-living/in/London"
+        },
+        {
+          "city": "Dublin",
+          "currency": "EUR",
+          "domesticDraftBeerPint": 7,
+          "domesticDraftBeerPintRange": [
+            5,
+            8.5
+          ],
+          "importedBeer12oz": 6.75,
+          "marketBottleWineMidRange": 12,
+          "marketDomesticBeer500ml": 3.04,
+          "updated": "2026-09-28",
+          "url": "https://www.numbeo.com/cost-of-living/in/Dublin"
+        },
+        {
+          "city": "Toronto",
+          "currency": "CAD",
+          "domesticDraftBeerPint": 9,
+          "importedBeer12oz": 10,
+          "marketBottleWineMidRange": 20,
+          "marketDomesticBeer500ml": 3.09,
+          "updated": "2026-10-01",
+          "url": "https://www.numbeo.com/cost-of-living/in/Toronto"
+        },
+        {
+          "city": "Vancouver",
+          "currency": "CAD",
+          "domesticDraftBeerPint": 8,
+          "importedBeer12oz": 9,
+          "marketBottleWineMidRange": 20,
+          "marketDomesticBeer500ml": 3.74,
+          "updated": "2026-09-26",
+          "url": "https://www.numbeo.com/cost-of-living/in/Vancouver"
+        },
+        {
+          "city": "Mexico City",
+          "currency": "MXN",
+          "domesticDraftBeerPint": 60,
+          "importedBeer12oz": 100,
+          "marketBottleWineMidRange": 300,
+          "marketDomesticBeer500ml": 35.47,
+          "updated": "2026-09-27",
+          "url": "https://www.numbeo.com/cost-of-living/in/Mexico-City"
+        }
+      ],
+      "glassOfWineAtBar": null,
+      "glassOfWineNote": "No source found giving an on-trade glass-of-wine price for these cities; Numbeo does not track it. Not invented.",
+      "ukOfficialPubPrices": {
+        "source": "ONS consumer price data, Oct 2025, UK-wide averages (as reported by The Morning Advertiser, 15 Dec 2025)",
+        "url": "https://www.morningadvertiser.co.uk/Article/2025/12/15/how-much-have-drinks-prices-in-pubs-risen-in-the-past-year/",
+        "currency": "GBP",
+        "pintDraughtLager3_4to4_2pct": 4.51,
+        "pintDraughtBitter": 4.29,
+        "pintCider4_5to5_5pct": 4.88,
+        "bottleOfWineInPub": 24.55,
+        "whisky30ml": 3.99,
+        "vodka30ml": 4.4,
+        "gin30ml": 4.37,
+        "note": "National averages; London prices run higher (compare Numbeo GBP 7.00)."
+      }
+    }
+  }
+}

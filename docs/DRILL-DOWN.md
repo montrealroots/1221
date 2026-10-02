@@ -1,8 +1,11 @@
 # Depth — every noun opens where it stands
 
 One of the main engines of the system. The machinery is in `src/ui/looks/`,
-twenty-three kinds are declared against it and Home is wired to every one of
-them. What follows is the rule the whole game obeys, the machinery that makes
+forty-nine kinds are declared against it, and every screen in the game is
+wired to them: Home since the engine was built, and from 2026-10-02 the
+calendar, the bank, papers, school, career, people, routines, homes, land,
+belongings, clothes, cars, travel and food. Twenty-three were declared until
+then, and only Home opened anything. What follows is the rule the whole game obeys, the machinery that makes
 obeying it cheap, what stood in the way, and the checks that hold it in place.
 Where a screen departs from this, the screen is wrong.
 

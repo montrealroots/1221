@@ -1,0 +1,1651 @@
+{
+  "meta": {
+    "title": "Research gaps: cars (audio, interior condition, wheels, labour, pre-purchase inspection) and clothes (resale, repair, shoe life)",
+    "dateRead": "2026-10-02",
+    "towns": [
+      "New York",
+      "Los Angeles",
+      "New Haven CT",
+      "London",
+      "Dublin",
+      "Toronto",
+      "Vancouver",
+      "Mexico City"
+    ],
+    "method": "Every figure carries its source URL, the date read and a method: \"page\" (fetched and read) or \"search-summary\" (search-engine result text only, unconfirmed on the page). Null with a reason where nothing was published or nothing could be read. Builds on research-vehicle-shops.json, research-custom-effects.json and research-clothing-services2.json; figures already there are referenced, not repeated.",
+    "cautions": [
+      "AAA's state \"repair cost\" figures (NY $251.36, CA $271.10, CT $281.53) are not hourly labour rates: they trace to CarMD 2021 check-engine-light repair costs (parts + labour sum to the total). research-vehicle-shops.json labour_rates quotes them with basis unclear; do not use them as $/hour.",
+      "KBB and Hagerty grade gaps here are single worked examples, not published fixed gaps.",
+      "Practitioner resale-share estimates in research-clothing-services2.json remain blog figures; the Vinted 2025 impact report figure (items sell ~72% below original retail) is the only first-party measured share found."
+    ]
+  },
+  "cars": {
+    "audio": {
+      "topic": "Aftermarket car audio: head unit retail price, installation price, and insurance treatment",
+      "dateRead": "2026-10-02",
+      "methodNote": "method 'page' = fetched and read (or PDF downloaded and text-extracted); 'search-summary' = from search-engine result summary only, not verified on the page. Retail prices are snapshots and change with promotions.",
+      "retail": {
+        "US_BestBuy": {
+          "cities": [
+            "New York",
+            "Los Angeles",
+            "New Haven CT"
+          ],
+          "cheapestCarPlayAndroidAutoHeadUnit": {
+            "model": "Pioneer DMH-1500NEX (7-inch, Apple CarPlay + Android Auto, double-DIN)",
+            "value": 279.99,
+            "currency": "USD",
+            "url": "https://www.bestbuy.com/site/car-stereos/apple-carplay-receivers/pcmcat1493672433779.c?id=pcmcat1493672433779",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "note": "Lowest-priced unit shown on Best Buy's Apple CarPlay Receivers category page; marked 'Top Deal, was $349.99'. Page reports supports 'Apple CarPlay, Android Auto, Bluetooth, Backup Camera Input'. Some category listings showed no price, so a cheaper unlisted unit cannot be excluded."
+          },
+          "installStandardInDashDeck": {
+            "value": 99.99,
+            "currency": "USD",
+            "url": "https://www.bestbuy.com/site/services/car-electronics-professional-installation/pcmcat59600050005.c?id=pcmcat59600050005",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "quote": "Standard In-Dash Car Deck Installation - $99.99"
+          },
+          "installTouchscreenInDash": {
+            "value": 149.99,
+            "currency": "USD",
+            "url": "https://www.bestbuy.com/site/services/car-electronics-professional-installation/pcmcat59600050005.c?id=pcmcat59600050005",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "quote": "In-Dash Car Stereo Installation with Touchscreen - $149.99",
+            "note": "This is the tier a CarPlay/Android Auto touchscreen unit falls in. Hardware (dash kit, wiring harness, steering-wheel-control interface) not included; search summary of Best Buy pages put vehicle-specific parts at $20-$700 extra (search-summary, not verified)."
+          }
+        },
+        "UK_Halfords": {
+          "cities": [
+            "London"
+          ],
+          "cheapestCarPlayAndroidAutoHeadUnit": {
+            "model": "JVC KW-M560BT (Apple CarPlay + Android Auto)",
+            "value": 140,
+            "currency": "GBP",
+            "url": "https://www.halfords.com/technology/car-audio/car-stereos/jvc-kw-m560bt-car-stereo-with-apple-carplay-and-android-auto-451118.html",
+            "dateRead": "2026-10-02",
+            "method": "search-summary",
+            "note": "Search summary: '£140.00 (reduced from £169.99)'. Halfords.com pages render prices client-side and WebFetch returned only the menu, so not verified on page. Next-cheapest seen in summary: Road Angel RA-X622BT £199, Pioneer SPH-DA150BT £229."
+          },
+          "installAudioFittingFrom": {
+            "value": 110,
+            "currency": "GBP",
+            "url": "https://www.halfords.ie/technology/car-audio/apple-carplay/pioneer-sph-da130dab-car-stereo-603671.html",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "quote": "Audio fitting available 'from £110/€120' with professional installation (up to 2 hours)",
+            "note": "Read on the Halfords Ireland product page, which states both the GBP and EUR figure. Halfords UK car-stereo buyer's guide also says full installation 'starting from £110' after a free 30-minute fitting assessment (search-summary for halfords.com; same sentence read on halfords.ie guide page). 'From' price; additional vehicle parts may be required."
+          }
+        },
+        "Ireland_HalfordsIE": {
+          "cities": [
+            "Dublin"
+          ],
+          "cheapestCarPlayAndroidAutoHeadUnit": {
+            "model": "Pioneer SPH-DA150BT (Apple CarPlay + Android Auto, double-DIN)",
+            "value": 275,
+            "currency": "EUR",
+            "url": "https://www.halfords.ie/technology/car-audio/apple-carplay/",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "note": "Reduced from €300.00. Cheaper items on the same page are not head units: 'Simply In-Car Stereo - 7 Inch Display Screen' €60.00 and 'Quad Lock Wireless CarPlay / Android Auto Adaptor' €67.07 (the €60 item appears to be a dash-mounted screen, not verified as an in-dash unit)."
+          },
+          "installAudioFittingFrom": {
+            "value": 120,
+            "currency": "EUR",
+            "url": "https://www.halfords.ie/technology/car-audio/apple-carplay/pioneer-sph-da130dab-car-stereo-603671.html",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "quote": "from £110/€120",
+            "note": "The halfords.ie buyer's guide still prints '£110' in GBP. A search summary of halfords.ie also mentioned 'from €90' for some audio fitting (search-summary, not verified). A €40 'Car Audio Accessories & Fitting Voucher' exists but only with four named basic Pioneer units (MVH-A200VBT, SPH-10BT, DEH-X7800DAB, MVH-S410BT) — https://www.halfords.ie/technology/car-audio/stereo-fittings/car-audio-accessories-and-fitting-voucher-129977.html (page)."
+          }
+        },
+        "Canada": {
+          "cities": [
+            "Toronto",
+            "Vancouver"
+          ],
+          "bestBuyCanadaPioneerDMH1500NEX": {
+            "model": "Pioneer DMH-1500NEX (CarPlay + Android Auto)",
+            "value": 448.99,
+            "currency": "CAD",
+            "url": "https://www.bestbuy.ca/en-ca/product/pioneer-dmh-1500nex-digital-multimedia-video-receiver-with-7-display-carplay-android-auto/13483532",
+            "dateRead": "2026-10-02",
+            "method": "search-summary",
+            "note": "Not confirmed to be the cheapest CarPlay head unit at Best Buy Canada; bestbuy.ca returned 503 / menu-only to WebFetch. Search summary said Best Buy Canada in-dash receivers run 'from around $159.99' but did not tie that to a CarPlay model."
+          },
+          "canadianTireCarPlayUnit": {
+            "model": "Pioneer DMH-W2770NEX (wireless CarPlay + Android Auto, 6.8-inch)",
+            "value": null,
+            "currency": "CAD",
+            "url": "https://www.canadiantire.ca/en/pdp/pioneer-dmh-w2770nex-digital-multimedia-am-fm-bluetooth-receiver-with-android-auto-apple-carplay-6-8-in-0355587p.html",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "note": "Product listed by Canadian Tire, but the price is rendered client-side and was not readable."
+          },
+          "installPrice": {
+            "value": null,
+            "currency": "CAD",
+            "url": null,
+            "dateRead": "2026-10-02",
+            "method": "search-summary",
+            "note": "No published head-unit installation price found for Best Buy Canada or Canadian Tire. Best Buy Canada's Geek Squad pages surfaced no car-install service (only home 'Audio System Connect and Setup' $199.99, unrelated). Treat as unpublished; independent shops quote per vehicle."
+          }
+        },
+        "Mexico": {
+          "cities": [
+            "Mexico City"
+          ],
+          "cheapestCarPlayAndroidAutoHeadUnitWalmartMX": {
+            "model": "Pioneer DMH-1800NEX (6.8-inch, CarPlay + Android Auto, 2-DIN)",
+            "value": 6799,
+            "currency": "MXN",
+            "url": "https://www.walmart.com.mx/c/ftp/pioneer-autoestereos",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "note": "Cheapest CarPlay/Android Auto unit on Walmart México's Pioneer car-stereo page (others: DMH-A5650BT $9,898; DMH-Z5350BT $9,949). Branded units only; a search summary showed the same DMH-1800NEX at $8,708 and DMH-1600NEX at $8,499 in another listing, so marketplace sellers vary. Unbranded Chinese 'Android/CarPlay' double-DIN units on Mercado Libre run far lower (search summary: from ~$845 MXN) but Mercado Libre returned 403."
+          },
+          "portableCarPlayScreenMercadoLibre": {
+            "value": 645,
+            "currency": "MXN",
+            "url": "https://www.xataka.com.mx/seleccion/este-autoestereo-cuesta-650-pesos-mercado-libre-compatible-adroid-auto-apple-carplay",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "note": "Xataka México article dated 2024-10-14; unbranded portable unit powered from the cigarette lighter — NOT an in-dash head unit, needs no installation. Price is as of the article date."
+          },
+          "steren": {
+            "model": "Steren CAR-150 wireless CarPlay/Android Auto adapter (not a head unit)",
+            "value": 495,
+            "currency": "MXN",
+            "url": "https://www.steren.com.mx/adaptador-inalambrico-carplay-android-auto.html",
+            "dateRead": "2026-10-02",
+            "method": "search-summary",
+            "note": "Steren did not surface a CarPlay head unit."
+          },
+          "installPrice": {
+            "value": null,
+            "currency": "MXN",
+            "url": "https://www.walmart.com.mx/c/ftp/pioneer-autoestereos",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "note": "Walmart México lists no installation service. No retailer (Walmart MX, Liverpool, Coppel, Steren) publishes a head-unit installation price that was found; Mercado Libre home-install service listings exist but returned 403."
+          }
+        }
+      },
+      "insurance": {
+        "US": {
+          "Progressive": {
+            "includedCustomPartsAndEquipment": {
+              "value": 1000,
+              "currency": "USD",
+              "url": "https://www.progressive.com/answers/aftermarket-car-safety-devices/",
+              "dateRead": "2026-10-02",
+              "method": "page",
+              "quote": "With Progressive, the first $1,000 of damage to aftermarket parts or modifications are covered under auto comprehensive coverage and auto collision coverage.",
+              "note": "Also on https://www.progressive.com/answers/does-car-insurance-cover-theft/ (page): 'At Progressive, comprehensive coverage will insure up to $1,000 in repair or replacement costs for custom parts and equipment.' Its worked example uses an $800 stereo."
+            },
+            "cpeEndorsementTypicalLimit": {
+              "value": 5000,
+              "currency": "USD",
+              "url": "https://www.progressive.com/auto/insurance-coverages/",
+              "dateRead": "2026-10-02",
+              "method": "page",
+              "quote": "Custom parts and equipment (CPE) coverage can help pay to repair or replace items that you add to modify your car, like a stereo, navigation system, custom wheels, or even a paint job. CPE coverage typically has a $5,000 limit."
+            }
+          },
+          "GEICO": {
+            "includedLimit": {
+              "value": null,
+              "currency": "USD",
+              "url": "https://www.geico.com/information/aboutinsurance/auto/",
+              "dateRead": "2026-10-02",
+              "method": "page",
+              "quote": "Custom Parts and Equipment: Covers aftermarket parts like custom wheels, stereo systems, or paint jobs if they're damaged in a covered loss.",
+              "note": "GEICO's page names stereos under the optional CPE coverage but publishes no dollar figure for an included amount. Third-party summaries giving $2,000-$10,000 are industry generalities, not GEICO figures."
+            }
+          },
+          "StateFarm": {
+            "audioSublimit": {
+              "value": null,
+              "currency": "USD",
+              "url": "https://www.statefarm.com/content/dam/sf-library/en-us/pca-endorsement/auto/9843C.pdf",
+              "dateRead": "2026-10-02",
+              "method": "page",
+              "quote": "A covered vehicle also includes the parts and equipment that are common to the use of the vehicle as a vehicle.",
+              "note": "State Farm Personal Car Policy Booklet, Texas form 9843C (© 2024), text-extracted. No dollar sublimit for audio/sound equipment and no custom-equipment endorsement appears in the physical-damage section; only exclusions found are removable storage media ('tapes, discs, and memory cards'), radar detectors and equipment illegal in the registering jurisdiction. Whether an aftermarket head unit counts as 'common to the use of the vehicle as a vehicle' is not stated. A NY form (9832C) did not download. Null = no published limit, not 'unlimited'."
+            }
+          },
+          "Allstate": {
+            "soundSystemExcludedWithoutEndorsement": {
+              "value": 0,
+              "currency": "USD",
+              "url": "https://delivery.contenthub.allstate.com/api/public/content/e239359950c94d45b51bb732c4266679?v=8919e2f4",
+              "dateRead": "2026-10-02",
+              "method": "page",
+              "quote": "We will not cover: ... 8. loss to any sound system in or on an insured auto.",
+              "note": "Allstate Auto Policy ACR1 (state not named in the form). Sound System Coverage (Coverage ZA) pays only 'If a premium for Sound System Coverage is shown', at the limit on the Declarations. Crucially, 'Sound System' is defined as a device permanently installed 'in a location other than the one designed by the auto's manufacturer for that type of device' — so a head unit swapped into the factory radio slot is arguably NOT a 'sound system' under this form and would fall to ordinary comp/collision or the custom-parts rule below. A third-party summary of a different Allstate form quoted 'up to $750' for sound systems (search-summary, unverified)."
+            },
+            "customPartsDefaultLimit": {
+              "value": 1000,
+              "currency": "USD",
+              "url": "https://delivery.contenthub.allstate.com/api/public/content/e239359950c94d45b51bb732c4266679?v=8919e2f4",
+              "dateRead": "2026-10-02",
+              "method": "page",
+              "quote": "for loss to custom parts or equipment, the higher of $1,000 or the applicable limit shown on the Policy Declarations for Collision Coverage for Custom Equipment or Comprehensive Coverage for Custom Equipment.",
+              "note": "Custom Parts or Equipment excludes 'items covered under Sound System Coverage'."
+            }
+          }
+        },
+        "Canada": {
+          "Ontario_OAP1_aftermarketElectronicsCap": {
+            "value": 1500,
+            "currency": "CAD",
+            "url": "https://sgicanada.ca/documents/37159/2487547/OAP%201%20Ontario%20Owners%20Policy%202024.pdf",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "quote": "We will not pay more than $1,500 for loss or damage to electronic accessories or equipment other than factory installed equipment. We will pay the actual cash value of the equipment up to $1,500 in total.",
+            "note": "OAP 1 (2024), s.7.7 What We Will Pay; approved by FSRA for use on or after 2024-01-01. Definition includes 'radios, tape players/decks, stereo players/decks, compact disc players, speakers ... electronic navigation assistance ... and items of a similar nature'. 'Factory installed equipment' = included in the original new purchase price. Note: actual cash value (depreciated), not replacement cost. Standard statutory wording, so it applies to every Ontario insurer (Toronto)."
+          },
+          "BC_ICBC": {
+            "value": 1000,
+            "currency": "CAD",
+            "note": "Already known per brief (ICBC CAD 1,000 cap for permanently attached sound equipment); not re-researched."
+          }
+        },
+        "UK": {
+          "Admiral_aftermarketAVEquipmentCap": {
+            "value": 1250,
+            "currency": "GBP",
+            "url": "https://mktgblobpubaccess1.blob.core.windows.net/eui-pdf-assets/admiral/AD-003-038-Your-Car-Insurance-Guide.pdf",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "quote": "your vehicle's audio, visual or electronic equipment, as long as it is permanently fitted to your vehicle: Manufacturer equipment is covered in full. Aftermarket equipment is covered up to £1,250 or the market value of your vehicle, whichever is lower.",
+            "note": "Admiral 'Your Car Insurance Guide' AD-003-038 (2024). Same guide, General condition 12: 'Your policy does not cover modifications ... we will only pay the cost of replacing parts needed for your vehicle to meet the manufacturer's specification', and modifications are 'any changes to the way the vehicle looks, functions or drives'; customers must 'tell us beforehand if ... you plan to make any modifications'. So: declare it; Admiral publishes no premium-loading figure for a head-unit swap."
+          },
+          "Aviva_accessoriesPermanentlyFitted": {
+            "value": null,
+            "currency": "GBP",
+            "url": "https://www.online.aviva.co.uk/StaticDocsAV/Insurance_policy_default_v7.pdf",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "quote": "accessories. The most we will pay for accessories is shown in your schedule. ... Accessories are items permanently fitted to your car which aren't directly related to how it works as a vehicle. For example, in-built satnavs, cameras, comms kits or roof racks.",
+            "note": "Aviva Online/Aviva Premium wording v7: limit sits on the individual schedule, not in the wording, hence null. Aviva's learner/short-term wording (search-summary, unverified) caps audio/satnav 'up to £500, unless it was fitted by the manufacturer'."
+          },
+          "premiumEffectOfHeadUnitSwap": {
+            "value": null,
+            "currency": "GBP",
+            "url": null,
+            "dateRead": "2026-10-02",
+            "method": "search-summary",
+            "note": "No insurer (Admiral, Aviva, Adrian Flux) publishes a premium loading for a stereo/head-unit upgrade. Evidence found is forum anecdote only (mixed: some report no change, some an increase). Aviva and comparethemarket guidance pages returned 403. Declaration requirement already known via the Financial Ombudsman."
+          }
+        },
+        "Ireland": {
+          "AvivaIE_audioCap": {
+            "value": 650,
+            "currency": "EUR",
+            "url": "https://static.aviva.io/content/dam/aviva-public/ie/pdfs/motorcare-policy-booklet.pdf",
+            "dateRead": "2026-10-02",
+            "method": "page",
+            "quote": "We will not pay for: ... 5 any amount over 5% of the insured value of the car, or [€]650, whichever is less, for loss or damage to radio, hi-fi, car-phone or CB radio equipment; 6 any modifications unless they form part of the manufacturers standard specification or are optional extras that we have agreed to cover;",
+            "note": "Aviva Insurance Ireland DAC MotorCare policy booklet. The cap is the LESSER of 5% of insured value or €650 (e.g. a €8,000 car → €400). The euro sign was lost in PDF extraction. Applies to radio/hi-fi equipment generally, not only aftermarket; modifications are uncovered unless agreed, so a head-unit swap must be declared to be covered at all."
+          }
+        }
+      }
+    },
+    "conditionUpholsteryAndInspection": {
+      "_meta": {
+        "topic": "Vehicle condition grades vs value; interior repair prices; pre-purchase inspection prices and fault rates",
+        "dateRead": "2026-10-02",
+        "rule": "Every figure carries url, dateRead and method. 'page' = fetched and read; 'search-summary' = from search-result summary only, not confirmed on the page. null = nothing published / not found."
+      },
+      "A_conditionAndValue": {
+        "kbbWorkedExample_2014SubaruForester25i": {
+          "note": "EXAMPLE ONLY, one vehicle, KBB's default mileage, ZIP 75014 (Irving/Dallas TX area), valid through 2026-10-01. KBB publishes no fixed gap; this is the gap for this one car on this one day. Ratios computed by researcher from the quoted dollars.",
+          "url": "https://www.kbb.com/subaru/forester/2014/25i-sport-utility-4d/",
+          "dateRead": "2026-10-02",
+          "method": "page",
+          "tradeIn": {
+            "excellent": {
+              "value": 3580,
+              "currency": "USD"
+            },
+            "veryGood": {
+              "value": 3380,
+              "currency": "USD"
+            },
+            "good": {
+              "value": 3155,
+              "currency": "USD"
+            },
+            "fair": {
+              "value": 2605,
+              "currency": "USD"
+            }
+          },
+          "privateParty": {
+            "excellent": {
+              "value": 7820,
+              "currency": "USD"
+            },
+            "veryGood": {
+              "value": 7420,
+              "currency": "USD"
+            },
+            "good": {
+              "value": 6970,
+              "currency": "USD"
+            },
+            "fair": {
+              "value": 5845,
+              "currency": "USD"
+            }
+          },
+          "derivedRatiosVsGood": {
+            "note": "Computed, not published: value / Good value.",
+            "tradeIn": {
+              "excellent": 1.135,
+              "veryGood": 1.071,
+              "good": 1,
+              "fair": 0.826
+            },
+            "privateParty": {
+              "excellent": 1.122,
+              "veryGood": 1.065,
+              "good": 1,
+              "fair": 0.839
+            }
+          }
+        },
+        "hagertyWorkedExample_1990NissanSkylineGTR": {
+          "note": "EXAMPLE ONLY, collector car, Hagerty Price Guide July 2022 update. #4 value not given in the summary. Computed ratio #2/#3 = 1.54, #1/#3 = 2.46. Hagerty pages returned 403 to fetch, so not confirmed on page.",
+          "url": "https://www.hagerty.com/media/market-trends/hagerty-insider/hagerty-price-guide-update-july-2022/",
+          "dateRead": "2026-10-02",
+          "method": "search-summary",
+          "condition1Concours": {
+            "value": 160000,
+            "currency": "USD"
+          },
+          "condition2Excellent": {
+            "value": 100000,
+            "currency": "USD"
+          },
+          "condition3Good": {
+            "value": 65000,
+            "currency": "USD"
+          },
+          "condition4Fair": {
+            "value": null,
+            "reason": "Not given in the search summary; Hagerty pages blocked fetch (HTTP 403)."
+          }
+        },
+        "hagertyTypicalRelationship": {
+          "value": null,
+          "reason": "No stated typical percentage between #1/#2/#3/#4 found. Hagerty states #3 'Good' is the most common condition. hagerty.com/media pages returned HTTP 403; the HowToValue PDF could not be text-extracted.",
+          "url": "https://www.hagerty.com/valuation-tools/about-our-conditions",
+          "dateRead": "2026-10-02",
+          "method": "search-summary"
+        },
+        "edmundsGradeGap": {
+          "value": null,
+          "reason": "Edmunds publishes grade definitions (Outstanding/Clean/Average/Rough/Damaged) and says TMV is set at Clean, with lower grades 'adjusted downward to reflect what it would cost to bring the vehicle up to a clean state' — i.e. the gap is a reconditioning cost per vehicle, not a fixed percent.",
+          "url": "https://help.edmunds.com/hc/en-us/articles/206103047-What-are-the-vehicle-conditions-used-for-True-Market-Value-Pricing",
+          "dateRead": "2026-10-02",
+          "method": "search-summary"
+        },
+        "blackBookGradeGap": {
+          "value": null,
+          "reason": "No published percent spread between Extra Clean/Clean/Average/Rough found. Auto Remarketing article (week of 2013-03-26) gives only counts of adjustments, not gaps.",
+          "url": "https://www.autoremarketing.com/ar/wholesale/black-book-notices-dealers-going-after-average-condition-units-more-aggressively/",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "canadianBlackBookGradeGap": {
+          "value": null,
+          "reason": "CBB uses X-Clean/Clean/Average/Rough but no published percent adjustment found.",
+          "url": "https://carappraisalbc.com/guides/canadian-black-book-value/",
+          "dateRead": "2026-10-02",
+          "method": "search-summary"
+        },
+        "nadaJdPowerGradeGap": {
+          "value": null,
+          "reason": "Not searched to a result within budget; no published fixed gap found.",
+          "url": null,
+          "dateRead": "2026-10-02",
+          "method": null
+        },
+        "capHpiGradeGap": {
+          "value": null,
+          "reason": "Not found within budget.",
+          "url": null,
+          "dateRead": "2026-10-02",
+          "method": null
+        },
+        "smokingResaleLoss_study": {
+          "value": [
+            7,
+            9
+          ],
+          "unit": "percent lower asking price, smoker vs comparable nonsmoker car (range)",
+          "quote": "Used nonsmoker cars were offered at a considerable premium above their KBB value (>11%) and above comparable smoker cars (7–9%).",
+          "note": "Peer-reviewed: Matt et al., Tobacco Induced Diseases, 2008. 1,642 private-party sellers, San Diego CA, Jan 2005–Apr 2006. Asking prices, not transaction prices.",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2547891/",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "nonsmokerPremiumOverKBB": {
+          "value": 11,
+          "unit": "percent, lower bound (>11%) above KBB value",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2547891/",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "smokingResaleLoss_UK_CarVeto": {
+          "value": [
+            7,
+            8
+          ],
+          "unit": "percent of resale value",
+          "quote": "Smoked-in cars typically lose around 7-8% of their resale value compared with smoke-free vehicles, according to research by car history specialists CarVeto",
+          "note": "Carwow also states roughly £1,750–£2,000 on a £25,000 car; auction bids typically £200–£500 lower (Brego CEO Simon Hunt); specialist cleaning/trim repair on lease returns £100–£300.",
+          "url": "https://www.carwow.co.uk/car-valuation/guides/does-smoking-vaping-affect-resale-value",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "smokingTradeInLoss_Edmunds": {
+          "value": 500,
+          "currency": "USD",
+          "unit": "at least, trade-in reduction",
+          "note": "Attributed to Richard Arca, Edmunds; via news syndication.",
+          "url": "https://fox59.com/news/national-world/the-high-cost-of-smoking-in-your-car/",
+          "dateRead": "2026-10-02",
+          "method": "search-summary"
+        }
+      },
+      "B_interiorRepairShops": {
+        "London_HoodsAndStitches": {
+          "note": "Named UK shop's published price list; page did not state its town, so London is NOT confirmed. Search summary (unconfirmed) also listed 1/2/3-panel at £140/£210/£260 and armrest £180 — those were not on the fetched page.",
+          "url": "https://www.hoodsandstitches.co.uk/prices",
+          "dateRead": "2026-10-02",
+          "method": "page",
+          "clothSeatRepairBasic": {
+            "value": 90,
+            "currency": "GBP",
+            "note": "from"
+          },
+          "leatherSeatRepairBasic": {
+            "value": 100,
+            "currency": "GBP",
+            "note": "from"
+          },
+          "panelReplacementCloth": {
+            "value": 120,
+            "currency": "GBP",
+            "note": "from"
+          },
+          "panelReplacementLeather": {
+            "value": 130,
+            "currency": "GBP",
+            "note": "from"
+          },
+          "fullInteriorRetrim": {
+            "value": 1950,
+            "currency": "GBP",
+            "note": "from; search summary says 2 front seats, rear bench and door cards"
+          },
+          "headliner": {
+            "value": null,
+            "reason": "Not listed on price page."
+          }
+        },
+        "MexicoCity_TapiceriaAutomotrizCdmx_headliner": {
+          "note": "CDMX shop's own approximate table for re-covering the headliner (tapizado de cielo); 'cotización sin compromiso'. The site's contact number is a placeholder (+1-800-123-4567), so treat the business as low-confidence.",
+          "url": "https://tapiceriaautomotrizcdmx.com/tapizado-de-cielo-de-autos-cdmx/",
+          "dateRead": "2026-10-02",
+          "method": "page",
+          "compact": {
+            "value": 1200,
+            "currency": "MXN"
+          },
+          "sedan": {
+            "value": 1500,
+            "currency": "MXN"
+          },
+          "suv": {
+            "value": 1800,
+            "currency": "MXN"
+          },
+          "premium": {
+            "value": 2500,
+            "currency": "MXN"
+          }
+        },
+        "MexicoCity_seatReupholsteryRange": {
+          "value": [
+            3000,
+            10000
+          ],
+          "currency": "MXN",
+          "unit": "per leather seat",
+          "note": "Same site family; general range, whole-car tapicería MXN 5,000–20,000.",
+          "url": "https://tapiceriaautomotrizcdmx.com/tapizado-de-asientos-de-auto-cdmx/",
+          "dateRead": "2026-10-02",
+          "method": "search-summary"
+        },
+        "NewYork_leatherSeatRepair_aggregator": {
+          "value": [
+            93,
+            634
+          ],
+          "currency": "USD",
+          "unit": "range per leather seat repair; most spend 100–500; upholsterers 70–120/hour",
+          "note": "HomeYou quote aggregator, not a named shop.",
+          "url": "https://www.homeyou.com/ny/leather-seat-repair-new-york-costs",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "Dublin_UMD": {
+          "value": null,
+          "reason": "U.M.D Upholstery Midlands-Dublin (Blanchardstown, D15) says it is 'difficult to give prices on leather work'; a DoneDeal ad lists seat repair from €90 (search-summary only).",
+          "url": "https://www.upholsterymidlands.com/",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "Dublin_seatRepair_DoneDealAd": {
+          "value": 90,
+          "currency": "EUR",
+          "note": "from; classified ad, Dublin",
+          "url": "https://www.donedeal.ie/damagedcars-for-sale/seat-repair-reupholstery-foam-refoam/39411827",
+          "dateRead": "2026-10-02",
+          "method": "search-summary"
+        },
+        "LosAngeles": {
+          "value": null,
+          "reason": "Car Upholstery Los Angeles (3268 W Pico Blvd) lists no prices. Best Way Auto Upholstery (LA 90232) reportedly 'starts at $150' for headliners but its page failed (expired certificate).",
+          "url": "https://losangelesupholstery.com/car-upholstery-los-angeles/",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "LosAngeles_BestWay_headlinerFrom": {
+          "value": 150,
+          "currency": "USD",
+          "note": "from, simplest headliners; unconfirmed on page",
+          "url": "https://bestwayautoupholstery.com/car-headliner-repair/",
+          "dateRead": "2026-10-02",
+          "method": "search-summary"
+        },
+        "Toronto": {
+          "value": null,
+          "reason": "Toronto Auto Upholstery (Mississauga/Toronto/Vaughan) lists no prices. Search summary mentions headliners 'start at $75' and all-seat leather $1,250–$3,500 from unnamed Toronto pages; not confirmed.",
+          "url": "https://torontoupholsteryinc.com/services",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "NewYork_McCoys": {
+          "value": null,
+          "reason": "A search summary claimed McCoys Upholstery (Woodside, Queens) charges $475 headliner / $375 seat; a follow-up search could not find that published. Yelp reviews mention a $1,100 headliner quote. Not usable.",
+          "url": "https://www.yelp.com/biz/mccoys-upholstery-woodside",
+          "dateRead": "2026-10-02",
+          "method": "search-summary"
+        },
+        "NewHaven_Vancouver": {
+          "value": null,
+          "reason": "Not searched within budget.",
+          "url": null,
+          "dateRead": "2026-10-02",
+          "method": null
+        }
+      },
+      "C_prePurchaseInspection": {
+        "US_LemonSquad_standard": {
+          "value": 219.99,
+          "currency": "USD",
+          "note": "Mobile, nationwide incl. NY/LA/New Haven; cars under 20 years old.",
+          "url": "https://lemonsquad.com/used-car-inspections/standard",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "US_LemonSquad_other": {
+          "note": "Search summary only: classic (20+ yrs) $330, exotic $286, commercial $365, motorcycle $210, RV $449, fraud-detection add-on $40.",
+          "classic": {
+            "value": 330,
+            "currency": "USD"
+          },
+          "exotic": {
+            "value": 286,
+            "currency": "USD"
+          },
+          "fraudDetectionAddOn": {
+            "value": 40,
+            "currency": "USD"
+          },
+          "url": "https://lemonsquad.com/",
+          "dateRead": "2026-10-02",
+          "method": "search-summary"
+        },
+        "US_YourMechanic": {
+          "value": null,
+          "reason": "Service page shows a quote form, no published price. A 2013 launch press release said the PPI 'averages around $75' — dated.",
+          "url": "https://www.yourmechanic.com/services/pre-purchase-car-inspection",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "US_YourMechanic_2013launchAverage": {
+          "value": 75,
+          "currency": "USD",
+          "note": "2013 press release; stale",
+          "url": "https://www.prweb.com/releases/yourmechanic_lifts_the_hood_on_used_car_shopping_with_pre_purchase_inspection_offering/prweb11200696.htm",
+          "dateRead": "2026-10-02",
+          "method": "search-summary"
+        },
+        "UK_AA": {
+          "url": "https://www.theaa.com/cars/advice/guides/what-is-a-vehicle-inspection",
+          "dateRead": "2026-10-02",
+          "method": "page",
+          "basic99point": {
+            "value": 110,
+            "currency": "GBP",
+            "note": "non-member; £99 AA members; up to 20 years old; 1-mile test drive"
+          },
+          "comprehensive214pointMember": {
+            "value": [
+              197,
+              287
+            ],
+            "currency": "GBP",
+            "note": "AA members; 10-mile drive, photo report"
+          },
+          "duration": {
+            "value": [
+              1,
+              2.5
+            ],
+            "unit": "hours"
+          },
+          "conflict": "A third-party comparison (autospect.co.uk, 2026-08-26) lists AA Basic £110, Comprehensive £219–£319, Advanced £279–£339; an older AA article said 'from £142' (Sept 2023). Prices vary by car age/value."
+        },
+        "UK_RAC": {
+          "url": "https://autospect.co.uk/compare/aa-vs-rac-vehicle-inspection/",
+          "dateRead": "2026-10-02",
+          "method": "page",
+          "note": "Third-party compilation dated 2026-08-26 citing rac.co.uk; RAC's own page lists no base price (oil analysis add-on £39). 'From' prices rise with age, value and model; buyer reports put Comprehensive at £250–£311. History check £14.99 extra at both AA and RAC.",
+          "basic": {
+            "value": 132,
+            "currency": "GBP",
+            "note": "from"
+          },
+          "comprehensive307point": {
+            "value": 225,
+            "currency": "GBP",
+            "note": "from"
+          },
+          "advanced": {
+            "value": 290,
+            "currency": "GBP",
+            "note": "from; OBD, brake fluid, 20-mile road test"
+          }
+        },
+        "UK_RAC_oilAnalysisAddOn": {
+          "value": 39,
+          "currency": "GBP",
+          "url": "https://www.rac.co.uk/buying-a-car/vehicle-inspections/advanced-inspection",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "Ireland": {
+          "note": "No AA Ireland PPI price found. 'AA Solutions' (aasolutions.ie) is NOT AA Ireland.",
+          "aaSolutions": {
+            "value": 199,
+            "currency": "EUR",
+            "url": "https://aasolutions.ie/pre-purchase-used-car-inspection-",
+            "dateRead": "2026-10-02",
+            "method": "page"
+          },
+          "carInspectIe_Dublin": {
+            "value": 129,
+            "currency": "EUR",
+            "note": "from",
+            "url": "https://carinspect.ie/",
+            "dateRead": "2026-10-02",
+            "method": "search-summary"
+          },
+          "carExpertsIe": {
+            "value": 179,
+            "currency": "EUR",
+            "note": "from",
+            "url": "https://www.carexperts.ie/",
+            "dateRead": "2026-10-02",
+            "method": "search-summary"
+          },
+          "vamChecks_Dublin": {
+            "value": [
+              249,
+              494
+            ],
+            "currency": "EUR",
+            "note": "by vehicle type",
+            "url": "https://vamchecks.ie/",
+            "dateRead": "2026-10-02",
+            "method": "search-summary"
+          },
+          "carInspectionsIreland": {
+            "value": null,
+            "reason": "Site shows 'Working on updates'; search summary said €170, not confirmed.",
+            "url": "https://www.carinspectionsireland.ie/",
+            "dateRead": "2026-10-02",
+            "method": "page"
+          },
+          "cartellMotorcheck": {
+            "value": null,
+            "reason": "History-check price not searched within budget.",
+            "url": null,
+            "dateRead": "2026-10-02",
+            "method": null
+          }
+        },
+        "Canada_Ontario_UVIP": {
+          "value": 20,
+          "currency": "CAD",
+          "note": "Used Vehicle Information Package — a government ownership/lien/fair-market-value document, not a mechanical inspection; required for most private sales in Ontario.",
+          "url": "https://stepstojustice.ca/steps/debt-and-consumer-rights/get-used-vehicle-information-package-uvip/",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "Canada_CAA_139point": {
+          "member": {
+            "value": 179.95,
+            "currency": "CAD"
+          },
+          "nonMember": {
+            "value": 199.95,
+            "currency": "CAD"
+          },
+          "note": "Fetched from CAA Manitoba. Search summary attributes same prices to CAA South Central Ontario (Toronto) but that was not confirmed on a CAASCO page.",
+          "url": "https://www.caamanitoba.com/auto/buy-sell-vehicle/inspection-service",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "Canada_Vancouver_BCAA_199point": {
+          "value": 249.95,
+          "currency": "CAD",
+          "note": "plus tax; cars and trucks; no member/non-member split shown",
+          "url": "https://www.bcaa.com/automotive/bcaa-auto-service-centre/vehicle-inspections",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "Canada_CanadianTire": {
+          "value": null,
+          "reason": "Not searched within budget.",
+          "url": null,
+          "dateRead": "2026-10-02",
+          "method": null
+        },
+        "MexicoCity_WeVerify": {
+          "url": "https://www.weverify.com.mx/",
+          "dateRead": "2026-10-02",
+          "method": "page",
+          "note": "CDMX revisión pre-compra. IVA inclusion not stated. Foreign/US-plated cars +MXN 1,500 for packages with legal review.",
+          "inspeccionTotal4areas": {
+            "value": 2300,
+            "currency": "MXN"
+          },
+          "inspeccion3areas": {
+            "value": 1950,
+            "currency": "MXN"
+          },
+          "inspeccion2areas": {
+            "value": 1750,
+            "currency": "MXN"
+          },
+          "mecanicaSolo": {
+            "value": 1550,
+            "currency": "MXN"
+          },
+          "historialVehicular": {
+            "value": 590,
+            "currency": "MXN"
+          },
+          "pruebaDeManejoAddOn": {
+            "value": 300,
+            "currency": "MXN"
+          },
+          "traslado": {
+            "value": {
+              "0-10km": 300,
+              "10-15km": 350,
+              "15-20km": 400,
+              "20-25km": 450,
+              "25-30km": 500,
+              "30-35km": 550,
+              "35-40km": 600
+            },
+            "currency": "MXN"
+          }
+        },
+        "faultRate_AA": {
+          "value": 70,
+          "unit": "percent of used cars inspected with at least one fault",
+          "quote": "Seven out of 10 used cars assessed by AA Cars have at least one fault, which can cost more than £1,000 to fix in some cases.",
+          "url": "https://www.theaa.com/cars/advice/buying-a-car/most-common-used-car-issues",
+          "dateRead": "2026-10-02",
+          "method": "page"
+        },
+        "hiddenHistory_HPI": {
+          "value": 33,
+          "unit": "percent (1 in 3) of cars checked with a hidden history (write-off, mileage discrepancy, finance, stolen)",
+          "note": "HPI page 404'd on fetch. Sub-figures from summary: 1 in 4 vehicles checked has outstanding finance averaging £9,500; ~30/day flagged stolen; ~649/day insurance write-offs. This is a data/history check, not a mechanical PPI.",
+          "url": "https://www.hpi.co.uk/content/buying-selling/1-in-3-cars-has-a-hidden-history/",
+          "dateRead": "2026-10-02",
+          "method": "search-summary"
+        },
+        "faultRate_US_LemonSquad_CarChex": {
+          "value": null,
+          "reason": "No published US PPI fault-rate statistic found within budget.",
+          "url": null,
+          "dateRead": "2026-10-02",
+          "method": null
+        }
+      }
+    },
+    "wheelsAndLabour": {
+      "fragment": "pcd-labour",
+      "dateRead": "2026-10-02",
+      "notes": [
+        "wheel-size.com and its Spanish mirror llantasneumaticos.com serve '?' for PCD, centre bore and thread to automated fetches (checked on Silverado 1500, Ram 1500, Equinox, Octavia, Aveo, K3 BL7 pages). Their values could not be read by fetch. Most rows below therefore rest on search-engine summaries of fitment sites (method 'search-summary'). hubcentric-rings.com fetched cleanly, but its pages carry no thread size.",
+        "A search-summary is a secondary reading of several pages and has been wrong before. Rows marked 'disputed' are ones where sources disagree or the summary contradicted itself."
+      ],
+      "pcd": {
+        "alreadyKnown": {
+          "note": "Supplied by caller; not refetched.",
+          "Toyota Corolla": "5x100 / 54.1",
+          "Toyota Camry": "5x114.3 / 60.1",
+          "Toyota RAV4": "5x114.3 / 60.1",
+          "Honda CR-V": "5x114.3 / 64.1",
+          "Ford F-150": "6x135 / 87.1",
+          "Volkswagen Golf Mk8": "5x112 / 57.1",
+          "Ford Puma": "5x108 / 63.4",
+          "Nissan Qashqai J12": "5x114.3 / 66.1",
+          "Hyundai Tucson NX4": "5x114.3 / 67.1",
+          "Kia Sportage NQ5": "5x114.3 / 67.1",
+          "Nissan Versa": "4x100 / 60.1"
+        },
+        "models": [
+          {
+            "model": "Chevrolet Silverado 1500",
+            "generation": "T1XX (2019+, facelift 2022+)",
+            "markets": "USA, Canada, Mexico",
+            "pcd": "6x139.7",
+            "centreBoreMm": 78.1,
+            "thread": "M14x1.5",
+            "fastener": "lug nut",
+            "source": "https://www.americantrucks.com/wheel-bolt-pattern-guide-at-tech-guides.html; https://truckguider.com/chevy-silverado-1500-bolt-pattern/",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "wheel-size.com 2025 page confirms generation 'IV (T1XX) Facelift [2022 .. 2027]' and lug nuts but showed '?' for values (method page)."
+          },
+          {
+            "model": "Chevrolet Silverado 2500 HD / 3500 HD",
+            "generation": "T1XX HD (2020+)",
+            "markets": "USA, Canada",
+            "pcd": "8x180",
+            "centreBoreMm": 124.1,
+            "thread": "M14x1.5",
+            "fastener": "lug nut",
+            "source": "https://www.wheel-size.com/pcd/8x180/chevrolet/silverado-2500-hd/2011-2025/; https://autotk.com/chevrolet/silverado-2500hd/wheels/",
+            "method": "search-summary",
+            "dateRead": "2026-10-02"
+          },
+          {
+            "model": "GMC Sierra 1500",
+            "generation": "T1XX (2019+)",
+            "markets": "USA, Canada, Mexico",
+            "pcd": "6x139.7",
+            "centreBoreMm": 78.1,
+            "thread": "M14x1.5",
+            "fastener": "lug nut",
+            "source": "https://www.wheel-size.com/pcd/6x139.7/gmc/sierra-1500/2022-2025/; https://www.customwheeloffset.com/blogs/1624/what-wheels-and-tires-best-fit-a-current-generation-gmc-sierra-1500",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "Same corner hardware as Silverado 1500."
+          },
+          {
+            "model": "Ram 1500",
+            "generation": "DT (2019+, facelift 2025+)",
+            "markets": "USA, Canada, Mexico",
+            "pcd": "6x139.7",
+            "centreBoreMm": 77.8,
+            "thread": "M14x1.5",
+            "fastener": "lug nut",
+            "source": "https://www.sdwheel.com/blogs/1278/5th-gen-ram-fitment-guide; https://www.supremesuspensions.com/products/2019-2022-ram-1500-hub-centric-wheel-spacers-6x139-7mm-bolt-pattern-m14x1-5-studs-77-8mm-center-bore",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "Same 6x139.7 as GM half-tons but a 77.8 bore against GM's 78.1. The 2018-and-earlier Ram 1500 (DS, and 'Classic') used 5x139.7, so a different generation means different wheels."
+          },
+          {
+            "model": "Ram 2500 HD / 3500",
+            "generation": "5th gen HD (2019+)",
+            "markets": "USA, Canada",
+            "pcd": "8x165.1",
+            "centreBoreMm": 121.3,
+            "thread": "M14x1.5",
+            "fastener": "lug nut",
+            "source": "https://www.wheel-size.com/pcd/8x165.1/ram/2500/2011-2026/; https://truck2go.co/products/bora-2012-2025-ram-2500-3500-steel-1-25-wheel-spacers-bolt-pattern-8x165-1-hub-bore-121-3-sold-by-pair",
+            "method": "search-summary",
+            "dateRead": "2026-10-02"
+          },
+          {
+            "model": "Ford F-250/F-350 Super Duty",
+            "generation": "2017+ (P558 2023+)",
+            "markets": "USA, Canada",
+            "pcd": "8x170",
+            "centreBoreMm": 124.9,
+            "thread": "disputed: M14x1.5 or M14x2.0",
+            "fastener": "lug nut",
+            "source": "https://www.mrwheeldeal.com/blogs/1036/what-wheels-fit-2017-2022-ford-f250; https://www.go-parts.com/garage/wheel-ford-f-350-super-duty-ford-f-250-super-duty-ford-f-450-super-duty-2005-2025; https://www.ford-trucks.com/forums/1470958-aftermarket-lug-nuts.html",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "PCD and bore agree across sources. Two search summaries gave M14x1.5, but aftermarket M14x2.0 lug-nut sets are sold widely for Super Duty and the summary contradicted itself. Thread left unresolved; needs a Ford parts catalogue or owner manual read."
+          },
+          {
+            "model": "Chevrolet Equinox",
+            "generation": "IV (2024/2025+)",
+            "markets": "USA, Canada, Mexico",
+            "pcd": "5x115",
+            "centreBoreMm": 70.3,
+            "thread": "disputed: summary said M12x1.5",
+            "fastener": "lug nut",
+            "source": "https://www.wheel-size.com/pcd/5x115/chevrolet/equinox/2024-2025/",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "5x115 and 70.3 are consistent. The thread came only from a search summary that also mixed up earlier generations, so treat it as unverified. wheel-size.com 2025 page (fetched) lists 7.5Jx17 ET31, 7.5Jx18 ET31, 7.5Jx19 ET31 and 8Jx20 OE rims but '?' for PCD."
+          },
+          {
+            "model": "Nissan Rogue",
+            "generation": "T33 (2021+)",
+            "markets": "USA, Canada",
+            "pcd": "5x114.3",
+            "centreBoreMm": 66.1,
+            "thread": "M12x1.25",
+            "fastener": "lug nut",
+            "source": "https://wheel-sizes.com/bolt-pattern/nissan/rogue/; https://autotk.com/nissan/rogue/wheels/",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "Same corners as Qashqai J12 (already known 5x114.3/66.1); Rogue T33 and X-Trail T33 share the CMF-CD platform."
+          },
+          {
+            "model": "Chevrolet Aveo (Mexico)",
+            "generation": "III (310C), 2023+",
+            "markets": "Mexico, Central & South America",
+            "pcd": null,
+            "centreBoreMm": null,
+            "thread": null,
+            "fastener": null,
+            "source": "https://llantasneumaticos.com/size/chevrolet/aveo/2024/",
+            "method": "page",
+            "dateRead": "2026-10-02",
+            "reason": "Page confirms generation III (310C) [2023..2027], 1.5i 98 hp, markets Mexico and Central/South America, but shows '?' for PCD, bore and thread. A search summary claimed 5x105, but cited nothing specific; not recorded as a value."
+          },
+          {
+            "model": "Nissan NP300 (Mexico)",
+            "generation": "D22-derived NP300 (Mexico, through 2024+)",
+            "markets": "Mexico",
+            "pcd": "6x139.7",
+            "centreBoreMm": null,
+            "thread": "M12x1.25 (search-summary, unverified)",
+            "fastener": "lug nut",
+            "source": "https://www.wheel-size.com/pcd/6x139.7/nissan/np300-hardbody/2004-2021/; https://listado.mercadolibre.com.mx/rines-para-nissan-np300",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "reason": "Centre bore not established: one summary offered 108 mm, another 100.1 mm, neither from a spec page.",
+            "notes": "Market mismatch: wheel-size.com lists an 'NP300' [2020-2024] with 6x114.3, which is the D23 Navara/NP300 Frontier sold elsewhere. The Mexican NP300 work truck is the 6x139.7 one."
+          },
+          {
+            "model": "Kia K3 Sedán (Mexico)",
+            "generation": "BL7 (2023+)",
+            "markets": "Mexico, Central & South America, Middle East",
+            "pcd": "4x100",
+            "centreBoreMm": null,
+            "thread": "M12x1.5",
+            "fastener": "wheel nut",
+            "source": "https://articulo.mercadolibre.com.mx/MLM-2121903985-rines-deportivos-15-4-100-para-kia-k3-2023-2025-_JM; https://www.amazon.com.mx/Gen%C3%A9rico-Seguridad-Antirrobo-Compatible-2024-2025/dp/B0D9KVPP4K",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "reason": "Centre bore not found on any spec page. The 73.1 mm figure in a listing is an aftermarket wheel's bore, not the hub.",
+            "notes": "Not to be confused with the K3/Forte BD (2018-2023) sold as K3 elsewhere, which is 5x114.3. The Mexican BL7 is the Rio successor. wheel-size.com BL7 page (fetched) shows '?' values."
+          },
+          {
+            "model": "Nissan March (Mexico)",
+            "generation": "K13 (2010-2023+ in Mexico)",
+            "markets": "Mexico, Latin America",
+            "pcd": "4x100",
+            "centreBoreMm": 60.1,
+            "thread": "M12x1.25",
+            "fastener": "lug nut",
+            "source": "https://avtoreference.com/en/auto/nissan/march/2012/; https://tirewheelguide.com/sizes/nissan/march/2021/",
+            "method": "search-summary",
+            "dateRead": "2026-10-02"
+          },
+          {
+            "model": "Mazda CX-30",
+            "generation": "DM (2019+)",
+            "markets": "global",
+            "pcd": "5x114.3",
+            "centreBoreMm": 67.1,
+            "thread": "M12x1.5",
+            "fastener": "lug nut",
+            "source": "https://hubcentric-rings.com/car_models/mazda/cx-30/",
+            "method": "page",
+            "dateRead": "2026-10-02",
+            "notes": "PCD, bore 67.1, ET40-ET50 and torque 108-147 Nm read on the page; thread M12x1.5 from search-summary (wheel-sizes.com, hubcentric-rings)."
+          },
+          {
+            "model": "Nissan Kicks",
+            "generation": "P16 (2025+)",
+            "markets": "USA, Canada, Mexico",
+            "pcd": "5x114.3",
+            "centreBoreMm": 66.1,
+            "thread": "M12x1.25",
+            "fastener": "lug nut",
+            "source": "https://www.go-parts.com/garage/wheel-nissan-kicks-2021-2026; https://wheel-sizes.com/lugnuts/nissan/kicks/",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "Changed from 4x100 on P15 (2018-2024) to 5 lugs for 2025. Mexico still sold the P15 'Kicks Play' alongside; that one is 4x100."
+          },
+          {
+            "model": "Volkswagen Virtus (Mexico)",
+            "generation": "MQB A0 (2023+ in Mexico)",
+            "markets": "Mexico, Latin America, India",
+            "pcd": "5x100",
+            "centreBoreMm": 57.1,
+            "thread": null,
+            "fastener": "wheel bolt",
+            "source": "https://listado.mercadolibre.com.mx/rines-virtus",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "reason": "Thread not found in a source. Other 5x100 VW MQB A0 cars use M14x1.5 bolts, but that is inference, not a reading.",
+            "notes": "Weakest row: values come from aftermarket rim listings for the Virtus, not a spec page."
+          },
+          {
+            "model": "Vauxhall Corsa F (Opel Corsa F)",
+            "generation": "F (2019+)",
+            "markets": "UK, EU",
+            "pcd": "4x108",
+            "centreBoreMm": 65.1,
+            "thread": "M12x1.25",
+            "fastener": "wheel bolt",
+            "source": "https://www.pcdparts.co.uk/products/wheel-spacers/4x108-pcd-65-1-cb-bolt-on-wheel-spacer-silver; https://wheelpcd.co.uk/fitment-guide/vauxhall/corsa/2020/",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "Market/generation mismatch: Corsa E and earlier (GM era) were 4x100/56.6; the Stellantis CMP Corsa F moved to 4x108/65.1 (Peugeot pattern)."
+          },
+          {
+            "model": "MG HS",
+            "generation": "II (AS33), 2024+",
+            "markets": "UK, EU, Australia",
+            "pcd": "5x112",
+            "centreBoreMm": "disputed: 66.6 (or 57.1)",
+            "thread": null,
+            "fastener": null,
+            "source": "https://www.wheel-size.com/pcd/5x112/mg/hs/2024-2025/; https://www.wheel-size.com/size/mg/hs/as33-2024-now/",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "reason": "Thread not found. The summary gave 66.6 mm for the 2025+ range and 57.1 mm for some variants without saying which generation each belonged to.",
+            "notes": "hubcentric-rings.com had no MG HS page ('Model not found')."
+          },
+          {
+            "model": "Nissan Juke",
+            "generation": "F16 (2019+)",
+            "markets": "UK, EU",
+            "pcd": "5x114.3",
+            "centreBoreMm": 66.1,
+            "thread": null,
+            "fastener": "wheel nut",
+            "source": "https://hubcentric-rings.com/car_models/nissan/juke/",
+            "method": "page",
+            "dateRead": "2026-10-02",
+            "reason": "Page gives no thread. (Renault-Nissan CMF-B cars in this family usually run M12x1.25; not read.)"
+          },
+          {
+            "model": "Toyota Yaris Cross (EU)",
+            "generation": "XP210 (2021+)",
+            "markets": "EU, UK",
+            "pcd": "5x114.3",
+            "centreBoreMm": "disputed: 60.1 or 54.1",
+            "thread": "M12x1.5",
+            "fastener": "wheel nut",
+            "source": "https://hubcentric-rings.com/car_models/toyota/yaris-cross/; https://selected.pl/en/what-wheel-bolt-size-on-toyota-yaris-cross-from-2021-wheel-size-center-bore-diameter-and-thread-pitch-guide/",
+            "method": "page (hubcentric-rings) + search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "hubcentric-rings.com page reads 5x114.3 with 54.1 mm bore; search summary of selected.pl and wheel-size gave 60.1 mm. 60.1 is Toyota's usual bore for 5x114.3 and 54.1 its bore for 5x100, so 54.1 looks like a data error on hubcentric-rings, but it is left disputed."
+          },
+          {
+            "model": "Skoda Octavia",
+            "generation": "Mk4 A8 / NX (2020+, facelift 2024+)",
+            "markets": "EU, UK",
+            "pcd": "5x112",
+            "centreBoreMm": 57.1,
+            "thread": "M14x1.5",
+            "fastener": "wheel bolt",
+            "source": "https://www.wheelfitment.eu/car/Skoda/Octavia%20(2020%20-%20).html; https://www.wheel-size.com/pcd/5x112/skoda/octavia/2020-2024/",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "wheel-size.com 2024 page (fetched) confirms generations Mk4 A8 (NX) [2020-2024] and facelift [2024-2027]."
+          },
+          {
+            "model": "Skoda Kodiaq",
+            "generation": "II (2024+)",
+            "markets": "EU, UK",
+            "pcd": "5x112",
+            "centreBoreMm": 57.1,
+            "thread": "M14x1.5",
+            "fastener": "wheel bolt",
+            "source": "https://www.wheel-size.com/pcd/5x112/skoda/kodiaq/2024-2025/; https://www.wheelfitment.eu/PCD/5x112/57.1.html",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "OE rims 6.5Jx17 ET38 to 8Jx20 ET41 per summary."
+          },
+          {
+            "model": "Volkswagen Tiguan",
+            "generation": "III (2024+)",
+            "markets": "EU, UK (the US kept the long-wheelbase Tiguan II and then the new car)",
+            "pcd": "5x112",
+            "centreBoreMm": 57.1,
+            "thread": "M14x1.5",
+            "fastener": "wheel bolt",
+            "source": "https://car-bolts.com/volkswagen/tiguan/2024/; https://hubcentric-rings.com/car_models/volkswagen/tiguan/",
+            "method": "search-summary",
+            "dateRead": "2026-10-02"
+          },
+          {
+            "model": "Volvo XC40",
+            "generation": "2017+ (incl. EX40/Recharge)",
+            "markets": "global",
+            "pcd": "5x108",
+            "centreBoreMm": 63.4,
+            "thread": "M14x1.5",
+            "fastener": "wheel bolt",
+            "source": "https://us.hubcentric-rings.com/car_models/volvo/xc40/; https://www.wheelfitment.eu/car/volvo/xc40%20(2017%20-%20).html; https://www.pcdparts.co.uk/products/wheel-spacers/5x108-pcd-63-4-cb-m14x1-5-bolt-on-wheel-spacer-silver",
+            "method": "search-summary",
+            "dateRead": "2026-10-02"
+          }
+        ],
+        "marketMismatches": [
+          "Kia K3: Mexico's K3 Sedán is the BL7 (4x100), while 'K3' elsewhere has meant the larger BD/Forte (5x114.3).",
+          "Nissan NP300: Mexico's NP300 is the D22-derived 6x139.7 truck; NP300 Navara/Frontier D23 elsewhere is 6x114.3.",
+          "Nissan Kicks: P16 (2025+, US/Canada/Mexico) is 5x114.3; the P15 still sold in Mexico as Kicks Play is 4x100.",
+          "Ram 1500: DT is 6x139.7; the older DS 'Classic' (sold alongside in some years) is 5x139.7.",
+          "Vauxhall/Opel Corsa: F (2019+) is 4x108/65.1; E and earlier were 4x100/56.6.",
+          "GM vs Ram half-ton: both 6x139.7 but bores differ (78.1 vs 77.8)."
+        ]
+      },
+      "labour": {
+        "alreadyKnown": {
+          "note": "Supplied by caller; not refetched.",
+          "London SW": "What Car? 2024 survey, GBP 141/h",
+          "UK average": "GBP 76/h",
+          "Vancouver": "ICBC CAD 163.21",
+          "Mexico City": "~MXN 320 (secondary)",
+          "A-1 Toyota": "USD 165 general (posted)"
+        },
+        "aaaClarification": {
+          "finding": "AAA's 'NY $251.36, CA $271.10' is NOT an hourly labour rate, and on the evidence it is not even labour.",
+          "aaaPage": {
+            "url": "https://www.aaa.com/autorepair/articles/average-mechanic-labor-rate-repair-costs-in-your-state-2026",
+            "method": "page",
+            "dateRead": "2026-10-02",
+            "reads": "Labels the column 'Average Cost of Labor': NY 251.36, CA 271.10, CT 281.53; says it is 'sourced from World Population Review'; gives no unit or method."
+          },
+          "upstream": {
+            "url": "https://worldpopulationreview.com/state-rankings/auto-repair-rates-by-state",
+            "method": "page",
+            "dateRead": "2026-10-02",
+            "reads": "Source 'Vehicle Health State Index - Car MD', year 2021. Columns read: NY total 135.19 / labor 251.36 / parts 386.55; CA 144.56 / 271.10 / 415.66; CT 136.84 / 281.53 / 418.37."
+          },
+          "interpretation": "In every row the first two figures sum exactly to the third (135.19+251.36=386.55; 144.56+271.10=415.66; 136.84+281.53=418.37). So the third is the total. The likeliest reading is that the WPR columns are mislabelled and CarMD's 2021 per-repair figures are labour 135.19 / parts 251.36 / total 386.55 for NY (CA 144.56 / 271.10 / 415.66; CT 136.84 / 281.53 / 418.37). AAA's '$251.36 labour' would then be CarMD's average PARTS cost per check-engine-light repair in 2021. Either way it is per-repair, 2021, check-engine repairs only: not a $/hour figure and not 2026.",
+          "useAsHourlyRate": false
+        },
+        "regulation": [
+          {
+            "jurisdiction": "Connecticut",
+            "rule": "Repair shops and dealers must post their hourly labour rate, storage charges and diagnostic charge on a sign at the place of business (min. 17x24 in); the state does not regulate the rate itself.",
+            "source": "https://portal.ct.gov/DMV/Dealers-and-Repairs/Dealers-and-Repairs/Repair-Charge-Rates; https://portal.ct.gov/ag/consumer-issues/auto-issues/automobile-repair-in-connecticut",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "notes": "The ct.gov page itself failed to load (socket hang up)."
+          }
+        ],
+        "namedGarages": [
+          {
+            "city": "Connecticut (Glastonbury, Hartford County, not New Haven)",
+            "garage": "Century Auto Service, 138 Welles St, Glastonbury CT 06033",
+            "type": "independent",
+            "ratePerHour": 169,
+            "currency": "USD",
+            "basis": "labour and diagnosis, billed on flat-rate book hours (Chilton/Motors/Mitchell)",
+            "source": "https://www.centuryautoservicect.com/pricing",
+            "method": "page",
+            "dateRead": "2026-10-02",
+            "notes": "Quote on page: '$169 AN HOUR FOR LABOR AND DIAGNOSIS CHARGES'. About 40 miles from New Haven; no New Haven shop was found posting online."
+          }
+        ],
+        "namedGaragesNotFound": {
+          "New York City": "No named NYC shop posting a rate online was found in three searches. Only blog ranges ('$200-$250' NYC, '$220 in Queens', '$250 Manhattan') from torque360 / repairmath, which are secondary and unsourced.",
+          "Los Angeles": "No named shop found. Aggregator localservicecost.com claims $45-76/h, which reads like technician wages, not shop rates; comparemechanic.com claims Santa Monica 'averages about $95/hr'. Both secondary, low confidence.",
+          "New Haven CT": "None online, though CT law requires the sign in the shop.",
+          "London": "No named main dealer or independent posting a rate online. Ranges only: main dealers GBP 150-220 in London (cargarages.co.uk / enginesmarket.co.uk, unsourced). Historic: Warranty Direct found a West London franchised workshop at GBP 215/h in 2014 (fleetnews.co.uk 2014-06-11).",
+          "Dublin": "No named garage. Irish Times 2021-03-17 (page read): highest quote EUR 125/h from an unnamed Dublin dealer, lowest EUR 80/h; AA's Conor Faughnan: EUR 60-100/h nationally, ~EUR 140 for exotic brands. boards.ie user reports a Dublin independent going EUR 70 (2022) to EUR 80 (2023) ex VAT (search-summary). Irish VAT on labour 13.5%.",
+          "Toronto": "No named shop. Browns Line Auto Centre's blog (page read, 2025-06-09, updated 2025-12-17) gives Toronto 'may exceed $120' and dealers 'often exceeding $150' but not its own rate.",
+          "Vancouver": "No named shop found beyond the ICBC figure already held.",
+          "Mexico City": "No named taller or agencia. Search-summary: 2025 CDMX MXN 320/h (infotaller.tv, already held), independents MXN 350-1,200 per hora-hombre and agencias 40-80% more (another-tool.com / garageauto.app, secondary)."
+        },
+        "secondaryRanges": [
+          {
+            "area": "Connecticut",
+            "value": "USD 125-140/h; another site USD 141/h; BLS-derived USD 87/h",
+            "source": "https://myautoshoppro.com/tools/auto-repair-labor-rates-by-state; https://www.tekmetric.com/post/average-auto-repair-labor-rates-by-state",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "confidence": "low; methods differ (one multiplies BLS technician wages by 3)"
+          },
+          {
+            "area": "Ireland",
+            "value": "EUR 80-120/h independents; EUR 120 normal for Dublin main dealer/specialist",
+            "source": "https://heyjodie.com/en-ie/guides/auto-repair-shop-labor-rates/",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "confidence": "low; vendor blog"
+          },
+          {
+            "area": "Toronto/GTA",
+            "value": "CAD 120-175 independents; CAD 160-220+ dealers",
+            "source": "https://heyjodie.com/en-ca/guides/auto-repair-shop-labor-rates/; https://trustedlocalauto.com/blog/shop-labor-rates-province-by-province-guide",
+            "method": "search-summary",
+            "dateRead": "2026-10-02",
+            "confidence": "low"
+          }
+        ]
+      }
+    }
+  },
+  "clothes": {
+    "fragment": "clothes-resale-repair-shoe-lifespan",
+    "read": "2026-10-02",
+    "conventions": "method 'page' = fetched and read; 'search-summary' = taken from a search engine's summary of the linked result, not read on the page. Null = nothing published that could be found or fetched; reason given.",
+    "resale_share_of_retail": {
+      "vinted_europe": {
+        "figure": "average fashion-item price on Vinted 72% lower than original retail for new items (i.e. ~28% of new retail)",
+        "also": "EUR 21.6bn saved by members on adult fashion vs original retail; EUR 10.8bn returned to sellers (2025)",
+        "method_note": "Original prices from a third-party service querying Google Shopping for comparable new items; weighted by sales volume of top brands per category and market; ~50,000 members surveyed across nine European markets; 2025 transaction data",
+        "published": "2026-05-19",
+        "url": "https://company.vinted.com/newsroom/vinted-equation",
+        "read": "2026-10-02",
+        "method": "page"
+      },
+      "thredup_marketing_claim": {
+        "figure": "up to 90% off estimated retail price",
+        "note": "A ceiling marketing claim, not an average",
+        "url": "https://www.thredup.com/resale/2025",
+        "read": "2026-10-02",
+        "method": "search-summary"
+      },
+      "thredup_14th_resale_report": {
+        "figure": "global secondhand apparel market $393bn, roughly 10% of total apparel spend",
+        "published": "2026-04-02",
+        "url": "https://www.businesswire.com/news/home/20260402799816/en/ThredUps-14th-Annual-Resale-Report-Reveals-New-Era-of-Structural-Competition-and-AI-Driven-Discovery",
+        "read": "2026-10-02",
+        "method": "search-summary",
+        "note": "IR page timed out on fetch"
+      },
+      "thredup_fy2025_operating": {
+        "active_buyers": 1700000,
+        "orders": 6100000,
+        "year": 2025,
+        "average_order_value": null,
+        "aov_reason": "Not found in the search summary of the FY2025 10-K; the IR results page timed out on fetch",
+        "url": "https://www.sec.gov/Archives/edgar/data/1484778/000148477826000007/tdup-20251231.htm",
+        "read": "2026-10-02",
+        "method": "search-summary"
+      },
+      "thredup_payout_schedule": {
+        "currency": "USD",
+        "bands_by_final_selling_price": [
+          {
+            "from": 5,
+            "to": 19.99,
+            "payout_pct_low": 3,
+            "payout_pct_high": 15
+          },
+          {
+            "from": 20,
+            "to": 49.99,
+            "payout_pct_low": 15,
+            "payout_pct_high": 30
+          },
+          {
+            "from": 50,
+            "to": 99.99,
+            "payout_pct_low": 30,
+            "payout_pct_high": 60
+          },
+          {
+            "from": 100,
+            "to": 199.99,
+            "payout_pct_low": 60,
+            "payout_pct_high": 80
+          },
+          {
+            "from": 200,
+            "to": null,
+            "payout_pct_low": 80,
+            "payout_pct_high": 80
+          }
+        ],
+        "fees": {
+          "standard_clean_out_service_fee": 14.99,
+          "premium_clean_out_service_fee": 34.99,
+          "reclaim_fee_per_item": 5.99,
+          "reclaim_plus": "return shipping"
+        },
+        "fee_rule": "service fee deducted from earnings only after items sell; if earnings are below the fee the seller is not charged the difference",
+        "payout_basis": "final selling price after markdowns and buyer promo codes",
+        "url": "https://www.underpriced.app/blog/thredup-selling-guide-2026",
+        "source_kind": "third-party guide that states it checked thredup.com/cleanout on 2026-10-01 and links ThredUp's earnings estimator",
+        "official_page": "https://www.thredup.com/cleanout/guide returned 403; web.archive.org cannot be fetched by this tool",
+        "read": "2026-10-02",
+        "method": "page"
+      },
+      "therealreal": {
+        "fy2025_gmv_usd": 2130000000,
+        "fy2025_aov_usd": 594,
+        "q4_2025_aov_usd": 641,
+        "ttm_active_buyers": 1056000,
+        "url": "https://investor.therealreal.com/news-releases/news-release-details/realreal-announces-fourth-quarter-and-full-year-2025-results/",
+        "read": "2026-10-02",
+        "method": "search-summary",
+        "note": "The press-release page returned 404 on fetch; figures are from the search summary of that release (published 2026-02-26)",
+        "consignor_commission_schedule": null,
+        "commission_reason": "therealreal.com/consignment/commission returned 403. Third-party summaries say 'up to 85%' on official pages, a typical 20-70% range and up to 90% for watches over $7,500 for top tiers, based on Net Selling Price; payments processed from the 15th of the month for previous-month sales. Not page-verified.",
+        "commission_secondary_url": "https://www.underpriced.app/blog/the-realreal-consignment-guide-2026",
+        "commission_secondary_method": "search-summary"
+      },
+      "canada_kijiji": {
+        "figure": "respondents said second-hand prices were on average 50% lower than buying new; clothing, shoes and accessories were among the top three categories (two of every five second-hand exchanges)",
+        "year": "Kijiji Second-Hand Economy Index (2016-era report)",
+        "url": "https://mpra.ub.uni-muenchen.de/96927/1/Kijiji-Index-Report-2016-1.pdf",
+        "read": "2026-10-02",
+        "method": "search-summary",
+        "note": "PDF fetched but not parseable by the tool; 2019 release (newswire.ca, 2019-11-04, page read) gives only market size $27.3bn, average earnings $961 and savings $723 per person, no clothing price",
+        "facebook_marketplace": null,
+        "facebook_reason": "Meta publishes no average sale price"
+      },
+      "academic_resale_ratio": null,
+      "academic_reason": "No peer-reviewed or WRAP/Ellen MacArthur figure for resale price as a share of original retail was found in the time available. Search summaries surfaced only seller pricing guides (e.g. 30-40%, 25-35%, fast fashion 5-15%) which are unsourced rules of thumb and are not recorded as figures.",
+      "mexico_ropa_de_paca": {
+        "currency": "MXN",
+        "markets": [
+          {
+            "name": "Tianguis de San Felipe de Jesus (La SanFe)",
+            "where": "Av. Gran Canal area, Gustavo A. Madero",
+            "days": "Sundays 8:00-18:00",
+            "price_per_piece": "from 20, up to 100 or less"
+          },
+          {
+            "name": "Tianguis El Rosario",
+            "where": "near Metro El Rosario, Azcapotzalco",
+            "price_per_piece": "from 60; 3 pieces for 100 offers"
+          },
+          {
+            "name": "Tianguis de Fray Servando",
+            "where": "Fray Servando 52, Col. Transito, Cuauhtemoc",
+            "days": "Tue-Sun 10:00-18:00",
+            "price_per_piece": "10-80; 3 pieces for 100"
+          }
+        ],
+        "published": "2025-07-14",
+        "url": "https://www.infobae.com/mexico/2025/07/14/tres-tianguis-en-cdmx-para-ir-a-comprar-ropa-de-paca-nueva-o-de-marca-desde-los-20-pesos-hasta-los-50-por-pieza/",
+        "read": "2026-10-02",
+        "method": "page",
+        "also": "Search summaries: newest/branded paca generally over 200 MXN; Pino Suarez paca from 10 MXN, 3 for 100 (radioformula 2025-06-16) - search-summary only",
+        "share_of_retail": null,
+        "share_reason": "No source relates paca prices to original retail"
+      }
+    },
+    "garment_repair_tear_patch": {
+      "los_angeles": {
+        "shop": "Circular Fashion LA, 525 S. Hewitt St., Los Angeles, CA 90013",
+        "currency": "USD",
+        "prices": {
+          "patch_small_holes_or_moth_holes_from": 20,
+          "patch_larger_rips_tears_worn_areas_from": 18,
+          "patch_and_reinforce_crotch_from": 28,
+          "resew_undone_seams": 20,
+          "resew_fallen_hem": 20,
+          "zipper_replace_from": 25,
+          "button_resew_replace_from": 15,
+          "elastic_replace_from": 25
+        },
+        "bundle_discount": "10% off 3 services, 15% off 6, 20% off 10+",
+        "url": "https://www.circularfashionla.com/clothing-repair",
+        "read": "2026-10-02",
+        "method": "page"
+      },
+      "new_york": [
+        {
+          "shop": "Denim Therapy NYC (no street address on the page)",
+          "currency": "USD",
+          "prices": {
+            "L_shaped_or_90_degree_tear_mend": 30,
+            "under_back_pocket_repair_3x1in": 25,
+            "back_crotch_blowout_both_sides_from": 45,
+            "front_side_crotch_add": 10,
+            "one_back_side_crotch_mend": 30,
+            "frayed_hem_repair": 25,
+            "back_pocket_reweave_from": 25
+          },
+          "url": "https://www.denimtherapy.com/before-and-after-pics/",
+          "read": "2026-10-02",
+          "method": "page"
+        },
+        {
+          "shop": "Mid City Tailors, 150 W 36th St, 3rd floor, New York, NY 10018",
+          "currency": "USD",
+          "prices": {
+            "denim_jacket_repair_per_inch": 10,
+            "jeans_button_repair_replace": 15,
+            "trouser_crotch_repair_from": 125
+          },
+          "url": "https://midcitytailoring.com/alteration-services.html",
+          "read": "2026-10-02",
+          "method": "page"
+        }
+      ],
+      "vancouver": {
+        "shops": [
+          {
+            "shop": "Dutil Denim (Vancouver and Toronto stores)",
+            "currency": "CAD",
+            "prices": {
+              "repairs_from": 15
+            },
+            "url": "https://dutildenim.com/pages/hems-repairs-alterations",
+            "read": "2026-10-02",
+            "method": "page"
+          },
+          {
+            "shop": "Maho's Sewing Studio, Vancouver",
+            "currency": "CAD",
+            "prices": {
+              "patch_one_hole": "10-35 plus tax, by area"
+            },
+            "url": "https://mahosewingstudio.com/pages/price-list",
+            "read": "2026-10-02",
+            "method": "search-summary",
+            "note": "page fetched empty (script-rendered)"
+          },
+          {
+            "shop": "Joyce Station Tailor, 5030 Joyce St, Vancouver BC V5R 4G6",
+            "prices": {
+              "tear_patch": null
+            },
+            "reason": "page lists alterations only; 'contact us' for repairs. A search summary cites jeans repair $38 + $5 mandatory cleaning, not on the page read",
+            "url": "https://www.thejoycetailor.com/vancouver-alteration/",
+            "read": "2026-10-02",
+            "method": "page"
+          }
+        ]
+      },
+      "new_haven_ct": {
+        "prices": null,
+        "reason": "No New Haven tailor publishes a repair price. Valentino Tailors (817 Grand Ave Unit 101, New Haven CT 06511) lists services without prices; others (Greg's, Sidney's, Alterations by Melonie) appear only in directories",
+        "url": "https://valentinotailors.com/services",
+        "read": "2026-10-02",
+        "method": "page"
+      }
+    },
+    "cobblers": {
+      "new_haven_ct": {
+        "prices": null,
+        "reason": "Not searched further this pass; earlier passes found no New Haven cobbler that publishes prices"
+      },
+      "toronto_city": {
+        "prices": null,
+        "reason": "No single City of Toronto storefront with a fetched itemised list. Shoe Therapy (Toronto M5S 2Y1) closed 2026-07-02 per its page, no prices; it refers to D&M Footwear, 624 Yonge St. cobbler.ca/toronto gives only service ranges (CAD shoe repair 25-120, boot repair/resoling 50-200, zipper 15-80) with no street address, pickup/delivery across GTA.",
+        "ranges_url": "https://cobbler.ca/toronto",
+        "ranges_method": "page",
+        "outdoor_resole_gta": {
+          "shop": "Ontario Resoles, 21-2410 Lucknow Dr, Mississauga ON (not City of Toronto)",
+          "currency": "CAD",
+          "prices": {
+            "climbing_half_resole": 65,
+            "approach_shoe_resole": 85,
+            "hiking_boot_resole": 100,
+            "mountaineering_boot_resole": 150
+          },
+          "url": "https://ontarioresoles.ca/services-and-pricing/",
+          "method": "page"
+        },
+        "read": "2026-10-02"
+      },
+      "los_angeles": {
+        "prices": {
+          "shop": "Willie's Shoe Service (LA, since 1956)",
+          "currency": "USD",
+          "resole": "180-360 by construction and sole",
+          "heel_high_heels_from": 24,
+          "heel_other_from": 68
+        },
+        "url": "https://williesshoeservice.square.site/",
+        "read": "2026-10-02",
+        "method": "search-summary",
+        "note": "page fetched as an empty shell; figures from search summary only"
+      },
+      "mexico_city": {
+        "current_list": null,
+        "reason": "No current itemised CDMX cobbler price list found. Maestro Zapatero (C. Bajio 96 Local 1 and C. Manzanillo 197 Local A, Roma Sur) publishes only cleaning prices: classic 250, deep 350, special care 500, premium 900 MXN (page, 2026-10-02). El Zapatitos (Colima y Cozumel, Roma): taps/heel 40-80, seams 40-80, full sole 200-250 MXN, but dated 2019-08-21 (local.mx, page). Chilango 2012-12-14 list is stale (sole 180, heel 120 MXN).",
+        "urls": [
+          "https://maestrozapatero.mx/",
+          "https://www.local.mx/donde-comprar/el-zapatitos/",
+          "https://www.chilango.com/general/zapatero-a-tus-zapatos/"
+        ],
+        "read": "2026-10-02",
+        "method": "page"
+      }
+    },
+    "shoe_lifespan": {
+      "running_shoes_asics": {
+        "figure": "replace every 300 to 500 miles (483-805 km); at ~15 miles/week roughly five to eight months",
+        "url": "https://www.asics.com/us/en-us/blog/how-often-need-replace-running-shoes/",
+        "read": "2026-10-02",
+        "method": "page"
+      },
+      "running_shoes_brooks": {
+        "figure": "replace after 300 to 500 miles (three to six months depending on how much you run)",
+        "url": "https://www.brooksrunning.com/en_us/blog/gear-maintenance/when-to-replace-your-running-shoes.html",
+        "read": "2026-10-02",
+        "method": "search-summary",
+        "note": "Brooks support page returned 403"
+      },
+      "midsole_studies": {
+        "findings": [
+          "15% decrease in energy absorbed by EVA midsole after a 270 km machine-simulated run",
+          "after the equivalent of 500 miles, shoes retained 55 +/- 10% of initial energy absorption",
+          "peak plantar pressure increased on average 100% after a 500 km run",
+          "structural foam damage (face wrinkling, holes) seen by SEM after 750 km",
+          "softening due to cell-structure yielding, not air loss"
+        ],
+        "principal_paper": "Verdejo & Mills, 'Heel-shoe interactions and the durability of EVA foam running-shoe midsoles', Journal of Biomechanics (2004), PubMed 15275845",
+        "urls": [
+          "https://www.sciencedirect.com/science/article/abs/pii/S0021929003004858",
+          "https://pubmed.ncbi.nlm.nih.gov/15275845/",
+          "https://etheses.bham.ac.uk/231/1/Verdejo04PhD.pdf"
+        ],
+        "read": "2026-10-02",
+        "method": "search-summary",
+        "note": "ScienceDirect 403 and PubMed served only a cookie page; findings and attribution are from search summaries and are not each tied to a specific paper on a page read"
+      },
+      "goodyear_welted_resoles": {
+        "crockett_and_jones": {
+          "figure": "can usually resole well-cared-for shoes and boots up to three times",
+          "factory_resole_price_per_pair": {
+            "single_leather_or_rubber": {
+              "GBP": 180,
+              "EUR": 210,
+              "USD": 250
+            },
+            "double_leather_or_rubber": {
+              "GBP": 190,
+              "EUR": 220,
+              "USD": 260
+            },
+            "hand_grade_single_leather": {
+              "GBP": 195,
+              "EUR": 220,
+              "USD": 270
+            },
+            "hand_grade_double_leather": {
+              "GBP": 195,
+              "EUR": 230,
+              "USD": 270
+            }
+          },
+          "turnaround": "factory up to 10 weeks; local heel-only about 2 weeks",
+          "url": "https://us.crockettandjones.com/pages/repairs",
+          "read": "2026-10-02",
+          "method": "page"
+        },
+        "allen_edmonds": {
+          "figure": "about four recrafts before retirement; recrafts 26,000 pairs a year",
+          "url": "https://www.allenedmonds.com/the-journal/made-here",
+          "read": "2026-10-02",
+          "method": "search-summary",
+          "note": "page returned 403"
+        },
+        "dress_shoe_years": null,
+        "years_reason": "No maker or study gives a measured lifespan in years; '20-30 years' claims come from retailer blogs only"
+      },
+      "consumer_replacement_interval": {
+        "us_pairs_per_person_per_year": {
+          "2023": 5.39,
+          "2024_forecast": 5.4,
+          "split_2023": {
+            "athletic": 2.2,
+            "non_athletic": 2.5
+          }
+        },
+        "source": "Statista market outlook as cited by RunRepeat",
+        "urls": [
+          "https://runrepeat.com/shoe-consumption-statistics",
+          "https://www.statista.com/statistics/758743"
+        ],
+        "read": "2026-10-02",
+        "method": "search-summary",
+        "replacement_interval_survey": null,
+        "reason": "No survey found giving how long consumers keep a pair before replacing it; purchase rate is not a replacement interval"
+      }
+    }
+  }
+}

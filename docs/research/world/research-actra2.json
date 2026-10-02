@@ -1,0 +1,253 @@
+{
+  "topic": "Canadian actor earnings beyond the day rate under ACTRA agreements, as of 2026",
+  "researched_on": "2026-09-30",
+  "currency": "CAD",
+  "method_note": "Figures marked confirmed=true were read by me in the source text itself (PDFs downloaded and extracted with pdftotext, or HTML pages fetched). Rate-chart PDFs have multi-column layouts; where column-to-row mapping from extracted text carries some risk, that is said in the note.",
+  "sources": {
+    "ipa_full": {
+      "title": "Independent Production Agreement between ACTRA and the CMPA/AQPM, 26 January 2025 - 31 December 2027 (official copy)",
+      "url": "https://www.actra.ca/wp-content/uploads/2025/06/ACTRA-CMPA-AQPM-Independent-Production-Agreement-2025-2027_OFFICIAL-COPY.pdf",
+      "publisher": "ACTRA (with CMPA and AQPM)",
+      "date": "2025-06 (upload path); agreement term 2025-01-26 to 2027-12-31"
+    },
+    "ipa_rates": {
+      "title": "2025 - 2027 Independent Production Agreement (IPA) - Rate Chart",
+      "url": "https://www.actra.ca/wp-content/uploads/2025/01/2025-2027-IPA-Rates_EN_FINAL.pdf",
+      "publisher": "ACTRA",
+      "date": "2025-01 (upload path); columns for 2025, 2026, 2027",
+      "mirror": "https://www.aqpm.ca/wp-content/uploads/2025/01/ACTRA-Grilles-tarifaires-2025-2027-EN.pdf"
+    },
+    "performers_magazine_ipa101": {
+      "title": "IPA 101: Residuals",
+      "url": "https://performersmagazine.com/ipa-101-residuals/",
+      "publisher": "Performers Magazine (ACTRA Toronto), author Gail Haupert",
+      "date": "2023-09-27"
+    },
+    "ubcp_residuals": {
+      "title": "Residuals and Use Fees",
+      "url": "https://ubcpactra.ca/residuals-use-fees/",
+      "publisher": "UBCP/ACTRA",
+      "date": "undated page, read 2026-09-30"
+    },
+    "bcmpa_rates": {
+      "title": "2025-2028 BC Master Production Agreement Minimum Fees (rate sheet)",
+      "url": "https://ubcpactra.ca/wp-content/uploads/2025/03/2025-2028-BCMPA-Rate-Sheet.pdf",
+      "publisher": "UBCP/ACTRA",
+      "date": "2025-03 (upload path); columns effective 2024-03-31, 2025-03-30, 2026-03-29, 2027-04-04"
+    },
+    "nca_rates": {
+      "title": "National Commercial Agreement Rate Chart, June 1, 2025 to May 31, 2026",
+      "url": "https://www.actra.ca/wp-content/uploads/2025/07/2025-2026-NCA-Rates.pdf",
+      "publisher": "ACTRA",
+      "date": "2025-07 (upload path); term 2025-06-01 to 2026-05-31"
+    },
+    "nca_page": {
+      "title": "National Commercial Agreement",
+      "url": "https://www.actra.ca/agreements/nca/",
+      "publisher": "ACTRA National",
+      "date": "read 2026-09-30"
+    },
+    "aca_ratification": {
+      "title": "ACTRA performers and ACA advertisers ratify the one-year renewal of National Commercial Agreement in Canada",
+      "url": "https://acaweb.ca/en/about/for-media/actra-and-aca-ratify-one-year-renewal-national-commercial-agreement-canada/",
+      "publisher": "Association of Canadian Advertisers",
+      "date": "2025-05-30 (per search snippet)"
+    },
+    "actra_toronto_permits": {
+      "title": "Permits",
+      "url": "https://actratoronto.com/permits/",
+      "publisher": "ACTRA Toronto",
+      "date": "undated page, read 2026-09-30"
+    },
+    "actra_toronto_apprentice": {
+      "title": "Apprentice Program",
+      "url": "https://actratoronto.com/apprentice-program/",
+      "publisher": "ACTRA Toronto",
+      "date": "undated page, read 2026-09-30"
+    },
+    "actra_magazine_follow_money": {
+      "title": "Follow the Money",
+      "url": "https://actramagazine.ca/follow-the-money/",
+      "publisher": "ACTRA Magazine, author Mark Dillon",
+      "date": "Fall 2024"
+    }
+  },
+
+  "ipa": {
+    "base_day_rates_2026_for_context": [
+      {"item": "B101(a) Principal Actor, on camera, daily", "value": 972.75, "hourly": 121.25, "overtime": 182.50, "weekly": 4133.50, "year": 2026, "source": "ipa_rates", "confirmed": true},
+      {"item": "B101(c) Actor, on camera, daily", "value": 656.50, "hourly": 82.00, "overtime": 123.25, "weekly": 2790.75, "year": 2026, "source": "ipa_rates", "confirmed": true, "note": "Column mapping from extracted multi-column PDF text; row order (a)-(g) matched to the 2026 daily column $972.75, $728.75, $656.50, $1,458.75, $945.25, $1,289.00, $1,458.75."},
+      {"item": "B103 Off-camera Principal Actor, per production", "value": 681.75, "hourly": 121.25, "overtime": 182.50, "year": 2026, "source": "ipa_rates", "confirmed": true},
+      {"item": "B103 Off-camera Actor, per production", "value": 459.25, "hourly": 82.00, "overtime": 123.25, "year": 2026, "source": "ipa_rates", "confirmed": true},
+      {"item": "Rate increases in the 2025-2027 IPA", "value": "6% on ratification (2025), 4% in 2026, 3.5% in 2027 (background: 7%, 4%, 3.5%)", "source_url": "https://www.actra.ca/agreements/ipa/", "publisher": "ACTRA National (via search snippet)", "confirmed": false}
+    ],
+    "declared_use_included_in_minimum_fee": {
+      "article": "B301",
+      "text": "Upon payment of the minimum fees the producer gets worldwide non-theatrical use plus ONE declared use: theatrical (worldwide, for the period of copyright); free TV (one domestic run in Canada); pay TV (one year in Canada); cable TV (three years in Canada); compact devices (two years in Canada); educational TV (three years in Canada); new media (worldwide one year for Option 1 New Media productions at $11,735/minute or less, or over that where a prepayment or advance is elected); High-Budget SVOD and other Option 1 New Media productions get a six-month worldwide declared use.",
+      "source": "ipa_full", "confirmed": true
+    },
+    "residual_payments_percent_of_net_fees": {
+      "article": "B4 (B401-B408)",
+      "rule": "If the production is used outside its declared use and the producer has NOT elected the B5 prepayment/advance system, performers are paid these percentages of their Net Fees, within 30 days of the use.",
+      "theatrical_use_of_non_theatrical_production": {"60_min_or_less": "15%", "over_60_min": "35%", "confirmed": true},
+      "free_tv_canada": {"each_domestic_run": "30%", "single_station_toronto_hamilton": "20%", "single_station_other": "10%", "note": "Once single-station payments reach 30% of Net Fees, one broadcast on one station in each unused Canadian market is allowed.", "confirmed": true},
+      "free_tv_united_states": {
+        "network": ["35% first", "30% second", "25% third", "25% fourth", "10% fifth and later"],
+        "syndicated": ["25%", "20%", "15%", "15%", "10%"],
+        "non_commercial": ["25%", "20%", "15%", "15%", "10%"],
+        "confirmed": true
+      },
+      "free_tv_world_market": {"any_country_except_canada_us_uk_germany_each_use": "10%", "uk_each_use": "5%", "germany_each_use": "4%", "any_single_other_country": "2%", "confirmed": true, "note": "Read from layout-extracted text; percentages appear in a single column in order 10%, 5%, 4%, 2%."},
+      "pay_tv": {"canada_3_months": "10%", "canada_12_months": "25%", "us_3_months": "15%", "us_12_months": "30%", "foreign_3_months": "5%", "foreign_12_months": "30%", "confirmed": true, "note": "Mapped from the column order 10%, 25%, 15%, 30%, 5%, 30% in the extracted PDF text. The foreign 12-month figure of 30% against 5% for three months looks irregular; verify against the printed page before relying on the foreign pair."},
+      "cable_tv_per_year": {"canada": "10%", "us": "15%", "foreign": "15%", "confirmed": true},
+      "compact_devices_per_year": {"canada": "10%", "us": "15%", "foreign": "15%", "confirmed": true},
+      "educational_tv_per_year": {"canada": "10%", "us": "15%", "foreign": "15%", "confirmed": true},
+      "new_media_per_year": {"canada": "10%", "us": "15%", "foreign": "15%", "confirmed": true, "note": "This is the 'Internet'/streaming use under the fixed-percentage system (B408)."},
+      "source": "ipa_full"
+    },
+    "prepayment_and_advance_options": {
+      "article": "B501",
+      "all_uses_prepayment_B501a": {"theatrical": "135% of Net Fees", "tv_and_other": "110% of Net Fees", "covers": "all media worldwide including New Media", "term": "4 consecutive years from first exploitation in any residual market", "confirmed": true},
+      "conventional_use_prepayment_B501b": {"theatrical": "130% of Net Fees", "tv_and_other": "105% of Net Fees", "covers": "all media worldwide excluding New Media", "term": "4 consecutive years from first exploitation in any conventional residual market", "confirmed": true},
+      "rule": "Prepayment must be declared in each performer's contract and paid at the time of production; the same option and percentage must apply to every performer on the production (B503).",
+      "advance_option_B501c": {
+        "options": [
+          {"option": 1, "advance_pct_of_net_fees": "100%", "dgr_participation": "3.6%"},
+          {"option": 2, "advance_pct_of_net_fees": "75%", "dgr_participation": "4.6%"},
+          {"option": 3, "advance_pct_of_net_fees": "50%", "dgr_participation": "5.6%"},
+          {"option": 4, "advance_pct_of_net_fees": "25%", "dgr_participation": "6.6%", "limit": "Only if all presales as of day one of principal photography are exclusively Canadian and include a declared use (B502)."}
+        ],
+        "mechanics": "Non-refundable advance paid at production; no DGR payments until the aggregate advance is recouped from DGR (B505). An individual's advance credited is capped at 50% of that performer's Gross Fees (B506); a performer's credited advance is also capped at days of principal photography x 12 x the B101 Principal Actor daily minimum (B507). Not available to purely foreign service series.",
+        "confirmed": true
+      },
+      "animation_extra_options_D111": {
+        "conventional_10_year": "200% of Net Fees (excludes New Media)",
+        "all_uses_10_year": "205% of Net Fees (includes New Media)",
+        "perpetuity_excluding_theatrical_and_new_media": "200% of Net Fees; a later theatrical use pays 3.6% of DGR from first dollar",
+        "perpetuity_excluding_theatrical_including_new_media": "205% of Net Fees; a later theatrical use pays 3.6% of DGR from first dollar",
+        "confirmed": true
+      },
+      "documentary_B601": {"conventional_5_year": "at least 50% of Net Fees, renewable for another 5 years at 50% or switch to 3.6% of DGR", "all_uses_5_year": "at least 55% of Net Fees, renewable at 55% or switch to 3.6% of DGR", "confirmed": true},
+      "source": "ipa_full"
+    },
+    "dgr_formula": {
+      "after_prepayment_B504a": "3.6% of DGR in aggregate to all performers after the 4-year prepaid window (revenue earned inside the prepaid window is excluded from DGR). 5% for CIPIP productions; 8% for Option 1 New Media productions budgeted at $111,735 per minute or less (as printed in B504(a)).",
+      "new_media_after_conventional_prepayment_B504b": "If a conventional (no New Media) prepayment was elected and the production is later exploited in New Media, performers get 3.6% of DGR (5% for CIPIP) from the date of first New Media exploitation.",
+      "high_budget_svod_E204": "Netflix-type High-Budget SVOD productions (thresholds: $1,475,000+ for 20-35 min, $2,825,000+ for 36-65 min, $3,400,000+ for 66+ min): New Media prepayment of 105% of Net Fees buys 4 years beyond the declared-use period, then 3.6% of DGR; or All Uses prepayment (B501a) then 3.6%; or an advance. With no election, 3.6% of DGR from New Media revenue after the 6-month declared use.",
+      "new_media_tiers_C_D_E108": "8% of DGR after the declared use or after a 105% four-year New Media prepayment.",
+      "dgr_definition_B509": "All monies from distribution of the production, from first dollar, with no deduction of expenses; excludes merchandising, novelization and sequel rights; presales included; distributor advances not included for triggering; for animation only English-language licence revenue counts; EST and physical disc DGR deemed 20% of wholesale price (10% if wholesale is at or below about $30/unit).",
+      "confirmed": true,
+      "source": "ipa_full"
+    },
+    "flows_through_actra_prs": {
+      "answer": true,
+      "detail": "Additional use fees are payable to the ACTRA PRS and distributed to performers under B512 (B508). B512: one unit = the minimum fee for the lowest-rated residual category for one day; each performer gets units by Gross Fee earned on the production, capped at 20 units; the production's total revenue is divided by total units to set a dollar value per unit.",
+      "prs_admin_fees": "Producer remits 0.5% of Gross Fees to ACTRA PRS (max $250 per episode / $1,500 per season for a series; $1,500 for other productions) (A3702a), plus 1% of amounts PRS distributes, minimum $150 per production (A3702b).",
+      "bc_exception": "In British Columbia, residuals for UBCP/ACTRA productions are administered by UBCP/ACTRA rather than ACTRA PRS (ubcp_residuals page).",
+      "source": "ipa_full",
+      "confirmed": true
+    },
+    "non_member_equalization": {
+      "article": "A3703",
+      "value": "Producer contributes 12% of Gross Fees (2025-01-26 to 2025-12-31) and 12.5% (2026-01-01 to 2026-12-31) for each non-member, apprentice or work permittee, to a maximum of $3,000 per performer per production (or per series cycle).",
+      "note": "This is paid to ACTRA by the producer, not to the performer.",
+      "source": "ipa_full", "confirmed": true
+    },
+    "share_of_performers_receiving_residuals": {
+      "found": false,
+      "note": "No published rule of thumb for the share of performers who receive residuals was found on ACTRA, ACTRA Toronto, UBCP/ACTRA, ACTRA PRS, AQPM or CMPA pages. The PRS landing page and the IPA 101 article give no such statistic. The only aggregate found: 'Last year ACTRA PRS distributed more than $20 million to performers.'",
+      "aggregate_figure": {"value": "more than $20 million distributed by ACTRA PRS in a year", "source": "actra_magazine_follow_money", "date": "Fall 2024 (refers to the prior year)", "confirmed": true},
+      "structural_note": "Structurally, B512's per-performer cap of 20 units and pro-rata distribution mean every contracted performer on a production that earns post-window DGR shares in it; whether a given production ever pays out depends on whether it earns DGR beyond the prepaid window or recoups the advance. No figure is invented here."
+    }
+  },
+
+  "bcmpa": {
+    "agreement": "BC Master Production Agreement 2025-2028 (UBCP/ACTRA with CMPA-BC and AMPTP affiliates)",
+    "day_rates_effective_2026_03_29": [
+      {"item": "Principal Actor/Stunt Performer, daily", "value": 954.40, "hourly": 119.30, "source": "bcmpa_rates", "confirmed": true},
+      {"item": "Actor, daily", "value": 642.34, "hourly": 80.29, "source": "bcmpa_rates", "confirmed": true},
+      {"item": "B104 Off-camera / lip sync Principal Actor, per program (4 hr included)", "value": 668.14, "hourly": 119.30, "source": "bcmpa_rates", "confirmed": true},
+      {"item": "B104 Off-camera / lip sync Actor, per program (4 hr included)", "value": 450.42, "hourly": 80.29, "source": "bcmpa_rates", "confirmed": true}
+    ],
+    "prepayment_options": {
+      "theatrical_motion_pictures": {"excluding_new_media": "130% of Net Fees, 4 years", "including_new_media": "135% of Net Fees, 4 years"},
+      "free_tv_series": {"excluding_theatrical_and_new_media": "105%, 5 years", "excluding_theatrical": "110%, 5 years"},
+      "free_tv_long_form": {"excluding_theatrical_and_new_media": "105%, 4 years", "excluding_theatrical": "110%, 4 years"},
+      "cable_tv": {"excluding_theatrical_and_new_media": "105%, 5 years", "excluding_theatrical": "110%, 5 years"},
+      "pay_tv_compact_devices_educational": {"excluding_theatrical_and_new_media": "105%, 4 years", "excluding_theatrical": "110%, 4 years"},
+      "new_media": {"new_media_only": "105%, 5 years", "all_media_excluding_theatrical": "110%, 5 years"},
+      "source": "bcmpa_rates", "confirmed": true,
+      "difference_from_ipa": "BCMPA gives free-TV series, cable and new media a 5-year prepaid term where the IPA gives 4 years across the board."
+    },
+    "advance_option": {"options": ["100% advance / 3.6% DGR", "75% / 4.6%", "50% / 5.6%", "25% / 6.6% (only with exclusively Canadian presales as of day one of principal photography)"], "note": "Not available to foreign service series.", "source": "bcmpa_rates", "confirmed": true},
+    "dgr_after_prepayment": {"value": "3.6% of DGR for all performers on UBCP/ACTRA contracts", "source": "ubcp_residuals", "confirmed": true},
+    "administration": {"value": "UBCP/ACTRA administers residuals for BC productions; ACTRA PRS in Toronto administers them for the rest of Canada. Residuals administration fee: 0.5% of Gross Fees (max $250/episode, $1,500/season; $1,500 other productions).", "source": "ubcp_residuals and bcmpa_rates", "confirmed": true},
+    "benefits_on_top_of_fees": {"insurance": "6.5% of Gross Fees (inclusive of use fees) from 2026-03-29, max $5,000 per performer per contract", "retirement": "6% of Gross Fees to members before 2027-04-04, max $6,000", "equalization_non_members": "6% before 2027-04-04, max $6,000", "source": "bcmpa_rates", "confirmed": true, "note": "Producer contributions, not cash to the performer."}
+  },
+
+  "nca": {
+    "status_2026": "The latest published NCA rate chart covers 2025-06-01 to 2026-05-31 (a one-year renewal ratified 2025-05-30 with a 3% increase). ACTRA's NCA page, read 2026-09-30, lists no 2026-2027 agreement or rate chart. No figure for the term starting 2026-06-01 was found; the figures below are the last published and applied through 2026-05-31.",
+    "status_sources": ["nca_page", "aca_ratification"],
+    "session_fees_national_tv_article_1202": [
+      {"category": "Principal/Solo Singer (on camera)", "session_fee": 939.50, "hourly_work_time": 119.00, "overtime": 175.00, "confirmed": true},
+      {"category": "Silent on Camera", "session_fee": 939.50, "confirmed": true},
+      {"category": "Voice-Over/Solo Singer (off camera)", "session_fee": 685.00, "hourly_work_time": 99.00, "confirmed": true},
+      {"category": "Group Singer", "session_fee": 296.50, "confirmed": true},
+      {"category": "Background Performer", "session_fee": 575.50, "confirmed": false, "note": "Extracted table columns are misaligned for the lower rows; the $575.50 placement is uncertain."}
+    ],
+    "session_fee_source": "nca_rates",
+    "billboards_1809": {"voice_over_session": 685.00, "voice_over_segment": 193.00, "principal_session": 939.50, "principal_segment": 281.50, "source": "nca_rates", "confirmed": true},
+    "use_fees": {
+      "wild_spot_table_A_1804_national_tv_1_year_term": {
+        "note": "Use fee scales by market units; 1-5 units is the minimum. Toronto is placed at unit 17 in the table's market column.",
+        "units_1_to_5": {"principal": 743.30, "silent_on_camera": 544.85, "solo_singer_voice_over": 363.75, "group_singer": 217.85},
+        "unit_17": {"principal": 990.25, "silent_on_camera": 693.25, "solo_singer_voice_over": 519.40, "group_singer": 291.95},
+        "source": "nca_rates", "confirmed": true
+      },
+      "network_spot_table_B_1805_1_year_term": {"units_1_to_5": {"principal": 1039.30, "silent_on_camera": 762.65, "solo_singer_voice_over": 485.00, "group_singer": 277.60}, "source": "nca_rates", "confirmed": true},
+      "digital_media_1820a_video_use": {"principal": {"1_year": 1406.50, "6_months": 787.75, "45_days": 478.25}, "voice_over_solo_singer": {"1_year": 1012.50, "6_months": 557.00, "45_days": 344.25}, "note": "45-day use may be used only once; 6-month and 45-day use limited to 5 versions.", "source": "nca_rates", "confirmed": true, "caveat": "Silent-on-camera and group-singer rows were garbled in extraction and are omitted."},
+      "digital_media_1820a_audio_use": {"single_voice": {"1_year": 1012.50, "6_months": 557.00, "45_days": 344.25}, "multiple_voice": {"1_year": 422.00, "6_months": 232.25, "45_days": 143.50}, "source": "nca_rates", "confirmed": true},
+      "pilot_bundles_tv_digital_other_media": {"principal": {"13_weeks": 2595.60, "6_months": 4326.00, "1_year": 7786.80}, "silent_on_camera_stunt": {"13_weeks": 1892.63, "6_months": 2865.98, "1_year": 5191.20}, "voice_over_solo_singer": {"13_weeks": 1395.14, "6_months": 2163.00, "1_year": 3893.40}, "note": "MOA pilot project; payable 15 business days from session date.", "source": "nca_rates", "confirmed": true},
+      "cycle_note": "NCA TV use fees in the 2025-2026 chart are stated as 1-year terms (Tables A-E), not 13-week cycles; 13-week cycles appear for singers' session-and-residual fees (Article 2101: solo $731.50 minimum per session/cycle) and for prepaid residual categories (principal performers $2,767.25 per 13-week cycle, per page 24 of the chart; the column pairing on that page was hard to read)."
+    }
+  },
+
+  "ipa_voice_and_animation_2026": {
+    "D103_animation_over_10_min_per_production": {"principal_actor": {"daily": 681.75, "hourly": 122.25, "overtime": 182.50}, "actor": {"daily": 459.25, "hourly": 82.00, "overtime": 123.25}, "year": 2026, "source": "ipa_rates", "confirmed": true},
+    "D105_short_animation_10_min_or_less": {"minimum_call_per_production": 459.25, "additional_work_time_per_hour": 121.25, "year": 2026, "source": "ipa_rates", "confirmed": true},
+    "D110_ADR": {"principals": 393.00, "actor": 263.75, "year": 2026, "source": "ipa_rates", "confirmed": true, "note": "Row labels matched to values in order; moderate confidence."},
+    "B103_off_camera_live_action_voice": {"principal_actor": 681.75, "actor": 459.25, "year": 2026, "source": "ipa_rates", "confirmed": true},
+    "appendix_20_dubbing_animation_1_hour": {"value": 244.50, "year": 2026, "source": "ipa_rates", "confirmed": true, "note": "Appendix 20 animation dubbing fee schedule, first row (1 hour) for 2026; the schedule steps up by half-hour to 8 hours ($1,034.75 at 8 hours per the 2026 column, as mapped from extracted text)."},
+    "animation_use_options": "See ipa.prepayment_and_advance_options.animation_extra_options_D111 (200%/205% ten-year or perpetuity options)."
+  },
+
+  "non_member_work_permit": {
+    "ipa_actra_toronto_page": [
+      {"category": "Principal Performer (on/off camera, ADR, specialty act, stunt, variety principal)", "fee": 260.00, "unit": "per week", "confirmed": true},
+      {"category": "Actor, chorus, group dancer/singer (3+), loop group", "fee": 210.00, "unit": "per week", "confirmed": true},
+      {"category": "Background", "fee": 12.50, "unit": "per day", "confirmed": true},
+      {"category": "Narrator/Commentator", "fee": 260.00, "unit": "per week", "confirmed": true},
+      {"category": "Non-resident", "fee": "260.00 first week, 175.00 second week", "confirmed": true}
+    ],
+    "ipa_agreement_text_A701": "Principal performers who are Canadian citizens or permanent residents pay $260.00 for the first week and $260.00 for each later week; other performers (not background) $210.00 per week; the producer is not required to pay; ACTRA may amend the fee on 90 days' notice. A non-Canadian non-member pays $260.00 for the first week and $175.00 for each later week. A week is seven consecutive days from the first contracted day.",
+    "ipa_answer": "Under the IPA the permit is charged per week of engagement, not per engagement: $260.00 per week for a principal, $210.00 per week for an actor. It is paid by the performer, and the same fee applies to apprentices and non-members (the ACTRA Toronto IPA table makes no apprentice/non-member distinction).",
+    "nca_commercial_permits_per_engagement": {
+      "heading_on_page": "National Commercial Agreement (NCA) - 2022-2023",
+      "all_categories_except_background": {"apprentice_or_AABP": {"first": 343.75, "second_and_later": 250.00}, "non_member": {"first": 412.50, "second_and_later": 300.00}},
+      "minors_15_and_under": {"apprentice_or_AABP": {"first": 237.50, "second_and_later": 175.00}, "non_member": {"first": 285.00, "second_and_later": 210.00}},
+      "background_adult": {"apprentice_or_AABP": {"first": 156.25, "second_and_later": 106.25}, "non_member": {"first": 187.50, "second_and_later": 127.50}},
+      "new_media_commercials": "50% of the above",
+      "note": "The page still labels the NCA permit table 2022-2023; no newer NCA permit table was found.",
+      "confirmed": true
+    },
+    "apprentice_membership": {"initiation": 75.00, "annual_renewal": 75.00, "credits_to_full_membership": 3, "full_member_initiation": 1600.00, "note": "Qualifying permit costs and the apprentice fee can be deducted from the full-member initiation fee.", "source": "actra_toronto_apprentice", "confirmed": true},
+    "source": "actra_toronto_permits; ipa_full (A701)"
+  },
+
+  "not_found": [
+    "A published rule of thumb for what share of performers receive residuals.",
+    "An NCA rate chart for the term beginning 2026-06-01 (none published on ACTRA's NCA page as of 2026-09-30).",
+    "A '5x' prepaid-use option in the IPA or BCMPA; the published options are 105%/110%/130%/135% (IPA/BCMPA), 200%/205% (IPA animation), 50%/55% (IPA documentary/industrial). No 5x option was found.",
+    "Any AQPM- or CMPA-specific page that adds use-fee figures beyond the IPA text; the AQPM URL hosts the same IPA rate chart."
+  ]
+}

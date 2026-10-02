@@ -11,8 +11,11 @@
  * one of two equals is what a default is, and neither of them is. Nobody's
  * title is ever guessed from their name.
  *
- * It is a word, not a stat. Nothing branches on it except what they are
- * called.
+ * It is a word, not a stat. This said nothing branched on it but what they
+ * are called, which stopped being true when the school's plays were cast
+ * (`systems/school.ts`): a part written for an actor or an actress goes to
+ * one, and the title says which the player is. It makes nobody better or
+ * worse at anything.
  */
 
 export type PerformerTitle = 'actor' | 'actress';

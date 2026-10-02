@@ -1,0 +1,65 @@
+{
+  "city": "Victoria, British Columbia (Greater Victoria)",
+  "researched": "2026-09-30",
+  "hotelADR": {
+    "value": 224,
+    "currency": "CAD",
+    "period": "calendar year 2025 (2024: 200)",
+    "url": "https://bcha.com/wp-content/uploads/2026/04/Hotel-Development-Working-Group-Report-2026.pdf",
+    "publisher": "Greater Victoria Hotel Development Working Group (Destination Greater Victoria with BC Hotel Association, City of Victoria and others), final report, hosted by BCHA, April 2026",
+    "confirmed": true,
+    "quote": "Victoria saw some of the most significant Average Daily Room Rate (ADR) growth across Canada in 2025 - with the average daily room rate jumping from $200 in 2024 to $224 in 2025.",
+    "notes": "Read from the PDF text. The report does not name the data vendor for this sentence; its adjacent inventory chart is labelled 'CoStar Data'. Occupancy for 2025 reported elsewhere as 79.9% (victoriabuzz.com citing Destination Greater Victoria), not confirmed on a primary page. Note: assets-corporate.visitvictoria.com 'Victoria Accommodation Monthly Summary' PDFs are Victoria, Australia (Melbourne) and were excluded."
+  },
+  "taxes": {
+    "gst": {
+      "value": 0.05,
+      "url": "https://www.tourismvictoria.com/travel-tips/currency-taxes",
+      "publisher": "Destination Greater Victoria (tourismvictoria.com)",
+      "confirmed": true
+    },
+    "pst": {
+      "value": 0.08,
+      "url": "https://www.tourismvictoria.com/travel-tips/currency-taxes",
+      "publisher": "Destination Greater Victoria (tourismvictoria.com)",
+      "confirmed": true
+    },
+    "mrdt": {
+      "value": 0.03,
+      "jurisdiction": "City of Victoria (Oak Bay, Saanich, Langford, Southern Gulf Islands reported at 2%; Sidney 3% from 2025 - from search summary, not confirmed on page)",
+      "url": "https://www.tourismvictoria.com/travel-tips/currency-taxes",
+      "publisher": "Destination Greater Victoria (tourismvictoria.com)",
+      "confirmed": true
+    },
+    "destinationFee": {
+      "value": 0.01,
+      "name": "Destination Marketing Fee (DMF)",
+      "applies": "some hotels only ('Depending on the hotel')",
+      "url": "https://www.tourismvictoria.com/travel-tips/currency-taxes",
+      "publisher": "Destination Greater Victoria (tourismvictoria.com)",
+      "confirmed": true
+    },
+    "quote": "For hotel rooms, a PST of 8%, GST of 5% and Municipal and Regional District Tax (MRDT) of 3% will be assessed. Depending on the hotel, you may be assessed an additional Destination Marketing Fee (DMF) of 1% as well."
+  },
+  "hostelDormBed": {
+    "value": 36.42,
+    "currency": "USD",
+    "period": "Hostelworld 'Dorms From' listing as read 2026-09-30",
+    "property": "Ocean Island Inn | Backpackers | Suites",
+    "url": "https://www.hostelworld.com/hostels/north-america/canada/victoria/",
+    "publisher": "Hostelworld",
+    "confirmed": true,
+    "notes": "Hostelworld displayed the price in USD. The only hostel listed for Victoria on that page. Corroborating range on the hostel's own blog (oceanisland.com, 2026-07-01): 'roughly $40-$60/night depending on the season' for a downtown dorm bed; currency not stated, CAD implied. HI Victoria: its HI Canada page returned 404 and no price was read on HI's own site; third-party 'from US$36' figures were not confirmed.",
+    "alternate": {
+      "value": "40-60",
+      "currency": "CAD (implied, not stated)",
+      "url": "https://www.oceanisland.com/blog/cheap-hostel-victoria-bc",
+      "publisher": "Ocean Island Inn",
+      "confirmed": true
+    }
+  },
+  "gaps": [
+    "No full-year ADR read from CBRE, CoStar/STR directly, or Statistics Canada; the $224 figure is from the DGV/BCHA working-group report.",
+    "HI Victoria dorm price not found on HI's own site (page 404)."
+  ]
+}

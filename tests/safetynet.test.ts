@@ -12,14 +12,14 @@ import { quickSave } from '@/engine';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax } from '@/engine/content/tax';
 import { AGENCIES, MANAGEMENT, MANAGERS, OVERTIME, RESIDUALS, UNION_HEALTH, rateOn } from '@/engine/content/career';
-import { BENCHMARK, CALIFORNIA_MANDATE, NEW_YORK_UI, RETURN, byYear, CONNECTICUT_UI, INSULIN, PLANS } from '@/engine/content/safetynet';
+import { BENCHMARK, CALIFORNIA_MANDATE, NEW_YORK_UI, RETURN, byYear, CONNECTICUT_UI, INSULIN, PLANS, POVERTY_LINE } from '@/engine/content/safetynet';
 import {
   RESIDUAL_KIND, afterlife, beginCareer, careerOf, managerOffersFor, mealPenalty, overtimeFor, paycheck, residualAmount, roleById, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
 import { earningsOf, recordBenefit, recordWages, yearOf } from '@/engine/systems/earnings';
 import { coverOn, healthMonth, healthOf, mayEnroll, yaleUntil, programFor, benchmarkFor, planKey, shareOf, insulinShareOf } from '@/engine/systems/health';
-import { basePeriodFor, monetary, unemploymentOf, weekBenefit, type Claim } from '@/engine/systems/unemployment';
+import { basePeriodFor, claimStateFor, monetary, unemploymentOf, weekBenefit, type Claim } from '@/engine/systems/unemployment';
 import { applicablePercent, deadline, figuresFor, latePenalty, returnsOf } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Craft } from '@/engine/systems/school';
@@ -44,7 +44,7 @@ function booking(sim: Simulation, roleId: string, units: number, starts = sim.no
   careerOf(sim.player).bookings.push(b);
   return b;
 }
-const claimOf = (state: 'ny' | 'ca' | 'ct', weekly: number): Claim => ({ state, filedAt: 0, endsAt: 1e15, weekly, maxTotal: 1e12, paid: 0, weeksPaid: 0, waited: true, basePeriod: [] });
+const claimOf = (state: 'ny' | 'ca' | 'ct', weekly: number): Claim => ({ state, filedAt: 0, endsAt: 1e15, weekly, maxTotal: 1e12, paid: 0, waited: true, basePeriod: [] });
 
 describe('new parts', () => {
   it('pay Off-Broadway’s minimums from the audition notices, and a series regular by the episode', () => {
@@ -217,10 +217,8 @@ describe('residuals', () => {
     const first = pending(sim, RESIDUAL_KIND).find((i) => i.payload.residualId === r.id && i.payload.stream === 'svod')!;
     expect(first.at).toBeGreaterThan(r.airsAt + 90 * MS_DAY);
     play(sim, first.at + MS_HOUR);
-    expect(r.payments).toBe(1);
     const pay = sim.universe.transactions.find((t) => t.memo.startsWith('Residuals'))!;
     expect(pay.category).toBe('salary');
-    expect(yearOf(sim.player, zonedParts(first.at, NY).year).residuals).toBe(r.paid);
     expect(pending(sim, RESIDUAL_KIND).some((i) => i.payload.residualId === r.id && i.payload.n === 2)).toBe(true);
   });
 });
@@ -332,6 +330,16 @@ describe('Connecticut', () => {
     expect(unemploymentOf(sim.player).claim).toMatchObject({ state: 'ct', waited: true, weekly: 307_00 });
     play(sim, sim.now + 8 * MS_DAY);
     expect(unemploymentOf(sim.player).claim!.paid).toBe(307_00);
+    // A New Haven actor whose base period was paid for New York work claims in New York, as an interstate claim is.
+    const commuter = pro('ct-ny-claim', 'us-ct-newhaven');
+    for (const q of ['2025-1', '2025-2', '2025-3', '2025-4']) earningsOf(commuter.player).quarters[q] = { wages: 8_000_00, sag: 0, byState: { 'us-ny': 8_000_00 } };
+    expect(claimStateFor(commuter.player, commuter.now)).toBe('ny');
+    // Wages recorded keep the state they were earned in.
+    const paid = pro('ct-ny-wages', 'us-ct-newhaven');
+    recordWages(paid.player, at(2026, 5, 1), NY, { gross: 5_000_00, where: 'us-ny-newyork', employer: 'x' });
+    expect(earningsOf(paid.player).quarters['2026-2']!.byState).toEqual({ 'us-ny': 5_000_00 });
+    commuter.must({ kind: 'benefits.claim', payload: {} });
+    expect(unemploymentOf(commuter.player).claim!.state).toBe('ny');
   });
 
   it('covers a low month by HUSKY D, to 175% of last year’s poverty line by Covered Connecticut, and above it by Access Health CT', () => {
@@ -404,7 +412,7 @@ describe('unemployment', () => {
     expect(weekBenefit(ca, 8, 2_000_00)).toBe(0);
   });
 
-  it('is claimed where they live, on the base period, with an unpaid waiting week, and paid as income', () => {
+  it('is claimed where they live when the wages’ state isn’t kept, on the base period, with an unpaid waiting week, and paid as income', () => {
     const sim = pro('claim');
     const person = sim.player;
     expect(sim.execute({ kind: 'benefits.claim', payload: {} }).ok).toBe(false);
@@ -500,6 +508,57 @@ describe('the tax return', () => {
     recordWages(cheap.player, at(2026, 5, 1), NY, { gross: 7_000_00, commission: 700_00, employer: 'a' });
     recordWages(cheap.player, at(2026, 6, 1), NY, { gross: 7_000_00, commission: 700_00, employer: 'b' });
     expect(figuresFor(cheap.player, 2026).deduction).toBe(0);
+  });
+
+  it('takes Yale New Haven’s charity off an uninsured Connecticut patient’s hospital bill: free to 250% of the poverty line, 67% off to 550%', () => {
+    const bill = (seed: string, city: string, yearly: number) => {
+      const sim = pro(seed, city);
+      const months = earningsOf(sim.player).months;
+      for (const k of Object.keys(months)) delete months[k];
+      months['2025-12'] = yearly;
+      return shareOf(sim.player, 'stay', sim.now);
+    };
+    const line = byYear(POVERTY_LINE, 2026);
+    const full = bill('ct-rich', 'us-ct-newhaven', Math.round(line * 7));
+    expect(full).toBeGreaterThan(0);
+    expect(bill('ct-low', 'us-ct-newhaven', Math.round(line * 2))).toBe(0);
+    expect(bill('ct-mid', 'us-ct-newhaven', Math.round(line * 4))).toBe(Math.round(full * 0.33));
+    // Not a New Yorker's: New York's own rule frees under 200% and no more.
+    expect(bill('ny-mid', 'us-ny-newyork', Math.round(line * 4))).toBe(full);
+  });
+
+  it('takes it off an insured Connecticut patient’s hospital bill on an application before it’s due, and not twice', () => {
+    const sim = pro('ct-aid', 'us-ct-newhaven');
+    const line = byYear(POVERTY_LINE, 2026);
+    const months = earningsOf(sim.player).months;
+    for (const k of Object.keys(months)) delete months[k];
+    months['2025-12'] = Math.round(line * 4);
+    const bill = { id: 'mx1', at: sim.now, what: 'A stay in hospital', amount: 1_000_00, dueAt: sim.now + 30 * MS_DAY, hospital: true, cityId: 'us-ct-newhaven' };
+    healthOf(sim.player).bills.push(bill);
+    expect(sim.must<{ aid: string }>({ kind: 'health.apply_aid', payload: { billId: 'mx1' } }).aid).toBe('discount');
+    expect(bill.amount).toBe(330_00);
+    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx1' } }).ok).toBe(false);
+    // Not a New York hospital's, nor one already screened.
+    healthOf(sim.player).bills.push({ ...bill, id: 'mx2', cityId: 'us-ny-newyork' }, { ...bill, id: 'mx3', aid: 'screened' as const });
+    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx2' } }).ok).toBe(false);
+    expect(sim.execute({ kind: 'health.apply_aid', payload: { billId: 'mx3' } }).error).toMatch(/charity is off it already/);
+  });
+
+  it('adds Connecticut’s 2026 assistance: half of what the expired credits would have paid over 400% of the poverty line, and none elsewhere', () => {
+    const at450 = Math.round(4.5 * 15_650_00);
+    const figures = (seed: string, city: string, gross: number) => {
+      const sim = pro(seed, city);
+      recordWages(sim.player, at(2026, 5, 1), NY, { gross });
+      healthOf(sim.player).premiums[2026] = [1_200_00, 1_200_00];
+      return figuresFor(sim.player, 2026);
+    };
+    const ct = figures('ct-tpa', 'us-ct-newhaven', at450);
+    // No federal credit over 400%; the enhanced one would have been the premium less 8.5% of income.
+    expect(ct.credit).toBe(0);
+    expect(ct.stateAssistance).toBe(Math.round(2 * Math.round(1_200_00 - (0.085 * at450) / 12) * 0.5));
+    expect(figures('ny-tpa', 'us-ny-newyork', at450).stateAssistance).toBeUndefined();
+    // At 350% the federal credit stands and Connecticut adds nothing.
+    expect(figures('ct-350', 'us-ct-newhaven', Math.round(3.5 * 15_650_00)).stateAssistance).toBeUndefined();
   });
 
   it('gives back the premium tax credit, and adds California’s penalty for months without cover', () => {

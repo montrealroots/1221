@@ -1,0 +1,318 @@
+{
+  "meta": {
+    "researchedOn": "2026-09-30",
+    "scope": "Canada (Toronto, Vancouver) as an acting market for SLATE",
+    "currencyNote": "All CAD unless stated. Casting Workbook page does not state currency; Actors Access prices are USD per its own help page.",
+    "confirmedMeans": "true only where the figure was read on the cited page or PDF in this session"
+  },
+
+  "agencies": {
+    "commission": {
+      "value": 15,
+      "unit": "percent of fees on work the agent procures, plus GST",
+      "currency": null,
+      "url": "https://actraalberta.com/talent-agents/",
+      "publisher": "ACTRA Alberta",
+      "date": null,
+      "sourceType": "union guidance page",
+      "confirmed": true,
+      "quote": "only the industry standard commission rate, 15% plus GST, on work they procure for you in the film and television industry"
+    },
+    "toronto": [
+      { "name": "Oscars Abrams Zimel & Associates (OAZ)", "city": "Toronto", "tier": "established principal agency; founded by Michael Oscars (retired 2022), Gayle Abrams, Perry Zimel", "detail": "438 Queen Street East; represents principal actors, writers, directors, commercial, voice, young talent; TAMAC and EIC member", "url": "https://playbackonline.ca/2022/04/25/star-maker-says-so-long-talent-agent-michael-oscars-retires/", "publisher": "Playback / directory listings (search results)", "date": "2022-04-25", "sourceType": "trade press + directory", "confirmed": false },
+      { "name": "The Characters Talent Agency", "city": "Toronto and Vancouver (also Calgary)", "tier": "large national; 1,300+ actors, 28 agents (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Paradigm Talent Agency (Toronto office)", "city": "Toronto", "tier": "large international; 140+ agents, 2,000+ clients (2019; Paradigm has since sold/closed several divisions — current Toronto status unverified)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Meridian Artists", "city": "Toronto and Los Angeles", "tier": "mid; 246 artists, 7 agents (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Talent House", "city": "Toronto", "tier": "boutique; 7 agents/managers, 300+ actors (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "GGA", "city": "Toronto", "tier": "boutique; 'a home for many of Canada's top actors' (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Amanda Rosenthal Talent Agency (ART)", "city": "Toronto and Montreal", "tier": "boutique; 4 agents, 181 actors (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Fountainhead Talent", "city": "Toronto", "tier": "mid; 250+ actors (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Edna Talent Management", "city": "Toronto", "tier": "boutique; 7 staff, 162 clients (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "AMI Artist Management", "city": "Toronto", "tier": "mid; 212 actors (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Creative Drive Artists", "city": "Toronto", "tier": "boutique; 125+ actors, 4 agents (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Hero Artists", "city": "Toronto and Vancouver", "tier": "boutique; 140 actors, 4 staff (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Butler Ruston Bell", "city": "Toronto", "tier": "boutique; 120 clients, 6 staff (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Oldfield Talent Management", "city": "Toronto", "tier": "small team; 200+ actors (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Ritter Talent Agency", "city": "Toronto", "tier": "small; 90 actors, 3 agents (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Integral Artists", "city": "Toronto", "tier": "small; 5 staff, 160+ actors (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Ambition Talent", "city": "Toronto (clients also Vancouver, NY, LA)", "tier": "boutique; just under 100 clients (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Parent Management", "city": "Toronto", "tier": "small; 60 clients (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Bella Agency", "city": "Toronto", "tier": "small; 2 agents, 110+ actors (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "Vanderwerff Talent", "city": "Toronto", "tier": "youth specialist (children and young adults)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "da Costa Talent Management", "city": "Toronto and Vancouver", "tier": "mid; 250+ actors (2019)", "url": "https://www.stagemilk.com/toronto-acting-agents/", "publisher": "StageMilk", "date": "2019-10-18", "sourceType": "secondary article", "confirmed": true },
+      { "name": "PLAY Management (Toronto office)", "city": "Toronto", "tier": "see Vancouver entry", "url": "https://www.playmgmt.com/", "publisher": "PLAY Management (via search snippet)", "date": null, "sourceType": "agency site", "confirmed": false }
+    ],
+    "vancouver": [
+      { "name": "Lucas Talent Inc.", "city": "Vancouver (307-1788 W 5th Ave)", "tier": "established literary and talent agency, founded 1986 by Richard Lucas; 'represent many of Canada's leading talents'", "url": "https://www.lucastalent.com/", "publisher": "Lucas Talent Inc.", "date": null, "sourceType": "agency site", "confirmed": true },
+      { "name": "PLAY Management Inc.", "city": "Vancouver (#337 1575 W Georgia St), also Toronto and Atlanta", "tier": "full-service, established 2006; selective, roster includes Danielle Deadwyler and Jewel Staite per Backstage", "url": "https://www.playmgmt.com/", "publisher": "PLAY Management / Backstage (via search snippet)", "date": null, "sourceType": "agency site + secondary", "confirmed": false },
+      { "name": "Premiere Talent Management", "city": "Vancouver (#206-1529 West 6th Ave)", "tier": "full-service; owner/agent Shannon Richardson plus ~7 agents; co-represents with US agencies", "url": "https://www.ptmtalent.com/", "publisher": "Premiere Talent Management (via search snippet)", "date": null, "sourceType": "agency site", "confirmed": false },
+      { "name": "The Characters Talent Agency", "city": "Vancouver (and Toronto)", "tier": "large national", "url": "https://www.vancouveractorsguide.com/listings/agencies", "publisher": "Vancouver Actors Guide", "date": null, "sourceType": "directory", "confirmed": true },
+      { "name": "Lauren Levitt & Associates", "city": "Vancouver", "tier": "principal and voice actors", "url": "https://www.vancouveractorsguide.com/listings/agencies", "publisher": "Vancouver Actors Guide", "date": null, "sourceType": "directory", "confirmed": true },
+      { "name": "Carrier Talent Management", "city": "Vancouver", "tier": "animation, mocap, musical theatre, film/TV", "url": "https://www.vancouveractorsguide.com/listings/agencies", "publisher": "Vancouver Actors Guide", "date": null, "sourceType": "directory", "confirmed": true },
+      { "name": "Connekt Creative Agency", "city": "Vancouver", "tier": "national agency, 'high profile professional performers'", "url": "https://www.vancouveractorsguide.com/listings/agencies", "publisher": "Vancouver Actors Guide", "date": null, "sourceType": "directory", "confirmed": true },
+      { "name": "Hero Artists", "city": "Vancouver (and Toronto)", "tier": "national, film/TV/commercials", "url": "https://www.vancouveractorsguide.com/listings/agencies", "publisher": "Vancouver Actors Guide", "date": null, "sourceType": "directory", "confirmed": true },
+      { "name": "da Costa Talent Management", "city": "Vancouver (and Toronto)", "tier": "actors, dancers, singers, choreographers", "url": "https://www.vancouveractorsguide.com/listings/agencies", "publisher": "Vancouver Actors Guide", "date": null, "sourceType": "directory", "confirmed": true },
+      { "name": "Alpha Artist Management", "city": "Vancouver", "tier": "established and emerging actors", "url": "https://www.vancouveractorsguide.com/listings/agencies", "publisher": "Vancouver Actors Guide", "date": null, "sourceType": "directory", "confirmed": true },
+      { "name": "Worldwide Talent Management", "city": "Vancouver", "tier": "small/boutique", "url": "https://www.vancouveractorsguide.com/listings/agencies", "publisher": "Vancouver Actors Guide", "date": null, "sourceType": "directory", "confirmed": true },
+      { "name": "Actum Talent Management", "city": "Vancouver", "tier": "boutique (Canada and Europe)", "url": "https://www.vancouveractorsguide.com/listings/agencies", "publisher": "Vancouver Actors Guide", "date": null, "sourceType": "directory", "confirmed": true }
+    ]
+  },
+
+  "actraRates": {
+    "ipa": {
+      "agreement": "ACTRA/CMPA/AQPM Independent Production Agreement 2025-2027",
+      "appliesTo": "Ontario and most provinces outside BC (Toronto); BC uses the BCMPA",
+      "effective": {
+        "value": "2025-01-26",
+        "note": "Agreement in effect Jan 26, 2025 to Dec 31, 2027. Increases: 6% on ratification (7% for background), 4% in 2026, 3.5% in 2027. The exact calendar date the 2026 and 2027 steps take effect was not stated on the page read.",
+        "url": "https://actratoronto.com/ipa-tentative-agreement-notice/",
+        "publisher": "ACTRA Toronto",
+        "date": "2025",
+        "sourceType": "union notice",
+        "confirmed": true
+      },
+      "rateChart": {
+        "url": "https://www.aqpm.ca/wp-content/uploads/2025/01/ACTRA-Grilles-tarifaires-2025-2027-EN.pdf",
+        "publisher": "AQPM (co-signatory producer association) — official IPA rate chart",
+        "date": "2025-01",
+        "sourceType": "collective agreement rate chart",
+        "currency": "CAD",
+        "confirmed": true,
+        "B101_onCamera": {
+          "principalActor": {
+            "2025": { "daily": 935.25, "hourly": 116.50, "overtime": 175.50, "weekly": 3974.50 },
+            "2026": { "daily": 972.75, "hourly": 121.25, "overtime": 182.50, "weekly": 4133.50 },
+            "2027": { "daily": 1006.75, "hourly": 125.50, "overtime": 189.00, "weekly": 4278.25 }
+          },
+          "actor": {
+            "note": "IPA category (c) 'Actor, etc.' — the lower (small-part) performer category; the definition (line limits) was not read",
+            "2025": { "daily": 631.25, "hourly": 78.75, "overtime": 118.50, "weekly": 2683.50 },
+            "2026": { "daily": 656.50, "hourly": 82.00, "overtime": 123.25, "weekly": 2790.75 },
+            "2027": { "daily": 679.50, "hourly": 84.75, "overtime": 127.50, "weekly": 2888.50 }
+          },
+          "stuntActor": { "2025": { "daily": 1402.75 }, "2026": { "daily": 1458.75 }, "2027": { "daily": 1509.75 } },
+          "varietyPrincipal": { "2025": { "daily": 1402.75, "weekly": 5961.50 }, "2026": { "daily": 1458.75, "weekly": 6200.00 }, "2027": { "daily": 1509.75, "weekly": 6417.00 } }
+        },
+        "C101_background": {
+          "backgroundPerformer": {
+            "2025": { "daily": 273.50, "hourly": 34.00, "overtime": 51.25 },
+            "2026": { "daily": 284.50, "hourly": 35.25, "overtime": 53.25 },
+            "2027": { "daily": 294.50, "hourly": 36.50, "overtime": 55.00 }
+          },
+          "standIn": {
+            "2025": { "daily": 287.75, "weekly": 1294.00 },
+            "2026": { "daily": 299.25, "weekly": 1345.75 },
+            "2027": { "daily": 309.75, "weekly": 1392.75 }
+          },
+          "specialSkill": { "2025": { "daily": 364.75 }, "2026": { "daily": 379.25 }, "2027": { "daily": 392.50 } }
+        },
+        "auditions": {
+          "A2801_auditionOverOneHour": { "2025": 60.75, "2026": 63.25, "2027": 65.50 },
+          "A2803_auditionRecall": { "2025": 101.50, "2026": 105.50, "2027": 109.25 }
+        },
+        "perDiem": { "2025": 70.00, "2026": 70.00, "2027": 75.00 },
+        "lowBudgetDiscounts": {
+          "note": "CIPIP: features under $2,500,000 budget get a 35% All-Canadian-cast discount (25% otherwise) off minimums; super-low-budget under $339,158 gets 45%/35%",
+          "confirmed": true
+        }
+      },
+      "overtimeBasics": {
+        "value": "IPA chart lists a single overtime hourly rate per category (principal $175.50 in 2025, ~1.5x the hourly $116.50). Daily fee = 8 hourly units (935.25/116.50 ≈ 8.03). The contractual day length and double-time triggers are in the agreement text, not read.",
+        "confirmed": false
+      }
+    },
+    "bcmpa": {
+      "agreement": "UBCP/ACTRA BC Master Production Agreement 2025-2028",
+      "url": "https://ubcpactra.ca/wp-content/uploads/2025/03/2025-2028-BCMPA-Rate-Sheet.pdf",
+      "publisher": "UBCP/ACTRA",
+      "date": "2025-03",
+      "sourceType": "union rate sheet",
+      "currency": "CAD",
+      "confirmed": true,
+      "B101_onCamera": {
+        "principalActorStunt": {
+          "2024-03-31": { "daily": 869.85, "hourly": 108.73, "ot1_5x": 163.10, "ot2x": 217.46 },
+          "2025-03-30": { "daily": 917.69, "hourly": 114.71, "ot1_5x": 172.07, "ot2x": 229.42 },
+          "2026-03-29": { "daily": 954.40, "hourly": 119.30, "ot1_5x": 178.95, "ot2x": 238.60 },
+          "2027-04-04": { "daily": 987.80, "hourly": 123.48, "ot1_5x": 185.22, "ot2x": 246.96 }
+        },
+        "actor": {
+          "2024-03-31": { "daily": 585.43, "hourly": 73.18 },
+          "2025-03-30": { "daily": 617.63, "hourly": 77.20 },
+          "2026-03-29": { "daily": 642.34, "hourly": 80.29, "ot1_5x": 120.44, "ot2x": 160.58 },
+          "2027-04-04": { "daily": 664.82, "hourly": 83.10 }
+        },
+        "stuntActor": { "2026-03-29": { "daily": 1426.16 } }
+      },
+      "D101_background": {
+        "generalBackground": {
+          "2024-03-31": { "daily": 244.04, "hourly": 30.51 },
+          "2025-03-30": { "daily": 259.90, "hourly": 32.49 },
+          "2026-03-29": { "daily": 270.30, "hourly": 33.79, "ot1_5x": 50.69, "ot2x": 67.58 },
+          "2027-04-04": { "daily": 279.76, "hourly": 34.97 }
+        },
+        "standIn": { "2026-03-29": { "daily": 293.86 } },
+        "specialAbility": { "2026-03-29": { "daily": 362.75 } }
+      },
+      "dayLength": { "value": 8, "unit": "hours included in daily fee (overtime at 1.5x then 2x)", "confirmed": true },
+      "insuranceAndRetirement": {
+        "value": "Producer pays insurance 6.5% of gross (max $5,000/contract) from 2026-03-29; retirement 6% (max $6,000) until 2027-04-04",
+        "confirmed": true
+      },
+      "currentOn2026-09-30": "Rates effective 2026-03-29 apply"
+    },
+    "membership": {
+      "fullMemberInitiation": { "value": 1600, "unit": "one-time", "currency": "CAD", "url": "https://www.actra.ca/join/", "publisher": "ACTRA National", "date": null, "sourceType": "union page", "confirmed": true },
+      "fullMemberAnnualDues": { "value": 195, "unit": "per year basic dues", "currency": "CAD", "url": "https://www.actra.ca/join/", "publisher": "ACTRA National", "date": null, "sourceType": "union page", "confirmed": true },
+      "workingDues": { "value": 2.25, "unit": "percent of gross earnings; basic + working dues capped at $4,000 combined per year", "currency": "CAD", "url": "https://www.actra.ca/join/", "publisher": "ACTRA National", "date": null, "sourceType": "union page", "confirmed": true },
+      "apprenticeFee": { "value": 75, "unit": "on joining, then $75 per year to renew", "currency": "CAD", "url": "https://actratoronto.com/apprentice-program/", "publisher": "ACTRA Toronto", "date": null, "sourceType": "union page", "confirmed": true },
+      "creditsToFullMember": { "value": 3, "unit": "qualifying credits / work permits", "url": "https://actratoronto.com/apprentice-program/", "publisher": "ACTRA Toronto", "date": null, "sourceType": "union page", "confirmed": true, "note": "Apprentice needs at least one qualifying work permit to register; cost of permits used and the initial apprentice fee are deductible from the $1,600 initiation fee" },
+      "aabp": {
+        "name": "ACTRA Additional Background Performer (AABP)",
+        "initiationFee": { "value": 30, "currency": "CAD", "confirmed": true },
+        "annualFee": { "value": 30, "currency": "CAD", "confirmed": true },
+        "eligibility": { "value": "15 days as a background performer on ACTRA sets in the prior 12 months", "confirmed": true },
+        "pathToApprentice": { "value": "200 background days or 1,600 background hours as an AABP member", "confirmed": true },
+        "url": "https://actratoronto.com/actra-additional-background-performer-aabp/",
+        "publisher": "ACTRA Toronto",
+        "date": null,
+        "sourceType": "union page"
+      },
+      "workPermitFee": { "value": null, "note": "Per-engagement work permit cost for non-members was not found on pages read" },
+      "ubcpMembershipFees": { "value": null, "note": "UBCP/ACTRA (BC) initiation, dues and apprentice rules not researched this pass; BC runs its own path (UBCP 'Apprentice' / 'Extra' categories)" }
+    }
+  },
+
+  "castingSites": {
+    "castingWorkbook": {
+      "pro": { "value": 12.99, "unit": "per month", "currency": null, "url": "https://home.castingworkbook.com/for-actors/", "publisher": "Casting Workbook", "date": "2026-09-30 (read)", "sourceType": "vendor site", "confirmed": true, "note": "Page text: 'Go Pro With Fair Pricing For Absolutely Everything $12.99/month gives you everything.' Currency not stated (Canadian company; likely CAD, unverified). A WebFetch summary also reported '$99/year' but that string was not found in the raw page text, so it is not confirmed." },
+      "lite": { "value": 0, "unit": "free tier", "currency": null, "confirmed": true }
+    },
+    "actorsAccessPlus": {
+      "annual": { "value": 68, "unit": "per year", "currency": "USD", "url": "https://actorsaccess.freshdesk.com/support/solutions/articles/17000122056-actors-all-about-actors-access-plus", "publisher": "Breakdown Services (Actors Access help centre)", "date": null, "sourceType": "vendor help page", "confirmed": true },
+      "monthly": { "value": 9.99, "unit": "per month", "currency": "USD", "confirmed": true },
+      "canadaUse": { "value": "Breakdown Services/Actors Access operates in Vancouver and Toronto; no separate Canadian price found", "confirmed": false }
+    }
+  },
+
+  "stage": {
+    "cta": {
+      "agreement": "Canadian Theatre Agreement 2024-2027 (CAEA and PACT) fee booklet",
+      "url": "https://www.caea.com/wp-content/uploads/CTA-MinimumFee.pdf",
+      "publisher": "Canadian Actors' Equity Association / Professional Association of Canadian Theatres",
+      "date": "2024",
+      "sourceType": "collective agreement fee booklet",
+      "currency": "CAD",
+      "confirmed": true,
+      "seasons": { "2024-2025": "2024-06-24 to 2025-06-22", "2025-2026": "2025-06-23 to 2026-06-21", "2026-2027": "2026-06-22 to 2027-06-20" },
+      "actorWeeklyMinimum_16_13": {
+        "unit": "per week, actor point of origin",
+        "A+":   { "2024-2025": 1307.50, "2025-2026": 1346.75, "2026-2027": 1387.25 },
+        "Shaw": { "2024-2025": 1270.50, "2025-2026": 1308.75, "2026-2027": 1348.25 },
+        "A":    { "2024-2025": 1255.25, "2025-2026": 1293.00, "2026-2027": 1332.00 },
+        "B":    { "2024-2025": 1208.25, "2025-2026": 1244.50, "2026-2027": 1282.00 },
+        "C":    { "2024-2025": 1143.00, "2025-2026": 1177.50, "2026-2027": 1213.00 },
+        "D":    { "2024-2025": 1049.00, "2025-2026": 1080.50, "2026-2027": 1113.00 },
+        "E":    { "2024-2025": 966.00,  "2025-2026": 995.00,  "2026-2027": 1025.00 },
+        "F":    { "2024-2025": 867.00,  "2025-2026": 893.25,  "2026-2027": 920.25 },
+        "G":    { "2024-2025": 730.75,  "2025-2026": 752.75,  "2026-2027": 775.50 }
+      },
+      "extraWeekly": { "A+": { "2026-2027": 733.00 }, "A": { "2026-2027": 677.50 }, "G": { "2026-2027": 487.75 } },
+      "sector2ActorWeekly_58_05": {
+        "note": "Sector 2 = commercial/large-scale productions",
+        "A-2": { "2024-2025": 1526.50, "2025-2026": 1572.50, "2026-2027": 1619.75 },
+        "A+":  { "2026-2027": 1428.50 },
+        "A":   { "2026-2027": 1387.75 }
+      },
+      "tyaActorWeekly": { "2026-2027": 750.25 },
+      "companyCategoryThresholds_2026_2027": {
+        "unit": "theatre's category calculation value (annual basis in CAD), A = $180,519.26 and over",
+        "A": 180519.26, "B_min": 136194.01, "C_min": 106363.26, "D_min": 76399.26, "E_min": 45925.26, "F_min": 23179.51, "G_min": 0
+      },
+      "overnightTouringPerDiem": { "2026-2027": 152.00, "unit": "per day" },
+      "theatreToCategoryMapping": { "value": null, "note": "Booklet names Shaw (own category) and mentions Stratford in insurance tables, but does not list which Toronto theatres (Soulpepper, Canadian Stage, Mirvish, etc.) sit in which category. Stratford's own agreement rates not found." }
+    }
+  },
+
+  "unemployment": {
+    "actraStatus": {
+      "value": "ACTRA performers are self-employed independent contractors; regular EI benefits require insurable employment, so performers cannot pay into or collect EI regular benefits between engagements. They can opt in to EI special benefits only.",
+      "url": "https://www.actra.ca/wp-content/uploads/2022/08/2022-07-27_ACTRA-Submission_Reforming-Canadas-EI-program-FINAL.pdf",
+      "publisher": "ACTRA (submission to ESDC)",
+      "date": "2022-07-27",
+      "sourceType": "union policy submission",
+      "confirmed": false,
+      "note": "Wording taken from search-result summaries of ACTRA's 2021 and 2022 EI submissions; the PDFs could not be text-extracted here."
+    },
+    "specialBenefitsForSelfEmployed": {
+      "benefits": ["maternity", "parental", "sickness", "family caregiver (children)", "family caregiver (adults)", "compassionate care"],
+      "rate": { "value": 55, "unit": "percent of earnings", "confirmed": true },
+      "maxWeekly2026": { "value": 729, "unit": "per week", "currency": "CAD", "confirmed": true },
+      "url": "https://www.canada.ca/en/services/benefits/ei/ei-self-employed-workers.html",
+      "publisher": "Government of Canada (Service Canada)",
+      "date": "2026",
+      "sourceType": "government page"
+    },
+    "waitingPeriod": { "value": 12, "unit": "months after registration before any special benefit can be paid", "url": "https://www.canada.ca/en/services/benefits/ei/ei-self-employed-workers/eligibility.html", "publisher": "Government of Canada", "date": "2026", "sourceType": "government page", "confirmed": true },
+    "minimumEarnings2026Claims": { "value": 9254, "unit": "net self-employed earnings in calendar 2025", "currency": "CAD", "url": "https://www.canada.ca/en/services/benefits/ei/ei-self-employed-workers/eligibility.html", "publisher": "Government of Canada", "date": "2026", "sourceType": "government page", "confirmed": true },
+    "premiumRate2026": { "value": null, "note": "Not read this pass" }
+  },
+
+  "volume": {
+    "ontario": {
+      "url": "https://www.ontariocreates.ca/assets/images/research/Statistics/Eng/YE2025_ProductionReview_2026-02-10_v1.2_20YrOnly_CLAU_LF_Eng.pdf",
+      "publisher": "Ontario Creates",
+      "date": "2026-02-10",
+      "sourceType": "provincial agency statistics",
+      "unit": "CAD millions, productions receiving Ontario Creates facilitation and/or tax credit applications",
+      "confirmed": true,
+      "total": { "2019": 2164.9, "2020": 1497.4, "2021": 2881.1, "2022": 3150.7, "2023": 1834.2, "2024": 2557.1, "2025": 2702.7 },
+      "foreign": { "2024": 1651.4, "2025": 1893.1 },
+      "domestic": { "2024": 905.6, "2025": 809.6 }
+    },
+    "toronto": {
+      "url": "https://www.toronto.ca/legdocs/mmis/2026/ec/bgrd/backgroundfile-264810.pdf",
+      "publisher": "City of Toronto, Economic Development and Culture (report to committee)",
+      "date": "2026-02-09",
+      "sourceType": "municipal report",
+      "confirmed": true,
+      "directSpendCADbillions": { "2019": 2.2, "2020": 1.5, "2021": 2.5, "2022": 2.6 },
+      "workforce": 40000,
+      "domesticShare": "approximately 20-30% of total annual production spending",
+      "studioSpaceSqFt": "almost 3 million",
+      "note": "Report says U.S. producers account for a majority of Toronto production; Toronto 2023/2024/2025 city figures not stated in this report (a secondary summary gave $1.6B for 2023 and >$2.2B expected for 2024 from the Olsberg SPI consultant report — unconfirmed)."
+    },
+    "britishColumbia": {
+      "url": "https://creativebc.com/wp-content/uploads/2026/03/Creative-BC_BC-Film-and-TV-Statistics_2024.pdf",
+      "publisher": "Creative BC",
+      "date": "2025-08-08 data (published 2026-03)",
+      "sourceType": "provincial agency statistics",
+      "unit": "CAD, B.C. production volume by PPKA start year",
+      "confirmed": true,
+      "total": { "2022": 3328489970, "2023": 2213664014, "2024": 3563623920 },
+      "projects": { "2022": 520, "2023": 379, "2024": 372 },
+      "foreign2024": 3083167609,
+      "domestic2024": 480456311,
+      "workforce": "nearly 100,000 (whole motion picture industry incl. VFX/animation)",
+      "note": "2024 includes $759M of foreign pre-certifications and is flagged incomplete; B.C. figure is province-wide, overwhelmingly Metro Vancouver but no city split given. 2025 B.C. figure not yet published in what was read."
+    },
+    "losAngelesComparator": {
+      "value": null,
+      "note": "Toronto report only says LA 2022 on-location shoot days were 0.7% above 2019. No LA/NY dollar spend in a comparable unit was gathered; FilmLA reports shoot days, NY MOME reports differently. Any Toronto/Vancouver vs LA/NY work-volume ratio would be a modeled estimate."
+    }
+  },
+
+  "uncertain": [
+    "IPA 2026 and 2027 step dates: ACTRA says 4% 'in 2026' and 3.5% 'in 2027' but the exact effective calendar date was not read (may be Jan 1 or an anniversary date).",
+    "IPA 'Actor, etc.' category definition (e.g., line-count limit) not read; treat as the lower-paid small-part tier.",
+    "IPA overtime/day-length rules and TV-series weekly/multi-episode rates beyond the B101 weekly column were not read from the agreement text.",
+    "Casting Workbook currency not stated on its page; the '$99/year' figure seen in a summarised fetch was not in the raw page and is excluded.",
+    "Agency sizes come from a 2019 StageMilk article; rosters have certainly changed. Paradigm's Toronto office status in 2026 is unverified.",
+    "OAZ, PLAY and Premiere details come from search snippets of their own/directory pages, not a direct read (their sites did not resolve for fetch).",
+    "ACTRA's EI wording is from search summaries of ACTRA submissions (PDF text not extractable); the Service Canada figures are confirmed.",
+    "UBCP/ACTRA membership fees and BC apprentice path not researched.",
+    "No per-permit ACTRA work permit fee found.",
+    "Which Toronto theatres sit in which CTA category, and Stratford's separate agreement rates, not found.",
+    "Toronto city-level 2023-2025 spend and any LA/NY comparator in matching units not gathered."
+  ]
+}

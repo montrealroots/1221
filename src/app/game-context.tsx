@@ -7,7 +7,7 @@
  * after any mutation and re-reads what it needs.
  */
 
-import { createClockStepper } from '@/engine/core/realclock';
+import { createClockStepper, realNow } from '@/engine/core/realclock';
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useRef, useState,
   type ReactNode,
@@ -140,7 +140,6 @@ export function GameProvider({
 
   // Re-read on every render so the ticker restarts when the player changes it.
   const timeSpeed = sim.universe.preferences.timeSpeed;
-  const reducedMotion = sim.universe.preferences.reducedMotion;
 
   const refresh = useCallback(() => setVersion((v) => v + 1), []);
 
@@ -275,18 +274,29 @@ export function GameProvider({
     const multiplier = SPEED_MULTIPLIER[timeSpeed] ?? 1;
     if (multiplier === 0) return;
 
-    // Measured against a monotonic clock rather than assumed from the interval.
+    // Measured against the wall clock rather than assumed from the interval.
     // A throttled or backgrounded tab does not fire on schedule, and a world
     // clock that quietly loses an hour is worse than one that runs behind.
-    // The arithmetic — carrying fractions, paying a night away back in
-    // bounded steps — is the stepper's, and is tested to the millisecond.
-    let lastAt = performance.now();
+    // Until 2026-09-27 it was measured with `performance.now()`, which stops
+    // while a phone's screen is locked or a machine sleeps, so the world fell
+    // behind real life by every minute the device was asleep. The arithmetic
+    // — carrying fractions, paying a night away back in bounded steps — is
+    // the stepper's, and is tested to the millisecond. Playtime keeps the
+    // page's own clock: time asleep isn't time played.
+    let lastWall = realNow();
+    let lastPage = performance.now();
+    let stopped = false;
     const stepper = createClockStepper(multiplier);
 
-    const handle = window.setInterval(() => {
-      const now = performance.now();
-      const elapsed = Math.max(0, now - lastAt);
-      lastAt = now;
+    const tick = () => {
+      if (stopped) return;
+      const wall = realNow();
+      const page = performance.now();
+      // A wall clock set back is no time at all, never time run backwards.
+      const elapsed = Math.max(0, wall - lastWall);
+      const played = Math.max(0, page - lastPage);
+      lastWall = wall;
+      lastPage = page;
       // A finished life has no more time in it, and none is counted as played.
       if (sim.universe.meta.endedAt !== undefined) return;
 
@@ -300,16 +310,29 @@ export function GameProvider({
         // the answer came back "that's already settled one way or the other".
         const wanted = sim.now + step;
         const result = sim.advanceBy(step, { stopOnPlayerRequired: true });
-        sim.universe.meta.playtimeSeconds += elapsed / 1_000;
+        sim.universe.meta.playtimeSeconds += played / 1_000;
         dirty.current = true;
         halt(result, wanted);
         setVersion((v) => v + 1);
       } catch {
         // A handler threw; stop ticking rather than looping on the error.
+        stopped = true;
         window.clearInterval(handle);
       }
-    }, TICK_MS);
-    return () => window.clearInterval(handle);
+    };
+
+    const handle = window.setInterval(tick, TICK_MS);
+    // Back on screen, the clock catches up at once rather than at the next
+    // throttled tick, which a background tab may hold back a minute.
+    const shown = () => { if (document.visibilityState === 'visible') tick(); };
+    document.addEventListener('visibilitychange', shown);
+    window.addEventListener('focus', shown);
+    return () => {
+      stopped = true;
+      window.clearInterval(handle);
+      document.removeEventListener('visibilitychange', shown);
+      window.removeEventListener('focus', shown);
+    };
   }, [sim, timeSpeed, halt]);
 
 
@@ -349,11 +372,6 @@ export function GameProvider({
     return () => window.removeEventListener('keydown', onKey);
   }, [navigate]);
 
-  // Honor the reduced-motion preference at the document level.
-  useEffect(() => {
-    document.body.dataset['reducedMotion'] = String(reducedMotion);
-  }, [reducedMotion]);
-
   const exitToMenu = useCallback(() => {
     void saveNow().then(onExit);
   }, [saveNow, onExit]);
@@ -377,7 +395,11 @@ const ROUTE_LABELS: Record<string, string> = {
   '/workspace/calendar': 'Calendar',
   '/workspace/school': 'Your School',
   '/workspace/career': 'Your Career',
-  '/workspace/papers': 'Taxes And Cover',
+  '/workspace/papers': 'Papers',
+  '/workspace/travel': 'Travel',
+  '/workspace/vehicles': 'Cars',
+  '/workspace/land': 'Land',
+  '/workspace/homes': 'Homes',
 };
 
 export function labelForRoute(route: string): string {

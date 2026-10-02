@@ -26,24 +26,55 @@ import type { Person } from '../domain/model';
 import { clamp } from '../core/rng';
 import type { LookAfter } from './life';
 import { personalityOf } from './personality';
+import type { Piece } from '../content/furniture';
+import { homeKeyOf } from './items';
+import { PRODUCT_INTEREST } from '../content/career';
 
 /** Which of what somebody cares about each thing they can do for themselves is. */
 const LOVED_IN: Record<LookAfter, readonly string[]> = {
   eat: ['cooking'],
+  order: [],
   wash: [],
+  bathe: [],
   exercise: ['fitness', 'sport'],
+  ride: ['fitness', 'sport', 'nature'],
+  trail: ['nature', 'sport'],
+  swim: ['fitness', 'sport'],
+  court: ['fitness', 'sport'],
+  outside: ['nature'],
+  boat: ['nature', 'sport'],
+  charter: ['nature', 'sport'],
+  laundry: ['fashion'],
+  tidy: ['design'],
+  // A lawn is time outdoors, and a garden's (from 2026-10-02).
+  mow: ['nature'],
   // An hour to yourself goes on what you'd spend an evening on.
-  unwind: ['art', 'design', 'film', 'games', 'history', 'music', 'photography', 'technology', 'television', 'theatre', 'writing'],
+  // Film History and Film Preservation are an evening with the old films.
+  unwind: ['art', 'design', 'film', 'film_history', 'film_preservation', 'games', 'history', 'music', 'photography', 'technology', 'television', 'theatre', 'writing'],
 };
 
 /** How much more of the mood, and of the stress relief, an hour gives somebody who loves it. */
 export const LOVED_MOOD = 1.5;
 export const LOVED_RELIEF = 1.25;
 
-/** The interests of theirs this is, by id, in the order the list above gives them. */
-export function lovedIn(person: Pick<Person, 'interests'>, action: LookAfter): string[] {
+/**
+ * What an interest needs at home to be enjoyed there (from 2026-09-30): a
+ * screen for film and television, a console for games, a speaker for music
+ * (`content/furniture.ts`). Away from home, a hotel's or a sublet's TV does.
+ */
+export const GEAR_FOR: Readonly<Record<string, Piece>> = { film: 'tv', film_history: 'tv', film_preservation: 'tv', television: 'tv', games: 'console', music: 'speaker' };
+
+/** The interests of theirs this is, by id, in the order the list above gives them; at home, those whose gear they own. */
+export function lovedIn(person: Pick<Person, 'interests'> & Partial<Pick<Person, 'furniture' | 'items' | 'home' | 'currentLocationId'>>, action: LookAfter): string[] {
   const theirs = person.interests ?? [];
-  return LOVED_IN[action].filter((id) => theirs.includes(id));
+  const atHome = person.home !== undefined && person.home.kind !== 'sofa' && person.currentLocationId === person.home.cityId;
+  return LOVED_IN[action].filter((id) => theirs.includes(id) && (!atHome || !GEAR_FOR[id] || hasGear(person, GEAR_FOR[id]!)));
+}
+
+/** Their gear at the home they live in: an item there (`systems/items.ts`), or a save's piece from before items. */
+function hasGear(person: Partial<Pick<Person, 'furniture' | 'items' | 'home'>>, piece: Piece): boolean {
+  const home = homeKeyOf(person.home);
+  return person.furniture?.[piece] !== undefined || (person.items ?? []).some((i) => i.kind === `furniture:${piece}` && i.at.kind === 'home' && i.at.home === home);
 }
 
 /** A day's work as enjoyment sees it: what it is, what it's filed under, and whether it's away from home. */
@@ -51,13 +82,85 @@ export interface WorkDay {
   medium: 'screen' | 'stage' | 'voice';
   after?: 'tv' | 'film' | 'commercial';
   genre?: string;
+  /** A commercial's product, which may speak to an interest (`PRODUCT_INTEREST`). */
+  product?: string;
   away: boolean;
+  /** The role's id, where the kind of voice work decides a craft: an animated series, a video game. */
+  role?: string;
+  rehearsal?: boolean;
+  /** The trades there, where they aren't a day of work's (an improv class's). */
+  crafts?: readonly string[];
+}
+
+/**
+ * The trades a day's work puts somebody beside, by where it is. A set has
+ * its camera, lights, hair and makeup, costume, sound, script supervisor,
+ * director, producers, art department and designers; a series its showrunner and writers; a location
+ * the place somebody scouted; a stage its lighting, costume, props, scenery
+ * and sound, and its rehearsal room the director, a dialect coach and an
+ * intimacy coordinator; a booth its mixer, an animated series its animators
+ * and a video game its motion capture. Until 2026-09-28 thirty of the crafts
+ * were said back and nothing more.
+ */
+export const CRAFTS_AT = {
+  set: ['cinematography', 'lighting', 'hair_and_makeup', 'costume_design', 'sound_mixing', 'script_supervision', 'directing', 'producing', 'production_design', 'art_direction', 'set_decoration', 'props'],
+  series: ['showrunning', 'writers_rooms', 'screenwriting'],
+  location: ['location_scouting'],
+  stage: ['lighting', 'costume_design', 'hair_and_makeup', 'props', 'set_decoration', 'sound_design', 'directing'],
+  rehearsal: ['directing', 'dialect_coaching', 'intimacy_coordination'],
+  booth: ['sound_mixing'],
+  animation: ['animation'],
+  game: ['motion_capture'],
+  /** The finished work, seen: what post-production made of it, and the reviews. */
+  seen: ['editing', 'color_grading', 'film_scoring', 'music_supervision', 'title_design', 'sound_design', 'foley', 'visual_effects', 'film_criticism'],
+  festival: ['film_festivals'],
+  room: ['casting'],
+  improv: ['improvisation'],
+} as const;
+
+/** The trades a genre brings onto the floor beside those. */
+export const GENRE_CRAFTS: readonly [readonly string[], readonly string[]][] = [
+  [['action', 'action_comedy', 'martial_arts', 'war', 'western', 'spaghetti_western', 'swashbuckler', 'superhero', 'spy', 'espionage', 'heist', 'chase', 'samurai', 'chanbara', 'wuxia', 'disaster', 'survival', 'sword_and_sandal', 'sword_and_sorcery'], ['stunts', 'storyboarding', 'stage_combat']],
+  [['horror', 'creature_feature', 'monster_movie', 'kaiju', 'body_horror', 'zombie', 'werewolf', 'vampire', 'splatter', 'slasher', 'eco_horror', 'cosmic_horror', 'tokusatsu'], ['creature_effects', 'practical_effects']],
+  [['science_fiction', 'space_opera', 'science_fantasy', 'cyberpunk', 'fantasy', 'dark_fantasy', 'superhero', 'kaiju', 'disaster', 'tokusatsu', 'steampunk'], ['visual_effects', 'miniatures']],
+  [['musical', 'backstage_musical', 'jukebox_musical', 'dance', 'concert_film'], ['choreography', 'music_supervision']],
+  [['childrens', 'family', 'fairy_tale'], ['puppetry']],
+  [['animated', 'anime'], ['animation']],
+  [['costume_drama', 'period_drama', 'historical_drama', 'historical_fiction', 'biographical'], ['dialect_coaching']],
+];
+
+/** The trades a day's work puts them beside (`CRAFTS_AT`, and the genre's). */
+export function craftsOf(day: WorkDay): string[] {
+  if (day.crafts) return [...day.crafts];
+  const out: string[] = [];
+  if (day.medium === 'screen') {
+    out.push(...CRAFTS_AT.set);
+    if (day.after === 'tv') out.push(...CRAFTS_AT.series);
+    if (day.away) out.push(...CRAFTS_AT.location);
+  } else if (day.medium === 'stage') out.push(...(day.rehearsal ? CRAFTS_AT.rehearsal : CRAFTS_AT.stage));
+  else {
+    out.push(...CRAFTS_AT.booth);
+    if (day.role === 'animation') out.push(...CRAFTS_AT.animation);
+    if (day.role === 'game') out.push(...CRAFTS_AT.game);
+  }
+  for (const [genres, crafts] of GENRE_CRAFTS) if (day.genre && genres.includes(day.genre)) out.push(...crafts);
+  return [...new Set(out)];
+}
+
+/** The first of their crafts among some trades, or none: a day's crafts count once, however many of them somebody loves. */
+export function lovedCraft(person: Pick<Person, 'interests'>, crafts: readonly string[]): string | undefined {
+  const theirs = person.interests ?? [];
+  return crafts.find((id) => theirs.includes(id));
 }
 
 /**
  * What of somebody's a day's work is: television or film for a screen job,
  * theater for the stage, voice acting for a voice job, travel for a job
- * away, and the job's genre if it's among theirs.
+ * away, the job's genre if it's among theirs, and a commercial's product
+ * where it speaks to an interest: a car for Cars, a fashion brand for
+ * Fashion, travel and the outdoors for Nature, pets for Animals, a campaign
+ * for Politics. Until 2026-09-28 those five interests were said back and
+ * nothing more.
  */
 export function lovedInWork(person: Pick<Person, 'interests' | 'genres'>, day: WorkDay): string[] {
   const theirs = person.interests ?? [];
@@ -66,6 +169,10 @@ export function lovedInWork(person: Pick<Person, 'interests' | 'genres'>, day: W
   if (medium && theirs.includes(medium)) out.push(medium);
   if (day.away && theirs.includes('travel')) out.push('travel');
   if (day.genre && (person.genres ?? []).includes(day.genre)) out.push(day.genre);
+  const product = day.product ? PRODUCT_INTEREST[day.product] : undefined;
+  if (product && theirs.includes(product)) out.push(product);
+  const craft = lovedCraft(person, craftsOf(day));
+  if (craft) out.push(craft);
   return out;
 }
 
@@ -84,7 +191,7 @@ export const DISPOSED = { room: 4, away: 2, rehearsal: 2 } as const;
 const lean = (axis: number | undefined) => ((axis ?? 50) - 50) / 50;
 
 /** A day's work, enjoyed or not: the loved things in it, the road by openness, and a rehearsal by agreeableness. */
-export function enjoyWork(person: Person, day: WorkDay & { rehearsal?: boolean }): void {
+export function enjoyWork(person: Person, day: WorkDay): void {
   const w = person.wellbeing;
   const loved = lovedInWork(person, day).length;
   let mood = loved * LOVED_WORK.mood;
@@ -124,8 +231,18 @@ export function feel(person: Person, turn: keyof typeof TURNS): void {
   w.stress = clamp(w.stress + (stress > 0 ? stress * personalityOf(person, 'stressGain') : stress), 0, 100);
 }
 
-/** An audition in the room, taken as the disposition takes it. A self-tape, made alone, takes nothing. */
+/** An audition in the room, taken as the disposition takes it, and a casting office enjoyed by somebody who loves Casting. A self-tape, made alone, takes nothing. */
 export function takeTheRoom(person: Person): void {
   const w = person.wellbeing;
   w.stress = clamp(w.stress - DISPOSED.room * lean(person.personality?.extraversion), 0, 100);
+  enjoyCrafts(person, CRAFTS_AT.room);
+}
+
+/** Some trades met outside a day's work (the casting room, an improv class, the finished work seen): one loved among them lifts as a day's does. */
+export function enjoyCrafts(person: Person, crafts: readonly string[]): boolean {
+  if (!lovedCraft(person, crafts)) return false;
+  const w = person.wellbeing;
+  w.morale = clamp(w.morale + LOVED_WORK.mood, 0, 100);
+  w.stress = clamp(w.stress - LOVED_WORK.relief, 0, 100);
+  return true;
 }

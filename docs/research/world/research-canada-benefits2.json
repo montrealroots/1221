@@ -1,0 +1,1252 @@
+{
+  "meta": {
+    "title": "Canadian benefits research, part 2: EI for the self-employed, Ontario and BC drug plans, BC Senior's Supplement, GIS top-up",
+    "researchedOn": "2026-09-30",
+    "method": "Each figure was read on the cited government page. The Fair PharmaCare tables and the Senior's Supplement table were also downloaded and parsed from the raw page HTML and PDF text (curl, pdftotext), so their rows are exact transcriptions, checked for gaps. readOnPage=true means the figure appeared on the cited page; false means it did not, and the note says where it came from.",
+    "currency": "CAD",
+    "spelling": "American"
+  },
+  "eiSelfEmployedSpecialBenefits": {
+    "premiumRate2026": {
+      "outsideQuebec": {
+        "ratePer100": 1.63,
+        "maxAnnualPremium": 1123.07
+      },
+      "quebec": {
+        "ratePer100": 1.3,
+        "maxAnnualPremium": 895.7
+      },
+      "source": {
+        "url": "https://www.canada.ca/en/services/benefits/ei/ei-self-employed-workers/premiums.html",
+        "publisher": "Employment and Social Development Canada (canada.ca)",
+        "pageDate": "2025-12-31",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "Self-employed people pay the employee rate only, with no employer share, through the yearly income tax return."
+      }
+    },
+    "sicknessBenefit": {
+      "maxWeeks": 26,
+      "replacementRate": 0.55,
+      "maxWeekly2026": 729,
+      "sources": [
+        {
+          "url": "https://www.canada.ca/en/services/benefits/ei/ei-self-employed-workers.html",
+          "publisher": "Employment and Social Development Canada (canada.ca)",
+          "pageDate": "2026-08-07",
+          "accessed": "2026-09-30",
+          "readOnPage": true,
+          "note": "Self-employed overview: up to 55% of earnings, $729 per week in 2026, up to 26 weeks of sickness benefits."
+        },
+        {
+          "url": "https://www.canada.ca/en/services/benefits/ei/ei-sickness.html",
+          "publisher": "Employment and Social Development Canada (canada.ca)",
+          "pageDate": "2026-06-02",
+          "accessed": "2026-09-30",
+          "readOnPage": true,
+          "note": "Sickness page: up to 26 weeks, 55% of earnings, maximum $729 a week."
+        }
+      ]
+    },
+    "waitingPeriod": {
+      "weeks": 1,
+      "unpaid": true,
+      "source": {
+        "url": "https://www.canada.ca/en/employment-social-development/programs/ei/ei-list/reports/digest/chapter-24/benefits-payment.html",
+        "publisher": "Employment and Social Development Canada (canada.ca)",
+        "pageDate": "2026-09-18",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "Digest of Benefit Entitlement Principles ch. 24: \"A one-week waiting period must be served when an initial benefit period is established and before sickness benefits can be paid\" (EI Act s.152.15)."
+      },
+      "temporaryWaiver": {
+        "claimsStartingFrom": "2025-03-30",
+        "claimsStartingTo": "2026-10-10",
+        "readOnPage": false,
+        "note": "A canada.ca search summary said the waiting period is waived on all initial claims starting March 30, 2025 to October 10, 2026. The Digest page does not mention it and no page was read confirming it. Treat as unconfirmed."
+      }
+    },
+    "waitAfterRegistering": {
+      "months": 12,
+      "source": {
+        "url": "https://www.canada.ca/en/services/benefits/ei/ei-self-employed-workers/eligibility.html",
+        "publisher": "Employment and Social Development Canada (canada.ca)",
+        "pageDate": "2025-12-31",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "\"Your agreement must be active for at least 12 months before you can receive any special benefits.\""
+      }
+    },
+    "minimumEarnings": {
+      "claimYear": 2026,
+      "earningsYear": 2025,
+      "minNetSelfEmployedEarnings": 9254,
+      "source": {
+        "url": "https://www.canada.ca/en/services/benefits/ei/ei-self-employed-workers/eligibility.html",
+        "publisher": "Employment and Social Development Canada (canada.ca)",
+        "pageDate": "2025-12-31",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "Page text: \"earned a minimum amount of $9,254 in net self-employed earnings between January 1 and December 31, 2025\". Claims in a year are tested on the previous calendar year, so this is the bar for 2026 claims."
+      }
+    },
+    "premiumsForLifeAfterClaiming": {
+      "answer": true,
+      "detail": "Once benefits have been received, premiums continue for as long as the person remains self-employed and they cannot withdraw.",
+      "source": {
+        "url": "https://www.canada.ca/en/services/benefits/ei/ei-self-employed-workers/premiums.html",
+        "publisher": "Employment and Social Development Canada (canada.ca)",
+        "pageDate": "2025-12-31",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "\"you must continue paying EI premiums for the duration of your self-employment and will not be able to withdraw from the program.\" The eligibility page says the same. Opting out when no benefits have ever been claimed is allowed but was not quoted from these pages."
+      }
+    }
+  },
+  "ontarioDrugBenefitSeniors": {
+    "standard": {
+      "annualDeductible": 100,
+      "copaymentPerPrescriptionMax": 6.11,
+      "programYear": "August 1 to July 31",
+      "source": {
+        "url": "https://www.ontario.ca/page/get-coverage-prescription-drugs",
+        "publisher": "Ontario Ministry of Health (ontario.ca)",
+        "pageDate": "2026-08-18",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "\"the first $100 of total prescription costs each program year\" and \"up to $6.11 for each prescription filled or refilled\"."
+      }
+    },
+    "seniorsCoPaymentProgram": {
+      "programYear": "2026-08-01 to 2027-07-31",
+      "incomeThresholdSingle": 25480,
+      "incomeThresholdCoupleCombined": 42290,
+      "incomeBasis": "annual net income",
+      "annualDeductible": 0,
+      "copaymentPerPrescriptionMax": 2,
+      "source": {
+        "url": "https://www.ontario.ca/page/seniors-ontario-drug-benefit-deductible-and-prescription-co-payment",
+        "publisher": "Ontario Ministry of Health (ontario.ca)",
+        "pageDate": "2026-07-02",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "Single: individual annual net income threshold $25,480; couple: combined $42,290; no deductible and up to $2 per prescription. The previous thresholds from August 1, 2024 ($25,000 single, $41,500 couple) were seen only in a search summary."
+      }
+    },
+    "trilliumDrugProgram": {
+      "deductibleShareOfHouseholdNetIncome": 0.04,
+      "wordingOnPage": "about 4% of the household income after taxes, for most people",
+      "incomeLine": "line 23600 of the previous tax year Notice of Assessment, minus RDSP withdrawals (line 12500)",
+      "paidQuarterly": true,
+      "quarters": [
+        "Aug 1 - Oct 31",
+        "Nov 1 - Jan 31",
+        "Feb 1 - Apr 30",
+        "May 1 - Jul 31"
+      ],
+      "copaymentAfterDeductibleMax": 2,
+      "programYear": "August 1 to July 31",
+      "source": {
+        "url": "https://www.ontario.ca/page/get-help-high-prescription-drug-costs",
+        "publisher": "Ontario Ministry of Health (ontario.ca)",
+        "pageDate": "2026-02-11",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "The page says \"about 4%\". The exact graduated formula in O. Reg. 201/96 was not read."
+      }
+    }
+  },
+  "bcFairPharmaCare": {
+    "shareAfterDeductible": {
+      "regular": 0.7,
+      "familyMemberBornBefore1940": 0.75,
+      "source": {
+        "url": "https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/who-we-cover/fair-pharmacare-plan",
+        "publisher": "BC Ministry of Health (gov.bc.ca)",
+        "pageDate": "2026-08-27",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "\"PharmaCare pays 70% of eligible costs, or 75% if a family member was born before 1940.\" Above the family maximum PharmaCare pays 100% for the rest of the calendar year; that rule was not quoted from this fetch."
+      }
+    },
+    "defaultDeductibleIfNotRegistered": 10000,
+    "regularTable": [
+      {
+        "netIncomeFrom": 0,
+        "netIncomeTo": 1875,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 1875.01,
+        "netIncomeTo": 3125,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 3125.01,
+        "netIncomeTo": 4375,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 4375.01,
+        "netIncomeTo": 6250,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 6250.01,
+        "netIncomeTo": 8750,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 8750.01,
+        "netIncomeTo": 11250,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 11250.01,
+        "netIncomeTo": 13750,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 13750.01,
+        "netIncomeTo": 15000,
+        "deductible": 0,
+        "familyMaximum": 100
+      },
+      {
+        "netIncomeFrom": 15000.01,
+        "netIncomeTo": 16250,
+        "deductible": 0,
+        "familyMaximum": 200
+      },
+      {
+        "netIncomeFrom": 16250.01,
+        "netIncomeTo": 18750,
+        "deductible": 0,
+        "familyMaximum": 300
+      },
+      {
+        "netIncomeFrom": 18750.01,
+        "netIncomeTo": 21250,
+        "deductible": 0,
+        "familyMaximum": 400
+      },
+      {
+        "netIncomeFrom": 21250.01,
+        "netIncomeTo": 23750,
+        "deductible": 0,
+        "familyMaximum": 500
+      },
+      {
+        "netIncomeFrom": 23750.01,
+        "netIncomeTo": 26250,
+        "deductible": 0,
+        "familyMaximum": 600
+      },
+      {
+        "netIncomeFrom": 26250.01,
+        "netIncomeTo": 28750,
+        "deductible": 0,
+        "familyMaximum": 700
+      },
+      {
+        "netIncomeFrom": 28750.01,
+        "netIncomeTo": 30000,
+        "deductible": 0,
+        "familyMaximum": 800
+      },
+      {
+        "netIncomeFrom": 30000.01,
+        "netIncomeTo": 31667,
+        "deductible": 650,
+        "familyMaximum": 900
+      },
+      {
+        "netIncomeFrom": 31667.01,
+        "netIncomeTo": 35000,
+        "deductible": 800,
+        "familyMaximum": 1150
+      },
+      {
+        "netIncomeFrom": 35000.01,
+        "netIncomeTo": 38333,
+        "deductible": 950,
+        "familyMaximum": 1350
+      },
+      {
+        "netIncomeFrom": 38333.01,
+        "netIncomeTo": 41667,
+        "deductible": 1100,
+        "familyMaximum": 1500
+      },
+      {
+        "netIncomeFrom": 41667.01,
+        "netIncomeTo": 45000,
+        "deductible": 1300,
+        "familyMaximum": 1700
+      },
+      {
+        "netIncomeFrom": 45000.01,
+        "netIncomeTo": 48333,
+        "deductible": 1400,
+        "familyMaximum": 1875
+      },
+      {
+        "netIncomeFrom": 48333.01,
+        "netIncomeTo": 51667,
+        "deductible": 1500,
+        "familyMaximum": 2000
+      },
+      {
+        "netIncomeFrom": 51667.01,
+        "netIncomeTo": 55000,
+        "deductible": 1600,
+        "familyMaximum": 2150
+      },
+      {
+        "netIncomeFrom": 55000.01,
+        "netIncomeTo": 58333,
+        "deductible": 1700,
+        "familyMaximum": 2275
+      },
+      {
+        "netIncomeFrom": 58333.01,
+        "netIncomeTo": 61667,
+        "deductible": 1800,
+        "familyMaximum": 2400
+      },
+      {
+        "netIncomeFrom": 61667.01,
+        "netIncomeTo": 65000,
+        "deductible": 1900,
+        "familyMaximum": 2550
+      },
+      {
+        "netIncomeFrom": 65000.01,
+        "netIncomeTo": 70833,
+        "deductible": 2000,
+        "familyMaximum": 2675
+      },
+      {
+        "netIncomeFrom": 70833.01,
+        "netIncomeTo": 79167,
+        "deductible": 2250,
+        "familyMaximum": 3000
+      },
+      {
+        "netIncomeFrom": 79167.01,
+        "netIncomeTo": 87500,
+        "deductible": 2500,
+        "familyMaximum": 3350
+      },
+      {
+        "netIncomeFrom": 87500.01,
+        "netIncomeTo": 95833,
+        "deductible": 2750,
+        "familyMaximum": 3675
+      },
+      {
+        "netIncomeFrom": 95833.01,
+        "netIncomeTo": 108333,
+        "deductible": 3000,
+        "familyMaximum": 4000
+      },
+      {
+        "netIncomeFrom": 108333.01,
+        "netIncomeTo": 125000,
+        "deductible": 3500,
+        "familyMaximum": 4675
+      },
+      {
+        "netIncomeFrom": 125000.01,
+        "netIncomeTo": 141667,
+        "deductible": 4000,
+        "familyMaximum": 5350
+      },
+      {
+        "netIncomeFrom": 141667.01,
+        "netIncomeTo": 158333,
+        "deductible": 4500,
+        "familyMaximum": 6000
+      },
+      {
+        "netIncomeFrom": 158333.01,
+        "netIncomeTo": 183333,
+        "deductible": 5000,
+        "familyMaximum": 6675
+      },
+      {
+        "netIncomeFrom": 183333.01,
+        "netIncomeTo": 216667,
+        "deductible": 6000,
+        "familyMaximum": 8000
+      },
+      {
+        "netIncomeFrom": 216667.01,
+        "netIncomeTo": 250000,
+        "deductible": 7000,
+        "familyMaximum": 9350
+      },
+      {
+        "netIncomeFrom": 250000.01,
+        "netIncomeTo": 283333,
+        "deductible": 8000,
+        "familyMaximum": 10000
+      },
+      {
+        "netIncomeFrom": 283333.01,
+        "netIncomeTo": 316667,
+        "deductible": 9000,
+        "familyMaximum": 10000
+      },
+      {
+        "netIncomeFrom": 316667.01,
+        "netIncomeTo": 999999999,
+        "deductible": 10000,
+        "familyMaximum": 10000
+      }
+    ],
+    "enhancedTableBornBefore1940": [
+      {
+        "netIncomeFrom": 0,
+        "netIncomeTo": 3000,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 3000.01,
+        "netIncomeTo": 5000,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 5000.01,
+        "netIncomeTo": 7000,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 7000.01,
+        "netIncomeTo": 10000,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 10000.01,
+        "netIncomeTo": 14000,
+        "deductible": 0,
+        "familyMaximum": 0
+      },
+      {
+        "netIncomeFrom": 14000.01,
+        "netIncomeTo": 18000,
+        "deductible": 0,
+        "familyMaximum": 200
+      },
+      {
+        "netIncomeFrom": 18000.01,
+        "netIncomeTo": 22000,
+        "deductible": 0,
+        "familyMaximum": 250
+      },
+      {
+        "netIncomeFrom": 22000.01,
+        "netIncomeTo": 26000,
+        "deductible": 0,
+        "familyMaximum": 300
+      },
+      {
+        "netIncomeFrom": 26000.01,
+        "netIncomeTo": 30000,
+        "deductible": 0,
+        "familyMaximum": 350
+      },
+      {
+        "netIncomeFrom": 30000.01,
+        "netIncomeTo": 33000,
+        "deductible": 0,
+        "familyMaximum": 400
+      },
+      {
+        "netIncomeFrom": 33000.01,
+        "netIncomeTo": 37500,
+        "deductible": 350,
+        "familyMaximum": 700
+      },
+      {
+        "netIncomeFrom": 37500.01,
+        "netIncomeTo": 42500,
+        "deductible": 400,
+        "familyMaximum": 800
+      },
+      {
+        "netIncomeFrom": 42500.01,
+        "netIncomeTo": 47500,
+        "deductible": 450,
+        "familyMaximum": 900
+      },
+      {
+        "netIncomeFrom": 47500.01,
+        "netIncomeTo": 50000,
+        "deductible": 500,
+        "familyMaximum": 1000
+      },
+      {
+        "netIncomeFrom": 50000.01,
+        "netIncomeTo": 52500,
+        "deductible": 1000,
+        "familyMaximum": 1500
+      },
+      {
+        "netIncomeFrom": 52500.01,
+        "netIncomeTo": 57500,
+        "deductible": 1100,
+        "familyMaximum": 1650
+      },
+      {
+        "netIncomeFrom": 57500.01,
+        "netIncomeTo": 62500,
+        "deductible": 1200,
+        "familyMaximum": 1800
+      },
+      {
+        "netIncomeFrom": 62500.01,
+        "netIncomeTo": 67500,
+        "deductible": 1300,
+        "familyMaximum": 1950
+      },
+      {
+        "netIncomeFrom": 67500.01,
+        "netIncomeTo": 72500,
+        "deductible": 1400,
+        "familyMaximum": 2100
+      },
+      {
+        "netIncomeFrom": 72500.01,
+        "netIncomeTo": 77500,
+        "deductible": 1500,
+        "familyMaximum": 2250
+      },
+      {
+        "netIncomeFrom": 77500.01,
+        "netIncomeTo": 82500,
+        "deductible": 1600,
+        "familyMaximum": 2400
+      },
+      {
+        "netIncomeFrom": 82500.01,
+        "netIncomeTo": 87500,
+        "deductible": 1700,
+        "familyMaximum": 2550
+      },
+      {
+        "netIncomeFrom": 87500.01,
+        "netIncomeTo": 92500,
+        "deductible": 1800,
+        "familyMaximum": 2700
+      },
+      {
+        "netIncomeFrom": 92500.01,
+        "netIncomeTo": 97500,
+        "deductible": 1900,
+        "familyMaximum": 2850
+      },
+      {
+        "netIncomeFrom": 97500.01,
+        "netIncomeTo": 106250,
+        "deductible": 2000,
+        "familyMaximum": 3000
+      },
+      {
+        "netIncomeFrom": 106250.01,
+        "netIncomeTo": 118750,
+        "deductible": 2250,
+        "familyMaximum": 3375
+      },
+      {
+        "netIncomeFrom": 118750.01,
+        "netIncomeTo": 131250,
+        "deductible": 2500,
+        "familyMaximum": 3750
+      },
+      {
+        "netIncomeFrom": 131250.01,
+        "netIncomeTo": 143750,
+        "deductible": 2750,
+        "familyMaximum": 4125
+      },
+      {
+        "netIncomeFrom": 143750.01,
+        "netIncomeTo": 162500,
+        "deductible": 3000,
+        "familyMaximum": 4500
+      },
+      {
+        "netIncomeFrom": 162500.01,
+        "netIncomeTo": 187500,
+        "deductible": 3500,
+        "familyMaximum": 5250
+      },
+      {
+        "netIncomeFrom": 187500.01,
+        "netIncomeTo": 212500,
+        "deductible": 4000,
+        "familyMaximum": 6000
+      },
+      {
+        "netIncomeFrom": 212500.01,
+        "netIncomeTo": 237500,
+        "deductible": 4500,
+        "familyMaximum": 6750
+      },
+      {
+        "netIncomeFrom": 237500.01,
+        "netIncomeTo": 275000,
+        "deductible": 5000,
+        "familyMaximum": 7500
+      },
+      {
+        "netIncomeFrom": 275000.01,
+        "netIncomeTo": 325000,
+        "deductible": 6000,
+        "familyMaximum": 9000
+      },
+      {
+        "netIncomeFrom": 325000.01,
+        "netIncomeTo": 375000,
+        "deductible": 7000,
+        "familyMaximum": 10000
+      },
+      {
+        "netIncomeFrom": 375000.01,
+        "netIncomeTo": 425000,
+        "deductible": 8000,
+        "familyMaximum": 10000
+      },
+      {
+        "netIncomeFrom": 425000.01,
+        "netIncomeTo": 475000,
+        "deductible": 9000,
+        "familyMaximum": 10000
+      },
+      {
+        "netIncomeFrom": 475000.01,
+        "netIncomeTo": 999999999,
+        "deductible": 10000,
+        "familyMaximum": 10000
+      }
+    ],
+    "source": {
+      "url": "https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/who-we-cover/fair-pharmacare-plan/how-your-coverage-is-calculated/fair-pharmacare-assistance-levels-regular",
+      "publisher": "BC Ministry of Health (gov.bc.ca)",
+      "pageDate": "2026-05-01",
+      "accessed": "2026-09-30",
+      "readOnPage": true,
+      "note": "Page \"Last updated on May 1, 2026\". Both tables were parsed from the downloaded page HTML. The page does not name the income year used; the program uses family net income from two years before, which was not read on this page. The enhanced table heading says \"born before 1940\"."
+    }
+  },
+  "bcSeniorsSupplement": {
+    "scope": "Table 1: single, surviving spouse or common-law partner, or divorced pensioners receiving a full OAS pension",
+    "effective": "2026-07-01",
+    "incomeBasis": "yearly taxable income for GIS purposes. The PDF says the table is for reference only; the supplement is actually set from the GIS or Allowance amount received.",
+    "maxMonthly": 99.3,
+    "minMonthly": 1,
+    "zeroFromIncome": 2280,
+    "pattern": "Falls $1.00 a month per $24 of income from $0 to $2,039.99. Between $2,040 and $2,279.99 the bands narrow, where the GIS top-up reduction begins at $2,048. The last band pays $1.00; nothing is paid from $2,280.",
+    "table": [
+      {
+        "incomeFrom": 0,
+        "incomeTo": 23.99,
+        "monthly": 99.3
+      },
+      {
+        "incomeFrom": 24,
+        "incomeTo": 47.99,
+        "monthly": 98.3
+      },
+      {
+        "incomeFrom": 48,
+        "incomeTo": 71.99,
+        "monthly": 97.3
+      },
+      {
+        "incomeFrom": 72,
+        "incomeTo": 95.99,
+        "monthly": 96.3
+      },
+      {
+        "incomeFrom": 96,
+        "incomeTo": 119.99,
+        "monthly": 95.3
+      },
+      {
+        "incomeFrom": 120,
+        "incomeTo": 143.99,
+        "monthly": 94.3
+      },
+      {
+        "incomeFrom": 144,
+        "incomeTo": 167.99,
+        "monthly": 93.3
+      },
+      {
+        "incomeFrom": 168,
+        "incomeTo": 191.99,
+        "monthly": 92.3
+      },
+      {
+        "incomeFrom": 192,
+        "incomeTo": 215.99,
+        "monthly": 91.3
+      },
+      {
+        "incomeFrom": 216,
+        "incomeTo": 239.99,
+        "monthly": 90.3
+      },
+      {
+        "incomeFrom": 240,
+        "incomeTo": 263.99,
+        "monthly": 89.3
+      },
+      {
+        "incomeFrom": 264,
+        "incomeTo": 287.99,
+        "monthly": 88.3
+      },
+      {
+        "incomeFrom": 288,
+        "incomeTo": 311.99,
+        "monthly": 87.3
+      },
+      {
+        "incomeFrom": 312,
+        "incomeTo": 335.99,
+        "monthly": 86.3
+      },
+      {
+        "incomeFrom": 336,
+        "incomeTo": 359.99,
+        "monthly": 85.3
+      },
+      {
+        "incomeFrom": 360,
+        "incomeTo": 383.99,
+        "monthly": 84.3
+      },
+      {
+        "incomeFrom": 384,
+        "incomeTo": 407.99,
+        "monthly": 83.3
+      },
+      {
+        "incomeFrom": 408,
+        "incomeTo": 431.99,
+        "monthly": 82.3
+      },
+      {
+        "incomeFrom": 432,
+        "incomeTo": 455.99,
+        "monthly": 81.3
+      },
+      {
+        "incomeFrom": 456,
+        "incomeTo": 479.99,
+        "monthly": 80.3
+      },
+      {
+        "incomeFrom": 480,
+        "incomeTo": 503.99,
+        "monthly": 79.3
+      },
+      {
+        "incomeFrom": 504,
+        "incomeTo": 527.99,
+        "monthly": 78.3
+      },
+      {
+        "incomeFrom": 528,
+        "incomeTo": 551.99,
+        "monthly": 77.3
+      },
+      {
+        "incomeFrom": 552,
+        "incomeTo": 575.99,
+        "monthly": 76.3
+      },
+      {
+        "incomeFrom": 576,
+        "incomeTo": 599.99,
+        "monthly": 75.3
+      },
+      {
+        "incomeFrom": 600,
+        "incomeTo": 623.99,
+        "monthly": 74.3
+      },
+      {
+        "incomeFrom": 624,
+        "incomeTo": 647.99,
+        "monthly": 73.3
+      },
+      {
+        "incomeFrom": 648,
+        "incomeTo": 671.99,
+        "monthly": 72.3
+      },
+      {
+        "incomeFrom": 672,
+        "incomeTo": 695.99,
+        "monthly": 71.3
+      },
+      {
+        "incomeFrom": 696,
+        "incomeTo": 719.99,
+        "monthly": 70.3
+      },
+      {
+        "incomeFrom": 720,
+        "incomeTo": 743.99,
+        "monthly": 69.3
+      },
+      {
+        "incomeFrom": 744,
+        "incomeTo": 767.99,
+        "monthly": 68.3
+      },
+      {
+        "incomeFrom": 768,
+        "incomeTo": 791.99,
+        "monthly": 67.3
+      },
+      {
+        "incomeFrom": 792,
+        "incomeTo": 815.99,
+        "monthly": 66.3
+      },
+      {
+        "incomeFrom": 816,
+        "incomeTo": 839.99,
+        "monthly": 65.3
+      },
+      {
+        "incomeFrom": 840,
+        "incomeTo": 863.99,
+        "monthly": 64.3
+      },
+      {
+        "incomeFrom": 864,
+        "incomeTo": 887.99,
+        "monthly": 63.3
+      },
+      {
+        "incomeFrom": 888,
+        "incomeTo": 911.99,
+        "monthly": 62.3
+      },
+      {
+        "incomeFrom": 912,
+        "incomeTo": 935.99,
+        "monthly": 61.3
+      },
+      {
+        "incomeFrom": 936,
+        "incomeTo": 959.99,
+        "monthly": 60.3
+      },
+      {
+        "incomeFrom": 960,
+        "incomeTo": 983.99,
+        "monthly": 59.3
+      },
+      {
+        "incomeFrom": 984,
+        "incomeTo": 1007.99,
+        "monthly": 58.3
+      },
+      {
+        "incomeFrom": 1008,
+        "incomeTo": 1031.99,
+        "monthly": 57.3
+      },
+      {
+        "incomeFrom": 1032,
+        "incomeTo": 1055.99,
+        "monthly": 56.3
+      },
+      {
+        "incomeFrom": 1056,
+        "incomeTo": 1079.99,
+        "monthly": 55.3
+      },
+      {
+        "incomeFrom": 1080,
+        "incomeTo": 1103.99,
+        "monthly": 54.3
+      },
+      {
+        "incomeFrom": 1104,
+        "incomeTo": 1127.99,
+        "monthly": 53.3
+      },
+      {
+        "incomeFrom": 1128,
+        "incomeTo": 1151.99,
+        "monthly": 52.3
+      },
+      {
+        "incomeFrom": 1152,
+        "incomeTo": 1175.99,
+        "monthly": 51.3
+      },
+      {
+        "incomeFrom": 1176,
+        "incomeTo": 1199.99,
+        "monthly": 50.3
+      },
+      {
+        "incomeFrom": 1200,
+        "incomeTo": 1223.99,
+        "monthly": 49.3
+      },
+      {
+        "incomeFrom": 1224,
+        "incomeTo": 1247.99,
+        "monthly": 48.3
+      },
+      {
+        "incomeFrom": 1248,
+        "incomeTo": 1271.99,
+        "monthly": 47.3
+      },
+      {
+        "incomeFrom": 1272,
+        "incomeTo": 1295.99,
+        "monthly": 46.3
+      },
+      {
+        "incomeFrom": 1296,
+        "incomeTo": 1319.99,
+        "monthly": 45.3
+      },
+      {
+        "incomeFrom": 1320,
+        "incomeTo": 1343.99,
+        "monthly": 44.3
+      },
+      {
+        "incomeFrom": 1344,
+        "incomeTo": 1367.99,
+        "monthly": 43.3
+      },
+      {
+        "incomeFrom": 1368,
+        "incomeTo": 1391.99,
+        "monthly": 42.3
+      },
+      {
+        "incomeFrom": 1392,
+        "incomeTo": 1415.99,
+        "monthly": 41.3
+      },
+      {
+        "incomeFrom": 1416,
+        "incomeTo": 1439.99,
+        "monthly": 40.3
+      },
+      {
+        "incomeFrom": 1440,
+        "incomeTo": 1463.99,
+        "monthly": 39.3
+      },
+      {
+        "incomeFrom": 1464,
+        "incomeTo": 1487.99,
+        "monthly": 38.3
+      },
+      {
+        "incomeFrom": 1488,
+        "incomeTo": 1511.99,
+        "monthly": 37.3
+      },
+      {
+        "incomeFrom": 1512,
+        "incomeTo": 1535.99,
+        "monthly": 36.3
+      },
+      {
+        "incomeFrom": 1536,
+        "incomeTo": 1559.99,
+        "monthly": 35.3
+      },
+      {
+        "incomeFrom": 1560,
+        "incomeTo": 1583.99,
+        "monthly": 34.3
+      },
+      {
+        "incomeFrom": 1584,
+        "incomeTo": 1607.99,
+        "monthly": 33.3
+      },
+      {
+        "incomeFrom": 1608,
+        "incomeTo": 1631.99,
+        "monthly": 32.3
+      },
+      {
+        "incomeFrom": 1632,
+        "incomeTo": 1655.99,
+        "monthly": 31.3
+      },
+      {
+        "incomeFrom": 1656,
+        "incomeTo": 1679.99,
+        "monthly": 30.3
+      },
+      {
+        "incomeFrom": 1680,
+        "incomeTo": 1703.99,
+        "monthly": 29.3
+      },
+      {
+        "incomeFrom": 1704,
+        "incomeTo": 1727.99,
+        "monthly": 28.3
+      },
+      {
+        "incomeFrom": 1728,
+        "incomeTo": 1751.99,
+        "monthly": 27.3
+      },
+      {
+        "incomeFrom": 1752,
+        "incomeTo": 1775.99,
+        "monthly": 26.3
+      },
+      {
+        "incomeFrom": 1776,
+        "incomeTo": 1799.99,
+        "monthly": 25.3
+      },
+      {
+        "incomeFrom": 1800,
+        "incomeTo": 1823.99,
+        "monthly": 24.3
+      },
+      {
+        "incomeFrom": 1824,
+        "incomeTo": 1847.99,
+        "monthly": 23.3
+      },
+      {
+        "incomeFrom": 1848,
+        "incomeTo": 1871.99,
+        "monthly": 22.3
+      },
+      {
+        "incomeFrom": 1872,
+        "incomeTo": 1895.99,
+        "monthly": 21.3
+      },
+      {
+        "incomeFrom": 1896,
+        "incomeTo": 1919.99,
+        "monthly": 20.3
+      },
+      {
+        "incomeFrom": 1920,
+        "incomeTo": 1943.99,
+        "monthly": 19.3
+      },
+      {
+        "incomeFrom": 1944,
+        "incomeTo": 1967.99,
+        "monthly": 18.3
+      },
+      {
+        "incomeFrom": 1968,
+        "incomeTo": 1991.99,
+        "monthly": 17.3
+      },
+      {
+        "incomeFrom": 1992,
+        "incomeTo": 2015.99,
+        "monthly": 16.3
+      },
+      {
+        "incomeFrom": 2016,
+        "incomeTo": 2039.99,
+        "monthly": 15.3
+      },
+      {
+        "incomeFrom": 2040,
+        "incomeTo": 2047.99,
+        "monthly": 14.3
+      },
+      {
+        "incomeFrom": 2048,
+        "incomeTo": 2063.99,
+        "monthly": 13.3
+      },
+      {
+        "incomeFrom": 2064,
+        "incomeTo": 2087.99,
+        "monthly": 12.3
+      },
+      {
+        "incomeFrom": 2088,
+        "incomeTo": 2095.99,
+        "monthly": 11.3
+      },
+      {
+        "incomeFrom": 2096,
+        "incomeTo": 2111.99,
+        "monthly": 10.3
+      },
+      {
+        "incomeFrom": 2112,
+        "incomeTo": 2135.99,
+        "monthly": 9.3
+      },
+      {
+        "incomeFrom": 2136,
+        "incomeTo": 2143.99,
+        "monthly": 8.3
+      },
+      {
+        "incomeFrom": 2144,
+        "incomeTo": 2159.99,
+        "monthly": 7.3
+      },
+      {
+        "incomeFrom": 2160,
+        "incomeTo": 2183.99,
+        "monthly": 6.3
+      },
+      {
+        "incomeFrom": 2184,
+        "incomeTo": 2191.99,
+        "monthly": 5.3
+      },
+      {
+        "incomeFrom": 2192,
+        "incomeTo": 2207.99,
+        "monthly": 4.3
+      },
+      {
+        "incomeFrom": 2208,
+        "incomeTo": 2231.99,
+        "monthly": 3.3
+      },
+      {
+        "incomeFrom": 2232,
+        "incomeTo": 2239.99,
+        "monthly": 2.3
+      },
+      {
+        "incomeFrom": 2240,
+        "incomeTo": 2255.99,
+        "monthly": 1.3
+      },
+      {
+        "incomeFrom": 2256,
+        "incomeTo": 2279.99,
+        "monthly": 1
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://www2.gov.bc.ca/assets/gov/british-columbians-our-governments/policies-for-government/bc-employment-assistance-policy-procedure-manual/additional-resources/sensuppratesincomemaritalstatus.pdf",
+        "publisher": "BC Ministry of Social Development and Poverty Reduction (gov.bc.ca)",
+        "pageDate": "2026-07-01",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "\"BC Seniors Supplement Rates by Income and Marital Status\", Updated: July 1, 2026. Parsed with pdftotext; rows checked for continuity."
+      },
+      {
+        "url": "https://www2.gov.bc.ca/gov/content/governments/policies-for-government/bcea-policy-and-procedure-manual/bc-employment-and-assistance-rate-tables/senior-s-supplement-rate-table",
+        "publisher": "BC Ministry of Social Development and Poverty Reduction (gov.bc.ca)",
+        "pageDate": "2026-07-07",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "Rate table page: combined OAS + GIS + Senior's Supplement maximum for a single senior is $1,974.44 a month under 75 and $2,049.64 at 75 and over, effective July 1, 2026."
+      }
+    ]
+  },
+  "gisTopUp": {
+    "topUpIncomeCutoffJulSep2026": {
+      "single": 10352,
+      "spouseOfOasPensioner": 8800,
+      "spouseOfNonPensioner": 20704,
+      "spouseOfAllowanceRecipient": 8800,
+      "allowance": 8800,
+      "allowanceForTheSurvivor": 10352,
+      "source": {
+        "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/pension/statistics/2026-quarterly-july-september.html",
+        "publisher": "Employment and Social Development Canada (canada.ca)",
+        "pageDate": "2026-09-29",
+        "accessed": "2026-09-30",
+        "readOnPage": true,
+        "note": "Table 5, July to September 2026, column \"Annual income level cut-off for top-ups\". The cut-offs exclude the OAS pension, the first $5,000 of employment or self-employment income and 50% of such income between $5,000 and $15,000."
+      }
+    },
+    "reductionThresholdSingle": 2048,
+    "reductionThresholdCouple": 4096,
+    "reductionRate": 0.25,
+    "combinedReductionRateSingleInTopUpBand": 0.75,
+    "thresholdAndRateSource": {
+      "url": "https://www.canada.ca/en/employment-social-development/services/pension/reports/take-up-rate-gis.html",
+      "publisher": "Employment and Social Development Canada (canada.ca)",
+      "pageDate": "2022-04-22",
+      "accessed": "2026-09-30",
+      "readOnPage": true,
+      "note": "Footnote 8 of the GIS take-up report: \"The top-up is reduced by $0.25 for every dollar of other income above $2,048 for singles and $4,096 for couples.\" No 2026-dated page stating these was found. The $2,048 threshold is consistent with the July 2026 BC Senior's Supplement table, whose bands change at $2,048, and with the $10,352 cut-off. The base GIS is reduced $1 for every $2 (50%), per ESDC question period notes such as PA-SEN_009_20260106 (May 26, 2026)."
+    },
+    "impliedMaxAnnualTopUpSingle": {
+      "amount": 2076,
+      "derived": true,
+      "note": "Not published. Derived as (10,352 - 2,048) x 0.25."
+    },
+    "obsoleteFigure": {
+      "value": 4544,
+      "note": "The 2022 footnote says the single top-up reaches zero at $4,544. That predates the July 2016 increase; the July to September 2026 table puts the single cut-off at $10,352. Do not use $4,544 (or the couple figure $7,648)."
+    },
+    "gisMaxContext": {
+      "julSep2026": {
+        "maxMonthlySingle": 1123.17,
+        "incomeCutoffSingle": 22800,
+        "source": {
+          "url": "https://www.canada.ca/en/employment-social-development/programs/pensions/pension/statistics/2026-quarterly-july-september.html",
+          "publisher": "Employment and Social Development Canada (canada.ca)",
+          "pageDate": "2026-09-29",
+          "accessed": "2026-09-30",
+          "readOnPage": true
+        }
+      },
+      "currentQuarterOnBenefitAmountPage": {
+        "maxMonthlySingle": 1138.9,
+        "incomeCutoffSingle": 23112,
+        "source": {
+          "url": "https://www.canada.ca/en/services/benefits/publicpensions/old-age-security/guaranteed-income-supplement/benefit-amount.html",
+          "publisher": "Employment and Social Development Canada (canada.ca)",
+          "pageDate": "2026-09-29",
+          "accessed": "2026-09-30",
+          "readOnPage": true,
+          "note": "The page calls it the current quarter. Updated September 29, so most likely October to December 2026, but the quarter was not stated in the fetch."
+        }
+      }
+    }
+  },
+  "notFound": [
+    "A 2026-dated canada.ca page stating the GIS top-up reduction threshold ($2,048) and rate (25%); only the 2022 take-up report states them.",
+    "Confirmation on a canada.ca page of the EI waiting-period waiver for claims starting March 30, 2025 to October 10, 2026; seen only in a search summary.",
+    "The exact Trillium deductible formula (graduated by income, in O. Reg. 201/96); ontario.ca gives only \"about 4%\"."
+  ]
+}

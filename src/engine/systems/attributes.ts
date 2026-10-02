@@ -58,8 +58,8 @@ export const ATTRIBUTES = {
   /** Nerves before an event, by its weight: the stress added at composure 0, and the share of the work it takes off. */
   nerves: { focusCost: 0.18 },
   eventWeight: { audition: 10, showcase: 18, performance: 6, set: 4 },
-  /** Composure a performance, an audition and the showcase each add, as a share of what's left to 100. */
-  composureGain: { performance: 0.012, audition: 0.01, showcase: 0.04, set: 0.006 },
+  /** Composure a performance, an audition and the showcase each add, as a share of what's left to 100. It was 0.012, 0.01, 0.04 and 0.006 until 2026-09-28, when all twelve of a batch of played lives reached 99 or 100 by the second year of work. */
+  composureGain: { performance: 0.005, audition: 0.004, showcase: 0.03, set: 0.003 },
   /** Presence a performance adds, as a share of what's left: slow. */
   presenceGain: 0.0015,
   /** Reputation earned and lost: points, as a share of what's left to earn where it's a gain. */
@@ -88,6 +88,21 @@ export const ATTRIBUTES = {
   /** Recognition past which the public knows the name, and the most above scale it pays at 100. */
   overscale: { from: 20, most: 1.0 },
 } as const;
+
+/**
+ * A classmate's presence, drawn once as the player's is and kept on them.
+ * Until 2026-09-28 every classmate was read at an ordinary 50, below the
+ * least a Yale actor's draw can be.
+ */
+export function classmatePresence(sim: Simulation, person: Person, i: number): number {
+  const mate = person.school?.classmates[i];
+  if (!mate) return 50;
+  if (mate.presence === undefined) {
+    const rng = sim.rng('attributes.presence', person.id, `mate-${i}`);
+    mate.presence = Math.round((ATTRIBUTES.presence.from + ATTRIBUTES.presence.span * (rng.next() + rng.next()) / 2) * 10) / 10;
+  }
+  return mate.presence;
+}
 
 /** A person's attributes, drawn the first time they're asked for. */
 export function attributesOf(sim: Simulation, person: Person): Attributes {

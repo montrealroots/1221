@@ -1,0 +1,382 @@
+{
+  "_meta": {
+    "stage": "A home's contents: appliances, furnishing, garages",
+    "retrieved": "2026-09-29",
+    "countries": ["US (New York City, New Haven CT, Los Angeles)", "UK (London)", "Ireland (Dublin)", "Canada (Toronto, Vancouver)", "Mexico (Mexico City)"],
+    "conventions": "Each figure is {value, unit, currency?, basis, source, date, sourceType, confirmed}. sourceType 'primary' = the authority's or maker's/retailer's own page or dataset; 'secondary' = press, compiler, cost-guide or consumer-organization article. confirmed:true means the figure was read on the page or in the downloaded file itself; confirmed:false means it was seen only in a search-engine snippet or summary (the page was blocked by a bot wall, 403 or Cloudflare). value:null means no published figure was found. Retail prices are shelf prices on the date seen and move with promotions; Mexican retailers in particular show deep 'sale' prices against inflated 'regular' prices.",
+    "notOwnedByThisFile": "Share of homes with each appliance and household electricity prices per kWh are already in the game and were not researched."
+  },
+
+  "appliancePrices": {
+    "US": {
+      "dishwasher": [
+        {"value": [500, 1000], "unit": "USD per unit, 'sweet spot' price tier", "currency": "USD", "basis": "Consumer Reports dishwasher buying guide tiers: '$500 or Less', '$500 to $1,000' (the sweet spot), '$1,000 or More'", "source": "https://www.consumerreports.org/appliances/dishwashers/buying-guide/", "date": "2026-05-28", "sourceType": "secondary", "confirmed": true},
+        {"value": 855, "unit": "USD, median spent on a new dishwasher", "currency": "USD", "basis": "Consumer Reports member survey, purchases 2023-2025 (reported in a CR dishwasher article)", "source": "https://www.consumerreports.org/appliances/dishwashers/best-dishwashers-for-500-dollars-or-less-a2131753599/", "date": "2026", "sourceType": "secondary", "confirmed": false}
+      ],
+      "washingMachine": [
+        {"value": [730, 2200], "unit": "USD per unit", "currency": "USD", "basis": "Consumer Reports price range, front-load washers", "source": "https://www.consumerreports.org/appliances/washing-machines/buying-guide/", "date": "2026-05-26", "sourceType": "secondary", "confirmed": true},
+        {"value": [450, 1500], "unit": "USD per unit", "currency": "USD", "basis": "Consumer Reports price range, top-load agitator washers", "source": "https://www.consumerreports.org/appliances/washing-machines/buying-guide/", "date": "2026-05-26", "sourceType": "secondary", "confirmed": true},
+        {"value": [500, 1200], "unit": "USD per unit", "currency": "USD", "basis": "Consumer Reports price range, high-efficiency top-load washers", "source": "https://www.consumerreports.org/appliances/washing-machines/buying-guide/", "date": "2026-05-26", "sourceType": "secondary", "confirmed": true}
+      ],
+      "electricDryer": [
+        {"value": [450, 2200], "unit": "USD per unit", "currency": "USD", "basis": "Consumer Reports price range, full-size electric dryers (gas dryers $530-$2,300; compact $720-$2,900; all-in-one washer-dryer $1,400-$2,200). CR gave no separate heat-pump dryer range.", "source": "https://www.consumerreports.org/appliances/clothes-dryers/buying-guide/", "date": "2026-06-17", "sourceType": "secondary", "confirmed": true}
+      ],
+      "windowAirConditioner": [
+        {"value": [150, 350], "unit": "USD per unit, 'and up'", "currency": "USD", "basis": "Consumer Reports, small window AC", "source": "https://www.consumerreports.org/appliances/air-conditioners/buying-guide/", "date": "2026-02-10", "sourceType": "secondary", "confirmed": true},
+        {"value": [250, 450], "unit": "USD per unit, 'and up'", "currency": "USD", "basis": "Consumer Reports, medium window AC", "source": "https://www.consumerreports.org/appliances/air-conditioners/buying-guide/", "date": "2026-02-10", "sourceType": "secondary", "confirmed": true},
+        {"value": [350, 600], "unit": "USD per unit, 'and up'", "currency": "USD", "basis": "Consumer Reports, large window AC; portable ACs $350-$800. CR gave no through-the-wall price.", "source": "https://www.consumerreports.org/appliances/air-conditioners/buying-guide/", "date": "2026-02-10", "sourceType": "secondary", "confirmed": true}
+      ],
+      "miniSplitOneZone": [
+        {"value": 1000, "unit": "USD, equipment 'and up'", "currency": "USD", "basis": "Consumer Reports: mini-splits '$1,000 and up' (equipment)", "source": "https://www.consumerreports.org/appliances/air-conditioners/buying-guide/", "date": "2026-02-10", "sourceType": "secondary", "confirmed": true},
+        {"value": [2000, 3000], "unit": "USD, unit cost (installation separate: $1,200-$10,000)", "currency": "USD", "basis": "Angi AC cost table, 'Ductless Split System' average unit cost", "source": "https://www.angi.com/articles/how-much-does-installing-new-ac-cost.htm", "date": "2026-07-20", "sourceType": "secondary", "confirmed": true}
+      ],
+      "centralAirConditioning": [
+        {"value": [2500, 4500], "unit": "USD, unit cost (installation separate: $3,500-$7,000)", "currency": "USD", "basis": "Angi AC cost table, 'Central AC' average unit cost; see installation.US.centralAirConditioning for installed totals", "source": "https://www.angi.com/articles/how-much-does-installing-new-ac-cost.htm", "date": "2026-07-20", "sourceType": "secondary", "confirmed": true}
+      ],
+      "refrigerator": [
+        {"value": [500, 1700], "unit": "USD per unit", "currency": "USD", "basis": "Consumer Reports, top-freezer", "source": "https://www.consumerreports.org/appliances/refrigerators/buying-guide/", "date": "2026-07-10", "sourceType": "secondary", "confirmed": true},
+        {"value": [600, 2900], "unit": "USD per unit", "currency": "USD", "basis": "Consumer Reports, bottom-freezer (French-door $1,000-$5,000; side-by-side $1,100-$2,500; built-in $6,000-$20,000; mini fridge $120-$260)", "source": "https://www.consumerreports.org/appliances/refrigerators/buying-guide/", "date": "2026-07-10", "sourceType": "secondary", "confirmed": true}
+      ],
+      "electricRange": [
+        {"value": null, "unit": "USD per unit", "currency": "USD", "basis": "The Consumer Reports range buying guide (updated 2025-08-15) gives no price range; no retailer best-seller price could be read (homedepot.com and lowes.com return 403 to automated fetches).", "source": "https://www.consumerreports.org/appliances/ranges/buying-guide/", "date": "2025-08-15", "sourceType": "secondary", "confirmed": true}
+      ]
+    },
+
+    "UK": {
+      "dishwasher": [
+        {"value": [200, 1000], "unit": "GBP per unit, market range ('less than £200 to more than £1,000')", "currency": "GBP", "basis": "Which?: a Best Buy needs at least £200; 'if your budget can stretch to £400 you'll have a decent selection'. Article is dated 29 January 2019, the newest Which? dishwasher price article that could be read.", "source": "https://www.which.co.uk/news/article/how-much-do-you-need-to-pay-for-a-good-dishwasher-aS4264G2rFeg", "date": "2019-01-29", "sourceType": "secondary", "confirmed": true}
+      ],
+      "washingMachine": [
+        {"value": [250, 400], "unit": "GBP per unit, bracket where Which? found several of the best-quality machines", "currency": "GBP", "basis": "Which? washing machine guide; auto-dosing models 'at least £800'", "source": "https://www.which.co.uk/reviews/washing-machines/article/which-washing-machine-should-you-buy-aafjl7E6UgGx", "date": "2026-08-28", "sourceType": "secondary", "confirmed": true}
+      ],
+      "tumbleDryerVented": [
+        {"value": 265, "unit": "GBP, average price of models tested (range £219-£319)", "currency": "GBP", "basis": "Which? tumble dryer buying guide price table", "source": "https://www.which.co.uk/reviews/tumble-dryers/article/how-to-buy-the-best-tumble-dryer-a2Xa42O3YWK7", "date": "2026-08-20", "sourceType": "secondary", "confirmed": true}
+      ],
+      "tumbleDryerCondenser": [
+        {"value": 313, "unit": "GBP, average price of models tested (range £220-£529)", "currency": "GBP", "basis": "Which? tumble dryer buying guide price table; 'spending at least £350 will give you the best chance of buying a good condenser tumble dryer'", "source": "https://www.which.co.uk/reviews/tumble-dryers/article/how-to-buy-the-best-tumble-dryer-a2Xa42O3YWK7", "date": "2026-08-20", "sourceType": "secondary", "confirmed": true}
+      ],
+      "tumbleDryerHeatPump": [
+        {"value": 727, "unit": "GBP, average price of models tested (range £327-£1,699)", "currency": "GBP", "basis": "Which? tumble dryer buying guide price table; Best Buy heat-pump dryers found for around £400", "source": "https://www.which.co.uk/reviews/tumble-dryers/article/how-to-buy-the-best-tumble-dryer-a2Xa42O3YWK7", "date": "2026-08-20", "sourceType": "secondary", "confirmed": true}
+      ],
+      "portableAirConditioner": [
+        {"value": [226.99, 700], "unit": "GBP per unit, range of models Which? tested", "currency": "GBP", "basis": "Which? air conditioner guide (e.g. Homcom 9000 BTU £226.99; Pro Breeze PB-AC01 £700). Window and through-wall units are not a normal UK product; the portable unit is the UK equivalent.", "source": "https://www.which.co.uk/reviews/air-conditioners/article/how-to-buy-an-air-conditioner-a1Qpf0t4HdUi", "date": "2026-08-26", "sourceType": "secondary", "confirmed": true}
+      ],
+      "splitAirConditionerOrAirToAirHeatPump": [
+        {"value": 500, "unit": "GBP, equipment 'upwards of', excluding installation", "currency": "GBP", "basis": "Which? on fixed split units", "source": "https://www.which.co.uk/reviews/air-conditioners/article/how-to-buy-an-air-conditioner-a1Qpf0t4HdUi", "date": "2026-08-26", "sourceType": "secondary", "confirmed": true}
+      ],
+      "centralAirConditioning": [
+        {"value": null, "unit": "GBP", "basis": "Ducted whole-house air conditioning is not a normal UK domestic product and no consumer-organization price was found. Nesta's whole-house multi-split air-to-air figure (see installation.UK) is the nearest real equivalent.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+      ],
+      "fridgeFreezer": [
+        {"value": 800, "unit": "GBP, average price of all fridge freezers Which? has reviewed", "currency": "GBP", "basis": "Which? fridge freezer guide; frost-free models from about £295; models exist under £250. A search summary of the same guide also gave £818 freestanding, £885 integrated, £1,270 American-style averages, not seen on the page itself.", "source": "https://www.which.co.uk/reviews/fridge-freezers/article/how-to-buy-the-best-fridge-freezer-a0EpY5V0403e", "date": "2026-09", "sourceType": "secondary", "confirmed": true}
+      ],
+      "electricCooker": [
+        {"value": [300, 500], "unit": "GBP, typical spend on a freestanding electric cooker", "currency": "GBP", "basis": "Which?: 'as cheap as £279, but you'll typically be spending between £300 and £500'; induction-hob cookers at least £500", "source": "https://www.which.co.uk/reviews/freestanding-cookers/article/how-to-buy-the-best-freestanding-cooker-a3XR07S4jRRt", "date": "2026-09-03", "sourceType": "secondary", "confirmed": true}
+      ]
+    },
+
+    "IE": {
+      "dishwasher": [
+        {"value": 449, "unit": "EUR per unit", "currency": "EUR", "basis": "Harvey Norman Ireland, Bosch Series 2 freestanding 12-place, model SMS26AW08G", "source": "https://www.harveynorman.ie/home-appliances/dishwashers/freestanding-dishwashers/bosch-series-2-free-standing-dishwasher-12-place-sms26aw08g.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false},
+        {"value": 649, "unit": "EUR per unit", "currency": "EUR", "basis": "Harvey Norman Ireland, Bosch Series 4 freestanding 14-place, model SMS4EMI06G", "source": "https://www.harveynorman.ie/home-appliances/dishwashers/freestanding-dishwashers/bosch-series-4-freestanding-dishwasher-14-place-sms4emi06g.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "washingMachine": [
+        {"value": 449, "unit": "EUR per unit", "currency": "EUR", "basis": "Harvey Norman Ireland, Hotpoint 9kg freestanding, model H91ANTISTAINIRE", "source": "https://www.harveynorman.ie/home-appliances/appliances/washing-machines/hotpoint-9kg-freestanding-washing-machine-h91antistainire.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false},
+        {"value": 499, "unit": "EUR per unit", "currency": "EUR", "basis": "Harvey Norman Ireland, LG 9kg freestanding, model F4X1009NWK", "source": "https://www.harveynorman.ie/home-appliances/appliances/washing-machines/lg-9kg-freestanding-washing-machine-f4x1009nwk.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false},
+        {"value": 569, "unit": "EUR per unit", "currency": "EUR", "basis": "Harvey Norman Ireland, Bosch Series 4 9kg freestanding, model WAN28259GB", "source": "https://www.harveynorman.ie/home-appliances/appliances/washing-machines/bosch-series-4-9kg-freestanding-washing-machine-wan28259gb.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "tumbleDryerHeatPump": [
+        {"value": [399, 449], "unit": "EUR per unit", "currency": "EUR", "basis": "Beko 8kg heat-pump dryers at Irish retailers (e.g. Euronics.ie model BM3T3822); Harvey Norman Ireland lists Hotpoint, Whirlpool, LG, Bosch, Indesit and Haier heat-pump dryers but no price could be read", "source": "https://euronics.ie/products/beko-8kg-tumble-dryer-with-heat-pump-technology-bm3t3822", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "tumbleDryerCondenserOrVented": [
+        {"value": null, "unit": "EUR", "basis": "No Irish price for a condenser or vented dryer was read.", "source": "https://www.harveynorman.ie/home-appliances/appliances/tumbler-dryers/", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "fridgeFreezer": [
+        {"value": 649, "unit": "EUR, entry price seen", "currency": "EUR", "basis": "Harvey Norman Ireland fridge-freezer listing: from €649 (Liebherr freestanding) to €5,999; mid-range from €899. Model of the €649 unit not captured.", "source": "https://www.harveynorman.ie/home-appliances/refrigeration-appliances/fridge-freezers/", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "electricCooker": [
+        {"value": 549, "unit": "EUR per unit", "currency": "EUR", "basis": "Harvey Norman Ireland, Belling 60cm double-oven electric cooker, model BFSE61DOBK", "source": "https://www.harveynorman.ie/home-appliances/cooking-appliances/freestanding-cookers/belling-60cm-double-oven-electric-cooker-bfse61dobk.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "splitAirConditioner": [
+        {"value": [700, 1300], "unit": "EUR, hardware share of an installed single split", "currency": "EUR", "basis": "Irish installer cost guide (see installation.IE)", "source": "https://www.aercon.ie/air-conditioning-cost-ireland", "date": "2026", "sourceType": "secondary", "confirmed": false}
+      ],
+      "windowAirConditionerOrCentralAir": [
+        {"value": null, "unit": "EUR", "basis": "Window, through-wall and ducted central AC are not normal Irish domestic products; no price found.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+      ]
+    },
+
+    "CA": {
+      "dishwasher": [
+        {"value": 448, "unit": "CAD per unit", "currency": "CAD", "basis": "Home Depot Canada, Frigidaire 24-inch built-in front-control dishwasher, stainless (entry model; model number not captured). Other Frigidaire $478-$598; Whirlpool $598-$898.", "source": "https://www.homedepot.ca/en/home/categories/appliances/dishwashers/f/frigidaire/r2d-7gz", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "washingMachine": [
+        {"value": 898, "unit": "CAD per unit", "currency": "CAD", "basis": "Home Depot Canada, Amana 5.0 cu. ft. high-efficiency front-load washer, white (GE 5.5 cu. ft. $1,098; Electrolux 5.2 $1,048; Samsung 5.2 $1,148)", "source": "https://www.homedepot.ca/en/home/categories/appliances/washers-and-dryers/washers/front-load-washers.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "electricDryer": [
+        {"value": 698, "unit": "CAD per unit", "currency": "CAD", "basis": "Home Depot Canada, Maytag 7.0 cu. ft. electric dryer, white; GE 7.2 cu. ft. also $698; LG 7.3 $898; Samsung 7.5 $948", "source": "https://www.homedepot.ca/en/home/categories/appliances/washers-and-dryers/dryers/electric-dryers.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "windowAirConditioner": [
+        {"value": [245, 428], "unit": "CAD per unit, 8,000 BTU", "currency": "CAD", "basis": "Home Depot Canada 8,000 BTU window AC listing (e.g. Frigidaire $375, Danby $349-$399, Vissani $274)", "source": "https://www.homedepot.ca/en/home/categories/appliances/heating-cooling-and-air-quality/air-conditioners/window-air-conditioners/f/8000-btu/3d2w-2mgy", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "miniSplitOneZone": [
+        {"value": null, "unit": "CAD, equipment only", "basis": "No homedepot.ca mini-split price could be read; see installation.CA for installed totals.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+      ],
+      "refrigerator": [
+        {"value": [597, 998], "unit": "CAD per unit, top-freezer", "currency": "CAD", "basis": "Home Depot Canada top-freezer listing (Vissani $597, Hisense 30-inch $748, Midea $779.99, Frigidaire garage-ready $848, GE 30-inch $878, LG garage-ready $998)", "source": "https://www.homedepot.ca/en/home/categories/appliances/refrigerators/top-freezer-refrigerators.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "electricRange": [
+        {"value": 898, "unit": "CAD per unit, entry price seen", "currency": "CAD", "basis": "Home Depot Canada electric ranges from $898 (GE freestanding) to $3,570; LG 6.3 cu. ft. $998; Samsung and Frigidaire 5-burner $1,198", "source": "https://www.homedepot.ca/en/home/categories/appliances/ranges/electric-ranges.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "centralAirConditioning": [
+        {"value": [1800, 3200], "unit": "CAD, 16 SEER2 equipment for a 1,000-1,800 sq ft home (installed $3,500-$6,000)", "currency": "CAD", "basis": "Ontario HVAC contractor cost guide", "source": "https://www.custom-contracting.ca/blog/ac-replacement-cost-ontario-2026", "date": "2026", "sourceType": "secondary", "confirmed": false}
+      ]
+    },
+
+    "MX": {
+      "dishwasher": [
+        {"value": 11999.40, "unit": "MXN per unit, sale price (listed regular price $19,999)", "currency": "MXN", "basis": "Liverpool, Samsung built-in 15-place dishwasher (model not captured); a Samsung 14-place listed at $10,352.41 (regular $17,399). Dishwashers are uncommon in Mexican homes.", "source": "https://www.liverpool.com.mx/tienda/lavavajillas/catst53844113", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "washingMachine": [
+        {"value": 8799, "unit": "MXN per unit, sale price (listed regular price $16,049)", "currency": "MXN", "basis": "Home Depot México, Whirlpool 18 kg top-load Xpert System (22 kg model 8MWTW2231WJB at $10,499, regular $18,299). Top-load is the dominant Mexican format.", "source": "https://www.homedepot.com.mx/p/whirlpool-lavadora-whirlpool-22-kg-xpert-system-8mwtw2231wjb-147711", "date": "2026-09-29", "sourceType": "primary", "confirmed": false},
+        {"value": 13199.40, "unit": "MXN per unit, sale price (listed regular price $21,999)", "currency": "MXN", "basis": "Liverpool, LG 22 kg front-load (model not captured); Samsung 22 kg front-load WF22C6400AP/AX $14,399.52 (regular $29,999)", "source": "https://www.liverpool.com.mx/tienda?s=lavadora+carga+frontal", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "electricDryer": [
+        {"value": null, "unit": "MXN", "basis": "Only a Mabe gas dryer (SMG26N5MNBAB0, $9,499 sale, $11,999 regular, Coppel) and a spin-dryer were seen; no electric tumble dryer price was read. Gas dryers dominate in Mexico.", "source": "https://www.coppel.com/ct/linea-blanca/secadoras/cat000477", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "miniSplitOneZone": [
+        {"value": 5399, "unit": "MXN per unit, 1 ton (12,000 BTU), 110 V, heat and cool", "currency": "MXN", "basis": "Midea Fresh minisplit at Home Depot México, as reported in press coverage of Profeco's minisplit study (Mirage Inverter X ~ $14,500; Bauer 1-ton cool-only $4,499 at Walmart)", "source": "https://www.infobae.com/mexico/2024/04/12/este-es-el-mejor-aire-acondicionado-y-con-mejor-precio-segun-la-profeco/", "date": "2024-04-12", "sourceType": "secondary", "confirmed": false},
+        {"value": [15499, 16499], "unit": "MXN per unit, LG 1-ton inverter heat/cool", "currency": "MXN", "basis": "Home Depot México minisplit listing", "source": "https://www.homedepot.com.mx/b/ventilacion-y-calefaccion/aire-acondicionado/minisplits", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "windowAirConditioner": [
+        {"value": null, "unit": "MXN", "basis": "No Mexican window-unit price was read.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+      ],
+      "centralAirConditioning": [
+        {"value": null, "unit": "MXN", "basis": "Not found; ducted central air is rare in Mexico City homes.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+      ],
+      "refrigerator": [
+        {"value": 9998, "unit": "MXN, average price across retailers", "currency": "MXN", "basis": "Electrolux ERTA16L4NG, Profeco's top-rated refrigerator in its 2025 study, as reported by the press", "source": "https://www.ambito.com/mexico/informacion-general/este-refrigerador-es-el-mejor-del-mercado-2025-segun-la-profeco-n6157686", "date": "2025", "sourceType": "secondary", "confirmed": false}
+      ],
+      "stove": [
+        {"value": 7999, "unit": "MXN per unit, sale price (regular $11,699)", "currency": "MXN", "basis": "Coppel, Mabe 30-inch floor stove, 6 burners, LP gas. Electric ranges are rare in Mexico; gas is the norm, so no electric-range price was found.", "source": "https://www.coppel.com/ct/linea-blanca/estufas-piso/cat000459", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ]
+    }
+  },
+
+  "installation": {
+    "US": {
+      "dishwasher": [
+        {"value": [130, 220], "unit": "USD, retailer install labor", "currency": "USD", "basis": "Home Depot dishwasher installation, per compiler sites (homedepot.com blocks automated reads)", "source": "https://homeguide.com/costs/dishwasher-installation-cost", "date": "2026", "sourceType": "secondary", "confirmed": false},
+        {"value": [125, 450], "unit": "USD, Lowe's basic installation", "currency": "USD", "basis": "Lowe's installation pages as summarized by search; price varies by address", "source": "https://www.lowes.com/l/dishwasher-installation-services.html", "date": "2026", "sourceType": "primary", "confirmed": false}
+      ],
+      "refrigeratorWasherElectricDryerFreestandingRange": [
+        {"value": 0, "unit": "USD, connection to existing hookups", "currency": "USD", "basis": "Lowe's: core appliances (refrigerators, washers, standalone ranges, electric dryers) connected to existing hookups free with delivery; gas dryers and built-ins require purchased installation", "source": "https://www.lowes.com/l/install/appliances", "date": "2026", "sourceType": "primary", "confirmed": false}
+      ],
+      "washerDryer": [
+        {"value": [100, 300], "unit": "USD per set, labor where hookups exist", "currency": "USD", "basis": "HomeGuide cost guide; new utility hookups where none existed $650-$2,000", "source": "https://homeguide.com/costs/washer-and-dryer-installation-cost", "date": "2026", "sourceType": "secondary", "confirmed": false}
+      ],
+      "windowAirConditioner": [
+        {"value": [60, 400], "unit": "USD, installation", "currency": "USD", "basis": "Angi AC cost table", "source": "https://www.angi.com/articles/how-much-does-installing-new-ac-cost.htm", "date": "2026-07-20", "sourceType": "secondary", "confirmed": true}
+      ],
+      "miniSplitOneZone": [
+        {"value": 3000, "unit": "USD, average installed", "currency": "USD", "basis": "Angi: professional mini-split installation $2,000-$5,000, average around $3,000", "source": "https://www.angi.com/articles/how-much-does-it-cost-install-ductless-mini-split-ac.htm", "date": "2026-04-04", "sourceType": "secondary", "confirmed": true},
+        {"value": [2000, 10500], "unit": "USD, installed", "currency": "USD", "basis": "Carrier (maker) price guide for ductless mini-splits in homes without ducts", "source": "https://www.carrier.com/us/en/residential/hvac-resources/air-conditioners/prices/", "date": "2026", "sourceType": "primary", "confirmed": true}
+      ],
+      "centralAirConditioning": [
+        {"value": [3500, 7000], "unit": "USD, installation on top of $2,500-$4,500 unit cost", "currency": "USD", "basis": "Angi AC cost table; new ductwork adds $3,000-$7,500 per 300 linear feet", "source": "https://www.angi.com/articles/how-much-does-installing-new-ac-cost.htm", "date": "2026-07-20", "sourceType": "secondary", "confirmed": true},
+        {"value": [3000, 15000], "unit": "USD, installed, excluding furnace, coil and duct changes", "currency": "USD", "basis": "Carrier (maker) central AC price guide", "source": "https://www.carrier.com/us/en/residential/hvac-resources/air-conditioners/prices/", "date": "2026", "sourceType": "primary", "confirmed": true}
+      ]
+    },
+    "UK": {
+      "retailerInstall": [
+        {"value": 30, "unit": "GBP, freestanding washing machine, washer-dryer or dishwasher", "currency": "GBP", "basis": "Currys published install prices: washing machine £30, smart washing machine £40, washer-dryer £30, tumble dryer £25, dishwasher £30, integrated washing machine / tumble dryer / dishwasher £115; installation only with delivery (standard delivery from £20)", "source": "https://www.currys.co.uk/services/delivery-installation/appliances-delivery-installation-recycling-pricing.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "splitAirToAirHeatPump": [
+        {"value": [2000, 4000], "unit": "GBP, single-split installed", "currency": "GBP", "basis": "Nesta field research; whole-house multi-split £5,000-£15,000, average £8,000-£10,000 for three to five indoor units", "source": "https://www.nesta.org.uk/report/air-to-air-heat-pumps-a-low-carbon-solution-for-uk-homes/", "date": "2026-02-17", "sourceType": "secondary", "confirmed": true}
+      ]
+    },
+    "IE": {
+      "retailerInstall": [
+        {"value": null, "unit": "EUR", "basis": "Currys.ie home-installation page exists but is behind a bot wall; no euro install price was read.", "source": "https://www.currys.ie/services/delivery-installation/home-installation.html", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+      ],
+      "splitAirConditioner": [
+        {"value": [2100, 3500], "unit": "EUR, single split installed", "currency": "EUR", "basis": "Irish installer cost guides (Aercon, Selectra.ie, HomePros.ie); other guides give €1,500-€4,000", "source": "https://www.aercon.ie/air-conditioning-cost-ireland", "date": "2026", "sourceType": "secondary", "confirmed": false}
+      ]
+    },
+    "CA": {
+      "miniSplitOneZone": [
+        {"value": [2800, 5500], "unit": "CAD, one zone installed, Ontario", "currency": "CAD", "basis": "Ontario HVAC contractor guide; Canada-wide guides give $4,500-$7,500", "source": "https://www.custom-contracting.ca/resources/ac-installation-cost-ontario", "date": "2026", "sourceType": "secondary", "confirmed": false}
+      ],
+      "centralAirConditioning": [
+        {"value": [3500, 8500], "unit": "CAD, installed, Ontario", "currency": "CAD", "basis": "Ontario HVAC contractor guide; 2-2.5 ton mid-range $4,500-$6,500 installed", "source": "https://www.custom-contracting.ca/blog/ac-replacement-cost-ontario-2026", "date": "2026", "sourceType": "secondary", "confirmed": false}
+      ],
+      "retailerInstall": [
+        {"value": null, "unit": "CAD", "basis": "No Home Depot Canada or Canadian Tire published install fee was read.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+      ]
+    },
+    "MX": {
+      "miniSplitOneZone": [
+        {"value": [2500, 5500], "unit": "MXN, labor for a 1-ton minisplit, Mexico City", "currency": "MXN", "basis": "Mexico City installer guides; independent technicians $1,500-$2,500; Home Depot México includes basic installation free on many eligible units", "source": "https://homepro.com.mx/blog/instalacion-aire-acondicionado", "date": "2026", "sourceType": "secondary", "confirmed": false}
+      ]
+    },
+    "permits": {
+      "NYC": [
+        {"value": "no permit", "unit": "rule", "basis": "1 RCNY §101-14, Table 1 (one- and two-family dwellings): a packaged air-conditioning unit not exceeding 5 tons rated capacity, installed in an existing building including in existing windows or sleeves, and not part of an alteration that otherwise needs a permit, is exempt. Table 2 (all buildings): the same exemption at 3 tons or less. The DOB page says a permit is generally not needed for a common window unit unless it exceeds three tons / 36,000 BTU/h.", "source": "https://www.nyc.gov/assets/buildings/rules/1_RCNY_101-14.pdf", "date": "2026-09-29", "sourceType": "primary", "confirmed": true},
+        {"value": "permit usually required", "unit": "rule", "basis": "A split system or central AC is not a 'packaged' unit, so the exemption does not cover it; installer and trade sources say a mini-split with an exterior condenser, wall penetrations or new circuits needs a DOB filing. No DOB page stating this for split systems was read.", "source": "https://www.nyc.gov/site/buildings/property-or-business-owner/installing-air-conditioning-units.page", "date": "2026-09-29", "sourceType": "secondary", "confirmed": false}
+      ],
+      "LA": [
+        {"value": "express mechanical permit", "unit": "rule", "basis": "LADBS Information Bulletin P/GI 2020-003 lists as express permits (no plan check) comfort cooling installations under 500,000 Btu/h aggregate and 'addition of air conditioning equipment having a rating of 5 tons or less'. LADBS's mechanical HVAC page says a mechanical permit is required for installing or modifying heating or cooling systems.", "source": "https://dbs.lacity.gov/sites/default/files/efs/pdf/publications/ib-p-gi-2020-003-express-permits_rev-12-16-2021.pdf", "date": "2021-12-16", "sourceType": "primary", "confirmed": true}
+      ]
+    }
+  },
+
+  "energyUse": {
+    "US": {
+      "_note": "EIA RECS 2020, Table CE5.3a and CE5.3b, average site electricity in kWh per household using the end use (national 'All homes'). RECS 2024 end-use tables are not out; EIA says the full 2024 data set comes in spring 2027. Washer kWh excludes water heating; AC covers all types (central, room, mini-split) together.",
+      "refrigeratorAll": {"value": 839, "unit": "kWh/yr per household with refrigerators (all units; most-used unit 617, second unit 494; separate freezer 570)", "basis": "EIA RECS 2020 CE5.3b", "source": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/ce5.3b.xlsx", "date": "2023-06 (revised 2024-03)", "sourceType": "primary", "confirmed": true},
+      "dishwasher": {"value": 112, "unit": "kWh/yr per household using", "basis": "EIA RECS 2020 CE5.3b", "source": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/ce5.3b.xlsx", "date": "2023-06 (revised 2024-03)", "sourceType": "primary", "confirmed": true},
+      "cooking": {"value": 290, "unit": "kWh/yr per household using electric cooking (ranges, cooktops, ovens; microwaves 107 separately)", "basis": "EIA RECS 2020 CE5.3b", "source": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/ce5.3b.xlsx", "date": "2023-06 (revised 2024-03)", "sourceType": "primary", "confirmed": true},
+      "clothesWasher": {"value": 69, "unit": "kWh/yr per household using (motor only, excludes water heating)", "basis": "EIA RECS 2020 CE5.3a", "source": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/ce5.3a.xlsx", "date": "2023-06 (revised 2024-03)", "sourceType": "primary", "confirmed": true},
+      "clothesDryer": {"value": 680, "unit": "kWh/yr per household using an electric dryer", "basis": "EIA RECS 2020 CE5.3a (Middle Atlantic 628, Pacific 603)", "source": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/ce5.3a.xlsx", "date": "2023-06 (revised 2024-03)", "sourceType": "primary", "confirmed": true},
+      "airConditioningAllTypes": {"value": 2318, "unit": "kWh/yr per household using AC (plus 457 for air handlers for cooling)", "basis": "EIA RECS 2020 CE5.3a; Middle Atlantic division (NY, NJ, PA) 1,483; Pacific division (incl. CA) 1,514", "source": "https://www.eia.gov/consumption/residential/data/2020/c&e/xls/ce5.3a.xlsx", "date": "2023-06 (revised 2024-03)", "sourceType": "primary", "confirmed": true},
+      "roomAirConditioner": {"value": 612, "unit": "kWh/yr, ENERGY STAR 12,000 Btu/h at 750 hours/yr (base model 826)", "basis": "DOE FEMP purchasing guide worked example (federal-facility usage assumption, 9-year life)", "source": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-room-air-conditioners", "date": "2024-12", "sourceType": "primary", "confirmed": true},
+      "centralAirConditioner": {"value": {"northern": 4038, "hotDrySouthwest": 3787, "hotHumidSoutheast": 8074}, "unit": "kWh/yr, ENERGY STAR 36,000 Btu/h (3-ton) SEER2 15.2; base SEER2 13.4 is 4,581 / 4,296 / 9,159", "basis": "DOE FEMP purchasing guide worked example; hours reflect federal-facility assumptions, not household use", "source": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-residential-central-air-conditioners", "date": "2024-12", "sourceType": "primary", "confirmed": true},
+      "miniSplit": {"value": null, "unit": "kWh/yr", "basis": "No official per-unit annual kWh for a one-zone mini-split was found; RECS folds it into air conditioning.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+    },
+    "UK": {
+      "_note": "No official UK per-appliance annual kWh table was readable. Which? publishes annual running costs at a stated unit rate, so kWh here are derived by dividing cost by 26.32p/kWh; they are Which?'s typical-use estimates, not metered data. The Energy Saving Trust pages give costs only.",
+      "washingMachine": {"value": 243, "unit": "kWh/yr, derived (£64 / £0.2632)", "basis": "Which? average annual running cost £64 at 26.32p/kWh, typical use (e.g. four washes a week)", "source": "https://www.which.co.uk/reviews/cutting-your-energy-bills/article/how-much-your-appliances-cost-to-run-a7N937v2SWom", "date": "2026-08-26", "sourceType": "secondary", "confirmed": true},
+      "tumbleDryerCondenser": {"value": 528, "unit": "kWh/yr, derived (£139 / £0.2632)", "basis": "Which? average condenser dryer running cost £139", "source": "https://www.which.co.uk/reviews/cutting-your-energy-bills/article/how-much-your-appliances-cost-to-run-a7N937v2SWom", "date": "2026-08-26", "sourceType": "secondary", "confirmed": true},
+      "tumbleDryerHeatPump": {"value": 205, "unit": "kWh/yr, derived (£54 / £0.2632)", "basis": "Which? average heat-pump dryer running cost £54. Cross-check: the Energy Saving Trust says a heat-pump dryer saves about £85/yr over a top-rated condenser at 160 cycles and 30.8p/kWh, about 276 kWh/yr.", "source": "https://www.which.co.uk/reviews/cutting-your-energy-bills/article/how-much-your-appliances-cost-to-run-a7N937v2SWom", "date": "2026-08-26", "sourceType": "secondary", "confirmed": true},
+      "dishwasher": {"value": 258, "unit": "kWh/yr, derived (£68 / £0.2632)", "basis": "Which? average dishwasher running cost £68. EST: a standard dishwasher costs 'up to £70' a year in GB; an A-rated 12-place £35.", "source": "https://www.which.co.uk/reviews/cutting-your-energy-bills/article/how-much-your-appliances-cost-to-run-a7N937v2SWom", "date": "2026-08-26", "sourceType": "secondary", "confirmed": true},
+      "fridgeFreezer": {"value": 300, "unit": "kWh/yr, derived (£79 / £0.2632)", "basis": "Which? freestanding fridge-freezer running cost £79 (American-style £116, about 441 kWh)", "source": "https://www.which.co.uk/reviews/cutting-your-energy-bills/article/how-much-your-appliances-cost-to-run-a7N937v2SWom", "date": "2026-08-26", "sourceType": "secondary", "confirmed": true},
+      "electricCooker": {"value": 224, "unit": "kWh/yr, derived (£59 / £0.2632)", "basis": "Which? freestanding electric cooker running cost £59 (single built-in oven £63; electric range cooker £67)", "source": "https://www.which.co.uk/reviews/cutting-your-energy-bills/article/how-much-your-appliances-cost-to-run-a7N937v2SWom", "date": "2026-08-26", "sourceType": "secondary", "confirmed": true}
+    },
+    "IE": {
+      "_note": "SEAI publishes label guidance (tumble dryers rated on 160 cycles a year) but no per-appliance typical annual kWh was found. Irish appliances carry the same EU energy labels as UK models, so the UK figures are the closest published proxy.",
+      "all": {"value": null, "unit": "kWh/yr", "basis": "Not found on seai.ie", "source": "https://www.seai.ie/plan-your-energy-journey/for-your-home/energy-labelling-and-ecodesign/energy-labelling", "date": "2026-09-29", "sourceType": "primary", "confirmed": false}
+    },
+    "CA": {
+      "_note": "NRCan (oee.nrcan.gc.ca) refused connections; figures below are from search snippets of NRCan's Energy Efficiency Trends and appliance-shipment publications. They are the rated consumption of NEW units shipped in 2020, not the stock average.",
+      "refrigeratorNew": {"value": 471, "unit": "kWh/yr, average new unit shipped 2020 (640 in 2000)", "basis": "NRCan, Energy Efficiency Trends in Canada, residential sector", "source": "https://oee.nrcan.gc.ca/publications/statistics/trends/2020/residential.cfm", "date": "2020 data", "sourceType": "primary", "confirmed": false},
+      "dishwasherNew": {"value": 71, "unit": "kWh/yr, average new unit shipped 2020 (172 in 2000)", "basis": "NRCan, Energy Efficiency Trends in Canada", "source": "https://oee.nrcan.gc.ca/publications/statistics/trends/2020/residential.cfm", "date": "2020 data", "sourceType": "primary", "confirmed": false},
+      "clothesDryerNew": {"value": 591, "unit": "kWh/yr, average new electric dryer shipped 2020 (910 in 2000)", "basis": "NRCan, Energy Efficiency Trends in Canada", "source": "https://oee.nrcan.gc.ca/publications/statistics/trends/2020/residential.cfm", "date": "2020 data", "sourceType": "primary", "confirmed": false},
+      "majorApplianceSetNew": {"value": 2299, "unit": "kWh/yr, a set of new major appliances (refrigerator, freezer, dishwasher, electric range, clothes washer, electric dryer), 2020", "basis": "NRCan, Energy Consumption of Major Household Appliances Shipped in Canada", "source": "https://oee.nrcan.gc.ca/publications/statistics/aham/2020/index.cfm", "date": "2020 data", "sourceType": "primary", "confirmed": false}
+    },
+    "MX": {
+      "all": {"value": null, "unit": "kWh/yr", "basis": "No CONUEE or SENER per-appliance annual kWh was found.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+    }
+  },
+
+  "lifespans": {
+    "_note": "NAHB/Bank of America Home Equity, 'Study of Life Expectancy of Home Components', February 2007 (Table 1). No newer NAHB edition was found. The study does not separate room AC from central AC; it gives 'air conditioners 10-15'.",
+    "dishwasher": {"value": 9, "unit": "years", "basis": "NAHB 2007 Table 1, Appliances", "source": "https://sghac.com/site/wp-content/uploads/NAHB-Lifetimes.pdf", "date": "2007-02", "sourceType": "primary", "confirmed": true},
+    "washer": {"value": 10, "unit": "years", "basis": "NAHB 2007 Table 1", "source": "https://sghac.com/site/wp-content/uploads/NAHB-Lifetimes.pdf", "date": "2007-02", "sourceType": "primary", "confirmed": true},
+    "dryerElectric": {"value": 13, "unit": "years (gas also 13)", "basis": "NAHB 2007 Table 1", "source": "https://sghac.com/site/wp-content/uploads/NAHB-Lifetimes.pdf", "date": "2007-02", "sourceType": "primary", "confirmed": true},
+    "refrigeratorStandard": {"value": 13, "unit": "years (compact 9; freezer 11)", "basis": "NAHB 2007 Table 1", "source": "https://sghac.com/site/wp-content/uploads/NAHB-Lifetimes.pdf", "date": "2007-02", "sourceType": "primary", "confirmed": true},
+    "rangeElectric": {"value": 13, "unit": "years (gas 15; range hood 14; microwave 9)", "basis": "NAHB 2007 Table 1", "source": "https://sghac.com/site/wp-content/uploads/NAHB-Lifetimes.pdf", "date": "2007-02", "sourceType": "primary", "confirmed": true},
+    "airConditioners": {"value": [10, 15], "unit": "years", "basis": "NAHB 2007 Table 1, HVAC ('air conditioning units 10-15 years'); room and central not separated", "source": "https://sghac.com/site/wp-content/uploads/NAHB-Lifetimes.pdf", "date": "2007-02", "sourceType": "primary", "confirmed": true},
+    "heatPump": {"value": 16, "unit": "years", "basis": "NAHB 2007 Table 1", "source": "https://sghac.com/site/wp-content/uploads/NAHB-Lifetimes.pdf", "date": "2007-02", "sourceType": "primary", "confirmed": true},
+    "garageDoorOpener": {"value": [10, 15], "unit": "years", "basis": "NAHB 2007 Table 1, Garages", "source": "https://sghac.com/site/wp-content/uploads/NAHB-Lifetimes.pdf", "date": "2007-02", "sourceType": "primary", "confirmed": true},
+    "roomAirConditionerDOE": {"value": 9, "unit": "years", "basis": "DOE FEMP life-cycle assumption for room air conditioners", "source": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-room-air-conditioners", "date": "2024-12", "sourceType": "primary", "confirmed": true},
+    "centralAirConditionerDOE": {"value": [18, 25], "unit": "years, depending on region", "basis": "DOE FEMP life-cycle assumption for residential central air conditioners", "source": "https://www.energy.gov/cmei/femp/purchasing-energy-efficient-residential-central-air-conditioners", "date": "2024-12", "sourceType": "primary", "confirmed": true},
+    "UK_fridgeFreezer": {"value": 17, "unit": "years", "basis": "Energy Saving Trust lifetime used in its savings calculation", "source": "https://energysavingtrust.org.uk/advice/home-appliances/", "date": "2026-05-20", "sourceType": "primary", "confirmed": true},
+    "UK_washingMachine": {"value": 11, "unit": "years", "basis": "Energy Saving Trust lifetime used in its savings calculation", "source": "https://energysavingtrust.org.uk/advice/home-appliances/", "date": "2026-05-20", "sourceType": "primary", "confirmed": true},
+    "UK_tumbleDryer": {"value": 13, "unit": "years", "basis": "Energy Saving Trust lifetime used in its savings calculation", "source": "https://energysavingtrust.org.uk/advice/home-appliances/", "date": "2026-05-20", "sourceType": "primary", "confirmed": true}
+  },
+
+  "furniture": {
+    "US": {
+      "householdFurnishingsAndEquipment": {"value": 2414, "unit": "USD per consumer unit per year (2023: 2,508)", "currency": "USD", "basis": "BLS Consumer Expenditure Surveys 2024, all consumer units; 3.1% of total spending", "source": "https://www.bls.gov/opub/reports/consumer-expenditures/2024/home.htm", "date": "2025-12-19 (data); report 2026-08", "sourceType": "primary", "confirmed": true},
+      "furniture": {"value": 648, "unit": "USD per consumer unit per year (2023: 619; one-person units 412)", "currency": "USD", "basis": "BLS CE 2024, all consumer units, series CXUFURNITURLB0101M", "source": "https://fred.stlouisfed.org/series/CXUFURNITURLB0101M", "date": "2025-12-19", "sourceType": "primary", "confirmed": true},
+      "majorAppliances": {"value": 385, "unit": "USD per consumer unit per year (2023: 384)", "currency": "USD", "basis": "BLS CE 2024, all consumer units, series CXUMAJAPPLLB0101M", "source": "https://fred.stlouisfed.org/series/CXUMAJAPPLLB0101M", "date": "2025-12-19", "sourceType": "primary", "confirmed": true}
+    },
+    "UK": {
+      "householdGoodsAndServices": {"value": 40.60, "unit": "GBP per household per week", "currency": "GBP", "basis": "ONS Family Spending workbook 1, Table A1, UK, financial year ending 2025 (April 2024-March 2025), COICOP 5", "source": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook1detailedexpenditureandtrends", "date": "2026-06-11", "sourceType": "primary", "confirmed": true},
+      "furnitureFurnishingsAndFloorCoverings": {"value": 21.70, "unit": "GBP per household per week", "currency": "GBP", "basis": "ONS Table A1, COICOP 5.1; of which furniture and furnishings 18.00, furniture alone 16.50, floor coverings 3.70", "source": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook1detailedexpenditureandtrends", "date": "2026-06-11", "sourceType": "primary", "confirmed": true},
+      "furniture": {"value": 16.50, "unit": "GBP per household per week", "currency": "GBP", "basis": "ONS Table A1, COICOP 5.1.1.1", "source": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook1detailedexpenditureandtrends", "date": "2026-06-11", "sourceType": "primary", "confirmed": true},
+      "householdAppliances": {"value": 4.00, "unit": "GBP per household per week", "currency": "GBP", "basis": "ONS Table A1, COICOP 5.3 (several sub-lines suppressed as unreliable)", "source": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook1detailedexpenditureandtrends", "date": "2026-06-11", "sourceType": "primary", "confirmed": true}
+    },
+    "IE": {
+      "householdDurableGoods": {"value": 34.98, "unit": "EUR per household per week", "currency": "EUR", "basis": "CSO Household Budget Survey 2022-2023, table HBS01, all areas, 'Total household durable goods (07)'", "source": "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/HBS01/CSV/1.0/en", "date": "2024-08-01", "sourceType": "primary", "confirmed": true},
+      "householdFurniture": {"value": 9.66, "unit": "EUR per household per week", "currency": "EUR", "basis": "CSO HBS 2022-2023, HBS01, 'Household furniture, including repairs (07.01)', all areas; Eastern and Midland region (includes Dublin), HBS06: 10.94", "source": "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/HBS01/CSV/1.0/en", "date": "2024-08-01", "sourceType": "primary", "confirmed": true},
+      "majorHouseholdAppliances": {"value": 3.56, "unit": "EUR per household per week", "currency": "EUR", "basis": "CSO HBS 2022-2023, HBS01, 07.03 (fridges, washing machines, cookers); Eastern and Midland 3.62; household textiles 2.27; garden furniture 2.02", "source": "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/HBS01/CSV/1.0/en", "date": "2024-08-01", "sourceType": "primary", "confirmed": true}
+    },
+    "CA": {
+      "householdFurnishingsAndEquipment": {"value": {"Canada": 3386, "Ontario": 3449, "BritishColumbia": 3375}, "unit": "CAD per household per year, 2023", "currency": "CAD", "basis": "Statistics Canada Survey of Household Spending 2023, table 11-10-0222-01", "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1110022201", "date": "2025-05-21", "sourceType": "primary", "confirmed": true},
+      "furniture": {"value": {"Canada": 1043, "Ontario": 1055, "BritishColumbia": 1085}, "unit": "CAD per household per year, 2023", "currency": "CAD", "basis": "StatCan SHS 2023, table 11-10-0222-01", "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1110022201", "date": "2025-05-21", "sourceType": "primary", "confirmed": true},
+      "householdAppliances": {"value": {"Canada": 798, "Ontario": 825, "BritishColumbia": 872}, "unit": "CAD per household per year, 2023", "currency": "CAD", "basis": "StatCan SHS 2023; Canada sub-lines: refrigerators and freezers 143, cooking appliances and microwaves 155, washers/dryers/dishwashers 160, room AC/humidifiers/dehumidifiers 116", "source": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1110022201", "date": "2025-05-21", "sourceType": "primary", "confirmed": true}
+    },
+    "MX": {
+      "enseresDomesticosLimpiezaYCuidadoDeLaCasa": {"value": 3014, "unit": "MXN per household per quarter, 2024 (urban 3,259; rural 2,063)", "currency": "MXN", "basis": "INEGI ENIGH 2024 results report, average quarterly current monetary spending, rubro 'Enseres domésticos, artículos para limpieza y cuidado de la casa' (includes furniture, utensils, appliances and linens together with cleaning goods); total current monetary spending 47,674", "source": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/enigh/ENIGH2024_RR.pdf", "date": "2025-07-30", "sourceType": "primary", "confirmed": true},
+      "muebles": {"value": null, "unit": "MXN per household per quarter", "basis": "The furniture (muebles) sub-line alone was not found in the results report; it sits in INEGI's detailed tabulados (https://www.inegi.org.mx/programas/enigh/nc/2024/#tabulados), which were not read.", "source": "https://www.inegi.org.mx/programas/enigh/nc/2024/", "date": "2025-07-30", "sourceType": "primary", "confirmed": false}
+    },
+    "wholeHomeFurnishing": {
+      "US_oneBedroom": {"value": [2600, 4600], "unit": "USD, budget tier (mid-range 6,700-10,800; premium 15,500-24,500)", "currency": "USD", "basis": "Online furnishing cost guide; no consumer-organization or IKEA package figure was found. Low-authority source, use only as a marked estimate.", "source": "https://www.meltflexai.com/blog/how-much-does-it-cost-to-furnish-a-one-bedroom-apartment", "date": "2026", "sourceType": "secondary", "confirmed": false}
+    }
+  },
+
+  "garages": {
+    "buildCost": {
+      "US_detached": [
+        {"value": 26400, "unit": "USD, national average detached garage (most spend 19,200-33,600); permits 150-2,000 extra", "currency": "USD", "basis": "Angi detached garage cost guide; by size: 1-car (240-384 sq ft) $9,600-$26,900; 2-car (360-480 sq ft) $14,400-$33,600; $40-$70 per sq ft", "source": "https://www.angi.com/articles/detached-garage-cost.htm", "date": "2026-09-28", "sourceType": "secondary", "confirmed": true},
+        {"value": [20000, 57600], "unit": "USD, 2-car detached ($50-$100 per sq ft); attached 2-car $25,000-$60,000", "currency": "USD", "basis": "HomeGuide detached garage cost guide", "source": "https://homeguide.com/costs/detached-garage-cost", "date": "2026-01-21", "sourceType": "secondary", "confirmed": true}
+      ],
+      "US_general": [
+        {"value": {"oneCar": [10500, 27000], "twoCar": [15000, 40000]}, "unit": "USD; about $50/sq ft average, attached from $30/sq ft", "currency": "USD", "basis": "Angi garage cost guide; one-car average about $20,000, two-car about $30,000", "source": "https://www.angi.com/articles/how-much-does-it-cost-build-garage.htm", "date": "2026-08-24", "sourceType": "secondary", "confirmed": true}
+      ],
+      "UK": [
+        {"value": {"singleFlatRoof": 25000, "singlePitchedTiled": 30000, "doubleFlatRoof": 36000, "doublePitchedTiled": 43000}, "unit": "GBP averages (ranges: 21,000-33,000; 25,000-40,000; 30,000-47,000; 36,000-58,000)", "currency": "GBP", "basis": "Checkatrade garage build cost guide; average about £1,300 per m2; prefab garages £1,000-£8,000; brick single-skin 6m x 6m x 2.5m £30,000-£55,000", "source": "https://www.checkatrade.com/blog/cost-guides/build-garage-cost/", "date": "2026-05", "sourceType": "secondary", "confirmed": true}
+      ],
+      "IE": [
+        {"value": null, "unit": "EUR", "basis": "No Irish garage-build cost guide was read. A search snippet cited rebuild-cost figures of €21,548 (single attached) and €38,544 (double attached), source not identified, so not recorded as a figure.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+      ],
+      "CA_MX": [
+        {"value": null, "unit": "CAD / MXN", "basis": "Not researched to a figure; no source found.", "source": null, "date": null, "sourceType": null, "confirmed": false}
+      ]
+    },
+    "prevalence_US": {"value": {"oneCar": 9, "twoCar": 65, "threePlusCar": 15, "carport": 1, "noParking": 9}, "unit": "percent of new single-family homes completed in 2024", "basis": "NAHB analysis of Census Survey of Construction", "source": "https://eyeonhousing.org/2025/09/parking-trends-in-newly-completed-single-family-homes-2024/", "date": "2025-09-11", "sourceType": "secondary", "confirmed": true},
+    "typicalSize": [
+      {"value": {"oneCar_sqft": [240, 384], "twoCar_sqft": [360, 480]}, "unit": "sq ft", "basis": "Angi size bands used in its cost table; HomeGuide says the most common 2-car garages are 400-576 sq ft; Angi elsewhere gives 18 x 20 ft (360 sq ft) as the average two-car size. No ICC or other code sets a garage size.", "source": "https://www.angi.com/articles/detached-garage-cost.htm", "date": "2026-09-28", "sourceType": "secondary", "confirmed": true},
+      {"value": {"single_m": [3, 6]}, "unit": "metres internal (width x length)", "basis": "Manual for Streets (DfT/DCLG 2007) para 8.3.41: 'many authorities now recommend a minimum size of 6 m by 3 m'. Council standards vary (e.g. Essex 7m x 3m).", "source": "https://assets.publishing.service.gov.uk/media/5a7e0035ed915d74e6223743/pdfmanforstreets.pdf", "date": "2007", "sourceType": "primary", "confirmed": true}
+    ],
+    "permits": {
+      "NYC": [
+        {"value": "permit required for a garage; sheds exempt only up to 120 sq ft", "unit": "rule", "basis": "1 RCNY §101-14 exempts only temporary portable sheds accessory to a one- or two-family dwelling (max 120 sq ft, 7'6\" high, 3 ft from lot lines, one per lot); a garage is not on the exempt list, so it needs a DOB filing. Zoning: accessory parking in a required rear yard of a one- or two-family home is limited to a detached building no more than 10 ft high (per Zoning Resolution, seen only in a snippet).", "source": "https://www.nyc.gov/assets/buildings/rules/1_RCNY_101-14.pdf", "date": "2026-09-29", "sourceType": "primary", "confirmed": true}
+      ],
+      "LA": [
+        {"value": "building permit required", "unit": "rule", "basis": "California/LA practice: one-story detached accessory buildings used as tool/storage sheds, playhouses and similar are permit-exempt only up to 120 sq ft; garages need a building permit. Not read on an LADBS page.", "source": "https://permitmint.com/guides/shed/california/los-angeles/", "date": "2026", "sourceType": "secondary", "confirmed": false}
+      ],
+      "England": [
+        {"value": "permitted development (Class E) within limits", "unit": "rule", "basis": "Planning Portal: outbuildings and garages single storey, max eaves 2.5 m, max overall height 4 m with a dual-pitched roof or 3 m otherwise; max 2.5 m if within 2 m of a boundary; not forward of the principal elevation; no more than half the land around the original house covered; in National Parks, AONBs, the Broads and World Heritage Sites, buildings more than 20 m from the house limited to 10 m2. Flats and maisonettes have no such rights; Article 4 directions and conservation areas can remove them (common in London).", "source": "https://www.planningportal.co.uk/permission/common-projects/outbuildings/planning-permission/", "date": "2026-09-29", "sourceType": "primary", "confirmed": true}
+      ],
+      "Ireland": [
+        {"value": 25, "unit": "m2, exempt total for garages, sheds and similar within a house's curtilage", "basis": "Planning and Development Regulations 2001 (S.I. 600/2001), Schedule 2 Part 1, Class 3: not forward of the front wall; total with earlier such structures not over 25 m2; leaves at least 25 m2 private open space; finishes match the house when at the side; height max 4 m with a tiled or slated pitched roof, else 3 m; no habitation. S.I. 340/2026 (in force 27 July 2026) inserted a new Class 3A (detached dwelling of 32-45 m2 in a rear garden) and did not change Class 3; structures under Class 3 count toward Class 3A's 45 m2.", "source": "https://assets.gov.ie/static/documents/Exempted_Development_2001_regulations_-_Schedule_2.pdf", "date": "2001 (Class 3A: 2026-07-27)", "sourceType": "primary", "confirmed": true}
+      ]
+    },
+    "countsAsParkingSpace": {
+      "England_ManualForStreets": {"value": "decided scheme by scheme", "unit": "rule", "basis": "Manual for Streets para 8.3.39-8.3.41: garages are not always used for parking; surveys found 44% (various English sites), 36% (Waterside Park, Kent) and 45% (Oxfordshire) of garages used for parking; car ports should count; whether garages count fully depends on other parking, cycle and storage provision and garage size (6 m x 3 m minimum widely recommended).", "source": "https://assets.publishing.service.gov.uk/media/5a7e0035ed915d74e6223743/pdfmanforstreets.pdf", "date": "2007", "sourceType": "primary", "confirmed": true},
+      "London": {"value": null, "unit": "rule", "basis": "The London Plan 2021 (Policy T6.1) sets maximum residential parking and no rule on whether a garage counts was found; borough SPDs were not readable. Many English councils (e.g. Basingstoke, Leicestershire) count a garage only if it meets 6 m x 3 m internal.", "source": "https://www.london.gov.uk/programmes-strategies/planning/london-plan/the-london-plan-2021-online/chapter-10-transport", "date": "2021", "sourceType": "primary", "confirmed": false},
+      "Dublin": {"value": null, "unit": "rule", "basis": "Dublin City Development Plan 2022-2028, Appendix 5: maximum parking for houses/apartments 0.5 per dwelling (Zone 1) and 1 per dwelling (Zones 2-3); a car in a front garden needs 3 m x 5 m; mews parking 'will be in off-street garages, forecourts or courtyards'. No statement on whether a garage counts as a space.", "source": "https://www.dublincity.ie/sites/default/files/2022-12/Final%20Vol%202-Appendices.pdf", "date": "2022-12", "sourceType": "primary", "confirmed": true}
+    }
+  },
+
+  "uncertain": [
+    "Most retailer prices (Harvey Norman Ireland, Home Depot Canada, Home Depot México, Liverpool, Coppel, Currys, Lowe's, Home Depot US) were seen only in search snippets, because those sites block automated reads with a 403 or Cloudflare challenge. They are marked confirmed:false, and some model numbers could not be captured.",
+    "No US retailer best-seller median price was obtained for any appliance, and there is no US electric-range price at all: Consumer Reports' range guide carries no prices.",
+    "Home Depot's and Lowe's current published installation fees could not be read directly. The US dishwasher install figures come from compilers or search summaries.",
+    "No official per-appliance annual kWh was found for the UK, Ireland or Mexico. The UK kWh are derived from Which? running costs at 26.32p/kWh, and Ireland has nothing.",
+    "The Canadian kWh (NRCan) come from search snippets only, since oee.nrcan.gc.ca refused connections, and they describe new units shipped in 2020, not the stock average.",
+    "The DOE FEMP central-AC and room-AC kWh use federal-facility operating hours, not household use. The household figure is RECS 2020's all-types AC average: 2,318 kWh nationally, 1,483 in the Middle Atlantic division and 1,514 in the Pacific division.",
+    "EIA RECS 2024 end-use (kWh) tables are not yet published; EIA says spring 2027. All US kWh are RECS 2020.",
+    "Lifespans rest on the 2007 NAHB study. No newer NAHB edition was found, and it does not separate room AC from central AC.",
+    "Mexico has no electric-dryer price, no window-AC price and no central-AC price. Electric ranges are rare there; the stove price is for an LP-gas model. Profeco's Quién es Quién en los Precios appliance data was not read.",
+    "The Consumer Reports member median of $855 for a dishwasher was seen only in a search summary.",
+    "The Which? dishwasher price article is from 2019. No 2026 Which? dishwasher price range was readable.",
+    "The ENIGH 2024 furniture-only line (muebles) was not extracted. Only the combined household-goods-and-cleaning rubro is recorded.",
+    "No authoritative cost to furnish a whole home or one-bedroom apartment was found: no IKEA package price and no consumer-organization estimate. Only a low-authority blog range is recorded, marked unconfirmed.",
+    "No garage-build cost was found for Ireland, Canada or Mexico.",
+    "The LA garage permit rule (sheds exempt to 120 sq ft; garages need a permit) was not read on an LADBS page.",
+    "Whether a garage counts as a parking space was not found stated in the London Plan or any London borough SPD, or in the Dublin City Development Plan.",
+    "Whether NYC DOB requires a permit for a mini-split or central AC was inferred from the packaged-unit exemption not covering split systems. No DOB page stating it was read."
+  ]
+}

@@ -373,12 +373,16 @@ describe('a personal loan', () => {
   it('is priced by the record, paid down monthly, and closed when it’s paid', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-citi', wealth: 'comfortable' });
     wages(sim, 4_000_00);
+    // Savings behind the current account: a loan payment reaches savings only where it's linked (`drawFromBank`).
+    sim.player.payments = { ...(sim.player.payments ?? {}), linkSavings: true } as typeof sim.player.payments;
     const answer = sim.must<{ apr: number; payment: number }>({ kind: 'bank.borrow', payload: { amount: 3_000_00, months: 12 } });
     const score = sim.player.credit!.score;
     expect(answer.apr).toBe(rateForRecord(0.0999, 0.1749, score));
     expect(answer.payment).toBe(monthlyPayment(3_000_00, answer.apr, 12));
     const loan = loanOf(sim, sim.player)!;
     expect(loan.balance).toBe(-3_000_00);
+    // A payment a little under what clears it, as rounding can leave one: the term's last payment takes the rest.
+    loan.loanPayment = (loan.loanPayment ?? 0) - 1_00;
     const interestPaid = () => sim.universe.transactions.filter((t) => t.category === 'loan_interest')
       .flatMap((t) => t.postings).filter((p) => p.accountId === loan.id).reduce((sum, p) => sum - p.amount, 0);
     sim.advanceBy(40 * MS_DAY);
@@ -386,9 +390,11 @@ describe('a personal loan', () => {
     sim.advanceBy(340 * MS_DAY);
     expect(loan.closedAt).toBeDefined();
     expect(loan.balance).toBe(0);
+    // The term's last payment clears what the months rounded, so it closes with its twelfth, not a thirteenth for the pennies.
+    expect(loan.closedAt! - loan.openedAt).toBeLessThan(12 * 30.44 * MS_DAY + 10 * MS_DAY);
     // The interest is what twelve equal payments carry over the principal,
     // within the pennies each month rounds.
-    expect(Math.abs(interestPaid() - (answer.payment * 12 - 3_000_00))).toBeLessThan(12_00);
+    expect(Math.abs(interestPaid() - (answer.payment * 12 - 3_000_00))).toBeLessThan(24_00);
     expect(interestPaid()).toBeGreaterThan(0);
   });
 

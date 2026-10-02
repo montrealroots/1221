@@ -1,0 +1,327 @@
+{
+  "_meta": {
+    "subject": "Running costs of owning a Cessna 172S Skyhawk in the United States",
+    "retrieved": "2026-09-29",
+    "currency": "USD",
+    "conventions": "sourceType 'primary' = the maker's or authority's own page or document; 'secondary' = press, broker, shop or forum. confirmed = true only where the figure was read directly on the cited page or document during this research; false where it came only from a search-engine summary or could not be opened. Figures not published are null with a note. Derived figures say how they were derived.",
+    "notes": [
+      "Textron's current Skyhawk spec page gives no fuel-burn figure; the burn below comes from the 172S Nav III Information Manual (a copy of the POH/AFM), Section 1 and Figure 5-8.",
+      "Lycoming SI 1009 is now at revision BF (July 20, 2026). BF added a separate 'Factory New/Rebuilt' TBO column: 2600 hours for the IO-360-L2A on its first run after a factory-new or factory-rebuilt engine, 2000 hours after any overhaul.",
+      "The FAA survey figure for hours flown is the average of all active piston singles, including flight schools. The personal-use figure is derived from two FAA tables and is labeled as such."
+    ]
+  },
+
+  "fuelBurn": {
+    "aircraft": "Cessna 172S (Nav III / G1000), Lycoming IO-360-L2A, 180 hp",
+    "gphAt75PctCruise": 10.2,
+    "gphAt75PctCruiseNote": "Derived: Information Manual Section 4 gives 124 KTAS at 12.2 NMPG at 75% power, 8000 ft (124 / 12.2 = 10.16 gph). Figure 5-8 cruise table at 8000 ft, standard temperature, recommended lean: 2650 RPM = 72% MCP, 122 KTAS, 9.9 gph; 2700 RPM = 77% MCP, 124 KTAS, 10.4 gph. At 4000 ft, 2550 RPM = 73% MCP, 9.9 gph. So a 75% cruise burns about 10 to 10.4 gph by the book.",
+    "tableRows": [
+      { "altitudeFt": 8000, "rpm": 2700, "pctMcp": 77, "ktas": 124, "gph": 10.4 },
+      { "altitudeFt": 8000, "rpm": 2650, "pctMcp": 72, "ktas": 122, "gph": 9.9 },
+      { "altitudeFt": 4000, "rpm": 2550, "pctMcp": 73, "ktas": 117, "gph": 9.9 },
+      { "altitudeFt": 2000, "rpm": 2550, "pctMcp": 77, "ktas": 118, "gph": 10.5 }
+    ],
+    "tableConditions": "2550 lb, recommended lean mixture, standard temperature, speed fairings installed",
+    "performanceSpecs": {
+      "cruise75PctAt8500FtKnots": 124,
+      "rangeAt75PctNm": 518,
+      "enduranceAt75PctHours": 4.26,
+      "usableFuelGal": 53,
+      "reserve": "45 minutes"
+    },
+    "source": {
+      "title": "Cessna Model 172S Nav III GFC 700 AFCS Information Manual (Original Issue, 20 December 2007), Section 1 Performance - Specifications, Section 4 Cruise, Section 5 Figure 5-8 Cruise Performance",
+      "url": "https://wayman.edu/files/C172S-G1000-POH.pdf",
+      "date": "2007-12-20",
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Cessna's own document, hosted by a flight school. The manual itself says it is not kept current and is not a substitute for the aircraft's POH/AFM."
+    },
+    "corroboration": [
+      {
+        "value": "9.9 gph at 75% power, best economy; 124 kt",
+        "title": "AOPA Aircraft Guide: Cessna 172S",
+        "url": "https://www.aopa.org/go-fly/aircraft-and-ownership/aircraft-guide/aircraft/cessna-172",
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": true
+      },
+      {
+        "value": "Textron spec page: max cruise 124 ktas, range 640 nm, usable fuel 53 gal, IO-360-L2A 180 hp; no fuel-burn figure published",
+        "title": "Cessna Skyhawk specifications (Textron Aviation)",
+        "url": "https://cessna.txtav.com/en/piston/cessna-skyhawk",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    ]
+  },
+
+  "avgas": {
+    "grade": "100LL",
+    "nationalAverage": {
+      "usdPerGal": 7.25,
+      "fbosReporting": 3480,
+      "date": "2026-09-29",
+      "note": "AirNav's own report, all FBOs reporting 100LL, not split into full or self service.",
+      "source": {
+        "title": "AirNav Fuel Price Report",
+        "url": "https://www.airnav.com/fuel/report.html",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "nationalAverageFullServiceGlobalAir": {
+      "usdPerGal": 7.69,
+      "fbosReporting": 3204,
+      "period": "30 days to about 2026-09-25",
+      "note": "GlobalAir full-service average, reported by AVweb. GlobalAir's own regional page returned 403. Same article: AirNav then at $7.22 across 3,583 FBOs; Alaska highest at $11.61, Central lowest at $7.00 (GlobalAir).",
+      "source": {
+        "title": "Full-Service 100LL Average Reaches $7.69 (AVweb)",
+        "url": "https://avweb.com/aviation-news/full-service-100ll-average-reaches-7-69/",
+        "date": "2026-09-25",
+        "sourceType": "secondary",
+        "confirmed": true
+      }
+    },
+    "regional": [
+      { "region": "Western-Pacific", "usdPerGal": 7.74, "fbosReporting": 318, "note": "AirNav region; FAA Western-Pacific covers California, Nevada, Arizona and Hawaii. Used as the closest published proxy for California." },
+      { "region": "New England", "usdPerGal": 7.88, "fbosReporting": 133 },
+      { "region": "Eastern", "usdPerGal": 7.60, "fbosReporting": 325, "note": "FAA Eastern region includes New York, New Jersey, Pennsylvania, Delaware, Maryland, Virginia, West Virginia and DC." },
+      { "region": "Great Lakes", "usdPerGal": 6.91, "fbosReporting": 709 },
+      { "region": "Central", "usdPerGal": 6.76, "fbosReporting": 346 },
+      { "region": "Southern", "usdPerGal": 7.27, "fbosReporting": 654 },
+      { "region": "Southwest", "usdPerGal": 6.91, "fbosReporting": 557 },
+      { "region": "Northwest Mountain", "usdPerGal": 7.46, "fbosReporting": 371 },
+      { "region": "Alaska", "usdPerGal": 10.49, "fbosReporting": 67 }
+    ],
+    "regionalSource": {
+      "title": "AirNav Fuel Price Report",
+      "url": "https://www.airnav.com/fuel/report.html",
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "californiaOnly": null,
+    "californiaOnlyNote": "No California-only statewide average was found published; AirNav and GlobalAir publish by FAA region. Use Western-Pacific ($7.74) or a specific airport's posted price.",
+    "northeastNote": "'Northeast' is not an AirNav region. New England ($7.88) and Eastern ($7.60) together cover it; the New York City area sits in the Eastern region, Connecticut in New England.",
+    "fuelCostPerHourAt75Pct": {
+      "usdPerHourNational": 73.95,
+      "usdPerHourWesternPacific": 78.95,
+      "usdPerHourNewEngland": 80.38,
+      "usdPerHourEastern": 77.52,
+      "note": "Derived: 10.2 gph x the AirNav averages above. Excludes oil."
+    }
+  },
+
+  "engine": {
+    "model": "Lycoming IO-360-L2A",
+    "tboHoursAfterOverhaul": 2000,
+    "tboHoursFactoryNewOrRebuiltFirstRun": 2600,
+    "tboCalendarYears": 12,
+    "tboNotes": "SI 1009BF Table 1 lists IO-360-L2A: Factory New/Rebuilt 2600 hours (no note); Overhaul 2000 hours, Notes 11, 15, 16. Note 11: add 200 hours for 'frequent' service (at least 120 hours in every rolling 90 days, no 30-day period under 20 hours) - a private owner will not qualify. Note 15: add 200 hours for a Lycoming factory overhaul, or a field overhaul meeting all the listed conditions (genuine Lycoming parts only, among others). Note 16: Notes 11 and 15 together can add 400 hours. All engines to be overhauled within 12 calendar years of entering service or last overhaul; under Part 91 a qualified mechanic may allow that to be exceeded after an Appendix D-based examination repeated annually.",
+    "tboSource": {
+      "title": "Lycoming Service Instruction No. 1009BF, Time Between Overhaul (TBO) Schedules",
+      "url": "https://www.lycoming.com/sites/default/files/file/2026-07/SI1009BF_%20TBO_Schedule.pdf",
+      "date": "2026-07-20",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "overhaulCost": {
+      "fieldOverhaulMajorShopUsd": { "low": 33000, "high": 53000 },
+      "fieldOverhaulLocalShopUsd": { "low": 32000, "high": 41000 },
+      "factoryOverhaulUsd": 58000,
+      "factoryRebuildUsd": 64000,
+      "coreNote": "Factory prices are 'plus core'.",
+      "removalAndReinstallUsd": { "low": 5000, "high": 10000 },
+      "note": "Quoted for Lycoming four-cylinder IO-320/IO-360 engines as a group, not specifically the -L2A. Removal, reinstallation, propeller work and accessories are extra.",
+      "source": {
+        "title": "Lycoming IO-Series Engine Overhaul Cost and Time to Expect (Flying411)",
+        "url": "https://flying411.com/blog/lycoming-io-series-overhaul-cost/277",
+        "date": "2026-02-06",
+        "sourceType": "secondary",
+        "confirmed": true
+      }
+    },
+    "reservePerHour": {
+      "fieldOverhaulUsdPerHour": 25.0,
+      "fieldOverhaulBasis": "Derived: midpoint major-shop field overhaul $43,000 + midpoint removal/reinstall $7,500 = $50,500 / 2000 h = $25.25, rounded to $25.",
+      "factoryRebuildUsdPerHour": 27.5,
+      "factoryRebuildBasis": "Derived: ($64,000 + $7,500 removal/reinstall) / 2600 h (first-run TBO for a factory-rebuilt engine under SI 1009BF) = $27.50. Excludes the core charge, which is refunded when an acceptable core is returned.",
+      "calendarLimitNote": "At the private-owner rate of about 60 hours a year, 2000 hours takes over 30 years, so the 12-year calendar TBO usually governs unless a mechanic extends it. Over 12 years at 63 h/yr (756 h), a $50,500 overhaul works out to about $67 per hour - the realistic reserve for a low-use private owner who overhauls on the calendar.",
+      "aopaMethod": {
+        "text": "AOPA divides the overhaul cost by TBO; its dated example is a $17,000 overhaul / 2000 h = $8.50 per hour.",
+        "url": "https://www.aopa.org/go-fly/aircraft-and-ownership/buying-an-aircraft/tips-on-buying-used-aircraft/guidelines-for-estimating-direct-operating-costs-and-reserves",
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": true,
+        "note": "Method only; the $17,000 figure is long out of date."
+      }
+    }
+  },
+
+  "annual": {
+    "inspectionFlatRateUsd": 1800,
+    "inspectionFlatRateNote": "One shop's published flat rate for a 'Late Model 172' (the 172R/172S): 20 labor hours for $1,800 ($90/h). Older 172s: 18 h, $1,620. Findings and parts are extra.",
+    "source": {
+      "title": "Lore Aviation Services - Inspection Price Sheet",
+      "url": "https://www.loreaviation.com/OurServices/InspectionPriceSheet.aspx",
+      "date": null,
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "The page carries a 2026 copyright notice but no date for the prices, and no location."
+    },
+    "otherFigures": [
+      {
+        "value": "About $1,700 for the inspection; findings extra",
+        "title": "What Does a 172 Annual Cost These Days? (Plane & Pilot, Amy Wilder)",
+        "url": "https://planeandpilotmag.com/what-does-a-172-annual-cost-these-days/",
+        "date": "2023-05-08",
+        "sourceType": "secondary",
+        "confirmed": true
+      },
+      {
+        "value": "Inspection fee $1,500-$2,200 for a well-kept 172 in 2026; total annual with findings $2,500-$4,500 for a healthy airplane; $8,000-$12,000 for one with deferred maintenance",
+        "title": "Aircraft Annual Inspection Cost in 2026: Owner Guide (e3 Aviation Association)",
+        "url": "https://e3aviationassociation.com/aviation-articles/aircraft-annual-inspection-cost-2026/",
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "From the search-engine summary only; the article body did not load when fetched."
+      },
+      {
+        "value": "One shop: Cessna 170/172/175, 18 hours, $2,124 flat rate",
+        "title": "Flat Rate Annual Inspection (WCS Aviation)",
+        "url": "https://wcsaviation.com/capabilites/flat-rate-annual-inspection/",
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "From the search-engine summary only."
+      }
+    ],
+    "typicalTotalWithFindingsUsd": { "low": 2500, "high": 4500 },
+    "typicalTotalNote": "Secondary and not confirmed on the page; see e3 Aviation Association above. Use for a healthy airplane only."
+  },
+
+  "hoursFlown": {
+    "faaAverageAllUsesPiston1Engine4PlusSeats2024": 128.5,
+    "faaAverageAllUsesPiston1EngineTotal2024": 114.9,
+    "faaAverageAllUsesPiston1Engine1to3Seats2024": 68.8,
+    "faaAllUsesNote": "FAA Table 2.1 (2024): 1-engine 4+ seats, 98,291 active aircraft, 12,629,343 hours, average 128.5; all piston singles 114.9 (Table 1.5 gives 114.5 for 2023). These include flight-school, rental and business flying, so they overstate a private owner's use.",
+    "personalUseDerived": {
+      "piston1Engine4PlusSeatsHoursPerAircraft": 63.0,
+      "piston1EngineAllSeatsHoursPerAircraft": 58.4,
+      "basis": "Derived: Table 3.2 personal-use hours (1-engine 4+ seats: 4,725,980; all 1-engine: 5,804,081) / Table 3.1 active aircraft whose primary use is personal (75,052; 99,439). Approximate, because Table 3.2 counts hours by actual use while Table 3.1 counts aircraft by primary use.",
+      "confirmed": true
+    },
+    "source": {
+      "title": "FAA General Aviation and Part 135 Activity Survey, CY 2024 - Chapter 1 (Table 1.5), Chapter 2 (Table 2.1), Chapter 3 (Tables 3.1, 3.2)",
+      "url": "https://www.faa.gov/data_research/aviation_data_statistics/general_aviation/cy2024",
+      "fileUrls": [
+        "https://www.faa.gov/data_research/aviation_data_statistics/general_aviation/cy2024/2024GASurveyCh1.xlsx",
+        "https://www.faa.gov/data_research/aviation_data_statistics/general_aviation/cy2024/2024GASurveyCh2.xlsx",
+        "https://www.faa.gov/data_research/aviation_data_statistics/general_aviation/cy2024/2024GASurveyCh3.xlsx"
+      ],
+      "date": "CY2024 survey (latest published)",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "aopaOrGamaOwnerSurvey": null,
+    "aopaOrGamaNote": "No AOPA or GAMA survey of private-owner hours was found published. AOPA's operating-cost guide uses 100 h/yr only as a worked example; a 2026 ownership-cost article (Jaken Aviation) assumes 75 h/yr. Neither is survey data."
+  },
+
+  "hangars": {
+    "hwdNote": "Hayward Executive Airport (HWD) fees are already on file and are not repeated here.",
+    "nearNewYorkCity": [
+      {
+        "airport": "Waterbury-Oxford Airport (KOXC), Oxford, Connecticut - about 65 miles from Manhattan",
+        "operator": "Connecticut Airport Authority (state public authority)",
+        "tiedownSingleEngineMonthlyUsd": 100.00,
+        "tiedownMultiEngineMonthlyUsd": 115.00,
+        "surface": "Paved",
+        "effective": "July 1, 2026 to June 30, 2027 (unchanged from FY2026)",
+        "terms": "License agreement required; due monthly in advance on the 1st; not prorated; no daily rate; 5 days' notice to terminate before month end; where the FBO handles the aircraft, FBO rates apply. Same rate at Hartford-Brainard (KHFD) and Groton-New London (KGON). Windham and Danielson: $55 unpaved / $65 paved single engine.",
+        "hangarRate": null,
+        "hangarNote": "The CAA sheet publishes no hangar rate.",
+        "source": {
+          "title": "General Aviation Airports Rates and Charges - July 1, 2026 to June 30, 2027 (Connecticut Airport Authority)",
+          "url": "https://ctairports.org/wp-content/uploads/2026/07/WebPage-Rate-Sheet-GA-FY27.pdf",
+          "date": "2026-07-01",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      {
+        "airport": "Westchester County Airport (HPN), White Plains, New York",
+        "operator": "Million Air (FBO; county-owned airport) - an FBO rate, not a municipal one",
+        "tiedownSingleEngineMonthlyUsd": 800.00,
+        "effective": "October 2026",
+        "terms": "Was $375/month for about ten years; $600 from October 2025, rising $50 a quarter to $800 in October 2026, then indexed to local CPI. AOPA contested it.",
+        "source": {
+          "title": "AOPA contests fee increase at Westchester County Airport",
+          "url": "https://www.aopa.org/news-and-media/all-news/2025/september/09/aopa-contests-fee-increase-at-westchester-county-airport",
+          "date": "2025-09-09",
+          "sourceType": "secondary",
+          "confirmed": true
+        }
+      },
+      {
+        "airport": "Republic Airport (FRG), East Farmingdale, New York",
+        "operator": "New York State Department of Transportation",
+        "tiedownSingleEngineMonthlyUsd": null,
+        "note": "No current NYSDOT rate schedule is published online. The last published figure is the 2008 NYSDOT release raising 'plane parking fees' from $105 to $140 for single-engine planes (the release does not say per month). Too old to use as current. Based tiedowns and T-hangars are now leased through the FBOs.",
+        "source": {
+          "title": "NYSDOT Approves New Rates and Charges for Republic Airport (press release)",
+          "url": "http://republicairport.net/pdf/Rate-Changes08.pdf",
+          "date": "2008",
+          "sourceType": "primary",
+          "confirmed": true
+        }
+      },
+      {
+        "airport": "Danbury Municipal Airport (DXR), Danbury, Connecticut",
+        "operator": "Business Aircraft Center (FBO; city-owned airport)",
+        "tiedownSingleEngineMonthlyUsd": 165.00,
+        "note": "$170 with electric outlet. FBO rate, not a city rate; undated.",
+        "source": {
+          "title": "Tie-Down Rentals Available, Danbury Municipal Airport (Business Aircraft Center)",
+          "url": "https://www.businessaircraftcenter.com/danbury-tiedowns-rentals.htm",
+          "date": null,
+          "sourceType": "secondary",
+          "confirmed": false,
+          "note": "From the search-engine summary only."
+        }
+      }
+    ]
+  },
+
+  "insurance": {
+    "privateOwnerAnnualPremiumUsd": { "low": 1200, "high": 2500 },
+    "assumptions": "Personal use, hull $80,000-$150,000, $1,000,000 smooth liability, pilot with 250+ total hours, clean history, hangared.",
+    "hullRatePctOfValue": { "low": 0.9, "high": 1.3 },
+    "example": "$100,000 hull x 1.1% = $1,100 hull premium",
+    "lowTimePilotUsd": { "low": 2000, "high": 3500 },
+    "note": "Published by an insurance broker; figures are the broker's own ranges, not filed rates. A new 172S (list price $419,620 per AOPA's guide) at 0.9-1.3% of hull would run about $3,800-$5,500 for hull alone.",
+    "source": {
+      "title": "Airplane Insurance Cost for a Cessna 172 in 2026 - Real Numbers (BWI Fly)",
+      "url": "https://bwifly.com/blog/airplane-insurance-cost-for-a-cessna-172-in-2026-real-numbers-what-affects-pricing-and-how-to-lower-your-premium/",
+      "date": "2026-03-04",
+      "sourceType": "secondary",
+      "confirmed": true
+    }
+  },
+
+  "uncertain": [
+    "Fuel burn at exactly 75% is not a single POH number: the Information Manual gives 124 KTAS at 12.2 NMPG (about 10.2 gph); the Figure 5-8 table brackets 75% between 9.9 and 10.4 gph. AOPA quotes 9.9 gph.",
+    "AirNav ($7.25, 29 Sep 2026) and GlobalAir ($7.69 full-service, about 25 Sep 2026) differ because AirNav averages all posted 100LL prices while GlobalAir's is full-service only.",
+    "No California-only or 'Northeast' avgas average is published; FAA-region averages stand in.",
+    "Overhaul prices are for Lycoming four-cylinder IO-320/IO-360 engines as a group, not quoted for the IO-360-L2A alone.",
+    "Engine reserve per hour is derived, and for a low-use owner the 12-year calendar TBO, not the 2000-hour limit, usually decides when the overhaul comes.",
+    "Personal-use hours per aircraft (63.0 for 4+ seat singles) is derived from two FAA tables that count use differently; treat as approximate.",
+    "The annual-inspection flat rate ($1,800) is one shop's price sheet with no date or location; the $2,500-$4,500 total-with-findings range was not confirmed on its page.",
+    "Republic Airport (FRG) has no current published NYSDOT tiedown rate; the only published figure dates from 2008.",
+    "Westchester (HPN) and Danbury (DXR) rates are FBO rates, not municipal ones; the Danbury figure was not confirmed on its page.",
+    "Insurance ranges come from a broker's marketing article, not from filed rates or an industry survey."
+  ]
+}

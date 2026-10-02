@@ -1,0 +1,449 @@
+{
+  "_meta": {
+    "compiledOn": "2026-09-29",
+    "subject": "Irish actor resident in Dublin",
+    "currency": "EUR",
+    "note": "Every figure carries its source and effective date. Where a figure could not be confirmed from a primary or near-primary source it is null and explained under 'uncertain'. Irish Equity keeps its current rate cards behind a members' login (https://irishequity.ie/fees/ returns 'You are required to login to view this page'), so the only performer rate schedule publicly readable is the 2021 SPI/Irish Equity Irish Film Agreement."
+  },
+
+  "screenRates": {
+    "union": {
+      "name": "Irish Equity",
+      "parent": "SIPTU (Services, Industrial, Professional and Technical Union)",
+      "address": "Liberty Hall, Dublin 1",
+      "source": "https://irishequity.ie/working-as-an-actor-in-ireland-the-facts/"
+    },
+    "irishFilmAgreement2021": {
+      "parties": "Screen Producers Ireland (SPI) and Irish Equity",
+      "covers": "Feature films (Irish-produced); performers",
+      "commenced": "2021-02-01",
+      "duration": "Three years from signature, then continuing until amended by mutual written agreement or terminated on 3 months' written notice (clause 1.2). No successor agreement found publicly, so it is presumed still in force by its rollover clause; see 'uncertain'.",
+      "structure": "A basic performance fee plus a use fee (a percentage of the basic, varying by budget tier) plus 8% holiday pay, plus a share in a net-profits cast pool. It is not a full buyout.",
+      "tiers": [
+        {
+          "tier": 1,
+          "budget": "Global budget of EUR 2.5m and over",
+          "daily": { "basic": 158.00, "useFeePercent": 280, "useFee": 442.40, "holidayPay": 12.64, "total": 613.00 },
+          "weekly": { "basic": 632.00, "useFeePercent": 280, "useFee": 1769.60, "holidayPay": 50.56, "total": 2452.00 },
+          "netProfitsCastPoolPercent": 3
+        },
+        {
+          "tier": 2,
+          "budget": "Global budget over EUR 1.25m and up to EUR 2.5m",
+          "daily": { "basic": 158.00, "useFeePercent": 75, "useFee": 118.50, "holidayPay": 12.64, "total": 289.00 },
+          "weekly": { "basic": 632.00, "useFeePercent": 75, "useFee": 474.00, "holidayPay": 50.56, "total": 1157.00 },
+          "netProfitsCastPoolPercent": 5
+        },
+        {
+          "tier": 3,
+          "budget": "Global budget of EUR 1.25m and under",
+          "daily": { "basic": 158.00, "useFeePercent": 50, "useFee": 79.00, "holidayPay": 12.64, "total": 250.00 },
+          "weekly": { "basic": 632.00, "useFeePercent": 50, "useFee": 316.00, "holidayPay": 50.56, "total": 999.00 },
+          "netProfitsCastPoolPercent": 5
+        }
+      ],
+      "otherTerms": {
+        "holidayPay": "8% of the daily or weekly performance fee, excluding use fees",
+        "overtimePerHour": 40.00,
+        "overtimeCapHoursPerDay": 4,
+        "nightWork": "Additional 50% of the basic daily fee",
+        "secondCallSession": "EUR 50 for a session of not more than 5 hours (tests, fittings, stills); no use fee",
+        "readThroughsAndRehearsals": "Half the artist's negotiated daily performance fee; no use fee",
+        "weatherCancellation": "Artist receives the negotiated daily performance fee (no use fee)"
+      },
+      "note": "The tier totals in the schedule are rounded to the euro (e.g. tier 3 daily 158 + 79 + 12.64 = 249.64, printed as 250; weekly 998.56 printed as 999).",
+      "source": "https://www.scannain.com/media/New-Film-Agreement-2021.pdf",
+      "announcement": "https://www.screenproducersireland.com/news/screen-producers-ireland-and-irish-equity-welcome-new-agreement-film"
+    },
+    "tvDramaAgreement2016": {
+      "parties": "Screen Producers Ireland and Irish Equity",
+      "signed": "2016-03-30",
+      "effective": "2016-05-01",
+      "duration": "Three years",
+      "covers": "Performers on TV drama commissioned by Irish broadcasters; the first collective agreement for artists in Irish TV drama. Moved away from full buyout toward profit participation from programme sales after an initial period. Excludes instrumental musicians, crowd, walk-on/background, stunt artists and dancers in those capacities.",
+      "dailyRate": null,
+      "perEpisodeRate": null,
+      "note": "The announcement publishes no figures; the rate schedule is not public.",
+      "source": "https://irishequity.ie/screen-producers-ireland-and-irish-equity-sign-collective-agreement/"
+    },
+    "rteDramaRates": {
+      "dailyRate": null,
+      "perEpisodeRate": null,
+      "note": "No public RTÉ/Irish Equity drama rate card found."
+    },
+    "marketRateCard2020_secondary": {
+      "actorDailyBuyoutMinimum": 850,
+      "weekly": "5 days' work for 4 days' pay",
+      "stuntAverageDaily": 750,
+      "childAverageDaily": 250,
+      "walkOnAverageDaily": 200,
+      "backgroundAverageDaily": 110,
+      "effective": "2020 market rate card (not a collective agreement)",
+      "caveat": "Secondary source (Focal / ProdValue, Swiss producers' association comparative survey). It describes prevailing market buyout rates on productions, largely inward international work, not an Irish Equity minimum.",
+      "source": "https://focal.ch/prodvalue/working_conditions/ireland.html"
+    }
+  },
+
+  "theatreRates": {
+    "irishEquityTheatreForumMinimumWeekly": null,
+    "effective": null,
+    "note": "No publicly readable Irish Equity / Theatre Forum rate card was found; Irish Equity's fees page is members-only. A blank Irish Equity theatre memorandum of agreement (undated) is public and sets structure but no figures: extra performances beyond the normal week at not less than one-sixth of the weekly salary; hourly rate basis of 1/42 of the weekly engagement fee; overtime at twice the hourly rate; management lodges a bond equal to one week's engagement for all artistes.",
+    "structureSource": "https://www.fia-actors.com/uploads/SIPTU%20TheatreAgreement.pdf",
+    "historicalFigure": {
+      "irishEquityAdvisedMinimumWeekly": 381,
+      "context": "Irish Times report on an Arts Council pay study: Abbey wages started at the Equity minimum and rose to EUR 792 for seasoned performers; Gate top rate reported at EUR 700; companies such as Rough Magic or Druid between EUR 550 and EUR 650 a week.",
+      "effective": "Undated older article (pre-2010 URL format); NOT a current figure",
+      "source": "https://www.irishtimes.com/culture/the-pay-s-the-thing-arts-council-report-findings-1.518210"
+    },
+    "touringNote": "UK Theatre states that touring in the Republic of Ireland is now covered by the UK Theatre/Equity Commercial and Subsidised Theatre Agreements, and the UK Theatre/SOLT/Irish Equity Addendum is no longer in use.",
+    "touringSource": "https://uktheatre.org/overseas-touring/"
+  },
+
+  "audioRates": {
+    "rteRadioDramaFee": null,
+    "voiceOverMinimum": null,
+    "effective": null,
+    "note": "No public Irish Equity radio/audio or RTÉ radio drama rate card was found. Do not substitute the UK Equity/BBC audio rates, which are a different jurisdiction."
+  },
+
+  "agencies": {
+    "typicalCommission": {
+      "percentRange": "10-15% average; rarely above 20%",
+      "sharedRepresentationExample": "One Irish agent charged 15% on her own clients and 21% (split between agents) when sharing a client with a UK or US agent",
+      "deductible": "Agent commission is deductible as a cost of earning the fee for Irish tax purposes",
+      "caveat": "Secondary sources (a casting platform guide and an accountant's guide). No agency publishes its commission on its site; none of the verified agency sites below discloses a rate.",
+      "sources": [
+        "https://castandhire.ie/blog/how-to-get-an-acting-agent-a-complete-guide-for-irish-actors/",
+        "https://www.firstaccounts.ie/accountant-for-actors-in-ireland/"
+      ]
+    },
+    "list": [
+      {
+        "name": "The Lisa Richards Agency",
+        "verifiedOn": "https://www.lisarichardsagency.com/",
+        "location": "Dublin; London office opened 2007; Finland from 2017",
+        "founded": 1989,
+        "represents": "Actors, comedians, voice-over artists, writers, presenters and creative talent",
+        "commission": null
+      },
+      {
+        "name": "The Agency",
+        "note": "Founded by Teri Hayden in the early 1980s (it was never called 'Teri Hayden Agency'). Hayden died 18 April 2024; her son Karl is now director.",
+        "verifiedOn": "https://www.theagency.ie/",
+        "location": "25 Leeson Street Lower, Dublin 2 (per Irish Theatre Institute listing)",
+        "represents": "Actors (female, male) and voice",
+        "commission": null,
+        "sources": [
+          "https://irishtheatre.ie/resource/agents-representatives-ireland-uk/the-agency/",
+          "https://www.irishtimes.com/obituaries/2024/06/08/teri-hayden-obituary-trailblazing-agent-who-guided-the-careers-of-some-of-irelands-most-successful-actors/"
+        ]
+      },
+      {
+        "name": "Castaway Actors Agency",
+        "verifiedOn": "https://www.castawayactors.com/",
+        "structure": "Describes itself as Ireland's longest-running co-operative agency",
+        "represents": "Actors (32 listed at time of check)",
+        "commission": null
+      },
+      {
+        "name": "First Call Management",
+        "verifiedOn": "https://www.firstcallmanagement.ie/",
+        "location": "Beauparc House, Ballydowd, Lucan, Co. Dublin (per Irish Theatre Institute listing)",
+        "represents": "Actors",
+        "commission": null,
+        "source": "https://irishtheatre.ie/resource/agents-representatives-ireland-uk/first-call-management/"
+      },
+      {
+        "name": "MacFarlane Chard Associates Ireland",
+        "verifiedOn": "https://www.macfarlane-chard.ie/",
+        "location": "24 Adelaide Street, Dún Laoghaire, Co. Dublin",
+        "founded": 2006,
+        "represents": "Actors, directors and writers",
+        "commission": null
+      },
+      {
+        "name": "Morgan The Agency",
+        "verifiedOn": "http://morgantheagency.com/",
+        "location": "Dublin (+353 1 661 4572)",
+        "represents": "Models, actors, commercial and creative talent",
+        "commission": null
+      }
+    ],
+    "fullDirectory": "https://irishtheatre.ie/resource/agents-representatives-ireland-uk/"
+  },
+
+  "directories": [
+    {
+      "name": "Spotlight (Ireland membership)",
+      "performerAnnualExVat": 196.50,
+      "performerAnnualIncVat": 241.70,
+      "performerMonthlyExVat": 18.37,
+      "performerMonthlyIncVat": 22.60,
+      "vatRatePercent": 23,
+      "eligibility": "At least one featured Equity role, two professional credits, or one year full-time (RQF level 5) / two years part-time professional training",
+      "effective": "Prices shown on the Spotlight Ireland join page as checked 2026-09-29",
+      "source": "https://www.spotlight.com/join-us/ireland/",
+      "note": "The inc-VAT figures are the ex-VAT price at Ireland's 23% standard VAT rate (196.50 x 1.23 = 241.70; 18.37 x 1.23 = 22.60). Graduate and young-performer tiers (reported EUR 128.50 + VAT a year) were not confirmed on the Ireland page."
+    },
+    {
+      "name": "CastMe.ie",
+      "fee": 0,
+      "note": "Free membership for actors, models and extras",
+      "source": "https://castme.ie/joinus"
+    },
+    {
+      "name": "Casting Ireland",
+      "fee": 14.99,
+      "feeType": "One-off profile set-up and hosting fee; no ongoing subscription",
+      "source": "https://register.castingireland.ie/"
+    },
+    {
+      "name": "CastandHire",
+      "fee": 0,
+      "source": "https://castandhire.ie/"
+    },
+    {
+      "name": "Irish Theatre Institute resource directory (agents, casting directors)",
+      "fee": 0,
+      "source": "https://irishtheatre.ie/resource/agents-representatives-ireland-uk/"
+    },
+    {
+      "name": "Casting Networks (Ireland)",
+      "fee": null,
+      "note": "Not confirmed to operate an Ireland-specific service"
+    },
+    {
+      "name": "Irish Equity membership subscription",
+      "fee": null,
+      "note": "Behind members' login at https://irishequity.ie/fees/"
+    }
+  ],
+
+  "production": {
+    "section481Spend2025": {
+      "totalEur": 544000000,
+      "yearOnYearChangePercent": 26,
+      "scope": "Total spend in Ireland by all film, TV, documentary and animation projects eligible for the Section 481 incentive in 2025",
+      "notableInward2025": ["The Mummy (Lee Cronin; Atomic Monster/Blumhouse for New Line)", "Mercenary: An Extraction Series (Netflix)", "Bloodaxe (Amazon Prime Video)"],
+      "published": "2026-01-29",
+      "publisher": "Screen Ireland (Fís Éireann), as reported",
+      "source": "https://www.screendaily.com/news/irish-production-spend-hit-record-high-of-544m-in-2025/5213175.article",
+      "breakdownByFormat": null,
+      "numberOfProjects": null
+    },
+    "section481Spend2021": {
+      "totalEur": 500000000,
+      "note": "Previous record, per Screen Ireland's Section 481 data page",
+      "source": "https://www.screenireland.ie/industry-insights/section-481-data"
+    },
+    "screenIreland2026Slate": {
+      "projects": 87,
+      "source": "https://www.screenireland.ie/news/screen-ireland-launches-its-slate-of-productions-coming-to-audiences-in-2026"
+    },
+    "section481Credit": {
+      "baseRatePercent": 32,
+      "basis": "32% of the lowest of eligible expenditure, 80% of total qualifying production costs, or EUR 125m",
+      "capEur": 125000000,
+      "source": "https://www.revenue.ie/en/companies-and-charities/reliefs-and-exemptions/film-relief/index.aspx",
+      "scealUplift": {
+        "ratePercent": 40,
+        "condition": "Independent feature films with qualifying expenditure up to EUR 20m globally (introduced Budget 2025)",
+        "source": "https://www.screenireland.ie/filming/section-481-1"
+      },
+      "vfxUplift": {
+        "ratePercent": 40,
+        "condition": "Minimum EUR 1m eligible VFX expenditure; 40% on up to EUR 10m of eligible expenditure; subject to EU State Aid approval (Budget 2026)",
+        "source": "https://www.revenue.ie/en/corporate/press-office/budget-information/current-year/budget-summary.pdf"
+      }
+    }
+  },
+
+  "statePension": {
+    "contributory": {
+      "pensionAge": 66,
+      "deferralUpToAge": 70,
+      "maxPersonalWeeklyAt66": 299.30,
+      "maxPersonalWeeklyIfDrawnAt67": 313.40,
+      "maxPersonalWeeklyIfDrawnAt68": 328.90,
+      "qualifiedAdultUnder66": 199.40,
+      "qualifiedAdult66Plus": 268.40,
+      "previousRate2025": 289.30,
+      "increase": "EUR 10 a week from January 2026 (Budget 2026)",
+      "age80PlusPersonal": 309.30,
+      "age80PlusSource": "https://www.zurich.ie/blog/pension-changes-2026/",
+      "effective": "January 2026",
+      "source": "https://www.citizensinformation.ie/en/social-welfare/older-and-retired-people/state-pension-contributory/",
+      "budgetSource": "https://www.rte.ie/news/budget-2026/2025/1007/1537087-budget-2026-social-welfare/",
+      "qualifying": {
+        "minimumPaidFullRateContributions": 520,
+        "minimumYears": 10,
+        "reckonableClasses": ["A", "E", "F", "G", "H", "N", "S"],
+        "entryIntoInsurance": "Must have started paying PRSI at least 10 years before drawing the pension (i.e. before age 56 to draw at 66)",
+        "voluntary": "High-rate voluntary contributions can make up the balance of the 520 if at least 260 full-rate employment contributions are paid",
+        "source": "https://www.citizensinformation.ie/en/social-welfare/older-and-retired-people/state-pension-contributory/"
+      },
+      "totalContributionsApproach": {
+        "appliesTo": "Anyone born on or after 1 January 1959 (claims from 1 January 2025)",
+        "fullRateContributions": 2080,
+        "fullRateYears": 40,
+        "formula": "Rate = min(total, 2080) / 2080 x maximum rate (e.g. 1,040 = 50%; 1,469 = 70.62%)",
+        "counts": [
+          "Full-rate paid contributions from employment (Class A) or self-employment (Class S)",
+          "High-rate and special voluntary contributions",
+          "HomeCaring Periods and Long-Term Carer's Contributions (may not overlap)",
+          "Up to 10 years (520) of credited contributions"
+        ],
+        "creditsCap": "Credited contributions capped at 10 years; HomeCaring Periods plus credits together capped at 1,040 (20 years)",
+        "contributionsCountedUntil": "Age 66, or the age to which the pension is deferred",
+        "source": "https://www.citizensinformation.ie/en/social-welfare/older-and-retired-people/state-pension-contributory/"
+      },
+      "yearlyAveragePhaseOut": {
+        "rule": "From 2025 to 2034 a claimant gets the higher of pure TCA or a blend of Yearly Average (YA) and TCA; by 2034 only TCA (everyone born on or after 1 January 1968).",
+        "blend2025": "90% YA / 10% TCA",
+        "blend2026": "80% YA / 20% TCA",
+        "yaWeeklyRates2026": [
+          { "yearlyAverage": "48 or over", "weekly": 299.30 },
+          { "yearlyAverage": "40-47", "weekly": 293.50 },
+          { "yearlyAverage": "30-39", "weekly": 269.10 },
+          { "yearlyAverage": "20-29", "weekly": 254.80 },
+          { "yearlyAverage": "15-19", "weekly": 195.00 },
+          { "yearlyAverage": "10-14", "weekly": 119.60 }
+        ],
+        "source": "https://www.citizensinformation.ie/en/social-welfare/older-and-retired-people/state-pension-contributory/"
+      },
+      "howClassesCount": {
+        "classA": "Employee PRSI; one contribution per week of insurable employment. Below EUR 352 a week the employee pays nothing but is still insured at Class A because the employer pays.",
+        "classS": "Self-employed PRSI; reckonable, full-rate for the State Pension (Contributory). Paid annually at 4.2% of total income (min EUR 650) from 1 Oct 2025.",
+        "maxPerWeek": "Only one contribution per contribution week (max 52 a year), whatever the mix of classes or credits",
+        "classSWeeksPerYear": null,
+        "classSWeeksNote": "Not confirmed from a primary page how many weekly contributions a year of Class S is recorded as (commonly 52); see 'uncertain'.",
+        "sources": [
+          "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-insurance-prsi/paying-social-insurance/",
+          "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-insurance-prsi/class-s-prsi/",
+          "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-insurance-prsi/credited-social-insurance-contributions/"
+        ]
+      },
+      "creditsFromJobseekers": {
+        "automatic": "Credits are awarded automatically when not working, under 66, and getting Jobseeker's Benefit or Jobseeker's Pay-Related Benefit",
+        "jobseekersAllowance": "Not automatic on the means-tested Jobseeker's Allowance: requires paid or credited contributions in either of the last 2 tax years",
+        "signingOnForCreditsOnly": "Possible without a payment if paid/credited contributions in either of the last 2 tax years, and unemployed, available, capable and genuinely seeking work",
+        "onePerWeek": "Where part-time work and Jobseeker's Benefit fall in the same week, the paid contribution is awarded, not a credit",
+        "pensionCap": "Credits count toward the TCA only up to 10 years (520)",
+        "source": "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-insurance-prsi/credited-social-insurance-contributions/"
+      }
+    },
+    "nonContributory": {
+      "maxWeekly66to79": 288.00,
+      "maxWeekly80Plus": 298.00,
+      "increaseForQualifiedAdult": 190.20,
+      "effective": "January 2026",
+      "meansTest": {
+        "fullRateIfWeeklyMeansUpTo": 30.00,
+        "taper": "After the first EUR 30 of weekly means, the pension falls EUR 2.50 for every EUR 2.50 of means",
+        "employmentEarningsDisregardWeekly": 200.00,
+        "employmentDisregardNote": "Up to EUR 200 a week from employment (not self-employment or farming) is disregarded, for the claimant and separately for a spouse/partner",
+        "capital": [
+          { "band": "First EUR 20,000", "assessedWeeklyMeans": "Nil" },
+          { "band": "Next EUR 10,000", "assessedWeeklyMeans": "EUR 1 per EUR 1,000" },
+          { "band": "Next EUR 10,000", "assessedWeeklyMeans": "EUR 2 per EUR 1,000" },
+          { "band": "Balance", "assessedWeeklyMeans": "EUR 4 per EUR 1,000" }
+        ],
+        "ownHome": "Value of own home is not assessed",
+        "roomRentalDisregard": "Up to EUR 269.23 a week (EUR 14,000 a year) from renting a room in own home, under conditions"
+      },
+      "source": "https://www.citizensinformation.ie/en/social-welfare/older-and-retired-people/state-pension-non-contributory/"
+    },
+    "pendingBudget2027": {
+      "status": "Government reported (26 Sept 2026) to be considering a EUR 7.50 weekly increase for Budget 2027; no decision made. Would take non-contributory rates to 295.50 / 305.50.",
+      "source": "https://www.rte.ie/news/ireland/2026/0926/1593064-state-pension/"
+    }
+  },
+
+  "tax": {
+    "year": 2026,
+    "incomeTax": {
+      "singleStandardRateBand": 44000,
+      "singleParentStandardRateBand": 48000,
+      "marriedOneEarnerBand": 53000,
+      "marriedTwoEarnersBand": "53,000 increased by up to 35,000 (max 88,000)",
+      "standardRatePercent": 20,
+      "higherRatePercent": 40,
+      "changeFrom2025": "None",
+      "source": "https://www.revenue.ie/en/corporate/press-office/budget-information/current-year/budget-summary.pdf",
+      "published": "2025-10-07"
+    },
+    "taxCredits": {
+      "personalSingle": 2000,
+      "personalMarried": 4000,
+      "employeePAYE": 2000,
+      "earnedIncome": 2000,
+      "note": "Employee (PAYE) and Earned Income credits are alternatives: combined they cannot exceed EUR 2,000 for one person with both employment and self-employment income. The combined cap is established Revenue practice but was not re-confirmed in the 2026 summary; see 'uncertain'.",
+      "rentTaxCredit": { "single": 1000, "jointlyAssessedCouple": 2000, "years": "2024 to 2028", "source": "https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/land-and-property/rent-credit/index.aspx" },
+      "source": "https://www.revenue.ie/en/corporate/press-office/budget-information/current-year/budget-summary.pdf"
+    },
+    "usc": {
+      "exemptIfTotalIncomeUpTo": 13000,
+      "exemptNote": "If total income exceeds EUR 13,000, USC is paid on the full income",
+      "exemptSource": "https://www.revenue.ie/en/jobs-and-pensions/usc/index.aspx",
+      "bands": [
+        { "from": 0, "to": 12012, "ratePercent": 0.5 },
+        { "from": 12012.01, "to": 28700, "ratePercent": 2 },
+        { "from": 28700.01, "to": 70044, "ratePercent": 3 },
+        { "from": 70044.01, "to": null, "ratePercent": 8 }
+      ],
+      "changeFrom2025": "2% band ceiling raised from EUR 27,382 to EUR 28,700 from 1 January 2026",
+      "reducedRate": "Max 2% for those aged 70+, or full medical card holders under 70, with aggregate income of EUR 60,000 or less (continued for 2026 and 2027)",
+      "selfEmployedSurchargeOver100k": null,
+      "effective": "2026-01-01",
+      "source": "https://www.revenue.ie/en/jobs-and-pensions/usc/standard-rates-thresholds.aspx"
+    },
+    "prsi": {
+      "classAEmployee": [
+        { "ratePercent": 4.1, "effective": "to 2025-09-30" },
+        { "ratePercent": 4.2, "effective": "2025-10-01 to 2026-09-30" },
+        { "ratePercent": 4.35, "effective": "from 2026-10-01" }
+      ],
+      "classAThresholds": {
+        "noEmployeePrsiAtOrBelowWeekly": 352.00,
+        "rateAppliesToAllEarningsAboveWeekly": 352.00,
+        "taperedCreditBand": "EUR 352.01 to EUR 424 a week",
+        "maxCreditWeekly": 12.00,
+        "creditFormula": "Credit = 12 - (earnings - 352.01) / 6"
+      },
+      "classAEmployer": [
+        { "effective": "2026-01-01", "rateUpTo552Weekly": 9.0, "rateAbove552Weekly": 11.25 },
+        { "effective": "2026-10-01", "rateUpTo552Weekly": 9.15, "rateAbove552Weekly": 11.4 }
+      ],
+      "classASource": "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-insurance-prsi/paying-social-insurance/",
+      "classS": [
+        { "ratePercent": 4.1, "effective": "to 2025-09-30" },
+        { "ratePercent": 4.2, "effective": "2025-10-01 to 2026-09-30" },
+        { "ratePercent": 4.35, "effective": "from 2026-10-01", "source": "https://www.gallagherkeane.ie/blog/prsi-rates-increase-from-1-october-2026/", "sourceNote": "Citizens Information states all PRSI rates rise by 0.15% on 1 Oct 2026; the explicit Class S figure is from a secondary source" }
+      ],
+      "classSDetail": {
+        "base": "Total income for tax purposes (gross less allowable expenses), or minimum payment, whichever is greater",
+        "minimumAnnual": 650,
+        "blended2025Rate": 4.125,
+        "flatRateIfNoReturnButOver5000": 310,
+        "exemptUnderAnnual": 5000,
+        "source": "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-insurance-prsi/class-s-prsi/"
+      }
+    }
+  },
+
+  "uncertain": [
+    "Irish Equity current rate cards (film, TV, theatre, audio, commercials) are behind the members' login at https://irishequity.ie/fees/; only the 2021 Irish Film Agreement schedule is publicly readable. Whether a successor to the 2021 film agreement has been signed is not publicly confirmed; its rollover clause keeps it in force until replaced.",
+    "No public per-episode TV rate, RTÉ drama rate, RTÉ radio drama rate or voice-over minimum was found: all null.",
+    "No current Irish Equity / Theatre Forum minimum weekly theatre rate was found. The EUR 381 figure is historical (old Irish Times article) and must not be used as current.",
+    "The EUR 850 daily actor buyout is a 2020 market rate card from a Swiss producers' survey, not a collective-agreement minimum.",
+    "Agency commission (10-15% typical, rarely over 20%) comes from secondary guides; no agency publishes its rate.",
+    "The age-80+ State Pension (Contributory) personal rate EUR 309.30 comes from Zurich Ireland, not a government page.",
+    "How many weekly contributions a year of Class S PRSI is recorded as for the TCA was not confirmed from a primary page.",
+    "The Employee/Earned Income credit combined cap of EUR 2,000 was not re-confirmed from a 2026 primary source.",
+    "The USC surcharge (additional 3%, i.e. 11%) on non-PAYE income over EUR 100,000 was not confirmed from a primary page in this pass; set to null.",
+    "Class S 4.35% from 1 October 2026 is stated explicitly only by secondary sources; Citizens Information says all PRSI rates rise 0.15% on that date.",
+    "Budget 2027 is due in October 2026 and may change pension rates, USC bands and credits from January 2027. A EUR 7.50 pension increase is under consideration (RTÉ, 26 Sept 2026).",
+    "Section 481 2025 spend (EUR 544m, +26%) is taken from Screen Daily's report of Screen Ireland's figures (29 Jan 2026); the Screen Ireland page itself was not retrieved, and no format breakdown or project count was obtained.",
+    "Teri Hayden's agency is named 'The Agency', not 'Teri Hayden Agency'; 'Lisa Richards' and 'The Lisa Richards Agency' are one agency."
+  ]
+}

@@ -314,6 +314,28 @@ describe('missed payments', () => {
     expect(late.postings.find((p) => p.accountId === c.id)!.amount).toBeGreaterThanOrEqual(-5_00);
   });
 
+  it('cost a US holder no more than the safe harbor: $30 the first time, $41 again within six cycles', () => {
+    const sim = lifeIn('us-ny-newyork', { wealth: 'scraping', bankId: 'us-chase' }, 'cl-us-harbor');
+    const c = card(sim)!;
+    withCard(c.bankId!, { name: 'Test', kind: 'revolving', apr: 0.2, lateFee: 400_00, minimumShare: 0.5, minimumFloor: 500_00, source: 'test', asOf: '2026-09-26' });
+    give(sim, c.id, -c.balance - 5_000_00);
+    missOne(sim);
+    const fees = () => sim.universe.transactions.filter((t) => t.memo === 'Late fee').map((t) => -t.postings.find((p) => p.accountId === c.id)!.amount);
+    expect(fees()).toEqual([30_00]);
+    missOne(sim);
+    expect(fees().at(-1)).toBe(41_00);
+  });
+
+  it('end Barclaycard’s promotional rate at one missed minimum, as its terms say, and not Lloyds’', () => {
+    const lost = (bankId: string) => {
+      const sim = lifeIn('uk-eng-london', { wealth: 'scraping', bankId }, `cl-intro-${bankId}`);
+      missOne(sim);
+      return sim.player.credit?.introLost === true;
+    };
+    expect(lost('gb-barclays')).toBe(true);
+    expect(lost('gb-lloyds')).toBe(false);
+  });
+
   it('are taken from the holder’s other accounts at the same bank in Britain', () => {
     const sim = lifeIn('uk-eng-london', { wealth: 'scraping' }, 'cl-setoff');
     const c = card(sim)!;

@@ -1,0 +1,4098 @@
+{
+  "_meta": {
+    "title": "SLATE vehicle research: real published figures",
+    "compiled": "2026-09-29",
+    "rules": "Every figure carries a source URL, the period it applies to and sourceType (primary = manufacturer, government, regulator, central bank, or official registration body SMMT/SIMI; secondary = press, analyst, industry data vendor). Unconfirmable figures are null and listed in 'uncertain'. No estimates are presented as published. Currencies are in their own units.",
+    "jurisdictionsCovered": [
+      "US-NY",
+      "US-CT",
+      "US-CA",
+      "GB",
+      "IE",
+      "CA-ON",
+      "CA-BC",
+      "MX-CMX"
+    ],
+    "jurisdictionsNotCovered": [
+      "DE",
+      "FR",
+      "ES",
+      "IS",
+      "JP",
+      "KR",
+      "AU-NSW",
+      "NZ",
+      "BR",
+      "LV"
+    ],
+    "fragmentMeta": {
+      "finIns": {
+        "researched": "2026-09-29",
+        "rule": "Every non-null value was read from the cited page or document. Nulls are unconfirmed and listed in 'uncertain'. No estimates are presented as published figures."
+      }
+    }
+  },
+  "catalog": {
+    "US": [
+      {
+        "rank": 1,
+        "make": "Ford",
+        "model": "F-Series",
+        "units2025": 828832,
+        "salesSource": {
+          "url": "https://www.fromtheroad.ford.com/us/en/articles/2026/ford-2025-full-year-us-sales-results",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "primary"
+        },
+        "basePrice": {
+          "amount": 37790,
+          "currency": "USD",
+          "modelYear": 2027,
+          "trim": "F-150 XL Regular Cab 4x2",
+          "includesTax": false,
+          "url": "https://pickuptrucktalk.com/2026/09/2027-ford-f-150-updates/",
+          "retrieved": "2026-09-29",
+          "sourceType": "secondary"
+        },
+        "body": "pickup",
+        "fuel": "petrol",
+        "economy": {
+          "value": null,
+          "unit": "mpg (EPA combined)",
+          "url": "https://www.fueleconomy.gov/ws/rest/vehicle/menu/model?year=2027&make=Ford",
+          "sourceType": "primary",
+          "config": "2027 F-150 base 3.0L EcoBoost V6: not yet listed on fueleconomy.gov"
+        },
+        "kerbWeightKg": null,
+        "notes": "Sales cover the whole F-Series (F-150, Super Duty, Lightning). Price excludes $2,795 destination per secondary sources; ford.com returned 403. For context only, the 2026 F-150 2WD 2.7L EcoBoost was 21 mpg (https://www.fueleconomy.gov/feg/noframes/50092.shtml)."
+      },
+      {
+        "rank": 2,
+        "make": "Chevrolet",
+        "model": "Silverado",
+        "units2025": 588709,
+        "salesSource": {
+          "url": "https://gmauthority.com/blog/2026/01/gm-sales-figures-numbers-results-united-states-2025-calendar-year/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 38600,
+          "currency": "USD",
+          "modelYear": 2027,
+          "trim": "Silverado 1500 Work Truck (cab/drive not stated)",
+          "includesTax": false,
+          "url": "https://www.chevrolet.com/upcoming-vehicles/2027-silverado-1500",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "pickup",
+        "fuel": "petrol",
+        "economy": {
+          "value": null,
+          "unit": "mpg (EPA combined)",
+          "url": "https://www.fueleconomy.gov/ws/rest/vehicle/menu/model?year=2027&make=Chevrolet",
+          "sourceType": "primary",
+          "config": "2027 Silverado not yet listed on fueleconomy.gov"
+        },
+        "kerbWeightKg": null,
+        "notes": "Sales = Silverado 1500 362,909 + HD 206,184 + MD 8,341 + EV 11,275. Destination exclusion inferred from GM Authority ($41,395 incl. $2,795); the chevrolet.com footnote did not load. For context only, the 2026 Silverado 2WD 2.7T was 20 mpg (https://www.fueleconomy.gov/feg/noframes/49358.shtml)."
+      },
+      {
+        "rank": 3,
+        "make": "Toyota",
+        "model": "RAV4",
+        "units2025": 479288,
+        "salesSource": {
+          "url": "https://www.best-selling-cars.com/usa/2025-full-year-usa-toyota-and-lexus-car-sales-by-model/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 31900,
+          "currency": "USD",
+          "modelYear": 2026,
+          "trim": "LE Hybrid FWD",
+          "includesTax": false,
+          "url": "https://pressroom.toyota.com/the-next-adventure-begins-2026-rav4-arrives-this-winter/",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "SUV",
+        "fuel": "hybrid",
+        "economy": {
+          "value": 43,
+          "unit": "mpg (EPA combined)",
+          "url": "https://www.fueleconomy.gov/feg/noframes/50285.shtml",
+          "sourceType": "primary",
+          "config": "2026 RAV4 FWD 2.5L hybrid (47 city / 40 hwy)"
+        },
+        "kerbWeightKg": {
+          "value": 1630.2,
+          "lb": 3594,
+          "url": "https://www.toyota.com/rav4/features/weights_capacities/"
+        },
+        "notes": "Toyota release: MSRP excludes the dealer processing and handling fee. The 2026 RAV4 is hybrid-only. Weight is the lighter LE figure, assumed FWD."
+      },
+      {
+        "rank": 4,
+        "make": "Honda",
+        "model": "CR-V",
+        "units2025": 403768,
+        "salesSource": {
+          "url": "https://www.best-selling-cars.com/usa/2025-full-year-usa-honda-and-acura-car-sales-by-model/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 31520,
+          "currency": "USD",
+          "modelYear": 2027,
+          "trim": "LX 2WD 1.5T CVT",
+          "includesTax": false,
+          "url": "https://hondanews.com/en-US/honda-automobiles/releases/release-5acd4d89f745189a21ef2396a500175b-2027-honda-cr-v-pricing-and-epa-ratings",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "SUV",
+        "fuel": "petrol",
+        "economy": {
+          "value": 30,
+          "unit": "mpg (EPA combined)",
+          "url": "https://www.fueleconomy.gov/feg/noframes/50756.shtml",
+          "sourceType": "primary",
+          "config": "2027 CR-V FWD 1.5L turbo CVT (28 city / 33 hwy)"
+        },
+        "kerbWeightKg": {
+          "value": 1574.9,
+          "lb": 3472,
+          "url": "https://hondanews.com/en-US/releases/release-2a30447979673882e0608a518f089aa6-2027-honda-cr-v-specifications-features"
+        },
+        "notes": "Excludes $1,550 destination. Honda's own year-end release returned 403, so units come from a secondary compiler; Honda describes 2025 as a record over 400,000."
+      },
+      {
+        "rank": 5,
+        "make": "Ram",
+        "model": "Pickup (1500 + Heavy Duty)",
+        "units2025": 374059,
+        "salesSource": {
+          "url": "https://www.best-selling-cars.com/usa/2025-full-year-usa-fca-jeep-ram-dodge-car-sales-by-brand-and-model/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 42575,
+          "currency": "USD",
+          "modelYear": 2027,
+          "trim": "1500 Tradesman (cab/drive not stated)",
+          "includesTax": false,
+          "url": "https://www.ramtrucks.com/2027/ram-1500.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "pickup",
+        "fuel": "petrol (mild hybrid eTorque)",
+        "economy": {
+          "value": 22,
+          "unit": "mpg (EPA combined)",
+          "url": "https://www.fueleconomy.gov/feg/noframes/50519.shtml",
+          "sourceType": "primary",
+          "config": "2027 Ram 1500 2WD 3.6L V6 eTorque, 8-speed (20 city / 25 hwy)"
+        },
+        "kerbWeightKg": null,
+        "notes": "Sales = light-duty 204,139 + heavy-duty 169,920. The ramtrucks.com footnote says MSRP excludes destination."
+      },
+      {
+        "rank": 6,
+        "make": "GMC",
+        "model": "Sierra",
+        "units2025": 356218,
+        "salesSource": {
+          "url": "https://gmauthority.com/blog/2026/01/gm-sales-figures-numbers-results-united-states-2025-calendar-year/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 48500,
+          "currency": "USD",
+          "modelYear": 2027,
+          "trim": "Sierra 1500 Pro 4WD Crew Cab",
+          "includesTax": false,
+          "url": "https://news.gmc.com/newsroom.detail.html/Pages/news/us/en/2026/sep/0922-next-generation-2027-Sierra-1500.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "pickup",
+        "fuel": "petrol",
+        "economy": {
+          "value": null,
+          "unit": "mpg (EPA combined)",
+          "url": "https://www.fueleconomy.gov/ws/rest/vehicle/menu/model?year=2027&make=GMC",
+          "sourceType": "primary",
+          "config": "2027 Sierra 2.7L TurboMax not yet on fueleconomy.gov"
+        },
+        "kerbWeightKg": {
+          "value": 2304.2,
+          "lb": 5080,
+          "url": "https://news.gmc.com/newsroom.detail.html/Pages/news/us/en/2026/sep/0922-next-generation-2027-Sierra-1500.html"
+        },
+        "notes": "Sales = Sierra 1500 230,156 + HD 118,066 + EV 7,996. The GMC release gives $51,295 including the $2,795 DFC. Regular and Double Cab prices are not yet announced, so a cheaper base is expected. For context only, the 2026 Sierra 2WD 2.7T was 20 mpg."
+      },
+      {
+        "rank": 7,
+        "make": "Chevrolet",
+        "model": "Equinox",
+        "units2025": 332301,
+        "salesSource": {
+          "url": "https://gmauthority.com/blog/2026/01/gm-sales-figures-numbers-results-united-states-2025-calendar-year/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 29000,
+          "currency": "USD",
+          "modelYear": 2027,
+          "trim": "LT FWD 1.5L turbo",
+          "includesTax": false,
+          "url": "https://www.chevrolet.com/suvs/equinox",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "SUV",
+        "fuel": "petrol",
+        "economy": {
+          "value": 27,
+          "unit": "mpg (EPA combined)",
+          "url": "https://www.fueleconomy.gov/feg/noframes/50403.shtml",
+          "sourceType": "primary",
+          "config": "2027 Equinox FWD 1.5T 8-speed (25 city / 29 hwy)"
+        },
+        "kerbWeightKg": null,
+        "notes": "332,301 = Equinox (petrol) 274,356 + Equinox EV 57,945. The petrol model alone would rank below the Camry and the Tacoma (274,638). Price and economy are for the petrol model. The destination exclusion ($1,995) is inferred from GM Authority."
+      },
+      {
+        "rank": 8,
+        "make": "Toyota",
+        "model": "Camry",
+        "units2025": 316185,
+        "salesSource": {
+          "url": "https://www.best-selling-cars.com/usa/2025-full-year-usa-toyota-and-lexus-car-sales-by-model/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 29600,
+          "currency": "USD",
+          "modelYear": 2026,
+          "trim": "LE FWD Hybrid",
+          "includesTax": false,
+          "url": "https://www.toyota.com/camry/",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "sedan",
+        "fuel": "hybrid",
+        "economy": {
+          "value": 51,
+          "unit": "mpg (EPA combined)",
+          "url": "https://www.fueleconomy.gov/feg/noframes/49823.shtml",
+          "sourceType": "primary",
+          "config": "2026 Camry HEV FWD LE 2.5L (52 city / 49 hwy)"
+        },
+        "kerbWeightKg": {
+          "value": 1564.9,
+          "lb": 3450,
+          "url": "https://www.toyota.com/camry/features/weights_capacities/"
+        },
+        "notes": "toyota.com still lists the 2026 as current. Press reports the 2027 LE at $29,700, not confirmed on a Toyota page."
+      }
+    ],
+    "CA": [
+      {
+        "rank": 1,
+        "make": "Ford",
+        "model": "F-Series",
+        "units2025": 138470,
+        "salesSource": {
+          "url": "https://www.fromtheroad.ford.com/ca/en/articles/2026/ford-canada-2025-sales-highlights",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "primary"
+        },
+        "basePrice": {
+          "amount": 53690,
+          "currency": "CAD",
+          "modelYear": 2027,
+          "trim": "F-150 XL 2WD Regular Cab 8 ft box",
+          "includesTax": false,
+          "url": "https://www.titaniumford.ca/new/2027-Ford-F_150.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "secondary",
+          "freightIncluded": false
+        },
+        "body": "pickup",
+        "fuel": "petrol",
+        "economy": {
+          "value": 11.2,
+          "unit": "L/100km (NRCan combined)",
+          "url": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+          "sourceType": "primary",
+          "config": "MY2026 F-150 2WD 2.7L EcoBoost AS10; no MY2027 rating yet"
+        },
+        "kerbWeightKg": null,
+        "notes": "The dealer page shows $56,485 including freight/PDI $2,695 and AC tax $100; the MSRP is derived by subtracting those."
+      },
+      {
+        "rank": 2,
+        "make": "Toyota",
+        "model": "RAV4",
+        "units2025": 75573,
+        "salesSource": {
+          "url": "https://www.guideautoweb.com/en/articles/80882/top-10-best-selling-vehicles-in-canada-in-2025/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 37500,
+          "currency": "CAD",
+          "modelYear": 2026,
+          "trim": "LE AWD Hybrid",
+          "includesTax": false,
+          "url": "https://media.toyota.ca/en/releases/2026/the-canadian-built-rav4-is-all-new-for-2026--and-offered-at-sugg.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary",
+          "freightIncluded": false
+        },
+        "body": "SUV",
+        "fuel": "hybrid",
+        "economy": {
+          "value": 5.5,
+          "unit": "L/100km (NRCan combined)",
+          "url": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+          "sourceType": "primary",
+          "config": "MY2026 RAV4 AWD LE 2.5L hybrid"
+        },
+        "kerbWeightKg": null,
+        "notes": "Toyota Canada release, January 2026."
+      },
+      {
+        "rank": 3,
+        "make": "GMC",
+        "model": "Sierra",
+        "units2025": 59962,
+        "salesSource": {
+          "url": "https://www.guideautoweb.com/en/articles/80882/top-10-best-selling-vehicles-in-canada-in-2025/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 53899,
+          "currency": "CAD",
+          "modelYear": 2027,
+          "trim": "Sierra 1500 Pro",
+          "includesTax": false,
+          "url": "https://www.autotrader.ca/editorial/car-news/gmc-announces-canadian-pricing-for-2027-sierra-1500/",
+          "retrieved": "2026-09-29",
+          "sourceType": "secondary",
+          "freightIncluded": false
+        },
+        "body": "pickup",
+        "fuel": "petrol",
+        "economy": {
+          "value": 12.5,
+          "unit": "L/100km (NRCan combined)",
+          "url": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+          "sourceType": "primary",
+          "config": "MY2026 Sierra 2WD 2.7L turbo A8; the MY2027 powertrain (10-speed) is not yet rated"
+        },
+        "kerbWeightKg": null,
+        "notes": "AutoTrader.ca citing GMC Canada; news.gm.ca returned 403."
+      },
+      {
+        "rank": 4,
+        "make": "Honda",
+        "model": "CR-V",
+        "units2025": 55987,
+        "salesSource": {
+          "url": "https://www.guideautoweb.com/en/articles/80882/top-10-best-selling-vehicles-in-canada-in-2025/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 37575,
+          "currency": "CAD",
+          "modelYear": 2027,
+          "trim": "LX 2WD",
+          "includesTax": false,
+          "url": "https://www.vaudreuilhonda.com/new/2027-Honda-Cr_v.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "secondary",
+          "freightIncluded": false
+        },
+        "body": "SUV",
+        "fuel": "petrol",
+        "economy": {
+          "value": 7.8,
+          "unit": "L/100km (NRCan combined)",
+          "url": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+          "sourceType": "primary",
+          "config": "MY2026 CR-V 2WD 1.5T CVT; no MY2027 rating yet"
+        },
+        "kerbWeightKg": null,
+        "notes": "Dealer configurator; freight/PDI $2,000 extra."
+      },
+      {
+        "rank": 5,
+        "make": "Chevrolet",
+        "model": "Silverado",
+        "units2025": 54068,
+        "salesSource": {
+          "url": "https://www.guideautoweb.com/en/articles/80882/top-10-best-selling-vehicles-in-canada-in-2025/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 52999,
+          "currency": "CAD",
+          "modelYear": 2027,
+          "trim": "Silverado 1500 WT",
+          "includesTax": false,
+          "url": "https://gmauthority.com/blog/2026/09/2027-chevy-silverado-pricing-announced-in-canada/",
+          "retrieved": "2026-09-29",
+          "sourceType": "secondary",
+          "freightIncluded": false
+        },
+        "body": "pickup",
+        "fuel": "petrol",
+        "economy": {
+          "value": 12.5,
+          "unit": "L/100km (NRCan combined)",
+          "url": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+          "sourceType": "primary",
+          "config": "MY2026 Silverado 2WD 2.7L turbo A8; MY2027 not yet rated"
+        },
+        "kerbWeightKg": null,
+        "notes": "GM Authority citing Chevrolet Canada; freight $2,700 extra."
+      },
+      {
+        "rank": 6,
+        "make": "Ram",
+        "model": "Pickup (1500 + Heavy Duty)",
+        "units2025": 42759,
+        "salesSource": {
+          "url": "https://www.guideautoweb.com/en/articles/80882/top-10-best-selling-vehicles-in-canada-in-2025/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 59495,
+          "currency": "CAD",
+          "modelYear": 2027,
+          "trim": "1500 Tradesman 4x4 Quad Cab 6'4\" box",
+          "includesTax": false,
+          "url": "https://www.chuddschrysler.ca/new/2027-Ram-1500.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "secondary",
+          "freightIncluded": false
+        },
+        "body": "pickup",
+        "fuel": "petrol (mild hybrid eTorque)",
+        "economy": {
+          "value": 11,
+          "unit": "L/100km (NRCan combined)",
+          "url": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+          "sourceType": "primary",
+          "config": "MY2026 Ram 1500 4X4 3.6L V6 eTorque A8"
+        },
+        "kerbWeightKg": null,
+        "notes": "Dealer page; freight/PDI $2,795 extra. The cheapest Canadian Ram 1500 is a 4x4."
+      },
+      {
+        "rank": 7,
+        "make": "Hyundai",
+        "model": "Tucson",
+        "units2025": 41840,
+        "salesSource": {
+          "url": "https://www.guideautoweb.com/en/articles/80882/top-10-best-selling-vehicles-in-canada-in-2025/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 35499,
+          "currency": "CAD",
+          "modelYear": 2026,
+          "trim": "Preferred AWD 2.5L",
+          "includesTax": false,
+          "url": "https://www.autotrader.ca/research/hyundai/tucson/2026/",
+          "retrieved": "2026-09-29",
+          "sourceType": "secondary",
+          "freightIncluded": false
+        },
+        "body": "SUV",
+        "fuel": "petrol",
+        "economy": {
+          "value": 8.8,
+          "unit": "L/100km (NRCan combined)",
+          "url": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+          "sourceType": "primary",
+          "config": "MY2026 Tucson AWD 2.5L AS8"
+        },
+        "kerbWeightKg": null,
+        "notes": "hyundaicanada.com showed no price that could be fetched."
+      },
+      {
+        "rank": 8,
+        "make": "Nissan",
+        "model": "Rogue",
+        "units2025": 36034,
+        "salesSource": {
+          "url": "https://www.guideautoweb.com/en/articles/80882/top-10-best-selling-vehicles-in-canada-in-2025/",
+          "period": "calendar year 2025 (Jan-Dec)",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 34848,
+          "currency": "CAD",
+          "modelYear": 2026,
+          "trim": "S AWD",
+          "includesTax": false,
+          "url": "https://canada.nissannews.com/en-CA/releases/2026-nissan-rogue-pricing-announced-for-canada",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary",
+          "freightIncluded": false
+        },
+        "body": "SUV",
+        "fuel": "petrol",
+        "economy": {
+          "value": 7.6,
+          "unit": "L/100km (NRCan combined)",
+          "url": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+          "sourceType": "primary",
+          "config": "MY2026 Rogue AWD 1.5T I3"
+        },
+        "kerbWeightKg": null,
+        "notes": "Nissan Canada release, 2025-08-06; freight/PDI $2,080 extra."
+      }
+    ],
+    "MX": [
+      {
+        "rank": 1,
+        "make": "Nissan",
+        "model": "Versa",
+        "units2025": 90223,
+        "salesSource": {
+          "url": "https://www.motorpasion.com.mx/industria/autos-vendidos-mexico-2025-asi-queda-ranking-completo-475-modelos-mercado",
+          "period": "calendar year 2025 (Jan-Dec), INEGI RAIAVL",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 374900,
+          "currency": "MXN",
+          "modelYear": 2026,
+          "trim": "Sense TM",
+          "includesTax": true,
+          "url": "https://www.nissan.com.mx/vehiculos/todos/versa.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "sedan",
+        "fuel": "petrol",
+        "economy": {
+          "value": 18.81,
+          "unit": "km/l",
+          "url": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/versa/my26/vlp/catalogos/nissan-2026-versa-catalogo.pdf",
+          "sourceType": "primary",
+          "config": "Nissan MX catalogue, combined, manual (NOM-163 method)"
+        },
+        "kerbWeightKg": {
+          "value": 1110,
+          "url": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/versa/my26/vlp/catalogos/nissan-2026-versa-catalogo.pdf"
+        },
+        "notes": "List price; the CrediNissan credit-only promotion is $309,990 (Sep 2026)."
+      },
+      {
+        "rank": 2,
+        "make": "Chevrolet",
+        "model": "Aveo",
+        "units2025": 61066,
+        "salesSource": {
+          "url": "https://www.motorpasion.com.mx/industria/autos-vendidos-mexico-2025-asi-queda-ranking-completo-475-modelos-mercado",
+          "period": "calendar year 2025 (Jan-Dec), INEGI RAIAVL",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 244800,
+          "currency": "MXN",
+          "modelYear": 2026,
+          "trim": "Aveo Sedán LS TM",
+          "includesTax": true,
+          "url": "https://www.chevrolet.com.mx/autos/aveo-auto-tipo-sedan",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "sedan",
+        "fuel": "petrol",
+        "economy": {
+          "value": 20.4,
+          "unit": "km/l",
+          "url": "https://www.chevrolet.com.mx/content/dam/chevrolet/na/mx/es/index/cars/2026-aveo-sedan/mov/02-pdf/Ficha-Tecnica-Aveo-Sedan-2026.pdf",
+          "sourceType": "primary",
+          "config": "Chevrolet MX ficha técnica, combined, LS TM"
+        },
+        "kerbWeightKg": null,
+        "notes": "\"Precio desde $244,800*\": the terms could not be read, so it may be promotional. Units combine sedan and hatchback; the hatchback is from $228,100."
+      },
+      {
+        "rank": 3,
+        "make": "Nissan",
+        "model": "NP300",
+        "units2025": 58422,
+        "salesSource": {
+          "url": "https://www.motorpasion.com.mx/industria/autos-vendidos-mexico-2025-asi-queda-ranking-completo-475-modelos-mercado",
+          "period": "calendar year 2025 (Jan-Dec), INEGI RAIAVL",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 499990,
+          "currency": "MXN",
+          "modelYear": 2026,
+          "trim": "Chasis TM AC VDC 2.5L gasolina",
+          "includesTax": true,
+          "url": "https://www.nissan.com.mx/vehiculos/todos/np300.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "pickup (chassis-cab base)",
+        "fuel": "petrol",
+        "economy": {
+          "value": 11.8,
+          "unit": "km/l",
+          "url": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/np300/my26/vlp/catalogos/nissan-2026-np300-catalogo.pdf",
+          "sourceType": "primary",
+          "config": "Nissan MX catalogue, combined, gasoline"
+        },
+        "kerbWeightKg": {
+          "value": 1452,
+          "url": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/np300/my26/vlp/catalogos/nissan-2026-np300-catalogo.pdf"
+        },
+        "notes": "Pick Up TM AC $501,990 (1,653 kg); diesel $531,990 (14.0 km/l)."
+      },
+      {
+        "rank": 4,
+        "make": "Kia",
+        "model": "K3 Sedán",
+        "units2025": 46551,
+        "salesSource": {
+          "url": "https://www.motorpasion.com.mx/industria/autos-vendidos-mexico-2025-asi-queda-ranking-completo-475-modelos-mercado",
+          "period": "calendar year 2025 (Jan-Dec), INEGI RAIAVL",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 304900,
+          "currency": "MXN",
+          "modelYear": 2027,
+          "trim": "L TM",
+          "includesTax": true,
+          "url": "https://www.kia.com/mx/showroom/k3-sedan/specification.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "sedan",
+        "fuel": "petrol",
+        "economy": {
+          "value": 20.61,
+          "unit": "km/l",
+          "url": "https://www.kia.com/mx/showroom/k3-sedan/specification.html",
+          "sourceType": "primary",
+          "config": "Kia MX spec page, combined, L TM 1.4L"
+        },
+        "kerbWeightKg": null,
+        "notes": ""
+      },
+      {
+        "rank": 5,
+        "make": "Nissan",
+        "model": "March",
+        "units2025": 31401,
+        "salesSource": {
+          "url": "https://www.motorpasion.com.mx/industria/autos-vendidos-mexico-2025-asi-queda-ranking-completo-475-modelos-mercado",
+          "period": "calendar year 2025 (Jan-Dec), INEGI RAIAVL",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 295990,
+          "currency": "MXN",
+          "modelYear": 2026,
+          "trim": "Sense TM",
+          "includesTax": true,
+          "url": "https://www.nissan.com.mx/vehiculos/todos/march.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "hatchback",
+        "fuel": "petrol",
+        "economy": {
+          "value": 17.99,
+          "unit": "km/l",
+          "url": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/march/my26/vlp/catalogos/nissan-2026-march-catalogo.pdf",
+          "sourceType": "primary",
+          "config": "Nissan MX catalogue, combined, manual"
+        },
+        "kerbWeightKg": {
+          "value": 981,
+          "url": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/march/my26/vlp/catalogos/nissan-2026-march-catalogo.pdf"
+        },
+        "notes": "The CrediNissan promotion is $225,990. 981 kg is the first weight column, assumed to be the Sense TM."
+      },
+      {
+        "rank": 6,
+        "make": "Mazda",
+        "model": "CX-30",
+        "units2025": 29898,
+        "salesSource": {
+          "url": "https://www.motorpasion.com.mx/industria/autos-vendidos-mexico-2025-asi-queda-ranking-completo-475-modelos-mercado",
+          "period": "calendar year 2025 (Jan-Dec), INEGI RAIAVL",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 451900,
+          "currency": "MXN",
+          "modelYear": 2026,
+          "trim": "i (automatic)",
+          "includesTax": true,
+          "url": "https://www.mazda.mx/vehiculos/cx-30",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "SUV",
+        "fuel": "petrol",
+        "economy": {
+          "value": 15.6,
+          "unit": "km/l",
+          "url": "https://www.mazda.mx/siteassets/descargables-2026/mazda-cx-30/ficha-tecnica/ficha-tecnica-mazda-cx-30-2026-v05.pdf",
+          "sourceType": "primary",
+          "config": "Mazda MX ficha técnica, combined, 2.5L FWD"
+        },
+        "kerbWeightKg": {
+          "value": 1454,
+          "url": "https://www.mazda.mx/siteassets/descargables-2026/mazda-cx-30/ficha-tecnica/ficha-tecnica-mazda-cx-30-2026-v05.pdf"
+        },
+        "notes": "Price includes IVA and ISAN."
+      },
+      {
+        "rank": 7,
+        "make": "Nissan",
+        "model": "Kicks",
+        "units2025": 26276,
+        "salesSource": {
+          "url": "https://www.motorpasion.com.mx/industria/autos-vendidos-mexico-2025-asi-queda-ranking-completo-475-modelos-mercado",
+          "period": "calendar year 2025 (Jan-Dec), INEGI RAIAVL",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 562990,
+          "currency": "MXN",
+          "modelYear": 2026,
+          "trim": "Advance CVT",
+          "includesTax": true,
+          "url": "https://www.nissan.com.mx/vehiculos/todos/kicks.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "SUV",
+        "fuel": "petrol",
+        "economy": {
+          "value": 18.64,
+          "unit": "km/l",
+          "url": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/kicks/my26/vlp/catalogos/nissan-2026-kicks-catalogo.pdf",
+          "sourceType": "primary",
+          "config": "Nissan MX catalogue, combined, 2.0L CVT"
+        },
+        "kerbWeightKg": {
+          "value": 1379,
+          "url": "https://www.nissan.com.mx/content/dam/Nissan/mexico/assets/kicks/my26/vlp/catalogos/nissan-2026-kicks-catalogo.pdf"
+        },
+        "notes": "2025 units probably mix the old Kicks Play (1.6L) and the new Kicks; the petrol Kicks Play is no longer listed. The Kicks Play e-POWER (hybrid) is from $616,990 at 23.3 km/l."
+      },
+      {
+        "rank": 8,
+        "make": "Volkswagen",
+        "model": "Virtus",
+        "units2025": 25040,
+        "salesSource": {
+          "url": "https://www.motorpasion.com.mx/industria/autos-vendidos-mexico-2025-asi-queda-ranking-completo-475-modelos-mercado",
+          "period": "calendar year 2025 (Jan-Dec), INEGI RAIAVL",
+          "sourceType": "secondary"
+        },
+        "basePrice": {
+          "amount": 322490,
+          "currency": "MXN",
+          "modelYear": 2026,
+          "trim": "Trendline Manual 5",
+          "includesTax": true,
+          "url": "https://www.vw.com.mx/es/autos-suvs/virtus.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "sedan",
+        "fuel": "petrol",
+        "economy": {
+          "value": 16.5,
+          "unit": "km/l",
+          "url": "https://www.vw.com.mx/idhub/content/dam/onehub_pkw/importers/mx/fichas-tecnicas/producto/2026/volkswagen-virtus-2026-ficha-tecnica.pdf",
+          "sourceType": "primary",
+          "config": "VW MX ficha técnica, combined, Trendline 1.6 MT"
+        },
+        "kerbWeightKg": {
+          "value": 1256,
+          "url": "https://www.vw.com.mx/idhub/content/dam/onehub_pkw/importers/mx/fichas-tecnicas/producto/2026/volkswagen-virtus-2026-ficha-tecnica.pdf"
+        },
+        "notes": "List price including IVA and ISAN; the cash promotion is $309,990 (Sep 2026)."
+      }
+    ],
+    "GB": [
+      {
+        "rank": 1,
+        "make": "Ford",
+        "model": "Puma",
+        "units2025": 55488,
+        "salesSource": {
+          "url": "https://www.smmt.co.uk/uk-new-car-market-breaches-two-million-as-almost-one-in-four-buyers-go-electric/",
+          "period": "Calendar 2025 (Jan-Dec), SMMT press release 6 Jan 2026",
+          "sourceType": "primary",
+          "note": "SMMT is the UK industry body that publishes official new-car registration counts; treated as primary."
+        },
+        "basePrice": {
+          "amount": 27145,
+          "currency": "GBP",
+          "trim": "Titanium 1.0 EcoBoost Hybrid (mHEV) 125PS 6-speed manual",
+          "includesTax": true,
+          "notes": "Ford UK price list effective 5 Aug 2026. RRP £26,610 (incl. VAT and delivery) + first-year VED £455 + first registration fee £55 + number plates £25 = OTR £27,145.",
+          "url": "https://www.ford.co.uk/content/dam/guxeu/uk/documents/price-list/cars/PL-en_gb-puma-october-2025.pdf",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "Compact SUV, 5-door",
+        "fuel": "hybrid (petrol 48V mild hybrid)",
+        "economy": {
+          "value": 52.3,
+          "unit": "mpg",
+          "url": "https://www.ford.co.uk/content/dam/guxeu/uk/documents/price-list/cars/PL-en_gb-puma-october-2025.pdf",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 122,
+          "url": "https://www.ford.co.uk/content/dam/guxeu/uk/documents/price-list/cars/PL-en_gb-puma-october-2025.pdf",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": {
+          "value": 1201,
+          "url": "https://www.ford.co.uk/cars/puma",
+          "sourceType": "primary",
+          "note": "Range-wide \"from\" figure, not confirmed for this trim"
+        }
+      },
+      {
+        "rank": 2,
+        "make": "Kia",
+        "model": "Sportage",
+        "units2025": 47788,
+        "salesSource": {
+          "url": "https://www.smmt.co.uk/uk-new-car-market-breaches-two-million-as-almost-one-in-four-buyers-go-electric/",
+          "period": "Calendar 2025 (Jan-Dec), SMMT press release 6 Jan 2026",
+          "sourceType": "primary",
+          "note": "SMMT is the UK industry body that publishes official new-car registration counts; treated as primary."
+        },
+        "basePrice": {
+          "amount": 31395,
+          "currency": "GBP",
+          "trim": "Pure 1.6 T-GDi 150PS 6-speed manual 2WD",
+          "includesTax": true,
+          "notes": "Kia UK pricing table: retail £29,155 incl. VAT + VED £1,410 + first registration fee £55 + delivery £775 = OTR £31,395. Number plates not itemised.",
+          "url": "https://www.kia.com/uk/new-cars/sportage/pricing/",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "SUV, 5-door",
+        "fuel": "petrol",
+        "economy": {
+          "value": null,
+          "unit": "mpg",
+          "url": "https://www.kia.com/uk/new-cars/sportage/specification/",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 158,
+          "url": "https://www.kia.com/uk/new-cars/sportage/pricing/",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": null
+      },
+      {
+        "rank": 3,
+        "make": "Nissan",
+        "model": "Qashqai",
+        "units2025": 41141,
+        "salesSource": {
+          "url": "https://www.smmt.co.uk/uk-new-car-market-breaches-two-million-as-almost-one-in-four-buyers-go-electric/",
+          "period": "Calendar 2025 (Jan-Dec), SMMT press release 6 Jan 2026",
+          "sourceType": "primary",
+          "note": "SMMT is the UK industry body that publishes official new-car registration counts; treated as primary."
+        },
+        "basePrice": {
+          "amount": 30635,
+          "currency": "GBP",
+          "trim": "Acenta Premium Mild Hybrid 1.3 DIG-T 158PS 6-speed manual 2WD",
+          "includesTax": true,
+          "notes": "Nissan UK: retail £30,020 incl. VAT + first registration fee £55 + first-year VED £560 = OTR £30,635. Nissan says OTR includes VAT, 12-month VED and the first registration fee.",
+          "url": "https://www.nissan.co.uk/vehicles/new-vehicles/qashqai/prices-specifications.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "Crossover SUV, 5-door",
+        "fuel": "hybrid (petrol 12V mild hybrid)",
+        "economy": {
+          "value": null,
+          "unit": "mpg",
+          "url": "https://www-europe.nissan-cdn.net/content/dam/Nissan/gb/brochures/Vehicles/Nissan_Qashqai_UK.pdf",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 142,
+          "url": "https://www-europe.nissan-cdn.net/content/dam/Nissan/gb/brochures/Vehicles/Nissan_Qashqai_UK.pdf",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": {
+          "value": 1345,
+          "url": "https://www-europe.nissan-cdn.net/content/dam/Nissan/gb/brochures/Vehicles/Nissan_Qashqai_UK.pdf",
+          "sourceType": "primary",
+          "note": "Minimum of a published 1,345-1,433 kg range for the manual"
+        }
+      },
+      {
+        "rank": 4,
+        "make": "Vauxhall",
+        "model": "Corsa",
+        "units2025": 35947,
+        "salesSource": {
+          "url": "https://www.smmt.co.uk/uk-new-car-market-breaches-two-million-as-almost-one-in-four-buyers-go-electric/",
+          "period": "Calendar 2025 (Jan-Dec), SMMT press release 6 Jan 2026",
+          "sourceType": "primary",
+          "note": "SMMT is the UK industry body that publishes official new-car registration counts; treated as primary."
+        },
+        "basePrice": {
+          "amount": 20590,
+          "currency": "GBP",
+          "trim": "Yes 1.2 Turbo 100PS 6-speed manual, 5-door",
+          "includesTax": true,
+          "notes": "Carwow RRP; what it includes is not stated. vauxhall.co.uk returned HTTP 403 to automated fetches, so this is not a manufacturer figure.",
+          "url": "https://www.carwow.co.uk/vauxhall/corsa",
+          "retrieved": "2026-09-29",
+          "sourceType": "secondary"
+        },
+        "body": "Supermini hatchback, 5-door",
+        "fuel": "petrol",
+        "economy": {
+          "value": null,
+          "unit": "mpg",
+          "url": "https://www.carwow.co.uk/vauxhall/corsa",
+          "sourceType": "secondary"
+        },
+        "co2gkm": {
+          "value": 121,
+          "url": "https://www.carwow.co.uk/vauxhall/corsa",
+          "sourceType": "secondary"
+        },
+        "kerbWeightKg": null
+      },
+      {
+        "rank": 5,
+        "make": "Nissan",
+        "model": "Juke",
+        "units2025": 34773,
+        "salesSource": {
+          "url": "https://www.smmt.co.uk/uk-new-car-market-breaches-two-million-as-almost-one-in-four-buyers-go-electric/",
+          "period": "Calendar 2025 (Jan-Dec), SMMT press release 6 Jan 2026",
+          "sourceType": "primary",
+          "note": "SMMT is the UK industry body that publishes official new-car registration counts; treated as primary."
+        },
+        "basePrice": {
+          "amount": 24485,
+          "currency": "GBP",
+          "trim": "Acenta Premium 1.0 DIG-T 114PS 6-speed manual 2WD",
+          "includesTax": true,
+          "notes": "Nissan UK: recommended OTR price includes 20% VAT, 12-month VED and the first registration fee; it excludes options.",
+          "url": "https://www.nissan.co.uk/vehicles/new-vehicles/juke.html",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "Small SUV / crossover, 5-door",
+        "fuel": "petrol",
+        "economy": {
+          "value": 48.7,
+          "unit": "mpg",
+          "url": "https://www.nissan.co.uk/vehicles/new-vehicles/juke/prices-specifications.html",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 131,
+          "url": "https://www.nissan.co.uk/vehicles/new-vehicles/juke/prices-specifications.html",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": {
+          "value": 1199,
+          "url": "https://www.nissan.co.uk/vehicles/new-vehicles/juke/prices-specifications.html",
+          "sourceType": "primary"
+        }
+      },
+      {
+        "rank": 6,
+        "make": "Volkswagen",
+        "model": "Golf",
+        "units2025": 32478,
+        "salesSource": {
+          "url": "https://www.smmt.co.uk/uk-new-car-market-breaches-two-million-as-almost-one-in-four-buyers-go-electric/",
+          "period": "Calendar 2025 (Jan-Dec), SMMT press release 6 Jan 2026",
+          "sourceType": "primary",
+          "note": "SMMT is the UK industry body that publishes official new-car registration counts; treated as primary."
+        },
+        "basePrice": {
+          "amount": 28910,
+          "currency": "GBP",
+          "trim": "Life 1.5 TSI 115PS 6-speed manual, 5-door",
+          "includesTax": true,
+          "notes": "Carwow \"price from\" RRP (page updated 25 Nov 2025). VW UK states its OTR includes delivery, plates, registration fee, first-year VED and 20% VAT, but VW's own price figures load by JS and could not be read.",
+          "url": "https://www.carwow.co.uk/volkswagen/golf",
+          "retrieved": "2026-09-29",
+          "sourceType": "secondary"
+        },
+        "body": "Hatchback, 5-door",
+        "fuel": "petrol",
+        "economy": {
+          "value": 50.4,
+          "unit": "mpg",
+          "url": "https://www.carwow.co.uk/volkswagen/golf",
+          "sourceType": "secondary"
+        },
+        "co2gkm": {
+          "value": 123,
+          "url": "https://www.carwow.co.uk/volkswagen/golf",
+          "sourceType": "secondary"
+        },
+        "kerbWeightKg": null
+      },
+      {
+        "rank": 7,
+        "make": "Volvo",
+        "model": "XC40",
+        "units2025": 30404,
+        "salesSource": {
+          "url": "https://www.smmt.co.uk/uk-new-car-market-breaches-two-million-as-almost-one-in-four-buyers-go-electric/",
+          "period": "Calendar 2025 (Jan-Dec), SMMT press release 6 Jan 2026",
+          "sourceType": "primary",
+          "note": "SMMT is the UK industry body that publishes official new-car registration counts; treated as primary."
+        },
+        "basePrice": {
+          "amount": 36860,
+          "currency": "GBP",
+          "trim": "Core B3 2.0 petrol mild hybrid 163hp auto",
+          "includesTax": true,
+          "notes": "Carwow \"price from\" (page updated 24 Jul 2026). volvocars.com/uk returned HTTP 403, so Volvo's own price and OTR wording could not be read.",
+          "url": "https://www.carwow.co.uk/volvo/xc40",
+          "retrieved": "2026-09-29",
+          "sourceType": "secondary"
+        },
+        "body": "Compact SUV, 5-door",
+        "fuel": "hybrid (petrol mild hybrid)",
+        "economy": {
+          "value": 42.7,
+          "unit": "mpg",
+          "url": "https://www.carwow.co.uk/volvo/xc40",
+          "sourceType": "secondary"
+        },
+        "co2gkm": {
+          "value": 149,
+          "url": "https://www.carwow.co.uk/volvo/xc40",
+          "sourceType": "secondary"
+        },
+        "kerbWeightKg": null
+      },
+      {
+        "rank": 8,
+        "make": "MG",
+        "model": "HS",
+        "units2025": 30191,
+        "salesSource": {
+          "url": "https://www.smmt.co.uk/uk-new-car-market-breaches-two-million-as-almost-one-in-four-buyers-go-electric/",
+          "period": "Calendar 2025 (Jan-Dec), SMMT press release 6 Jan 2026",
+          "sourceType": "primary",
+          "note": "SMMT is the UK industry body that publishes official new-car registration counts; treated as primary."
+        },
+        "basePrice": {
+          "amount": 27495,
+          "currency": "GBP",
+          "trim": "SE 1.5T GS6 169PS 6-speed manual",
+          "includesTax": true,
+          "notes": "From the price attribute in mg.co.uk's HS configurator; the site navigation also says \"From £27,495\". MG's page does not state what OTR includes. MG dealers state OTR includes VAT, the registration fee, delivery, plates and first-year VED.",
+          "url": "https://www.mg.co.uk/new-cars/mg-hs",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "Mid-size SUV, 5-door",
+        "fuel": "petrol",
+        "economy": {
+          "value": 38.1,
+          "unit": "mpg",
+          "url": "https://www.mg.co.uk/new-cars/mg-hs",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 168,
+          "url": "https://www.automobile-catalog.com/car/2026/3470150/mg_hs_1_5_t_manual_6_speed.html",
+          "sourceType": "secondary"
+        },
+        "kerbWeightKg": {
+          "value": 1550,
+          "url": "https://www.automobile-catalog.com/car/2026/3470150/mg_hs_1_5_t_manual_6_speed.html",
+          "sourceType": "secondary"
+        }
+      }
+    ],
+    "IE": [
+      {
+        "rank": 1,
+        "make": "Hyundai",
+        "model": "Tucson",
+        "units2025": 4643,
+        "salesSource": {
+          "url": "https://stats.simi.ie/ (SIMI Motorstats, Passenger Cars, year filter 2025, Total New Registrations; queried 2026-09-29, database data up to 28 Sep 2026). Ranking also at https://www.simi.ie/en/news/124-954-new-car-registrations-in-2025",
+          "period": "Calendar 2025 (Jan-Dec), as held in SIMI Motorstats on 2026-09-29",
+          "sourceType": "primary",
+          "note": "SIMI Motorstats is the Irish industry-official registration database; treated as primary."
+        },
+        "basePrice": {
+          "amount": 42645,
+          "currency": "EUR",
+          "trim": "Comfort Plus Diesel",
+          "includesTax": true,
+          "notes": "Cheapest non-commercial Tucson in Hyundai Ireland's price-list data feed. Includes VAT and VRT; \"Excludes delivery and related charge\". Other entry prices: Mild Hybrid €43,995, PHEV €44,445, HEV €47,695.",
+          "url": "https://www.hyundai.ie/data/price-list.json (loaded by https://www.hyundai.ie/hyundai-price-list)",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "SUV",
+        "fuel": "diesel",
+        "economy": {
+          "value": null,
+          "unit": "l/100km",
+          "url": null,
+          "sourceType": null
+        },
+        "co2gkm": {
+          "value": 141,
+          "url": "https://www.hyundai.ie/data/price-list.json",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": null
+      },
+      {
+        "rank": 2,
+        "make": "Skoda",
+        "model": "Octavia",
+        "units2025": 3693,
+        "salesSource": {
+          "url": "https://stats.simi.ie/ (SIMI Motorstats, Passenger Cars, year filter 2025, Total New Registrations; queried 2026-09-29, database data up to 28 Sep 2026). Ranking also at https://www.simi.ie/en/news/124-954-new-car-registrations-in-2025",
+          "period": "Calendar 2025 (Jan-Dec), as held in SIMI Motorstats on 2026-09-29",
+          "sourceType": "primary",
+          "note": "SIMI Motorstats is the Irish industry-official registration database; treated as primary."
+        },
+        "basePrice": {
+          "amount": 33070,
+          "currency": "EUR",
+          "trim": "Selection 1.5 TSI 115hp 6-speed manual (liftback)",
+          "includesTax": true,
+          "notes": "Skoda Ireland Octavia Product Guide, September 2026. The RRP includes VAT and VRT; \"Delivery & Related Charges Extra\".",
+          "url": "https://www.skoda.ie/_doc/84f89261-ee2b-4e9d-8e34-519ef6ed35ea",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "Hatchback (liftback), 5-door",
+        "fuel": "petrol",
+        "economy": {
+          "value": 5.3,
+          "unit": "l/100km",
+          "url": "https://www.skoda.ie/models/octavia/octavia",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 120,
+          "url": "https://www.skoda.ie/models/octavia/octavia",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": {
+          "value": 1351,
+          "url": "https://www.skoda.ie/_doc/84f89261-ee2b-4e9d-8e34-519ef6ed35ea",
+          "sourceType": "primary",
+          "note": "\"Kerb weight with driver min\" (includes 75 kg driver)"
+        }
+      },
+      {
+        "rank": 3,
+        "make": "Toyota",
+        "model": "Yaris Cross",
+        "units2025": 3580,
+        "salesSource": {
+          "url": "https://stats.simi.ie/ (SIMI Motorstats, Passenger Cars, year filter 2025, Total New Registrations; queried 2026-09-29, database data up to 28 Sep 2026). Ranking also at https://www.simi.ie/en/news/124-954-new-car-registrations-in-2025",
+          "period": "Calendar 2025 (Jan-Dec), as held in SIMI Motorstats on 2026-09-29",
+          "sourceType": "primary",
+          "note": "SIMI Motorstats is the Irish industry-official registration database; treated as primary."
+        },
+        "basePrice": {
+          "amount": 33155,
+          "currency": "EUR",
+          "trim": "Luna Hybrid 115",
+          "includesTax": true,
+          "notes": "toyota.ie \"From €33,155\". Includes VAT and VRT; \"Excludes delivery & related charges\". Toyota's finance example puts delivery at €1,000.",
+          "url": "https://www.toyota.ie/new-cars/yaris-cross",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "Compact crossover SUV",
+        "fuel": "hybrid (HEV)",
+        "economy": {
+          "value": 4.4,
+          "unit": "l/100km",
+          "url": "https://www.toyota.ie/content/dam/toyota/nmsc/ireland/guides/Yaris-Cross-PDF-Guide.pdf",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 101,
+          "url": "https://www.toyota.ie/content/dam/toyota/nmsc/ireland/guides/Yaris-Cross-PDF-Guide.pdf",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": null
+      },
+      {
+        "rank": 4,
+        "make": "Kia",
+        "model": "Sportage",
+        "units2025": 3463,
+        "salesSource": {
+          "url": "https://stats.simi.ie/ (SIMI Motorstats, Passenger Cars, year filter 2025, Total New Registrations; queried 2026-09-29, database data up to 28 Sep 2026). Ranking also at https://www.simi.ie/en/news/124-954-new-car-registrations-in-2025",
+          "period": "Calendar 2025 (Jan-Dec), as held in SIMI Motorstats on 2026-09-29",
+          "sourceType": "primary",
+          "note": "SIMI Motorstats is the Irish industry-official registration database; treated as primary."
+        },
+        "basePrice": {
+          "amount": 41300,
+          "currency": "EUR",
+          "trim": "1.6 CRDi 136ps diesel mild hybrid 2WD (trim name not shown)",
+          "includesTax": true,
+          "notes": "kia.com/ie \"Sportage Diesel From €41,300\". Includes VAT and VRT; \"Prices shown exclude dealer and delivery related charges\".",
+          "url": "https://www.kia.com/ie/new-cars/sportage/",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "SUV",
+        "fuel": "hybrid (diesel mild hybrid)",
+        "economy": {
+          "value": 5.1,
+          "unit": "l/100km",
+          "url": "https://www.kia.com/ie/new-cars/sportage/",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 132,
+          "url": "https://www.kia.com/ie/new-cars/sportage/",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": null
+      },
+      {
+        "rank": 5,
+        "make": "Toyota",
+        "model": "RAV4",
+        "units2025": 3204,
+        "salesSource": {
+          "url": "https://stats.simi.ie/ (SIMI Motorstats, Passenger Cars, year filter 2025, Total New Registrations; queried 2026-09-29, database data up to 28 Sep 2026). Ranking also at https://www.simi.ie/en/news/124-954-new-car-registrations-in-2025",
+          "period": "Calendar 2025 (Jan-Dec), as held in SIMI Motorstats on 2026-09-29",
+          "sourceType": "primary",
+          "note": "SIMI Motorstats is the Irish industry-official registration database; treated as primary."
+        },
+        "basePrice": {
+          "amount": 48005,
+          "currency": "EUR",
+          "trim": "Sol 2.5 Plug-in Hybrid 2WD (all-new 6th generation)",
+          "includesTax": true,
+          "notes": "Cheapest grade in toyota.ie's RAV4 grade table. Includes VAT and VRT (with maximum VRT relief); excludes delivery and related charges (delivery €1,000 in Toyota's finance example). The page headline says \"From €47,340\", which could not be tied to any listed grade.",
+          "url": "https://www.toyota.ie/models/rav4/prices-and-costs",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "SUV",
+        "fuel": "PHEV",
+        "economy": {
+          "value": 1.3,
+          "unit": "l/100km",
+          "url": "https://www.toyota.ie/models/rav4/prices-and-costs",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 30,
+          "url": "https://www.toyota.ie/models/rav4/prices-and-costs",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": null
+      },
+      {
+        "rank": 6,
+        "make": "Toyota",
+        "model": "Corolla",
+        "units2025": 2832,
+        "salesSource": {
+          "url": "https://stats.simi.ie/ (SIMI Motorstats, Passenger Cars, year filter 2025, Total New Registrations; queried 2026-09-29, database data up to 28 Sep 2026). Ranking also at https://www.simi.ie/en/news/124-954-new-car-registrations-in-2025",
+          "period": "Calendar 2025 (Jan-Dec), as held in SIMI Motorstats on 2026-09-29",
+          "sourceType": "primary",
+          "note": "SIMI Motorstats is the Irish industry-official registration database; treated as primary."
+        },
+        "basePrice": {
+          "amount": 33220,
+          "currency": "EUR",
+          "trim": "Hatchback Luna 1.8 Hybrid 140hp",
+          "includesTax": true,
+          "notes": "toyota.ie retail price. Includes VAT and VRT; excludes delivery and related charges (Toyota's finance example gives OTR €34,220, delivery €1,000). SIMI counts all Corolla bodies together; the price is for the hatchback.",
+          "url": "https://www.toyota.ie/models/corolla-hatchback/prices-and-costs",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "Hatchback, 5-door",
+        "fuel": "hybrid (HEV)",
+        "economy": {
+          "value": 4.4,
+          "unit": "l/100km",
+          "url": "https://www.toyota.ie/models/corolla-hatchback/prices-and-costs",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 100,
+          "url": "https://www.toyota.ie/models/corolla-hatchback/prices-and-costs",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": null
+      },
+      {
+        "rank": 7,
+        "make": "Skoda",
+        "model": "Kodiaq",
+        "units2025": 2745,
+        "salesSource": {
+          "url": "https://stats.simi.ie/ (SIMI Motorstats, Passenger Cars, year filter 2025, Total New Registrations; queried 2026-09-29, database data up to 28 Sep 2026). Ranking also at https://www.simi.ie/en/news/124-954-new-car-registrations-in-2025",
+          "period": "Calendar 2025 (Jan-Dec), as held in SIMI Motorstats on 2026-09-29",
+          "sourceType": "primary",
+          "note": "SIMI Motorstats is the Irish industry-official registration database; treated as primary."
+        },
+        "basePrice": {
+          "amount": 54235,
+          "currency": "EUR",
+          "trim": "Selection 1.5 TSI 204hp DSG plug-in hybrid (5 seats)",
+          "includesTax": true,
+          "notes": "Skoda Ireland Kodiaq Product Guide, September 2026. The RRP includes VAT and VRT; \"Delivery & Related Charges Extra\". The skoda.ie model page instead shows \"From EUR 56,330\" (the TDI 150 Selection).",
+          "url": "https://www.skoda.ie/_doc/43f4f086-3207-4b73-b662-08e53b774816",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "SUV",
+        "fuel": "PHEV",
+        "economy": {
+          "value": 1.6,
+          "unit": "l/100km",
+          "url": "https://www.skoda.ie/_doc/43f4f086-3207-4b73-b662-08e53b774816",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 36,
+          "url": "https://www.skoda.ie/_doc/43f4f086-3207-4b73-b662-08e53b774816",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": null
+      },
+      {
+        "rank": 8,
+        "make": "Volkswagen",
+        "model": "Tiguan",
+        "units2025": 2656,
+        "salesSource": {
+          "url": "https://stats.simi.ie/ (SIMI Motorstats, Passenger Cars, year filter 2025, Total New Registrations; queried 2026-09-29, database data up to 28 Sep 2026). Ranking also at https://www.simi.ie/en/news/124-954-new-car-registrations-in-2025",
+          "period": "Calendar 2025 (Jan-Dec), as held in SIMI Motorstats on 2026-09-29",
+          "sourceType": "primary",
+          "note": "SIMI Motorstats is the Irish industry-official registration database; treated as primary."
+        },
+        "basePrice": {
+          "amount": 50750,
+          "currency": "EUR",
+          "trim": "Life 1.5 eHybrid 204hp DSG (plug-in hybrid)",
+          "includesTax": true,
+          "notes": "Volkswagen Ireland Tiguan MY27 product guide, September 2026. The RRP includes VAT and VRT and excludes the separate \"Delivery & Service\" of €2,080; the on-the-road price is €52,830.",
+          "url": "https://www.volkswagen.ie/idhub/content/dam/onehub_pkw/importers/ie/models/product-guides/my27/Tiguan_MY27.pdf",
+          "retrieved": "2026-09-29",
+          "sourceType": "primary"
+        },
+        "body": "SUV",
+        "fuel": "PHEV",
+        "economy": {
+          "value": 1.4,
+          "unit": "l/100km",
+          "url": "https://www.volkswagen.ie/idhub/content/dam/onehub_pkw/importers/ie/models/product-guides/my27/Tiguan_MY27.pdf",
+          "sourceType": "primary"
+        },
+        "co2gkm": {
+          "value": 32,
+          "url": "https://www.volkswagen.ie/idhub/content/dam/onehub_pkw/importers/ie/models/product-guides/my27/Tiguan_MY27.pdf",
+          "sourceType": "primary"
+        },
+        "kerbWeightKg": {
+          "value": 1866,
+          "url": "https://www.volkswagen.ie/idhub/content/dam/onehub_pkw/importers/ie/models/product-guides/my27/Tiguan_MY27.pdf",
+          "sourceType": "primary",
+          "note": "\"Unladen weight minimum (EU)\", which includes a 75 kg driver; read from a misaligned PDF text extraction"
+        }
+      }
+    ]
+  },
+  "depreciation": {
+    "vehicletrendsMedianRetentionAll": {
+      "description": "Median used-listing price / MSRP by vehicle age, all powertrains, all vehicle types (US). Source bins are 3-month bins; the bin whose midpoint follows each whole year is reported with its exact midpoint. Not interpolated.",
+      "unit": "share of MSRP retained, 0 to 1",
+      "period": "US listings (marketcheck.com); the package's related price series cover listing years 2018-2025; exact depreciation window not stated",
+      "url": "https://raw.githubusercontent.com/vehicletrends/vehicletrends/refs/heads/main/data-raw/depreciation.csv",
+      "sourceType": "secondary",
+      "note": "Academic dataset by John Paul Helveston (vehicletrends.us, GWU); rr defined as price/MSRP per https://pkg.vehicletrends.us/articles/datasets. Listing (asking) prices against MSRP, so year-1 retention (0.94) is far higher than trade-in or transaction curves.",
+      "byYear": {
+        "1": {
+          "value": 0.9426,
+          "ageBinMonths": 13.5
+        },
+        "2": {
+          "value": 0.8425,
+          "ageBinMonths": 25.5
+        },
+        "3": {
+          "value": 0.8069,
+          "ageBinMonths": 37.5
+        },
+        "4": {
+          "value": 0.742,
+          "ageBinMonths": 49.5
+        },
+        "5": {
+          "value": 0.6862,
+          "ageBinMonths": 61.5
+        },
+        "6": {
+          "value": 0.6216,
+          "ageBinMonths": 73.5
+        },
+        "7": {
+          "value": 0.5628,
+          "ageBinMonths": 85.5
+        },
+        "8": {
+          "value": 0.5113,
+          "ageBinMonths": 97.5
+        },
+        "9": {
+          "value": 0.4686,
+          "ageBinMonths": 109.5
+        },
+        "10": {
+          "value": 0.4268,
+          "ageBinMonths": 121.5
+        }
+      }
+    },
+    "vehicletrendsMedianRetentionGasoline": {
+      "unit": "share of MSRP retained, 0 to 1",
+      "period": "as vehicletrendsMedianRetentionAll",
+      "url": "https://raw.githubusercontent.com/vehicletrends/vehicletrends/refs/heads/main/data-raw/depreciation.csv",
+      "sourceType": "secondary",
+      "byYear": {
+        "1": 0.9424,
+        "2": 0.8521,
+        "3": 0.8128,
+        "4": 0.7488,
+        "5": 0.697,
+        "6": 0.6349,
+        "7": 0.5768,
+        "8": 0.5215,
+        "9": 0.4775,
+        "10": 0.4344
+      },
+      "note": "powertrain Gasoline, vehicle_type All, median. Same bins as the All series (13.5, 25.5 ... 121.5 months)."
+    },
+    "vehicletrendsMedianRetentionBEV": {
+      "unit": "share of MSRP retained, 0 to 1",
+      "period": "as vehicletrendsMedianRetentionAll",
+      "url": "https://raw.githubusercontent.com/vehicletrends/vehicletrends/refs/heads/main/data-raw/depreciation.csv",
+      "sourceType": "secondary",
+      "byYear": {
+        "1": 0.9966,
+        "2": 0.7501,
+        "3": 0.6423,
+        "4": 0.5755,
+        "5": 0.547,
+        "6": 0.5069,
+        "7": 0.4193,
+        "8": 0.3714,
+        "9": 0.311,
+        "10": 0.2802
+      },
+      "note": "powertrain 'Battery Electric (BEV)', vehicle_type All, median. Same bins."
+    },
+    "vehicletrendsAnnualRateGasolineCar": {
+      "value": 0.0676,
+      "unit": "annual depreciation rate, 1-exp(b) from log-linear fit of retention on age",
+      "period": "as vehicletrendsMedianRetentionAll",
+      "url": "https://raw.githubusercontent.com/vehicletrends/vehicletrends/refs/heads/main/data-raw/dep_annual_type.csv",
+      "sourceType": "secondary",
+      "note": "Other rows: Gasoline CUV 0.0819, Gasoline SUV 0.0631, Gasoline Pickup 0.0487, Gasoline Minivan 0.0806, BEV Car 0.1023, BEV CUV 0.1040, HEV Car 0.0718."
+    },
+    "iSeeCarsAllCars": {
+      "description": "Average depreciation for all cars, from the comparison table on iSeeCars model pages (analysis of 15M+ vehicles).",
+      "unit": "percent of value lost",
+      "period": "undated on page; fetched 2026-09-29",
+      "url": "https://www.iseecars.com/car/honda-civic/resale-value",
+      "sourceType": "secondary",
+      "byYear": {
+        "1": null,
+        "2": null,
+        "3": 24.79,
+        "4": null,
+        "5": 41.7,
+        "6": null,
+        "7": 52.51,
+        "8": null,
+        "9": null,
+        "10": 65.12
+      },
+      "note": "Retained share is 100 minus these; iSeeCars publishes the loss only. No 1-year figure."
+    },
+    "iSeeCars5Year2026": {
+      "value": 41.8,
+      "unit": "percent lost after 5 years, average all vehicles",
+      "period": "5-year-old cars sold March 2025 to February 2026",
+      "url": "https://www.iseecars.com/cars-that-hold-their-value-study",
+      "sourceType": "secondary",
+      "note": "By type: trucks 34.2, hybrids 35.4, SUVs 44.9, EVs 57.2."
+    },
+    "carwowUK": {
+      "value": null,
+      "unit": "percent lost",
+      "period": "article dated 2025-01-17",
+      "url": "https://www.carwow.co.uk/car-valuation/guides/how-much-do-cars-depreciate-per-year",
+      "sourceType": "secondary",
+      "note": "Publishes ranges only: 15-35% lost in year 1, then roughly 10-15% per year from year 2. No per-year point figures."
+    },
+    "aaa2026DepreciationPerYear": {
+      "value": 4422,
+      "currency": "USD",
+      "unit": "USD lost per year, new car over 5 years / 75,000 miles",
+      "period": "AAA Your Driving Costs 2026",
+      "url": "https://newsroom.aaa.com/wp-content/uploads/2026/09/AAA_YDC-Fact-Sheet_2026.pdf",
+      "sourceType": "secondary",
+      "note": "Weighted average MSRP $39,376."
+    }
+  },
+  "usedPrices": {
+    "US": {
+      "value": 27239,
+      "currency": "USD",
+      "unit": "average used-vehicle listing price",
+      "period": "August 2026 (published 2026-09-11)",
+      "url": "https://www.coxautoinc.com/insights/used-vehicle-inventory-august-2026/",
+      "sourceType": "secondary",
+      "note": "Cox Automotive / Kelley Blue Book listing (asking) price, not transaction price; +7% YoY; July revised to $26,999."
+    },
+    "UK": {
+      "value": 17131,
+      "currency": "GBP",
+      "unit": "average used car asking price",
+      "period": "August 2026",
+      "url": "https://plc.autotrader.co.uk/news-views/press-releases/used-car-market-gains-momentum-as-both-independent-franchise-retailers-record-growth-for-first-time-this-year/",
+      "sourceType": "secondary",
+      "note": "Autotrader Retail Price Index; like-for-like -0.1% YoY. September 2026 not yet found."
+    },
+    "Canada": {
+      "value": 36690,
+      "currency": "CAD",
+      "unit": "average used vehicle price",
+      "period": "June 2026 (Q2 2026 AutoTrader Price Index, released 2026-07-18)",
+      "url": "https://emptytank.ca/2026/07/18/autotrader-releases-q2-2026-price-index/",
+      "sourceType": "secondary",
+      "note": "-2.6% YoY. New vehicle average CAD 63,016. Index home: https://www.autotrader.ca/editorial/price-index/"
+    },
+    "Ireland": {
+      "value": null,
+      "currency": "EUR",
+      "unit": "average used car price",
+      "period": null,
+      "url": "https://www.fleetcar.ie/advice/donedeal-cars-price-index-h1-2026-key-points/",
+      "sourceType": "secondary",
+      "note": "Coverage of the DoneDeal Cars Price Index H1 2026 gives only percentage changes; no confirmed absolute average."
+    }
+  },
+  "buyingCosts": {
+    "US-NY": {
+      "salesTaxStateRate": {
+        "value": 0.04,
+        "unit": "fraction of purchase price",
+        "period": "current (Publication 718, effective 2025-03-01)",
+        "url": "https://www.tax.ny.gov/pdf/publications/sales/pub718.pdf",
+        "sourceType": "primary",
+        "note": "'New York State only 4'. Collected by DMV at registration on private sales; dealers collect on dealer sales."
+      },
+      "salesTaxNYCCombinedRate": {
+        "value": 0.08875,
+        "unit": "fraction of purchase price",
+        "period": "current (Publication 718, effective 2025-03-01)",
+        "url": "https://www.tax.ny.gov/pdf/publications/sales/pub718.pdf",
+        "sourceType": "primary",
+        "note": "New York City listed at 8 7/8 (reporting code 8081); footnote says the rate includes 3/8% imposed for the Metropolitan Commuter Transportation District. Components: 4% state + 4.5% city + 0.375% MCTD."
+      },
+      "salesTaxMCTDComponent": {
+        "value": 0.00375,
+        "unit": "fraction of purchase price",
+        "period": "current (Publication 718, effective 2025-03-01)",
+        "url": "https://www.tax.ny.gov/pdf/publications/sales/pub718.pdf",
+        "sourceType": "primary"
+      },
+      "registrationFeeByWeight": {
+        "value": [
+          {
+            "minLb": 0,
+            "maxLb": 1650,
+            "fee": 26
+          },
+          {
+            "minLb": 1651,
+            "maxLb": 1750,
+            "fee": 27.5
+          },
+          {
+            "minLb": 1751,
+            "maxLb": 1850,
+            "fee": 29
+          },
+          {
+            "minLb": 1851,
+            "maxLb": 1950,
+            "fee": 31
+          },
+          {
+            "minLb": 1951,
+            "maxLb": 2050,
+            "fee": 32.5
+          },
+          {
+            "minLb": 2051,
+            "maxLb": 2150,
+            "fee": 34
+          },
+          {
+            "minLb": 2151,
+            "maxLb": 2250,
+            "fee": 35.5
+          },
+          {
+            "minLb": 2251,
+            "maxLb": 2350,
+            "fee": 37.5
+          },
+          {
+            "minLb": 2351,
+            "maxLb": 2450,
+            "fee": 39
+          },
+          {
+            "minLb": 2451,
+            "maxLb": 2550,
+            "fee": 40.5
+          },
+          {
+            "minLb": 2551,
+            "maxLb": 2650,
+            "fee": 42
+          },
+          {
+            "minLb": 2651,
+            "maxLb": 2750,
+            "fee": 43.5
+          },
+          {
+            "minLb": 2751,
+            "maxLb": 2850,
+            "fee": 45.5
+          },
+          {
+            "minLb": 2851,
+            "maxLb": 2950,
+            "fee": 47
+          },
+          {
+            "minLb": 2951,
+            "maxLb": 3050,
+            "fee": 48.5
+          },
+          {
+            "minLb": 3051,
+            "maxLb": 3150,
+            "fee": 50
+          },
+          {
+            "minLb": 3151,
+            "maxLb": 3250,
+            "fee": 52
+          },
+          {
+            "minLb": 3251,
+            "maxLb": 3350,
+            "fee": 53.5
+          },
+          {
+            "minLb": 3351,
+            "maxLb": 3450,
+            "fee": 55
+          },
+          {
+            "minLb": 3451,
+            "maxLb": 3550,
+            "fee": 56.5
+          },
+          {
+            "minLb": 3551,
+            "maxLb": 3650,
+            "fee": 59
+          },
+          {
+            "minLb": 3651,
+            "maxLb": 3750,
+            "fee": 61.5
+          },
+          {
+            "minLb": 3751,
+            "maxLb": 3850,
+            "fee": 64
+          },
+          {
+            "minLb": 3851,
+            "maxLb": 3950,
+            "fee": 66.5
+          },
+          {
+            "minLb": 3951,
+            "maxLb": 4050,
+            "fee": 69
+          },
+          {
+            "minLb": 4051,
+            "maxLb": 4150,
+            "fee": 71
+          },
+          {
+            "minLb": 4151,
+            "maxLb": 4250,
+            "fee": 73.5
+          },
+          {
+            "minLb": 4251,
+            "maxLb": 4350,
+            "fee": 76
+          },
+          {
+            "minLb": 4351,
+            "maxLb": 4450,
+            "fee": 78.5
+          },
+          {
+            "minLb": 4451,
+            "maxLb": 4550,
+            "fee": 81
+          },
+          {
+            "minLb": 4551,
+            "maxLb": 4650,
+            "fee": 83.5
+          },
+          {
+            "minLb": 4651,
+            "maxLb": 4750,
+            "fee": 85.5
+          },
+          {
+            "minLb": 4751,
+            "maxLb": 4850,
+            "fee": 88
+          },
+          {
+            "minLb": 4851,
+            "maxLb": 4950,
+            "fee": 90.5
+          },
+          {
+            "minLb": 4951,
+            "maxLb": 5050,
+            "fee": 93
+          },
+          {
+            "minLb": 5051,
+            "maxLb": 5150,
+            "fee": 95.5
+          },
+          {
+            "minLb": 5151,
+            "maxLb": 5250,
+            "fee": 98
+          },
+          {
+            "minLb": 5251,
+            "maxLb": 5350,
+            "fee": 100.5
+          },
+          {
+            "minLb": 5351,
+            "maxLb": 5450,
+            "fee": 102.5
+          },
+          {
+            "minLb": 5451,
+            "maxLb": 5550,
+            "fee": 105
+          },
+          {
+            "minLb": 5551,
+            "maxLb": 5650,
+            "fee": 107.5
+          },
+          {
+            "minLb": 5651,
+            "maxLb": 5750,
+            "fee": 110
+          },
+          {
+            "minLb": 5751,
+            "maxLb": 5850,
+            "fee": 112.5
+          },
+          {
+            "minLb": 5851,
+            "maxLb": 5950,
+            "fee": 115
+          },
+          {
+            "minLb": 5951,
+            "maxLb": 6050,
+            "fee": 117
+          },
+          {
+            "minLb": 6051,
+            "maxLb": 6150,
+            "fee": 119.5
+          },
+          {
+            "minLb": 6151,
+            "maxLb": 6250,
+            "fee": 122
+          },
+          {
+            "minLb": 6251,
+            "maxLb": 6350,
+            "fee": 124.5
+          },
+          {
+            "minLb": 6351,
+            "maxLb": 6450,
+            "fee": 127
+          },
+          {
+            "minLb": 6451,
+            "maxLb": 6550,
+            "fee": 129.5
+          },
+          {
+            "minLb": 6551,
+            "maxLb": 6650,
+            "fee": 131.5
+          },
+          {
+            "minLb": 6651,
+            "maxLb": 6750,
+            "fee": 134
+          },
+          {
+            "minLb": 6751,
+            "maxLb": 6850,
+            "fee": 136.5
+          },
+          {
+            "minLb": 6851,
+            "maxLb": 6950,
+            "fee": 139
+          },
+          {
+            "minLb": 6951,
+            "maxLb": null,
+            "fee": 140
+          }
+        ],
+        "currency": "USD",
+        "unit": "per two-year registration",
+        "period": "schedule effective 2009-09-01; form MV-202 (4/23), current as fetched 2026-09-29",
+        "url": "https://dmv.ny.gov/forms/mv202.pdf",
+        "sourceType": "primary",
+        "note": "Two-year fees by vehicle weight in pounds. Form note: the minimum two-year fee for a vehicle with 6 or more cylinders, or for an electric vehicle, is $32.50."
+      },
+      "minimumFeeSixCylOrEV": {
+        "value": 32.5,
+        "currency": "USD",
+        "unit": "per two-year registration (minimum)",
+        "period": "MV-202 (4/23)",
+        "url": "https://dmv.ny.gov/forms/mv202.pdf",
+        "sourceType": "primary"
+      },
+      "titleCertificateFee": {
+        "value": 50,
+        "currency": "USD",
+        "unit": "one-time",
+        "period": "MV-202 (4/23), current",
+        "url": "https://dmv.ny.gov/forms/mv202.pdf",
+        "sourceType": "primary"
+      },
+      "plateFee": {
+        "value": 25,
+        "currency": "USD",
+        "unit": "one-time, new plates",
+        "period": "MV-202 (4/23), current",
+        "url": "https://dmv.ny.gov/forms/mv202.pdf",
+        "sourceType": "primary",
+        "note": "DMV page: $12.50 for a vehicle with one plate. Plate transfer fee $10.00."
+      },
+      "plateTransferFee": {
+        "value": 10,
+        "currency": "USD",
+        "unit": "one-time",
+        "period": "MV-202 (4/23)",
+        "url": "https://dmv.ny.gov/forms/mv202.pdf",
+        "sourceType": "primary"
+      },
+      "nycVehicleUseTax": {
+        "value": 30,
+        "currency": "USD",
+        "unit": "per two-year registration ($15/yr), all weights",
+        "period": "MV-202 (4/23), current",
+        "url": "https://dmv.ny.gov/registration/passenger-vehicle-registration-fees-use-taxes-and-supplemental-fees",
+        "sourceType": "primary",
+        "note": "Bronx, Kings, New York, Queens, Richmond. Charged on original and renewal registrations."
+      },
+      "mctdSupplementalRegistrationFee": {
+        "value": 50,
+        "currency": "USD",
+        "unit": "per two-year registration ($25/yr)",
+        "period": "MV-202 (4/23), current",
+        "url": "https://dmv.ny.gov/forms/mv202.pdf",
+        "sourceType": "primary",
+        "note": "Applies in the 12 MCTD counties: New York, Bronx, Kings, Queens, Richmond, Dutchess, Nassau, Orange, Putnam, Rockland, Suffolk, Westchester."
+      }
+    },
+    "US-CT": {
+      "salesTaxRate": {
+        "value": 0.0635,
+        "unit": "fraction of purchase price",
+        "period": "current",
+        "url": "https://portal.ct.gov/dmv/vehicle-services/sales-tax-registrations",
+        "sourceType": "primary",
+        "note": "Dealer sales: full trade-in credit. Private sales: tax on the higher of NADA average trade-in value or bill-of-sale price."
+      },
+      "luxurySalesTaxRate": {
+        "value": 0.0775,
+        "unit": "fraction of the ENTIRE purchase price",
+        "period": "since 2015-07-01",
+        "url": "https://portal.ct.gov/dmv/vehicle-services/sales-tax-registrations",
+        "sourceType": "primary",
+        "note": "Applies to motor vehicles with a sales price over $50,000; the 7.75% applies to the whole price, not just the excess (CT DMV/DRS SN 2011-10)."
+      },
+      "luxuryThreshold": {
+        "value": 50000,
+        "currency": "USD",
+        "unit": "sales price above which 7.75% applies",
+        "period": "current",
+        "url": "https://portal.ct.gov/dmv/vehicle-services/sales-tax-registrations",
+        "sourceType": "primary"
+      },
+      "registrationFeePassenger": {
+        "value": 120,
+        "currency": "USD",
+        "unit": "per three-year registration",
+        "period": "current as fetched 2026-09-29",
+        "url": "https://portal.ct.gov/dmv/resources/dmv-fees",
+        "sourceType": "primary",
+        "note": "DMV fee page lists $120 but did not state the term in the extracted text; the three-year term is from CGS 14-49 ('one hundred twenty dollars every three years', via Justia) and the Passport to the Parks change describing '$24 during the customary 3-year registration'."
+      },
+      "titleFee": {
+        "value": 25,
+        "currency": "USD",
+        "unit": "one-time",
+        "period": "current",
+        "url": "https://portal.ct.gov/dmv/resources/dmv-fees",
+        "sourceType": "primary"
+      },
+      "plateFee": {
+        "value": 5,
+        "currency": "USD",
+        "unit": "one-time",
+        "period": "current",
+        "url": "https://portal.ct.gov/dmv/resources/dmv-fees",
+        "sourceType": "primary"
+      },
+      "administrativeFee": {
+        "value": 10,
+        "currency": "USD",
+        "unit": "per registration transaction",
+        "period": "current",
+        "url": "https://portal.ct.gov/dmv/resources/dmv-fees",
+        "sourceType": "primary"
+      },
+      "cleanAirActFee": {
+        "value": 15,
+        "currency": "USD",
+        "unit": "per registration period",
+        "period": "current",
+        "url": "https://portal.ct.gov/dmv/resources/dmv-fees",
+        "sourceType": "primary",
+        "note": "EVs exempt per the fee page."
+      },
+      "greenhouseGasFee": {
+        "value": 15,
+        "currency": "USD",
+        "unit": "per new registration with certificate of origin (new car)",
+        "period": "current",
+        "url": "https://portal.ct.gov/dmv/vehicle-services/register-a-new-vehicle-or-boat-in-ct",
+        "sourceType": "primary",
+        "note": "$7.50 when registering with an existing title (used car)."
+      },
+      "greenhouseGasFeeUsed": {
+        "value": 7.5,
+        "currency": "USD",
+        "unit": "per registration with existing title",
+        "period": "current",
+        "url": "https://portal.ct.gov/dmv/vehicle-services/register-a-new-vehicle-or-boat-in-ct",
+        "sourceType": "primary"
+      },
+      "passportToParksFee": {
+        "value": 24,
+        "currency": "USD",
+        "unit": "per three-year registration ($8/yr)",
+        "period": "from 2025-07-01",
+        "url": "https://portal.ct.gov/dmv/resources/dmv-fees",
+        "sourceType": "primary",
+        "note": "Was $15 before 2025-07-01. EVs exempt per the fee page extraction."
+      },
+      "emissionsExemptionFee": {
+        "value": 40,
+        "currency": "USD",
+        "unit": "one-time, vehicles four model years old or newer",
+        "period": "current",
+        "url": "https://portal.ct.gov/dmv/vehicle-services/register-a-new-vehicle-or-boat-in-ct",
+        "sourceType": "primary"
+      },
+      "lienFee": {
+        "value": 10,
+        "currency": "USD",
+        "unit": "if financed",
+        "period": "current",
+        "url": "https://portal.ct.gov/dmv/resources/dmv-fees",
+        "sourceType": "primary"
+      },
+      "newPassengerRegistrationTotal": {
+        "value": 190,
+        "currency": "USD",
+        "unit": "one-time bundle at first registration",
+        "period": "current",
+        "url": "https://portal.ct.gov/dmv/vehicle-services/register-a-new-vehicle-or-boat-in-ct",
+        "sourceType": "primary",
+        "note": "DMV states 'Registration fee: $190' for a personal car; arithmetic 120+25 title+5 plate+10 admin+15 clean air+15 parks = 190 (matches the pre-July-2025 $15 parks fee; the page may not be updated for the $24). Excludes emissions exemption, greenhouse gas, lien and sales tax."
+      }
+    },
+    "US-CA": {
+      "salesTaxStatewideBaseRate": {
+        "value": 0.0725,
+        "unit": "fraction of purchase price",
+        "period": "current",
+        "url": "https://www.cdtfa.ca.gov/formspubs/L1037.pdf",
+        "sourceType": "primary",
+        "note": "Use tax at the same rate is collected by DMV on private-party purchases."
+      },
+      "salesTaxLosAngelesCity": {
+        "value": 0.0975,
+        "unit": "fraction of purchase price",
+        "period": "through 2026-09-30",
+        "url": "https://www.cdtfa.ca.gov/formspubs/L1037.pdf",
+        "sourceType": "primary",
+        "note": "CDTFA Special Notice L-1037 (Aug 2026): County of Los Angeles countywide rate 9.750% -> 10.250% effective 2026-10-01. City of Los Angeles is not in the by-city list, so it takes the countywide rate."
+      },
+      "salesTaxLosAngelesCityFromOct2026": {
+        "value": 0.1025,
+        "unit": "fraction of purchase price",
+        "period": "from 2026-10-01",
+        "url": "https://www.cdtfa.ca.gov/formspubs/L1037.pdf",
+        "sourceType": "primary",
+        "note": "Countywide change; many other LA County cities go to 10.75-11.25%."
+      },
+      "salesTaxSanFrancisco": {
+        "value": 0.08625,
+        "unit": "fraction of purchase price",
+        "period": "2026",
+        "url": "https://www.salestaxhandbook.com/california/rates/san-francisco",
+        "sourceType": "secondary",
+        "note": "7.25% state + 1.375% district. Not in L-1037 changes. Not confirmed on a CDTFA page this session."
+      },
+      "registrationFee": {
+        "value": 76,
+        "currency": "USD",
+        "unit": "per year",
+        "period": "current as fetched 2026-09-29",
+        "url": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+        "sourceType": "primary",
+        "note": "Includes the $3 Alternative Fuel/Technology Fee."
+      },
+      "chpFee": {
+        "value": 34,
+        "currency": "USD",
+        "unit": "per year",
+        "period": "current",
+        "url": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+        "sourceType": "primary"
+      },
+      "vehicleLicenseFeeRate": {
+        "value": 0.0065,
+        "unit": "fraction of purchase price/value, per year",
+        "period": "current",
+        "url": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+        "sourceType": "primary",
+        "note": "Value depreciates by statutory schedule in later years (schedule not captured)."
+      },
+      "transportationImprovementFee": {
+        "value": [
+          {
+            "minValue": 0,
+            "maxValue": 4999,
+            "fee": 33
+          },
+          {
+            "minValue": 5000,
+            "maxValue": 24999,
+            "fee": 66
+          },
+          {
+            "minValue": 25000,
+            "maxValue": 34999,
+            "fee": 132
+          },
+          {
+            "minValue": 35000,
+            "maxValue": 59999,
+            "fee": 198
+          },
+          {
+            "minValue": 60000,
+            "maxValue": null,
+            "fee": 231
+          }
+        ],
+        "currency": "USD",
+        "unit": "per year, by vehicle value",
+        "period": "current as fetched 2026-09-29",
+        "url": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+        "sourceType": "primary"
+      },
+      "transferFee": {
+        "value": 15,
+        "currency": "USD",
+        "unit": "one-time, title transfer",
+        "period": "current",
+        "url": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+        "sourceType": "primary"
+      },
+      "roadImprovementFeeZEV": {
+        "value": 121,
+        "currency": "USD",
+        "unit": "per year",
+        "period": "current",
+        "url": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+        "sourceType": "primary",
+        "note": "Model year 2020+ zero-emission vehicles only."
+      },
+      "countyDistrictFees": {
+        "value": null,
+        "currency": "USD",
+        "unit": "per year",
+        "period": "current",
+        "url": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+        "sourceType": "primary",
+        "note": "DMV says 'varies by county'; no per-county amounts captured."
+      }
+    },
+    "GB": {
+      "vatIncludedInPrice": {
+        "value": 0.2,
+        "unit": "fraction, included in the retail price",
+        "period": "current",
+        "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services",
+        "sourceType": "primary",
+        "note": "Standard rate; not re-fetched this session. No separate purchase tax is paid by the buyer."
+      },
+      "firstRegistrationFee": {
+        "value": 55,
+        "currency": "GBP",
+        "unit": "one-time, new vehicle",
+        "period": "current as fetched 2026-09-29",
+        "url": "https://www.gov.uk/vehicle-registration/new-registrations",
+        "sourceType": "primary"
+      },
+      "vedFirstYearRatesByCO2": {
+        "value": [
+          {
+            "minG": 0,
+            "maxG": 0,
+            "rate": 10
+          },
+          {
+            "minG": 1,
+            "maxG": 50,
+            "rate": 115
+          },
+          {
+            "minG": 51,
+            "maxG": 75,
+            "rate": 135
+          },
+          {
+            "minG": 76,
+            "maxG": 90,
+            "rate": 280
+          },
+          {
+            "minG": 91,
+            "maxG": 100,
+            "rate": 365
+          },
+          {
+            "minG": 101,
+            "maxG": 110,
+            "rate": 405
+          },
+          {
+            "minG": 111,
+            "maxG": 130,
+            "rate": 455
+          },
+          {
+            "minG": 131,
+            "maxG": 150,
+            "rate": 560
+          },
+          {
+            "minG": 151,
+            "maxG": 170,
+            "rate": 1410
+          },
+          {
+            "minG": 171,
+            "maxG": 190,
+            "rate": 2270
+          },
+          {
+            "minG": 191,
+            "maxG": 225,
+            "rate": 3420
+          },
+          {
+            "minG": 226,
+            "maxG": 255,
+            "rate": 4850
+          },
+          {
+            "minG": 256,
+            "maxG": null,
+            "rate": 5690
+          }
+        ],
+        "currency": "GBP",
+        "unit": "first year (first tax payment), cars registered on or after 2017-04-01",
+        "period": "2026/27 (from 2026-04-01) — inferred, see note",
+        "url": "https://www.gov.uk/vehicle-tax-rate-tables",
+        "sourceType": "primary",
+        "note": "Rates as on GOV.UK when fetched 2026-09-29. The page shows no effective date; they are higher than the 2025/26 table (e.g. 111-130g £440, >255g £5,490), so they are taken to be the April 2026 uprating. Petrol, RDE2 diesel, alternative fuel and zero-emission. Non-RDE2 diesel pays one band higher (1-50g £135 ... 226-255g and >255g £5,690)."
+      },
+      "vedStandardRate": {
+        "value": 200,
+        "currency": "GBP",
+        "unit": "per year, single 12-month payment (from second tax payment)",
+        "period": "current on GOV.UK as fetched 2026-09-29 (2026/27)",
+        "url": "https://www.gov.uk/vehicle-tax-rate-tables",
+        "sourceType": "primary",
+        "note": "£210 total if paid by 12 monthly Direct Debits. Applies to petrol, diesel, alternative fuel and electric cars registered from 2017-04-01."
+      },
+      "expensiveCarSupplement": {
+        "value": 440,
+        "currency": "GBP",
+        "unit": "per year, years 2-6 of the car's life",
+        "period": "current on GOV.UK as fetched 2026-09-29 (2026/27)",
+        "url": "https://www.gov.uk/vehicle-tax-rate-tables",
+        "sourceType": "primary"
+      },
+      "expensiveCarSupplementThresholdICE": {
+        "value": 40000,
+        "currency": "GBP",
+        "unit": "list price above which the supplement applies",
+        "period": "current",
+        "url": "https://www.gov.uk/vehicle-tax-rate-tables",
+        "sourceType": "primary"
+      },
+      "expensiveCarSupplementThresholdEV": {
+        "value": 50000,
+        "currency": "GBP",
+        "unit": "list price above which the supplement applies to electric cars",
+        "period": "current; GOV.UK says it also applies to EVs registered 2025-04-01 to 2026-03-31",
+        "url": "https://www.gov.uk/vehicle-tax-rate-tables",
+        "sourceType": "primary",
+        "note": "Zero-emission vehicles registered before 2025-04-01 do not pay the supplement."
+      },
+      "evTreatment": {
+        "value": "EVs pay the lowest first-year rate (£10, 0g/km) then the standard rate (£200), plus the expensive car supplement over £50,000 list price",
+        "period": "since 2025-04-01",
+        "url": "https://www.gov.uk/vehicle-tax-rate-tables",
+        "sourceType": "primary"
+      }
+    },
+    "IE": {
+      "vrtCO2RatesCategoryA": {
+        "value": [
+          {
+            "maxG": 50,
+            "rate": 0.07,
+            "minEUR": 140
+          },
+          {
+            "maxG": 80,
+            "rate": 0.09,
+            "minEUR": 180
+          },
+          {
+            "maxG": 85,
+            "rate": 0.0975,
+            "minEUR": 195
+          },
+          {
+            "maxG": 90,
+            "rate": 0.105,
+            "minEUR": 210
+          },
+          {
+            "maxG": 95,
+            "rate": 0.1125,
+            "minEUR": 225
+          },
+          {
+            "maxG": 100,
+            "rate": 0.12,
+            "minEUR": 240
+          },
+          {
+            "maxG": 105,
+            "rate": 0.1275,
+            "minEUR": 255
+          },
+          {
+            "maxG": 110,
+            "rate": 0.135,
+            "minEUR": 270
+          },
+          {
+            "maxG": 115,
+            "rate": 0.1525,
+            "minEUR": 305
+          },
+          {
+            "maxG": 120,
+            "rate": 0.16,
+            "minEUR": 320
+          },
+          {
+            "maxG": 125,
+            "rate": 0.1675,
+            "minEUR": 335
+          },
+          {
+            "maxG": 130,
+            "rate": 0.175,
+            "minEUR": 350
+          },
+          {
+            "maxG": 135,
+            "rate": 0.1925,
+            "minEUR": 385
+          },
+          {
+            "maxG": 140,
+            "rate": 0.2,
+            "minEUR": 400
+          },
+          {
+            "maxG": 145,
+            "rate": 0.215,
+            "minEUR": 430
+          },
+          {
+            "maxG": 150,
+            "rate": 0.25,
+            "minEUR": 500
+          },
+          {
+            "maxG": 155,
+            "rate": 0.275,
+            "minEUR": 550
+          },
+          {
+            "maxG": 170,
+            "rate": 0.3,
+            "minEUR": 600
+          },
+          {
+            "maxG": 190,
+            "rate": 0.35,
+            "minEUR": 700
+          },
+          {
+            "maxG": null,
+            "rate": 0.41,
+            "minEUR": 820
+          }
+        ],
+        "currency": "EUR",
+        "unit": "fraction of Open Market Selling Price (OMSP), or the minimum, whichever is greater; WLTP g/km bands (each band is 'more than' the previous maxG up to and including maxG)",
+        "period": "since 2022-01-01, current as fetched 2026-09-29",
+        "url": "https://www.revenue.ie/en/vrt/calculating-vrt/applying-tax.aspx",
+        "sourceType": "primary"
+      },
+      "noxLevy": {
+        "value": [
+          {
+            "fromMg": 0,
+            "toMg": 40,
+            "eurPerMg": 5
+          },
+          {
+            "fromMg": 40,
+            "toMg": 80,
+            "eurPerMg": 15
+          },
+          {
+            "fromMg": 80,
+            "toMg": null,
+            "eurPerMg": 25
+          }
+        ],
+        "currency": "EUR",
+        "unit": "per mg/km NOx, marginal bands, added to CO2 charge",
+        "period": "since 2020-01-01, current",
+        "url": "https://www.revenue.ie/en/vrt/calculating-vrt/calculating-nox-charge.aspx",
+        "sourceType": "primary",
+        "note": "Where satisfactory NOx evidence is unavailable: €4,850 for diesel, €600 for others. Pure EVs exempt; hybrids pay."
+      },
+      "evVrtRelief": {
+        "value": 5000,
+        "currency": "EUR",
+        "unit": "maximum relief",
+        "period": "for EVs registered before 2026-12-31",
+        "url": "https://www.revenue.ie/en/vrt/calculating-vrt/electric-vehicles.aspx",
+        "sourceType": "primary",
+        "note": "Full relief up to €5,000 for OMSP up to €40,000; reduced relief for OMSP over €40,000 and under €50,000; no relief above €50,000. Budget 2026 extended it to end-2026. Taper formula (secondary sources: relief reduced by 50% of OMSP over €40,000) not confirmed on Revenue's page."
+      },
+      "motorTaxWLTPBands2021On": {
+        "value": [
+          {
+            "minG": 0,
+            "maxG": 0,
+            "annual": 120
+          },
+          {
+            "minG": 1,
+            "maxG": 50,
+            "annual": 140
+          },
+          {
+            "minG": 51,
+            "maxG": 80,
+            "annual": 150
+          },
+          {
+            "minG": 81,
+            "maxG": 90,
+            "annual": 160
+          },
+          {
+            "minG": 91,
+            "maxG": 100,
+            "annual": 170
+          },
+          {
+            "minG": 101,
+            "maxG": 110,
+            "annual": 180
+          },
+          {
+            "minG": 111,
+            "maxG": 120,
+            "annual": 190
+          },
+          {
+            "minG": 121,
+            "maxG": 130,
+            "annual": 200
+          },
+          {
+            "minG": 131,
+            "maxG": 140,
+            "annual": 210
+          },
+          {
+            "minG": 141,
+            "maxG": 150,
+            "annual": 270
+          },
+          {
+            "minG": 151,
+            "maxG": 160,
+            "annual": 280
+          },
+          {
+            "minG": 161,
+            "maxG": 170,
+            "annual": 420
+          },
+          {
+            "minG": 171,
+            "maxG": 190,
+            "annual": 600
+          },
+          {
+            "minG": 191,
+            "maxG": 200,
+            "annual": 790
+          },
+          {
+            "minG": 201,
+            "maxG": 225,
+            "annual": 1250
+          },
+          {
+            "minG": 226,
+            "maxG": null,
+            "annual": 2400
+          }
+        ],
+        "currency": "EUR",
+        "unit": "per year, private cars first registered on/after 2021-01-01",
+        "period": "effective 2021-01-01; unchanged for 2026 per secondary sources on Budget 2026",
+        "url": "https://assets.gov.ie/static/documents/motor-tax-rates-01-january-2021.pdf",
+        "sourceType": "primary",
+        "note": "Rates €120-€600 read from the Department of Transport PDF; the 191-200 (€790), 201-225 (€1,250) and 226+ (€2,400) rows came from a search summary citing motortax.ie and did not extract cleanly from the PDF. Half-year = 55.5% and quarterly = 28.25% of annual per the PDF."
+      },
+      "budget2026MotorTaxChange": {
+        "value": null,
+        "period": "Budget 2026 (Oct 2025)",
+        "url": "https://www.citizensinformation.ie/en/money-and-tax/budgets/budget-2026/",
+        "sourceType": "secondary",
+        "note": "No motor tax rate change found; could not fetch Citizens Information (HTTP 403)."
+      }
+    },
+    "CA-ON": {
+      "hstRate": {
+        "value": 0.13,
+        "unit": "fraction of purchase price (dealer / GST-HST registrant sales)",
+        "period": "since 2016-10-01; listed for on or after 2025-04-01",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate/calculator.html",
+        "sourceType": "primary"
+      },
+      "privateSaleRST": {
+        "value": 0.13,
+        "unit": "fraction of the greater of purchase price or wholesale value (Canadian Red Book)",
+        "period": "current",
+        "url": "https://www.ontario.ca/page/buy-or-sell-used-vehicle-ontario",
+        "sourceType": "primary",
+        "note": "Paid by buyer at ServiceOntario on registration; not paid to the seller. Exempt on gifts to close family members."
+      },
+      "vehiclePermitFee": {
+        "value": 32,
+        "currency": "CAD",
+        "unit": "one-time",
+        "period": "page updated 2026-01-14",
+        "url": "https://www.ontario.ca/page/register-vehicle-permit-and-licence-plate",
+        "sourceType": "primary"
+      },
+      "plateWithPermitFee": {
+        "value": 59,
+        "currency": "CAD",
+        "unit": "one-time, new or replacement plate with permit",
+        "period": "page updated 2026-01-14",
+        "url": "https://www.ontario.ca/page/register-vehicle-permit-and-licence-plate",
+        "sourceType": "primary"
+      },
+      "plateRenewalFee": {
+        "value": 0,
+        "currency": "CAD",
+        "unit": "per year",
+        "period": "since 2022-03-13",
+        "url": "https://www.cbc.ca/news/canada/toronto/ontario-vehicle-licence-renewal-1.6359951",
+        "sourceType": "secondary",
+        "note": "Ontario eliminated licence plate sticker renewal fees for passenger vehicles and light trucks effective 2022-03-13 (previously $120/yr southern, $60/yr northern). Renewal itself is still required. Not confirmed on an ontario.ca page this session."
+      },
+      "usedVehicleInformationPackageFee": {
+        "value": null,
+        "currency": "CAD",
+        "unit": "one-time, seller obtains",
+        "period": "current",
+        "url": "https://www.ontario.ca/page/buy-or-sell-used-vehicle-ontario",
+        "sourceType": "primary",
+        "note": "Required for private sales; fee not stated on the pages fetched."
+      }
+    },
+    "CA-BC": {
+      "gstRate": {
+        "value": 0.05,
+        "unit": "fraction of purchase price (dealer sales)",
+        "period": "current, listed for on or after 2025-04-01",
+        "url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate/calculator.html",
+        "sourceType": "primary",
+        "note": "No GST on private sales between individuals."
+      },
+      "pstPassengerFromDealer": {
+        "value": [
+          {
+            "minPrice": 0,
+            "maxPrice": 54999.99,
+            "rate": 0.07
+          },
+          {
+            "minPrice": 55000,
+            "maxPrice": 55999.99,
+            "rate": 0.08
+          },
+          {
+            "minPrice": 56000,
+            "maxPrice": 56999.99,
+            "rate": 0.09
+          },
+          {
+            "minPrice": 57000,
+            "maxPrice": 124999.99,
+            "rate": 0.1
+          },
+          {
+            "minPrice": 125000,
+            "maxPrice": 149999.99,
+            "rate": 0.15
+          },
+          {
+            "minPrice": 150000,
+            "maxPrice": null,
+            "rate": 0.2
+          }
+        ],
+        "currency": "CAD",
+        "unit": "fraction of the entire purchase price, passenger vehicles bought from a GST registrant, imported or leased",
+        "period": "Bulletin PST 308 revised August 2026",
+        "url": "https://www2.gov.bc.ca/assets/gov/taxes/sales-taxes/publications/pst-308-vehicles.pdf",
+        "sourceType": "primary"
+      },
+      "pstPassengerPrivateSale": {
+        "value": [
+          {
+            "minPrice": 0,
+            "maxPrice": 124999.99,
+            "rate": 0.12
+          },
+          {
+            "minPrice": 125000,
+            "maxPrice": 149999.99,
+            "rate": 0.15
+          },
+          {
+            "minPrice": 150000,
+            "maxPrice": null,
+            "rate": 0.2
+          }
+        ],
+        "currency": "CAD",
+        "unit": "fraction of purchase price (private sale or taxable gift)",
+        "period": "Bulletin PST 308 revised August 2026",
+        "url": "https://www2.gov.bc.ca/assets/gov/taxes/sales-taxes/publications/pst-308-vehicles.pdf",
+        "sourceType": "primary",
+        "note": "Tax base on private sales can be the greater of price and a value measure (average wholesale / appraisal); rules not captured in full."
+      },
+      "pstZEVFromDealer": {
+        "value": [
+          {
+            "minPrice": 0,
+            "maxPrice": 74999.99,
+            "rate": 0.07
+          },
+          {
+            "minPrice": 75000,
+            "maxPrice": 75999.99,
+            "rate": 0.08
+          },
+          {
+            "minPrice": 76000,
+            "maxPrice": 76999.99,
+            "rate": 0.09
+          },
+          {
+            "minPrice": 77000,
+            "maxPrice": 124999.99,
+            "rate": 0.1
+          },
+          {
+            "minPrice": 125000,
+            "maxPrice": 149999.99,
+            "rate": 0.15
+          },
+          {
+            "minPrice": 150000,
+            "maxPrice": null,
+            "rate": 0.2
+          }
+        ],
+        "currency": "CAD",
+        "unit": "fraction of purchase price, ZEVs acquired after 2022-02-22",
+        "period": "until 2027-02-22",
+        "url": "https://www2.gov.bc.ca/assets/gov/taxes/sales-taxes/publications/pst-308-vehicles.pdf",
+        "sourceType": "primary",
+        "note": "Private sale ZEV rates: 12% below $125,000, then 15%/20%. Used-ZEV PST exemption ran 2022-02-23 to 2025-04-30."
+      },
+      "registrationFee": {
+        "value": 18,
+        "currency": "CAD",
+        "unit": "one-time, initial registration",
+        "period": "Motor Vehicle Fees Regulation, consolidated to 2026-09-22",
+        "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/334_91",
+        "sourceType": "primary"
+      },
+      "plateFee": {
+        "value": 18,
+        "currency": "CAD",
+        "unit": "per plate",
+        "period": "consolidated to 2026-09-22",
+        "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/334_91",
+        "sourceType": "primary"
+      },
+      "transferFee": {
+        "value": 28,
+        "currency": "CAD",
+        "unit": "one-time, transfer of ownership",
+        "period": "consolidated to 2026-09-22",
+        "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/334_91",
+        "sourceType": "primary"
+      },
+      "annualLicenceFeeByNetWeight": {
+        "value": [
+          {
+            "maxKg": 1000,
+            "fee": 46
+          },
+          {
+            "minKg": 1001,
+            "maxKg": 1400,
+            "fee": 53
+          },
+          {
+            "minKg": 1401,
+            "maxKg": 1900,
+            "fee": 61
+          },
+          {
+            "minKg": 1901,
+            "maxKg": 2300,
+            "fee": 84
+          },
+          {
+            "minKg": 2301,
+            "maxKg": 2800,
+            "fee": 122
+          },
+          {
+            "minKg": 2801,
+            "maxKg": null,
+            "fee": 142
+          }
+        ],
+        "currency": "CAD",
+        "unit": "per year, passenger motor vehicles",
+        "period": "consolidated to 2026-09-22",
+        "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/334_91",
+        "sourceType": "primary",
+        "note": "Read via a summarizing fetch; the lower rows (all $46 up to 1,000 kg) should be re-checked against the regulation text. Paid with ICBC Autoplan insurance."
+      }
+    },
+    "MX-CMX": {
+      "iva": {
+        "value": 0.16,
+        "unit": "fraction of price",
+        "period": "current",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIVA.pdf",
+        "sourceType": "primary",
+        "note": "General IVA rate (LIVA art. 1); not re-fetched this session. Included in dealer prices; ISAN exemption thresholds exclude IVA, tenencia subsidy threshold includes it."
+      },
+      "isanTariff2026": {
+        "value": [
+          {
+            "lowerMXN": 0.01,
+            "upperMXN": 383940.35,
+            "fixedMXN": 0,
+            "marginalRate": 0.02
+          },
+          {
+            "lowerMXN": 383940.36,
+            "upperMXN": 460728.35,
+            "fixedMXN": 7678.67,
+            "marginalRate": 0.05
+          },
+          {
+            "lowerMXN": 460728.36,
+            "upperMXN": 537516.64,
+            "fixedMXN": 11518.25,
+            "marginalRate": 0.1
+          },
+          {
+            "lowerMXN": 537516.65,
+            "upperMXN": 691092.34,
+            "fixedMXN": 19197.04,
+            "marginalRate": 0.15
+          },
+          {
+            "lowerMXN": 691092.35,
+            "upperMXN": null,
+            "fixedMXN": 42233.35,
+            "marginalRate": 0.17
+          }
+        ],
+        "currency": "MXN",
+        "unit": "fixed fee + rate on excess over lower limit; price before IVA",
+        "period": "2026 (Anexo 15 RMF 2026, DOF 2025-12-28)",
+        "url": "https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rmf/anexos/Anexo-15-RMF-2026_DOF-2812225.pdf",
+        "sourceType": "primary",
+        "note": "If price exceeds $1,060,189.93, the tax is reduced by 7% of the difference between the price and $1,060,189.93."
+      },
+      "isanFullExemptionThreshold2026": {
+        "value": 356934.05,
+        "currency": "MXN",
+        "unit": "price excluding IVA at or below which no ISAN",
+        "period": "2026",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFISAN.pdf",
+        "sourceType": "primary",
+        "note": "LFISAN art. 8 fr. II, amount updated by RMF DOF 2025-12-28. 50% exemption for prices $356,934.06 to $452,116.48."
+      },
+      "isanHalfExemptionUpper2026": {
+        "value": 452116.48,
+        "currency": "MXN",
+        "unit": "upper price (excl. IVA) for 50% exemption",
+        "period": "2026",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFISAN.pdf",
+        "sourceType": "primary"
+      },
+      "isanEVExemption": {
+        "value": true,
+        "unit": "exempt",
+        "period": "since DOF 2016-11-30",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFISAN.pdf",
+        "sourceType": "primary",
+        "note": "Art. 8 fr. IV: battery-electric cars, and electric cars that also have a combustion or hydrogen engine (hybrids), are exempt."
+      },
+      "tenenciaSubsidyThreshold2026": {
+        "value": 638000,
+        "currency": "MXN",
+        "unit": "vehicle value incl. IVA at or below which the 100% tenencia subsidy applies",
+        "period": "2026",
+        "url": "https://www.finanzas.cdmx.gob.mx/comunicacion/noticias/inician-descuentos-en-pago-de-predial-agua-y-tenencia-en-la-cdmx",
+        "sourceType": "primary",
+        "note": "Condition: pay the refrendo on time and owe no prior tenencia. Deadline originally 2026-03-31, extended to 2026-06-30 (El Financiero, 2026-04-28). Motorcycles: $250,000."
+      },
+      "tenenciaTariffAboveThreshold": {
+        "value": null,
+        "currency": "MXN",
+        "period": "2026",
+        "url": null,
+        "sourceType": "primary",
+        "note": "Código Fiscal CDMX tenencia tariff for vehicles above the subsidy threshold not captured."
+      },
+      "refrendo2026": {
+        "value": 760,
+        "currency": "MXN",
+        "unit": "per year",
+        "period": "2026",
+        "url": "https://cdmxassets.s3.us-east-1.amazonaws.com/media/files-pdf/control-vehicular/2026/CONT_VEH_CV_2026.pdf",
+        "sourceType": "primary",
+        "note": "Código Fiscal CDMX art. 219 fr. I a). 50% reduction for electric vehicles and vehicles adapted for people with disabilities."
+      },
+      "altaDePlacas2026": {
+        "value": 972,
+        "currency": "MXN",
+        "unit": "one-time: initial plates, tarjeta de circulación and calcomanía",
+        "period": "2026",
+        "url": "https://cdmxassets.s3.us-east-1.amazonaws.com/media/files-pdf/control-vehicular/2026/CONT_VEH_CV_2026.pdf",
+        "sourceType": "primary",
+        "note": "Art. 219 fr. I b). 50% reduction for EVs. A secondary report of $804 for new cars was not borne out by the Tesorería table."
+      },
+      "tarjetaCirculacion2026": {
+        "value": 433,
+        "currency": "MXN",
+        "unit": "replacement or renewal",
+        "period": "2026",
+        "url": "https://cdmxassets.s3.us-east-1.amazonaws.com/media/files-pdf/control-vehicular/2026/CONT_VEH_CV_2026.pdf",
+        "sourceType": "primary",
+        "note": "Art. 219 fr. IV; column alignment in the PDF extraction was imperfect, and El Universal reports the same $433."
+      },
+      "cambioDePropietario2026": {
+        "value": 433,
+        "currency": "MXN",
+        "unit": "change of owner incl. new tarjeta de circulación",
+        "period": "2026",
+        "url": "https://cdmxassets.s3.us-east-1.amazonaws.com/media/files-pdf/control-vehicular/2026/CONT_VEH_CV_2026.pdf",
+        "sourceType": "primary",
+        "note": "Art. 219 fr. V; read from a column-misaligned PDF extraction — re-check."
+      },
+      "baja2026": {
+        "value": 590,
+        "currency": "MXN",
+        "unit": "deregistration",
+        "period": "2026",
+        "url": "https://cdmxassets.s3.us-east-1.amazonaws.com/media/files-pdf/control-vehicular/2026/CONT_VEH_CV_2026.pdf",
+        "sourceType": "primary"
+      }
+    }
+  },
+  "finance": {
+    "US": {
+      "fedG19": {
+        "commercialBankNewCar60moAPR": {
+          "value": 7.14,
+          "unit": "percent",
+          "period": "2026 Q2 (survey month May 2026)",
+          "url": "https://www.federalreserve.gov/releases/g19/current/default.htm",
+          "sourceType": "primary",
+          "note": "G.19 release of 2026-09-08. Unweighted average of each bank's most common rate in the first week of the quarter's middle month. Also FRED series RIFLPBCIANM60NM. 2026 Q1 was 7.53."
+        },
+        "commercialBankNewCar72moAPR": {
+          "value": 6.97,
+          "unit": "percent",
+          "period": "2026 Q2 (May 2026)",
+          "url": "https://www.federalreserve.gov/releases/g19/current/default.htm",
+          "sourceType": "primary"
+        },
+        "financeCompanyNewCarAPR": {
+          "value": 6.3,
+          "unit": "percent",
+          "period": "2026 Q2 / June 2026",
+          "url": "https://www.federalreserve.gov/releases/g19/current/default.htm",
+          "sourceType": "primary",
+          "note": "Finance-company (incl. captive) new-car loans."
+        },
+        "financeCompanyNewCarTermMonths": {
+          "value": 67,
+          "unit": "months",
+          "period": "2026 Q2 / June 2026",
+          "url": "https://www.federalreserve.gov/releases/g19/current/default.htm",
+          "sourceType": "primary"
+        },
+        "financeCompanyNewCarAmountFinanced": {
+          "value": 41705,
+          "currency": "USD",
+          "period": "2026 Q2 / June 2026",
+          "url": "https://fred.stlouisfed.org/series/DTCTLVENANM",
+          "sourceType": "primary",
+          "note": "FRED shows 41,704.72."
+        }
+      },
+      "experian": {
+        "_source": {
+          "url": "https://www.experian.com/blogs/ask-experian/average-car-loan-interest-rates-by-credit-score/",
+          "period": "2026 Q2 (State of the Automotive Finance Market; page dated 2026-09-10)",
+          "sourceType": "secondary",
+          "note": "Tiers use VantageScore 4.0: super prime 781-850, prime 661-780, near prime 601-660, subprime 501-600, deep subprime 300-500."
+        },
+        "newAPRAverage": {
+          "value": 6.35,
+          "unit": "percent",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/auto-loan-rates-financing/",
+          "sourceType": "secondary"
+        },
+        "usedAPRAverage": {
+          "value": 11.19,
+          "unit": "percent",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/auto-loan-rates-financing/",
+          "sourceType": "secondary"
+        },
+        "newAPRByTier": {
+          "value": {
+            "superPrime": 4.41,
+            "prime": 6.15,
+            "nearPrime": 9.71,
+            "subprime": 13.52,
+            "deepSubprime": 16.11
+          },
+          "unit": "percent",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/average-car-loan-interest-rates-by-credit-score/",
+          "sourceType": "secondary"
+        },
+        "usedAPRByTier": {
+          "value": {
+            "superPrime": 6.29,
+            "prime": 8.81,
+            "nearPrime": 13.93,
+            "subprime": 19.1,
+            "deepSubprime": 21.62
+          },
+          "unit": "percent",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/average-car-loan-interest-rates-by-credit-score/",
+          "sourceType": "secondary"
+        },
+        "newLoanAmount": {
+          "value": 43610,
+          "currency": "USD",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/auto-loan-rates-financing/",
+          "sourceType": "secondary"
+        },
+        "usedLoanAmount": {
+          "value": 27852,
+          "currency": "USD",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/auto-loan-rates-financing/",
+          "sourceType": "secondary"
+        },
+        "newTermMonths": {
+          "value": 69.5,
+          "unit": "months",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/auto-loan-rates-financing/",
+          "sourceType": "secondary"
+        },
+        "usedTermMonths": {
+          "value": 67.9,
+          "unit": "months",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/auto-loan-rates-financing/",
+          "sourceType": "secondary"
+        },
+        "newMonthlyPayment": {
+          "value": 765,
+          "currency": "USD",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/auto-loan-rates-financing/",
+          "sourceType": "secondary"
+        },
+        "usedMonthlyPayment": {
+          "value": 542,
+          "currency": "USD",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/auto-loan-rates-financing/",
+          "sourceType": "secondary"
+        },
+        "leaseShareOfNew": {
+          "value": 23.75,
+          "unit": "percent of new-vehicle transactions",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/auto-loan-rates-financing/",
+          "sourceType": "secondary"
+        },
+        "averageLeasePayment": {
+          "value": 617,
+          "currency": "USD",
+          "unit": "per month",
+          "period": "2026 Q2",
+          "url": "https://www.experian.com/blogs/ask-experian/auto-loan-rates-financing/",
+          "sourceType": "secondary"
+        }
+      }
+    },
+    "GB": {
+      "shareOfPrivateNewCarsFinancedByFLAMembers": {
+        "value": 85,
+        "unit": "percent (stated as 'over 85%')",
+        "period": "calendar 2025",
+        "url": "https://fla.org.uk/news/fla-members-provided-56-billion-of-new-lending-in-the-first-four-months-of-2026/",
+        "sourceType": "secondary",
+        "note": "FLA is an industry body. Wording: 'finance for over 85% of private new car registrations'. Published 2026-06-17. Treat 85 as a floor, not a point value."
+      },
+      "motorFinanceLentH1": {
+        "value": 22.7,
+        "currency": "GBP",
+        "unit": "billion, new and used car finance to households",
+        "period": "2026 H1",
+        "url": "https://cardealermagazine.co.uk/motor-finance-growth-continues-as-lenders-support-22-7bn-of-new-and-used-car-purchases/326258",
+        "sourceType": "secondary",
+        "note": "FLA data reported by Car Dealer Magazine, 2026-08-06."
+      },
+      "typicalPCPorHPAPR": {
+        "value": null,
+        "unit": "percent",
+        "period": null,
+        "url": null,
+        "sourceType": null,
+        "note": "No regulator, central bank or FLA average car-finance APR found. Bank of England effective rates cover 'other loans' to individuals, not car finance. Broker representative APRs (e.g. 9.9%) are adverts, not market averages."
+      }
+    },
+    "IE": {
+      "newConsumerLoanRate": {
+        "value": 6.72,
+        "unit": "percent, weighted average on new consumer loan agreements",
+        "period": "July 2026",
+        "url": "https://www.centralbank.ie/statistics/data-and-analysis/credit-and-banking-statistics/retail-interest-rates",
+        "sourceType": "primary",
+        "note": "All consumer lending, not car loans specifically. Down 76bp on June. Floating 7.90% (59% of volume), fixed 5.05%. New volume EUR 364m."
+      },
+      "carFinanceSpecificRate": {
+        "value": null,
+        "unit": "percent",
+        "period": null,
+        "url": null,
+        "sourceType": null,
+        "note": "Not published separately by the Central Bank of Ireland."
+      }
+    },
+    "CA": {
+      "charteredBankAutoLoanRateNewLending": {
+        "value": 6.66,
+        "unit": "percent, volume-weighted",
+        "period": "July 2026",
+        "url": "https://www.bankofcanada.ca/rates/banking-and-financial-statistics/interest-rates-for-new-and-existing-lending-by-chartered-banks/",
+        "sourceType": "primary",
+        "note": "Bank of Canada series V122667805 ('Personal loan plans: of which auto loans', funds advanced by chartered banks); also Statistics Canada table 10-10-0006-01. New and used combined; excludes captive finance companies and credit unions."
+      }
+    },
+    "MX": {
+      "autoCreditWeightedRateOriginatedLast12m": {
+        "value": 14.1,
+        "unit": "percent, contract interest rate weighted by balance",
+        "period": "loans originated Nov 2024 - Oct 2025",
+        "url": "https://www.banxico.org.mx/publicaciones-y-prensa/rib-creditos-automotrices/%7BA7049ADE-932D-F95A-BBB6-F1188DE67C39%7D.pdf",
+        "sourceType": "primary",
+        "note": "Banxico Indicadores Basicos de Credito Automotriz, datos a octubre de 2025 (latest edition). Banks 13.9%, brand-finance arms 15.0%. Loans originated in October 2025 alone: 13.8%. Whole outstanding comparable book: 14.3%. This is the interest rate, not the CAT."
+      },
+      "autoCreditAverageTermMonths": {
+        "value": 55,
+        "unit": "months",
+        "period": "originated Nov 2024 - Oct 2025",
+        "url": "https://www.banxico.org.mx/publicaciones-y-prensa/rib-creditos-automotrices/%7BA7049ADE-932D-F95A-BBB6-F1188DE67C39%7D.pdf",
+        "sourceType": "primary",
+        "note": "Banks 56, brand-finance arms 49."
+      },
+      "autoCreditAverageAmount": {
+        "value": 317194,
+        "currency": "MXN",
+        "period": "originated Nov 2024 - Oct 2025",
+        "url": "https://www.banxico.org.mx/publicaciones-y-prensa/rib-creditos-automotrices/%7BA7049ADE-932D-F95A-BBB6-F1188DE67C39%7D.pdf",
+        "sourceType": "primary",
+        "note": "Average amount at origination. Banks 307,162; brand-finance arms 358,949."
+      },
+      "shareOfNewLightVehiclesSoldOnCredit": {
+        "value": 62,
+        "unit": "percent",
+        "period": "Jan-Oct 2025",
+        "url": "https://www.banxico.org.mx/publicaciones-y-prensa/rib-creditos-automotrices/%7BA7049ADE-932D-F95A-BBB6-F1188DE67C39%7D.pdf",
+        "sourceType": "secondary",
+        "note": "AMDA figure quoted in the Banxico report: of those loans, banks 20.3%, finance companies 78.5%, autofinanciamiento 1.2%."
+      },
+      "averageCAT": {
+        "value": null,
+        "unit": "percent",
+        "period": null,
+        "url": null,
+        "sourceType": null,
+        "note": "The Banxico auto-credit RIB publishes contract interest rates, not a system-wide average CAT."
+      }
+    }
+  },
+  "insurance": {
+    "US-NY": {
+      "naicAverageExpenditure": {
+        "value": 1752.55,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary",
+        "note": "NAIC 2022/2023 Auto Insurance Database Report (adopted Dec 2025), Table 4. Latest edition; data year 2023. Per insured vehicle."
+      },
+      "naicLiabilityAvgPremium": {
+        "value": 1115.97,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary",
+        "note": "Table 1C; liability includes no-fault PIP and statutory UM."
+      },
+      "naicCollisionAvgPremium": {
+        "value": 541.06,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "naicComprehensiveAvgPremium": {
+        "value": 238.96,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "naicCombinedAvgPremium": {
+        "value": 1895.99,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "fullCoverageAnnual": {
+        "value": 3560,
+        "currency": "USD",
+        "period": "August 2026",
+        "url": "https://www.experian.com/blogs/ask-experian/average-cost-car-insurance-new-york/",
+        "sourceType": "secondary",
+        "note": "Experian marketplace quote data (Bankrate pages would not load). Quotes, not premiums paid."
+      },
+      "minimumCoverageAnnual": {
+        "value": 2914,
+        "currency": "USD",
+        "period": "August 2026",
+        "url": "https://www.experian.com/blogs/ask-experian/average-cost-car-insurance-new-york/",
+        "sourceType": "secondary"
+      },
+      "stateMinimum": {
+        "value": {
+          "bodilyInjuryPerPerson": 25000,
+          "bodilyInjuryPerAccident": 50000,
+          "deathPerPerson": 50000,
+          "deathPerAccident": 100000,
+          "propertyDamage": 10000,
+          "noFaultPIP": 50000,
+          "uninsuredMotoristPerPerson": 25000,
+          "uninsuredMotoristPerAccident": 50000
+        },
+        "currency": "USD",
+        "period": "current 2026",
+        "url": "https://www.dfs.ny.gov/consumers/auto_insurance/minimum_auto_insurance_requirements",
+        "sourceType": "primary",
+        "note": "DFS page blocked automated fetch; 25/50/10 and $50,000 PIP confirmed on Experian NY page and secondary summaries; death 50/100 and UM 25/50 from secondary summaries citing DFS/DMV."
+      }
+    },
+    "US-CT": {
+      "naicAverageExpenditure": {
+        "value": 1393.9,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "naicLiabilityAvgPremium": {
+        "value": 853.74,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "naicCollisionAvgPremium": {
+        "value": 477.53,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "naicComprehensiveAvgPremium": {
+        "value": 176.94,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "naicCombinedAvgPremium": {
+        "value": 1508.21,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "fullCoverageAnnual": {
+        "value": 3874,
+        "currency": "USD",
+        "period": "August 2026",
+        "url": "https://www.experian.com/blogs/ask-experian/average-cost-car-insurance-connecticut/",
+        "sourceType": "secondary",
+        "note": "Experian marketplace quote data."
+      },
+      "minimumCoverageAnnual": {
+        "value": 2990,
+        "currency": "USD",
+        "period": "August 2026",
+        "url": "https://www.experian.com/blogs/ask-experian/average-cost-car-insurance-connecticut/",
+        "sourceType": "secondary"
+      },
+      "stateMinimum": {
+        "value": {
+          "bodilyInjuryPerPerson": 25000,
+          "bodilyInjuryPerAccident": 50000,
+          "propertyDamage": 25000,
+          "uninsuredUnderinsuredPerPerson": 25000,
+          "uninsuredUnderinsuredPerAccident": 50000
+        },
+        "currency": "USD",
+        "period": "current 2026",
+        "url": "https://cga.ct.gov/2023/rpt/pdf/2023-R-0090.pdf",
+        "sourceType": "primary",
+        "note": "CT OLR report (fetch failed on certificate). 25/50/25 confirmed on Experian CT page; UM/UIM 25/50 from multiple secondary summaries."
+      }
+    },
+    "US-CA": {
+      "naicAverageExpenditure": {
+        "value": 1225.02,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "naicLiabilityAvgPremium": {
+        "value": 660.84,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "naicCollisionAvgPremium": {
+        "value": 607.06,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "naicComprehensiveAvgPremium": {
+        "value": 150.04,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "naicCombinedAvgPremium": {
+        "value": 1417.94,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "fullCoverageAnnual": {
+        "value": 3001,
+        "currency": "USD",
+        "period": "August 2026",
+        "url": "https://www.experian.com/blogs/ask-experian/average-cost-car-insurance-california/",
+        "sourceType": "secondary",
+        "note": "Experian marketplace quote data."
+      },
+      "minimumCoverageAnnual": {
+        "value": 1312,
+        "currency": "USD",
+        "period": "August 2026",
+        "url": "https://www.experian.com/blogs/ask-experian/average-cost-car-insurance-california/",
+        "sourceType": "secondary"
+      },
+      "stateMinimum": {
+        "value": {
+          "bodilyInjuryPerPerson": 30000,
+          "bodilyInjuryPerAccident": 60000,
+          "propertyDamage": 15000
+        },
+        "currency": "USD",
+        "period": "effective 2025-01-01 (SB 1107; previously 15/30/5)",
+        "url": "https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202120220SB1107",
+        "sourceType": "primary"
+      }
+    },
+    "US-national": {
+      "naicAverageExpenditure": {
+        "value": 1281.92,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      },
+      "naicCombinedAvgPremium": {
+        "value": 1438.6,
+        "currency": "USD",
+        "period": "2023",
+        "url": "https://content.naic.org/sites/default/files/publication-aut-pb-auto-insurance-database.pdf",
+        "sourceType": "primary"
+      }
+    },
+    "GB": {
+      "averageComprehensivePremiumPaid": {
+        "value": 566,
+        "currency": "GBP",
+        "unit": "per year",
+        "period": "2026 Q2",
+        "url": "https://www.insurancetimes.co.uk/news/motor-insurance-payouts-hit-record-32bn-in-second-quarter/1459259.article",
+        "sourceType": "secondary",
+        "note": "ABI Motor Insurance Premium Tracker (price paid, not quoted), reported July 2026. ABI's own page (https://www.abi.org.uk/news/news-articles/2026/7/record3.2-billion-paid-out-to-support-motor-insurance-customers-in-q2-2026/) blocked fetch. Q1 2026 was 560. Average claim GBP 4,900."
+      }
+    },
+    "IE": {
+      "averageWrittenPremium": {
+        "value": 655,
+        "currency": "EUR",
+        "unit": "per policy per year",
+        "period": "2025 H1",
+        "url": "https://www.centralbank.ie/docs/default-source/statistics/data-and-analysis/national-claims-information-database/ncid-private-motor-insurance-mid-year-2025.pdf?sfvrsn=b857731a_4",
+        "sourceType": "primary",
+        "note": "NCID Private Motor Mid-Year 2025, published March 2026. Comprehensive 648, third-party 753. 93% of policies comprehensive. Full-year 2024: 623 in the Oct 2025 annual report (629 in the mid-year release's series)."
+      }
+    },
+    "CA-ON": {
+      "averageAnnualPremium": {
+        "value": 2164,
+        "currency": "CAD",
+        "period": "12 months to October 2025",
+        "url": "https://www.fsrao.ca/consumers/auto-insurance/understanding-auto-insurance-rates/your-average-premium",
+        "sourceType": "primary",
+        "note": "FSRA, all Ontario private passenger vehicles. GTA 2,810; other urban 2,076; rural 1,740. Latest FSRA update on the page."
+      }
+    },
+    "CA-BC": {
+      "averageAutoplanPremium": {
+        "value": 1358,
+        "currency": "CAD",
+        "period": "fiscal 2024/25 (Apr 2024 - Mar 2025)",
+        "url": "https://www.icbc.com/assets/en/0y9OFJVtt6MPhvvZatXmi/ar-25.pdf",
+        "sourceType": "primary",
+        "note": "ICBC 2024/25 Annual Service Plan Report, Financial Summary: 'Average premium is based on Autoplan premiums earned' (Basic plus Optional). Other column 1,268 (2023/24). Basic rates frozen through fiscal 2026/27."
+      },
+      "averageBasicOnlyPremium": {
+        "value": null,
+        "currency": "CAD",
+        "period": null,
+        "url": null,
+        "sourceType": null
+      }
+    },
+    "MX": {
+      "cdmxMandatoryLiability": {
+        "value": "Third-party liability (persons and property) mandatory; no minimum sum set in the regulation",
+        "period": "current",
+        "url": "https://mcontreras.gob.mx/wp-content/uploads/2026/01/reglamento-de-transito-cdmx.pdf",
+        "sourceType": "primary",
+        "note": "Reglamento de Transito CDMX art. 46. Fine for a private vehicle without a valid policy: 20, 30 or 40 UMA. URL is a borough-hosted copy of the Gaceta Oficial text."
+      },
+      "cdmxFineRange": {
+        "value": [
+          2346.2,
+          4692.4
+        ],
+        "currency": "MXN",
+        "period": "Feb 2026 - Jan 2027",
+        "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/uma/uma2026.pdf",
+        "sourceType": "primary",
+        "note": "Derived arithmetic: 20 and 40 x UMA of 117.31 MXN/day (INEGI)."
+      },
+      "federalRoadsMinimumSums": {
+        "value": {
+          "personsInjuryDeath": 100000,
+          "property": 50000
+        },
+        "currency": "MXN",
+        "period": "since 2019",
+        "url": "https://www.segurosbanorte.com.mx/seguros-auto/seguro-obligatorio",
+        "sourceType": "secondary",
+        "note": "Ley de Caminos, Puentes y Autotransporte Federal art. 63 Bis; sums from insurer/press summaries of the implementing rules; primary text not fetched."
+      },
+      "averagePremium": {
+        "value": null,
+        "currency": "MXN",
+        "period": null,
+        "url": null,
+        "sourceType": null
+      }
+    }
+  },
+  "running": {
+    "aaa2026": {
+      "url": "https://newsroom.aaa.com/wp-content/uploads/2026/09/AAA_YDC-Fact-Sheet_2026.pdf",
+      "sourceType": "secondary",
+      "period": "AAA Your Driving Costs 2026 (prices for the 12 months ending May 2026)",
+      "totalPerYear": {
+        "value": 12863,
+        "currency": "USD",
+        "unit": "per year, average new vehicle"
+      },
+      "totalPerMonth": {
+        "value": 1071.92,
+        "currency": "USD",
+        "unit": "per month"
+      },
+      "annualMilesAssumed": {
+        "value": 15000,
+        "unit": "miles per year",
+        "note": "5 years / 75,000 miles"
+      },
+      "costPerMileByAnnualMiles": {
+        "10000": 1.1,
+        "15000": 0.86,
+        "20000": 0.74,
+        "currency": "USD",
+        "unit": "per mile"
+      },
+      "fuelPerMile": {
+        "value": 17.3,
+        "unit": "US cents per mile"
+      },
+      "gasPriceAssumed": {
+        "value": 4.152,
+        "currency": "USD",
+        "unit": "per gallon, regular"
+      },
+      "evElectricityAssumed": {
+        "value": 18,
+        "unit": "US cents per kWh, home charging"
+      },
+      "maintenanceRepairTiresPerMile": {
+        "value": 11.7,
+        "unit": "US cents per mile",
+        "note": "Manufacturer-scheduled maintenance, extended warranty, wear repairs over 5 years, and one set of replacement tires."
+      },
+      "insurancePerYear": {
+        "value": 2098,
+        "currency": "USD",
+        "unit": "per year"
+      },
+      "financePerYear": {
+        "value": 1184,
+        "currency": "USD",
+        "unit": "per year"
+      },
+      "licenseRegistrationTaxesPerYear": {
+        "value": 802,
+        "currency": "USD",
+        "unit": "per year"
+      },
+      "depreciationPerYear": {
+        "value": 4422,
+        "currency": "USD",
+        "unit": "per year"
+      },
+      "byCategoryPerMile": {
+        "smallSedan": 0.6173,
+        "mediumSedan": 0.7037,
+        "subcompactSUV": 0.7168,
+        "compactSUV": 0.778,
+        "mediumSUV": 0.9632,
+        "midsizePickup": 0.8726,
+        "halfTonPickup": 1.1,
+        "currency": "USD",
+        "unit": "per mile"
+      },
+      "note": "Per-category values read from the fact sheet's layout-scrambled table in its listed order; the ranking text (small sedan cheapest, medium sedan second, medium SUV second-most expensive, half-ton highest) is consistent."
+    },
+    "aaa2026MediumSedan": {
+      "value": 10582,
+      "currency": "USD",
+      "unit": "per year, medium sedan, gasoline",
+      "period": "2026",
+      "url": "https://newsroom.aaa.com/2026/09/aaa-new-vehicle-ownership-costs-hit-12863-annually/",
+      "sourceType": "secondary",
+      "note": "EV medium sedan costs $3,080 more per year (29.1%)."
+    },
+    "serviceInterval": {
+      "value": 10000,
+      "unit": "miles or 12 months, whichever first (Toyota with 0W-20 synthetic; severe use 5,000 mi / 6 months)",
+      "period": "current",
+      "url": "https://www.jdpower.com/cars/shopping-guides/toyota-car-maintenance-guide",
+      "sourceType": "secondary",
+      "note": "toyota.com returned 403; confirmed only via J.D. Power and dealer pages. ToyotaCare covers scheduled maintenance for 2 years / 25,000 miles at no cost."
+    },
+    "serviceCost": {
+      "value": null,
+      "currency": "USD",
+      "note": "No authoritative published average per-service cost found."
+    },
+    "tyreReplacement": {
+      "value": null,
+      "currency": "USD",
+      "note": "Only retailer and blog ranges found (about $500-$900 per set for sedans); no authoritative survey. AAA's 11.7 c/mile includes one set of tires."
+    },
+    "fuelUS": {
+      "value": 4.465,
+      "currency": "USD",
+      "unit": "per gallon, regular, all formulations, including taxes",
+      "period": "week of 2026-09-28",
+      "url": "https://www.eia.gov/dnav/pet/pet_pri_gnd_a_epmr_pte_dpgal_w.htm",
+      "sourceType": "primary",
+      "note": "Same week: California 6.189, New York 4.405."
+    },
+    "fuelUK": {
+      "petrol": {
+        "value": 173.46,
+        "currency": "GBP",
+        "unit": "pence per litre, ULSP"
+      },
+      "diesel": {
+        "value": 197.58,
+        "currency": "GBP",
+        "unit": "pence per litre, ULSD"
+      },
+      "period": "week of 2026-09-28",
+      "url": "https://assets.publishing.service.gov.uk/media/6aba69e2a9c3d267bcccefa8/CSV__2018_-__.csv",
+      "sourceType": "primary",
+      "note": "DESNZ weekly road fuel prices, https://www.gov.uk/government/statistics/weekly-road-fuel-prices. Duty 52.95p/litre, VAT 20%."
+    },
+    "fuelCanada": {
+      "value": 173.8,
+      "currency": "CAD",
+      "unit": "cents per litre, regular unleaded, self-serve",
+      "period": "August 2026",
+      "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101",
+      "sourceType": "primary",
+      "note": "Statistics Canada table 18-10-0001-01. Toronto August 2026: regular 170.3, diesel 221.1."
+    },
+    "fuelIreland": {
+      "petrol": {
+        "value": 1.87,
+        "currency": "EUR",
+        "unit": "per litre"
+      },
+      "diesel": {
+        "value": 1.94,
+        "currency": "EUR",
+        "unit": "per litre"
+      },
+      "period": "September 2026 (published 2026-09-14)",
+      "url": "https://www.theaa.ie/blog/september-fuel-prices-2026/",
+      "sourceType": "secondary"
+    },
+    "parking": {
+      "nycManhattanMonthly": {
+        "value": null,
+        "currency": "USD",
+        "note": "No published average found; only marketplace listing ranges (e.g. SpotAngels garages $510-$650)."
+      },
+      "westminsterResidentPermit": {
+        "currency": "GBP",
+        "unit": "per year",
+        "period": "from 2026-03-02",
+        "url": "https://www.westminster.gov.uk/media/document/new-charges-from-mon-2-march-2026",
+        "sourceType": "primary",
+        "bands": {
+          "1A_EV_battery_1to69kWh": 40,
+          "1B_EV_battery_over70kWh": 80,
+          "2_1to90gkm": 91.85,
+          "3_91to130gkm": 126.12,
+          "4_131to150gkm_or_pre2001_under1200cc": 143.96,
+          "5_151to255gkm_or_pre2001_over1200cc": 230.05,
+          "6_over256gkm_or_unregistered": 353.1,
+          "M_motorcycles": 61.59
+        },
+        "dieselSurchargePre2015": 60,
+        "note": "The document shows old and new charges side by side (new in red); the second, new values are used. Previous: 90.95, 123.05, 139.10, 214.00, 321.00, M 60.99, diesel surcharge 50.00. Bands 1A and 1B show a single figure."
+      },
+      "camdenResidentPermit12Month": {
+        "currency": "GBP",
+        "unit": "per 12-month permit",
+        "period": "from 2026-10-01",
+        "url": "https://www.camden.gov.uk/documents/d/guest/fees-and-charges-2026-27-april-2-",
+        "sourceType": "primary",
+        "bands": {
+          "electric": 146.8,
+          "1to75gkm": 154.62,
+          "76to120gkm": 193.2,
+          "121to150gkm": 241.5,
+          "151to185gkm": 301.85,
+          "186to225gkm": 407.43,
+          "over225gkm": 590.7
+        },
+        "beforeOct2026": {
+          "electric": 138.9,
+          "1to75gkm": 146.3,
+          "76to120gkm": 182.8,
+          "121to150gkm": 228.5,
+          "151to185gkm": 285.6,
+          "186to225gkm": 385.5,
+          "over225gkm": 558.9
+        },
+        "note": "Plus an air-quality surcharge for pre-Euro-6 petrol and non-Euro-6d diesel; from 1 Oct 2026 petrol GBP 38.57-147.64 and diesel GBP 77.25-295.29 across the emitting bands."
+      },
+      "dublinResidentialPermit": {
+        "value": 50,
+        "currency": "EUR",
+        "unit": "per year (EUR 80 for two years)",
+        "period": "current as of 2026-09-29; unchanged since 2011",
+        "url": "https://www.dublincity.ie/travel-and-transport/apply-or-renew-residential-parking-permit/apply-residential-parking-permit",
+        "sourceType": "primary",
+        "note": "A 2025 proposal to raise yellow-zone permits to EUR 225 (RTE, 2025-09-03) was not found to have been adopted."
+      }
+    }
+  },
+  "ev": {
+    "publicChargingUS_DCFC": {
+      "value": 0.538,
+      "currency": "USD",
+      "unit": "per kWh, national average DC fast charging",
+      "period": "Q2 2026",
+      "url": "https://www.paren.app/reports/us-ev-fast-charging-q2-2026",
+      "sourceType": "secondary"
+    },
+    "publicChargingUS_Level2": {
+      "value": null,
+      "currency": "USD",
+      "note": "No authoritative national Level 2 average found."
+    },
+    "publicChargingUK_slowFast": {
+      "value": 54,
+      "currency": "GBP",
+      "unit": "pence per kWh, 3-49 kW, PAYG weighted average",
+      "period": "August 2026",
+      "url": "https://www.zapmap.com/ev-stats/charging-price-index",
+      "sourceType": "secondary"
+    },
+    "publicChargingUK_rapidUltra": {
+      "value": 77,
+      "currency": "GBP",
+      "unit": "pence per kWh, 50 kW and above, PAYG weighted average",
+      "period": "August 2026",
+      "url": "https://www.zapmap.com/ev-stats/charging-price-index",
+      "sourceType": "secondary",
+      "note": "July 2026 was 80p."
+    },
+    "residentialElectricityUS": {
+      "unit": "US cents per kWh, average residential",
+      "period": "July 2026 (preliminary)",
+      "url": "https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a",
+      "sourceType": "primary",
+      "US": 18.31,
+      "NY": 29.9,
+      "CT": 24.16,
+      "CA": 33.61
+    },
+    "ofgemCapOctDec2026": {
+      "unitRate": {
+        "value": 26.32,
+        "currency": "GBP",
+        "unit": "pence per kWh"
+      },
+      "standingCharge": {
+        "value": 54.83,
+        "currency": "GBP",
+        "unit": "pence per day"
+      },
+      "period": "2026-10-01 to 2026-12-31; GB average, Direct Debit",
+      "url": "https://www.ofgem.gov.uk/information-consumers/energy-advice-households/energy-price-cap-unit-rates-and-standing-charges",
+      "sourceType": "primary",
+      "note": "Jul-Sep 2026 was 26.11p/kWh and 57.19p/day. Typical dual-fuel cap GBP 1,723/yr (+4%)."
+    },
+    "residentialElectricityIreland": {
+      "value": 38.4,
+      "currency": "EUR",
+      "unit": "euro cents per kWh, household, all taxes, weighted average across bands",
+      "period": "July-December 2025 (latest SEAI semester)",
+      "url": "https://www.seai.ie/sites/default/files/publications/EPR-Electricity-Gas-Prices.pdf",
+      "sourceType": "primary",
+      "note": "SEAI (state agency). -8% YoY. No 2026 semester figure found."
+    }
+  },
+  "uncertain": [
+    {
+      "section": "catalog-NA",
+      "note": "US: Tesla Model Y 2025 US sales (about 270,000-320,000) are estimates only. Tesla does not publish US model sales, so it is left out of the top 8, though it may rank 8th or 9th."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "US: EPA combined mpg for the base engines of the 2027 Ford F-150, Chevrolet Silverado 1500 and GMC Sierra 1500 is not yet on fueleconomy.gov; set to null."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "US: The F-150 2027 base price ($37,790) comes from the press only; ford.com returned 403."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "US: The GMC Sierra 2027 base price is the cheapest configuration announced so far (Pro 4WD Crew Cab). Regular and Double Cab prices are not yet announced."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "US: The cab and drive for the Ram 1500 at $42,575 are not stated. The secondary figure of $45,170 with $2,795 destination does not reconcile with it."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "US: That the Chevrolet Silverado and Equinox prices exclude destination is inferred from GM Authority; the chevrolet.com footnote did not load."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "US: The Equinox rank uses the nameplate total including the Equinox EV (57,945); the petrol model alone sold 274,356."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "US: GM, Toyota, Honda and Ram unit figures are from secondary compilers of the manufacturers' releases, because the primary PDFs and pages would not load. Ford's is primary."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "CA: Sales for every model except the Ford come from the Automotive News Data Center via The Car Guide (secondary)."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "CA: NRCan figures are MY2026 ratings. No MY2027 ratings are published yet, and the 2027 GM trucks use a new 10-speed powertrain."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "CA: Ford, GMC, Honda, Chevrolet, Ram and Hyundai prices are secondary (dealer configurators or trade press); only the Toyota and Nissan prices come from manufacturer releases. The F-150 MSRP was derived by subtracting the fees stated on the dealer page."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "CA: No kerb weights were confirmed from Canadian manufacturer pages; all are null."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "MX: Units are INEGI RAIAVL figures as republished by Motorpasión (secondary); the INEGI model-level table was not fetched directly. INEGI leaves out brands that do not report to it (e.g. BYD, GAC)."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "MX: NP300 units are reported as 58,422 by Motorpasión and other outlets but as 58,522 by El Universal."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "MX: The terms for the Chevrolet Aveo \"Precio desde $244,800\" could not be read, so it may be promotional (Motorpasión, Mar 2026, gave the LS MT at $259,400)."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "MX: CONUEE (ecovehiculos.gob.mx) could not be reached, so every km/l figure is from a manufacturer spec sheet (NOM-163 lab method)."
+    },
+    {
+      "section": "catalog-NA",
+      "note": "MX: The Mexican spec sheets for the Chevrolet Aveo and the Kia K3 do not publish a kerb weight."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "sourceType convention: \"primary\" is used for manufacturer sites and documents and for the official registration bodies (SMMT for GB, SIMI Motorstats for IE). Both bodies are industry organisations rather than government; they count as primary here only because they are the recognised registration-statistics publishers."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "GB sales: SMMT figures cover UK registrations (GB and Northern Ireland combined). SMMT publishes no GB-only model ranking."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "IE sales: SIMI's press release of 2 Jan 2026 ranks the top 5 as Tucson, Octavia, Sportage, Yaris Cross, RAV4 but gives no unit counts. The live SIMI Motorstats database, queried 2026-09-29 for calendar 2025, puts Yaris Cross 3rd (3,580) and Sportage 4th (3,463), and its 2025 total is 124,969 against the 124,954 published, so it appears to include late revisions. The catalog uses the database counts and order. Ranks 9-10 in the database: Hyundai Kona 2,597, VW Golf 2,437."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "IE sales: secondary figures conflict with SIMI and were not used (changinglanes.ie gives Tucson 4,313; AIG's Tucson 4,276 is January-October CSO data only)."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "GB Kia Sportage: Kia UK publishes only 7.1 l/100km for the Pure manual. No mpg is published (a conversion gives about 39.8), so economy is null. Kia's CO2 conflicts: the pricing page says 158 g/km and the spec page 162; 158 was used. No kerb weight."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "GB Nissan Qashqai: no mpg is published for the manual. The brochure gives 6.3-6.4 l/100km, so economy is null."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "GB Vauxhall Corsa: vauxhall.co.uk returned 403, so the price and CO2 are secondary (carwow). No mpg is confirmed for the 100PS manual, the 121 g/km is not tied explicitly to the Yes trim, and no kerb weight was found."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "GB VW Golf: the manufacturer price is JS-rendered and could not be read, so price, mpg and CO2 are secondary (carwow). What Car? gives 53.3 mpg and 120 g/km for the same version, which conflicts. It is also not confirmed that the 1.5 TSI 115 Life is the current UK entry version. No kerb weight."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "GB Volvo XC40: volvocars.com/uk returned 403, so all figures are secondary (carwow). Indexed Volvo UK build pages showed £33,860 for a Core B3 in May 2026, which may reflect a price change or options. No kerb weight."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "GB MG HS: MG's 38.1 mpg is an \"up to\" figure. The CO2 of 168 g/km and kerb weight of 1,550 kg are secondary (automobile-catalog.com, seen through a search summary). Some dealers still quote £26,495, but the manufacturer's live £27,495 is used."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "GB Ford Puma: the kerb weight is a range-wide \"from\" figure. The web page says CO2 \"from 121 g/km\", and the price list gives 122 for this trim; 122 was used."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "GB Nissan Juke: it is unclear whether the 1,199 kg kerb weight includes a driver."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "IE Hyundai Tucson: the diesel's WLTP l/100km is not published on hyundai.ie (the feed gives CO2 141 only), so economy is null. The engine size and power are not stated. No kerb weight."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "IE Toyota Yaris Cross: the €33,155 from-price is not labelled with a grade on the page. It is attributed to Luna, the only Hybrid 115 entry grade in the July 2026 guide. The specs are marked \"pending final homologation\". No kerb weight."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "IE Kia Sportage: the page contradicts itself (menu €41,300, powertrain block €41,000). The trim name is not shown, and economy and CO2 are the lower ends of published ranges (5.1-5.4 l/100km, 132-141 g/km). No kerb weight."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "IE Toyota RAV4: the headline \"From €47,340\" (labelled \"RAV4 Hybrid Sol\" in a finance example) could not be tied to a listed grade. A self-charging HEV Sol may exist below the PHEV Sol used here. No kerb weight."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "IE Skoda Kodiaq: the PHEV economy and CO2 are the low ends of ranges (1.6-1.7 l/100km, 36-37 g/km). The model page shows a different from-price (€56,330, TDI) and \"Selection from €53,670\", which conflict with the September 2026 guide. No kerb weight."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "IE Skoda Octavia and VW Tiguan: the weights include a 75 kg driver (EU unladen minimum), not a driverless kerb weight, and both were read from misaligned PDF text extractions."
+    },
+    {
+      "section": "catalog-GB-IE",
+      "note": "IE Toyota Corolla: SIMI counts all Corolla bodies (hatch, Touring Sports, saloon) together. The price and specs are for the hatchback. No kerb weight."
+    },
+    {
+      "section": "buyingCosts",
+      "note": "US-CT: DMV fee page did not show the term for the $120 registration; three-year term taken from CGS 14-49 (via Justia, secondary) and Passport to the Parks news. Clean Air ($15) and greenhouse gas fee terms assumed per registration period."
+    },
+    {
+      "section": "buyingCosts",
+      "note": "US-CT: DMV's $190 new-registration bundle appears to still use the pre-2025-07-01 $15 Passport to the Parks fee; with $24 it would be $199. Not confirmed."
+    },
+    {
+      "section": "buyingCosts",
+      "note": "US-CA: San Francisco 8.625% from a secondary rate site only. County/district registration fees not captured (null). VLF depreciation schedule not captured."
+    },
+    {
+      "section": "buyingCosts",
+      "note": "US-CA: DMV fee page carries no effective date; figures are as fetched 2026-09-29."
+    },
+    {
+      "section": "buyingCosts",
+      "note": "GB: GOV.UK rate table showed no effective date; the figures are taken as 2026/27 because they exceed the known 2025/26 values. VAT 20% not re-fetched."
+    },
+    {
+      "section": "buyingCosts",
+      "note": "IE: Motor tax rows 191-200 (€790), 201-225 (€1,250), 226+ (€2,400) not cleanly extracted from the gov.ie PDF. Budget 2026 'no change' to motor tax/VRT rates is from secondary sources. EV VRT relief taper formula between €40,000 and €50,000 OMSP not confirmed on Revenue."
+    },
+    {
+      "section": "buyingCosts",
+      "note": "CA-ON: Used Vehicle Information Package fee not found (null). Plate renewal fee elimination confirmed only by news sources."
+    },
+    {
+      "section": "buyingCosts",
+      "note": "CA-BC: Annual licence fee rows below 1,400 kg read through a summarizing fetch; re-check. Private-sale PST tax base rules not captured in full."
+    },
+    {
+      "section": "buyingCosts",
+      "note": "MX-CMX: Tenencia tariff above the $638,000 subsidy threshold not captured (null). Art. 219 cambio de propietario and tarjeta amounts read from a column-misaligned PDF extraction. IVA 16% not re-fetched."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "GB: no published market-average PCP/HP APR from FLA, Bank of England or FCA found; broker representative APRs (e.g. 9.9%) are adverts, not averages."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "GB: FLA share is 'over 85%' of private new car registrations in 2025 - a floor, not an exact value."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "IE: Central Bank of Ireland does not break out car-loan rates; 6.72% is all new consumer loans (July 2026)."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "CA: Bank of Canada auto-loan rate covers chartered banks only (new and used together); no credit-tier or new/used split published."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "MX: no published system-wide average CAT for auto credit; Banxico gives contract interest rates only. Latest Banxico RIB is October 2025 data."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "MX: no AMIS average auto premium found; figures such as 5,720 MXN for RC circulating online are unattributed broker numbers and were not used."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "MX: federal-road minimum sums (100,000 / 50,000 MXN) confirmed only via secondary summaries."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "US: Bankrate state pages redirected to the homepage and could not be read; Experian (secondary, quote data, August 2026) used for full/minimum coverage averages. Insurance Information Institute 2026 state averages not found."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "US: NAIC's latest state data is 2023 (report adopted Dec 2025); no 2024 state table published yet."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "US-NY/US-CT: primary minimum-limit pages (NY DFS, CT OLR) blocked automated fetch; limits confirmed via secondary sources."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "CA-BC: ICBC average is 'Autoplan' (Basic + Optional earned) for FY2024/25; FY2025/26 report not located; Basic-only average not published. Assignment of 1,358 to 2024/25 (vs 1,268 to 2023/24) is inferred from the table layout."
+    },
+    {
+      "section": "finance-insurance",
+      "note": "US G.19: finance-company figures are identical for 2026 Q2 and June 2026; July 2026 not yet available."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "No published year-by-year (1-10) transaction or trade-in depreciation curve found. vehicletrends gives listing price / MSRP in 3-month bins; iSeeCars gives only 3/5/7/10 years in an undated table."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "AAA per-category per-mile figures were parsed from a PDF with scrambled layout; order assumed as listed."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "Ireland average used car price: not confirmed (null)."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "Tyre replacement cost: no authoritative source (null)."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "Average cost per service visit: no authoritative source (null)."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "Toyota 10,000 mi / 12 month interval confirmed via J.D. Power and dealers, not toyota.com (403)."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "NYC Manhattan monthly garage parking: no published average (null)."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "US public Level 2 charging price: no authoritative national average (null)."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "UK Autotrader September 2026 average not yet found; August used."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "Canada AutoTrader Q2 figure comes from a press report of the release (emptytank.ca), not AutoTrader's own page."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "Ireland electricity: latest SEAI figure is H2 2025, not 2026."
+    },
+    {
+      "section": "running-ev-depreciation",
+      "note": "Dublin EUR 225 permit proposal: adoption status unknown; EUR 50 is the council's current published price."
+    },
+    {
+      "section": "_meta",
+      "note": "Lower-priority jurisdictions (Germany, France, Spain, Iceland, Japan, South Korea, New South Wales, New Zealand, Brazil, Latvia) were not researched in this pass."
+    }
+  ]
+}

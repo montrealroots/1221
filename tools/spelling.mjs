@@ -54,7 +54,7 @@ const SPELLINGS = {
   memorise: 'memorize', memorised: 'memorized', criticise: 'criticize', criticised: 'criticized',
   emphasise: 'emphasize', emphasised: 'emphasized', specialise: 'specialize', specialised: 'specialized',
   summarise: 'summarize', summarised: 'summarized',
-  defence: 'defense', offence: 'offense', pretence: 'pretense', licence: 'license',
+  defence: 'defense', offence: 'offense', pretence: 'pretense', licence: 'license', licences: 'licenses', licenced: 'licensed',
   practise: 'practice', practising: 'practicing',
   travelled: 'traveled', travelling: 'traveling', traveller: 'traveler', travellers: 'travelers',
   cancelled: 'canceled', cancelling: 'canceling', modelled: 'modeled', modelling: 'modeling',
@@ -85,7 +85,7 @@ const REAL_NAMES = [
   'Kalyan Jewellers', 'Chow Tai Fook Jewellery', 'PC Jeweller', 'Joyalukkas',
   'Silverbend Jewellers', 'Halliwell Goldsmiths',
   // Venues and institutions.
-  'Theatre Royal', 'Old Vic', 'National Theatre', 'Barbican Centre', 'Centre Pompidou',
+  'Theatre Royal', 'Canadian Theatre Agreement', 'Professional Association of Canadian Theatres', 'Old Vic', 'National Theatre', 'Barbican Centre', 'Capuchin Day Centre', 'Centre Pompidou',
   // Point Grey is the headland the University of British Columbia stands on.
   'Point Grey',
   // The studio behind Total Extreme Wrestling, named in docs/DEPTH.md. It is a
@@ -101,6 +101,11 @@ const REAL_NAMES = [
   // Venues that spell themselves that way, and the square one of them is on.
   'Bell Centre', 'National Centre For The Performing Arts', 'Bolshoi Theatre', 'Theatre Square',
   'Centre National du Cinéma',
+  // Toronto's waterfront center, whose Nautical Centre charters a boat and skipper (`content/boats.ts`).
+  'Harbourfront Centre', 'Nautical Centre',
+  // The license Britain's CAA, Ireland's IAA and Transport Canada issue a private pilot (`systems/aviation.ts`).
+  'Private Pilot Licence',
+  'Euro Traveller',
   'Rockefeller Center', 'Lincoln Center', 'Kennedy Center',
   // Organisations, parties and titles.
   'Labour Party', 'Colour Supplies', 'Grey Goose', 'Earl Grey', 'Greyhound',
@@ -115,6 +120,14 @@ const REAL_NAMES = [
   'Micro Colour', 'Face Colour', 'Cream Colour Base', 'Duo Fibre', 'Fibre Gel', 'Bravia Theatre',
   // Offices and insurers that spell themselves that way.
   'National Driver Licence Service', 'Driving Licence Testing Centre', 'Defence Health',
+  // Driving documents as the authority that issues them names them, in its own
+  // English: the DVLA and DVA, the RSA, Ontario, ICBC, Transport for NSW and
+  // NZTA (src/engine/content/licensepaths.ts). A translated name is American.
+  'Provisional Driving Licence', 'Full Driving Licence', 'Full Licence', 'Provisional Licence', 'Learner Licence',
+  'Restricted Licence', 'Unrestricted Licence', 'Novice Licence', 'Driver’s Licence', 'G1 Licence', 'G2 Licence',
+  'G Licence', 'P1 Licence', 'P2 Licence', 'M1 Licence', 'M2 Licence', 'M Licence', 'Class 6 Licence',
+  // The managers' body the UK Theatre/Equity agreements are named for.
+  'UK Theatre',
   // Watch and jewelry names the maker itself spells this way, on its own American pages.
   'Bulgari Aluminium', 'Aluminium Watch', 'Aluminium Chronograph', 'Calibre 321', 'Grey Side Of The Moon', 'Grey Mother Of Pearl',
   // Christian Louboutin Beaute prints the British spelling on the tube everywhere.
@@ -124,6 +137,8 @@ const REAL_NAMES = [
   // Banking names and pages spelled by their own banks and governments.
   'Cuenta de Cheques', 'cuentas-cheques', 'cheque-accounts', 'Special Defence Contribution',
   'special-defence-contribution', 'Youth Programme', 'bankers-association/organisation',
+  // A town in Alabama spelled the British way, whose id is in the home values' table.
+  'al-centre',
 ];
 
 const EXTENSIONS = /\.(ts|tsx|mjs|md)$/;
@@ -139,7 +154,16 @@ const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', 'coverage']);
  * editing a source, and a research file that has been edited is worth less
  * than one that has not. The house style governs what the game says.
  */
-const NOT_OURS = ['docs/research'];
+// The airports' table is nothing but real names as OurAirports records them, a seaplane base's and a flight
+// school's among them, each spelled its owner's way (src/engine/content/airports.ts, tools/build-airports.mjs).
+// The clothes on sale are retailers' products under their exact names and colors, a British shop's
+// spellings among them (src/engine/content/clothingcatalog.ts, tools/build-clothing.mjs), and the restaurants and their
+// dishes are each named the restaurant's way (src/engine/content/restaurants.ts, tools/build-restaurants.mjs), as are the
+// groceries and the recipes their sources' way (src/engine/content/groceries.ts, tools/build-groceries.mjs), and the
+// toiletries and salons theirs (src/engine/content/hygiene.ts, tools/build-hygiene.mjs), and the clinics and hospitals
+// theirs (src/engine/content/clinics.ts, tools/build-clinics.mjs), and the hotels and their rooms theirs
+// (src/engine/content/hotels.ts, tools/build-hotels.mjs), the garages' names theirs (src/engine/content/carshops.ts), and the gyms' (src/engine/content/gyms.ts).
+const NOT_OURS = ['docs/research', 'src/engine/content/airports.ts', 'src/engine/content/clothingcatalog.ts', 'src/engine/content/restaurants.ts', 'src/engine/content/groceries.ts', 'src/engine/content/hygiene.ts', 'src/engine/content/clinics.ts', 'src/engine/content/hotels.ts', 'src/engine/content/carshops.ts', 'src/engine/content/gyms.ts', 'src/engine/content/telecom.ts'];
 const oursToFix = (path) => !NOT_OURS.some((dir) => path.startsWith(dir));
 
 function walk(dir) {

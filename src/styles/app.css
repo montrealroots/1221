@@ -204,20 +204,13 @@ body {
   overscroll-behavior: none;
 }
 
-/* Respect the reader's motion preference, and SLATE's own setting. */
+/* Respect the reader's motion preference. SLATE's own setting, which nothing could change, went on 2026-10-02. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
   }
-}
-body[data-reduced-motion="true"] *,
-body[data-reduced-motion="true"] *::before,
-body[data-reduced-motion="true"] *::after {
-  animation-duration: .001ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: .001ms !important;
 }
 
 h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.01em; }
@@ -282,13 +275,20 @@ a:hover { text-decoration: underline; }
 }
 .btn-primary:hover:not(:disabled) { background: var(--accent-strong); border-color: var(--accent-strong); }
 
-.btn-ghost { background: transparent; border-color: transparent; color: var(--text-muted); }
-.btn-ghost:hover:not(:disabled) { background: var(--surface-2); color: var(--text); }
+/* A quiet button is its words, with no box and no side padding, so they start exactly where the line above starts. Until 2026-10-02 it was an invisible box, and its words sat a padding's width in from the text above: Tinder under its heading, Rent A Room under the home it was in. An outline was tried that day and lined the boxes up but not the words. */
+.btn-ghost {
+  background: transparent; border-color: transparent; color: var(--accent-strong);
+  padding-left: 0; padding-right: 0; border-left-width: 0; border-right-width: 0;
+}
+.btn-ghost:hover:not(:disabled) { background: transparent; border-color: transparent; color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+/* Words side by side need the room the box used to give them. */
+.row > .btn-ghost + .btn-ghost, .row > * + .btn-ghost { margin-left: var(--s2); }
 
 .btn-danger { color: var(--negative); border-color: var(--line-strong); }
 .btn-danger:hover:not(:disabled) { background: var(--negative-dim); border-color: var(--negative); }
 
 .btn-sm { padding: var(--s1) var(--s3); font-size: var(--size-xs); }
+.btn-sm.btn-ghost, .btn-lg.btn-ghost { padding-left: 0; padding-right: 0; }
 .btn-lg { padding: var(--s3) var(--s6); font-size: var(--size-md); }
 .btn-block { width: 100%; justify-content: center; }
 
@@ -312,12 +312,29 @@ a:hover { text-decoration: underline; }
 .panel-head > :first-child { min-width: 0; flex: 1 1 12rem; }
 /* Four actions do not fit across a phone. They wrap onto a second line rather
    than pushing the card open and bleeding out of its right edge. */
-.panel-head > .row { flex-wrap: wrap; justify-content: flex-end; }
+.panel-head > .row { flex-wrap: wrap; justify-content: flex-end; min-width: 0; max-width: 100%; }
+/* A panel that passes its own row of actions wraps the same way: Home's grew to five and ran past the card's edge. */
+.panel-head > .row > .row { flex-wrap: wrap; justify-content: flex-end; min-width: 0; }
 .panel-head h2, .panel-head h3 { margin: 0; }
 
 .eyebrow {
   font-size: var(--size-xs); font-weight: 650; letter-spacing: .1em;
   text-transform: uppercase; color: var(--text-dim);
+}
+
+/* Home's groups: one heading per part of life, the panels under it filling each row (from 2026-10-02). */
+.home-group { margin-bottom: var(--s5); }
+.home-group-lead { margin-bottom: var(--s4); }
+/* Narrower columns than a grid elsewhere, so the five small panels of a day sit in one row and none is left alone on the next. */
+.home-group > .grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); }
+/* A grouped panel puts its one button under its title, every one the same way, so a row lines up whatever the titles' lengths. */
+.home-group .panel-head { flex-direction: column; align-items: flex-start; }
+/* Stacked, the title's 12rem basis would be a height, not a width. */
+.home-group .panel-head > :first-child { flex: none; }
+.home-group-label {
+  font-size: var(--size-xs); font-weight: 650; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text-dim);
+  margin: 0 0 var(--s3); padding-bottom: var(--s2); border-bottom: 1px solid var(--line);
 }
 
 .muted { color: var(--text-muted); }
@@ -354,6 +371,9 @@ button.link:hover { color: var(--accent-strong); }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); }
 .grid-4 { grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); }
+/* A row of figures: equal columns, each only as wide as a figure and its note
+   need, so a wide panel keeps them together instead of spreading them apart. */
+.stats { display: grid; gap: var(--s4) var(--s5); grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 200px)); }
 
 .chip {
   display: inline-flex; align-items: center; gap: var(--s1);
@@ -428,6 +448,8 @@ input:not([type]), input[type="text"], input[type="number"], input[type="date"],
   border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
 }
 input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+/* A choice beside small buttons in a table row, sized as a .btn-sm is so the row stays even. */
+select.select-sm { width: auto; padding: var(--s1) var(--s3); font-size: var(--size-xs); }
 /* A field that reports rather than asks. Kept the same shape so the form still
    lines up, and visibly not one you can type in — styled the same as the rest,
    it read as a box somebody had simply not filled in yet. */
@@ -467,6 +489,9 @@ input[type="range"] {
 
 .field { margin-bottom: var(--s4); }
 .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--s4); }
+/* Short fields, as Travel's booking asks: four to a row, so a second row's boxes sit under the first's
+   and none wraps alone. Until 2026-09-29 they fit as many as would, and a seventh sat on a row by itself. */
+.field-row.field-row-tight { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 /* A button among the fields sits level with their boxes, not their labels. */
 .field-row > .btn { align-self: end; justify-self: start; margin-bottom: var(--s4); }
 /* A field and the button that acts on it, side by side, level at the bottom. */
@@ -504,6 +529,9 @@ input[type="range"] {
 
 table { width: 100%; border-collapse: collapse; font-size: var(--size-sm); }
 th, td { padding: var(--s2) var(--s3); text-align: left; border-bottom: 1px solid var(--line); }
+/* A table's first column starts on the panel's own edge, under its title, and its last ends on the other (from 2026-10-02). */
+th:first-child, td:first-child { padding-left: 0; }
+th:last-child, td:last-child { padding-right: 0; }
 th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--text-dim); font-weight: 650; white-space: nowrap; }
 .master-detail > *, .side-by-side > * { min-width: 0; }
 @media (max-width: 900px) { }
@@ -701,6 +729,8 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
 .topbar-brand {
   display: flex; align-items: center; gap: var(--s2);
   font-weight: 600; letter-spacing: .18em; font-size: var(--size-sm);
+  /* The mark, not an action: it keeps the quiet color a quiet button gave up on 2026-10-02. */
+  color: var(--text-muted);
 }
 /* The clock reads across, not down. Stacking the date under the time made a
    tall, narrow column that crowded everything beside it in the bar. */
@@ -786,6 +816,9 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   font: inherit; font-size: var(--size-sm); cursor: pointer; text-align: left;
 }
 .rail-item:hover { background: var(--surface-2); color: var(--text); }
+/* The rail's search sits where its items do, as wide, so it lines up with them. */
+.rail-find { width: 100%; font-size: var(--size-sm); padding: var(--s2) var(--s3); }
+.rail-empty { padding: var(--s2) var(--s3); }
 .rail-item[aria-current="page"] { background: var(--accent-dim); color: var(--accent-strong); font-weight: 600; }
 .rail-badge {
   margin-left: auto; font-size: var(--size-xs); font-weight: 700;
@@ -817,6 +850,9 @@ button.link.is-open { color: var(--accent-strong); text-decoration-style: solid;
   display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap;
   font-size: var(--size-xs); color: var(--text-dim); margin-bottom: var(--s4);
 }
+/* The breadcrumbs and the page's pin share one row, level (from 2026-10-01); the row keeps the space beneath. */
+.crumb-row { display: flex; justify-content: space-between; align-items: center; gap: var(--s2); margin-bottom: var(--s4); }
+.crumb-row .breadcrumbs { margin-bottom: 0; }
 .breadcrumbs button {
   background: none; border: 0; color: var(--text-muted); font: inherit;
   cursor: pointer; padding: 0;
@@ -1034,6 +1070,7 @@ kbd {
   .wordmark { font-size: 34px; letter-spacing: .34em; text-indent: .34em; }
   .clapper { font-size: 54px; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .field-row.field-row-tight { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .creation { padding: var(--s4) var(--s3); }
   .hide-sm { display: none !important; }
 }
@@ -1295,3 +1332,21 @@ kbd {
 /* A chosen place's line under its name, on the accent's tint, where the dim
    text failed contrast (axe, 2026-09-26, the birthplace every new life picks). */
 .picker-option[data-selected] .picker-option-meta { color: var(--text-muted); }
+
+/* Sources and estimates, folded behind a line (`Fine`). */
+details.fine > summary { cursor: pointer; width: fit-content; }
+details.fine > summary:hover { color: var(--text); }
+details.fine[open] > summary { margin-bottom: 0; }
+
+/* A phone (2026-09-28): the tabs wrap onto a second line rather than hide
+   off the edge, and a table keeps its words whole, scrolling in its panel
+   when it's wider than the screen. Table cells broke words anywhere, which
+   let a column shrink past a word ("Mon/day", "Profession/al"). */
+td, th { overflow-wrap: break-word; }
+@media (max-width: 640px) {
+  .tabs { flex-wrap: wrap; overflow-x: visible; }
+  table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+/* A statement's lines keep their columns, scrolling as one on a phone. */
+.statement-lines { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.statement-lines > .row-between { min-width: 520px; }

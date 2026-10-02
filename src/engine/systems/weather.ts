@@ -407,3 +407,23 @@ export function weatherShort(condition: WeatherCondition): string {
 // until 2026-09-26. It was named for an exterior shoot day, lost its reader
 // when the production system went, found one in the outdoor shift, and went
 // with the job engine.
+
+/**
+ * The heat index, °C: how hot a temperature feels at a humidity, by the
+ * National Weather Service's own method (WPC, "The Heat Index Equation"):
+ * Steadman's simple form, and where that comes to 80°F or more, Rothfusz's
+ * regression with its two adjustments, for very dry and very humid air.
+ * From 2026-10-01 it's what a run or sitting out reads, where until then
+ * the humidity the weather drew was only shown.
+ */
+export function heatIndexC(tempC: number, humidity: number): number {
+  const t = tempC * 9 / 5 + 32;
+  const rh = humidity;
+  let hi = 0.5 * (t + 61 + (t - 68) * 1.2 + rh * 0.094);
+  if ((hi + t) / 2 >= 80) {
+    hi = -42.379 + 2.04901523 * t + 10.14333127 * rh - 0.22475541 * t * rh - 0.00683783 * t * t - 0.05481717 * rh * rh + 0.00122874 * t * t * rh + 0.00085282 * t * rh * rh - 0.00000199 * t * t * rh * rh;
+    if (rh < 13 && t >= 80 && t <= 112) hi -= ((13 - rh) / 4) * Math.sqrt((17 - Math.abs(t - 95)) / 17);
+    else if (rh > 85 && t >= 80 && t <= 87) hi += ((rh - 85) / 10) * ((87 - t) / 5);
+  }
+  return (hi - 32) * 5 / 9;
+}

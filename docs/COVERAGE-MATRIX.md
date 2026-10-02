@@ -35,7 +35,7 @@ claims otherwise.
 | Birthdays and the end of a life | Implemented — a birthday each year at nine in the morning, and each year's chance of the life ending from the US 2024 life table, moved by the country's life expectancy and the body's condition; an ended life stops the clock and opens onto what it came to | `src/engine/systems/birthdays.ts`, `src/engine/systems/mortality.ts`, `src/ui/shell/LifeEnded.tsx` | `mortality` |
 | The guide | Implemented — fourteen chapters, read in order, each opening the part of the game it describes: its commands in the engine and its controls, panels and underlined words on screen. A new life starts paused with everything shut but the guide | `src/engine/content/tutorial.ts`, `src/engine/world/tutorial.ts`, `src/ui/guide/Guide.tsx` | `tutorial` |
 | The Decision Center | Implemented — answering, dismissing, closing on a date and forgetting are built and tested, and offers of representation, management and work and each year's return raise their own | `src/engine/world/world.ts`, `src/ui/looks/attention.tsx` | `smoke`, `looks` |
-| Drill-down | Implemented — every noun on Home opens onto what it is, and the graph is crawled end to end | `src/ui/looks/` | `looks` |
+| Drill-down | Implemented — every noun on every screen opens onto what it is (49 kinds, from 2026-10-02; Home only until then), and the graph is crawled end to end | `src/ui/looks/` | `looks` |
 | Server-checked persistence | Implemented — the guards between a browser and storage, and the client that speaks the platform's protocol | `base44/`, `src/engine/persistence/` | `server-guards`, `base44-adapter`, `base44-contract` |
 
 ## What was taken out
@@ -130,7 +130,7 @@ night that a stop in its first hour left unpaid. `life.waking` charges each
 person for the hours they are awake, wherever the clock stops, so Home's dials
 move during a day of play and midnight no longer charges the day ahead.
 
-The routes are `/workspace/calendar`, `/workspace/bank`, `/workspace/school`, `/workspace/career` and `/workspace/papers`; Home is served by the shell itself. `/workspace/work` went with the job engine.
+The routes are `/workspace/calendar`, `/workspace/bank`, `/workspace/school`, `/workspace/career`, `/workspace/papers`, `/workspace/homes`, `/workspace/travel`, `/workspace/vehicles`, `/workspace/land`, `/workspace/belongings`, `/workspace/clothes`, `/workspace/food`, `/workspace/routines` and `/workspace/people` (from 2026-10-01); Home is served by the shell itself. `/workspace/work` went with the job engine.
 
 ## The guide, chapter by chapter
 
@@ -147,52 +147,98 @@ chapter or to two, or if a chapter opens nothing.
 | 5 | What Needs You | `ui.needs` `world.mark_read` `world.take_decision_action` `world.dismiss_decision` `look.notification` `look.decision` |
 | 6 | How You Are | `ui.how` `look.dial` `look.readiness` |
 | 7 | Sleep | `ui.sleep` `life.sleep` |
-| 8 | Looking After Yourself | `ui.look-after` `life.look_after` |
+| 8 | Looking After Yourself | `ui.look-after` `life.look_after` `gym.join` `gym.leave` `gym.trainer` `look.gym` `look.trainer` |
 | 9 | Your Own Plans | `ui.open-calendar` `calendar.schedule` `calendar.cancel` `look.plans` `look.stretch` |
 | 10 | Weather | `ui.weather` `look.weather` `look.forecastday` `look.hours` `look.skyhour` `look.skyweek` |
-| 11 | Drama School | `ui.school` `school.call_in_sick` `school.take_shift` `school.cabaret` `school.summer_cabaret` |
-| 12 | The Business | `ui.career` `career.sign` `career.self_submit` `career.accept` `career.pass` `career.leave` `career.renew` `career.sign_manager` `career.leave_manager` `career.relocate` `career.subscribe` `career.headshots` `career.reel` `career.buy_kit` `career.class` `career.coach` `career.improv` `career.workshop` `career.publicist` |
-| 13 | Between Jobs | `ui.papers` `health.enroll` `health.drop` `health.elect_cobra` `health.pay_bill` `health.treat` `health.dental` `benefits.claim` `tax.file` `tax.pay` |
-| 14 | Rent And A Roof | `ui.home` `home.pay_landlord` `home.move` |
-| 15 | Money | `ui.money` `look.account` `look.networth` `look.debt` |
-| 16 | Your Bank | `ui.bank` `finance.pay_card` `finance.set_autopay` `card.apply` `card.money_transfer` `card.plan` `card.redeem_rewards` `card.lock` `card.report` `card.update_billers` `card.dispute` `bank.new_number` `card.close` `card.refund_credit` `card.set_statement_day` `card.request_limit` `card.set_auto_raise` `card.set_over_limit` `card.request_hardship` `bank.set_alerts` `cash.withdraw` `cash.deposit` `bank.set_term_end` `bank.break_term` `bank.take_term_interest` `bank.set_round_ups` `bank.reactivate` `bank.cancel_new` `bank.claim_unclaimed` `bank.set_payments` `bank.add_standing_order` `bank.cancel_standing_order` `bank.schedule_payment` `bank.cancel_scheduled` `bank.stop_check` `bank.reclaim_debit` `bank.transfer` `bank.open_savings` `bank.close_savings` `bank.arrange_overdraft` `bank.open_term` `bank.borrow` `bank.repay_loan` `bank.debit_overdraft` `bank.pay_collections` `bank.take_overrun_loan` `bank.switch` |
-| 17 | A Whole Life | `look.person` |
+| 11 | Drama School | `ui.school` `school.call_in_sick` `school.take_shift` `school.cabaret` `school.summer_cabaret` `look.school` `look.course` `look.skill` |
+| 12 | The Business | `ui.career` `career.sign` `career.query_agencies` `career.self_submit` `career.accept` `career.counter` `career.pass` `career.leave` `career.renew` `career.sign_manager` `career.leave_manager` `career.relocate` `career.subscribe` `career.headshots` `career.reel` `career.buy_kit` `career.class` `career.coach` `career.t1287` `career.furnish_wardrobe` `career.enter_award` `career.improv` `career.workshop` `career.publicist` `pension.start` `pension.state` `pension.ie_state` `pension.cpp` `pension.ca_oas` `pension.bienestar` `pension.imss` `pension.social_security` `career.commercial_meet` `career.commercial_leave` `look.part` `look.job` `look.agency` `look.manager` `look.award` |
+| 13 | Between Jobs | `ui.papers` `health.enroll` `health.drop` `health.elect_cobra` `health.pay_bill` `health.apply_aid` `health.treat` `health.dental` `health.choose_clinic` `benefits.claim` `benefits.ei_register` `benefits.hap` `benefits.assistance` `tax.file` `tax.pay` `health.choose_pharmacy` |
+| 14 | Getting Around | `ui.travel` `travel.book` `travel.cancel` `travel.insure` `travel.rent_car` `travel.stay_let` `travel.extend` `travel.late_checkout` `pilot.train` `aircraft.buy` `aircraft.sell` `look.journey` `look.hotel` |
+| 15 | A Car Of Your Own | `ui.vehicles` `vehicle.buy` `vehicle.sell` `vehicle.redeem` `vehicle.lease` `vehicle.lease_return` `vehicle.lease_buyout` `vehicle.winter_tires` `vehicle.tint` `vehicle.modify` `vehicle.stereo` `vehicle.inspect_used` `vehicle.repair` `vehicle.wrap` `vehicle.coverage` `vehicle.service` `vehicle.stand_in` `boat.buy` `boat.sell` `boat.certify` `look.vehicle` |
+| 16 | Land | `ui.land` `land.offer` `land.withdraw` `land.sell` `land.split` `land.combine` `land.lease_out` `land.end_lease` `look.parcel` |
+| 17 | Building A House | `build.start` `build.pay` |
+| 18 | Passports And Licenses | `documents.apply_passport` `documents.apply_authorization` `documents.apply_visa` `documents.report_lost` `documents.license_step` `documents.renew_license` `documents.apply_idp` `documents.apply_idcard` `documents.real_id` `documents.apply_opt` `documents.petition_o1` `documents.residence` `documents.settle` `documents.renew_residence` `documents.naturalize` `documents.apply_work_permit` `documents.exchange_license` `look.document` |
+| 19 | Rent And A Roof | `ui.home` `home.internet` `home.pay_landlord` `home.move` `home.cleaner` `home.renters_insurance` `home.alarm` `home.security` `home.charger` `home.move_by` `ui.belongings` `items.move` `ui.clothes` `clothes.buy` `clothes.return` `clothes.dry_clean` `clothes.collect` `clothes.sell` `clothes.dress` `clothes.save_outfit` `clothes.wear_outfit` `clothes.delete_outfit` `clothes.alter` `ui.food` `food.dine` `food.drink` `food.buy_groceries` `food.cook` `food.eat_ready` `food.drink_home` `ui.routines` `routine.save` `routine.delete` `look.routine` `errand.go` `errand.park` `errand.fuel` `hygiene.buy` `hygiene.groom` `caravan.buy` `caravan.sell` `vehicle.hitch` `ui.homes` `home.offer` `home.cancel` `home.pay_mortgage` `home.refinance` `home.borrow` `home.renovate` `home.gardener` `home.fit` `home.buy_units` `home.buy_portable` `home.take_lodger` `home.end_lodger` `home.replace_mattress` `home.furnish` `home.let` `home.manager` `home.end_tenancy` `home.move_in` `home.sell` `look.home` `look.listing` `look.item` `look.garment` `look.restaurant` |
+| 20 | Money | `ui.money` `look.account` `look.networth` `look.debt` |
+| 21 | Your Bank | `ui.bank` `finance.pay_card` `finance.set_autopay` `card.apply` `card.money_transfer` `card.plan` `card.redeem_rewards` `card.lock` `card.report` `card.update_billers` `card.dispute` `bank.new_number` `card.close` `card.refund_credit` `card.set_statement_day` `card.request_limit` `card.set_auto_raise` `card.set_over_limit` `card.set_everyday` `card.request_hardship` `bank.set_alerts` `cash.withdraw` `cash.deposit` `bank.set_term_end` `bank.break_term` `bank.take_term_interest` `bank.set_round_ups` `bank.reactivate` `bank.cancel_new` `bank.claim_unclaimed` `bank.set_payments` `bank.add_standing_order` `bank.cancel_standing_order` `bank.schedule_payment` `bank.cancel_scheduled` `bank.stop_check` `bank.reclaim_debit` `bank.transfer` `bank.open_savings` `bank.close_savings` `bank.arrange_overdraft` `bank.open_term` `bank.borrow` `bank.repay_loan` `bank.debit_overdraft` `bank.pay_collections` `bank.take_overrun_loan` `bank.switch` `look.bank` `look.transaction` |
+| 22 | A Whole Life | `look.person` |
+| 23 | People | `ui.people` `social.invite` `social.ask_out` `social.move_in` `social.break_up` `social.split` `social.marry` `social.divorce` `social.try_for_child` `social.adopt` `family.care` `dating.app` `look.contact` `look.child` `look.parent` |
 
 <!-- inventory:begin -->
-Generated by `node tools/inventory.mjs --markdown`. 89 commands, 54 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 5 routes.
+Generated by `node tools/inventory.mjs --markdown`. 233 commands, 127 scheduled kinds, 2 passage reactors, 3 events emitted, 1 event listener, 0 scenes, 14 routes.
 
 ### Commands
 
 | System | Kinds | Owner |
 | --- | --- | --- |
+| aircraft | `aircraft.buy` `aircraft.sell` | `src/engine/systems/aviation.ts` |
 | bank | `bank.add_standing_order` `bank.arrange_overdraft` `bank.borrow` `bank.break_term` `bank.cancel_new` `bank.cancel_scheduled` `bank.cancel_standing_order` `bank.claim_unclaimed` `bank.close_savings` `bank.debit_overdraft` `bank.new_number` `bank.open_savings` `bank.open_term` `bank.pay_collections` `bank.reactivate` `bank.reclaim_debit` `bank.repay_loan` `bank.schedule_payment` `bank.set_alerts` `bank.set_payments` `bank.set_round_ups` `bank.set_term_end` `bank.stop_check` `bank.switch` `bank.take_overrun_loan` `bank.take_term_interest` `bank.transfer` | `src/engine/systems/accountlife.ts`, `src/engine/systems/banking.ts`, `src/engine/systems/lending.ts`, `src/engine/systems/payments.ts`, `src/engine/systems/security.ts`, `src/engine/systems/statements.ts` |
-| benefits | `benefits.claim` | `src/engine/systems/unemployment.ts` |
+| benefits | `benefits.assistance` `benefits.claim` `benefits.ei_register` `benefits.hap` | `src/engine/systems/assistance.ts`, `src/engine/systems/eiself.ts`, `src/engine/systems/homebenefits.ts`, `src/engine/systems/unemployment.ts` |
+| boat | `boat.buy` `boat.certify` `boat.sell` | `src/engine/systems/boats.ts` |
+| build | `build.pay` `build.start` | `src/engine/systems/construction.ts` |
 | calendar | `calendar.cancel` `calendar.schedule` `calendar.skip` | `src/engine/world/plans.ts` |
-| card | `card.apply` `card.close` `card.dispute` `card.lock` `card.money_transfer` `card.plan` `card.redeem_rewards` `card.refund_credit` `card.report` `card.request_hardship` `card.request_limit` `card.set_auto_raise` `card.set_over_limit` `card.set_statement_day` `card.update_billers` | `src/engine/systems/cardlife.ts`, `src/engine/systems/cardoffers.ts`, `src/engine/systems/credit.ts`, `src/engine/systems/security.ts` |
-| career | `career.accept` `career.buy_kit` `career.class` `career.coach` `career.headshots` `career.improv` `career.leave_manager` `career.leave` `career.pass` `career.publicist` `career.reel` `career.relocate` `career.renew` `career.self_submit` `career.sign_manager` `career.sign` `career.subscribe` `career.workshop` | `src/engine/systems/career.ts` |
+| caravan | `caravan.buy` `caravan.sell` | `src/engine/systems/caravans.ts` |
+| card | `card.apply` `card.close` `card.dispute` `card.lock` `card.money_transfer` `card.plan` `card.redeem_rewards` `card.refund_credit` `card.report` `card.request_hardship` `card.request_limit` `card.set_auto_raise` `card.set_everyday` `card.set_over_limit` `card.set_statement_day` `card.update_billers` | `src/engine/systems/cardlife.ts`, `src/engine/systems/cardoffers.ts`, `src/engine/systems/credit.ts`, `src/engine/systems/security.ts` |
+| career | `career.accept` `career.buy_kit` `career.class` `career.coach` `career.commercial_leave` `career.commercial_meet` `career.counter` `career.enter_award` `career.furnish_wardrobe` `career.headshots` `career.improv` `career.leave_manager` `career.leave` `career.pass` `career.publicist` `career.query_agencies` `career.reel` `career.relocate` `career.renew` `career.self_submit` `career.sign_manager` `career.sign` `career.subscribe` `career.t1287` `career.workshop` | `src/engine/systems/awards.ts`, `src/engine/systems/career.ts`, `src/engine/systems/commercial.ts`, `src/engine/systems/fittings.ts` |
 | cash | `cash.deposit` `cash.withdraw` | `src/engine/systems/cash.ts` |
+| clothes | `clothes.alter` `clothes.buy` `clothes.collect` `clothes.delete_outfit` `clothes.dress` `clothes.dry_clean` `clothes.return` `clothes.save_outfit` `clothes.sell` `clothes.wear_outfit` | `src/engine/systems/clothing.ts`, `src/engine/systems/resale.ts`, `src/engine/systems/tailoring.ts` |
+| dating | `dating.app` | `src/engine/systems/dating.ts` |
+| documents | `documents.apply_authorization` `documents.apply_idcard` `documents.apply_idp` `documents.apply_opt` `documents.apply_passport` `documents.apply_visa` `documents.apply_work_permit` `documents.exchange_license` `documents.license_step` `documents.naturalize` `documents.petition_o1` `documents.real_id` `documents.renew_license` `documents.renew_residence` `documents.report_lost` `documents.residence` `documents.settle` | `src/engine/systems/citizenship.ts`, `src/engine/systems/documents.ts`, `src/engine/systems/identity.ts`, `src/engine/systems/licensing.ts`, `src/engine/systems/permission.ts`, `src/engine/systems/residence.ts` |
+| errand | `errand.fuel` `errand.go` `errand.park` | `src/engine/systems/trips.ts` |
+| family | `family.care` | `src/engine/systems/parents.ts` |
 | finance | `finance.pay_card` `finance.set_autopay` | `src/engine/systems/credit.ts` |
-| health | `health.dental` `health.drop` `health.elect_cobra` `health.enroll` `health.pay_bill` `health.treat` | `src/engine/systems/health.ts` |
-| home | `home.move` `home.pay_landlord` | `src/engine/systems/household.ts` |
+| food | `food.buy_groceries` `food.cook` `food.dine` `food.drink_home` `food.drink` `food.eat_ready` | `src/engine/systems/alcohol.ts`, `src/engine/systems/kitchen.ts`, `src/engine/systems/life.ts` |
+| gym | `gym.join` `gym.leave` `gym.trainer` | `src/engine/systems/gyms.ts`, `src/engine/systems/trainers.ts` |
+| health | `health.apply_aid` `health.choose_clinic` `health.choose_pharmacy` `health.dental` `health.drop` `health.elect_cobra` `health.enroll` `health.pay_bill` `health.treat` | `src/engine/systems/health.ts` |
+| home | `home.alarm` `home.borrow` `home.buy_portable` `home.buy_units` `home.cancel` `home.charger` `home.cleaner` `home.end_lodger` `home.end_tenancy` `home.fit` `home.furnish` `home.gardener` `home.internet` `home.let` `home.manager` `home.move_by` `home.move_in` `home.move` `home.offer` `home.pay_landlord` `home.pay_mortgage` `home.refinance` `home.renovate` `home.renters_insurance` `home.replace_mattress` `home.security` `home.sell` `home.take_lodger` | `src/engine/systems/alarm.ts`, `src/engine/systems/appliances.ts`, `src/engine/systems/charging.ts`, `src/engine/systems/dwelling.ts`, `src/engine/systems/furniture.ts`, `src/engine/systems/homes.ts`, `src/engine/systems/homesecurity.ts`, `src/engine/systems/household.ts`, `src/engine/systems/lawns.ts`, `src/engine/systems/lodgers.ts`, `src/engine/systems/propertymanagers.ts`, `src/engine/systems/telecom.ts` |
+| hygiene | `hygiene.buy` `hygiene.groom` | `src/engine/systems/hygiene.ts`, `src/engine/systems/life.ts` |
+| items | `items.move` | `src/engine/systems/items.ts` |
+| land | `land.combine` `land.end_lease` `land.lease_out` `land.offer` `land.sell` `land.split` `land.withdraw` | `src/engine/systems/land.ts`, `src/engine/systems/landlease.ts` |
 | life | `life.look_after` `life.sleep` | `src/engine/systems/life.ts` |
+| pension | `pension.bienestar` `pension.ca_oas` `pension.cpp` `pension.ie_state` `pension.imss` `pension.social_security` `pension.start` `pension.state` | `src/engine/systems/capensions.ts`, `src/engine/systems/homepensions.ts`, `src/engine/systems/imss.ts`, `src/engine/systems/pension.ts`, `src/engine/systems/socialsecurity.ts`, `src/engine/systems/statepension.ts` |
+| pilot | `pilot.train` | `src/engine/systems/aviation.ts` |
+| routine | `routine.delete` `routine.save` | `src/engine/systems/routines.ts` |
 | school | `school.cabaret` `school.call_in_sick` `school.summer_cabaret` `school.take_shift` | `src/engine/systems/school.ts` |
+| social | `social.adopt` `social.ask_out` `social.break_up` `social.divorce` `social.invite` `social.marry` `social.move_in` `social.split` `social.try_for_child` | `src/engine/systems/adoption.ts`, `src/engine/systems/children.ts`, `src/engine/systems/marriage.ts`, `src/engine/systems/people.ts` |
 | tax | `tax.file` `tax.pay` | `src/engine/systems/taxreturn.ts` |
+| travel | `travel.book` `travel.cancel` `travel.extend` `travel.insure` `travel.late_checkout` `travel.rent_car` `travel.stay_let` | `src/engine/systems/journey.ts`, `src/engine/systems/latecheckout.ts`, `src/engine/systems/rentals.ts`, `src/engine/systems/travelinsurance.ts` |
 | tutorial | `tutorial.read` | `src/engine/world/tutorial.ts` |
+| vehicle | `vehicle.buy` `vehicle.coverage` `vehicle.hitch` `vehicle.inspect_used` `vehicle.lease_buyout` `vehicle.lease_return` `vehicle.lease` `vehicle.modify` `vehicle.redeem` `vehicle.repair` `vehicle.sell` `vehicle.service` `vehicle.stand_in` `vehicle.stereo` `vehicle.tint` `vehicle.winter_tires` `vehicle.wrap` | `src/engine/systems/caraudio.ts`, `src/engine/systems/caravans.ts`, `src/engine/systems/carcare.ts`, `src/engine/systems/leasing.ts`, `src/engine/systems/mods.ts`, `src/engine/systems/repairs.ts`, `src/engine/systems/repossession.ts`, `src/engine/systems/standin.ts`, `src/engine/systems/tint.ts`, `src/engine/systems/tires.ts`, `src/engine/systems/usedcars.ts`, `src/engine/systems/vehicles.ts`, `src/engine/systems/wraps.ts` |
 | world | `world.dismiss_decision` `world.mark_read` `world.set_preferences` `world.take_decision_action` | `src/engine/world/world.ts` |
 
 ### Scheduled kinds
 
 | System | Kinds | Owner |
 | --- | --- | --- |
+| aircraft | `aircraft.month` `aircraft.repo_sale` | `src/engine/systems/aviation.ts` |
+| alcohol | `alcohol.arrest` | `src/engine/systems/alcohol.ts` |
 | bank | `bank.check_clears` `bank.fraud_refund` `bank.loan_due` `bank.month_end` `bank.savings_notice` `bank.scheduled_payment` `bank.standing_order` `bank.switch_complete` | `src/engine/systems/banking.ts`, `src/engine/systems/lending.ts`, `src/engine/systems/payments.ts`, `src/engine/systems/security.ts` |
-| benefits | `benefits.week` | `src/engine/systems/unemployment.ts` |
+| benefits | `benefits.assistance_month` `benefits.desempleo_month` `benefits.ja_week` `benefits.uc_period` `benefits.week` | `src/engine/systems/assistance.ts`, `src/engine/systems/homebenefits.ts`, `src/engine/systems/unemployment.ts`, `src/engine/systems/universalcredit.ts` |
+| boat | `boat.month` `boat.repo_sale` | `src/engine/systems/boats.ts` |
+| build | `build.loan_month` `build.reinspect` `build.retention` `build.stage` | `src/engine/systems/construction.ts` |
+| caravan | `caravan.month` | `src/engine/systems/caravans.ts` |
 | card | `card.arrives` `card.due` `card.replaced` `card.statement` | `src/engine/systems/cardlife.ts`, `src/engine/systems/credit.ts`, `src/engine/systems/security.ts` |
-| career | `career.agency_term` `career.audition` `career.dues` `career.festival` `career.improv` `career.lapse` `career.offer` `career.pay` `career.renewal` `career.residual` `career.showcase` `career.stay` `career.travel` `career.week` `career.work` `career.workshop` | `src/engine/systems/career.ts` |
+| career | `career.agency_term` `career.airs` `career.audition` `career.dues` `career.festival` `career.fitting` `career.improv` `career.lapse` `career.offer` `career.pay` `career.press` `career.query_answer` `career.renewal` `career.residual` `career.showcase` `career.stay` `career.travel` `career.wardrobe_back` `career.week` `career.work` `career.workshop` | `src/engine/systems/career.ts`, `src/engine/systems/fittings.ts` |
+| child | `child.birth` `child.month` | `src/engine/systems/children.ts` |
+| citizenship | `citizenship.decided` | `src/engine/systems/citizenship.ts` |
+| clothes | `clothes.cleaning_ready` | `src/engine/systems/clothing.ts` |
+| dating | `dating.month` | `src/engine/systems/dating.ts` |
+| documents | `documents.decided` `documents.license_step` `documents.opt_week` `documents.permission` `documents.us_status` | `src/engine/systems/documents.ts`, `src/engine/systems/licensing.ts`, `src/engine/systems/permission.ts` |
+| gym | `gym.month` | `src/engine/systems/gyms.ts` |
 | health | `health.bill` `health.month` `health.week` | `src/engine/systems/health.ts` |
-| home | `home.rent` | `src/engine/systems/household.ts` |
+| home | `home.appliance_out` `home.closing` `home.inspection` `home.lodger_month` `home.portable_out` `home.rent` `home.sale_closes` `home.units_out` `home.works_done` | `src/engine/systems/appliances.ts`, `src/engine/systems/homes.ts`, `src/engine/systems/household.ts`, `src/engine/systems/lodgers.ts` |
+| injury | `injury.comp` | `src/engine/systems/injury.ts` |
+| items | `items.order_arrives` | `src/engine/systems/orders.ts` |
+| land | `land.closing` `land.exchange` `land.lease_year` `land.loan_month` `land.sale_closes` `land.tax_year` | `src/engine/systems/land.ts`, `src/engine/systems/landlease.ts` |
 | life | `life.birthday` `life.commitment` `life.day_rollover` `life.end` | `src/engine/systems/birthdays.ts`, `src/engine/systems/life.ts`, `src/engine/systems/mortality.ts`, `src/engine/world/plans.ts` |
-| school | `school.cabaret` `school.call` `school.classes` `school.commencement` `school.evaluation` `school.lab` `school.payday` `school.recess` `school.shift` `school.stipend` `school.summer` `school.term` `school.week` | `src/engine/systems/school.ts` |
-| tax | `tax.due` `tax.refund` `tax.season` | `src/engine/systems/taxreturn.ts` |
+| pension | `pension.bienestar_payment` `pension.ca_month` `pension.ie_week` `pension.imss_month` `pension.month` `pension.ss_month` `pension.state_payment` | `src/engine/systems/capensions.ts`, `src/engine/systems/homepensions.ts`, `src/engine/systems/imss.ts`, `src/engine/systems/pension.ts`, `src/engine/systems/socialsecurity.ts`, `src/engine/systems/statepension.ts` |
+| pilot | `pilot.medical` `pilot.month` | `src/engine/systems/aviation.ts` |
+| rental | `rental.pickup` `rental.return` | `src/engine/systems/rentals.ts` |
+| school | `school.cabaret` `school.call` `school.classes` `school.commencement` `school.company` `school.evaluation` `school.lab` `school.payday` `school.recess` `school.shift` `school.stipend` `school.summer` `school.term` `school.week` | `src/engine/systems/school.ts` |
+| social | `social.anniversary` `social.divorce_final` `social.meet` `social.wedding` | `src/engine/systems/marriage.ts`, `src/engine/systems/people.ts` |
+| tax | `tax.due` `tax.notice` `tax.refund` `tax.season` `tax.substitute` | `src/engine/systems/taxreturn.ts` |
+| travel | `travel.arrive` `travel.checkout` `travel.compensation` `travel.leave` | `src/engine/systems/children.ts`, `src/engine/systems/compensation.ts`, `src/engine/systems/journey.ts` |
+| vehicle | `vehicle.lease_end` `vehicle.lease_month` `vehicle.month` `vehicle.renewal` `vehicle.repo_sale` | `src/engine/systems/leasing.ts`, `src/engine/systems/vehicles.ts` |
 | world | `world.tick` | `src/engine/world/world.ts` |
 
 ### Passage reactors
@@ -221,5 +267,5 @@ Generated by `node tools/inventory.mjs --markdown`. 89 commands, 54 scheduled ki
 
 ### Routes
 
-`/workspace/bank` · `/workspace/calendar` · `/workspace/career` · `/workspace/papers` · `/workspace/school`
+`/workspace/bank` · `/workspace/belongings` · `/workspace/calendar` · `/workspace/career` · `/workspace/clothes` · `/workspace/food` · `/workspace/homes` · `/workspace/land` · `/workspace/papers` · `/workspace/people` · `/workspace/routines` · `/workspace/school` · `/workspace/travel` · `/workspace/vehicles`
 <!-- inventory:end -->

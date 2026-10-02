@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "compiled": "2026-09-30",
+    "note": "confirmed=true only where the figure was read on the cited page or document (PDFs were downloaded and text-extracted). 'derived' figures are arithmetic on confirmed figures and say so."
+  },
+  "bcFerries": {
+    "tsawwassenSwartzBay": {
+      "crossingTime": {"value": 95, "unit": "minutes", "currency": null, "url": "https://www.bcferries.com/current-conditions/TSA-SWB", "publisher": "BC Ferries", "date": "2026-09-30", "sourceType": "operator live departures page", "confirmed": true, "note": "Page states 'Sailing duration: 1h 35m' (both directions). The seasonal schedule page (bcferries.com/routes-fares/schedules/seasonal/TSA-SWB) sits behind a Queue-it waiting room and could not be read, so sailings are taken from the live departures board."},
+      "weekdaySailingsTsawwassenToSwartzBay": {"value": 13, "unit": "sailings/day", "currency": null, "url": "https://www.bcferries.com/current-conditions/TSA-SWB", "publisher": "BC Ferries", "date": "2026-09-30 (Wednesday)", "sourceType": "operator live departures page", "confirmed": true, "note": "Departures read for Wed 30 Sep 2026: 07:00, 08:00, 09:00, 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 19:00, 21:00. Page also shows 06:00 as the first sailing 'Tomorrow', so some weekdays may have 14; one day observed, not the printed seasonal timetable."},
+      "weekdaySailingsSwartzBayToTsawwassen": {"value": 13, "unit": "sailings/day", "currency": null, "url": "https://www.bcferries.com/current-conditions/SWB-TSA", "publisher": "BC Ferries", "date": "2026-09-30 (Wednesday)", "sourceType": "operator live departures page", "confirmed": true, "note": "06:00, 07:00, 09:00, 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 19:00, 21:00."},
+      "onTimePerformanceFY2026": {"value": 83.0, "unit": "% of sailings departing within 10 min of schedule", "currency": null, "url": "https://www.bcferries.com/web_image/h83/h24/9088121634846.pdf", "publisher": "BC Ferries, 'Sailing Statistics Fiscal 2026, Quarter Ended March 31, 2026'", "date": "FY Apr 2025-Mar 2026", "sourceType": "operator statistical report", "confirmed": true, "note": "By quarter: Q1 82.4%, Q2 (Jul-Sep) 79.4%, Q3 87.4%, Q4 84.6%."},
+      "onTimePerformanceFY2025": {"value": 77.6, "unit": "% of sailings departing within 10 min", "currency": null, "url": "https://www.bcferries.com/web_image/images/h62/h76/9048649269278.pdf", "publisher": "BC Ferries, Annual Report to the BC Ferries Commission, year ended 31 Mar 2025", "date": "FY Apr 2024-Mar 2025", "sourceType": "regulatory report", "confirmed": true, "note": "6,722 on time, 1,936 delayed."},
+      "cancellationShareFY2026": {"value": 1.5, "unit": "% of scheduled sailings cancelled", "currency": null, "url": "https://www.bcferries.com/web_image/h83/h24/9088121634846.pdf", "publisher": "BC Ferries", "date": "FY2026", "sourceType": "operator statistical report", "confirmed": true, "note": "143 cancellations: mechanical 103 (1.1%), weather 40 (0.4%), crew 0, other 0. By quarter 0.1%, 0.1%, 1.7%, 5.3%."},
+      "cancellationShareFY2025": {"value": 6.4, "unit": "% of scheduled sailings not sailed", "currency": null, "url": "https://www.bcferries.com/web_image/images/h62/h76/9048649269278.pdf", "publisher": "BC Ferries", "date": "FY2025", "sourceType": "regulatory report", "confirmed": false, "note": "Derived: 9,248 scheduled vs 8,658 actual (-590), p.27. Includes the ~200 days Queen of New Westminster was out of service."}
+    },
+    "horseshoeBayDepartureBay": {
+      "crossingTime": {"value": 100, "unit": "minutes", "currency": null, "url": "https://www.bcferries.com/current-conditions/HSB-NAN", "publisher": "BC Ferries", "date": "2026-09-30", "sourceType": "operator live departures page", "confirmed": false, "note": "Derived from the board: 06:15 departed, arrived 07:55; 08:35 departed, arrived 10:17 (1h42). The NAN-HSB page states 'Sailing duration: 1h 42m' for the 10:55 sailing. Scheduled duration commonly 1h40; not read as a schedule figure."},
+      "weekdaySailingsHorseshoeBayToNanaimo": {"value": 7, "unit": "sailings/day", "currency": null, "url": "https://www.bcferries.com/current-conditions/HSB-NAN", "publisher": "BC Ferries", "date": "2026-09-30 (Wednesday)", "sourceType": "operator live departures page", "confirmed": true, "note": "06:15, 08:35, 11:05, 13:25, 18:20, 20:30, 22:40 (Queen of Oak Bay, Queen of Cowichan). A gap 13:25-18:20 suggests a sailing may be missing this day; treat as one observed day."},
+      "weekdaySailingsNanaimoToHorseshoeBay": {"value": 7, "unit": "sailings/day", "currency": null, "url": "https://www.bcferries.com/current-conditions/NAN-HSB", "publisher": "BC Ferries", "date": "2026-09-30 (Wednesday)", "sourceType": "operator live departures page", "confirmed": true, "note": "06:15, 08:40, 10:55, 13:20, 16:00, 20:30, 22:40."},
+      "onTimePerformanceFY2026": {"value": 84.6, "unit": "% departing within 10 min", "currency": null, "url": "https://www.bcferries.com/web_image/h83/h24/9088121634846.pdf", "publisher": "BC Ferries", "date": "FY2026", "sourceType": "operator statistical report", "confirmed": true, "note": "Quarterly 72.0%, 76.9%, 95.3%, 96.9%."},
+      "onTimePerformanceFY2025": {"value": 70.2, "unit": "% departing within 10 min", "currency": null, "url": "https://www.bcferries.com/web_image/images/h62/h76/9048649269278.pdf", "publisher": "BC Ferries", "date": "FY2025", "sourceType": "regulatory report", "confirmed": true, "note": "3,987 on time, 1,689 delayed."},
+      "cancellationShareFY2026": {"value": 1.1, "unit": "% of scheduled sailings", "currency": null, "url": "https://www.bcferries.com/web_image/h83/h24/9088121634846.pdf", "publisher": "BC Ferries", "date": "FY2026", "sourceType": "operator statistical report", "confirmed": true, "note": "62 cancellations: mechanical 48, weather 12, crew 2."}
+    },
+    "systemWide": {
+      "onTimeDefinition": {"value": "A sailing that departed within 10 minutes of scheduled departure (Major and Minor routes); arrived within 10 minutes of scheduled arrival (Northern routes)", "unit": null, "currency": null, "url": "https://www.bcferries.com/web_image/h83/h24/9088121634846.pdf", "publisher": "BC Ferries (glossary)", "date": "2026", "sourceType": "operator statistical report", "confirmed": true},
+      "onTimePerformanceFY2026": {"value": 86.1, "unit": "% of sailings", "currency": null, "url": "https://www.bcferries.com/web_image/h83/h24/9088121634846.pdf", "publisher": "BC Ferries", "date": "FY2026", "sourceType": "operator statistical report", "confirmed": true, "note": "170,283 on time of 197,809 actual. Delay bands: 10-19 min 8.5%, 20-29 min 2.7%, 30-59 min 2.2%, 60+ min 0.4%. Major routes 80.8%."},
+      "onTimePerformanceFY2025": {"value": 84.0, "unit": "% of sailings", "currency": null, "url": "https://www.bcferries.com/web_image/images/h62/h76/9048649269278.pdf", "publisher": "BC Ferries", "date": "FY2025", "sourceType": "regulatory report", "confirmed": true, "note": "Major routes 72.4%."},
+      "cancellationShareFY2026": {"value": 0.7, "unit": "% of scheduled sailings", "currency": null, "url": "https://www.bcferries.com/web_image/h83/h24/9088121634846.pdf", "publisher": "BC Ferries", "date": "FY2026", "sourceType": "operator statistical report", "confirmed": true, "note": "1,432 of 199,241. Causes: mechanical 49.9%, weather 32.3%, other 10.1%, crew 7.7%. FY2025 was 1.4% (2,809 of 199,274)."},
+      "delayControllabilityFY2025": {"value": 33.1, "unit": "% of delayed sailings controllable", "currency": null, "url": "https://www.bcferries.com/web_image/images/h62/h76/9048649269278.pdf", "publisher": "BC Ferries", "date": "FY2025", "sourceType": "regulatory report", "confirmed": false, "note": "Chart shows 10.4K (33.1%) and 21.0K (66.9%) with legend 'Controllable, Non-Controllable'; text extraction does not bind labels to values with certainty."}
+    },
+    "transitDowntownVancouverToTsawwassen": {
+      "route": {"value": "Canada Line (SkyTrain) from Waterfront/downtown to Bridgeport Station, then bus 620 Tsawwassen Ferry (express, via Ladner Exchange)", "unit": null, "currency": null, "url": "https://infomaps.translink.ca/Public_Timetables/218/tt620.pdf", "publisher": "TransLink", "date": "timetable effective 2026-06-08", "sourceType": "operator timetable", "confirmed": true},
+      "bus620Minutes": {"value": 33, "unit": "minutes Bridgeport to ferry terminal (weekday, range ~33-38)", "currency": null, "url": "https://infomaps.translink.ca/Public_Timetables/218/tt620.pdf", "publisher": "TransLink", "date": "effective 2026-06-08", "sourceType": "operator timetable", "confirmed": true, "note": "e.g., 06:00->06:33, 09:00->09:36, 14:50->15:32. Weekday first trip 06:00, roughly every 45-60 min with extra trips. Reverse (ferry->Bridgeport) 38-42 min. A newer timetable period may have started in Sept 2026; not found."},
+      "canadaLineMinutes": {"value": null, "unit": "minutes Waterfront to Bridgeport", "currency": null, "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false, "note": "Not read on a TransLink page. Commonly ~20 min; unverified."},
+      "fare": {"value": 6.70, "unit": "adult 3-zone single, contactless/cash (Compass stored value 5.40)", "currency": "CAD", "url": "https://www.translink.ca/transit-fares/pricing-and-fare-zones", "publisher": "TransLink", "date": "fares effective 2026-07-01", "sourceType": "operator fare page", "confirmed": false, "note": "Fare values confirmed (1-zone 3.50/2.85, 2-zone 5.10/4.20, 3-zone 6.70/5.40). That downtown Vancouver (Zone 1) to Tsawwassen (Delta) is a 3-zone trip on weekdays was not stated on the page read; zones apply only on weekdays before 18:30, otherwise 1-zone price."}
+    },
+    "transitSwartzBayToDowntownVictoria": {
+      "route": {"value": "BC Transit route 70 / 70X Swartz Bay-Downtown via Highway 17 (70X skips Sidney)", "unit": null, "currency": null, "url": "https://www.bctransit.com/victoria/schedules-and-maps/route-overview/?route=70", "publisher": "BC Transit", "date": "2026", "sourceType": "operator route page", "confirmed": true},
+      "minutes": {"value": 50, "unit": "minutes (45-50 typical)", "currency": null, "url": "https://www.bctransit.com/victoria/schedules-and-maps/route-overview/?route=70", "publisher": "BC Transit", "date": "2026", "sourceType": "operator route page", "confirmed": true, "note": "Summarised from the timetable (Legislature Exchange <-> Swartz Bay ~45-50 min). 70X about 45-54 min per third-party TransSee data."},
+      "fare": {"value": 3.00, "unit": "adult single ride (DayPASS 6.00)", "currency": "CAD", "url": "https://www.bctransit.com/victoria/fares/", "publisher": "BC Transit", "date": "2026", "sourceType": "operator fare page", "confirmed": true}
+    }
+  },
+  "irishSea": {
+    "stenaDublinHolyhead": {
+      "footPassengerSingleAdult": {"value": 44, "unit": "adult foot passenger online single, off-peak period incl. 1 Oct-17 Dec 2026", "currency": "EUR", "url": "https://www.stenaline.ie/content/dam/stenaline/en_ie/documents/fares/2026/fares_2026_dublin_holyhead.pdf", "publisher": "Stena Line", "date": "2026 fares", "sourceType": "operator fare table", "confirmed": true, "note": "Table lists foot adult 44 and 49 (child 22/25). The column-to-period mapping could not be read with certainty: probably 44 for the off-peak and shoulder periods and 49 for the peak periods (26 Jun-30 Aug, 18 Dec-3 Jan). The UK (GBP) table for Holyhead-Dublin gives 38 and 42."},
+      "footPassengerSingleAdultGBP": {"value": 38, "unit": "adult foot single Holyhead-Dublin, lower column", "currency": "GBP", "url": "https://www.stenaline.co.uk/content/dam/stenaline/en_gb/documents/fares/2026/fares_2026_holyhead_dublin.pdf", "publisher": "Stena Line", "date": "2026 fares", "sourceType": "operator fare table", "confirmed": true, "note": "Same caveat on period mapping; higher column 42."},
+      "crossingTime": {"value": 195, "unit": "minutes", "currency": null, "url": "https://www.stenaline.ie/routes/dublin-holyhead", "publisher": "Stena Line", "date": "2026", "sourceType": "operator route page", "confirmed": true, "note": "'8 times daily ... in only 3 hours 15 minutes' (Stena Adventurer, Stena Estrid)."},
+      "sailingsPerDayEachWay": {"value": 4, "unit": "sailings/day each direction", "currency": null, "url": "https://www.stenaline.ie/content/dam/stenaline/en_ie/documents/fares/2026/fares_2026_dublin_holyhead.pdf", "publisher": "Stena Line", "date": "2026", "sourceType": "operator fare table", "confirmed": true, "note": "From Dublin 02:15, 08:15, 14:45, 20:30; from Holyhead 02:15, 09:00, 14:45, 20:30."}
+    },
+    "irishFerriesDublinHolyhead": {
+      "footPassengerSingleAdult": {"value": null, "unit": null, "currency": "EUR", "url": "https://www.irishferries.com/uk-en/routes-and-times/dublin-holyhead/", "publisher": "Irish Ferries", "date": "2026-09-30", "sourceType": "operator route page", "confirmed": false, "note": "No standard foot-passenger 'from' fare published; dynamic pricing via booking engine. Irish Ferries publishes duty-free day-trip foot fares (EUR 10 Mon-Wed, EUR 12 Thu-Sun adult return day trips), which are not ordinary singles and were not read on-page. Aggregator (Direct Ferries) cites an average foot fare of ~EUR 75; not primary."},
+      "crossingTime": {"value": 210, "unit": "minutes", "currency": null, "url": "https://www.irishferries.com/uk-en/routes-and-times/dublin-holyhead/", "publisher": "Irish Ferries", "date": "2026-09-30", "sourceType": "operator route page", "confirmed": true, "note": "All listed sailings 3h30 cruise ferry. The Dublin Swift fast ferry (just over 2h) is seasonal and not in the current listing."},
+      "sailingsPerDayEachWay": {"value": 4, "unit": "sailings/day each direction", "currency": null, "url": "https://www.irishferries.com/uk-en/routes-and-times/dublin-holyhead/", "publisher": "Irish Ferries", "date": "2026-09-30", "sourceType": "operator route page", "confirmed": true, "note": "Dublin dep 01:15, 07:30, 13:45, 19:45; Holyhead dep 01:30, 07:30, 13:15, 19:30."}
+    },
+    "holyheadToLondonEuston": {
+      "fastestMinutes": {"value": 227, "unit": "minutes (fastest, 'as little as 3 hours and 47 minutes'; average ~4 h; 227 miles)", "currency": null, "url": "https://www.avantiwestcoast.co.uk/travel-information/train-times/holyhead/london-euston", "publisher": "Avanti West Coast", "date": "2026-09-30", "sourceType": "operator route page", "confirmed": true},
+      "directTrainsPerDay": {"value": null, "unit": "weekday direct trains", "currency": null, "url": "https://www.avantiwestcoast.co.uk/-/media/avanti-pdfs/avanti-timetables/2026/september/mon-28-sep-to-fri-02-oct-2026.pdf", "publisher": "Avanti West Coast", "date": "28 Sep-2 Oct 2026", "sourceType": "operator timetable", "confirmed": false, "note": "Timetable PDF downloaded but its table text did not extract cleanly enough to count. Avanti news (9 May 2025) says two weekday services were added from 18 May 2025 (04:45 ex-Holyhead, 08:00 ex-Euston); total not stated."},
+      "advanceSingleFrom": {"value": 39.50, "unit": "Advance single 'from'", "currency": "GBP", "url": "https://www.avantiwestcoast.co.uk/travel-information/train-times/holyhead/london-euston", "publisher": "Avanti West Coast", "date": "2026-09-30", "sourceType": "operator route page", "confirmed": true},
+      "anytimeSingle": {"value": null, "unit": null, "currency": "GBP", "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false, "note": "Not found on a primary page."}
+    },
+    "onTimePerformance": {"value": null, "unit": null, "currency": null, "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false, "note": "Neither Stena Line nor Irish Ferries publishes punctuality statistics that could be found."}
+  },
+  "flightDelayCauses": {
+    "usBTS12Months": {
+      "period": "August 2025 - July 2026",
+      "url": "https://www.transtats.bts.gov/OT_Delay/OT_DelayCause1.asp",
+      "publisher": "US DOT Bureau of Transportation Statistics",
+      "sourceType": "official statistics",
+      "confirmed": true,
+      "percentOfAllFlights": {"onTime": 76.18, "airCarrierDelay": 6.73, "weatherDelay": 0.79, "nasDelay": 5.98, "securityDelay": 0.04, "lateArrivingAircraft": 8.13, "cancelled": 1.88, "diverted": 0.28},
+      "shareOfDelayedFlightsDerived": {"airCarrier": 31.1, "weather": 3.6, "nas": 27.6, "security": 0.2, "lateArrivingAircraft": 37.5, "note": "Derived: each cause / 21.67 (sum of delay causes). Delayed = arrival 15+ min late; causes prorated by minutes, so these are shares of delayed-flight equivalents. Extreme weather is part of the 'weather' figure only; weather inside NAS is counted under NAS."},
+      "latestMonth": {"period": "July 2026", "onTime": 69.49, "airCarrierDelay": 8.22, "weatherDelay": 1.12, "nasDelay": 6.90, "securityDelay": 0.05, "lateArrivingAircraft": 10.92, "cancelled": 2.79, "diverted": 0.52, "confirmed": true},
+      "cancellationCauses": {"value": null, "note": "BTS summary page does not break cancellations down by cause; the on-time database has a cancellation code field but it was not queried."}
+    },
+    "ukCAA2025": {
+      "url": "https://caa.co.uk/Documents/Download/24022/3d82eddc-84f7-4692-bc12-a9ab96562d04/1712",
+      "publisher": "UK Civil Aviation Authority, 2025 Annual Punctuality Statistics Summary Analysis (run 25/02/2026)",
+      "date": "calendar 2025",
+      "sourceType": "regulator statistics (CSV)",
+      "onTimePercent": {"value": 72.65, "unit": "% of matched flights early or within 15 min late (arrivals and departures, 25 reporting airports)", "confirmed": false, "note": "Derived by weighting the 25 AIRPORT TOTAL rows by matched flights (1,910,591); matches the CAA's published 72.7%."},
+      "averageDelayMinutes": {"value": 15.1, "unit": "minutes", "confirmed": false, "note": "Derived weighted mean; matches the CAA's published 15.1."},
+      "delayedOver3hPercent": {"value": 0.55, "unit": "% of matched flights more than 180 min late (181-360 plus 360+ bands)", "confirmed": false, "note": "Derived from the CSV bands; 121-180 min band adds 0.97%. Counts arrivals and departures at UK airports."},
+      "cancelledPercent": {"value": 1.04, "unit": "% of (matched + cancelled)", "confirmed": false, "note": "Derived: 20,085 cancelled vs 1,910,591 matched."},
+      "delayCauses": {"value": null, "note": "The CAA does not publish delay causes."}
+    },
+    "eurocontrolCODA": {
+      "august2026": {"url": "https://www.eurocontrol.int/sites/default/files/2026-09/eurocontrol-all-causes-delay-to-air-transport-august-2026.pdf", "publisher": "EUROCONTROL CODA", "date": "published 2026-09-22", "sourceType": "official statistics", "confirmed": true, "avgDepartureDelayMinPerFlight": 19.3, "reactionary": 9.3, "airline": 4.1, "atfmEnRoute": 3.4, "atfmAirport": 1.0, "otherWeather": 0.2, "government": 0.3, "miscellaneous": 0.4, "atfmWeather": 0.1, "otherAirport": 0.4, "airlineShareOfTotalDerived": 21.2, "airlineShareOfPrimaryDerived": 41.0, "note": "Minutes per flight from 1 min onward, by IATA delay code (Airline = codes 0-69, 97; Reactionary = 90-96). Reactionary delay is knock-on and mixes all primary causes. CODA coverage 55.3% of flights; partial data."},
+      "year2025": {"url": "https://www.eurocontrol.int/sites/default/files/2026-01/eurocontrol-european-aviation-overview-20260123-2025-review.pdf", "publisher": "EUROCONTROL European Aviation Overview 2025 review", "date": "2026-01-23", "sourceType": "official statistics", "confirmed": true, "avgDepartureDelayMinPerFlight": 14.6, "arrivalPunctualityOTP15": 76.1, "departurePunctualityOTP15": 70.1, "note": "Reactionary is the largest cause (-19% vs 2024), airline delays -13%; the per-cause minute values are chart images and were not extractable. En-route ATFM 1.7 min/flight, airport ATFM 0.7."},
+      "december2025": {"url": "https://www.eurocontrol.int/sites/default/files/2026-01/eurocontrol-all-causes-delay-to-air-transport-december-2025.pdf", "confirmed": true, "avgDepartureDelayMinPerFlight": 14.0, "reactionary": 6.2, "airline": 3.8}
+    },
+    "canadaCTA": {"value": null, "note": "The CTA does not publish a share of delays or cancellations within the airline's control. None found."},
+    "euDelayed3hPlus": {"value": null, "note": "No EU-wide official share of flights 3h+ late found; EUROCONTROL publishes only a 'Del > 60' band."}
+  },
+  "appr": {
+    "largeCarrier": {"3to6h": 400, "6to9h": 700, "9hPlus": 1000},
+    "smallCarrier": {"3to6h": 125, "6to9h": 250, "9hPlus": 500},
+    "currency": "CAD",
+    "url": "https://protection-passager-passenger.otc-cta.gc.ca/en/refunds-and-compensation/flight-delays-cancellations-rebooking-refunds-compensation",
+    "publisher": "Canadian Transportation Agency",
+    "date": "page modified 2026-02-26",
+    "sourceType": "regulator page",
+    "confirmed": true,
+    "conditions": "Disruption within the airline's control and not required for safety; notified 14 days or less before departure; arrival at final destination 3+ hours late; written claim within 1 year; airline has 30 days to respond.",
+    "amendmentsInForce": {"value": false, "url": "https://laws.justice.gc.ca/eng/regulations/SOR-2019-150/page-1.html", "publisher": "Justice Laws Website (Government of Canada)", "date": "current to 2026-09-21", "sourceType": "official consolidated regulation", "confirmed": true, "note": "Page reads 'current to 2026-09-21 and last amended on 2022-09-08'. The amendments proposed in Canada Gazette Part I on 2024-12-21 had not come into force as of that date; the 2022 refund amendments (SOR/2022-134, in force 2022-09-08) are the latest."}
+  },
+  "eu261": {
+    "amounts": {"upTo1500km": 250, "over1500kmIntraEUor1500to3500km": 400, "over3500km": 600},
+    "currency": "EUR",
+    "threeHourRule": "Passengers reaching the final destination 3 hours or more late are entitled to compensation unless extraordinary circumstances apply.",
+    "fiftyPercentReduction": "Compensation may be reduced by 50% when re-routed passengers arrive within set time limits.",
+    "url": "https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_en.htm",
+    "publisher": "European Union, Your Europe",
+    "date": "last checked 2026-09-21",
+    "sourceType": "official EU page",
+    "confirmed": true,
+    "note": "The Irish regulator's old passenger-rights URL (aviationreg.ie) now redirects to iaa.ie and was not re-read. The Council's 2025 reform position (longer thresholds) is not reflected on the page, so the 3h rule stands as of the check date."
+  },
+  "uncertain": [
+    "BC Ferries sailing counts come from the live departures board for a single day (Wed 30 Sep 2026), not the printed fall schedule, which is behind a queue page. HSB-NAN shows a gap from 13:25 to 18:20 that may be a cancelled sailing.",
+    "HSB-Departure Bay crossing time (100 min) is inferred from actual departure and arrival times; the live page states 1h42m for one sailing.",
+    "The FY2025 BC Ferries controllable-delay share (33.1%) depends on the order of labels in the chart.",
+    "Stena foot fare column-to-period mapping (EUR 44 vs 49; GBP 38 vs 42) is uncertain from the text extraction.",
+    "Irish Ferries foot fare: not published.",
+    "Avanti direct Holyhead-Euston trains per day: not counted, because the timetable text was unreadable. Anytime single fare not found.",
+    "TransLink zone count for downtown to Tsawwassen (3 zones) and Canada Line minutes were not read on-page.",
+    "The UK CAA figures are derived from the CSV (weighted), not quoted headline numbers, but match the CAA's published 72.7% / 15.1 min.",
+    "EUROCONTROL monthly figures are based on partial CODA data (55-61% coverage)."
+  ]
+}

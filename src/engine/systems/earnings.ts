@@ -15,7 +15,6 @@ import { CITIES } from '../content/geography';
 export interface YearEarnings {
   /** Wages from acting work, residuals among them. */
   acting: Money;
-  residuals: Money;
   /** Of the acting wages, under SAG-AFTRA, for its dues and its health plan. */
   sag: Money;
   workStudy: Money;
@@ -24,6 +23,33 @@ export interface YearEarnings {
   scholarship?: Money;
   /** Interest the bank paid, before any tax taken at source: a 1099-INT's, taxable, with no payroll tax. */
   interest?: Money;
+  /** A pension paid: a 1099-R's, taxable, with no payroll tax (`systems/pension.ts`). */
+  pension?: Money;
+  /**
+   * What a home put on the year (`systems/homes.ts`), from 2026-09-28: the
+   * mortgage interest, the American property tax and the mortgage insurance
+   * paid on a home kept; the rent in and the costs and depreciation of a home
+   * let; and a sale's gain, long-term or short, and what was kept free of tax.
+   */
+  homeInterest?: Money;
+  homeTax?: Money;
+  homePmi?: Money;
+  rentalRent?: Money;
+  rentalCosts?: Money;
+  homeGain?: Money;
+  homeGainShort?: Money;
+  homeGainExcluded?: Money;
+  /** Of a long-term gain, the depreciation taken while it was let, taxed as income to 25%; and whether a let home was sold, which frees its held-back losses. */
+  homeGain1250?: Money;
+  rentalDisposed?: number;
+  /** A lodger's rent in the year, and of it what was taxed outside America (`systems/lodgers.ts`), from 2026-09-30. */
+  lodgerRent?: Money;
+  lodgerTaxed?: Money;
+  /** Farm rent in the year, and of it what was taxed outside America (`systems/landlease.ts`), from 2026-09-30. */
+  farmRent?: Money;
+  farmTaxed?: Money;
+  /** SAG-AFTRA wages by production, for the pension's per-project ceiling. */
+  sagByProject?: Record<string, Money>;
   withheld: Money;
   /** What the job cost: the agency's and the manager's commission, and the unions' dues. */
   commission: Money;
@@ -36,6 +62,12 @@ export interface YearEarnings {
   residence?: string;
   /** Income by the town they lived in when it was paid, for a part-year return. */
   byResidence: Record<string, Money>;
+  /**
+   * Wages by the country they were earned in, from 2026-09-29: what a US
+   * return taxes of someone who isn't a citizen is what they earned there.
+   * A year from before it has none, and is read as all American.
+   */
+  bySource?: Record<string, Money>;
   /** Wages for work done in a state they didn't live in, by `livedInState>workedInTown`. */
   elsewhere: Record<string, Money>;
   /** Wages for work done abroad, and what the country withheld, by country; and by the town it was done in. */
@@ -46,13 +78,16 @@ export interface YearEarnings {
 export interface EarningsRecord {
   years: Record<string, YearEarnings>;
   /** Wages by quarter, `YYYY-Q`, and of them SAG-AFTRA's. */
-  quarters: Record<string, { wages: Money; sag: Money }>;
+  quarters: Record<string, { wages: Money; sag: Money; byState?: Record<string, Money> }>;
   /** Weeks with Equity work, by the Monday they began, `YYYY-MM-DD`. */
   equityWeeks: string[];
   /** Income by month, `YYYY-MM`, for the programs that test current income. */
   months: Record<string, Money>;
   /** UK wages by the UK's tax year, keyed by the year it began on 6 April, for its treaty's test; what was withheld, by year and by payer; and the years settled. */
   ukYears: Record<string, Money>;
+  /** Wages earned in the UK by its tax year, in the save's money, and the years National Insurance credits covered: the State Pension's record (`systems/statepension.ts`). */
+  ukEarned?: Record<string, Money>;
+  ukCredited?: string[];
   ukWithheld?: Record<string, Money>;
   ukPayers?: Record<string, Record<string, Money>>;
   ukSettled?: string[];
@@ -67,7 +102,7 @@ export function earningsOf(person: Person): EarningsRecord {
 
 export function yearOf(person: Person, year: number | string): YearEarnings {
   const record = earningsOf(person);
-  record.years[year] ??= { acting: 0, residuals: 0, sag: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} };
+  record.years[year] ??= { acting: 0, sag: 0, workStudy: 0, unemployment: 0, withheld: 0, commission: 0, dues: 0, employers: {}, byResidence: {}, elsewhere: {}, foreign: {} };
   const y = record.years[year]!;
   y.byResidence ??= {};
   y.elsewhere ??= {};
@@ -89,6 +124,9 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   const y = yearOf(person, p.year);
   const home = homeOf(person);
   y.byResidence[home] = (y.byResidence[home] ?? 0) + pay.gross;
+  const source = CITIES.get(pay.where ?? home)?.countryId ?? 'us';
+  y.bySource = { ...y.bySource, [source]: (y.bySource?.[source] ?? 0) + pay.gross };
+  if (source === 'uk') { const r = earningsOf(person); const key = ukTaxYear(at); r.ukEarned = { ...r.ukEarned, [key]: (r.ukEarned?.[key] ?? 0) + pay.gross }; }
   const lived = stateOf(home);
   const country = pay.where ? CITIES.get(pay.where)?.countryId : undefined;
   if (country && country !== CITIES.get(home)?.countryId) {
@@ -111,8 +149,10 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + pay.gross;
   if (pay.workStudy) y.workStudy += pay.gross;
   else y.acting += pay.gross;
-  if (pay.residual) y.residuals += pay.gross;
-  if (pay.sag) y.sag += pay.gross;
+  if (pay.sag) {
+    y.sag += pay.gross;
+    if (pay.employer && !pay.residual) (y.sagByProject ??= {})[pay.employer] = (y.sagByProject[pay.employer] ?? 0) + pay.gross;
+  }
   y.withheld += pay.withheld ?? 0;
   y.commission += pay.commission ?? 0;
   y.dues += pay.dues ?? 0;
@@ -123,6 +163,8 @@ export function recordWages(person: Person, at: Instant, zone: string, pay: {
   const q = (earningsOf(person).quarters[quarterKey(p.year, p.month)] ??= { wages: 0, sag: 0 });
   q.wages += pay.gross;
   if (pay.sag) q.sag += pay.gross;
+  // Where in the country they were earned, which state a claim goes to.
+  (q.byState ??= {})[worked] = (q.byState[worked] ?? 0) + pay.gross;
 }
 
 /** A benefit paid: unemployment insurance, income for the return. */
@@ -151,6 +193,33 @@ export function recordInterest(person: Person, at: Instant, zone: string, amount
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
   earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+}
+
+/** A pension paid, to the year it's paid and where they lived: income for the return, and the month's. */
+export function recordPension(person: Person, at: Instant, zone: string, amount: Money, withheld = 0): void {
+  const p = zonedParts(at, zone);
+  const y = yearOf(person, p.year);
+  y.pension = (y.pension ?? 0) + amount;
+  y.withheld += withheld;
+  const home = homeOf(person);
+  y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
+  const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
+  earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+}
+
+export type HomeLine = 'homeInterest' | 'homeTax' | 'homePmi' | 'rentalRent' | 'rentalCosts' | 'homeGain' | 'homeGainShort' | 'homeGainExcluded' | 'homeGain1250' | 'rentalDisposed';
+
+/** Something a home put on the year, to the year it happened. */
+export function recordHome(person: Person, at: Instant, zone: string, line: HomeLine, amount: Money): void {
+  if (amount === 0) return;
+  const p = zonedParts(at, zone);
+  const y = yearOf(person, p.year);
+  y[line] = (y[line] ?? 0) + amount;
+  // Rent received is income for the programs that test current income, as wages are.
+  if (line === 'rentalRent') {
+    const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
+    earningsOf(person).months[month] = (earningsOf(person).months[month] ?? 0) + amount;
+  }
 }
 
 /** A scholarship's taxable part, to the year it's paid and where they lived. */

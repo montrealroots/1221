@@ -79,6 +79,8 @@ export interface Account {
   /** An arranged overdraft: its limit, its rate, when it was arranged, and interest built on it (`systems/lending.ts`). */
   overdraftLimit?: Money;
   overdraftRate?: number;
+  /** An arranged overdraft paid for by the use rather than the month, where the bank sells it so. */
+  overdraftPerUse?: boolean;
   overdraftSince?: Instant;
   odAccrued?: number;
   /** Overdraft items charged today, where a bank charges by the item and caps the day. */
@@ -115,6 +117,8 @@ export interface Account {
   dormant?: boolean;
   /** When its holder last had a dormant account reactivated, which counts as using it. */
   reactivatedAt?: Instant;
+  /** When the bank wrote that the balance goes to the state unless the holder gets in touch (`ESCHEAT_NOTICE_DAYS`). */
+  escheatWarned?: Instant;
   /** A term deposit renewed: until when it can be taken without penalty, and whether the bank has written about its end. */
   graceUntil?: Instant;
   maturityNoticed?: boolean;

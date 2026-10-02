@@ -1,0 +1,252 @@
+{
+  "meta": {
+    "title": "Car ownership facts: warranties, maintenance, collision claims, insurance changes, resale",
+    "dateRead": "2026-10-01",
+    "markets": ["US-NY", "US-CA", "US-CT", "UK", "IE", "CA-ON", "CA-BC", "MX-CDMX"],
+    "basisLegend": {
+      "page": "the figure was read on the cited page itself (via fetch)",
+      "search-summary": "the figure came from a web-search result summary of the cited URL; the page itself was not opened or could not be fetched (403/PDF). Treat as lower confidence and re-verify before relying on it."
+    },
+    "rule": "No figure is invented. Where nothing was found, the value is null with a note."
+  },
+
+  "1_warranties": {
+    "US": {
+      "units": "years / miles, whichever first",
+      "Toyota": {"basic": {"years": 3, "miles": 36000}, "powertrain": {"years": 5, "miles": 60000}, "other": "Rust-through 5yr/unlimited; ToyotaCare no-cost maintenance 2yr/25,000 mi with 24-hr roadside 2yr/unlimited", "transfer": "Secondary sources say it transfers to later owners at no fee; no first-party page read. Low confidence.", "source": "https://www.toyota.com/owners/warranty-owners-manuals/ (and dealer pages in the same result set)", "basis": "search-summary"},
+      "Honda": {"basic": {"years": 3, "miles": 36000}, "powertrain": {"years": 5, "miles": 60000}, "other": "Rust perforation 5yr/unlimited; seat belts 15yr/150,000 mi", "source": "https://automobiles.honda.com/2025/cr-v/warranty", "basis": "search-summary"},
+      "Ford": {"basic": {"years": 3, "miles": 36000}, "powertrain": {"years": 5, "miles": 60000}, "other": "Corrosion 5yr/unlimited; roadside 5yr/60,000; EV battery parts 8yr/100,000", "modelYear": 2026, "source": "https://www.greghublerford.com/ford-research/f-150/2026-f-150-warranty-and-maintenance/", "basis": "search-summary"},
+      "Chevrolet": {"basic": {"years": 3, "miles": 36000}, "powertrain": {"years": 5, "miles": 60000}, "modelYear": 2026, "source": "https://www.colonialsouthchevy.com/blogs/8962/understanding-your-2026-chevrolet-warranty-coverage", "basis": "search-summary"},
+      "GMC": {"basic": {"years": 3, "miles": 36000}, "powertrain": {"years": 5, "miles": 60000}, "modelYear": 2026, "source": "https://carbuzz.com/gmc-warranty-cover-2026/", "basis": "search-summary"},
+      "Ram": {"basic": {"years": 3, "miles": 36000}, "powertrain": {"years": 10, "miles": 100000}, "modelYear": 2026, "scope": "1500/2500/3500 pickups, chassis cabs, ProMaster; US and Canada", "transfer": "10yr/100k powertrain applies to the original owner only", "source": "https://www.cars.com/articles/ram-extends-10-year-100000-mile-powertrain-warranty-to-2026-models-520040/", "basis": "search-summary"},
+      "Hyundai": {"basic": {"years": 5, "miles": 60000}, "powertrain": {"years": 10, "miles": 100000}, "other": "Anti-perforation 7yr/unlimited; roadside 5yr/unlimited", "transfer": "All warranties transfer except powertrain, which for second and later owners reverts to 5yr/60,000 from the original in-service date", "source": "https://www.cars.com/car-warranty/money/what-car-manufacturer-has-the-best-warranty-coverage/", "basis": "page (terms); transfer rule from search-summary of https://www.brandonhyundai.com/americas-best-vehicle-warranty-blog/"},
+      "Kia": {"basic": {"years": 5, "miles": 60000}, "powertrain": {"years": 10, "miles": 100000}, "other": "Anti-perforation 5yr/100,000; roadside 5yr/60,000", "transfer": "Basic, anti-perforation, roadside transfer; powertrain reverts to 5yr/60,000 from original in-service date for second owners", "source": "https://www.cars.com/car-warranty/money/what-car-manufacturer-has-the-best-warranty-coverage/", "basis": "page (terms); transfer from search-summary of https://www.tomkadleckia.com/blog/kia-warranty-length/"},
+      "Nissan": {"basic": {"years": 3, "miles": 36000}, "powertrain": {"years": 5, "miles": 60000}, "other": "Corrosion 5yr/unlimited; roadside 3yr/36,000", "source": "https://www.nissanusa.com/owners/warranty-and-protection.html", "basis": "search-summary"},
+      "Volkswagen": {"basic": {"years": 4, "miles": 50000}, "powertrain": {"years": 4, "miles": 50000, "note": "powertrain included within the same 4/50 term (VW dropped its 6-yr warranty)"}, "other": "Carefree Maintenance 2yr/20,000; roadside 3yr/36,000", "modelYear": 2026, "source": "https://www.bachmanvolkswagen.com/whats-included-with-your-new-volkswagen-carefree-coverage-explained/", "basis": "search-summary"},
+      "Mazda": {"basic": {"years": 3, "miles": 36000}, "powertrain": {"years": 5, "miles": 60000}, "other": "Roadside 3yr/36,000; anti-perforation 5yr/unlimited", "transfer": "All factory warranties transfer to later owners at no cost", "modelYear": 2026, "source": "https://www.mazda112.com/blog/understanding-the-2026-mazda-warranty-coverage-maintenance-and-peace-of-mind", "basis": "search-summary", "note": "One comparison summary claimed Mazda 4yr/60k and 6yr/70k; that conflicts with Mazda dealer sources and was not used."},
+      "Volvo": {"basic": {"years": 4, "miles": 50000}, "powertrain": null, "powertrainNote": "Not separately confirmed; the 4yr/50k new-vehicle limited warranty is the headline term", "other": "MY2026+: complimentary factory scheduled maintenance 2yr/20,000 (10k and 20k services), at a Volvo retailer; earlier programme was 3yr/36,000", "source": "https://www.volvocars.com/us/l/warranty/", "basis": "search-summary"},
+      "Tesla": {"basic": {"years": 4, "miles": 50000}, "batteryDriveUnit": "Model 3/Y Standard 8yr/100,000 mi, 70% capacity retention; Model 3/Y Long Range and Performance 8yr/120,000 mi", "srs": "5yr/60,000", "source": "https://www.tesla.com/sites/default/files/blog_attachments/ms_vehicle_warranty.pdf", "basis": "search-summary"},
+      "servicingRequirement_MagnusonMoss": {"fact": "A manufacturer cannot void a warranty or deny coverage because maintenance or repair was done by an independent shop, by the owner, or with third-party parts, unless it provides that service or part free. It may deny a claim only if it shows the outside part or work caused the defect. Owners should follow the maintenance schedule and keep dated receipts.", "law": "Magnuson-Moss Warranty Act, enforced by the FTC", "source": "https://www.perrysqualityauto.com/blog/independent-shop-warranty-magnuson-moss/", "basis": "search-summary", "note": "FTC consumer page URL tried (consumer.ftc.gov/articles/auto-warranties-routine-maintenance) returned 404."}
+    },
+    "UK": {
+      "units": "years / miles, whichever first",
+      "Toyota": {"base": "3 years / 60,000 miles, unlimited mileage in year 1", "extended": "Toyota Relax: each scheduled service at an official Toyota centre adds 12 months / 10,000 miles, up to 10 years / 100,000 miles, free", "servicingRequirement": "Relax needs servicing at a Toyota centre", "source": "https://www.toyota.co.uk/owners/toyota-warranty; https://www.regit.cars/car-news/toyota-relax-10-year-100000-mile-warranty", "basis": "search-summary"},
+      "Honda": {"base": "3 years / 90,000 miles", "extended": "Cars registered from 1 June 2026: service-activated warranty, +1 year per service at an Authorised Honda Retailer, up to 8 years / 100,000 miles", "transfer": "Tied to the car; transfers on sale", "source": "https://www.honda.co.uk/cars/owners/honda-warranty.html; https://www.warranty24.co.uk/manufacturer-warranty-comparison/", "basis": "search-summary (Honda) and page (warranty24, July 2026)"},
+      "Ford": {"base": "3 years / 60,000 miles", "source": "https://www.warranty24.co.uk/manufacturer-warranty-comparison/", "basis": "page"},
+      "Hyundai": {"base": "5 years, unlimited mileage (100,000 miles for taxi use)", "transfer": "Transferable", "servicingRequirement": "Must be serviced and maintained per manufacturer guide", "source": "https://www.warranty24.co.uk/manufacturer-warranty-comparison/; https://www.hyundai.com/uk/en/owners/owning-a-hyundai/warranty.html", "basis": "page (warranty24); conditions search-summary"},
+      "Kia": {"base": "7 years / 100,000 miles, unlimited mileage in years 1-3", "other": "Paint 5yr/100,000; anti-perforation 12yr unlimited; EVs registered from 1 Jan 2024: 8-yr battery", "transfer": "Remaining balance transfers automatically if car is under 7 yrs/100k and serviced to schedule", "source": "https://www.warranty24.co.uk/manufacturer-warranty-comparison/; https://www.motorpoint.co.uk/car-care/kia-7-year-warranty-what-is-covered-and-is-it-transferable", "basis": "page (terms); search-summary (transfer)"},
+      "Nissan": {"base": "3 years / 60,000 miles", "extended": "Service Activated Warranty up to 6 years / 100,000 miles (+12 months per Nissan dealer service). Launched July 2026 for EVs: new Micra, Leaf, 2026 Ariya; future Juke", "source": "https://www.nissan.co.uk/owners/car-warranty/nissan-ev-warranty.html", "basis": "search-summary", "note": "warranty24 lists 'up to 6 years/100,000 via Service Activated Warranty' without the EV-only qualifier."},
+      "Volkswagen": {"base": "3 years: unlimited mileage first 2 years, 60,000 miles in year 3", "source": "https://www.warranty24.co.uk/manufacturer-warranty-comparison/", "basis": "page"},
+      "Skoda": {"base": "3 years: unlimited mileage first 2 years, 60,000 miles in year 3", "source": "https://www.warranty24.co.uk/manufacturer-warranty-comparison/", "basis": "page"},
+      "Mazda": {"base": "6 years / 100,000 miles (registered from 1 September 2025)", "source": "https://www.warranty24.co.uk/manufacturer-warranty-comparison/", "basis": "page"},
+      "MG": {"base": "7 years / 80,000 miles; first 12 months unlimited mileage (registered from 1 Sept 2019)", "other": "HV battery 8yr/100,000; paint 3yr/60,000; anti-perforation 7yr with annual body inspections", "transfer": "Remaining warranty follows the eligible vehicle", "source": "https://www.warranty24.co.uk/manufacturer-warranty-comparison/; https://www.motorpoint.co.uk/car-care/mg-7-year-warranty", "basis": "page (term); search-summary (details)"},
+      "Vauxhall": {"base": "3 years: unlimited mileage year 1, 60,000 miles years 2-3", "source": "https://www.warranty24.co.uk/manufacturer-warranty-comparison/", "basis": "page"},
+      "Volvo": {"base": "3 years / 60,000 miles", "source": "https://www.warranty24.co.uk/manufacturer-warranty-comparison/", "basis": "page"},
+      "Tesla": {"base": "4 years / 60,000 miles (UK) per warranty24; a search summary of Tesla/other sources said 4 years / 50,000 miles. Conflict unresolved.", "batteryDriveUnit": "8 years / 100,000-150,000 miles depending on model", "source": "https://www.warranty24.co.uk/manufacturer-warranty-comparison/; https://www.tesla.com/en_GB/support/vehicle-warranty (403)", "basis": "page (warranty24) / search-summary"},
+      "Ram": null, "GMC": null, "Chevrolet": null,
+      "notSoldNote": "Ram, GMC and Chevrolet are not sold new through UK franchised networks; no UK warranty found.",
+      "servicingRequirement_BlockExemption": {"fact": "Under the Block Exemption Regulation (retained in UK after Brexit) a manufacturer cannot void the warranty solely because an independent garage serviced the car, provided servicing follows the manufacturer schedule, uses genuine or matching-quality parts, and is recorded. Service-activated extensions (Toyota Relax, Honda, Nissan) are separate: they require a franchised service to extend.", "source": "https://yourcarspecialist.uk/blog/block-exemption-regulation-car-servicing", "basis": "search-summary"}
+    },
+    "IE": {
+      "units": "years / km",
+      "Toyota": {"base": null, "baseNote": "Old (2017) source said 3 years / 100,000 km; current base not confirmed", "extended": "Toyota Relax: each service at a Toyota dealer or authorised repairer gives a 1-year / 15,000 km warranty, until 10 years from first registration or 185,000 km. Available even without full service history", "source": "https://www.toyota.ie/relax", "basis": "search-summary"},
+      "Hyundai": {"base": "5 years, unlimited mileage (cars bought from an authorised dealer in Europe)", "other": "HV battery 8yr/160,000 km", "source": "https://www.hyundai.ie/warranty/", "basis": "search-summary"},
+      "Kia": {"base": "7 years / 150,000 km", "transfer": "Remaining time or mileage passes to the next owner", "source": "https://www.kia.com/ie/service/warranty-guides/kia-7-year-warranty/", "basis": "search-summary"},
+      "Skoda": {"base": "3 years / 150,000 km", "dated": "January 2017 article; may be out of date", "source": "https://www.thejournal.ie/which-car-brands-have-the-best-warranties-3172278-Jan2017/", "basis": "search-summary"},
+      "Volkswagen": {"base": "3 years: unlimited km first 2 years, up to 90,000 km in year 3", "dated": "January 2017 article; may be out of date", "source": "https://www.thejournal.ie/which-car-brands-have-the-best-warranties-3172278-Jan2017/", "basis": "search-summary"},
+      "Honda": null, "Ford": null, "Nissan": null, "Mazda": null, "MG": null, "Vauxhall": null, "Volvo": null, "Tesla": null,
+      "gapNote": "Not researched for Ireland in this pass; Opel (not Vauxhall) is the GM/Stellantis brand sold in Ireland."
+    },
+    "CA": {
+      "units": "years / km",
+      "Toyota": {"basic": "3 yr / 60,000 km", "powertrain": "5 yr / 100,000 km", "source": "https://www.toyota.ca/en/owners/warranty-and-coverage/new-vehicle/", "basis": "page"},
+      "Hyundai": {"basic": "5 yr / 100,000 km", "powertrain": "5 yr / 100,000 km", "other": "EV/hybrid 8 yr/160,000 km; roadside 5 yr/unlimited", "transfer": "Automatically transfers to new owner at no charge", "source": "https://www.hyundaicanada.com/en/shopping-tools/warranty-marketing", "basis": "page"},
+      "Kia": {"basic": "5 yr / 100,000 km", "powertrain": "5 yr / 100,000 km", "other": "Roadside 5 yr/unlimited", "source": "https://www.kia.ca/en/owners/kia-ownership/warranty/", "basis": "search-summary"},
+      "Mazda": {"basic": "3 yr / unlimited km", "powertrain": "5 yr / unlimited km", "source": "https://www.mazda.ca/en/warranty/mazda-unlimited-warranty/", "basis": "search-summary"},
+      "Volkswagen": {"basic": "4 yr / 80,000 km", "powertrain": "5 yr / 100,000 km", "modelYear": 2026, "source": "https://www.vw.ca/en/owners-and-drivers/warranties-and-coverage.html", "basis": "search-summary"},
+      "Honda": {"basic": "3 yr / 60,000 km", "powertrain": "5 yr / 100,000 km", "source": "https://www.apa.ca/en/comparing-new-car-warranties-in-canada-and-the-us-for-2026/ (403)", "basis": "search-summary"},
+      "Ford": {"basic": "3 yr / 60,000 km", "powertrain": "5 yr / 100,000 km", "source": "https://www.apa.ca/en/comparing-new-car-warranties-in-canada-and-the-us-for-2026/ (403)", "basis": "search-summary"},
+      "Chevrolet": {"basic": "3 yr / 60,000 km", "powertrain": "5 yr / 100,000 km", "source": "https://www.apa.ca/en/comparing-new-car-warranties-in-canada-and-the-us-for-2026/ (403)", "basis": "search-summary"},
+      "GMC": {"basic": "3 yr / 60,000 km", "powertrain": "5 yr / 100,000 km", "source": "https://www.apa.ca/en/comparing-new-car-warranties-in-canada-and-the-us-for-2026/ (403)", "basis": "search-summary"},
+      "Nissan": {"basic": "3 yr / 60,000 km", "powertrain": "5 yr / 100,000 km", "source": "https://www.apa.ca/en/comparing-new-car-warranties-in-canada-and-the-us-for-2026/ (403)", "basis": "search-summary"},
+      "Ram": {"powertrain": "10 yr / 100,000 (MY2026, US and Canada per Ram announcement; km equivalent not confirmed)", "basic": null, "source": "https://www.kbb.com/car-news/ram-extends-10-year-powertrain-warranty-through-2026/", "basis": "search-summary"},
+      "Volvo": null, "Tesla": null,
+      "note": "APA (Automobile Protection Association) publishes the annual 2026 Canada/US warranty comparison; its page and PDF could not be read (403 / PDF not parseable)."
+    },
+    "MX": {
+      "units": "years / km",
+      "Toyota": {"base": "36 months / 60,000 km", "extended": "Protección Extendida up to 7 years / 150,000 km (paid)", "source": "https://sensorautomotriz.com/preguntas-frecuentes/cual-es-la-garantia-de-los-vehiculos-toyota", "basis": "search-summary"},
+      "Nissan": {"base": "3 years / 60,000 km", "servicingRequirement": "Must do scheduled maintenance and not have repairs/modifications done outside an Authorised Nissan Distributor", "extended": "Garantía Extendida: 3 more years or up to 125,000 km", "source": "https://www.nissannh.mx/faq/pregunta-frecuente/cul-es-la-garanta-que-ofrece-nissan-para-sus-vehculos-nuevos", "basis": "search-summary"},
+      "Volkswagen": {"base": "3 years / 60,000 km (MY2020 and later); Saveiro 2 years unlimited km", "extended": "Extended warranty requires completed Maintenance Program services", "source": "https://www.vw.com.mx/es/ofertas/garantias-seguros/garantias.html", "basis": "page"},
+      "Kia": {"base": "7 years / 150,000 km", "source": "https://www.motorpasion.com.mx/industria/letra-pequena-garantias-autos-mexico", "basis": "page"},
+      "Honda": {"base": "3 years / 60,000 km (Accord example)", "source": "https://www.motorpasion.com.mx/industria/letra-pequena-garantias-autos-mexico", "basis": "page"},
+      "MG": {"base": "7 years / 150,000 km", "source": "https://www.sobreruedas.news/destacados/autos-del-2026-con-mejor-garantia-del-fabricante/ (search result set)", "basis": "search-summary", "note": "Low confidence; the fetched article did not contain MG."},
+      "Hyundai": {"base": null, "note": "Search summary mentioned a 7-year warranty on the Grand i10 2026 but no km and no page read"},
+      "servicingRequirement": {"fact": "In Mexico, keeping the factory warranty in practice requires servicing at the brand's agency (dealer); the article computes the cost of keeping it: Kia K3 1.6 (7yr/150,000 km, services every 10,000 km) MXN 47,305 through 150,000 km; Suzuki Swift Sport (3yr/60,000 km) MXN 31,413; Honda Accord (3yr/60,000 km) MXN 29,185", "articleDate": "2026-01-28", "source": "https://www.motorpasion.com.mx/industria/letra-pequena-garantias-autos-mexico", "basis": "page"},
+      "Ford": null, "Chevrolet": null, "GMC": null, "Ram": null, "Mazda": null, "Volvo": null, "Tesla": null
+    },
+    "usedCarKeepsWarranty": {
+      "summary": "Generally yes: factory warranties attach to the car (VIN) and the remaining time/distance passes to the next owner. Exceptions found: Hyundai and Kia US 10yr/100k powertrain is original-owner only (reverts to 5yr/60k for later owners); Ram 2026 10yr/100k powertrain is original-owner only. UK: Kia, MG, Hyundai, Honda (service-activated) all stated transferable. Service-activated extensions require the service condition to keep running.",
+      "basis": "see per-make entries above"
+    }
+  },
+
+  "2_maintenance": {
+    "serviceIntervals": {
+      "US": {
+        "Toyota": {"interval": "Engines requiring 0W-20 (or 0W-16) synthetic: 10,000 mi / 12 months; engines where 0W-20 is optional to 5W-20/5W-30: 5,000 mi / 6 months; special operating conditions: 5,000 mi; tire rotation/inspection every 5,000 mi", "source": "https://support.toyota.com/s/article/What-are-the-oil-chan-7604?language=en_US", "basis": "search-summary"},
+        "Honda": {"interval": "Maintenance Minder (oil-life algorithm); typically 5,000-7,500 mi or once a year", "source": "https://www.brickellhonda.com/blog/honda-maintenance-minder-codes-miami-guide", "basis": "search-summary (dealer)"},
+        "Ford": {"interval": "Intelligent Oil-Life Monitor, up to 1 year or 10,000 mi", "source": "https://www.loganvilleford.com/blog/your-ultimate-guide-to-fords-intelligent-oil-life-monitoring-system/", "basis": "search-summary"},
+        "Chevrolet": {"interval": null, "note": "Oil Life Monitor based; GM max interval not confirmed in this pass"},
+        "GMC": {"interval": null, "note": "Same as Chevrolet; not confirmed"},
+        "Ram": {"interval": null, "note": "Not found"},
+        "Hyundai": {"interval": "About 7,500 mi / 12 months normal; severe 5,000 mi / 6 months (one source 3,750 mi)", "source": "https://www.huffineshyundaiplano.com/blog/2026/may/21/when-does-my-2026-hyundai-need-maintenance.htm?locale=en_US", "basis": "search-summary"},
+        "Kia": {"interval": "7,500 mi / 12 months normal; severe 5,000 mi / 6 months", "source": "https://www.kiaoflincoln.com/understanding-the-standard-kia-oil-change-frequency-and-maintenance-guidelines/", "basis": "search-summary"},
+        "Nissan": {"interval": "2026 Rogue: engine oil and filter every 7,500 mi or 12 months (standard and severe)", "source": "https://maintenance-schedules.nissanusa.com/maintenance-schedules/2026/rogue/components/engine-oil-and-filter/?MakeID=67&RegionID=1&LocaleID=en_US", "basis": "page"},
+        "Volkswagen": {"interval": "Typically 10,000 mi / 12 months", "source": "https://www.elginvw.com/how-often-should-you-change-your-volkswagen-vehicles-oil/", "basis": "search-summary"},
+        "Mazda": {"interval": "Flexible maintenance: wrench indicator; maximum 12 months / 10,000 mi", "source": "https://www.mazdausa.com/static/manuals/2022/cx-5/contents/07020201.html", "basis": "search-summary"},
+        "Volvo": {"interval": "Complimentary services at 10,000 and 20,000 mi imply a 10,000 mi interval (inferred from programme)", "source": "https://www.volvocars.com/us/l/warranty/", "basis": "search-summary"},
+        "Tesla": {"interval": "No oil changes; tire rotation every 6,250 mi or 2/32 in tread difference; cabin air filter every 2 years; brake fluid tested every 4 years (sources differ: 2 or 4 years)", "source": "https://www.tesla.com/support/vehicle-maintenance (403)", "basis": "search-summary"}
+      },
+      "UK": {
+        "Toyota": {"interval": "12 months / 10,000 miles", "source": "https://www.toyota.co.uk/owners/servicing-and-aftercare/service-mot-maintenance", "basis": "search-summary"},
+        "Volkswagen": {"interval": "Fixed: 12 months / 9,000-10,000 miles (sources differ); LongLife flexible: up to 2 years / ~18,000-20,000 miles", "source": "https://customer.vwfs.co.uk/content/dam/bluelabel/valid/www-vwfs-co-uk/documents/self-serve-documents/vw-self-serve-docs/VW%20FCM%20drivers%20guide.pdf", "basis": "search-summary"},
+        "Skoda": {"interval": "Fixed 12 months / 9,000 miles; flexible LongLife up to 24 months / 18,000 miles", "source": "https://customer.vwfs.co.uk/service-plans/skoda.html", "basis": "search-summary"},
+        "Ford": {"interval": "12 months / 12,500 miles (Fiesta, Focus, Kuga, Puma)", "source": "https://www.regit.cars/car-news/how-often-should-you-service-your-car-in-the-uk-2026-guide-for-drivers", "basis": "search-summary"},
+        "Kia": {"interval": "Most petrol: 12 months / 10,000 miles; most diesel and hybrid: 12 months / 20,000 miles", "source": "https://www.group1auto.co.uk/kia/service-and-repair/service-intervals/", "basis": "search-summary"},
+        "Hyundai": {"interval": "12 months / 10,000 miles", "source": "https://www.servicingstop.co.uk/hyundai_service.html", "basis": "search-summary"},
+        "MG": {"interval": "Most models 12 months / 15,000 miles (2016 MG3 Stop/Start: 10,000)", "source": "https://www.mg.co.uk/servicing", "basis": "search-summary"},
+        "Vauxhall": {"interval": "Interim 12 months / 12,000 miles; major in 20,000-mile increments or 12 months", "source": "https://www.lookers.co.uk/vauxhall/servicing-and-parts/which-service", "basis": "search-summary (dealer)"},
+        "Volvo": {"interval": "Petrol/diesel/hybrid 12 months / 18,000 miles; full EV 24 months / 18,000 miles", "source": "https://www.volvocars.com/uk/support/topic/blt9d1bd3b64c8ea7ea/", "basis": "search-summary"},
+        "Honda": null, "Nissan": null, "Mazda": null, "Tesla": null
+      },
+      "MX": {
+        "Nissan": {"interval": "Every 6 months or 10,000 km", "source": "https://www.nissanvegusa.com.mx/blog/costos-de-mantenimiento-de-nissan-versa-y-sentra-en-mexico", "basis": "page"},
+        "Toyota": {"interval": "Every 6 months or 10,000 km", "source": "https://dalton.zendesk.com/hc/es/articles/360059268171-Precios-de-mantenimiento-Toyota (403)", "basis": "search-summary"},
+        "Kia": {"interval": "Every 10,000 km (K3)", "source": "https://www.motorpasion.com.mx/industria/letra-pequena-garantias-autos-mexico", "basis": "page"}
+      },
+      "CA": {"note": "Canadian intervals follow the same owner's-manual schedules as US models in km; not separately researched."},
+      "IE": {"Toyota": {"interval": "Relax cover runs 1 year / 15,000 km between services for most Toyotas, implying a 1-yr/15,000 km service interval", "source": "https://www.toyota.ie/relax", "basis": "search-summary"}}
+    },
+    "servicePrices": {
+      "UK": {
+        "KwikFit": {"interim": {"fromGBP": 186.95, "rangeGBP": "186.95-251.95 by engine size (search-summary)", "frequency": "every 6 months or 6,000 miles"}, "full": {"fromGBP": 246.95, "rangeGBP": "246.95-311.95 (search-summary)", "frequency": "every 12 months or 12,000 miles"}, "manufacturerService": "quote only", "interimPlusMOTfromGBP": 221.95, "source": "https://www.kwik-fit.com/servicing", "basis": "page (from-prices, frequency); search-summary (ranges, MOT bundle)"},
+        "Halfords": {"interimFromGBP": 104.99, "fullFromGBP": 239.99, "majorFromGBP": 214.99, "note": "Major cheaper than Full in the summary looks inconsistent; product pages could not be read. Treat as unverified.", "source": "https://www.halfords.com/car-servicing/petrol-diesel-servicing/full-service-PRODUCTFULLSERVICE.html", "basis": "search-summary"},
+        "timeTaken": {"kwikFitFull": "2-4 hours", "halfordsFull": "2-3 hours of work; plan to leave car for the day", "source": "https://www.kwik-fit.com/servicing/packages/full-service; https://www.halfords.com/car-servicing/faqs", "basis": "search-summary"}
+      },
+      "IE": {
+        "CarServiceIreland_Dundalk": {"basicEUR": "149 semi-synthetic / 169 synthetic (oil, filter, 9-point check)", "fullEUR": "249 semi-synthetic / 269 synthetic (oil, oil filter, air filter, spark plugs, fuel filter, 21-point check)", "surcharge": "extra for engines over 2.0L", "preNCTcheckEUR": 50, "source": "https://www.carserviceireland.ie/pricing/", "basis": "page", "note": "One independent garage only; not a national average."},
+        "nationalRange": {"interimEUR": "80-150", "fullEUR": "200-400", "majorEUR": "400-600", "source": "https://amazingcarsanddrives.com/car-repair-costs-ireland-guide/", "basis": "search-summary", "note": "Unattributed estimate; low confidence."}
+      },
+      "US": {
+        "JiffyLube": {"signatureService": {"conventionalUSD": "49.99-59.99", "syntheticBlendUSD": "69.99-79.99", "highMileageUSD": "69.99-79.99", "fullSyntheticUSD": "89.99-109.99"}, "includes": "oil and filter, fluid top-offs, 19-point inspection, tire pressure, vacuum", "note": "Franchise pricing varies by market; ranges from a third-party price guide", "source": "https://theoilchangeprices.com/jiffy-lube-oil-change-prices/", "basis": "search-summary"},
+        "Valvoline": {"fullSyntheticUSD": "89-129 before coupons/tax (Texas avg ~89, NYC up to ~115)", "time": "about 15 minutes, with an 18-point check", "source": "https://carserviceland.com/valvoline-instant-oil-change-prices/; https://www.groupon.com/coupons/blog/how-long-does-a-valvoline-oil-change-take", "basis": "search-summary"},
+        "Firestone": {"standardUSD": null, "note": "Search summaries gave conflicting numbers (29.99 / 43.98 standard; 49.99 / 90.46 synthetic); Firestone's own price guide returned 403. Not used.", "source": "https://www.firestonecompleteautocare.com/maintain/oil/price-guide/", "basis": "search-summary"},
+        "dealer": null, "dealerNote": "No posted US dealer oil-change price was found"
+      },
+      "CA": {
+        "MrLube_Kingston_ON": {"conventionalCAD": 66, "syntheticCAD": 118},
+        "CanadianTire_Belleville_ON": {"conventionalCAD": 62, "syntheticCAD": 90},
+        "JiffyLube_Belleville_ON": {"conventionalCAD": 59.99, "syntheticCAD": 109.99},
+        "dealershipsRangeCAD": "51.54-139.11 (mainstream); BMW 199.98, Mercedes-Benz 250",
+        "time": "quick-lube 10-15 minutes; repair shop/dealer with hoist 20-40 minutes",
+        "quotesCollected": "September 2022 (Ontario, Alberta, BC, Saskatchewan) - stale; inflate before use",
+        "source": "https://cansumer.ca/oil-change/", "basis": "page"
+      },
+      "MX": {
+        "NissanAgency": {"versaBasicMXN": "1,550-3,700 (10k/30k/50k km)", "versaMajorMXN": "can exceed 4,000 (20k/40k/60k km)", "versaFirstServiceMXN": "2,900-3,700", "sentraBasicMXN": "1,550-3,900", "sentraMajorMXN": "2,300-5,300+", "articleDate": "2026-04-08", "source": "https://www.nissanvegusa.com.mx/blog/costos-de-mantenimiento-de-nissan-versa-y-sentra-en-mexico", "basis": "page"},
+        "ToyotaAgency": {"service10000kmMXN": "2,195 (another agency 2,073); GR Yaris 3,412; IVA included", "source": "https://dalton.zendesk.com/hc/es/articles/360059268171-Precios-de-mantenimiento-Toyota (403)", "basis": "search-summary"},
+        "costToKeepWarranty": "see 1_warranties.MX.servicingRequirement",
+        "timeTaken": null
+      }
+    }
+  },
+
+  "3_collision": {
+    "US": {
+      "industryFrequencyAndSeverity_2024": {
+        "collision": {"claimsPer100EarnedCarYears": 4.16, "severityUSD": 5489},
+        "propertyDamageLiability": {"claimsPer100EarnedCarYears": 2.50, "severityUSD": 6770},
+        "bodilyInjuryLiability": {"claimsPer100EarnedCarYears": 0.80, "severityUSD": 28278},
+        "comprehensive": {"claimsPer100EarnedCarYears": 3.95, "severityUSD": 2306},
+        "basis_note": "Collision and comprehensive figures are for coverage with a $500 deductible",
+        "dataSource": "ISO (Verisk), via Insurance Information Institute",
+        "source": "https://www.iii.org/fact-statistic/facts-statistics-auto-insurance", "basis": "page"
+      },
+      "HLDI_collision_MY2021_23": {"claimsPer100InsuredVehicleYears": 6.2, "severityUSD": 9486, "overallLossPerInsuredVehicleYearUSD": 591, "passengerCarsAndMinivans": {"frequency": 7.7, "severityUSD": 9632, "overallLossUSD": 745}, "earlier": "MY2020-22: 6.1 per 100, $8,739", "source": "https://www.repairerdrivennews.com/2024/02/05/my-2021-2023-cars-and-minivans-have-highest-claim-frequency-severity/", "basis": "page"},
+      "HLDI_collision_MY2022_24": {"overallLossPerInsuredVehicleYearUSD": 604, "frequency": null, "severity": null, "source": "https://www.iihs.org/research-areas/auto-insurance", "basis": "search-summary", "note": "Frequency and severity for MY2022-24 not found publicly"},
+      "HLDI_PDL_MY2019_21": {"claimsPer100InsuredVehicleYears": 2.0, "severityUSD": null, "source": "https://www.iihs.org/media/b082db1f-1afb-4c25-b6dd-3258e0b37db3/r6IGOg/HLDI%20Research/Loss%20fact%20sheets/PDL_summary_2022.pdf", "basis": "search-summary", "note": "Latest public HLDI PDL fact sheet found; PDF not parseable"},
+      "usualCollisionDeductible": {"value": "$500 is the most common; $500 and $1,000 are the usual choices. Raising from $500 to $1,000 cuts collision+comprehensive premium 10-25%.", "source": "https://wallethub.com/edu/ci/car-insurance-deductible/69574; https://www.moneygeek.com/insurance/auto/what-is-a-car-insurance-deductible/", "basis": "search-summary"},
+      "liabilityOnlyCoversOwnCar": {"value": false, "fact": "Liability pays for injuries to others and damage to others' property; it does not pay for damage to the policyholder's own car. Own-car damage needs collision (crash) or comprehensive (theft, weather, animal, etc.).", "source": "https://www.policygenius.com/auto-insurance/liability-car-insurance/", "basis": "search-summary"}
+    },
+    "UK": {
+      "ABI_Q2_2026": {"totalPaidGBP": "3.2 billion (record quarter)", "averageClaimGBP": 4900, "averageWindscreenRepairGBP": 283, "averagePremiumGBP": 566, "articleDate": "2026-07-30", "source": "https://www.insurancetimes.co.uk/news/motor-insurance-payouts-hit-record-32bn-in-second-quarter/1459259.article", "basis": "page"},
+      "ABI_2025_annual": {"totalPaidGBP": "11.9 billion", "claims": "2.5 million", "vehicleDamagePaidGBP": "nearly 7.5 billion (63%)", "Q4_2025_averagePremiumGBP": 559, "articleDate": "2026-02-12", "source": "https://abc.ukgigroup.com/abi-reports-11-9-billion-paid-out-in-2025-to-support-motorists-across-2-5-million-claims/", "basis": "page"},
+      "claimFrequency": {"value": "Overall claims frequency 11.9% in 2023 (12.8% in 2019), across major insurers, all claim types", "source": "https://www.fca.org.uk/publication/multi-firm-reviews/motor-insurance-claims-analysis-multi-firm-review-2025.pdf", "basis": "search-summary (PDF not parseable)", "note": "Not split by own-damage vs third-party property"},
+      "thirdPartyOnlyCoversOwnCar": {"value": false, "note": "UK Third Party Only and Third Party Fire & Theft do not pay for accidental damage to the policyholder's own car; only Comprehensive does. Standard product definitions; no specific page fetched."}
+    },
+    "IE": {
+      "CBI_NCID_2024": {"averageDamageClaimEUR": 2236, "damageClaimCostPerPolicyEUR": 192, "injuryClaimCostPerPolicyEUR": 205, "claimsCostPerPolicyEUR": 397, "averagePremiumEUR": 623, "damageClaimFrequencyChange": "+6% vs 2023", "averageDamageCostChange": "+18% vs 2023; +116% since 2010 (EUR 1,033)", "damageShareOfSettledCost": "54%", "published": "2025-10-31", "source": "https://www.centralbank.ie/news/article/press-release-central-bank-of-ireland-publishes-seventh-annual-private-motor-insurance-report-31-october-2025; https://www.irishtimes.com/business/2025/10/31/motor-insurance-premiums-jump-9-an-average-of-623-as-vehicle-repair-costs-surge/", "basis": "page"},
+      "damageClaimFrequencyAbsolute": null
+    },
+    "CA": {
+      "Quebec_GAA_2025": {"collisionUpsetFrequencyPct": 3.84, "averageCollisionClaimCAD": 8638, "claims": 179856, "2015averageCAD": 4083, "scope": "Quebec passenger vehicles only (Groupement des Assureurs Automobiles statistical plan)", "source": "https://gaa.qc.ca/en/statistics/claims-experience/collision-and-upset-frequency/", "basis": "page"},
+      "nationalRepairableSeverity": {"value": "Average repairable claim about CAD 5,044 in H1 2023 (+12% y/y); total losses about 1 in 5 physical damage claims; body labour CAD 75/hr", "source": "https://www.insuranceinstitute.ca/en/Insights-And-Publications/CanadianUnderwriterArticles/items/2024/08/13/Why-insurers-auto-repair-costs-are-still-going-up", "basis": "search-summary"},
+      "Ontario_IBC_frequency": null, "BC_ICBC_frequency": null,
+      "ownCarNuance": {"Ontario": "Direct Compensation - Property Damage (DCPD) pays for the policyholder's own car to the extent they are not at fault (Ontario crash, identified insured other vehicle). Optional since 1 Jan 2024 via OPCF 49; waiving DCPD also waives collision.", "BC": "ICBC Basic Vehicle Damage Coverage pays the policyholder's own repairs up to CAD 200,000 to the extent they are not responsible; not for single-vehicle crashes, hit-and-runs or crashes outside BC. At-fault own-car damage needs optional Collision.", "source": "https://www.economical.com/en/blog/economical-blog/january-2024/opting-out-of-dcpd-coverage-in-ontario; https://icbc.com/claims/crash-responsibility-fault/if-you-are-not-responsible", "basis": "search-summary"}
+    },
+    "MX": {"frequency": null, "severity": null, "note": "Not found (AMIS publishes data; not researched in this pass)."}
+  },
+
+  "4_changingCover": {
+    "lenderRequirement_US": {"fact": "Not a state law; it is a loan/lease contract term. Lenders and lessors require comprehensive and collision until the loan is paid off, commonly with a maximum deductible of $500-$1,000; lessors often also require gap. If coverage lapses the lender can force-place collateral protection insurance, which protects only the lender's interest and costs much more (one source: about 2-3x).", "source": "https://www.moneygeek.com/insurance/auto/can-you-have-liability-insurance-on-a-financed-car/; https://en.wikipedia.org/wiki/Collateral_protection_insurance", "basis": "search-summary"},
+    "minimumLiability": {
+      "NY": {"bodilyInjury": "USD 25,000 one person / 50,000 two or more", "death": "USD 50,000 one person / 100,000 two or more", "propertyDamage": "USD 10,000 per crash", "otherRequired": "No-fault (PIP) and uninsured motorist also required in NY; amounts not on page read", "source": "https://dmv.ny.gov/insurance/insurance-requirements", "basis": "page"},
+      "CA": {"limits": "USD 30,000 injury/death one person / 60,000 more than one / 15,000 property", "law": "California Insurance Code §11580.1b", "source": "https://www.dmv.ca.gov/portal/vehicle-registration/insurance-requirements/", "basis": "page"},
+      "CT": {"limits": "USD 25,000 / 50,000 / 25,000; uninsured/underinsured motorist 25,000 / 50,000", "source": "https://portal.ct.gov/dmv/vehicle-services/compliance-issues", "basis": "search-summary"},
+      "ON": {"limits": "Third-party liability CAD 200,000 minimum; plus Accident Benefits, Uninsured Automobile; DCPD (optional since 2024)", "source": "https://www.ibc.ca/insurance-basics/auto/types-of-auto-coverage/mandatory-auto-insurance-requirements", "basis": "page"},
+      "BC": {"limits": "ICBC Basic: CAD 200,000 third-party liability, Basic Vehicle Damage, up to CAD 1 million Underinsured Motorist Protection, Inverse Liability", "source": "https://www.ibc.ca/insurance-basics/auto/types-of-auto-coverage/mandatory-auto-insurance-requirements", "basis": "page"},
+      "UK": {"limits": "Third-party cover compulsory; death and personal injury unlimited; property damage minimum GBP 1.2 million (Road Traffic Act 1988 s.145, as amended by Motor Vehicles (Compulsory Insurance) Regulations 2016)", "source": "https://www.legislation.gov.uk/uksi/2016/1193/made", "basis": "search-summary"},
+      "IE": {"limits": "Third-party cover compulsory (Road Traffic Act 1961); personal injury unlimited; property damage EUR 1.3 million in policies cited", "source": "https://www.allianz.ie/blog/insurance-explained/motor-insurance-explained.html", "basis": "search-summary", "note": "The EUR 1.3m figure was quoted as a typical policy limit, not confirmed as the statutory minimum."},
+      "MX_CDMX": {"requirement": "Vehicles must carry current civil-liability (responsabilidad civil) insurance from a CNSF-authorised insurer covering third-party persons and property (CDMX Reglamento de Tránsito). Federal roads (since 2019, Ley de Caminos, Puentes y Autotransporte Federal): minimum MXN 50,000 property damage and MXN 100,000 bodily injury/death. Fine in CDMX for no insurance: 20-40 UMA (about MXN 2,262.80-4,525.60 in 2026).", "cdmxMinimumAmount": null, "source": "https://www.condusef.gob.mx/?p=contenido&idc=630&idcat=1 (TLS error on fetch); https://www.bbva.mx/educacion-financiera/seguros/seguro-moto-reglamento-de-transito-cdmx.html", "basis": "search-summary"}
+    },
+    "midTermCancellation": {
+      "UK": {"fact": "Pro-rata refund for unused days minus a cancellation fee after the 14-day cooling-off period", "fees": {"AdmiralGBP": 49.50, "AvivaGBP": 60, "DirectLineGBP": 53.25, "coolingOff": "Admiral GBP 25; Aviva 0; Direct Line 0"}, "source": "https://www.nimblefins.co.uk/cheap-car-insurance/average-cost-cancel-uk-car-insurance (now redirects to clearscore.com)", "basis": "search-summary", "note": "A different summary gave Aviva GBP 38 and AXA UK GBP 52.50; fees differ by brand and product. Not verified on insurer pages."},
+      "US": {"fact": "If the insured cancels, some insurers refund on a short-rate basis (keep about 10% of the unearned premium more than pro-rata) where their filed rates allow; insurer-initiated cancellation is pro-rata. NY: short-rate penalty allowed only if in the insurer's filed rates and the policy is not premium-financed (opinion is about a commercial package policy).", "source": "https://www.dfs.ny.gov/insurance/ogco2007/rg070107.htm; https://en.wikipedia.org/wiki/Cancellation_(insurance)", "basis": "page (NY DFS) / search-summary", "CA": null, "CT": null, "CAnote": "The CA code section in the search result (Ins. Code §10369.9) concerns disability insurance, not auto; not used."},
+      "ON": {"fact": "Ontario standard policy OAP 1: if the insured cancels, premium is calculated on a short-rate basis including handling costs; each insurer files its own short-rate table", "source": "https://www.fsrao.ca/media/5156/download", "basis": "search-summary"},
+      "BC": {"fact": "ICBC cancellation fee CAD 30 (plus CAD 18 re-plating; CAD 15 if paying monthly), per 2019-2020 reporting", "source": "https://globalnews.ca/news/5817077/icbc-insurance-new-rates-cancel/", "basis": "search-summary", "note": "Dated; current fee not confirmed"},
+      "IE": {"fee": null, "note": "No Irish insurer fee found"},
+      "MX": {"fact": "On cancellation the insured is entitled to refund of unearned premium (primas no devengadas), typically within 15-30 business days; if cancelled within the first 30 days the first full month is kept; the policy issuance fee (derecho de póliza) is not refunded", "source": "https://www.rastreator.mx/seguros-de-auto/articulos-destacados/prima-no-devengada", "basis": "search-summary"}
+    }
+  },
+
+  "5_resale": {
+    "serviceHistory_UK": {
+      "dealerAuction": {"value": "Full, documented history: 10-15% more than similar cars without records", "source": "https://www.autotrader.co.uk/content/advice/how-important-is-a-used-car-s-service-history", "basis": "page"},
+      "motorway": {"value": "Full service history can raise value by up to 20%", "source": "https://www.carwow.co.uk/car-valuation/guides/does-service-history-affect-car-value", "basis": "page"},
+      "hpi": {"value": "Missing service records can knock up to 40% off the price", "source": "https://www.carwow.co.uk/car-valuation/guides/does-service-history-affect-car-value", "basis": "page"},
+      "mainDealerVsIndependent": {"value": "Full main-dealer history adds 8-12% on cars under 8 years old; full independent history 5-8%", "source": "https://www.autochain.co.uk/news/service-history-car-value-uk/", "basis": "search-summary", "note": "'Industry data' not attributed; low confidence"},
+      "kwikFitSurvey": {"value": "Nearly half of 2,000 car owners wouldn't consider buying a used car without full service history", "source": "https://motorway.co.uk/sell-my-car/guides/does-service-history-impact-the-value-of-your-car", "basis": "search-summary"}
+    },
+    "serviceHistory_US": null,
+    "mileage": {
+      "US": {"value": "About 12,000 miles/year treated as normal by KBB and Edmunds; each mile over lowers value, each under raises it; the adjustment is often 5-50 cents per mile depending on the car's original price (example: a 5-yr-old car at 90,000 vs 60,000 miles worth $2,000-4,000 less)", "source": "https://www.autofax.org/used-car-buying-guides/appraise-prices/", "basis": "search-summary", "note": "Rule of thumb; KBB does not publish its per-mile formula (KBB article fetched gave no per-mile figure)"},
+      "UK": {"value": "UK average about 7,000-8,000 miles/year; 20,000 miles over average can cut value by GBP 1,000-2,000", "source": "https://www.thecarexpert.co.uk/how-important-is-mileage-on-a-used-car/", "basis": "search-summary", "note": "Low confidence; no CAP HPI per-mile figure found"}
+    },
+    "condition": {
+      "KBB": {"value": "KBB grades Excellent / Very Good / Good / Fair; most cars it values are 'Good'; only about 3% are 'Excellent'", "source": "https://www.kbb.com/faq/values/", "basis": "page"}
+    }
+  },
+
+  "gaps": [
+    "Ireland warranties for Toyota base, Honda, Ford, Nissan, Mazda, MG, Opel/Vauxhall, Volvo, Tesla; Skoda/VW Ireland figures come from a 2017 article.",
+    "Mexico warranties for Ford, Chevrolet, GMC, Ram, Mazda, Hyundai (km), Volvo, Tesla; MG low confidence.",
+    "Canada: Volvo, Tesla, Ram basic; APA 2026 comparison unreadable. Ram powertrain km not confirmed.",
+    "US intervals for Chevrolet/GMC/Ram; UK intervals for Honda, Nissan, Mazda, Tesla.",
+    "US dealer oil-change price; reliable Firestone posted prices; Canadian quick-lube prices are Sept 2022.",
+    "HLDI MY2022-24 collision frequency/severity and current PDL severity not public; used ISO/III 2024 calendar data instead.",
+    "Canada national (IBC) collision frequency for Ontario/BC; Mexico collision frequency/severity.",
+    "Ireland insurer cancellation fees; California/Connecticut short-rate rules; CDMX minimum liability amount (only federal-road minimum found).",
+    "US published figure for service-history premium; CAP HPI per-mile depreciation."
+  ]
+}

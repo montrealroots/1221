@@ -13,7 +13,8 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { formatDate, instantFromZoned, MS_DAY } from '@/engine/core/time';
+import { dateKey, formatDate, instantFromZoned, MS_DAY } from '@/engine/core/time';
+import { LookRegion, Open, at } from '@/ui/looks';
 import {
   checkFees, checksUsed, mayReclaim, paymentWords, paymentsOf, SCHEDULED_KIND, type BillsWay, type RentWay,
 } from '@/engine/systems/payments';
@@ -140,12 +141,14 @@ export function BankPayments() {
       {accounts.length > 1 && (
         <div style={{ marginTop: 'var(--s4)' }}>
           <div className="eyebrow">Payments Set For A Date</div>
+          <LookRegion>
           {scheduled.map((item) => (
             <div key={item.id} className="row-between small" style={{ padding: '3px 0' }}>
-              <span>{money(Number(item.payload.amount))} to {sim.universe.accounts[String(item.payload.toId)]?.name} on {formatDate(item.at, sim.zone)}</span>
+              <span>{money(Number(item.payload.amount))} to <Open subject={at('account', String(item.payload.toId))}>{sim.universe.accounts[String(item.payload.toId)]?.name}</Open> on <Open subject={at('day', dateKey(item.at, sim.homeZone))}>{formatDate(item.at, sim.zone)}</Open></span>
               <Gated feature="bank.cancel_scheduled" className="btn btn-sm btn-ghost" onClick={() => run('bank.cancel_scheduled', { id: item.id })}>Cancel</Gated>
             </div>
           ))}
+          </LookRegion>
           <div className="field-row">
             <div className="field">
               <label htmlFor="sp-from">From</label>

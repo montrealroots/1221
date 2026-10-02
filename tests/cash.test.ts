@@ -23,16 +23,24 @@ const give = (sim: Simulation, accountId: string, amount: number) => sim.post({ 
 const run = (sim: Simulation, kind: string, payload: Record<string, unknown>) => sim.execute({ kind, payload });
 
 describe('taking cash out', () => {
-  it('is free at the bank’s own ATM and costs the bank’s fee at another’s, whose owner may charge too', () => {
+  it('is free at the bank’s own ATM and costs the bank’s fee at another’s, and in the US its owner’s average $3.22', () => {
     const sim = lifeIn('us-ny-newyork', { bankId: 'us-chase' }, 'cash-atm');
     give(sim, current(sim).id, 5_000_00);
     const before = current(sim).balance;
     expect(run(sim, 'cash.withdraw', { amount: 100_00, from: 'atm' }).ok).toBe(true);
     expect(before - current(sim).balance).toBe(100_00);
+    const mid = current(sim).balance;
     const other = run(sim, 'cash.withdraw', { amount: 100_00, from: 'other_atm' });
     expect(other.ok).toBe(true);
-    expect(other.value).toMatchObject({ fee: CASH['us-chase']!.other, ownerFee: true });
+    expect(other.value).toMatchObject({ fee: CASH['us-chase']!.other, ownerCharge: 3_22 });
+    expect(mid - current(sim).balance).toBe(100_00 + CASH['us-chase']!.other! + 3_22);
     expect(walletOf(sim, sim.player)!.balance).toBe(200_00);
+  });
+
+  it('says a machine’s owner may charge where no average is published', () => {
+    const sim = lifeIn('ca-on-toronto', { bankId: 'ca-td' }, 'cash-atm-ca');
+    give(sim, current(sim).id, 5_000_00);
+    expect(run(sim, 'cash.withdraw', { amount: 100_00, from: 'other_atm' }).value).toMatchObject({ ownerFee: true });
   });
 
   it('lets no more out of machines in a day than the bank allows, and the counter has no such limit', () => {

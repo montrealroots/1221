@@ -1,0 +1,642 @@
+{
+  "_meta": {
+    "topic": "Land purchase due diligence, construction finance, warranties and insurance, construction delays, building control and permit charges, and what appliances add to value or rent",
+    "places": ["New York State (NYC and upstate)", "Connecticut", "California (Los Angeles)", "England (London)", "Ireland (Dublin/Kildare)", "Ontario", "British Columbia"],
+    "retrievalDate": "2026-09-30",
+    "conventions": {
+      "sourceType": "'primary' when the page belongs to the authority, insurer, lender or company whose figure it is; otherwise 'secondary'",
+      "confirmed": "true when the figure was read directly from the cited page or document during this session; false when it came only from a search-engine excerpt or a page that could not be opened, or when it is a broad market estimate",
+      "nulls": "null with a note where no published figure was found; nothing here is invented",
+      "arithmetic": "Where a premium is given for a sample amount, it was computed by this researcher from the published rate table. The computation is shown in the note."
+    },
+    "correctionToBrief": "The brief described TIRSA zone 1 as NYC. It is the other way round: every New York City county (Bronx, Kings, New York, Queens, Richmond) is in zone 2, along with Long Island, Westchester, the Hudson Valley and Albany. Zone 1 is western, central and northern upstate (Buffalo, Rochester, Syracuse, the North Country and so on). Zone 2 rates include the title search. Zone 1 rates do not, and the search is billed separately."
+  },
+
+  "landDueDiligence": {
+    "titleInsurance": [
+      {
+        "id": "ny-tirsa-zones",
+        "place": "New York State",
+        "item": "TIRSA rate zones",
+        "value": {
+          "zone1": ["Allegany", "Broome", "Cattaraugus", "Cayuga", "Chautauqua", "Chemung", "Chenango", "Clinton", "Cortland", "Delaware", "Erie", "Essex", "Franklin", "Fulton", "Genesee", "Hamilton", "Herkimer", "Jefferson", "Lewis", "Livingston", "Madison", "Monroe", "Montgomery", "Niagara", "Oneida", "Onondaga", "Ontario", "Orleans", "Oswego", "Otsego", "St. Lawrence", "Saratoga", "Schenectady", "Schoharie", "Schuyler", "Seneca", "Steuben", "Tioga", "Tompkins", "Warren", "Washington", "Wayne", "Wyoming", "Yates"],
+          "zone2": ["Albany", "Bronx", "Columbia", "Dutchess", "Greene", "Kings", "Nassau", "New York", "Orange", "Putnam", "Queens", "Rensselaer", "Richmond", "Rockland", "Suffolk", "Sullivan", "Ulster", "Westchester"],
+          "zone1SearchIncluded": false,
+          "zone2SearchIncluded": true
+        },
+        "source": { "url": "https://tirsa.org/__static/4dca82db7768ac3d338b334acdc8020f/tirsa-rate-manual-approval-june-10-2024-effective-date-october-1-2024.pdf", "mirrorReadFrom": "https://ratecalculator.fnf.com/Documents/TIRSA%20Rate%20Manual%20Appvd%20June%2010%202024%20Effective%20Oct%201%202024.pdf", "publisher": "Title Insurance Rate Service Association (TIRSA), approved by the NY Department of Financial Services", "date": "2024-10-01 (Seventh Revision, approved 2024-06-10)" },
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Read from the rate manual text, Rule on rate zones. The tirsa.org link refused connections during this session; the identical manual hosted by Fidelity National Financial's rate calculator was read instead. Individual insurers may file deviations (for example WFG files a lower deviation), so a quoted premium can differ from the TIRSA base."
+      },
+      {
+        "id": "ny-tirsa-owner-rates",
+        "place": "New York State",
+        "item": "Owner's policy premium, TIRSA base rates",
+        "currency": "USD",
+        "value": {
+          "zone1": {
+            "first35000OrLess": 338,
+            "perAdditional1000": { "35001-50000": 7.52, "50001-100000": 4.69, "100001-500000": 3.78, "500001-1000000": 3.38, "1000001-5000000": 3.09, "5000001-10000000": 2.81, "10000001-15000000": 2.62, "15000001+": 2.36 },
+            "examples": { "100000": 685.30, "250000": 1252.30, "500000": 2197.30 }
+          },
+          "zone2": {
+            "first35000OrLess": 382,
+            "perAdditional1000": { "35001-50000": 6.34, "50001-100000": 5.16, "100001-500000": 4.14, "500001-1000000": 3.78, "1000001-5000000": 3.48, "5000001-10000000": 3.09, "10000001-15000000": 2.92, "15000001+": 2.62 },
+            "examples": { "100000": 735.10, "250000": 1356.10, "500000": 2391.10 }
+          },
+          "loanPolicy": {
+            "zone1": { "first35000OrLess": 284, "perAdditional1000": [6.28, 3.90, 3.14, 2.81, 2.57, 2.35, 2.19, 1.97] },
+            "zone2": { "first35000OrLess": 327, "perAdditional1000": [5.27, 4.31, 3.46, 3.14, 2.90, 2.57, 2.42, 2.19] }
+          }
+        },
+        "source": { "url": "https://ratecalculator.fnf.com/Documents/TIRSA%20Rate%20Manual%20Appvd%20June%2010%202024%20Effective%20Oct%201%202024.pdf", "publisher": "TIRSA (filed with NY DFS)", "date": "2024-10-01" },
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Rates read from Part II of the manual. Examples computed here: zone 1 at $100,000 = 338 + 15 x 7.52 + 50 x 4.69; at $250,000 add 150 x 3.78; at $500,000 add 400 x 3.78 to the $100,000 figure. Zone 2 is the same method with its own rates. Loan-policy per-$1,000 rates follow the same eight brackets in order. These are premiums only: endorsements, the zone 1 search charge, recording and closing fees are extra."
+      },
+      {
+        "id": "ca-la-oldrepublic",
+        "place": "California (Los Angeles County)",
+        "item": "Owner's policy premium, Old Republic Title partial rate schedule for Los Angeles",
+        "currency": "USD",
+        "value": {
+          "cltaStandardOwners": { "100000": 725, "250000": 1100, "500000": 1600 },
+          "homeownersPolicyAltaExpanded": { "100000": 798, "250000": 1210, "500000": 1760 },
+          "altaLoanPolicy": { "100000": 465, "250000": 653, "500000": 1015 }
+        },
+        "source": { "url": "https://media.oldrepublictitle.com/california/los-angeles/rates/files/basic-html/page3.html", "publisher": "Old Republic Title", "date": "2025-03-17 (rates effective)" },
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "California rates are filed by each underwriter rather than promulgated, so First American and Fidelity charge different amounts. The homeowner's policy is 110% of the standard owner's rate here. Escrow fees are separate and not included."
+      },
+      {
+        "id": "ct-catic",
+        "place": "Connecticut",
+        "item": "Owner's policy premium, CATIC standard and expanded protection",
+        "currency": "USD",
+        "value": {
+          "ownerStandard": { "100000": 420, "250000": 957, "500000": 1770 },
+          "ownerExpanded": { "100000": 462, "250000": 1053, "500000": 1947 },
+          "formula": "Owner: $100 minimum to $20,000; $4.00 per $1,000 over $20,000 plus $100 to $100,000; $3.75 per $1,000 over $100,000 plus $420 to $200,000; $3.25 per $1,000 over $200,000 plus $795 to $500,000; $2.75 per $1,000 over $500,000 plus $1,770 to $5,000,000"
+        },
+        "source": { "url": "https://catic.com/sites/default/files/Portals/0/PDF/Connecticut/CT_Premium%20Rate%20Schedule_May2016.pdf", "publisher": "CATIC (Connecticut Attorneys Title Insurance Company)", "date": "2016-01-01 (effective)" },
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Read from CATIC's published schedule. It is the most recent CATIC schedule found online and is dated 2016, so a newer filing may exist; treat it as the last published CATIC rate rather than a confirmed current one. Expanded (homeowner's) policy is about 110% of standard."
+      },
+      {
+        "id": "ct-wfg",
+        "place": "Connecticut",
+        "item": "Owner's policy premium, WFG National Title filed rate manual (cross-check on CATIC)",
+        "currency": "USD",
+        "value": {
+          "first20000OrLess": 109,
+          "ownerPerAdditional1000": { "20001-100000": 4.36, "100001-200000": 4.09, "200001-500000": 3.54, "500001-5000000": 3.00, "5000001-10000000": 2.45, "10000001+": 1.96 },
+          "examples": { "100000": 458, "250000": 1044, "500000": 1929 },
+          "expandedCoverageMultiplier": 1.10
+        },
+        "source": { "url": "https://wfgunderwriting.com/wp-content/uploads/filebase/connecticut/rates/Connecticut%20Title%20Rate%20Manual%20-%20eff%202-01-2021.pdf", "publisher": "WFG National Title Insurance Company", "date": "2021-02-01 (effective)" },
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Examples computed here and rounded per the manual's rule (49 cents or less dropped): $100,000 = 109 + 80 x 4.36; $250,000 adds 100 x 4.09 and 50 x 3.54; $500,000 adds 100 x 4.09 and 300 x 3.54 to the $100,000 figure."
+      },
+      {
+        "id": "on-bc-title",
+        "place": "Ontario and British Columbia",
+        "item": "Residential owner's title insurance premium",
+        "currency": "CAD",
+        "value": { "typicalRange": [300, 1000] },
+        "source": { "url": "https://wowa.ca/title-insurance-Canada", "publisher": "WOWA", "date": "2026 (undated page)" },
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Canadian insurers (FCT, Stewart, Chicago Title, TitlePLUS) do not publish residential rate tables; premiums are quoted through the lawyer or notary and are usually flat. Figure from a search excerpt only. Treat as a modeled estimate."
+      }
+    ],
+    "survey": [
+      {
+        "id": "us-survey-angi",
+        "place": "United States (national)",
+        "item": "Land survey cost",
+        "currency": "USD",
+        "value": { "averageAllSurveys": 2300, "range": [475, 25000], "boundarySurveyRange": [1200, 5500], "hourlyRate": [220, 450] },
+        "source": { "url": "https://www.angi.com/articles/how-much-does-land-survey-cost.htm", "publisher": "Angi", "date": "2026" },
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "From search excerpt. HomeAdvisor's 2025 page gives a much lower average ($546), which likely reflects small residential lot surveys; the two are not reconciled. Angi also publishes city pages for Los Angeles and New York (https://www.angi.com/articles/how-much-does-land-survey-cost/ny/new-york) that were not opened."
+      }
+    ],
+    "phaseIEnvironmental": [
+      {
+        "id": "us-phase1-esa",
+        "place": "United States (national)",
+        "item": "Phase I Environmental Site Assessment to ASTM E1527-21",
+        "currency": "USD",
+        "value": { "typicalRange": [2200, 4000], "widerRange": [1850, 6000], "californiaAdjustment": "about 30% higher than national", "riskyPriorUseAdjustment": "gas stations and dry cleaners add 30-60%" },
+        "source": { "url": "https://a3e.com/4-factors-in-the-average-cost-of-phase-i-environmental/", "publisher": "A3E (environmental consultancy)", "date": "2026" },
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Search excerpt. A Phase I is standard for commercial land and lenders; it is rarely ordered for an ordinary residential lot. No official fee exists; these are consultant market prices."
+      }
+    ],
+    "legalFees": [
+      {
+        "id": "ny-attorney",
+        "place": "New York (NYC and Long Island)",
+        "item": "Real estate attorney flat fee for a residential purchase",
+        "currency": "USD",
+        "value": { "nycTypical": [2500, 5000], "longIslandTypical": [1500, 3000], "statewideTypical": [2000, 3000] },
+        "source": { "url": "https://thomassirianniesq.com/blog/real-estate-attorney-cost-new-york", "publisher": "Law firm blog pages (several)", "date": "2026" },
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Search excerpts from several firm pages; no official schedule exists. New York practice is a flat fee per closing, with an attorney for each side."
+      },
+      {
+        "id": "eng-conveyancing",
+        "place": "England and Wales",
+        "item": "Conveyancing fees for a purchase",
+        "currency": "GBP",
+        "value": { "averagePurchaseIncludingDisbursementsAndVat": 1509, "averageSale": 929, "averageBuyAndSell": 2438 },
+        "source": { "url": "https://hoa.org.uk/advice/guides-for-homeowners/i-am-buying/much-conveyancing-fees-cost/", "publisher": "HomeOwners Alliance, citing reallymoving Conveyancing Costs Index Q2 2026", "date": "2026 (Q2 index)" },
+        "sourceType": "secondary",
+        "confirmed": true,
+        "note": "Based on about 34,000 quotes. No London-only figure was published on the page; London quotes typically run higher. Excludes Stamp Duty Land Tax. A leasehold purchase usually costs around £300 more."
+      },
+      {
+        "id": "ie-solicitor",
+        "place": "Ireland",
+        "item": "Solicitor's fee for a residential purchase",
+        "currency": "EUR",
+        "value": { "flatFeeTypical": [1500, 2500], "flatFeeUpper": [2000, 3500], "percentageModel": "about 1% of price", "vatRate": 0.23, "landRegistryFee": [400, 800], "searches": [150, 250] },
+        "source": { "url": "https://onlinelegalservices.ie/conveyancing-costs-ireland-2025/", "publisher": "Irish legal and mortgage websites (several)", "date": "2026" },
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Search excerpts. Fees are quoted plus 23% VAT and outlays. The 1% model is still seen but flat fees are now more common in Dublin and Kildare."
+      },
+      {
+        "id": "on-lawyer",
+        "place": "Ontario",
+        "item": "Real estate lawyer fee for a purchase",
+        "currency": "CAD",
+        "value": { "legalFeeTypical": [1000, 2000], "allInClosingLegal": [1500, 3000] },
+        "source": { "url": "https://insightlawfirm.ca/real-estate-lawyer-fees/", "publisher": "Ontario law firm pages (several)", "date": "2026" },
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Search excerpts. Plus 13% HST and disbursements."
+      },
+      {
+        "id": "bc-notary",
+        "place": "British Columbia",
+        "item": "Lawyer or notary fee for a purchase",
+        "currency": "CAD",
+        "value": { "withDisbursements": [1300, 2100], "totalBudget": [1800, 2800] },
+        "source": { "url": "https://alpinelawyers.com/notary-cost-bc/", "publisher": "BC legal websites (several)", "date": "2026" },
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Search excerpts. In BC a notary public can handle conveyancing, and fees are comparable to a lawyer's."
+      }
+    ],
+    "subdivision": [
+      {
+        "id": "la-parcel-map",
+        "place": "Los Angeles (City)",
+        "item": "Preliminary parcel map filing fee, up to 4 lots",
+        "currency": "USD",
+        "value": { "singleFamilyZones": 13204, "multiFamilyZones": 13621, "tentativeTractMap5to49SingleFamily": 13579 },
+        "source": { "url": "https://codelibrary.amlegal.com/codes/los_angeles/latest/lapz/0-0-0-18617", "publisher": "City of Los Angeles, Municipal Code Sec. 19.02 (via American Legal Publishing)", "date": "CPI-adjusted annually each July 1; 3.50% adjustment effective 2024-07-01" },
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "Figures from a search excerpt of the municipal code; the code page and the Planning Department's CPI schedule (https://planning.lacity.gov/odocument/ca4fb8e8-1bb8-4f52-8203-4f93fcff93c8/2024_annual_fee_adjustment.pdf) both refused access. Surcharges and later CPI adjustments are not included."
+      },
+      {
+        "id": "ny-rochester-ulster",
+        "place": "New York (Town of Rochester, Ulster County; TIRSA zone 2)",
+        "item": "Subdivision application fee",
+        "currency": "USD",
+        "value": { "minorBase": 300, "minorPerNewLot": 200, "minorEscrow": [750, 1000], "majorBase": 750, "majorPerNewLot": 200, "majorEscrow": [1500, 5000], "lotLineAdjustment": 100 },
+        "source": { "url": "https://www.townofrochester.ny.gov/departments/planning_zoning/fee_schedule.php", "publisher": "Town of Rochester, NY", "date": "2026-01-02 (adopted)" },
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Escrow pays the town's consultants and is drawn down, then refunded or topped up."
+      },
+      {
+        "id": "ny-other-towns",
+        "place": "New York (other towns)",
+        "item": "Subdivision application fees, for comparison",
+        "currency": "USD",
+        "value": {
+          "smithtown_SuffolkCounty_residential": "2000 plus 1100 per lot or dwelling unit (April 2025)",
+          "clinton_DutchessCounty_minor": "500 plus 300 per lot and 300 per dwelling (2025)",
+          "yorktown_WestchesterCounty": "1080 plus 270 per lot",
+          "newburgh_OrangeCounty_minor": "550 plus 200 per lot"
+        },
+        "source": { "url": "https://www.smithtownny.gov/DocumentCenter/View/8557/Subdivision-application-Apr-2025PDF", "publisher": "Town governments (see note)", "date": "2025" },
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "Search excerpts from each town's own fee schedule (Clinton: https://www.clintondcny.gov/wp-content/uploads/RES-10-OF-2025-THE-FEE-SCHEDULE-2.11.25-2.pdf; Yorktown: https://www.yorktownny.gov/media/454no14b/feeschedule-minorsub.pdf; Newburgh: https://www.townofnewburghny.gov/FCpdf/FEE%20SCHEDULE%20TOTAL%20PACKAGE.doc). Not opened. No zone 1 (western or central upstate) town schedule was gathered."
+      }
+    ]
+  },
+
+  "constructionFinance": [
+    {
+      "id": "us-sccu",
+      "place": "United States (Florida credit union; example of a published rate sheet)",
+      "item": "Construction-to-permanent loan",
+      "currency": "USD",
+      "value": { "rates": { "10yr": 6.375, "15yr": 6.5, "20yr": 7.25, "30yr": 7.25, "30yrJumbo": 7.375 }, "aprs": { "10yr": 6.58, "15yr": 6.646, "20yr": 7.37, "30yr": 7.343 }, "constructionPeriodMonths": 12, "interestOnlyDuringBuild": true, "interestOn": "amount advanced to the builder", "minDownPayment": 0.10, "originationFee": "1100 plus 0.25% of loan", "inspectionDisbursementFee": 1400 },
+      "source": { "url": "https://www.sccu.com/personal/mortgage-purchase-products/construction-home-loan", "publisher": "Space Coast Credit Union", "date": "2026-09-25 (rates effective)" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Florida lender, not NY, CT or CA; no lender in those three states was found publishing construction rates online (Mid-Hudson Valley FCU and Hudson Valley CU describe the product without rates)."
+    },
+    {
+      "id": "us-hfsfcu",
+      "place": "United States (Hawaii credit union; example of a published rate sheet)",
+      "item": "Construction-to-permanent loan",
+      "currency": "USD",
+      "value": { "startingApr": 8.0, "constructionRate": "permanent rate plus 1.5 percentage points", "constructionPeriodMonths": 12, "interestOnlyDuringBuild": true, "maxLtv": 0.80, "minDownPayment": 0.20, "upfrontDeposit": 1000 },
+      "source": { "url": "https://hfsfcu.org/construction-to-permanent/", "publisher": "HFS Federal Credit Union", "date": "2026-09-29 (rates effective)" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Matches the 12-month, interest-only, 20% down pattern in the brief. The $1,000 deposit covers appraisal, credit report, inspection and flood certification."
+    },
+    {
+      "id": "us-market-range",
+      "place": "United States (national)",
+      "item": "Construction loan rate range",
+      "currency": "USD",
+      "value": { "constructionPhaseRate": [7.0, 8.5], "permanentPhaseRate": [6.5, 7.5] },
+      "source": { "url": "https://payoffcalculators.org/construction-loan-rates", "publisher": "PayoffCalculators", "date": "2026-02" },
+      "sourceType": "secondary",
+      "confirmed": false,
+      "note": "Search excerpt; market summary, not a lender's rate."
+    },
+    {
+      "id": "eng-ecology-80",
+      "place": "England (UK)",
+      "item": "Self-build mortgage, 80% LTV",
+      "currency": "GBP",
+      "value": { "rate": 5.89, "rateType": "variable", "aprc": 6.1, "maxLtvRepayment": 0.80, "maxLtvInterestOnly": 0.65, "applicationFee": 999, "valuationFee": 625, "earlyRepaymentCharges": false },
+      "source": { "url": "https://www.ecology.co.uk/mortgages/self-build/self-build-80/", "publisher": "Ecology Building Society", "date": "2026 (page current at retrieval)" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Funds are released in arrears as the build adds value, not at fixed milestones. Interest-only during the build needs a repayment vehicle."
+    },
+    {
+      "id": "eng-ecology-65",
+      "place": "England (UK)",
+      "item": "Self-build mortgage, 65% LTV",
+      "currency": "GBP",
+      "value": { "rate": 5.69, "rateType": "variable", "aprc": 5.9, "maxLtvRepayment": 0.65, "maxLtvInterestOnly": 0.50, "maxLoan": 1250000, "maxTermYears": 30, "applicationFee": 999, "valuationFee": 625, "epcDiscount": "0.50 to 1.50 points off for EPC B or better" },
+      "source": { "url": "https://www.ecology.co.uk/mortgages/self-build/self-build-65/", "publisher": "Ecology Building Society", "date": "2026 (page current at retrieval)" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Ecology suggests a 35% deposit on the plot plus funds for the early build stages."
+    },
+    {
+      "id": "eng-buildstore",
+      "place": "England (UK)",
+      "item": "BuildStore Accelerator self-build mortgage (stage payments in advance)",
+      "currency": "GBP",
+      "value": { "maxLtvLandAndBuild": 0.95, "minDeposit": 0.05, "stageTiming": "released at the start of each stage", "rateRange": [5.59, 7.74] },
+      "source": { "url": "https://www.buildstore.co.uk/accelerator-mortgage", "publisher": "BuildStore", "date": "2026" },
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "LTV and in-advance timing read from the page. The rate range came from a search excerpt of a BuildStore page and was not shown on the page opened; BuildStore is a broker, so the range spans several lenders."
+    },
+    {
+      "id": "ie-boi-selfbuild",
+      "place": "Ireland",
+      "item": "Bank of Ireland self-build mortgage (stage payments)",
+      "currency": "EUR",
+      "value": { "stages": ["Floor level (foundations certified)", "Roof level (shell or frame certified)", "Finished (habitable, services connected)", "Post completion (final valuation)"], "maxLtv": 0.90, "interestOnlyMonths": 9, "firstDrawdownWithinMonthsOfOffer": 6, "finalDrawdownWithinMonthsOfFirst": 18, "finalDrawdownMaxMonthsFromOffer": 24, "valuationFee": 150 },
+      "source": { "url": "https://personalbanking.bankofireland.com/borrow/mortgages/self-build/", "publisher": "Bank of Ireland", "date": "2026-01 (guide)" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Each stage is certified by the borrower's own architect or engineer. The rate is the bank's standard variable or fixed mortgage rate; no separate self-build rate is published. Other Irish lenders: AIB 4 to 6 stages; PTSB up to 6."
+    }
+  ],
+
+  "warrantyInsurance": [
+    {
+      "id": "us-2-10",
+      "place": "United States",
+      "item": "Builder's 1-2-10 structural warranty (2-10 Home Buyers Warranty)",
+      "currency": "USD",
+      "value": { "costShareOfPriceIncludingLand": "under 0.5%", "typicalDollarRange": [500, 1000], "coverage": { "workmanshipYears": 1, "systemsYears": 2, "structuralYears": 10 } },
+      "source": { "url": "https://www.2-10.com/builders-warranty/builder-faqs/", "publisher": "2-10 Home Buyers Warranty", "date": "2026 (page current at retrieval)" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "The under-0.5% figure was read on the page; the $500 to $1,000 range is from a 2-10 blog excerpt and was not opened. Bought by the builder, usually; an owner-builder normally cannot enroll."
+    },
+    {
+      "id": "us-builders-risk",
+      "place": "United States",
+      "item": "Builder's risk insurance premium",
+      "currency": "USD",
+      "value": { "shareOfCompletedValue": [0.01, 0.04], "insureonAverageAnnual": 1259, "insureonAverageMonthly": 105 },
+      "source": { "url": "https://www.insureon.com/small-business-insurance/builders-risk/cost", "publisher": "Insureon (broker)", "date": "2026-07-02" },
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "The average is across Insureon's small-business customers, not specifically single-family homes. Other sources quote as little as 0.1% to 0.55% of completed value; the published ranges disagree by an order of magnitude, so treat the 1-4% as the upper, broker-quoted band."
+    },
+    {
+      "id": "eng-selfbuild-warranty",
+      "place": "England",
+      "item": "Self-build 10-year structural warranty",
+      "currency": "GBP",
+      "value": { "typicalRange": [1000, 5000], "average": 2000, "architectsCertificateAlternative": 1000, "lateStartSurcharge": { "concretePoured": 0.25, "firstFloorJoists": 0.50, "wallPlate": 0.75, "structurallyComplete": 1.00 } },
+      "source": { "url": "https://www.homebuilding.co.uk/advice/self-build-warranties", "publisher": "Homebuilding & Renovating (Mark Brinkley)", "date": "2020-06-01" },
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "Dated 2020. Providers named for self-build: LABC Warranty, Self Build Zone, BuildCare, Protek, ProAktive. The surcharge is the extra premium when cover is bought after work has started."
+    },
+    {
+      "id": "eng-labc-selfbuild",
+      "place": "England",
+      "item": "LABC Warranty self-build policy terms",
+      "currency": "GBP",
+      "value": { "years": 10, "excess": 1000, "maxReconstructionCost": 1000000, "mechanicalElectricalYears": 5, "price": null },
+      "source": { "url": "https://www.labcwarranty.co.uk/self-build-get-an-indication", "publisher": "LABC Warranty", "date": "2026" },
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "Terms from search excerpts of LABC Warranty pages. LABC gives a price only through its online indication form; no published price."
+    },
+    {
+      "id": "eng-nhbc",
+      "place": "England",
+      "item": "NHBC Buildmark premium",
+      "currency": "GBP",
+      "value": null,
+      "source": { "url": "https://www.nhbc.co.uk/builders/warranties-and-cover/custom-build", "publisher": "NHBC", "date": "2026" },
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "NHBC publishes no price; the premium depends on the registered builder's rating and the sale price. Its custom-build page does not describe a self-build product, and Premier Guarantee also appears not to cover self-builders. A £1,500 to £3,500 figure circulates on secondary sites but was not traced to NHBC."
+    },
+    {
+      "id": "ie-homebond",
+      "place": "Ireland",
+      "item": "HomeBond structural and defects insurance",
+      "currency": "EUR",
+      "value": { "structuralYears": [10, 12], "defectsYears": [5, 10, 12], "excessPerUnit": 1500, "coversOneOffHouses": true, "premium": null, "secondaryEstimateFor150m2": [2500, 5000] },
+      "source": { "url": "https://www.homebond.ie/about_us/", "publisher": "HomeBond", "date": "2026" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "HomeBond says it is a fixed price per dwelling but does not publish the price. The €2,500 to €5,000 estimate is from planningpermissionireland.ie (secondary, unconfirmed)."
+    },
+    {
+      "id": "on-tarion",
+      "place": "Ontario",
+      "item": "Tarion new home enrolment fee (paid by the builder or vendor, usually passed to the buyer)",
+      "currency": "CAD",
+      "value": { "500000-550000": 890, "550000-600000": 1075, "600000-650000": 1515, "700000-750000": 1670, "950000-1000000": 2075, "1000000-1250000": 2245, "1250000-1500000": 2315, "hst": 0.13, "coverageYears": 7, "perHomeLimit": 400000 },
+      "source": { "url": "https://www.tarion.com/builders/enrolment-fees-calculator", "publisher": "Tarion Warranty Corporation", "date": "2025-09-01 (effective)" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Fees before 13% HST. A search excerpt quoted older fees (for example $970 for $500,000 to $550,000); the page read here supersedes it. The 7-year term and $400,000 limit are from a search excerpt."
+    },
+    {
+      "id": "bc-owner-builder",
+      "place": "British Columbia",
+      "item": "Owner-builder authorization (BC Housing)",
+      "currency": "CAD",
+      "value": { "authorizationFeeIncludingExam": 425, "nonRefundableIfRejected": 50, "examPassMark": 0.70, "thirdPartyWarrantyRequired": false, "personalLiabilityYears": 10, "noSaleOrRentMonthsAfterOccupancy": 12 },
+      "source": { "url": "https://www.bchousing.org/licensing-consumer-services/owner-builder/how-to-become-owner-builder", "publisher": "BC Housing", "date": "2026" },
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "From search excerpts of BC Housing pages. A licensed builder in BC must instead buy 2-5-10 home warranty insurance; no published premium was found."
+    }
+  ],
+
+  "delays": [
+    {
+      "id": "us-census-soc-time",
+      "place": "United States, Northeast and West",
+      "item": "Average months from start to completion, new single-family houses, by purpose of construction",
+      "unit": "months",
+      "value": {
+        "2025": {
+          "unitedStates": { "all": 7.4, "builtForSale": 6.1, "contractorBuilt": 10.5, "ownerBuilt": 12.8 },
+          "northeast": { "all": 11.5, "builtForSale": 9.9, "contractorBuilt": 13.8, "ownerBuilt": 14.5 },
+          "west": { "all": 8.3, "builtForSale": 6.4, "contractorBuilt": 14.0, "ownerBuilt": 15.6 }
+        },
+        "2024": {
+          "unitedStates": { "all": 7.7, "builtForSale": 6.3, "contractorBuilt": 10.6, "ownerBuilt": 13.7 },
+          "northeast": { "all": 11.5, "builtForSale": 9.3, "contractorBuilt": 12.4, "ownerBuilt": 16.2 },
+          "west": { "all": 8.8, "builtForSale": 7.1, "contractorBuilt": 15.1, "ownerBuilt": 16.2 }
+        },
+        "authorizationToStart2025AllSingleFamily": 1.4
+      },
+      "source": { "url": "https://www.census.gov/construction/nrc/xls/avg_starttocomp_cust.xlsx", "publisher": "U.S. Census Bureau and HUD, Survey of Construction", "date": "2026 release (annual data through 2025)" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Read from the Census workbook. 'Contractor-built' means built on the owner's land by a general contractor; 'owner-built' means the owner acts as the general contractor. New York and Connecticut fall in the Northeast; California in the West. The relative standard error for US owner-built is 5%. The 1.4-month authorization-to-start figure is from NAHB's Eye on Housing (https://eyeonhousing.org/2026/09/single-family-home-construction-time-declines-in-2025/, Na Zhao, 2026-09-08), which also gives permit-to-completion totals (owner-built 14.3 months, contractor-built 11.7)."
+    },
+    {
+      "id": "us-nahb-cost-breakdown",
+      "place": "United States",
+      "item": "NAHB Cost of Constructing a Home, 2024",
+      "currency": "USD",
+      "value": { "averageSalesPrice": 665298, "totalConstructionCost": 428215, "constructionShare": 0.644, "finishedLotCost": 91057, "finishedLotShare": 0.137, "financingCost": 10220, "financingShare": 0.015, "overheadShare": 0.057, "salesCommissionShare": 0.028, "marketingShare": 0.008, "profitShare": 0.11, "constructionCostPerSqFt": 162, "averageFinishedAreaSqFt": 2647, "averageLotSqFt": 20907, "buildingPermitFees": 7640, "impactFee": 6367, "waterSewerFeesInspections": 6260, "architectureEngineering": 6480 },
+      "source": { "url": "https://www.nahb.org/news-and-economics/housing-economics-plus/special-studies/special-studies-pages/cost-of-constructing-a-home-in-2024", "publisher": "National Association of Home Builders (Eric Lynch)", "date": "2025-01-20" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "A builder survey of homes built for sale. It does not measure delays or overruns. Its shares of construction cost for the fee lines, as printed: permit fees about 1.8%, impact fee 1.5%, water and sewer 1.5%."
+    },
+    {
+      "id": "us-hbi-labor-delay",
+      "place": "United States",
+      "item": "Delay from skilled-labor shortage",
+      "unit": "months",
+      "value": { "averageAddedMonths": 2 },
+      "source": { "url": "https://www.nahb.org/blog/2026/09/immigration-enforcement", "publisher": "Home Builders Institute study (June 2025), as reported", "date": "2025-06" },
+      "sourceType": "secondary",
+      "confirmed": false,
+      "note": "Search excerpt; the HBI study itself was not opened."
+    },
+    {
+      "id": "us-houzz-overrun",
+      "place": "United States",
+      "item": "Renovation budget overrun, Houzz & Home Study",
+      "value": { "shareExceededBudget2025": 0.37, "chosePricierMaterials": 0.35, "expandedScope": 0.31, "medianSpend2025USD": 20000, "respondentsRenovating": 10176 },
+      "source": { "url": "https://www.houzz.com/magazine/2026-u-s-houzz-and-home-study-renovation-trends-stsetivw-vs~185090855", "publisher": "Houzz Research", "date": "2026-04-22" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Renovations, not new houses. The average size of the overrun is not given on this page."
+    },
+    {
+      "id": "uk-nacsba-contingency",
+      "place": "United Kingdom",
+      "item": "Self-build contingency and budget outcome, NaCSBA Custom and Self Build Market Report 2022",
+      "currency": "GBP",
+      "value": { "averageContingency": 0.15, "averagePlotPrice": 253000, "averageBuildBudget": 312000, "outcome": "most builds came in on budget or within the contingency", "shareOverBudget": null },
+      "source": { "url": "https://www.granddesignsmagazine.com/news/nacsba-custom-self-build-report-2022/", "publisher": "Grand Designs magazine, reporting NaCSBA", "date": "2022-05" },
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "The report itself is paywalled (£298). An exact share over budget was not published in the coverage read. A search excerpt claimed about 15% of self-builders went over budget, mostly from upgrading the specification; not traced."
+    },
+    {
+      "id": "uk-selfbuild-costs-2020",
+      "place": "United Kingdom",
+      "item": "Self-build spend, Homebuilding & Renovating market report",
+      "currency": "GBP",
+      "value": { "medianBuildSpend": 270000, "medianPlotCost": 190000, "interquartileBuildSpend": [190000, 350000], "commonCostPerM2": [900, 1500] },
+      "source": { "url": "https://www.homebuilding.co.uk/news/average-self-builder-spends-270k-to-build-their-own-home", "publisher": "Homebuilding & Renovating", "date": "2020-06-23" },
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "Survey of about 500 self-builders. No overrun or duration figures."
+    }
+  ],
+
+  "buildingControl": [
+    {
+      "id": "eng-camden",
+      "place": "England (London Borough of Camden)",
+      "item": "Building control charges, single-storey extension, full plans",
+      "currency": "GBP",
+      "value": {
+        "upTo10m2": { "planChargeExVat": 313.28, "inspectionChargeExVat": 469.91, "planChargeIncVat": 375.93, "inspectionChargeIncVat": 563.90 },
+        "over10To60m2": { "planChargeExVat": 625.18, "inspectionChargeExVat": 937.78, "planChargeIncVat": 750.22, "inspectionChargeIncVat": 1125.33 },
+        "over60m2": "individual quote"
+      },
+      "source": { "url": "https://www.camden.gov.uk/documents/d/guest/schedule-2-residential-costs", "publisher": "London Borough of Camden", "date": "2026 scheme (3% increase on 2025)" },
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "Figures from a search excerpt of Camden's own schedule; the file returned 403 when opened. Each council in England sets its own charges; a private approved inspector is the alternative."
+    },
+    {
+      "id": "ie-bcms",
+      "place": "Ireland (national, including Dublin and Kildare)",
+      "item": "Commencement notice and 7-day notice fees (BCMS)",
+      "currency": "EUR",
+      "value": { "commencementNoticePerBuilding": 30, "commencementNoticeMax": 3800, "sevenDayNotice": "greater of 250 or 5.80 per m2", "lodgeDaysBeforeStart": [14, 28] },
+      "source": { "url": "https://www.fingal.ie/council/service/building-works-commencement-notices-submission", "publisher": "Irish local authorities (Fingal, Meath, Limerick, Cork County)", "date": "2025-2026" },
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "Search excerpts from council pages; Dublin City's and Kildare's pages did not state the fee. A single house (or an extension over 45 m2) may opt out of statutory certification. Not a plan-review charge like England's."
+    },
+    {
+      "id": "nyc-dob",
+      "place": "New York City",
+      "item": "DOB work permit fees, 1-3 family dwellings",
+      "currency": "USD",
+      "value": { "newBuildingPerSqFt": 0.06, "newBuildingMinimum": 130, "alterationBasePerWorkType": 130, "alterationPer1000OverFirst5000": 2.60, "minimumAnyApplicationFrom2025-12-21": 130 },
+      "source": { "url": "https://codelibrary.amlegal.com/codes/newyorkcity/latest/NYCadmin/0-0-0-156650", "publisher": "NYC Administrative Code §28-112.2", "date": "as amended by Local Law 128 of 2024" },
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "From search excerpts of the code; the code library and ICC copy returned 403. An addition to a house is an alteration permit, so the cost is roughly $130 plus $2.60 per $1,000 of cost above $5,000, before plan-review and other fees."
+    },
+    {
+      "id": "la-ladbs",
+      "place": "Los Angeles (City)",
+      "item": "LADBS building permit fee (Table 1-A) and plan check",
+      "currency": "USD",
+      "value": { "upTo2000": 65, "100000To500000": "395 plus 3.50 per 1,000", "500000To1000000": "520 plus 3.25 per 1,000", "planCheckShareOfPermitFee": 0.90 },
+      "source": { "url": "https://nplinedesign.com/ladbs-permit-costs-complete-breakdown", "publisher": "Secondary summary of LAMC 91.107 Table 1-A", "date": "2026" },
+      "sourceType": "secondary",
+      "confirmed": false,
+      "note": "Search excerpt. The base table is CPI-indexed each July 1 and surcharges, electrical, plumbing, mechanical, school fees and sewer charges are added, so real totals for an addition run several thousand dollars. One source says plan check is 85%, another 90%."
+    },
+    {
+      "id": "ct-new-haven",
+      "place": "Connecticut (New Haven)",
+      "item": "Building permit fee, one- and two-family residential",
+      "currency": "USD",
+      "value": { "examples": { "1000": 50.26, "5000": 159.30, "10000": 295.60 }, "impliedFormula": "50.26 for the first 1,000, then 27.26 per additional 1,000 (which includes the state's 0.26 per 1,000 education fee)", "commercialExamples": { "1000": 55.26, "5000": 196.30 } },
+      "source": { "url": "https://www.newhavenct.gov/government/departments-divisions/office-of-building-inspection-enforcement/building-department-applications", "publisher": "City of New Haven", "date": "2026-03 (schedule referenced)" },
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "The dollar examples came from a search excerpt; the city page returned 403. The per-$1,000 formula is inferred here from the three examples, which fit it exactly, and is not a published statement."
+    },
+    {
+      "id": "on-toronto",
+      "place": "Ontario (Toronto)",
+      "item": "Building permit fee, residential addition",
+      "currency": "CAD",
+      "value": { "serviceIndexPerM2": 18.56, "minimumFee": 214.79, "hourlyFee": 92.79, "formula": "fee = service index x floor area in m2" },
+      "source": { "url": "https://www.toronto.ca/services-payments/building-construction/building-permit/before-you-apply-for-a-building-permit/building-permit-fees/", "publisher": "City of Toronto", "date": "2026-01-01 (effective)" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Group C residential (single, semi, town, duplex). A 40 m2 addition would be 742.40."
+    },
+    {
+      "id": "bc-vancouver",
+      "place": "British Columbia (Vancouver)",
+      "item": "Building permit fee, one-family dwelling addition or alteration",
+      "currency": "CAD",
+      "value": { "25001To50000": "217 plus 6.21 per 1,000 over 25,000", "50001To100000": "372 plus 6.21 per 1,000 over 50,000" },
+      "source": { "url": "https://vancouver.ca/files/cov/vancouver-development-building-permit-fees.pdf", "publisher": "City of Vancouver", "date": "2026 schedule" },
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "Search excerpt; the PDF returned 403. Development permit fees and development cost levies are separate."
+    }
+  ],
+
+  "applianceValue": [
+    {
+      "id": "fanniemae-appliances",
+      "place": "United States",
+      "item": "How appraisers treat appliances",
+      "value": { "rule": "Appliances not permanently attached are commonly personal property and given no contributory value; built-in appliances can be real property; the appraiser decides, and analyzes missing appliances that are standard in the market for their effect on value or marketability." },
+      "source": { "url": "https://singlefamily.fanniemae.com/media/6776/display", "publisher": "Fannie Mae, Appraisal and Property-Related FAQs (Q35)", "date": "2023-11" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "So a freestanding fridge, washer or dryer adds nothing to appraised value, while a built-in range, dishwasher or wall oven can. In a sale contract, freestanding appliances pass only if listed."
+    },
+    {
+      "id": "nyc-streeteasy-washer-rent",
+      "place": "New York City",
+      "item": "Rent premium for an in-unit washer-dryer",
+      "value": { "rentPremium": 0.12, "shareOfListingsWithIt": { "2019": 0.23, "2021": 0.27, "2025": 0.34 }, "example": "a $3,000 apartment rents for about $360 more a month" },
+      "source": { "url": "https://gothamist.com/news/more-nyc-apartments-now-have-washer-dryers-is-it-worth-the-extra-cost", "publisher": "Gothamist (David Brand), reporting a StreetEasy analysis", "date": "2025-03-13" },
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "StreetEasy compared apartments in the same neighborhood with similar size and bedroom count. It is an association, not proof the machine causes the rent difference."
+    },
+    {
+      "id": "nyc-streeteasy-washer-sale",
+      "place": "New York City",
+      "item": "Sale premium for an in-unit washer-dryer, condos and co-ops under $2.5M",
+      "value": { "salePremium": 0.141 },
+      "source": { "url": "https://streeteasy.com/blog/nyc-features-that-sell/", "publisher": "StreetEasy", "date": null },
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "Search excerpt; the page returned 403, so its date and method were not seen."
+    },
+    {
+      "id": "zillow-2018-features",
+      "place": "United States",
+      "item": "Sale premium for listing keywords (Zillow Home Features That Sell, 2018)",
+      "value": { "professionalAppliances": 0.29, "chefsKitchen": 0.21, "wineFridge": 0.22, "farmhouseSink": 0.19, "newAppliances": null },
+      "source": { "url": "https://zillow.mediaroom.com/2018-04-04-Homes-with-Heated-Floors-Steam-Showers-or-Outdoor-Kitchens-Sell-for-Nearly-30-Percent-More-than-Expected", "publisher": "Zillow", "date": "2018-04-04" },
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "About 3.6 million sales from 2016-2017, regression controlling for size, age, location and timing. The premium is over the expected price for homes whose listing uses the phrase, which mostly tags luxury homes, so it overstates what installing the appliance would add. A 3.2% premium for 'new appliances' circulates but was not found in this release."
+    },
+    {
+      "id": "us-rent-laundry-national",
+      "place": "United States (national)",
+      "item": "National rent premium for in-unit laundry or a dishwasher",
+      "value": null,
+      "source": { "url": "https://www.zillow.com/research/", "publisher": "Zillow Research", "date": null },
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "No published national rent premium was found. Zillow reports rental listings mentioning in-unit laundry get 76% more saves and 67% more shares per day, which is demand, not a price (search excerpt, unconfirmed)."
+    }
+  ],
+
+  "uncertain": [
+    "CATIC's Connecticut schedule found is dated 2016-01-01; a later filing may exist. WFG's 2021 CT manual is given as a cross-check.",
+    "No title insurance rate table is published for Ontario or British Columbia; the CAD 300-1,000 range is a secondary estimate.",
+    "The TIRSA manual used is the Seventh Revision effective 2024-10-01. Individual underwriters can file deviations, so a quoted premium may be lower.",
+    "No construction lender in New York, Connecticut or California was found publishing a construction-loan rate; the two published rate sheets used are from Florida and Hawaii credit unions.",
+    "LA parcel map fee ($13,204), NYC DOB fee items, Camden building control charges, Vancouver permit fees, New Haven permit examples, the Irish BCMS fees and BC Housing's owner-builder fee all came from search excerpts because the official pages refused automated access (403). The figures are quoted from the official documents' own text, but they were not opened here.",
+    "The New Haven formula (first $1,000 at $50.26, then $27.26 per $1,000) is inferred from three examples, not stated.",
+    "The NHBC Buildmark premium, LABC self-build price, the HomeBond premium and 2-5-10 warranty premiums in BC are not published.",
+    "Builder's risk premium estimates disagree: 1-4% of completed value (brokers) versus 0.1-0.55% (other sources).",
+    "No UK statistic was found for the share of self-builds that overrun or by how many months. NaCSBA gives only a 15% average contingency, and its full report is paywalled.",
+    "Survey, Phase I, and the attorney, solicitor and conveyancer fees are market estimates from vendors and law-firm pages, not official schedules.",
+    "No zone 1 (western or central upstate New York) town subdivision fee schedule was gathered; the Town of Rochester example is in Ulster County (zone 2)."
+  ]
+}

@@ -5,7 +5,7 @@
  */
 
 import { useWorld } from '@/app/game-context';
-import { Panel, Stat } from '@/ui/components/primitives';
+import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { ATTRIBUTES, overscaleOf, sendsFactor } from '@/engine/systems/attributes';
 
 const whole = (x: number) => String(Math.round(x));
@@ -28,7 +28,7 @@ export function AttributesPanel() {
         <p className="small" style={{ margin: 0 }}>
           Presence is mostly given. Composure grows with every audition and performance. Reputation is earned by work done and calls kept, the degree and a good showing, and lost by a missed day, a firing or a missed audition. Recognition comes from screen work that airs, and Broadway, and fades a little each month without it.
         </p>
-        <p className="xs dim" style={{ margin: 0 }}>What each does, and how fast each moves, is SLATE’s estimate: the trades publish no scale for any of the four.</p>
+        <Fine>What each does, and how fast each moves, is SLATE’s estimate: the trades publish no scale for any of the four.</Fine>
       </div>
     </Panel>
   );

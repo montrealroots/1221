@@ -1,0 +1,801 @@
+{
+  "meta": {
+    "title": "SLATE research: vehicle service shops, maintenance, repairs, customization and rentals",
+    "researched": "2026-10-01",
+    "cities": ["New York", "Los Angeles", "New Haven CT", "London", "Dublin", "Toronto", "Vancouver", "Mexico City"],
+    "method": "WebSearch and WebFetch on 2026-10-01. Every figure carries the URL it came from and the date it was read (2026-10-01 unless a publication date is given). Where a figure was not published or could not be read, it is null with a note. Figures read only through a search-engine summary, not from the page itself, are marked confidence 'search-summary'. Secondary aggregators are marked sourceType 'secondary'.",
+    "corrections_to_brief": [
+      "NCT is no longer EUR 55: from 1 January 2025 the full NCT is EUR 60 and a retest needing equipment EUR 40 (was EUR 55 and EUR 28). Source: https://www.irishexaminer.com/news/arid-41535299.html and https://en.wikipedia.org/wiki/National_Car_Test (search summary, 2026-10-01).",
+      "Ford Puma's bolt pattern is 5x108, not 4x108 (wheel-size.com lists it as 5x4.25 in).",
+      "The 2019+ North American Corolla (E210) is 5x100 with a 54.1 mm bore; one secondary source (kipardoracing) says 5x114.3 'most global models' but gives a 54.1 mm bore, which belongs to Toyota's 5x100 hubs. 5x100 is the figure taken.",
+      "California's ride-height law (Vehicle Code 24008, body lower than the wheel rims) was repealed by AB 436, signed 13 Oct 2023, effective 1 Jan 2024.",
+      "Ontario's Highway Traffic Act s.73(3) has no numeric VLT for front side windows: the test is 'substantially obscures the interior'. The 70% figure seen on tint-shop sites is a shop rule of thumb, not statute.",
+      "BC's AirCare emissions program ended 31 Dec 2014; Ontario's Drive Clean ended for light vehicles 1 Apr 2019. Neither city has a periodic inspection of private cars."
+    ],
+    "currency_note": "US prices USD before sales tax; Canada CAD (shops usually quote before HST/GST+PST); UK GBP incl. VAT unless stated '+VAT'; Ireland EUR incl. VAT; Mexico MXN incl. IVA unless stated."
+  },
+
+  "shops": {
+    "New York": [
+      {
+        "name": "Toyota of Manhattan (service)",
+        "type": "dealer service",
+        "address": "679 11th Avenue, New York, NY 10019",
+        "phone": "(347) 916-3375",
+        "hours": "Mon-Fri 7:00-18:00; Sat-Sun closed",
+        "services": ["Toyota maintenance and repair", "pick-up and delivery"],
+        "loaner": "Complimentary loaner vehicles, by appointment only (call 877-385-8761).",
+        "prices": null,
+        "source": "https://www.toyotaofmanhattan.com/service/center.htm ; https://www.yelp.com/biz/toyota-of-manhattan-service-and-parts-new-york",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Pep Boys Auto Service & Tire",
+        "type": "chain",
+        "address": "354 4th Ave, Brooklyn, NY 11215",
+        "phone": "(718) 596-2833",
+        "hours": "Mon-Fri 7:00-20:00; Sat 7:00-19:00; Sun 9:00-18:00",
+        "services": ["oil change", "brakes", "batteries", "tires", "NYS inspection"],
+        "second_location": "2015 Utica Ave, Brooklyn, NY 11234, (718) 444-3549",
+        "prices": null,
+        "source": "https://www.yelp.com/biz/pep-boys-brooklyn-4 ; https://www.yellowpages.com/brooklyn-ny/mip/pep-boys-541028096",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Midas",
+        "type": "chain",
+        "address": "455 W 53rd St, New York, NY 10019",
+        "phone": "(212) 582-7088",
+        "hours": null,
+        "services": ["brakes", "exhaust", "oil change", "general repair"],
+        "notes": "Midas at 223 E 125th St and 5060 Broadway are listed on Yelp as CLOSED. Nearest confirmed Midas store page: 589-91 E Fordham Rd, Bronx, NY 10458 (midas.com shop 4850).",
+        "prices": null,
+        "source": "https://www.yellowpages.com/new-york-ny/midas-auto-service-experts ; https://www.midas.com/store/ny/bronx/589-91-east-fordham-road-10458/auto-maintenance?shopnum=4850",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Manhattan Collision",
+        "type": "independent body shop",
+        "address": "428 W 19th St, New York, NY 10011",
+        "phone": "(212) 645-0169",
+        "services": ["collision repair", "paint"],
+        "prices": null,
+        "source": "https://www.yelp.com/biz/manhattan-collision-new-york",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Manhattan Auto Repair",
+        "type": "independent garage",
+        "address": "552 W 48th St, New York, NY 10036",
+        "phone": "(212) 757-4366",
+        "services": ["auto repair", "collision", "tires", "auto glass", "engine and transmission", "24-hour towing"],
+        "prices": null,
+        "source": "https://www.yelp.com/biz/manhattan-auto-repair-new-york-3",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      }
+    ],
+    "Los Angeles": [
+      {
+        "name": "Toyota of Hollywood",
+        "type": "dealer service",
+        "address": "6920 W Sunset Blvd, Los Angeles, CA 90028",
+        "phone": "323-618-6180",
+        "hours": "Mon-Fri 7:00-18:00; Sat 7:00-17:00; Sun closed",
+        "loaner": null,
+        "loaner_note": "Not published on the pages read.",
+        "prices": null,
+        "source": "https://www.hollywoodtoyota.com/service/center.htm ; https://www.cars.com/dealers/83770/toyota-of-hollywood/service/",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Firestone Complete Auto Care",
+        "type": "chain",
+        "address": "10785 Santa Monica Blvd, Los Angeles, CA 90025",
+        "phone": "(310) 622-9293",
+        "second_location": "1975 S La Cienega Blvd, Los Angeles, CA 90034, (310) 736-4253",
+        "services": ["oil change", "tires", "brakes", "alignment", "batteries"],
+        "prices": null,
+        "price_note": "Firestone prices by store; a secondary search summary gave chain-wide oil-change prices of $43.98 standard / $62.49 blend / $90.46 full synthetic, unverified on firestonecompleteautocare.com and not used.",
+        "source": "https://www.firestonecompleteautocare.com/california/los-angeles/10785-santa-monica-blvd/",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Car City Custom",
+        "type": "tint shop",
+        "address": "Los Angeles (street address not printed on the pricing page)",
+        "phone": "(323) 302-3118",
+        "services": ["window tint"],
+        "prices": {
+          "currency": "USD",
+          "basis": "same price for sedan, SUV, coupe, truck, van and Tesla, as posted",
+          "windshield_only": {"basic": 140, "carbon": 180, "nano_ceramic": 220, "nano_ceramic_plus": 300},
+          "driver_and_passenger": {"basic": 70, "carbon": 130, "nano_ceramic": 180, "nano_ceramic_plus": 220},
+          "driver_passenger_windshield": {"basic": 210, "carbon": 310, "nano_ceramic": 400, "nano_ceramic_plus": 520},
+          "all_sides_and_back": {"basic": 270, "carbon": 380, "nano_ceramic": 550, "nano_ceramic_plus": 650},
+          "all_sides_back_windshield": {"basic": 410, "carbon": 550, "nano_ceramic": 770, "nano_ceramic_plus": 950}
+        },
+        "legality_note": "In California the front side windows must keep 70% VLT combined (VC 26708); a full-car dark package sold here is not legal on the front sides.",
+        "source": "https://carcitycustom.com/pricing/",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Smog check stations (any licensed)",
+        "type": "inspection",
+        "address": null,
+        "prices": {"currency": "USD", "state_certificate_fee": 8.25, "statewide_average_test_price_july_2026": 69.54, "station_fee_regulated": false},
+        "rules": "Biennial at registration renewal for gas/hybrid model year 1976+ except the 8 newest model years; on sale except the 4 newest; diesel 1998+; electric vehicles exempt.",
+        "source": "https://www.bar.ca.gov/smog-check (rules, $8.25) ; https://californiaemissionscheck.com/info/average-smog-check-cost-california/ (average $69.54, citing BAR monthly report, search-summary)",
+        "confidence": "page-read (rules); search-summary (average)",
+        "date": "2026-10-01"
+      }
+    ],
+    "New Haven CT": [
+      {
+        "name": "A-1 Toyota",
+        "type": "dealer service",
+        "address": "50 Amity Road, New Haven, CT 06515",
+        "phone": "Service (877) 734-5457",
+        "hours": "Mon-Fri 7:30-19:00; Sat 7:30-17:00; Sun closed (search summary); page read 2026-10-01 showed 'open today 7:30 AM - 5 PM'",
+        "services": ["mechanical repair", "brakes", "oil change", "battery", "tires", "collision repair"],
+        "loaner": "Loaner vehicles at $34.95 per day; shuttle to nearby locations.",
+        "labour_rates_usd_per_hour": {"general_mechanical": 165, "brake_work": 125, "maintenance": 130},
+        "source": "https://www.a1toyota.com/service/",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Midas Auto Service Experts",
+        "type": "chain",
+        "address": "75 Whalley Ave, New Haven, CT 06511",
+        "phone": "(203) 865-6111",
+        "prices": null,
+        "source": "https://auto-parts-stores.cmac.ws/midas-auto-service-experts/12371/",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Meineke Car Care Center #122",
+        "type": "chain",
+        "address": "1175 Whalley Avenue, New Haven, CT 06515",
+        "phone": "(203) 800-7122",
+        "prices": null,
+        "source": "https://www.meineke.com/locations/ct/new-haven-122/",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Firestone Complete Auto Care",
+        "type": "chain",
+        "address": "680 Chapel St, New Haven, CT 06510",
+        "prices": null,
+        "source": "https://www.yellowpages.com/new-haven-ct/auto-repair-service",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Automobilia",
+        "type": "tint / PPF / detailing",
+        "address": "550 Island Ln. Unit #11, West Haven, CT 06516",
+        "phone": "203.795.3998",
+        "hours": "Mon-Fri 9:00-17:00",
+        "services": ["window tint", "XPEL paint protection film", "ceramic coating", "custom wheels", "brake painting", "detailing"],
+        "prices": null,
+        "source": "https://www.automobiliaautosalon.com/window-tinting-new-haven-ct/",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Tint Works / Sound Works",
+        "type": "tint and audio",
+        "address": "923 Dixwell Ave (Hamden, CT)",
+        "notes": "Established 1990. Prices not published.",
+        "prices": null,
+        "source": "https://www.yellowpages.com/new-haven-ct/window-tinting",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      }
+    ],
+    "London": [
+      {
+        "name": "Kwik Fit Holloway (Islington)",
+        "type": "chain",
+        "address": "379 Camden Road, London N7 0SH",
+        "phone": "020 7700 7810",
+        "hours": "Mon-Fri 8:30-18:00; Sat 8:30-17:00; Sun 10:00-16:00",
+        "prices": "see Kwik Fit national price list below",
+        "source": "https://www.kwik-fit.com/locate-a-centre/london-islington-holloway",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Kwik Fit (national price list, applies at London centres 'from')",
+        "type": "chain price list",
+        "prices": {
+          "currency": "GBP incl. VAT",
+          "mot": 52.00,
+          "oil_and_filter_change_from": {"0-1400cc": 132.95, "1401-2000cc": 152.95, "2001-3000cc": 172.95, "over_3000cc": 192.95},
+          "interim_service_from": {"0-1400cc": 186.95, "1401-2000cc": 211.95, "2001-3000cc": 231.95, "over_3000cc": 251.95},
+          "interim_service_plus_mot_from": {"0-1400cc": 221.95, "1401-2000cc": 246.95, "2001-3000cc": 266.95, "over_3000cc": 286.95},
+          "full_service_from": {"0-1400cc": 246.95, "1401-2000cc": 271.95, "2001-3000cc": 291.95, "over_3000cc": 311.95},
+          "full_service_plus_mot_from": {"0-1400cc": 281.95, "1401-2000cc": 306.95, "2001-3000cc": 326.95, "over_3000cc": 346.95},
+          "ev_service_from": 230.95,
+          "ev_service_plus_mot_from": 270.90,
+          "tyre_fitting_per_tyre": 20.50
+        },
+        "notes": "Oil-and-filter-only: 'we are unable to stamp your log book or reset your service light'. Free MOT retest possible if the fix is done without the car leaving the garage. Booking up to 28 days early keeps the renewal date.",
+        "source": "https://www.kwik-fit.com/servicing/service-pricing ; https://www.kwik-fit.com/mot",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Halfords Autocentre Southfields",
+        "type": "chain",
+        "address": "Unit 1 Merton Road Ind Estate, 271 Merton Road, Southfields, London SW18 5JS",
+        "phone": "0208 870 4697",
+        "hours": "Mon-Fri 8:00-18:00; Sat 8:00-17:00; Sun closed",
+        "other_london_centres": ["157 Greenwich High Street, SE10 8JA (0208 858 5288)", "Unit 5 Deacon Industrial Estate, Cabinet Way, E4 8QF (Chingford)", "9&10 Hanover West Ind Est, Acton Ln, NW10 7NB (020 8965 1844)"],
+        "prices": null,
+        "price_note": "Halfords service pages did not print prices when fetched. A search summary gave interim from £104.99, full from £239.99, major from £214.99 (major below full is inconsistent), so these are not used. Halfords states full service every 12 months/12,000 miles, major every 24 months/24,000 miles; work guaranteed 2 years/24,000 miles.",
+        "source": "https://www.halfords.com/locations/southfields-london-autocentre/ ; https://www.halfords.com/car-servicing/petrol-diesel-servicing/full-service-PRODUCTFULLSERVICE.html",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Jemca Toyota Edgware Road (service centre)",
+        "type": "dealer service",
+        "address": "78 Capitol Way, London NW9 0EW",
+        "phone": "+44 2039 052023",
+        "hours": "Mon-Fri 8:00-18:00; Sat 8:00-13:00",
+        "loaner": "Courtesy car offered as an option (terms not published).",
+        "prices": null,
+        "source": "https://www.toyota.co.uk/dealers/jemcaedgwareroad",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Prestige Tint",
+        "type": "wrap and tint",
+        "address": "259 Old Marylebone Road, London NW1 5RA; also Unit 6a, 27a Spring Grove Road, Hounslow TW3 4BE",
+        "prices": {"currency": "GBP", "full_wrap_from_plus_vat": 2000},
+        "job_time": "Wrap 2-7 days",
+        "source": "https://prestigetint.co.uk/car-vinyl-wrapping/",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "London Tint Studio",
+        "type": "wrap and tint",
+        "address": "9B Venables Street, London NW8 8EZ",
+        "phone": "0203 488 6148",
+        "prices": {"currency": "GBP", "full_exterior_wrap_medium_car_from": 1400, "full_exterior_wrap_range_rover_from": 1700, "finish_basis": "standard finishes such as matte black"},
+        "job_time": "Wrap 2-3 days",
+        "source": "https://www.londontintstudio.co.uk/wrapping/",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "MOT (any DVSA-approved test centre)",
+        "type": "inspection",
+        "prices": {"currency": "GBP", "car_maximum_fee": 54.85, "motorcycle_maximum_fee": 29.65, "vat": "none on the MOT fee"},
+        "source": "https://www.gov.uk/getting-an-mot/mot-test-fees",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      }
+    ],
+    "Dublin": [
+      {
+        "name": "Advance Pitstop Townsend Street",
+        "type": "chain",
+        "address": "53 Townsend Street, Dublin 2",
+        "phone": "(01) 677 2891",
+        "hours": "Mon-Wed 8:30-18:00; Thu 8:30-20:00; Fri 8:30-18:00; Sat 9:00-17:00; Sun closed",
+        "services": ["servicing", "tyres", "brakes", "clutch", "exhausts", "pre-NCT check"],
+        "prices": null,
+        "price_note": "Only voucher-site promotions found (interim service EUR 47-79 on Groupon/LivingSocial, standard 10W40 oil); regular prices not published.",
+        "other_branch": "Ballymount Road, Ballymount, Dublin 22, (01) 4503567, Mon-Fri 9:00-19:00, Sat 9:00-14:00",
+        "source": "https://www.yelp.com/biz/advance-pitstop-dublin-2 ; https://carservicerepair.ie/advance-pitstop-brake-clutch-exhausts-repairs-ballymount-dublin/",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Sweeneys Garage",
+        "type": "independent garage (AA Approved)",
+        "address": "Four branches: Ballyfermot (01 623 6017), Bridgefoot St city centre (01 672 5926), Finglas (01 834 0679), Bray (01 286 6815)",
+        "prices": {"currency": "EUR", "oil_and_filter_change_from": 120, "standard_service_from": 160, "full_service_from": 210, "basis": "varies by engine size up to 3.5 L; long-life plugs and oil over 4 L extra"},
+        "services": ["servicing", "same-day service"],
+        "collection": "Car collection within 2 km radius, minimum EUR 50",
+        "warranty": "12 months",
+        "source": "https://sweeneysgarage.ie/car-service/",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Tadg Riordan Motors (Toyota)",
+        "type": "dealer service",
+        "address": "Airton Rd, Tallaght, Dublin 24, D24 F252",
+        "phone": "(01) 451 7447",
+        "hours": "Mon-Fri 9:00-18:00 (Saturday sales only)",
+        "loaner": null,
+        "loaner_note": "Not published on the service page.",
+        "prices": null,
+        "source": "https://www.trmtallaght.ie/service-at-tadg-riordan-motors",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "We Tint",
+        "type": "tint shop",
+        "address": "Dublin (map only)",
+        "phone": "01 460 4755",
+        "hours": "Mon-Fri 9:00-18:00; Sat 10:00-18:00",
+        "prices": {"currency": "EUR", "from": 80},
+        "source": "https://wetint.ie/price-list/",
+        "confidence": "page-read (price list is an image; only 'from EUR 80' readable)",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "NCT (National Car Testing Service)",
+        "type": "inspection",
+        "prices": {"currency": "EUR", "full_test": 60, "retest_with_equipment": 40, "retest_visual_only": 0, "effective": "2025-01-01"},
+        "source": "https://www.irishexaminer.com/news/arid-41535299.html ; https://en.wikipedia.org/wiki/National_Car_Test",
+        "confidence": "search-summary (ncts.ie/fees returned 404)",
+        "date": "2026-10-01"
+      }
+    ],
+    "Toronto": [
+      {
+        "name": "Canadian Tire Auto Service Centre (Yonge St)",
+        "type": "chain",
+        "address": "839 Yonge St, Toronto, ON M4W 2H2",
+        "phone": "416-925-5927",
+        "hours": "Mon-Sat 8:00-21:00",
+        "other_location": "825 Eglinton Ave E (Leaside Centre), Toronto ON M4G 4G9: Mon-Fri 7:00-21:00, Sat 7:00-18:00, Sun 9:00-18:00",
+        "prices": null,
+        "price_note": "Secondary sources give CAD 62 conventional / CAD 90 synthetic oil change, not verified on canadiantire.ca; not used.",
+        "source": "https://www.yellowpages.ca/bus/Ontario/Toronto/Canadian-Tire-Associate-Stores-Auto-Service-Centre/101568658.html",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Mr. Lube",
+        "type": "chain (quick lube)",
+        "address": "61 Overlea Blvd., Toronto, ON M4H 1C2",
+        "phone": "(416) 429-0621",
+        "other_locations": ["793 Spadina Road, Toronto M5P 2X5, (416) 787-7350", "70 Grand Marshall Drive, Toronto M1B 5N7, (416) 283-3323"],
+        "prices": null,
+        "source": "https://www.mrlube.com/en/locations/40 ; https://www.yelp.ca/biz/mr-lube-toronto-2",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Downtown Toyota",
+        "type": "dealer service",
+        "address": "79 E Don Roadway, Toronto, ON M4M 2A5",
+        "phone": "(416) 465-5471",
+        "loaner": null,
+        "prices": null,
+        "source": "https://www.yelp.ca/biz/downtown-toyota-toronto-18",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Toronto Honda",
+        "type": "dealer service",
+        "address": "2300 Danforth Ave, Toronto",
+        "loaner": "Free loaner cars and free shuttle, 'limitations apply'.",
+        "notes": "Honda Downtown (47 Eastern Ave, M5A 1H1, 416-368-8181) shuttle reported temporarily suspended for staffing.",
+        "prices": null,
+        "source": "https://www.torontohonda.com/service/",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Elite Tint",
+        "type": "tint / PPF / ceramic coating",
+        "address": "156 Chrislea Rd. Unit 4, Vaughan, ON L4L 8V1",
+        "phone": "905-669-8468",
+        "prices": {
+          "currency": "CAD",
+          "coupe_sedan": {"classic": 250, "pinnacle_ceramic": 380, "stratus": 580},
+          "two_front_windows": {"classic": 150, "pinnacle_ceramic": 200, "stratus": 250},
+          "trucks_suvs": {"prime_hp": 350, "prime_xr": 430, "prime_xr_plus": 599},
+          "full_windshield_from": 350,
+          "sun_strip": "50-100",
+          "tint_removal": "30-150",
+          "ppf": {"light_from": 650, "medium_from": 1200, "extreme_from": 1850, "full_from": 5000},
+          "ceramic_coating": {"bronze_2yr": 600, "silver_5yr": 900, "gold_5yr": 1500}
+        },
+        "legality_note": "Ontario has banned aftermarket windshield tint since 2017 except a top strip; the shop's full-windshield product is the shop's offer, not a legality statement.",
+        "source": "https://elitetint.ca/pricelist/",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Safety Standards Certificate (any MTO-licensed station)",
+        "type": "inspection (on transfer only)",
+        "prices": {"currency": "CAD", "range": "60-150", "regulated": false},
+        "rules": "No periodic inspection of private cars; SSC needed on ownership transfer, out-of-province registration, rebuilt status; valid 36 days. Drive Clean emissions tests for light vehicles ended 1 April 2019.",
+        "source": "https://www.mcdougallinsurance.com/2025/03/21/car-safety-certificate-ontario-safety-inspection/ ; https://ero.ontario.ca/notice/019-0416 ; https://en.wikipedia.org/wiki/Ontario%27s_Drive_Clean",
+        "confidence": "search-summary, secondary",
+        "date": "2026-10-01"
+      }
+    ],
+    "Vancouver": [
+      {
+        "name": "Jim Pattison Toyota Downtown",
+        "type": "dealer service",
+        "address": "1290 Burrard Street, Vancouver, BC V6Z 1Z1",
+        "phone": "1 (888) 716-8574",
+        "hours": "Mon-Sat 7:30-18:00; Sun closed",
+        "loaner": null,
+        "loaner_note": "Not stated on the service page.",
+        "prices": null,
+        "source": "http://www.jptoyota-downtown.com/service",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Canadian Tire #604 Grandview Highway",
+        "type": "chain",
+        "address": "2830 Bentall Street, Vancouver, BC V5M 4H4",
+        "phone": "604-431-3572",
+        "hours": "Auto centre Mon-Fri 7:00-19:00; Sat-Sun 8:00-18:00",
+        "other_location": "8277 Ontario Street (SW Marine), Vancouver V5X 0A7, 604-336-1086",
+        "prices": null,
+        "source": "https://www.canadianplanet.net/canadian-tire-604-grandview-highway-F110EC00F1FD441",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Kal Tire Vancouver Downtown",
+        "type": "chain (tires and service)",
+        "address": "1500 W 4th Ave, Vancouver, BC V6J 1L7",
+        "phone": "(604) 734-5252",
+        "other_locations": ["8130 Ontario St, V5X 3E3 (#673), (604) 322-4060", "1670 Main St, V6A 2W8, (604) 669-3124", "2055 Clark Drive, V5N 3G6, (604) 875-9988"],
+        "prices": null,
+        "source": "https://www.michelin.ca/en/auto/dealer-locator/vancouver/kal-tire-vancouver-673",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Drippy Customs",
+        "type": "tint shop (XPEL)",
+        "address": "9049 Shaughnessy St #2, Vancouver, BC",
+        "phone": "(672) 965-8088",
+        "prices": {"currency": "CAD", "rear_windows_from": 290, "front_windows_only_from": 150, "full_car_from": 410},
+        "shades": "70, 50, 35, 20, 5% VLT",
+        "job_time": "Most vehicles same day, 2-4 hours",
+        "legality_note": "BC MVAR 7.05 bars any tint film on front side windows; the shop sells a 'front windows only' package anyway.",
+        "source": "https://drippycustoms.ca/window-tinting-vancouver/",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Inspections",
+        "type": "inspection",
+        "rules": "No periodic inspection or emissions test of private cars in BC. AirCare ran 22 years and ended 31 Dec 2014.",
+        "source": "https://news.gov.bc.ca/releases/2014ENV0112-001944 ; https://en.wikipedia.org/wiki/AirCare",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      }
+    ],
+    "Mexico City": [
+      {
+        "name": "Nissan Insurgentes Norte (agencia)",
+        "type": "dealer service",
+        "address": "Av. Insurgentes Nte. 208, San Simón Tolnahuac, Cuauhtémoc, CDMX 06920",
+        "phone": "Servicio 55 4056 0566",
+        "prices": {
+          "currency": "MXN",
+          "servicio_march_versa_vdrive_promo": 1299,
+          "servicio_march_versa_vdrive_regular": 3049,
+          "servicio_motor_pro_promo": 2499,
+          "servicio_motor_pro_regular": 3199,
+          "servicio_nissan_total_promo": 3999,
+          "servicio_nissan_total_regular": 4799,
+          "validity": "promotions valid to 30 June 2025 (out of date when read); March/Versa price is for cars out of warranty (3+ years or 60,000+ km)",
+          "express": "Servicio Express for 10,000/30,000/50,000 km services, done in 60 minutes (to 31 Aug 2025)"
+        },
+        "loaner": null,
+        "source": "https://www.nissaninsurgentesnorte.com.mx/promociones-de-servicio",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Toyota Universidad (agencia)",
+        "type": "dealer service",
+        "address": "Av. Universidad 1112, CDMX 03330",
+        "phone": "Servicio (55) 3000 3353",
+        "hours": "Servicio Mon-Fri 7:00-19:00; Sat 7:00-14:00; Sun closed",
+        "prices": null,
+        "source": "https://www.toyotauniversidad.mx/horarios-y-direcciones",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Toyota Polanco (agencia)",
+        "type": "dealer service",
+        "address": "Lago Alberto 320, Granada, Miguel Hidalgo, CDMX 11520",
+        "phone": "55 8854 4112",
+        "hours": "Servicio Mon-Fri 7:15-19:00; Sat 9:15-14:00",
+        "prices": null,
+        "source": "https://www.toyotapolanco.com.mx/horarios-y-direcciones",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "SpeeDee (Pedregal)",
+        "type": "chain taller",
+        "address": "Av. San Jerónimo 538, Álvaro Obregón, CDMX; also Av. 20 de Noviembre #36, Xochimilco",
+        "services": ["afinación mayor", "cambio de aceite", "frenos"],
+        "prices": null,
+        "source": "https://speedee.com.mx/servicios/afinacion-mayor-en-cdmx",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Goodyear Grupo Servisan",
+        "type": "tire and service centre",
+        "address": "Ermita Iztapalapa 2186, Constitución de 1917, Iztapalapa, CDMX 09260",
+        "phone": "+52 55 5614 0167",
+        "other_location": "Goodyear Miramontes, Canal de Miramontes 2718, Prado Coyoacán, CDMX 04830",
+        "prices": null,
+        "source": "https://llanteracercademi.com.mx/cdmx/iztapalapa/goodyear-grupo-servisan-iztapalapa/",
+        "confidence": "search-summary",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Los Deslumbrantes",
+        "type": "wrap shop",
+        "address": "San Luis Potosí #38, Col. Roma, CDMX",
+        "phone": "WhatsApp 55 3242 7946",
+        "hours": "Mon-Fri 9:00-18:00; Sat 9:00-14:00",
+        "prices": {"currency": "MXN", "full_wrap": {"0-4 m": 29500, "4-4.5 m": 31000, "4.5-5 m": 32500, "5-5.5 m": 34000}, "hood_wrap": "5490-9500", "tonneau": "5900-7900", "includes": "interior detailing and 2 m spare vinyl; paid up front"},
+        "vinyl": "3M, Avery Dennison, Hexis, Teckwrap",
+        "job_time": "5-9 days",
+        "source": "https://www.losdeslumbrantes.com.mx/wrapping-car-wrap-car-vinil-automotriz",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      },
+      {
+        "name": "Verificación vehicular (verificentros)",
+        "type": "inspection (emissions)",
+        "prices": {"currency": "MXN", "from_2026_02_01": 765, "before_2026_02_01": 738, "formula": "5.625 UMA (daily UMA 2026 = 117.31) + 16% IVA", "same_price_any_hologram": true},
+        "frequency": "Semestral (twice a year), by plate ending/sticker colour; holograma 00 exempts 3 consecutive semesters; Exento validity cut from 8 to 6 years in 2026.",
+        "source": "https://www.nmas.com.mx/ciudad-de-mexico/sociedad/costo-verificacion-2026-cdmx-cuanto-sube-por-aumento-uma-partir-1-de-febrero/ ; https://www.proceso.com.mx/nacional/cdmx/2026/1/5/verificacion-vehicular-2026-en-cdmx-que-cambia-en-hologramas-costos-requisitos-363881.html",
+        "confidence": "page-read",
+        "date": "2026-10-01"
+      }
+    ]
+  },
+
+  "inspections_summary": {
+    "New York": {"periodic": "annual safety + OBD-II emissions", "fee_usd": 37, "breakdown": "safety $10 + OBD-II emissions $27 in the NYC metro area (15 NYCRR 79.6 maximum)", "source": "https://comparemechanic.com/article/annual-car-inspection-new-york (secondary, search-summary); frequency from https://dmv.ny.gov/brochure/new-york-state-vehicle-safetyemissions-inspection-program", "date": "2026-10-01"},
+    "Los Angeles": {"periodic": "biennial smog check (8 newest model years exempt; EVs exempt)", "fee_usd": "station price unregulated; state certificate $8.25; July 2026 statewide average $69.54", "source": "https://www.bar.ca.gov/smog-check", "date": "2026-10-01"},
+    "New Haven CT": {"periodic": "biennial emissions test; no periodic safety inspection found", "fee_usd": 20, "late_fee_usd": 20, "late_rule": "more than 30 days late for the test or 60 days late for the free retest", "source": "https://ctemissions.com/Content/FeesAndPenaltiesFAQs", "date": "2026-10-01"},
+    "London": {"periodic": "annual MOT from 3 years old", "fee_gbp_max": 54.85, "source": "https://www.gov.uk/getting-an-mot/mot-test-fees", "date": "2026-10-01"},
+    "Dublin": {"periodic": "NCT (cars 4+ years: every 2 years; 10+ years: annual, per NCTS rules, not re-read here)", "fee_eur": 60, "retest_eur": 40, "source": "https://www.irishexaminer.com/news/arid-41535299.html", "date": "2026-10-01", "note": "Frequency rule not verified on 2026-10-01; treat as unverified."},
+    "Toronto": {"periodic": "none for private cars", "fee_cad": null, "source": "https://ero.ontario.ca/notice/019-0416", "date": "2026-10-01"},
+    "Vancouver": {"periodic": "none for private cars (AirCare ended 2014)", "fee_cad": null, "source": "https://news.gov.bc.ca/releases/2014ENV0112-001944", "date": "2026-10-01"},
+    "Mexico City": {"periodic": "semestral verificación", "fee_mxn": 765, "source": "https://www.nmas.com.mx/ciudad-de-mexico/sociedad/costo-verificacion-2026-cdmx-cuanto-sube-por-aumento-uma-partir-1-de-febrero/", "date": "2026-10-01"}
+  },
+
+  "maintenance": {
+    "intervals": [
+      {"model": "Toyota Corolla (2019+, North America)", "oil": "10,000 mi / 12 months (synthetic 0W-8 or 0W-16); severe use 5,000 mi / 6 months", "tire_rotation": "5,000 mi / 6 months", "brake_fluid": null, "coolant": "first at 100,000 mi / 120 months, then every 50,000 mi / 60 months", "timing": "chain (no scheduled replacement)", "spark_plugs": "120,000 mi", "source": "https://services.firestonecompleteautocare.com/toyota/corolla-2019-2025/ ; https://www.beamantoyota.com/helpful-resources/corolla-maintenance-schedule/ (Toyota's own PDF https://www.toyota.com/content/dam/toyota/brochures/pdf/2025/T-MMS-25Corolla.pdf returned 403)", "confidence": "search-summary, secondary", "timing_note": "Timing-chain status is general knowledge of Toyota's Dynamic Force engines, not read from a source on 2026-10-01; treat as unverified."},
+      {"model": "Toyota Camry / RAV4 (current)", "oil": null, "note": "Not read separately; Toyota's 10,000 mi / 12 month synthetic schedule is the same family per dealer pages, unverified for these models.", "source": null},
+      {"model": "Honda Civic / CR-V", "oil": "Maintenance Minder, up to about 10,000 mi", "tire_rotation": "Minder sub-item 1 (with oil service)", "brake_fluid": "every 3 years regardless of Minder", "coolant": "first about 120,000 mi / 10 years, then every 60,000 mi / 5 years (Minder code 5)", "timing": null, "source": "https://revrated.com/honda-civic-maintenance-schedule/ ; https://www.fisherhonda.com/honda-civic-maintenance-schedule/ (Honda's own Minder PDF https://owners.honda.com/... could not be text-extracted)", "confidence": "search-summary, secondary"},
+      {"model": "Ford F-150", "oil": null, "note": "Not researched to a source in this pass (Ford Intelligent Oil-Life Monitor).", "source": null},
+      {"model": "Tesla Model 3 / Model Y", "oil": "none (EV)", "tire_rotation": "every 6,250 mi (10,000 km) or at 2/32 in (1.5 mm) tread difference", "brake_fluid": "health check every 4 years, replace if necessary", "cabin_filter": "every 2 years", "coolant": null, "timing": "n/a", "source": "https://www.tesla.com/ownersmanual/model3/en_pr/GUID-E95DAAD9-646E-4249-9930-B109ED7B1D91.html", "confidence": "search-summary of owner's manual"},
+      {"model": "Volkswagen Golf (UK)", "oil": "fixed 10,000 mi / 12 months; flexible (PR code QI6) up to 30,000 km / 18,600 mi or 24 months", "brake_fluid": "every 2 years (secondary source)", "timing": "1.4 TSI EA211 toothed belt, ~100,000 mi range (secondary)", "source": "https://golfdz.com/vw-golf-service-intervals-schedule/ ; https://jxlperformance.co.uk/blogs/golf-gti-mk8/vw-golf-gti-mk8-maintenance-guide", "confidence": "search-summary, secondary"},
+      {"model": "Ford Puma 1.0 EcoBoost (UK)", "oil": null, "timing": "wet (oil-bathed) belt: Ford revised the interval more than once; 2022 guidance 10 years / 100,000 mi; some schedules 10 years / 150,000 mi; specialists work to ~6 years / 100,000 mi. The owner's own handbook governs.", "source": "https://www.parkers.co.uk/car-news/ford/ford-wet-belt-issues/ ; https://fastlanegroup.co.uk/ford-puma-wet-belt/", "confidence": "search-summary"},
+      {"model": "Nissan Qashqai 1.3 DIG-T (UK)", "oil": "18,000 mi / 12 months (PS140; older 12,500 mi / 12 months)", "brake_fluid": null, "timing": null, "source": "https://www.qashqaiforums.co.uk/viewtopic.php?t=11674 ; https://www.auto-abc.eu/Nissan-Qashqai/v17212-2021/service", "confidence": "search-summary, forum/secondary"},
+      {"model": "Hyundai Tucson / Kia Sportage", "oil": null, "note": "Not researched to a source in this pass.", "source": null},
+      {"model": "Nissan Versa (Mexico)", "oil": "every 6 months or 10,000 km, whichever first", "source": "https://www.autocava.com.mx/article/1066 ; https://www.informabtl.com/nissan-versa-que-tan-caro-es-darle-servicio-a-este-auto-en-agencia/", "confidence": "search-summary, secondary"}
+    ],
+    "typical_service_cost": {
+      "US": [
+        {"item": "Oil change, Toyota Corolla (national estimate)", "usd": "129-159", "labour": "63-93", "parts": "65-66", "source": "https://repairpal.com/estimator/toyota/corolla/oil-change-cost", "date": "2026-10-01"},
+        {"item": "Tire rotation, Honda Civic", "usd": "49-72", "source": "https://repairpal.com/estimator/honda/civic/tire-rotation-cost", "date": "2026-10-01"},
+        {"item": "Brake pads, Toyota Camry", "usd": "304-368 (2025-26 models 317-374)", "labour": "122-179", "parts": "182-189", "source": "https://repairpal.com/estimator/toyota/camry/brake-pad-replacement-cost", "date": "2026-10-01"}
+      ],
+      "UK": [
+        {"item": "Kwik Fit full service, 1401-2000cc", "gbp_from": 271.95, "source": "https://www.kwik-fit.com/servicing/service-pricing", "date": "2026-10-01"},
+        {"item": "Kwik Fit interim service, 1401-2000cc", "gbp_from": 211.95, "source": "https://www.kwik-fit.com/servicing/service-pricing", "date": "2026-10-01"}
+      ],
+      "Ireland": [
+        {"item": "Full service (AA Ireland, starting price)", "eur_from": 99, "other": "brake pads EUR 80-200+; timing belt EUR 400-1,000; battery EUR 100-250", "source": "https://www.theaa.ie/blog/understanding-the-costs-of-a-full-car-service-in-ireland/", "date": "published 2025-01-29, read 2026-10-01"},
+        {"item": "Sweeneys Garage full service", "eur_from": 210, "source": "https://sweeneysgarage.ie/car-service/", "date": "2026-10-01"}
+      ],
+      "Canada": [
+        {"item": "Oil change", "cad": null, "note": "Only secondary/aggregator figures found (Toronto conventional CAD 56-85, full synthetic CAD 102-147 incl. HST, cansumer.ca); unverified, not used."}
+      ],
+      "Mexico": [
+        {"item": "Nissan Versa 10,000 km service at agencia", "mxn": "1,550-2,500 (2020 Versa about 2,280; 20,000 km about 3,155)", "source": "https://www.autocava.com.mx/article/1066 ; https://www.informabtl.com/nissan-versa-que-tan-caro-es-darle-servicio-a-este-auto-en-agencia/", "confidence": "search-summary, secondary", "date": "2026-10-01"}
+      ]
+    }
+  },
+
+  "repairs": {
+    "repairpal_brand_reliability": {
+      "source": "https://repairpal.com/reliability and https://repairpal.com/reliability/<brand>",
+      "date": "2026-10-01 (RepairPal 2026 ratings)",
+      "all_brand_average": {"annual_cost_usd": 652, "unscheduled_visits_per_year": 0.4, "severe_probability": 0.12},
+      "brands": [
+        {"brand": "Honda", "rating": 4.0, "rank": "1/32", "annual_cost_usd": 428, "visits_per_year": 0.3, "severe_probability": 0.10},
+        {"brand": "Kia", "rating": 4.0, "rank": "3/32", "annual_cost_usd": 474, "visits_per_year": 0.2, "severe_probability": 0.10},
+        {"brand": "Hyundai", "rating": 4.0, "rank": "4/32", "annual_cost_usd": 468, "visits_per_year": 0.27, "severe_probability": 0.10},
+        {"brand": "Toyota", "rating": 4.0, "rank": "8/32", "annual_cost_usd": 441, "visits_per_year": 0.3, "severe_probability": 0.12},
+        {"brand": "Nissan", "rating": 4.0, "rank": "9/32", "annual_cost_usd": 500, "visits_per_year": 0.3, "severe_probability": 0.13},
+        {"brand": "Volkswagen", "rating": 3.5, "rank": "12/32", "annual_cost_usd": 676, "visits_per_year": 0.5, "severe_probability": 0.11},
+        {"brand": "Chevrolet", "rating": 3.5, "rank": "20/32", "annual_cost_usd": 649, "visits_per_year": 0.3, "severe_probability": 0.15},
+        {"brand": "Ford", "rating": 3.5, "rank": "21/32", "annual_cost_usd": 775, "visits_per_year": 0.3, "severe_probability": 0.15},
+        {"brand": "Ram", "rating": 3.0, "rank": "23/32", "annual_cost_usd": 858, "visits_per_year": 0.26, "severe_probability": 0.15},
+        {"brand": "Tesla", "rating": null, "annual_cost_usd": null, "note": "repairpal.com/reliability/tesla returned 404"}
+      ],
+      "models": [
+        {"model": "Toyota Corolla", "rating": 4.5, "rank": "1/36 compact cars", "annual_cost_usd": 362, "visits_per_year": 0.35, "severe_probability": 0.07},
+        {"model": "Toyota Camry", "rating": 4.0, "rank": "3/24 midsize cars", "annual_cost_usd": 388, "visits_per_year": 0.28, "severe_probability": 0.11},
+        {"model": "Toyota RAV4", "rating": 4.0, "rank": "3/26 compact SUVs", "annual_cost_usd": 429, "visits_per_year": 0.26, "severe_probability": 0.10},
+        {"model": "Honda Civic", "rating": 4.5, "rank": "3/36 compact cars", "annual_cost_usd": 368, "visits_per_year": 0.22, "severe_probability": 0.10},
+        {"model": "Honda CR-V", "rating": 4.5, "rank": "2/26 compact SUVs", "annual_cost_usd": 407, "visits_per_year": 0.3, "severe_probability": 0.09},
+        {"model": "Ford F-150", "rating": 3.5, "rank": "7th fullsize trucks", "annual_cost_usd": 788, "visits_per_year": 0.28, "severe_probability": 0.15, "class_average_usd": 936},
+        {"model": "Volkswagen Golf", "rating": 4.0, "rank": "25/36 compact cars", "annual_cost_usd": 630, "visits_per_year": 0.35, "severe_probability": 0.11},
+        {"model": "Nissan Versa", "rating": 4.0, "rank": "9/21 subcompact cars", "annual_cost_usd": 456, "visits_per_year": 0.37, "severe_probability": 0.10},
+        {"model": "Hyundai Tucson", "rating": 4.0, "rank": "5/26 compact SUVs", "annual_cost_usd": 426, "visits_per_year": 0.26, "severe_probability": 0.10},
+        {"model": "Kia Sportage", "rating": 4.0, "rank": "6/26 compact SUVs", "annual_cost_usd": 462, "visits_per_year": 0.19, "severe_probability": 0.11}
+      ],
+      "class_averages": {"compact_car_usd": 526, "compact_suv_usd": 521, "fullsize_truck_usd": 936},
+      "note": "US data from US repair invoices. RepairPal's 'visits' are unscheduled repairs per year; 'severe' is the share of repairs costing over 3x the average annual repair cost (RepairPal's method, not re-read)."
+    },
+    "carmd_vehicle_health_index_2026": {
+      "covers": "calendar 2025, 39 million+ vehicles",
+      "average_check_engine_repair_usd": 554,
+      "change": "+33% on the prior year; labour +51%, parts +23%",
+      "top_repairs_usd": [
+        {"rank": 1, "repair": "Catalytic converter", "usd": 1511},
+        {"rank": 2, "repair": "Oxygen sensor", "usd": 287},
+        {"rank": 3, "repair": "Ignition coil and spark plugs", "usd": 480},
+        {"rank": 4, "repair": "Mass air flow sensor", "usd": 346},
+        {"rank": 5, "repair": "Ignition coil", "usd": 256},
+        {"rank": 6, "repair": "EVAP purge control valve", "usd": 172},
+        {"rank": 7, "repair": "Fuel injectors", "usd": 572},
+        {"rank": 8, "repair": "ABS wheel speed sensor", "usd": 314},
+        {"rank": 9, "repair": "Thermostat", "usd": 324},
+        {"rank": 10, "repair": "Spark plugs", "usd": 299}
+      ],
+      "source": "https://www.forbes.com/sites/jimgorzelany/2026/04/22/study-reveals-the-most-common-check-engine-issues-and-repair-costs/ ; https://finance.yahoo.com/sectors/technology/articles/carmd-reports-record-check-engine-140000133.html",
+      "confidence": "search-summary",
+      "date": "published 2026-04-22, read 2026-10-01"
+    },
+    "consumer_reports_problem_rates": null,
+    "consumer_reports_note": "Not obtained: Consumer Reports' reliability data is paywalled.",
+    "labour_rates": {
+      "New York": {"usd_per_hour": null, "ranges": "NYC up to $200-250/h (torque360 blog); state typical $135-180 (secondary). AAA's 2026 state page prints NY $251.36 — its basis is unclear and it may not be an hourly shop rate.", "source": "https://blog.torque360.co/auto-repair-labor-rates-in-new-york/ ; https://www.aaa.com/autorepair/articles/average-mechanic-labor-rate-repair-costs-in-your-state-2026", "confidence": "secondary", "date": "2026-10-01"},
+      "Los Angeles": {"usd_per_hour": null, "ranges": "high-cost metros $170-200/h (secondary); AAA prints California $271.10 (basis unclear).", "source": "https://www.wickedfile.com/blogs/whats-the-right-labor-rate-for-my-auto-repair-shop-in-2026/ ; https://www.aaa.com/autorepair/articles/average-mechanic-labor-rate-repair-costs-in-your-state-2026", "confidence": "secondary", "date": "2026-10-01"},
+      "New Haven CT": {"usd_per_hour": {"A-1 Toyota general mechanical": 165, "A-1 Toyota brakes": 125, "A-1 Toyota maintenance": 130}, "source": "https://www.a1toyota.com/service/", "confidence": "page-read (named dealer's posted rates)", "date": "2026-10-01", "other": "AAA prints Connecticut $281.53 (basis unclear)."},
+      "US_national": {"note": "Almost half of shops price labour at $120-159/h (2025 PartsTech report, cited by AAA).", "source": "https://www.aaa.com/autorepair/articles/average-mechanic-labor-rate-repair-costs-in-your-state-2026", "date": "2026-10-01"},
+      "London": {"gbp_per_hour": 141, "basis": "south-west London independents, highest UK area; UK average £76; Huddersfield £47. What Car? survey Jan 2024 of 279 IGA-member independents.", "source": "https://autos.yahoo.com/141-london-47-huddersfield-huge-204316239.html", "confidence": "page-read", "date": "survey Jan 2024, read 2026-10-01", "older": "IGA Nov 2020: UK £47.47, inside M25 £55.48 (https://garagewire.co.uk/news/associations/iga/average-independent-garage-labour-rates-revealed/)"},
+      "Dublin": {"eur_per_hour": null, "ranges": "Dublin dealer up to €125/h, exotic brands ~€140; national €60-100 (AA's Conor Faughnan), Irish Times 2021-03-17. Newer: independents €80-120, Dublin dealer/specialist ~€120 (secondary).", "source": "https://www.irishtimes.com/life-and-style/motors/why-do-car-dealers-charge-bank-manager-fees-to-service-your-vehicle-1.4507738", "confidence": "page-read (2021 figures)", "date": "published 2021-03-17, read 2026-10-01"},
+      "Toronto": {"cad_per_hour": null, "ranges": "Ontario $120-140 average; GTA dealers $160-220+ (secondary aggregator).", "source": "https://trustedlocalauto.com/blog/shop-labor-rates-province-by-province-guide", "confidence": "search-summary, secondary", "date": "2026-10-01"},
+      "Vancouver": {"cad_per_hour": 163.21, "basis": "ICBC Collision Repair Program mechanical rate for car-in dates from 1 April 2026 (insurer-set rate for its repair network, not a retail posted rate)", "source": "https://partners.icbc.com/assets/c2Ms1g7KvsWdORGZ1OX1G/collision-facility-labour-rates-material-allowances.pdf", "confidence": "search-summary (PDF could not be text-extracted)", "date": "2026-10-01"},
+      "Mexico City": {"mxn_per_hour": 320, "basis": "CDMX taller labour per hour, 2025; independents 200-350, agencias up to 600 (secondary blog).", "source": "https://another-tool.com/como-calcular-la-mano-de-obra-de-un-taller-mecanico/", "confidence": "search-summary, secondary", "date": "2026-10-01"}
+    }
+  },
+
+  "customization": {
+    "wraps": [
+      {"city": "London", "shop": "London Tint Studio", "price": "from £1,400 (medium car), from £1,700 (Range Rover)", "time": "2-3 days", "source": "https://www.londontintstudio.co.uk/wrapping/"},
+      {"city": "London", "shop": "Prestige Tint", "price": "from £2,000 + VAT", "time": "2-7 days", "source": "https://prestigetint.co.uk/car-vinyl-wrapping/"},
+      {"city": "Mexico City", "shop": "Los Deslumbrantes", "price": "MXN 29,500 (0-4 m) to 34,000 (5-5.5 m)", "time": "5-9 days", "source": "https://www.losdeslumbrantes.com.mx/wrapping-car-wrap-car-vinil-automotriz"},
+      {"city": "Vancouver", "shop": null, "price": "CAD 2,500-6,000 typical full wrap (directory summary, no named shop price)", "source": "https://wraptor.io/shops/vancouver-bc", "confidence": "search-summary"},
+      {"city": "New York / Los Angeles / New Haven / Dublin / Toronto", "shop": null, "price": null, "note": "No named shop's posted full-wrap price found. The brief's $2,500-6,000 is not confirmed for these cities."}
+    ],
+    "paint": {
+      "maaco": {"tiers_usd": {"basic": "advertised 599-899", "preferred": "advertised 999-1,399", "premium": "advertised 1,499-1,999"}, "note": "From a secondary cost guide; maaco.com does not print package names or prices (page read 2026-10-01). Quotes are said to run 30-50% above advertised.", "source": "https://carpaintjobcost.com/maaco-paint-job-cost ; https://www.maaco.com/services/auto-painting", "confidence": "secondary"},
+      "uk_respray": "Already in SLATE (mods.ts): £2,000-4,000 full respray, solid colour."
+    },
+    "window_tint_law": {
+      "New York": {"windshield": "70% VLT; tint only in top 6 in", "front_sides": "70%", "rear_sides": "70% on sedans, coupes, hatchbacks, wagons, convertibles", "rear_window": "70% unless dual outside mirrors", "fine": "up to $150", "law": "VTL 375(12-a)", "source": "https://www.benjamingoldmanlawoffice.com/ny-vehicle-traffic-laws/vtl-375-12-a-tint-tickets.html ; https://www.cartintlaw.com/new-york/", "confidence": "search-summary"},
+      "California": {"front_sides": "70% combined glass+film (film alone 88%)", "rear": "any darkness with dual mirrors", "fine": "about $25-197, correctable", "law": "VC 26708", "source": "https://gilroyblackout.com/blog/california-window-tint-laws-2026-updated-guide/", "confidence": "search-summary"},
+      "Connecticut": {"front_sides": "35%", "rear_sides": "35% (sedans)", "rear_window": "any", "medical_exemption": "down to 20%", "fine": "$100-150 first offence", "law": "CGS 14-99g", "source": "https://tintlegal.com/window-tint-laws/connecticut/", "confidence": "search-summary"},
+      "UK": {"windscreen": "75% (vehicles first used on/after 1 April 1985)", "front_sides": "70%", "rear": "no limit", "pre_1985": "70% windscreen and front sides", "penalty": "prohibition notice, penalty notice or court; MOT fail", "source": "https://www.gov.uk/tinted-vehicle-window-rules", "confidence": "search-summary of gov.uk"},
+      "Ireland": {"windscreen_and_front_sides": "65%", "rear": "any", "enforced": "NCT and Gardaí with VLT meters", "source": "https://www.donegallive.ie/news/motoring/567033/explainer-what-are-the-laws-on-window-tinting-on-vehicles-in-ireland.html", "confidence": "search-summary", "note": "Statutory instrument number not confirmed."},
+      "Ontario": {"windshield": "no aftermarket tint since 1 Jan 2017 except a top strip no deeper than 75 mm", "front_sides": "no numeric VLT; may not 'substantially obscure the interior' (HTA s.73(3)); shops commonly cite 70% as a safe figure", "rear": "not restricted by s.73(3)", "source": "https://www.mychoice.ca/blog/tinted-windows-laws-and-restrictions-in-ontario/ ; https://tintgta.ca/blog/ontario-window-tint-laws", "confidence": "search-summary"},
+      "British Columbia": {"front_sides": "no tint film at all except optically clear UV film", "windshield": "no film (strip only)", "rear_sides_and_back": "allowed, no VLT figure stated", "law": "Motor Vehicle Act Regulations s.7.05(8)", "source": "https://elementslabs.ca/bc-window-tint-laws/ ; https://www.tinting-laws.com/canada/british-columbia/", "confidence": "search-summary"},
+      "Mexico City": {"rule": "Art. 43 Reglamento de Tránsito CDMX: no solar-control film darkening side or rear glass by more than 20%; medical exception noted on tarjeta de circulación", "fine": "20, 25 or 30 UMA (about MXN 2,200-3,300)", "source": "https://www.eluniversal.com.mx/autopistas/esta-sera-la-multa-para-los-autos-con-vidrios-polarizados/ ; https://mvsnoticias.com/nacional/cdmx/2024/10/17/este-es-el-maximo-de-polarizado-permitido-en-la-cdmx-evita-que-te-multen-661447.html", "confidence": "search-summary"}
+    },
+    "window_tint_prices": [
+      {"city": "Los Angeles", "shop": "Car City Custom", "full_car_without_windshield_usd": {"basic": 270, "carbon": 380, "nano_ceramic": 550}, "source": "https://carcitycustom.com/pricing/"},
+      {"city": "Toronto (Vaughan)", "shop": "Elite Tint", "coupe_sedan_cad": {"classic": 250, "ceramic": 380, "stratus": 580}, "source": "https://elitetint.ca/pricelist/"},
+      {"city": "Vancouver", "shop": "Drippy Customs", "rear_windows_from_cad": 290, "time": "2-4 hours", "source": "https://drippycustoms.ca/window-tinting-vancouver/"},
+      {"city": "Dublin", "shop": "We Tint", "from_eur": 80, "source": "https://wetint.ie/price-list/"},
+      {"city": "New Haven", "shop": "M&M Auto Detailing", "prices_usd": "2 windows 140-180; all sides/rear 300+; windshield 170+", "source": "https://mmautodetailing.com/detailing-services/car-window-tinting/", "confidence": "search-summary"},
+      {"city": "New York / London / Mexico City", "shop": null, "price": null, "note": "No named shop's posted tint price read."}
+    ],
+    "wheels_fitment": [
+      {"model": "Toyota Corolla 2019+ (US)", "bolt_pattern": "5x100", "center_bore_mm": 54.1, "thread": "M12x1.5", "source": "https://www.threepiece.us/blog/2023-2026-toyota-corolla-wheel-fitment-guide-5x100/ ; https://boltpatternhq.com/toyota/corolla/2023/"},
+      {"model": "Toyota Camry XV70", "bolt_pattern": "5x114.3", "center_bore_mm": 60.1, "source": "https://www.santaanawheel.com/blog/toyota-oem-wheels-fitment-guide/"},
+      {"model": "Toyota RAV4 XA50", "bolt_pattern": "5x114.3", "center_bore_mm": 60.1, "source": "https://www.santaanawheel.com/blog/toyota-oem-wheels-fitment-guide/"},
+      {"model": "Honda Civic (11th gen)", "bolt_pattern": "5x114.3", "center_bore_mm": 64.1, "source": "https://www.fitmentindustries.com/blogs/1800/eleventh-generation-honda-civic-fitment-guide"},
+      {"model": "Honda CR-V (6th gen)", "bolt_pattern": "5x114.3", "center_bore_mm": 64.1, "source": "https://us.hubcentric-rings.com/car_models/honda/cr-v/"},
+      {"model": "Ford F-150 (2021+)", "bolt_pattern": "6x135", "center_bore_mm": 87.1, "thread": "M14x1.5", "torque": "150 lb-ft", "source": "https://www.sdwheel.com/blogs/1347/2021-2022-ford-f-150-fitment-guide"},
+      {"model": "Tesla Model 3 / Model Y", "bolt_pattern": "5x114.3", "center_bore_mm": 64.1, "source": "https://unpluggedperformance.com/tesla-wheel-and-tire-guide/"},
+      {"model": "Volkswagen Golf Mk8", "bolt_pattern": "5x112", "center_bore_mm": 57.1, "source": "https://hubcentric-rings.com/car_models/volkswagen/golf/"},
+      {"model": "Ford Puma (2019+)", "bolt_pattern": "5x108", "center_bore_mm": 63.4, "source": "https://wheel-size.com/size/ford/puma/j2k-2019-now"},
+      {"model": "Nissan Qashqai J12", "bolt_pattern": "5x114.3", "center_bore_mm": 66.1, "thread": "M12x1.25", "source": "https://www.wheelfitment.eu/car/Nissan/Qashqai%20J12%20(2022%20-%20).html"},
+      {"model": "Hyundai Tucson NX4", "bolt_pattern": "5x114.3", "center_bore_mm": 67.1, "source": "https://www.wheel-size.com/size/hyundai/tucson/nx4-2024-now/"},
+      {"model": "Kia Sportage NQ5", "bolt_pattern": "5x114.3", "center_bore_mm": 67.1, "source": "https://hubcentric-rings.com/car_models/kia/sportage/"},
+      {"model": "Nissan Versa (2020+)", "bolt_pattern": "4x100", "center_bore_mm": 60.1, "thread": "M12x1.25", "source": "https://www.go-parts.com/garage/wheel-nissan-versa-nissan-cube-nissan-versa-note-2007-2022"}
+    ],
+    "wheels_fitment_confidence": "search-summary of fitment guides, read 2026-10-01",
+    "upholstery": [
+      {"city": "UK (County Durham, national)", "shop": "Hide N Seat Auto Interiors", "prices_gbp": {"front_seats_pair": 750, "steering_wheel_recover": 165, "dashboard": 600, "complete_interior_from": 2000}, "source": "https://hidenseat.co.uk/uncategorized/price-list-car-retrims/", "confidence": "page-read (sample list)"},
+      {"city": "US", "shop": null, "price": "leather reupholstery about $200-750 per seat (consumer guide, no named shop)", "source": "https://www.synchrony.com/blog/automotive/cost-to-reupholster-car-seats.html", "confidence": "search-summary"},
+      {"city": "others", "price": null, "note": "No named-shop upholstery price found for the other cities."}
+    ],
+    "audio": [
+      {"market": "US", "shop": "Best Buy Geek Squad", "prices_usd": {"in_dash_stereo_install_no_touchscreen": 99.99, "with_touchscreen": 149.99, "off_road_vehicle_stereo": 129.99}, "extra": "vehicle-specific parts (dash kit, harness) extra, $20-700 per a secondary guide", "source": "https://www.bestbuy.com/product/in-dash-car-stereo-install-with-touchscreen-hardware-not-included/JCQ66HT689 ; https://www.bestbuy.com/site/clp-services/installation-offer/pcmcat1706305175019.c?id=pcmcat1706305175019", "confidence": "search-summary"},
+      {"market": "UK / Ireland / Canada / Mexico", "price": null, "note": "Not researched to a named price."}
+    ],
+    "lowering_legality": {
+      "California": "Legal ride height since 1 Jan 2024: AB 436 (signed 13 Oct 2023) repealed VC 24008 and local cruising bans. Source: https://www.hagerty.com/media/news/gavin-newsom-signs-bill-to-help-cruising-return-to-california/",
+      "New York": null,
+      "New York_note": "No specific ride-height rule found; the annual inspection checks suspension components.",
+      "Connecticut": null,
+      "UK": "Legal; must be declared to the insurer (SLATE already loads +15.93% for suspension, mods.ts).",
+      "British Columbia": "Suspension height altered by more than 10 cm from the maker's specification brings the vehicle under MVAR s.25.20 (modified-vehicle rules, inspection by a designated facility). Source: https://www.bclaws.gov.bc.ca/civix/document/id/loo68/loo68/05_26_58-04 (search-summary).",
+      "Ontario": null,
+      "Ireland": null,
+      "Mexico City": null
+    },
+    "time_in_shop": [
+      {"job": "Full vinyl wrap", "time": "2-3 days (London Tint Studio); 2-7 days (Prestige Tint); 5-9 days (Los Deslumbrantes)", "sources": ["https://www.londontintstudio.co.uk/wrapping/", "https://prestigetint.co.uk/car-vinyl-wrapping/", "https://www.losdeslumbrantes.com.mx/wrapping-car-wrap-car-vinil-automotriz"]},
+      {"job": "Window tint, full car", "time": "same day, 2-4 hours (Drippy Customs)", "sources": ["https://drippycustoms.ca/window-tinting-vancouver/"]},
+      {"job": "Routine service", "time": "same day (Sweeneys: drop in morning, collect end of day); Nissan Servicio Express 60 minutes", "sources": ["https://sweeneysgarage.ie/car-service/", "https://www.nissaninsurgentesnorte.com.mx/promociones-de-servicio"]},
+      {"job": "Paint, upholstery, audio", "time": null}
+    ]
+  },
+
+  "rentals": {
+    "dealer_loaners": [
+      {"dealer": "Toyota of Manhattan", "city": "New York", "policy": "complimentary, by appointment", "source": "https://www.toyotaofmanhattan.com/service/center.htm"},
+      {"dealer": "A-1 Toyota", "city": "New Haven", "policy": "$34.95 per day; shuttle also offered", "source": "https://www.a1toyota.com/service/"},
+      {"dealer": "Toronto Honda", "city": "Toronto", "policy": "free loaner and free shuttle, limitations apply", "source": "https://www.torontohonda.com/service/"},
+      {"dealer": "Jemca Toyota / Toyota Isleworth", "city": "London", "policy": "courtesy car offered as an option", "source": "https://www.toyota.co.uk/dealers/jemcaedgwareroad"},
+      {"dealer": "others", "policy": null, "note": "Toyota of Hollywood, Jim Pattison Toyota Downtown, Tadg Riordan Tallaght and the CDMX agencias did not publish a loaner policy on the pages read."}
+    ],
+    "rental_daily_rates_kayak": {
+      "basis": "KAYAK city pages, average daily price from users' searches over the past year, read 2026-10-01; small-car class unless stated. Not Enterprise- or Hertz-specific unless stated.",
+      "New York": {"currency": "USD", "small_car_avg": 64, "all_avg": 84, "source": "https://www.kayak.com/Cheap-New-York-Car-Rentals.15830.cars.ksp"},
+      "Los Angeles": {"currency": "USD", "small_car_avg": 35, "medium_avg": 67, "source": "https://www.kayak.com/Cheap-Los-Angeles-Car-Rentals.16078.cars.ksp", "note": "The page's own average figures are inconsistent (small 'around $35' but '40% cheaper than average' of about $32)."},
+      "New Haven CT": {"currency": "USD", "small_car_avg": 53, "enterprise_avg": 71, "hertz_avg": 60, "source": "https://www.kayak.com/Cheap-New-Haven-Car-Rentals.14151.cars.ksp ; https://www.kayak.com/Enterprise-Car-Rentals-New-Haven.AENTERPRISE.14151.cl.ksp ; https://www.kayak.com/Hertz-Car-Rentals-New-Haven.AHERTZ.14151.cl.ksp", "confidence": "small-car page-read; Enterprise/Hertz search-summary"},
+      "London": {"currency": "GBP", "small_car_avg": 23, "all_avg": 32, "source": "https://www.kayak.co.uk/Cheap-London-Car-Rentals.28501.cars.ksp"},
+      "Dublin": {"currency": "EUR", "small_car_avg": 26, "medium_avg": 48, "source": "https://www.kayak.ie/Cheap-Dublin-Car-Hire.7362.cars.ksp", "note": "Reviews warn of mandatory insurance charges at pickup on top of the quote."},
+      "Toronto": {"currency": "CAD", "small_car_avg": null, "medium_avg": 55, "cheapest_seen": 22, "source": "https://www.ca.kayak.com/Cheap-Toronto-Car-Rentals.11592.cars.ksp", "note": "Small-car average not printed on the page read."},
+      "Vancouver": {"currency": "CAD", "small_car_avg": 46, "source": "https://www.ca.kayak.com/Cheap-Vancouver-Car-Rentals.6668.cars.ksp"},
+      "Mexico City": {"currency": "MXN", "economy_avg": 200, "all_avg": 440, "source": "https://www.kayak.com.mx/Renta-de-autos-baratos-Ciudad-de-Mexico.53588.cars.ksp"}
+    }
+  },
+
+  "gaps": [
+    "Posted brake-pad-per-axle and tire-rotation prices from named shops: chains don't print them; only RepairPal national estimates (Camry pads $304-368, Civic rotation $49-72) and secondary Midas/Firestone ranges were found.",
+    "RepairPal labour rate by metro: not reachable; used a named dealer's posted rates (A-1 Toyota) and secondary ranges.",
+    "Consumer Reports problem rates: paywalled.",
+    "Maintenance intervals from the makers' own documents for F-150, Camry, RAV4, Tucson, Sportage, and brake fluid/coolant for several: not read to source; Toyota's and Honda's PDFs were blocked or not text-extractable.",
+    "Halfords service prices: page didn't print them; search figures inconsistent.",
+    "Canadian Tire and Mr. Lube oil-change prices: only secondary figures.",
+    "Named-shop wrap prices for New York, Los Angeles, New Haven, Dublin and Toronto; tint prices for New York, London and Mexico City; upholstery and audio outside the US and UK.",
+    "Lowering legality for New York, Connecticut, Ontario, Ireland and Mexico City.",
+    "Loaner policies for Toyota of Hollywood, Jim Pattison Toyota Downtown, Tadg Riordan and CDMX agencias.",
+    "NCT frequency (4+ and 10+ years) not re-verified; ncts.ie fees page 404."
+  ]
+}

@@ -62,6 +62,19 @@ describe('a term deposit’s end', () => {
     expect(Math.round((term.maturesAt! - term.renewedAt!) / (30.44 * MS_DAY))).toBe(months);
   });
 
+  it('breaks at MUFG at its early rate: the ordinary deposit’s in the first six months, and never under it after', () => {
+    const sim = lifeIn('jp-13-tokyo', 'jp-mufg', 'life-mufg-break');
+    const term = openTerm(sim, 10_000_000_00);
+    sim.advanceTo(term.openedAt + 100 * MS_DAY);
+    const earned = Math.floor(term.accrued!);
+    // Kept: the ordinary rate for the days run, the 0.40% of August 2026 (0.7 of the term's 0.50% is less).
+    const kept = earned - breakQuote(sim, term).penalty;
+    expect(kept).toBeGreaterThan(0);
+    expect(kept).toBeLessThan(earned);
+    expect(kept).toBeCloseTo(term.balance * 0.004 * 100 / 365, -3);
+    expect(breakQuote(sim, term).estimate).toBe(false);
+  });
+
   it('pays out instead when the holder says so, and moves into savings where that’s the bank’s way', () => {
     const us = lifeIn('us-ny-newyork', 'us-chase', 'life-payout');
     const cd = openTerm(us, 10_000_00);
@@ -309,6 +322,17 @@ describe('savings', () => {
     expect(feeFor(sim, acct, monthStartOf(sim, sim.now)).fee).toBe(0);
   });
 
+  it('pays Arion’s and Íslandsbanki’s savings by their tiers, as their rate tables step them', () => {
+    const arion = bankById('is-arion')!.savings!;
+    const isb = bankById('is-islandsbanki')!.savings!;
+    const at = (bankId: string) => ({ bankId } as Account);
+    expect(tierRate(arion, at('is-arion'), 500_000_00)).toBeUndefined();
+    expect(tierRate(arion, at('is-arion'), 6_000_000_00)).toBe(0.0575);
+    expect(tierRate(arion, at('is-arion'), 50_000_000_00)).toBe(0.0585);
+    expect(tierRate(isb, at('is-islandsbanki'), 2_000_000_00)).toBe(0.0617);
+    expect(tierRate(isb, at('is-islandsbanki'), 80_000_000_00)).toBe(0.0631);
+  });
+
   it('reads a tier, a floor and a cap in the bank’s own money', () => {
     const product = { tiers: [{ from: 100_00, rate: 0.01 }, { from: 1_000_00, rate: 0.02 }], rateFrom: 100_00, rateUpTo: 1_000_00 } as never;
     const account = { bankId: 'ca-cibc' } as Account;
@@ -391,6 +415,30 @@ describe('an idle account', () => {
     expect(current(sim).balance - before).toBe(held);
     expect(sim.player.unclaimed).toEqual([]);
     expect(run(sim, 'bank.claim_unclaimed', {}).ok).toBe(false);
+  });
+
+  it('writes ninety days before it goes to the state, and getting in touch keeps it', () => {
+    const sim = lifeIn('us-ny-newyork', 'us-chase', 'life-escheat-notice');
+    const saver = savings(sim)!;
+    give(sim, saver, 500_00);
+    const long = sim.now - (3 * 365.25 - 100) * MS_DAY;
+    idleAccounts(sim, sim.player, (a) => (a.id === saver.id ? long : sim.now));
+    expect(saver.escheatWarned).toBeUndefined();
+    const soon = sim.now - (3 * 365.25 - 80) * MS_DAY;
+    idleAccounts(sim, sim.player, (a) => (a.id === saver.id ? soon : sim.now));
+    expect(saver.escheatWarned).toBe(sim.now);
+    const notice = Object.values(sim.universe.decisions).find((d) => d.refType === 'unclaimed-notice' && d.refId === saver.id && !d.resolvedAt)!;
+    expect(notice.actions[0]).toMatchObject({ commandKind: 'bank.reactivate', payload: { accountId: saver.id } });
+    sim.must({ kind: notice.actions[0]!.commandKind, payload: notice.actions[0]!.payload });
+    expect(notice.resolvedAt).toBeDefined();
+    // Kept: the untouched years start again from getting in touch.
+    idleAccounts(sim, sim.player, (a) => (a.id === saver.id ? soon - 200 * MS_DAY : sim.now));
+    expect(saver.closedAt).toBeUndefined();
+    // And the next time it sits untouched that long, the bank writes again.
+    sim.advanceBy(10 * MS_DAY);
+    saver.reactivatedAt = sim.now - (3 * 365.25 - 80) * MS_DAY;
+    idleAccounts(sim, sim.player, (a) => (a.id === saver.id ? soon : sim.now));
+    expect(saver.escheatWarned).toBe(sim.now);
   });
 
   it('stays with a German bank however long it sits, Germany having no scheme', () => {

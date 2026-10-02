@@ -10,11 +10,13 @@ import { cardOf } from '@/engine/systems/credit';
 import { payFromCurrent, spend } from '@/engine/systems/household';
 import { ESTIMATE_PENDING_DAYS, pendingDaysOf, pendingOn, postedBalance } from '@/engine/systems/pending';
 import { activity } from '@/engine/systems/statements';
+import { afterBusinessDays } from '@/engine/content/bankdays';
 
 const lifeIn = (cityId: string, bankId: string, seed = 'pend') =>
   quickSave({ startLocationId: cityId, homeRegionId: cityId, livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
 const current = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!;
-const calendar = (business: number) => Math.ceil(business * 7 / 5) * MS_DAY;
+/** The bank's business days on from a moment, as time: its weekends and holidays skipped (`content/bankdays.ts`). */
+const calendar = (from: number, business: number) => afterBusinessDays(from, business, 'us', 'America/New_York') - from;
 
 describe('a card payment', () => {
   it('is held against the available balance at once and posts in the bank’s days', () => {
@@ -28,7 +30,9 @@ describe('a card payment', () => {
     expect(account.balance).toBeLessThan(before);
     expect(pendingOn(sim, account)).toBeLessThanOrEqual(-45_00);
     expect(postedBalance(sim, account)).toBe(posted);
-    expect(txn.postsAt! - txn.at).toBe(calendar(pendingDaysOf(account).days));
+    // Two business days from a Monday: the Wednesday.
+    expect(txn.postsAt! - txn.at).toBe(calendar(txn.at, pendingDaysOf(account).days));
+    expect(txn.postsAt! - txn.at).toBe(2 * MS_DAY);
     const line = activity(sim, account, txn.at, txn.at + 1).lines.find((l) => l.id === txn.id)!;
     expect(line.pending).toBe(true);
     sim.advanceTo(txn.postsAt! + 1000);
@@ -47,7 +51,7 @@ describe('a card payment', () => {
     expect(spend(sim, sim.player, 30_00, 'Groceries', 'food')).toBe(true);
     const txn = sim.universe.transactions.at(-1)!;
     expect(txn.postings.some((p) => p.accountId === card.id)).toBe(true);
-    expect(txn.postsAt! - txn.at).toBe(calendar(pendingDaysOf(card).days));
+    expect(txn.postsAt! - txn.at).toBe(calendar(txn.at, pendingDaysOf(card).days));
     expect(pendingOn(sim, card)).toBeLessThanOrEqual(-30_00);
   });
 

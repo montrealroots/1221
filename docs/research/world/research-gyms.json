@@ -1,0 +1,2133 @@
+{
+  "meta": {
+    "date_read": "2026-10-01",
+    "read_method_legend": {
+      "page": "read from the page itself",
+      "search-summary": "taken from search results because the page refused"
+    },
+    "caveats": [
+      "monthly_price is as published: Canadian chains (Fit4Less, Fitness World, YMCA BC) often bill biweekly - read billing_period/notes alongside it.",
+      "For City of Toronto FitnessTO and City of Vancouver Flexipass, annual_fee holds the 12-month pass price, not a maintenance fee (see notes).",
+      "tax_included null means the page did not say; see tax and town tax_notes for whether tax applies at all.",
+      "Prices vary by branch within chains (e.g. Smart Fit, PureGym US, 24 Hour Fitness); each figure is for the named branch or as noted."
+    ]
+  },
+  "towns": [
+    {
+      "town": "New York",
+      "country": "US",
+      "currency": "USD",
+      "tax_notes": "New York State Tax Bulletin TB-ST-329 (read 2026-10-01): dues, membership and initiation fees of health and fitness facilities located in New York City are subject to the NYC local sales tax only (not the state tax). The bulletin page read does not state the rate; secondary sources give 4.5%. Whether nonprofit YMCAs collect it was not confirmed. Source: https://tax.ny.gov/pubs_and_bulls/tg_bulletins/st/health_and_fitness_clubs.htm",
+      "gyms": [
+        {
+          "name": "Planet Fitness Manhattan (Union Square)",
+          "chain": "Planet Fitness",
+          "branch_address": "22 E 14th St, New York, NY 10003",
+          "hours": "Mon-Thu 5:00-23:00, Fri 5:00-22:00, Sat-Sun 7:00-19:00 (third-party listings via search)",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Classic",
+              "monthly_price": 19,
+              "joining_fee": 59,
+              "annual_fee": 59,
+              "min_term": "12 months",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "'plus taxes & fees'; annual fee billed on or shortly after October 1. A no-commitment Classic at $24/mo with $29 startup fee appeared for Manhattan clubs in search results but was not confirmed for this branch."
+            },
+            {
+              "tier": "PF Black Card",
+              "monthly_price": 37.99,
+              "joining_fee": 1,
+              "annual_fee": 0,
+              "min_term": "none (no commitment)",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "'plus taxes & fees'. Search summary said no annual fee on this offer; PF Black Card usually carries one elsewhere, so treat the 0 with caution."
+            }
+          ],
+          "pool": false,
+          "classes": null,
+          "sauna": false,
+          "source_url": "https://www.planetfitness.com/gyms/manhattan-union-square-ny/offers",
+          "date_read": "2026-10-01",
+          "read_method": "search-summary",
+          "notes": "planetfitness.com returned HTTP 403 to direct fetch; figures are from search-result summaries of the branch offers page. Pool/sauna false by chain format (Black Card has hydromassage and tanning), not read from this branch's page."
+        },
+        {
+          "name": "Crunch Union Square",
+          "chain": "Crunch Fitness (Signature club)",
+          "branch_address": "113 4th Ave, New York, NY 10003",
+          "hours": "Mon-Thu 5:00-23:00, Fri 5:00-22:00, Sat 7:00-21:00, Sun 8:00-21:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "All Crunch",
+              "monthly_price": 127.2,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "Only tier price on the branch page. Enrollment fee, annual fee, contract terms and whether $127.20 already includes NYC tax were not on the page; the join page did not render its content."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://www.crunch.com/locations/union-square",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Page lists 50+ group classes weekly and dry saunas in both locker rooms; no pool mentioned (recorded false on that basis)."
+        },
+        {
+          "name": "McBurney YMCA",
+          "chain": "YMCA of Greater New York",
+          "branch_address": "125 West 14th Street, New York, NY 10011",
+          "hours": "Mon-Fri 6:00-21:00, Sat-Sun 8:00-17:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Adult (18-64)",
+              "monthly_price": 129,
+              "joining_fee": 0,
+              "annual_fee": 0,
+              "min_term": "none",
+              "cancellation": "'No contracts, no annual fees'",
+              "tax_included": null,
+              "notes": "Citywide access to all YMCA NYC branches. A fall promotion (8/31-10/5) adds December free and $0 joiner's fee for staying 3 months."
+            },
+            {
+              "tier": "Senior (65+)",
+              "monthly_price": 104,
+              "joining_fee": 0,
+              "annual_fee": 0,
+              "min_term": "none",
+              "cancellation": "No contracts",
+              "tax_included": null,
+              "notes": null
+            },
+            {
+              "tier": "Student",
+              "monthly_price": 104,
+              "joining_fee": null,
+              "annual_fee": 0,
+              "min_term": "none",
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "Student ID required; join in person."
+            },
+            {
+              "tier": "Teen (12-17)",
+              "monthly_price": 56,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": "none",
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "Or $674/year; join in person."
+            },
+            {
+              "tier": "Family 1 (1 adult + kids under 18)",
+              "monthly_price": 152,
+              "joining_fee": 0,
+              "annual_fee": 0,
+              "min_term": "none",
+              "cancellation": null,
+              "tax_included": null,
+              "notes": null
+            },
+            {
+              "tier": "Family 2 (2 adults + kids under 18)",
+              "monthly_price": 225,
+              "joining_fee": 0,
+              "annual_fee": 0,
+              "min_term": "none",
+              "cancellation": null,
+              "tax_included": null,
+              "notes": null
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://ymcanyc.org/locations/mcburney-ymca/membership",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Branch page https://ymcanyc.org/locations/mcburney-ymca lists indoor pool, sauna, steam room, running track, basketball court and complimentary group fitness classes. Financial assistance available. Tax treatment for this nonprofit not stated."
+        },
+        {
+          "name": "PureGym Park Slope (formerly Blink Fitness)",
+          "chain": "PureGym US (took over Blink Fitness; blinkfitness.com now 301-redirects to puregym.com/us)",
+          "branch_address": "227 4th Ave, Brooklyn, NY 11215",
+          "hours": "24 hours a day, 7 days a week",
+          "is_24_7": true,
+          "tiers": [
+            {
+              "tier": "Core",
+              "monthly_price": 24,
+              "joining_fee": 40,
+              "annual_fee": null,
+              "min_term": "12 months",
+              "cancellation": "Membership agreement: cancelling a 12-month commitment early costs a $60 buy-out fee; to end at expiry give 7 business days' notice or it renews month-to-month. 14-day cooling-off cancellation with full refund.",
+              "tax_included": null,
+              "notes": "Single gym access."
+            },
+            {
+              "tier": "Premium - No Commit",
+              "monthly_price": 34,
+              "joining_fee": 20,
+              "annual_fee": null,
+              "min_term": "none (month-to-month)",
+              "cancellation": "Cancel any time; notice due at least 7 days before the next dues date (search summary of terms).",
+              "tax_included": null,
+              "notes": "Multi-gym access."
+            },
+            {
+              "tier": "Premium Plus",
+              "monthly_price": 43,
+              "joining_fee": 10,
+              "annual_fee": null,
+              "min_term": "12 months",
+              "cancellation": "$60 early buy-out fee; 7 business days' notice before expiry, else auto-renews month-to-month.",
+              "tax_included": null,
+              "notes": "Access to all 56 US gyms; guest 4x/month."
+            }
+          ],
+          "pool": false,
+          "classes": null,
+          "sauna": null,
+          "source_url": "https://www.puregym.com/us/gyms/ny/brooklyn-227-fourth-avenue",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Membership agreement (https://www.puregym.com/us/wp-content/uploads/2025/09/TCs.pdf?v=2, read as PDF) confirms an Annual Maintenance Fee charged with the first month and yearly, but gives no amount; search results quoted $59.99 and $64.99 inconsistently, so it is null. Prices vary by branch: PureGym Canarsie (9029 Flatlands Ave, Brooklyn) lists Core $26/$40 join, Premium No Commit $36/$20, Premium Plus $45/$10. Pool false as none listed; classes and sauna not stated. Current promo: $10 join fee + rest of month free at selected gyms."
+        }
+      ]
+    },
+    {
+      "town": "New Haven",
+      "country": "US",
+      "currency": "USD",
+      "tax_notes": "Connecticut taxes health and athletic club services (membership, initiation and similar fees) at the 6.35% state sales tax rate; services of 501(c) nonprofits and municipalities are excluded (CT DRS SN 2007(1), via search summary). A bill to exempt health clubs (HB 5079) was introduced; its passage was not confirmed. Source: https://portal.ct.gov/drs/publications/special-notices/2007/sn-2007-1",
+      "gyms": [
+        {
+          "name": "Planet Fitness New Haven",
+          "chain": "Planet Fitness",
+          "branch_address": "160 Amity Rd, New Haven, CT 06515",
+          "hours": "Mon-Thu 5:00-23:00, Fri 5:00-21:00, Sat-Sun 7:00-19:00 (third-party listings via search)",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Classic",
+              "monthly_price": 15,
+              "joining_fee": 59,
+              "annual_fee": 49,
+              "min_term": "none (no commitment) per search summary",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "'plus taxes and fees'; annual fee billed on or shortly after October 1. Conflict: one search summary gave Classic at $10/mo; two others gave $15. $15 recorded."
+            },
+            {
+              "tier": "PF Black Card",
+              "monthly_price": 24.99,
+              "joining_fee": 1,
+              "annual_fee": 49,
+              "min_term": "none (no commitment) per search summary",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "'plus taxes & fees'."
+            }
+          ],
+          "pool": false,
+          "classes": null,
+          "sauna": false,
+          "source_url": "https://www.planetfitness.com/gyms/new-haven-ct/offers",
+          "date_read": "2026-10-01",
+          "read_method": "search-summary",
+          "notes": "planetfitness.com returned HTTP 403. Nearby but outside the city: PF East Haven, 836 Foxon Rd, East Haven CT 06513. Pool/sauna false by chain format, not read from the page."
+        },
+        {
+          "name": "Orangetheory Fitness New Haven",
+          "chain": "Orangetheory Fitness",
+          "branch_address": "25 Grove St, New Haven, CT 06511",
+          "hours": "Open 7 days a week (class-schedule studio; times not listed)",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Premier",
+              "monthly_price": 169,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": "month-to-month",
+              "cancellation": "30 days' notice",
+              "tax_included": null,
+              "notes": "Unlimited classes; 30-day risk-free guarantee requires 12 sessions at home studio."
+            },
+            {
+              "tier": "Elite",
+              "monthly_price": 109,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": "month-to-month",
+              "cancellation": "30 days' notice",
+              "tax_included": null,
+              "notes": "Class allowance unclear: the page reader said 'unlimited', which conflicts with Premier; Orangetheory Elite is usually 8 classes/month. Not confirmed."
+            },
+            {
+              "tier": "Basic",
+              "monthly_price": 69,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": "month-to-month",
+              "cancellation": "30 days' notice",
+              "tax_included": null,
+              "notes": "Page reader said 8 classes/month; Basic is usually 4. Not confirmed."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": null,
+          "source_url": "https://www.orangetheory.com/en-us/locations/new-haven-connecticut-1251",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Class-only studio. Class packs $115-$539 (5-30 classes). Freeze up to 60 days, twice a year."
+        },
+        {
+          "name": "City Climb Gym",
+          "chain": "Independent (climbing gym)",
+          "branch_address": "432 Science Park, New Haven, CT 06511",
+          "hours": "Mon-Fri 14:00-22:00, Sat-Sun 10:00-20:00; members-only Tue/Fri 10:00-14:00; early bird Thu 6:00-9:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Adult monthly EFT",
+              "monthly_price": 62,
+              "joining_fee": 25,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "Includes free yoga/fitness classes."
+            },
+            {
+              "tier": "Student/Military/First Responder/Healthcare/Youth monthly EFT",
+              "monthly_price": 52,
+              "joining_fee": 25,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": null,
+              "notes": null
+            },
+            {
+              "tier": "Pre-paid month",
+              "monthly_price": 75,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": "one month prepaid",
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "+$24 for unlimited rentals. Adult day pass $20."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": null,
+          "source_url": "http://www.cityclimbgym.com/pricing",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Family: $62 first adult + $52 second + $37 per child."
+        },
+        {
+          "name": "New Haven YMCA Youth Center",
+          "chain": "Central Connecticut Coast YMCA",
+          "branch_address": "50 Howe Street, New Haven, CT 06511",
+          "hours": "Mon-Fri 7:30-18:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Membership",
+              "monthly_price": null,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "No prices on the branch page. A search summary said rates use a household-income sliding scale, with a youth rate of $45/mo and $25 joiner fee; not confirmed from a page."
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": null,
+          "source_url": "https://cccymca.org/locations/newhaven/",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Youth center only (ages 1-23: child care, swim lessons, youth sports), not a full adult fitness facility. No adult YMCA gym in New Haven proper was found."
+        }
+      ]
+    },
+    {
+      "town": "Los Angeles",
+      "country": "US",
+      "currency": "USD",
+      "tax_note": "California does not charge sales tax on gym membership dues. CDTFA, Tax Guide for Membership Fees (https://cdtfa.ca.gov/industry/membership-fees/): 'Membership fees that grant access to health club facilities, such as a gym or a massage facility, are generally not taxable even if the operator sells consumables, fitness and wellness merchandise, or other miscellaneous items on the premises.' Chains still print 'taxes may apply' as boilerplate.",
+      "gyms": [
+        {
+          "name": "24 Hour Fitness Mid Wilshire Sport",
+          "chain": "24 Hour Fitness",
+          "branch_address": "3699 Wilshire Blvd, Suite 110, Los Angeles, CA 90010",
+          "hours": "Mon 5:00 AM-11:59 PM; Tue-Thu 12:00 AM-11:59 PM (around the clock); Fri 12:00 AM-9:00 PM; Sat-Sun 5:00 AM-9:00 PM",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "GetFit (monthly)",
+              "monthly_price": 24.99,
+              "joining_fee": 5.99,
+              "annual_fee": 69.99,
+              "min_term": "month-to-month",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "Access limited to this club's tier. $30.98 due today = first month + $1 join fee + $4.99 activation fee. Annual fee is billed on the 15th day after enrollment."
+            },
+            {
+              "tier": "KeepFit (monthly)",
+              "monthly_price": 39.99,
+              "joining_fee": 5.99,
+              "annual_fee": 69.99,
+              "min_term": "month-to-month",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "Access to all Sport clubs. $45.98 due today."
+            },
+            {
+              "tier": "KeepFit+ (monthly)",
+              "monthly_price": 39.99,
+              "joining_fee": 5.99,
+              "annual_fee": 69.99,
+              "min_term": "month-to-month",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "Access to Sport, Super-Sport and Ultra-Sport clubs nationwide. $45.98 due today. The page summary listed the same price as KeepFit, so treat that as unconfirmed."
+            },
+            {
+              "tier": "KeepFit+ (monthly commitment)",
+              "monthly_price": 49.99,
+              "joining_fee": 5.99,
+              "annual_fee": 69.99,
+              "min_term": "monthly commitment (the page did not say how long)",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "$5.99 due today, so the first month's dues appear to be waived."
+            },
+            {
+              "tier": "GetFit (yearly, paid in full)",
+              "monthly_price": 19.99,
+              "joining_fee": 4.99,
+              "annual_fee": 69.99,
+              "min_term": "12 months, paid up front",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "$244.87 due today (= 12 x $19.99 + $4.99). The page summary said $19.98/mo, but the total due today implies $19.99."
+            },
+            {
+              "tier": "KeepFit / KeepFit+ (yearly, paid in full)",
+              "monthly_price": 24.99,
+              "joining_fee": 4.99,
+              "annual_fee": 69.99,
+              "min_term": "12 months, paid up front",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "$304.87 due today (= 12 x $24.99 + $4.99)."
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://www.24hourfitness.com/gyms/los-angeles-ca/mid-wilshire-sport",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "These are online offer prices. Fine print: '$69.99 Annual Fee required for all memberships and is in addition to the yearly membership renewal dues and will be billed on the 15th day after the date of enrollment.' 'Taxes may apply. Membership dues and annual fees are subject to increase.' The page gave no cancellation terms. The 'Sport' tier does not open around the clock every day."
+        },
+        {
+          "name": "24 Hour Fitness Hollywood Super-Sport",
+          "chain": "24 Hour Fitness",
+          "branch_address": "6380 West Sunset Blvd., Hollywood, CA 90028",
+          "hours": "Mon-Thu 5:00 AM-10:00 PM; Fri 5:00 AM-9:00 PM; Sat-Sun 6:00 AM-8:00 PM",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "GetFit (monthly)",
+              "monthly_price": 19.99,
+              "joining_fee": 5.99,
+              "annual_fee": 69.99,
+              "min_term": "month-to-month",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "$25.98 due today. GetFit here is cheaper than at Mid Wilshire, presumably because it does not include access to this Super-Sport club."
+            },
+            {
+              "tier": "KeepFit (monthly)",
+              "monthly_price": 49.99,
+              "joining_fee": 5.99,
+              "annual_fee": 69.99,
+              "min_term": "month-to-month",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "$55.98 due today."
+            },
+            {
+              "tier": "KeepFit+ (monthly)",
+              "monthly_price": 49.99,
+              "joining_fee": 5.99,
+              "annual_fee": 69.99,
+              "min_term": "month-to-month",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "$55.98 due today."
+            },
+            {
+              "tier": "KeepFit+ (monthly commitment)",
+              "monthly_price": 59.99,
+              "joining_fee": 5.99,
+              "annual_fee": 69.99,
+              "min_term": "monthly commitment (the page did not say how long)",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "$5.99 due today."
+            },
+            {
+              "tier": "GetFit (yearly, paid in full)",
+              "monthly_price": 21.99,
+              "joining_fee": 4.99,
+              "annual_fee": 69.99,
+              "min_term": "12 months, paid up front",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "$268.87 due today."
+            },
+            {
+              "tier": "KeepFit / KeepFit+ (yearly, paid in full)",
+              "monthly_price": 29.99,
+              "joining_fee": 4.99,
+              "annual_fee": 69.99,
+              "min_term": "12 months, paid up front",
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "$364.87 due today."
+            }
+          ],
+          "pool": null,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://www.24hourfitness.com/gyms/hollywood-ca/hollywood-super-sport",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Amenities listed include a sauna, steam room, basketball court, group exercise and cycling. The page read did not list a pool, so pool is null rather than false. Fees are '$1 Join fee' + '$4.99 Membership Activation Fee' + '$69.99 Annual Fee required'. Some memberships renew automatically each year. Cancellation terms were not given."
+        },
+        {
+          "name": "Planet Fitness Los Angeles (Mid City - W Washington)",
+          "chain": "Planet Fitness",
+          "branch_address": "4050 W Washington Blvd, Los Angeles, CA 90018",
+          "hours": "Mon-Thu 5:00 AM-11:00 PM; Fri 5:00 AM-10:00 PM; Sat-Sun 7:00 AM-7:00 PM",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Classic",
+              "monthly_price": 15,
+              "joining_fee": null,
+              "annual_fee": 49,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "'$15/mo (plus taxes & fees)'. Annual fee is '$49.00 ... billed on or shortly after October 1st'. A search summary for the Washington Blvd club gave a $49 startup fee, but this could not be confirmed on the page, so joining_fee is null."
+            },
+            {
+              "tier": "PF Black Card",
+              "monthly_price": 24.99,
+              "joining_fee": 1,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "'$24.99/mo (plus taxes & fees)', with a $1 startup fee. The Black Card's annual fee was not stated (Planet Fitness usually charges $49, but this was not confirmed for this club)."
+            }
+          ],
+          "pool": null,
+          "classes": null,
+          "sauna": null,
+          "source_url": "https://www.planetfitness.com/gyms/los-angeles-mid-city-w-washington-ca/offers",
+          "date_read": "2026-10-01",
+          "read_method": "search-summary",
+          "notes": "planetfitness.com returned HTTP 403 to every fetch, including curl with a browser user agent. The prices come from search summaries of planetfitness.com offer pages for LA clubs (Washington Blvd and Mid City). The hours come from a search summary that attributed them to the official site. There are other LA clubs, including DTLA, Midtown and Wilmington Ave. Amenities were not read."
+        },
+        {
+          "name": "Ketchum-Downtown YMCA",
+          "chain": "YMCA of Metropolitan Los Angeles",
+          "branch_address": "401 S Hope Street, Los Angeles, CA 90071",
+          "hours": "Sun 9:00 AM-1:00 PM; Mon-Thu 5:30 AM-9:00 PM; Fri 5:30 AM-8:00 PM; Sat 8:00 AM-4:00 PM",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Adult (monthly)",
+              "monthly_price": 57,
+              "joining_fee": 10,
+              "annual_fee": null,
+              "min_term": "none stated",
+              "cancellation": "From the association handbook: 'Effective July 16, 2026, all cancellations require 15 days advance written notice before your next draft date.' Cancellation can be by email or online. There is a 30-day money-back policy for new members.",
+              "tax_included": true,
+              "notes": "The $57.00/mo figure is from a search summary only, because the pricing tool on ymcala.org renders by script and shows no figures to a fetch. 'Join for only $10!' is a promotion on the location page and may be a reduced joining fee rather than the standard one. Financial assistance is available on a sliding scale. Dues vary by location."
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://www.ymcala.org/locations/ketchum-downtown-ymca/",
+          "date_read": "2026-10-01",
+          "read_method": "search-summary",
+          "notes": "The address, hours and amenities were read from the page itself: indoor heated pool, steam room, sauna, indoor track, racquetball courts, cycling studio and exercise studios. Only the price comes from a search summary. The handbook is at https://www.ymcala.org/handbook/. The Hollywood YMCA (1553 N Schrader Blvd, 90028; Mon-Thu 7am-10pm, Fri 7am-9pm, Sat 8am-4pm, Sun closed; pool and sauna) also advertises 'Join for only $10!', but no monthly figure was found for it."
+        },
+        {
+          "name": "Gold's Gym Venice",
+          "chain": "Gold's Gym",
+          "branch_address": "360 Hampton Drive, Venice (Los Angeles), CA 90291",
+          "hours": "Mon-Sun 5:00 AM-11:00 PM",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Monthly (no contract)",
+              "monthly_price": 119.99,
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "none (month-to-month)",
+              "cancellation": "The join page offers an 'Easy Online Cancellation Request through the link at the bottom of the website'.",
+              "tax_included": true,
+              "notes": "Search summary: '$119.99 USD' per month. A local news post titled 'Join Gold's Gym Venice! $120/month No Contract, No Initiation Fee' (venicepaparazzi.com, 2025-01-01) supports it. The join page loads its prices by script, so the dues, enrollment fee and club/maintenance fee could not be read directly; they appeared as template placeholders. The annual/club fee is unknown."
+            }
+          ],
+          "pool": null,
+          "classes": null,
+          "sauna": null,
+          "source_url": "https://www.goldsgym.com/locations/ca/venice/join/",
+          "date_read": "2026-10-01",
+          "read_method": "search-summary",
+          "notes": "The address and hours were read from https://www.goldsgym.com/locations/ca/venice/. The location page lists free weights, cardio, machines, an outdoor workout space, locker rooms and a pro shop. It does not mention a pool, sauna or steam room, but that is not proof of absence, so all three are null. This is the original 'Mecca of bodybuilding' location. Venice is a neighborhood inside the City of Los Angeles."
+        },
+        {
+          "name": "Crunch Fitness Sunset (West Hollywood)",
+          "chain": "Crunch Fitness",
+          "branch_address": "8000 Sunset Blvd, Los Angeles, CA 90046",
+          "hours": "Mon-Thu 5:00 AM-11:00 PM; Fri 5:00 AM-10:00 PM; Sat-Sun 7:00 AM-8:00 PM",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Signature club membership",
+              "monthly_price": null,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "No published price was found. crunch.com location pages render by script and showed no prices to a fetch. Aggregator ranges (Base $9.99-$14.99, Peak $22.99-$26.99, Peak Results $29.99-$34.99, annual fee $40-$89) apply to franchise clubs, not to company-run Signature clubs like this one, so they were not used."
+            }
+          ],
+          "pool": null,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://www.crunch.com/locations/sunset",
+          "date_read": "2026-10-01",
+          "read_method": "search-summary",
+          "notes": "The address, hours and Signature status come from a search summary of crunch.com location pages. Signature clubs are described as having group fitness studios and 'full-service locker rooms with towel service, saunas and steam rooms'. Kept as a named gym, but every price is null."
+        }
+      ]
+    },
+    {
+      "town": "London",
+      "country": "GB",
+      "currency": "GBP",
+      "gyms": [
+        {
+          "name": "PureGym London Holborn",
+          "chain": "PureGym",
+          "branch_address": "Lacon House, 84 Theobalds Road, London WC1X 8RW",
+          "hours": "24 hours a day, 7 days a week",
+          "is_24_7": true,
+          "tiers": [
+            {
+              "tier": "Core",
+              "monthly_price": 41.99,
+              "joining_fee": 24.99,
+              "annual_fee": null,
+              "min_term": "none (rolling monthly)",
+              "cancellation": "No contract, cancel any time",
+              "tax_included": true,
+              "notes": "Book classes 8 days ahead. Promotion at read time: 50% off first month and GBP 0 joining fee with code SAVEHALF (not reflected in figures)."
+            },
+            {
+              "tier": "Plus",
+              "monthly_price": 52.99,
+              "joining_fee": 24.99,
+              "annual_fee": null,
+              "min_term": "none (rolling monthly)",
+              "cancellation": "No contract, cancel any time",
+              "tax_included": true,
+              "notes": "Adds multi-gym access, 14-day class booking, 4 guest passes a month, membership freeze, partner discounts."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": false,
+          "source_url": "https://www.puregym.com/gyms/london-holborn/",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Over 50 free classes a week. Pool and sauna not listed among facilities, recorded as false on that basis."
+        },
+        {
+          "name": "The Gym Group London Caledonian Road",
+          "chain": "The Gym Group",
+          "branch_address": "7 Sterling Way, London N7 9HJ",
+          "hours": "24 hours a day, 7 days a week",
+          "is_24_7": true,
+          "tiers": [
+            {
+              "tier": "Standard (rolling monthly)",
+              "monthly_price": 30.99,
+              "joining_fee": 15,
+              "annual_fee": null,
+              "min_term": "none (rolling monthly)",
+              "cancellation": "No long-term commitment on month-to-month memberships",
+              "tax_included": true,
+              "notes": "Page as read gave GBP 30.99 for Standard."
+            },
+            {
+              "tier": "Ultimate (rolling monthly)",
+              "monthly_price": 38.99,
+              "joining_fee": 15,
+              "annual_fee": null,
+              "min_term": "none (rolling monthly)",
+              "cancellation": "No long-term commitment on month-to-month memberships",
+              "tax_included": true,
+              "notes": "Page as read: GBP 30.99 for the first month, then GBP 38.99. The fetch summary blurred Standard vs Ultimate pricing slightly; treat as approximate."
+            },
+            {
+              "tier": "Ultimate 9-month saver (paid upfront)",
+              "monthly_price": null,
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "9 months, paid upfront",
+              "cancellation": "Upfront payment",
+              "tax_included": true,
+              "notes": "GBP 329 upfront (about GBP 36.56 a month). Joining fee waived on saver plans."
+            },
+            {
+              "tier": "Ultimate 12-month saver (paid upfront)",
+              "monthly_price": null,
+              "joining_fee": 0,
+              "annual_fee": 419,
+              "min_term": "12 months, paid upfront",
+              "cancellation": "Upfront payment",
+              "tax_included": true,
+              "notes": "GBP 419 upfront (about GBP 34.92 a month)."
+            },
+            {
+              "tier": "Student 12-month (paid upfront)",
+              "monthly_price": null,
+              "joining_fee": 0,
+              "annual_fee": 349,
+              "min_term": "12 months, paid upfront",
+              "cancellation": "Upfront payment",
+              "tax_included": true,
+              "notes": "Also 6 months GBP 179 and 9 months GBP 269. Day passes: 1 day GBP 12.99, 3 days GBP 20.99, 5 days GBP 26.99."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": false,
+          "source_url": "https://www.thegymgroup.com/find-a-gym/north-london-gyms/london-caledonian-road/",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "The Gym Group's Holborn Circus site closed permanently on 1 September (per its own page in search results), so Caledonian Road was used instead. Joining fees vary by London site (GBP 0 to 20)."
+        },
+        {
+          "name": "Third Space Islington",
+          "chain": "Third Space",
+          "branch_address": "15 Esther Anne Place, London N1 1UL",
+          "hours": "Mon-Fri 05:30-22:00; Sat-Sun and bank holidays 07:00-21:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Club (Islington only)",
+              "monthly_price": 287,
+              "joining_fee": 100,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": "One full calendar month's notice; request by the 1st of a month to end on the last day of that month",
+              "tax_included": true,
+              "notes": "Freeze: 7 days' notice, GBP 40 a month, up to 6 months a year. Minimum term not stated on the pages read."
+            },
+            {
+              "tier": "Group (all clubs except Mayfair and Chelsea)",
+              "monthly_price": 299,
+              "joining_fee": 100,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": "One full calendar month's notice",
+              "tax_included": true,
+              "notes": null
+            },
+            {
+              "tier": "Group Plus (all clubs)",
+              "monthly_price": 345,
+              "joining_fee": 200,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": "One full calendar month's notice",
+              "tax_included": true,
+              "notes": null
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://www.thirdspace.london/clubs/islington/",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "20 m 6-lane pool, sauna and steam, over 370 classes a week. Notice and freeze terms from https://www.thirdspace.london/membership/ (read 2026-10-01, page)."
+        },
+        {
+          "name": "Virgin Active Strand",
+          "chain": "Virgin Active",
+          "branch_address": "Shell-Mex House, 80 The Strand, London WC2R 0DT",
+          "hours": "Mon-Fri 06:30-21:00; Sat-Sun 09:00-18:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "12-month membership",
+              "monthly_price": 160,
+              "joining_fee": 25,
+              "annual_fee": null,
+              "min_term": "12 months",
+              "cancellation": "Per Virgin Active membership T&Cs (notice period not stated on the rates page)",
+              "tax_included": true,
+              "notes": null
+            },
+            {
+              "tier": "Rolling monthly",
+              "monthly_price": 218,
+              "joining_fee": 50,
+              "annual_fee": null,
+              "min_term": "none (rolling monthly)",
+              "cancellation": "Per Virgin Active membership T&Cs (notice period not stated on the rates page)",
+              "tax_included": true,
+              "notes": null
+            },
+            {
+              "tier": "Age 18-25, 12-month",
+              "monthly_price": 136,
+              "joining_fee": 25,
+              "annual_fee": null,
+              "min_term": "12 months",
+              "cancellation": "Per T&Cs",
+              "tax_included": true,
+              "notes": "Same price for age 65+ on 12 months. Age 16-17 rolling: GBP 96 + GBP 50."
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": null,
+          "source_url": "https://www.virginactive.co.uk/clubs/strand/membership-rates",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Address, hours and facilities from https://www.virginactive.co.uk/clubs/strand (page). 16 m pool and a spa listed; sauna not named explicitly, so null."
+        },
+        {
+          "name": "Highbury Leisure Centre",
+          "chain": "Better (GLL)",
+          "branch_address": "Highbury Crescent, Islington, London N5 1RR",
+          "hours": "Mon-Fri 06:30-22:00; Sat-Sun 08:00-18:00 (last entry 40 minutes before closing)",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Better Health Islington (gym, swim, classes)",
+              "monthly_price": 64.2,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "Figure from search results (Better/Islington directory), not read on a Better page itself; the Better memberships and prices pages did not render the figure."
+            },
+            {
+              "tier": "Flex Adult",
+              "monthly_price": 10,
+              "joining_fee": 12.5,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "Read on page. One free booked activity a month plus up to 30% off full-price activities. Concessionary version GBP 5 + GBP 12.50 setup."
+            },
+            {
+              "tier": "Pay As You Go gym visit (non-member, peak)",
+              "monthly_price": null,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "GBP 18.00 per visit; PAYG member GBP 13.00; adult swim non-member GBP 7.70 (from https://www.better.org.uk/leisure-centre/london/islington/highbury/prices, page)."
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://www.better.org.uk/leisure-centre/london/islington/highbury/memberships",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Address, hours, facilities from https://www.better.org.uk/leisure-centre/london/islington/highbury (page): 25 m pool, health suite with sauna and steam. Better is run by GLL, a charitable social enterprise; under HMRC VAT Notice 701/45 sports supplies by eligible non-profit bodies can be VAT-exempt, so 'tax_included' here means the consumer price is the full price paid, not that VAT is charged."
+        }
+      ]
+    },
+    {
+      "town": "Dublin",
+      "country": "IE",
+      "currency": "EUR",
+      "gyms": [
+        {
+          "name": "BD Gyms Carlisle",
+          "chain": "BD Gyms (formerly Ben Dunne Gyms)",
+          "branch_address": "52-54 Kimmage Road West, Terenure, Kimmage, Dublin D12 X379",
+          "hours": "Mon-Fri 06:00-22:00; Sat-Sun 08:30-17:30",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Monthly",
+              "monthly_price": 36,
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "none",
+              "cancellation": "No contract, cancel anytime",
+              "tax_included": true,
+              "notes": "Includes classes and free parking."
+            },
+            {
+              "tier": "6-month (one-off payment)",
+              "monthly_price": null,
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "6 months, paid upfront",
+              "cancellation": "Upfront payment",
+              "tax_included": true,
+              "notes": "EUR 199 one-off."
+            },
+            {
+              "tier": "Annual (one-off payment)",
+              "monthly_price": null,
+              "joining_fee": 0,
+              "annual_fee": 299,
+              "min_term": "12 months, paid upfront",
+              "cancellation": "Upfront payment",
+              "tax_included": true,
+              "notes": "EUR 299 one-off."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": false,
+          "source_url": "https://bdgyms.com/carlisle/",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "bendunnegyms.com now redirects to bdgyms.com. Pool/sauna not listed, recorded false on that basis. Other Dublin sites: Blanchardstown, Cherrywood, Northwood."
+        },
+        {
+          "name": "FLYEfit Jervis Street",
+          "chain": "FLYEfit",
+          "branch_address": "Jervis Shopping Centre, Jervis Lane Upper, North City, Dublin 1",
+          "hours": "Mon-Fri 05:30-23:30; Sat-Sun and bank holidays 07:30-19:30; closed Christmas Day",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Single gym, monthly",
+              "monthly_price": 38,
+              "joining_fee": 25,
+              "annual_fee": null,
+              "min_term": "none",
+              "cancellation": "No contract",
+              "tax_included": true,
+              "notes": "3 months EUR 114 + EUR 25 joining."
+            },
+            {
+              "tier": "Single gym, annual",
+              "monthly_price": null,
+              "joining_fee": 25,
+              "annual_fee": 355,
+              "min_term": "12 months, paid upfront",
+              "cancellation": "Upfront payment",
+              "tax_included": true,
+              "notes": null
+            },
+            {
+              "tier": "All gyms (roaming), monthly",
+              "monthly_price": 41,
+              "joining_fee": 25,
+              "annual_fee": null,
+              "min_term": "none",
+              "cancellation": "No contract",
+              "tax_included": true,
+              "notes": "3 months EUR 123 + EUR 25. Promotion at read time: no joining fee on All Gyms (limited time)."
+            },
+            {
+              "tier": "All gyms (roaming), annual",
+              "monthly_price": null,
+              "joining_fee": 25,
+              "annual_fee": 395,
+              "min_term": "12 months, paid upfront",
+              "cancellation": "Upfront payment",
+              "tax_included": true,
+              "notes": "Day passes valid over 30 days: 1 day EUR 14, 2 days EUR 22, 3 days EUR 29. Students 50% off joining fee."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": false,
+          "source_url": "https://www.flyefit.ie/gyms/jervis-street/",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Branch page gives address, hours, facilities (heated studio, spin, yoga/Pilates; all classes free with membership). Prices are network-wide and were read from https://www.flyefit.ie/ (page), not from the branch page. Pool/sauna not listed, recorded false on that basis."
+        },
+        {
+          "name": "Gym Plus Ballsbridge",
+          "chain": "Gym Plus",
+          "branch_address": "The Oval, Shelbourne Road, Dublin 4, D04 T8F2",
+          "hours": null,
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Multi-club (all 7 clubs), monthly",
+              "monthly_price": 69,
+              "joining_fee": null,
+              "annual_fee": 690,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "Annual EUR 690 (two months free when paid in full). Joining fee and terms not shown on the page."
+            },
+            {
+              "tier": "Under 16s",
+              "monthly_price": 10,
+              "joining_fee": null,
+              "annual_fee": 100,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "Unlimited swim sessions."
+            }
+          ],
+          "pool": null,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://gymplus.ie/membership/",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Opening hours not found on pages read; is_24_7 false is an inference from the absence of any 24/7 claim, treat hours as unknown. Full health suite at Ballsbridge confirmed; pool at Ballsbridge not unambiguously confirmed (Swords has a 20 m pool), so pool is null. Single-club EUR 59 applies to Cork only. Other Dublin sites: Rathfarnham (Nutgrove), Swords (Applewood Village)."
+        },
+        {
+          "name": "Energie Fitness Dublin 8",
+          "chain": "Energie Fitness",
+          "branch_address": "Brabazon Hall, Cork Street, The Liberties, Dublin D08 XH90",
+          "hours": "Staffed hours: Mon-Fri 06:00-22:00; Sat-Sun 09:00-17:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Monthly (no contract)",
+              "monthly_price": null,
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "none",
+              "cancellation": "No contract per search results; a Trustpilot review claims an extra month plus about EUR 60 cancellation fee, unverified",
+              "tax_included": true,
+              "notes": "Branch price not readable: the join portal (ie-join.energiefitness.com) returned HTTP 503. Search results put Irish Energie monthly prices at about EUR 30-40 ('from EUR 36', Tallaght offer EUR 29.99) and annual from EUR 349; none of these is confirmed for Dublin 8, so monthly_price is null. Joining fee 0 is a time-limited 'no joining fee' sale on the branch page."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": false,
+          "source_url": "https://www.energiefitness.com/gym/dublin-8",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Address, hours, facilities and joining-fee offer read on page; price is the gap. Page did not state 24/7 access for members, only staffed hours."
+        },
+        {
+          "name": "West Wood Club Clontarf",
+          "chain": "West Wood Club",
+          "branch_address": "Clontarf, Dublin 3 (street address not captured; phone 01-8530353)",
+          "hours": null,
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Membership",
+              "monthly_price": null,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": true,
+              "notes": "West Wood does not publish prices online (brochure request only). Only figure found was a January 2023 boards.ie forum post (EUR 89-98 a month, EUR 98 joining on sale) — stale and unofficial, not used."
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": null,
+          "source_url": "https://www.westwood.ie/",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Clontarf has a 50 m pool per the chain's site. Six Dublin clubs: Aston Quay, Clontarf, Sandymount, Westmanstown, Leopardstown, Dun Laoghaire. Spa facilities mentioned network-wide but sauna at Clontarf not confirmed. Free 4-day trial offer to 31 Oct 2026."
+        }
+      ]
+    },
+    {
+      "town": "Toronto",
+      "country": "CA",
+      "currency": "CAD",
+      "gyms": [
+        {
+          "name": "Fit4Less Overlea Boulevard",
+          "chain": "Fit4Less",
+          "branch_address": "B24-45 Overlea Boulevard, Toronto, ON M4H 1C3",
+          "hours": "Open 24 hours daily (per Yelp/YellowPages listing, not the chain's site)",
+          "is_24_7": true,
+          "tiers": [
+            {
+              "tier": "4Less Card (one location)",
+              "monthly_price": 7.99,
+              "billing_period": "biweekly",
+              "joining_fee": null,
+              "annual_fee": 49.99,
+              "min_term": "none",
+              "cancellation": "No commitment period",
+              "tax_included": false,
+              "notes": "Page: '$7.99 + tax' biweekly; 'Enrollment Fee: $49.99 + tax (annual)' - the chain labels its single $49.99 charge an annual enrollment fee, so it is recorded once here as annual_fee and joining_fee left null. Price figure is a biweekly amount despite the field name."
+            },
+            {
+              "tier": "Black Card (all locations)",
+              "monthly_price": 13.99,
+              "billing_period": "biweekly",
+              "joining_fee": null,
+              "annual_fee": 49.99,
+              "min_term": "none",
+              "cancellation": "No commitment period",
+              "tax_included": false,
+              "notes": "Page: '$13.99 + tax' biweekly; same $49.99 + tax annual enrollment fee. Adds Black Card workout area, guests, tanning, hydromassage."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": null,
+          "source_url": "https://www.fit4less.ca/memberships",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Prices are the national price page, not branch-specific. Branch address and hours from search results (https://www.yelp.ca/biz/fit4less-toronto-3); fit4less.ca branch page URL guessed returned 404. 'Classes' = 30-minute Express Circuit sessions only. Page: 'Applicable taxes apply to all fees.' No pool listed; sauna not mentioned."
+        },
+        {
+          "name": "Planet Fitness Toronto (College Park)",
+          "chain": "Planet Fitness",
+          "branch_address": "444 Yonge St Units G1 and G4, Toronto, ON M5B 2H4",
+          "hours": "Open & Staffed 24/7",
+          "is_24_7": true,
+          "tiers": [
+            {
+              "tier": "Classic",
+              "monthly_price": 15,
+              "billing_period": "monthly",
+              "joining_fee": 39,
+              "annual_fee": 49,
+              "min_term": "none",
+              "cancellation": "No commitment (per club offers page snippet)",
+              "tax_included": false,
+              "notes": "'Starting as low as $15 a month' plus taxes & fees; $39 enrolment fee."
+            },
+            {
+              "tier": "PF Black Card",
+              "monthly_price": 29.99,
+              "billing_period": "monthly",
+              "joining_fee": 1,
+              "annual_fee": 49,
+              "min_term": "none",
+              "cancellation": "'$1 Down with no commitment' (current offer)",
+              "tax_included": false,
+              "notes": "$1 enrolment is a current promotion; regular enrolment fee not found."
+            }
+          ],
+          "pool": false,
+          "classes": false,
+          "sauna": null,
+          "source_url": "https://www.planetfitness.ca/gyms/toronto-college-park/offers",
+          "date_read": "2026-10-01",
+          "read_method": "search-summary",
+          "notes": "planetfitness.ca returned HTTP 403 to direct fetch; all figures from search-engine summaries of planetfitness.ca club pages (domain-restricted search). Annual fee $49 'automatically debited once a year'. Pool/classes false reflect the chain's standard format (no pools, no instructor-led group classes); sauna not confirmed."
+        },
+        {
+          "name": "Central YMCA",
+          "chain": "YMCA of Greater Toronto",
+          "branch_address": "20 Grosvenor Street, Toronto, ON M4Y 2V5",
+          "hours": "Mon-Fri 6:00-22:00; Sat-Sun 7:00-22:00; holidays 8:00-16:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Adult (30+)",
+              "monthly_price": 63,
+              "billing_period": "monthly",
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "none (continuous monthly)",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "Joining fee shown as '$100 No Join Fee' - regular $100 currently waived."
+            },
+            {
+              "tier": "Young Adult (22-29)",
+              "monthly_price": 49,
+              "billing_period": "monthly",
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "none (continuous monthly)",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "Regular $100 joining fee waived."
+            },
+            {
+              "tier": "Youth (15-21)",
+              "monthly_price": 41,
+              "billing_period": "monthly",
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "none (continuous monthly)",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": null
+            },
+            {
+              "tier": "Family",
+              "monthly_price": 106,
+              "billing_period": "monthly",
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "none (continuous monthly)",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": null
+            },
+            {
+              "tier": "Adult Plus",
+              "monthly_price": 111,
+              "billing_period": "monthly",
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": "none (continuous monthly)",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "Plus adds saunas, whirlpools, steam rooms, lounges, towel service. Search summary said $100 joining fee for Adult Plus; page waiver text applied to 'General and Youth' categories, so Plus joining fee left null."
+            },
+            {
+              "tier": "Family Plus",
+              "monthly_price": 187,
+              "billing_period": "monthly",
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": "none (continuous monthly)",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": null
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://www.ymcagta.org/find-a-y/central-ymca",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Page: 'All memberships are continuous monthly memberships. Fees are withdrawn monthly, taxes not included.' Sauna only with Plus memberships. 25m indoor pool, track, gym, squash."
+        },
+        {
+          "name": "GoodLife Fitness Toronto 137 Yonge Street",
+          "chain": "GoodLife Fitness",
+          "branch_address": "137 Yonge Street, Toronto, ON M5C 1W6",
+          "hours": "Club page shows '24/4'. Search listing: Mon 5:00-24:00, Tue-Thu 24 hours, Fri 0:00-22:00, Sat-Sun 6:00-20:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Essential / Premium / Ultimate / Performance",
+              "monthly_price": null,
+              "billing_period": "biweekly",
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "GoodLife does not render prices in fetchable HTML (club-specific join flow). Third-party 2026 guides (thespoonathletic.com, healthleeks.com) report roughly Essential $29.99, Premium $35.99, Ultimate $39.99, Performance $54.99 biweekly, joining fee $49.99 (Essential/Premium) or $20 (Ultimate/Performance) - NOT read from GoodLife, so not recorded as figures. Club page shows promo 'Only $19.99 enrolment on select Memberships! Ends October 31, 2026'."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://www.goodlifefitness.com/clubs/club.032.html",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Address, amenities and promo read from club page. Amenities: hot studio, group cycling, dry cedar sauna, steam room, HydroMassage, recovery room, towel service. No pool listed. Tax treatment inferred from Ontario HST rules, not stated on page."
+        },
+        {
+          "name": "North Toronto Memorial Community Centre (FitnessTO)",
+          "chain": "City of Toronto Parks, Forestry & Recreation",
+          "branch_address": "200 Eglinton Ave W, Toronto, ON M4R 1A7",
+          "hours": "Facility Mon-Fri 6:45-21:45, Sat-Sun 8:30-21:00 (search listing); weight/cardio room and pools have narrower schedules",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "FitnessTO (weight/cardio rooms) - adult 1 month",
+              "monthly_price": 33.73,
+              "billing_period": "1-month pass",
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "1 month (prepaid)",
+              "cancellation": "No refunds for memberships or multi-visit passes",
+              "tax_included": false,
+              "notes": "3-month $52.58; 12-month $177.70. Youth 13-18 / older adult 60+: 1-month $16.86, 3-month $26.29, 12-month $88.87."
+            },
+            {
+              "tier": "FitnessTO Plus Swim - adult 1 month",
+              "monthly_price": 39.56,
+              "billing_period": "1-month pass",
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "1 month (prepaid)",
+              "cancellation": "No refunds",
+              "tax_included": false,
+              "notes": "Weight/cardio rooms or lane swim. 3-month $67.08; 12-month $224.28. Youth/older adult: $19.78 / $33.54 / $112.14."
+            },
+            {
+              "tier": "FitnessTO All Access - adult 1 month",
+              "monthly_price": 49.44,
+              "billing_period": "1-month pass",
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "1 month (prepaid)",
+              "cancellation": "No refunds",
+              "tax_included": false,
+              "notes": "Adds drop-in fitness and aquatic fitness classes. 3-month $83.86; 12-month $280.33. Youth/older adult: $24.72 / $41.94 / $140.18."
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": null,
+          "source_url": "https://www.toronto.ca/explore-enjoy/parks-recreation/program-activities/fitness/",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Prices read from toronto.ca (citywide, valid at 65+ locations): 'Prices do not include tax'; $14.13 replacement fee for lost pass. joining_fee 0 = none listed. Branch address/hours from search results (getmoving.to, Yelp); toronto.ca facility page did not render. Some City centres (e.g. Wellesley CC, Regent Park CC, Pam McConnell Aquatic Centre) are free-access per search results."
+        }
+      ]
+    },
+    {
+      "town": "Vancouver",
+      "country": "CA",
+      "currency": "CAD",
+      "gyms": [
+        {
+          "name": "Fitness World Kitsilano",
+          "chain": "Fitness World (formerly Steve Nash Fitness World)",
+          "branch_address": "2150 West Broadway, #200, Vancouver BC V6K 4L9",
+          "hours": "Mon-Fri 6:00-23:00; Sat-Sun 7:00-20:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Move (1 location)",
+              "monthly_price": 12.99,
+              "billing_period": "biweekly",
+              "joining_fee": null,
+              "annual_fee": 59.99,
+              "min_term": "12-month term or month-to-month",
+              "cancellation": "Month-to-month: 30 days' notice; 12-month term: early exit only with proof of relocation or illness",
+              "tax_included": false,
+              "notes": "Price from search summary of fitnessworld.ca blog posts (possibly dated; they cite 16 locations vs 17 now) - read_method search-summary for the price."
+            },
+            {
+              "tier": "Fit (17 locations)",
+              "monthly_price": 17.99,
+              "billing_period": "biweekly",
+              "joining_fee": null,
+              "annual_fee": 59.99,
+              "min_term": "12-month term or month-to-month",
+              "cancellation": "As above",
+              "tax_included": false,
+              "notes": "Search summary; also seen as $16.99. Unlimited classes, recovery tools, tanning."
+            },
+            {
+              "tier": "Goal (17 locations)",
+              "monthly_price": 23.99,
+              "billing_period": "biweekly",
+              "joining_fee": null,
+              "annual_fee": 59.99,
+              "min_term": "12-month term or month-to-month",
+              "cancellation": "As above",
+              "tax_included": false,
+              "notes": "Search summary. The live /join/ page widget displayed '$14.99 BI-WEEKLY' (12-Month Term) and '$21.99 BI-WEEKLY' (Month-to-Month) for its default-selected plan, but which tier that is could not be determined from the fetched text."
+            },
+            {
+              "tier": "Train (1 location)",
+              "monthly_price": null,
+              "billing_period": "biweekly",
+              "joining_fee": null,
+              "annual_fee": 59.99,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "Price not shown."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": false,
+          "source_url": "https://fitnessworld.ca/locations/kitsilano/",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Branch page read directly (address, hours, amenities, 'Annual Enhancement Fee of $59.99 + tax' billed 5 weeks after joining); its price fields were empty placeholders. Tier prices: search-summary. Enrollment fee: search results cite $99.99 regular with frequent '$1 enrol' promotion (https://www.fitnessworld.ca/enroll-for-1/) - not confirmed on page, left null. /join/ page: 'Prices do not include tax'. Other fees on /join/: towel add-on $7.00 biweekly, $15 late payment, $20 transfer fee. Kitsilano page lists no pool, sauna or steam."
+        },
+        {
+          "name": "Robert Lee YMCA",
+          "chain": "YMCA BC",
+          "branch_address": "955 Burrard St, Vancouver, BC V6E 0B1",
+          "hours": "Mon-Fri 5:30-22:30; Sat-Sun 7:00-21:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Individual (19+)",
+              "monthly_price": null,
+              "billing_period": "biweekly",
+              "joining_fee": 100,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "'$32.49 - $40.49 est.' biweekly, varies by age; range only so no single figure. Search summary of Active Network listing gave Young Adult 19-35 $25.99, Adult 36-64 $31.99, Senior 65+ $26.49 biweekly (older/unconfirmed)."
+            },
+            {
+              "tier": "Individual Plus (19+)",
+              "monthly_price": null,
+              "billing_period": "biweekly",
+              "joining_fee": 100,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "'$50.49 - $59.99 est.' biweekly by age."
+            },
+            {
+              "tier": "Youth (0-18)",
+              "monthly_price": 25.99,
+              "billing_period": "biweekly",
+              "joining_fee": 30,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "Page shows '$25.99 est.'"
+            },
+            {
+              "tier": "Family",
+              "monthly_price": null,
+              "billing_period": "biweekly",
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "'$40.49+ est.' biweekly."
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": null,
+          "source_url": "https://www.ymcabc.ca/locations/robert-lee-ymca",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "25-yard UV-filtered pool, steam room, hot tub (reopening Oct 10), three studios, gym. Sauna not listed (steam room is). Tax not stated on page; search summary says GST is added - consistent with 5% GST, no PST on memberships. Search summary also mentions a $0 joiner fee promotion at participating locations."
+        },
+        {
+          "name": "YWCA Health + Fitness Centre",
+          "chain": "YWCA Metro Vancouver",
+          "branch_address": "535 Hornby Street, Vancouver, BC V6C 2E8",
+          "hours": "Mon-Fri 5:45-21:30; Sat-Sun 8:00-17:30 (search summary)",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "All-Inclusive",
+              "monthly_price": 79,
+              "billing_period": "monthly",
+              "joining_fee": 59,
+              "annual_fee": null,
+              "min_term": "none (ongoing, no-term)",
+              "cancellation": "$45 cancellation fee and two weeks' notice",
+              "tax_included": false,
+              "notes": null
+            },
+            {
+              "tier": "One-Month",
+              "monthly_price": 149,
+              "billing_period": "monthly (single prepaid month)",
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": "1 month",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "Joiner fee waived on renewal under conditions."
+            },
+            {
+              "tier": "Student",
+              "monthly_price": 59,
+              "billing_period": "monthly",
+              "joining_fee": 59,
+              "annual_fee": null,
+              "min_term": "none",
+              "cancellation": "Two weeks' notice before next billing date, no cancellation fee",
+              "tax_included": false,
+              "notes": "Enrolment verification required."
+            },
+            {
+              "tier": "Senior (65+)",
+              "monthly_price": 69,
+              "billing_period": "monthly",
+              "joining_fee": 59,
+              "annual_fee": null,
+              "min_term": "none (ongoing, no-term)",
+              "cancellation": "$45 cancellation fee and two weeks' notice",
+              "tax_included": false,
+              "notes": null
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://ywcabc.org/fitness/membership/plans-and-pricing",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Prices/terms read from page: 'All memberships and services are subject to GST'. Address, hours and amenities (pool, hot tub, steam room, infrared sauna) from search results (Yelp, ywcabc.org/fitness)."
+        },
+        {
+          "name": "Anytime Fitness Vancouver (Yaletown, One Pacific)",
+          "chain": "Anytime Fitness",
+          "branch_address": "236-60 Smithe St 2nd Floor, Vancouver, BC V6B 0B5",
+          "hours": "Open to members 24/7; office hours listed as closed",
+          "is_24_7": true,
+          "tiers": [
+            {
+              "tier": "Standard membership",
+              "monthly_price": null,
+              "billing_period": null,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "Club page publishes no prices ('range of membership options'). A search snippet said plans 'start at $37 biweekly' at this club - unverified, not recorded as a figure."
+            }
+          ],
+          "pool": false,
+          "classes": null,
+          "sauna": null,
+          "source_url": "https://www.anytimefitness.com/en-ca/locations/vancouver-british-columbia-3787",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Franchise; pricing set per club and only given on enquiry. Amenities: cardio, strength, functional, personal training, private restrooms/showers. No pool listed."
+        },
+        {
+          "name": "City of Vancouver Flexipass (community centre fitness centres and pools)",
+          "chain": "Vancouver Board of Parks and Recreation",
+          "branch_address": null,
+          "hours": null,
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Adult Flexipass - 1 month",
+              "monthly_price": 64.15,
+              "billing_period": "1-month pass",
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": "1 month (prepaid)",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "Prices do not include tax."
+            },
+            {
+              "tier": "Adult Flexipass - 12 month",
+              "monthly_price": null,
+              "billing_period": "12-month pass",
+              "joining_fee": null,
+              "annual_fee": 554.26,
+              "min_term": "12 months (prepaid)",
+              "cancellation": null,
+              "tax_included": false,
+              "notes": "$554.26 for 12 months (about $46.19/month equivalent). Promotion Sept 21 - Oct 31, 2026: $50 off a 12-month Flexipass ($504.26)."
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": null,
+          "source_url": "https://vancouver.ca/parks-recreation-culture/flexipasses.aspx",
+          "date_read": "2026-10-01",
+          "read_method": "search-summary",
+          "notes": "vancouver.ca returned HTTP 403 to direct fetch; figures from search summary of vancouver.ca Flexipass and promo pages. Pass is citywide (pools, rinks, fitness centres, drop-in fitness classes), so no single branch address/hours recorded. annual_fee field holds the 12-month pass price, not a separate fee."
+        }
+      ]
+    },
+    {
+      "town": "Mexico City",
+      "country": "MX",
+      "currency": "MXN",
+      "gyms": [
+        {
+          "name": "Smart Fit Reforma 26",
+          "chain": "Smart Fit",
+          "branch_address": "Paseo de la Reforma 26 Nivel 1, Juárez, Ciudad de México, CDMX 06600",
+          "hours": "Mon-Fri 06:00-23:00; Sat/holidays 08:00-18:00; Sun 08:00-16:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Plan Black",
+              "monthly_price": 679,
+              "joining_fee": 149,
+              "annual_fee": 699,
+              "min_term": "12 months (fidelidad)",
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "First month $0 (100% off promo at time of reading). Branch page price; chain-wide /planes page shows Black at $599, so prices vary by branch. Access to 2,000+ network gyms, up to 5 guests/month, group classes."
+            },
+            {
+              "tier": "Plan Smart",
+              "monthly_price": 699,
+              "joining_fee": 149,
+              "annual_fee": 699,
+              "min_term": "none (sin fidelidad)",
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "Single-branch no-commitment plan; costs more per month than Black at this branch. Chain /planes page lists Smart at $399 and a Fit plan at $299 (12 months) not offered at this branch."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": false,
+          "source_url": "https://www.smartfit.com.mx/gimnasios/reforma-26",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Pool and sauna not listed among branch amenities (inferred false; Smart Fit is a high-value-low-price format without wet areas). Cancellation terms not on page. IVA not stated on page; under LFPC art. 7 Bis displayed price must be the total including taxes. Chain plans page: https://www.smartfit.com.mx/planes ."
+        },
+        {
+          "name": "Anytime Fitness Miramontes",
+          "chain": "Anytime Fitness",
+          "branch_address": "Canal de Miramontes 2600, Coapa, Ciruelos, Coyoacán, 04830 Ciudad de México",
+          "hours": "24/7 member access; staffed Mon-Fri 06:00-23:00, Sat 08:00-16:00",
+          "is_24_7": true,
+          "tiers": [
+            {
+              "tier": "Sin excusas (6 months)",
+              "monthly_price": 949,
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "6 months",
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "Plus one-time access key (llave de acceso) $299. Total at signup shown $1,298. Inscripción $0 appears promotional (club page says ask about enrollment promotions); another Anytime club's sign-up page (MX-1100, labelled Coapa) showed inscripción $1,500 and key $600."
+            },
+            {
+              "tier": "Mi mejor yo (12 months)",
+              "monthly_price": 949,
+              "joining_fee": 0,
+              "annual_fee": null,
+              "min_term": "12 months",
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "Plus one-time access key $299. Total at signup shown $1,248 (asterisked; difference from 6-month plan unexplained on page). Page mentions maintenance fees 'as established by contract' elsewhere in the chain but no anualidad figure shown."
+            }
+          ],
+          "pool": false,
+          "classes": true,
+          "sauna": null,
+          "source_url": "https://payments.anytimefitness.com.mx/inscribeteEnLinea/mx-1176",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Branch details from https://anytimefitness.com.mx/club/mx-1176/ ; prices from the club's online sign-up page. Pool not listed (inferred false); sauna not mentioned. Access to 4,000+ clubs worldwide included."
+        },
+        {
+          "name": "Sport City Torre Reforma",
+          "chain": "Sport City",
+          "branch_address": "Av. Paseo de la Reforma 483, Cuauhtémoc, 06500 Ciudad de México",
+          "hours": "Mon-Thu 06:00-23:00; Fri 06:00-22:00; Sat 08:00-18:00; Sun 09:00-16:00",
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Uniclub / Biclub / Multiclub (monthly maintenance)",
+              "monthly_price": null,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": "Annual (12), 6- or 3-month contracts; 'el plazo contratado será forzoso'",
+              "cancellation": "Early termination: 60% penalty on the unearned amount as administrative costs; only prorated maintenance refunded; inscripción never refunded.",
+              "tax_included": null,
+              "notes": "Club page publishes no price. Press (ejecentral.com.mx, 2026-06-01) says Sport City monthly plans run 2,700-3,500 MXN depending on type and club - search-summary range, not a branch figure. Terms from https://sportcity.com.mx/terminos-y-condiciones/2025 (read from page)."
+            },
+            {
+              "tier": "Executive Zone",
+              "monthly_price": null,
+              "joining_fee": null,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "Adds fixed locker, laundry, towels, snacks, nutrition consult. No price published."
+            },
+            {
+              "tier": "Travel Access Executive (day/week pass, no membership)",
+              "monthly_price": null,
+              "joining_fee": 0,
+              "annual_fee": 0,
+              "min_term": "none",
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "$700 per day or $3,100 per week; valid at Reforma, Lomas Plaza and Andares. From https://sportcity.com.mx/membresias (page)."
+            }
+          ],
+          "pool": true,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://sportcity.com.mx/clubes/torre-reforma",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Amenities from club page: pool, sauna, steam room, group classes, cycling, Pilates reformer, boxing, valet. Membership prices only by quote; the only published figures are pass prices."
+        },
+        {
+          "name": "Sports World Condesa",
+          "chain": "Sports World",
+          "branch_address": "Sonora 180, Hipódromo Condesa, Cuauhtémoc, Ciudad de México",
+          "hours": null,
+          "is_24_7": false,
+          "tiers": [
+            {
+              "tier": "Uniclub / Allclub / Part Time Uniclub (10:00-18:00 Mon-Thu) / Juvenil (14-22)",
+              "monthly_price": null,
+              "joining_fee": 5000,
+              "annual_fee": null,
+              "min_term": null,
+              "cancellation": null,
+              "tax_included": null,
+              "notes": "Chain T&Cs (Mantenimientos 2025 PDF): individual membership costs 'como máximo' $5,000 MXN (joining_fee is that cap, not a quoted price); monthly maintenance 'corresponde a la lista de precios vigente' displayed at club reception; mandatory automatic credit-card charge; Black Pass card must also be bought. A search summary cited Part Time maintenance at $2,568/month and third-party sites cite Uniclub ~2,706 and All-Club ~3,199 - not verified on an official page, so left null."
+            }
+          ],
+          "pool": null,
+          "classes": true,
+          "sauna": true,
+          "source_url": "https://sportsworld.com.mx/uploads/documentos_generales/descargas/mantenimiento-diciembre-2025-01.pdf",
+          "date_read": "2026-10-01",
+          "read_method": "page",
+          "notes": "Address and amenities (sauna, vapor, 2,000 m2) from Sports World's own Condesa opening release (https://sportsworld.com.mx/uploads/documentos_generales/releases/Even_InauguraCondesa.pdf) via search-summary. Pool at Condesa not confirmed (chain says pools exist at most family-format clubs). Hours not found. Membership tiers Oro/Plata/Bronce (30/18/5 guest passes) per https://www.sportsworld.com.mx/uploads/documentos_generales/descargas/generales-2026-01.pdf ."
+        }
+      ]
+    }
+  ],
+  "gym_tax_notes_by_region": [
+    {
+      "country": "GB",
+      "treatment": "Standard rate 20%. Commercial, profit-distributing gyms and health clubs (PureGym, The Gym Group, Third Space, Virgin Active) charge VAT at 20% on memberships. Supplies of sport and physical education by 'eligible bodies' (non-profit, non-distribution clause, profits reinvested in facilities, not under commercial influence), including many leisure trusts operating council centres, are VAT-exempt (VAT Notice 701/45). Consumer prices are shown VAT-inclusive as required by UK price-marking law, so the published figure is what the member pays either way.",
+      "source_url": "https://www.gov.uk/guidance/sport-supplies-that-are-vat-exempt-notice-70145",
+      "read_method": "page"
+    },
+    {
+      "country": "IE",
+      "treatment": "Gymnasium (commercial) membership fees — right of admission including use of facilities — are liable at the second reduced rate, 9% (current rates from 1 Jan 2026: standard 23%, reduced 13.5%, second reduced 9%; sporting-facilities item in the 9% band from 1 May 2022 to 31 Dec 2030 per Revenue). Separately charged aerobic/keep-fit classes are at the reduced rate, 13.5%. Facilities provided by non-profit organisations are outside this charge (exempt). Irish consumer prices are quoted VAT-inclusive.",
+      "source_url": "https://www.revenue.ie/en/vat/vat-rates/search-vat-rates/G/gymnasium-commercial-sporting-facilities-.aspx",
+      "read_method": "page"
+    },
+    {
+      "country": "IE",
+      "treatment": "Current Irish VAT rates from 1 January 2026: standard 23%, reduced 13.5%, second reduced 9%.",
+      "source_url": "https://www.revenue.ie/en/vat/vat-rates/search-vat-rates/current-vat-rates.aspx",
+      "read_method": "page"
+    },
+    {
+      "jurisdiction": "Ontario",
+      "treatment": "Gym and fitness memberships are taxable supplies under the GST/HST; Ontario HST rate is 13% (5% federal + 8% provincial). All Toronto chains read here (Fit4Less, Planet Fitness, YMCA GTA, City of Toronto) quote prices before tax.",
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate/calculator.html",
+      "read_method": "page"
+    },
+    {
+      "jurisdiction": "British Columbia - GST",
+      "treatment": "GST 5% applies to gym memberships (BC is not an HST province). YWCA page: 'All memberships and services are subject to GST'; Fitness World and City of Vancouver quote prices before tax.",
+      "source_url": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/charge-collect-which-rate/calculator.html",
+      "read_method": "page"
+    },
+    {
+      "jurisdiction": "British Columbia - PST",
+      "treatment": "PST (7%) does not apply to memberships: 'No, PST does not apply to memberships, event admissions, or tickets and passes for sporting or music events, as long as no taxable goods (e.g. a t-shirt) are provided with the membership or admission.' So a Vancouver gym membership carries 5% GST only.",
+      "source_url": "https://www2.gov.bc.ca/gov/content/taxes/sales-taxes/pst/faqs",
+      "read_method": "page"
+    },
+    {
+      "jurisdiction": "MX (federal) - Ley del IVA art. 1",
+      "treatment": "Gym memberships are independent services taxed at the general 16% IVA rate (not among art. 15 exemptions). CDMX is not in the northern/southern border 8% stimulus zone.",
+      "source_url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LIVA.pdf",
+      "read_method": "search-summary"
+    },
+    {
+      "jurisdiction": "MX (federal) - Ley Federal de Protección al Consumidor art. 7 Bis",
+      "treatment": "Providers must display notoriously and visibly the total amount to pay, including taxes, commissions, interest, insurance and any other charge. So published consumer gym prices should be read as IVA-included.",
+      "source_url": "https://www.profeco.gob.mx/juridico/pdf/l_lfpc_ultimo_camdip.pdf",
+      "read_method": "search-summary"
+    }
+  ],
+  "attendance": [
+    {
+      "claim": "Members who choose a flat monthly contract (fee over $70) attend on average 4.3 times per month and pay more than $17 per expected visit, when a 10-visit pass would have cost $10 per visit; on average they forgo about $600 over their membership.",
+      "figure": {
+        "visits_per_month": 4.3,
+        "price_per_visit_usd": 17,
+        "pay_per_visit_alternative_usd": 10,
+        "monthly_fee_usd_over": 70,
+        "forgone_savings_usd": 600
+      },
+      "population": "7,752 members of three U.S. health clubs, followed over three years",
+      "year": 2006,
+      "source": "DellaVigna, S. and Malmendier, U. (2006), 'Paying Not to Go to the Gym', American Economic Review 96(3): 694-719",
+      "source_url": "https://eml.berkeley.edu/~sdellavi/wp/gymempAER.pdf",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": "The PDF could not be text-extracted by the fetch tool; figures come from the abstract as surfaced in search results. Citation (volume, issue, pages) was read from the AEA page https://www.aeaweb.org/articles?id=10.1257/aer.96.3.694 (read_method page). Data are 1997-2000-era club prices."
+    },
+    {
+      "claim": "The average U.S. fitness-facility member visited 1.5 times per week in 2024, down from 2.1 per week in 2019; 77 million Americans (25% of people aged six and older) were members in 2024.",
+      "figure": {
+        "visits_per_week_2024": 1.5,
+        "visits_per_week_2019": 2.1,
+        "members_2024": 77000000,
+        "share_of_population_6plus": 0.25
+      },
+      "population": "U.S. fitness facility members aged 6+",
+      "year": 2024,
+      "source": "Health & Fitness Association (formerly IHRSA), 2025 US Health & Fitness Consumer Report: Headline Trends, released 2025-04-07",
+      "source_url": "https://www.healthandfitness.org/one-in-four-americans-belonged-to-a-gym-in-2024/",
+      "date_read": "2026-10-01",
+      "read_method": "page",
+      "notes": "Search summaries also give 78.5 days per year in 2024 vs 109.5 days in 2019; those day counts were not seen on the HFA page itself, so treat them as search-summary. 1.5/week x 52 = 78, consistent."
+    },
+    {
+      "claim": "In a UK survey, 18% of people who joined a gym quit going after 1-2 months, 27% of New Year joiners stopped within 3-4 months, and only 4% kept a long-term routine; an estimated GBP 503 million was spent on unused memberships in 2025.",
+      "figure": {
+        "quit_after_1_2_months": 0.18,
+        "quit_within_3_4_months": 0.27,
+        "keep_routine_long_term": 0.04,
+        "unused_spend_gbp_2025": 503000000
+      },
+      "population": "2,000 UK adults surveyed",
+      "year": 2025,
+      "source": "Survey by Live Football Tickets, reported by PA Life",
+      "source_url": "https://palife.co.uk/news/workplace-wellbeing/brits-waste-503-million-on-unused-gym-memberships-in-2025/",
+      "date_read": "2026-10-01",
+      "read_method": "page",
+      "notes": "Commercial consumer survey, not peer-reviewed; methodology not published on the page."
+    },
+    {
+      "claim": "Share of members who never or rarely use their membership (widely quoted '67% of memberships go unused').",
+      "figure": null,
+      "population": null,
+      "year": null,
+      "source": null,
+      "source_url": "https://www.elevaterope.com/blogs/home-workout-tips/unused-gym-memberships",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": "The 67% figure circulates on marketing blogs without a traceable primary study; no reliable primary source was found, so the figure is left null. Do not use 67% as a real statistic."
+    }
+  ],
+  "training_effect": {
+    "met_values": [
+      {
+        "activity": "Resistance (weight lifting - free weight, nautilus or universal-type), power lifting or body building, vigorous effort",
+        "compendium_code": "02050",
+        "met": 6,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Resistance (weight) training, squats, deadlift, slow or explosive effort",
+        "compendium_code": "02052",
+        "met": 5,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Resistance (weight) training, multiple exercises, 8-15 reps at varied resistance",
+        "compendium_code": "02054",
+        "met": 3.5,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Resistance training, circuit, reciprocal supersets, peripheral heart action training",
+        "compendium_code": "02055",
+        "met": 5.8,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Circuit training, body weight exercises",
+        "compendium_code": "02032",
+        "met": 6,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Circuit training, light effort",
+        "compendium_code": "02034",
+        "met": 3.5,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Circuit training, moderate effort",
+        "compendium_code": "02035",
+        "met": 5,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Circuit training, including kettlebells, some aerobic movement with minimal rest, general, vigorous intensity",
+        "compendium_code": "02040",
+        "met": 7.5,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Calisthenics (e.g., pushups, sit ups, pull-ups, jumping jacks, burpees, battling ropes), vigorous effort",
+        "compendium_code": "02020",
+        "met": 7.5,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Calisthenics (e.g., pushups, sit ups, pull-ups, lunges), moderate effort",
+        "compendium_code": "02022",
+        "met": 3.8,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Calisthenics (e.g., curl ups, abdominal crunches, plank), light effort",
+        "compendium_code": "02024",
+        "met": 2.8,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Calisthenics, light or moderate effort, general (e.g., back exercises), going up & down from floor",
+        "compendium_code": "02030",
+        "met": 3.5,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Body weight resistance exercises (e.g., squat, lunge, push-up, crunch), general",
+        "compendium_code": "02056",
+        "met": 3,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Body weight resistance exercises (e.g., squat, lunge, push-up, crunch), high intensity",
+        "compendium_code": "02057",
+        "met": 6.5,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      },
+      {
+        "activity": "Home exercise, general",
+        "compendium_code": "02064",
+        "met": 3.8,
+        "source_url": "https://pacompendium.com/conditioning-exercise/",
+        "read_method": "page"
+      }
+    ],
+    "equipment_vs_bodyweight": [
+      {
+        "claim": "Low-load bench press and push-up produce similar hypertrophy and strength gain.",
+        "finding": "18 untrained college men, 3 sets to failure at ~40% 1RM, twice weekly for 8 weeks. Pectoralis major thickness +19.4% (bench) vs +18.3% (push-up); triceps +10.3% vs +9.5%; 1RM +8.3% vs +5.1%; no significant between-group difference. Authors: push-up at a load similar to 40% 1RM bench press is 'comparably effective for muscle hypertrophy and strength gain'. Limitation noted for highly trained subjects.",
+        "source": "Kikuchi, N. and Nakazato, K. (2017), Journal of Exercise Science & Fitness 15(1): 37-42",
+        "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5812864/",
+        "read_method": "page"
+      },
+      {
+        "claim": "Bench press and elastic-band push-up at matched muscle activity give similar strength gains.",
+        "finding": "5-week training at 6RM: bench press group and elastic-band push-up group both improved 1RM and 6RM significantly with similar gains (changes ranging 13.65 to 22.21); control unchanged. Conclusion: when EMG levels are comparable the exercises give similar strength gains.",
+        "source": "Calatayud, J. et al. (2015), Journal of Strength and Conditioning Research 29(1): 246-253",
+        "source_url": "https://www.researchgate.net/publication/263548074_Bench_Press_and_Push-up_at_Comparable_Levels_of_Muscle_Activity_Results_in_Similar_Strength_Gains",
+        "read_method": "search-summary"
+      }
+    ],
+    "conclusion": "No published MET or training-effect penalty specific to 'bodyweight at home' versus 'equipment at a gym' was found. In the 2024 Adult Compendium the energy cost is set by effort, not by venue or equipment: vigorous weight lifting 6.0 vs vigorous calisthenics 7.5 and high-intensity bodyweight resistance 6.5; multi-exercise weight training 3.5 vs moderate calisthenics 3.8 and general bodyweight resistance 3.0; 'home exercise, general' is 3.8. Training studies show matched-effort bodyweight work (push-ups, banded push-ups) gives hypertrophy and strength gains statistically similar to bench press in untrained or short-term subjects. The one defensible difference is progression: bodyweight load is capped by body mass unless variations or bands are added, and Kikuchi and Nakazato flag that their result may not hold for highly trained people; no published figure quantifies that cap, so its size is null."
+  },
+  "tax": [
+    {
+      "jurisdiction": "US-NY (New York State, outside New York City)",
+      "taxed": false,
+      "rate": 0,
+      "treatment": "Dues and membership fees paid to health and fitness facilities are not subject to New York State sales tax. Athletic club dues are taxable statewide (distinct category). Locker fees, merchandise etc. taxed at state and local rates everywhere.",
+      "source_url": "https://tax.ny.gov/pubs_and_bulls/tg_bulletins/st/health_and_fitness_clubs.htm",
+      "date_read": "2026-10-01",
+      "read_method": "page",
+      "notes": "TB-ST-329, updated 2021-03-15; treatment dates to 1983 guidance, not a 2020 change."
+    },
+    {
+      "jurisdiction": "US-NY-NYC (New York City)",
+      "taxed": true,
+      "rate": 0.045,
+      "treatment": "NYC local sales tax applies to all charges by health and fitness facilities in the city, including dues, membership and initiation fees, classes, personal training, spa, tanning, guest access and childcare. City rate 4.5% on the service; no New York State sales tax on it.",
+      "source_url": "https://www.nyc.gov/site/finance/business/business-nys-sales-tax.page",
+      "date_read": "2026-10-01",
+      "read_method": "page",
+      "notes": "Coverage from https://tax.ny.gov/pubs_and_bulls/tg_bulletins/st/nyc_health_and_fitness_facilities.htm (page; that bulletin does not state the rate). Products sold with the service carry the combined 8.875%."
+    },
+    {
+      "jurisdiction": "US-CT (Connecticut)",
+      "taxed": true,
+      "rate": 0.0635,
+      "treatment": "Payments to health and athletic clubs (service, membership, initiation and application fees) are subject to sales and use tax; extra-charge services such as personal training and yoga/spin/Pilates classes too. Excluded: services included in dues already subject to the 10% club dues tax, and services by municipalities or 501(c) non-profits.",
+      "source_url": "https://portal.ct.gov/drs/publications/special-notices/2007/sn-2007-1",
+      "date_read": "2026-10-01",
+      "read_method": "page",
+      "notes": "SN 2007(1) does not state the rate; 6.35% is Connecticut's general sales tax rate (search-summary). Taxable since payments on/after 1989-07-01."
+    },
+    {
+      "jurisdiction": "US-CA (California)",
+      "taxed": false,
+      "rate": 0,
+      "treatment": "Membership fees granting access to health club facilities are generally not taxable, even if the operator sells merchandise on site; only fees tied to anticipated retail sales of goods are taxable (Regulation 1584).",
+      "source_url": "https://cdtfa.ca.gov/industry/membership-fees/",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": null
+    },
+    {
+      "jurisdiction": "US-TX (Texas)",
+      "taxed": true,
+      "rate": 0.0625,
+      "treatment": "Health club/spa memberships are taxable amusement services (Tax Code 151.0028; 34 TAC 3.298), including dues and initiation fees; state 6.25% plus local up to 2%. Exclusion where a licensed practitioner prescribes the service for health maintenance.",
+      "source_url": "http://txrules.elaws.us/rule/title34_chapter3_sec.3.298",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": "Rule page returned 503; comptroller nonprofit page did not address gyms."
+    },
+    {
+      "jurisdiction": "US-WA (Washington)",
+      "taxed": true,
+      "rate": null,
+      "treatment": "Since 2016-01-01 (HB 1550) all charges for the use of an athletic or fitness facility, and instructional lessons there, are retail sales subject to retail sales tax and retailing B&O tax. Educational institutions providing access to their own staff and students are exempt.",
+      "source_url": "https://dor.wa.gov/forms-publications/publications-subject/tax-topics/athletic-and-fitness-facilities",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": "Page returned 403. Rate is state 6.5% plus local; combined rate not verified here, left null."
+    },
+    {
+      "jurisdiction": "US-PA (Pennsylvania)",
+      "taxed": true,
+      "rate": 0.06,
+      "treatment": "Memberships to clubs providing sports or athletic facilities are taxable (initiation and periodic dues), at 6% state (+1% Allegheny County, +2% Philadelphia per general rules). YMCA/YWCA/JCC-type organizations exempt; separately stated optional class, nutrition and personal-trainer fees not taxable.",
+      "source_url": "https://www.salestaxinstitute.com/resources/membership-fees-subject-to-tax-in-pennsylvania",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": "Not verified on revenue.pa.gov; search summaries partly conflict (one states local add-on of 1% in Philadelphia). Treat as probable; confirm before relying on it."
+    },
+    {
+      "jurisdiction": "US-OH (Ohio)",
+      "taxed": true,
+      "rate": null,
+      "treatment": "Physical fitness facility service is taxable: monthly/annual dues for open use of a facility over at least one month, initiation and renewal fees. Not taxable: one-time use, set numbers of classes/sessions, instructor-led class memberships without open facility access.",
+      "source_url": "https://codes.ohio.gov/ohio-administrative-code/rule-5703-9-62",
+      "date_read": "2026-10-01",
+      "read_method": "page",
+      "notes": "Contradicts a search summary claiming Ohio does not tax memberships; the administrative rule wins. State rate 5.75% plus county; not verified here, left null."
+    },
+    {
+      "jurisdiction": "US-IA (Iowa)",
+      "taxed": true,
+      "rate": 0.06,
+      "treatment": "Fees for fitness centers, athletic clubs and commercial recreation, including yoga, Pilates, cycling and martial-arts memberships and classes, are taxable unless part of primary/secondary/post-secondary education; 6% state plus usually 1% local option.",
+      "source_url": "https://revenue.iowa.gov/taxes/tax-guidance/sales-use-excise-tax/sales-use-tax-guide",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": null
+    },
+    {
+      "jurisdiction": "US-NJ (New Jersey)",
+      "taxed": true,
+      "rate": 0.06625,
+      "treatment": "Initiation fees, membership fees or dues for access to a health and fitness, athletic, sporting or shopping club are subject to sales tax at 6.625%. Exempt: clubs with members predominantly 18 or under, qualified charities, government.",
+      "source_url": "https://www.nj.gov/treasury/taxation/pdf/pubs/sales/su11.pdf",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": "PDF not text-extractable by the fetch tool. Contradicts a search summary claiming NJ exempts health clubs; the Division of Taxation bulletin is preferred."
+    },
+    {
+      "jurisdiction": "US-TN (Tennessee)",
+      "taxed": null,
+      "rate": null,
+      "treatment": "Tennessee DOR Notice Sales 18-09 'Dues or Fees Paid to Physical Fitness Facilities' exists; contents could not be read.",
+      "source_url": "https://www.tn.gov/content/dam/tn/revenue/documents/notices/sales/sales18-09.pdf",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": "Fetch failed (connection reset); left null."
+    },
+    {
+      "jurisdiction": "GB (United Kingdom)",
+      "taxed": true,
+      "rate": 0.2,
+      "treatment": "Commercial gym memberships are standard-rated VAT at 20%. Sporting services by an eligible non-profit body, including membership subscriptions for active participation, are VAT-exempt (VAT Notice 701/45).",
+      "source_url": "https://www.gov.uk/guidance/sport-supplies-that-are-vat-exempt-notice-70145",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": null
+    },
+    {
+      "jurisdiction": "IE (Ireland)",
+      "taxed": true,
+      "rate": 0.09,
+      "treatment": "Provision of sporting facilities (including gym membership as admission to facilities for sport/physical education) is liable at the second reduced rate, currently 9%; separately charged training classes (e.g., aerobics) at 13.5%; exceptions in the Tax and Duty Manual.",
+      "source_url": "https://www.revenue.ie/en/vat/vat-on-services/sports/sporting-facilities.aspx",
+      "date_read": "2026-10-01",
+      "read_method": "page",
+      "notes": "Page confirms 'second reduced rate' but not the percentage; 9% and the 13.5% class rate are from search summaries of the Revenue Tax and Duty Manual."
+    },
+    {
+      "jurisdiction": "CA (Canada, federal GST/HST)",
+      "taxed": true,
+      "rate": null,
+      "treatment": "Gym memberships and drop-in fees are taxable supplies under GST/HST (5% GST; HST provinces combined, e.g. Ontario 13%).",
+      "source_url": "https://insightscpa.ca/fitness-wellness-tax/",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": "Not verified on canada.ca; rate varies by province so left null. Saskatchewan added 6% PST on gym memberships from October 2022 (https://www.cbc.ca/news/canada/saskatchewan/saskatchewan-budget-2022-gyms-1.6398812, search-summary)."
+    },
+    {
+      "jurisdiction": "CA-BC (British Columbia PST)",
+      "taxed": false,
+      "rate": 0,
+      "treatment": "PST does not apply to memberships or admissions as long as no taxable goods are provided with them; only the 5% GST applies to a BC gym membership.",
+      "source_url": "https://www2.gov.bc.ca/gov/content/taxes/sales-taxes/pst/faqs",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": "A search summary wrongly described BC as 12% HST; BC left HST in 2013."
+    },
+    {
+      "jurisdiction": "MX (Mexico IVA)",
+      "taxed": true,
+      "rate": 0.16,
+      "treatment": "Commercial gyms charge IVA at 16%. The LIVA art. 15 fr. XII exemption covers member dues of certain non-profit civil associations, but not those providing sports facilities worth more than 25% of their total facilities.",
+      "source_url": "https://losimpuestos.com.mx/pagan-iva-las-cuotas-sociales-de-asociacion-civil-deportiva/",
+      "date_read": "2026-10-01",
+      "read_method": "search-summary",
+      "notes": "Search summaries conflict (one claimed sports memberships are exempt, apparently drawn from Spanish law). Not verified against SAT or the LIVA text; treat as probable."
+    }
+  ]
+}

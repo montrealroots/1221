@@ -267,6 +267,8 @@ describe('the rest of the world’s banks', () => {
     expect(named).toBeGreaterThan(150);
     expect(stated).toBe(22);
     expect(Object.keys(WORLD_FEES).length).toBe(22);
+    // Swedbank Latvia's Pamata package, free to 25, as its June 2026 price list says.
+    expect(WORLD_FEES['LV|Swedbank']).toMatchObject({ monthlyFee: 1_70, waiver: { ageBelow: 26 } });
   });
 });
 

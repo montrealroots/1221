@@ -11,8 +11,10 @@
  * states, sales tax, property tax, payroll tax. They are close enough for the
  * simulation to teach real intuitions and they are not filing advice. A
  * vehicle's registration and purchase tax were kept too until 2026-09-27,
- * and nothing is driven; property tax is a fact the place shows, charged to
- * no one, since nothing is owned.
+ * when nothing was driven; since 2026-09-29 they are kept again in
+ * `content/vehiclefees.ts`. Property tax was a fact the place showed, charged to
+ * no one, until homes could be owned on 2026-09-28 (`systems/homes.ts`),
+ * which charges it, and reads California's cap on how fast an assessment grows.
  */
 
 import type { Money } from '../core/money';
@@ -37,6 +39,12 @@ export interface IncomeTaxRule {
   effectiveFrom: number;
   effectiveTo?: number;
   note: string;
+  /** The money its brackets and deduction are written in; dollars where not said. */
+  currency?: string;
+  /** Tax credits taken off the tax the brackets give, never below nothing, as Ireland's. */
+  credit?: Money;
+  /** A second charge on the whole income beside the tax, as Ireland's Universal Social Charge: none at all up to `exemptUpTo`. */
+  levy?: { label: string; brackets: TaxBracket[]; exemptUpTo: Money };
 }
 
 export interface PayrollTaxRule {
@@ -52,6 +60,11 @@ export interface PayrollTaxRule {
   /** Self-employed pay both halves. */
   selfEmployedMultiplier: number;
   effectiveFrom: number;
+  effectiveTo?: number;
+  /** Earnings below which the social rate doesn't start, as the UK's primary threshold. */
+  socialFloor?: Money;
+  /** The money its bases and thresholds are written in; dollars where not said. */
+  currency?: string;
 }
 
 export interface SalesTaxRule {
@@ -148,21 +161,45 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
   { jurisdictionCode: 'US-WA', label: 'Washington (No State Income Tax)', kind: 'none', brackets: [], standardDeduction: 0, effectiveFrom: YEAR(1900), note: 'Washington levies no personal income tax on wages.' },
   { jurisdictionCode: 'US-TN', label: 'Tennessee (No State Income Tax)', kind: 'none', brackets: [], standardDeduction: 0, effectiveFrom: YEAR(2021), note: 'Tennessee levies no personal income tax.' },
   // Other countries, structurally modeled.
-  { jurisdictionCode: 'CA', label: 'Canada Federal Income Tax', kind: 'progressive', brackets: brackets([[0, 0.15], [55_867, 0.205], [111_733, 0.26], [173_205, 0.29], [246_752, 0.33]]), standardDeduction: 15_705_00, effectiveFrom: YEAR(2024), note: APPROX },
-  { jurisdictionCode: 'CA-02', label: 'British Columbia Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0506], [47_937, 0.077], [95_875, 0.105], [110_076, 0.1229], [133_664, 0.147], [181_232, 0.168], [252_752, 0.205]]), standardDeduction: 12_580_00, effectiveFrom: YEAR(2024), note: APPROX },
-  { jurisdictionCode: 'CA-08', label: 'Ontario Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0505], [51_446, 0.0915], [102_894, 0.1116], [150_000, 0.1216], [220_000, 0.1316]]), standardDeduction: 12_399_00, effectiveFrom: YEAR(2024), note: APPROX },
-  { jurisdictionCode: 'CA-10', label: 'Quebec Income Tax', kind: 'progressive', brackets: brackets([[0, 0.14], [51_780, 0.19], [103_545, 0.24], [126_000, 0.2575]]), standardDeduction: 18_056_00, effectiveFrom: YEAR(2024), note: APPROX },
-  { jurisdictionCode: 'GB', label: 'United Kingdom Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [12_570, 0.20], [50_270, 0.40], [125_140, 0.45]]), standardDeduction: 0, effectiveFrom: YEAR(2021), note: APPROX },
-  { jurisdictionCode: 'IE', label: 'Ireland Income Tax', kind: 'progressive', brackets: brackets([[0, 0.20], [42_000, 0.40]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX },
-  { jurisdictionCode: 'FR', label: 'France Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [11_294, 0.11], [28_797, 0.30], [82_341, 0.41], [177_106, 0.45]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX },
-  { jurisdictionCode: 'DE', label: 'Germany Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [11_604, 0.14], [17_006, 0.24], [66_761, 0.42], [277_826, 0.45]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX },
-  { jurisdictionCode: 'ES', label: 'Spain Income Tax', kind: 'progressive', brackets: brackets([[0, 0.19], [12_450, 0.24], [20_200, 0.30], [35_200, 0.37], [60_000, 0.45], [300_000, 0.47]]), standardDeduction: 5_550_00, effectiveFrom: YEAR(2023), note: APPROX },
-  { jurisdictionCode: 'IT', label: 'Italy Income Tax', kind: 'progressive', brackets: brackets([[0, 0.23], [28_000, 0.35], [50_000, 0.43]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX },
-  { jurisdictionCode: 'AU', label: 'Australia Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [18_200, 0.16], [45_000, 0.30], [135_000, 0.37], [190_000, 0.45]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX },
-  { jurisdictionCode: 'NZ', label: 'New Zealand Income Tax', kind: 'progressive', brackets: brackets([[0, 0.105], [15_600, 0.175], [53_500, 0.30], [78_100, 0.33], [180_000, 0.39]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX },
+  { jurisdictionCode: 'CA', label: 'Canada Federal Income Tax', kind: 'progressive', brackets: brackets([[0, 0.15], [55_867, 0.205], [111_733, 0.26], [173_205, 0.29], [246_752, 0.33]]), standardDeduction: 15_705_00, effectiveFrom: YEAR(2024), note: APPROX, currency: 'CAD' },
+  { jurisdictionCode: 'CA-02', label: 'British Columbia Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0506], [47_937, 0.077], [95_875, 0.105], [110_076, 0.1229], [133_664, 0.147], [181_232, 0.168], [252_752, 0.205]]), standardDeduction: 12_580_00, effectiveFrom: YEAR(2024), note: APPROX, currency: 'CAD' },
+  { jurisdictionCode: 'CA-08', label: 'Ontario Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0505], [51_446, 0.0915], [102_894, 0.1116], [150_000, 0.1216], [220_000, 0.1316]]), standardDeduction: 12_399_00, effectiveFrom: YEAR(2024), note: APPROX, currency: 'CAD' },
+  { jurisdictionCode: 'CA-10', label: 'Quebec Income Tax', kind: 'progressive', brackets: brackets([[0, 0.14], [51_780, 0.19], [103_545, 0.24], [126_000, 0.2575]]), standardDeduction: 18_056_00, effectiveFrom: YEAR(2024), note: APPROX, currency: 'CAD' },
+  { jurisdictionCode: 'GB', label: 'United Kingdom Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [12_570, 0.20], [50_270, 0.40], [125_140, 0.45]]), standardDeduction: 0, effectiveFrom: YEAR(2021), note: APPROX, currency: 'GBP' },
+  { jurisdictionCode: 'IE', label: 'Ireland Income Tax', kind: 'progressive', brackets: brackets([[0, 0.20], [42_000, 0.40]]), standardDeduction: 0, effectiveFrom: YEAR(2024), effectiveTo: YEAR(2026), note: APPROX, currency: 'EUR' },
+  // Revenue's Budget 2026 summary: 20% on a single person's first €44,000 and
+  // 40% above, less the personal credit and the employee or earned income
+  // credit, €2,000 each and never more than €2,000 together for the second;
+  // the Universal Social Charge beside it, none at all on €13,000 or less and
+  // on every euro above it otherwise, from 1 January 2026. The rent credit and
+  // USC's 3% surcharge on self-employed income over €100,000 aren't kept.
+  // Until 2026-09-29 Ireland's band was 2024's €42,000, with no credits and
+  // no USC.
+  {
+    jurisdictionCode: 'IE', label: 'Ireland Income Tax', kind: 'progressive', brackets: brackets([[0, 0.20], [44_000, 0.40]]), standardDeduction: 0, effectiveFrom: YEAR(2026), currency: 'EUR',
+    credit: 4_000_00,
+    levy: { label: 'Universal Social Charge', brackets: brackets([[0, 0.005], [12_012, 0.02], [28_700, 0.03], [70_044, 0.08]]), exemptUpTo: 13_000_00 },
+    note: 'Revenue, Budget 2026 summary; https://www.revenue.ie/en/jobs-and-pensions/usc/standard-rates-thresholds.aspx',
+  },
+  { jurisdictionCode: 'FR', label: 'France Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [11_294, 0.11], [28_797, 0.30], [82_341, 0.41], [177_106, 0.45]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX, currency: 'EUR' },
+  { jurisdictionCode: 'DE', label: 'Germany Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [11_604, 0.14], [17_006, 0.24], [66_761, 0.42], [277_826, 0.45]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX, currency: 'EUR' },
+  { jurisdictionCode: 'ES', label: 'Spain Income Tax', kind: 'progressive', brackets: brackets([[0, 0.19], [12_450, 0.24], [20_200, 0.30], [35_200, 0.37], [60_000, 0.45], [300_000, 0.47]]), standardDeduction: 5_550_00, effectiveFrom: YEAR(2023), note: APPROX, currency: 'EUR' },
+  { jurisdictionCode: 'IT', label: 'Italy Income Tax', kind: 'progressive', brackets: brackets([[0, 0.23], [28_000, 0.35], [50_000, 0.43]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX, currency: 'EUR' },
+  { jurisdictionCode: 'AU', label: 'Australia Income Tax', kind: 'progressive', brackets: brackets([[0, 0], [18_200, 0.16], [45_000, 0.30], [135_000, 0.37], [190_000, 0.45]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX, currency: 'AUD' },
+  { jurisdictionCode: 'NZ', label: 'New Zealand Income Tax', kind: 'progressive', brackets: brackets([[0, 0.105], [15_600, 0.175], [53_500, 0.30], [78_100, 0.33], [180_000, 0.39]]), standardDeduction: 0, effectiveFrom: YEAR(2024), note: APPROX, currency: 'NZD' },
   { jurisdictionCode: 'JP', label: 'Japan Income Tax', kind: 'progressive', brackets: brackets([[0, 0.05], [1_950, 0.10], [3_300, 0.20], [6_950, 0.23], [9_000, 0.33], [18_000, 0.40], [40_000, 0.45]]), standardDeduction: 480_00, effectiveFrom: YEAR(2020), note: `${APPROX} Amounts modeled in USD-equivalent for simulation purposes.` },
   { jurisdictionCode: 'KR', label: 'South Korea Income Tax', kind: 'progressive', brackets: brackets([[0, 0.06], [12_000, 0.15], [46_000, 0.24], [88_000, 0.35], [150_000, 0.38], [300_000, 0.40]]), standardDeduction: 0, effectiveFrom: YEAR(2023), note: `${APPROX} Amounts modeled in USD-equivalent.` },
-  { jurisdictionCode: 'MX', label: 'Mexico Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0192], [4_000, 0.064], [34_000, 0.1088], [60_000, 0.16], [120_000, 0.2152], [250_000, 0.30], [400_000, 0.35]]), standardDeduction: 0, effectiveFrom: YEAR(2023), note: `${APPROX} Amounts modeled in USD-equivalent.` },
+  { jurisdictionCode: 'MX', label: 'Mexico Income Tax', kind: 'progressive', brackets: brackets([[0, 0.0192], [4_000, 0.064], [34_000, 0.1088], [60_000, 0.16], [120_000, 0.2152], [250_000, 0.30], [400_000, 0.35]]), standardDeduction: 0, effectiveFrom: YEAR(2023), effectiveTo: YEAR(2026), note: `${APPROX} Amounts modeled in USD-equivalent.` },
+  // SAT's annual tariff for 2026 (Article 152, Anexo 8 of the RMF 2026), in
+  // pesos, the first update since 2023; its fixed quotas are the brackets
+  // below summed. The employment subsidy, a credit against a wage's ISR up
+  // to MXN 11,492.66 a month, isn't kept. Until 2026-09-29 Mexico was taxed
+  // on round brackets read in dollars.
+  {
+    jurisdictionCode: 'MX', label: 'Mexico Income Tax (ISR)', kind: 'progressive', currency: 'MXN', standardDeduction: 0, effectiveFrom: YEAR(2026),
+    brackets: [[0, 0.0192], [10_135_12, 0.064], [86_022_12, 0.1088], [151_176_20, 0.16], [175_735_67, 0.1792], [210_403_70, 0.2136], [424_353_98, 0.2352], [668_840_15, 0.30], [1_276_925_99, 0.32], [1_702_567_98, 0.34], [5_107_703_93, 0.35]].map(([from, rate]) => ({ from: from as number, rate: rate as number })),
+    note: 'https://www.sat.gob.mx/minisitio/NormatividadRMFyRGCE/documentos2026/rmf/anexos/Anexo-8-RMF-2026_DOF-28122025.pdf',
+  },
   { jurisdictionCode: 'AE', label: 'United Arab Emirates (No Personal Income Tax)', kind: 'none', brackets: [], standardDeduction: 0, effectiveFrom: YEAR(1900), note: 'The UAE levies no personal income tax on employment income.' },
   {
     jurisdictionCode: 'IS',
@@ -176,11 +213,29 @@ export const INCOME_TAX_RULES: readonly IncomeTaxRule[] = [
 ];
 
 export const PAYROLL_TAX_RULES: readonly PayrollTaxRule[] = [
-  { jurisdictionCode: 'US', socialRate: 0.062, socialWageBase: 168_600_00, medicalRate: 0.0145, surchargeRate: 0.009, surchargeThreshold: 200_000_00, selfEmployedMultiplier: 2, effectiveFrom: YEAR(2024) },
-  { jurisdictionCode: 'CA', socialRate: 0.0595, socialWageBase: 68_500_00, medicalRate: 0.0166, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 2, effectiveFrom: YEAR(2024) },
-  { jurisdictionCode: 'GB', socialRate: 0.08, socialWageBase: 50_270_00, medicalRate: 0.02, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 1.2, effectiveFrom: YEAR(2024) },
+  { jurisdictionCode: 'US', socialRate: 0.062, socialWageBase: 168_600_00, medicalRate: 0.0145, surchargeRate: 0.009, surchargeThreshold: 200_000_00, selfEmployedMultiplier: 2, effectiveFrom: YEAR(2024), effectiveTo: YEAR(2025) },
+  // The Social Security wage base, SSA's: $176,100 in 2025 and $184,500 in 2026, held after. Until 2026-09-29 it stopped at 2024's $168,600.
+  { jurisdictionCode: 'US', socialRate: 0.062, socialWageBase: 176_100_00, medicalRate: 0.0145, surchargeRate: 0.009, surchargeThreshold: 200_000_00, selfEmployedMultiplier: 2, effectiveFrom: YEAR(2025), effectiveTo: YEAR(2026) },
+  { jurisdictionCode: 'US', socialRate: 0.062, socialWageBase: 184_500_00, medicalRate: 0.0145, surchargeRate: 0.009, surchargeThreshold: 200_000_00, selfEmployedMultiplier: 2, effectiveFrom: YEAR(2026) },
+  { jurisdictionCode: 'CA', socialRate: 0.0595, socialWageBase: 68_500_00, medicalRate: 0.0166, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 2, effectiveFrom: YEAR(2024), currency: 'CAD' },
+  // Class 1 National Insurance: 8% between the primary threshold and the upper
+  // earnings limit, 2% above it, both frozen at £12,570 and £50,270 to 2028.
+  // Until 2026-09-29 the 8% ran from the first pound and the 2% on all of it.
+  { jurisdictionCode: 'GB', socialRate: 0.08, socialFloor: 12_570_00, socialWageBase: 50_270_00, medicalRate: 0, surchargeRate: 0.02, surchargeThreshold: 50_270_00, selfEmployedMultiplier: 0.75, effectiveFrom: YEAR(2024), currency: 'GBP' },
+  // Ireland's PRSI, Class A and Class S alike: 4.2% of all income from 1
+  // October 2025, 4.35% from 1 October 2026 (Citizens Information). None at
+  // €352 a week or less for an employee, nor on €5,000 a year for the
+  // self-employed, which SLATE doesn't keep. Until 2026-09-29 Ireland took none.
+  { jurisdictionCode: 'IE', socialRate: 0.042, socialWageBase: 0, medicalRate: 0, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 1, effectiveFrom: Date.UTC(2025, 9, 1), effectiveTo: Date.UTC(2026, 9, 1), currency: 'EUR' },
+  { jurisdictionCode: 'IE', socialRate: 0.0435, socialWageBase: 0, medicalRate: 0, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 1, effectiveFrom: Date.UTC(2026, 9, 1), currency: 'EUR' },
+  // A worker's IMSS contributions in 2026: 2.375% of the registered wage to
+  // 25 UMA a day, and 0.40% more on what's over 3 UMA (the Social Security
+  // Law, articles 25, 106, 107, 147 and 168; the 0.40% from a secondary
+  // source). The UMA is MXN 117.31 a day from 1 February 2026. Until
+  // 2026-09-29 Mexico took none.
+  { jurisdictionCode: 'MX', socialRate: 0.02375, socialWageBase: 1_070_453_75, medicalRate: 0, surchargeRate: 0.004, surchargeThreshold: 128_454_45, selfEmployedMultiplier: 1, effectiveFrom: YEAR(2026), currency: 'MXN' },
   { jurisdictionCode: 'AU', socialRate: 0, socialWageBase: 0, medicalRate: 0.02, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 1, effectiveFrom: YEAR(2024) },
-  { jurisdictionCode: 'NZ', socialRate: 0.0153, socialWageBase: 142_283_00, medicalRate: 0, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 1, effectiveFrom: YEAR(2024) },
+  { jurisdictionCode: 'NZ', socialRate: 0.0153, socialWageBase: 142_283_00, medicalRate: 0, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 1, effectiveFrom: YEAR(2024), currency: 'NZD' },
   { jurisdictionCode: 'AE', socialRate: 0, socialWageBase: 0, medicalRate: 0, surchargeRate: 0, surchargeThreshold: 0, selfEmployedMultiplier: 1, effectiveFrom: YEAR(1900) },
   // The employee side in Iceland is the mandatory pension contribution, 4% and
   // uncapped. Tryggingagjald at 6.35% is the employer's and is not withheld from
@@ -353,20 +408,18 @@ export interface TaxComputation {
 /** Annual tax on employment income at a location. */
 export function computeAnnualTax(
   income: Money, cityId: string, at: number,
-  opts: { selfEmployed?: boolean; deductions?: Money; currency?: string } = {},
+  opts: { selfEmployed?: boolean; deductions?: Money; currency?: string; relief?: { deductions?: Money; credit?: Money } } = {},
 ): TaxComputation {
-  // The tables are in dollars (`TAX_RULES`): an amount in another money is
-  // taxed on what it comes to in dollars, and the tax said in its own. Until
-  // 2026-09-27 a save kept in krónur was taxed as if every króna were a dollar.
-  const other = opts.currency !== undefined && opts.currency !== 'USD' ? opts.currency : undefined;
-  if (other) {
-    const inUsd = (x: Money) => exchange(x, other, 'USD') ?? x;
-    const back = (x: Money) => exchange(x, 'USD', other) ?? x;
-    const usd = computeAnnualTax(inUsd(income), cityId, at, { selfEmployed: opts.selfEmployed, deductions: opts.deductions === undefined ? undefined : inUsd(opts.deductions) });
-    const federal = back(usd.federal); const regional = back(usd.regional); const local = back(usd.local); const payroll = back(usd.payroll);
-    const total = federal + regional + local + payroll;
-    return { gross: income, federal, regional, local, payroll, total, net: income - total, effectiveRate: income > 0 ? total / income : 0, lines: usd.lines.map((l) => ({ ...l, amount: back(l.amount) })) };
-  }
+  // Each rule is written in its own money (`currency`, dollars where not
+  // said): an amount is taxed on what it comes to in the rule's money, and the
+  // tax said in the amount's own. Until 2026-09-27 a save kept in krónur was
+  // taxed as if every króna were a dollar; until 2026-09-29 every rule was read
+  // in dollars, and a Londoner's pound was taxed on bands of £12,570 read as
+  // $12,570.
+  const cur = opts.currency ?? 'USD';
+  const inRule = (x: Money, rc: string) => (rc === cur ? x : exchange(x, cur, rc) ?? x);
+  const outOf = (x: Money, rc: string) => (rc === cur ? x : exchange(x, rc, cur) ?? x);
+  const money = (x: Money, rc: string) => (x / 100).toLocaleString('en-US', { style: 'currency', currency: rc, maximumFractionDigits: 0 });
   const gross = income;
   const layers = resolveIncomeTaxLayers(cityId, at);
   const lines: TaxComputation['lines'] = [];
@@ -375,8 +428,13 @@ export function computeAnnualTax(
   let local = 0;
 
   for (const rule of layers) {
-    const taxable = Math.max(0, gross - rule.standardDeduction - (opts.deductions ?? 0));
-    const amount = applyBrackets(taxable, rule);
+    const rc = rule.currency ?? 'USD';
+    // A married person's relief (`systems/marriage.ts`, from 2026-10-01): a deduction from the national tax's income, a credit off it.
+    const depth0 = jurisdictionPath(cityId).indexOf(rule.jurisdictionCode) === 0;
+    const reliefDeduction = depth0 ? inRule(opts.relief?.deductions ?? 0, rc) : 0;
+    const taxable = Math.max(0, inRule(gross, rc) - rule.standardDeduction - inRule(opts.deductions ?? 0, rc) - reliefDeduction);
+    const levy = rule.levy && inRule(gross, rc) > rule.levy.exemptUpTo ? outOf(applyBrackets(inRule(gross, rc), { ...rule, kind: 'progressive', brackets: rule.levy.brackets }), rc) : 0;
+    const amount = Math.max(0, outOf(Math.max(0, applyBrackets(taxable, rule) - (rule.credit ?? 0)), rc) - (depth0 ? opts.relief?.credit ?? 0 : 0)) + levy;
     if (amount === 0 && rule.kind === 'none') {
       lines.push({ label: rule.label, amount: 0, note: rule.note });
       continue;
@@ -384,9 +442,11 @@ export function computeAnnualTax(
     lines.push({
       label: rule.label,
       amount,
-      note: rule.kind === 'flat'
-        ? `Flat ${((rule.flatRate ?? 0) * 100).toFixed(2)}% on ${(taxable / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })} after deductions.`
-        : `Progressive brackets on ${(taxable / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })} after deductions.`,
+      note: (rule.kind === 'flat'
+        ? `Flat ${((rule.flatRate ?? 0) * 100).toFixed(2)}% on ${money(taxable, rc)} after deductions.`
+        : `Progressive brackets on ${money(taxable, rc)} after deductions.`)
+        + (rule.credit ? ` Less ${money(rule.credit, rc)} of credits.` : '')
+        + (rule.levy ? ` With the ${rule.levy.label}, ${money(levy, cur)}.` : ''),
     });
     const depth = jurisdictionPath(cityId).indexOf(rule.jurisdictionCode);
     if (depth === 0) federal += amount;
@@ -398,18 +458,20 @@ export function computeAnnualTax(
   let payroll = 0;
   if (payrollRule) {
     const multiplier = opts.selfEmployed ? payrollRule.selfEmployedMultiplier : 1;
-    const socialBase = payrollRule.socialWageBase > 0 ? Math.min(gross, payrollRule.socialWageBase) : gross;
+    const rc = payrollRule.currency ?? 'USD';
+    const g = inRule(gross, rc);
+    const socialBase = Math.max(0, (payrollRule.socialWageBase > 0 ? Math.min(g, payrollRule.socialWageBase) : g) - (payrollRule.socialFloor ?? 0));
     const social = applyRate(socialBase, payrollRule.socialRate * multiplier);
-    const medical = applyRate(gross, payrollRule.medicalRate * multiplier);
-    const surcharge = gross > payrollRule.surchargeThreshold && payrollRule.surchargeThreshold > 0
-      ? applyRate(gross - payrollRule.surchargeThreshold, payrollRule.surchargeRate)
+    const medical = applyRate(g, payrollRule.medicalRate * multiplier);
+    const surcharge = g > payrollRule.surchargeThreshold && payrollRule.surchargeThreshold > 0
+      ? applyRate(g - payrollRule.surchargeThreshold, payrollRule.surchargeRate)
       : 0;
-    payroll = social + medical + surcharge;
+    payroll = outOf(social + medical + surcharge, rc);
     if (payroll > 0) {
       lines.push({
         label: opts.selfEmployed ? 'Payroll tax (self-employed, both halves)' : 'Payroll tax',
         amount: payroll,
-        note: `Social insurance and medical levies${payrollRule.socialWageBase > 0 ? `, social capped at a ${(payrollRule.socialWageBase / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })} wage base` : ''}.`,
+        note: `Social insurance and medical levies${payrollRule.socialWageBase > 0 ? `, social capped at a ${money(payrollRule.socialWageBase, rc)} wage base` : ''}.`,
       });
     }
   }
@@ -428,6 +490,12 @@ export function salesTaxRate(cityId: string, at: number, category: string): numb
   if (!rule) return 0;
   if (rule.exemptCategories.includes(category)) return 0;
   return rule.rate;
+}
+
+/** The federal standard deduction where a town is, from the federal layer of its rules. */
+export function federalStandardDeduction(cityId: string, at: number): Money {
+  const path = jurisdictionPath(cityId);
+  return resolveIncomeTaxLayers(cityId, at).find((rule) => path.indexOf(rule.jurisdictionCode) === 0)?.standardDeduction ?? 0;
 }
 
 export function propertyTaxRate(cityId: string, at: number): number {

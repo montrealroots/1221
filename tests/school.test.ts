@@ -3,7 +3,10 @@
  * against the David Geffen School of Drama's 2026–2027 figures, on played
  * careers: the clock sent on six hours at a time, nights slept alone.
  */
+import { canPay } from '@/engine/systems/household';
+import { journeysOf } from '@/engine/systems/journey';
 import { describe, expect, it } from 'vitest';
+import { SUMMER_PLAYS } from '@/engine/content/plays';
 import { createSave, quickSave } from '@/engine';
 import { atSchool, defaultConfig, newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
@@ -28,13 +31,33 @@ const life = (seed = 'school', extra: Record<string, unknown> = {}) =>
 const inNeed = (seed: string) => life(seed, { family: undefined, wealth: 'scraping' });
 /** Played to a moment, six hours at a time. */
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); };
+/** Played by somebody who looks after themselves: rested, fed and steady each time the clock moves, as a player keeps a character. Since 2026-09-28 a run of off nights falls short at the evaluation. */
+const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
+/** Once the last journey is there: a job's trip is a train from New Haven, from 2026-09-29. */
+const landed = (sim: Simulation) => { const j = journeysOf(sim.player).at(-1); if (j) sim.advanceTo(Math.max(sim.now, j.arriveAt + (j.lateMinutes ?? 0) * 60_000 + 60_000)); };
 const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter((i) => i.kind === kind && i.status === 'pending');
 const day = (key: string) => { const [year, month, d] = key.split('-').map(Number); return { year: year!, month: month!, day: d! }; };
 
 describe('one student, one calendar', () => {
-  it('never calls a student to two places at once, Yale Rep and their own production, second year or third', () => {
-    for (const term of [2, 4]) {
+  it('asks a third-year in the Rep’s company to play there that fall, not in a School production too', () => {
+    const sim = life('both-company');
+    Object.assign(sim.player.craft!, { scene: 95, character: 95, emotion: 95 });
+    Object.assign(sim.player.school!.classmates[0]!.craft, { scene: 95, character: 95, emotion: 95 });
+    sim.schedule({ at: sim.now + 60_000, kind: 'school.term', label: 'A Term Begins', category: 'school', priority: 30, payload: { personId: sim.player.id, term: 4 } });
+    sim.advanceTo(sim.now + 2 * 60_000);
+    expect(sim.player.school!.rep).toMatchObject({ kind: 'role' });
+    expect(sim.player.school!.casting).toBeUndefined();
+    expect(pending(sim, CALL_KIND).every((c) => c.payload.which === 'rep')).toBe(true);
+    // The class's others at the Rep aren't in the School's productions either.
+    const around = sim.player.school!.around!.list;
+    const atRep = around.filter((a) => a.part === 'A Featured Part In The Company');
+    expect(atRep.map((a) => a.name)).toContain(sim.player.school!.classmates[0]!.name);
+    for (const at of atRep) expect(around.filter((a) => a.name === at.name)).toHaveLength(1);
+  });
+
+  it('never calls a student to two places at once, Yale Rep and their own production', () => {
+    for (const term of [2]) {
       const sim = life(`both-${term}`);
       Object.assign(sim.player.craft!, { scene: 95, character: 95, emotion: 95 });
       sim.schedule({ at: sim.now + 60_000, kind: 'school.term', label: 'A Term Begins', category: 'school', priority: 30, payload: { personId: sim.player.id, term } });
@@ -68,6 +91,8 @@ describe('one student, one calendar', () => {
       sim.player.awakeSince = night.at - MS_HOUR;
       sim.player.currentLocationId = 'us-ct-newhaven';
       sim.advanceTo(night.at + 60_000);
+      // Sent on: the curtain, three hours later, played.
+      if (night.status === 'done') sim.advanceTo(Number(night.payload.perfAt) + 60_000);
     }
     const needed = onCall.filter((n) => n.status === 'done').length;
     expect(onCall.filter((n) => n.status === 'cancelled').length).toBe(onCall.length - needed);
@@ -91,6 +116,27 @@ describe('one student, one calendar', () => {
     expect(school.tally.calls).toBe(0);
     expect(labs[1]!.status).toBe('missed');
   });
+
+  it('excuses a performance missed laid up by an injury, as a stay in hospital is', () => {
+    // Until 2026-09-28 a broken bone kept an actor from the stage and the School warned, then dismissed, them for it.
+    const sim = life('laid-up');
+    let performances: ReturnType<typeof pending> = [];
+    for (let m = 0; m < 12 && performances.length < 2; m += 1) {
+      tended(sim, sim.now + 30 * MS_DAY);
+      performances = pending(sim, CALL_KIND).filter((c) => c.payload.call === 'performance').sort((a, b) => a.at - b.at).slice(0, 2);
+    }
+    expect(performances).toHaveLength(2);
+    const school = sim.player.school!;
+    const last = performances[1]!.at;
+    tended(sim, performances[0]!.at - MS_DAY);
+    healthOf(sim.player).injury = { kind: 'fracture', at: sim.now, until: last + 30 * MS_DAY, offWorkUntil: last + MS_DAY };
+    const breaches = school.tally.breaches;
+    const standing = school.standing;
+    tended(sim, last + 60_000);
+    expect(performances.map((c) => c.status)).toEqual(['missed', 'missed']);
+    expect(school.tally.breaches).toBe(breaches);
+    expect(school.standing).toBe(standing);
+  }, 180_000);
 
   it('lets a dismissed student’s showcases go with the school’s calendar', () => {
     const sim = life('show-gone');
@@ -157,25 +203,30 @@ describe('a new life', () => {
 });
 
 describe('the admitted class', () => {
-  it('is fifteen classmates, and the player, the faculty’s first choice, is ahead of every one in every area', () => {
-    for (const seed of ['a', 'b', 'c']) {
+  it('is fifteen classmates, each an actor or an actress with their own drive, and the player among the strongest, not above everyone', () => {
+    let firstInAll = 0;
+    for (const seed of ['a', 'b', 'c', 'd', 'e', 'f']) {
       const p = life(seed).player;
       const mates = p.school!.classmates;
       expect(mates).toHaveLength(YALE_DRAMA.classSize - 1);
-      for (const { id } of SKILLS) {
-        const best = Math.max(...mates.map((m) => m.craft[id]));
-        expect(p.craft![id]).toBe(Math.min(95, best + 6));
-        expect(rankIn(p, id)).toBe(1);
+      for (const m of mates) {
+        expect(meanCraft(m.craft)).toBeGreaterThan(38);
+        expect(['actor', 'actress']).toContain(m.title);
+        expect(m.drive).toBeGreaterThanOrEqual(1 - ESTIMATE.driveSpread);
+        expect(m.drive).toBeLessThanOrEqual(1 + ESTIMATE.driveSpread);
       }
-      expect(rankIn(p)).toBe(1);
-      for (const m of mates) expect(meanCraft(m.craft)).toBeGreaterThan(38);
+      // Above the class's middle overall, as one of its strongest admits.
+      const means = mates.map((m) => meanCraft(m.craft)).sort((x, y) => x - y);
+      expect(meanCraft(p.craft!)).toBeGreaterThan(means[7]!);
+      if (SKILLS.every(({ id }) => rankIn(p, id) === 1)) firstInAll += 1;
     }
+    expect(firstInAll).toBe(0);
     expect(life('a').player.school!.classmates).toEqual(life('a').player.school!.classmates);
     expect(life('a').player.school!.classmates).not.toEqual(life('b').player.school!.classmates);
   });
 
   it('grows less from a session the better it already is, and more for coming ready', () => {
-    expect(sessionGain(40, 1)).toBeCloseTo(0.55 * 0.6 ** 1.5, 10);
+    expect(sessionGain(40, 1)).toBeCloseTo(ESTIMATE.sessionGain * 0.6 ** 1.5, 10);
     expect(sessionGain(80, 1)).toBeLessThan(sessionGain(40, 1));
     expect(sessionGain(50, 1.2)).toBeGreaterThan(sessionGain(50, 0.3));
     expect(sessionGain(100, 1)).toBe(0);
@@ -384,7 +435,7 @@ describe('work-study', () => {
   it('works six hours each class-week Saturday and pays them on the Friday, as wages a bank counts', () => {
     const sim = life('work');
     play(sim, at(2026, 9, 5, 17));
-    expect(sim.player.school!.workStudy).toMatchObject({ yearHours: 6, owedHours: 6 });
+    expect(sim.player.school!.workStudy).toMatchObject({ owedHours: 6 });
     play(sim, at(2026, 9, 11, 17) + 60_000);
     const pay = sim.universe.transactions.filter((t) => t.memo.startsWith('Work-study wages'));
     expect(pay).toHaveLength(1);
@@ -440,7 +491,7 @@ describe('work-study', () => {
 });
 
 describe('casting', () => {
-  it('casts a first-year in good standing to understudy at Yale Rep in the first spring, beside the Carlotta Festival, on call at every performance', () => {
+  it('casts a first-year in good standing to understudy at Yale Rep in the first spring, beside the Carlotta Festival, on call at five every performance day, with a run-through', () => {
     const sim = life('seagull');
     sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
     const casting = sim.player.school!.rep!;
@@ -453,8 +504,13 @@ describe('casting', () => {
     expect(rehearsals.length).toBe(11);
     expect(rehearsals.every((c) => c.requiresPlayer)).toBe(true);
     expect(onCall.length).toBe(20);
-    // A night on call is held for the Rep: the calendar flags a clash with it.
-    expect(onCall.every((c) => c.requiresPlayer)).toBe(true);
+    // On call is a call at five, three hours before the curtain, and stops no clock: only a night sent on does.
+    expect(onCall.every((c) => !c.requiresPlayer && Number(c.payload.perfAt) - c.at === 3 * MS_HOUR)).toBe(true);
+    const through = calls.filter((c) => c.payload.call === 'runthrough');
+    expect(through).toHaveLength(1);
+    expect(through[0]!.requiresPlayer).toBe(true);
+    expect(zonedParts(through[0]!.at, zone)).toMatchObject({ hour: 14 });
+    expect(new Date(through[0]!.at).getUTCDay()).toBe(1);
   });
 
   it('doesn’t send a student out of good standing to Yale Rep, however good', () => {
@@ -555,16 +611,25 @@ describe('casting', () => {
     const cast = (seed: string) => {
       const sim = life(seed);
       sim.advanceTo(at(2027, 1, 4, 9) + 60_000);
-      const night = pending(sim, CALL_KIND).find((c) => c.payload.call === 'oncall' && goesOn(sim, sim.player, c.at));
+      const night = pending(sim, CALL_KIND).find((c) => c.payload.call === 'oncall' && goesOn(sim, sim.player, Number(c.payload.perfAt)));
       return night ? { sim, night } : undefined;
     };
     const found = ['on-1', 'on-2', 'on-3', 'on-4', 'on-5', 'on-6', 'on-7', 'on-8', 'on-9'].map(cast).filter(Boolean);
     expect(found.length).toBeGreaterThanOrEqual(2);
     const { sim, night } = found[0]!;
     sim.advanceTo(night.at - 60_000);
+    sim.player.currentLocationId = 'us-ct-newhaven';
     const acting = sim.player.craft!.scene;
     sim.advanceTo(night.at + 60_000);
+    // Told at five, and the curtain is theirs, on the calendar.
+    expect(titled(sim, `You’re On Tonight As ${sim.player.school!.rep!.role}`)).toHaveLength(1);
+    const curtain = pending(sim, CALL_KIND).find((c) => c.payload.wentOn === true)!;
+    expect(curtain.at).toBe(Number(night.payload.perfAt));
+    expect(curtain.requiresPlayer).toBe(true);
+    sim.player.awakeSince = curtain.at - 8 * MS_HOUR;
+    sim.advanceTo(curtain.at + 60_000);
     expect(sim.player.school!.rep!.performed).toBe(1);
+    expect(sim.player.school!.rep!.nights).toBeDefined();
     expect(sim.player.craft!.scene).toBeGreaterThan(acting);
     expect(titled(sim, `You Went On As ${sim.player.school!.rep!.role}`)).toHaveLength(1);
     // On the résumé, once the term's casting is done with: the next term's.
@@ -599,7 +664,7 @@ describe('casting', () => {
     sim.player.currentLocationId = 'us-ny-newyork';
     sim.advanceTo(shows[1]!.at + 60_000);
     expect(sim.player.school!.standing).toBe('dismissed');
-    expect(sim.player.school!.credits).toEqual([{ production: 'Carlotta Festival Of New Plays', role: 'A Part In A New Play', kind: 'carlotta', year: 2027, wentOn: 1 }]);
+    expect(sim.player.school!.credits).toEqual([{ production: 'Carlotta Festival Of New Plays', role: expect.stringMatching(/^A (Leading|Supporting|Featured) Part In A New Play$/), kind: 'carlotta', year: 2027, wentOn: 1, size: expect.stringMatching(/^(lead|supporting|featured)$/) }]);
   }, 120_000);
 
   it('sends an understudy on about one performance in fifty', () => {
@@ -664,10 +729,10 @@ describe('evaluation', () => {
   it('confers the MFA at Commencement after six terms in standing', () => {
     const sim = life('degree');
     // The second year's assigned shifts, all booked by June, come to its 150 hours at most: every class-week Saturday was 156.
-    play(sim, at(2028, 6, 1, 12));
+    tended(sim, at(2028, 6, 1, 12));
     expect(sim.player.school!.workStudy.assignedBooked).toBeLessThanOrEqual(WORK_STUDY.assignedHours);
     expect(sim.player.school!.workStudy.assignedBooked).toBeGreaterThan(WORK_STUDY.assignedHours - 12);
-    play(sim, at(2029, 5, 29, 12));
+    tended(sim, at(2029, 5, 29, 12));
     const school = sim.player.school!;
     expect(school.history.map((r) => r.standing)).toEqual(['good', 'good', 'good', 'good', 'good', 'good']);
     expect(school.standing).toBe('graduated');
@@ -675,8 +740,6 @@ describe('evaluation', () => {
     // The filmed monologues, posted at the end of the final term.
     expect(school.filmed).toBe(true);
     expect(yearOfStudy(sim.player)).toBe(3);
-    expect(school.workStudy.yearHours).toBeGreaterThan(100);
-    expect(school.workStudy.yearHours).toBeLessThanOrEqual(WORK_STUDY.assignedHours + WORK_STUDY.electiveHours);
     // The year's assigned shifts come to its 150 hours at most.
     expect(school.workStudy.assignedBooked).toBeLessThanOrEqual(WORK_STUDY.assignedHours);
     expect(school.workStudy.assignedBooked).toBeGreaterThan(90);
@@ -713,7 +776,12 @@ describe('the Yale Cabaret', () => {
     // In front of a house, the feeling is worked too; in rehearsal, the lines.
     expect(sim.player.craft!.emotion).toBeGreaterThan(control.player.craft!.emotion);
     expect(sim.player.craft!.memorization).toBeGreaterThan(control.player.craft!.memorization);
-    expect(sim.player.school!.credits).toEqual([{ production: cabaretSeason(0), role: 'In The Company', kind: 'cabaret', year: 2026, wentOn: sim.player.school!.cabaret!.performed }]);
+    // A part in a new piece, cast within the company, on the résumé with its nights and the director's note.
+    const cab = sim.player.school!.cabaret!;
+    expect(cab.role).toMatch(/^A (Leading|Supporting) Part In A New Piece$/);
+    expect(Object.values(cab.nights!).reduce((a, b) => a + b, 0)).toBe(cab.performed);
+    expect(cab.note).toBeDefined();
+    expect(sim.player.school!.credits).toEqual([{ production: cabaretSeason(0), role: cab.role, kind: 'cabaret', year: 2026, wentOn: cab.performed }]);
   }, 120_000);
 
   it('turns away a student on academic warning, and finds a week clear of the term’s casting calls', () => {
@@ -794,7 +862,14 @@ describe('the Yale Summer Cabaret', () => {
     const firstClose = shows.find((c) => c.payload.last === true)!;
     play(sim, firstClose.at + 60_000);
     expect(sim.player.school!.summer!.played[0]).toBeGreaterThan(0);
-    expect(sim.player.school!.credits?.find((c) => c.kind === 'summer')).toMatchObject({ production: 'Yale Summer Cabaret 2027, Show 1', year: 2027 });
+    // Each show a real play, with a part in it written for them, its nights kept.
+    const first = sim.player.school!.summer!.shows![0]!;
+    const script = SUMMER_PLAYS.find((x) => x.title === first.play)!;
+    expect(script.parts.map((x) => x.name)).toContain(first.role);
+    expect(sim.player.school!.summer!.shows!.map((x) => x.play)).toHaveLength(3);
+    expect(new Set(sim.player.school!.summer!.shows!.map((x) => x.play)).size).toBe(3);
+    expect(first.nights).toBeDefined();
+    expect(sim.player.school!.credits?.find((c) => c.kind === 'summer')).toMatchObject({ production: `${first.play}, Yale Summer Cabaret 2027`, role: first.role, year: 2027 });
     const paid = sim.universe.transactions.filter((t) => t.memo.startsWith('Yale Summer Cabaret stipend'));
     expect(paid.length).toBeGreaterThan(0);
     expect(paid.every((t) => t.postings.some((p) => p.amount === -SUMMER_CABARET.stipendWeekly))).toBe(true);
@@ -882,14 +957,21 @@ describe('the summers, for work', () => {
     const job = { id: 'june', roleId: 'costar', cityId: 'us-ny-newyork' as const, starts: at(2027, 6, 7, 7), units: 2, rehearsalWeeks: 0, status: 'offered' as const, dueAt: sim.now + 2 * MS_DAY, offeredAt: sim.now, worked: 0, owed: 0 };
     careerOf(sim.player).bookings.push(job);
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: 'june' } }).ok).toBe(true);
-    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
-    sim.universe.accounts[sim.player.primaryAccountId!]!.balance = -100_000_00;
-    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'credit_card') a.balance = -(a.creditLimit ?? 0);
     const stay = pending(sim, 'career.stay')[0]!;
+    sim.advanceTo(stay.at - 60_000);
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
+    for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.kind === 'credit_card') a.balance = -(a.creditLimit ?? 0);
+    // The journey's fares and no more, an overdraft counted: from 2026-09-29 the way there is a Metro-North ticket, $20.25, and the rides to and from the stations, $1.75 and $3.00.
+    const primary = sim.universe.accounts[sim.player.primaryAccountId!]!;
+    primary.balance = 0;
+    primary.balance = 26_00 - canPay(sim, sim.player);
     sim.advanceTo(stay.at + 60_000);
+    landed(sim);
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
     expect(sim.universe.transactions.some((t) => t.memo.startsWith('A sublet in New York'))).toBe(false);
-    expect(sim.player.earnings?.years[2027]?.jobCosts ?? 0).toBe(0);
+    // The fare, and nothing for a room.
+    const fare = sim.universe.transactions.find((t) => t.memo === 'The fare to New York, for the job')!;
+    expect(sim.player.earnings?.years[2027]?.jobCosts ?? 0).toBe(fare.postings.find((q) => q.amount > 0)!.amount);
     expect(sim.universe.notifications.some((n) => /friend’s sofa/.test(n.body))).toBe(true);
   }, 180_000);
 
@@ -906,11 +988,14 @@ describe('the summers, for work', () => {
     const stays = pending(sim, 'career.stay');
     expect(stays).toHaveLength(2);
     sim.advanceTo(stays[0]!.at + 60_000);
+    landed(sim);
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
     const sublet = sim.universe.transactions.find((t) => t.memo.startsWith('A sublet in New York'))!;
-    // A cost of the work, for the return.
-    expect(sim.player.earnings!.years[2027]!.jobCosts).toBe(sublet.postings.find((q) => q.amount > 0)!.amount);
+    const fare = sim.universe.transactions.find((t) => t.memo === 'The fare to New York, for the job')!;
+    // Costs of the work, for the return: the room and the train.
+    expect(sim.player.earnings!.years[2027]!.jobCosts).toBe(sublet.postings.find((q) => q.amount > 0)!.amount + fare.postings.find((q) => q.amount > 0)!.amount);
     sim.advanceTo(stays[1]!.at + 60_000);
+    landed(sim);
     expect(sim.player.currentLocationId).toBe(YALE_DRAMA.cityId);
     // Gone somewhere else by the job's end, they aren't brought back from it.
     const other = { ...job, id: 'july', starts: at(2027, 7, 12, 7), status: 'offered' as const };
@@ -918,6 +1003,7 @@ describe('the summers, for work', () => {
     sim.must({ kind: 'career.accept', payload: { bookingId: 'july' } });
     const next = pending(sim, 'career.stay');
     sim.advanceTo(next[0]!.at + 60_000);
+    landed(sim);
     sim.player.currentLocationId = 'us-ca-losangeles';
     sim.advanceTo(next[1]!.at + 60_000);
     expect(sim.player.currentLocationId).toBe('us-ca-losangeles');
@@ -938,7 +1024,7 @@ describe('the summers, for work', () => {
     const planned = { one: home('one').at, two: home('two').at };
     play(sim, home('one').at + 60_000);
     expect(sim.player.currentLocationId).toBe('us-ny-newyork');
-    play(sim, home('two').at + 60_000);
+    play(sim, home('two').at + 8 * 3_600_000);
     expect(sim.player.currentLocationId).toBe(YALE_DRAMA.cityId);
     // One room kept on: the second job pays only the nights past the first’s.
     const sublets = sim.universe.transactions.filter((t) => t.memo.startsWith('A sublet in New York'));

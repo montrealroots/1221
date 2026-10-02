@@ -1,0 +1,136 @@
+{
+  "researched": "2026-09-30",
+  "conventions": "confirmed=true means the figure was read on the fetched page itself; false means it came only from a search-engine summary or a page that could not be fetched (403/404/timeout). Currency as published.",
+  "domestic_flight_id": {
+    "canada": {
+      "rule": {
+        "text": "One identification document issued by a Canadian federal, provincial or territorial government that includes photo, full name and date of birth; otherwise two government-issued documents showing name, one with full name and date of birth. Provincial/territorial documents listed include birth certificate, driver's licence, health card and identification card. Hunting, boating and fishing licenses are not accepted; ID must not be expired; name must match the boarding pass.",
+        "provincial_photo_card_accepted": true,
+        "source": {"url": "https://travel.gc.ca/air/identification-requirements", "publisher": "Government of Canada (travel.gc.ca)", "date": "2024-09-13 (page date modified)", "confirmed": true},
+        "note": "The requirement stems from Transport Canada's Passenger Protect / Identity Screening Regulations; the airline checks ID at check-in and the gate. The CATSA page URL tried returned 404."
+      },
+      "ontario_photo_card_fee": {
+        "value": 35.00, "currency": "CAD",
+        "text": "$35 fee, for a new card and for a renewal",
+        "source": {"url": "https://www.ontario.ca/page/ontario-photo-card", "publisher": "Government of Ontario", "date": "read 2026-09-30", "confirmed": true}
+      },
+      "bcid_fee": {
+        "new_card": 35.00, "renewal": 15.00, "currency": "CAD",
+        "other": "Reported free for seniors 65+ and free when exchanging a driver's license for a BCID.",
+        "source": {"url": "https://icbc.com/driver-licensing/getting-licensed/Apply-for-a-bcid", "publisher": "ICBC", "date": "read 2026-09-30", "confirmed": false},
+        "note": "ICBC's BCID page says 'pay the fee' without the amount, and its Fees page table did not render (loaded by script). $35 new / $15 renewal comes from search summaries of ICBC and third-party pages only."
+      }
+    },
+    "mexico": {
+      "ine_accepted_domestic": {
+        "value": true,
+        "text": "ASA (Aeropuertos y Servicios Auxiliares) lists these official photo IDs for domestic flights: passport, professional license (cédula profesional), military service booklet (cartilla militar), driver's license and the INE/IFE voter credential. It must be current and legible.",
+        "source": {"url": "https://www.elimparcial.com/mexico/2026/09/22/perdi-mi-ine-y-tengo-un-vuelo-puedo-viajar-con-otra-identificacion/", "publisher": "El Imparcial (citing ASA)", "date": "2026-09-22", "confirmed": true},
+        "note": "Secondary press citing ASA; an ASA/AFAC primary page was not fetched."
+      },
+      "ine_cost": {
+        "value": 0, "currency": "MXN",
+        "text": "\"Tramitar tu Credencial para Votar (también conocida como INE) es completamente gratuito.\"",
+        "source": {"url": "https://centralelectoral.ine.mx/2026/07/31/tramitar-credencial-ine-gratis/", "publisher": "Instituto Nacional Electoral (Central Electoral)", "date": "2026-07-31", "confirmed": true}
+      }
+    },
+    "united_kingdom": {
+      "note": "UK law does not set an ID rule for domestic flights; each airline sets its own. Children under 16 flying with an adult generally need no ID.",
+      "british_airways": {
+        "text": "Since 2023-09-01 BA requires passengers 16+ on UK domestic flights to show photo ID such as a passport, a driving license or a valid EU national identity card (other sources add armed forces ID and police warrant card).",
+        "driving_license_suffices": true,
+        "source": {"url": "https://simpleflying.com/british-airways-id-domestic-flights/", "publisher": "Simple Flying", "date": "2023-08-26", "confirmed": true},
+        "note": "ba.com's travel-documents page returned a high-demand holding page; not read on BA's own site."
+      },
+      "easyjet": {
+        "text": "Photo ID required on all UK domestic flights: valid passport, valid photographic EU or Swiss national ID card, valid photographic driving license (provisional or full), armed forces ID card, police warrant card/badge.",
+        "driving_license_suffices": true,
+        "source": {"url": "https://www.easyjet.com/en/help/boarding-and-flying/travel-documents-and-information", "publisher": "easyJet", "date": "read 2026-09-30", "confirmed": false},
+        "note": "easyJet's page returned 403; the list is from search summaries, including an easyJet reply on X (https://x.com/easyJet/status/2054509262471348667) stating a provisional or full photo driving license is accepted."
+      }
+    },
+    "ireland": {
+      "passport_card_fee": {
+        "value": 35.00, "currency": "EUR",
+        "text": "€35 online; valid 5 years or until the passport book expires, whichever comes first; only issued to holders of a valid Irish passport book. Bundle with an adult 10-year passport is €100 (a €10 saving). €15 postal fee if living outside Ireland.",
+        "source": {"url": "https://en.wikipedia.org/wiki/Irish_passport_card", "publisher": "Wikipedia", "date": "read 2026-09-30", "confirmed": true},
+        "official_source": {"url": "https://www.ireland.ie/en/dfa/passports/passport-fees/", "publisher": "Department of Foreign Affairs (Ireland)", "date": "read 2026-09-30", "confirmed": false},
+        "note": "The DFA and Citizens Information pages returned 403; €35, the €100 bundle and the €15 postal fee match their search snippets."
+      },
+      "aer_lingus": {
+        "text": "From 2026-02-25 all customers, including Irish and British nationals, on Aer Lingus and Aer Lingus Regional between Ireland and the UK need a valid passport or an Irish passport card; driving licenses and other photo ID are no longer accepted. Exempt: domestic Aer Lingus Regional (Emerald Airlines) services, e.g. Belfast–UK and Dublin–Donegal. The passport card is also valid throughout the EU/EEA and Switzerland.",
+        "passport_card_accepted": true,
+        "source": {"url": "https://travelgossip.co.uk/latestnews/aer-lingus-introduces-passport-rule-on-flights-between-uk-and-ireland/", "publisher": "Travel Gossip", "date": "2026 (early; before the 2026-02-25 start)", "confirmed": true}
+      },
+      "ryanair": {
+        "text": "Ryanair: \"the airline does in fact accept Irish Passport Cards as a valid travel document for travel to/from all EU member states, Norway, Switzerland and the UK.\" Ryanair accepts only passports and national ID cards (not driving licenses) and has long required a passport on Ireland–UK flights.",
+        "passport_card_accepted": true,
+        "source": {"url": "https://www.irishtimes.com/your-money/2022/06/20/confusion-about-documents-as-air-travel-takes-off-again/", "publisher": "The Irish Times (Ryanair spokeswoman)", "date": "2022-06-20", "confirmed": true},
+        "note": "Ryanair's help center returned 403, so the current wording was not read there."
+      }
+    }
+  },
+  "hotel_fees": {
+    "summary": "No chain publishes one early check-in or late check-out fee; each hotel sets its own. The published figures below are property-specific.",
+    "incidental_holds": [
+      {"hotel": "1 Hotel Central Park, New York", "value": 150, "currency": "USD", "per": "day", "text": "To cover incidentals, we'll hold $150/day on your credit card.", "source": {"url": "https://www.1hotels.com/central-park/policies", "publisher": "1 Hotels", "date": "read 2026-09-30", "confirmed": true}},
+      {"hotel": "1 Hotel Toronto", "value": 150, "currency": "CAD (page shows $)", "per": "day", "text": "To cover incidentals, we'll hold $150/day on your credit card.", "source": {"url": "https://www.1hotels.com/toronto/policies", "publisher": "1 Hotels", "date": "read 2026-09-30", "confirmed": true}},
+      {"hotel": "Nobu Hotel London Portman Square", "value": 200, "currency": "GBP", "per": "night, max 3 nights", "text": "pre-authorisation ... to cover room and incidental costs (£200 per night, to a maximum of three nights)", "source": {"url": "https://www.nobuhotels.com/london-portman/terms-and-conditions/", "publisher": "Nobu Hotels", "date": "read 2026-09-30", "confirmed": true}},
+      {"hotel": "Fairmont Royal York, Toronto", "value": 200, "currency": "CAD", "per": "night", "text": "Breakage deposit CAD 200 per night", "source": {"url": "https://www.orbitz.com/Toronto-Hotels-Fairmont-Royal-York.h17289.Hotel-Information", "publisher": "Orbitz listing", "date": "read 2026-09-30", "confirmed": false}},
+      {"hotel": "Marriott (typical)", "value": 50, "currency": "USD", "per": "night, on top of room and tax", "text": "Room rate plus about $50 per night is typical; luxury and resort properties can exceed $100.", "source": {"url": "https://engine.com/blog/hotel-incidentals", "publisher": "Engine (search summary)", "date": "read 2026-09-30", "confirmed": false}},
+      {"hotel": "Hilton (typical)", "value_range": [50, 100], "currency": "USD", "per": "night", "text": "$50–$100 a night at standard brands; $150+ at Waldorf Astoria/Conrad; some budget brands a flat $50 per stay.", "source": {"url": "https://hotelchantelle.com/how-much-do-hilton-hotels-hold-on-credit-card/", "publisher": "Hotel Chantelle (search summary)", "date": "read 2026-09-30", "confirmed": false}}
+    ],
+    "early_check_in": [
+      {"hotel": "New York Marriott Marquis", "value": 99, "currency": "USD", "text": "Guaranteed 11:00 AM early check-in for $99.", "source": {"url": "https://www.marriott.com/offers/guaranteed-early-check-in-OFF-90971/nycmq-new-york-marriott-marquis", "publisher": "Marriott", "date": "read 2026-09-30", "confirmed": false}, "note": "marriott.com returned 403; figure from the search summary only."},
+      {"hotel": "Marriott property, Newport RI (activities.marriott.com)", "value": 79, "currency": "USD", "text": "Guaranteed early check-in from 10:00 AM, $79.", "source": {"url": "https://activities.marriott.com/north-america/usa/rhode-island/newport/activities/guaranteed_early_check_in-X3EG02", "publisher": "Marriott Bonvoy Activities", "date": "read 2026-09-30", "confirmed": false}}
+    ],
+    "late_check_out": [
+      {"hotel": "Heritage Hotel NYC", "value": 25, "currency": "USD", "per": "hour until 2 PM; a full night after 2 PM", "source": {"url": "https://www.heritagehotelnyc.com/overview", "publisher": "Heritage Hotel NYC", "date": "read 2026-09-30", "confirmed": false}, "note": "Page returned 403; from the search summary."},
+      {"hotel": "1 Hotel Central Park / 1 Hotel Toronto", "value": null, "text": "Late check-out fees apply after 12pm (amount not published). Check-in 4 PM, check-out 12 PM.", "source": {"url": "https://www.1hotels.com/central-park/policies", "publisher": "1 Hotels", "date": "read 2026-09-30", "confirmed": true}},
+      {"hotel": "Nobu Hotel London Portman Square", "value": null, "text": "Early check-in and late check-out subject to availability; 'a fee may apply' (amount not published). Check-in 3 PM, check-out 12 PM.", "source": {"url": "https://www.nobuhotels.com/london-portman/terms-and-conditions/", "publisher": "Nobu Hotels", "date": "read 2026-09-30", "confirmed": true}},
+      {"hotel": "Marriott (loyalty benefit)", "value": 0, "text": "Platinum, Titanium and Ambassador Elite get guaranteed 4 PM late checkout at most properties (not resort/convention hotels); Gold gets 2 PM subject to availability.", "source": {"url": "https://help.marriott.com/s/article/late-check-out-benefit", "publisher": "Marriott", "date": "read 2026-09-30", "confirmed": false}}
+    ],
+    "not_found": "No published early check-in or late check-out fee from a London or Toronto chain hotel was read on the page itself; no Hilton official incidental-hold figure was found."
+  },
+  "bc_ferries": {
+    "source": {"url": "https://www.bcferries.com/web_image/h90/h4b/9089486028830.pdf", "publisher": "BC Ferries, Fare Index version #26-05", "date": "effective 2026-06-16", "confirmed": true, "note": "Read by extracting the PDF's text myself."},
+    "general": "One-way fares in CAD, taxes included. A 5% fuel surcharge is added at payment to net fares (not stowage). Vehicle fare excludes driver and passengers.",
+    "tsawwassen_swartz_bay_route_1": {
+      "adult_12plus": {"at_terminal": 21.00, "prepaid": 21.00, "saver": 15.00},
+      "standard_vehicle_up_to_20ft": {"at_terminal": 89.00, "prepaid": 89.00, "saver": "34.00-84.00"},
+      "car_plus_driver_at_terminal": 110.00,
+      "car_plus_driver_with_fuel_surcharge_at_terminal": 115.50,
+      "reservation_fee": {"value": 20.00, "text": "Customers looking to book ahead, but not prepay, can purchase a separate reservation fee costing $20, and pay the At-Terminal tariff on departure."},
+      "other": "Motorcycle $44.50; extra length over 20 ft $8.00/ft; seniors free Monday–Thursday except statutory holidays."
+    },
+    "horseshoe_bay_to_departure_bay_route_2": {
+      "adult_12plus": {"at_terminal": 21.00, "prepaid": 21.00, "saver": 15.00},
+      "standard_vehicle_up_to_20ft": {"at_terminal": "N/A (must be booked in advance)", "prepaid": 89.00, "saver": "34.00-84.00"},
+      "car_plus_driver_prepaid": 110.00,
+      "reservation_fee": "None separately; vehicles must book and pay in advance (Prepaid, which includes a booking, or Saver). This applies since 2025-10-15, in the Horseshoe Bay → Departure Bay direction only.",
+      "extra": "Nanaimo Port Authority fee $0.50 per adult, $0.30 per child 5–11.",
+      "direction_rule_source": {"url": "https://www.bcferries.com/routes-fares/ferry-fares", "publisher": "BC Ferries", "date": "read 2026-09-30", "confirmed": true}
+    },
+    "fees": {"no_show": 25.00, "text": "$25 no-show fee on major routes", "source": {"url": "https://www.bcferries.com/routes-fares/ferry-fares", "publisher": "BC Ferries", "date": "read 2026-09-30", "confirmed": true}}
+  },
+  "dublin_london_rail_and_sail": {
+    "stena_line_dublin_holyhead": {
+      "crossing_time": "3 hours 15 minutes",
+      "sailings": "8 times daily (as published on the route page)",
+      "from_fare_car_and_driver": [{"value": 179.50, "currency": "EUR", "source": {"url": "https://www.stenaline.ie/routes/dublin-holyhead", "publisher": "Stena Line", "date": "read 2026-09-30", "confirmed": true}},
+                                   {"value": 155, "currency": "GBP", "source": {"url": "https://www.stenaline.co.uk/routes/holyhead-dublin", "publisher": "Stena Line", "date": "read 2026-09-30", "confirmed": true}}],
+      "foot_passenger_fare": {"value": null, "note": "Not published on Stena's route pages. Aggregators give ranges (about €26–€72, dynamically priced); not confirmed on a primary page."},
+      "sample_timetable": {"text": "Stena Line departs Dublin Port Terminal 2 at 08:15, arrives Holyhead 11:50; London→Dublin direction sails Holyhead 15:15, arrives Dublin 18:30.", "source": {"url": "https://www.seat61.com/train-and-ferry-to-dublin.htm", "publisher": "The Man in Seat 61", "date": "updated 2026-06-09", "confirmed": true}, "note": "Only one deepwater berth has operated at Holyhead since storm damage in late 2024, still in 2026, per the same page."}
+    },
+    "avanti_holyhead_london_euston": {
+      "text": "Direct Avanti West Coast train departs Holyhead 12:48, arrives London Euston 16:37 (Monday–Friday), about 3 h 49 min. Outbound London Euston 09:00 → Holyhead 12:50 (3 h 40 min). Total central Dublin → Euston is roughly 8–9 hours.",
+      "source": {"url": "https://www.seat61.com/train-and-ferry-to-dublin.htm", "publisher": "The Man in Seat 61", "date": "updated 2026-06-09", "confirmed": true}
+    },
+    "sailrail_through_ticket": [
+      {"direction": "Dublin Port → London (any station)", "value": 58.00, "currency": "EUR", "text": "Adult single €58.00; double for return; same-day purchase supplement €6 single; children 5–15 half fare, 0–4 free; no services 25–26 December; book by phone +353 1 871 4788. Other stations: Bangor/Llandudno/Rhyl €51, Chester/Manchester/Liverpool €52, Birmingham/Leeds/Coventry €53, Bristol/Milton Keynes/Watford €55.", "source": {"url": "https://www.stenaline.ie/rail-and-sail", "publisher": "Stena Line Ireland", "date": "read 2026-09-30 (no date on page)", "confirmed": true}},
+      {"direction": "London → Dublin", "value": 53.40, "currency": "GBP", "text": "£53.40 Advance or £60.10 Single", "source": {"url": "https://www.seat61.com/train-and-ferry-to-dublin.htm", "publisher": "The Man in Seat 61", "date": "updated 2026-06-09", "confirmed": true}},
+      {"direction": "London → Dublin (Avanti)", "value": 46.10, "currency": "GBP", "text": "Advance Rail & Sail fares from £46.10 each way; children half price; no First Class; no railcard discounts; ferry reservation compulsory. The page also says these tickets 'are not available yet'.", "source": {"url": "https://www.avantiwestcoast.co.uk/about-us/further-afield/ferries", "publisher": "Avanti West Coast", "date": "read 2026-09-30", "confirmed": true}}
+    ],
+    "id_note": "Avanti's page says that as of September 28 a valid passport or Irish passport card is required to board ferries to Dublin; driving licenses and national ID cards are no longer accepted (year not stated on the page; read 2026-09-30)."
+  }
+}

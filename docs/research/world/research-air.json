@@ -1,0 +1,1371 @@
+{
+  "_meta": {
+    "compiledOn": "2026-09-29",
+    "note": "Each figure carries a source URL and retrieval date. 'derived' marks numbers computed here from official microdata rather than published as such. null means not found in an official or primary source."
+  },
+  "domesticFares": {
+    "source": {
+      "name": "US DOT Office of Aviation Analysis, Domestic Airline Consumer Airfare Report, Table 1 (Top 1,000 Contiguous State City-Pair Markets), via DOT open-data API",
+      "url": "https://data.transportation.gov/Aviation/Consumer-Airfare-Report-Table-1-Top-1-000-Contiguo/4f3n-jbg2",
+      "apiUrl": "https://data.transportation.gov/resource/4f3n-jbg2.json?year=2026&quarter=1",
+      "quarter": "2026 Q1 (latest quarter in the dataset; dataset rows updated 2026-09-03)",
+      "retrieved": "2026-09-29"
+    },
+    "definitions": {
+      "fare": "Overall average market fare paid by all fare-paying passengers in the city-pair market, both directions, all carriers. Includes first-class fares paid, excludes free/award tickets (dataset description). Nominal US dollars.",
+      "basis": "Treated as a one-way (directional) fare with round trips split in half, per the DB1B-based DOT report convention. The dataset page does not restate this: medium-high confidence.",
+      "nonstopMiles": "Nonstop market distance in statute miles",
+      "paxPerDay": "Average one-way passenger trips per day",
+      "markets": "City markets pool airports. BTS 'New York City, NY (Metropolitan Area)' pools JFK, LGA, EWR and others; Washington DC (Metropolitan Area) pools DCA/IAD/BWI; Los Angeles, San Francisco, Miami, Boston and Atlanta are also metropolitan-area markets; Chicago pools ORD/MDW; Dallas/Fort Worth pools DFW/DAL. The dataset does not list member airports, so these lists come from DOT's city-market convention."
+    },
+    "coverage": "All 66 pairs among the 12 requested cities appear in the Q1 2026 top-1,000 table.",
+    "pairs": [
+      {
+        "cityA": "Miami, FL (Metropolitan Area)",
+        "cityB": "New York City, NY (Metropolitan Area)",
+        "nonstopMiles": 1118,
+        "avgFareUSD": 238.05,
+        "paxPerDay": 18659,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 274.97,
+        "lowestFareCarrier": "NK",
+        "lowestCarrierFareUSD": 123.14
+      },
+      {
+        "cityA": "Los Angeles, CA (Metropolitan Area)",
+        "cityB": "San Francisco, CA (Metropolitan Area)",
+        "nonstopMiles": 379,
+        "avgFareUSD": 201.48,
+        "paxPerDay": 15083,
+        "largestCarrier": "WN",
+        "largestCarrierFareUSD": 207.55,
+        "lowestFareCarrier": "AS",
+        "lowestCarrierFareUSD": 173.11
+      },
+      {
+        "cityA": "Los Angeles, CA (Metropolitan Area)",
+        "cityB": "New York City, NY (Metropolitan Area)",
+        "nonstopMiles": 2510,
+        "avgFareUSD": 454.42,
+        "paxPerDay": 10752,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 449.83,
+        "lowestFareCarrier": "B6",
+        "lowestCarrierFareUSD": 358.67
+      },
+      {
+        "cityA": "Chicago, IL",
+        "cityB": "New York City, NY (Metropolitan Area)",
+        "nonstopMiles": 773,
+        "avgFareUSD": 191.17,
+        "paxPerDay": 7766,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 202.13,
+        "lowestFareCarrier": "AA",
+        "lowestCarrierFareUSD": 193.94
+      },
+      {
+        "cityA": "New York City, NY (Metropolitan Area)",
+        "cityB": "San Francisco, CA (Metropolitan Area)",
+        "nonstopMiles": 2619,
+        "avgFareUSD": 517.88,
+        "paxPerDay": 7028,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 608.65,
+        "lowestFareCarrier": "AS",
+        "lowestCarrierFareUSD": 293.21
+      },
+      {
+        "cityA": "Atlanta, GA (Metropolitan Area)",
+        "cityB": "New York City, NY (Metropolitan Area)",
+        "nonstopMiles": 795,
+        "avgFareUSD": 204.43,
+        "paxPerDay": 6980,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 254.76,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 109.2
+      },
+      {
+        "cityA": "Las Vegas, NV",
+        "cityB": "Los Angeles, CA (Metropolitan Area)",
+        "nonstopMiles": 236,
+        "avgFareUSD": 157.56,
+        "paxPerDay": 6146,
+        "largestCarrier": "WN",
+        "largestCarrierFareUSD": 178.36,
+        "lowestFareCarrier": "NK",
+        "lowestCarrierFareUSD": 84.81
+      },
+      {
+        "cityA": "Los Angeles, CA (Metropolitan Area)",
+        "cityB": "Seattle, WA",
+        "nonstopMiles": 978,
+        "avgFareUSD": 208.9,
+        "paxPerDay": 5998,
+        "largestCarrier": "AS",
+        "largestCarrierFareUSD": 205.61,
+        "lowestFareCarrier": "AS",
+        "lowestCarrierFareUSD": 205.61
+      },
+      {
+        "cityA": "Miami, FL (Metropolitan Area)",
+        "cityB": "Washington, DC (Metropolitan Area)",
+        "nonstopMiles": 946,
+        "avgFareUSD": 229.91,
+        "paxPerDay": 5746,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 254.81,
+        "lowestFareCarrier": "B6",
+        "lowestCarrierFareUSD": 180.75
+      },
+      {
+        "cityA": "Chicago, IL",
+        "cityB": "Miami, FL (Metropolitan Area)",
+        "nonstopMiles": 1197,
+        "avgFareUSD": 228.78,
+        "paxPerDay": 5589,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 277.51,
+        "lowestFareCarrier": "NK",
+        "lowestCarrierFareUSD": 109.82
+      },
+      {
+        "cityA": "Las Vegas, NV",
+        "cityB": "San Francisco, CA (Metropolitan Area)",
+        "nonstopMiles": 414,
+        "avgFareUSD": 200.66,
+        "paxPerDay": 5452,
+        "largestCarrier": "WN",
+        "largestCarrierFareUSD": 200.15,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 125.99
+      },
+      {
+        "cityA": "Dallas/Fort Worth, TX",
+        "cityB": "Los Angeles, CA (Metropolitan Area)",
+        "nonstopMiles": 1246,
+        "avgFareUSD": 283.4,
+        "paxPerDay": 5430,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 355.06,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 138.59
+      },
+      {
+        "cityA": "Dallas/Fort Worth, TX",
+        "cityB": "New York City, NY (Metropolitan Area)",
+        "nonstopMiles": 1428,
+        "avgFareUSD": 265.86,
+        "paxPerDay": 5218,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 290.8,
+        "lowestFareCarrier": "NK",
+        "lowestCarrierFareUSD": 102.38
+      },
+      {
+        "cityA": "Boston, MA (Metropolitan Area)",
+        "cityB": "Miami, FL (Metropolitan Area)",
+        "nonstopMiles": 1283,
+        "avgFareUSD": 240.7,
+        "paxPerDay": 4795,
+        "largestCarrier": "B6",
+        "largestCarrierFareUSD": 222.08,
+        "lowestFareCarrier": "NK",
+        "lowestCarrierFareUSD": 128.42
+      },
+      {
+        "cityA": "San Francisco, CA (Metropolitan Area)",
+        "cityB": "Seattle, WA",
+        "nonstopMiles": 696,
+        "avgFareUSD": 224.63,
+        "paxPerDay": 4696,
+        "largestCarrier": "AS",
+        "largestCarrierFareUSD": 219.77,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 188.82
+      },
+      {
+        "cityA": "Chicago, IL",
+        "cityB": "Los Angeles, CA (Metropolitan Area)",
+        "nonstopMiles": 1751,
+        "avgFareUSD": 312.64,
+        "paxPerDay": 4593,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 349.03,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 272.68
+      },
+      {
+        "cityA": "Atlanta, GA (Metropolitan Area)",
+        "cityB": "Miami, FL (Metropolitan Area)",
+        "nonstopMiles": 594,
+        "avgFareUSD": 183.53,
+        "paxPerDay": 4433,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 226.46,
+        "lowestFareCarrier": "NK",
+        "lowestCarrierFareUSD": 85.44
+      },
+      {
+        "cityA": "Boston, MA (Metropolitan Area)",
+        "cityB": "Washington, DC (Metropolitan Area)",
+        "nonstopMiles": 418,
+        "avgFareUSD": 191.8,
+        "paxPerDay": 4418,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 190.29,
+        "lowestFareCarrier": "B6",
+        "lowestCarrierFareUSD": 151.6
+      },
+      {
+        "cityA": "Las Vegas, NV",
+        "cityB": "New York City, NY (Metropolitan Area)",
+        "nonstopMiles": 2282,
+        "avgFareUSD": 368.95,
+        "paxPerDay": 4232,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 387.62,
+        "lowestFareCarrier": "B6",
+        "lowestCarrierFareUSD": 305.49
+      },
+      {
+        "cityA": "Los Angeles, CA (Metropolitan Area)",
+        "cityB": "Washington, DC (Metropolitan Area)",
+        "nonstopMiles": 2329,
+        "avgFareUSD": 359.69,
+        "paxPerDay": 3903,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 376.55,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 297.39
+      },
+      {
+        "cityA": "Atlanta, GA (Metropolitan Area)",
+        "cityB": "Washington, DC (Metropolitan Area)",
+        "nonstopMiles": 577,
+        "avgFareUSD": 223.23,
+        "paxPerDay": 3774,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 258.23,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 131.58
+      },
+      {
+        "cityA": "Los Angeles, CA (Metropolitan Area)",
+        "cityB": "Miami, FL (Metropolitan Area)",
+        "nonstopMiles": 2343,
+        "avgFareUSD": 407.08,
+        "paxPerDay": 3738,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 484.14,
+        "lowestFareCarrier": "B6",
+        "lowestCarrierFareUSD": 383.98
+      },
+      {
+        "cityA": "Chicago, IL",
+        "cityB": "Dallas/Fort Worth, TX",
+        "nonstopMiles": 802,
+        "avgFareUSD": 222.71,
+        "paxPerDay": 3521,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 244.71,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 128.71
+      },
+      {
+        "cityA": "Chicago, IL",
+        "cityB": "Las Vegas, NV",
+        "nonstopMiles": 1521,
+        "avgFareUSD": 257.08,
+        "paxPerDay": 3389,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 308.64,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 220.2
+      },
+      {
+        "cityA": "Chicago, IL",
+        "cityB": "Washington, DC (Metropolitan Area)",
+        "nonstopMiles": 622,
+        "avgFareUSD": 235.7,
+        "paxPerDay": 3214,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 253.07,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 213.94
+      },
+      {
+        "cityA": "Atlanta, GA (Metropolitan Area)",
+        "cityB": "Dallas/Fort Worth, TX",
+        "nonstopMiles": 731,
+        "avgFareUSD": 242.66,
+        "paxPerDay": 3188,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 311.62,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 107.12
+      },
+      {
+        "cityA": "Dallas/Fort Worth, TX",
+        "cityB": "Washington, DC (Metropolitan Area)",
+        "nonstopMiles": 1217,
+        "avgFareUSD": 255.63,
+        "paxPerDay": 3165,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 280.48,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 232.49
+      },
+      {
+        "cityA": "Dallas/Fort Worth, TX",
+        "cityB": "Las Vegas, NV",
+        "nonstopMiles": 1067,
+        "avgFareUSD": 255.95,
+        "paxPerDay": 3106,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 337.02,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 133.92
+      },
+      {
+        "cityA": "Dallas/Fort Worth, TX",
+        "cityB": "Miami, FL (Metropolitan Area)",
+        "nonstopMiles": 1121,
+        "avgFareUSD": 258.18,
+        "paxPerDay": 2999,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 328.53,
+        "lowestFareCarrier": "NK",
+        "lowestCarrierFareUSD": 97.37
+      },
+      {
+        "cityA": "Atlanta, GA (Metropolitan Area)",
+        "cityB": "Chicago, IL",
+        "nonstopMiles": 606,
+        "avgFareUSD": 211.44,
+        "paxPerDay": 2933,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 252.32,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 124.9
+      },
+      {
+        "cityA": "Boston, MA (Metropolitan Area)",
+        "cityB": "Los Angeles, CA (Metropolitan Area)",
+        "nonstopMiles": 2611,
+        "avgFareUSD": 341.69,
+        "paxPerDay": 2828,
+        "largestCarrier": "B6",
+        "largestCarrierFareUSD": 302.56,
+        "lowestFareCarrier": "UA",
+        "lowestCarrierFareUSD": 297.69
+      },
+      {
+        "cityA": "Atlanta, GA (Metropolitan Area)",
+        "cityB": "Los Angeles, CA (Metropolitan Area)",
+        "nonstopMiles": 1947,
+        "avgFareUSD": 408.33,
+        "paxPerDay": 2797,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 502.42,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 187.56
+      },
+      {
+        "cityA": "Chicago, IL",
+        "cityB": "San Francisco, CA (Metropolitan Area)",
+        "nonstopMiles": 1855,
+        "avgFareUSD": 327.53,
+        "paxPerDay": 2728,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 369.09,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 264.38
+      },
+      {
+        "cityA": "Boston, MA (Metropolitan Area)",
+        "cityB": "New York City, NY (Metropolitan Area)",
+        "nonstopMiles": 209,
+        "avgFareUSD": 221.91,
+        "paxPerDay": 2718,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 263.04,
+        "lowestFareCarrier": "AA",
+        "lowestCarrierFareUSD": 193.47
+      },
+      {
+        "cityA": "Boston, MA (Metropolitan Area)",
+        "cityB": "Chicago, IL",
+        "nonstopMiles": 867,
+        "avgFareUSD": 177.64,
+        "paxPerDay": 2707,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 182.32,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 172.76
+      },
+      {
+        "cityA": "San Francisco, CA (Metropolitan Area)",
+        "cityB": "Washington, DC (Metropolitan Area)",
+        "nonstopMiles": 2457,
+        "avgFareUSD": 411.42,
+        "paxPerDay": 2605,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 450.53,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 293.29
+      },
+      {
+        "cityA": "Dallas/Fort Worth, TX",
+        "cityB": "San Francisco, CA (Metropolitan Area)",
+        "nonstopMiles": 1476,
+        "avgFareUSD": 292.12,
+        "paxPerDay": 2474,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 309.23,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 256.25
+      },
+      {
+        "cityA": "Boston, MA (Metropolitan Area)",
+        "cityB": "San Francisco, CA (Metropolitan Area)",
+        "nonstopMiles": 2704,
+        "avgFareUSD": 406.59,
+        "paxPerDay": 2461,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 432.77,
+        "lowestFareCarrier": "B6",
+        "lowestCarrierFareUSD": 393.1
+      },
+      {
+        "cityA": "Las Vegas, NV",
+        "cityB": "Seattle, WA",
+        "nonstopMiles": 867,
+        "avgFareUSD": 198.75,
+        "paxPerDay": 2355,
+        "largestCarrier": "AS",
+        "largestCarrierFareUSD": 208.14,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 175.5
+      },
+      {
+        "cityA": "New York City, NY (Metropolitan Area)",
+        "cityB": "Seattle, WA",
+        "nonstopMiles": 2448,
+        "avgFareUSD": 318.36,
+        "paxPerDay": 2183,
+        "largestCarrier": "AS",
+        "largestCarrierFareUSD": 292.72,
+        "lowestFareCarrier": "UA",
+        "lowestCarrierFareUSD": 289.61
+      },
+      {
+        "cityA": "Miami, FL (Metropolitan Area)",
+        "cityB": "San Francisco, CA (Metropolitan Area)",
+        "nonstopMiles": 2585,
+        "avgFareUSD": 397.94,
+        "paxPerDay": 2122,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 407.68,
+        "lowestFareCarrier": "B6",
+        "lowestCarrierFareUSD": 378.23
+      },
+      {
+        "cityA": "New Orleans, LA",
+        "cityB": "New York City, NY (Metropolitan Area)",
+        "nonstopMiles": 1218,
+        "avgFareUSD": 241.15,
+        "paxPerDay": 2102,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 261.99,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 206.15
+      },
+      {
+        "cityA": "New York City, NY (Metropolitan Area)",
+        "cityB": "Washington, DC (Metropolitan Area)",
+        "nonstopMiles": 264,
+        "avgFareUSD": 202.09,
+        "paxPerDay": 2063,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 196.98,
+        "lowestFareCarrier": "DL",
+        "lowestCarrierFareUSD": 196.98
+      },
+      {
+        "cityA": "Las Vegas, NV",
+        "cityB": "Miami, FL (Metropolitan Area)",
+        "nonstopMiles": 2174,
+        "avgFareUSD": 352.32,
+        "paxPerDay": 1911,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 434.24,
+        "lowestFareCarrier": "NK",
+        "lowestCarrierFareUSD": 141.53
+      },
+      {
+        "cityA": "Atlanta, GA (Metropolitan Area)",
+        "cityB": "Las Vegas, NV",
+        "nonstopMiles": 1747,
+        "avgFareUSD": 409.94,
+        "paxPerDay": 1907,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 562.88,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 168.37
+      },
+      {
+        "cityA": "Las Vegas, NV",
+        "cityB": "Washington, DC (Metropolitan Area)",
+        "nonstopMiles": 2106,
+        "avgFareUSD": 371.09,
+        "paxPerDay": 1888,
+        "largestCarrier": "WN",
+        "largestCarrierFareUSD": 343.8,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 343.8
+      },
+      {
+        "cityA": "Atlanta, GA (Metropolitan Area)",
+        "cityB": "Boston, MA (Metropolitan Area)",
+        "nonstopMiles": 952,
+        "avgFareUSD": 277.6,
+        "paxPerDay": 1882,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 329.1,
+        "lowestFareCarrier": "B6",
+        "lowestCarrierFareUSD": 189.27
+      },
+      {
+        "cityA": "Boston, MA (Metropolitan Area)",
+        "cityB": "Dallas/Fort Worth, TX",
+        "nonstopMiles": 1562,
+        "avgFareUSD": 285.69,
+        "paxPerDay": 1668,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 308.31,
+        "lowestFareCarrier": "DL",
+        "lowestCarrierFareUSD": 280.36
+      },
+      {
+        "cityA": "Dallas/Fort Worth, TX",
+        "cityB": "Seattle, WA",
+        "nonstopMiles": 1670,
+        "avgFareUSD": 246.95,
+        "paxPerDay": 1576,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 258.52,
+        "lowestFareCarrier": "AS",
+        "lowestCarrierFareUSD": 238
+      },
+      {
+        "cityA": "Atlanta, GA (Metropolitan Area)",
+        "cityB": "San Francisco, CA (Metropolitan Area)",
+        "nonstopMiles": 2139,
+        "avgFareUSD": 404.57,
+        "paxPerDay": 1536,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 509.64,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 158.72
+      },
+      {
+        "cityA": "Seattle, WA",
+        "cityB": "Washington, DC (Metropolitan Area)",
+        "nonstopMiles": 2335,
+        "avgFareUSD": 325.42,
+        "paxPerDay": 1437,
+        "largestCarrier": "AS",
+        "largestCarrierFareUSD": 322.64,
+        "lowestFareCarrier": "AS",
+        "lowestCarrierFareUSD": 322.64
+      },
+      {
+        "cityA": "New Orleans, LA",
+        "cityB": "Washington, DC (Metropolitan Area)",
+        "nonstopMiles": 998,
+        "avgFareUSD": 268.65,
+        "paxPerDay": 1410,
+        "largestCarrier": "WN",
+        "largestCarrierFareUSD": 268.48,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 268.48
+      },
+      {
+        "cityA": "Chicago, IL",
+        "cityB": "Seattle, WA",
+        "nonstopMiles": 1733,
+        "avgFareUSD": 229.14,
+        "paxPerDay": 1384,
+        "largestCarrier": "AS",
+        "largestCarrierFareUSD": 216.76,
+        "lowestFareCarrier": "AS",
+        "lowestCarrierFareUSD": 216.76
+      },
+      {
+        "cityA": "Boston, MA (Metropolitan Area)",
+        "cityB": "Las Vegas, NV",
+        "nonstopMiles": 2381,
+        "avgFareUSD": 339.64,
+        "paxPerDay": 1362,
+        "largestCarrier": "B6",
+        "largestCarrierFareUSD": 322.05,
+        "lowestFareCarrier": "B6",
+        "lowestCarrierFareUSD": 322.05
+      },
+      {
+        "cityA": "Chicago, IL",
+        "cityB": "New Orleans, LA",
+        "nonstopMiles": 837,
+        "avgFareUSD": 217.32,
+        "paxPerDay": 1217,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 262.74,
+        "lowestFareCarrier": "NK",
+        "lowestCarrierFareUSD": 115.2
+      },
+      {
+        "cityA": "Dallas/Fort Worth, TX",
+        "cityB": "New Orleans, LA",
+        "nonstopMiles": 448,
+        "avgFareUSD": 216.34,
+        "paxPerDay": 1166,
+        "largestCarrier": "WN",
+        "largestCarrierFareUSD": 225.37,
+        "lowestFareCarrier": "NK",
+        "lowestCarrierFareUSD": 100.66
+      },
+      {
+        "cityA": "Miami, FL (Metropolitan Area)",
+        "cityB": "Seattle, WA",
+        "nonstopMiles": 2724,
+        "avgFareUSD": 330.75,
+        "paxPerDay": 1152,
+        "largestCarrier": "AS",
+        "largestCarrierFareUSD": 329.67,
+        "lowestFareCarrier": "DL",
+        "lowestCarrierFareUSD": 323.1
+      },
+      {
+        "cityA": "Los Angeles, CA (Metropolitan Area)",
+        "cityB": "New Orleans, LA",
+        "nonstopMiles": 1671,
+        "avgFareUSD": 324.02,
+        "paxPerDay": 1133,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 405.83,
+        "lowestFareCarrier": "MX",
+        "lowestCarrierFareUSD": 173.53
+      },
+      {
+        "cityA": "Miami, FL (Metropolitan Area)",
+        "cityB": "New Orleans, LA",
+        "nonstopMiles": 674,
+        "avgFareUSD": 187.08,
+        "paxPerDay": 1118,
+        "largestCarrier": "AA",
+        "largestCarrierFareUSD": 231.23,
+        "lowestFareCarrier": "NK",
+        "lowestCarrierFareUSD": 105.4
+      },
+      {
+        "cityA": "Boston, MA (Metropolitan Area)",
+        "cityB": "Seattle, WA",
+        "nonstopMiles": 2496,
+        "avgFareUSD": 324.55,
+        "paxPerDay": 905,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 338.11,
+        "lowestFareCarrier": "AS",
+        "lowestCarrierFareUSD": 308.91
+      },
+      {
+        "cityA": "Atlanta, GA (Metropolitan Area)",
+        "cityB": "New Orleans, LA",
+        "nonstopMiles": 425,
+        "avgFareUSD": 245.9,
+        "paxPerDay": 840,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 301.56,
+        "lowestFareCarrier": "F9",
+        "lowestCarrierFareUSD": 124.5
+      },
+      {
+        "cityA": "Atlanta, GA (Metropolitan Area)",
+        "cityB": "Seattle, WA",
+        "nonstopMiles": 2182,
+        "avgFareUSD": 352.96,
+        "paxPerDay": 834,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 401.82,
+        "lowestFareCarrier": "AS",
+        "lowestCarrierFareUSD": 296.76
+      },
+      {
+        "cityA": "New Orleans, LA",
+        "cityB": "San Francisco, CA (Metropolitan Area)",
+        "nonstopMiles": 1911,
+        "avgFareUSD": 315.19,
+        "paxPerDay": 694,
+        "largestCarrier": "UA",
+        "largestCarrierFareUSD": 347.58,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 261.41
+      },
+      {
+        "cityA": "Boston, MA (Metropolitan Area)",
+        "cityB": "New Orleans, LA",
+        "nonstopMiles": 1371,
+        "avgFareUSD": 246.34,
+        "paxPerDay": 692,
+        "largestCarrier": "DL",
+        "largestCarrierFareUSD": 280.59,
+        "lowestFareCarrier": "B6",
+        "lowestCarrierFareUSD": 211.41
+      },
+      {
+        "cityA": "Las Vegas, NV",
+        "cityB": "New Orleans, LA",
+        "nonstopMiles": 1500,
+        "avgFareUSD": 247.53,
+        "paxPerDay": 556,
+        "largestCarrier": "WN",
+        "largestCarrierFareUSD": 287.17,
+        "lowestFareCarrier": "MX",
+        "lowestCarrierFareUSD": 117.96
+      },
+      {
+        "cityA": "New Orleans, LA",
+        "cityB": "Seattle, WA",
+        "nonstopMiles": 2086,
+        "avgFareUSD": 279.64,
+        "paxPerDay": 392,
+        "largestCarrier": "AS",
+        "largestCarrierFareUSD": 302.98,
+        "lowestFareCarrier": "WN",
+        "lowestCarrierFareUSD": 231.75
+      }
+    ],
+    "derivedFromTable1": {
+      "note": "derived here from all 1,000 Q1 2026 markets, passenger-weighted",
+      "avgFareUSD": 258.75,
+      "avgNonstopMiles": 1108,
+      "centsPerMile": 23.36,
+      "byDistanceBand": [
+        {
+          "miles": "0-499",
+          "avgFareUSD": 213.81,
+          "centsPerMile": 57.14
+        },
+        {
+          "miles": "500-999",
+          "avgFareUSD": 227.98,
+          "centsPerMile": 29.29
+        },
+        {
+          "miles": "1000-1499",
+          "avgFareUSD": 253.95,
+          "centsPerMile": 21.43
+        },
+        {
+          "miles": "1500-1999",
+          "avgFareUSD": 314.21,
+          "centsPerMile": 18.19
+        },
+        {
+          "miles": "2000+",
+          "avgFareUSD": 375.86,
+          "centsPerMile": 15.93
+        }
+      ]
+    },
+    "uncertainty": "Quarterly averages from a 10% ticket sample. Individual fares vary widely with booking lead time and season. Q1 is a low-demand quarter."
+  },
+  "nationalAverage": {
+    "latestQuarter": {
+      "period": "2026 Q2",
+      "avgItineraryFareUSD": 436.36,
+      "basis": "BTS itinerary fare, inflation-adjusted to the release quarter",
+      "oneWayShare": 0.45,
+      "oneWayAvgUSD": 307,
+      "roundTripShare": 0.55,
+      "roundTripAvgUSD": 535,
+      "note": "Down 0.02% from Q1 2026 ($436.45 inflation-adjusted). Highest Q2 on record.",
+      "source": "https://www.bts.gov/newsroom/second-quarter-2026-average-air-fare-decreased-002-first-quarter-2026",
+      "retrieved": "2026-09-29",
+      "uncertainty": "bts.gov returned HTTP 403 to direct fetches, so the figures come from the release text as indexed by search. Medium-high confidence."
+    },
+    "previousQuarter": {
+      "period": "2026 Q1",
+      "avgItineraryFareUSD": 428,
+      "oneWayAvgUSD": 305,
+      "roundTripAvgUSD": 522,
+      "note": "As first released: up 4.7% from the Q4 2025 inflation-adjusted $409. The Q2 release later restated Q1 as $436.45 in Q2 dollars.",
+      "source": "https://www.bts.gov/newsroom/first-quarter-2026-average-air-fare-increases-47-fourth-quarter-2025",
+      "retrieved": "2026-09-29"
+    },
+    "annual2025": {
+      "avgItineraryFareUSD": 387,
+      "comparison": "Down 1.8% from the 2024 inflation-adjusted $394, and 39.0% below the 2000 high ($634 inflation-adjusted)",
+      "source": "https://www.bts.gov/newsroom/2025-annual-average-domestic-air-fare-decreases-2024",
+      "corroboration": "https://x.com/bts_usdot/status/2047764858087571816",
+      "retrieved": "2026-09-29"
+    },
+    "methodology": "BTS itinerary fare is the total fare per itinerary, with a round trip counted once at full price. It includes taxes and fees at purchase and excludes bag and other ancillary fees and award tickets. Not directly comparable with the DOT Table 1 per-direction market fares.",
+    "arcDomesticRoundTrip": {
+      "note": "Tickets settled through ARC (travel agencies) only; round-trip itineraries entirely within the US",
+      "firstHalf2026USD": 614,
+      "june2026USD": 629,
+      "source": "https://www2.arccorp.com/about-us/newsroom/2026-news-releases/june-air-ticket-sales/",
+      "released": "2026-07-16",
+      "retrieved": "2026-09-29",
+      "laterMonthsFromSearchOnly": {
+        "may2026USD": 628,
+        "july2026USD": 619,
+        "august2026USD": 624,
+        "uncertainty": "from search snippets of the ARC monthly releases; the releases themselves were not opened"
+      }
+    },
+    "domesticYieldCentsPerMile": null,
+    "domesticYieldNote": "No industry-wide A4A or BTS domestic yield figure was found in a source that could be opened. A4A's fares-and-fees dataset is an interactive exhibit, and A4A's 'State of U.S. Commercial Aviation' deck has no yield figure. At carrier level, search results give American Airlines consolidated yield as 20.21 cents (Q1 2025) and 19.96 cents (Q2 2025); these were not checked against AA's filings. domesticFares.derivedFromTable1.centsPerMile (23.36) is a fare-per-nonstop-mile proxy."
+  },
+  "internationalFares": {
+    "perRouteOfficial": null,
+    "note": "No official source publishes average transatlantic or transpacific economy fares by route. The BTS/DOT fare products (DB1B, Consumer Airfare Report) cover domestic travel only. The UK CAA passenger survey does not publish fares, and ARC's public releases give domestic prices only.",
+    "iataGlobal": {
+      "source": "https://www.iata.org/en/iata-repository/pressroom/fact-sheets/industry-statistics",
+      "updated": "June 2026 (next update December 2026)",
+      "retrieved": "2026-09-29",
+      "passengerRevenueUSDbn": {
+        "2024": 726,
+        "2025E": 768,
+        "2026F": 839
+      },
+      "originDestinationPassengersMillion": {
+        "2024": 4100,
+        "2025E": 4260,
+        "2026F": 4343
+      },
+      "segmentPassengersMillion": {
+        "2024": 4781,
+        "2025E": 4967,
+        "2026F": 5085
+      },
+      "passengerTicketYieldYoY": {
+        "2024": -0.02,
+        "2025E": 0.005,
+        "2026F": 0.07
+      },
+      "derivedPassengerRevenuePerODPassengerUSD": {
+        "2025E": 180.3,
+        "2026F": 193.2,
+        "note": "derived here as passenger revenue divided by O-D passengers, across all markets and cabins, excluding ancillary revenue. It is a global average per one-way journey, not an economy transatlantic fare."
+      }
+    },
+    "uncertainty": "High. No official per-mile figure exists to anchor transatlantic or transpacific economy fares. Any per-mile value the simulation uses would be a modeled estimate and should be labelled as one."
+  },
+  "onTime": {
+    "source": {
+      "name": "BTS Reporting Carrier On-Time Performance (1987-present), monthly microdata covering every reported domestic flight",
+      "url": "https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ",
+      "files": "https://transtats.bts.gov/PREZIP/On_Time_Reporting_Carrier_On_Time_Performance_1987_present_{YYYY}_{M}.zip",
+      "retrieved": "2026-09-29",
+      "method": "derived here by aggregating every row. On time means arriving less than 15 minutes late (ArrDel15=0). Delay minutes are ArrDelayMinutes. Cause shares follow the BTS method: each delayed flight is split across causes in proportion to its cause minutes."
+    },
+    "year2025": {
+      "period": "Jan-Dec 2025",
+      "flights": 7001619,
+      "cancelled": 102876,
+      "diverted": 19258,
+      "arrived": 6879485,
+      "onTime": 5344847,
+      "delayed15": 1534638,
+      "shareOfScheduled": {
+        "onTime": 0.7634,
+        "delayed15": 0.2192,
+        "cancelled": 0.0147,
+        "diverted": 0.0028
+      },
+      "shareOnTimeOfArrived": 0.7769,
+      "avgArrivalDelayOfDelayedFlightsMin": 72.9,
+      "avgArrivalDelayAllArrivedMin": 17.3,
+      "causeShareByMinutes": {
+        "carrier": 0.3245,
+        "weather": 0.0635,
+        "nas": 0.2187,
+        "security": 0.0014,
+        "lateAircraft": 0.3919
+      },
+      "causeShareOfScheduledFlightsBTSStyle": {
+        "carrier": 0.0674,
+        "weather": 0.0088,
+        "nas": 0.0636,
+        "security": 0.0004,
+        "lateAircraft": 0.079
+      },
+      "cancellationCauses": {
+        "carrier": 0.2048,
+        "weather": 0.6163,
+        "nas": 0.1784,
+        "security": 0.0005
+      }
+    },
+    "latestMonth": {
+      "period": "July 2026 (latest month posted; file dated 2026-09-21)",
+      "flights": 631970,
+      "cancelled": 16530,
+      "diverted": 3402,
+      "arrived": 612038,
+      "onTime": 438577,
+      "delayed15": 173461,
+      "shareOfScheduled": {
+        "onTime": 0.694,
+        "delayed15": 0.2745,
+        "cancelled": 0.0262,
+        "diverted": 0.0054
+      },
+      "shareOnTimeOfArrived": 0.7166,
+      "avgArrivalDelayOfDelayedFlightsMin": 79.3,
+      "avgArrivalDelayAllArrivedMin": 23.5,
+      "causeShareByMinutes": {
+        "carrier": 0.3167,
+        "weather": 0.0647,
+        "nas": 0.1993,
+        "security": 0.0013,
+        "lateAircraft": 0.4181
+      },
+      "causeShareOfScheduledFlightsBTSStyle": {
+        "carrier": 0.084,
+        "weather": 0.0113,
+        "nas": 0.0697,
+        "security": 0.0005,
+        "lateAircraft": 0.109
+      },
+      "cancellationCauses": {
+        "carrier": 0.2729,
+        "weather": 0.5385,
+        "nas": 0.1884,
+        "security": 0.0001
+      }
+    },
+    "notes": [
+      "Cause codes: carrier = within the airline's control; weather = extreme weather; nas = National Aviation System (non-extreme weather, traffic volume, air traffic control); lateAircraft = the previous flight arrived late. The weather share in BTS's own charts also counts the weather part of NAS and late-aircraft delays, so it is larger than the extreme-weather code alone.",
+      "Cancellation cause codes: A carrier, B weather, C NAS, D security.",
+      "The DOT Air Travel Consumer Report PDFs on transportation.gov returned HTTP 403, so the published headline percentages were not cross-checked. They are built from this microdata and should agree to within rounding."
+    ],
+    "uncertainty": "Low for the counts: this is the full population of reporting carriers, about 7.0M flights in 2025. It covers only BTS reporting carriers (the large US airlines) and only domestic flights."
+  },
+  "bagFees": {
+    "note": "First checked bag, economy, one way, standard bag (23 kg / 50 lb). Prices exclude taxes where the airline says so. Waivers for status and co-branded cards are ignored.",
+    "carriers": [
+      {
+        "airline": "American Airlines",
+        "domesticFirstBagUSD": {
+          "prepaidOnline": 45,
+          "airport": 50
+        },
+        "effective": "tickets booked on/after 2026-04-09",
+        "basicEconomyDomesticFirstBagUSD": {
+          "prepaidOnline": 50,
+          "airport": 55,
+          "effective": "tickets bought on/after 2026-05-18"
+        },
+        "transatlanticEconomyFirstBag": "included in Main Cabin (not restated in the 2026 release)",
+        "transatlanticBasicEconomyFirstBagUSD": null,
+        "source": "https://news.aa.com/news/news-details/2026/American-Airlines-updates-bag-fees-and-Basic-Economy-fares-OPS-POL-04/default.aspx",
+        "released": "2026-04-09",
+        "retrieved": "2026-09-29",
+        "confidence": "high (domestic)"
+      },
+      {
+        "airline": "Delta Air Lines",
+        "domesticFirstBagUSD": {
+          "standard": 45
+        },
+        "domesticNote": "Applies to Delta Main and Delta Comfort. The page says lower fees may apply depending on purchase date and states no prepaid discount.",
+        "transatlanticEconomyFirstBag": "included in Main Cabin",
+        "transatlanticBasicEconomyFirstBagUSD": null,
+        "transatlanticBasicEconomyUnverifiedUSD": 75,
+        "source": "https://www.delta.com/us/en/baggage/overview",
+        "retrieved": "2026-09-29",
+        "confidence": "high (domestic); the transatlantic Basic $75 comes only from secondary sites"
+      },
+      {
+        "airline": "United Airlines",
+        "domesticFirstBagUSD": {
+          "prepaidOnline": 45,
+          "airport": 50
+        },
+        "effective": "tickets issued on/after 2026-04-03",
+        "transatlanticEconomyFirstBag": "Included in standard Economy. United raised long-haul international (including Europe) bag fees for tickets bought on/after 2026-05-12; the Basic Economy amount was not confirmed.",
+        "transatlanticBasicEconomyFirstBagUSD": null,
+        "source": "https://upgradedpoints.com/news/united-airlines-increasing-bag-fees-april-2026/ (secondary; the united.com fee pages did not load)",
+        "officialPage": "https://www.united.com/en/us/fly/baggage/fees.html",
+        "retrieved": "2026-09-29",
+        "confidence": "medium"
+      },
+      {
+        "airline": "Southwest Airlines",
+        "domesticFirstBagUSD": {
+          "standard": 45
+        },
+        "effective": "reservations ticketed or changed on/after 2026-04-09 (previously $35)",
+        "transatlantic": "not applicable (no transatlantic service)",
+        "source": "https://www.swamedia.com/news-and-stories/update/checked-bag-fee-update-effective-april-9-MCBQX3BIWKM5H2NJJFWTB7TBP6VA",
+        "retrieved": "2026-09-29",
+        "confidence": "medium-high (official newsroom, read through the search index)"
+      },
+      {
+        "airline": "JetBlue",
+        "domesticFirstBagUSD": {
+          "offPeak": 45,
+          "peak": 49
+        },
+        "domesticNote": "Main Base, Main and Main Flex fares on US, Latin America, Caribbean and Canada routes. JetBlue says adding bags at least 24h before departure saves up to $10 a bag. Peak pricing applies around holidays and in peak spring and summer.",
+        "transatlanticMainBaseFirstBag": {
+          "USD": {
+            "offPeak": 75,
+            "peak": 85
+          },
+          "GBP": {
+            "offPeak": 65,
+            "peak": 75
+          },
+          "EUR": {
+            "offPeak": 70,
+            "peak": 80
+          }
+        },
+        "transatlanticMainFirstBag": "included",
+        "source": "https://www.jetblue.com/legal/fees",
+        "retrieved": "2026-09-29",
+        "confidence": "medium-high (the peak/off-peak split was summarised by the fetch tool)"
+      },
+      {
+        "airline": "Alaska Airlines",
+        "domesticFirstBagUSD": {
+          "standard": 45
+        },
+        "effective": "tickets booked on/after 2026-04-10 (previously $40); prepayment discount removed",
+        "transatlantic": "Alaska flies Seattle-Europe routes, but no fee was found for them",
+        "source": "https://seattlered.com/transportation/alaska-airlines-checked-bag-fee-increase-2026/4117838 (secondary; the alaskaair.com pages did not render fees)",
+        "officialPage": "https://www.alaskaair.com/content/travel-info/baggage/checked-bags",
+        "retrieved": "2026-09-29",
+        "confidence": "medium"
+      },
+      {
+        "airline": "Air Canada",
+        "domesticAndTransborderFirstBag": {
+          "economyBasicAndStandard": {
+            "CAD_or_USD": 45
+          },
+          "economyFlex": "free",
+          "effective": "fares bought on/after 2026-04-13",
+          "covers": "within Canada, Canada-US, Mexico, Caribbean, Central America"
+        },
+        "longHaulInternational": {
+          "economyBasicFirstBag": {
+            "CAD_or_USD": 90
+          },
+          "economyStandardAndFlexFirstBag": "free",
+          "effective": "fares bought on/after 2026-05-14",
+          "covers": "Canada/US to Europe, Africa, Asia, Middle East, South America"
+        },
+        "taxes": "excluded",
+        "source": "https://www.aircanada.com/us/en/aco/home/book/travel-news-and-updates/baggage-fee-changes.html",
+        "retrieved": "2026-09-29",
+        "confidence": "high"
+      },
+      {
+        "airline": "British Airways",
+        "shortHaulFirstBag": null,
+        "transatlanticEconomyFirstBag": "Included on standard Economy. Hand-baggage-only 'Basic' fares include no hold bag.",
+        "transatlanticBasicFirstBag": null,
+        "note": "ba.com returned a high-demand holding page. BA prices extra bags per route in Manage My Booking. Secondary sites cite about $75 for a transatlantic Basic bag, but that is a 2020 figure and was not verified.",
+        "source": "https://www.britishairways.com/content/en/us/information/legal/us-optional-extras",
+        "retrieved": "2026-09-29",
+        "confidence": "not found"
+      },
+      {
+        "airline": "Lufthansa",
+        "shortHaulFirstBag": null,
+        "transatlanticEconomyLightFirstBag": null,
+        "note": "Economy Light and Basic include no hold bag. The price depends on the route and comes from Lufthansa's baggage calculator; lufthansa.com returned 403. Secondary sites put the transatlantic price at about EUR 65-90 prepaid and a second bag on US/Canada routes at $85; neither was verified.",
+        "source": "https://www.lufthansa.com/us/en/baggage-and-other-fees",
+        "retrieved": "2026-09-29",
+        "confidence": "not found"
+      },
+      {
+        "airline": "Aer Lingus",
+        "shortHaulSaverFirstBag": null,
+        "transatlanticSaverFirstBag": null,
+        "note": "In Europe every fare except Saver includes a 20 kg bag; the Saver bag price depends on distance band and on whether it is bought online or at the airport. Transatlantic Smart and Flex fares include one 23 kg bag; Saver includes none. aerlingus.com sits behind a bot check. Secondary sites give about EUR 75 online for a transatlantic Saver bag; not verified.",
+        "source": "https://www.aerlingus.com/prepare/bags/checked-baggage/",
+        "retrieved": "2026-09-29",
+        "confidence": "not found"
+      }
+    ]
+  },
+  "arrivalGuidance": {
+    "tsa": {
+      "domesticHoursBefore": 2,
+      "internationalHoursBefore": 3,
+      "note": "TSA's standing recommendation, repeated in its press releases",
+      "source": "https://www.tsa.gov/travel/frequently-asked-questions/how-early-should-i-arrive-airport-prior-my-flights-departure",
+      "retrieved": "2026-09-29"
+    },
+    "checkInCutoffsMinutes": [
+      {
+        "airline": "American",
+        "domesticBagAndAirportCheckIn": 45,
+        "internationalBagAndAirportCheckIn": 60,
+        "onlineCheckInCloses": {
+          "domestic": 45,
+          "international": 90
+        },
+        "source": "https://www.aa.com/i18n/travel-info/check-in-and-arrival.jsp",
+        "retrieved": "2026-09-29"
+      },
+      {
+        "airline": "Delta",
+        "domesticNoBags": 30,
+        "domesticWithBags": 45,
+        "international": 60,
+        "note": "some airports require more time",
+        "source": "https://www.delta.com/us/en/check-in-security/check-in-time-requirements/domestic-check-in",
+        "sourceIntl": "https://www.delta.com/us/en/check-in-security/check-in-time-requirements/international-check-in",
+        "retrieved": "2026-09-29"
+      },
+      {
+        "airline": "United",
+        "domesticAll": 45,
+        "international": 60,
+        "note": "Since 2025-06-03 United requires 45 min on all domestic flights (previously 30 without bags). Some foreign airports close earlier: 75 min at Paris and Dubai, 90 min at Toronto and Lagos, per news coverage.",
+        "source": "https://www.meetingstoday.com/articles/145248/united-airlines-changes-check-timeframe-what-you-need-know (news coverage; the united.com pages did not render)",
+        "retrieved": "2026-09-29",
+        "confidence": "medium"
+      },
+      {
+        "airline": "British Airways (London Heathrow T3/T5)",
+        "shortHaul": 45,
+        "longHaul": 60,
+        "other": "Be at the T5 gate 20 min before departure; clear T3 security 35 min before",
+        "source": "https://www.britishairways.com/content/information/airport-information/london-heathrow-airport/heathrow-t5",
+        "retrieved": "2026-09-29"
+      }
+    ]
+  },
+  "airportTaxis": [
+    {
+      "city": "New York",
+      "airport": "JFK",
+      "fare": {
+        "flatUSD": 70,
+        "direction": "Manhattan<->JFK, either direction"
+      },
+      "surchargesUSD": {
+        "mtaStateSurcharge": 0.5,
+        "improvementSurcharge": 1,
+        "rushHour4to8pmWeekdays": 5,
+        "nyStateCongestionSurcharge": 2.5,
+        "mtaCongestionPricingTollSouthOf60thSt": 0.75,
+        "airportAccessFeePickupOnly": 2
+      },
+      "excludes": "tolls and tip",
+      "otherAirports": {
+        "LGA": "metered + $5 surcharge + $2 airport access fee (pickups)",
+        "EWR": "metered + $20 Newark surcharge + tolls, including the return tolls"
+      },
+      "meter": "$3.00 initial + $0.70 per 1/5 mile or per 60 s in slow traffic",
+      "source": "https://www.nyc.gov/site/tlc/passengers/taxi-fare.page",
+      "retrieved": "2026-09-29",
+      "confidence": "high"
+    },
+    {
+      "city": "Los Angeles",
+      "airport": "LAX",
+      "fare": {
+        "flatUSD": 51.15,
+        "area": "Downtown (bounded by Alameda St, Santa Monica Fwy, Harbor Fwy and Cesar Chavez Ave, plus Union Station and Chinatown); per trip or group, either direction"
+      },
+      "surchargesUSD": {
+        "laxOriginSurcharge": 4
+      },
+      "meter": "$3.10 flag drop, $0.33 per 1/9 mile ($2.97/mile), $0.33 per 37 s waiting; minimum $16.50 + $4 for trips from LAX",
+      "source": "https://ladot.lacity.gov/sites/default/files/documents/taxicab-rates-2023.pdf",
+      "retrieved": "2026-09-29",
+      "confidence": "medium-high (the rate card is titled 2023; no later card was found)"
+    },
+    {
+      "city": "London",
+      "airport": "Heathrow",
+      "taxiTypicalGBP": {
+        "min": 70,
+        "max": 120,
+        "journeyMinutes": "30-60",
+        "between": "Heathrow and central London"
+      },
+      "extrasGBP": {
+        "fromHeathrowRank": 1.6,
+        "dropOffInTerminalZone": 6,
+        "phoneAppBooking": "up to 2.00"
+      },
+      "effective": "TfL fares from 2026-04-25",
+      "source": "https://content.tfl.gov.uk/taxi-fare-card-2026.pdf",
+      "retrieved": "2026-09-29",
+      "confidence": "high",
+      "heathrowExpressGBP": {
+        "singleOnDay": 26,
+        "advanceFrom": 10,
+        "advanceCondition": "booked 30+ days ahead",
+        "sameDayReturn": 30,
+        "return": 42,
+        "premierPlusSingle": 32,
+        "journeyMinutes": 15,
+        "route": "Paddington-Heathrow Central",
+        "source": "https://www.heathrowexpress.com/ticket-fares",
+        "retrieved": "2026-09-29",
+        "confidence": "high"
+      }
+    },
+    {
+      "city": "Toronto",
+      "airport": "Pearson (YYZ)",
+      "fare": null,
+      "note": "The GTAA sets flat taxi and limo fares by destination zone. Limos cost about 10% more than taxis, and there is a $15 extra for 4+ bags or an oversize item and $15 for 5+ passengers. Its rate table sits in a JavaScript estimate tool that did not render. Secondary sites put downtown at CAD 60-75 (about 65); not verified.",
+      "source": "https://www.torontopearson.com/en/transportation-and-parking/taxis-and-limos/estimate",
+      "retrieved": "2026-09-29",
+      "confidence": "not found"
+    },
+    {
+      "city": "Vancouver",
+      "airport": "YVR",
+      "fare": {
+        "flatCAD": 46,
+        "zone": "Downtown / Canada Place"
+      },
+      "includes": "Includes the $4.00 Passenger Load Charge. No other surcharges except tolls, clean-up and requested stops; tip not included.",
+      "otherZones": "e.g. Kitsilano/Broadway $40, Central Vancouver $35, North Richmond $25",
+      "mapDated": "2024-10-11",
+      "regulator": "Passenger Transportation Board of BC",
+      "source": "https://www.yvr.ca/-/media/yvr/documents/new-taxi-fares-map/eng_2024_taxi-zone-fares-map.pdf",
+      "retrieved": "2026-09-29",
+      "confidence": "high"
+    },
+    {
+      "city": "Chicago",
+      "airport": "O'Hare",
+      "fare": {
+        "flat": null,
+        "note": "metered; no flat fare for a solo ride"
+      },
+      "meterFrom2026_07_01": {
+        "flagUSD": 3.25,
+        "perNinthMileUSD": 0.31,
+        "perMileUSD": 2.79,
+        "time": "$0.31 per 45 s",
+        "firstExtraPassengerUSD": 1,
+        "eachFurtherPassengerUSD": 0.5,
+        "electronicPaymentFeeUSD": 0.5,
+        "rushHour330to7pmUSD": 2.5,
+        "overnight8pmto6amUSD": 1,
+        "airportDepartureTaxUSD": 4,
+        "fuelSurchargeByFare": "$1 (fare <= $20), $2 ($20.01-40), $3 (> $40)"
+      },
+      "sharedRideFlatPerPersonUSD": {
+        "ohareToDowntownOrMcCormick": 30,
+        "midwayToDowntownOrMcCormick": 22,
+        "ohareMidway": 45
+      },
+      "effective": "2026-07-01 (notice dated 2026-04-22)",
+      "source": "https://www.chicago.gov/content/dam/city/depts/bacp/publicvehicleinfo/publicvehicleindustrynotices/2026/chicagotaxifareratestructureeffectivejuly12026.pdf",
+      "retrieved": "2026-09-29",
+      "confidence": "high"
+    },
+    {
+      "city": "Atlanta",
+      "airport": "ATL",
+      "fare": {
+        "zone1DowntownOnePersonUSD": 37.5,
+        "includes": "$1.50 airport surcharge",
+        "eachAdditionalPersonUSD": 2
+      },
+      "otherZonesOnePersonUSD": {
+        "midtown": 39.5,
+        "buckhead": 49.5
+      },
+      "fuelSurchargeUSD": "$2.00 when regular gasoline averages $2.90-4.39 over 14 days; $3.00 above $4.40",
+      "meter": "$3.50 first 1/8 mile, $0.30 each further 1/8 mile, $1.50 vehicle trip fee, $24/h waiting",
+      "source": "https://www.atl.com/ground-transportation/",
+      "retrieved": "2026-09-29",
+      "confidence": "medium-high (the page's heading reads 'Effective [Insert Date of New Rates]', so no effective date is published)"
+    },
+    {
+      "city": "New Orleans",
+      "airport": "MSY",
+      "fare": {
+        "flatUSD": 36,
+        "area": "CBD or French Quarter (west of Elysian Fields)",
+        "passengers": "up to 2",
+        "threePlusPerPersonUSD": 15
+      },
+      "source": "https://flymsy.com/taxis-2/",
+      "retrieved": "2026-09-29",
+      "confidence": "high"
+    },
+    {
+      "city": "New Haven",
+      "airport": "JFK / LGA",
+      "option": "GO Airport Shuttle Connecticut shared-ride van (the same company runs CT Limo private cars)",
+      "fare": {
+        "sharedRideFromUSD": 79,
+        "perPerson": true,
+        "oneWay": true
+      },
+      "timing": "First New Haven departure about 03:30, arriving JFK about 06:15. Driving time 90-120 min for about 80 miles.",
+      "discounts": "$4 off a round trip; seniors 65+ get $8.50 off each leg (per the search index)",
+      "privateCar": "priced per vehicle by quote",
+      "source": "https://2theairport.com/ct-airport-transfers/jfk-airport-shuttle/",
+      "sourceAlt": "https://gowithus.com/new-haven-to-jfk-airport/",
+      "retrieved": "2026-09-29",
+      "confidence": "medium ('starts at' price)"
+    }
+  ],
+  "immigrationWaits": {
+    "usCBP": {
+      "averageWaitMinutes": null,
+      "note": "CBP's Airport Wait Times site gives hourly waits by airport and terminal only through an interactive query and CSV export. No published national or per-airport average was found, and its API could not be reached outside the browser app.",
+      "source": "https://awt.cbp.gov/",
+      "retrieved": "2026-09-29"
+    },
+    "ukBorderForce": {
+      "serviceStandard": {
+        "britishAndEEA": {
+          "percentile": 0.95,
+          "maxMinutes": 25
+        },
+        "nonEEA": {
+          "percentile": 0.95,
+          "maxMinutes": 45
+        }
+      },
+      "note": "The standard is that 95% of passengers are seen within the time, counted from joining the queue, and Heathrow reports against it. It dates from the EEA/non-EEA era, and no post-Brexit restatement was found.",
+      "source": "https://questions-statements.parliament.uk/written-questions/detail/2018-07-17/164990",
+      "sourceAlt": "https://assets.publishing.service.gov.uk/media/5a7ddc8540f0b65d8b4e3f37/ho_performance_data_2013_14_q4_v09.pdf",
+      "retrieved": "2026-09-29",
+      "confidence": "medium (confirmed in a 2018 Parliamentary answer; not re-confirmed as current for 2026)"
+    }
+  },
+  "uncertain": [
+    "domesticFares: the one-way basis of the DOT Table 1 fares is inferred from the DOT report convention; the dataset text does not restate it.",
+    "nationalAverage: the BTS 2026 Q2, 2026 Q1 and 2025 annual figures were read from release text indexed by search, because bts.gov returned HTTP 403.",
+    "nationalAverage.domesticYieldCentsPerMile is null: no industry-wide A4A or BTS figure was found.",
+    "internationalFares: none of the sources checked gives an official per-route or per-mile transatlantic or transpacific economy fare; only IATA global aggregates exist.",
+    "bagFees: the United and Alaska 2026 figures come from secondary news because the official pages did not render. British Airways, Lufthansa and Aer Lingus first-bag prices are null; secondary sites' figures appear in the notes only.",
+    "arrivalGuidance: United's cut-off comes from news coverage of its June 2025 change.",
+    "airportTaxis: the Toronto Pearson flat fare is null. LAX comes from an LADOT card titled 2023. The ATL page shows a placeholder instead of an effective date.",
+    "immigrationWaits: the CBP averages are null. The UK Border Force 25/45-minute standard is sourced from government documents dated 2013-2018.",
+    "onTime: computed from BTS microdata rather than copied from the DOT Air Travel Consumer Report, whose PDFs returned 403. The two should agree to within rounding."
+  ]
+}

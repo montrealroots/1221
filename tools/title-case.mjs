@@ -68,7 +68,7 @@ function isProse(value) {
   return false;
 }
 
-const files = execSync('git ls-files "src/**/*.ts" "src/**/*.tsx"', { encoding: 'utf8' })
+const files = execSync('git ls-files --cached --others --exclude-standard "src/**/*.ts" "src/**/*.tsx"', { encoding: 'utf8' })
   .split('\n').filter(Boolean)
   .filter((f) => !f.endsWith('world-data.ts'));
 

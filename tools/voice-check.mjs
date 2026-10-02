@@ -9,6 +9,7 @@
  *
  *   node tools/voice-check.mjs           counts, by pattern and by file
  *   node tools/voice-check.mjs --fix     rewrites the safe contractions
+ *   node tools/voice-check.mjs --fix <file>...  only in those files
  *   node tools/voice-check.mjs --check   exits 1 when the count is over budget
  *
  * The fix only touches text inside string literals and JSX text, never code,
@@ -161,7 +162,10 @@ function withoutJsxComments(source) {
     block.replace(/[^\n]/g, ' '));
 }
 
-const files = walk(ROOT);
+// Files named after the flags narrow the sweep: a builder fixes only what it wrote.
+const slashes = (p) => p.split('\\').join('/');
+const ONLY = process.argv.slice(2).filter((a) => !a.startsWith('--')).map(slashes);
+const files = walk(ROOT).filter((file) => !ONLY.length || ONLY.includes(slashes(file)));
 const byRule = {};
 const byFile = {};
 const tics = {};

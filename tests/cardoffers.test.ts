@@ -130,7 +130,8 @@ describe('a balance transfer', () => {
     const score = sim.player.credit!.score;
     expect(run(sim, 'card.apply', { transfer: true }).ok).toBe(false);
     expect(sim.player.credit!.score).toBe(score);
-    expect(run(sim, 'card.apply', {}).ok).toBe(false);
+    // A second card from the bank already issuing one is refused; until 2026-09-28 any second card was.
+    expect(run(sim, 'card.apply', { bankId: 'us-chase' }).error).toMatch(/already/);
     const same = lifeIn('us-ny-newyork', { bankId: 'us-chase' }, 'co-bt-same');
     give(same, card(same).id, -card(same).balance - 100_00);
     expect(run(same, 'card.apply', { transfer: true }).error).toMatch(/another bank/);
@@ -191,6 +192,28 @@ describe('a plan', () => {
     expect(minimumDue(sim, credit.statementBalance, terms, credit.statementInterest ?? 0, credit.statementPlanDue)).toBe(Math.max(terms.minimumFloor, rest) + 2_103_20);
     const nat = lifeIn('uk-eng-london', { bankId: 'gb-natwest' }, 'co-plan-gb');
     expect(run(nat, 'card.plan', { amount: 100_00, months: 3 }).error).toMatch(/no plan/);
+  });
+});
+
+describe('a plan charged as interest', () => {
+  it('pays a Bank of Ireland purchase off in equal months at 6.7%, from €250, over its own lengths', () => {
+    const sim = lifeIn('ie-lei-dublin', { bankId: 'ie-bank-of-ireland' }, 'co-plan-boi');
+    const c = card(sim);
+    give(sim, c.id, -c.balance - 2_000_00);
+    expect(run(sim, 'card.plan', { amount: 1_000_00, months: 3 }).error).toMatch(/6, 12, 24 months/);
+    expect(run(sim, 'card.plan', { amount: 200_00, months: 12 }).error).toMatch(/at least/);
+    sim.must({ kind: 'card.plan', payload: { amount: 1_000_00, months: 12 } });
+    const credit = sim.player.credit!;
+    const plan = credit.plans![0]!;
+    const r = 0.067 / 12;
+    expect(plan.apr).toBe(0.067);
+    expect(plan.monthly).toBe(Math.ceil(1_000_00 * r / (1 - (1 + r) ** -12)));
+    sim.advanceTo(nextStatement(sim) + 1000);
+    // The month's interest on the whole, and the rest of the equal month off it.
+    const interest = sim.universe.transactions.find((t) => t.memo === 'Plan interest')!;
+    expect(interest.postings.find((p) => p.accountId === c.id)!.amount).toBe(-Math.round(1_000_00 * r));
+    expect(credit.statementPlanDue).toBe(plan.monthly);
+    expect(planLeftOf(credit)).toBe(1_000_00 - (plan.monthly - Math.round(1_000_00 * r)));
   });
 });
 

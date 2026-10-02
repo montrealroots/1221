@@ -1,0 +1,407 @@
+{
+  "_meta": {
+    "purpose": "Published real-world figures for owning a small (18-20 ft) outboard powerboat, for SLATE's life-simulation model. Complements existing research on NY/CT registration fees, the CA Boater Card, the CT Safe Boating Certificate, Hamble Point (UK) and a Lake Simcoe (Ontario) marina.",
+    "retrieved": "2026-09-29",
+    "conventions": "sourceType 'primary' = the maker's, provider's or authority's own page; 'secondary' = press, aggregator or dealer. confirmed = true only where the figure was read on the cited page itself during retrieval; false where it came only from a search-engine excerpt or the page could not be loaded. null values mean nothing was found published; the note says why.",
+    "choiceOfBoat": "The reference boat is the Bayliner Trophy T18 Bay center console (18 ft 2 in, 115 hp Mercury FourStroke, 30 US gal). It is the only candidate where the same maker publishes both a US MSRP and an engine-maker performance report for the exact boat and engine. The Bayliner Element E18 is its sister deck boat on the same 18 ft 2 in hull and 115 hp engine, but it carries a 12 gal tank."
+  },
+
+  "boats": {
+    "US": [
+      {
+        "model": "Bayliner Trophy T18 Bay (center console)",
+        "modelYear": 2027,
+        "priceUSD": 33543,
+        "priceBasis": "\"Starting at $33,543\", footnoted \"Pricing reflects NAP\" (nationally advertised price). The package includes a 115 HP Mercury FourStroke, the Convenience Package and a single-axle galvanized trailer as standard equipment. Freight, dealer prep and sales tax are not stated.",
+        "financingExample": "Or as low as $321.05 per month, at 6.5% APR over 144 months with $1,500 down, for well-qualified US buyers through Brunswick-dealer financing (not available in Canada).",
+        "lengthOverall": "18 ft 2 in",
+        "beam": "7 ft 5 in",
+        "engineHp": 115,
+        "engine": "Mercury 115 HP FourStroke (standard, and also the maximum rating)",
+        "fuelCapacityGal": 30,
+        "personsCapacity": 6,
+        "weightWithEngineLb": 2000,
+        "weightWithTrailerLb": 2750,
+        "source": "https://www.bayliner.com/us/en/boats/fishing/center-console/trophy-center-console/t18",
+        "date": "2026-09-29 (page carries boatModelYear 2027)",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "model": "Bayliner Element E18 (deck boat)",
+        "modelYear": 2027,
+        "priceUSD": 30872,
+        "priceBasis": "\"Starting at $30,872\", footnoted \"Pricing reflects NAP\". Comes pre-configured with a 115 HP Mercury FourStroke and a single-axle trailer.",
+        "financingExample": "Or as low as $294.28 per month on the same terms as the T18.",
+        "lengthOverall": "18 ft 2 in",
+        "beam": "7 ft 5 in",
+        "engineHp": 115,
+        "fuelCapacityGal": 12,
+        "personsCapacity": 9,
+        "weightWithEngineLb": 2000,
+        "source": "https://www.bayliner.com/us/en/boats/cruising/deck-boats/e-series/e18le",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "model": "Boston Whaler 170 Montauk",
+        "modelYear": 2026,
+        "priceUSD": 50505,
+        "priceBasis": "Base MSRP from the maker's configurator, with a Mercury 90 hp Command Thrust FourStroke and a 25 gal tank. The configurator returned HTTP 403, so this is not verified.",
+        "source": "https://www.bostonwhaler.com/build-and-price/boat-configurator.17MTK.html",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": false
+      }
+    ],
+    "UK": {
+      "makerPublished": null,
+      "makerNote": "Bayliner publishes no UK or EU prices. www.bayliner.com/uk/en redirects to a global site with no prices. Quicksilver (also Brunswick, and Bayliner's European counterpart) publishes UK specs but no prices.",
+      "comparable": {
+        "model": "Quicksilver Activ 555 Open, 2026, new in stock",
+        "priceGBP": 44995,
+        "priceBasis": "Dealer's asking price. It includes a Mercury 115 hp outboard and an SBS single-axle road trailer. The page does not say whether VAT is included (UK retail boat prices normally include 20% VAT).",
+        "lengthOverall": "5.84 m (19 ft 2 in)",
+        "engineHp": 115,
+        "fuelCapacityL": 110,
+        "source": "https://www.clarkeandcarter.co.uk/2026-quicksilver-555-open/",
+        "date": "2026-09-29",
+        "sourceType": "secondary",
+        "confirmed": true
+      }
+    },
+    "Canada": {
+      "makerPublished": null,
+      "makerNote": "Bayliner's Canadian URLs redirect to the US site. No CAD Bayliner price is published.",
+      "comparable": {
+        "model": "Yamaha AR190 (2026, model code TX1900A), 19 ft jet-drive sport boat with a 1.9 L High Output Yamaha marine engine, not an outboard",
+        "priceCAD": 45199,
+        "priceBasis": "\"msrp\":45199 in Yamaha Motor Canada's product data. The site's footnotes variously describe displayed prices as MSRP alone, or as MSRP plus freight and PDI; which one applies to boats is unclear.",
+        "source": "https://www.yamaha-motor.ca/en/water/sport-boat/19-foot/2026-ar190/2026-TX1900A",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "Ireland": {
+      "makerPublished": null,
+      "note": "Neither Bayliner nor Quicksilver publishes a euro price for Ireland. Search excerpts showed Irish and EU listings of the Activ 555 Open with a Mercury 115 at EUR 32,550 to 37,900 (2024-2025 model years), but no current listing could be opened to confirm them. Leave this as an estimate derived from the UK price, and mark it as one."
+    }
+  },
+
+  "fuel": {
+    "burn": {
+      "boat": "Bayliner Trophy T18 Bay, Mercury 75-115 FourStroke at 115 hp, 2.38 gear ratio, Black Max 19-pitch aluminum 3-blade prop",
+      "table": [
+        { "rpm": 600,  "mph": 2.8,  "gph": 0.4 },
+        { "rpm": 1000, "mph": 3.8,  "gph": 0.6 },
+        { "rpm": 1500, "mph": 5.4,  "gph": 1.0 },
+        { "rpm": 2000, "mph": 7.2,  "gph": 1.6 },
+        { "rpm": 2500, "mph": 8.6,  "gph": 2.2 },
+        { "rpm": 3000, "mph": 13.4, "gph": 3.0 },
+        { "rpm": 3500, "mph": 20.4, "gph": 3.7, "mpg": 5.6, "note": "most economical planing speed" },
+        { "rpm": 4000, "mph": 24.4, "gph": 5.0, "mpg": 4.9, "note": "typical cruise" },
+        { "rpm": 4500, "mph": 27.8, "gph": 6.6 },
+        { "rpm": 5000, "mph": 31.0, "gph": 8.4 },
+        { "rpm": 5500, "mph": 35.9, "gph": 10.2 }
+      ],
+      "cruiseGph": 3.7,
+      "cruiseLph": 14.0,
+      "cruiseNote": "At 3,500 rpm and 20.4 mph (range 167 mi on 90% of 30 gal). At 4,000 rpm and 24.4 mph the burn is 5.0 gph (18.9 L/h). Top speed was 34.4 mph at 5,457 rpm.",
+      "testConditions": "Tested 2020-10-06 in fresh water, calm, wind 6 mph, 75 F, elevation 715 ft. Boat weight as tested 2,500 lb, with 20 gal of fuel aboard.",
+      "source": "http://assets.bayliner.com/dal/bhb_T18_115hp_4stroke_19p.pdf",
+      "document": "Mercury Marine Boat House Bulletin ('A Factual Report from Mercury Marine')",
+      "date": "2020-10-06",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "marinaGasPrice": {
+      "note": "Marina fuel docks set their own prices. These are the Long Island Sound entries in Waterway Guide's price report, as the marinas themselves reported them. Marina gas ran about $1.05 to $1.30 over road regular in New England that week.",
+      "entries": [
+        { "marina": "Harbor One Marina, Old Saybrook, CT", "fuel": "89 octane gasoline", "priceUSDPerGal": 5.419, "taxIncluded": true, "updated": "2026-09-25" },
+        { "marina": "Cedar Island Marina, Clinton, CT", "fuel": "89 octane gasoline", "priceUSDPerGal": 5.690, "taxIncluded": true, "updated": "2026-09-25" },
+        { "marina": "Saybrook Point Resort & Marina, Old Saybrook, CT", "fuel": "89 octane gasoline", "priceUSDPerGal": 5.499, "taxIncluded": true, "updated": "2026-09-21" }
+      ],
+      "source": "https://www.waterwayguide.com/fuel-price-report/2",
+      "date": "2026-09-29",
+      "sourceType": "secondary",
+      "confirmed": true,
+      "otherPrimaryExample": {
+        "marina": "Dysart's Marina, Maine",
+        "fuel": "ethanol-free gasoline",
+        "priceUSDPerGal": 6.49,
+        "source": "https://www.dysartsmarina.com/diesel-ethanol-free-gas-current-pricing/",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "roadGasolineStandIn": {
+      "note": "EIA weekly retail regular gasoline, in USD per gallon, week of 2026-09-28. Use this where no marina price exists, and add a marina premium.",
+      "US": 4.465,
+      "NewEngland": 4.369,
+      "CentralAtlantic": 4.411,
+      "NewYorkCity": 4.378,
+      "SanFrancisco": 6.267,
+      "priorWeeks": { "2026-09-14": 4.319, "2026-09-21": 4.478 },
+      "source": "https://www.eia.gov/petroleum/gasdiesel/",
+      "releaseDate": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": true
+    }
+  },
+
+  "education": {
+    "newYork": {
+      "law": "Brianna's Law",
+      "requirement": "\"As of January 1, 2025, a safe boating certificate will be required of all motorized boat operators, regardless of age.\" Operators born on or after 1978-01-01 already needed one in 2024, the last phase-in year. It applies to motorized vessels, including PWCs.",
+      "allAgesDate": "2025-01-01",
+      "minimumCourseAge": 10,
+      "rentalAge": "At least 18 may rent and operate a motorized boat",
+      "courseHours": "The classroom course runs a minimum of 8 hours",
+      "fees": {
+        "stateParksClassroom": "No state fee for the course. \"Some courses may be taught by volunteers and are free of charge\"; others charge an instructor fee, listed per event.",
+        "permanentCertificateAdult": { "amountUSD": 10, "note": "Classroom students 18 and older buy the permanent certificate separately (via ilostmycard.com). A replacement is also $10. Everyone gets a 90-day temporary certificate on passing." },
+        "onlineCourses": "\"Fees paid to the online provider include the cost of your permanent certificate issued by the provider.\""
+      },
+      "onlineProviderPrices": [
+        { "provider": "BoatUS Foundation", "courseUSD": 0, "permanentCardUSD": 15, "note": "\"the only FREE Online Boating Safety Course approved by the state of New York\". The temporary certificate prints free. The alternative NYS Adventure License costs $13.50.", "source": "https://boatus.org/newyork", "sourceType": "primary", "confirmed": true },
+        { "provider": "Aceboater", "courseUSD": 39.95, "note": "Covers course, final test and card", "source": "https://aceboater.com/en-us/how-much-boating-license-new-york", "sourceType": "primary", "confirmed": true },
+        { "provider": "BOATERexam", "courseUSD": 49.95, "note": "One-time fee, unlimited exam retries", "source": "https://www.boaterexam.com/usa/newyork/", "sourceType": "primary", "confirmed": true },
+        { "provider": "Boat-Ed", "courseUSD": 54.95, "note": "The Boat-Ed+ version is $79.95 (from a search excerpt)", "source": "https://www.boat-ed.com/newyork/", "sourceType": "primary", "confirmed": true }
+      ],
+      "sources": [
+        { "url": "https://parks.ny.gov/news/press-releases/safe-boating-week-kicks-recreational-boating-season", "date": "2024-05-17", "sourceType": "primary", "confirmed": true, "what": "The all-ages date" },
+        { "url": "https://parks.ny.gov/activities/boating/boating-education", "date": "2026-09-29", "sourceType": "primary", "confirmed": true, "what": "Fees, age 10, 8 hours, temporary certificate" }
+      ],
+      "staleNote": "NYC Parks' marinas page still says the requirement applies to those born on or after May 1, 1996. That text predates the 2025 all-ages rule."
+    },
+    "canadaPCOC": {
+      "requirement": "Every operator of a motorized pleasure craft in Canada needs proof of competency, usually the Pleasure Craft Operator Card, regardless of age, boat length or horsepower (the Northwest Territories and Nunavut are excepted). The card is valid for life. Operating without one draws a fine of about CAD 250.",
+      "courseFees": [
+        { "provider": "BOATsmart!", "priceCAD": 49.95, "note": "Per boater, plus tax. Group rates are 42.46 each for 2, 37.46 for 3 and 32.47 for 4 or more. A replacement card is 19.95.", "source": "https://www.boatsmartexam.com/ca/", "date": "2026-09-29", "sourceType": "primary", "confirmed": true },
+        { "provider": "BOATERexam (Canada)", "priceCAD": 59.95, "note": "Figure is from BOATERexam's own cost article; one extra card costs 19.95 plus tax", "source": "https://www.boaterexam.com/blog/ontario-boating-license-cost/", "date": "2026-04-23", "sourceType": "secondary", "confirmed": false }
+      ],
+      "typicalRangeCAD": "30 to 80, one time (secondary)"
+    }
+  },
+
+  "registration": {
+    "canadaPleasureCraftLicence": {
+      "what": "A Pleasure Craft Licence (PCL) is required for pleasure craft with 10 hp (7.5 kW) or more of propulsion. Since 2025-12-31, new and renewed licences are valid for 5 years, and lifetime licences are being phased into 5-year ones.",
+      "feeCAD": [
+        { "from": "2025-12-31", "to": "2026-03-31", "amount": 24.00 },
+        { "from": "2026-04-01", "to": "2027-03-31", "amount": 24.41 },
+        { "from": "2027-04-01", "to": null, "amount": 25.09 }
+      ],
+      "appliesTo": "\"Initial/renewal/replacement/transfer of a Pleasure Craft Licence\". Updating or cancelling a licence costs $0.",
+      "indexation": "Annual CPI adjustment each April 1 (a low-materiality fee)",
+      "exemption": "No fee where the craft is used to exercise Indigenous rights under section 35 of the Constitution Act, 1982",
+      "source": "https://api.tc.canada.ca/siapi/api/v2/fees/id=svc-202852",
+      "sourcePage": "https://tc.canada.ca/en/marine-transportation/vessel-licensing-registration/licensing-pleasure-craft/apply-manage-pleasure-craft-licence-pcl/fees-service-standards",
+      "note": "The Transport Canada page fills its fee cell from this official fee API. The 2022 consultation page proposing $15 is obsolete.",
+      "sourceType": "primary",
+      "confirmed": true,
+      "tenHpThresholdConfirmed": false
+    },
+    "californiaDMV": {
+      "unit": "USD",
+      "cycle": "Registration runs on a two-year cycle. Renewal is due by December 31 of every odd-numbered year.",
+      "original": {
+        "residentSoldInEvenYear": { "withQuaggaFee": 37, "quaggaExempt": 29 },
+        "residentSoldInOddYear": { "withQuaggaFee": 65, "quaggaExempt": 49 },
+        "nonresidentEvenYear": { "withQuaggaFee": 65, "quaggaExempt": 57 },
+        "nonresidentOddYear": { "withQuaggaFee": 93, "quaggaExempt": 77 },
+        "penaltyResidentEvenYear": 10,
+        "penaltyResidentOddYear": 25,
+        "penaltyNonresidentEvenYear": 24,
+        "penaltyNonresidentOddYear": 39
+      },
+      "biennialRenewal": { "withQuaggaFee": 36, "quaggaExempt": 20, "penalty": 10 },
+      "transfer": { "fee": 15, "penalty": 8 },
+      "replacements": { "ownershipCertificate": 15, "certificateOfNumber": 15, "vesselSticker": 15, "quaggaSticker": 16 },
+      "quaggaMusselFee": "It is $16, which is the difference between the fee-paid and exempt columns and also the price of a conversion sticker. It is due on DMV-registered vessels used in fresh water, and vessels used only in marine waters are exempt. It is renewed every two years and bought separately from registration.",
+      "feeInclusions": "The fees include the original or nonresident vessel fee, the vessel renewal fee, the alternative fuel/technology fee and the Quagga fee if due.",
+      "source": "https://www.dmv.ca.gov/portal/handbook/vehicle-industry-registration-procedures-manual-2/appendix-1f-fees/",
+      "supportingSource": "https://www.dmv.ca.gov/portal/driver-education-and-safety/special-interest-driver-guides/boat-vessel-owners/",
+      "date": "2026 (page modified in 2026); retrieved 2026-09-29",
+      "sourceType": "primary",
+      "confirmed": true
+    }
+  },
+
+  "mooring": {
+    "losAngelesMarinaDelRey": {
+      "operator": "Los Angeles County Department of Beaches and Harbors",
+      "guestDock": {
+        "rateUSD": 1.25,
+        "unit": "per foot per night",
+        "minimumLengthFt": 8,
+        "maxStay": "7 days within any 30-day period",
+        "lateCheckoutUSDPerHour": 10,
+        "requirements": "Valid photo ID, current boat registration and current boat insurance",
+        "free": "20 minutes at the pump-out, and a 4-hour zone that needs no registration"
+      },
+      "source": "https://beaches.lacounty.gov/marina-del-rey-guest-docks/",
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": true,
+      "longTermSlips": "The county owns the slips but leases them to private operators (hotels, apartment complexes, anchorages), and each sets its own rates. The county publishes no long-term slip rate.",
+      "countyDryStorage": {
+        "note": "County-run powerboat dry storage (Dock 77, boats up to 40 ft) and the public launch ramp. The county's storage page lists no rates. These figures come only from a search excerpt, and the period is not stated (probably monthly).",
+        "under24ftUSD": 150,
+        "launchRampUSD": { "vehicleWithTrailer24h": 13, "vehicleOnly": 10 },
+        "source": "https://beaches.lacounty.gov/marina-del-rey-boat-storage/",
+        "sourceType": "primary",
+        "confirmed": false
+      }
+    },
+    "newYorkCity": {
+      "operator": "NYC Department of Parks & Recreation. Rates are set by Rules of the City of New York, Title 56, Chapter 3, § 3-23 Fees.",
+      "worldsFairMarina": {
+        "location": "Flushing Bay, Queens",
+        "summerDockage": [
+          { "length": "20 ft or less", "USD": 1325, "unit": "flat, per season" },
+          { "length": "21-26 ft", "USD": 70, "unit": "per linear foot, per season" },
+          { "length": "27-35 ft", "USD": 73, "unit": "per linear foot" },
+          { "length": "36-45 ft", "USD": 78, "unit": "per linear foot" },
+          { "length": "46-65 ft", "USD": 95, "unit": "per linear foot" },
+          { "length": "66 ft or greater", "USD": 118, "unit": "per linear foot" }
+        ],
+        "transient": { "nonCommercialUSDPerFtPerDay": 2.00, "eventsOrDockAndDineUSDPerFt": 1.00, "commercialUSDPerFtPerDay": 2.50 },
+        "forThe18ftBoat": "An 18 ft 2 in boat falls in the 20 ft-or-less band, so a season costs $1,325.",
+        "currentStatus": "NYC Parks says Pier 1 is closed for a major reconstruction project, and no dockage is available for larger or commercial vessels."
+      },
+      "sheepsheadBay": {
+        "location": "Emmons Avenue piers, Brooklyn",
+        "summer": "May 1 to Oct 31: $120 per linear foot or $3,000, whichever is greater",
+        "winter": "Nov 1 to Apr 30, current winter permittees only: $105 per linear foot or $2,625, whichever is greater",
+        "billing": "Yearly dockage is billed in 12 monthly installments, each paid in advance"
+      },
+      "source": "https://codelibrary.amlegal.com/codes/newyorkcity/latest/NYCrules/0-0-0-120593",
+      "pointer": "https://www.nycgovparks.org/parks/flushing-meadows-corona-park/facilities/marinas (sends readers to § 3-23 for rates)",
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": false,
+      "confirmNote": "The rule text sits behind a Cloudflare challenge. The figures come from a search-engine excerpt of the rule. NYC Parks' own page confirmed that § 3-23 is where the rates live and that Pier 1 is closed."
+    },
+    "connecticutMunicipal": {
+      "town": "Town of Greenwich (Fairfield County, not the New Haven area)",
+      "title": "2026 Approved Fees",
+      "tax": "Plus 6.35% Connecticut sales tax, not included in the figures",
+      "facilityUsePermit": { "age18to64USD": 100, "age18to64EarlyUSD": 95, "age65plusUSD": 50, "age65plusEarlyUSD": 45, "additionalVesselUSD": 55, "earlyDeadline": "before Feb 1" },
+      "seasonalSlips": {
+        "columns": ["before Feb 1", "on/before Feb 15", "on/before Mar 1*", "on/before Mar 15*", "on/after Apr 1*"],
+        "ByramMarina": { "ropeAndPulley": [455, 455, 480, 505, 530], "slip20ft": [815, 865, 940, 1015, 1090], "slip24ft": [960, 1025, 1100, 1175, 1250] },
+        "CosCobMarina": { "slip20ft": [960, 1025, 1100, 1175, 1250], "slip24ft": [1115, 1185, 1260, 1335, 1410] },
+        "GrassIslandMarina": { "slip20ft": [960, 1025, 1100, 1175, 1250], "slip30ft": [2975, 2975, 3050, 3125, 3200], "slip36ft": [3275, 3275, 3350, 3425, 3500] },
+        "asterisk": "Based on slip availability"
+      },
+      "otherFees": { "smallRack": 180, "largeRack": 220, "stands": 185, "drySailPerFt": 19, "trailer": 255, "winterStoragePerFtUpTo36ft": 27, "winterPowerWashPerFt": 3.85, "smallLocker": 55, "largeLocker": 75 },
+      "rules": "Slips are sized by LOA, including outboards trimmed down. Renewing slip holders must occupy the slip by June 15 or forfeit it with no refund (Town Code § 7-87). Slips go to residents.",
+      "forThe18ftBoat": "A 20 ft slip at Cos Cob costs $960 to $1,250 a season, plus a $95-$100 facility permit, plus 6.35% tax.",
+      "source": "https://www.greenwichct.gov/DocumentCenter/View/53390/2026-Boating-Fees",
+      "indexPage": "https://www.greenwichct.gov/566/Boating-Marinas",
+      "date": "2026",
+      "sourceType": "primary",
+      "confirmed": true,
+      "newHavenArea": {
+        "note": "New Haven's Long Wharf Pier is municipal and shows as $5 per foot per day for docking (utilities included) and $1 per foot per day for mooring, but only in a search excerpt; newhavenct.gov returned HTTP 403. Milford's Lisman Landing, also municipal and all-transient, shows as $3.50 per foot per night ($3.00 Sun-Thu) plus $10/$15 a day for 30/50-amp power, again only in a search excerpt, since the town page lists no rates.",
+        "sources": ["https://www.newhavenct.gov/government/departments-divisions/port-authority/long-wharf-pier", "https://www.milfordct.us/317/Milford-Lisman-Landing-Marina"],
+        "sourceType": "primary",
+        "confirmed": false
+      }
+    }
+  },
+
+  "insurance": {
+    "progressiveStateAverages": {
+      "what": "Progressive's average annual premium for a one-watercraft boat policy, December 2024 through November 2025",
+      "rangeUSD": { "low": 274.42, "lowState": "Wisconsin", "high": 867.86, "highState": "Florida" },
+      "costGroupsUSD": { "lowCostStates": 307.01, "mediumCostStates": 413.34, "highCostStates": 662.51 },
+      "highCostStatesInclude": "California, Connecticut and New York, among others (AL, AK, DE, FL, HI, LA, MD, MA, MS, NJ, RI, SC, TX)",
+      "liabilityOnlyFromUSD": 100,
+      "source": "https://www.progressive.com/answers/average-boat-insurance-cost/",
+      "date": "2026-09-29 (page shows 'Updated November 14, 2024' but carries data through Nov 2025)",
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "These are the insurer's own averages across all boats it covers, not a quote for this boat."
+    },
+    "ruleOfThumb": {
+      "text": "Industry guides put a 20-26 ft bowrider or deck boat worth $25,000-$60,000 at about $400-$900 a year. The common rule of thumb is 1-5% of hull value a year, the low end for smaller boats.",
+      "sourceType": "secondary",
+      "confirmed": false
+    },
+    "forTheT18": "In CA, CT or NY the T18 (about $33,500) would plausibly cost around $660 a year, the high-cost-states average. That is an estimate, not a quote."
+  },
+
+  "ireland": {
+    "operatorLicence": {
+      "recreational": "No licence is needed to operate a private recreational motorboat, inland or at sea. The Passenger Boat Licence (EUR 144 including survey, valid 2 years, EUR 29 to renew) is only for boats carrying passengers commercially. \"You do not need a licence if you are sailing your boat on an inland waterway.\"",
+      "ageRules": "Under-12s may not operate any mechanically propelled pleasure craft over 3.7 kW (about 5 hp). Operators of a fast powerboat or jet ski must be 16 or older. Under-16s must wear a lifejacket at all times.",
+      "safetyRules": "Lifejackets are required for everyone aboard, and must be worn in craft under 7 m (23 ft). No alcohol or drugs while in control. The fixed penalty is EUR 150, or up to EUR 5,000 on conviction. The rules come from S.I. 2005 as amended in 2012 and 2018.",
+      "optionalCertificate": "The International Certificate of Competence (ICC), issued by Irish Sailing, is optional at home but often asked for abroad",
+      "radio": "A ship radio licence costs EUR 100 for the life of the vessel, and only if a radio is fitted voluntarily",
+      "source": "https://www.citizensinformation.ie/en/travel-and-recreation/sport-and-leisure/licensing-of-boats-and-watercraft-in-ireland/",
+      "date": "page edited 2026-03-30",
+      "sourceType": "primary",
+      "confirmed": true,
+      "fastPowerboatDefinitionConfirmed": false,
+      "fastPowerboatNote": "The page does not define 'fast powerboat'. A 115 hp boat that tops out around 30 knots almost certainly qualifies, so the operator must be 16 or older."
+    },
+    "registration": {
+      "sea": "There is no national registration for small recreational craft used at sea (not found published)",
+      "shannonNavigation": {
+        "rule": "All vessels on the Shannon Navigation, the Shannon-Erne Waterway and the Erne System must be registered with Waterways Ireland. Only open, undecked boats of 15 hp or less (Shannon) or 10 hp or less (Erne) are exempt.",
+        "feeEUR": 0,
+        "detail": "\"Registration is free.\" You register once for all three waterways and display the number on the outside of the hull.",
+        "pendingChange": "Waterways Ireland consulted in 2024-2025 on a EUR 200 registration fee and an insurance requirement under draft Shannon bye-laws. The adopted status was not confirmed.",
+        "source": "https://www.waterwaysireland.org/boat-owners/craft-registration",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "canals": {
+        "rule": "The Barrow Navigation, Grand Canal and Royal Canal need a permit, with evidence of insurance. Permits are annual, running Nov 1 to Oct 31.",
+        "combinedMooringPassagePermitEUR": 126,
+        "nonResidentialExtendedMooringPermitEUR": 278,
+        "visitorPermit": "Free, up to 31 days, once per calendar year",
+        "source": "https://www.waterwaysireland.org/boat-owners/permits",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "dunLaoghaireMarina": {
+      "currency": "EUR",
+      "annualPerMetre": 586.00,
+      "annualPeriod": "1 Apr - 31 Mar",
+      "summerPerMetre": 445.00,
+      "summerPeriod": "1 Apr - 30 Sep",
+      "winterPerMetre": 239.00,
+      "winterPeriod": "1 Oct - 31 Mar",
+      "visitorMonthlyPerMetre": 91.00,
+      "visitorWeeklyPerMetre": 24.00,
+      "visitorNightlyPerMetre": 4.80,
+      "dayVisitMax6h": 7.00,
+      "forThe18ftBoat": "5.54 m LOA (18 ft 2 in). Marinas usually bill on LOA, sometimes rounded up or with a minimum length, and the page states neither. Annual: 5.54 x 586 = EUR 3,246. Summer only: EUR 2,465.",
+      "vat": "The page does not say",
+      "source": "https://www.dlmarina.com/rates/",
+      "date": "2026-09-29 (no rate year printed)",
+      "sourceType": "primary",
+      "confirmed": true
+    }
+  },
+
+  "uncertain": [
+    "No maker price exists for the reference boat in the UK, Canada or Ireland. The UK figure is a dealer's (GBP 44,995 for a Quicksilver Activ 555 Open with a 115 and a trailer). The Canadian figure is a different boat type (a Yamaha AR190 jet boat, CAD 45,199). Ireland has no confirmed current price.",
+    "The Bayliner US price is a 'nationally advertised price' that includes a trailer. Freight, dealer prep and tax are not itemized.",
+    "The Mercury performance report is from a 2020 test of the T18 at 2,500 lb. Real-world burn varies with load, trim, prop and sea state (Bayliner's own disclaimer).",
+    "The NYC Parks § 3-23 marina rates were read only through a search excerpt (Cloudflare blocked the rule text). World's Fair Marina Pier 1 is currently closed for reconstruction.",
+    "The Marina del Rey county dry-storage and launch-ramp figures are unconfirmed, and the dry-storage period (monthly?) is not stated.",
+    "The New Haven Long Wharf and Milford Lisman Landing rates are unconfirmed (the sites returned HTTP 403 or listed no rates). The confirmed Connecticut municipal figures are Greenwich's, and Greenwich slips go to residents.",
+    "The Transport Canada PCL fee comes from TC's official fee API, which feeds its public page. The 10 hp licensing threshold is general knowledge, not re-read on the page.",
+    "The Waterways Ireland proposed EUR 200 Shannon registration fee may or may not have been adopted. The page read on 2026-09-29 still says registration is free.",
+    "Insurance figures are averages, not quotes. The 1-5%-of-value rule and the $400-$900 band are secondary and unverified.",
+    "Dun Laoghaire's page states no rate year, VAT treatment or minimum length."
+  ]
+}

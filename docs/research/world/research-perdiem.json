@@ -1,0 +1,142 @@
+{
+  "_meta": {
+    "retrieved": "2026-09-29",
+    "currency": "USD",
+    "component": "Maximum lodging rate only, per night, before taxes; meals and incidentals (M&IE) excluded.",
+    "meaning": "These are ceilings, not prices. A US federal civilian traveler is reimbursed actual lodging cost up to this maximum (lodging taxes are reimbursed separately for CONUS). GSA sets CONUS rates each fiscal year (1 Oct - 30 Sep) from market data on hotel average daily rates; the State Department's Office of Allowances sets foreign (OCONUS) rates, reviewed on a rolling monthly publication cycle, from surveys of hotel prices at each post. They say what an acceptable mid-range business hotel costs there, not what a resident pays in rent.",
+    "gsaMethod": "GSA per diem API v2 (api.gsa.gov/travel/perdiem/v2/rates/city/{city}/state/{st}/year/2026), the data behind https://www.gsa.gov/travel/plan-book/per-diem-rates. Month values are for FY2026: Oct-Dec are 2025, Jan-Sep are 2026.",
+    "stateMethod": "Queried post by post on https://allowances.state.gov/web920/per_diem_action.asp (aoprals.state.gov redirects there), for the 09/01/2026 publication (in force in September 2026) and the 10/01/2026 publication. Lodging was identical in both for every post; only Seoul's M&IE changed (126 -> 132)."
+  },
+  "conusStandard": {
+    "lodgingUsd": 110,
+    "effective": "FY2026 (2025-10-01 to 2026-09-30), all months",
+    "source": "GSA per diem API v2, FY2026 'Standard Rate' row (e.g. /rates/city/.../state/KS/year/2026); https://www.gsa.gov/travel/plan-book/per-diem-rates"
+  },
+  "us-ga-atlanta": {
+    "lodgingUsd": [
+      { "months": "Oct-Dec", "usd": 182 },
+      { "months": "Jan-Mar", "usd": 197 },
+      { "months": "Apr-Sep", "usd": 182 }
+    ],
+    "gsaArea": "Atlanta, Fulton / DeKalb counties",
+    "effective": "FY2026 (2025-10-01 to 2026-09-30)",
+    "source": "https://api.gsa.gov/travel/perdiem/v2/rates/city/Atlanta/state/GA/year/2026 ; https://www.gsa.gov/travel/plan-book/per-diem-rates"
+  },
+  "us-la-neworleans": {
+    "lodgingUsd": [
+      { "months": "Oct-Jan", "usd": 157 },
+      { "months": "Feb-May", "usd": 179 },
+      { "months": "Jun-Aug", "usd": 133 },
+      { "months": "Sep", "usd": 157 }
+    ],
+    "gsaArea": "New Orleans, Orleans / Jefferson parishes",
+    "effective": "FY2026 (2025-10-01 to 2026-09-30)",
+    "source": "https://api.gsa.gov/travel/perdiem/v2/rates/city/New%20Orleans/state/LA/year/2026 ; https://www.gsa.gov/travel/plan-book/per-diem-rates"
+  },
+  "us-dc-washington": {
+    "lodgingUsd": [
+      { "months": "Oct", "usd": 275 },
+      { "months": "Nov-Feb", "usd": 196 },
+      { "months": "Mar-Jun", "usd": 276 },
+      { "months": "Jul-Aug", "usd": 183 },
+      { "months": "Sep", "usd": 275 }
+    ],
+    "gsaArea": "District of Columbia (also Alexandria, Falls Church, Fairfax city, Arlington and Fairfax counties VA; Montgomery and Prince George's counties MD)",
+    "effective": "FY2026 (2025-10-01 to 2026-09-30)",
+    "source": "https://api.gsa.gov/travel/perdiem/v2/rates/city/Washington/state/DC/year/2026 ; https://www.gsa.gov/travel/plan-book/per-diem-rates"
+  },
+  "us-ct-newhaven": {
+    "lodgingUsd": 130,
+    "gsaArea": "New Haven, New Haven County",
+    "effective": "FY2026 (2025-10-01 to 2026-09-30), all months",
+    "source": "https://api.gsa.gov/travel/perdiem/v2/rates/city/New%20Haven/state/CT/year/2026 ; https://www.gsa.gov/travel/plan-book/per-diem-rates"
+  },
+  "de-be-berlin": {
+    "lodgingUsd": 271,
+    "effective": "2025-08-01 (in force through the 09/01/2026 and 10/01/2026 publications)",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Germany, post Berlin, PCode 10145)"
+  },
+  "kr-11-seoul": {
+    "lodgingUsd": 245,
+    "effective": "2026-09-01 row (09/01/2026 publication); unchanged lodging in 10/01/2026 publication",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Korea, South, post Seoul, PCode 10283)"
+  },
+  "mx-cmx-mexicocity": {
+    "lodgingUsd": 250,
+    "effective": "2026-03-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Mexico, post 'Mexico City, D.F.', PCode 10069)"
+  },
+  "nz-akl-auckland": {
+    "lodgingUsd": 230,
+    "effective": "2026-05-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (New Zealand, post Auckland, PCode 10296)"
+  },
+  "is-39-reykjavik": {
+    "lodgingUsd": [
+      { "season": "06-01 to 09-30", "usd": 592 },
+      { "season": "10-01 to 05-31", "usd": 338 }
+    ],
+    "effective": "2025-07-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Iceland, post Reykjavik, PCode 10160)"
+  },
+  "lv-25-riga": {
+    "lodgingUsd": 217,
+    "effective": "2025-08-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Latvia, post Riga, PCode 10174)"
+  },
+  "uk-eng-london": {
+    "lodgingUsd": 424,
+    "effective": "2025-06-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (United Kingdom, post London, PCode 10219)"
+  },
+  "fr-idf-paris": {
+    "lodgingUsd": 511,
+    "effective": "2025-08-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (France, post Paris, PCode 10137)"
+  },
+  "jp-13-tokyo": {
+    "lodgingUsd": 346,
+    "effective": "2026-06-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Japan, post 'Tokyo City', PCode 10273)"
+  },
+  "ca-on-toronto": {
+    "lodgingUsd": 319,
+    "effective": "2026-08-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Canada, post Toronto, PCode 10122)"
+  },
+  "ca-bc-vancouver": {
+    "lodgingUsd": [
+      { "season": "04-15 to 10-30", "usd": 411 },
+      { "season": "10-31 to 04-14", "usd": 267 }
+    ],
+    "effective": "2026-09-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Canada, post Vancouver, PCode 10123)"
+  },
+  "ie-lei-dublin": {
+    "lodgingUsd": 356,
+    "effective": "2025-08-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Ireland, post Dublin, PCode 10162)"
+  },
+  "es-md-madrid": {
+    "lodgingUsd": 399,
+    "effective": "2026-02-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Spain, post Madrid, PCode 10201)"
+  },
+  "au-nsw-sydney": {
+    "lodgingUsd": 280,
+    "effective": "2026-03-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Australia, post Sydney, PCode 10248)"
+  },
+  "br-27-saopaulo": {
+    "lodgingUsd": 291,
+    "effective": "2026-08-01",
+    "source": "https://allowances.state.gov/web920/per_diem_action.asp (Brazil, post Sao Paulo, PCode 10033)"
+  },
+  "uncertain": [
+    "GSA FY2027 rates (from 2026-10-01) were not checked: the GSA API's DEMO_KEY hit its rate limit. The FY2026 figures above are the ones in force in September 2026.",
+    "The State Department site shows a footnote link ('View') for Seoul, London, Paris, Tokyo City, Toronto and Sao Paulo; the footnote text was not read. It may carry conditions or other-locality notes, but the lodging number itself is as tabled.",
+    "Tokyo: two posts exist, 'Tokyo City' (346) and 'Tokyo-To' (PCode 11480), which returned no data in either publication. Tokyo City is used.",
+    "The 'meaning' text is a general description of how GSA and State set these rates, not a quotation from either page.",
+    "GSA month values are FY-ordered: Oct-Dec belong to calendar 2025, Jan-Sep to 2026. New Orleans' Oct-Jan band spans the year boundary."
+  ]
+}

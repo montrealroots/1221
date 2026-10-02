@@ -29,16 +29,22 @@
  *   includes the ill: 0.8 of the table. Worn to nothing, it is three times it,
  *   about what poor self-rated health carries in the survey studies.
  *
+ * - Living alone, from 2026-10-01, at Holt-Lunstad's odds, spread so the
+ *   table stays everybody's (`livingFactor` in `systems/people.ts`).
+ *
  * None of it is shown. Nothing on a screen says how likely the end is or when.
  */
 
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { zonedParts, type Instant } from '../core/time';
+import { MS_DAY, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { ceilingAt } from '../content/lifespan';
 import { clamp } from '../core/rng';
 import { homeOf } from './earnings';
+import { bmiOf } from './body';
+import { BMI_SURVIVAL_LIMIT, bmiHazard } from '../content/body';
+import { livingFactor } from './people';
 
 export const END_KIND = 'life.end';
 const MS_YEAR = 365.2425 * 86_400_000;
@@ -91,9 +97,9 @@ export function frailty(condition: number, age: number): number {
   return 0.8 + 2.2 * short ** 1.5;
 }
 
-/** The chance a year from this age ends their life, all of it together. */
+/** The chance a year from this age ends their life, all of it together: the table, the country, the shape they're in, their weight (`bmiHazard`) and, from 2026-10-01, whether they live alone (`livingFactor`). */
 export function chanceOfEndingYear(person: Person, age: number, countryId: string | undefined): number {
-  return Math.min(1, tableChance(Math.floor(age)) * countryFactor(countryId) * frailty(person.wellbeing.condition, age));
+  return Math.min(1, tableChance(Math.floor(age)) * countryFactor(countryId) * frailty(person.wellbeing.condition, age) * (person.body ? bmiHazard(bmiOf(person.body)) : 1) * livingFactor(person));
 }
 
 /**
@@ -130,6 +136,14 @@ export function ageOn(sim: Simulation, person: Person, at: Instant): number {
   const then = zonedParts(at, sim.homeZone);
   const had = then.month > born.month || (then.month === born.month && then.day >= born.day);
   return then.year - born.year - (had ? 0 : 1);
+}
+
+/** Starved past the body's limit (`BMI_SURVIVAL_LIMIT`): the life ends that day, where it isn't already ending. */
+export function starvedPastTheLimit(sim: Simulation, person: Person): boolean {
+  if (!person.body || bmiOf(person.body) >= BMI_SURVIVAL_LIMIT || sim.universe.meta.endedAt !== undefined) return false;
+  if (sim.universe.scheduled.some((i) => i.kind === END_KIND && i.status === 'pending' && (i.payload.personId ?? sim.universe.playerId) === person.id && i.at <= sim.now + MS_DAY)) return false;
+  sim.schedule({ at: sim.now + 60_000, kind: END_KIND, label: 'World Simulation', category: 'system', priority: 1, payload: { personId: person.id } });
+  return true;
 }
 
 export function registerMortality(sim: Simulation): void {

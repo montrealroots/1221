@@ -1,0 +1,362 @@
+{
+  "ukMods": {
+    "currency": "GBP",
+    "note": "Halfords, Kwik Fit and similar chains could not be shown to sell any of these five modifications. Halfords' 'Wheel Trims & Alloys' category lists wheel trims such as the 15in Comet set at £15.99, or £22.99 fitted (seen in search snippets only), but no alloy wheel sets with prices turned up, and no Halfords or Kwik Fit remap, lowering, exhaust or body kit service was found. Every figure below comes from a named independent tuner or retailer instead. 'Ordinary family car' fitted prices were mostly unavailable; the nearest priced fitments are for VW Golf and Ford Fiesta variants, named per item.",
+    "ecuRemapStage1": [
+      {
+        "shop": "VUDU Performance, 282 Harehills Lane, Leeds LS9 7BD",
+        "vehicle": "Ford Fiesta Mk7 1.0 EcoBoost",
+        "priceGBP": 449.00,
+        "vatIncluded": true,
+        "fitted": true,
+        "detail": "Page states '£449.00 inc. VAT'; the software is flashed at their West Yorkshire HQ by booking and is not available through their home tuning tool.",
+        "url": "https://vuduperformance.com/products/fiesta-1-0-ecoboost-remap-package-vudu-performance",
+        "publisher": "VUDU Performance",
+        "date": "accessed 2026-09-30 (page undated)",
+        "confirmed": true
+      },
+      {
+        "shop": "RevLimit Tuning, Unit 6 Macon Business Park, Macon Way, Crewe CW1 6DG",
+        "vehicle": "any (generic Stage 1 booking payment)",
+        "priceGBP": 200.00,
+        "vatIncluded": "not stated on page",
+        "fitted": true,
+        "detail": "Payment link for a Stage 1 remap carried out at the shop; 'contact us first to arrange a time and date'.",
+        "url": "https://www.revlimittuning.co.uk/product/Stage-1-ECU-Remap",
+        "publisher": "RevLimit Tuning",
+        "date": "accessed 2026-09-30 (page undated)",
+        "confirmed": true
+      },
+      {
+        "shop": "Viezu",
+        "vehicle": "Land Rover Defender 2000-2011 / Alfa Romeo 147",
+        "priceGBP": "249.00 (Defender, inc VAT); 249.00-289.00 (Alfa 147)",
+        "vatIncluded": true,
+        "fitted": "unknown",
+        "url": "https://viezu.com/shop/cars/land-rover-tuning-remapping/",
+        "publisher": "Viezu",
+        "date": "accessed 2026-09-30",
+        "confirmed": false,
+        "detail": "Seen in search snippets only; the page itself was not read."
+      }
+    ],
+    "loweringSpringsOrCoilovers": [
+      {
+        "shop": "QT Performance (Cambridge, Peterborough, St Ives, Bury St Edmunds)",
+        "item": "Eibach Pro-Kit lowering springs, 10-15mm, VW Golf Mk7 R Estate",
+        "priceGBP": 779.15,
+        "fitted": true,
+        "vatIncluded": "not stated on page (the site states 'ALL PRICES ARE FULLY FITTED'; it is a consumer retailer, so VAT is presumably included)",
+        "url": "https://qtperformance.co.uk/product/eibach-pro-kit-lowering-springs-10-15mm-vw-golf-mk7-r-estate-ba5-bv5-e10-85-041-05-22/",
+        "publisher": "QT Performance",
+        "date": "accessed 2026-09-30 (page undated)",
+        "confirmed": true
+      },
+      {
+        "shop": "QT Performance",
+        "item": "KW Street Comfort coilover kit, VW Golf R, with replacement OEM drop links and top mounts and a geometry alignment",
+        "priceGBP": 2142.02,
+        "fitted": true,
+        "vatIncluded": "not stated on page",
+        "url": "https://qtperformance.co.uk/product/kw-street-comfort-coilovers-volkswagen-golf-r-1808000n/",
+        "publisher": "QT Performance",
+        "date": "accessed 2026-09-30 (page undated)",
+        "confirmed": true
+      },
+      {
+        "shop": "QT Performance",
+        "item": "Eibach Pro-Kit lowering springs, VW Golf Mk5 R32",
+        "priceGBP": 722.36,
+        "fitted": true,
+        "url": "https://qtperformance.co.uk/product/eibach-pro-kit-lowering-springs-20mm-vw-golf-mk5-r32-e8599-140/",
+        "publisher": "QT Performance",
+        "date": "accessed 2026-09-30",
+        "confirmed": false,
+        "detail": "Seen in a search snippet only."
+      }
+    ],
+    "catBackExhaust": [
+      {
+        "shop": "QT Performance",
+        "item": "Cobra Sport cat-back exhaust, VW Golf GTI Mk7 (2013-2017)",
+        "priceGBP": "1038.46 to 1426.34 (range across variants)",
+        "fitted": true,
+        "vatIncluded": "not stated on page",
+        "url": "https://qtperformance.co.uk/product-category/parts/exhausts/",
+        "publisher": "QT Performance",
+        "date": "accessed 2026-09-30 (page undated)",
+        "confirmed": true,
+        "otherListings": "Golf GTI Mk5 £854.11-£953.03; Golf GTI Mk6 £1,009.39-£1,238.58; Golf GTI 2017-2020 £1,038.45-£1,319.62; Golf Mk8 GTI 245ps GPF £1,089.66-£1,376.21 (all fitted, same page)"
+      },
+      {
+        "shop": "mountune (mountunestore.com)",
+        "item": "mountune cat-back exhaust, Mk7 Fiesta ST (part only)",
+        "priceGBP": 665.83,
+        "fitted": false,
+        "vatIncluded": "not stated; the figure is exactly £799.00 divided by 1.2, which suggests a price excluding VAT (inference, not stated)",
+        "url": "https://www.mountunestore.com/products/fiesta-b299st-cat-back-exhaust",
+        "publisher": "mountune",
+        "date": "accessed 2026-09-30; both variants shown as unavailable",
+        "confirmed": true
+      }
+    ],
+    "bodyKitFittedAndPainted": [
+      {
+        "shop": "Meduza Design Ltd, Leicester",
+        "item": "Installation and paint charges for body kits (labor and paint only; kit bought separately)",
+        "priceGBP": 595.00,
+        "vatIncluded": true,
+        "detail": "The product data shows the price 'with_tax' £595.00, tax label VAT. The page also says prices range 'from £120.00 per panel to be painted'.",
+        "url": "https://www.meduza.co.uk/automotive-paintwork-installation-and-paint-charges-for-body-kits/",
+        "publisher": "Meduza Design Ltd",
+        "date": "accessed 2026-09-30 (page undated)",
+        "confirmed": true
+      },
+      {
+        "shop": "Delta Styling (Carlton Motor Sport Ltd), Barnsley S72 0JE",
+        "item": "Fitting only (no paint): full body kits from £100.00; front/rear bumpers from £80.00; side skirts (pair) from £80.00; Delta Ford Fiesta/Focus full low line kit from £80.00",
+        "priceGBP": "from 100.00 (full kit, fitting only)",
+        "vatIncluded": "not stated (VAT-registered business)",
+        "url": "https://deltastyling.com/fitting/",
+        "publisher": "Delta Styling",
+        "date": "accessed 2026-09-30 (page undated)",
+        "confirmed": true
+      }
+    ],
+    "alloyWheelsSetOfFourFitted": [
+      {
+        "shop": "LK Performance, Cleckheaton, West Yorkshire",
+        "item": "Fox Racing FX004 Gloss Black, 17-inch page",
+        "priceGBP": "from 332.00 per set of 4",
+        "fittingGBP": 0,
+        "detail": "The wheel page reads 'from £332.00 per set of 4'. The fitting page says 'We also fit any of the alloy wheels bought at our showroom or online, free of charge' (book on 01274 936040). Tires are not included; 'from' may refer to the smallest offset or size option.",
+        "vatIncluded": "not stated (VAT-registered: VAT No. 943799565)",
+        "urls": [
+          "https://www.lkperformance.co.uk/wheels/fox-racing/5726-fx004-gloss-black/17-inch",
+          "https://www.lkperformance.co.uk/pages/display/24"
+        ],
+        "publisher": "LK Performance Ltd",
+        "date": "accessed 2026-09-30 (read via direct HTTP fetch)",
+        "confirmed": true
+      },
+      {
+        "shop": "Ford (shop.ford.co.uk)",
+        "item": "Genuine Ford Focus 17in 5x2-spoke set of 4, Rock Metallic",
+        "priceGBP": 1176.00,
+        "fitted": false,
+        "url": "https://shop.ford.co.uk/products/set-of-4-focus-alloy-wheels-17-5-x-2-spoke-design-rock-metallic-light",
+        "publisher": "Ford Motor Company Ltd",
+        "date": "accessed 2026-09-30",
+        "confirmed": false,
+        "detail": "Seen in a search snippet only."
+      },
+      {
+        "shop": "Wolfrace",
+        "item": "17in wheels for a Ford Focus Mk3, set of 4",
+        "priceGBP": "from 520.00",
+        "fitted": false,
+        "url": "https://www.wolfrace.co.uk/ford-focus-iii-2011-on-17-inch-alloy-wheels",
+        "publisher": "Wolfrace",
+        "date": "accessed 2026-09-30",
+        "confirmed": false,
+        "detail": "Seen in a search snippet only."
+      }
+    ]
+  },
+  "californiaSmog": {
+    "inspectionPrice": {
+      "note": "BAR does not regulate inspection prices. It publishes monthly averages that stations self-report.",
+      "august2026": {
+        "overallAverageUSD": 69.16,
+        "starTestAndRepair": 71.03,
+        "starTestOnly": 63.34,
+        "nonStarTestAndRepair": 74.36,
+        "nonStarTestOnly": 58.97,
+        "initialTestsInCostSample": 964281,
+        "url": "https://bar.ca.gov/smog-check-executive-summary-report/2026-08",
+        "publisher": "California Bureau of Automotive Repair",
+        "date": "August 2026 report",
+        "confirmed": true
+      },
+      "july2026": {
+        "overallAverageUSD": 69.54,
+        "starTestAndRepair": 71.60,
+        "starTestOnly": 63.15,
+        "nonStarTestAndRepair": 75.16,
+        "nonStarTestOnly": 58.41,
+        "url": "https://bar.ca.gov/smog-check-executive-summary-report/2026-07",
+        "publisher": "California Bureau of Automotive Repair",
+        "date": "July 2026 report",
+        "confirmed": true
+      },
+      "certificateFeeUSD": 8.25,
+      "certificateFeeDetail": "'The station must charge a $8.25 Smog Check certificate fee.' 'Inspection prices are not regulated by BAR.'",
+      "certificateFeeUrl": "https://www.bar.ca.gov/smog-check",
+      "certificateFeePublisher": "California Bureau of Automotive Repair",
+      "certificateFeeDate": "accessed 2026-09-30 (page undated)",
+      "certificateFeeConfirmed": true,
+      "certificateOnlyOnPass": "Secondary sites (smogcheck.com blog) say the $8.25 is charged only when the vehicle passes. BAR's page wasn't read as saying so.",
+      "certificateOnlyOnPassConfirmed": false
+    },
+    "whoNeedsOne": {
+      "rules": [
+        "Gasoline, hybrid and alternative-fuel vehicles of model year 1976 and newer, and diesels of model year 1998 and newer, are subject to Smog Check.",
+        "Gasoline, hybrid and alternative-fuel vehicles eight model years old or newer do not need a Smog Check at registration renewal; they pay a smog abatement fee instead.",
+        "Vehicles four model years old or newer are exempt from the change-of-ownership Smog Check (DMV charges an $8 smog transfer fee instead).",
+        "Change of ownership: a private seller must supply a passing certificate (valid 90 days); for dealers it is valid for two years.",
+        "Biennial: renewal requires a Smog Check every other year once the vehicle is past the eight-model-year exemption, in the biennial (smog-required) areas; 33 counties are listed by DMV.",
+        "Exempt: electric vehicles, motorcycles, gasoline vehicles 1975 and older, and diesels 1997 and older or over 14,000 lbs."
+      ],
+      "urls": [
+        "https://www.bar.ca.gov/smog-check",
+        "https://www.dmv.ca.gov/portal/vehicle-registration/smog-inspections/"
+      ],
+      "publisher": "California Bureau of Automotive Repair; California DMV",
+      "date": "accessed 2026-09-30 (pages undated)",
+      "confirmed": true
+    },
+    "smogAbatementFee": {
+      "correction": "The $25 fee does not apply to all of a car's first eight years. Under AB 1274 (effective January 1, 2019) the $25 annual fee applies only to vehicles that are seven and eight model years old. Vehicles six model years old or less pay the older $20 annual fee. The fee is due only at registration renewal, and only in a biennial smog area.",
+      "sevenAndEightModelYearsUSD": 25,
+      "sixOrLessModelYearsUSD": 20,
+      "transferFeeUnder4ModelYearsUSD": 8,
+      "detail": "The DMV bulletin: 'Requires an annual $25 smog abatement fee for vehicles that are seven and eight model years old' and 'the current annual $20 smog abatement fee for vehicles that are six or less model years old remains in effect.' The current DMV fees page lists 'Smog abatement (HSC §44060(d)(1)) $20' and 'Smog transfer (VC §4000.1) $8'.",
+      "urls": [
+        "https://www.dmv.ca.gov/portal/uploads/2020/05/18vin19.pdf",
+        "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/"
+      ],
+      "publisher": "California DMV (Vehicle Industry News VIN 2018-19; Registration Fees page)",
+      "date": "Bulletin effective 2019-01-01, distributed October 2018; fees page accessed 2026-09-30",
+      "confirmed": true
+    },
+    "failRate": {
+      "august2026": {
+        "initialTestFailRatePct": 8.26,
+        "initialTests": 968963,
+        "initialFailures": 80034,
+        "allTestsFailRatePct": 8.76,
+        "allTests": 1046162,
+        "obdOisFailRatePct": 7.60,
+        "bar97TailpipeFailRatePct": 17.81,
+        "url": "https://bar.ca.gov/smog-check-executive-summary-report/2026-08",
+        "publisher": "California Bureau of Automotive Repair",
+        "date": "August 2026 report",
+        "confirmed": true
+      },
+      "july2026": {
+        "obdOisFailRatePct": 7.48,
+        "bar97TailpipeFailRatePct": 17.46,
+        "initialTests": 984880,
+        "allTests": 1061736,
+        "url": "https://bar.ca.gov/smog-check-executive-summary-report/2026-07",
+        "publisher": "California Bureau of Automotive Repair",
+        "date": "July 2026 report",
+        "confirmed": true
+      },
+      "note": "OIS is the OBD-based test for 2000-and-newer vehicles, and BAR-97 is the tailpipe test for older ones. Most cars a player would own take OIS, at about 7.5%."
+    },
+    "modifiedSoftware": {
+      "startDate": "2021-07-19",
+      "rule": "Cal. Code Regs. tit. 16 §3340.42.2(c)(8), adopted 2013-07-01: fail if 'The vehicle's OBD system data does not match the original equipment manufacturer (OEM) or an Air Resources Board (ARB) exempted OBD software configuration.' Vehicle Code §27156 bars tampering, and software counts as part of the emissions control system.",
+      "outcome": "The vehicle fails, and the inspection report reads 'Modified Software'. It counts as a 'tampered' result, which excludes the vehicle from BAR's Repair Assistance Program until corrected. Software approved by a CARB Executive Order is allowed.",
+      "fix": "'The vehicle's software must be restored to an OEM version or a CARB EO approved version.' The owner has a licensed repair facility restore the OEM software, then retests at any licensed Smog Check station, except that vehicles first directed to a STAR or Referee station must return to that station type.",
+      "expectedVolume": "BAR's preliminary analysis in 2021 put it at 5 to 10 vehicles failing per day statewide for Modified Software.",
+      "costToFlashBackToStockUSD": null,
+      "costNote": "No published price was found. The August 2026 BAR report doesn't break out Modified Software failures. Forum claims (for example '$100' to send an ECU back to the tuner) aren't usable.",
+      "url": "https://www.bar.ca.gov/pdf/bag/202107/bar-ois-modified-software.pdf",
+      "publisher": "California Bureau of Automotive Repair (Paul Hedglin, Engineering and Research Branch, BAR Advisory Group meeting)",
+      "date": "2021-07-15",
+      "confirmed": true,
+      "corroboratingUrl": "https://www.bar.ca.gov/arsc/newsletters/newsletter/spring-2021/illegal-software-modifications-detected-during-smog-check-inspections",
+      "corroboratingConfirmed": true
+    },
+    "referee": {
+      "what": "The Smog Check Referee Program is BAR's dispute and special-case service, located at community colleges. It reviews contested Smog Check results; inspects unusual vehicles (kit cars, specially constructed vehicles, engine changes, modified vehicles); resolves emissions-related and exhaust-noise citations; locates hard-to-find emissions parts; and handles repair cost waivers and smog exemptions. If the owner of a car that failed for Modified Software insists the software is OEM, the Referee requires signed documentation from an OEM dealer stating that the software version, Cal ID and CVN are correct for that exact vehicle.",
+      "scheduling": "asktheref.org or (800) 622-7733",
+      "fees": "The Referee's exhaust-noise inspection certificate is $108 (asktheref.org FAQ). General services were described as free ('There are no fees for services') only in a search summary, not read on a page.",
+      "urls": [
+        "https://asktheref.org/Services/Services-Overview/",
+        "https://asktheref.org/information/faqs/",
+        "https://thedcapage.blog/2021/08/04/smog-check-referees-help-consumers-with-emissions-issues/",
+        "https://www.bar.ca.gov/pdf/bag/202107/bar-ois-modified-software.pdf"
+      ],
+      "publisher": "BAR Smog Check Referee Program (asktheref.org); Department of Consumer Affairs blog (2021-08-04); BAR",
+      "confirmed": true,
+      "feesFreeConfirmed": false,
+      "noiseCertificate108Confirmed": true
+    }
+  },
+  "sleepAct": {
+    "law": {
+      "summary": "The SLEEP Act (Chapter 527 of the Laws of 2021; S784B) was signed on 2021-10-29 and took effect on 2022-04-01. It raised the maximum fine for illegal muffler and exhaust modifications to $1,000 ('an $850 increase'). Inspection stations must check that motorcycle mufflers and exhausts have not been illegally modified. A repair shop that willfully installs illegal equipment three times within 18 months risks losing its inspection station and operating certificates.",
+      "url": "https://www.governor.ny.gov/news/governor-hochul-signs-legislation-cracking-down-noisy-illegal-mufflers-and-exhaust-systems",
+      "publisher": "Office of the Governor of New York",
+      "date": "2021-10-29",
+      "confirmed": true,
+      "effectiveDateConfirmed": false,
+      "effectiveDateNote": "The date 2022-04-01 comes from secondary sources (NYCM Insurance blog and others); the governor's release doesn't give it."
+    },
+    "statewideTicketCount": null,
+    "statewideNote": "No published count of statewide SLEEP Act (VTL §375(31)) tickets was found, from the State Police, the DMV/TSLED or any court system.",
+    "nycNoiseCameraEnforcement": {
+      "caveat": "This is New York City enforcement under the City Noise Code §24-236(e), under which DEP's camera summonses are issued (Local Law 7 of 2024). It is not SLEEP Act enforcement, but it is the only published count of loud-exhaust tickets found.",
+      "cy2025": {
+        "cameras": 12,
+        "eventsCaptured": 15994,
+        "summonsesFiledAtOATH": 1691,
+        "shareOfEventsSummonsedPct": 11,
+        "dismissedAtOATHPct": 1.2,
+        "summonsesPerDay": 4.6,
+        "penaltiesImposedUSD": 1472265,
+        "penaltiesPaidUSD": 308229,
+        "dispositions": {"defaulted": 965, "newIssuanceOrRescheduled": 290, "inViolation": 214, "admitInViolation": 176, "dismissed": 20, "adjourned": 14, "stipulated": 12},
+        "programCostsUSD": {"personnel": 492565, "vendorCalibrationAndService": 109092},
+        "url": "https://www.nyc.gov/assets/dep/downloads/pdf/air/noise/2025-annual-report-noise-camera-enforcement-program.pdf",
+        "publisher": "NYC Department of Environmental Protection",
+        "date": "2025 annual report (calendar year 2025)",
+        "confirmed": true
+      },
+      "priorYears": {
+        "cy2022": {"summonses": 102, "cameras": 1, "penaltiesImposedUSD": 62000, "paidUSD": 25000},
+        "cy2023": {"summonses": 651, "cameras": "9 as of 9/23", "penaltiesImposedUSD": 512000, "paidUSD": 202000},
+        "cy2024": {"summonses": 849, "cameras": 9, "penaltiesImposedUSD": 462000, "paidUSD": 113000},
+        "june2021ToDec2024TotalSummonses": 1602,
+        "url": "https://www.nyc.gov/assets/dep/downloads/pdf/air/noise/2024-annual-report-noise-camera-enforcement-program.pdf",
+        "publisher": "NYC Department of Environmental Protection",
+        "date": "2024 annual report",
+        "confirmed": true,
+        "conflict": "Carscoops (2023-01-24) reported 71 camera tickets in 2022 with a minimum $800 penalty, against DEP's 102 for CY2022. DEP's figure is the primary source."
+      },
+      "penaltyScale": {
+        "detail": "$800 for a first offense, up to $2,625 on a third-offense default (Carscoops; Brooklyn Eagle)",
+        "url": "https://www.carscoops.com/2023/01/new-york-city-issued-71-tickets-during-2022-over-loud-exhausts/",
+        "publisher": "Carscoops",
+        "date": "2023-01-24",
+        "confirmed": true
+      }
+    },
+    "nypdClaim": {
+      "claim": "46,913 vehicle-noise complaints and 568 NYPD summonses in 2024",
+      "confirmed": false,
+      "note": "Appeared only in a search summary. The page it was attributed to (dubmagazine.com) doesn't contain it. Don't use."
+    }
+  },
+  "meta": {
+    "researchedOn": "2026-09-30",
+    "method": "Web search, then reading each page (WebFetch, or a direct HTTP fetch plus pdftotext for PDFs and JS-heavy pages). 'confirmed: true' means the figure was read on the cited page itself; 'confirmed: false' means it was seen only in a search snippet or secondary summary.",
+    "spelling": "American spelling in notes; shop names and quoted text left as published."
+  },
+  "uncertain": [
+    "UK: no Halfords or Kwik Fit price exists for any of the five modifications. Neither appears to sell remaps, suspension, exhausts, body kits or alloy wheel sets, and Halfords' wheel category lists trims. All UK prices come from independent tuners.",
+    "UK: QT Performance's fitted prices, LK Performance's wheel price and Delta Styling's fitting prices don't state VAT treatment on the page. The businesses are VAT-registered consumer retailers, so VAT is probably included but not confirmed. Only VUDU (£449 inc. VAT) and Meduza (£595, VAT in the product data) are explicit.",
+    "UK: the mountune exhaust price (£665.83) is almost certainly ex-VAT (£799 / 1.2), and it is a part price, not fitted.",
+    "UK: fitted prices were found for VW Golf and Ford Fiesta performance variants, not a base family hatchback; a base Focus or Golf could differ.",
+    "UK: body kit prices are labor and paint only. The kit itself is extra and varies widely; no single named-retailer price for a kit, fitted and painted, was found.",
+    "California: the $25 abatement fee covers only model years 7 and 8. Years 1-6 pay $20. This corrects the premise of the brief.",
+    "California: no published price for reflashing a tuned ECU back to stock was found.",
+    "California: whether general Referee services are free is not confirmed on a primary page. The $108 noise certificate is confirmed.",
+    "California: the Modified Software failure count isn't published in the monthly reports. The only figure is BAR's 2021 forecast of 5 to 10 per day.",
+    "New York: no statewide SLEEP Act ticket count exists in any source found. The NYC DEP noise-camera counts are city Noise Code enforcement, not SLEEP Act enforcement.",
+    "New York: the SLEEP Act's 2022-04-01 effective date comes from secondary sources only."
+  ]
+}

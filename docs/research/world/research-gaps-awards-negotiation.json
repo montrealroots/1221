@@ -1,0 +1,262 @@
+{
+  "meta": {
+    "title": "Gaps: eligible acting fields for the Oscars, Tonys, Oliviers and Ariel; negotiation over scale",
+    "compiled": "2026-10-02",
+    "companionTo": [
+      "docs/research/world/research-award-pools.json (pools: entry and production counts)",
+      "docs/research/world/research-career-depth.json (awards bodies, categories, nominee counts; scale, scale+10, quotes, Labor Code 432.3)"
+    ],
+    "howSlateUsesIt": "src/engine/systems/awards.ts sets a nomination's chance to (slots / submissions) x standout, from EMMY_FIELDS and BAFTA_FIELDS in content/awards.ts. This file supplies the same two numbers (an eligible field, and the slots) for bodies that don't publish a submission count, either counted from a primary list or derived from production counts x performers per production, with the derivation shown.",
+    "rules": "No invented numbers. Each figure carries its source URL, the date read, and 'page' (read from the page or the downloaded document), 'count' (counted by this research from the primary document), 'derived' (arithmetic on cited figures, formula given) or 'search-summary' (only from a search engine's summary; not confirmed). Null with a reason where nothing is published.",
+    "dateRead": "2026-10-02"
+  },
+
+  "fields": {
+    "academyAwards": {
+      "note": "The Academy's Reminder List is the eligible field for all four acting categories. It lists, per film, up to 10 actors and 10 actresses submitted for consideration, with no lead/supporting split: lead and supporting draw from the same list. Films with no submitted performers (documentaries, most animation) show '——'. The Academy states no performer total; the counts below were made by this research from the PDF.",
+      "nomineesPerActingCategory": 5,
+      "actingCategories": ["Actor in a Leading Role", "Actress in a Leading Role", "Actor in a Supporting Role", "Actress in a Supporting Role"],
+      "entries": [
+        {
+          "edition": "98th Academy Awards (films of 2025; list dated 2026-01-07)",
+          "eligibleFeatureFilms": 317,
+          "eligibleFeatureFilmsBasis": "page",
+          "eligibleFeatureFilmsSource": "https://press.oscars.org/news/317-feature-films-contention-98th-academy-awardsr",
+          "filmsWithSubmittedPerformers": 260,
+          "filmsWithNoPerformers": 57,
+          "actors": 1075,
+          "actresses": 790,
+          "performersTotal": 1865,
+          "performersPerFilmWithCast": { "mean": 7.17, "median": 6 },
+          "performersPerEligibleFilm": 5.88,
+          "filmsAtTheTenActorCap": 23,
+          "filmsAtTheTenActressCap": 7,
+          "distributionPerFilmWithCast": { "1": 6, "2": 15, "3": 28, "4": 27, "5": 38, "6": 32, "7": 23, "8": 15, "9": 14, "10": 14, "11": 13, "12": 2, "13": 4, "14": 3, "15": 7, "16": 6, "17": 1, "18": 5, "19": 1, "20": 6 },
+          "basis": "count",
+          "countMethod": "PDF (43 pages) text-extracted with xpdf pdftotext -table; names counted per column by character offset per page; header and page-footer lines excluded; 13 titles that wrap onto a second line merged. The merged film count came out at 317, matching the Academy's stated total, which checks the parse.",
+          "source": "https://www.oscars.org/sites/oscars/files/2026-01/98th_general_entry_reminder_list.pdf?VersionId=xXbW7Qd_Y2MJHdEWi.YXlKsmDdcwQwY3",
+          "dateRead": "2026-10-02",
+          "fieldPerCategory": {
+            "leadOrSupportingActor": 1075,
+            "leadOrSupportingActress": 790,
+            "slotsPerCategory": 5,
+            "note": "A performer is placed in lead or supporting by the voters, not by the list, so each gendered pair of categories shares one field. Slots over field, per category: 5/1075 (actor) and 5/790 (actress); a performer can be nominated in only one category per performance."
+          }
+        },
+        {
+          "edition": "97th Academy Awards (films of 2024)",
+          "eligibleFeatureFilms": 323,
+          "eligibleFeatureFilmsBasis": "page (see research-award-pools.json, Variety)",
+          "actors": 1018,
+          "actresses": 790,
+          "performersTotal": 1808,
+          "performersPerEligibleFilm": 5.6,
+          "basis": "count",
+          "countMethod": "Same parser as the 98th list. The film-entry count here was not reconciled against 323 (wrapped titles not merged by hand), so per-film figures are not given; name totals do not depend on the merge.",
+          "source": "https://www.oscars.org/sites/oscars/files/2025-01/97th_aa_general_entry_reminder_list.pdf",
+          "dateRead": "2026-10-02"
+        }
+      ]
+    },
+
+    "tonyAwards": {
+      "note": "Tony eligibility is per production. There is no performer submission list and no published count of eligible performers: any performer in an eligible production's opening cast can be nominated, and the Tony Administration Committee rules lead versus featured.",
+      "eligibleProductions": [
+        {
+          "edition": "79th Tony Awards (2025-26 season)",
+          "value": 30,
+          "split": { "newPlays": 8, "newMusicals": 6, "playRevivals": 11, "musicalRevivals": 5 },
+          "detail": "34 shows opened; the Beetlejuice tour and Rob Lake Magic With Special Guests The Muppets were ineligible; two comedy shows withdrew.",
+          "basis": "page (total); page via fetch tool (split, from Wikipedia)",
+          "source": ["https://www.newyorktheatreguide.com/theatre-news/news/the-2026-tony-awards-by-the-numbers", "https://en.wikipedia.org/wiki/79th_Tony_Awards"],
+          "dateRead": "2026-10-02"
+        }
+      ],
+      "nomineesPerActingCategory2026": {
+        "leadingActorPlay": 5, "leadingActressPlay": 5, "leadingActorMusical": 5, "leadingActressMusical": 5,
+        "featuredActorPlay": 6, "featuredActressPlay": 5, "featuredActorMusical": 5, "featuredActressMusical": 5,
+        "note": "Featured Actor in a Play had six (Ehrenreich, Abbott, Burstein, Dirden, Santiago-Hudson, Thomas). Eight acting categories, split by play/musical, so a play's performers compete only with plays' performers.",
+        "basis": "page (Wikipedia, read through the fetch tool)",
+        "source": "https://en.wikipedia.org/wiki/79th_Tony_Awards",
+        "dateRead": "2026-10-02"
+      },
+      "performersPerProduction": {
+        "value": 19.6,
+        "basis": "derived",
+        "formula": "647 Broadway actors / 33 Broadway productions, 2018-19 season (AAPAC)",
+        "inputs": {
+          "broadwayActors2018_19": 647,
+          "broadwayActorsDetail": "539 hired by the commercial sector plus 108 hired by non-profits on Broadway contracts ('Total number of actors hired during the 2018-19 season was 1,298 — 539 were employed by the commercial sector, 841 by the non-profits (108 of which were hired on Broadway contracts and counted towards total Broadway contracts...)').",
+          "broadwayProductions2018_19": 33,
+          "broadwayProductionsDetail": "'Only 5 out of 33 Broadway productions were written by at least one BIPOC writer'; survey covered all plays and musicals that opened prior to the 2019 Tony Awards."
+        },
+        "source": "https://deadline.com/wp-content/uploads/2021/06/aapac_report2_2018-2019_final.pdf",
+        "sourceBasis": "page (PDF downloaded and text-extracted)",
+        "dateRead": "2026-10-02",
+        "caveat": "The 647 counts performers hired, including understudies and swings where they hold Equity contracts in the opening company. It is the newest season with a published Broadway actor total found; AAPAC reports after 2018-19 were not found."
+      },
+      "derivedField2026": {
+        "value": 588,
+        "basis": "derived",
+        "formula": "30 eligible productions x 19.6 actors per production = 588 (rounded); not a published figure",
+        "note": "Split across eight categories by play/musical and gender, not one pool."
+      },
+      "castSizeRange": {
+        "note": "Broadway ensembles: 165 ensemblists originated tracks in the 2017-18 season across 33 scheduled openings, against 259 in 1967-68 (73 openings); about one in five Broadway actors was billed as a swing in 2017-18.",
+        "basis": "page",
+        "source": "https://playbill.com/article/how-much-have-broadway-ensembles-changed-in-the-last-50-years",
+        "articleDate": "2018-02-24",
+        "dateRead": "2026-10-02"
+      }
+    },
+
+    "olivierAwards": {
+      "note": "SOLT publishes the list of eligible productions by panel. Acting categories are judged from the Theatre panel's list. No performer count is published.",
+      "entries": [
+        {
+          "edition": "Olivier Awards 2026 (productions opening 2025-02-15 to 2026-02-17 in a SOLT-member theatre)",
+          "theatre": 110,
+          "affiliate": 71,
+          "family": 16,
+          "dance": 64,
+          "opera": 12,
+          "total": 273,
+          "basis": "count",
+          "countMethod": "Page HTML downloaded; the paragraphs under each panel heading counted (one production per paragraph, alphabetical, '1536' to 'Woman In Mind' for Theatre).",
+          "correction": "research-award-pools.json gives theatre 143, affiliate 65, family 12, dance 73, opera 12 (total 305), counted by the fetch tool and flagged unconfirmed. The recount from the page's HTML is 110 / 71 / 16 / 64 / 12 = 273. This file's figures supersede those.",
+          "source": "https://officiallondontheatre.com/news/eligible-productions-for-the-olivier-awards-2026-with-cunard/",
+          "dateRead": "2026-10-02"
+        }
+      ],
+      "nomineesPerActingCategory": 5,
+      "actingCategories": 8,
+      "performersPerProduction": null,
+      "performersPerProductionNote": "No published average West End cast size was found. The Broadway figure (19.6 per production, AAPAC 2018-19) is the nearest published proxy, and the Theatre list mixes subsidised plays with small casts and large commercial musicals.",
+      "derivedFieldIfBroadwayProxyUsed": { "value": 2156, "basis": "derived", "formula": "110 x 19.6 = 2,156; proxy only, not a London figure" }
+    },
+
+    "premiosAriel": {
+      "note": "Ariel 68 (2026): the 43 Mexican fiction features registered are the acting pool (research-award-pools.json, Quadratín). AMACC publishes no performer count.",
+      "eligibleFictionFeatures": 43,
+      "nomineesPerActingCategory": 5,
+      "actingCategories": ["Mejor Actriz", "Mejor Actor", "Mejor Coactuación Femenina", "Mejor Coactuación Masculina", "Mejor Revelación Actoral"],
+      "performersPerFilm": null,
+      "performersPerFilmNote": "No study of credited cast size for Mexican features was found. Two non-Mexican reference points: the Academy's 98th Reminder List carries a median of 6 submitted performers per film with cast (mean 7.17), and USC Annenberg coded 44.0 speaking or named characters per top-grossing US film of 2024. The first is the closer analogue to an awards field, because it counts only performers put forward.",
+      "derivedFieldIfAcademyRatioUsed": { "value": 308, "basis": "derived", "formula": "43 x 7.17 = 308; proxy only" }
+    },
+
+    "featureFilmCastSize": {
+      "speakingCharactersPerTopFilm2024": 44.0,
+      "inputs": "4,401 speaking or named characters coded across the 100 top-grossing films of 2024",
+      "longRun": "48,171 speaking characters across 1,100 films (43.8 per film)",
+      "basis": "page (PDF downloaded and text-extracted); per-film value derived",
+      "source": "https://assets.uscannenberg.org/docs/aii-2025-inequality-popular-films-full-report.pdf",
+      "dateRead": "2026-10-02",
+      "caveat": "Counts every speaking or named character, including voice roles and one-line parts, so it is the credited cast, not the awards field. The Academy list (about 7 per film) is the field."
+    }
+  },
+
+  "negotiation": {
+    "counterAcceptanceRate": {
+      "actingSpecific": null,
+      "actingSpecificNote": "No survey of agents or casting directors publishing how often an agent's counter above scale is accepted, or how often a production withdraws an offer after a counter, was found. Trade reporting is anecdotal only (below).",
+      "generalLabourMarketAnalogue": {
+        "shareWhoCounter": 0.42,
+        "shareOfCountersThatGotSomething": 0.85,
+        "averageGainFromCounteringInExperiment": "about 12.45%",
+        "offerWithdrawal": "Managers withdrew offers after counters 'far, far less often than job candidates believe' (no rate stated on the page).",
+        "population": "About 3,858 tech job seekers, average age 31, compensation $217,000-$221,000; not actors.",
+        "study": "Zoë B. Cullen, Bobak Pakzad-Hurson, Ricardo Perez-Truglia, 'Pushing the Envelope: The Effects of Salary Negotiations', NBER Working Paper w33903",
+        "basis": "page",
+        "source": "https://anderson-review.ucla.edu/most-job-seekers-skip-negotiation-and-pay-a-high-price/",
+        "articleDate": "2025-10-15",
+        "dateRead": "2026-10-02",
+        "rejected": "A search summary claimed managers rescind after a counter 'less than 1% of the time'; the page did not state that number, so it is not used."
+      }
+    },
+
+    "takeItOrLeaveIt": {
+      "summary": "For roles below series regular, offers are increasingly made at scale and not moved. Variety (2023-07-24): experienced members 'once routinely secured fees that were 10% to 20% or more above SAG-AFTRA minimum' for lower-level categories; one actor: 'it was [once] rare that you just got the minimum, and now it is the norm'; the article describes 'take-it-or-leave-it offers handed to talent below series-regular status'.",
+      "overscaleIncrementHistoric": { "low": 0.10, "high": 0.20, "note": "'10% to 20% or more' above minimum, lower-level TV categories, before streaming" },
+      "basis": "page",
+      "source": "https://variety.com/2023/biz/news/sag-actor-strike-minimum-pay-streaming-residuals-1235678058/",
+      "dateRead": "2026-10-02"
+    },
+
+    "quoteIncrements": {
+      "oneDayGuestStarQuotes": "Search summaries of Backstage's Secret Agent Man column: a one-day guest star rate 'is based on the actor's quote and level of experience, ranging from $1,500 to $3,000 a day'; a client with a $2,500 quote was paid $2,500; most established character actors have a one-day quote of $2,000 to $3,000; a pilot quote example of $40,000 an episode.",
+      "basis": "search-summary",
+      "source": ["https://www.backstage.com/magazine/article/thing-remember-holiday-season-2734/", "https://www.backstage.com/advice-for-actors/secret-agent-man/3-major-points-guest-star-bookings/"],
+      "dateRead": "2026-10-02",
+      "typicalBumpOverQuote": null,
+      "typicalBumpNote": "No published figure for the increment agents ask over a client's last quote was found (Backstage pages returned 403). The only published increment is Rick Genow's estimate of the post-432.3 rise (below) and Variety's historic 10-20% over scale."
+    },
+
+    "quotePracticeAndLaborCode432_3": {
+      "beforeTheLaw": "Studios asked agents for recent quotes and verified them by calling business affairs at the last studio that hired the talent; an executive said agents 'sometimes exaggerate' and the call 'kept everyone honest' (Deadline, Mike Fleming Jr, 2017-12-13).",
+      "theLaw": "From 2018-01-01 studios may not ask for or verify salary history; agents may disclose only with the client's written consent, and studios may not ask or verify by other means. One executive: 'We'll offer them scale, and increase it if they find some way of verifying what their clients made.' New York enacted a similar ban on 2017-10-31 with a penalty of up to $250,000 (as the article states it).",
+      "effectMeasured": {
+        "payRiseForWomenAndNonWhiteActors": { "low": 0.10, "high": 0.20, "who": "talent attorney Rick Genow's estimate of deals in the 2018 pilot season" },
+        "overallBudgets": "Network and studio casting directors in THR's pilot-season survey said salaries as a whole were unchanged because budgets were the same; negotiations ran to extra rounds and casting took longer.",
+        "topStars": "Reps said top stars were not affected; one agent said the law hurts those with high quotes because studios were 'cutting those quotes anyway'.",
+        "pilotsCompeting": "more than 70 broadcast comedies and dramas in the 2018 pilot season"
+      },
+      "basis": "page",
+      "source": [
+        "https://deadline.com/2017/12/hollywood-dealmaking-california-labor-code-432-3-salary-quotes-1202225985/",
+        "https://www.hollywoodreporter.com/tv/tv-news/how-actors-are-benefiting-a-no-quotes-law-1096096/",
+        "https://cdas.com/assembly-bill-168-impact-hollywood/"
+      ],
+      "articleDates": { "deadline": "2017-12-13", "hollywoodReporter": "2018-03-22 (Lesley Goldberg)" },
+      "dateRead": "2026-10-02"
+    },
+
+    "shareAboveScale": {
+      "sagAftra": null,
+      "sagAftraNote": "SAG-AFTRA publishes no share of engagements or earnings paid above scale. A search summary attributed '42% of working members earn primarily at or near minimum rates' to a union survey, but it came from an unattributed retail-site feed and was not used. The union's health-plan threshold ($26,470) is met by roughly 12.7-14% of members per press reports; that is an annual-earnings measure, not above-scale (search-summary only).",
+      "sagAftraHealthThresholdShare": { "value": "about 12.7%-14% of members", "basis": "search-summary", "source": ["https://www.yahoo.com/entertainment/most-sag-actors-don-t-140000591.html", "https://www.npr.org/sections/health-shots/2023/08/30/1196652142/hollywood-union-health-insurance-sag-aftra-wga"], "dateRead": "2026-10-02" },
+      "actorsEquityProductionContract": {
+        "earnings2023_24": 201908234,
+        "workWeeks2023_24": 49609,
+        "averageEarningsPerWorkWeek": 4070,
+        "minimumWeekly": { "fromSep2022": 2439, "fromSep2023": 2537, "fromSep2024": 2638, "pre2022": 2323 },
+        "ratioOfAverageToMinimum": 1.60,
+        "basis": "page (earnings, work weeks); derived (average = 201,908,234 / 49,609; ratio = 4,070 / 2,537; the $2,537 step is $2,439 x 1.04, consistent with Playbill's $2,638 by 2024)",
+        "caveat": "Equity says earnings reflect 'collectively bargained contractual increases in the minimum terms and other terms individually negotiated by members'. Work weeks include stage managers, and the average folds in star salaries, so it is not a share paid over scale; it shows average Production pay running about 1.6 times the minimum.",
+        "source": ["https://www.actorsequity.org/docs/librariesprovider2/about-documents/annual-reports/2023-2024-annual-report.pdf?sfvrsn=9c52a4bb_1", "https://playbill.com/article/new-aea-broadway-league-production-contract-raises-actor-wages-affirms-commitment-to-equity-more"],
+        "dateRead": "2026-10-02",
+        "otherFigures": "2023-24 all contracts: 271,562 work weeks, $476,608,031; Broadway alone was 41.9% of national earnings; Broadway work weeks down nearly 15% from 2018-19."
+      },
+      "actra": null,
+      "actraNote": "No ACTRA publication of the share of engagements above IPA minimums was found. ACTRA's IPA requires good-faith negotiation and forbids pressuring performers to accept minimum terms (research-career-depth.json).",
+      "equityUK": null,
+      "equityUKNote": "Not researched to a readable source in this pass."
+    },
+
+    "academicStudies": [
+      {
+        "study": "Sofia Izquierdo Sanchez and Maria Navarro Paniagua, 'Hollywood's Wage Structure and Discrimination', Lancaster University Economics Working Paper 2017/005",
+        "data": "1,344 movie-actor pairs, 267 stars (38% female), 1980-2015, salaries from IMDb and Box Office Mojo",
+        "findings": [
+          "Female stars earned about $2.18 million less per film than male stars (56% less) before controls; about $1.065 million (OLS) or $1.092 million (movie fixed effects) after controls.",
+          "Blinder-Oaxaca: 43% (OLS) to 45% (fixed effects) of the gap is unexplained, read as discrimination.",
+          "The top quartile of actors took 50-80% of total wages, falling since the mid-1980s; in 2006 the top quartile took 68% and the bottom quartile under 1%.",
+          "Top-quartile actors earn about 5 times bottom-quartile actors.",
+          "The authors suggest that disclosing co-stars' pay could narrow the 'negotiation gap'."
+        ],
+        "basis": "page (PDF downloaded and text-extracted)",
+        "source": "https://eprints.lancs.ac.uk/id/eprint/84548/1/LancasterWP2017_005.pdf",
+        "dateRead": "2026-10-02",
+        "caveat": "Covers stars with published salaries only, not scale or near-scale performers."
+      }
+    ],
+
+    "notFound": [
+      "Rate at which counters above scale are accepted (any union, any country).",
+      "Rate at which productions withdraw an offer after a counter, for performers.",
+      "Typical percentage increment agents ask over a client's quote.",
+      "Share of SAG-AFTRA, Equity (US/UK) or ACTRA engagements paid above minimum.",
+      "Any casting-director or agent survey that publishes negotiation outcomes."
+    ]
+  }
+}

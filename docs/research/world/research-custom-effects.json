@@ -1,0 +1,327 @@
+{
+  "meta": {
+    "compiled": "2026-09-30",
+    "purpose": "Real, sourced figures so vehicle customization in SLATE has real downstream effects (condition/value, theft, tint enforcement, tires, modification disclosure, dashcams/cameras, remote start/audio).",
+    "fieldConventions": "Each figure: value, unit, currency, url, publisher, date, sourceType, confirmed. confirmed=true only where the figure was read on the cited page/document in this session (WebFetch, curl or PDF text extraction). confirmed=false means seen only in a search-engine summary or a secondary site. Derived values are marked sourceType 'derived' and list their inputs.",
+    "sourceTypes": ["statute", "regulation", "government", "government-statistics", "regulator", "court-schedule", "ombudsman", "insurer", "industry-association", "manufacturer", "peer-reviewed", "conference-paper", "retailer", "secondary", "derived"]
+  },
+
+  "condition": {
+    "kbbGrades": {
+      "grades": ["Excellent", "Very Good", "Good", "Fair"],
+      "note": "KBB's consumer tool uses four grades (a fifth, Poor, is not offered for valuation). KBB says it posts the share of vehicles matching each grade but only the Excellent share was readable in the FAQ.",
+      "shareExcellent": {
+        "value": 3, "unit": "percent of vehicles KBB values", "currency": null,
+        "url": "https://www.kbb.com/faq/values/", "publisher": "Kelley Blue Book (Cox Automotive)", "date": "read 2026-09-30",
+        "sourceType": "industry-publisher", "confirmed": true,
+        "quote": "if only 3% of the vehicles in the market are considered \"Excellent\" condition, chances are that your car isn't one of them"
+      },
+      "mostCommonGrade": {
+        "value": "Good", "unit": "grade", "currency": null,
+        "url": "https://www.kbb.com/faq/values/", "publisher": "Kelley Blue Book", "date": "read 2026-09-30",
+        "sourceType": "industry-publisher", "confirmed": true,
+        "quote": "Most cars we see are in 'Good' Condition."
+      },
+      "shareVeryGood": null, "shareGood": null, "shareFair": null,
+      "valueDifferenceBetweenGrades": null,
+      "valueDifferenceNote": "KBB, Edmunds and Black Book do not publish a fixed percent or dollar gap between grades; the gap is computed per vehicle in their tools. Nothing citable.",
+      "gradeDefinitions": {
+        "Excellent": "Looks new, excellent mechanical condition, needs no reconditioning, never had paint or body work, free of rust.",
+        "Very Good": "Minor cosmetic defects, excellent mechanical condition, minor paint touch-ups and/or bodywork, minimal reconditioning.",
+        "Good": "Free of major defects, clean title; paint, body and interior have only minor (if any) blemishes.",
+        "Fair": "Some mechanical or cosmetic defects, needs servicing, still in reasonable running condition.",
+        "url": "https://www.kbb.com/faq/values/", "publisher": "Kelley Blue Book (as summarised by search engine)", "date": null,
+        "sourceType": "secondary", "confirmed": false,
+        "howModsMoveGrades": "By these definitions: any repaint/bodywork (e.g., fixing curb rash or paint damage by refinishing) disqualifies Excellent; minor touch-ups = Very Good ceiling; visible blemishes/interior wear = Good; unrepaired cosmetic defects = Fair."
+      }
+    },
+    "edmundsGrades": {
+      "grades": ["Outstanding", "Clean", "Average", "Rough", "Damaged"],
+      "shareOutstanding": { "value": 5, "unit": "percent of used vehicles (approx.)", "currency": null, "url": "https://help.edmunds.com/hc/en-us/articles/206103047-What-are-the-vehicle-conditions-used-for-True-Market-Value-Pricing", "publisher": "Edmunds", "date": null, "sourceType": "industry-publisher", "confirmed": false, "note": "Page returned 403; figure from search summary." },
+      "definitionsSummary": "Outstanding: no visible wear, glossy paint, near-new tires. Clean: minimal wear, glossy paint with slight scratches or dings, minimal interior fading, substantial tread. Average: some mechanical/cosmetic problems, typical wear. Rough: multiple mechanical or cosmetic problems. Damaged: major damage, not appraised.",
+      "confirmed": false
+    },
+    "blackBookGrades": { "grades": ["Extra Clean", "Clean", "Average", "Rough"], "publishedDifference": null, "confirmed": false, "note": "Black Book grade names widely reported; no public percent gap." },
+    "factoryPaintLife": {
+      "floridaExposureRequirementUS": {
+        "value": 8, "unit": "years of Florida outdoor exposure a coating must survive (vehicles sold in US)", "currency": null,
+        "url": "https://uvebtech.com/articles/2019/the-radtech-uv-clearcoat-durability-study-how-paint-performance-is-assessed-by-ford-motor-company/",
+        "publisher": "UV+EB Technology (RadTech); author Christopher M. Seubert PhD, Ford Motor Company", "date": "2019-05-28",
+        "sourceType": "industry-technical", "confirmed": true,
+        "quote": "an automotive coating must be durable for at least eight years of Florida exposure for vehicles sold in the US and at least five years of Florida exposure for vehicles sold in Europe"
+      },
+      "floridaExposureRequirementEurope": { "value": 5, "unit": "years Florida exposure", "currency": null, "url": "https://uvebtech.com/articles/2019/the-radtech-uv-clearcoat-durability-study-how-paint-performance-is-assessed-by-ford-motor-company/", "publisher": "UV+EB Technology / Ford", "date": "2019-05-28", "sourceType": "industry-technical", "confirmed": true },
+      "designTarget": { "value": ">90% customer satisfaction at 10 years in service", "unit": "OEM design target", "currency": null, "url": "https://uvebtech.com/articles/2019/the-radtech-uv-clearcoat-durability-study-how-paint-performance-is-assessed-by-ford-motor-company/", "publisher": "UV+EB Technology / Ford", "date": "2019-05-28", "sourceType": "industry-technical", "confirmed": true },
+      "acceleratedEquivalence": { "value": "4,500 h accelerated weathering ~ 6 years natural Florida", "unit": "test equivalence", "currency": null, "url": "https://uvebtech.com/articles/2019/the-radtech-uv-clearcoat-durability-study-how-paint-performance-is-assessed-by-ford-motor-company/", "publisher": "UV+EB Technology / Ford", "date": "2019-05-28", "sourceType": "industry-technical", "confirmed": true },
+      "yearsUntilFadingOxidation": null,
+      "note": "No authoritative published 'years until fade' for factory clearcoat exists; the OEM spec above (~10-year service design life, 8 Florida years) is the defensible anchor. Real fade depends on UV index/latitude and garaging."
+    },
+    "paintProtectionFilm": {
+      "xpelUltimatePlusWarranty": {
+        "value": 10, "unit": "years from installation", "currency": null,
+        "url": "https://www.xpel.com/warranty-information", "publisher": "XPEL Inc.", "date": "read 2026-09-30",
+        "sourceType": "manufacturer", "confirmed": true,
+        "covers": "yellowing, cracking, blistering, delaminating (professionally installed; transferable)",
+        "excludes": "water spots, scratches, collision damage, rock/debris impact damage, improper washing, non-XPEL ceramic coatings"
+      },
+      "xpelStealthWarranty": { "value": 10, "unit": "years", "currency": null, "url": "https://www.xpel.com/warranty-information", "publisher": "XPEL Inc.", "date": "read 2026-09-30", "sourceType": "manufacturer", "confirmed": true },
+      "xpelUltimateFusionPaintFadeCover": { "value": 4, "unit": "years additional cover for oxidation, loss of gloss, UV damage, fading of the paint under film (annual inspections required); film itself 10 years", "currency": null, "url": "https://www.xpel.com/warranty-information", "publisher": "XPEL Inc.", "date": "read 2026-09-30", "sourceType": "manufacturer", "confirmed": true },
+      "xpelOtherFilms": { "value": "COLOR PPF 10 y; LUX PLUS/ZEUS etc. 10 y; EXO ARMOR 7 y; PROTEX Lite 5 y", "unit": "years", "currency": null, "url": "https://www.xpel.com/warranty-information", "publisher": "XPEL Inc.", "date": "read 2026-09-30", "sourceType": "manufacturer", "confirmed": true }
+    },
+    "vinylWrap": {
+      "3m2080VerticalWarranty": {
+        "value": 8, "unit": "years maximum (vertical surfaces; varies by climate zone)", "currency": null,
+        "url": "https://multimedia.3m.com/mws/media/2331493O/2023-anz-2080-product-bulletin.pdf", "publisher": "3M", "date": "2023-07 (Product Bulletin 2080)",
+        "sourceType": "manufacturer", "confirmed": true,
+        "quote": "Comprehensive 3M MCS Warranty - up to eight years of protection on vertical applications* ... * Warranty varies by zone",
+        "notes": "3M does NOT warrant 2080 with ceramic coatings or other aftermarket additions, nor printed 2080. Desert Southwest region has reduced warranted durability."
+      },
+      "3m2080HorizontalWarranty": { "value": 3, "unit": "years (hoods/roofs), reported", "currency": null, "url": "https://www.3m.com/3M/en_US/p/d/b5005081006/", "publisher": "3M (via search summary)", "date": null, "sourceType": "secondary", "confirmed": false },
+      "protectsPaint": "A wrap/PPF shields factory paint from UV and stone chips while installed; removal within the warranty period is by heat/chemicals from most surfaces (3M bulletin, confirmed)."
+    }
+  },
+
+  "theft": {
+    "unitsNote": "NICB/US police figures are counts; rates below 'per 100,000 vehicles' are derived by dividing by registrations. NICB's own rates are per 100,000 residents.",
+    "US": {
+      "national2025": { "value": 659880, "unit": "vehicles stolen, 2025", "currency": null, "url": "https://www.nicb.org/news/news-releases/us-vehicle-thefts-experience-historic-decline", "publisher": "National Insurance Crime Bureau", "date": "2026-03-18", "sourceType": "industry-association", "confirmed": true, "note": "-23% vs 2024" },
+      "national2024": { "value": 850708, "unit": "vehicles stolen, 2024", "currency": null, "url": "https://www.nicb.org/news/news-releases/vehicle-thefts-united-states-fell-17-2024", "publisher": "NICB", "date": "2025-03-18", "sourceType": "industry-association", "confirmed": true },
+      "nationalRate2024": { "value": 250.2, "unit": "thefts per 100,000 residents, 2024", "currency": null, "url": "https://www.nicb.org/news/news-releases/vehicle-thefts-united-states-fell-17-2024", "publisher": "NICB", "date": "2025-03-18", "sourceType": "industry-association", "confirmed": true }
+    },
+    "NewYorkCity": {
+      "grandLarcenyAuto2025": { "value": 13523, "unit": "G.L.A. complaints, calendar 2025, citywide", "currency": null, "url": "https://www.nyc.gov/assets/nypd/downloads/pdf/crime_statistics/cs-en-us-city.pdf", "publisher": "NYPD CompStat (Vol. 33 No. 39)", "date": "2026-09-27", "sourceType": "government-statistics", "confirmed": true, "note": "Historic-perspective table, 2025 column; preliminary." },
+      "grandLarcenyAuto2026YTD": { "value": 9001, "unit": "G.L.A. complaints 2026 YTD through 2026-09-27 (vs 10,297 same period 2025, -12.6%)", "currency": null, "url": "https://www.nyc.gov/assets/nypd/downloads/pdf/crime_statistics/cs-en-us-city.pdf", "publisher": "NYPD", "date": "2026-09-27", "sourceType": "government-statistics", "confirmed": true },
+      "registeredVehicles": { "value": 2180335, "unit": "NY DMV 'VEH' registrations, five NYC counties (Bronx 274,344; Kings 534,961; New York 242,040; Queens 838,490; Richmond 290,500)", "currency": null, "url": "https://data.ny.gov/resource/w4pv-hbkt.json", "publisher": "NY DMV via data.ny.gov (Vehicle, Snowmobile, and Boat Registrations)", "date": "queried 2026-09-30 (dataset updated ~2026-09-02)", "sourceType": "government-statistics", "confirmed": true },
+      "theftRatePer100kVehicles": { "value": 620.2, "unit": "G.L.A. per 100,000 registered vehicles, 2025", "currency": null, "url": null, "publisher": null, "date": "2026-09-30", "sourceType": "derived", "confirmed": false, "inputs": "13,523 / 2,180,335" },
+      "recoveryRate": null
+    },
+    "NewYorkState": {
+      "thefts2025": { "value": 24206, "unit": "vehicles stolen, 2025 (5th by volume)", "currency": null, "url": "https://www.nicb.org/news/news-releases/us-vehicle-thefts-experience-historic-decline", "publisher": "NICB", "date": "2026-03-18", "sourceType": "industry-association", "confirmed": true },
+      "rate2024PerResidents": { "value": 143, "unit": "per 100,000 residents, 2024", "currency": null, "url": "https://www.nicb.org/news/news-releases/vehicle-thefts-united-states-fell-17-2024", "publisher": "NICB (table image; via secondary)", "date": "2025-03-18", "sourceType": "secondary", "confirmed": false },
+      "registeredVehicles": { "value": 11377388, "unit": "NY DMV 'VEH' registrations statewide (excludes 803,775 trailers, 358,172 boats, 5,945 snowmobiles)", "currency": null, "url": "https://data.ny.gov/resource/w4pv-hbkt.json", "publisher": "NY DMV via data.ny.gov", "date": "queried 2026-09-30", "sourceType": "government-statistics", "confirmed": true },
+      "theftRatePer100kVehicles": { "value": 212.8, "unit": "per 100,000 registered vehicles, 2025", "currency": null, "url": null, "publisher": null, "date": "2026-09-30", "sourceType": "derived", "confirmed": false, "inputs": "24,206 / 11,377,388" },
+      "nyMetroMSAThefts2025": { "value": 27138, "unit": "vehicles stolen, New York-Newark-Jersey City MSA, 2025", "currency": null, "url": "https://www.nicb.org/news/news-releases/us-vehicle-thefts-experience-historic-decline", "publisher": "NICB", "date": "2026-03-18", "sourceType": "industry-association", "confirmed": true }
+    },
+    "Connecticut": {
+      "thefts2024": { "value": 7885, "unit": "vehicles stolen, 2024", "currency": null, "url": "https://www.nicb.org/news/news-releases/vehicle-thefts-united-states-fell-17-2024", "publisher": "NICB (via secondary summary)", "date": "2025-03-18", "sourceType": "secondary", "confirmed": false },
+      "rate2024PerResidents": { "value": 216, "unit": "per 100,000 residents, 2024", "currency": null, "url": "https://www.nicb.org/news/news-releases/vehicle-thefts-united-states-fell-17-2024", "publisher": "NICB (via secondary)", "date": "2025-03-18", "sourceType": "secondary", "confirmed": false },
+      "change2025": { "value": -27.8, "unit": "percent change in MV thefts 2025 vs 2024", "currency": null, "url": "https://www.wtnh.com/news/connecticut/middlesex/connecticut-sees-double-digit-decline-of-some-violent-and-serious-crimes-in-2025/amp/", "publisher": "WTNH (reporting CT State Police data)", "date": "2026-01", "sourceType": "secondary", "confirmed": false },
+      "registeredVehicles2023": { "value": 2837111, "unit": "total motor-vehicle registrations, 2023", "currency": null, "url": "https://www.fhwa.dot.gov/policyinformation/statistics/2023/mv1.cfm", "publisher": "FHWA Highway Statistics Table MV-1", "date": "2024-11", "sourceType": "government-statistics", "confirmed": true },
+      "theftRatePer100kVehicles": { "value": 277.9, "unit": "per 100,000 registered vehicles (2024 thefts / 2023 registrations)", "currency": null, "url": null, "publisher": null, "date": "2026-09-30", "sourceType": "derived", "confirmed": false, "inputs": "7,885 / 2,837,111 (mixed years)" }
+    },
+    "California": {
+      "thefts2025": { "value": 136988, "unit": "vehicles stolen, 2025 (most of any state, >20% of US)", "currency": null, "url": "https://www.nicb.org/news/news-releases/us-vehicle-thefts-experience-historic-decline", "publisher": "NICB", "date": "2026-03-18", "sourceType": "industry-association", "confirmed": true },
+      "rate2024PerResidents": { "value": 463, "unit": "per 100,000 residents, 2024", "currency": null, "url": "https://www.nicb.org/news/news-releases/vehicle-thefts-united-states-fell-17-2024", "publisher": "NICB (table image; via secondary)", "date": "2025-03-18", "sourceType": "secondary", "confirmed": false },
+      "registeredVehicles2025": { "value": 36190654, "unit": "estimated fee-paid vehicles registered, CY2025 (autos 26,012,237; trucks 6,504,920; trailers 2,799,175; motorcycles 776,882)", "currency": null, "url": "https://www.dmv.ca.gov/portal/file/estimated-fee-paid-vehicle-registration-by-county-report-pdf/", "publisher": "California DMV", "date": "CY2025", "sourceType": "government-statistics", "confirmed": true },
+      "theftRatePer100kVehicles": { "value": 378.5, "unit": "per 100,000 registered vehicles, 2025", "currency": null, "url": null, "publisher": null, "date": "2026-09-30", "sourceType": "derived", "confirmed": false, "inputs": "136,988 / 36,190,654" },
+      "laMSAThefts2025": { "value": 53911, "unit": "vehicles stolen, Los Angeles-Long Beach-Anaheim MSA, 2025 (#1 by volume)", "currency": null, "url": "https://www.nicb.org/news/news-releases/us-vehicle-thefts-experience-historic-decline", "publisher": "NICB", "date": "2026-03-18", "sourceType": "industry-association", "confirmed": true },
+      "laCountyRegistered2025": { "value": 7767206, "unit": "vehicles registered, LA County CY2025 (autos 6,232,742)", "currency": null, "url": "https://www.dmv.ca.gov/portal/file/estimated-fee-paid-vehicle-registration-by-county-report-pdf/", "publisher": "California DMV", "date": "CY2025", "sourceType": "government-statistics", "confirmed": true },
+      "orangeCountyRegistered2025": { "value": 2983348, "unit": "vehicles registered, Orange County CY2025", "currency": null, "url": "https://www.dmv.ca.gov/portal/file/estimated-fee-paid-vehicle-registration-by-county-report-pdf/", "publisher": "California DMV", "date": "CY2025", "sourceType": "government-statistics", "confirmed": true },
+      "laMSATheftRatePer100kVehicles": { "value": 501.5, "unit": "per 100,000 registered vehicles, 2025", "currency": null, "url": null, "publisher": null, "date": "2026-09-30", "sourceType": "derived", "confirmed": false, "inputs": "53,911 / (7,767,206 + 2,983,348)" },
+      "sfMSARate2025": { "value": 477.51, "unit": "per 100,000 residents, 2025 (highest metro rate)", "currency": null, "url": "https://www.nicb.org/news/news-releases/us-vehicle-thefts-experience-historic-decline", "publisher": "NICB", "date": "2026-03-18", "sourceType": "industry-association", "confirmed": true }
+    },
+    "Canada": {
+      "national2025": { "value": 46999, "unit": "private passenger vehicles stolen, 2025 (-18%)", "currency": null, "url": "https://cdn.prod.website-files.com/673f22d617fe90219dc4cba4/698b4df182fea37ba9ea4dca_%C3%89quit%C3%A9%20Association's%202025%20Auto%20Theft%20Trend%20Report%20-%20FINAL.pdf", "publisher": "Équité Association (insurer-funded)", "date": "2026-02", "sourceType": "industry-association", "confirmed": true },
+      "nationalRecovery2025": { "value": 59, "unit": "percent recovered (58% in 2024)", "currency": null, "url": "https://cdn.prod.website-files.com/673f22d617fe90219dc4cba4/698b4df182fea37ba9ea4dca_%C3%89quit%C3%A9%20Association's%202025%20Auto%20Theft%20Trend%20Report%20-%20FINAL.pdf", "publisher": "Équité Association", "date": "2026-02", "sourceType": "industry-association", "confirmed": true }
+    },
+    "Ontario": {
+      "thefts2025": { "value": 19319, "unit": "vehicles stolen, 2025 (24,877 in 2024; -22%)", "currency": null, "url": "https://cdn.prod.website-files.com/673f22d617fe90219dc4cba4/698b4df182fea37ba9ea4dca_%C3%89quit%C3%A9%20Association's%202025%20Auto%20Theft%20Trend%20Report%20-%20FINAL.pdf", "publisher": "Équité Association", "date": "2026-02", "sourceType": "industry-association", "confirmed": true },
+      "recovery2025": { "value": 51, "unit": "percent recovered", "currency": null, "url": "https://cdn.prod.website-files.com/673f22d617fe90219dc4cba4/698b4df182fea37ba9ea4dca_%C3%89quit%C3%A9%20Association's%202025%20Auto%20Theft%20Trend%20Report%20-%20FINAL.pdf", "publisher": "Équité Association", "date": "2026-02", "sourceType": "industry-association", "confirmed": true, "note": "SUVs were 46% of Ontario thefts." },
+      "registeredLDV2024": { "value": 8800000, "unit": "light-duty vehicle registrations, 2024", "currency": null, "url": "https://www150.statcan.gc.ca/n1/daily-quotidien/251017/dq251017c-eng.htm", "publisher": "Statistics Canada", "date": "2025-10-17", "sourceType": "government-statistics", "confirmed": true },
+      "theftRatePer100kVehicles": { "value": 219.5, "unit": "per 100,000 LDVs (2025 thefts / 2024 registrations)", "currency": null, "url": null, "publisher": null, "date": "2026-09-30", "sourceType": "derived", "confirmed": false, "inputs": "19,319 / 8,800,000" }
+    },
+    "Toronto": {
+      "thefts2025": { "value": 7044, "unit": "auto theft occurrences, 2025 (reported -25.5% vs 9,598)", "currency": null, "url": "https://www.torontotoday.ca/local/crime-emergency-services/auto-theft-ontario-decreases-22-per-cent-2025-report-11866229", "publisher": "Secondary (citing Toronto Police Service data)", "date": "2026-02", "sourceType": "secondary", "confirmed": false, "note": "Another secondary gives 7,305 (vs 9,650 in 2024); TPS portal not reached." },
+      "registeredVehicles": null,
+      "recoveryRate": null
+    },
+    "BritishColumbia": {
+      "stolenVehicleIncidents2025": { "value": 6626, "unit": "stolen-vehicle incidents (ICBC claims), 2025 (12,210 in 2016; -46%)", "currency": null, "url": "https://icbc.com/about-icbc/newsroom/2026-05-26-data", "publisher": "ICBC (via CHEK News/Collision Repair summaries)", "date": "2026-05-26", "sourceType": "secondary", "confirmed": false, "note": "ICBC newsroom page fetched only showed the -46% figure (confirmed); counts from secondary." },
+      "stolenVehicles2024": { "value": 5764, "unit": "stolen vehicles, 2024", "currency": null, "url": "https://icbc.com/about-icbc/newsroom/2025-06-04-data-update", "publisher": "ICBC (via secondary)", "date": "2025-06-04", "sourceType": "secondary", "confirmed": false, "note": "Different basis from the 6,626 figure; do not mix." },
+      "westernCanadaRecovery2025": { "value": 73, "unit": "percent recovered (Western Canada incl. BC)", "currency": null, "url": "https://cdn.prod.website-files.com/673f22d617fe90219dc4cba4/698b4df182fea37ba9ea4dca_%C3%89quit%C3%A9%20Association's%202025%20Auto%20Theft%20Trend%20Report%20-%20FINAL.pdf", "publisher": "Équité Association", "date": "2026-02", "sourceType": "industry-association", "confirmed": true },
+      "registeredVehicles": null,
+      "vancouverThefts": null
+    },
+    "London": {
+      "vehicleOffences2025MetPolice": { "value": 87206, "unit": "police-recorded vehicle offences (theft of/from vehicle + interference), Met area, calendar 2025; 9.6 per 1,000 residents", "currency": null, "url": "https://www.london-now.co.uk/news/26264093.london-named-vehicle-theft-capital-england-wales/", "publisher": "Secondary (citing ONS/Home Office)", "date": "2026", "sourceType": "secondary", "confirmed": false },
+      "theftOfMotorVehicleOnly": null,
+      "englandWalesVehicleOffencesYEMar2026": { "value": 312250, "unit": "police-recorded vehicle offences, England & Wales, year ending March 2026 (-11%)", "currency": null, "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/crimeandjustice/bulletins/crimeinenglandandwales/yearendingmarch2026", "publisher": "Office for National Statistics", "date": "2026-07-23", "sourceType": "government-statistics", "confirmed": true },
+      "registeredVehicles": null,
+      "recoveryRate": null
+    },
+    "Ireland": {
+      "theftTakingOfVehicles2024": { "value": 7919, "unit": "theft/taking of vehicle and related offences, 2024 (highest since 2012); of which 5,207 thefts of vehicles", "currency": null, "url": "https://www.irishtimes.com/crime-law/2025/04/07/car-crimes-in-republic-almost-double-level-suggested-in-official-figures/", "publisher": "Irish Times (citing CSO)", "date": "2025-04-07", "sourceType": "secondary", "confirmed": false },
+      "h1_2025": { "value": 3472, "unit": "motor theft and related offences, Jan-Jun 2025 (-13%); Dublin 1,723", "currency": null, "url": "https://www.outsurance.ie/company-news/fall-in-motor-thefts-ireland/", "publisher": "Secondary (citing CSO Q2 2025)", "date": "2025", "sourceType": "secondary", "confirmed": false },
+      "fullYear2025": null,
+      "licensedVehicles2024": { "value": 3100000, "unit": "vehicles licensed on the road, 2024 (approx.)", "currency": null, "url": "https://www.cso.ie/en/csolatestnews/pressreleases/2025pressreleases/pressstatement-snapshotoftransportstatisticsinireland2025/", "publisher": "CSO (via search summary)", "date": "2025", "sourceType": "secondary", "confirmed": false }
+    },
+    "MexicoCity": {
+      "insuredStolen2025": { "value": 4900, "unit": "insured vehicles stolen, Ciudad de México, Jan-Dec 2025 (5,590 in 2024)", "currency": null, "url": "https://centroestadisticoamis.mx/wp-content/uploads/2026/02/Robo-de-vehiculos-asegurados2025-m12.pdf", "publisher": "AMIS (Asociación Mexicana de Instituciones de Seguros), OCRA data", "date": "2026-02 (data to 2026-01-08)", "sourceType": "industry-association", "confirmed": true, "note": "PDF text extraction garbled; value reconciled from the violence-share table and recovery ratio. Treat as high-confidence but check." },
+      "insuredRecovered2025": { "value": 1395, "unit": "insured vehicles recovered, CDMX 2025", "currency": null, "url": "https://centroestadisticoamis.mx/wp-content/uploads/2026/02/Robo-de-vehiculos-asegurados2025-m12.pdf", "publisher": "AMIS", "date": "2026-02", "sourceType": "industry-association", "confirmed": true },
+      "insuredRecoveryRate2025": { "value": 28, "unit": "percent recovered (excludes write-offs)", "currency": null, "url": "https://centroestadisticoamis.mx/wp-content/uploads/2026/02/Robo-de-vehiculos-asegurados2025-m12.pdf", "publisher": "AMIS", "date": "2026-02", "sourceType": "industry-association", "confirmed": true },
+      "violentShare": { "value": 42, "unit": "percent of CDMX insured thefts with violence (2025 table)", "currency": null, "url": "https://centroestadisticoamis.mx/wp-content/uploads/2026/02/Robo-de-vehiculos-asegurados2025-m12.pdf", "publisher": "AMIS", "date": "2026-02", "sourceType": "industry-association", "confirmed": false, "note": "Column alignment uncertain in extraction." },
+      "nationalInsuredStolen2025": { "value": 54910, "unit": "insured vehicles stolen, Mexico, 2025 (-13.3%); 24,321 recovered (44%); 55% with violence", "currency": null, "url": "https://centroestadisticoamis.mx/wp-content/uploads/2026/02/Robo-de-vehiculos-asegurados2025-m12.pdf", "publisher": "AMIS", "date": "2026-02", "sourceType": "industry-association", "confirmed": true },
+      "registeredVehicles2024": { "value": 6509434, "unit": "motor vehicles registered in circulation, CDMX, 2024", "currency": null, "url": "https://www.inegi.org.mx/rnm/index.php/catalog/940", "publisher": "INEGI VMRC (via La Razón summary)", "date": "2025-01", "sourceType": "secondary", "confirmed": false },
+      "insuredVehiclesDenominator": null,
+      "note": "AMIS counts insured vehicles only; per-insured-vehicle rate not computable without insured fleet size. SESNSP (all thefts) not retrieved."
+    },
+    "antiTheft": {
+      "immobiliserEffect": {
+        "value": 40, "unit": "percent reduction in overall car theft (EU mandatory immobiliser, Netherlands 1995-2008, net of displacement)", "currency": null,
+        "url": "https://res.org.uk/mediabriefing/the-car-engine-immobiliser-benefits-of-mandatory-anti-theft-device-greatly-exceed-costs/", "publisher": "Royal Economic Society (van Ours & Vollaard, Economic Journal 126(593))", "date": "2016-06",
+        "sourceType": "peer-reviewed", "confirmed": true,
+        "extra": "~EUR 50 per device; 34 cars fitted per theft prevented (~EUR 1,700 per prevented theft)"
+      },
+      "lojackEffect": { "value": "10-50", "unit": "percent reduction in area auto theft where LoJack introduced (with positive externality to non-users)", "currency": null, "url": "https://econpapers.repec.org/RePEc:oup:qjecon:v:113:y:1998:i:1:p:43-77.", "publisher": "Ayres & Levitt, Quarterly Journal of Economics 113(1):43-77", "date": "1998", "sourceType": "peer-reviewed", "confirmed": false, "note": "Range from secondary summaries; abstract not read." },
+      "ontarioTagCost": { "value": 400, "unit": "CAD approx. installed, incl. multi-year service", "currency": "CAD", "url": "https://www.ratehub.ca/blog/auto-theft-tracking-devices-and-car-insurance/", "publisher": "Ratehub (secondary)", "date": null, "sourceType": "secondary", "confirmed": false, "note": "tagtracking.ca gives no public price." },
+      "intactTagIncentive": { "value": "installation subsidy (CAD 150 reported), 20% off comprehensive with TAG; surcharge (CAD 500/yr reported) on high-risk vehicles without TAG", "unit": "insurer programme", "currency": "CAD", "url": "https://www.intact.ca/en/personal-insurance/vehicle/anti-theft", "publisher": "Intact Insurance (page blocked; figures via secondary)", "date": null, "sourceType": "secondary", "confirmed": false, "note": "Intact's own text (search snippet): discount after TAG install; high-theft-risk vehicles without TAG or superior system face additional premium and coverage restrictions." },
+      "icbcImmobiliserDiscount": { "value": null, "unit": "discount on Comprehensive/Specified Perils for a passive electronic immobilizer; amount varies by vehicle type and territory; motorcycles/trailers ineligible", "currency": "CAD", "url": "https://www.icbc.com/assets/pa/4bYpswFaIjYOKJO2cDlysF/autoplan-insurance-brochure.pdf", "publisher": "ICBC Autoplan guide APG20Q (032026)", "date": "2026-03", "sourceType": "insurer", "confirmed": true },
+      "icbcAntiTheftDeductibleRebate": { "value": 100, "unit": "CAD deductible rebate when device prevented theft / was compromised", "currency": "CAD", "url": "https://www.icbc.com/insurance/costs/Discounts-and-savings", "publisher": "ICBC (via search summary)", "date": null, "sourceType": "secondary", "confirmed": false },
+      "ukTrackerLocatePrice": { "value": 459, "unit": "GBP upfront incl. installation; subscription +209 (12 mo), +389 (24 mo), +549 (36 mo)", "currency": "GBP", "url": "https://www.tracker.co.uk/shop/locate", "publisher": "Tracker (UK)", "date": "read 2026-09-30", "sourceType": "manufacturer", "confirmed": true },
+      "ukTrackerRecoveryClaim": { "value": 95, "unit": "percent recovery success rate (vendor claim); 50% within 4 h, 80% within 24 h", "currency": null, "url": "https://www.tracker.co.uk/", "publisher": "Tracker (UK)", "date": "read 2026-09-30", "sourceType": "manufacturer", "confirmed": true },
+      "ukTrackerInsuranceDiscount": { "value": "5-20", "unit": "percent (by Thatcham grade), reported", "currency": null, "url": "https://www.safeandsoundmobile.co.uk/car-tracker-insurance-discount-uk/", "publisher": "Secondary (installer)", "date": null, "sourceType": "secondary", "confirmed": false },
+      "lojackUSPrice": { "value": "695-995 installed + 99-199/yr; or 895 (3-yr term) in CA dealer listing", "unit": "USD", "currency": "USD", "url": "https://airpinpoint.com/compare/airtags-vs-lojack", "publisher": "Secondary", "date": "2026", "sourceType": "secondary", "confirmed": false, "note": "lojack.com shows no prices." },
+      "steeringWheelLockPrice": { "value": 42.99, "unit": "USD, The Club 3000 Twin Hooks (O'Reilly listing); other retailers 35-38", "currency": "USD", "url": "https://www.oreillyauto.com/detail/c/the-club/winner-international-the-club-steering-wheel-lock/wnr0/3000", "publisher": "O'Reilly Auto Parts (page blocked; via search summary)", "date": null, "sourceType": "retailer", "confirmed": false },
+      "ontarioRegulatorMandatedAntiTheftDiscount": null
+    }
+  },
+
+  "tintEnforcement": {
+    "NewYork": {
+      "legalLimit": { "value": 70, "unit": "percent minimum light transmittance: windshield (except top 6 in), front side windows, rear side windows of sedans/coupes, rear window (unless dual side mirrors)", "currency": null, "url": "https://www.nysenate.gov/legislation/laws/VAT/375", "publisher": "NY Vehicle & Traffic Law §375(12-a)", "date": "read 2026-09-30", "sourceType": "statute", "confirmed": true },
+      "fineFirst": { "value": 150, "unit": "USD maximum fine, first conviction (traffic infraction; or up to 15 days)", "currency": "USD", "url": "https://www.nysenate.gov/legislation/laws/VAT/1800", "publisher": "NY VTL §1800(b)", "date": "read 2026-09-30", "sourceType": "statute", "confirmed": true, "note": "§375(12-a) sets no amount of its own; §1800(b) default applies. 2nd within 18 mo: up to $300; 3rd: up to $450." },
+      "mandatorySurcharge": { "value": "58 (city courts) / 63 (town & village courts)", "unit": "USD surcharge per conviction, reported", "currency": "USD", "url": "https://www.benjamingoldmanlawoffice.com/ny-vehicle-traffic-laws/vtl-375-12-a-tint-tickets.html", "publisher": "Secondary (law firm)", "date": null, "sourceType": "secondary", "confirmed": false },
+      "points": { "value": 0, "unit": "DMV points", "currency": null, "url": "https://www.benjamingoldmanlawoffice.com/ny-vehicle-traffic-laws/vtl-375-12-a-tint-tickets.html", "publisher": "Secondary", "date": null, "sourceType": "secondary", "confirmed": false },
+      "nycTintSummonsesJanJul2025": { "value": 27600, "unit": "NYPD 'Tints' moving-violation summonses, YTD through July 2025 (July alone 3,678)", "currency": null, "url": "https://www.nyc.gov/html/nypd/downloads/pdf/traffic_data/mv-en-us-citysum.pdf", "publisher": "NYPD Moving Violations, Citywide", "date": "2025-07 (preliminary)", "sourceType": "government-statistics", "confirmed": true },
+      "nycTintSummons2024": { "value": 51724, "unit": "NYPD 'Tints' summonses, 2024", "currency": null, "url": "https://data.cityofnewyork.us/Public-Safety/Moving-Violation-Summons-Statistics/f6an-2v46", "publisher": "NYC Open Data (via search summary)", "date": null, "sourceType": "secondary", "confirmed": false },
+      "nycTintSummons2025FullYear": { "value": 45771, "unit": "reported Dec-2025 YTD", "currency": null, "url": "https://www.nyc.gov/html/nypd/downloads/pdf/traffic_data/mv-en-us-citysum.pdf", "publisher": "Search summary only", "date": null, "sourceType": "secondary", "confirmed": false },
+      "nycTintSummonsPerVehicle": { "value": 1.27, "unit": "percent of NYC registered vehicles ticketed in Jan-Jul 2025 (~2.2% annualised)", "currency": null, "url": null, "publisher": null, "date": "2026-09-30", "sourceType": "derived", "confirmed": false, "inputs": "27,600 / 2,180,335; annualised 27,600*12/7 = 47,314" }
+    },
+    "Connecticut": { "fine": null, "ticketCounts": null, "note": "Not researched to a primary source in this pass (CGS §14-99g governs tint)." },
+    "California": {
+      "baseFine": { "value": 25, "unit": "USD bail (base fine) for VC 26708(a)(1), before penalty assessments", "currency": "USD", "url": "https://www.alameda.courts.ca.gov/system/files/forms-and-filings/2026-judicial-council-statewide-uniform-bail-and-penalty-schedule.pdf", "publisher": "Judicial Council of California, Uniform Bail and Penalty Schedules 2026 (via search summary)", "date": "2026", "sourceType": "court-schedule", "confirmed": false },
+      "totalWithAssessments": { "value": 197, "unit": "USD approx. total payable first offence", "currency": "USD", "url": "https://gilroyblackout.com/blog/window-tint-ticket-california-fine-amount/", "publisher": "Secondary", "date": "2026", "sourceType": "secondary", "confirmed": false },
+      "proofOfCorrectionFee": { "value": 25, "unit": "USD transaction fee per correctable violation (fix-it ticket)", "currency": "USD", "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=40611", "publisher": "California Vehicle Code §40611", "date": "read 2026-09-30", "sourceType": "statute", "confirmed": true },
+      "chpTintCitationsPerYear": null
+    },
+    "Ontario": {
+      "setFine73_3": { "value": 85, "unit": "CAD set fine, HTA s.73(3) 'Colour coating obscuring interior' (same for 73(1)(a), 73(1)(b), 73(2))", "currency": "CAD", "url": "https://www.ontariocourts.ca/ocj/provincial-offences/set-fines/set-fines-i/schedule-43/", "publisher": "Ontario Court of Justice, POA Schedule 43", "date": "2026-01-22", "sourceType": "court-schedule", "confirmed": true },
+      "totalPayable": { "value": 110, "unit": "CAD commonly cited total (set fine + victim fine surcharge + costs)", "currency": "CAD", "url": null, "publisher": null, "date": null, "sourceType": "derived", "confirmed": false, "note": "Surcharge/cost amounts not verified in this pass." },
+      "improperTiresFine": { "value": "85-200", "unit": "CAD set fine, HTA s.70 improper tires", "currency": "CAD", "url": "https://www.ontariocourts.ca/ocj/provincial-offences/set-fines/set-fines-i/schedule-43/", "publisher": "Ontario Court of Justice", "date": "2026-01-22", "sourceType": "court-schedule", "confirmed": true },
+      "ticketCounts": null
+    },
+    "BritishColumbia": {
+      "fine7_05": { "value": 81, "unit": "CAD ticketed amount (fine 70 + levy 11), MVAR s.7.05(1) 'Windshield or window that impairs driver vision'; 56 if paid early (fine 45)", "currency": "CAD", "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/89_97_00_multi", "publisher": "BC Violation Ticket Administration and Fines Regulation (B.C. Reg. 89/97), consolidated to 2026-09-22", "date": "2026-09-22", "sourceType": "regulation", "confirmed": true, "note": "Commonly quoted $109 is a different offence (fail to obey peace officer); not the tint fine." },
+      "rule": { "value": "No aftermarket film on front side windows; windshield film only within top 75 mm; rear allowed with dual exterior mirrors", "unit": "rule", "currency": null, "url": "https://www.bclaws.gov.bc.ca/civix/document/id/loo73/loo73/26_58_04", "publisher": "BC MVA Regulations (via secondary summary)", "date": null, "sourceType": "secondary", "confirmed": false },
+      "ticketCounts": null
+    },
+    "UK": {
+      "legalLimit": { "value": "windscreen >=75%, front side windows >=70% light (vehicles first used on/after 1 Apr 1985); 70%/70% before; rear unrestricted", "unit": "VLT", "currency": null, "url": "https://www.gov.uk/tinted-vehicle-window-rules", "publisher": "GOV.UK", "date": "read 2026-09-30", "sourceType": "government", "confirmed": true },
+      "penalty": { "value": "prohibition notice (vehicle off road until tint removed), and/or penalty notice or court summons", "unit": "sanction", "currency": "GBP", "url": "https://www.gov.uk/tinted-vehicle-window-rules", "publisher": "GOV.UK", "date": "read 2026-09-30", "sourceType": "government", "confirmed": true },
+      "fixedPenaltyAmount": { "value": "60 (non-endorsable) or 100 reported; 3 points if endorsable", "unit": "GBP", "currency": "GBP", "url": "https://moneynerd.co.uk/fixed-penalty-notice-tinted-windows/", "publisher": "Secondary", "date": null, "sourceType": "secondary", "confirmed": false },
+      "ticketCounts": null
+    },
+    "Ireland": {
+      "legalLimit": { "value": 65, "unit": "percent minimum VLT, windscreen and front side windows (NCT and roadside)", "currency": null, "url": "https://www.rsa.ie/road-safety/road-users/vehicle-components/vehicle-glass/window-tinting", "publisher": "Road Safety Authority (page 403; via search summary)", "date": null, "sourceType": "secondary", "confirmed": false },
+      "penalty": { "value": "Garda fixed charge notice / direction to remove tint and present vehicle for test; owner and driver liable", "unit": "sanction", "currency": "EUR", "url": "https://www.donegallive.ie/news/motoring/567033/explainer-what-are-the-laws-on-window-tinting-on-vehicles-in-ireland.html", "publisher": "Secondary", "date": null, "sourceType": "secondary", "confirmed": false },
+      "fixedChargeAmount": null,
+      "ticketCounts": null
+    }
+  },
+
+  "tires": {
+    "allSeasonTreadwearWarranty": { "value": 80000, "unit": "miles, Michelin Defender2 limited treadwear warranty", "currency": null, "url": "https://www.michelinman.com/auto/tires/michelin-defender2", "publisher": "Michelin North America", "date": "read 2026-09-30", "sourceType": "manufacturer", "confirmed": true, "note": "Read in the page's product data (warranties: '80,000'). Six-year time limit and half mileage for staggered fitments are reported by secondary sources (unconfirmed)." },
+    "winterTreadwearWarranty": { "value": 40000, "unit": "miles (60,000 km), Michelin X-Ice Snow limited treadwear warranty, North America", "currency": null, "url": "https://michelinmedia.com/site/user/files/1/X-ICE-SNOW-FAQ_EXTERNAL_NA_FINAL_Feb-21-2020_ENG.pdf", "publisher": "Michelin (media FAQ)", "date": "2020-02-21", "sourceType": "manufacturer", "confirmed": true, "note": "Most winter tires carry no mileage warranty (secondary)." },
+    "BC": {
+      "requirementPeriod": { "value": "October 1 to April 30 on most designated routes; ends March 31 on select non-mountain/low-snowfall routes", "unit": "dates", "currency": null, "url": "https://www2.gov.bc.ca/gov/content/transportation/driving-and-cycling/traveller-information/seasonal/winter-driving/enforcement", "publisher": "Government of British Columbia", "date": "read 2026-09-30", "sourceType": "government", "confirmed": true },
+      "tireStandard": { "value": "M+S or 3-peak mountain/snowflake, at least 3.5 mm tread; two matching winter tires on primary drive axle (search summary); chains on summer tires not acceptable", "unit": "standard", "currency": null, "url": "https://www2.gov.bc.ca/gov/content/transportation/driving-and-cycling/traveller-information/seasonal/winter-driving/about-winter-tires", "publisher": "Government of British Columbia", "date": "read 2026-09-30", "sourceType": "government", "confirmed": true },
+      "fine": { "value": 121, "unit": "CAD, MVA s.125 (passenger vehicle without winter tires where required)", "currency": "CAD", "url": "https://www2.gov.bc.ca/gov/content/transportation/driving-and-cycling/traveller-information/seasonal/winter-driving/enforcement", "publisher": "Government of British Columbia", "date": "read 2026-09-30", "sourceType": "government", "confirmed": true, "note": "Cross-checked: VTAFR lists s.125 'Fail to obey traffic control device' fine 105 + levy 16 = 121." },
+      "appliesTo": "Signed designated routes: all highways in northern BC and the Interior, parts of South Coast (incl. Sea to Sky) and Vancouver Island; not all Metro Vancouver city streets."
+    },
+    "Quebec": {
+      "mandatoryPeriodOriginal": { "value": "December 15 to March 15 (Highway Safety Code s.440.1, first applied 2008-09)", "unit": "dates", "currency": null, "url": "https://www.tac-atc.ca/wp-content/uploads/fournier-e.pdf", "publisher": "Ministère des Transports du Québec (Fournier & Bélanger, TAC 2010)", "date": "2010", "sourceType": "conference-paper", "confirmed": true, "note": "Later extended to Dec 1 - Mar 15 (not verified here). User noted Quebec not needed as a market; kept for the crash study." },
+      "crashEffect": { "value": 5, "unit": "percent net reduction in road accident victims attributable to mandatory winter tires (597 people spared, winter 2008-09)", "currency": null, "url": "https://www.tac-atc.ca/wp-content/uploads/fournier-e.pdf", "publisher": "Ministère des Transports du Québec", "date": "2010", "sourceType": "conference-paper", "confirmed": true },
+      "brakingEffect": { "value": 25, "unit": "percent shorter braking distance, winter vs all-season tires (MTQ 2001 test)", "currency": null, "url": "https://www.tac-atc.ca/wp-content/uploads/fournier-e.pdf", "publisher": "Ministère des Transports du Québec", "date": "2010", "sourceType": "conference-paper", "confirmed": true },
+      "overRepresentation": { "value": "all-season tires on ~10% of cars but involved in 38% of fatal/serious winter accidents (winter 2004-05)", "unit": "finding", "currency": null, "url": "https://www.tac-atc.ca/wp-content/uploads/fournier-e.pdf", "publisher": "Ministère des Transports du Québec", "date": "2010", "sourceType": "conference-paper", "confirmed": true }
+    },
+    "Ontario": {
+      "winterTireDiscountMandate": { "value": "All Ontario auto insurers must offer a winter tire discount, effective 2016-01-01; each insurer sets the amount and proof required", "unit": "regulatory requirement", "currency": null, "url": "https://www.cbc.ca/news/canada/kitchener-waterloo/winter-tire-insurance-discount-for-ontario-1.3270674", "publisher": "CBC (reporting Ontario Ministry of Finance release)", "date": "2015-10", "sourceType": "secondary", "confirmed": false, "note": "news.ontario.ca release 34544 would not render; FSRA consumer page (403) says insurers must offer it." },
+      "typicalDiscount": { "value": "2-5", "unit": "percent of premium, typical", "currency": null, "url": "https://www.ratehub.ca/blog/will-winter-tires-save-money-on-auto-insurance/", "publisher": "Secondary", "date": null, "sourceType": "secondary", "confirmed": false },
+      "legalRequirement": null
+    }
+  },
+
+  "modsInsurance": {
+    "ukPremiumEffectByMod": {
+      "value": { "engineRemap": 15.93, "suspension": 15.93, "exhaust": 15.93, "bodyKit": 15.93, "rearSpoiler": 12.10, "tintedWindows": 12.10, "nonStandardRespray": 4.52, "upratedBrakes": 4.52, "sideSkirts": 4.52, "alloyWheels": 0.79 },
+      "unit": "percent premium increase for a single declared modification (quotes in 10 UK cities; city averages 7.00% Bristol to 8.88% London)",
+      "currency": null, "url": "https://www.cinch.co.uk/news/most-expensive-car-mods-to-insure", "publisher": "cinch (used-car retailer) research", "date": "2025-07-16", "sourceType": "secondary", "confirmed": true,
+      "note": "Read on page; a commercial quote study, not an insurer or regulator figure."
+    },
+    "ukUndisclosedModsLaw": {
+      "value": "Consumer Insurance (Disclosure and Misrepresentation) Act 2012: careless misrepresentation -> insurer may avoid only if it would not have offered cover at all, must refund premium; if it would have offered on different terms, claim is adjusted proportionately; deliberate/reckless -> avoid and keep premium",
+      "unit": "legal rule as applied by FOS", "currency": "GBP",
+      "url": "https://www.financial-ombudsman.org.uk/decision/DRN-4959020.pdf", "publisher": "Financial Ombudsman Service (decision DRN-4959020, Highway Insurance)", "date": "2024-10-17",
+      "sourceType": "ombudsman", "confirmed": true,
+      "caseOutcome": "Aftermarket alloys fitted two days before cover; policy excluded all mods; misrepresentation found careless not reckless: insurer entitled to avoid policy and refuse the multi-car collision claim and recover its costs, but must refund premium (offset against its outlay)."
+    },
+    "fosGuidance": { "value": "Mods to declare include body kits, custom paint, alloy wheels (esp. oversized), ECU remaps, exhaust upgrades, tinted windows, stereo upgrades; undisclosed mods can void the policy, cause claims to be rejected, or raise premiums; a simple air-filter change was held not a reportable modification", "unit": "guidance", "currency": null, "url": "https://www.financial-ombudsman.org.uk/news/car-modifications-can-wreck-insurance", "publisher": "Financial Ombudsman Service", "date": "2024-09-30", "sourceType": "ombudsman", "confirmed": true },
+    "icbcAftermarketEquipmentCaps": {
+      "value": { "soundAndCommunicationEquipment": 1000, "otherPermanentlyAttachedEquipmentInclCustomPaint": 5000 },
+      "unit": "CAD maximum aggregate covered under Collision/Comprehensive/Specified Perils for rate-group vehicles; manufacturer-equivalent paint incl. pinstriping covered; declared-value (modified) vehicles cover all paint and attached equipment at declared value",
+      "currency": "CAD", "url": "https://www.icbc.com/assets/pa/4bYpswFaIjYOKJO2cDlysF/autoplan-insurance-brochure.pdf", "publisher": "ICBC Autoplan guide APG20Q (032026)", "date": "2026-03", "sourceType": "insurer", "confirmed": true,
+      "note": "Modified vehicles move to 'declared value' rating (premium set vehicle-by-vehicle on owner's declared value)."
+    },
+    "usCustomPartsAndEquipment": { "value": "Aftermarket parts (stereo, wheels, custom paint, wraps) generally need a Custom Parts & Equipment endorsement; limit chosen by policyholder", "unit": "coverage practice", "currency": "USD", "url": "https://www.carinsurance.com/kb/does-insurance-cover-theft-of-personal-items", "publisher": "Secondary", "date": null, "sourceType": "secondary", "confirmed": false, "note": "Progressive CPE page returned 404; insurer-specific default ($1,000 auto-included, up to $5,000) not verified." },
+    "averagePremiumLoading": null
+  },
+
+  "dashcamAndCameras": {
+    "ukDashcamDiscounts": {
+      "nextbaseInsuranceScheme": { "value": 113, "unit": "GBP average saving (2024 data) for Nextbase owners buying through Nextbase Insurance Services (Cornmarket; panel incl. AXA, KGM, Aviva, Ageas); baseline average premium GBP 613; excess may be waived when footage provided", "currency": "GBP", "url": "https://nextbase.co.uk/insurance/", "publisher": "Nextbase / Cornmarket Insurance Services", "date": "read 2026-09-30", "sourceType": "insurer-broker", "confirmed": true },
+      "swiftcover": { "value": null, "unit": "percent", "currency": null, "url": "https://www.swiftcover.com/carinsurance/dashcams/", "publisher": "Swiftcover", "date": "read 2026-09-30", "sourceType": "insurer", "confirmed": true, "note": "Page no longer mentions any dashcam discount. The 12.5% (10% + 2.5% Nextbase) figure is historical (c.2015) and should not be used as current." },
+      "axa": { "value": null, "unit": "percent", "currency": null, "url": "https://www.axa.co.uk/car-insurance/dashcams/", "publisher": "AXA UK", "date": "read 2026-09-30", "sourceType": "insurer", "confirmed": true, "note": "Page describes faster claims/fraud protection only; no discount stated." },
+      "trend": "Direct premium discounts for dashcams are now rare; benefit is mainly claims (liability evidence, excess waivers)."
+    },
+    "rearviewCameras": {
+      "annualBackoverDeathsAllVehicles": { "value": 267, "unit": "fatalities per year (plus 15,000 injuries, 6,000 incapacitating)", "currency": null, "url": "https://www.govinfo.gov/content/pkg/FR-2014-04-07/html/2014-07469.htm", "publisher": "NHTSA, FMVSS 111 Rear Visibility final rule, 79 FR 19178", "date": "2014-04-07", "sourceType": "regulation", "confirmed": true },
+      "annualBackoverDeathsLightVehicles": { "value": 210, "unit": "fatalities per year, vehicles <=10,000 lb GVWR (15,000 injuries)", "currency": null, "url": "https://www.govinfo.gov/content/pkg/FR-2014-04-07/html/2014-07469.htm", "publisher": "NHTSA", "date": "2014-04-07", "sourceType": "regulation", "confirmed": true },
+      "rulePrevents": { "value": "13-15 deaths and 1,125-1,332 injuries per year", "unit": "incremental benefit once fully implemented (remaining ~27% of fleet not voluntarily equipped)", "currency": null, "url": "https://www.govinfo.gov/content/pkg/FR-2014-04-07/html/2014-07469.htm", "publisher": "NHTSA", "date": "2014-04-07", "sourceType": "regulation", "confirmed": true },
+      "costPerVehicle": { "value": "43-45 (vehicle with suitable display) / 132-142 (others)", "unit": "USD per vehicle (2010 dollars)", "currency": "USD", "url": "https://www.govinfo.gov/content/pkg/FR-2014-04-07/html/2014-07469.htm", "publisher": "NHTSA", "date": "2014-04-07", "sourceType": "regulation", "confirmed": true },
+      "effectiveDate": { "value": "2018-05-01", "unit": "all new light vehicles must have rear visibility system", "currency": null, "url": "https://www.govinfo.gov/content/pkg/FR-2014-04-07/html/2014-07469.htm", "publisher": "NHTSA", "date": "2014-04-07", "sourceType": "regulation", "confirmed": false, "note": "Commonly cited; the fetched summary did not quote the date." },
+      "icbcAEBDiscount": { "value": null, "unit": "Basic insurance discount for model-year 2006+ vehicles with factory autonomous emergency braking (amount not stated)", "currency": "CAD", "url": "https://www.icbc.com/assets/pa/4bYpswFaIjYOKJO2cDlysF/autoplan-insurance-brochure.pdf", "publisher": "ICBC", "date": "2026-03", "sourceType": "insurer", "confirmed": true, "note": "Factory-installed only: an aftermarket add-on would not qualify." }
+    }
+  },
+
+  "remoteStartAndAudio": {
+    "remoteStartTheftRisk": { "value": null, "unit": null, "currency": null, "url": null, "publisher": null, "date": null, "sourceType": null, "confirmed": false, "note": "No published statistical study links aftermarket remote starters to theft rates or insurance loadings. Police warnings concern idling/unattended warm-ups and keyless relay attacks, not remote starters per se." },
+    "keylessRelayAttack": { "value": "NICB bought a relay attack device (2016) and found it unlocked and started many keyless push-button vehicles", "unit": "finding", "currency": null, "url": "https://www.nicb.org/sites/default/files/2017-10/2016-Annual-Report.pdf", "publisher": "NICB 2016 Annual Report (via search summary)", "date": "2017", "sourceType": "secondary", "confirmed": false, "note": "Oft-quoted '18 of 35 vehicles' not located on NICB's pages." },
+    "audioInsuranceCapICBC": { "value": 1000, "unit": "CAD maximum aggregate for permanently attached sound & communication equipment on rate-group vehicles", "currency": "CAD", "url": "https://www.icbc.com/assets/pa/4bYpswFaIjYOKJO2cDlysF/autoplan-insurance-brochure.pdf", "publisher": "ICBC", "date": "2026-03", "sourceType": "insurer", "confirmed": true },
+    "icbcAlarmCovered": { "value": "one vehicle security alarm system is covered equipment", "unit": "coverage", "currency": null, "url": "https://www.icbc.com/assets/pa/4bYpswFaIjYOKJO2cDlysF/autoplan-insurance-brochure.pdf", "publisher": "ICBC", "date": "2026-03", "sourceType": "insurer", "confirmed": true },
+    "ukStereoAsDeclarableMod": { "value": "stereo enhancements listed by FOS as a modification to declare", "unit": "guidance", "currency": null, "url": "https://www.financial-ombudsman.org.uk/news/car-modifications-can-wreck-insurance", "publisher": "Financial Ombudsman Service", "date": "2024-09-30", "sourceType": "ombudsman", "confirmed": true },
+    "ukAlarmImmobiliserDiscount": { "value": "5-15", "unit": "percent potential discount for Thatcham alarm/immobiliser, reported", "currency": null, "url": "https://insurance-edge.net/2025/07/28/which-car-mods-bump-up-your-insurance-costs/", "publisher": "Secondary", "date": "2025-07-28", "sourceType": "secondary", "confirmed": false },
+    "theftFromVehicleNote": "Break-ins (the risk an aftermarket head unit adds) are tracked separately: ICBC break-ins fell from 30,342 (2016) to 12,118 (2025) per secondary summary of ICBC data (unconfirmed)."
+  },
+
+  "uncertain": [
+    "KBB share of cars by grade: only Excellent = 3% is published on the FAQ; Very Good/Good/Fair shares are not available. No publisher gives a fixed value gap between grades.",
+    "Edmunds 'Outstanding ~5%' seen only in a search summary (help page 403).",
+    "NICB state rates per 100,000 residents for 2024 (CA 463, NY 143, CT 216) and CT count 7,885 are in table images on NICB's page; taken from secondary reporting.",
+    "Derived per-vehicle theft rates mix sources (police complaints vs NICB NCIC data vs insurer claims) and sometimes years (CT: 2024 thefts / 2023 registrations; Ontario: 2025 thefts / 2024 LDVs).",
+    "Toronto 2025 auto thefts: 7,044 vs 7,305 in different secondary reports; TPS portal not read.",
+    "BC: ICBC 2025 stolen-vehicle incidents 6,626 (claims basis) vs 2024 5,764 (different basis) — both secondary; BC registered-vehicle denominator not found.",
+    "London: no theft-of-motor-vehicle-only count for the Met found; 87,206 is all vehicle offences (secondary). London licensed-vehicle count (DfT VEH0105) not retrieved.",
+    "Ireland: full-year 2025 vehicle theft count not found (CSO detailed page 404); 2024 and H1-2025 figures are secondary. RSA tint page returned 403; 65% limit and fixed charge unconfirmed; fixed charge amount unknown.",
+    "Mexico City: AMIS PDF text extraction was column-misaligned; CDMX 4,900 stolen / 1,395 recovered / 28% reconciled across three tables. Insured-fleet denominator unknown; SESNSP all-theft totals not retrieved.",
+    "NYC tint summonses: only Jan-Jul 2025 (27,600) confirmed; 2024 (51,724) and full 2025 (45,771) from search summaries.",
+    "California tint base fine $25 from bail-schedule search summary; ~$197 total is secondary. No CHP tint citation counts published.",
+    "Ontario: $110 tint total payable (vs $85 set fine) not verified; winter-tire discount mandate from CBC report, 2-5% typical from brokers — no regulator percentage exists (each insurer sets it).",
+    "Intact TAG incentives (CAD 150 subsidy, 20% comprehensive discount, CAD 500 surcharge) and TAG ~CAD 400 price are secondary; Intact page blocked.",
+    "LoJack and The Club prices from secondary/retailer summaries.",
+    "3M 2080 horizontal-surface warranty (3 years) unconfirmed; vertical 'up to 8 years, varies by zone' confirmed.",
+    "Michelin Defender2 6-year time limit and staggered-fitment halving unconfirmed.",
+    "Ayres & Levitt LoJack effect range (10-50%) from secondary summaries.",
+    "Swiftcover 12.5% dashcam discount is historical; current Swiftcover and AXA pages show no dashcam discount.",
+    "No published evidence found linking aftermarket remote starters or aftermarket audio to theft rates or specific insurance loadings."
+  ]
+}

@@ -1,0 +1,498 @@
+{
+  "_meta": {
+    "retrieved": "2026-09-30",
+    "subject": "Small powerboat (5-6 m, ~100-115 hp outboard, ~GBP 40,000 / CAD 68,000) kept by a Londoner in the UK or by a Toronto-area resident in Ontario",
+    "conventions": "sourceType is 'primary' when the insurer's, marina's or maker's own page or document is the source, else 'secondary'. confirmed=true means the figure was read directly from the fetched page or PDF on 2026-09-30; false means it came only from a search-engine snippet, or it is a derivation. Nothing here was invented: where no figure is published the value is null with a note. Derived figures are labeled 'derived' and show their arithmetic.",
+    "currencyNotes": "UK figures are GBP including 20% VAT unless noted. Ontario figures are CAD and exclude 13% HST unless noted."
+  },
+
+  "insurance": {
+    "uk": [
+      {
+        "item": "Typical annual yacht premium as a share of agreed hull value",
+        "value": { "pctOfHullValueLow": 1.0, "pctOfHullValueHigh": 1.5 },
+        "note": "Range attributed to London Marine Insurance Services Ltd (a Lloyd's placing broker), quoted by a US cruising blog. The same article says most cruising yachts fall between 1% and 5%, with a typical owner near 1.5%. Not a UK insurer's own page.",
+        "source": "https://theboatgalley.com/yacht-insurance-hull-values-premiums-related/",
+        "publisher": "The Boat Galley (quoting London Marine Insurance Services Ltd)",
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": false
+      },
+      {
+        "item": "UK motorboat insurance, published range and the broker's average",
+        "value": { "rangeGBPPerYear": [300, 1500], "brokerAveragePremiumGBP": 225 },
+        "note": "The broker labels these indicative UK estimates for 2026, not guaranteed premiums. Its GBP 225 average is across all motorboats it insures, most smaller or cheaper than GBP 40,000, so it is not a figure for this boat. The page gives no percentage of value.",
+        "source": "https://www.insuremy.co.uk/guides/a-guide-to-the-cost-of-boat-insurance",
+        "publisher": "InsureMy (CETA Insurance Ltd, broker)",
+        "date": "2026",
+        "sourceType": "secondary",
+        "confirmed": true
+      },
+      {
+        "item": "Haven Knox-Johnston RIB insurance",
+        "value": null,
+        "note": "No premium or rate is published; the page says premiums are tailored and sends readers to a quote. The only price shown is the Marine Legal Protection add-on, GBP 15.00 plus Insurance Premium Tax per year.",
+        "source": "https://www.havenkj.com/boat-insurance/rib-insurance/",
+        "publisher": "Haven Knox-Johnston",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "item": "Navigators & General, GJW Direct, Bishop Skinner",
+        "value": null,
+        "note": "No published example premium or percentage-of-value rate was found for any of the three. All quote individually.",
+        "source": "https://www.navandgen.co.uk/rigid-inflatable-boat/",
+        "publisher": "Navigators & General",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": false
+      },
+      {
+        "item": "Derived: annual premium for a GBP 40,000 sports boat",
+        "value": { "gbpLow": 400, "gbpHigh": 600 },
+        "note": "Derived, not published: 1.0%-1.5% x GBP 40,000. A fast planing boat may be rated above this; insurers say speed raises the rate. Treat as a modeled estimate.",
+        "source": null,
+        "publisher": null,
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": false
+      }
+    ],
+    "canadaOntario": [
+      {
+        "item": "Ontario rule of thumb: annual premium about 1.5% of boat value",
+        "value": { "pctOfValue": 1.5, "workedExample": { "boatValueCAD": 30000, "premiumCAD": 450 } },
+        "note": "Insurer's own guide: 'take around 1.5% of the value of your boat'.",
+        "source": "https://www.eriemutual.com/insights/boat-insurance-ontario/",
+        "publisher": "Erie Mutual Insurance",
+        "date": "2022-05-11",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "item": "Ontario premium bands by boat type",
+        "value": { "smallFishingBoatCAD": [300, 500], "midSizePowerboatOrSailboatCAD": [500, 800], "luxuryOrYachtCAD": "1000+", "mostOwnersCAD": [300, 1000] },
+        "source": "https://www.marathoninsurance.ca/blog/how-much-is-boat-insurance-in-ontario/",
+        "publisher": "Marathon Insurance (broker)",
+        "date": "2025-03-26",
+        "sourceType": "secondary",
+        "confirmed": true
+      },
+      {
+        "item": "Ontario range by value",
+        "value": { "about20000BoatCAD": 320, "over100000BoatCAD": 1500 },
+        "note": "Search snippet only; the page was not opened.",
+        "source": "https://insuremycottage.ca/answers/how-much-does-boat-insurance-cost-ontario/",
+        "publisher": "InsureMyCottage.ca",
+        "date": "2026",
+        "sourceType": "secondary",
+        "confirmed": false
+      },
+      {
+        "item": "Intact, Aviva Canada, Skippers' Plan published averages",
+        "value": null,
+        "note": "No published average premium found for any of the three.",
+        "source": null,
+        "publisher": null,
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": false
+      },
+      {
+        "item": "Derived: annual premium for a CAD 68,000 boat in Ontario",
+        "value": { "cad": 1020 },
+        "note": "Derived, not published: 1.5% x CAD 68,000, from Erie Mutual's rule of thumb. The Marathon bands would put a mid-size powerboat lower (CAD 500-800). Treat as a modeled estimate.",
+        "source": "https://www.eriemutual.com/insights/boat-insurance-ontario/",
+        "publisher": "Erie Mutual Insurance",
+        "date": "2022-05-11",
+        "sourceType": "secondary",
+        "confirmed": false
+      }
+    ]
+  },
+
+  "torontoMarinas": {
+    "boatingSeason": {
+      "summer": "May 1 to October 31 (Outer Harbour Marina); 'May to October' (Bluffer's Park); 'early May to the end of October' (Credit Village Marina, Mississauga)",
+      "winter": "November 1 to April 30 (Outer Harbour Marina winter storage); 'October to April' (Bluffer's Park)",
+      "note": "Every Toronto-area marina checked prices its summer season as May through October, so launch falls around early May and haul-out around late October.",
+      "confirmed": true
+    },
+    "marinas": [
+      {
+        "name": "Outer Harbour Marina (PortsToronto), Toronto",
+        "effective": "2026-02-01",
+        "seasonalSummerBerth": { "cadPerFtLOA_30amp": 154.00, "cadPerFtLOA_50amp": 200.00, "minimumFt": 30, "basis": "LOA or dock length, whichever is greater", "includes": "hydro, water, parking" },
+        "winterStorage": { "outdoorPackageCADPerSqFt": 8.90, "outdoorStorageOnlyCADPerSqFt": 8.75, "heatedIndoorPackageCADPerSqFt": 26.25, "area": "LOA x beam", "minimumSqFt": "150-200", "packageIncludes": "haul-out, blocking, storage, launch" },
+        "haulOutOrLaunchCADPerFtLOA": 16.60,
+        "trailerStorageCAD": { "singleAxle": 475.00, "doubleAxle": 575.00, "tripleAxle": 750.00 },
+        "transientCADPerFtLOA": { "daily": 3.10, "weekly": 16.75, "monthly": 51.50, "minimumFt": 20 },
+        "derivedFor5_5mBoat": "An 18 ft boat pays the 30 ft minimum: 30 x 154 = CAD 4,620 + HST for the summer (derived).",
+        "taxNote": "Rates do not include HST.",
+        "source": "https://www.torontoportauthority.com/marina/our-rates/",
+        "publisher": "Toronto Port Authority (PortsToronto)",
+        "date": "2026-02-01",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "name": "Bluffer's Park Marina, Scarborough (Toronto)",
+        "effective": "2026 season",
+        "seasonalSummerBerth": { "fixedShorelineCADPerFt": 142.00, "floatingCADPerFt": 118.00, "basis": "LOA or dock length, whichever is greater", "extra30ampCADPerFt": 12.00, "extra50ampCADPerFt": 20.00, "minimumFt": null },
+        "boatOnTrailerRampAccessSeason": { "cadPerFt": 50.00, "minimumFt": 20 },
+        "summerLandStorage": { "seasonCADPerSqFt": 7.50, "monthlyCADPerSqFt": 4.00, "weeklyCADPerSqFt": 2.00, "minimumSqFt": 150 },
+        "trailerStorageCAD": { "singleAxle": 180.00, "doubleAxle": 240.00, "tripleAxle": 395.00 },
+        "liftOrLaunchCADPerFt": { "upTo40ft": 8.75, "over40ft": 11.75 },
+        "winterStorage": { "landPackageCADPerSqFt": 7.00, "landStorageOnlyCADPerSqFt": 6.25, "minimumSqFt": 150, "packageIncludes": "haul-out, hull rinse, storage, spring launch", "winterDockageCADPerFtLOA": 118, "winterDockageMinimumFt": 30 },
+        "derivedFor5_5mBoat": "Kept on its trailer with ramp access, an 18 ft boat pays the 20 ft minimum: 20 x 50 = CAD 1,000 for the season. A floating slip would be about 18 x 118 = CAD 2,124 if no minimum length applies (none is published). Winter package: an 18 ft x ~7.5 ft boat is under the 150 sq ft minimum, so 150 x 7.00 = CAD 1,050. All derived; add HST.",
+        "taxNote": "Pricing subject to HST where applicable.",
+        "source": "https://www.bluffersparkmarina.ca/boat-dockage-storage-toronto/",
+        "publisher": "Bluffer's Park Marina",
+        "date": "2026",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "name": "Credit Village Marina, Port Credit (Mississauga), City of Mississauga",
+        "effective": "2025 rates (latest shown on 2026-09-30)",
+        "seasonalSlipCADPerFt": { "mississaugaResident": 106.64, "nonResident": 117.31 },
+        "overnightServicedSlipCADPerFt": { "resident": 2.36, "nonResident": 2.44 },
+        "season": "early May to the end of October",
+        "winterStorage": null,
+        "winterStorageNote": "Not published on the city page.",
+        "taxNote": "13% HST added to all fees.",
+        "source": "https://www.mississauga.ca/events-and-attractions/marinas/credit-village-marina/",
+        "publisher": "City of Mississauga",
+        "date": "2025",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "name": "Port Credit Harbour Marina (Mississauga)",
+        "value": null,
+        "note": "No published rate sheet found.",
+        "source": "https://marinas.com/view/marina/16c31d_Port_Credit_Harbour_Marina_Mississauga_ON_Canada",
+        "publisher": null,
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": false
+      },
+      {
+        "name": "Ashbridges Bay Yacht Club",
+        "value": null,
+        "note": "Member club; no public per-foot rate sheet was found.",
+        "source": null,
+        "publisher": null,
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": false
+      }
+    ]
+  },
+
+  "fuelBurn": [
+    {
+      "engine": "Honda BF100",
+      "boat": "Highfield Deluxe (DX) 540 RIB, 17 ft 8 in (5.4 m), 992 lb dry, 23 gal tank",
+      "test": { "date": "2016-05-03", "people": 2, "fuelLoadGal": 20, "prop": "stainless 13.25 x 15 x 4-blade" },
+      "table": [
+        { "rpm": "idle", "mph": 1.96, "gph": 0.28 },
+        { "rpm": 1000, "mph": 3.11, "gph": 0.55 },
+        { "rpm": 1500, "mph": 4.69, "gph": 0.73 },
+        { "rpm": 2000, "mph": 4.59, "gph": 1.29 },
+        { "rpm": 2500, "mph": 7.59, "gph": 2.04 },
+        { "rpm": 3000, "mph": 12.72, "gph": 2.04 },
+        { "rpm": 3500, "mph": 19.27, "gph": 2.36 },
+        { "rpm": 4000, "mph": 23.34, "gph": 3.72 },
+        { "rpm": 4500, "mph": 24.23, "gph": 4.78 },
+        { "rpm": 5000, "mph": 27.99, "gph": 5.79 },
+        { "rpm": 5500, "mph": 31.52, "gph": 7.16 },
+        { "rpm": 6292, "mph": 37.40, "gph": 10.14 }
+      ],
+      "cruise": { "rpm": 4000, "mph": 23.34, "usGph": 3.72, "litersPerHour": 14.1, "note": "L/h converted (x 3.785)." },
+      "note": "The PDF's text layer is misaligned; rows were rebuilt by checking that mph / gph equals the printed mpg for every row. Honda's disclaimer: a guide only, results vary with weather, water, elevation and load.",
+      "source": "https://cdn.powerequipment.honda.com/marine/pdf/props/BF100%20Highfield%20DX%20540-3.pdf",
+      "publisher": "American Honda Motor Co. (Honda Marine performance report)",
+      "date": "2016-05-03",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    {
+      "engine": "Honda BF100",
+      "boat": "Alumacraft Voyageur 175 (17 ft aluminum)",
+      "table": [
+        { "rpm": 3500, "mph": 20.6, "gph": 2.3, "mpg": 9.0 },
+        { "rpm": 4000, "mph": 25.2, "gph": 3.2, "mpg": 7.9 },
+        { "rpm": 4500, "mph": 29.9, "gph": 4.4, "mpg": 6.8 },
+        { "rpm": 6300, "mph": 41, "gph": null }
+      ],
+      "cruise": { "rpm": 4000, "mph": 25.2, "usGph": 3.2, "litersPerHour": 12.1 },
+      "note": "Magazine test by Capt. John N. Raguso. The aluminum boat is lighter than the Cap Camarat.",
+      "source": "https://www.thefisherman.com/honda-bf100-four-stroke-outboard/",
+      "publisher": "The Fisherman",
+      "date": "2019-04-19",
+      "sourceType": "secondary",
+      "confirmed": true
+    },
+    {
+      "engine": "Honda BF100 on Jeanneau Cap Camarat 5.5 CC",
+      "value": null,
+      "note": "No Honda-powered test of the Cap Camarat 5.5 CC was found, from Jeanneau, MBY or PBO. Jeanneau's own technical file for the boat has tests with Yamaha engines only; see the next two entries, which are the closest real figures for the boat.",
+      "source": null,
+      "publisher": null,
+      "date": null,
+      "sourceType": "primary",
+      "confirmed": false
+    },
+    {
+      "engine": "Yamaha F100 FETL",
+      "boat": "Jeanneau Cap Camarat 5.5 CC (5.21 m hull, 100 L tank), tested displacement 1,328 kg",
+      "table": [
+        { "rpm": 600, "knots": 1.9, "litersPerHour": 1.1 },
+        { "rpm": 1000, "knots": 2.9, "litersPerHour": 1.6 },
+        { "rpm": 1500, "knots": 4.3, "litersPerHour": 2.8 },
+        { "rpm": 2000, "knots": 5.6, "litersPerHour": 4.7 },
+        { "rpm": 2500, "knots": 6.2, "litersPerHour": 7.5 },
+        { "rpm": 3000, "knots": 7.4, "litersPerHour": 10.8 },
+        { "rpm": 3500, "knots": 10.3, "litersPerHour": 14.8 },
+        { "rpm": 4000, "knots": 19.3, "litersPerHour": 15.6 },
+        { "rpm": 4500, "knots": 22.3, "litersPerHour": 19.8 },
+        { "rpm": 5000, "knots": 25.8, "litersPerHour": 25.6 },
+        { "rpm": 5500, "knots": 28.6, "litersPerHour": 33.8 },
+        { "rpm": 5700, "knots": 31.8, "litersPerHour": 36.0 }
+      ],
+      "cruise": { "rpm": 4000, "knots": 19.3, "litersPerHour": 15.6, "usGph": 4.12 },
+      "note": "Jeanneau yard test dated 2013-08-02 (new hull, 5 kn wind, calm sea, no antifouling), reprinted in the Series 2 technical file dated 04/2023. The extracted text shifts the L/h column one row; rows were realigned using the file's own US gal/h column (e.g. 4.12 gal = 15.6 L).",
+      "source": "https://nolimityacht.fr/uploads/4a548afda7929c7db739e8869220c0f2e4f87c35.pdf",
+      "publisher": "Jeanneau (technical file, hosted by the dealer No Limit Yacht)",
+      "date": "2023-04",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    {
+      "engine": "Yamaha F115 BETL",
+      "boat": "Jeanneau Cap Camarat 5.5 CC, tested displacement 1,282 kg",
+      "table": [
+        { "rpm": 600, "knots": 2.4, "litersPerHour": 1.8 },
+        { "rpm": 1000, "knots": 3.0, "litersPerHour": 2.8 },
+        { "rpm": 1500, "knots": 5.0, "litersPerHour": 4.6 },
+        { "rpm": 2000, "knots": 6.0, "litersPerHour": 7.0 },
+        { "rpm": 2500, "knots": 6.6, "litersPerHour": 12.0 },
+        { "rpm": 3000, "knots": 6.5, "litersPerHour": 17.4 },
+        { "rpm": 3500, "knots": 15.6, "litersPerHour": 20.7 },
+        { "rpm": 4000, "knots": 20.6, "litersPerHour": 25.0 },
+        { "rpm": 4500, "knots": 23.7, "litersPerHour": 31.3 },
+        { "rpm": 5000, "knots": 27.7, "litersPerHour": 38.5 },
+        { "rpm": 5500, "knots": 31.3, "litersPerHour": 51.5 },
+        { "rpm": 5800, "knots": 34.3, "litersPerHour": 53.7 }
+      ],
+      "cruise": { "rpm": 4000, "knots": 20.6, "litersPerHour": 25.0, "usGph": 6.60 },
+      "note": "Jeanneau yard test dated 2013-07-25; same realignment as the F100 table.",
+      "source": "https://nolimityacht.fr/uploads/4a548afda7929c7db739e8869220c0f2e4f87c35.pdf",
+      "publisher": "Jeanneau (technical file, hosted by the dealer No Limit Yacht)",
+      "date": "2023-04",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    {
+      "engine": "Mercury 115 Pro XS on Princecraft Sport 175",
+      "value": null,
+      "published": { "topSpeedMph": 42, "zeroTo30Seconds": 6.9, "bestCruiseMph": [24, 28], "priceUSD": 43753, "fuelLoadGal": 23 },
+      "note": "Boating's test prints its rpm/mph/gph table only as an image, which could not be read, so no gph is recorded. Mercury's Boat House Bulletin database (performancedata.mercurymarine.com) lists Princecraft as a brand but blocked automated access (Cloudflare) before the test could be found. No Mercury 90 test on this boat was found.",
+      "source": "https://boatingmag.com/boats/2024-princecraft-sport-175-boat-test/",
+      "publisher": "Boating (Jeff Hemmel)",
+      "date": "2024-01-31",
+      "sourceType": "secondary",
+      "confirmed": true
+    },
+    {
+      "engine": "Mercury 115 Pro XS on Princecraft Sport 175 MAX (Canadian listing)",
+      "value": null,
+      "published": { "lengthFtIn": "17 ft 5 in", "beamIn": 91, "topSpeedMph": 42, "msrpCADWithTrailerFrom": 46689 },
+      "note": "No fuel table in this review.",
+      "source": "https://www.powerboating.com/2024-princecraft-175-max/",
+      "publisher": "Power Boating Canada (Jarrett Matthews)",
+      "date": "2024-05-01",
+      "sourceType": "secondary",
+      "confirmed": true
+    }
+  ],
+
+  "marineFuel": {
+    "uk": [
+      {
+        "marina": "Port Hamble Marina (MDL), Hamble; the fuel berth that serves Hamble Point Marina",
+        "petrolGBPPerLitre": 2.30,
+        "dieselGBPPerLitre": 1.92,
+        "basis": "'60/40 retail price including VAT' (the leisure 60/40 declaration)",
+        "asOf": "shown as 'Today's fuel prices' on 2026-09-30",
+        "source": "https://www.mdlmarinas.co.uk/marinas/mdl-port-hamble-marina/tariffs/",
+        "publisher": "MDL Marinas",
+        "date": "2026-09-30",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "marina": "Swanwick, Port Solent, Gosport, Chichester, Southsea, Brighton, Sovereign Harbour (Premier Marinas)",
+        "petrolGBPPerLitre": 2.27,
+        "note": "Noss on Dart GBP 2.36. The page says 'Today's price' but prints no date.",
+        "source": "https://www.premiermarinas.com/fuel-at-premier-marinas",
+        "publisher": "Premier Marinas",
+        "date": "2026-09-30 (retrieval; no date on the page)",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "marina": "Penton Hook, Windsor and Bray marinas (MDL, non-tidal Thames)",
+        "petrolGBPPerLitre": 2.28,
+        "dieselGBPPerLitre": 1.90,
+        "basis": "60/40 retail price including VAT",
+        "source": "https://www.mdlmarinas.co.uk/marinas/mdl-penton-hook-marina/tariffs/",
+        "publisher": "MDL Marinas",
+        "date": "2026-09-30",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    ],
+    "ontario": [
+      {
+        "marina": "Cobourg Marina, Cobourg (Lake Ontario, ~95 km east of Toronto)",
+        "gasCADPerLitre": 2.450,
+        "gasGrade": "90 octane, ethanol-free, tax included",
+        "dieselCADPerLitre": 2.990,
+        "asOf": "2026-09-25 (last update shown)",
+        "note": "A search snippet from an earlier update (2026-08-21) showed diesel at CAD 2.390 and gas 'call'.",
+        "source": "https://www.waterwayguide.com/fuel-price-report/13",
+        "publisher": "Waterway Guide fuel price report (marina-reported)",
+        "date": "2026-09-25",
+        "sourceType": "secondary",
+        "confirmed": true
+      },
+      {
+        "marina": "Bridge Port Marina, Orillia (Lake Couchiching/Simcoe, inland Ontario)",
+        "gasCADPerLitre": { "89OctaneNonEthanol": 2.20, "91PremiumNonEthanol": 2.30 },
+        "dieselCADPerLitre": 2.60,
+        "note": "No date on the page. A search snippet showed older figures of 2.10 and 2.20.",
+        "source": "https://bridgeportmarina.ca/Fuel-Dock-Prices/",
+        "publisher": "Bridge Port Marina",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "marina": "Toronto Island Marina (and other Toronto marinas)",
+        "gasCADPerLitre": null,
+        "note": "The fuel dock sells ethanol-free gasoline and diesel but publishes no price. No Toronto marina price was found.",
+        "source": "https://torontoislandmarina.com/fuel-dock/",
+        "publisher": "Toronto Island Marina",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    ]
+  },
+
+  "londonMarinas": {
+    "londonToSolent": {
+      "trainLondonWaterlooToHamble": { "fastestMinutes": 104, "averageMinutes": 196, "distanceMiles": 68, "trainsPerDay": 48 },
+      "note": "Train-booking site figures; Hamble station is about 1.5 miles from Hamble Point Marina. No road distance or drive time was sourced.",
+      "source": "https://www.thetrainline.com/train-times/london-waterloo-to-hamble",
+      "publisher": "Trainline",
+      "date": "2026-09-30",
+      "sourceType": "secondary",
+      "confirmed": false
+    },
+    "hamblePointMarina": {
+      "tariffValidUntil": "2027-03-31",
+      "vatNote": "All prices include VAT at 20%; per metre on LOA.",
+      "monthlyBerthGBPPerMetre": { "upTo8m": 110.60, "8_1to10m": 135.80, "10_1to12_5m": 158.75, "12_6mPlus": 172.45, "minimumChargeMetres": 7 },
+      "trailerBoating": {
+        "description": "storage plus unlimited slipway use, MDL group sites",
+        "annualGBPPerMetre": { "upTo5_9m": 386.55, "6mPlus": 407.75 },
+        "summerAprToSepGBPPerMetre": { "upTo5_9m": 272.40, "6mPlus": 288.85 },
+        "monthlyGBPPerMetre": { "upTo5_9m": 49.30, "6mPlus": 52.35 },
+        "measuredOn": "LOA on the trailer including hitch"
+      },
+      "dryStackMonthlyGBPPerMetre": { "upTo7m": 99.80, "7to8m": 101.80, "8_1to9m": 122.80, "9_1to10m": 124.65, "10_1mPlus": 172.45 },
+      "dailyVisitorGBPPerMetre": { "upTo12_5m": 5.55 },
+      "carParkingDailyGBP": 16.90,
+      "correctionToKnownFigure": "The brief's 'already known' trailer-storage figure of GBP 372 per metre per year does not match the July 2026 tariff, which reads GBP 386.55 per metre per year (up to 5.9 m). The GBP 372 figure is probably from an earlier tariff. The GBP 110.60 per metre per month berth figure is confirmed.",
+      "source": "https://www.mdlmarinas.co.uk/_assets/hamble-point-july-2026-tariff.pdf",
+      "publisher": "MDL Marinas (Marina Developments Ltd)",
+      "date": "2026-07",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "thames": [
+      {
+        "name": "Penton Hook Marina, Chertsey, Surrey (non-tidal Thames; on the M25 west of London)",
+        "monthlyBerthGBPPerMetre": { "upTo7m": 57.10, "7_1mPlus": 73.15 },
+        "trailerBoatingThamesOnly": {
+          "note": "A second, cheaper trailer-boating scale listed for 'MDL Thames (Bray Marina, Penton Hook and Windsor Marina only)'.",
+          "summerAprToSepGBPPerMetre": { "upTo5_9m": 150.80, "6mPlus": 166.40 },
+          "monthlyGBPPerMetre": { "upTo5_9m": 30.15, "6mPlus": 32.75 }
+        },
+        "storageAshoreGBPPerMetrePerWeek": 11.85,
+        "slipwayGBP": { "daily": 22.20, "weekly": 79.60 },
+        "note": "Prices include VAT at 20% and are valid until 2027-03-31. The best-documented published per-metre rate on the Thames near London.",
+        "source": "https://www.mdlmarinas.co.uk/_assets/penton-hook-july-2026-tariff.pdf",
+        "publisher": "MDL Marinas",
+        "date": "2026-07",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "name": "Windsor Marina (MDL, non-tidal Thames)",
+        "value": null,
+        "note": "A July 2026 tariff PDF is published (https://www.mdlmarinas.co.uk/_assets/windsor-july-2026-tariff.pdf) but was not read. It shares the MDL Thames trailer-boating scale above.",
+        "source": "https://www.mdlmarinas.co.uk/marinas/mdl-windsor-marina/tariffs/",
+        "publisher": "MDL Marinas",
+        "date": "2026-07",
+        "sourceType": "primary",
+        "confirmed": false
+      },
+      {
+        "name": "Chelsea Harbour Marina (MDL, tidal Thames, central London)",
+        "value": null,
+        "note": "The MDL tariff page for Chelsea Harbour shows no per-metre rate and links no tariff PDF.",
+        "source": "https://www.mdlmarinas.co.uk/marinas/mdl-chelsea-harbour-marina/tariffs/",
+        "publisher": "MDL Marinas",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      {
+        "name": "Limehouse Basin / Limehouse Waterside & Marina (Aquavista)",
+        "value": null,
+        "note": "No current per-metre rate published. PBO's 2017 annual berth guide gave an average of GBP 687.53 per metre per year, which is nine years old and should not be used as a 2026 figure.",
+        "source": "https://www.pbo.co.uk/marina-guide/annual-berth-guide-2017/limehouse-basin-marina-2",
+        "publisher": "Practical Boat Owner",
+        "date": "2017",
+        "sourceType": "secondary",
+        "confirmed": false
+      },
+      {
+        "name": "Brentford Lock",
+        "value": null,
+        "note": "No published per-metre rate found.",
+        "source": null,
+        "publisher": null,
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": false
+      }
+    ]
+  },
+
+  "uncertain": [
+    "UK insurance: no named UK insurer (Navigators & General, Haven Knox-Johnston, GJW Direct, Bishop Skinner) publishes an example premium or a percentage-of-value rate. The 1-1.5% figure is a Lloyd's broker's range quoted second-hand; GBP 400-600 for a GBP 40,000 boat is derived.",
+    "Ontario insurance: Erie Mutual's 1.5% rule gives CAD 1,020 for a CAD 68,000 boat, but a broker's bands put mid-size powerboats at CAD 500-800. Intact, Aviva Canada and Skippers' Plan publish no averages.",
+    "Toronto minimums: Outer Harbour charges a 30 ft minimum, so an 18 ft boat pays for 30 ft. Bluffer's Park prints no minimum for slips, only a 20 ft minimum for trailer-with-ramp. Port Credit Harbour Marina and Ashbridges Bay Yacht Club publish no rate sheets.",
+    "No Toronto marina publishes a fuel price. The nearest published Lake Ontario figure is Cobourg (CAD 2.45/L gas, 2026-09-25), from a marina-reported aggregator.",
+    "Mercury/Princecraft: no fuel-burn figure for a Mercury 90 or 115 on a Princecraft Sport 175 could be read. Mercury's performance database blocked automated access and Boating's table is an image.",
+    "Honda BF100 on the Cap Camarat 5.5 CC: not found. Jeanneau's own file tests Yamaha F100 and F115 only. The Honda figure (3.72 gph = 14.1 L/h at 4000 rpm, 23.3 mph) comes from a 5.4 m Highfield RIB, which is lighter than the 1.3 t Cap Camarat. The Yamaha F100 on the Cap Camarat burned 15.6 L/h at 4000 rpm, 19.3 kn.",
+    "Hamble Point trailer storage: the July 2026 tariff reads GBP 386.55 per metre per year (up to 5.9 m), not the GBP 372 given as known.",
+    "London to Hamble travel time comes from a train-booking site, not the rail operator."
+  ]
+}

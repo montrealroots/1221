@@ -1,0 +1,448 @@
+{
+  "_meta": {
+    "title": "Car buying, leasing, used market, inspection, configuration, delivery and trade-in: US (NY, CT, CA), Canada (ON, BC), Mexico (CDMX), UK, Ireland",
+    "researchedOn": "2026-09-30",
+    "method": "Primary sources were preferred: manufacturer offer fine print, statutes and regulations, government statistics, and the publishers' own pages. Several manufacturer pages block automated fetchers, so their HTML was retrieved directly and the offer fine print was read from the page source. 'confirmed: true' means the figure was read on the cited page itself. 'confirmed: false' means it came from a search-engine summary or a secondary site and was not read on a primary page. Null means no published figure was found; nothing was estimated or invented.",
+    "fieldKey": {
+      "value": "the figure as published",
+      "url": "where it was read",
+      "publisher": "who published it",
+      "date": "publication or offer date (or the date it was read, 2026-09-30, when the page shows none)",
+      "sourceType": "statute | regulation | government-statistics | legislative-research | manufacturer-offer | manufacturer-pricing | manufacturer-finance | industry-data | company-price-list | news | secondary",
+      "confirmed": "true only if read on the page"
+    },
+    "currencies": { "US": "USD", "Canada": "CAD", "Mexico": "MXN", "UK": "GBP", "Ireland": "EUR" },
+    "keyCorrections": [
+      "California's dealer document fee cap is still $85 (dealers that are DMV private industry partners) or $70 (all others). SB 791, which would have allowed up to 1% of price capped at $260, was vetoed on 2025-10-13 and the veto was sustained on 2026-03-02. Several secondary sites wrongly describe it as law from 2026.",
+      "California does not let a trade-in reduce the sales-tax base. New York and Connecticut do when the car is bought from a dealer. This is a real per-market difference in what a trade-in is worth."
+    ]
+  },
+
+  "leasing": {
+    "US": {
+      "product": "Closed-end consumer lease (lessee returns the car and is not liable for its market value at maturity, only for excess mileage, excess wear, the disposition fee and any early-termination charge).",
+      "mechanics": {
+        "payment": "Monthly payment = depreciation part ((adjusted capitalized cost - residual) / term) + rent charge part ((adjusted capitalized cost + residual) x money factor), plus sales tax on the payment in most states. Money factor x 2400 is roughly the equivalent APR. Manufacturers' offers publish the capitalized cost and residual (called the 'lease end purchase amount' by Toyota) but not the money factor.",
+        "federalDisclosureRule": {
+          "value": "Regulation M (12 CFR 1013.4) requires the lessor to disclose the conditions for early termination and the charges for it (paragraph g), its wear and use standards, which must be reasonable (paragraph h), and whether and at what price the lessee may buy the car (paragraph i).",
+          "url": "https://www.law.cornell.edu/cfr/text/12/1013.4",
+          "publisher": "Consumer Financial Protection Bureau (Regulation M), via Cornell LII",
+          "date": "2026-09-30",
+          "sourceType": "regulation",
+          "confirmed": true
+        }
+      },
+      "toyotaFinancialServicesTerms": {
+        "termsAvailable": { "value": "24 to 60 months", "url": "https://www.toyotafinancial.com/content/dam/tmcc-webcommons/toyotafinancial/documents/financing_options/lease_a_toyota/TFS_lease_programs.pdf", "publisher": "Toyota Financial Services", "date": "2022-05", "sourceType": "manufacturer-finance", "confirmed": true },
+        "mileageAllowance": { "value": "Up to 15,000 miles/year on a standard lease; up to 10,000 miles/year on the low-mileage lease; extra miles can be bought up front on a standard lease", "url": "https://www.toyotafinancial.com/content/dam/tmcc-webcommons/toyotafinancial/documents/financing_options/lease_a_toyota/TFS_lease_programs.pdf", "publisher": "Toyota Financial Services", "date": "2022-05", "sourceType": "manufacturer-finance", "confirmed": true },
+        "multipleSecurityDeposits": { "value": "Up to 9 additional refundable security deposits to lower the payment; not available in New York State", "url": "https://www.toyotafinancial.com/content/dam/tmcc-webcommons/toyotafinancial/documents/financing_options/lease_a_toyota/TFS_lease_programs.pdf", "publisher": "Toyota Financial Services", "date": "2022-05", "sourceType": "manufacturer-finance", "confirmed": true },
+        "earlyTermination": { "value": "The car can be returned at any time, but early termination charges 'may be substantial'. No formula or dollar figure is published.", "url": "https://www.toyotafinancial.com/us/en/glossary.html", "publisher": "Toyota Financial Services", "date": "2026-09-30", "sourceType": "manufacturer-finance", "confirmed": true },
+        "dispositionFee": { "value": 350, "unit": "USD, due at lease end; waived if the lessee leases or finances a new or certified Toyota/Lexus through TFS/LFS within 30 days before or after return, or has had 3 or more TFS/LFS accounts", "url": "https://www.toyotafinancial.com/us/en/end_of_lease_options/return_your_vehicle.html", "publisher": "Toyota Financial Services", "date": "2026-09-30", "sourceType": "manufacturer-finance", "confirmed": true },
+        "complimentaryPreInspection": { "value": "Free courtesy inspection offered about 60 days before return", "url": "https://www.toyotafinancial.com/us/en/end_of_lease_options/return_your_vehicle.html", "publisher": "Toyota Financial Services", "date": "2026-09-30", "sourceType": "manufacturer-finance", "confirmed": true }
+      },
+      "publishedOffers": [
+        {
+          "market": "NY and CT (Toyota Greater New York region: CT, NJ, NY)",
+          "vehicle": "2026 RAV4 4WD LE Hybrid (model 4435)",
+          "monthly": 379, "termMonths": 36, "dueAtSigning": 379, "downPayment": 0,
+          "totalSRP": 35234, "netCapitalizedCost": 34175, "leaseEndPurchaseAmount": 27130,
+          "residualPercentDerived": 77.0,
+          "acquisitionFee": "Not listed separately in the fine print; $0 down and $379 due at signing, so any acquisition fee is inside the capitalized cost",
+          "mileageAllowancePerYear": 10000, "excessMileCharge": 0.15, "dispositionFee": 350,
+          "expires": "2026-09-30",
+          "fineprintQuote": "Lease example based on 2026 RAV4 4WD 5Dr. Wagon LE Hybrid CVT Model 4435 with Total SRP of $35,234, net capitalized cost of $34,175, and a lease end purchase amount of $27,130. $379 Due At Signing includes $0 customer down payment and first month's payment of $379. ... will pay $0.15 per mile for all mileage over 10,000 miles per year. $350 disposition fee is due at lease end. ... Offer available in CT, NJ, NY regardless of buyer's residency ... Expires 09-30-2026.",
+          "url": "https://www.toyota.com/greaterny/deals-incentives/?vehicles=rav4",
+          "publisher": "Toyota Motor North America", "date": "2026-09-30", "sourceType": "manufacturer-offer", "confirmed": true
+        },
+        {
+          "market": "CA (Toyota Southern California region; offer valid statewide)",
+          "vehicle": "2026 RAV4 2WD LE Hybrid (model 4521)",
+          "monthly": 279, "termMonths": 36, "dueAtSigning": 3999, "downPayment": 2970,
+          "totalSRP": 33834, "netCapitalizedCost": 29784, "leaseEndPurchaseAmount": 25714,
+          "residualPercentDerived": 76.0,
+          "acquisitionFee": 750,
+          "mileageAllowancePerYear": 10000, "excessMileCharge": 0.15, "dispositionFee": 350,
+          "securityDeposit": "Required unless waived for prior TFS history or credit rating",
+          "expires": "2026-09-30",
+          "fineprintQuote": "Lease example based on 2026 RAV4 2WD 5Dr. Wagon LE Hybrid CVT Model 4521 with Total SRP of $33,834, net capitalized cost of $29,784, and a lease end purchase amount of $25,714. $3,999 Due At Signing includes $2,970 customer down payment, first month's payment of $279 of the 36 month lease offer, and $750 Acquisition Fee. ... will pay $0.15 per mile for all mileage over 10,000 miles per year. $350 disposition fee is due at lease end. ... Offer available in CA regardless of buyer's residency ... Expires 09-30-2026.",
+          "url": "https://www.toyota.com/socal/deals-incentives/?vehicles=rav4",
+          "publisher": "Toyota Motor North America", "date": "2026-09-30", "sourceType": "manufacturer-offer", "confirmed": true
+        },
+        {
+          "market": "Midwest comparison (IL, IN, MN, WI)",
+          "vehicle": "2026 RAV4 4WD LE Hybrid (model 4435)",
+          "monthly": 319, "termMonths": 36, "dueAtSigning": 3999, "downPayment": 2930,
+          "totalSRP": 35234, "netCapitalizedCost": 32225, "leaseEndPurchaseAmount": 27130,
+          "acquisitionFee": 750, "mileageAllowancePerYear": 10000, "excessMileCharge": 0.15, "dispositionFee": 350,
+          "expires": "2026-09-30",
+          "url": "https://www.toyota.com/midwest/deals-incentives/rav4_lease_475f30ea-e289-4623-934f-fe48138da551/?vehicles=rav4",
+          "publisher": "Toyota Motor North America", "date": "2026-09-30", "sourceType": "manufacturer-offer", "confirmed": true
+        }
+      ],
+      "impliedMoneyFactor": {
+        "value": 0.00299,
+        "aprEquivalentPercent": 7.18,
+        "derivation": "Worked back from each Toyota offer's own figures (pre-tax payment = (cap - residual)/36 + (cap + residual) x MF). All three offers (NY/CT, CA, Midwest) give the same MF, 0.002990, to four significant figures. This is a derived number, not a published one; TFS does not publish the money factor.",
+        "confirmed": false
+      },
+      "otherLendersFees": {
+        "hondaExcessMile": { "value": null, "note": "American Honda Finance does not publish its excess-mile rate or disposition fee on a public page that could be read; dealer blogs cite $0.15-$0.20/mile and $350-$400 turn-in fees. Honda's offer page (automobiles.honda.com/tools/current-offers) blocked retrieval.", "confirmed": false },
+        "fordCreditExcessMile": { "value": null, "note": "Ford Credit Red Carpet Lease terms vary by contract; secondary sources cite $0.15-$0.25/mile and $395-$495 disposition fees. ford.com blocked retrieval.", "confirmed": false }
+      }
+    },
+
+    "Canada": {
+      "product": "Closed-end lease offered through the manufacturer's captive finance company. Canadian offers state a lease APR (interest rate), not a money factor, and a total kilometre allowance with a per-km excess charge.",
+      "hondaCanadaRepresentativeExample": {
+        "vehicle": "Honda CR-V Touring Hybrid (representative example, not a live offer)",
+        "leaseVehiclePrice": 51993, "leaseAPRPercent": 2.99,
+        "monthly24": 797.47, "monthly28StretchLease": 698.76,
+        "totalObligation24": 19139, "totalObligation28": 19565,
+        "includedInPayment": "$2,000 freight and PDI; $100 A/C charge; regulatory fees up to $167.50; lien registration fees up to $78.50 (including lien registering agent fee)",
+        "downPayment": 0, "securityDeposit": 0,
+        "kmAllowance": "20,000 kilometre allowance (the page does not say whether per year; Honda Canada's standard allowance is annual)",
+        "excessKmCharge": 0.15,
+        "quote": "Monthly payment includes: $2,000 freight and PDI; $100 A/C charge; regulatory fees (up to $167.50); lien registration fees (up to $78.50, including lien registering agent fee) ... 20,000 kilometre allowance; charge of $0.15/km for excess kilometres.",
+        "url": "https://www.honda.ca/en/stretch-lease",
+        "publisher": "Honda Canada", "date": "2026-09-30", "sourceType": "manufacturer-finance", "confirmed": true
+      },
+      "provincialDifferences": "Ontario and BC both require the advertised price to include freight, PDI and dealer fees (see docFees). Neither province caps the dealer's documentation fee.",
+      "toyotaCanadaOffer": { "value": null, "note": "toyota.ca offer pages returned 404 to automated retrieval; no Toyota Canada RAV4 lease fine print was read.", "confirmed": false }
+    },
+
+    "Mexico": {
+      "product": "Arrendamiento puro (operating lease). In Mexico it is mainly a business product: rent is deductible for companies and for individuals with business activity (persona física con actividad empresarial). The lessor keeps ownership; at the end the lessee buys, refinances or returns.",
+      "toyotaFinancialServicesMexico": {
+        "terms": { "value": "24, 36 and 48 months", "confirmed": true },
+        "securityDeposits": { "value": "From 2 security deposits (depósitos en garantía)", "confirmed": true },
+        "financialServicesCommission": { "value": 2.5, "unit": "percent (comisión por servicios financieros)", "confirmed": true },
+        "includes": { "value": "Preventive maintenance at Toyota dealers nationwide and damage insurance for the whole term are included in the monthly payment; help with vehicle paperwork", "confirmed": true },
+        "endOfLease": { "value": "Buy, refinance or return the vehicle", "confirmed": true },
+        "residualValue": { "value": null, "note": "Not published." },
+        "mileageAllowance": { "value": null, "note": "Not published." },
+        "url": "https://toyotacredito.com.mx/Portal/arrendamientos/arrendamiento-puro",
+        "publisher": "Toyota Financial Services México", "date": "2026-09-30", "sourceType": "manufacturer-finance"
+      }
+    },
+
+    "UK": {
+      "PCH": {
+        "product": "Personal Contract Hire: a rental, not credit toward ownership. The customer pays an initial rental (a multiple of the monthly rental) and then monthly rentals, returns the car at the end, and pays excess mileage and damage beyond fair wear and tear (the industry standard is the BVRLA Fair Wear and Tear guide). There is no statutory voluntary-termination right; early termination charges are set by the contract.",
+        "publishedOffer": {
+          "vehicle": "Toyota Corolla Hatchback 1.8 Self-Charging Hybrid Icon",
+          "monthlyIncVAT": 327, "initialRentalIncVAT": 1960, "initialRentalMultiple": 6,
+          "termMonths": 36, "milesPerYear": 8000,
+          "maintenance": "Customer maintained; rentals include VAT and vehicle excise duty",
+          "provider": "KINTO UK Limited",
+          "excessMileCharge": { "value": null, "note": "The PCH fine print says only 'Excess mileage, vehicle condition and other charges may be payable'. The 8p/mile on the same page belongs to the Toyota Financial Services PCP offer, not the PCH." },
+          "orderWindow": "Ordered 2026-08-03 to 2026-09-30, registered and leased by 2026-12-31",
+          "url": "https://www.toyota.co.uk/new-cars/corolla-hatchback/personal-contract-hire-offer",
+          "publisher": "Toyota (GB) PLC", "date": "2026-09-30", "sourceType": "manufacturer-offer", "confirmed": true
+        }
+      },
+      "PCP": {
+        "product": "Personal Contract Purchase: a hire-purchase agreement with a deposit, monthly payments and an optional final payment (the guaranteed future value). The customer may pay it and own the car, hand the car back, or part-exchange. Mileage is set in the agreement and excess mileage is charged per mile if the car is returned.",
+        "voluntaryTermination": {
+          "value": "Under the Consumer Credit Act 1974 s.99-100, the customer may end a hire-purchase agreement (PCP included) and must pay only the amount by which one-half of the total price exceeds what has been paid and is due (the 'half rule').",
+          "url": "https://www.legislation.gov.uk/ukpga/1974/39/section/100",
+          "publisher": "legislation.gov.uk (The National Archives)", "date": "2026-09-30", "sourceType": "statute", "confirmed": true
+        },
+        "publishedOffer": {
+          "vehicle": "Nissan Qashqai Acenta Premium Mild Hybrid Manual",
+          "onTheRoadCashPrice": 30635, "customerDeposit": 9190.50, "amountOfCredit": 21444.50,
+          "APR": 0, "durationMonths": 37, "monthlyPayment": 219, "optionalFinalPayment": 13550,
+          "totalAmountPayable": 30635, "milesPerYear": 6000, "excessMileCharge": 0.08,
+          "offerWindow": "Valid 2026-07-01 to 2026-09-30; order by 2026-09-30, register and finance by 2026-12-31",
+          "quote": "Monthly payments of £219, On the road cash price £30,635, Customer deposit £9,190.50, Amount of credit £21,444.50, Fixed rate of interest (per annum) 0%, Duration of agreement 37 months, Total amount payable £30,635, APR representative 0% APR, Optional Final Payment £13,550, Mileage based on 6000 miles per annum, Cost of Credit £0. ... excess mileage 8p per mile.",
+          "url": "https://www.nissan.co.uk/vehicles/new-vehicles/qashqai/prices-specifications.html",
+          "publisher": "Nissan Motor (GB) Ltd", "date": "2026-09-30", "sourceType": "manufacturer-offer", "confirmed": true
+        }
+      }
+    },
+
+    "Ireland": {
+      "PCP": {
+        "product": "Personal Contract Plan: a hire-purchase agreement with a deposit (typically 10-30% of the car's value, in cash or a trade-in), fixed monthly payments for usually 3 years, and a Guaranteed Minimum Future Value (GMFV) balloon. The finance company owns the car until the GMFV is paid. Kilometre limits, wear and tear rules and servicing requirements apply. The 'half rule' lets the customer return the car once half the total amount payable has been paid, without having to be in financial difficulty.",
+        "url": "https://www.ccpc.ie/manage-your-money/borrowing-money/car-loans-and-car-finance/personal-contract-plan",
+        "publisher": "Competition and Consumer Protection Commission (CCPC)", "date": "2026-09-30", "sourceType": "government-consumer-guidance", "confirmed": true
+      },
+      "toyotaIreland": {
+        "value": "Toyota Easy Finance (PCP by hire purchase) requires a deposit of 0% to 36% of the on-the-road price and a maximum term of 49 months. The APR includes a once-off documentation fee and a purchase fee of €63.49 each. The quoted monthly figures include a delivery charge calculated at €1,000. RAV4 from €47,340 cash or from €390.68 per month.",
+        "rav4FromPrice": 47340, "rav4FromMonthly": 390.68,
+        "documentationFee": 63.49, "purchaseFee": 63.49, "maxTermMonths": 49, "deliveryChargeAssumed": 1000,
+        "gmfvAndExcessKm": { "value": null, "note": "The full representative example (deposit, GMFV, APR, cents per km) was not present in the page data; the GMFV is only described. No excess-km rate was published." },
+        "url": "https://www.toyota.ie/new-cars/rav4",
+        "publisher": "Toyota Ireland / Toyota Financial Services (Ireland) DAC", "date": "2026-09-30", "sourceType": "manufacturer-offer", "confirmed": true
+      },
+      "hyundaiIreland": {
+        "value": "Tucson offer highlights: 3.99% low-rate finance and a €600 Hyundai Peace of Mind voucher; valid on cars booked and registered by 2026-09-30. Finance is from Bank of Ireland Finance. Prices exclude delivery and related charges.",
+        "url": "https://www.hyundai.ie/offers",
+        "publisher": "Hyundai Ireland", "date": "2026-09-30", "sourceType": "manufacturer-offer", "confirmed": true,
+        "note": "A full Tucson PCP example (€35,595 price, €12,405.75 deposit, 36 payments of €244.15, €15,567.75 GMFV, 3.9% APR, 37-month term) sits in the page source of hyundai.ie/tucson but inside commented-out code, so it is not displayed and may be stale. It is recorded here for reference only and is not confirmed as live."
+      },
+      "leasing": { "value": null, "note": "Personal leasing (PCH-style) is uncommon for Irish consumers; PCP and hire purchase dominate. No manufacturer consumer lease offer was found." }
+    }
+  },
+
+  "negotiation": {
+    "US": {
+      "averageTransactionPrice": {
+        "value": 50089, "month": "2026-08",
+        "averageMSRP": 51852, "gapBelowMSRPDollars": 1763, "gapBelowMSRPPercent": 3.4,
+        "incentivesPercentOfATP": 6.5,
+        "segments": { "compactSUV_ATP": 37722, "fullSizePickup_ATP": 67446 },
+        "note": "The 3.4% gap between average MSRP and average transaction price is the best published measure of the average discount actually paid below sticker. Incentives (6.5% of ATP) are paid by manufacturers and are partly inside that gap.",
+        "url": "https://mediaroom.kbb.com/2026-09-10-Kelley-Blue-Book-Report-Average-New-Vehicle-Transaction-Price-Moves-Back-Above-50,000-in-August",
+        "publisher": "Kelley Blue Book / Cox Automotive", "date": "2026-09-10", "sourceType": "industry-data", "confirmed": true
+      },
+      "edmundsDiscountOffMSRP": { "value": null, "note": "Edmunds' average-transaction-price page (edmunds.com/avg-transaction-price-atp/) blocked retrieval. Search summaries cite about 6% average discount in December, the deepest month; not confirmed on the page.", "confirmed": false },
+      "modelDiscount": { "value": null, "note": "Model-level transaction-vs-MSRP data for RAV4, CR-V and F-150 was not published on a readable primary page." }
+    },
+    "Canada": { "value": null, "note": "No published average discount off MSRP. AutoTrader.ca Q1 2026 average new-vehicle price was $62,830 (down 2.7% year over year), which is a listing average, not a discount.", "averageNewListingPrice": 62830, "url": "https://go.trader.ca/autotrader-price-index-q1-2026/", "publisher": "AutoTrader.ca (TRADER Corporation)", "date": "2026 Q1", "sourceType": "industry-data", "confirmed": true },
+    "Mexico": { "value": null, "note": "No published average discount off list price was found." },
+    "UK": { "value": null, "note": "No published average discount off list price from a primary source. Manufacturer offers deliver discounts mainly as deposit contributions and 0% APR (e.g., Nissan's 0% APR Qashqai PCP)." },
+    "Ireland": { "value": null, "note": "No published average discount off list price. Discounts are delivered as finance rates and vouchers (e.g., Hyundai's €600 voucher and 3.99% finance)." }
+  },
+
+  "docFees": {
+    "NY": {
+      "cap": 175,
+      "value": "A dealer may charge for assisting in securing a registration and/or certificate of title only if it actually files the application; the fee may not exceed $175. It is separate from DMV fees.",
+      "url": "https://www.law.cornell.edu/regulations/new-york/15-NYCRR-78.19",
+      "publisher": "NY DMV regulation 15 NYCRR 78.19, via Cornell LII", "date": "2026-09-30", "sourceType": "regulation", "confirmed": true
+    },
+    "CT": {
+      "cap": null,
+      "value": "No cap. The 'dealer conveyance fee' must be shown separately in at least 10-point bold type on the order and invoice, with a statement that it is not payable to the state and is negotiable. A 2016 legislative study found an average of $405 for new-car dealers and $131 for used-car dealers.",
+      "averageNewDealer2016": 405, "averageUsedDealer2016": 131,
+      "url": "https://cga.ct.gov/2023/rpt/pdf/2023-R-0092.pdf",
+      "publisher": "Connecticut General Assembly, Office of Legislative Research (report 2023-R-0092)", "date": "2023-03-08", "sourceType": "legislative-research", "confirmed": true
+    },
+    "CA": {
+      "cap": { "dmvPrivateIndustryPartner": 85, "otherDealers": 70 },
+      "plusElectronicFilingCharge": "A separate electronic filing charge may be added, not to exceed what the dealer pays its provider; the Connecticut legislative report cites $29.",
+      "value": "Vehicle Code 4456.5: document processing charge not to exceed $85 for DMV private industry partners, $70 otherwise; it may not be represented as a government fee.",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=4456.5",
+      "publisher": "California Legislative Information", "date": "2026-09-30", "sourceType": "statute", "confirmed": true,
+      "sb791": {
+        "value": "SB 791 would have allowed up to 1% of the vehicle price, capped at $260, until 2031. It was vetoed by the Governor on 2025-10-13; the veto was sustained on 2026-03-02. The cap has not changed.",
+        "url": "https://leginfo.legislature.ca.gov/faces/billStatusClient.xhtml?bill_id=202520260SB791",
+        "publisher": "California Legislative Information", "date": "2026-03-02", "sourceType": "statute", "confirmed": true
+      }
+    },
+    "Ontario": {
+      "cap": null,
+      "value": "All-in price advertising: an advertised price must include every fee the dealer intends to collect (freight, PDI/PDE, administration fees, OMVIC transaction fee, government levies, pre-installed products), except HST and licensing, and the fees must be itemized on the bill of sale. The admin fee is not capped.",
+      "url": "https://www.omvic.ca/buying/your-rights/all-in-price-advertising/",
+      "publisher": "Ontario Motor Vehicle Industry Council (OMVIC), under O. Reg. 333/08", "date": "2026-09-30", "sourceType": "regulator", "confirmed": true
+    },
+    "BC": {
+      "cap": null,
+      "value": "Dealer fees are legal and there is no set amount. The price on the window sticker and in any advertisement must be the total price, including dealer fees, inspection costs and transportation charges; fees cannot be added after a price is agreed. Documentation and finance placement fees are often negotiable.",
+      "url": "https://vsabc.ca/consumers/get-information-about-vehicle-purchasing/consumer-protection-facts/dealer-fees/",
+      "publisher": "Vehicle Sales Authority of British Columbia", "date": "2026-09-30", "sourceType": "regulator", "confirmed": true
+    },
+    "Mexico": { "cap": null, "value": null, "note": "No federal cap or published typical amount for dealer paperwork charges (gastos de trámite) was found." },
+    "UK": { "cap": null, "value": null, "note": "No statutory cap. Manufacturer 'on the road' prices include delivery, first registration fee and 12 months' vehicle excise duty (see delivery). No published typical admin fee was found." },
+    "Ireland": {
+      "cap": null,
+      "value": "Toyota Financial Services (Ireland) charges a once-off documentation fee of €63.49 and a purchase fee of €63.49 on finance agreements. Dealer 'delivery and related charges' are separate from the list price (see delivery).",
+      "url": "https://www.toyota.ie/new-cars/rav4",
+      "publisher": "Toyota Ireland", "date": "2026-09-30", "sourceType": "manufacturer-finance", "confirmed": true
+    }
+  },
+
+  "usedMarket": {
+    "depreciation": {
+      "US_fiveYear": {
+        "value": "Average 5-year depreciation 41.8% (3.8 points better than 2025). By segment: trucks 34.2%, hybrids 35.4%, SUVs 44.9%, EVs 57.2%. Toyota RAV4/RAV4 Hybrid 25.2%, Honda CR-V 28.9%, Ford F-150 37.9%.",
+        "allVehiclesPercent": 41.8, "trucksPercent": 34.2, "hybridsPercent": 35.4, "suvsPercent": 44.9, "evsPercent": 57.2,
+        "models": { "ToyotaRAV4": 25.2, "HondaCRV": 28.9, "FordF150": 37.9 },
+        "sample": "Over 950,000 five-year-old vehicles sold March 2025 to February 2026",
+        "url": "https://www.iseecars.com/cars-that-hold-their-value-study",
+        "publisher": "iSeeCars", "date": "2026", "sourceType": "industry-data", "confirmed": true,
+        "note": "Read through a page summarizer; the model figures should be spot-checked before use."
+      },
+      "US_curveByYear": { "value": null, "note": "No primary source publishing a year-by-year curve (years 1 through 10) was read. The Toyota lease residuals above imply about 76-77% retained after 3 years at 10,000 miles/year for a RAV4 Hybrid." },
+      "UK": { "value": null, "note": "Cap HPI benchmarks at 3 years/60,000 miles, but its residual tables are subscription data and no public percentage was found. The Nissan PCP above implies a guaranteed future value of 44.2% of the on-the-road price after 37 months at 6,000 miles/year (13,550 / 30,635)." },
+      "Ireland": { "value": null, "note": "No published curve. DoneDeal H1 2026 medians for 2023-registered cars are given under averagePrices." }
+    },
+    "averagePrices": {
+      "US": { "value": 27239, "unit": "USD average used listing price, August 2026 (up 7% year over year; highest since December 2022); days' supply 44", "url": "https://www.coxautoinc.com/insights/used-vehicle-inventory-august-2026/", "publisher": "Cox Automotive", "date": "2026-09-11", "sourceType": "industry-data", "confirmed": true },
+      "Canada": { "value": 36713, "unit": "CAD average used listing price, end of Q1 2026 (down 0.3% year over year)", "url": "https://go.trader.ca/autotrader-price-index-q1-2026/", "publisher": "AutoTrader.ca (TRADER Corporation)", "date": "2026 Q1", "sourceType": "industry-data", "confirmed": true },
+      "UK": { "value": 17131, "unit": "GBP average used car price, August 2026 (Auto Trader Retail Price Index; down 0.1% year over year)", "url": "https://www.bodyshopmag.com/2026/news/used-car-prices-steady-but-ev-demand-grows/", "publisher": "Bodyshop Magazine reporting Auto Trader", "date": "2026-09-09", "sourceType": "news", "confirmed": true, "note": "Read in a trade-press report of Auto Trader's index, not on Auto Trader's own page." },
+      "Ireland": { "value": { "petrol2023Reg": 22895, "ev2023Reg": 27950, "hybrid2023Reg": 29949, "diesel2023Reg": 33950, "phev2023Reg": 39950 }, "unit": "EUR median asking price for 2023-registered cars, H1 2026", "url": "https://www.rte.ie/news/business/2026/0908/1590707-donedeal-h1-car-report/", "publisher": "RTÉ reporting the DoneDeal Cars Price Index", "date": "2026-09-08", "sourceType": "news", "confirmed": true },
+      "Mexico": { "value": null, "note": "No published national average used price was found. Kavak listings are individual asking prices (e.g., a Chevrolet Groove at MXN 301,999-302,999 on 2026-09-30)." },
+      "byMileage": { "value": null, "note": "No primary source publishing average used price by mileage band was read in any market." }
+    },
+    "averageAnnualMileage": {
+      "US": { "value": 10787, "unit": "miles per light-duty vehicle, 2024 (short wheelbase 10,812; long wheelbase 10,707); 2023 was 11,106", "url": "https://www.fhwa.dot.gov/policyinformation/statistics/2024/vm1.cfm", "publisher": "Federal Highway Administration, Highway Statistics Table VM-1", "date": "2026-02", "sourceType": "government-statistics", "confirmed": true },
+      "Canada": { "value": 15336, "unit": "km per light vehicle, 2009 (latest Canadian Vehicle Survey)", "url": "https://oee.nrcan.gc.ca/publications/statistics/cvs/2009/chapter2.cfm", "publisher": "Natural Resources Canada", "date": "2011", "sourceType": "government-statistics", "confirmed": false, "note": "Dated; the survey was discontinued. Figure from a search summary of the NRCan page, not read on it." },
+      "Mexico": { "value": null, "note": "No official figure found. Press and bank pages cite 10,000 km (smaller cities) to 15,000-20,000 km (large cities) per year without a primary source." },
+      "UK": { "value": 7100, "unit": "miles per car, England, 2024 (petrol 6,200; hybrid 8,000; diesel 8,300; battery electric 8,900)", "url": "https://www.gov.uk/government/statistics/national-travel-survey-2024", "publisher": "Department for Transport, National Travel Survey 2024", "date": "2025", "sourceType": "government-statistics", "confirmed": false, "note": "Several reports cite this NTS figure; the gov.uk page holding it could not be retrieved. The 2025 NTS page read gives only per-person figures (men 4,640 and women 3,885 miles by car per person)." },
+      "Ireland": { "value": 15854, "unit": "km per vehicle, 2023 (down from 16,261 in 2022), from NCT odometer readings", "url": "https://www.cso.ie/en/csolatestnews/pressreleases/2024pressreleases/pressstatement-snapshotoftransportstatisticsinireland2024/", "publisher": "Central Statistics Office", "date": "2024", "sourceType": "government-statistics", "confirmed": true }
+    },
+    "listingPlatforms": {
+      "US": ["Autotrader (autotrader.com)", "Cars.com", "CarGurus", "Carvana (online retailer with delivery)", "Facebook Marketplace", "dealer websites"],
+      "Canada": ["AutoTrader.ca", "Kijiji Autos", "Clutch (online retailer)", "Facebook Marketplace"],
+      "Mexico": ["Kavak (online retailer: 240-point inspection, 3-month warranty, 7-day return)", "Mercado Libre Autos", "Seminuevos.com", "Facebook Marketplace"],
+      "UK": ["Auto Trader (autotrader.co.uk)", "Motors.co.uk", "eBay Motors", "Cinch and Cazoo-style online retailers", "Facebook Marketplace"],
+      "Ireland": ["DoneDeal", "Carzone", "Facebook Marketplace"],
+      "note": "Platform names are common knowledge; only the Kavak terms were read (kavak.com/mx/seminuevos, 2026-09-30)."
+    },
+    "irelandImports": { "value": "63,815 used cars imported in the first eight months of 2026 (up 37%); Japan supplied 55% of H1 imports and the UK 14%", "url": "https://www.donedeal.ie/car-buying/news/new-car-registrations-ireland-august-2026", "publisher": "DoneDeal (reporting SIMI)", "date": "2026-09", "sourceType": "news", "confirmed": false }
+  },
+
+  "inspection": {
+    "prePurchaseInspection": {
+      "US": { "value": { "standard": 219.99, "electricVehicle": 249, "exotic": 286, "classic": 330, "commercial": 365, "motorcycle": 210, "rv": 449 }, "unit": "USD, Lemon Squad mobile pre-purchase inspection (the Standard is for cars newer than 2006)", "url": "https://lemonsquad.com/used-car-inspections/compare", "publisher": "Lemon Squad", "date": "2026-09-30", "sourceType": "company-price-list", "confirmed": true },
+      "Canada": { "value": null, "note": "No national price list was read; independent shops and CAA clubs set their own prices." },
+      "Mexico": { "value": null, "note": "No priced independent inspection service was found. Kavak's cars come with its own 240-point inspection." },
+      "UK": { "value": { "basic": { "member": 99, "nonMember": 110 }, "comprehensive": { "member": "179-269", "nonMember": "199-299" }, "advanced": { "member": "251-305", "nonMember": "279-339" } }, "unit": "GBP, AA vehicle inspection (Basic up to 98 points; Comprehensive up to 214 points; Advanced up to 221 points with a road test up to 10 miles); cancellation on the day costs £15", "url": "https://www.theaa.com/vehicle-inspection", "publisher": "The AA", "date": "2026-09-30", "sourceType": "company-price-list", "confirmed": true },
+      "Ireland": { "value": null, "note": "AA Ireland's inspection price page could not be retrieved. Independent Irish providers advertise €129 (carinspect.ie), from €179 (carexperts.ie) and €249-€494 (vamchecks.ie); these were not read on the pages.", "confirmed": false }
+    },
+    "vehicleHistoryReport": {
+      "US": { "value": 44.99, "unit": "USD, single Carfax report (3 for $64.99, 5 for $99.99)", "url": "https://www.carfax.com/vehicle-history-reports/", "publisher": "Carfax", "date": "2026", "sourceType": "secondary", "confirmed": false, "note": "Price not shown in the page source of carfax.com; figures are from secondary comparison sites." },
+      "Canada": { "value": { "report": 58.95, "reportPlusLienCheck": 77.95, "threeReportsPlusOneLienCheck": 146.95 }, "unit": "CAD, CARFAX Canada", "url": "https://www.carfax.ca/order", "publisher": "CARFAX Canada", "date": "2026-09-30", "sourceType": "company-price-list", "confirmed": true },
+      "Mexico": { "value": 0, "unit": "MXN; the REPUVE public vehicle registry check (theft report and legal status by VIN or plate) is free", "url": "https://www.repuve.gob.mx", "publisher": "Registro Público Vehicular (SESNSP)", "date": "2026", "sourceType": "government", "confirmed": false, "note": "Confirmed only through search summaries and unofficial guide sites; the official portal was not read." },
+      "UK": { "value": { "single": 19.99, "threeChecks": 29.99 }, "unit": "GBP, HPI Check", "url": "https://www.hpicheck.com/", "publisher": "HPI (Solera)", "date": "2026-09-30", "sourceType": "company-price-list", "confirmed": true },
+      "Ireland": { "value": { "standardSingle": 20, "standardThree": 45 }, "unit": "EUR, Cartell standard report (mileage, tax, NCT and owner history); a Premium check adds outstanding finance, UK history and a valuation (price not captured)", "url": "https://www.cartell.ie/", "publisher": "Cartell.ie", "date": "2026-09-30", "sourceType": "company-price-list", "confirmed": true }
+    },
+    "testDrives": {
+      "value": "Dealer test drives are free in every market. No manufacturer or regulator publishes a fee. Online retailers use return windows in place of test drives: Carvana has a 7-day return (the delivery or shipping fee is generally not refunded, per secondary sources), and Kavak has a 7-day return.",
+      "kavak": { "value": "7 days to return; 3-month warranty; 240-point inspection", "url": "https://www.kavak.com/mx/seminuevos", "publisher": "Kavak", "date": "2026-09-30", "sourceType": "company", "confirmed": true },
+      "carvana": { "value": null, "note": "Carvana's help page lists delivery and shipping-fee topics but the fee amounts and the 7-day return terms were not read on it.", "confirmed": false }
+    }
+  },
+
+  "configuration": {
+    "ToyotaRAV4_US_2026": {
+      "hybrid": { "LE": 31900, "SE": 34700, "XLEPremium": 36100, "Woodland": 39900, "XSE": 41300, "Limited": 43300 },
+      "plugInHybrid": { "SE": 41500, "Woodland": 45300, "XSE": 47200, "GRSport": 48500 },
+      "unit": "USD starting MSRP, excluding the Dealer Processing and Handling fee",
+      "url": "https://pressroom.toyota.com/all-new-2026-toyota-rav4-takes-center-stage-in-whats-your-rav4-campaign/",
+      "publisher": "Toyota Motor North America pressroom", "date": "2026-04-06", "sourceType": "manufacturer-pricing", "confirmed": true,
+      "crossCheck": "The same hybrid prices appear in toyota.com/rav4 page data (LE 31,900; SE 34,700; XLE Premium 36,100; Woodland 39,900; XSE 41,300; Limited 43,300), read 2026-09-30.",
+      "optionPackages": {
+        "value": { "weatherPackage": 375, "xleDriverAssistPackage": 375, "panoramicMoonroofPackage": 1850, "jblPremiumAudio": 620, "conveniencePackage_powerLiftgate": 330, "twentyInchWheelPackage": 1240, "tenInchColorHUD": 600 },
+        "unit": "USD",
+        "url": "https://www.edmunds.com/car-news/2026-toyota-rav4-pricing.html",
+        "publisher": "Edmunds (secondary)", "date": "2025-11", "sourceType": "secondary", "confirmed": false,
+        "note": "toyota.com lists the Weather and Convenience packages by name but its page data carries no package prices; these amounts are from a search summary of a secondary source."
+      }
+    },
+    "HondaCRV_US_2026": {
+      "trims": {
+        "LX_2WD": 30920, "LX_AWD": 32420, "EX_2WD": 33150, "EX_AWD": 34650, "EXL_2WD": 35400, "EXL_AWD": 36900,
+        "SportHybrid_2WD": 35630, "SportHybrid_AWD": 37130, "TrailSportHybrid_AWD": 38800,
+        "SportLHybrid_2WD": 38725, "SportLHybrid_AWD": 40225, "SportTouringHybrid_AWD": 42250
+      },
+      "unit": "USD MSRP excluding the $1,395 destination charge",
+      "url": "https://hondanews.com/en-US/honda-automobiles/releases/release-0d29cf91ab5515b985a1c286910fb0f9-2026-honda-cr-v-pricing-and-epa-ratings",
+      "publisher": "American Honda (Honda News)", "date": "2025-05-21", "sourceType": "manufacturer-pricing", "confirmed": true,
+      "optionPackages": { "value": null, "note": "Honda sells the CR-V by trim with few factory options; no option-package prices were published in the release." }
+    },
+    "FordF150_US_2026": {
+      "trims": { "XL": 39330, "STX": 41855, "XLT": 44695, "Lariat": 59560, "Tremor": 64915, "KingRanch": 65825, "Platinum": 68800, "Raptor": 79005, "PlatinumPlus": 90090, "RaptorR": 114220 },
+      "unit": "USD starting MSRP excluding destination",
+      "destination": 2595,
+      "optionExamples": { "fourWheelDriveOnLariatKingRanchPlatinum": 3800, "kingRanchMulticontourSeatsActiveMotionPackage": 2065, "xltHigherEquipmentPackageWithMoonroof": 6980 },
+      "url": "https://pickuptrucktalk.com/2025/11/2026-ford-f-150-pricing-revealed-with-king-ranch-platinum-dropping-by-thousands-with-a-catch/",
+      "publisher": "Pickup Truck Talk (secondary; built on ford.com)", "date": "2025-11", "sourceType": "secondary", "confirmed": true,
+      "note": "Read on the page, but it is a secondary source; ford.com blocked retrieval. Another secondary summary gave a $2,795 destination charge, so the destination figure is uncertain (see uncertain)."
+    },
+    "NissanQashqai_UK_2026": {
+      "mildHybridManual": { "AcentaPremium": 30635, "NConnecta": 33105, "NDesign": 35025, "Tekna": 35025, "TeknaPlus": 41125 },
+      "ePower": { "AcentaPremium": 34875, "NConnecta": 37345, "NDesign": 39655, "Tekna": 39655, "TeknaPlus": 43225 },
+      "unit": "GBP on-the-road cash price, excluding optional paint and personalization; includes first registration fee and 12 months' vehicle excise duty",
+      "url": "https://www.nissan.co.uk/vehicles/new-vehicles/qashqai/prices-specifications.html",
+      "publisher": "Nissan Motor (GB) Ltd", "date": "2026-09-30", "sourceType": "manufacturer-pricing", "confirmed": true,
+      "optionPackages": { "value": { "metallicPaint": 760, "twoToneWithPearlBlackRoof": "760-1280", "fujiSunsetRed": 0 }, "unit": "GBP", "url": "https://www.carwow.co.uk/nissan/qashqai/colours", "publisher": "carwow (secondary)", "date": "2026", "sourceType": "secondary", "confirmed": false }
+    },
+    "HyundaiTucson_Ireland": {
+      "diesel": { "ComfortPlus": 42645, "Executive": 45595, "ExecutivePlus": 48095, "ExecutivePlusTwoToneRoof": 49145 },
+      "dieselMildHybrid": { "ComfortPlus": 43995, "Executive": 46945, "Platinum": 50095 },
+      "hybridHEV_MY26": { "ComfortPlus": 47695, "Executive": 50195, "ExecutivePlus": 53195 },
+      "plugInHybrid_MY26": { "ComfortPlus2WD": 45195, "Executive2WD": 47695, "PlatinumPlus2WD": 51195, "PlatinumNLine2WD": 50695, "PlatinumPlusNLine2WD": 52195 },
+      "optionExample": { "twoToneRoof": 1050, "derivation": "Executive Plus diesel €49,145 with two-tone roof minus €48,095 without" },
+      "annualMotorTax": { "diesel": 270, "dieselMildHybrid": 210, "hybrid": 200, "plugInHybridMY26": 150 },
+      "unit": "EUR recommended retail price, excluding delivery and related charges",
+      "url": "https://www.hyundai.ie/data/specs-pricing.json",
+      "publisher": "Hyundai Ireland (data feed behind hyundai.ie/tucson)", "date": "2026-09-30", "sourceType": "manufacturer-pricing", "confirmed": true,
+      "note": "The feed also lists older non-MY26 hybrid rows (Executive HEV €49,445; Executive PLUS HEV €52,445) that appear to be run-out stock."
+    },
+    "ToyotaRAV4_Canada": { "value": null, "note": "toyota.ca pricing pages returned 404 to automated retrieval." },
+    "ToyotaRAV4_Mexico": {
+      "value": { "HEV_from": 650300, "PHEV_from": 999000 },
+      "unit": "MXN starting price (Desde ... M.N.)",
+      "url": "https://www.toyota.mx/",
+      "publisher": "Toyota Motor Sales de México", "date": "2026-09-30", "sourceType": "manufacturer-pricing", "confirmed": true,
+      "trimsSecondary": { "value": { "LE_HEV": 650300, "XLE_HEV": 712000, "Woodland_HEV": 816800, "Limited_HEV": 898500 }, "url": "https://www.eluniversal.com.mx/autopistas/toyota-rav4-2026-precios-y-versiones-en-mexico/", "publisher": "El Universal (secondary)", "date": "2026-03", "sourceType": "news", "confirmed": false }
+    },
+    "ToyotaRAV4_Ireland": { "value": 47340, "unit": "EUR 'from' cash price", "url": "https://www.toyota.ie/new-cars/rav4", "publisher": "Toyota Ireland", "date": "2026-09-30", "sourceType": "manufacturer-pricing", "confirmed": true }
+  },
+
+  "delivery": {
+    "US": {
+      "ToyotaRAV4": {
+        "value": 1095,
+        "unit": "USD Dealer Processing and Handling fee, as printed in Toyota's pressroom footnote ('*MSRP Excludes Dealer Processing and Handling fee of $1,095', updated 2026-09-26)",
+        "url": "https://pressroom.toyota.com/all-new-2026-toyota-rav4-takes-center-stage-in-whats-your-rav4-campaign/",
+        "publisher": "Toyota Motor North America pressroom", "date": "2026-09-26", "sourceType": "manufacturer-pricing", "confirmed": true,
+        "conflict": "Secondary sources (Edmunds and others) give $1,450 for the 2026 RAV4. The two do not agree; see uncertain."
+      },
+      "HondaCRV": { "value": 1395, "unit": "USD destination charge", "url": "https://hondanews.com/en-US/honda-automobiles/releases/release-0d29cf91ab5515b985a1c286910fb0f9-2026-honda-cr-v-pricing-and-epa-ratings", "publisher": "American Honda", "date": "2025-05-21", "sourceType": "manufacturer-pricing", "confirmed": true },
+      "FordF150": { "value": 2595, "unit": "USD destination and delivery", "url": "https://pickuptrucktalk.com/2025/11/2026-ford-f-150-pricing-revealed-with-king-ranch-platinum-dropping-by-thousands-with-a-catch/", "publisher": "Pickup Truck Talk (secondary)", "date": "2025-11", "sourceType": "secondary", "confirmed": true, "note": "Conflicts with a $2,795 figure in another secondary summary." },
+      "homeDelivery": { "value": null, "note": "Carvana waives delivery inside its local markets and otherwise charges a per-vehicle shipping fee shown on each listing; secondary sources cite about $190 to over $1,900. Not read on Carvana's page.", "confirmed": false }
+    },
+    "Canada": {
+      "value": 2000, "unit": "CAD freight and PDI (Honda CR-V Touring Hybrid representative example), plus $100 A/C charge, regulatory fees up to $167.50 and lien registration up to $78.50",
+      "url": "https://www.honda.ca/en/stretch-lease", "publisher": "Honda Canada", "date": "2026-09-30", "sourceType": "manufacturer-finance", "confirmed": true,
+      "rule": "In Ontario and BC these charges must be included in any advertised price (see docFees)."
+    },
+    "Mexico": {
+      "newCars": { "value": null, "note": "Toyota México's 'desde' prices are published without a separate freight line; no separate destination charge was found." },
+      "homeDelivery": { "value": "Kavak home delivery is available in its service areas; listings show delivery lead times (e.g., 'Entrega +7 días')", "url": "https://www.kavak.com/mx/seminuevos", "publisher": "Kavak", "date": "2026-09-30", "sourceType": "company", "confirmed": true, "note": "Search summaries say delivery is free in Mexico City, Estado de México, Guadalajara, Monterrey, Puebla and Querétaro; not read on the page." }
+    },
+    "UK": { "value": "Included: manufacturer on-the-road prices include delivery, the first registration fee and 12 months' vehicle excise duty", "quote": "Vehicle price includes first registration fee and 12 months' road fund licence.", "url": "https://www.nissan.co.uk/vehicles/new-vehicles/qashqai/prices-specifications.html", "publisher": "Nissan Motor (GB) Ltd", "date": "2026-09-30", "sourceType": "manufacturer-pricing", "confirmed": true },
+    "Ireland": {
+      "value": 1000, "unit": "EUR; Toyota Ireland's finance quotes assume a delivery charge of €1,000 and state that dealer delivery and related charges may vary. Hyundai Ireland states its prices exclude delivery and related charges.",
+      "url": "https://www.toyota.ie/new-cars/rav4", "publisher": "Toyota Ireland", "date": "2026-09-30", "sourceType": "manufacturer-offer", "confirmed": true
+    }
+  },
+
+  "tradeIn": {
+    "gap": {
+      "value": null,
+      "note": "No primary source publishes an average percentage or dollar gap between trade-in and private-sale value in any of the five markets. Kelley Blue Book defines its Trade-In Value as what a dealer will pay and says it 'will likely be less than' the Private Party Value because the dealer bears inspection, reconditioning and other business costs.",
+      "url": "https://b2b.kbb.com/kbb-vehicle-values/definitions-of-our-values/",
+      "publisher": "Kelley Blue Book", "date": "2026-09-30", "sourceType": "industry-data", "confirmed": true
+    },
+    "salesTaxTreatment": {
+      "NY": { "value": "The trade-in allowance is subtracted before sales tax when the dealer will resell the trade-in (example: $22,500 car minus $4,500 trade-in = $18,000 taxable).", "url": "https://www.tax.ny.gov/pubs_and_bulls/tg_bulletins/st/taxable_receipt.htm", "publisher": "NY Department of Taxation and Finance", "date": "2026-09-30", "sourceType": "government", "confirmed": true },
+      "CT": { "value": "Full trade-in credit is allowed against the 6.35% sales and use tax (7.75% over $50,000) when the car is bought from a licensed dealer. Private-party purchases are taxed on the higher of the NADA average trade-in value or the bill of sale, with no trade-in credit.", "url": "https://portal.ct.gov/DMV/Tax-Questions/Tax-Questions/Sales-Tax-on-Registrations", "publisher": "Connecticut DMV", "date": "2026-09-30", "sourceType": "government", "confirmed": true },
+      "CA": { "value": "No trade-in credit. The dealer must report and pay tax on the full selling price and cannot deduct the trade-in allowance (example: $20,000 car with a $4,000 trade-in is taxed on $20,000).", "url": "https://cdtfa.ca.gov/industry/motor-vehicle-dealers/industry-topics.htm", "publisher": "California Department of Tax and Fee Administration", "date": "2026-09-30", "sourceType": "government", "confirmed": true },
+      "Ontario_BC_Mexico_UK_Ireland": { "value": null, "note": "Not researched in this pass. Canadian provinces have their own rules; UK and Irish VAT is inside the list price and there is no sales tax on the transaction, so a part-exchange carries no tax credit." }
+    },
+    "equityData_US": {
+      "value": "Q2 2026: average positive trade-in equity $13,330 (a record); 68.8% of trade-ins had positive equity; 29.6% of trade-ins toward new cars had negative equity, averaging $6,884 (a Q2 record); average payment with negative equity rolled in $944 vs. $777 overall.",
+      "url": "https://www.edmunds.com/car-news/insights-q2-2026-used-car-report.html",
+      "publisher": "Edmunds", "date": "2026-07", "sourceType": "industry-data", "confirmed": false,
+      "note": "edmunds.com blocked retrieval; figures from a search summary of the Edmunds report."
+    }
+  },
+
+  "uncertain": [
+    "Toyota 2026 RAV4 delivery fee: Toyota's pressroom footnote (updated 2026-09-26) says $1,095; Edmunds and other secondary sources say $1,450. The manufacturer's page was read, but the figure is out of line with the industry. Check toyota.com's build page before using it.",
+    "Ford 2026 F-150 destination: $2,595 (Pickup Truck Talk, read) vs. $2,795 (another secondary summary). ford.com could not be retrieved.",
+    "Money factor: no manufacturer publishes it. The 0.00299 figure (about 7.2% APR) is derived from Toyota's own offer figures and matches across three regions, but it is a calculation, not a published rate.",
+    "Honda Canada's '20,000 kilometre allowance' in the Stretch Lease example does not say 'per year' on the page.",
+    "UK PCH excess-mileage rate for the Toyota Corolla offer is not stated; only the PCP rate (8p/mile) is.",
+    "Hyundai Ireland's Tucson PCP example (€35,595 / €244.15 x 36 / €15,567.75 GMFV / 3.9% APR) exists only in commented-out page code and may be stale.",
+    "iSeeCars model depreciation figures (RAV4 25.2%, CR-V 28.9%, F-150 37.9%) were read through a page summarizer; spot-check them.",
+    "UK average annual mileage (7,100 miles, 2024) is widely attributed to the DfT National Travel Survey, but the gov.uk page holding it could not be retrieved.",
+    "Canada's average annual kilometres (15,336 km) is from 2009, the last national survey.",
+    "Carfax US single-report price ($44.99) comes from secondary sites; carfax.com did not show it in the page source.",
+    "Mexico: no official average annual mileage, used-price average, dealer paperwork fee or independent inspection price was found."
+  ]
+}

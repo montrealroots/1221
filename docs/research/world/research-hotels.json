@@ -1,0 +1,4050 @@
+{
+ "meta": {
+  "generated": "2026-10-01",
+  "targetStay": "Wednesday 2026-11-04 to Thursday 2026-11-05 (one night, one adult) - about 5 weeks out",
+  "method": "WebFetch of hotel-owned pages where reachable; WebSearch summaries of OTA listings otherwise. confirmed:true on a hotel means its core policies were read on the cited hotel-owned page; on a room it means name and bed config were read on the cited page.",
+  "rateFinding": "No dated nightly rate could be read for any hotel. Every booking engine and OTA tried (hotel engines, Booking.com, Expedia [429], Hotels.com, Kayak, Trip.com, Google Travel, Cloudbeds, Travelodge) renders prices with JavaScript or blocks automated fetches, so the 4-5 Nov 2026 rate is null everywhere. Two hotels show undated from-prices on their own pages (The Westbury, Dublin; Sandman Signature Vancouver Downtown); these are recorded with kind \"from-price, undated\" and dateQuoted null.",
+  "blockedSites": [
+   "marriott.com (403)",
+   "hilton.com (403)",
+   "omnihotels.com (403)",
+   "fourseasons.com (403)",
+   "dorchestercollection.com (403)",
+   "expedia.com (429)",
+   "booking.com (empty)",
+   "premierinn.com (timeouts)"
+  ],
+  "taxNotes": {
+   "uk-eng-london": "UK room rates include 20% VAT; No London visitor levy was stated on any page read; not verified.",
+   "ie-lei-dublin": "Irish room rates include VAT.",
+   "US/Canada/Mexico": "Taxes added on top of quoted rates (US city/state occupancy tax; Canadian GST/HST, provincial and municipal accommodation taxes; Mexican IVA and CDMX lodging tax). Exact percentages were not read on these pages and are not stated here."
+  },
+  "cityIds": [
+   "us-ny-newyork",
+   "us-ca-losangeles",
+   "us-ct-newhaven",
+   "uk-eng-london",
+   "ie-lei-dublin",
+   "ca-on-toronto",
+   "ca-bc-vancouver",
+   "mx-cmx-mexicocity"
+  ],
+  "countsPerCity": {
+   "us-ny-newyork": 6,
+   "us-ca-losangeles": 6,
+   "us-ct-newhaven": 6,
+   "uk-eng-london": 5,
+   "ie-lei-dublin": 5,
+   "ca-on-toronto": 5,
+   "ca-bc-vancouver": 5,
+   "mx-cmx-mexicocity": 5
+  },
+  "totalHotels": 43,
+  "totalRoomCategories": 162,
+  "hotelsConfirmed": 19
+ },
+ "hotels": [
+  {
+   "id": "pod-times-square",
+   "name": "Pod Times Square",
+   "brand": "Pod Hotels",
+   "city": "us-ny-newyork",
+   "address": "400 W 42nd St, New York, NY 10036",
+   "starRating": null,
+   "url": "https://www.thepodhotel.com/pod-times-square",
+   "checkIn": "15:00",
+   "checkOut": "13:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": 50,
+     "currency": "USD",
+     "basis": "per stay",
+     "text": "Full stay plus a $50 refundable security deposit authorized at arrival"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": "Not published on the FAQ page; varies by rate"
+    },
+    "pets": "Small dogs under 25 lb, $25 per night, with advance notice",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": {
+     "amount": 29.84,
+     "currency": "USD",
+     "name": "Facility fee",
+     "taxIncluded": true,
+     "covers": "Early check-in and late check-out when available, US calls, printing, same-day luggage storage, walking tours"
+    },
+    "parkingPerNight": {
+     "self": null,
+     "valet": null,
+     "offsite": {
+      "amount": 57,
+      "currency": "USD",
+      "text": "iPark, 350 W 42nd St: $57 sedan, $67 SUV/oversized, 24 hours, no in/out"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "restaurant",
+    "gym",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Bunk Pod",
+     "bedConfig": "1 Twin bunk bed",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "private bathroom",
+      "rain shower",
+      "soundproof windows",
+      "work desk"
+     ],
+     "rate": null,
+     "source": "https://www.thepodhotel.com/pod-times-square/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Full Pod",
+     "bedConfig": "1 Full",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "private bathroom",
+      "rain shower",
+      "soundproof windows",
+      "work desk"
+     ],
+     "rate": null,
+     "source": "https://www.thepodhotel.com/pod-times-square/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Queen Pod",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "private bathroom",
+      "rain shower",
+      "soundproof windows",
+      "work desk"
+     ],
+     "rate": null,
+     "source": "https://www.thepodhotel.com/pod-times-square/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Standard One Bed + One Bath Pod Pad",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "kitchen",
+      "living room",
+      "city view",
+      "accessible option"
+     ],
+     "rate": null,
+     "source": "https://www.thepodhotel.com/pod-times-square/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Standard Two Bed + Two Bath Pod Pad",
+     "bedConfig": "2 Queens",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": "450-600 sq ft",
+     "features": [
+      "kitchen",
+      "two bathrooms",
+      "city or Hudson River view",
+      "accessible bedroom and bath"
+     ],
+     "rate": null,
+     "source": "https://www.thepodhotel.com/pod-times-square/rooms",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Policies from https://www.thepodhotel.com/pod-times-square/frequently-asked-questions (read). Facility fee is quoted tax-inclusive by the hotel. Trip.com lists a $30 deposit instead; the hotel's own FAQ ($50) is used. No dated rate could be read: the hotel's booking engine, Booking.com, Expedia, Kayak and Trip.com did not render prices to the fetcher."
+  },
+  {
+   "id": "citizenm-new-york-times-square",
+   "name": "citizenM New York Times Square",
+   "brand": "citizenM (Marriott International)",
+   "city": "us-ny-newyork",
+   "address": "218 W 50th St, New York, NY",
+   "starRating": null,
+   "url": "https://www.marriott.com/en-us/hotels/nyczt-citizenm-new-york-times-square/overview/",
+   "checkIn": "14:00",
+   "checkOut": "11:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": "Photo ID and credit card required at check-in"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Not allowed; service animals welcome",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": null
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [
+    {
+     "name": "citizenM Room",
+     "bedConfig": "1 King (XL)",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "about 150 sq ft",
+     "features": [
+      "rain shower",
+      "under-bed luggage drawer",
+      "moodpad lighting and TV control"
+     ],
+     "rate": null,
+     "source": "search summary of oyster.com / e-architect.com",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "citizenM's own site now redirects to Marriott (marriott.com returned 403 to the fetcher). Check-in/out, age and pet policy are from search summaries of OTA listings, not read on a page. 230 rooms. Address is the hotel's published street address. Rate null: no booking page rendered prices. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "hgi-nyc-times-square-central",
+   "name": "Hilton Garden Inn New York/Times Square Central",
+   "brand": "Hilton Garden Inn (Hilton)",
+   "city": "us-ny-newyork",
+   "address": "136 West 42nd Street, New York, NY 10036",
+   "starRating": null,
+   "url": "https://www.hilton.com/en/hotels/nycssgi-hilton-garden-inn-new-york-times-square-central/",
+   "checkIn": "15:00",
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": 21,
+    "deposit": {
+     "amount": 100,
+     "currency": "USD",
+     "basis": "per night",
+     "text": "OTA listings disagree: USD 100 per night, or $700 damage deposit on arrival"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Allowed, $75 non-refundable fee, 50 lb maximum",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": {
+     "amount": null,
+     "currency": "USD",
+     "name": "Destination charge",
+     "taxIncluded": false,
+     "covers": "Premium internet, $10 daily food and beverage credit, laundry up to $30 daily, 2 Citi Bike passes, lobby Starbucks coffee"
+    },
+    "parkingPerNight": {
+     "self": null,
+     "valet": null,
+     "text": "No on-site self or valet parking; public garage at 38 W 43rd St"
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "laundry service",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "1 Queen Bed",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "1 King Bed City View",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "city view"
+     ],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "1 King Bed Corner Ball Drop View",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "Times Square view",
+      "corner"
+     ],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "2 Queen Beds",
+     "bedConfig": "2 Queens",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "hilton.com returned 403 to the fetcher; all facts are from search summaries of Booking.com/Orbitz/trip.com listings. 282 rooms over 35 floors, 32 accessible. Destination charge amount not found. Room names are approximations of Hilton's labels, not read from Hilton. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "nyc-marriott-marquis",
+   "name": "New York Marriott Marquis",
+   "brand": "Marriott Hotels (Marriott International)",
+   "city": "us-ny-newyork",
+   "address": "1535 Broadway, New York, NY 10036",
+   "starRating": null,
+   "url": "https://www.marriott.com/en-us/hotels/nycmq-new-york-marriott-marquis/overview/",
+   "checkIn": "16:00",
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": 21,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": "Card or cash deposit may be required for incidentals"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Not allowed; service animals welcome",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": {
+     "amount": 51.64,
+     "currency": "USD",
+     "name": "Destination fee",
+     "taxIncluded": null
+    },
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 90,
+      "currency": "USD",
+      "text": "Valet $90 car, $100 SUV, $125 oversized (no in/out); figures vary between listings"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [
+    {
+     "name": "Deluxe Guest Room, 1 King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "391 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "search summary of suiteness.com / hotels-new-york.org",
+     "confirmed": false
+    },
+    {
+     "name": "Deluxe Guest Room, 2 Double",
+     "bedConfig": "2 Doubles",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "385 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "search summary",
+     "confirmed": false
+    },
+    {
+     "name": "Renovated Deluxe, Guest room, 1 King, Sofa bed",
+     "bedConfig": "1 King, 1 Sofa bed",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "385 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.suiteness.com/suites/united-states/new-york/new-york/new-york-marriott-marquis/renovated-deluxe-guest-room-1-king-sofa-bed (title)",
+     "confirmed": false
+    },
+    {
+     "name": "Premier Corner, Guest room, 1 King, Sofa bed",
+     "bedConfig": "1 King, 1 Sofa bed",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "498 sq ft",
+     "features": [
+      "corner"
+     ],
+     "rate": null,
+     "source": "search summary",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "marriott.com returned 403 (Retry-After 8 hours). Destination fee $51.64 and valet figures are from search summaries of resortfeechecker/Orbitz; another listing gives $150 per day valet with in/out. Treat as unconfirmed. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "ace-hotel-brooklyn",
+   "name": "Ace Hotel Brooklyn",
+   "brand": "Ace Hotel",
+   "city": "us-ny-newyork",
+   "address": "252 Schermerhorn St, Brooklyn, NY 11217",
+   "starRating": null,
+   "url": "https://acehotel.com/brooklyn/",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": 21,
+    "deposit": {
+     "amount": 300,
+     "currency": "USD",
+     "basis": "per stay",
+     "text": "Card authorized for room + taxes + $300 for incidentals; unused funds released at check-out"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": "Varies by rate plan; early departure fee unless 24 hours' notice"
+    },
+    "pets": "Pets under 25 lb, $25 per day per pet",
+    "smoking": "All rooms non-smoking; $350 plus tax smoking fee"
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": {
+     "amount": 40,
+     "currency": "USD",
+     "name": "Destination fee",
+     "taxIncluded": false,
+     "covers": "Fitness center, premium WiFi, calls, retail discount, pet amenities"
+    },
+    "parkingPerNight": {
+     "self": null,
+     "valet": null,
+     "offsite": {
+      "amount": 34,
+      "currency": "USD",
+      "text": "IPark, 255 Schermerhorn St: $34 overnight, $40 oversized"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "gym",
+    "restaurant",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Queen",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "250-300 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://acehotel.com/brooklyn/",
+     "confirmed": true
+    },
+    {
+     "name": "Cozy",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://acehotel.com/brooklyn/",
+     "confirmed": true
+    },
+    {
+     "name": "Medium",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "325-375 sq ft",
+     "features": [
+      "floor-to-ceiling windows"
+     ],
+     "rate": null,
+     "source": "https://acehotel.com/brooklyn/",
+     "confirmed": true
+    },
+    {
+     "name": "Medium Skyline",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "325-375 sq ft",
+     "features": [
+      "city view",
+      "top four floors",
+      "some with bathtub"
+     ],
+     "rate": null,
+     "source": "https://acehotel.com/brooklyn/",
+     "confirmed": true
+    },
+    {
+     "name": "Double",
+     "bedConfig": "2 Queens",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "340-380 sq ft",
+     "features": [
+      "floor-to-ceiling windows"
+     ],
+     "rate": null,
+     "source": "https://acehotel.com/brooklyn/",
+     "confirmed": true
+    },
+    {
+     "name": "Loft",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "525-555 sq ft",
+     "features": [
+      "corner",
+      "guitar and turntable"
+     ],
+     "rate": null,
+     "source": "https://acehotel.com/brooklyn/",
+     "confirmed": true
+    },
+    {
+     "name": "One Bed Suite",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "545-600 sq ft",
+     "features": [
+      "two rooms"
+     ],
+     "rate": null,
+     "source": "https://acehotel.com/brooklyn/",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Ace's Manhattan hotel closed in 2020; Brooklyn is its New York property. Policies read on https://acehotel.com/brooklyn/frequently-asked-questions/ (the FAQ says $40/night destination fee plus tax; an OTA lists USD 45.90, which is the fee with tax)."
+  },
+  {
+   "id": "the-plaza-nyc",
+   "name": "The Plaza",
+   "brand": "Fairmont (Accor) - managed",
+   "city": "us-ny-newyork",
+   "address": "768 Fifth Avenue, New York, NY 10019",
+   "starRating": 5,
+   "url": "https://www.theplazany.com/",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": 21,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": "Card or cash deposit may be required for incidentals"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Dogs of any size, no charge, maximum 2 per room, not left unattended",
+    "smoking": "Non-smoking hotel; minimum $1,500 violation fee"
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": {
+     "amount": 65,
+     "currency": "USD",
+     "name": "Urban Experience Fee",
+     "taxIncluded": false,
+     "covers": "$50 food and beverage credit, $50 spa credit, Chromecast"
+    },
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 110,
+      "currency": "USD",
+      "text": "Valet $110 per night, no in/out; $15 oversized surcharge"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "gym",
+    "spa",
+    "restaurant",
+    "laundry service",
+    "room service"
+   ],
+   "rooms": [
+    {
+     "name": "Plaza King",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "475 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "search summary of virginatlantic.com / oyster.com",
+     "confirmed": false
+    },
+    {
+     "name": "Deluxe King",
+     "bedConfig": "1 King",
+     "maxOccupancy": 3,
+     "sizeSqFtOrM2": "550 sq ft",
+     "features": [
+      "sitting area"
+     ],
+     "rate": null,
+     "source": "search summary",
+     "confirmed": false
+    },
+    {
+     "name": "Terrace Room King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "terrace"
+     ],
+     "rate": null,
+     "source": "https://www.theplazany.com/rooms-and-suites/ (name only)",
+     "confirmed": false
+    },
+    {
+     "name": "Edwardian Suite",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "1000 sq ft",
+     "features": [
+      "living room",
+      "powder room",
+      "large primary bath"
+     ],
+     "rate": null,
+     "source": "https://www.theplazany.com/rooms-and-suites/edwardian-one-bedroom-suite-king/ (search summary)",
+     "confirmed": false
+    }
+   ],
+   "confirmed": true,
+   "notes": "Check-in/out, pets, fee, valet read on https://www.fairmont.com/en/hotels/new-york-city/the-plaza/guest-services.html; smoking on https://www.theplazany.com/faq/. Minimum age 21 is from an OTA listing (search summary), not confirmed. Category names on theplazany.com appear as 'Plaza King', 'Deluxe King'; sizes from search summaries."
+  },
+  {
+   "id": "freehand-los-angeles",
+   "name": "Freehand Los Angeles",
+   "brand": "Freehand Hotels",
+   "city": "us-ca-losangeles",
+   "address": "416 W. 8th St., Los Angeles, CA 90014",
+   "starRating": null,
+   "url": "https://freehandhotels.com/los-angeles/",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": 75,
+     "currency": "USD",
+     "basis": "per stay",
+     "text": "$75 refundable deposit for all rooms; higher for cash"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Dogs 75 lb or less in private rooms only; $75 plus tax per stay; one dog per room",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": {
+     "amount": 28,
+     "currency": "USD",
+     "name": "Facility fee",
+     "taxIncluded": null,
+     "covers": "Rooftop bar priority, 24/7 gym, pool, WiFi, two waters, $10 F&B credit"
+    },
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 66,
+      "currency": "USD",
+      "text": "24-hour valet, $66 overnight including tax; no self-parking"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "pool",
+    "gym",
+    "restaurant",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Bunk Room",
+     "bedConfig": "4 Twins",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": "329 sq ft (30.5 m2)",
+     "features": [
+      "private bathroom",
+      "accessible option"
+     ],
+     "rate": null,
+     "source": "https://freehandhotels.com/los-angeles/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Friend Zone 6-Bunk Room",
+     "bedConfig": "6 Twins",
+     "maxOccupancy": 6,
+     "sizeSqFtOrM2": "329 sq ft (30.5 m2)",
+     "features": [
+      "private bathroom"
+     ],
+     "rate": null,
+     "source": "https://freehandhotels.com/los-angeles/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Friend Zone 8-Bunk Room",
+     "bedConfig": "8 Twins",
+     "maxOccupancy": 8,
+     "sizeSqFtOrM2": "565 sq ft (52.5 m2)",
+     "features": [
+      "two bathrooms"
+     ],
+     "rate": null,
+     "source": "https://freehandhotels.com/los-angeles/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "225 sq ft (21 m2)",
+     "features": [
+      "private bathroom"
+     ],
+     "rate": null,
+     "source": "https://freehandhotels.com/los-angeles/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Premium King City View",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "310 sq ft (29 m2)",
+     "features": [
+      "city view"
+     ],
+     "rate": null,
+     "source": "https://freehandhotels.com/los-angeles/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Premium King Skyline View",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "310 sq ft (29 m2)",
+     "features": [
+      "city view",
+      "accessible option"
+     ],
+     "rate": null,
+     "source": "https://freehandhotels.com/los-angeles/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Deluxe King Corner Studio",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "480 sq ft (45 m2)",
+     "features": [
+      "corner",
+      "accessible option"
+     ],
+     "rate": null,
+     "source": "https://freehandhotels.com/los-angeles/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Loft Suite",
+     "bedConfig": "1 King & 1 Quad",
+     "maxOccupancy": 5,
+     "sizeSqFtOrM2": "950 sq ft (88 m2)",
+     "features": [],
+     "rate": null,
+     "source": "https://freehandhotels.com/los-angeles/rooms/",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Policies read on https://freehandhotels.com/los-angeles/faq/. The rooms page's occupancy for king rooms was not clear in the fetch and is left null. 'Quad' is the hotel's own bed term (bunk unit)."
+  },
+  {
+   "id": "citizenm-los-angeles-downtown",
+   "name": "citizenM Los Angeles Downtown",
+   "brand": "citizenM (Marriott International)",
+   "city": "us-ca-losangeles",
+   "address": "721 S Broadway, Los Angeles, CA 90014",
+   "starRating": null,
+   "url": "https://www.marriott.com/en-us/hotels/laxzd-citizenm-los-angeles-downtown/overview/",
+   "checkIn": "14:00",
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Not allowed; service animals welcome",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": null,
+     "text": "No on-site parking; Broadway Spring Center garage at extra cost"
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [
+    {
+     "name": "citizenM Room",
+     "bedConfig": "1 King (XL)",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "rain shower",
+      "moodpad"
+     ],
+     "rate": null,
+     "source": "brand standard; not read on a property page",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "All facts from search summaries of OTA listings (marriott.com blocks the fetcher). Late check-out fee USD 39 per one listing. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "hotel-figueroa",
+   "name": "Hotel Figueroa",
+   "brand": "The Unbound Collection by Hyatt",
+   "city": "us-ca-losangeles",
+   "address": "939 S. Figueroa Street, Los Angeles, CA 90015",
+   "starRating": null,
+   "url": "https://www.hotelfigueroa.com/",
+   "checkIn": "16:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": 21,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": "Credit card required for incidentals at registration"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": 72,
+     "penalty": "1 night",
+     "text": "Cancel by 4:00 PM PT, 72 hours prior to arrival, to avoid a 1 night penalty"
+    },
+    "pets": "Dogs under 50 lb, $50 non-refundable per stay",
+    "smoking": "Smoke-free; $500 plus tax for violations (tobacco, vape, marijuana)"
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": {
+     "amount": 35,
+     "currency": "USD",
+     "name": "Nightly amenity fee",
+     "taxIncluded": false,
+     "covers": "Internet, fitness center, coffee, two boxed waters, museum discounts"
+    },
+    "parkingPerNight": {
+     "self": {
+      "amount": 40,
+      "currency": "USD",
+      "text": "Self-park $15 first 2 hours then $5 per 30 min, $40 max"
+     },
+     "valet": {
+      "amount": 62,
+      "currency": "USD",
+      "text": "Overnight valet $62 plus tax"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "pool",
+    "gym",
+    "restaurant",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "1 Queen Bed",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "187-220 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.hotelfigueroa.com/rooms-suites/ (name); size from search summary",
+     "confirmed": true
+    },
+    {
+     "name": "1 Queen Bed ADA with Tub",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "accessible",
+      "bathtub"
+     ],
+     "rate": null,
+     "source": "https://www.hotelfigueroa.com/rooms-suites/",
+     "confirmed": true
+    },
+    {
+     "name": "1 King Bed",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "about 270 sq ft",
+     "features": [
+      "sitting area",
+      "bathtub or rain shower"
+     ],
+     "rate": null,
+     "source": "https://www.hotelfigueroa.com/rooms-suites/ (name); size from search summary of /rooms-suites/classic-king/",
+     "confirmed": true
+    },
+    {
+     "name": "1 King Bed ADA w/ Roll-In Shower",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "accessible",
+      "roll-in shower"
+     ],
+     "rate": null,
+     "source": "https://www.hotelfigueroa.com/rooms-suites/",
+     "confirmed": true
+    },
+    {
+     "name": "2 Double Beds",
+     "bedConfig": "2 Doubles",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.hotelfigueroa.com/rooms-suites/",
+     "confirmed": true
+    },
+    {
+     "name": "2 Queen Beds",
+     "bedConfig": "2 Queens",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": "about 316 sq ft",
+     "features": [
+      "bathtub with rain shower"
+     ],
+     "rate": null,
+     "source": "https://www.hotelfigueroa.com/rooms-suites/ (name); size from search summary",
+     "confirmed": true
+    },
+    {
+     "name": "Junior Suite with 1 King Bed",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "353-356 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.hotelfigueroa.com/rooms-suites/",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Policies read on https://www.hotelfigueroa.com/faq. Room names read on /rooms-suites/; sizes are from search summaries of the hotel's own room pages (not individually fetched). The 'confirmed' on rooms refers to name and bed config."
+  },
+  {
+   "id": "hollywood-roosevelt",
+   "name": "The Hollywood Roosevelt",
+   "brand": "Independent",
+   "city": "us-ca-losangeles",
+   "address": "7000 Hollywood Boulevard, Los Angeles, CA 90028",
+   "starRating": null,
+   "url": "https://www.thehollywoodroosevelt.com/",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": "Card authorization at check-in for room, tax and estimated incidentals"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": "Varies by rate or offer"
+    },
+    "pets": "Up to two dogs 60 lb or less, $50 per stay; no cats",
+    "smoking": "Non-smoking; minimum $500 cleaning fee"
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": {
+     "amount": 37,
+     "currency": "USD",
+     "name": "Destination fee",
+     "taxIncluded": true,
+     "covers": "Enhanced WiFi, waters, morning coffee, calls, attraction discounts"
+    },
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 75,
+      "currency": "USD",
+      "text": "$75 per night overnight"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "pool",
+    "gym",
+    "spa",
+    "restaurant",
+    "laundry service",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Tower Room",
+     "bedConfig": "1 King, 1 Queen or 2 Doubles",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "300 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.thehollywoodroosevelt.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Premiere Room",
+     "bedConfig": "1 King or 2 Doubles",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "380 sq ft",
+     "features": [
+      "city or courtyard view"
+     ],
+     "rate": null,
+     "source": "https://www.thehollywoodroosevelt.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Cabana Garden King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "265 sq ft",
+     "features": [
+      "private patio"
+     ],
+     "rate": null,
+     "source": "https://www.thehollywoodroosevelt.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Cabana Poolside King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "275 sq ft",
+     "features": [
+      "pool access"
+     ],
+     "rate": null,
+     "source": "https://www.thehollywoodroosevelt.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Tower Suite",
+     "bedConfig": "1 King or 2 Doubles",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "480 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.thehollywoodroosevelt.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Roosevelt Suite",
+     "bedConfig": "1 King, 1 Sofa bed",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "680 sq ft",
+     "features": [
+      "corner",
+      "boulevard view"
+     ],
+     "rate": null,
+     "source": "https://www.thehollywoodroosevelt.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Accessible Rooms",
+     "bedConfig": "1 King or 2 Doubles",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "380 sq ft",
+     "features": [
+      "accessible",
+      "roll-in shower"
+     ],
+     "rate": null,
+     "source": "https://www.thehollywoodroosevelt.com/rooms",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Policies read on https://www.thehollywoodroosevelt.com/faq."
+  },
+  {
+   "id": "jw-marriott-la-live",
+   "name": "JW Marriott Los Angeles L.A. LIVE",
+   "brand": "JW Marriott (Marriott International)",
+   "city": "us-ca-losangeles",
+   "address": "900 W Olympic Blvd, Los Angeles, CA 90015",
+   "starRating": null,
+   "url": "https://www.marriott.com/en-us/hotels/laxjw-jw-marriott-los-angeles-la-live/overview/",
+   "checkIn": "16:00",
+   "checkOut": "11:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Not allowed; service animals welcome",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": {
+     "amount": 58,
+     "currency": "USD",
+     "name": "Destination fee",
+     "taxIncluded": null
+    },
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 71.5,
+      "currency": "USD",
+      "text": "Valet $71.50 per day per search summary"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [],
+   "confirmed": false,
+   "notes": "marriott.com blocks the fetcher; all facts from search summaries of OTA listings, not confirmed. Address is the hotel's well-known published address (900 W Olympic Blvd). Room categories not read; rooms left empty rather than guessed. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "beverly-hills-hotel",
+   "name": "The Beverly Hills Hotel",
+   "brand": "Dorchester Collection",
+   "city": "us-ca-losangeles",
+   "address": "9641 Sunset Boulevard, Beverly Hills, CA 90210",
+   "starRating": 5,
+   "url": "https://www.dorchestercollection.com/los-angeles/the-beverly-hills-hotel",
+   "checkIn": "15:00",
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Up to two house-trained dogs, max 20 kg / 45 lb, $150 per stay",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 70,
+      "currency": "USD",
+      "text": "Valet $70 per night with in/out"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [
+    {
+     "name": "Superior Room",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "37 m2 / 400 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.dorchestercollection.com/los-angeles/the-beverly-hills-hotel/rooms-suites/superior-room (search summary)",
+     "confirmed": false
+    },
+    {
+     "name": "Deluxe Room",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "49 m2 / 525 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.dorchestercollection.com/los-angeles/the-beverly-hills-hotel/rooms-suites/deluxe-room (search summary)",
+     "confirmed": false
+    },
+    {
+     "name": "Bungalow Room",
+     "bedConfig": "1 King or 2 Doubles",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "44 m2 / 475 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.dorchestercollection.com/los-angeles/the-beverly-hills-hotel/rooms-suites/bungalow-room (search summary)",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "Dorchester Collection site returned 403. Policies are from search summaries of OTA listings. Sits in the City of Beverly Hills, inside the Los Angeles area; Beverly Hills levies its own hotel tax. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "la-quinta-new-haven",
+   "name": "La Quinta Inn & Suites by Wyndham New Haven",
+   "brand": "La Quinta by Wyndham",
+   "city": "us-ct-newhaven",
+   "address": "400 Sargent Drive, New Haven, CT 06511",
+   "starRating": null,
+   "url": "https://www.wyndhamhotels.com/laquinta/new-haven-connecticut/la-quinta-new-haven/overview",
+   "checkIn": null,
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Pets allowed (terms not read)",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": null
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [],
+   "confirmed": false,
+   "notes": "Budget option. Only name, address and pet allowance are known, from search summaries of OTA listings (phone +1 203-562-1111). The official URL is the Wyndham pattern and was not fetched. Policies, rooms and rate not read; left null rather than guessed."
+  },
+  {
+   "id": "courtyard-new-haven-at-yale",
+   "name": "Courtyard New Haven at Yale",
+   "brand": "Courtyard by Marriott (Marriott International)",
+   "city": "us-ct-newhaven",
+   "address": "30 Whalley Ave, New Haven, CT 06511",
+   "starRating": null,
+   "url": "https://www.marriott.com/en-us/hotels/hvndt-courtyard-new-haven-at-yale/overview/",
+   "checkIn": null,
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Not allowed; service animals welcome",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": 25,
+      "currency": "USD",
+      "text": "On-site parking $25 daily per vehicle, tax not included"
+     },
+     "valet": null
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Room, 1 King Bed",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "Room, 1 King Bed with Sofa bed",
+     "bedConfig": "1 King, 1 Sofa bed",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "Room, 1 King Bed, Mobility Accessible, Bathtub",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "accessible",
+      "bathtub"
+     ],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "207 rooms. marriott.com blocks the fetcher; facts are from search summaries. Room names are Expedia-style labels, not Marriott's own. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "graduate-new-haven",
+   "name": "Graduate by Hilton New Haven",
+   "brand": "Graduate by Hilton (Hilton)",
+   "city": "us-ct-newhaven",
+   "address": "1151 Chapel St, New Haven, CT 06511",
+   "starRating": null,
+   "url": "https://www.hilton.com/en/hotels/hvngngu-graduate-new-haven/",
+   "checkIn": "16:00",
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": "Photo ID and credit card at check-in"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Up to two pets, 75 lb max each, $125 per pet per stay, non-refundable",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": null,
+     "text": "No self-parking per Hilton; listings mention $30/night or nearby $20/day; unresolved"
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [],
+   "confirmed": false,
+   "notes": "hilton.com blocks the fetcher; facts from search summaries. Rooms not read. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "hotel-marcel-new-haven",
+   "name": "Hotel Marcel New Haven, Tapestry Collection by Hilton",
+   "brand": "Tapestry Collection by Hilton (Hilton)",
+   "city": "us-ct-newhaven",
+   "address": "500 Sargent Drive, New Haven, CT 06511",
+   "starRating": null,
+   "url": "https://www.hilton.com/en/hotels/hvnmmup-hotel-marcel-new-haven/",
+   "checkIn": "15:00",
+   "checkOut": "11:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Up to two dogs, 50 lb max each, $75 per pet per stay",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": 0,
+      "currency": "USD",
+      "text": "Free covered on-site parking with 24 EV chargers"
+     },
+     "valet": null
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [],
+   "confirmed": false,
+   "notes": "Converted Marcel Breuer Armstrong Rubber/Pirelli building; Passive House certified. Facts from search summaries of Booking.com/Expedia; hilton.com blocks the fetcher. The Hilton URL slug was not verified. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "omni-new-haven-at-yale",
+   "name": "Omni New Haven Hotel at Yale",
+   "brand": "Omni Hotels & Resorts",
+   "city": "us-ct-newhaven",
+   "address": "155 Temple Street, New Haven, CT 06510",
+   "starRating": null,
+   "url": "https://www.omnihotels.com/hotels/new-haven-yale",
+   "checkIn": null,
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": 100,
+     "currency": "USD",
+     "basis": "per night",
+     "text": "Breakage deposit USD 100 per day (OTA listing)"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Dogs and cats, 50 lb max, USD 143.75 per stay, certain rooms only",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": 28.75,
+      "currency": "USD",
+      "text": "Covered self-parking with in/out"
+     },
+     "valet": {
+      "amount": 34.5,
+      "currency": "USD",
+      "text": "Covered valet with in/out"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [
+    {
+     "name": "Deluxe King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "335 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "search summary (suiteness.com / OTA)",
+     "confirmed": false
+    },
+    {
+     "name": "Deluxe Room, 2 Queen Beds",
+     "bedConfig": "2 Queens",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "336 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.suiteness.com/suites/united-states/connecticut/new-haven/omni-new-haven-hotel-at-yale/deluxe-room-2-queen-beds-exp (search summary)",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "omnihotels.com returned 403. Parking and pet figures (which look tax-inclusive: $28.75 = $25 + 15%) are from OTA search summaries. Policies page exists at https://www.omnihotels.com/hotels/new-haven-yale/property-details/policies but could not be fetched. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "study-at-yale",
+   "name": "The Study at Yale",
+   "brand": "Study Hotels",
+   "city": "us-ct-newhaven",
+   "address": "1157 Chapel Street, New Haven, CT 06511",
+   "starRating": null,
+   "url": "https://www.thestudyatyale.com/",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "USD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Most household pets, USD 75 per stay",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 34,
+      "currency": "USD",
+      "text": "Covered valet $34 per night with in/out"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "King Room",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "large desk"
+     ],
+     "rate": null,
+     "source": "https://www.thestudyatyale.com/accommodations",
+     "confirmed": true
+    },
+    {
+     "name": "Queen Room",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "city view"
+     ],
+     "rate": null,
+     "source": "https://www.thestudyatyale.com/accommodations",
+     "confirmed": true
+    },
+    {
+     "name": "Double Room",
+     "bedConfig": "2 beds (size not stated)",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.thestudyatyale.com/accommodations",
+     "confirmed": true
+    },
+    {
+     "name": "King Room - Campus View",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "30 m2 / 320 sq ft",
+     "features": [
+      "Yale campus view"
+     ],
+     "rate": null,
+     "source": "https://www.thestudyatyale.com/accommodations (size from OTA search summary)",
+     "confirmed": true
+    },
+    {
+     "name": "Premier King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "80 sq ft larger than King Room",
+      "Yale view"
+     ],
+     "rate": null,
+     "source": "https://www.thestudyatyale.com/accommodations",
+     "confirmed": true
+    },
+    {
+     "name": "King Study",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "40 m2 / 430 sq ft",
+     "features": [
+      "separate den"
+     ],
+     "rate": null,
+     "source": "https://www.thestudyatyale.com/accommodations (size from OTA search summary)",
+     "confirmed": true
+    },
+    {
+     "name": "Accessible Single Room",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "accessible"
+     ],
+     "rate": null,
+     "source": "https://www.thestudyatyale.com/accommodations",
+     "confirmed": true
+    },
+    {
+     "name": "Presidential Suite",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "725 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.thestudyatyale.com/accommodations",
+     "confirmed": true
+    }
+   ],
+   "confirmed": false,
+   "notes": "Rooms read on the hotel's own site. Check-in/out, valet and pet fee are from search summaries of OTA listings (not confirmed). Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "travelodge-london-kings-cross-royal-scot",
+   "name": "Travelodge London Kings Cross Royal Scot",
+   "brand": "Travelodge",
+   "city": "uk-eng-london",
+   "address": "100 Kings Cross Road, London WC1X 9DT",
+   "starRating": null,
+   "url": "https://www.travelodge.co.uk/hotels/269/London-Central-Kings-Cross-Royal-Scot-hotel",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "GBP",
+     "basis": null,
+     "text": "No incidental hold stated; card charged on no-show for bookings not prepaid"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": "Flexible rate: refundable until 12:00 on the arrival date; Saver/Semi-Flex/Lowest rates: non-refundable",
+     "text": "Flexible: cancel before 12pm on the check-in date for a refund. Semi-Flex and Lowest Rate: not refundable in whole or in part."
+    },
+    "pets": "Pet-friendly rooms; pet stay is a purchased extra; assistance dogs free",
+    "smoking": "Non-smoking; charged for specialist cleaning, damage, and lost room nights"
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": 24,
+      "currency": "GBP",
+      "text": "GBP 24.00 per 24 hours, first come first served; Blue Badge exempt"
+     },
+     "valet": null
+    },
+    "cityTaxes": "included (VAT included in room rates unless stated otherwise; no visitor levy stated on pages read)"
+   },
+   "amenities": [
+    "restaurant",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Standard Double Room",
+     "bedConfig": "1 King (Travelodge Dreamer)",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.travelodge.co.uk/hotels/269/London-Central-Kings-Cross-Royal-Scot-hotel",
+     "confirmed": true
+    },
+    {
+     "name": "Twin Room",
+     "bedConfig": "2 Single beds",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "Family Room",
+     "bedConfig": "1 Double, 1 Single",
+     "maxOccupancy": 3,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "SuperRoom",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "capsule coffee machine",
+      "power shower"
+     ],
+     "rate": null,
+     "source": "https://www.travelodge.co.uk/hotels/269/London-Central-Kings-Cross-Royal-Scot-hotel",
+     "confirmed": true
+    },
+    {
+     "name": "Accessible Room",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "accessible"
+     ],
+     "rate": null,
+     "source": "Travelodge hotel page (room list)",
+     "confirmed": false
+    }
+   ],
+   "confirmed": true,
+   "notes": "Hotel page and https://www.travelodge.co.uk/about/booking-terms-conditions/ read. The hotel page did not render prices for 4-5 Nov 2026 (it only showed nearby hotels 'from GBP 145.99', not a dated rate for this hotel). WiFi: 30 min free per 24h, GBP 3.50 for 24h. Hotel number 269 on travelodge.co.uk."
+  },
+  {
+   "id": "premier-inn-london-county-hall",
+   "name": "Premier Inn London County Hall",
+   "brand": "Premier Inn (Whitbread)",
+   "city": "uk-eng-london",
+   "address": "County Hall, Belvedere Road, London SE1 7PB",
+   "starRating": null,
+   "url": "https://www.premierinn.com/gb/en/hotels/england/greater-london/london/london-county-hall.html",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "GBP",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": "Flex: free until 13:00 on arrival day; Semi-Flex: until midnight UK time 3 days before arrival; Saver: non-refundable",
+     "text": "From search summary of premierinn.com rate FAQ"
+    },
+    "pets": "Not allowed (assistance dogs excepted)",
+    "smoking": "Non-smoking"
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": null,
+     "text": "No hotel parking; nearby public parking about GBP 20 (OTA listing)"
+    },
+    "cityTaxes": "included (UK rates are quoted including VAT)"
+   },
+   "amenities": [
+    "restaurant",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Double room",
+     "bedConfig": "1 King (Premier Inn Bed)",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of https://www.premierinn.com/gb/en/sleep/our-rooms.html",
+     "confirmed": false
+    },
+    {
+     "name": "Twin room",
+     "bedConfig": "1 Double or King, 1 Single sofa bed (some: 2 Single beds)",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of premierinn.com/our-rooms",
+     "confirmed": false
+    },
+    {
+     "name": "Family room",
+     "bedConfig": "1 Double or King, 1 Single sofa bed, 1 pull-out bed",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "2 adults + 2 children under 16"
+     ],
+     "rate": null,
+     "source": "search summary of premierinn.com/our-rooms",
+     "confirmed": false
+    },
+    {
+     "name": "Accessible room",
+     "bedConfig": "1 Double or King (lowered)",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "accessible",
+      "wet room or low bath"
+     ],
+     "rate": null,
+     "source": "search summary of premierinn.com/our-rooms",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "premierinn.com timed out on every fetch (three attempts). 316 bedrooms. Check-in time: Premier Inn standard is 15:00; one OTA lists 14:00. Room types are the brand's standard set, not read for this property."
+  },
+  {
+   "id": "hoxton-holborn",
+   "name": "The Hoxton, Holborn",
+   "brand": "The Hoxton (Ennismore)",
+   "city": "uk-eng-london",
+   "address": "199-206 High Holborn, London WC1V 7BD",
+   "starRating": null,
+   "url": "https://thehoxton.com/london/holborn/",
+   "checkIn": "14:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": 50,
+     "currency": "GBP",
+     "basis": "per stay",
+     "text": "GBP 50 damage deposit on arrival (OTA listing), refunded within 14 days"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": "Direct bookings: cancel free until 2pm the day before arrival (roughly 24-25 hours); terms vary by booking type"
+    },
+    "pets": "Dogs up to 18 kg free, any room except Shoebox",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": null,
+     "text": "No on-site parking; public car park 2 minutes away; congestion zone and ULEZ"
+    },
+    "cityTaxes": "included (UK VAT included)"
+   },
+   "amenities": [
+    "restaurant",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Shoebox",
+     "bedConfig": "1 Double",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "12 m2 / 130 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://thehoxton.com/london/holborn/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Snug",
+     "bedConfig": "1 Double",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "14 m2 / 150 sq ft",
+     "features": [
+      "dog friendly"
+     ],
+     "rate": null,
+     "source": "https://thehoxton.com/london/holborn/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Cosy",
+     "bedConfig": "1 Double",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "16 m2 / 170 sq ft",
+     "features": [
+      "dog friendly"
+     ],
+     "rate": null,
+     "source": "https://thehoxton.com/london/holborn/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Cosy Up",
+     "bedConfig": "1 Double",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "18 m2 / 195 sq ft",
+     "features": [
+      "desk",
+      "dog friendly"
+     ],
+     "rate": null,
+     "source": "https://thehoxton.com/london/holborn/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Roomy",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "21 m2 / 225 sq ft",
+     "features": [
+      "dog friendly"
+     ],
+     "rate": null,
+     "source": "https://thehoxton.com/london/holborn/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Roomy Twin",
+     "bedConfig": "2 Single beds or 1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "21 m2 / 225 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://thehoxton.com/london/holborn/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Biggy",
+     "bedConfig": "1 King",
+     "maxOccupancy": 3,
+     "sizeSqFtOrM2": "27 m2 / 290 sq ft",
+     "features": [
+      "2 adults + 1 child",
+      "dog friendly"
+     ],
+     "rate": null,
+     "source": "https://thehoxton.com/london/holborn/rooms/",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Rooms and 'cancel for free up til 2pm the day before arrival' read on the hotel's rooms page; it also advertises 'Flexy Time: check in & out any time, for free' for direct bookings (72 hours ahead). Standard 14:00 check-in, age 18, GBP 50 deposit and dog policy are from search summaries. 220 bedrooms."
+  },
+  {
+   "id": "citizenm-tower-of-london",
+   "name": "citizenM Tower of London",
+   "brand": "citizenM (Marriott International)",
+   "city": "uk-eng-london",
+   "address": "40 Trinity Square, London",
+   "starRating": null,
+   "url": "https://www.marriott.com/en-us/hotels/lontl-citizenm-tower-of-london/overview/",
+   "checkIn": "14:00",
+   "checkOut": "11:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": 0,
+     "currency": "GBP",
+     "basis": null,
+     "text": "No deposit required (OTA listing)"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Not allowed; service animals welcome",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": null
+    },
+    "cityTaxes": "included (UK VAT included)"
+   },
+   "amenities": [],
+   "rooms": [
+    {
+     "name": "citizenM Room",
+     "bedConfig": "1 King (XL)",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "rain shower",
+      "moodpad"
+     ],
+     "rate": null,
+     "source": "brand standard; not read on a property page",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "All facts from search summaries of Orbitz/Expedia/trip.com listings; marriott.com blocks the fetcher. Postcode EC3N 4DJ is the published postcode for 40 Trinity Square. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "the-savoy-london",
+   "name": "The Savoy",
+   "brand": "Fairmont (Accor) - managed",
+   "city": "uk-eng-london",
+   "address": "Strand, London WC2R 0EZ",
+   "starRating": 5,
+   "url": "https://www.thesavoylondon.com/",
+   "checkIn": "15:00",
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "GBP",
+     "basis": null,
+     "text": "Valid credit card at check-in for incidentals and security deposit"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "GBP 25 per pet per night; pet-sitting available",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 70,
+      "currency": "GBP",
+      "text": "Secured covered valet GBP 70 per day with in/out"
+     }
+    },
+    "cityTaxes": "included (UK VAT included)"
+   },
+   "amenities": [],
+   "rooms": [
+    {
+     "name": "Superior Queen Room",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "27 m2 / 290 sq ft",
+     "features": [
+      "city or courtyard view"
+     ],
+     "rate": null,
+     "source": "https://www.thesavoylondon.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Deluxe King Room",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "31 m2 / 333 sq ft",
+     "features": [
+      "city or courtyard view"
+     ],
+     "rate": null,
+     "source": "https://www.thesavoylondon.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Luxury King Room",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "34 m2 / 365 sq ft",
+     "features": [
+      "city or courtyard view"
+     ],
+     "rate": null,
+     "source": "https://www.thesavoylondon.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Luxury Double Double Room",
+     "bedConfig": "2 Doubles",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": "39 m2 / 419 sq ft",
+     "features": [
+      "city or courtyard view"
+     ],
+     "rate": null,
+     "source": "https://www.thesavoylondon.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Junior Suite River View",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "39 m2 / 419 sq ft",
+     "features": [
+      "river view"
+     ],
+     "rate": null,
+     "source": "https://www.thesavoylondon.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "One Bedroom River View Suite",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "61 m2 / 656 sq ft",
+     "features": [
+      "river view"
+     ],
+     "rate": null,
+     "source": "https://www.thesavoylondon.com/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Royal Suite",
+     "bedConfig": "1 King",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": "264 m2 / 2,841 sq ft",
+     "features": [
+      "river view"
+     ],
+     "rate": null,
+     "source": "https://www.thesavoylondon.com/rooms",
+     "confirmed": true
+    }
+   ],
+   "confirmed": false,
+   "notes": "Rooms read on the hotel's own site (15 categories; 7 kept). Check-in, age, pet fee and valet are from search summaries of OTA listings (not confirmed). 263 rooms and suites. Amenities were not read on a property page and are left empty rather than filled from memory."
+  },
+  {
+   "id": "travelodge-plus-dublin-city-centre",
+   "name": "Travelodge PLUS Dublin City Centre",
+   "brand": "Travelodge Ireland",
+   "city": "ie-lei-dublin",
+   "address": "44 Townsend Street, Dublin 2, D02 DY01",
+   "starRating": 3,
+   "url": "https://www.travelodge.ie/rooms/travelodge-dublin-city-centre",
+   "checkIn": "15:00",
+   "checkOut": "11:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "EUR",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": "Flexible Rate: full refund until midday on arrival day; other rates non-refundable",
+     "text": "Search summary of https://www.travelodge.ie/responsibilities/terms-and-conditions"
+    },
+    "pets": null,
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": null,
+     "text": "Listings conflict on whether paid parking exists"
+    },
+    "cityTaxes": "included (Irish rates include VAT)"
+   },
+   "amenities": [
+    "restaurant"
+   ],
+   "rooms": [
+    {
+     "name": "Standard Room",
+     "bedConfig": "1 King (Travelodge Dreamer)",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.travelodge.ie/rooms/travelodge-dublin-city-centre",
+     "confirmed": true
+    },
+    {
+     "name": "SuperRoom",
+     "bedConfig": "1 King (Travelodge Dreamer)",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "capsule coffee machine",
+      "rain shower",
+      "larger TV"
+     ],
+     "rate": null,
+     "source": "https://www.travelodge.ie/rooms/travelodge-dublin-city-centre (150 SuperRooms)",
+     "confirmed": true
+    }
+   ],
+   "confirmed": false,
+   "notes": "Travelodge Ireland is a separate operator from Travelodge UK. 393 bedrooms, opened April 2023, Mossco restaurant/bar. Hotel page read (name, rooms, restaurant); check-in/out, age and cancellation are from search summaries. 3-star from an OTA listing."
+  },
+  {
+   "id": "maldron-parnell-square",
+   "name": "Maldron Hotel Parnell Square",
+   "brand": "Maldron Hotels (Dalata)",
+   "city": "ie-lei-dublin",
+   "address": "Parnell Square West, Rotunda, Dublin 1",
+   "starRating": 4,
+   "url": "https://www.maldronhotels.com/parnell-square/",
+   "checkIn": "15:00",
+   "checkOut": "11:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "EUR",
+     "basis": null,
+     "text": "Valid card to secure booking; no charge at booking unless advance purchase; photo ID for cash"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": 24,
+     "penalty": "First night charged on no-show or late cancellation; advance purchase 100%",
+     "text": "Free cancellation 24 hours prior to the day of arrival unless advance purchase"
+    },
+    "pets": "Not permitted except guide dogs or therapy animals",
+    "smoking": "All bedrooms non-smoking; deep-cleaning fee for violations; outdoor smoking area"
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": null,
+     "text": "No on-site parking; Q-Park Parnell Street (Loftus Lane), 5-7 min walk, price not stated"
+    },
+    "cityTaxes": "included (VAT included)"
+   },
+   "amenities": [
+    "restaurant",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Deluxe King",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "power shower",
+      "air conditioning"
+     ],
+     "rate": null,
+     "source": "https://www.maldronhotels.com/parnell-square/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Deluxe Twin or Double",
+     "bedConfig": "2 Single beds or 1 Double",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "power shower"
+     ],
+     "rate": null,
+     "source": "https://www.maldronhotels.com/parnell-square/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Deluxe Triple",
+     "bedConfig": "1 Double, 1 Single or 3 Single beds",
+     "maxOccupancy": 3,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.maldronhotels.com/parnell-square/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Superior Quad",
+     "bedConfig": "2 Doubles",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.maldronhotels.com/parnell-square/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Interconnecting",
+     "bedConfig": "2 Doubles, 1 Sofa bed",
+     "maxOccupancy": 6,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "Nespresso",
+      "autism-friendly option"
+     ],
+     "rate": null,
+     "source": "https://www.maldronhotels.com/parnell-square/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Executive King",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "bathrobe and slippers"
+     ],
+     "rate": null,
+     "source": "https://www.maldronhotels.com/parnell-square/rooms/",
+     "confirmed": true
+    },
+    {
+     "name": "Junior Suite",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "living space",
+      "balcony",
+      "city view"
+     ],
+     "rate": null,
+     "source": "https://www.maldronhotels.com/parnell-square/rooms/",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Policies read on https://www.maldronhotels.com/parnell-square/faqs/ (7 wheelchair-accessible rooms). Booking engine bookings.maldronhotels.com did not render rates."
+  },
+  {
+   "id": "the-dean-dublin",
+   "name": "The Dean Dublin",
+   "brand": "Dean Hotels",
+   "city": "ie-lei-dublin",
+   "address": "33 Harcourt Street, Dublin 2",
+   "starRating": 4,
+   "url": "https://thedeanhotels.com/",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "EUR",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Listings conflict: not allowed (Booking.com) vs dogs EUR 40 per pet per stay (Expedia)",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": null
+    },
+    "cityTaxes": "included (VAT included)"
+   },
+   "amenities": [],
+   "rooms": [],
+   "confirmed": false,
+   "notes": "The hotel's own FAQ (thedeanhotels.com/faq/faq-dublin) covered only gift cards. Check-in/out and age from search summaries. Address is the hotel's widely published Harcourt Street address but was not read on a fetched page. Rooms not read."
+  },
+  {
+   "id": "the-westbury-dublin",
+   "name": "The Westbury",
+   "brand": "The Doyle Collection",
+   "city": "ie-lei-dublin",
+   "address": "Balfe Street, Dublin 2, D02 CH66",
+   "starRating": 5,
+   "url": "https://www.doylecollection.com/hotels/the-westbury-hotel",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "EUR",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Not permitted except guide dogs",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 40,
+      "currency": "EUR",
+      "text": "Valet EUR 40 per night per vehicle; EV charging extra"
+     }
+    },
+    "cityTaxes": "included (rates shown incl. VAT)"
+   },
+   "amenities": [
+    "restaurant",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Classic Room 1 King Bed",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": {
+      "amount": 455,
+      "currency": "EUR",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": true,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.doylecollection.com/hotels/the-westbury-hotel/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Westbury Twin 2 Single Beds",
+     "bedConfig": "2 Single beds",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": {
+      "amount": 455,
+      "currency": "EUR",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": true,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.doylecollection.com/hotels/the-westbury-hotel/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Deluxe King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": {
+      "amount": 495,
+      "currency": "EUR",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": true,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.doylecollection.com/hotels/the-westbury-hotel/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Deluxe Twin",
+     "bedConfig": "2 Single beds",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": {
+      "amount": 555,
+      "currency": "EUR",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": true,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.doylecollection.com/hotels/the-westbury-hotel/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Studio Suite",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": {
+      "amount": 835,
+      "currency": "EUR",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": true,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.doylecollection.com/hotels/the-westbury-hotel/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "Two-Bedroom Westbury Room",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "two bedrooms"
+     ],
+     "rate": {
+      "amount": 970,
+      "currency": "EUR",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": true,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.doylecollection.com/hotels/the-westbury-hotel/rooms",
+     "confirmed": true
+    },
+    {
+     "name": "The P.V. Doyle Suite",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": {
+      "amount": 4800,
+      "currency": "EUR",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": true,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.doylecollection.com/hotels/the-westbury-hotel/rooms",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Policies read on https://www.doylecollection.com/hotels/the-westbury-hotel/contact-us/frequently-asked-questions (gym closed until November 2026 for upgrades; three Les Clefs d'Or concierges). Rates are the 'from' prices shown on the rooms page on 2026-10-01, NOT tied to a stay date - kept because they are read verbatim, but they are not the dated weeknight rate requested. 'Westbury King' was listed at EUR 485 excl. VAT (odd one out) and is omitted."
+  },
+  {
+   "id": "the-shelbourne-dublin",
+   "name": "The Shelbourne, Autograph Collection",
+   "brand": "Autograph Collection (Marriott International)",
+   "city": "ie-lei-dublin",
+   "address": "27 St. Stephen's Green, Dublin 2, D02 K224",
+   "starRating": 5,
+   "url": "https://www.theshelbourne.com/",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "EUR",
+     "basis": null,
+     "text": "Photo ID and credit card at check-in"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": "Varies by rate"
+    },
+    "pets": "Not allowed except guide dogs",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 50,
+      "currency": "EUR",
+      "text": "Valet only, EUR 50 per 24 hours; parked in a nearby public car park"
+     }
+    },
+    "cityTaxes": "included (VAT included)"
+   },
+   "amenities": [
+    "restaurant"
+   ],
+   "rooms": [
+    {
+     "name": "Deluxe Room",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "25 m2 / 269 sq ft",
+     "features": [
+      "marble bathroom"
+     ],
+     "rate": null,
+     "source": "search summary (hotels-dublin.com / kiwicollection)",
+     "confirmed": false
+    },
+    {
+     "name": "Heritage Premium Room",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "32 m2 / 344 sq ft",
+     "features": [
+      "historic wing"
+     ],
+     "rate": null,
+     "source": "search summary",
+     "confirmed": false
+    },
+    {
+     "name": "Heritage One Bedroom King Suite",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "45 m2 / 484 sq ft",
+     "features": [
+      "living room",
+      "bathtub"
+     ],
+     "rate": null,
+     "source": "search summary",
+     "confirmed": false
+    }
+   ],
+   "confirmed": true,
+   "notes": "Address, 5-star, 15:00 check-in and valet read on https://www.theshelbourne.com/. The page says the health club and spa are closed through May 2027, so 'spa' and 'gym' are not listed. Check-out, age and pets from OTA search summaries."
+  },
+  {
+   "id": "chelsea-hotel-toronto",
+   "name": "Chelsea Hotel, Toronto",
+   "brand": "Independent (Brilliant by Langham reservations)",
+   "city": "ca-on-toronto",
+   "address": "33 Gerrard Street West, Toronto, ON (homepage contact block gives 22 Elm Street, Toronto, ON M5G 1G7)",
+   "starRating": null,
+   "url": "https://www.chelseatoronto.com/",
+   "checkIn": "15:00",
+   "checkOut": "11:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "CAD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Allowed (terms not read)",
+    "smoking": "Non-smoking rooms"
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": 43,
+      "currency": "CAD",
+      "text": "CAD 43 per night (OTA listing)"
+     },
+     "valet": null
+    },
+    "cityTaxes": "added on top (13% HST and Toronto's 6% Municipal Accommodation Tax are added to quoted rates in Ontario)"
+   },
+   "amenities": [
+    "restaurant",
+    "kitchenette",
+    "accessible rooms",
+    "laundry service"
+   ],
+   "rooms": [
+    {
+     "name": "Chelsea Room",
+     "bedConfig": "1 Queen, 1 King or 2 Doubles",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": "from 275 sq ft",
+     "features": [
+      "some with balcony",
+      "bathtub (shower/tub combination)",
+      "mini fridge",
+      "accessible option"
+     ],
+     "rate": null,
+     "source": "https://www.chelseatoronto.com/en/rooms/chelsea-room/",
+     "confirmed": true
+    },
+    {
+     "name": "Executive Room",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.chelseatoronto.com/ (name only)",
+     "confirmed": true
+    },
+    {
+     "name": "Studio Kitchenette",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "kitchenette"
+     ],
+     "rate": null,
+     "source": "https://www.chelseatoronto.com/ (name only)",
+     "confirmed": true
+    },
+    {
+     "name": "One Bedroom Suite",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.chelseatoronto.com/ (name only)",
+     "confirmed": true
+    }
+   ],
+   "confirmed": false,
+   "notes": "Canada's largest hotel (about 1,590 rooms per Wikipedia). Rooms read on the hotel's site; check-in/out, parking and pets from OTA search summaries. Two addresses appear: 33 Gerrard St W is the hotel's long-published street address (Wikipedia/Waze); the site's contact block shows 22 Elm St. Tax line is a statement about Ontario law, not read from this hotel's page. Amenities include adults-only 'The Heights' wellness floor and 'The Hive' family recreation centre."
+  },
+  {
+   "id": "revery-toronto-downtown",
+   "name": "Revery Toronto Downtown, Curio Collection by Hilton",
+   "brand": "Curio Collection by Hilton (Hilton)",
+   "city": "ca-on-toronto",
+   "address": "92 Peter Street, Toronto, ON M5V 2G5",
+   "starRating": null,
+   "url": "https://www.hilton.com/",
+   "checkIn": null,
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": 150,
+     "currency": "CAD",
+     "basis": "per night",
+     "text": "CAD 150 per accommodation per night (OTA listing)"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Allowed, CAD 100 per stay",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 48,
+      "currency": "CAD",
+      "text": "Valet CAD 48 per night (listings range 42-50)"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [],
+   "confirmed": false,
+   "notes": "Formerly Hilton Garden Inn Toronto Downtown, rebranded to Revery Toronto Downtown (Curio Collection). All facts from search summaries; hilton.com blocks the fetcher. Exact Hilton URL not established."
+  },
+  {
+   "id": "the-drake-hotel-toronto",
+   "name": "The Drake Hotel",
+   "brand": "Drake Hotel Properties",
+   "city": "ca-on-toronto",
+   "address": "1150 Queen Street West, Toronto, ON M6J 1J3",
+   "starRating": null,
+   "url": "https://www.thedrake.ca/",
+   "checkIn": null,
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": 200,
+     "currency": "CAD",
+     "basis": "per stay",
+     "text": "CAD 200 damage deposit on arrival (OTA listing)"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Listings conflict; one lists dogs and cats CAD 70 per stay",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": 25,
+      "currency": "CAD",
+      "text": "CAD 25 per day (OTA listing)"
+     },
+     "valet": null
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [
+    {
+     "name": "The Nook",
+     "bedConfig": "1 Full",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "Crash Pad",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "Modern Wing Queen Room",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "Two-Bedroom Suite",
+     "bedConfig": "1 Queen, 1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "two bedrooms"
+     ],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "The hotel's FAQ URL guessed (thedrake.ca/drakehotel/faq/) returned 404. All facts from OTA search summaries. Amenities limited to what a read page or search summary stated; unread amenities left out."
+  },
+  {
+   "id": "fairmont-royal-york",
+   "name": "Fairmont Royal York",
+   "brand": "Fairmont (Accor)",
+   "city": "ca-on-toronto",
+   "address": "100 Front Street West, Toronto, ON",
+   "starRating": null,
+   "url": "https://www.fairmont.com/en/hotels/toronto/fairmont-royal-york.html",
+   "checkIn": "16:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "CAD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Up to two small pets per room, CAD 60 plus tax per pet per stay; not left unattended",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 75,
+      "currency": "CAD",
+      "text": "Overnight valet CAD 75 with in/out; vehicles up to 6'3\"; 5 EV chargers"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "pool",
+    "gym",
+    "spa",
+    "restaurant",
+    "business center",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Fairmont Room",
+     "bedConfig": "1 King, 1 Queen or 2 Doubles",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": "250 sq ft / 23 m2",
+     "features": [
+      "city view (some limited)",
+      "Nespresso"
+     ],
+     "rate": null,
+     "source": "https://www.thefairmontroyalyork.com/accommodations/fairmont-room/",
+     "confirmed": true
+    },
+    {
+     "name": "Fairmont Luxury Room",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.thefairmontroyalyork.com/accommodations/fairmont-room/ (name only)",
+     "confirmed": true
+    },
+    {
+     "name": "Deluxe Room",
+     "bedConfig": "1 King, 1 Queen or 2 Doubles",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "500 sq ft",
+     "features": [
+      "separate living area with sofa"
+     ],
+     "rate": null,
+     "source": "https://www.thefairmontroyalyork.com/accommodations/deluxe-room/ (search summary)",
+     "confirmed": false
+    },
+    {
+     "name": "Signature Room",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.thefairmontroyalyork.com/accommodations/fairmont-room/ (name only)",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Check-in/out, pets, valet and amenities read on https://www.fairmont.com/en/hotels/toronto/fairmont-royal-york/guest-services.html. Address 100 Front St W confirmed by several listings in search; postcode M5J 1E3 not read on a page."
+  },
+  {
+   "id": "four-seasons-toronto",
+   "name": "Four Seasons Hotel Toronto",
+   "brand": "Four Seasons Hotels and Resorts",
+   "city": "ca-on-toronto",
+   "address": "60 Yorkville Avenue, Toronto, ON",
+   "starRating": 5,
+   "url": "https://www.fourseasons.com/toronto/",
+   "checkIn": "15:00",
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "CAD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Pet friendly (terms not read)",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 70,
+      "currency": "CAD",
+      "text": "On-site parking CAD 70 per day (OTA listing)"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [
+    {
+     "name": "Superior King Room",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "Superior Room Two Double Beds",
+     "bedConfig": "2 Doubles",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "Deluxe King Room",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "fourseasons.com returned 403. All facts from search summaries; postcode not read on a page. 5-star per Forbes/Michelin listings in search."
+  },
+  {
+   "id": "days-inn-vancouver-downtown",
+   "name": "Days Inn by Wyndham Vancouver Downtown",
+   "brand": "Days Inn by Wyndham",
+   "city": "ca-bc-vancouver",
+   "address": "921 West Pender Street, Vancouver, BC",
+   "starRating": null,
+   "url": "https://www.wyndhamhotels.com/days-inn/vancouver-british-columbia/days-inn-vancouver-downtown/overview",
+   "checkIn": "15:00",
+   "checkOut": "11:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "CAD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Not allowed",
+    "smoking": "Non-smoking rooms"
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": null,
+      "currency": "CAD",
+      "text": "Self-parking for a daily fee plus tax, in/out, max height 6'4\" / 1.93 m; nearby parking CAD 25/night"
+     },
+     "valet": null
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [],
+   "rooms": [
+    {
+     "name": "1 King Bed Non-Smoking",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "2 Double Beds Non-Smoking",
+     "bedConfig": "2 Doubles",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "1 Queen Bed Suite Non-Smoking",
+     "bedConfig": "1 Queen, 1 Sofa bed",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "Budget option. All facts from OTA search summaries; Wyndham URL follows the brand's pattern and was not fetched."
+  },
+  {
+   "id": "sandman-signature-vancouver-downtown",
+   "name": "Sandman Signature Vancouver Downtown Hotel",
+   "brand": "Sandman Signature (Sandman Hotel Group)",
+   "city": "ca-bc-vancouver",
+   "address": "180 West Georgia Street, Vancouver, BC V6B 4P4",
+   "starRating": 3,
+   "url": "https://www.sandmanhotels.com/signature-vancouver-downtown",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "CAD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": 24,
+     "penalty": null,
+     "text": "24-hour cancellation policy"
+    },
+    "pets": "Pets allowed in select rooms",
+    "smoking": "Smoke-free property"
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": 30,
+      "currency": "CAD",
+      "text": "$30 per day plus taxes, gated underground, max height 6'5\""
+     },
+     "valet": null
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "pool",
+    "gym",
+    "restaurant",
+    "room service",
+    "accessible rooms",
+    "kitchenette"
+   ],
+   "rooms": [
+    {
+     "name": "Standard Room, 1 Queen Bed, South Tower",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "fridge",
+      "microwave"
+     ],
+     "rate": {
+      "amount": 153,
+      "currency": "$ (symbol only; CAD presumed)",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": null,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.sandmanhotels.com/vancouver-city-centre",
+     "confirmed": true
+    },
+    {
+     "name": "Standard Room, 1 King Bed, North Tower",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": {
+      "amount": 162,
+      "currency": "$ (symbol only; CAD presumed)",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": null,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.sandmanhotels.com/vancouver-city-centre",
+     "confirmed": true
+    },
+    {
+     "name": "Standard Room, 2 Queen Beds, North Tower",
+     "bedConfig": "2 Queens",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": {
+      "amount": 169,
+      "currency": "$ (symbol only; CAD presumed)",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": null,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.sandmanhotels.com/vancouver-city-centre",
+     "confirmed": true
+    },
+    {
+     "name": "Grand Room, 2 Queen Beds, North Tower",
+     "bedConfig": "2 Queens",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": {
+      "amount": 177,
+      "currency": "$ (symbol only; CAD presumed)",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": null,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.sandmanhotels.com/vancouver-city-centre",
+     "confirmed": true
+    },
+    {
+     "name": "Standard Room, 1 King Bed, Sofa Bed, South Tower",
+     "bedConfig": "1 King, 1 Sofa bed",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": {
+      "amount": 183,
+      "currency": "$ (symbol only; CAD presumed)",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": null,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.sandmanhotels.com/vancouver-city-centre",
+     "confirmed": true
+    },
+    {
+     "name": "Standard Suite, 1 King Bed, Kitchenette, South Tower",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "kitchenette"
+     ],
+     "rate": {
+      "amount": 249,
+      "currency": "$ (symbol only; CAD presumed)",
+      "dateQuoted": null,
+      "kind": "from-price, undated",
+      "taxesIncluded": null,
+      "source": "hotel's own site",
+      "confirmed": true
+     },
+     "source": "https://www.sandmanhotels.com/vancouver-city-centre",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Formerly Sandman Hotel Vancouver City Centre; relaunched as Sandman Signature in January 2026 (GlobeNewswire). Policies and rooms read on the hotel's own page; parking on /signature-vancouver-downtown/amenities/on-site-parking. Address from search summaries (agoda), not read on the hotel page. The 'from' prices appeared both with and without date parameters, so they are not tied to 4-5 Nov 2026; currency shown only as '$'."
+  },
+  {
+   "id": "fairmont-hotel-vancouver",
+   "name": "Fairmont Hotel Vancouver",
+   "brand": "Fairmont (Accor)",
+   "city": "ca-bc-vancouver",
+   "address": "900 West Georgia Street, Vancouver, BC V6C 2W6",
+   "starRating": null,
+   "url": "https://www.fairmont-hotel-vancouver.com/",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "CAD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Pet-friendly; CAD 50 per night plus tax, maximum CAD 100; CAD 75 removal fee for excessive noise",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": 70,
+      "currency": "CAD",
+      "text": "Self-parking CAD 70/night with in/out"
+     },
+     "valet": {
+      "amount": 85,
+      "currency": "CAD",
+      "text": "Valet CAD 85/night"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "pool",
+    "gym",
+    "laundry service"
+   ],
+   "rooms": [
+    {
+     "name": "Fairmont Room",
+     "bedConfig": "1 King, 1 Queen or 2 Queens",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": "28-42 m2 / 301-452 sq ft",
+     "features": [
+      "courtyard or city view",
+      "bathtub in two-bed rooms"
+     ],
+     "rate": null,
+     "source": "https://www.fairmont-hotel-vancouver.com/accommodations/fairmont-room/",
+     "confirmed": true
+    },
+    {
+     "name": "Fairmont Gallery Room",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.fairmont-hotel-vancouver.com/accommodations/fairmont-room/ (name only)",
+     "confirmed": true
+    },
+    {
+     "name": "Deluxe Room",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "walk-in shower"
+     ],
+     "rate": null,
+     "source": "https://www.fairmont-hotel-vancouver.com/accommodations/fairmont-room/ (name only)",
+     "confirmed": true
+    },
+    {
+     "name": "Deluxe Corner Room",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "city view"
+     ],
+     "rate": null,
+     "source": "https://www.fairmont-hotel-vancouver.com/accommodations/fairmont-room/ (name only)",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Policies read on https://www.fairmont.com/en/hotels/vancouver/fairmont-hotel-vancouver/guest-services.html; rooms and address on the hotel's own accommodations page. Indoor pool, saunas, 24-hour fitness."
+  },
+  {
+   "id": "fairmont-pacific-rim",
+   "name": "Fairmont Pacific Rim",
+   "brand": "Fairmont (Accor)",
+   "city": "ca-bc-vancouver",
+   "address": "1038 Canada Place, Vancouver, BC V6C 0B9",
+   "starRating": 5,
+   "url": "https://www.fairmont.com/en/hotels/vancouver/fairmont-pacific-rim.html",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "CAD",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": 24,
+     "penalty": "Cancellation penalty (amount not stated)",
+     "text": "Reservations must be cancelled at least 24 hours prior to avoid cancellation penalties"
+    },
+    "pets": "Cats and dogs welcome; fee not stated",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": 80,
+      "currency": "CAD",
+      "text": "Self-parking CAD 80 per 24 hours, tax included"
+     },
+     "valet": {
+      "amount": 80,
+      "currency": "CAD",
+      "text": "Valet CAD 80 per 24 hours, tax included"
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "gym",
+    "spa",
+    "room service",
+    "laundry service"
+   ],
+   "rooms": [
+    {
+     "name": "Fairmont City View King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "about 400 sq ft / 37 m2",
+     "features": [
+      "city view"
+     ],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "Pool View Suite King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "950 sq ft",
+     "features": [
+      "pool view"
+     ],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    }
+   ],
+   "confirmed": true,
+   "notes": "Policies and parking read on https://www.fairmont.com/en/hotels/vancouver/fairmont-pacific-rim/guest-services.html. Address/postcode from search results (hotelplanner title), not read on the Fairmont page. 5-star per Michelin/Forbes listings in search. The hotel has a rooftop pool, but the guest-services page did not list it, so 'pool' is not included."
+  },
+  {
+   "id": "rosewood-hotel-georgia",
+   "name": "Rosewood Hotel Georgia",
+   "brand": "Rosewood Hotels & Resorts",
+   "city": "ca-bc-vancouver",
+   "address": "801 West Georgia St., Vancouver, BC V6C 1P7",
+   "starRating": null,
+   "url": "https://www.rosewoodhotels.com/en/hotel-georgia-vancouver",
+   "checkIn": "16:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": 19,
+    "deposit": {
+     "amount": 200,
+     "currency": "CAD",
+     "basis": "per night",
+     "text": "CAD 200 per night, maximum CAD 600"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": 48,
+     "penalty": "1 night",
+     "text": "Cancel 48 hours prior to arrival by 6 pm PST to avoid one night's penalty; Lord Stanley and Rosewood Suites non-refundable"
+    },
+    "pets": "One dog or cat up to 25 lb, minimum CAD 75 one-time fee",
+    "smoking": "Smoke-free; CAD 750 penalty (rooms), CAD 1,000 (suites)"
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 70,
+      "currency": "CAD",
+      "text": "Overnight valet CAD 70 including all taxes, in/out; max height 6'6\""
+     }
+    },
+    "cityTaxes": "added on top"
+   },
+   "amenities": [
+    "pool",
+    "gym",
+    "spa",
+    "restaurant",
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "Deluxe King Gallery City View",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "410-465 sq ft / 38-43 m2",
+     "features": [
+      "city view"
+     ],
+     "rate": null,
+     "source": "search summary of rosewoodhotels.com room page",
+     "confirmed": false
+    }
+   ],
+   "confirmed": true,
+   "notes": "Policies read on https://www.rosewoodhotels.com/en/hotel-georgia-vancouver/hotel-policy. Minimum age 19 is inferred: the policy says children under 19 stay free in parents' room, and an OTA lists minimum check-in age 19 (BC's age of majority). The policy page's tax line (8.10% 'State Tax', 3.04% lodging, 3.79% city, 5.75% 'VAT/GST') does not match British Columbia's taxes and looks like a template error; it is not used."
+  },
+  {
+   "id": "hotel-catedral-cdmx",
+   "name": "Hotel Catedral",
+   "brand": "Independent",
+   "city": "mx-cmx-mexicocity",
+   "address": "República de Guatemala 16, Centro Histórico, Ciudad de México, CDMX 06020",
+   "starRating": null,
+   "url": "https://www.hotelcatedral.com/en",
+   "checkIn": "15:00",
+   "checkOut": "13:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "MXN",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": 48,
+     "penalty": null,
+     "text": "Direct bookings: free cancellation until 48 hours before arrival, 12:00 AM CDMX time"
+    },
+    "pets": "Not allowed",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": 0,
+      "currency": "MXN",
+      "text": "Free valet for guests, subject to availability"
+     }
+    },
+    "cityTaxes": null
+   },
+   "amenities": [
+    "restaurant",
+    "room service"
+   ],
+   "rooms": [
+    {
+     "name": "Standard Queen Room",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "22 m2 / 237 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.hotelcatedral.com/en/catedral-tower",
+     "confirmed": true
+    },
+    {
+     "name": "Double Room with 2 Beds",
+     "bedConfig": "2 Doubles",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": "23 m2 / 247 sq ft",
+     "features": [],
+     "rate": null,
+     "source": "https://www.hotelcatedral.com/en/catedral-tower",
+     "confirmed": true
+    },
+    {
+     "name": "Junior Suite with Jacuzzi",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "33 m2 / 355 sq ft",
+     "features": [
+      "jacuzzi",
+      "marble bathroom"
+     ],
+     "rate": null,
+     "source": "https://www.hotelcatedral.com/en/catedral-tower",
+     "confirmed": true
+    },
+    {
+     "name": "Family Room for 6",
+     "bedConfig": "2 Doubles, 1 King",
+     "maxOccupancy": 6,
+     "sizeSqFtOrM2": "35 m2 / 377 sq ft",
+     "features": [
+      "two sleeping areas"
+     ],
+     "rate": null,
+     "source": "https://www.hotelcatedral.com/en/catedral-tower",
+     "confirmed": true
+    },
+    {
+     "name": "King Room with Balcony",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "23 m2",
+     "features": [
+      "balcony",
+      "Pirámide Tower"
+     ],
+     "rate": null,
+     "source": "https://hotels.cloudbeds.com/en/reservation/9Hm4WN/",
+     "confirmed": true
+    },
+    {
+     "name": "Interior King Room",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "24 m2",
+     "features": [
+      "interior",
+      "Pirámide Tower"
+     ],
+     "rate": null,
+     "source": "https://hotels.cloudbeds.com/en/reservation/9Hm4WN/",
+     "confirmed": true
+    },
+    {
+     "name": "Corner Suite with Bathtub",
+     "bedConfig": null,
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "46 m2",
+     "features": [
+      "bathtub",
+      "corner"
+     ],
+     "rate": null,
+     "source": "https://hotels.cloudbeds.com/en/reservation/9Hm4WN/",
+     "confirmed": true
+    },
+    {
+     "name": "Templo Mayor Jacuzzi Suite",
+     "bedConfig": null,
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": "50 m2",
+     "features": [
+      "jacuzzi"
+     ],
+     "rate": null,
+     "source": "https://hotels.cloudbeds.com/en/reservation/9Hm4WN/",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Read on the hotel's own site and its Cloudbeds booking page. Cloudbeds lists check-out 13:30; the hotel homepage says 13:00 (homepage used). Cloudbeds did not render prices for 4-5 Nov 2026. About 201 rooms in two towers (116 Catedral + 85 Pirámide per search). Room service 24h per the tower page. Tax treatment not stated by the hotel; Mexican hotel rates usually quote IVA (16%) and the CDMX lodging tax (ISH) separately - not read here, so left null."
+  },
+  {
+   "id": "hampton-mexico-city-centro-historico",
+   "name": "Hampton Inn & Suites Mexico City - Centro Historico",
+   "brand": "Hampton by Hilton (Hilton)",
+   "city": "mx-cmx-mexicocity",
+   "address": "Calle 5 de Febrero 24, Centro, Ciudad de México 06060",
+   "starRating": null,
+   "url": "https://www.hilton.com/en/hotels/mexchhx-hampton-suites-mexico-city-centro-historico/",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "MXN",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": null,
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": null
+    },
+    "cityTaxes": null
+   },
+   "amenities": [
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "1 Queen Bed",
+     "bedConfig": "1 Queen",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "1 King Bed Executive",
+     "bedConfig": "1 King",
+     "maxOccupancy": 2,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "Suite with 2 Queen Beds",
+     "bedConfig": "2 Queens",
+     "maxOccupancy": 4,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "suite"
+     ],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "1 Queen Bed Accessible with Sofabed",
+     "bedConfig": "1 Queen, 1 Sofa bed",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "accessible"
+     ],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "hilton.com blocks the fetcher. Address from the hotelplanner listing title; times and rooms from OTA search summaries."
+  },
+  {
+   "id": "hilton-mexico-city-reforma",
+   "name": "Hilton Mexico City Reforma",
+   "brand": "Hilton Hotels & Resorts (Hilton)",
+   "city": "mx-cmx-mexicocity",
+   "address": "Avenida Juárez 70, Colonia Centro, Ciudad de México 06010",
+   "starRating": null,
+   "url": "https://www.hilton.com/",
+   "checkIn": "15:00",
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": 18,
+    "deposit": {
+     "amount": null,
+     "currency": "MXN",
+     "basis": null,
+     "text": "Refundable incidentals deposit at check-in (amount not stated)"
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Dogs and cats up to 55 lb; MXN 1,085 per pet per stay plus MXN 5,000 deposit",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": 220,
+      "currency": "MXN",
+      "text": "MXN 220 per day"
+     },
+     "valet": {
+      "amount": 220,
+      "currency": "MXN",
+      "text": "MXN 220 per day"
+     }
+    },
+    "cityTaxes": null
+   },
+   "amenities": [
+    "accessible rooms"
+   ],
+   "rooms": [
+    {
+     "name": "1 King Bed Accessible Room",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "accessible"
+     ],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    },
+    {
+     "name": "Presidential Suite 1 King Bed",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "suite"
+     ],
+     "rate": null,
+     "source": "search summary of OTA listings",
+     "confirmed": false
+    }
+   ],
+   "confirmed": false,
+   "notes": "All facts from OTA search summaries; hilton.com blocks the fetcher and the property URL slug was not established."
+  },
+  {
+   "id": "hotel-geneve-cdmx",
+   "name": "Hotel Geneve Mexico City",
+   "brand": "Independent",
+   "city": "mx-cmx-mexicocity",
+   "address": "Londres 130, Col. Juárez, 06600 Ciudad de México, CDMX",
+   "starRating": null,
+   "url": "https://www.hotelgeneve.com.mx/",
+   "checkIn": null,
+   "checkOut": null,
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "MXN",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": null,
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": {
+      "amount": 0,
+      "currency": "MXN",
+      "text": "Free parking for guests ('servicio de estacionamiento gratuito')"
+     },
+     "valet": null
+    },
+    "cityTaxes": null
+   },
+   "amenities": [
+    "gym",
+    "spa",
+    "restaurant",
+    "business center"
+   ],
+   "rooms": [
+    {
+     "name": "Deluxe King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.hotelgeneve.com.mx/habitaciones/",
+     "confirmed": true
+    },
+    {
+     "name": "Deluxe Doble",
+     "bedConfig": "2 Doubles (Matrimonial)",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.hotelgeneve.com.mx/habitaciones/",
+     "confirmed": true
+    },
+    {
+     "name": "Superior King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.hotelgeneve.com.mx/habitaciones/",
+     "confirmed": true
+    },
+    {
+     "name": "Superior Doble",
+     "bedConfig": "2 Doubles (Matrimonial)",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.hotelgeneve.com.mx/habitaciones/",
+     "confirmed": true
+    },
+    {
+     "name": "Junior Suite King",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "sitting area",
+      "bathtub with shower"
+     ],
+     "rate": null,
+     "source": "https://www.hotelgeneve.com.mx/habitaciones/",
+     "confirmed": true
+    },
+    {
+     "name": "Junior Suite Doble",
+     "bedConfig": "2 Doubles (Matrimonial)",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "sitting area",
+      "bathtub with shower"
+     ],
+     "rate": null,
+     "source": "https://www.hotelgeneve.com.mx/habitaciones/",
+     "confirmed": true
+    },
+    {
+     "name": "Master Suite",
+     "bedConfig": "1 King",
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "51 m2",
+     "features": [
+      "separate living room"
+     ],
+     "rate": null,
+     "source": "https://www.hotelgeneve.com.mx/habitaciones/",
+     "confirmed": true
+    },
+    {
+     "name": "Suite de Época",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [
+      "period-themed"
+     ],
+     "rate": null,
+     "source": "https://www.hotelgeneve.com.mx/habitaciones/",
+     "confirmed": true
+    }
+   ],
+   "confirmed": true,
+   "notes": "Read on the hotel's own site (226 rooms; Sunday late check-out to 14:00). 'Matrimonial' is the Mexican term for a double/full bed. Standard check-in/out times, pets and taxes not stated on the pages read."
+  },
+  {
+   "id": "four-seasons-mexico-city",
+   "name": "Four Seasons Hotel Mexico City",
+   "brand": "Four Seasons Hotels and Resorts",
+   "city": "mx-cmx-mexicocity",
+   "address": "Paseo de la Reforma 500, Colonia Juárez, Ciudad de México 06600",
+   "starRating": 5,
+   "url": "https://www.fourseasons.com/mexico/",
+   "checkIn": "15:00",
+   "checkOut": "12:00",
+   "policies": {
+    "minCheckInAge": null,
+    "deposit": {
+     "amount": null,
+     "currency": "MXN",
+     "basis": null,
+     "text": null
+    },
+    "cancellation": {
+     "freeUntilHoursBeforeArrival": null,
+     "penalty": null,
+     "text": null
+    },
+    "pets": "Pet-friendly rooms and services",
+    "smoking": null
+   },
+   "fees": {
+    "resortOrDestinationFeePerNight": null,
+    "parkingPerNight": {
+     "self": null,
+     "valet": {
+      "amount": null,
+      "currency": null,
+      "text": "Valet on site; one OTA lists USD 5/night, which is implausible and not used"
+     }
+    },
+    "cityTaxes": null
+   },
+   "amenities": [
+    "pool",
+    "gym",
+    "spa",
+    "restaurant"
+   ],
+   "rooms": [
+    {
+     "name": "Superior Room",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": "50 m2 / 537 sq ft",
+     "features": [
+      "deep soaking tub",
+      "separate shower"
+     ],
+     "rate": null,
+     "source": "https://www.fourseasons.com/mexico/accommodations/guest_rooms/superior_room/ (search summary)",
+     "confirmed": false
+    },
+    {
+     "name": "Deluxe Room",
+     "bedConfig": null,
+     "maxOccupancy": null,
+     "sizeSqFtOrM2": null,
+     "features": [],
+     "rate": null,
+     "source": "https://www.fourseasons.com/mexico/accommodations/guest_rooms/deluxe_room/ (title only)",
+     "confirmed": false
+    }
+   ],
+   "confirmed": true,
+   "notes": "Address, 240 rooms (200 rooms + 40 suites), pool, spa, gym, four restaurants and pet-friendliness read on https://press.fourseasons.com/mexico/hotel-facts/. fourseasons.com returned 403. Check-in/out from OTA search summaries."
+  }
+ ]
+}

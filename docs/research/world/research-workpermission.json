@@ -1,0 +1,302 @@
+{
+  "_meta": {
+    "researchedOn": "2026-09-29",
+    "method": "Primary sources fetched where the site allowed it (USCIS G-1055 edition 09/09/26 PDF, gov.uk, Home Office 'Sponsor a Creative Worker' v04/26, IRCC fee list and C14 program delivery instruction, CUSMA Chapter 16 text). travel.state.gov, sagaftra.org and ecfr.gov refused automated fetch (403 / redirect); figures from those are taken from search snippets or secondary sources and are flagged in uncertain[].",
+    "currencyNote": "USD for US, GBP for UK, CAD for Canada."
+  },
+
+  "us-opt": {
+    "title": "United States: F-1 post-completion OPT after an MFA (Yale / David Geffen School of Drama)",
+    "whoApplies": "The student files Form I-765 herself/himself, category (c)(3)(B), after the school's Designated School Official (DSO) recommends OPT in SEVIS and issues an updated Form I-20. No employer or union is involved in the application.",
+    "forms": [
+      { "name": "Form I-765, Application for Employment Authorization, (c)(3)(B) - online filing", "amount": 470, "currency": "USD", "paidBy": "student", "source": "https://www.uscis.gov/g-1055", "statedDate": "G-1055 edition 09/09/26; fee in force since 2024-04-01 (USCIS fee rule)" },
+      { "name": "Form I-765, (c)(3)(B) - paper filing", "amount": 520, "currency": "USD", "paidBy": "student", "source": "https://www.uscis.gov/g-1055", "statedDate": "G-1055 edition 09/09/26; fee in force since 2024-04-01" },
+      { "name": "Form I-907 premium processing for I-765 OPT/STEM OPT", "amount": 1780, "currency": "USD", "paidBy": "student", "source": "https://www.uscis.gov/g-1055 ; Federal Register 2026-00321 (2026-01-12) 'Adjustment to Premium Processing Fees'", "statedDate": "2026-03-01 (raised from 1,685)" },
+      { "name": "Asylum Program Fee", "amount": 0, "currency": "USD", "paidBy": "n/a", "source": "https://www.uscis.gov/g-1055", "statedDate": "Applies only to I-129 and I-140 employer petitions, not to I-765" },
+      { "name": "Biometrics fee", "amount": 0, "currency": "USD", "paidBy": "n/a", "source": "https://www.uscis.gov/g-1055", "statedDate": "Separate biometrics fee was folded into form fees by the 2024-04-01 fee rule" }
+    ],
+    "processingDays": {
+      "standard": null,
+      "premium": 30,
+      "premiumFee": 1780,
+      "premiumUnit": "business days (USCIS premium clocks run in business days since the 2024 fee rule; the 30-day OPT clock was set by the Emergency Stopgap USCIS Stabilization Act)"
+    },
+    "filingWindow": {
+      "earliest": "90 days before the program end date",
+      "latest": "60 days after the program end date",
+      "alsoRequired": "USCIS must receive the I-765 within 30 days of the DSO entering the OPT recommendation in SEVIS",
+      "source": "https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/optional-practical-training-opt-for-f-1-students"
+    },
+    "validity": "Up to 12 months of full-time OPT per degree level, reduced month-for-month by any pre-completion OPT (part-time pre-completion counts at half). The requested start date must fall within the 60 days after program completion. The EAD card fixes the start and end dates; work may not begin before the card's start date and receipt of the card.",
+    "unemploymentLimit": "90 days in aggregate across the 12-month post-completion period. Work under 20 hours a week counts as unemployment. The counter starts on the EAD start date, not the graduation date.",
+    "tiedTo": "Not tied to one employer. The authorization is 'open' within the field of study: any employer, several employers at once, short-term multiple gigs (typical for performers), contract work, work-for-hire and self-employment are all permitted as long as each job is directly related to the major area of study and the student reports each employer to the DSO/SEVP portal within 10 days.",
+    "fieldOfStudyRule": "Every job must be directly related to the degree. For an MFA in Acting, paid acting work in film, TV, theatre, commercials, voice-over etc. is directly related. Unrelated work (e.g. waiting tables) does not count and leaves the day counted as unemployment.",
+    "stemExtension": "Does not apply. The 24-month STEM OPT extension requires a degree whose CIP code is on the DHS STEM Designated Degree Program List; Drama/Theatre Arts/Acting (CIP 50.05xx) is not on it.",
+    "gracePeriod": "Yes, it matters. After program completion the F-1 has a 60-day grace period. If no OPT application is filed by then, status ends. A timely filed I-765 lets the student remain in the US while it is pending but not work. After OPT ends, a further 60-day grace period applies (no work). Leaving the US after completion while the OPT application is pending, or with an EAD but no job, can prevent re-entry.",
+    "exemptions": "None for performers. F-1 on-campus work and CPT are pre-completion only. After OPT, continued acting work needs a change of status (typically O-1B, or P-3).",
+    "notes": [
+      "Standard processing: USCIS publishes one combined figure for (c)(3) categories; a secondary source reports USCIS showed 80% of (c)(3) cases completed within about 3.5 months (checked 2026-07-17), with online (c)(3)(B) filings commonly 2-3 months. Official page could not be fetched, so the field is null.",
+      "Online filing is available for all three F-1 OPT categories, including (c)(3)(B), and costs $50 less than paper.",
+      "Yale School of Drama was renamed the David Geffen School of Drama at Yale University in 2021."
+    ],
+    "sources": [
+      "https://www.uscis.gov/g-1055 (Form G-1055 edition 09/09/26)",
+      "https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/optional-practical-training-opt-for-f-1-students",
+      "https://studyinthestates.dhs.gov/sevis-help-hub/student-records/fm-student-employment/f-1-optional-practical-training-opt",
+      "https://studyinthestates.dhs.gov/sevis-help-hub/student-records/fm-student-employment/unemployment-counter",
+      "https://www.federalregister.gov/documents/2026/01/12/2026-00321/adjustment-to-premium-processing-fees",
+      "https://immiva.com/blog/opt-processing-time-2026 (secondary, processing time only)"
+    ],
+    "uncertain": [
+      "Official standard processing time for (c)(3)(B) (USCIS processing-times tool not fetchable; secondary figure ~3.5 months for 80% of cases).",
+      "Whether the premium 30-day clock is business days vs calendar days for OPT specifically (secondary sources say business days; primary regulation text not fetched).",
+      "Whether the part-time pre-completion OPT deduction rule (half rate) is exactly as stated; it is standard SEVP guidance but was not re-verified today."
+    ]
+  },
+
+  "us-o1": {
+    "title": "United States: O-1B (extraordinary ability in the arts / extraordinary achievement in motion picture or television)",
+    "whoApplies": "A US employer, a US agent (who may represent the actor or several employers, with an itinerary), or a foreign employer through a US agent files Form I-129 with USCIS. The actor cannot self-petition. After approval, the actor applies for the visa stamp at a US consulate (DS-160) unless visa-exempt (Canadians).",
+    "standards": "Film/TV actors are judged under O-1B motion picture/television 'extraordinary achievement' (recognised as outstanding, notable or leading). Stage actors fall under O-1B arts 'distinction' (a lower bar).",
+    "forms": [
+      { "name": "Form I-129, O petition - regular petitioner", "amount": 1055, "currency": "USD", "paidBy": "employer or agent (petitioner)", "source": "https://www.uscis.gov/g-1055", "statedDate": "G-1055 edition 09/09/26; in force since 2024-04-01. One beneficiary per O-1 petition." },
+      { "name": "Form I-129, O petition - small employer (25 or fewer full-time-equivalent employees) or nonprofit", "amount": 530, "currency": "USD", "paidBy": "employer or agent", "source": "https://www.uscis.gov/g-1055", "statedDate": "G-1055 edition 09/09/26; in force since 2024-04-01" },
+      { "name": "Asylum Program Fee - regular petitioner", "amount": 600, "currency": "USD", "paidBy": "employer or agent", "source": "https://www.uscis.gov/g-1055", "statedDate": "in force since 2024-04-01" },
+      { "name": "Asylum Program Fee - small employer", "amount": 300, "currency": "USD", "paidBy": "employer or agent", "source": "https://www.uscis.gov/g-1055", "statedDate": "in force since 2024-04-01" },
+      { "name": "Asylum Program Fee - nonprofit", "amount": 0, "currency": "USD", "paidBy": "n/a", "source": "https://www.uscis.gov/g-1055", "statedDate": "in force since 2024-04-01" },
+      { "name": "Form I-907 premium processing, I-129 O classification", "amount": 2965, "currency": "USD", "paidBy": "petitioner (a beneficiary may not file I-907)", "source": "https://www.uscis.gov/g-1055 ; Federal Register 2026-00321", "statedDate": "2026-03-01 (raised from 2,805)" },
+      { "name": "SAG-AFTRA consultation (advisory opinion) letter - film/TV", "amount": 300, "currency": "USD", "paidBy": "petitioner (usually via attorney)", "source": "https://www.sagaftra.org/contracts-industry-resources/o-and-p-visas (403 on fetch; figure from search snippet)", "statedDate": "2026-05-01" },
+      { "name": "Actors' Equity Association consultation letter - stage", "amount": null, "currency": "USD", "paidBy": "petitioner", "source": "secondary: https://fedlaws.org/o-1-advisory-opinion-issuers-fees-and-consultation-waivers/", "statedDate": null },
+      { "name": "Management-organisation consultation letter (film/TV requires one in addition to the union letter)", "amount": null, "currency": "USD", "paidBy": "petitioner", "source": "https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-7 ; e.g. https://producersguild.org/01-02-visa/", "statedDate": null },
+      { "name": "DS-160 nonimmigrant visa application (MRV) fee - petition-based (H, L, O, P, Q, R)", "amount": 205, "currency": "USD", "paidBy": "actor (often reimbursed)", "source": "https://travel.state.gov/content/travel/en/News/visas-news/niv-fee-increases-to-take-effect-june-17-2023.html", "statedDate": "2023-06-17" },
+      { "name": "Visa Integrity Fee (Pub. L. 119-21, One Big Beautiful Bill Act), charged at visa issuance", "amount": 250, "currency": "USD", "paidBy": "actor", "source": "https://www.bu.edu/isso/2026/05/19/visa-integrity-fee/ (secondary)", "statedDate": "Statute effective 2025-10-01; collection rollout uneven; indexed annually to CPI-U" },
+      { "name": "Additional Form I-94 fee (Pub. L. 119-21), listed under I-129 in G-1055", "amount": 24, "currency": "USD", "paidBy": "petitioner", "source": "https://www.uscis.gov/g-1055", "statedDate": "G-1055 edition 09/09/26" }
+    ],
+    "processingDays": {
+      "standard": null,
+      "premium": 15,
+      "premiumFee": 2965,
+      "premiumUnit": "business days"
+    },
+    "peerConsultation": {
+      "rule": "A written advisory opinion is mandatory. Film/TV: from a labor union (SAG-AFTRA for actors) AND a management organisation. Stage/arts: from an appropriate peer group (Actors' Equity for stage actors). If no appropriate group exists, the petitioner may say so and USCIS decides on the record.",
+      "responseTime": "Under 8 CFR 214.2(o)(5) a consulting organisation that USCIS asks has 15 days to respond; petitioners normally obtain the letter themselves before filing.",
+      "sagAftraFee": 300,
+      "sagAftraFeeDate": "2026-05-01",
+      "equityFee": null
+    },
+    "validity": "Initial petition: the time needed for the event/activity, up to 3 years. Extensions: in increments of up to 1 year to continue the same event/activity; no cap on number of extensions. Admission may include up to 10 days before and after the petition validity.",
+    "tiedTo": "Tied to the petitioner. An employer petition covers that employer's engagement(s). An agent petition can cover multiple employers/engagements if an itinerary is filed. A new employer needs a new or amended petition (concurrent petitions are allowed).",
+    "exemptions": "None for paid acting work. B-1/B-2 visitors and Visa Waiver entrants may not perform for pay (narrow exceptions for unpaid appearances / competitions). Canadians need the approved O petition but no visa stamp.",
+    "notes": [
+      "USCIS publishes no fixed standard processing time for I-129 O; the field is null. Premium processing gives action (approval, RFE or denial) within 15 business days.",
+      "The Asylum Program Fee is charged on I-129 and I-140 only; nonprofits pay 0.",
+      "Canadian citizens are visa-exempt: no DS-160 or MRV fee; they present the I-797 approval at the port of entry.",
+      "Some nationalities pay a visa reciprocity (issuance) fee on top of the MRV fee, by nationality and class."
+    ],
+    "sources": [
+      "https://www.uscis.gov/g-1055 (Form G-1055 edition 09/09/26)",
+      "https://www.federalregister.gov/documents/2026/01/12/2026-00321/adjustment-to-premium-processing-fees",
+      "https://www.uscis.gov/policy-manual/volume-2-part-m-chapter-7",
+      "https://www.law.cornell.edu/cfr/text/8/214.2 (8 CFR 214.2(o) and (p))",
+      "https://travel.state.gov/content/travel/en/News/visas-news/niv-fee-increases-to-take-effect-june-17-2023.html",
+      "https://www.sagaftra.org/contracts-industry-resources/o-and-p-visas",
+      "https://www.bu.edu/isso/2026/05/19/visa-integrity-fee/",
+      "https://producersguild.org/01-02-visa/"
+    ],
+    "uncertain": [
+      "SAG-AFTRA's $300 fee effective 2026-05-01 comes from a search snippet of sagaftra.org; the page returned 403 and was not read directly. Its turnaround and any expedite fee are unknown.",
+      "Actors' Equity consultation fee: a secondary source says Equity charges nothing and takes up to 2 weeks; not confirmed from actorsequity.org, so amount is null.",
+      "Management-organisation letter fee (e.g. PGA) not researched; null.",
+      "Visa Integrity Fee: statute says $250 from 2025-10-01, but as of May 2026 only some consular posts were reported collecting it; whether it is universally collected in Sept 2026 and whether the CPI-U adjustment has changed the figure is unverified.",
+      "The $24 'Additional Form I-94 fee' appears under I-129 in G-1055; exactly which I-129 filings owe it (likely change/extension of status in the US where USCIS issues an I-94) was not confirmed.",
+      "Standard (non-premium) I-129 O processing time: not fetched; null.",
+      "8 CFR 214.2(o) quotes were obtained through a summarising fetch of Cornell LII, not a verbatim read; the 3-year / 1-year / 15-day figures match long-standing regulation text."
+    ]
+  },
+
+  "us-p": {
+    "title": "United States: P-1B / P-2 / P-3 for performers (briefly)",
+    "whoApplies": "US employer, US sponsoring organisation or US agent files I-129. Same union consultation requirement as O (SAG-AFTRA / Actors' Equity / AGMA depending on the work).",
+    "relevance": "P-1B covers members of an internationally recognised entertainment GROUP (at least 75% of members with the group 1+ year); an individual film actor cannot use P-1 alone. P-2 covers artists in a government-recognised reciprocal exchange between a US and a foreign organisation (historically union-to-union exchanges). P-3 covers artists/entertainers coming to perform, teach or coach in a culturally unique program. For a single actor in a film or play, O-1B is the usual route; P-3 is possible for culturally unique theatre.",
+    "forms": [
+      { "name": "Form I-129, P petition - regular petitioner", "amount": 1015, "currency": "USD", "paidBy": "employer / sponsor / agent", "source": "https://www.uscis.gov/g-1055", "statedDate": "G-1055 edition 09/09/26; in force since 2024-04-01. Up to 25 beneficiaries per petition." },
+      { "name": "Form I-129, P petition - small employer or nonprofit", "amount": 510, "currency": "USD", "paidBy": "employer / sponsor / agent", "source": "https://www.uscis.gov/g-1055", "statedDate": "in force since 2024-04-01" },
+      { "name": "Asylum Program Fee - regular / small employer / nonprofit", "amount": 600, "currency": "USD", "paidBy": "petitioner", "source": "https://www.uscis.gov/g-1055", "statedDate": "in force since 2024-04-01; 300 for small employer, 0 for nonprofit" },
+      { "name": "Form I-907 premium processing, I-129 P classification", "amount": 2965, "currency": "USD", "paidBy": "petitioner", "source": "https://www.uscis.gov/g-1055", "statedDate": "2026-03-01" },
+      { "name": "DS-160 MRV fee (P)", "amount": 205, "currency": "USD", "paidBy": "performer", "source": "https://travel.state.gov/content/travel/en/News/visas-news/niv-fee-increases-to-take-effect-june-17-2023.html", "statedDate": "2023-06-17" }
+    ],
+    "processingDays": { "standard": null, "premium": 15, "premiumFee": 2965 },
+    "validity": "P-1 entertainment group and P-3: the time needed for the event, up to 1 year; extensions in increments of up to 1 year. (P-1A individual athletes can get up to 5 years; not relevant to actors.)",
+    "tiedTo": "The petitioner and the event/tour itinerary on the petition.",
+    "exemptions": "None for paid performance.",
+    "notes": [ "P petitions also owe the Asylum Program Fee: $600 regular, $300 small employer, $0 nonprofit." ],
+    "sources": [
+      "https://www.uscis.gov/g-1055",
+      "https://www.law.cornell.edu/cfr/text/8/214.2",
+      "https://www.sagaftra.org/contracts-industry-resources/o-and-p-visas"
+    ],
+    "uncertain": [
+      "Which reciprocal exchange programs are currently recognised for P-2 actors (e.g. any Actors' Equity exchange with UK Equity) was not verified.",
+      "P validity figures come from a summarising read of 8 CFR 214.2(p), not verbatim text."
+    ]
+  },
+
+  "gb-creative": {
+    "title": "United Kingdom: Temporary Work - Creative Worker visa (film/TV or stage performer)",
+    "whoApplies": "The UK production (or agent/venue) must hold a Temporary Worker - Creative Worker sponsor licence and assign a Certificate of Sponsorship (CoS). The performer then applies for the visa (or, if eligible, uses the concession at the border). Sponsors must follow the Appendix Creative Worker Codes of Practice: there are codes for 'performers in film and television' and for theatre/dance (Equity-linked); these replace a resident labour market test.",
+    "forms": [
+      { "name": "Certificate of Sponsorship - Temporary Work routes", "amount": 55, "currency": "GBP", "paidBy": "sponsor (UK production/agent)", "source": "https://www.fragomen.com/insights/united-kingdom-fee-increases-in-april-2026.html ; https://www.jobbatical.com/blog/uk-sponsor-licence-cos-cost-update", "statedDate": "Unchanged in the 2026-04-08 fee round (set 2025-04-09)" },
+      { "name": "Sponsor licence application (Temporary Worker / small-sponsor rate)", "amount": 611, "currency": "GBP", "paidBy": "sponsor", "source": "https://www.fragomen.com/insights/united-kingdom-fee-increases-in-april-2026.html", "statedDate": "2026-04-08 (was 574)" },
+      { "name": "Creative Worker visa application fee (per person)", "amount": 340, "currency": "GBP", "paidBy": "performer (sponsor may reimburse)", "source": "https://www.gov.uk/creative-worker-visa/how-much-it-costs", "statedDate": "2026-04-08" },
+      { "name": "Immigration Health Surcharge", "amount": 1035, "currency": "GBP", "paidBy": "performer", "source": "https://www.gov.uk/creative-worker-visa/how-much-it-costs ; https://www.gov.uk/healthcare-immigration-application/who-needs-pay", "statedDate": "Per year; not payable for a visa of 6 months or less applied for from outside the UK" },
+      { "name": "Priority service (outside UK)", "amount": 500, "currency": "GBP", "paidBy": "performer", "source": "secondary: https://www.davidsonmorris.com/creative-worker-visa-uk/", "statedDate": null },
+      { "name": "Super priority service (outside UK)", "amount": 1000, "currency": "GBP", "paidBy": "performer", "source": "secondary: https://www.davidsonmorris.com/creative-worker-visa-uk/", "statedDate": null },
+      { "name": "Maintenance funds (evidence, not a fee)", "amount": 1270, "currency": "GBP", "paidBy": "performer holds it for 28 days, unless an A-rated sponsor certifies maintenance on the CoS", "source": "https://assets.publishing.service.gov.uk/media/69d4bde1826d774e7b263e30/Sponsor-a-Creative-Worker-04-26-v1.0.pdf", "statedDate": "guidance v04/26 valid from 2026-04-08" }
+    ],
+    "processingDays": {
+      "standard": 21,
+      "standardNote": "gov.uk: 'usually ... within 3 weeks' from outside the UK; 8 weeks for applications inside the UK",
+      "premium": 5,
+      "premiumNote": "Priority aims for 5 working days; super priority aims for a decision within 24 hours / next working day (secondary source)",
+      "premiumFee": 500
+    },
+    "validity": "Up to 12 months initially: the shortest of 12 months, the CoS engagement period plus 14 days either side, or the span of consecutive engagements plus 14 days either side. Can extend in-country to a maximum of 24 months in total if continuing with the same sponsor; with a different sponsor the total is capped at 12 months. Not a settlement route.",
+    "tiedTo": "Tied to the sponsor and the engagement(s) on the CoS. A worker with consecutive engagements (multiple entry) may be covered by one CoS; a new sponsor requires a new CoS and application.",
+    "visaVsNonVisaNationals": "Visa nationals (on Appendix Visitor: Visa national list) must obtain the Creative Worker visa before travel for any length of engagement. Non-visa nationals (e.g. US, Canada, EU, Australia, Japan) coming for 3 months or less can instead use the Creative Worker visa concession (see gb-ppe entry) with a CoS and an ETA; for longer engagements they must apply for the visa.",
+    "exemptions": "Irish citizens need no permission (Common Travel Area). EU/EEA/Swiss citizens with EU Settlement Scheme settled or pre-settled status need none. Everyone else needs a CoS (visa or concession) or a visitor route that permits the activity (see gb-ppe).",
+    "notes": [
+      "A worker must use the CoS within 3 months of its assignment and must not apply more than 3 months before the start date on the CoS.",
+      "No Immigration Skills Charge on the Creative Worker route.",
+      "In the April 2026 fee round the Standard Visitor fee rose from £127 to £135 and the ETA from £16 to £20 (Fragomen summary)."
+    ],
+    "sources": [
+      "https://www.gov.uk/creative-worker-visa",
+      "https://www.gov.uk/creative-worker-visa/how-much-it-costs",
+      "https://www.gov.uk/healthcare-immigration-application/who-needs-pay",
+      "https://assets.publishing.service.gov.uk/media/69d4bde1826d774e7b263e30/Sponsor-a-Creative-Worker-04-26-v1.0.pdf",
+      "https://www.fragomen.com/insights/united-kingdom-fee-increases-in-april-2026.html",
+      "https://www.davidsonmorris.com/creative-worker-visa-uk/"
+    ],
+    "uncertain": [
+      "Priority (£500) and super priority (£1,000) fees and their 5-day / 24-hour targets come from secondary sources; not confirmed on gov.uk and it is not confirmed whether the 2026-04-08 round changed them. Availability varies by visa application centre.",
+      "The previous Creative Worker fee (believed £319 from 2025-04-09) was not verified.",
+      "The £340 effective date of 2026-04-08 is inferred from the April 2026 fee round (Fragomen) plus the current gov.uk figure; the fees order itself was not read.",
+      "CoS £55 comes from secondary sources, not the Home Office fee table."
+    ]
+  },
+
+  "gb-ppe": {
+    "title": "United Kingdom: visitor routes (Permitted Paid Engagement, film-crew location shoot) and the Creative Worker visa concession",
+    "whoApplies": "PPE and Standard Visitor: the performer alone (visa nationals apply for a Standard Visitor visa; non-visa nationals get an ETA and see a Border Force officer). Concession: the UK sponsor assigns a CoS; the performer presents it at the border with an ETA.",
+    "forms": [
+      { "name": "Standard Visitor visa (covers PPE) - visa nationals only", "amount": 135, "currency": "GBP", "paidBy": "performer", "source": "https://www.gov.uk/standard-visitor ; https://www.fragomen.com/insights/united-kingdom-fee-increases-in-april-2026.html", "statedDate": "2026-04-08 (was 127)" },
+      { "name": "Electronic Travel Authorisation (ETA) - non-visa nationals", "amount": 20, "currency": "GBP", "paidBy": "performer", "source": "https://www.fragomen.com/insights/united-kingdom-fee-increases-in-april-2026.html", "statedDate": "2026-04-08 (was 16)" },
+      { "name": "Certificate of Sponsorship for concession entry", "amount": 55, "currency": "GBP", "paidBy": "sponsor", "source": "https://www.fragomen.com/insights/united-kingdom-fee-increases-in-april-2026.html", "statedDate": "unchanged 2026-04-08" },
+      { "name": "Immigration Health Surcharge", "amount": 0, "currency": "GBP", "paidBy": "n/a", "source": "https://www.gov.uk/healthcare-immigration-application/who-needs-pay", "statedDate": "Visitors and stays of 6 months or less from outside the UK do not pay it" }
+    ],
+    "processingDays": { "standard": 21, "premium": null, "premiumFee": null },
+    "routes": {
+      "permittedPaidEngagement": "A professional artist, entertainer or musician aged 18+ may be paid for an activity directly relating to their profession where invited by a UK-based creative (arts or entertainment) organisation, agent or broadcaster (Appendix V: Visitor V 13.3). The engagement must be arranged before travel, declared, evidenced by a written invitation, relate to the full-time profession, and be completed within 30 days of entry (PA 19). Stay up to 6 months but the engagement must happen in the first month. PPE entrants who are non-visa nationals must see a Border Force officer, not an e-gate.",
+      "canAFilmActorUseIt": "For a short, pre-arranged paid appearance by an established professional, invited by a UK production company, agent or broadcaster (e.g. a guest spot, a few shooting days, a promotional appearance), the rule text covers it. A role requiring longer than 30 days of work, or ongoing employment on a UK production, falls to the Creative Worker route.",
+      "filmCrewLocationShoot": "Standard Visitor permitted activity PA 14.3: 'Film crew (actor, producer, director or technician) employed by an overseas company may visit the UK to take part in a location shoot for a film or programme or other media content that is produced and financed overseas.' No UK payment, no CoS.",
+      "otherVisitorActivities": "PA 14.1: artists/entertainers may give performances, take part in competitions/auditions, make personal appearances and promotional activities, and perform at permit-free festivals, but may not be paid from a UK source except under PPE.",
+      "creativeWorkerConcession": "Non-visa nationals only, coming to work for 3 months or less, holding a valid Creative Worker CoS and (usually) an ETA, meeting the Creative Worker eligibility requirements. Must see a Border Force officer and get a passport stamp; using an e-gate gives no permission to work. Leave is granted for a maximum of 3 months, cannot be extended, and lapses on leaving the Common Travel Area. Visa nationals cannot use it."
+    },
+    "validity": "PPE: engagement within 30 days of entry, visit up to 6 months. Concession: up to 3 months. Location-shoot visitor: up to 6 months.",
+    "tiedTo": "PPE: the inviting organisation/engagement. Concession: the CoS sponsor and engagement. Location shoot: the overseas employer.",
+    "exemptions": "Irish citizens need nothing (Common Travel Area).",
+    "notes": [
+      "Visa nationals must hold a visa before travel for PPE or any visitor route; non-visa nationals need an ETA.",
+      "The same CoS-based concession applies to non-visa nationals on the Home Office list (Australia, Canada, EU countries, Iceland, Japan, Liechtenstein, New Zealand, Norway, Singapore, South Korea, Switzerland, USA) who could otherwise use e-gates, so the 'see an officer' rule is the one practical trap."
+    ],
+    "sources": [
+      "https://www.gov.uk/standard-visitor/paid-engagement-event",
+      "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-v-visitor",
+      "https://www.gov.uk/guidance/immigration-rules/immigration-rules-appendix-visitor-permitted-activities",
+      "https://www.gov.uk/creative-worker-visa/creative-worker-concession",
+      "https://assets.publishing.service.gov.uk/media/69d4bde1826d774e7b263e30/Sponsor-a-Creative-Worker-04-26-v1.0.pdf",
+      "https://www.gov.uk/healthcare-immigration-application/who-needs-pay",
+      "https://www.fragomen.com/insights/united-kingdom-fee-increases-in-april-2026.html"
+    ],
+    "uncertain": [
+      "Whether Home Office caseworker guidance narrows PPE for performers cast in UK-financed film/TV productions was not checked in the Visit caseworker guidance; the rule text alone permits it for a pre-arranged engagement within 30 days.",
+      "Standard Visitor visa processing is 'usually 3 weeks' on gov.uk; priority options for visitor visas were not researched (null).",
+      "ETA £20 and visitor £135 figures are from the Fragomen April 2026 summary plus gov.uk (£135); the ETA figure was not read on gov.uk directly."
+    ]
+  },
+
+  "ca-film": {
+    "title": "Canada: foreign performer on a film/TV production in British Columbia or Ontario",
+    "whoApplies": "The Canadian production company (employer) submits an offer of employment through the IRCC Employer Portal under LMIA-exemption code C14 and pays the employer compliance fee. The performer then applies for an employer-specific work permit (online from abroad, or at the port of entry if eligible).",
+    "workPermitRequired": "Yes. R186(g) (performing artists, no work permit) does not apply when the performance is primarily for a film production or a television/radio broadcast, nor to anyone involved in the film/TV/broadcast elements. A film or TV actor therefore needs a work permit; the LMIA-exempt route is R205(a) 'significant benefit', exemption code C14, Television and film production workers.",
+    "c14Eligibility": "Cumulatively: (1) essential to the production stage (filming) of a live-action TV or film project, i.e. physical presence on location in Canada is required; (2) high wage, at or above the median wage for the occupation and province (Job Bank); (3) unionized, shown by a letter from the relevant union or guild (in practice UBCP/ACTRA in BC, ACTRA in Ontario) naming the production, location, worker, stating the work is covered by a collective agreement, signed by a senior representative and dated. Actors are named as an example occupation.",
+    "forms": [
+      { "name": "Work permit (employer-specific), per person", "amount": 155, "currency": "CAD", "paidBy": "performer (often reimbursed by the production)", "source": "https://ircc.canada.ca/english/information/fees/fees.asp", "statedDate": "IRCC fee list, page modified 2026-09-21" },
+      { "name": "Employer compliance fee (Employer Portal offer of employment)", "amount": 230, "currency": "CAD", "paidBy": "employer (production); may not be recovered from the worker", "source": "https://ircc.canada.ca/english/information/fees/fees.asp ; C14 program delivery instruction", "statedDate": "IRCC fee list, page modified 2026-09-21" },
+      { "name": "Biometrics - individual", "amount": 85, "currency": "CAD", "paidBy": "performer", "source": "https://ircc.canada.ca/english/information/fees/fees.asp", "statedDate": "page modified 2026-09-21; US nationals are exempt from biometrics for work permits" },
+      { "name": "Biometrics - group of 3+ performing artists (maximum)", "amount": 255, "currency": "CAD", "paidBy": "performers", "source": "https://ircc.canada.ca/english/information/fees/fees.asp", "statedDate": "page modified 2026-09-21" },
+      { "name": "Open work permit holder fee", "amount": 100, "currency": "CAD", "paidBy": "n/a for C14 (employer-specific permit); only for open work permits", "source": "https://ircc.canada.ca/english/information/fees/fees.asp", "statedDate": "page modified 2026-09-21" }
+    ],
+    "processingDays": {
+      "standard": null,
+      "standardNote": "Outside Canada varies by country of application (IRCC processing-times tool). At the port of entry the decision is made on arrival.",
+      "premium": null,
+      "premiumFee": null,
+      "premiumNote": "IRCC has no paid premium/priority service for work permits."
+    },
+    "validity": "Duration of the offer of employment, or until the passport expires, whichever is earlier.",
+    "tiedTo": "Employer-specific: the named production company and the offer submitted in the Employer Portal.",
+    "portOfEntry": "Yes for US citizens and US permanent residents (and other visa-exempt applicants eligible under R198): the C14 instruction confirms applicants can apply at the port of entry if eligible, with the Employer Portal offer number, the union letter and wage evidence. US nationals pay no biometrics fee. Visa-required nationals must apply before travel.",
+    "exemptions": "R186(g) no-permit exemption for performing artists covers stage/live performance (not film/TV), where the artist is not in an employment relationship with the Canadian engager. Stage actors employed by a Canadian theatre company generally use LMIA-exempt code C23 (performing arts) or an LMIA. Film crew/actors on a location shoot entirely foreign-financed are not given a blanket exemption for actors in the sources read.",
+    "notes": [
+      "Quebec-destined C14 workers do not need a CAQ.",
+      "Work permit application refused if the employer has not submitted the offer and paid the compliance fee, unless R303.1(5) or R303.2(2) exemptions apply.",
+      "C14 program delivery instruction page date modified 2026-04-16 (a 2025-12-16 update restructured it)."
+    ],
+    "sources": [
+      "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/publications-manuals/operational-bulletins-manuals/temporary-residents/foreign-workers/exemption-codes/canadian-interests-significant-benefit-television-film-production-workers-r205-exemption-code-c14.html",
+      "https://ircc.canada.ca/english/information/fees/fees.asp",
+      "https://www.canada.ca/en/immigration-refugees-citizenship/services/biometrics/who-needs-to-give.html",
+      "https://meurrensonimmigration.com/performing-artists-and-work-permits/ (secondary, R186(g) film exclusion)",
+      "https://stewartmckelvey.com/thought-leadership/hiring-internationally-in-the-film-television-industry-5-things-you-should-know/ (secondary)"
+    ],
+    "uncertain": [
+      "Standard processing time from outside Canada (country-specific tool not fetched); null.",
+      "The R186(g) film/TV exclusion text was taken from secondary sources summarising the IRCC instruction; the IRCC R186(g) page URL tried returned 404.",
+      "The exact conditions of C23 for stage actors and whether BC/Ontario have provincial wrinkles were not researched.",
+      "Effective dates of the 155 / 230 / 85 CAD fees (they are long-standing) were not confirmed; only the fee page's modification date is given."
+    ]
+  },
+
+  "free-rights": {
+    "title": "Free rights to work by citizenship",
+    "forms": [],
+    "processingDays": { "standard": null, "premium": null, "premiumFee": null },
+    "byCountry": {
+      "US": {
+        "anyFreeRight": false,
+        "detail": "No citizenship other than US gives a free right to act for pay in the US. Canadians and Visa Waiver nationals (UK, Irish, most EU) still need an approved O or P petition; Canadians skip the consular visa and MRV fee. USMCA/CUSMA TN professionals do not include actors (Appendix 2 lists no performers or film occupations; its only arts entries are Graphic Designer and Interior Designer). The E-3 is for Australians and not for performers. Visitors (B-1/B-2/ESTA) may not perform for pay."
+      },
+      "GB": {
+        "anyFreeRight": true,
+        "detail": "Irish citizens may live and work in the UK, including self-employed, without any permission under the Common Travel Area. EU/EEA/Swiss citizens have a right to work only if they hold EU Settlement Scheme (pre-)settled status; otherwise they need the Creative Worker route (usually via the 3-month concession, as non-visa nationals). US and Canadian citizens are non-visa nationals: Creative Worker concession (CoS + ETA, up to 3 months), PPE, or the visa."
+      },
+      "CA": {
+        "anyFreeRight": false,
+        "detail": "No citizenship other than Canadian gives a free right to act on a Canadian film/TV production. CUSMA professionals do not include actors (confirmed against CUSMA Chapter 16 Appendix 2). US citizens get practical advantages only: port-of-entry application and no biometrics. UK, Irish and EU citizens need C14 like anyone else."
+      }
+    },
+    "youthMobilityNote": "Separate from these cases: bilateral youth schemes (Canada's International Experience Canada working holiday for eligible UK/Irish/EU nationals, the UK Youth Mobility Scheme for eligible Canadians) give open work permits that would allow acting work. They were not researched here and no figures are given.",
+    "sources": [
+      "https://www.gov.uk/government/publications/common-travel-area-guidance/common-travel-area-guidance",
+      "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/cusma-aceum/text-texte/16.aspx?lang=eng",
+      "https://www.gov.uk/creative-worker-visa/creative-worker-concession",
+      "https://www.canada.ca/en/immigration-refugees-citizenship/services/biometrics/who-needs-to-give.html"
+    ],
+    "uncertain": [
+      "The US TN list (USMCA Appendix 2 to Annex 16-A) is the same trilateral text as CUSMA; the US-side regulation 8 CFR 214.6 was not separately read.",
+      "IEC and UK Youth Mobility Scheme eligibility, quotas and fees were not researched."
+    ]
+  }
+}

@@ -1,0 +1,492 @@
+{
+  "_meta": {
+    "title": "Vehicle, boat and aircraft customization: prices, labor time and legal rules",
+    "researchedOn": "2026-09-30",
+    "markets": ["US-NY", "US-CT", "US-CA", "CA-ON", "CA-BC", "MX-CDMX", "UK", "IE"],
+    "fieldKey": {
+      "value": "Number as published. Ranges are given as low/high. Currency in 'currency'.",
+      "sourceType": "primary-shop (a shop's own price list/page), primary-manufacturer, primary-regulator, primary-statute, secondary-guide (third-party estimate), forum (owner reports)",
+      "confirmed": "true = the figure was read on the fetched page itself during this research; false = seen only in a search-result snippet or the page could not be opened, so it needs rechecking before use"
+    },
+    "method": "Primary sources first (shops' own price lists, statutes, regulators). Where no primary figure is published, the value is null with a note, or a secondary figure is given and marked secondary. Nothing was invented.",
+    "caveats": [
+      "Shop price lists are single-shop observations, not market averages. Treat each as one real data point for its town.",
+      "Several shop pages were geographically outside the target markets (noted per entry); they are kept as real reference points, not as the market's figure.",
+      "Prices exclude sales tax/VAT unless the entry says otherwise."
+    ]
+  },
+
+  "paint": {
+    "US": {
+      "maacoTiers": {
+        "tiers": [
+          {"name": "Basic", "chemistry": "single-stage enamel", "warranty": "1 year (6 months limited + 6 months prorated)"},
+          {"name": "Preferred", "chemistry": "single-stage urethane", "warranty": "3 years (2 limited + 1 prorated)"},
+          {"name": "Premium", "chemistry": "two-stage base coat + clear coat", "warranty": "5 years (3 limited + 2 prorated)"}
+        ],
+        "price": null,
+        "url": "https://www.maaco.com/blog/maaco-paint-packages-and-pricing/",
+        "publisher": "Maaco",
+        "date": "2026-08-11",
+        "sourceType": "primary-shop",
+        "confirmed": true,
+        "notes": "Maaco publishes NO national dollar prices; it says pricing varies by location, vehicle size and condition and requires an in-person estimate. Location 'offers' pages (e.g., Staten Island NY) did not show dollar figures when fetched. Third-party guides claim Basic ~$599+ advertised / $899-1,399 realistic, Preferred ~$999+ / $1,299-1,899, Premium ~$1,499+ / $1,799-2,499 (autobodyshopnear.com, carpaintjobcost.com); these are unverified secondary estimates and should be labeled as such.",
+        "secondaryEstimate": {"basic": [899, 1399], "preferred": [1299, 1899], "premium": [1799, 2499], "currency": "USD", "url": "https://autobodyshopnear.com/blog/maaco-paint-job-cost", "sourceType": "secondary-guide", "confirmed": false}
+      },
+      "laborTime": {"value": null, "notes": "No primary published turnaround for a full respray found. UK bodyshop guide (below) gives 3-7 days for full respray."}
+    },
+    "UK": {
+      "fullRespray": {
+        "items": [
+          {"item": "Single panel", "low": 150, "high": 500},
+          {"item": "Bumper", "low": 150, "high": 350},
+          {"item": "Half respray", "low": 800, "high": 1500},
+          {"item": "Full car, solid colour", "low": 2000, "high": 4000},
+          {"item": "Full car, metallic/pearl", "low": 3000, "high": 6000},
+          {"item": "Classic bare-metal restoration", "low": 6000, "high": 15000}
+        ],
+        "currency": "GBP",
+        "url": "https://www.toptouchcoachworks.co.uk/car-respray-cost-uk/",
+        "publisher": "Top Touch Coachworks (bodyshop, Wicken, Milton Keynes)",
+        "date": "2026-06-07",
+        "sourceType": "primary-shop",
+        "confirmed": true,
+        "notes": "Shop's own guide ranges, not a fixed tariff. VAT treatment not stated."
+      },
+      "laborTimeDays": {"fullResprayMinimalRepairs": [3, 5], "fullResprayWithBodywork": [5, 7], "url": "https://www.samedaycarpaint.co.uk/blog/car-respray-cost-uk", "sourceType": "secondary-guide", "confirmed": false}
+    },
+    "IE": {
+      "fullRespray": {
+        "items": [
+          {"item": "Full respray, small car", "value": 1600},
+          {"item": "Full respray, large car", "value": 2200},
+          {"item": "Full respray, average van", "value": 2500},
+          {"item": "Panel respray, any colour (no chrome), per piece", "value": 70}
+        ],
+        "surcharges": "50% surcharge for colour change",
+        "currency": "EUR",
+        "url": "https://www.gvdautos.ie/pricing",
+        "publisher": "GVD Autos (Walkinstown, Dublin 12)",
+        "date": null,
+        "sourceType": "primary-shop",
+        "confirmed": true,
+        "notes": "Shop calls these guide prices that vary job to job. VAT inclusion not stated. Page undated."
+      }
+    },
+    "MX-CDMX": {
+      "dealerPanelPaint": {
+        "items": [
+          {"item": "Front fascia paint (Nissan, any year), IVA included", "value": 5800},
+          {"item": "Door-handle covers paint, IVA included", "value": 850}
+        ],
+        "currency": "MXN",
+        "url": "https://www.nissanpolanco.com.mx/promociones-hojalateria-pintura.html",
+        "publisher": "Nissan Polanco (dealer body shop, CDMX)",
+        "date": "promotion valid through 2026-09-30",
+        "sourceType": "primary-shop",
+        "confirmed": true,
+        "notes": "Promotional prices expiring today; bodywork excluded. 10% off for 3+ panels."
+      },
+      "fullPaint": {"low": 10000, "high": 35000, "currency": "MXN", "bySize": {"small": [10000, 15000], "medium": [15000, 25000], "large": [20000, 35000]}, "url": "https://blog.chocaste.com/cuanto-cuesta-pintar-carro-mexico-2026/", "sourceType": "secondary-guide", "confirmed": false, "notes": "No CDMX shop publishing a full-respray tariff was found."}
+    },
+    "CA-ON": {"fullRespray": null, "notes": "No Ontario shop price list for full respray found."},
+    "CA-BC": {"fullRespray": null, "notes": "Not found."}
+  },
+
+  "wraps": {
+    "US-CA": {
+      "fullColorChangeFrom": 2500, "customPrintedFrom": 3500, "partialFrom": 400, "chromeDelete": [300, 850],
+      "currency": "USD",
+      "url": "https://gilroyblackout.com/blog/car-wrap-cost-2026-complete-pricing-guide/",
+      "publisher": "Blackout Window Tinting (Gilroy, CA)",
+      "date": "2026-06-21",
+      "sourceType": "primary-shop",
+      "confirmed": true
+    },
+    "US-general": {"sedan": [2000, 5000], "suvTruck": [3500, 7500], "currency": "USD", "url": "https://metrocentersignworks.com/how-much-does-it-cost-to-wrap-a-car-a-complete-guide/", "sourceType": "secondary-guide", "confirmed": false},
+    "CA-ON": {
+      "coupeFrom": 2900, "sedanSuvFrom": 3500, "currency": "CAD",
+      "url": "https://mrtint.ca/pricing/",
+      "publisher": "Mr Tint (2370 Midland Ave, Toronto)",
+      "date": null, "sourceType": "primary-shop", "confirmed": true,
+      "notes": "Plus 13% HST."
+    },
+    "UK": {
+      "smallCarFrom": 1800, "midSizeTypical": 3500, "largeSuvUpTo": 5000, "chromeBrushed": [4000, 9000],
+      "lifespanYears": {"standard": [5, 7], "chrome": [2, 3]},
+      "currency": "GBP",
+      "url": "https://autowrapmanchester.co.uk/how-much-does-a-car-wrap-cost/",
+      "publisher": "Auto Wrap Manchester",
+      "date": "2026-09",
+      "sourceType": "primary-shop", "confirmed": true,
+      "notes": "VAT inclusion not stated."
+    },
+    "IE": null, "MX-CDMX": null,
+    "paintProtectionFilm": {
+      "US-CA": {
+        "film": "XPEL (Ultimate Plus, Stealth, Armor)",
+        "bySize": [
+          {"class": "Small (Civic, Corolla, Mini)", "partial": [1200, 1800], "fullBody": [3500, 5000]},
+          {"class": "Mid-size (3 Series, Model 3, A4)", "partial": [1500, 2200], "fullBody": [4500, 6500]},
+          {"class": "Large SUV/truck (X5, Cayenne, F-150)", "partial": [2000, 3000], "fullBody": [6000, 9000]},
+          {"class": "Exotic/luxury", "partial": [3000, 5000], "fullBody": [9000, 15000]}
+        ],
+        "currency": "USD",
+        "url": "https://www.rapidwindowtinting.com/post/how-much-does-full-body-ppf-cost-in-los-angeles-2026-price-guide",
+        "publisher": "Rapid Window Tinting (5300 Sunset Blvd, Los Angeles)",
+        "date": "2026-03-26", "sourceType": "primary-shop", "confirmed": true
+      },
+      "CA-ON": {
+        "packages": [
+          {"name": "Hood & fender bra", "from": 350},
+          {"name": "Full bumper + hood/fender", "from": 900},
+          {"name": "Full hood, fenders, bumper, mirrors", "from": 1600},
+          {"name": "Door panels, trunk guard, door cups", "value": 300}
+        ],
+        "currency": "CAD", "url": "https://mrtint.ca/pricing/", "publisher": "Mr Tint (Toronto)", "date": null, "sourceType": "primary-shop", "confirmed": true
+      },
+      "UK": null, "IE": null, "MX-CDMX": null
+    }
+  },
+
+  "wheelsTires": {
+    "fitmentRules": {
+      "boltPattern": "Lug count x bolt-circle diameter in mm (e.g., 5x114.3). Must match the hub exactly; 5x112 and 5x114.3 are NOT interchangeable.",
+      "offset": "Distance in mm from the wheel's mounting face to its centerline. Positive = face toward the outside (typical FWD cars); negative = wheel pushed outward (typical off-road trucks). Wrong offset causes rubbing on suspension/fenders and changes scrub radius.",
+      "centerBore": "Wheel's center hole must equal or exceed the hub diameter; if larger, hub-centric rings center it. Too small = will not mount.",
+      "otherChecks": "Width and diameter vs. tire size and brake-caliper clearance; load rating; lug seat type (conical/ball/flat); TPMS sensor compatibility. Overall tire diameter change affects speedometer.",
+      "urls": ["https://apexwheels.com/blog/technical-discussion/bolt-pattern-and-centerbore-guide-what-they-are-and-how-to-measure-them", "https://neotires.com/aftermarket-wheel-fitment-7-specs-you-cant-get-wrong"],
+      "sourceType": "secondary-guide", "confirmed": false,
+      "modelSuggestion": "A vehicle has {boltPattern, centerBoreMm, offsetRangeMm, maxWidthIn, diameterRangeIn}; a wheel fits only if boltPattern matches exactly, wheel centerBore >= hub, and offset/width fall within the vehicle's range."
+    },
+    "aftermarketWheelExample": {
+      "item": "Enkei RPF1 17x8, 5x100, +45 offset, gold", "pricePerWheel": 296.10, "listPrice": 329.00, "setOf4": 1184.40,
+      "currency": "USD", "url": "https://subimods.com/products/enkei-rpf1-gold-17x8-5x100-45mm-offset",
+      "publisher": "Subimods (retailer)", "date": "2026-09-30 (fetched)", "sourceType": "primary-shop", "confirmed": true,
+      "notes": "Sold individually. Page notes hub-centric rings recommended. Tire Rack product pages returned 'currently unavailable' during research."
+    },
+    "tirePrices": {
+      "US": {
+        "perTireRanges": [
+          {"category": "All-season, small (12-15 in)", "low": 80, "high": 150},
+          {"category": "All-season, medium (16-20 in)", "low": 100, "high": 250},
+          {"category": "Winter, small", "low": 100, "high": 150},
+          {"category": "Winter, medium", "low": 200, "high": 400},
+          {"category": "All-terrain, medium", "low": 150, "high": 250},
+          {"category": "All-terrain, large", "low": 200, "high": 500},
+          {"category": "Performance, medium", "low": 100, "high": 750},
+          {"category": "Performance, large", "low": 200, "high": 1000}
+        ],
+        "currency": "USD", "url": "https://www.discounttire.com/blog/tire-prices-guide", "publisher": "Discount Tire", "date": null,
+        "sourceType": "primary-shop", "confirmed": true,
+        "notes": "Discount Tire's own ballpark guide; page undated. Its 'Large (18-26 in) all-season $140-170' figure looks inconsistent with the medium range and was omitted."
+      },
+      "UK": {
+        "item": "Michelin Primacy 4 205/55 R16 91V, fully fitted, per tyre", "value": 75.00, "currency": "GBP",
+        "url": "https://www.kwik-fit.com/tyres/search/details/michelin/michelin-primacy-4/t1018459",
+        "publisher": "Kwik Fit", "date": null, "sourceType": "primary-shop", "confirmed": false,
+        "notes": "From search snippet only; product page now returns HTTP 410 (discontinued listing). Kwik Fit's fitted price includes VAT, tyre, new valve, balancing and disposal."
+      }
+    },
+    "fittingFees": {
+      "US-DiscountTire": {
+        "included": "Labor, valve stems or TPMS rebuild kit, mounting, balancing, disposal, visual inspection, plus lifetime rotations, rebalancing, flat repair and air checks",
+        "perTire": null, "mobileSurcharge": 50,
+        "currency": "USD", "url": "https://www.discounttire.com/learn/tire-installation-cost", "publisher": "Discount Tire", "sourceType": "primary-shop", "confirmed": true,
+        "notes": "Per-tire fee not published on the page (shown only in cart). Secondary sources cite ~$24.99/tire (unconfirmed). Mobile install 'as low as $50' extra (https://www.discounttire.com/services/mobile-installation). Wheel+tire packages pay one installation, about half the price of separate installs."
+      },
+      "US-TireRack": {"mobilePerTireFrom": 40, "currency": "USD", "url": "https://www.tirerack.com/mobile-tire-installation", "publisher": "Tire Rack", "sourceType": "primary-shop", "confirmed": false, "notes": "Page unavailable when fetched; 'from $40 a tire' from search snippet. Partner-installer mount/balance commonly ~$24.99/tire (unconfirmed)."},
+      "CA-ON": {
+        "items": [
+          {"item": "Mount & balance x4, cars/small SUVs", "from": 120},
+          {"item": "Mount & balance x4, full-size SUV/truck/van", "from": 140},
+          {"item": "Off-car mount & balance x4", "from": 100},
+          {"item": "Seasonal switchover (on rims), car", "value": 50},
+          {"item": "Seasonal switchover, small SUV", "value": 60},
+          {"item": "Seasonal switchover, full-size", "from": 80},
+          {"item": "Switchover with balancing, car/small SUV", "from": 90},
+          {"item": "Leak repair (patch)", "from": 50}
+        ],
+        "currency": "CAD", "url": "https://formulatire.ca/service-and-price", "publisher": "Formula Tire (Mississauga, ON)", "date": null, "sourceType": "primary-shop", "confirmed": true,
+        "notes": "Plus HST. Ontario also levies a tire stewardship/disposal fee (not captured here)."
+      },
+      "UK-KwikFit": {
+        "fittingValveBalanceDisposalPerTyre": 20.50, "currency": "GBP",
+        "url": "https://www.kwik-fit.com/wheel-alignment", "publisher": "Kwik Fit", "sourceType": "primary-shop", "confirmed": true,
+        "notes": "Kwik Fit bundles fitting into its 'fully fitted' price; the £20.50 is the component excluded from discounts. The tyre FAQ page states £20.00 for the same thing — the two Kwik Fit pages disagree. Kwik Fit will not fit tyres bought elsewhere. Four-wheel alignment covers Hunter Hawkeye check + front toe only; price not shown on page (refund if no adjustment needed)."
+      }
+    }
+  },
+
+  "tint": {
+    "legalLimits": [
+      {
+        "jurisdiction": "US-NY", "windshield": "70% VLT minimum (tint only allowed on top 6 inches)", "frontSide": "70% VLT", "rearSide": "70% VLT for sedans/coupes/wagons/hatchbacks/convertibles", "rearWindow": "70% unless both outside mirrors present",
+        "enforcement": "Checked at annual safety inspection since 2017-01-01; non-compliant tint fails. Illegal to sell/install non-compliant glass.", "medicalExemption": "Form MV-80W",
+        "statute": "VTL 375(12-a)", "url": "https://dmv.ny.gov/inspections/tinted-windows", "publisher": "NY DMV", "sourceType": "primary-regulator", "confirmed": true
+      },
+      {
+        "jurisdiction": "US-CT", "windshield": "Non-reflective tint above AS-1 line only (secondary)", "frontSide": "35% VLT", "rearSide": "35% VLT (sedans); any darkness on multipurpose vehicles", "rearWindow": "Any darkness",
+        "medicalExemption": "Available (secondary: down to 20%)", "statute": "CGS 14-99g",
+        "url": "https://law.justia.com/codes/connecticut/title-14/chapter-246/section-14-99g/", "publisher": "Connecticut General Assembly (via Justia)", "sourceType": "primary-statute", "confirmed": false,
+        "notes": "Statute page returned 403; figures from multiple secondary tint-law summaries that agree on 35%. Recheck against cga.ct.gov."
+      },
+      {
+        "jurisdiction": "US-CA", "windshield": "Clear strip only at top (secondary: top 4 in)", "frontSide": "70% combined VLT (film+glass); film alone must pass 88%", "rearSide": "Any darkness if dual outside mirrors (secondary)", "rearWindow": "Any darkness if dual outside mirrors (secondary)",
+        "statute": "Vehicle Code 26708 / 26708.5", "url": "https://codes.findlaw.com/ca/vehicle-code/veh-sect-26708-5/", "publisher": "California Legislature (via FindLaw)", "sourceType": "primary-statute", "confirmed": false,
+        "notes": "70%/88% figure from search results citing statute; statute text not fetched."
+      },
+      {
+        "jurisdiction": "UK (GB)", "windshield": "75% minimum (vehicles first used on/after 1985-04-01); 70% if earlier", "frontSide": "70% minimum", "rearSide": "No rule", "rearWindow": "No rule",
+        "enforcement": "Police/DVSA light meters; prohibition notice, fixed penalty or court summons. Illegal to fit or sell non-compliant glass.",
+        "url": "https://www.gov.uk/tinted-vehicle-window-rules", "publisher": "GOV.UK", "sourceType": "primary-regulator", "confirmed": false,
+        "notes": "Figures from GOV.UK page text in search results; page not separately fetched."
+      },
+      {
+        "jurisdiction": "IE", "windshield": "65% minimum at NCT (S.I. 415 of 2017); 70% under EU type approval for new vehicles", "frontSide": "65% at NCT", "rearSide": "No restriction", "rearWindow": "No restriction",
+        "notes": "Sun strip below wiper sweep is an NCT fail. RSA page returned 403; figures from RSA-citing news explainers (Leinster Express etc.).",
+        "url": "https://www.rsa.ie/road-safety/road-users/vehicle-components/vehicle-glass/window-tinting", "publisher": "Road Safety Authority", "sourceType": "primary-regulator", "confirmed": false
+      },
+      {
+        "jurisdiction": "CA-ON", "windshield": "No aftermarket tint on vehicles manufactured on/after 2017-01-01 (secondary: top 75 mm strip)", "frontSide": "HTA 73(3): must not 'substantially obscure' the interior — no numeric VLT in statute; the Passenger and Light-Duty Vehicle Inspection Standard uses 70% for 2017+ vehicles", "rearSide": "Not restricted by 73(3)", "rearWindow": "Not restricted by 73(3)",
+        "statute": "Highway Traffic Act s.73(3)", "url": "https://www.mondaq.com/canada/rail-road-cycling/971116/window-tinting-is-it-legal-in-ontario", "sourceType": "secondary-guide", "confirmed": false,
+        "notes": "Primary text (ontario.ca/laws HTA s.73) not fetched. Pre-2017 vehicles: 'substantially obscures' test only, left to officer's judgment."
+      },
+      {
+        "jurisdiction": "CA-BC", "windshield": "Film only within top 75 mm", "frontSide": "No film of any kind", "rearSide": "Allowed (behind driver)", "rearWindow": "Allowed only with left and right outside mirrors",
+        "factoryGlass": "Tint within glass must meet CMVSS minimum transmittance",
+        "statute": "Motor Vehicle Act Regulations s.7.05", "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/26_58_04", "publisher": "BC Laws", "sourceType": "primary-statute", "confirmed": true
+      },
+      {
+        "jurisdiction": "MX-CDMX", "windshield": "No film darker than permitted (secondary)", "frontSide": "Film may not darken more than 20% (i.e., ~80% transmission); secondary sources disagree, some say 70%", "rearSide": "Same", "rearWindow": "Same",
+        "fine": {"uma": [20, 30], "mxn2026": [2200, 3400], "licensePoints": 3, "impoundPossible": true},
+        "medicalExemption": "Available with documented medical condition (permit)",
+        "statute": "Reglamento de Tránsito de la Ciudad de México, art. 43 (per secondary)",
+        "url": "https://www.informador.mx/mexico/de-cuanto-es-la-multa-por-tener-vidrios-polarizados-en-cdmx-este-2026-20260720-0129.html", "publisher": "El Informador", "date": "2026-07-20", "sourceType": "secondary-guide", "confirmed": true,
+        "notes": "Confirmed as reported by the newspaper; Reglamento text itself not fetched. Public, school and staff transport: no tint at all."
+      }
+    ],
+    "prices": {
+      "US-AZ-reference": {"sedanFrom": {"LLumar IRX": 499, "STEK Nex+": 599, "3M Ceramic IR": 699}, "threeRowSuvFrom": 649, "currency": "USD", "url": "https://www.autocosmetics.org/car-window-tinting", "publisher": "Auto Cosmetics (Chandler, AZ)", "sourceType": "primary-shop", "confirmed": true, "notes": "Outside target markets; kept as a real US shop price list. No NY/CT/CA shop tariff captured."},
+      "CA-ON": {"items": [{"item": "2 front windows", "xpelCS": 130, "xpelXR": 170}, {"item": "4-door sedan", "xpelCS": 250, "xpelXR": 360}, {"item": "SUV", "xpelCS": 260, "xpelXR": 360}, {"item": "Front windshield", "xpelXR": 220}], "currency": "CAD", "url": "https://mrtint.ca/pricing/", "publisher": "Mr Tint (Toronto)", "sourceType": "primary-shop", "confirmed": true, "notes": "Shop sells front-window and windshield tint that Ontario law restricts on 2017+ vehicles."},
+      "CA-BC": {"rearWindowsFrom": 290, "sedanCeramicFrom": 400, "currency": "CAD", "url": "https://www.pureauto.ca/window-tint-pureauto-vancouver", "publisher": "Pureauto (Vancouver)", "sourceType": "primary-shop", "confirmed": false, "notes": "Search snippet only."},
+      "UK": {"items": [{"item": "Small hatchback (rear windows)", "from": 100}, {"item": "4-door saloon (rear)", "from": 135}, {"item": "5-door estate (rear)", "from": 160}], "currency": "GBP", "url": "https://www.dynamictinting.co.uk/prices/", "publisher": "Dynamic Tinting (Birmingham/West Midlands)", "sourceType": "primary-shop", "confirmed": true},
+      "IE": {"items": [{"item": "Half saloon", "from": 160}, {"item": "Full saloon", "from": 220}, {"item": "Half estate/jeep", "from": 200}, {"item": "Full estate/jeep", "from": 260}, {"item": "Back windscreen", "from": 80}, {"item": "One side window", "from": 40}, {"item": "Sunstrip", "from": 50}], "currency": "EUR", "url": "https://qztints.ie/car-tinting-prices/", "publisher": "QZ Tints (Blanchardstown, Dublin 15)", "sourceType": "primary-shop", "confirmed": true},
+      "MX-CDMX": {"conventional": 600, "nanocarbonCompact": [1500, 2800], "nanoceramicStandard": [2500, 4500], "currency": "MXN", "url": "https://solex.mx/cual-es-el-precio-de-polarizados-para-autos-guia-completa-2026/", "sourceType": "secondary-guide", "confirmed": false, "notes": "El Bulldog (CDMX 3M installer) publishes no prices; quotes only, IVA included."}
+    },
+    "laborTime": {"value": null, "notes": "Several shops advertise same-day installation (search snippets); no primary hour figure captured."}
+  },
+
+  "interior": {
+    "leatherKit": {
+      "item": "Katzkin professionally installed leather interior", "from": 2195, "currency": "USD",
+      "url": "https://katzkin.com/faq/general-faqs/how-much-does-it-cost-to-upgrade-my-vehicle-to-a-katzkin-interior/",
+      "publisher": "Katzkin (manufacturer)", "date": null, "sourceType": "primary-manufacturer", "confirmed": true,
+      "notes": "Starting price; varies by vehicle and options. Secondary: 2-row $1,700-2,500, 3-row can exceed $3,000; heated seats ~ +$400 (unconfirmed)."
+    },
+    "customReupholstery": {"value": null, "notes": "No primary shop price list for full automotive leather reupholstery found in target markets."},
+    "seatCovers": {"value": null, "notes": "Not researched to a primary figure."}
+  },
+
+  "lighting": {
+    "ledHidConversions": [
+      {"jurisdiction": "US-federal", "rule": "Aftermarket LED/HID bulbs in halogen headlamp housings do not comply with FMVSS 108; NHTSA says no LED replaceable headlamp bulb meets the standard and works with CBP to block imports, but leaves enforcement of owner modifications to states.", "url": "https://blog.betterautomotivelighting.com/are-led-headlight-bulbs-legal-in-2026/", "sourceType": "secondary-guide", "confirmed": false, "notes": "Primary NHTSA interpretation letter not fetched."},
+      {"jurisdiction": "UK", "rule": "Converting a halogen headlamp to HID or LED is an MOT Major fail ('light source and lamp not compatible') for cars first used on/after 1986-04-01.", "url": "https://mtta.org.uk/wp-content/uploads/2020/08/4.-Lamps-reflectors-and-electrical-equipment-MOT-inspection-manual_-cars-and-passenger-vehicles-Guidance-GOV.UK_.pdf", "publisher": "DVSA MOT inspection manual (copy)", "sourceType": "primary-regulator", "confirmed": false},
+      {"jurisdiction": "IE", "rule": "HID bulb in a non-HID headlamp is an NCT fail; HID must be a complete type-approved system with self-levelling and cleaning. Aftermarket LED bulbs are not explicitly addressed (per forums).", "url": "https://www.rsa.ie/road-safety/road-users/vehicle-components/vehicle-lighting/high-intensity-discharge-lights-(hid)", "publisher": "RSA", "sourceType": "primary-regulator", "confirmed": false},
+      {"jurisdiction": "CA-ON/BC, MX-CDMX, US-NY/CT/CA state level", "rule": null, "notes": "No jurisdiction-specific primary text captured; federal (US) and CMVSS 108 (Canada) govern equipment."}
+    ],
+    "underglow": [
+      {"jurisdiction": "US-NY", "rule": "VTL 375(41) reserves blue (volunteer fire), green (volunteer ambulance) and amber (hazard vehicles) lights; red is for emergency vehicles. Secondary sources read this as: only white, steady (non-flashing) underglow is lawful.", "url": "https://www.nysenate.gov/legislation/laws/VAT/375", "publisher": "NY Senate", "sourceType": "primary-statute", "confirmed": true, "notes": "The 'white only' reading is secondary (low-offset.com)."},
+      {"jurisdiction": "US-CA", "rule": "Diffused lights permitted under VC 25400 below 0.05 candela per sq in; no red visible from front; not within 12 in of required lamps; max 720 sq in.", "url": "https://www.californiacarlaws.com/neon-lights/", "sourceType": "secondary-guide", "confirmed": false},
+      {"jurisdiction": "US-CT", "rule": null, "notes": "Not found."},
+      {"jurisdiction": "UK", "rule": "Road Vehicles Lighting Regulations 1989: no red light to the front; blue reserved for emergency vehicles; no dazzling/distracting lamps. Secondary: underglow tolerated only if not red/blue, not flashing, not visible to front.", "url": "https://www.legislation.gov.uk/uksi/1989/1796", "sourceType": "primary-statute", "confirmed": false},
+      {"jurisdiction": "CA-ON", "rule": "HTA s.62: only police vehicles may carry red-and-blue lamps casting to the front; flashing blue restricted to police/snow removal. No specific underglow provision.", "url": "https://www.ontarioticket.com/motor-vehicle-lighting.php", "sourceType": "secondary-guide", "confirmed": false},
+      {"jurisdiction": "CA-BC, IE, MX-CDMX", "rule": null, "notes": "Not found."}
+    ]
+  },
+
+  "audio": {
+    "US-GeekSquad": {
+      "items": [
+        {"item": "In-dash stereo install, no touchscreen", "value": 99.99, "confirmed": false},
+        {"item": "In-dash stereo install, touchscreen", "value": 149.99, "confirmed": false},
+        {"item": "Off-road vehicle stereo install", "value": 129.99, "confirmed": false},
+        {"item": "Standard speaker install (hardware not included)", "value": 99.99, "confirmed": true, "url": "https://www.bestbuy.com/site/promo/speaker-installation-136088"},
+        {"item": "Component speaker install", "value": 129.99, "confirmed": false, "notes": "Another search snippet said $149.99; conflict unresolved."},
+        {"item": "2-channel or mono amplifier install", "value": 199.99, "confirmed": false},
+        {"item": "4-channel amplifier install", "value": 249.99, "confirmed": false},
+        {"item": "Rear back-up camera install (hardware not included)", "value": 149.99, "confirmed": true, "url": "https://www.bestbuy.com/site/promo/backup-camera-and-sensor-installation-136088"},
+        {"item": "Rearview mirror + backup camera install", "value": 209.99, "confirmed": true, "url": "https://www.bestbuy.com/site/promo/backup-camera-and-sensor-installation-136088"},
+        {"item": "Remote start install with T-harness", "value": 229.98, "confirmed": true, "url": "https://www.bestbuy.com/site/promo/remote-start-installation-136088"}
+      ],
+      "currency": "USD", "publisher": "Best Buy / Geek Squad", "sourceType": "primary-shop",
+      "url": "https://www.bestbuy.com/site/auto-tech-services/car-audio-installation/pcmcat1553539170913.c?id=pcmcat1553539170913",
+      "notes": "Hardware, dash kits, harnesses and extra labor are extra; Autotech gives an estimate first. Stereo/amp product pages timed out or truncated, so those prices are from search snippets of bestbuy.com."
+    },
+    "UK-Halfords": {"fullStereoInstallFrom": 110, "currency": "GBP", "url": "https://carinterior.alibaba.com/question/halfords-car-stereo-fitting-guide", "sourceType": "secondary-guide", "confirmed": false, "notes": "Halfords' own pages did not show fitting prices when fetched; it offers a free 30-minute fitting assessment at selected stores."},
+    "CA, IE, MX": null
+  },
+
+  "accessibility": {
+    "vehicleConversions": [
+      {"item": "BraunAbility Toyota Sienna Power Foldout XT (2026), complete WAV", "from": 88590, "currency": "USD", "url": "https://www.braunability.com/us/en/mobility-products/wheelchair-accessible-vehicles/toyota-sienna-hybrid/side-entry-power-foldout-xt-ramp.html", "publisher": "BraunAbility", "sourceType": "primary-manufacturer", "confirmed": true, "notes": "Includes base vehicle. 31 in door opening, 1,000 lb ramp."},
+      {"item": "2026 Sienna XLE BraunAbility dealer listing: base MSRP $47,165 + conversion $47,052 = $94,217", "currency": "USD", "url": "https://shop.mobilityworks.com/p/wheelchair-vans/2026-toyota-sienna-braunability-ts295269/", "publisher": "MobilityWorks", "sourceType": "primary-shop", "confirmed": false, "notes": "Listing 404 when fetched (likely sold); snippet only. Useful as conversion-only cost ~ $47k."},
+      {"item": "VMI Northstar Honda Odyssey conversion (complete vehicle offers)", "low": 40900, "high": 72030, "currency": "USD", "url": "https://superiorvan.com/products/honda-side-entry/vmi-odyssey-northstar/", "publisher": "Superior Van & Mobility", "sourceType": "primary-shop", "confirmed": true, "notes": "Aggregate offer range incl. used inventory."}
+    ],
+    "handControls": {
+      "UK-Motability": {
+        "period": "2026-07-01 to 2026-09-30",
+        "free": ["FeatherDrive electronic hand control system", "Push/pull brake with electric accelerator", "Radial hand control with push brake", "Easy-release handbrake", "False floor", "Pedal guard (quick release, select models)", "Stalk crossover arm (certain versions)"],
+        "paid": [
+          {"item": "Electronic accelerators", "low": 20, "high": 1520},
+          {"item": "Left-hand floor-mounted push brake with electronic accelerator", "value": 1105},
+          {"item": "Boot hoist 40 kg", "low": 505, "high": 700},
+          {"item": "Boot hoist 200 kg", "value": 868},
+          {"item": "Person lift transferable (Handylift) up to 120 kg", "value": 615},
+          {"item": "Manual swivel seat", "from": 922},
+          {"item": "E Motion X electric swivel/lowering seat", "value": 3875},
+          {"item": "Wheelchair stowage system (Abiloader)", "value": 13850},
+          {"item": "High-tech driving controls", "from": 30000}
+        ],
+        "currency": "GBP", "vat": "0% VAT where eligible for relief", "url": "https://www.motability.co.uk/whats-available/adaptations/adaptation-prices", "publisher": "Motability Operations", "sourceType": "primary-regulator", "confirmed": true,
+        "notes": "Prices are Motability Scheme customer contributions for adaptations fitted at lease start. Current list expires today (2026-09-30); a new quarter's list likely starts 2026-10-01."
+      },
+      "US": {"mechanicalPushPull": [500, 2000], "installedTypical": [2700, 8000], "currency": "USD", "url": "https://www.mobilityinmotion.com/hand-controls-for-cars-cost/", "sourceType": "secondary-guide", "confirmed": false, "notes": "No US dealer published an installed price list."}
+    },
+    "grants": [
+      {"jurisdiction": "US", "program": "VA automobile allowance (one-time, paid to seller)", "value": 27074.99, "currency": "USD", "effective": "2025-10-01", "url": "https://www.va.gov/disability/compensation-rates/special-benefit-allowance-rates/", "publisher": "US Department of Veterans Affairs", "sourceType": "primary-regulator", "confirmed": true, "notes": "Rate is adjusted each Oct 1; a new figure may take effect 2026-10-01. Adaptive equipment (lifts, hand controls, etc.) is a separate, reusable benefit, not capped by this figure. Apply on VA Form 21-4502."},
+      {"jurisdiction": "UK", "program": "Motability Scheme lease + Motability Foundation grants toward Advance Payments and adaptations", "value": null, "url": "https://www.motabilityfoundation.org.uk/individual-grants/wheelchair-accessible-vehicle-wav", "sourceType": "primary-regulator", "confirmed": false, "notes": "WAVs carry 0% VAT. Grant amounts are means-tested, not fixed."},
+      {"jurisdiction": "CA-ON", "program": "Home and Vehicle Modification Program (March of Dimes Canada, funded by Ontario)", "value": 15000, "currency": "CAD", "frequency": "per 10 years for vehicle modifications", "url": "https://www.marchofdimes.ca/en-ca/programs/am/hvmp", "sourceType": "primary-regulator", "confirmed": false, "notes": "Amount from search snippet of March of Dimes; ontario.ca page confirms eligible items (hand/foot controls, lifts, roof raise/floor lowering) but not the cap."},
+      {"jurisdiction": "CA-federal", "program": "GST/HST relief on specially equipped motor vehicles", "value": null, "notes": "Mentioned in secondary sources; not verified."},
+      {"jurisdiction": "IE", "program": "Drivers and Passengers with Disabilities Tax Relief Scheme (VRT/VAT relief)", "caps": {"driver": 10000, "passenger": 16000, "severelyDisabledDriverAdapted": 16000, "extensivelyAdapted": 22000, "wavDriver": 48000, "wavPassenger": 32000}, "currency": "EUR", "url": "https://www.revenue.ie/en/vrt/documents/vrt/vrt7.pdf", "publisher": "Revenue (VRT7, revised March 2026)", "sourceType": "primary-regulator", "confirmed": false, "notes": "Caps from search snippet; Primary Medical Certificate required; VAT on adaptation costs repayable."},
+      {"jurisdiction": "CA-BC, MX-CDMX", "program": null, "notes": "No individual vehicle-modification grant identified."}
+    ]
+  },
+
+  "performance": {
+    "exhaust": [
+      {"jurisdiction": "US-NY", "rule": "VTL 375(31): muffler required; modifying exhaust to increase noise is prohibited. SLEEP Act (signed 2021-10-29, in force 2022-04-01) raised the fine to up to $1,000 and/or 30 days jail; shops violating more than twice (or willfully) in 18 months can lose their inspection license.", "soundLimits": {"passengerVehicles": {"le35mph": 76, "gt35mph": 82}, "motorcycles": {"le35mph": 82, "gt35mph": 86}, "unit": "dB(A) at 50 ft", "statute": "VTL 386"}, "urls": ["https://www.nysenate.gov/legislation/laws/VAT/375", "https://www.nysenate.gov/legislation/laws/VAT/386"], "sourceType": "primary-statute", "confirmed": true, "notes": "Per SEMA, inspectors do not carry decibel meters at inspection."},
+      {"jurisdiction": "US-CA", "rule": "VC 27150/27151: aftermarket exhaust legal if <=95 dBA under SAE J1492 (vehicles <6,000 lb GVWR). Cited drivers can get a BAR Referee noise certificate.", "refereeFee": 108, "currency": "USD", "url": "https://california.public.law/codes/vehicle_code_section_27151", "sourceType": "primary-statute", "confirmed": false, "notes": "Referee fee from search snippet (asktheref.org)."},
+      {"jurisdiction": "US-CT", "rule": null, "notes": "Not found."},
+      {"jurisdiction": "UK", "rule": "MOT section 8.1: exhaust must not be noticeably louder than a standard silencer in average condition (tester judgment); emissions over limit fail; removing a DPF is illegal and an MOT fail.", "url": "https://motester.co.uk/mot-test-of-exhaust-system-and-emissions/", "sourceType": "secondary-guide", "confirmed": false},
+      {"jurisdiction": "CA-ON, CA-BC, IE, MX-CDMX", "rule": null, "notes": "Not researched to primary text."}
+    ],
+    "ecuTuning": {
+      "US-CA-rule": {"rule": "Since 2021-07-19 Smog Check scans the ECU; software not from the OEM or approved by a CARB Executive Order fails and the car cannot be registered. Aftermarket emissions-related parts need a CARB EO number.", "url": "https://ww2.arb.ca.gov/resources/documents/california-racing-vehicles-aftermarket-parts-executive-orders", "publisher": "CARB", "sourceType": "primary-regulator", "confirmed": false},
+      "priceExample": {"item": "COBB Accessport V3, 2022-2026 Subaru WRX", "list": 770.00, "sale": 693.00, "currency": "USD", "url": "https://www.cobbtuning.com/products/accessport/subaru-accessport-v3-wrx-6mt-cvt-2022-2026/", "publisher": "COBB Tuning", "sourceType": "primary-manufacturer", "confirmed": false, "notes": "cobbtuning.com returned 403; price from search snippets citing COBB and dealers."}
+    },
+    "suspension": [
+      {"item": "Eibach Pro-Kit lowering springs, 2022-2026 Civic Si sedan (set of 4)", "value": 395.00, "currency": "USD", "url": "https://eibach.com/product/E10-40-043-02-22", "publisher": "Eibach", "sourceType": "primary-manufacturer", "confirmed": true, "notes": "Requires rear camber kit 5.67476K for alignment. Lowers ~1.2 in front / 1.0 in rear (secondary). Add alignment."},
+      {"item": "Rough Country 2 in leveling kit, 2021-2026 F-150", "from": 99.95, "withRearShocks": 239.95, "installHours": [2, 3], "currency": "USD", "url": "https://www.roughcountry.com/product/configurable/ford-leveling-lift-kit-568c", "publisher": "Rough Country", "sourceType": "primary-manufacturer", "confirmed": false, "notes": "roughcountry.com returned 403; from search snippets."}
+    ],
+    "insuranceDisclosure": [
+      {"jurisdiction": "UK", "rule": "Consumer Insurance (Disclosure and Representations) Act 2012: consumer must take reasonable care not to misrepresent. Insurers ask about modifications; an undisclosed mod lets the insurer apply remedies according to whether the misrepresentation was innocent, careless or deliberate/reckless (from proportionate claim reduction up to avoiding the policy).", "premiumEffect": null, "url": "https://www.legislation.gov.uk/ukpga/2012/6", "sourceType": "primary-statute", "confirmed": false, "notes": "No published per-modification premium loading exists; insurers price individually."},
+      {"jurisdiction": "IE", "rule": "Consumer Insurance Contracts Act 2019: no duty to volunteer information; the consumer must answer the insurer's specific questions honestly and with reasonable care. Ambiguous questions are read in the consumer's favor.", "url": "https://www.irishstatutebook.ie/eli/2019/act/53/section/14/enacted/en/html", "sourceType": "primary-statute", "confirmed": false},
+      {"jurisdiction": "US, CA, MX", "rule": null, "notes": "Governed by policy terms and state/provincial misrepresentation law; not researched."}
+    ]
+  },
+
+  "towing": {
+    "US": {
+      "hitchPartsOnly": [150, 300], "installHours": [2, 3], "currency": "USD",
+      "url": "https://www.uhaul.com/Trailer-Hitches/", "publisher": "U-Haul", "sourceType": "primary-shop", "confirmed": true,
+      "notes": "U-Haul quotes installed price per vehicle via its hitch finder; no flat labor price published. Secondary: labor ~$150-200, hitch+wiring installed $450-600 (unconfirmed)."
+    },
+    "UK, IE, CA, MX": null
+  },
+
+  "boats": {
+    "bottomPaint": [
+      {"yard": "Nichols Yacht Yard, Mamaroneck NY", "url": "http://www.nicholsyacht.com/NicholsMain/MarinaRates.html", "items": [{"item": "Ablative antifouling to 25 ft, per ft, materials incl.", "value": 27.50}, {"item": "26-35 ft", "value": 32.50}, {"item": "36-45 ft", "value": 37.50}, {"item": "46 ft+ (materials extra)", "value": 42.50}], "notes": "Second coat at same time: subtract $5/ft. Yard does not sand (NY DEC). Outdrive antifouling $325 each + materials.", "currency": "USD", "date": "current page, fetched 2026-09-30", "sourceType": "primary-shop", "confirmed": true},
+      {"yard": "Monterey Bay Boatworks, CA", "url": "https://www.montereybayboatworks.com/boatyard-rate", "items": [{"item": "1st coat, per ft LOA, labor only", "value": 10.00}, {"item": "2nd coat, per ft", "value": 8.50}], "currency": "USD", "date": "rates updated 2023-07-01", "sourceType": "primary-shop", "confirmed": true, "notes": "Environmental fee $1.50/ft on all work orders; 3% card surcharge."},
+      {"yard": "Crocker's Boat Yard (Manchester-by-the-Sea, MA — outside target markets)", "url": "https://www.crockersboatyard.com/fckimages/pdf/Labor%20Rates%202025_Updated%204.21.25.pdf", "items": [{"item": "Sand and paint bottom, up to 25 ft", "value": 23.00}, {"item": "25-45 ft", "value": 26.00}, {"item": "over 45 ft", "value": 28.00}], "currency": "USD", "date": "2025-2026 rates", "sourceType": "primary-shop", "confirmed": true},
+      {"yard": "Hancock Harbor Marina, Greenwich NJ — outside target markets", "url": "http://www.hancockharbor.com/marina-services.html", "items": [{"item": "Bottom paint w/ light sanding, per ft + tax + materials", "value": 15.00}], "currency": "USD", "date": "2026 rates", "sourceType": "primary-shop", "confirmed": true, "notes": "A search summary called this Connecticut; it is in New Jersey."}
+    ],
+    "shrinkWrap": [
+      {"yard": "Nichols Yacht Yard, Mamaroneck NY", "items": [{"item": "Up to 25 ft, per ft", "value": 26.00}, {"item": "26-35 ft", "value": 32.00}, {"item": "36-45 ft", "value": 38.00}, {"item": "46 ft+", "value": 45.00}, {"item": "Zippered door", "value": 85.00}, {"item": "Spring removal & recycling, per ft", "value": 7.50}], "currency": "USD", "url": "http://www.nicholsyacht.com/NicholsMain/MarinaRates.html", "sourceType": "primary-shop", "confirmed": true},
+      {"yard": "Crocker's Boat Yard, MA", "items": [{"item": "Up to 25 ft", "value": 26.00}, {"item": "25-45 ft", "value": 29.00}, {"item": "Over 45 ft", "value": 32.00}, {"item": "Mast up", "value": 36.00}, {"item": "Disposal fee per ft", "value": 4.00}], "currency": "USD", "url": "https://www.crockersboatyard.com/fckimages/pdf/Labor%20Rates%202025_Updated%204.21.25.pdf", "sourceType": "primary-shop", "confirmed": true},
+      {"yard": "Hancock Harbor, NJ", "items": [{"item": "Per ft + tax + materials (door/vents extra)", "value": 15.00}, {"item": "Removal & disposal", "value": 150.00}], "currency": "USD", "url": "http://www.hancockharbor.com/marina-services.html", "sourceType": "primary-shop", "confirmed": true}
+    ],
+    "winterizing": {"yard": "Nichols Yacht Yard, NY", "items": [{"item": "Gas inboard or generator", "value": 525}, {"item": "1-4 cyl diesel", "value": 495}, {"item": "6 cyl+ diesel", "value": 575}, {"item": "Outboard <=25 hp", "value": 350}, {"item": "Outboard 26-150 hp", "value": 525}, {"item": "Outboard >150 hp", "value": 675}, {"item": "Outdrive service (Alpha/Bravo/Volvo) each", "value": 495}], "currency": "USD", "notes": "All plus materials.", "url": "http://www.nicholsyacht.com/NicholsMain/MarinaRates.html", "sourceType": "primary-shop", "confirmed": true},
+    "haulLaunch": [
+      {"yard": "Nichols, NY", "items": [{"item": "Short haul (<=24 h in slings), per ft", "value": 19.00}, {"item": "Long haul, block & relaunch, per ft", "value": 24.00}], "currency": "USD", "confirmed": true},
+      {"yard": "Monterey Bay Boatworks, CA", "items": [{"item": "Haul out up to 35 ft, per ft ($375 min)", "value": 13.50}], "currency": "USD", "confirmed": true}
+    ],
+    "electronicsInstall": {"chartplotterInstallPrice": null, "laborRates": [{"yard": "Crocker's, MA", "electricalPerHour": 180}, {"yard": "Monterey Bay Boatworks, CA", "electricalPerHour": 125}], "currency": "USD", "notes": "No flat chartplotter install price published. West Marine installs in select CA and FL stores with free estimates. Model as hours x electrical rate; hour count unconfirmed.", "sourceType": "primary-shop", "confirmed": true},
+    "interiorRefit": {"value": null, "secondary": {"perSeat": [150, 500], "fullBoat": [1500, 3000], "currency": "USD", "sourceType": "secondary-guide", "confirmed": false}, "notes": "No primary marine upholstery shop tariff found."},
+    "laborRates": [
+      {"yard": "Nichols Yacht Yard, Mamaroneck NY", "mechanicalPerHour": 205, "craneForkliftPerHour": 225, "confirmed": true},
+      {"yard": "Monterey Bay Boatworks, CA", "generalPerHour": 110, "electricalMechanicalFiberglassCarpentryPerHour": 125, "overtime": "1.5x after 5 pm and weekends", "confirmed": true},
+      {"yard": "Crocker's, MA", "fiberglassElectricalMechanical": 180, "rigging": 130, "carpentry": 140, "paintVarnish": 130, "yardWork": 110, "confirmed": true},
+      {"yard": "Hancock Harbor, NJ", "laborPerHour": 80, "confirmed": true}
+    ],
+    "UK, IE, CA, MX": null
+  },
+
+  "aircraft": {
+    "inspections": {
+      "rule": "14 CFR 91.409(a): annual inspection every 12 calendar months for all aircraft, signed by an A&P with Inspection Authorization (IA). 91.409(b): additionally a 100-hour inspection if the aircraft carries passengers for hire or is provided by the instructor for flight instruction for hire. An annual can count as a 100-hour, not the reverse. The 100-hour limit may be overflown by up to 10 hours to reach an inspection place; the excess counts against the next interval. A 100-hour needs only an A&P.",
+      "url": "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-91/subpart-E/section-91.409", "publisher": "eCFR / FAA", "sourceType": "primary-regulator", "confirmed": false,
+      "notes": "Rule text summarized from search results referencing eCFR; eCFR page not separately fetched. US-only; UK/IE (EASA/CAA Part-ML), Canada (CARs Standard 625) and Mexico differ and were not researched."
+    },
+    "annualPrice": {
+      "item": "Cessna 172 annual inspection, flat rate", "value": 1550.00, "currency": "USD",
+      "includes": "Standard inspection, oil change, spark plug service, filter, AD research", "excludes": "Repairs found, AD-mandated work, oil/filter/parts",
+      "laborRate": {"inShop": 115, "offSite": 145},
+      "url": "https://www.firstlineaero.com/rates", "publisher": "First-Line Aero (Cherokee County Airport KJSO, Texas — outside target markets)", "sourceType": "primary-shop", "confirmed": true,
+      "notes": "Secondary: 2026 inspection-only $1,500-2,200; total with typical findings $2,500-4,500 (unconfirmed)."
+    },
+    "avionics": {
+      "gfc500Hardware": {"item": "Garmin GFC 500 for Cessna 172 (autopilot components only)", "value": 8689.00, "currency": "USD", "url": "https://www.sarasotaavionics.com/avionics/gfc-500-for-cessna-172", "publisher": "Sarasota Avionics", "sourceType": "primary-shop", "confirmed": false, "notes": "Page returned 403; from search snippet. Requires a G5, GI 275 or G3X Touch as attitude source."},
+      "garminLaunchPrice": {"value": 6995, "note": "2-axis, for owners who already have a G5; with G5 'under $10,000' (2017 launch, stale)", "url": "https://www.garmin.com/en-US/blog/aviation/announcement-new-revolutionary-cost-effective-retrofit-autopilots-for-ga-aircraft/", "publisher": "Garmin", "date": "2017-07-18", "sourceType": "primary-manufacturer", "confirmed": true},
+      "installedEstimate": {"dualG5PlusGfc500Hardware": {"twoServo": 10900, "threeServo": 12600}, "installLaborHours": [30, 35], "installedTotal": [15000, 20000], "currency": "USD", "sourceType": "forum", "confirmed": false, "url": "https://www.pilotsofamerica.com/community/threads/garmin-gfc-500-with-dual-g5-under-9k.105272/", "notes": "No shop publishes an installed price; installed total is owner-reported. Model as hardware + hours x shop rate."}
+    },
+    "interiorRefurbishment": {
+      "items": [
+        {"item": "Cessna 172 vinyl (Naugahyde) interior, customer installs", "value": 4800},
+        {"item": "Cessna 172 vinyl interior, installed (adds trim & headliner painting)", "value": 6000},
+        {"item": "Cessna 172 leather interior, customer installs", "value": 5400},
+        {"item": "Cessna 172 leather interior, installed", "value": 6500}
+      ],
+      "includes": "Seat repaint, foam replacement where needed, reupholstery, panel reupholstery, nylon carpet (style 6779), flammability certs, FAA releases",
+      "currency": "USD", "url": "https://www.rvmarineinc.com/Pages/aircraft%20upholstery%20product%20price.html", "publisher": "RV Marine Inc. (phone 904 = Jacksonville, FL area)", "date": null, "sourceType": "primary-shop", "confirmed": true
+    }
+  },
+
+  "laborRates": {
+    "US": {
+      "national": {"band": [120, 159], "note": "Almost half of shops price labor in this band (2025 PartsTech report, cited by AAA)", "url": "https://www.aaa.com/autorepair/articles/average-mechanic-labor-rate-repair-costs-in-your-state-2026", "publisher": "AAA", "sourceType": "secondary-guide", "confirmed": true},
+      "stateFigures": {"NY": 251.36, "CA": 271.10, "CT": 281.53, "currency": "USD", "url": "https://www.aaa.com/autorepair/articles/average-mechanic-labor-rate-repair-costs-in-your-state-2026", "sourceType": "secondary-guide", "confirmed": true, "notes": "AAA article citing World Population Review. These conflict sharply with shop-software surveys (Tekmetric/AutoLeap-type sources: NY $135-180, CA $155-200, CT $125-140; NYC up to $200-250). Treat state figures as uncertain; independents cluster near the national band, dealers higher."}
+    },
+    "CA-ON": {"typical": [120, 140], "currency": "CAD", "url": "https://trustedlocalauto.com/blog/shop-labor-rates-province-by-province-guide", "sourceType": "secondary-guide", "confirmed": false, "notes": "Dealers ~30-50% higher."},
+    "CA-BC": {"typical": [125, 145], "currency": "CAD", "url": "https://trustedlocalauto.com/blog/shop-labor-rates-province-by-province-guide", "sourceType": "secondary-guide", "confirmed": false},
+    "UK": {"independent": [55, 95], "mainDealer": [85, 220], "fastFit": [60, 100], "mobile": [40, 70], "currency": "GBP", "url": "https://www.checkatrade.com/blog/cost-guides/mechanic-hourly-rate-uk/", "sourceType": "secondary-guide", "confirmed": false, "notes": "London/SE highest. Sources differ on ex- vs inc-VAT."},
+    "IE": {"independentDublin": 80, "currency": "EUR", "exVat": true, "date": "2023", "url": "https://www.boards.ie/discussion/2058322866/hourly-rates-for-servicing", "sourceType": "forum", "confirmed": false, "notes": "Single stale owner report; no current published Irish rate found."},
+    "MX-CDMX": {"value": null, "notes": "No published auto-shop hourly rate found. Mexican shops usually quote per job (por pieza/servicio). Specialized trades in CDMX ~MXN 550-1,000/h (homepro.com.mx, secondary, not auto-specific)."},
+    "bodyShopLeadTimes": {
+      "repairDurations": {"minorCosmeticDays": [1, 2], "boltOnDays": [2, 5], "multiPanelDays": [4, 8], "structuralWeeks": [2, 4]},
+      "url": "https://www.soloncollision.com/post/how-long-does-collision-repair-take-in-2026", "sourceType": "secondary-guide", "confirmed": false,
+      "notes": "These are in-shop durations, not the wait to get an appointment. No primary source publishes appointment lead times; forum reports of multi-week to 3-month queues for collision work exist. Treat appointment wait as unknown."
+    },
+    "installTimes": [
+      {"job": "Trailer hitch install", "hours": [2, 3], "source": "U-Haul (primary, confirmed)"},
+      {"job": "2 in leveling kit (spacer)", "hours": [2, 3], "source": "Rough Country (unconfirmed)"},
+      {"job": "GFC 500 + dual G5 in C172", "hours": [30, 35], "source": "forum (unconfirmed)"}
+    ]
+  },
+
+  "uncertain": [
+    "Maaco publishes no national dollar prices; any Maaco tier price is a third-party estimate.",
+    "Geek Squad in-dash stereo ($99.99/$149.99), amplifier ($199.99/$249.99) and component-speaker ($129.99 vs $149.99 conflict) prices come from search snippets of bestbuy.com; pages timed out.",
+    "Kwik Fit's fitting/valve/balance/disposal component is £20.50 on one Kwik Fit page and £20.00 on another.",
+    "Connecticut tint (35%) and California tint (70%/88%) were not read from statute text; UK GOV.UK and Irish RSA pages were not directly fetched (403/not fetched).",
+    "CDMX tint limit: reported as 'no more than 20% darkening'; some outlets say 70% transmission. Reglamento text not read.",
+    "Ontario tint: statute has no number; 70% comes from the inspection standard for 2017+ vehicles.",
+    "US state labor rates: AAA/World Population Review figures (NY $251, CA $271, CT $282) conflict with shop-software surveys ($125-200).",
+    "VA automobile allowance $27,074.99 is the FY2026 rate effective 2025-10-01; a new rate may take effect 2026-10-01 (tomorrow).",
+    "Motability adaptation price list covers 2026-07-01 to 2026-09-30; the next quarter's list may differ.",
+    "Several boatyard, aviation and tint price lists are outside the target markets (MA, NJ, TX, FL, AZ); used as real reference points only.",
+    "No primary figures found for: US automotive reupholstery tariffs, seat covers, UK/IE/MX tow-hitch fitting, IE/MX wraps, IE/MX PPF, chartplotter flat install price, CDMX auto-shop hourly rate, appointment lead times in any market, insurance premium loadings per modification.",
+    "Aircraft inspection rules captured are US (FAA) only; UK/IE (Part-ML), Canada (CARs) and Mexico (AFAC) rules not researched."
+  ]
+}

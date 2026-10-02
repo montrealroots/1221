@@ -1,0 +1,442 @@
+{
+  "meta": {
+    "purpose": "Utility providers, move-in setup costs, cheapest plans/tariffs and electricity reliability for eight SLATE cities, to replace the single monthly 'Bills' line in seasons.ts/household.ts.",
+    "retrieved": "2026-10-01",
+    "rules": "No invented numbers. null + note where not found. Every figure carries source + date. 'official' = utility/regulator page or filing; 'third-party' = comparison site or press summarising the provider (flagged, lower confidence). Promotional prices are marked promo with term and post-promo price where published.",
+    "currencies": { "us": "USD", "uk": "GBP", "ie": "EUR", "ca": "CAD", "mx": "MXN" },
+    "cities": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven", "uk-eng-london", "ie-lei-dublin", "ca-on-toronto", "ca-bc-vancouver", "mx-cmx-mexicocity"],
+    "caveats": [
+      "Internet prices vary by address; the figures are each provider's advertised starting offer on the date given, not a quote.",
+      "US, UK, IE, CA mobile plans are national, so one cheapest plan per country is repeated for each city in that country.",
+      "Reliability indices are not comparable across countries without care: thresholds (1, 3 or 5 minutes), major-event/storm exclusions and planned-outage inclusion differ. Each entry states its basis."
+    ]
+  },
+
+  "providers": {
+    "us-ny-newyork": {
+      "electricity": [{ "name": "Con Edison", "role": "regulated distribution utility (default supply; retail ESCO supply optional)" }],
+      "gas": [{ "name": "Con Edison", "area": "Manhattan, the Bronx, parts of Queens" }, { "name": "National Grid", "area": "Brooklyn, Staten Island, most of Queens" }],
+      "water": [{ "name": "NYC Department of Environmental Protection (rates set by NYC Water Board)", "note": "Billed to the property owner; renters normally pay it inside rent." }],
+      "internet": ["Spectrum", "Verizon Fios", "Optimum (parts of the Bronx/Brooklyn)", "Astound (RCN)"],
+      "mobile": ["Verizon", "AT&T", "T-Mobile", "MVNOs e.g. Mint Mobile (T-Mobile network), Visible, Cricket"]
+    },
+    "us-ca-losangeles": {
+      "electricity": [{ "name": "LADWP (Los Angeles Department of Water and Power)", "role": "municipal utility, City of LA" }],
+      "gas": [{ "name": "SoCalGas" }],
+      "water": [{ "name": "LADWP" }],
+      "internet": ["Spectrum", "AT&T Fiber", "Frontier (parts)", "T-Mobile/Verizon 5G home internet"],
+      "mobile": ["Verizon", "AT&T", "T-Mobile", "MVNOs e.g. Mint Mobile"]
+    },
+    "us-ct-newhaven": {
+      "electricity": [{ "name": "United Illuminating (UI, Avangrid)", "role": "distribution; Standard Service supply unless a retail supplier is chosen" }],
+      "gas": [{ "name": "Southern Connecticut Gas (SCG, Avangrid)" }],
+      "water": [{ "name": "South Central Connecticut Regional Water Authority (RWA)" }],
+      "internet": ["Xfinity (Comcast)", "Frontier Fiber"],
+      "internet_note": "New Haven is Comcast Xfinity cable territory, not Optimum (broadbandnow.com / allconnect.com, Sep 2026).",
+      "mobile": ["Verizon", "AT&T", "T-Mobile", "MVNOs e.g. Mint Mobile"]
+    },
+    "uk-eng-london": {
+      "electricity": [{ "name": "Competitive supplier market: Octopus Energy, British Gas, EDF, E.ON Next, OVO, etc." }, { "name": "UK Power Networks (London Power Networks licence)", "role": "distribution network operator (DNO); not chosen by the resident" }],
+      "gas": [{ "name": "Same supplier market (dual fuel common)" }, { "name": "Cadent / SGN", "role": "gas distribution networks" }],
+      "water": [{ "name": "Thames Water", "note": "Water + sewerage for most of London; some outer areas get water from Affinity or SES Water with Thames sewerage." }],
+      "internet": ["BT", "Sky", "Virgin Media", "TalkTalk", "Hyperoptic/Community Fibre (alt-nets)"],
+      "mobile": ["EE", "Vodafone", "O2", "Three", "MVNOs: giffgaff (O2), Lycamobile (EE), Tesco Mobile, Voxi, Smarty"]
+    },
+    "ie-lei-dublin": {
+      "electricity": [{ "name": "Supplier market: Electric Ireland, Bord Gáis Energy, SSE Airtricity, Energia, Flogas, Pinergy" }, { "name": "ESB Networks", "role": "distribution system operator" }],
+      "gas": [{ "name": "Bord Gáis Energy, Electric Ireland, SSE Airtricity, Energia, Flogas" }, { "name": "Gas Networks Ireland", "role": "network" }],
+      "water": [{ "name": "Uisce Éireann", "note": "Domestic water and wastewater are not charged; an excess-use charge exists in law but the Department of Housing said in March 2025 it is 'not giving consideration at this time' to introducing it (citizensinformation.ie; thejournal.ie, Mar 2025)." }],
+      "internet": ["eir", "Virgin Media Ireland", "Sky Ireland", "Vodafone", "Pure Telecom/Digiweb (resellers)"],
+      "mobile": ["Three", "Vodafone", "eir", "MVNOs: 48, Tesco Mobile, Lycamobile, Clear Mobile, GoMo, Virgin Media Mobile"]
+    },
+    "ca-on-toronto": {
+      "electricity": [{ "name": "Toronto Hydro", "role": "local distribution company; commodity at OEB Regulated Price Plan unless a retailer is chosen" }],
+      "gas": [{ "name": "Enbridge Gas" }],
+      "water": [{ "name": "City of Toronto (Toronto Water)", "note": "Billed to the property owner; tenants usually pay through rent." }],
+      "internet": ["Rogers (Xfinity-branded internet)", "Bell (Fibe)", "Resellers e.g. EBOX, TekSavvy", "Virgin Plus, Fido, Start.ca"],
+      "mobile": ["Rogers", "Bell", "Telus", "Freedom Mobile", "Fido", "Koodo", "Virgin Plus", "Public Mobile", "Chatr", "Lucky"]
+    },
+    "ca-bc-vancouver": {
+      "electricity": [{ "name": "BC Hydro" }],
+      "gas": [{ "name": "FortisBC" }],
+      "water": [{ "name": "City of Vancouver", "note": "Billed to property owner (flat rate for single detached/duplex, metered otherwise); renters normally pay through rent." }],
+      "internet": ["Telus (PureFibre)", "Rogers (formerly Shaw; Shaw was acquired by Rogers in April 2023)", "Novus", "resellers"],
+      "mobile": ["Telus", "Rogers", "Bell", "Freedom Mobile", "Fido", "Koodo", "Public Mobile", "Virgin Plus"]
+    },
+    "mx-cmx-mexicocity": {
+      "electricity": [{ "name": "CFE (Comisión Federal de Electricidad), CFE Suministrador de Servicios Básicos", "role": "sole residential supplier" }],
+      "gas": [{ "name": "Gas LP (cylinders or stationary tanks) from distributors incl. Gas Bienestar", "note": "Piped natural gas (Naturgy) reaches only parts of CDMX; most homes use LP gas. No price research done here." }],
+      "water": [{ "name": "SACMEX (Sistema de Aguas de la Ciudad de México)", "note": "Bimonthly bill; tariffs subsidised by neighbourhood development index." }],
+      "internet": ["Telmex (Infinitum)", "Totalplay", "izzi", "Megacable", "CFE Internet para Todos"],
+      "mobile": ["Telcel", "AT&T México", "Movistar", "Bait (Walmart, Altán network)", "other MVNOs"]
+    }
+  },
+
+  "setup": {
+    "us-ny-newyork": {
+      "electricity_gas": {
+        "provider": "Con Edison",
+        "connection_fee": null,
+        "connection_fee_note": "No published start-service fee found.",
+        "deposit": "May be requested from new customers (no prior account, recent disconnection, poor credit); NY law caps a residential deposit at an estimated two months' bills, refunded with interest after 12 months of on-time payment.",
+        "deposit_source": "callmepower.com/ny/utility/conedison/moving-in (third-party summary of NY HEFPA rules), retrieved 2026-10-01",
+        "lead_time": "Start online with address, move-in date and photo ID."
+      },
+      "water": { "fee": null, "note": "Owner-billed by DEP; no tenant account." },
+      "internet": {
+        "Verizon Fios": { "install_fee": 0, "note": "Router included; installation fee waived for pre-wired addresses (self-install); may cost for non-pre-wired homes, amount not stated.", "source": "verizon.com/home/internet/near-me/new-york-ny/", "date": "2026-10-01" },
+        "Spectrum": { "pro_install_fee": 65, "self_install_activation_fee": 30, "source": "third-party (search summary of cabletv.com / reviews.org hidden-fee guides)", "date": "2026-10-01", "confidence": "low" }
+      },
+      "mobile": { "AT&T_activation": 35, "T-Mobile_device_connection_charge": 35, "Verizon_activation": "Standard $40; waived for Verizon Loyalty members since June 2026", "source": "androidpolice.com hidden-carrier-fees; droid-life.com 2026-06-16", "date": "2026-10-01" },
+      "internet_install_lead_time": null,
+      "internet_install_lead_time_note": "No provider publishes appointment lead times."
+    },
+    "us-ca-losangeles": {
+      "electricity_water": {
+        "provider": "LADWP",
+        "start_service_charge": 19.00,
+        "start_service_charge_note": "From LADWP 'Schedule of Charges for Customer Service' FY2012-13 — the newest published schedule found; current amount unverified.",
+        "source": "ladwp.com/sites/default/files/documents/Schedule_of_Charges_for_Customer_Service.pdf",
+        "deposit": "May be required on credit evaluation (SSN used for credit check); generally not more than an estimated two billing periods' average bill.",
+        "deposit_source": "LADWP Rules Governing Water and Electric Service (ladwp.com), retrieved 2026-10-01",
+        "lead_time": "Customer Bill of Rights: new residential accounts processed within one business day (or on the requested day) or the connection fee is waived."
+      },
+      "gas": { "provider": "SoCalGas", "service_establishment_charge": 25, "note": "One-time, added to first bill; a technician may need entry to light appliances.", "source": "socalgas.com (CPUC-authorised SEC, via SoCalGas regulatory workpapers)", "date": "2026-10-01" },
+      "internet": {
+        "AT&T Fiber": { "install_fee": "Included on faster tiers; up to $99 in some areas; self-install kits available", "source": "third-party (whistleout / highspeedinternet summaries)", "date": "2026-10-01", "confidence": "low" },
+        "Spectrum": { "pro_install_fee": 65, "self_install_activation_fee": 30, "source": "third-party", "confidence": "low" }
+      },
+      "mobile": "Same national carrier fees as us-ny-newyork."
+    },
+    "us-ct-newhaven": {
+      "electricity": { "provider": "United Illuminating", "connection_fee": null, "note": "No published start-service fee found." },
+      "gas": { "provider": "Southern Connecticut Gas", "connection_fee": null, "note": "No published start-service fee found." },
+      "water": { "provider": "RWA", "connection_fee": null, "note": "RWA's $47.09 5/8-inch 'service connection charge' (June 2023 schedule) is for a new physical service connection and meter, not an account transfer on move-in." },
+      "internet": {
+        "Xfinity": { "pro_install_fee": 100, "self_install": "Free where an active connection exists; $39.99 'Self Install Plus' option", "source": "third-party (cabletv.com, reviews.org Xfinity hidden-cost guides; Xfinity community forum)", "date": "2026-10-01", "confidence": "medium" }
+      },
+      "mobile": "Same national carrier fees as us-ny-newyork."
+    },
+    "uk-eng-london": {
+      "energy": {
+        "connection_fee": 0,
+        "note": "On moving in you are on a 'deemed contract' with the existing supplier at its standard variable tariff (price-capped); switching away has no exit fee and the new supplier should switch you within 5 working days.",
+        "source": "citizensadvice.org.uk moving-home and switching pages; Ofgem home-moves call for input (Dec 2025)",
+        "date": "2026-10-01"
+      },
+      "water": { "connection_fee": 0, "note": "Thames Water account is opened on move-in; billed under its charges scheme. Average Thames Water household bill 2026/27: £658/yr.", "source": "water.org.uk 'Annual average bill changes 2026-27'", "date": "2026-10-01" },
+      "internet": {
+        "BT Full Fibre 100": { "setup_fee": null, "note": "Sources conflict: one lists no set-up fee, another an upfront £31.99. Unresolved.", "source": "third-party (techradar, dealsonbroadband)", "confidence": "low" },
+        "Virgin Media M125": { "setup_fee": 0, "source": "third-party summary of virginmedia.com/broadband offer", "date": "2026-10-01", "confidence": "medium" }
+      },
+      "mobile": { "activation_fee": 0, "note": "UK SIM-only plans carry no activation fee (giffgaff free SIM and delivery).", "source": "moneysupermarket / uswitch giffgaff pages", "date": "2026-10-01" }
+    },
+    "ie-lei-dublin": {
+      "electricity_gas": {
+        "provider": "Electric Ireland",
+        "connection_fee": null,
+        "connection_fee_note": "No setup fee found for taking over an existing connection.",
+        "deposit_eur": 300,
+        "deposit_note": "New customers (or none in past 2 years) must use Direct Debit, a PAYG meter, or pay a €300 security deposit.",
+        "source": "electricireland.ie/residential/about-us/security-deposit-policy",
+        "date": "2026-10-01"
+      },
+      "water": { "fee": 0, "note": "Uisce Éireann does not charge households." },
+      "internet": {
+        "Virgin Media Ireland": { "activation_fee_eur": 0, "note": "€30 activation credited back on current offers; technician install €50, or self-install.", "source": "virginmedia.ie/broadband/buy-a-broadband-package/", "date": "2026-10-01" },
+        "eir": { "installation_eur": "Included on 500Mb and 5Gb plans; €149.99 on the 1Gb plan", "source": "eir.ie/shop/broadband", "date": "2026-10-01" }
+      },
+      "mobile": { "activation_fee": null, "note": "Not researched per network; SIM-only plans generally free SIM." }
+    },
+    "ca-on-toronto": {
+      "electricity": { "provider": "Toronto Hydro", "account_setup_charge_cad": 35.00, "note": "OEB-approved; applied when a new account is opened or transferred to a new address; HST applies.", "source": "torontohydro.com/for-home/service-charges", "date": "2026-10-01", "deposit": null, "deposit_note": "Not stated on Toronto Hydro service-charges page." },
+      "gas": { "provider": "Enbridge Gas", "account_opening_charge": null, "note": "Enbridge confirms a one-time new-account charge on the first bill (OEB-approved) but its FAQ does not state the amount. Residential security deposits not mentioned (commercial only).", "source": "enbridgegas.com/ontario/contact-us/faq", "date": "2026-10-01" },
+      "water": { "fee": null, "note": "Owner-billed." },
+      "internet": {
+        "Rogers": { "pro_install_cad": 110, "express_setup_cad": 39, "source": "third-party (comparezone/plangenius search summaries)", "confidence": "low" },
+        "Bell": { "install_fee": null, "note": "Not found." }
+      },
+      "mobile": { "connection_fee": 0, "note": "CRTC ban on activation/connection fees in effect June 2026. Workarounds reported: Bell $40 'device handling' charge, Telus $15 SIM charge; Freedom removed its $45 connection fee. Rogers had charged $75 (Feb 2025).", "source": "mobilesyrup.com 2026-06-12; iphoneincanada.ca 2026-06-12 and 2026-07-20", "date": "2026-10-01" }
+    },
+    "ca-bc-vancouver": {
+      "electricity": { "provider": "BC Hydro", "account_opening_charge_cad": 13.50, "note": "Plus GST; on first bill, each new account.", "source": "app.bchydro.com/accounts-billing/moving-electrical-connections/new-customer.html", "date": "2026-10-01" },
+      "gas": { "provider": "FortisBC", "account_opening_charge": null, "note": "Not found on FortisBC rates pages." },
+      "water": { "fee": null, "note": "Owner-billed." },
+      "internet": { "Telus": { "install_fee": null, "note": "Not stated; Telus Wi-Fi hardware included (internetadvice.ca tracker, 2026-09-22)." } },
+      "mobile": "Same Canadian carrier fee situation as ca-on-toronto."
+    },
+    "mx-cmx-mexicocity": {
+      "electricity": {
+        "provider": "CFE",
+        "contract_procedure_fee_mxn": 0,
+        "deposito_de_garantia_mxn": "Roughly 222–788 depending on tariff and region, charged on the first bill; refundable on cancellation.",
+        "requirements": "Official ID, proof of address, no outstanding CFE debt.",
+        "source": "adn40.mx 2026-07-08 (third-party); cfe.gob.mx nuevo contrato page",
+        "date": "2026-10-01",
+        "confidence": "medium"
+      },
+      "water": { "fee": null, "note": "Not researched." },
+      "internet": {
+        "izzi": { "install_mxn": 0, "source": "third-party (cronica.com.mx 2026-05-29 / internetencasa.mx)", "confidence": "low" },
+        "Totalplay": { "install_mxn": 450, "source": "third-party (same)", "confidence": "low" },
+        "Telmex": { "install_mxn": null, "note": "Not found." }
+      },
+      "mobile": { "activation_fee": null, "note": "Not found; prepaid SIMs sold at retail." }
+    }
+  },
+
+  "plans": {
+    "electricity": {
+      "us-ny-newyork": {
+        "provider": "Con Edison",
+        "structure": "SC1 residential: monthly customer (basic service) charge + delivery per kWh (tiered at 250 kWh in summer) + market supply per kWh",
+        "customer_charge_usd_month": null,
+        "customer_charge_note": "Rate order adopted 22 Jan 2026 (retroactive to 1 Jan 2026) raises the residential customer charge by $1 each rate year; base amount not confirmed from an official page. A third-party site lists $23.91/month (unverified).",
+        "typical_bill_change": "NYC customer using 280 kWh/month: +$4.03/month (+3.9%) in 2026",
+        "per_kwh": null,
+        "per_kwh_note": "Third-party sites show all-in ~30.8¢ (Jan) to 32.3–34.9¢ (Jul) per kWh; not confirmed officially.",
+        "source": "coned.com/en/accounts-billing/your-bill/about-con-edisons-rates; dps.ny.gov Con Edison electric rate case summary (Jan 2026)",
+        "date": "2026-10-01"
+      },
+      "us-ca-losangeles": {
+        "provider": "LADWP",
+        "plan": "R-1A Standard Residential (Zone/tier allocations by zone and season)",
+        "usd_per_kwh_2026": {
+          "Jan-Mar": { "tier1": 0.24771, "tier2": 0.30630, "tier3": 0.30630 },
+          "Apr-May": { "tier1": 0.24362, "tier2": 0.30221, "tier3": 0.30221 },
+          "Jun": { "tier1": 0.24362, "tier2": 0.30221, "tier3": 0.38922 },
+          "Jul-Sep": { "tier1": 0.26408, "tier2": 0.32267, "tier3": 0.40968 },
+          "Oct-Dec": { "tier1": 0.27292, "tier2": 0.33151, "tier3": 0.33151 }
+        },
+        "power_access_charge_usd_month": { "tier1": 2.30, "tier2": 7.90, "tier3": 22.70 },
+        "minimum_charge": "$10/month plus adjustment factors",
+        "note": "Tier kWh thresholds not stated on the page; City Utility Users Tax applies on top.",
+        "source": "ladwp.com/account/customer-service/electric-rates/residential-rates",
+        "date": "2026-10-01"
+      },
+      "us-ct-newhaven": {
+        "provider": "United Illuminating",
+        "standard_service_generation_cents_per_kwh": 11.9473,
+        "period": "2026-07-01 to 2026-12-31 (Rate R)",
+        "customer_charge": null,
+        "note": "Delivery/distribution per-kWh and monthly customer charge not retrieved (uinet.com pricing page timed out).",
+        "source": "uinet.com standard service rate notice / energizect.com rate board (search summary)",
+        "date": "2026-10-01"
+      },
+      "uk-eng-london": {
+        "provider": "Ofgem default tariff cap (applies to every supplier's standard variable tariff)",
+        "period": "2026-10-01 to 2026-12-31",
+        "direct_debit_gb_average": {
+          "electricity_p_per_kwh": 26.32, "electricity_standing_p_per_day": 54.83,
+          "gas_p_per_kwh": 7.97, "gas_standing_p_per_day": 29.68
+        },
+        "typical_dual_fuel_gbp_year": 1723,
+        "vat_note": "Ofgem states there is no VAT on electricity from 1 Oct 2026 to 31 Mar 2027; gas figures include 5% VAT.",
+        "regional_note": "London region figures differ slightly from the GB average; not retrieved.",
+        "source": "ofgem.gov.uk/your-energy-supply/your-energy-bill/energy-price-cap-unit-rates-and-standing-charges",
+        "date": "2026-10-01"
+      },
+      "ie-lei-dublin": {
+        "provider": "Electric Ireland (standard 24-hour, urban)",
+        "unit_rate_eur_cents_per_kwh_incl_vat": 38.04,
+        "standing_charge_eur_year_incl_vat": 250.76,
+        "effective": "2026-07-01",
+        "source": "third-party (solarquotesireland.ie 'Electric Ireland price increase 2026'); Ireland has no price cap — CRU does not set retail prices",
+        "date": "2026-10-01",
+        "confidence": "medium",
+        "gas_bord_gais_standard": { "unit_rate_eur_cents_per_kwh_incl_vat": 12.36, "standing_charge_eur_year_incl_vat": 140.92, "effective": "2026-10-09", "source": "third-party summary of bordgaisenergy.ie price-change info", "confidence": "medium" }
+      },
+      "ca-on-toronto": {
+        "provider": "OEB Regulated Price Plan (commodity) — billed by Toronto Hydro",
+        "period": "2025-11-01 to 2026-10-31",
+        "tou_cents_per_kwh": { "off_peak": 9.8, "mid_peak": 15.7, "on_peak": 20.3 },
+        "tou_hours_winter": "Off-peak weekdays 7pm–7am and all weekend/holidays; on-peak weekdays 7–11am and 5–7pm; mid-peak 11am–5pm",
+        "ulo_cents_per_kwh": { "ultra_low_overnight_11pm_7am": 3.9, "weekend_off_peak": 9.8, "mid_peak": 15.7, "on_peak_4pm_9pm": 39.1 },
+        "tiered_cents_per_kwh": { "tier1_first_1000kwh_month": 12.0, "tier2": 14.2 },
+        "ontario_electricity_rebate": "23.5% from 2025-11-01",
+        "note": "Commodity only; Toronto Hydro delivery and regulatory charges are extra and were not retrieved. New prices due 2026-11-01 (not yet announced at retrieval).",
+        "source": "oeb.ca newsroom 2025, 'Ontario Energy Board announces changes to electricity prices…'",
+        "date": "2026-10-01"
+      },
+      "ca-bc-vancouver": {
+        "provider": "BC Hydro residential tiered (conservation) rate",
+        "basic_charge_cad_per_day": 0.2344,
+        "step1_cad_per_kwh": 0.1187,
+        "step2_cad_per_kwh": 0.1408,
+        "step1_threshold": "22.1918 kWh x billing days (~675 kWh/month, ~1,350 kWh per two-month bill)",
+        "note": "An optional flat rate and time-of-day option also exist (BCUC-approved 2025). A third-party site lists April 2026 rates of 10.97¢/14.08¢ and $0.2027/day, which conflicts with bchydro.com; the bchydro.com figures are used.",
+        "source": "app.bchydro.com/accounts-billing/rates-energy-use/electricity-rates/residential-rates/tiered.html",
+        "date": "2026-10-01",
+        "gas_fortisbc_basic_charge_cad_per_day": { "value": 0.4216, "effective": "2026-07-01", "source": "FortisBC one-page rate summary (rates effective July 1, 2026)" }
+      },
+      "mx-cmx-mexicocity": {
+        "provider": "CFE Tarifa 1 (CDMX)",
+        "month": "2026-09",
+        "mxn_per_kwh": { "basico_1_75": 1.136, "intermedio_76_140": 1.381, "excedente_141_plus": 4.041 },
+        "dac_threshold": "Tarifa 1 moves to DAC above a 12-month average of 250 kWh/month",
+        "dac": "Roughly MXN 6–7/kWh plus fixed charge ~MXN 142.41 (third-party)",
+        "tax": "IVA 16% plus municipal DAP (public lighting) charge",
+        "note": "Official CFE tariff page is JavaScript-rendered and could not be read; figures are from recibo-de-luz.com.mx citing CFE. Another site gave August 2026 as 1.132/1.377/4.028 with different block bounds — block bounds should be checked against CFE.",
+        "source": "recibo-de-luz.com.mx/tarifas-cfe/ (third-party)",
+        "date": "2026-10-01",
+        "confidence": "medium"
+      }
+    },
+
+    "water": {
+      "us-ny-newyork": { "water_usd_per_100cf": 5.35, "sewer_usd_per_100cf": 8.51, "effective": "2026-07-01 (FY2027, +6.0%)", "source": "nyc.gov NYC Water Board FY2027 rate schedule", "note": "Owner-billed." },
+      "us-ca-losangeles": { "schedule_B_multi_unit_tier1_usd_per_hcf": { "Jan-Jun_2026": 11.586, "Jul-Dec_2026": 10.885 }, "fixed_charge": "None except private fire service", "source": "ladwp.com Schedule B (search summary)", "confidence": "medium" },
+      "uk-eng-london": { "thames_water_average_bill_gbp_2026_27": 658, "source": "water.org.uk" },
+      "ie-lei-dublin": { "charge": 0 },
+      "ca-on-toronto": { "block1_cad_per_m3": 4.8629, "late_rate_cad_per_m3": 5.1188, "effective": "2026-01-01 (+3.75%)", "source": "toronto.ca water rates (search summary)", "note": "Owner-billed." },
+      "ca-bc-vancouver": { "metered_cad_per_100cf": { "high_season_May1_Oct15": 5.128, "low_season": 4.091 }, "flat_annual_single_family_cad": { "water": 867, "sewer": 1238 }, "year": 2026, "source": "vancouver.ca metered/flat rates; council report 2025-11-12 (search summary)", "note": "Owner-billed." },
+      "mx-cmx-mexicocity": { "unmetered_fixed_bimonthly_mxn": { "popular": 141.80, "baja": 225.02, "media": 569.27, "alta": 974.34 }, "year": null, "note": "Year of these SACMEX fixed quotas not confirmed.", "source": "third-party search summary (adn40.mx / finanzas.cdmx.gob.mx)", "confidence": "low" }
+    },
+
+    "internet_cheapest": {
+      "us-ny-newyork": { "provider": "Verizon Fios", "plan": "Fios 300 Mbps", "speed": "300/300 Mbps", "price_usd_month": 30, "price_without_autopay": 40, "terms": "With $10 Auto Pay discount; multi-year price lock; router included", "source": "verizon.com/home/internet/near-me/new-york-ny/", "date": "2026-10-01", "alternative": { "provider": "Spectrum", "plan": "Internet 100", "speed": "100 Mbps", "price_usd_month": 30, "terms": "First year; standard rate after", "source": "spectrum.com/internet", "date": "2026-10-01" } },
+      "us-ca-losangeles": { "provider": "Spectrum", "plan": "Internet 100", "speed": "100 Mbps", "price_usd_month": 30, "terms": "First 12 months; 'standard rates apply' after", "source": "spectrum.com/internet", "date": "2026-10-01", "alternative": { "provider": "AT&T Fiber", "plan": "Internet 300", "price_usd_month": 35, "note": "Third-party also reports $15/mo for 12 months after autopay/paperless discounts for new LA customers", "source": "third-party (whistleout / att.com/local summary)", "confidence": "low" } },
+      "us-ct-newhaven": { "provider": "Frontier Fiber", "plan": "Fiber 200 (or Fiber 500 promo)", "speed": "200 Mbps (500 Mbps promo at same price)", "price_usd_month": 29.99, "terms": "Promotional, first 12 months", "source": "third-party (broadbandnow / allconnect New Haven pages)", "date": "2026-09", "confidence": "medium", "alternative": { "provider": "Xfinity", "plan": "Connect", "speed": "up to 400 Mbps", "price_usd_month": 30, "source": "third-party", "confidence": "low" } },
+      "uk-eng-london": { "provider": "Virgin Media", "plan": "M125 Fibre Broadband", "speed": "132 Mbps average", "price_gbp_month": 23.99, "terms": "24 months, then £62/month; no price rise until 2027", "source": "third-party summary of virginmedia.com/broadband (dealsonbroadband.co.uk)", "date": "2026-10-01", "confidence": "medium", "alternative": { "provider": "BT", "plan": "Full Fibre 100", "price_gbp_month": 30.99, "terms": "24 months; sources conflict (one shows £39.99)", "confidence": "low" } },
+      "ie-lei-dublin": { "provider": "eir", "plan": "Standard 500Mb", "speed": "500 Mbps", "price_eur_month": 34.99, "terms": "24 months, then €75.99; landline included; installation included", "source": "eir.ie/shop/broadband", "date": "2026-10-01", "alternative": { "provider": "Virgin Media Ireland", "plan": "500Mb or 1Gb", "price_eur_month": 35, "terms": "12 months, then €70 (500Mb) / €80 (1Gb); or €40 on 24 months", "source": "virginmedia.ie/broadband/buy-a-broadband-package/", "date": "2026-10-01" } },
+      "ca-on-toronto": { "provider": "Bell", "plan": "Fibe 150", "speed": "150 Mbps", "price_cad_month": 65, "terms": "Promotional; Giga Hub included", "source": "internetadvice.ca Canadian Internet Price Tracker (tracked 2026-09-22)", "confidence": "medium", "alternative": { "provider": "Rogers", "plan": "Xfinity Starter 150", "price_cad_month": 75, "terms": "Promotional; gateway rental fee at checkout", "source": "same tracker, 2026-09-22" } },
+      "ca-bc-vancouver": { "provider": "Telus", "plan": "PureFibre 500", "speed": "500 Mbps", "price_cad_month": 70, "terms": "Promotional; Wi-Fi hardware included; telus.com deal page shows $90 before discounts", "source": "internetadvice.ca tracker (2026-09-22); telus.com/en/deals-and-bundles/internet-500", "confidence": "medium" },
+      "mx-cmx-mexicocity": { "provider": "Telmex", "plan": "Infinitum (internet only)", "speed": "120 Mbps (upgraded from 80 Mbps in March 2026)", "price_mxn_month": 349, "terms": "MXN 389 with home phone", "source": "xataka.com.mx / elmanana.com.mx (Mar 2026), third-party press", "date": "2026-03", "confidence": "medium", "alternative": { "provider": "izzi", "speed": "80–120 Mbps", "price_mxn_month": 379, "install": "free", "source": "third-party", "confidence": "low" }, "note": "An August 2026 report says Telmex raised speeds again; the price/speed pairing above may be stale." }
+    },
+
+    "mobile_cheapest": {
+      "us": {
+        "applies_to": ["us-ny-newyork", "us-ca-losangeles", "us-ct-newhaven"],
+        "provider": "Mint Mobile (T-Mobile network)",
+        "plans_regular_usd_month": { "6GB": 15, "17GB": 20, "23GB": 25, "Unlimited": 30 },
+        "terms": "Regular prices quoted are for 12-month prepay; a 1 Jul–30 Sep 2026 promo set all plans to $15/mo for new customers (ended).",
+        "source": "third-party (whistleout.com best-mint-mobile-plans; androidcentral, intomobile 2026-08-07); mintmobile.com returned 403",
+        "date": "2026-10-01",
+        "confidence": "medium",
+        "postpaid_alternative": { "provider": "T-Mobile", "plan": "Essentials Saver", "data": "Unlimited", "price_usd_month": 50, "without_autopay": 55, "source": "third-party (upphone, phonearena)", "confidence": "medium" }
+      },
+      "uk": {
+        "applies_to": ["uk-eng-london"],
+        "provider": "giffgaff (O2 network)",
+        "plan": "2GB 5G", "price_gbp_month": 6, "terms": "1-month rolling, no annual price rise",
+        "next_up": [{ "data": "20GB", "price_gbp_month": 10 }, { "data": "Unlimited (18-month offer until 2026-10-02)", "price_gbp_month": 14 }],
+        "source": "moneysupermarket / simsherpa giffgaff pages; ispreview.co.uk 2026-06",
+        "date": "2026-10-01",
+        "confidence": "medium"
+      },
+      "ie": {
+        "applies_to": ["ie-lei-dublin"],
+        "provider": "Tesco Mobile (Three network)",
+        "plan": "€10 SIM Only", "data": "5GB", "price_eur_month": 10,
+        "cheapest_unlimited": { "provider": "48 / Clear Mobile / Lycamobile", "price_eur_month": 12.99, "data": "Unlimited 5G" },
+        "source": "third-party (smartsaver.ie, bonkers.ie)",
+        "date": "2026-10-01",
+        "confidence": "medium"
+      },
+      "ca": {
+        "applies_to": ["ca-on-toronto", "ca-bc-vancouver"],
+        "provider": "Public Mobile (Telus flanker)",
+        "plan": "4G 1GB", "price_cad_month": 22,
+        "ladder": [{ "data": "5GB", "price": 24 }, { "data": "10GB", "price": 28 }, { "data": "35GB", "price": 30 }, { "data": "50GB 5G", "price": 35 }],
+        "big_three_brand_alternative": { "provider": "Freedom Mobile", "data": "10GB + 1GB roaming", "price_cad_month": 35 },
+        "source": "third-party (whistleout.ca, topicks.ca)",
+        "date": "2026-10-01",
+        "confidence": "medium"
+      },
+      "mx": {
+        "applies_to": ["mx-cmx-mexicocity"],
+        "prepaid": { "provider": "Telcel Amigo", "price_mxn": 50, "data": "1GB", "validity_days": 30 },
+        "postpaid": { "provider": "Telcel", "plan": "Libre 1", "price_mxn_month": 249, "data": "4GB" },
+        "alternatives": [{ "provider": "AT&T México", "plan": "Lite", "price_mxn_month": 299 }, { "provider": "Bait", "price_mxn": 200, "data": "12GB", "validity_days": 30 }],
+        "source": "third-party (internetencasa.mx, selectra.mx, merca20)",
+        "date": "2026-10-01",
+        "confidence": "low"
+      }
+    }
+  },
+
+  "outages": {
+    "us-ny-newyork": {
+      "distributor": "Consolidated Edison Co. of NY",
+      "year": 2024,
+      "saidi_minutes": 27.785, "saifi": 0.13,
+      "without_major_events": { "saidi_minutes": 14.951, "saifi": 0.106 },
+      "basis": "EIA-861 'Other standard' (Con Ed does not report IEEE 1366); low values reflect NYC's underground network.",
+      "customers": 3686348,
+      "source": "EIA Form 861 2024, Reliability_2024.xlsx (published 2025-10)",
+      "date": "2026-10-01"
+    },
+    "us-ca-losangeles": {
+      "distributor": "LADWP",
+      "year": 2024,
+      "saidi_minutes": 111.16, "saifi": 0.66, "caidi_minutes": 168.42,
+      "without_major_events": { "saidi_minutes": 111.16, "saifi": 0.66 },
+      "basis": "EIA-861, IEEE 1366",
+      "customers": 1563515,
+      "source": "EIA Form 861 2024, Reliability_2024.xlsx"
+    },
+    "us-ct-newhaven": {
+      "distributor": "United Illuminating",
+      "year": 2024,
+      "saidi_minutes": 121.8, "saifi": 0.79, "caidi_minutes": 154.18,
+      "without_major_events": { "saidi_minutes": 49.2, "saifi": 0.62 },
+      "basis": "EIA-861, IEEE 1366 (all events incl. major event days)",
+      "customers": 345159,
+      "source": "EIA Form 861 2024, Reliability_2024.xlsx"
+    },
+    "uk-eng-london": {
+      "distributor": "London Power Networks plc (UK Power Networks)",
+      "year": "2024/25 (Apr–Mar)",
+      "saidi_minutes": 10.5, "saifi": 0.112,
+      "native_units": { "customer_minutes_lost": 10.5, "customer_interruptions_per_100": 11.2 },
+      "prior_year": { "cml": 11.4, "ci_per_100": 12.2 },
+      "basis": "Ofgem IIS measures: interruptions of 3 minutes or longer, excluding exceptional events",
+      "source": "London Power Networks plc annual report and financial statements 2024 (rns-pdf.londonstockexchange.com, 2025-07-28)",
+      "note": "UKPN's 25.6 CML headline is the weighted average of its three licence areas (London, South East, East)."
+    },
+    "ie-lei-dublin": {
+      "distributor": "ESB Networks (national; no Dublin-only figure found)",
+      "year": 2024,
+      "saidi_minutes_planned_plus_unplanned": 219,
+      "saifi": 1.75,
+      "unplanned_excl_storm_days": { "cml": 117.47, "ci_per_100": 137.86, "cru_target_cml": 78.7, "cru_target_ci": 112.7 },
+      "basis": "Interruptions over 3 minutes; the 1.75 and 219 figures combine planned and unplanned outages (storm days excluded per ESB's benchmarking basis).",
+      "source": "ESB Networks Distribution Annual Performance Report 2024 (issued Sep 2025)"
+    },
+    "ca-on-toronto": {
+      "distributor": "Toronto Hydro-Electric System Ltd",
+      "year": 2024,
+      "saidi_minutes": 56.4, "saidi_hours": 0.94, "saifi": 1.29,
+      "oeb_standard": { "saidi_hours": 0.87, "saifi": 1.20 },
+      "basis": "OEB scorecard: excludes loss of supply and major events",
+      "source": "OEB scorecard, Toronto Hydro-Electric System Limited (published 2025-09-22)"
+    },
+    "ca-bc-vancouver": {
+      "distributor": "BC Hydro (system-wide; no Vancouver-only figure found)",
+      "year": "fiscal 2024/25 (Apr 2024–Mar 2025)",
+      "saidi_minutes": 220.2, "saidi_hours": 3.67, "saifi": 1.48,
+      "targets": { "saidi_hours": 3.35, "saifi": 1.38 },
+      "prior_year": { "saidi_hours": 3.56, "saifi": 1.56 },
+      "basis": "Excluding major events; sustained interruptions >1 minute",
+      "source": "BC Hydro 2024/25 Annual Service Plan Report (Aug 2025)",
+      "note": "A search summary cited SAIDI 7.73 h / SAIFI 2.25 for F2025 from BC Hydro's Directive 26 reliability filing (probably including major events); not verified, not used."
+    },
+    "mx-cmx-mexicocity": {
+      "distributor": "CFE Distribución",
+      "year": 2024,
+      "national": {
+        "saidi_minutes_distributor_attributable": 16.708, "saifi_distributor_attributable": 0.375,
+        "saidi_minutes_total": 116.706, "saifi_total": 1.038,
+        "note": "'Total' includes casos fortuitos y de fuerza mayor (weather etc.), comparable to all-events figures elsewhere."
+      },
+      "cdmx_divisions_distributor_attributable": {
+        "Valle de México Centro": { "saidi_minutes": 11.97, "saifi": 0.37 },
+        "Valle de México Sur": { "saidi_minutes": 11.11, "saifi": 0.34 },
+        "Valle de México Norte": { "saidi_minutes": 16.20, "saifi": 0.50 }
+      },
+      "regulatory_limits": { "saidi_minutes": 50, "saifi": 0.94 },
+      "source": "CNE, Reporte de Confiabilidad del Sistema Eléctrico Nacional 2024 (cne.gob.mx), Tablas 19–20",
+      "note": "Division-level totals including force majeure were not extracted."
+    }
+  }
+}

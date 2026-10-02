@@ -1,0 +1,128 @@
+{
+  "us-ny-course": {
+    "value": null,
+    "low": 40,
+    "high": 62,
+    "currency": "USD",
+    "basis": "Advertised prices of DMV-approved 5-hour pre-licensing course providers (live Zoom/online/classroom): e.g. $40 (coreway.nyc), $43.95 (Safety Sense Solutions), $49 (NYDriver.com), $50 (Drive Rite, Bell's). NY DMV sets no fee, cap or range (checked its course page). No consumer-authority survey found.",
+    "source": "https://dmv.ny.gov/driver-license/the-driver-pre-licensing-course ; https://www.nydriver.com/ ; https://safetysensesolutions.com/new-york-5-hour-online-prelicensing/ ; https://coreway.nyc/pre-licensing-course",
+    "statedDate": "provider pages current as fetched 2026-09-29"
+  },
+  "us-ct-course": {
+    "value": null,
+    "low": 125,
+    "high": 150,
+    "currency": "USD",
+    "basis": "Advertised prices at CT commercial driving schools: $125 (Frank's), $130 (Tom's), $149 (The Next Street), $125 cash/$150 online (Rae's); outlier $200 (Santo). CT DMV page states no fee or cap. No consumer-authority survey found.",
+    "source": "https://portal.ct.gov/TeenDriving/Home-Training/Home-Training/8-Hour-Safe-Driving-Practices-Class ; https://www.thenextstreet.com/ct/classroom/8-hour-safe-driving-course/ ; https://drivingschoolct.com/8-hour-safe-driving-course/ ; https://www.tomsdrivingschoolct.com/8-hour-adult-program",
+    "statedDate": "provider pages current as fetched 2026-09-29"
+  },
+  "ie-edt-lesson": {
+    "value": 46,
+    "low": 42,
+    "high": 63,
+    "currency": "EUR",
+    "basis": "Per lesson, derived from Money Guide Ireland's sample survey of 12-lesson EDT prices around Ireland: range EUR 500-750 for 12, common price ~EUR 550 (=~EUR 46/lesson; range ~42-63). Independent consumer-finance site, not RSA; RSA publishes no price guidance (rsa.ie returned 403 but RSA does not regulate ADI fees).",
+    "source": "https://www.moneyguideireland.com/cost-of-learning-to-drive-in-ireland.html",
+    "statedDate": "early 2026"
+  },
+  "fr-total": {
+    "value": 1804,
+    "currency": "EUR",
+    "basis": "UFC-Que Choisir survey of 1,076 (some reports say 1,374) auto-écoles: average total = basic package EUR ~1,155-1,234 (code, 20 h driving, fees) + 15 extra hours at EUR 43/h, i.e. ~35 hours average for a beginner (legal minimum 20). Range by department EUR ~1,468-1,484 (Nord) to 2,140 (Paris). This is still the most-cited consumer-body figure in 2026 but the study itself dates from 2016; no newer official (Sécurité routière/government) average cost found.",
+    "averageHours": 35,
+    "hourlyRate": 43,
+    "source": "UFC-Que Choisir study as reported by https://www.digischool.fr/articles/auto/permis-conduire/tarifs-en-auto-ecole/ and https://www.sudradio.fr/on-parle-auto/prix-permis-de-conduire-2026-aides",
+    "statedDate": "2016 (study); cited as current in 2026 press"
+  },
+  "jp-school": {
+    "value": 323488,
+    "currency": "JPY",
+    "basis": "AT-limited: Statistics Bureau Retail Price Survey (小売物価統計調査) item 9325 自動車教習料, 公安委員会指定自動車教習所・第一種普通免許(AT限定), June 2026 value (Jan 2026 320,998; Mar 320,812; Jun 323,488), as tabulated by price.w3g.jp. Geographic scope (likely 東京都区部) not confirmed. MT: no official average; driving-school industry estimate AT ~JPY 280,000-350,000, MT ~JPY 300,000-380,000.",
+    "mt": { "value": null, "low": 300000, "high": 380000, "source": "https://www.meids.co.jp/7137", "statedDate": "2026 (article titled 2026年版)" },
+    "atRangeIndustry": { "low": 280000, "high": 350000, "source": "https://www.meids.co.jp/7137" },
+    "source": "https://price.w3g.jp/driving-school (data: 総務省統計局 小売物価統計調査)",
+    "statedDate": "2026-06"
+  },
+  "is-total": {
+    "value": null,
+    "low": 335000,
+    "high": 375000,
+    "currency": "ISK",
+    "basis": "Driving-instructor price lists: lesson 45 min ISK 16,500 (normally 17,500), minimum 15 lessons = ISK 247,500; Ökuskóli 1 & 2 ISK 27,000 combined (other schools 9,800-13,500 each); Ökuskóli 3 (skid/risk course) ISK 53,900; total 'at least ISK 375,000' (aksturogkennsla.is) vs 'about ISK 335,000-350,000' (another instructor site). Instructor sites, not an official or consumer survey.",
+    "lessonPrice": 16500,
+    "minLessons": 15,
+    "okuskoli3": 53900,
+    "source": "https://aksturogkennsla.is/verdskra-okukennsla/ ; https://aksturogkennsla.is/bilprof/",
+    "statedDate": "2026 (page copyright 2026; no content date)"
+  },
+  "br-lesson-hour": {
+    "value": null,
+    "low": 100,
+    "high": 150,
+    "currency": "BRL",
+    "basis": "Per practical lesson in São Paulo with a credentialed autonomous instructor under the new CNH rules (minimum 2 practical lessons); another survey puts SP market at R$70-150/hour. Detran-SP publishes no lesson price ('consultar valores junto à Autoescola ou Instrutor'). Official Detran-SP fees for context: medical R$90, psychological R$90, theory exam R$52.83, practical exam R$52.83, CNH issue R$137.79.",
+    "source": "https://www.estudacnh.com.br/blog/quanto-custa-cnh-sp ; https://detran.sp.gov.br/cnhpaulista/",
+    "statedDate": "2026-03-20"
+  },
+  "br-toxicology": {
+    "value": null,
+    "low": 130,
+    "high": 180,
+    "currency": "BRL",
+    "basis": "Average standard (7-10 business day) price at accredited labs in São Paulo; express R$220-280. Another guide lists R$160; lab ads from R$95-99.99. Mandatory for first licence processes opened after 2026-06-17 per SP services portal. Detran-SP sets no price.",
+    "source": "https://climec.com.br/blog/quanto-custa-o-exame-toxicologico-em-sao-paulo-guia-de-precos-2026/ ; https://www.estudacnh.com.br/blog/quanto-custa-cnh-sp",
+    "statedDate": "2026-08-05"
+  },
+  "lv-fees": {
+    "value": null,
+    "currency": "EUR",
+    "theoryExam": 11.40,
+    "drivingExam": 35.82,
+    "drivingExamAlt": 50.57,
+    "licenceIssue": 22.41,
+    "licenceIssueAlt": 5.42,
+    "schoolCourse": { "low": 600, "high": 1000, "note": "total B budget incl. state fees; school part: theory 125-250 + 20+ lessons 280-420 + extras 0-300", "source": "https://www.steerclear.io/lv/cik-maksa-vaditaja-apliecibas-iegusana", "statedDate": "2026-06" },
+    "basis": "CSDD tariffs. csdd.lv payments page refused connection, so figures are secondary: theory exam EUR 11.40 is consistent across sources. Driving exam: Baltic Course (from March 2026 tariff) says EUR 35.82 excluding vehicle rental; steerclear says EUR 50.57 (possibly including CSDD car). Licence issue: steerclear/others EUR 22.41; Baltic Course lists EUR 5.42 (EU resident) — conflicting.",
+    "source": "https://www.csdd.lv/viegla-automobila-vaditaja-aplieciba-b/maksajumi (unreachable) ; https://spogulis.baltic-course.com/no-2026-gada-marta-mainas-csdd-tarifi-cik-maksas-tehniska-apskate-un-citi-pakalpojumi/166474 ; https://www.steerclear.io/lv/cik-maksa-vaditaja-apliecibas-iegusana",
+    "statedDate": "2026-01-09 (Baltic Course, tariffs from March 2026); 2026-06 (steerclear)"
+  },
+  "mx-cmx-roadtest": {
+    "value": null,
+    "currency": "MXN",
+    "inForce": false,
+    "basis": "SEMOVI published guidelines on Mon 21 Sept 2026 requiring theory and practical exams, but did not state the mandatory start date or any fee for the practical test. So: not confirmed in force; fee unknown. Existing fees for context: Type A licence first issue MXN 1,142 (3 years); permanent licence MXN 1,500.",
+    "source": "https://xpectrofm.com/licencia-de-manejo-en-cdmx-exigira-examenes-teoricos-y-practicos-obligatorios/ ; https://www.infobae.com/mexico/2026/05/27/licencia-de-conducir-2026-requisitos-costos-y-puntos-de-tramite-en-cdmx-edomex-jalisco-y-nuevo-leon/",
+    "statedDate": "2026-09-21 (guidelines)"
+  },
+  "de-total": {
+    "value": null,
+    "low": 2466,
+    "high": 4476,
+    "currency": "EUR",
+    "basis": "ADAC does not publish a single average; it gives two worked examples: all low values + pass first time after 15 practice hours = ~EUR 2,500 (2,466); all high values + 25 practice hours = ~EUR 4,500 (4,476). Practice hour cited elsewhere at EUR 60-100. Press figures of a ~EUR 3,400-4,200 'ADAC average' were not found on the ADAC page.",
+    "source": "https://www.adac.de/verkehr/rund-um-den-fuehrerschein/erwerb/fuehrerschein-kosten/",
+    "statedDate": "2025-04-08"
+  },
+  "es-total": {
+    "value": null,
+    "low": 558,
+    "high": 1575,
+    "currency": "EUR",
+    "basis": "OCU survey of 321 driving schools in 25 cities; reference student = 20 practical lessons + one repeated exam; cheapest A Coruña EUR 558, dearest San Sebastián EUR 1,575. OCU gives no single national average. Study is from June 2015. Non-consumer 2026 estimates put the average at EUR 1,000-1,400. DGT exam fee (tasa) not included/checked.",
+    "source": "https://www.ocu.org/coches/coches/informe/precio-autoescuela",
+    "statedDate": "2015-06"
+  },
+  "uncertain": [
+    "us-ny-course and us-ct-course: no official or consumer-authority figure exists; ranges are advertised provider prices.",
+    "ie-edt-lesson: per-lesson value is derived (EUR 550 / 12) from an informal consumer-site sample, not RSA.",
+    "fr-total: UFC-Que Choisir figure dates from 2016; no newer official average found.",
+    "jp-school: AT figure's geographic scope (national vs Tokyo wards) unconfirmed; retrieved via a third-party tabulation of the Retail Price Survey; no official MT average.",
+    "is-total: only instructor price lists; totals differ (335k-350k vs 375k+ ISK).",
+    "lv-fees: CSDD site unreachable; driving exam (35.82 vs 50.57) and licence issue (22.41 vs 5.42) conflict between secondary sources.",
+    "mx-cmx-roadtest: start date and fee not published; treated as not yet in force.",
+    "de-total: ADAC gives a range from worked examples, not an average; dated April 2025.",
+    "es-total: OCU study dates from 2015 and gives a city range, not a national average.",
+    "br-lesson-hour, br-toxicology: commercial/blog surveys only; no official price."
+  ]
+}

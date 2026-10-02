@@ -53,3 +53,10 @@ export function createClockStepper(multiplier: number, maxStepMs = MAX_STEP_MS):
     },
   };
 }
+
+/**
+ * The real time now, for the live clock alone: the wall clock, which keeps
+ * counting while a phone is locked or a machine sleeps, where the page's own
+ * clock stops.
+ */
+export const realNow = (): number => Date.now();

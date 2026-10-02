@@ -1,0 +1,413 @@
+{
+  "meta": {
+    "title": "Residential construction gaps: size of overruns, size of delays, change orders, bids, and who must design a house (NYC, LA/California, Connecticut, England, Ireland, Ontario, British Columbia, Mexico City)",
+    "date_read": "2026-10-02",
+    "builds_on": "docs/research/world/research-construction-process.json (read first; nothing there is repeated here except where corrected, see 'corrections_to_research_construction_process')",
+    "method_values": {
+      "page": "the figure was read on the page itself (WebFetch, curl, or text pulled from a downloaded PDF)",
+      "search-summary": "the figure came from a search engine's summary; the page itself was not opened (usually 403) and the figure has not been checked against it"
+    },
+    "rule": "Figures are never invented. Where nothing published was found, the value is null and a note says why. Consumer polls are self-reported by homeowners; aggregator cost guides are estimates, not measured market data."
+  },
+
+  "1_how_much_projects_go_over_budget": {
+    "US_Angi_2026_State_of_Home_Spending_Pulse": {
+      "share_exceeded_original_estimate_pct": 43,
+      "of_those_over_share_at_least_30pct_over": "slightly more than one-third",
+      "quote": "Among those who went over budget, slightly more than one-third spent at least 30% more than planned.",
+      "derived_share_of_all_hirers_30pct_or_more_over_pct": {
+        "value_approx": 14.5,
+        "note": "Derived here, not published: 43% x ~0.34. Treat as approximate because Angi gives 'slightly more than one-third', not a number."
+      },
+      "sample": "1,000 US homeowners aged 18+ who hired a professional for a home improvement, repair or maintenance project in the past 12 months; fielded 2026-07-09",
+      "scope_note": "Includes repairs and maintenance, not only renovations. Measures overrun against the pro's original estimate.",
+      "source": "https://www.angi.com/press/angis-2026-state-of-home-spending-pulse-report",
+      "published": "2026-08-20",
+      "date_read": "2026-10-02",
+      "method": "page"
+    },
+    "US_Clever_2026_poll": {
+      "share_over_budget_latest_renovation_pct": 70,
+      "share_over_by_at_least_1000_usd_pct": 44,
+      "share_over_by_at_least_5000_usd_pct": 24,
+      "share_took_longer_than_expected_pct": 48,
+      "share_significant_setbacks_pct": 29,
+      "share_went_into_debt_for_renovation_pct": 30,
+      "sample": "1,000 US property owners, 2025-12-17 to 2025-12-22",
+      "note": "A dollar distribution, not a percent. Read with the 2024 Clever poll already in research-construction-process.json (44% >= $5,000, 35% >= $10,000); the two polls disagree sharply at the $5,000 threshold (44% vs 24%), so neither is a stable figure.",
+      "source": "https://cleveroffers.com/research/home-renovation-trends-2026/",
+      "date_read": "2026-10-02",
+      "method": "page"
+    },
+    "UK_Toolstation_2022_poll": {
+      "share_over_budget_pct": 55,
+      "average_overrun_gbp": 3024,
+      "average_overrun_by_city_gbp": {
+        "London": 4378,
+        "Cardiff": 3041,
+        "Brighton": 1070
+      },
+      "london_share_spending_7001_to_10000_extra_pct": 16,
+      "sample": "1,000 UK homeowners, poll by Toolstation (builders' merchant)",
+      "note": "The only published AVERAGE overrun amount found for UK home improvement. Absolute pounds, not a percent of budget; the poll's budget base is not given. Reported by loveproperty.com; Toolstation's own release not opened.",
+      "source": "https://www.loveproperty.com/news/132704/house-renovation-costs-how-much-does-the-average-project-go-over-budget-by",
+      "published": "2022-03-19",
+      "date_read": "2026-10-02",
+      "method": "page"
+    },
+    "US_new_construction_buyers_Real_Estate_Witch_2022": {
+      "share_faced_higher_than_anticipated_costs_pct": 92,
+      "share_attributing_to_covid_era_cost_increases_pct": 40,
+      "sample": "1,000 new-home owners and buyers awaiting completion, January 2022",
+      "note": "New homes, not renovation. The pandemic peak; do not use as a steady-state rate. Size of the increase not published. The original realestatewitch.com page returned 403; figures read on a news report of it.",
+      "source": "https://realtynewsreport.com/homebuyers-peeved-about-delays-in-construction/",
+      "original": "https://www.realestatewitch.com/buying-new-construction-home-2022-data/",
+      "date_read": "2026-10-02",
+      "method": "page"
+    },
+    "average_overrun_pct_of_budget": {
+      "value": null,
+      "note": "No survey or study found that publishes the mean or median residential overrun as a percent of budget. Figures circulating on blogs ('average overrun 10-20%', '15-28%', '22% of original budget') trace to no named study and are left out. Houzz publishes only the share over budget (already in research-construction-process.json). FMB, Which?, Checkatrade and NAHB: no overrun-size figure found."
+    },
+    "academic": {
+      "value": null,
+      "note": "Academic work on residential cost overrun found is factor-ranking (e.g. Soundarya et al., Sci Rep 15:12655, 2025, India: ranks twelve causes, no overrun magnitude for a homeowner population). Nearest measured residential quantity is rework: Love & Li (2000) put rework in Australian residential construction at 3.15% of contract value (search-summary via https://www.researchgate.net/publication/24077442_Quantifying_the_causes_and_costs_of_rework_in_construction, date_read 2026-10-02). Rework is a builder's cost, not necessarily the owner's overrun.",
+      "rework_residential_pct_of_contract_value": 3.15,
+      "rework_source": "https://www.researchgate.net/publication/24077442_Quantifying_the_causes_and_costs_of_rework_in_construction",
+      "rework_method": "search-summary"
+    }
+  },
+
+  "2_how_late_projects_run": {
+    "UK_Toolstation_2022_renovation": {
+      "share_not_completed_on_time_pct": "almost a quarter",
+      "average_overrun_months": 3,
+      "longest_city_average_months": { "Norwich": 6 },
+      "sample": "1,000 UK homeowners",
+      "note": "The only published AVERAGE renovation delay found (in months, ~13 weeks). 'Almost a quarter' late is far below US polls' 48-58% 'took longer than expected', which may reflect wording (missed a completion deadline vs took longer than expected).",
+      "source": "https://www.loveproperty.com/news/132704/house-renovation-costs-how-much-does-the-average-project-go-over-budget-by",
+      "date_read": "2026-10-02",
+      "method": "page"
+    },
+    "US_new_construction_Real_Estate_Witch_2022": {
+      "share_experienced_some_delay_pct": 85,
+      "share_delay_3_months_or_more_pct": 50,
+      "share_delay_over_6_months_pct": 35,
+      "distribution_derived": {
+        "delay_0": 15,
+        "delay_under_3_months": 35,
+        "delay_3_to_6_months": 15,
+        "delay_over_6_months": 35,
+        "note": "Derived here from the three published shares (85/50/35); the 3-month boundary wording differs slightly between reports ('more than three additional months' vs 'three months or longer')."
+      },
+      "sample": "1,000 new-home owners/buyers, January 2022 (pandemic peak)",
+      "source": "https://realtynewsreport.com/homebuyers-peeved-about-delays-in-construction/",
+      "date_read": "2026-10-02",
+      "method": "page"
+    },
+    "UK_new_build_New_Homes_Review": {
+      "share_completed_on_time_pct": { "2019": 64, "2018": 63 },
+      "average_delay_weeks": null,
+      "note": "Delay length not published in the report as quoted. The 6-month figure on the page is the consumer-protection threshold, not a measured delay.",
+      "source": "https://hoa.org.uk/news/new-build-completion-date-moved/",
+      "date_read": "2026-10-02",
+      "method": "page"
+    },
+    "US_Houzz_durations_2019_projects": {
+      "planning_months_avg": { "kitchen": 8.3, "entry_foyer_mudroom": 6.6, "primary_bathroom": 5.4, "guest_bathroom": 4.8 },
+      "construction_months_avg": { "kitchen": 4.5, "entry_foyer_mudroom": 3.1, "primary_bathroom": 3.2, "guest_bathroom": 2.9 },
+      "sample": "87,000+ respondents, 2020 US Houzz & Home Study (fielded 2020-01-02 to 2020-03-05)",
+      "note": "Durations, not delays; a baseline to measure lateness against. Houzz does not publish how late projects ran. (2025 kitchen figures, 9.5 / 5.8 months, are already in research-construction-process.json.)",
+      "source": "https://www.houzz.com/magazine/how-long-it-took-to-plan-and-complete-a-remodel-in-2019-stsetivw-vs~137254320",
+      "date_read": "2026-10-02",
+      "method": "page"
+    },
+    "US_renovation_average_delay_weeks": {
+      "value": null,
+      "note": "No US survey publishes the size of a renovation's delay. Clever 2026: 48% took longer than expected, 29% significant setbacks, no duration (page, https://cleveroffers.com/research/home-renovation-trends-2026/)."
+    },
+    "NHBC_HBF_delay": {
+      "value": null,
+      "note": "The HBF/NHBC National New Homes Survey (8 weeks and 9 months after completion) publishes satisfaction and recommend-rates, not completion delay. Nothing found."
+    }
+  },
+
+  "3_change_orders": {
+    "US_CoConstruct_platform_data": {
+      "projects_analyzed": "nearly 30,000 US residential construction projects, 2019-2021",
+      "avg_change_orders_per_project_250k_to_500k_usd": 6.3,
+      "avg_change_orders_per_project_under_250k_usd": null,
+      "under_250k_note": "The article says the $250K-500K average was 'more than double' that of projects under $250K; the under-$250K count itself was not stated.",
+      "avg_total_change_order_value_per_home_building_project_usd": { "2019": 44344, "2020": 29251 },
+      "avg_total_change_order_value_per_small_project_usd": { "2019": 21234, "2020": 16793 },
+      "change_orders_per_home_building_project_change_2019_to_2020_pct": -13.6,
+      "note": "Builder-entered data from CoConstruct's residential project-management software, so it covers builders who use that tool. Dollar totals per project, not percent of contract; 2020 is a pandemic year. The most traceable residential change-order figures found.",
+      "source": "https://www.coconstruct.com/blog/volume-of-change-orders-in-construction-declined-in-2020",
+      "published": "2021-09-24",
+      "date_read": "2026-10-02",
+      "method": "page"
+    },
+    "single_firm_reports": {
+      "value": { "Precision Homecrafters_2023_2025_pct_of_contract": [3.5, 4], "Phoenix Home Remodeling_interior_pct": 2.1 },
+      "note": "Individual remodelers' self-reported averages for their own work (marketing). The '20-32% industry range' these releases compare against has no traceable source.",
+      "sources": [
+        "https://precisionhomecrafters.com/blog/what-is-a-change-order-in-remodeling/",
+        "https://www.openpr.com/news/4617823/phoenix-home-remodeling-reports-a-2-1-change-order-rate"
+      ],
+      "date_read": "2026-10-02",
+      "method": "search-summary"
+    },
+    "change_order_pct_of_contract_value_residential": {
+      "value": null,
+      "note": "Still no traceable study giving residential change orders as a percent of contract value. '8-14%', '10-25%', '25-30%' and '20-32%' all trace to software-vendor blogs without a study. Houzz's '31% of over-budget owners expanded scope mid-project' is already recorded."
+    }
+  },
+
+  "4_bids": {
+    "how_many_bids": {
+      "US_ArcSite_2022_homeowner_survey": {
+        "share_get_more_than_one_bid_pct": 95,
+        "majority_get_three_or_more": true,
+        "share_expect_quote_same_day_pct": 28,
+        "sample": "1,000+ US homeowners, late 2021, with Researchscape",
+        "note": "No breakdown by number of bids published. ArcSite sells estimating software to contractors.",
+        "source": "https://www.arcsite.com/blog/2022-homeowner-survey-report",
+        "date_read": "2026-10-02",
+        "method": "page"
+      },
+      "US_Housecall_Pro_2026": {
+        "share_get_additional_quotes_when_price_higher_than_expected_pct": 68,
+        "sample": "1,100+ US homeowners, 2026-02-25 to 2026-02-26",
+        "note": "Home services broadly (repairs included), not renovation.",
+        "source": "https://www.housecallpro.com/resources/home-service-spending-report/",
+        "date_read": "2026-10-02",
+        "method": "page"
+      },
+      "untraced_claims": {
+        "value": null,
+        "note": "'42% of homeowners compare only two quotes and 15.6% compare four or more' (improveit360 blog, attributed to listwithclever.com) was checked against the Clever 2024 renovation page, which contains no such figure; also attributed elsewhere to Modernize. Untraced, left out. '85% contact 3 or fewer contractors' appeared in a search summary with no identifiable source; left out."
+      },
+      "average_bids_obtained": {
+        "value": null,
+        "note": "No survey publishes the mean or median number of bids. UK: no Checkatrade, Which?, FMB or HomeOwners Alliance survey of quotes actually obtained was found."
+      }
+    },
+    "spread_for_the_same_job": {
+      "US_Washington_Consumers_Checkbook_undercover": {
+        "jobs": [
+          { "job": "two-storey addition: expand first-floor family room/kitchen, add primary bedroom suite with bath above", "low_usd": 190000, "high_usd": 321000, "high_over_low_pct_derived": 69 },
+          { "job": "small bathroom remodel", "low_usd": 8500, "high_usd": 13250, "high_over_low_pct_derived": 56 }
+        ],
+        "number_of_contractors_quoting": null,
+        "finding": "Checkbook found no relationship between price and quality: 'The best contractors are just as likely to charge low prices as lousy outfits.'",
+        "advice": "Get at least three, but more is better.",
+        "note": "Undercover shoppers requesting proposals for identical specified jobs in the Washington, DC area; page last updated December 2021. The percent spreads are derived here. The only residential same-job bid spread found from a body that collected the bids itself. Other Checkbook spreads ($38,600-$61,500; $113,000-$205,000; $26,000-$61,000) appeared only in search summaries and are not recorded.",
+        "source": "https://www.checkbook.org/washington-area/home-contractors/articles/Getting-Prices-and-Proposals-for-Remodeling-Work-4281",
+        "date_read": "2026-10-02",
+        "method": "page"
+      },
+      "platform_published_spread": {
+        "value": null,
+        "note": "Angi, HomeAdvisor, Thumbtack, Checkatrade and Which?: none publishes the spread between bids for the same job (confirmed again)."
+      }
+    }
+  },
+
+  "5_who_must_design_a_new_house_and_fees": {
+    "New_York_City": {
+      "registered_design_professional_required": true,
+      "law": "NYC Admin. Code §28-104.1: construction documents 'shall be prepared by or under the supervision of a registered design professional as required by this code'. §28-104.6: the applicant 'shall be the registered design professional who prepared or supervised the preparation of the construction documents on behalf of the owner'. Exceptions are limited plumbing/sprinkler/standpipe work, most demolition, elevators, and categories set by rule; none for a new one- or two-family house.",
+      "law_source": "https://nycadmincode.readthedocs.io/t28/c01/art104/",
+      "law_method": "page",
+      "state_law_contrast": "NY Education Law §7307(5) exempts from the architecture article 'residence buildings of gross area of fifteen hundred square feet or less, not including garages, carports, porches, cellars, or uninhabitable basements or attics', and alterations costing $10,000 or less in NYC ($20,000 outside) that do not affect structural or public safety. NYC's own code still makes the RA or PE the DOB applicant.",
+      "state_law_source": "https://www.nysenate.gov/legislation/laws/EDN/7307",
+      "state_law_method": "page",
+      "who": "Registered Architect (RA) or Professional Engineer (PE)",
+      "fee": {
+        "renovation_pct_of_construction": [15, 25],
+        "hourly_usd": [100, 250],
+        "note": "Brick Underground's renovation guide (undated), the author's statement, not a survey: '15 to 25 percent being the norm in NYC'. Rule of thumb for renovations. For new single-family houses no NYC-specific figure was found; use the US 8-15% range already in research-construction-process.json.",
+        "source": "https://www.brickunderground.com/guides/how-to-renovate/how-design-build-firms-charge-for-their-services",
+        "date_read": "2026-10-02",
+        "method": "page"
+      },
+      "date_read": "2026-10-02"
+    },
+    "Los_Angeles_California": {
+      "architect_required": false,
+      "law": "Cal. Bus. & Prof. Code §5537(a): 'This chapter does not prohibit any person from preparing plans, drawings, or specifications for ... (1) Single-family dwellings of woodframe construction not more than two stories and basement in height.' (b): any portion that deviates from conventional woodframe framing requirements of Title 24 must be prepared by, or under the responsible control of, a licensed architect or registered engineer and bear that licensee's stamp. Amended Stats. 1996 ch. 184, effective 1997-01-01.",
+      "who": "Anyone (owner, unlicensed designer or drafter) for a conventional wood-frame house of up to two storeys plus basement; a licensed architect or engineer for anything beyond that, and for the non-conventional portion. Over two storeys, or steel/concrete, needs a licensee.",
+      "practical_note": "In Los Angeles, hillside and seismic conditions often push the structure outside conventional framing, which brings in an engineer under §5537(b). Not quantified.",
+      "source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=5537.&lawCode=BPC",
+      "method": "page",
+      "date_read": "2026-10-02",
+      "fee_drafter": {
+        "per_sqft_usd": { "stock_plans": [0.35, 0.75], "semi_custom": [0.5, 1], "custom": [1, 10] },
+        "custom_plans_total_usd": [2000, 10000],
+        "hourly_usd": [30, 120],
+        "note": "HomeGuide aggregator estimate, national (page returned 403). Rule of thumb, not LA-measured.",
+        "source": "https://homeguide.com/costs/blueprints-house-plans-cost",
+        "date_read": "2026-10-02",
+        "method": "search-summary"
+      },
+      "fee_architect": "Use the US 8-15% range in research-construction-process.json."
+    },
+    "Connecticut": {
+      "architect_required": false,
+      "law": "Conn. Gen. Stat. §20-298(2) exempts from the architects chapter 'the construction or alteration of a residential building to provide dwelling space for not more than two families, or of a private garage or other accessory building intended for use with such residential building'. §20-298(8) also exempts plans for any building under 5,000 sq ft total area except assembly, educational, institutional, high-hazard and transient-residential uses.",
+      "who": "Anyone may prepare plans for a one- or two-family house; the building official may still require an engineer's design for structure under the State Building Code (not quantified).",
+      "source": "https://www.cga.ct.gov/current/pub/chap_390.htm",
+      "method": "page",
+      "date_read": "2026-10-02",
+      "fee": "No Connecticut-specific fee figure found; use the US ranges in research-construction-process.json."
+    },
+    "England": {
+      "architect_required": false,
+      "law": "The Architects Act 1997 protects the title only (s.20: no one may practise 'under any name style or title containing the word architect' unless registered with ARB). Nothing requires a registered architect to design a house or to submit planning or Building Regulations drawings.",
+      "source": "https://www.designingbuildings.co.uk/wiki/The_Architects_Act",
+      "method": "search-summary",
+      "date_read": "2026-10-02",
+      "who": "Anyone: architect (ARB-registered, often RIBA), chartered architectural technologist (CIAT), architectural designer, or the owner.",
+      "fees": {
+        "architect_pct_of_construction": [3, 15],
+        "architect_hourly_gbp": [50, 100],
+        "new_build_planning_application_drawings_gbp": [3000, 5000],
+        "source": "https://hoa.org.uk/advice/guides-for-homeowners/i-am-improving/architect-fees/",
+        "method": "page",
+        "note": "HomeOwners Alliance guide (2026). Rule of thumb.",
+        "date_read": "2026-10-02"
+      },
+      "technologist_fees": {
+        "ciat_technologist_hourly_gbp": [55, 100],
+        "new_house_planning_drawings_gbp": [4000, 9000],
+        "new_house_planning_plus_building_regs_gbp": [8000, 20000],
+        "technologist_discount_vs_architect_pct": [25, 40],
+        "note": "Aggregator figures (bestbuilders/checkatrade/myjobquote) seen only in a search summary; Checkatrade page returned 403. Rule of thumb.",
+        "sources": ["https://www.bestbuilders.co.uk/guides/costs/how-much-do-architects-charge-2026", "https://www.checkatrade.com/blog/cost-guides/architect-fees/"],
+        "method": "search-summary",
+        "date_read": "2026-10-02"
+      }
+    },
+    "Ireland": {
+      "architect_required_to_design": false,
+      "certifier_required": "Under BC(A)R (S.I. 9 of 2014, from 2014-03-01) a new building needs a Design Certifier and an Assigned Certifier, each a registered architect, chartered engineer or registered/chartered building surveyor. A single dwelling on a single-unit development may opt out (S.I. 365 of 2015, from 2015-09-01): no certifiers, but drawings are still lodged and the house must comply (opt-out already recorded in research-construction.json).",
+      "certifier_source": "https://a1architects.com/uploads/pdf/A1Architects_pack4-2023.pdf",
+      "certifier_method": "page",
+      "fees": {
+        "riai_architects_average_renovation_extension_pct": 10,
+        "larger_project_reduced_pct_example": 7,
+        "note_pct": "A1 Architects (Dublin) fee pack, 2023: 'The average fee charged by majority of RIAI architects for home renovation and extension is 10% of the construction cost'; a firm's claim about competitors, not a survey.",
+        "fixed_fee_new_house_up_to_120m2_eur_ex_vat": {
+          "line_items_as_printed": { "outline_design_and_planning_items": [3700, 1600, 5100], "tender": 450, "project_planning": 300, "on_site_operations_15_visits": 3000, "architect_certs_2": 400, "commencement_notice_if_no_assigned_certifier": 250, "post_planning_compliance": 250 },
+          "note": "One firm's 2023 price list for an opt-out new house (no assigned certifier). The first three amounts' stage labels were scrambled by PDF extraction, so they are listed in order without labels. Excludes structural engineer, QS, H&S, BER and VAT."
+        },
+        "source": "https://a1architects.com/uploads/pdf/A1Architects_pack4-2023.pdf",
+        "method": "page",
+        "date_read": "2026-10-02",
+        "assigned_certifier_fee": {
+          "value_eur_200m2_dwelling": [4000, 5000],
+          "plus_vat": true,
+          "note": "Seen only in a search summary of a Bregs Forum (2016) article on self-certification costs; the page's certificate failed. A 2026 aggregator (beforeyoubuild.ie, page) gives EUR 400-1,500 for 'assigned certifier fees' on a standard new build, which looks too low for the full BC(A)R role and may mean the lodgement only. A 2014 councillor's claim of 'may cost EUR 20,000' (Irish Examiner, 2014-02-21, page: https://www.irishexaminer.com/news/arid-20259468.html) was a political estimate, not a quote. Treat all three as unreliable.",
+          "sources": ["http://www.bregsforum.com/2016/10/06/cost-of-self-certification-surveyors-architects-fees/", "https://www.beforeyoubuild.ie/blog/cost-to-build-a-house-ireland-2026"],
+          "method": "search-summary",
+          "date_read": "2026-10-02"
+        }
+      }
+    },
+    "Ontario": {
+      "architect_required": false,
+      "law": "Architects Act, R.S.O. 1990, c. A.26, s.11(3)(b)(i) exempts 'the preparation or provision of a design for a building that is not more than three storeys and that contains one dwelling unit or two attached dwelling units, each of which is constructed directly on grade'. s.11(3)(a) exempts any residential building of not more than three storeys and not more than 600 m2 gross area.",
+      "source": "https://oaa.on.ca/Assets/Common/Shared_Documents/Documents/Professional%20Requirements%20for%20the%20Built%20Environment%20in%20Ontario_Dec%202025.pdf",
+      "method": "page",
+      "date_read": "2026-10-02",
+      "who": "A designer qualified (BCIN, 'House' category) and registered under the Building Code, an architect or engineer, or the owner designing their own house. The owner-designer exemption also covers an accessory structure to any house up to 50 m2. Structural elements often still need a P.Eng. stamp.",
+      "who_source": "https://buildersontario.com/owner-builder-ontario/",
+      "who_method": "search-summary",
+      "fee": {
+        "plans_cad": [5000, 30000],
+        "note": "A custom-home cost guide's range for plans; search summary only; rule of thumb. No published BCIN designer fee survey found. The architect range (8-15%) is in research-construction-process.json.",
+        "source": "https://greenbuildingcanada.ca/cost-build-house-ontario/",
+        "method": "search-summary",
+        "date_read": "2026-10-02"
+      }
+    },
+    "British_Columbia": {
+      "architect_required": false,
+      "law": "Under the Professional Governance Act and the Architects Regulation (B.C. Reg. 33/2023, in force 2023-02-10, replacing the Architects Act), residential buildings of up to 4 dwelling units do not require an architect. The building designers' association summarises the limits as footprint 600 m2 or less, gross area 2,400 m2 or less, 3 storeys plus basement, and a maximum of 4 dwelling units per building.",
+      "source": "https://www.bcabd.org/architects-regulation",
+      "method": "page",
+      "date_read": "2026-10-02",
+      "conflict_note": "Several BC designer sites say a single-family house needs no architect 'regardless of square footage or height' (search-summary). The BCABD page, which states numeric limits, is preferred; its own caveat is that it 'cannot guarantee the interpretations'. Any ordinary house falls well inside either reading.",
+      "who": "Registered building designer (BCABD), certified residential designer, architect, or anyone; engineering is required for Part 4 structures and often for Part 9 elements outside prescriptive limits.",
+      "fee": "The AIBC tariff house percentages (historic) are in research-construction-process.json. No BC building-designer fee survey found."
+    },
+    "Mexico_City": {
+      "DRO_required": "Depends on the manifestación type. Reglamento de Construcciones para el Distrito Federal (as reformed to 2024-10-04), Art. 51: Tipo A covers 'no más de una vivienda unifamiliar de hasta 120 m2 construidos, en un predio con frente mínimo de 6 m, dos niveles, altura máxima de 5.5 m y claros libres no mayores de 4 m'; Art. 52 (Tipo A requirements) does not require a Director Responsable de Obra. Tipo B (residential up to 10,000 m2) and Tipo C need the DRO's name and registration number and the DRO's responsiva (Arts. 34, 48, 53). So a new house over 120 m2, or over two levels, or with spans over 4 m, needs a DRO.",
+      "law_source": "https://paot.org.mx/centro/leyes-normas-htmls/reglamento-de-construcciones-1028.html",
+      "law_method": "page",
+      "date_read": "2026-10-02",
+      "DRO_fee": {
+        "flat_mxn_tipo_B_casa_habitacion_avg": 25000,
+        "includes": "responsiva for the manifestación, site visits during construction, responsiva before SACMEX, SEDEMA/SEDUVI, ISC and the alcaldía",
+        "source": "https://www.grupoqvick.com/post/director-responsable-de-obra",
+        "published": "2023-06-27 (updated 2023-06-29)",
+        "method": "page",
+        "note": "A DRO service firm's own price. Market figure, not a tariff.",
+        "pct_of_construction_cost": [1.5, 3],
+        "pct_source": "https://tandacasa.com/blog/cuanto-cuesta-construir-casa-mexico-2026",
+        "pct_method": "page",
+        "pct_note": "A 2026 cost blog's rule of thumb; says the DRO is mandatory in CDMX, Estado de México, Nuevo León and Jalisco and lists architect fees at 3-6% as 'recommended'."
+      },
+      "FCARM_arancel_2022_habitacional": {
+        "formula": "H = CBM x V x FI x FGE x FM x FA x FR x FACP x FEPE",
+        "CBM_mxn_per_m2_nov_2022": 9286.80,
+        "CBM_basis": "CMIC parametric cost for Vivienda Social tipo T11, Mexico City; to be updated to the date of calculation",
+        "FI_CDMX": 1.000,
+        "FGE": { "vivienda_progresiva_autoconstruccion": 0.84, "interes_social_T11": 1.00, "tipo_medio": 1.15, "residencial": 1.30, "lujo": 1.90, "condominio_interes_social": 1.05, "condominio_tipo_medio": 1.35, "condominio_residencial": 1.50, "condominio_lujo": 1.60 },
+        "FM": { "obra_nueva": 1.00, "ampliacion": 1.05, "remodelacion": 1.10, "reacondicionamiento": 1.15, "rehabilitacion": 1.20 },
+        "FA_by_marginacion": { "muy_bajo": 1.00, "bajo": 0.95, "medio": 0.90, "alto": 0.80, "muy_alto": 0.75 },
+        "FR_single_family_repeat": { "first": 1.00, "second": 0.40, "third": 0.25, "fourth": 0.10, "fifth_on": 0.05 },
+        "FACP_by_stages_contracted": { "four_stages": 0.040, "three_stages": 0.041, "two_stages": 0.042, "one_stage": 0.043 },
+        "FEPE_stage_shares": { "diseno_conceptual": 0.05, "anteproyecto": 0.20, "diseno_ejecutivo": 0.33, "ingenierias": 0.42, "all_four": 1.00 },
+        "excluded_from_arancel": "DRO and corresponsable signatures, permits and procedures (tramitología), special studies, BIM, travel",
+        "status": "Minimum fee recommended by the Federation of Colleges of Architects; FCARM's own 2022 diagnosis found only 23% of members use the aranceles. Not law.",
+        "derived_full_executive_project_new_house_CDMX_pct_of_parametric_cost": {
+          "value": 4.0,
+          "note": "Derived here: with FM=FA=FR=FEPE=1 the fee is FACP (0.040) times the parametric construction cost (CBM x V x FI x FGE), i.e. 4.0% of that cost, design and engineering only, no site supervision and no DRO. This is a minimum and is based on a parametric cost, not the real build cost."
+        },
+        "derived_fee_mxn_per_m2_nov_2022_CDMX_new_full_project": {
+          "tipo_medio": 427.19,
+          "residencial": 482.91,
+          "lujo": 705.80,
+          "note": "Derived here: 9,286.80 x FGE x 0.040. Close to the 450-900 MXN/m2 market range already in research-construction-process.json."
+        },
+        "worked_example_check": "Case 2 in the document (230 m2, FI 0.994, FGE 1.05, FA 0.80, FACP 0.040) gives MXN 71,337.78, which reproduces. Case 1 (remodel, Campeche) reproduces at MXN 28,334.16 only if FM is taken as 1.00, though the table lists 1.10 for remodelación; the published example appears to drop FM.",
+        "source": "https://fcarm.org.mx/wp-content/uploads/2024/04/CAN-FCARM_Arancel-genero-habitacional_nov2022.pdf",
+        "method": "page",
+        "date_read": "2026-10-02"
+      },
+      "CAM_SAM_arancel": {
+        "value": null,
+        "note": "The Colegio de Arquitectos de la Ciudad de México's own arancel was not found online. CAM-SAM is listed among the contributors to the FCARM 2022 arancel above."
+      }
+    }
+  },
+
+  "corrections_to_research_construction_process": [
+    "Section 1 Mexico_CDMX.arancel_formula records 'H = CO x FS x FR / 100' from a secondary blog. FCARM's current residential arancel (Nov 2022, read on the page) uses H = CBM x V x FI x FGE x FM x FA x FR x FACP x FEPE. The older formula may be the 2008 version, which the 2022 document attaches as Anexo 1. The gap note 'No CAM-SAM arancel tables were found online' still holds, but FCARM's tables are now recorded here.",
+    "Gaps: 'No average lateness in weeks' — UK Toolstation 2022 gives an average of 3 months over for late home-improvement projects (poll of 1,000). There is still no US figure.",
+    "Gaps: 'No published spread between residential bids for the same job' — Washington Consumers' Checkbook's undercover shoppers published same-job ranges ($190,000-$321,000; $8,500-$13,250).",
+    "Gaps: 'No average overrun %' — still true as a percent. Angi 2026 gives a tail (about a third of those over budget went 30%+ over), and Toolstation 2022 gives a UK average in pounds (GBP 3,024)."
+  ],
+
+  "gaps": [
+    "No published mean or median residential overrun as a percent of budget, in any country covered.",
+    "No US average renovation delay in weeks. UK has a single 2022 poll (3 months). No new-build average delay for the UK (on-time share only) or the US outside the 2022 pandemic-peak poll.",
+    "No traceable study of residential change orders as a percent of contract value. CoConstruct gives counts and dollar totals per project (2019-2020).",
+    "No survey of the mean number of bids homeowners obtain, in the US or the UK.",
+    "Same-job bid spreads come from one source (Checkbook, DC area, two jobs, number of bidders not stated).",
+    "No NYC-, Connecticut- or LA-specific architect fee survey. No BCIN-designer or BC-designer fee survey.",
+    "Irish assigned-certifier fees: the three figures found (EUR 400-1,500; EUR 4,000-5,000 + VAT; EUR 20,000) disagree and none is reliable.",
+    "CDMX DRO fee: one firm's flat price (MXN 25,000) and one blog's 1.5-3%. FCARM has no DRO arancel yet; its 2022 document lists DROs as future work."
+  ]
+}

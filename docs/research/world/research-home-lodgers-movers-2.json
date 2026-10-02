@@ -1,0 +1,383 @@
+{
+  "_meta": {
+    "retrieved": "2026-09-30",
+    "conventions": "Every figure carries its source URL, publisher, publication date (null when the page shows none), sourceType ('primary' = the retailer, government body or study author itself; 'secondary' = a guide, aggregator or press report), and 'confirmed'. confirmed=true means the figure was read directly from the page or document on 2026-09-30. confirmed=false means it came from a search-engine extract of that page because the page itself refused automated access (HTTP 403 or timeout); treat those as likely-but-unverified. Null means no published figure was found, and the note says so. Retail prices are shelf prices on the retrieval date and move with sales.",
+    "spelling": "American spelling in our own words; product and publication names are quoted as published."
+  },
+
+  "portableAppliances": {
+    "UK": {
+      "currency": "GBP",
+      "portableOrTwinTubWasher": [
+        {
+          "item": "Leisurewize Twin Tub Washing Machine (mains, portable)",
+          "retailer": "Argos",
+          "price": 140.00,
+          "source": { "url": "https://www.argos.co.uk/product/8864970", "publisher": "Argos", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Price from the search-engine extract of the Argos product page; the page returned 403. The same extract listed a Costway Compact Twin Tub at Argos for 140.00 too."
+        }
+      ],
+      "compactVentedDryer": [
+        {
+          "item": "STATESMAN TD03VFW 3 kg Vented Tumble Dryer",
+          "retailer": "Currys",
+          "price": 195.00,
+          "source": { "url": "https://www.currys.co.uk/products/statesman-td03vfw-3-kg-vented-tumble-dryer-white-10268524.html", "publisher": "Currys", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Search-engine extract; page returned 403."
+        },
+        {
+          "item": "MONTPELLIER MTD30P 3 kg Vented Tumble Dryer (wall-mountable)",
+          "retailer": "Currys",
+          "price": 208.97,
+          "source": { "url": "https://www.currys.co.uk/products/montpellier-mtd30p-3-kg-vented-tumble-dryer-white-10202816.html", "publisher": "Currys", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Search-engine extract; page returned 403."
+        }
+      ],
+      "AO": {
+        "price": null,
+        "note": "No portable/twin-tub washer or 3 kg compact dryer listing from ao.com surfaced in search; ao.com was not directly reachable. Left null."
+      }
+    },
+
+    "Ireland": {
+      "currency": "EUR",
+      "portableOrTwinTubWasher": [
+        {
+          "item": "Streetwize Portawash Twin Tub Washing Machine (3.0 kg wash / 2.5 kg spin, gravity drain, no pump)",
+          "retailer": "MicksGarage (Irish online retailer)",
+          "price": 149.99,
+          "regularPrice": 187.49,
+          "source": { "url": "https://www.micksgarage.com/d/camping-equipment/products/2059802/twin-tub-washing-machine", "publisher": "MicksGarage", "date": null, "sourceType": "primary" },
+          "confirmed": true,
+          "note": "Neither Harvey Norman, DID Electrical nor Currys.ie was found to stock a twin-tub or portable washer (see notes below), so an Irish camping/motor retailer is the nearest real listing. Very.ie lists the Streetwize Portawash Plus at 201.47 (search extract only, page 403)."
+        }
+      ],
+      "compactVentedDryer": [
+        {
+          "item": "MONTPELLIER MTD30P 3 kg Vented Tumble Dryer",
+          "retailer": "Currys.ie",
+          "price": 239.99,
+          "source": { "url": "https://www.currys.ie/appliances/laundry/tumble-dryers/vented-tumble-dryers", "publisher": "Currys Ireland", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Search-engine extract; Currys.ie returned 403."
+        }
+      ],
+      "countertopDishwasher": [
+        {
+          "item": "electriQ Mini Table Top dishwasher, 6 place settings, white",
+          "retailer": "BuyItDirect.ie",
+          "price": 209.97,
+          "source": { "url": "https://www.buyitdirect.ie/ct/dishwashers/compact", "publisher": "BuyItDirect.ie", "date": null, "sourceType": "primary" },
+          "confirmed": true,
+          "note": "Same page: electriQ Mini Table Top Portable (2 place settings, no plumbing) 254.97; electriQ XL Mini Table Top (8 place settings) 294.97 silver / 314.97 black or white."
+        },
+        {
+          "item": "Candy CP 6E51LS-80 table-top dishwasher, 6 place settings",
+          "retailer": "Amazon.ie",
+          "price": 269.65,
+          "source": { "url": "https://www.amazon.ie/Table-Top-Dishwashers/s?k=Table+Top+Dishwashers", "publisher": "Amazon.ie", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Search-engine extract only."
+        }
+      ],
+      "retailerCoverageNotes": [
+        {
+          "retailer": "DID Electrical",
+          "finding": "DID's full tumble-dryer (36), dishwasher (57) and washing-machine (60) collections were read from its store catalog on 2026-09-30. None is a twin tub, portable washer, 3 kg compact dryer or table-top dishwasher; its smallest washer is the Thor 6 kg freestanding at 249.99.",
+          "source": { "url": "https://www.did.ie/collections/washing-machines", "publisher": "DID Electrical", "date": null, "sourceType": "primary" },
+          "confirmed": true
+        },
+        {
+          "retailer": "Harvey Norman Ireland",
+          "finding": "No twin-tub, compact dryer or table-top dishwasher listing found; the site returned 403 to direct requests. Price null.",
+          "source": { "url": "https://www.harveynorman.ie/home-appliances/appliances/", "publisher": "Harvey Norman Ireland", "date": null, "sourceType": "primary" },
+          "confirmed": false
+        }
+      ]
+    },
+
+    "Canada": {
+      "currency": "CAD",
+      "portableWasher": [
+        {
+          "item": "Danby DWM065A1WDB-6 1.8 cu ft compact top-load washer (casters, faucet connection kit)",
+          "retailer": "Danby (manufacturer list price)",
+          "price": 649.99,
+          "source": { "url": "https://www.danby.com/products/washing-machines/dwm065a1wdb-6/", "publisher": "Danby Products Ltd.", "date": null, "sourceType": "primary" },
+          "confirmed": true
+        },
+        {
+          "item": "Danby 1.8 cu ft Washing Machine (DWM065A1WDB-6)",
+          "retailer": "Best Buy Canada",
+          "price": 699.99,
+          "source": { "url": "https://www.bestbuy.ca/en-ca/product/danby-1-8-cu-ft-washing-machine/15937777", "publisher": "Best Buy Canada", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Search-engine extract; page returned 403."
+        },
+        {
+          "item": "Danby 22 in. 1.8 cu ft Compact Top Load Washing Machine (online only)",
+          "retailer": "Home Depot Canada",
+          "price": 537.00,
+          "source": { "url": "https://www.homedepot.ca/product/danby-22-in-1-8-cu-ft-compact-top-load-washing-machine-in-white/1001839200", "publisher": "The Home Depot Canada", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Search-engine extract; page timed out."
+        }
+      ],
+      "compactDryer": [
+        {
+          "item": "BLACK+DECKER Portable Dryer, 3.5 cu ft / 13.2 lb, 120 V",
+          "retailer": "Home Depot Canada",
+          "price": 679.00,
+          "source": { "url": "https://www.homedepot.ca/product/black-decker-portable-dryer-small-4-modes-load-volume-13-2-lbs/1001737245", "publisher": "The Home Depot Canada", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Search-engine extract only."
+        },
+        {
+          "item": "Danby DDY060WDB 13.2 lb (6.0 kg) vented 120 V portable dryer",
+          "retailer": "Danby (manufacturer list price)",
+          "price": 549.99,
+          "source": { "url": "https://www.danby.com/products/dryers/ddy060wdb/", "publisher": "Danby Products Ltd.", "date": null, "sourceType": "primary" },
+          "confirmed": true,
+          "note": "Danby marks this model discontinued; remaining Canadian dealer stock was quoted at 645.00 to 699.99 in search extracts."
+        }
+      ],
+      "magicChef": {
+        "price": null,
+        "note": "Only US Home Depot prices for Magic Chef portable washers surfaced (e.g. 0.9 cu ft USD 299.99); no Canadian retailer price was found, so none is recorded for Canada."
+      }
+    },
+
+    "Mexico": {
+      "currency": "MXN",
+      "twinTubWasher": [
+        {
+          "item": "Lavadora Acros Dos Tinas 13 kg (ALD1335JE)",
+          "retailer": "Coppel",
+          "price": 4199,
+          "regularPrice": 6099,
+          "source": { "url": "https://www.coppel.com/pdp/lavadora-acros-dos-tinas-13-kg-blanco-ald1335je-mkp-74451232", "publisher": "Coppel", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Search-engine extract; page timed out. Same extract: Hisense WSA1803P 18 kg 5,499 (was 8,199); Hisense WSA2001P 20 kg 6,499 (was 9,399)."
+        },
+        {
+          "item": "Lavadora doble tina Hisense 16 kg semiautomática (WSA1603P)",
+          "retailer": "Liverpool",
+          "price": 5249.48,
+          "source": { "url": "https://www.liverpool.com.mx/tienda/pdp/lavadora-doble-tina-hisense-16-kg-semiautomatica-carga-superior-wsa1603p/1171369521", "publisher": "Liverpool", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Search-engine extract. Same extract: Koblenz LDM-19B 19 kg 5,759.36."
+        }
+      ],
+      "miniPortableWasher": [
+        {
+          "item": "Mini Lavadora Portátil LAVATROK (folding bucket with spin)",
+          "retailer": "Walmart México (marketplace)",
+          "price": 1246.00,
+          "regularPrice": 1400.00,
+          "source": { "url": "https://www.walmart.com.mx/ip/mini-lavadora-portatil-lavatrok-en-cubeta-plegable-con-centrifugado/00042551677200", "publisher": "Walmart de México", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Search-engine extract. A small-load travel unit, not a household washer."
+        }
+      ],
+      "compactDryer": [
+        {
+          "item": "Koblenz SCK-60 secadora centrífuga 6 kg",
+          "retailer": "Walmart México",
+          "price": 2255.00,
+          "source": { "url": "https://www.walmart.com.mx/ip/secadora-centrifugadora-koblenz-6-kg-blanca/00009905301836", "publisher": "Walmart de México", "date": null, "sourceType": "primary" },
+          "confirmed": false,
+          "note": "Search-engine extract; two extracts gave 2,255 and 2,244. This is a spin extractor with no heat, which is what 'secadora compacta' usually means at Mexican mass retail. Koblenz's own list price is 2,599, and Liverpool lists the SCK-60 at 2,599."
+        }
+      ]
+    }
+  },
+
+  "builtInValue": {
+    "hvacCostRecovered": [
+      {
+        "study": "NAR 2019 Remodeling Impact Report: HVAC Replacement",
+        "jobCostUSD": 8200,
+        "valueAtSaleUSD": 7000,
+        "costRecoveredPct": 85,
+        "source": { "url": "https://www.nar.realtor/sites/default/files/documents/2019-remodeling-impact-10-03-2019.pdf", "publisher": "National Association of Realtors (with NARI cost estimates)", "date": "2019-10-03", "sourceType": "primary" },
+        "confirmed": true,
+        "note": "NAR's most recent Remodeling Impact Report to publish an HVAC-replacement row. Cost comes from NARI remodelers' estimates and value from Realtors' estimates."
+      },
+      {
+        "study": "NAR 2025 Remodeling Impact Report",
+        "costRecoveredPct": null,
+        "source": { "url": "https://cms.nar.realtor/sites/default/files/2025-04/2025-remodeling-impact-report_04-09-2025.pdf", "publisher": "National Association of Realtors", "date": "2025-04-09", "sourceType": "primary" },
+        "confirmed": true,
+        "note": "The public 2025 PDF charts only its top cost-recovery projects (steel front door 100% down to bathroom renovation 50%) and has no HVAC row. The full per-project detail is sold separately. No 2026 edition was found."
+      },
+      {
+        "study": "Cost vs. Value 2025 (national): HVAC Conversion | Electrification",
+        "jobCostUSD": 19484,
+        "valueAtSaleUSD": 14053,
+        "costRecoveredPct": 72.1,
+        "source": { "url": "https://www.jlconline.com/cost-vs-value/2025/", "publisher": "Zonda / JLC (Journal of Light Construction)", "date": "2025-01-01", "sourceType": "primary" },
+        "confirmed": true,
+        "note": "Read from the page's data table. No 2026 edition exists yet (the 2026 URL returns 404). Earlier editions reported 104% (2023: cost 17,747, value 18,366) and 66% (2024: cost 18,800, value 12,422), but those come from search extracts and are unconfirmed."
+      }
+    ],
+    "fractionOfNewHvacRecoupedAtSale": {
+      "value": 0.72,
+      "range": [0.72, 0.85],
+      "note": "Two primary figures are available: 72% (Cost vs. Value 2025, a heat-pump conversion) and 85% (NAR 2019, a like-for-like replacement). Use the 2025 figure as current and cite the 2019 one as the older NAR measure."
+    },
+    "centralAirSalePremium": {
+      "premiumPct": 2.5,
+      "premiumUSD": 5486,
+      "shareOfSoldHomesWithCentralAir": 0.661,
+      "topMetros": [
+        { "metro": "San Antonio", "pct": 5.8, "usd": 10757 },
+        { "metro": "Cincinnati", "pct": 5.7, "usd": 9092 },
+        { "metro": "Detroit", "pct": 5.5, "usd": 8470 },
+        { "metro": "Indianapolis", "pct": 5.4, "usd": 8180 },
+        { "metro": "Las Vegas", "pct": 5.2, "usd": 13620 }
+      ],
+      "rentalPremiumPct": 2.8,
+      "rentalPremiumUSDPerMonth": 40,
+      "source": { "url": "https://zillow.mediaroom.com/2018-07-03-Central-Air-Conditioning-Commands-5-500-Premium", "publisher": "Zillow Group", "date": "2018-07-03", "sourceType": "primary" },
+      "confirmed": true,
+      "note": "Covers homes sold June 1, 2017 to May 31, 2018 in the 35 largest metros. The figure is a feature premium from comparable sales, not a cost-recovered ratio. It is old, and no newer Zillow or Redfin central-air study was found."
+    },
+    "dishwasherSalePremium": {
+      "value": null,
+      "note": "No Zillow, Redfin, NAR or appraisal-body study giving a dishwasher sale premium was found. Figures that circulate, such as 'new appliances carry a 2.2 to 3.2% premium' and 'dishwasher ROI 60 to 80%', appear only on blogs without a traceable primary study, so they are not recorded."
+    },
+    "appraisalOrJCHSGuidance": {
+      "value": null,
+      "note": "No JCHS or appraisal-standards document giving a percentage value for built-in appliances or HVAC was found. Left null."
+    }
+  },
+
+  "moversAbroad": {
+    "_note": "All of these are published estimate ranges from comparison sites or movers, not quotes. MoveHub shows its figures in GBP even for non-UK origins. Pages show no publication date unless one is given.",
+    "UK_Canada": [
+      { "basis": "1-bedroom flat, sea", "low": 3942, "high": 4357, "currency": "GBP", "transit": "9-12 days by sea",
+        "source": { "url": "https://www.movehub.com/uk/international-shipping/canada/", "publisher": "MoveHub", "date": null, "sourceType": "secondary" }, "confirmed": true,
+        "note": "The same page gives air at 7,509-8,299 and a 20ft container at 6,065-6,703." },
+      { "basis": "1-bedroom flat, London to Toronto", "low": 2500, "high": 5000, "currency": "GBP",
+        "source": { "url": "https://sirelo.co.uk/moving-abroad/moving-to-canada/", "publisher": "Sirelo UK", "date": null, "sourceType": "secondary" }, "confirmed": true },
+      { "basis": "shared container (LCL), from", "low": 1264, "high": null, "currency": "GBP",
+        "source": { "url": "https://www.shipit.co.uk/container-shipping-costs/canada", "publisher": "Shipit (UK mover)", "date": null, "sourceType": "primary" }, "confirmed": true,
+        "note": "Montreal or Toronto from 1,264, Vancouver from 1,377. Freight only: packing runs 100-300 more and insurance 2-4.5% of value." }
+    ],
+    "UK_Mexico": [
+      { "basis": "1-bed house, shared container", "low": 2423, "high": 2918, "currency": "GBP",
+        "source": { "url": "https://www.shipit.co.uk/removals-to-mexico", "publisher": "Shipit (UK mover)", "date": null, "sourceType": "primary" }, "confirmed": true,
+        "note": "Excludes UK collection and packing. A small flat by shared container is 1,825-2,109." },
+      { "basis": "1-bedroom flat, sea", "low": 4334, "high": 4791, "currency": "GBP", "transit": "15-21 days by sea",
+        "source": { "url": "https://www.movehub.com/uk/international-shipping/mexico/", "publisher": "MoveHub", "date": null, "sourceType": "secondary" }, "confirmed": true,
+        "note": "Air 8,255-9,126." }
+    ],
+    "Ireland_Canada": [
+      { "basis": "1-bed flat, basics only (5-10 CBM), sea to Halifax or Montreal", "low": 2500, "high": 4000, "currency": "EUR",
+        "source": { "url": "https://www.amcremovals.ie/international-relocations/moving-to-canada", "publisher": "AMC Removals (Irish mover)", "date": null, "sourceType": "primary" }, "confirmed": true,
+        "note": "Search extract adds that Vancouver and the west coast cost roughly 1,000-2,000 more; that addition was not confirmed on the fetched page." },
+      { "basis": "up to 2 bedrooms, sea", "low": 3000, "high": 3500, "currency": "EUR",
+        "source": { "url": "https://www.getamover.ie/international-removals/moving-canada/", "publisher": "GetAMover.ie", "date": "2024-06-06", "sourceType": "secondary" }, "confirmed": true },
+      { "basis": "1-bedroom flat, sea", "low": 4212, "high": 4655, "currency": "GBP", "transit": "8-11 days by sea",
+        "source": { "url": "https://www.movehub.com/ie/international-shipping/canada/", "publisher": "MoveHub", "date": null, "sourceType": "secondary" }, "confirmed": true,
+        "note": "Air 8,024-8,866." }
+    ],
+    "Ireland_Mexico": [
+      { "basis": "1-bedroom flat, sea", "low": 4657, "high": 5147, "currency": "GBP", "transit": "14-20 days by sea",
+        "source": { "url": "https://www.movehub.com/ie/international-shipping/mexico/", "publisher": "MoveHub", "date": null, "sourceType": "secondary" }, "confirmed": true,
+        "note": "Air 8,871-9,805. No Irish mover publishes a Mexico figure; this is the only one found." }
+    ],
+    "Canada_Mexico": [
+      { "basis": "1-2 bedroom shipment", "low": 4000, "high": 9500, "currency": "USD (page does not state; published by a US mover)",
+        "source": { "url": "https://threemovers.com/cost-of-movers-canada-to-mexico/", "publisher": "Three Movers", "date": "2026-08-15", "sourceType": "secondary" }, "confirmed": true,
+        "note": "Transit 5-14 days, or 3-7 days by dedicated truck." },
+      { "basis": "1 bedroom, sea", "low": 3189, "high": 3524, "currency": "GBP", "transit": "6-9 days by sea",
+        "source": { "url": "https://www.movehub.com/ca/international-shipping/mexico/", "publisher": "MoveHub", "date": null, "sourceType": "secondary" }, "confirmed": true,
+        "note": "Air 6,074-6,713. MoveHub showed GBP even for a Canadian origin." }
+    ]
+  },
+
+  "lodgers": {
+    "irsPub527PartOfHome": {
+      "rule": "If you rent part of your home, you divide shared expenses (mortgage interest, taxes, heat, electricity) between rental and personal use as though they were two separate properties. Any reasonable method is allowed, and the two most common are the number of rooms and square footage; the IRS adds that some items, such as water, can reasonably be split by the number of people using them. Expenses that belong only to the rented part, such as painting the rented room or liability insurance for renting it, are fully rental expenses. The rented part may be depreciated. No part of the first phone line is deductible.",
+      "example": "A 12 x 15 ft (180 sq ft) room in an 1,800 sq ft house gives 10% of shared expenses as rental: a $600 heating bill yields $60 rental and $540 nondeductible personal.",
+      "rentalShareFormula": "rentedSqFt / totalSqFt, or rentedRooms / totalRooms",
+      "source": { "url": "https://www.irs.gov/pub/irs-pdf/p527.pdf", "publisher": "Internal Revenue Service", "date": "2025 tax year (for use in preparing 2025 returns)", "sourceType": "primary" },
+      "confirmed": true,
+      "note": "Chapter 4, Special Situations, 'Renting Part of Property'. Rent below fair rental falls under the not-for-profit rules, where income is still reported but rental expenses cannot be deducted."
+    },
+    "ukEnergy": {
+      "ofgemTDCV": {
+        "effective": "2026-07-01",
+        "electricitySingleRateKWh": { "low": 1600, "medium": 2500, "high": 3800 },
+        "electricityMultiRateKWh": { "low": 1900, "medium": 3400, "high": 6100 },
+        "gasKWh": { "low": 6000, "medium": 9500, "high": 14000 },
+        "previous2023": { "electricity": { "low": 1800, "medium": 2700, "high": 4100 }, "gas": { "low": 7500, "medium": 11500, "high": 17000 } },
+        "source": { "url": "https://www.ofgem.gov.uk/sites/default/files/2026-05/Review%20of%20typical%20domestic%20consumption%20values%20decision.pdf", "publisher": "Ofgem", "date": "2026-05-27", "sourceType": "primary" },
+        "confirmed": true,
+        "note": "The decision sets bands by consumption, not by household size. The common labels (low = flat or 1 bed with 1-2 people, medium = 2-3 bed with 2-3 people, high = 4+ bed with 4-5 people) come from suppliers' and comparison sites' guides and are not in this decision."
+      },
+      "medianConsumptionByNumberOfAdults2024": {
+        "coverage": "England and Wales, 2024 meter readings",
+        "gasMedianKWh": { "1": 8482, "2": 10545, "3": 11499, "4": 12664, "5plus": 14397, "all": 10012 },
+        "electricityMedianKWh": { "1": 1945, "2": 2809, "3": 3244, "4": 3690, "5plus": 4069, "all": 2538 },
+        "addedByOneMoreAdultKWh": {
+          "gas": { "1to2": 2063, "2to3": 954, "3to4": 1165 },
+          "electricity": { "1to2": 864, "2to3": 435, "3to4": 447 }
+        },
+        "source": { "url": "https://assets.publishing.service.gov.uk/media/6a2827843b15d05a7ce31fa7/Consumption_headline_EW_2024.xlsx", "publisher": "Department for Energy Security and Net Zero (NEED consumption data tables 2026, Tables 13c and 14c)", "date": "2026-06-11", "sourceType": "primary" },
+        "confirmed": true,
+        "note": "Read directly from the spreadsheet. We derived the increments by subtracting adjacent medians. They are cross-sectional (bigger households also live in bigger homes), so they overstate what one lodger adds to a fixed home, especially for gas, which follows floor area. A lodger joining a 1-adult home is closest to the 1-to-2 step on electricity."
+      },
+      "energySavingTrustExtraPersonFigure": {
+        "value": null,
+        "note": "No Energy Saving Trust figure for what one extra occupant adds was found. A secondary guide claims each extra adult adds about £190-£390 a year, but that is a derived figure and is not recorded as published."
+      }
+    },
+    "spareRoomTimeToFill": {
+      "value": null,
+      "note": "SpareRoom publishes no average time to fill or let a room. Its only related statistic is marketing ('someone finds a flatmate every 3 minutes'), plus user testimonials (rooms let in 3 to 10 days) that are anecdotes. Its statistics page (https://www.spareroom.co.uk/statistics/) covers rents and supply, not void length.",
+      "source": { "url": "https://www.spareroom.co.uk/statistics/", "publisher": "SpareRoom", "date": null, "sourceType": "primary" },
+      "confirmed": true
+    },
+    "englandRightToRent": {
+      "scope": "England only. No check is required in Wales, Scotland or Northern Ireland. The duty covers a resident landlord who takes in a lodger.",
+      "lodgerDefinition": "Someone who takes a room within accommodation they share with their landlord (the owner or an occupier).",
+      "onlineCheck": {
+        "how": "For tenants who are not British or Irish citizens: the tenant generates a 9-character share code, and the landlord enters it with the tenant's date of birth at gov.uk/view-right-to-rent. The code is valid for 90 days. British and Irish citizens cannot get a share code; their original documents are checked instead, or a Digital Verification Service is used.",
+        "feeGBP": 0,
+        "feeConfirmed": false,
+        "feeNote": "The GOV.UK service page and the Home Office landlord's guide ask for no payment and state no fee, but neither says in so many words that the check is free. Secondary guides (e.g. Selectra, Landlord Studio) state it is free. Commercial Digital Verification Services, which are optional for British and Irish passport holders, charge their own fees.",
+        "source": { "url": "https://www.gov.uk/view-right-to-rent", "publisher": "GOV.UK / Home Office", "date": null, "sourceType": "primary" }
+      },
+      "civilPenalties": {
+        "inForceFrom": "2024-02-13",
+        "firstBreachGBP": { "perLodger": 5000, "perOccupier": 10000 },
+        "repeatBreachGBP": { "perLodger": 10000, "perOccupier": 20000 },
+        "fastPaymentOptionGBP": { "perLodger": 3500, "perOccupier": 7000, "condition": "First breach only, paid within 21 calendar days of the notice (a 30% discount)." },
+        "previousGBP": { "firstBreach": { "perLodger": 80, "perOccupier": 1000 }, "repeatBreach": { "perLodger": 500, "perOccupier": 3000 } },
+        "sources": [
+          { "url": "https://www.gov.uk/government/publications/right-to-rent-landlords-code-of-practice/code-of-practice-for-landlords-and-their-agents-the-right-to-rent-scheme-for-landlords-and-their-agents-1-october-2026", "publisher": "Home Office", "date": "2026-10-01 (in force)", "sourceType": "primary" },
+          { "url": "https://assets.publishing.service.gov.uk/media/6878ea540263c35f52e4dd75/270625_Landlords_guide_to_Right_To_Rent_Checks-.pdf", "publisher": "Home Office", "date": "2025-06-26", "sourceType": "primary" }
+        ],
+        "confirmed": true,
+        "note": "A new code of practice takes effect 2026-10-01, the day after retrieval. It keeps the same penalty amounts and mainly adds digital documents and Digital Verification Service rules. The pre-2024 amounts come from secondary law-firm summaries (e.g. Shoosmiths), not a primary page. Criminal prosecution, with possible imprisonment, remains available for knowing breaches."
+      }
+    }
+  },
+
+  "uncertain": [
+    "Most retail prices (Argos, Currys UK and IE, Best Buy Canada, Home Depot Canada, Coppel, Liverpool, Walmart MX) come from search-engine extracts because those sites blocked automated fetches; they are marked confirmed=false. Prices confirmed directly: MicksGarage twin tub (EUR 149.99), BuyItDirect.ie table-top dishwashers, and Danby list prices.",
+    "Harvey Norman Ireland and DID Electrical do not appear to sell twin tubs, portable washers, 3 kg dryers or table-top dishwashers (DID verified from its full catalog; Harvey Norman not verifiable).",
+    "Mexican 'secadora compacta' at mass retail is usually a heatless centrifugal spin extractor (Koblenz SCK-60), not a heated tumble dryer. Search extracts also showed some 'Genérica' units near MXN 1,000 on Liverpool that may be garment-bag dryers.",
+    "NAR has not published an HVAC cost-recovered figure since 2019 (85%). The current figure is from Cost vs. Value 2025 (72%), a different publisher and methodology (heat-pump conversion).",
+    "The Zillow central-air premium (2.5%, $5,486) dates from 2018. No dishwasher sale-premium study exists in a primary source.",
+    "Mover figures are estimate ranges from comparison sites and movers, not quotes. MoveHub prices every route in GBP. The Three Movers Canada-Mexico range does not state its currency.",
+    "The NEED per-adult increments are cross-sectional medians and not a controlled 'one lodger added' measurement.",
+    "No official source states outright that the Home Office online right-to-rent check is free; it asks for no payment, and secondary sources say it is free.",
+    "No published average void or time-to-fill for a lodger room exists from SpareRoom."
+  ]
+}

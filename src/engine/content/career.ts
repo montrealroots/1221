@@ -6,10 +6,23 @@
  */
 
 import type { Money } from '../core/money';
+import type { Skill } from './school';
 import type { Craft } from '../systems/school';
+import { exchange } from './currency';
 
-/** Where the business is: the two cities agencies, casting and the work are in. */
-export const CAREER_CITIES = ['us-ny-newyork', 'us-ca-losangeles'] as const;
+/**
+ * Where the business is: the cities agencies, casting and the work are in.
+ * London from 2026-09-29, for a British actor at home (`UK_ROLES`,
+ * `UK_AGENCIES`); until then the business was American only, and a British
+ * graduate without permission to work in the US had nowhere to work. Dublin
+ * from the same day, for an Irish actor at home, its films at the published
+ * agreement and the rest at SLATE's estimate (`IRELAND_SCALE`); and
+ * Mexico City, at SLATE's estimate of its rates (`MEXICO_SCALE`). Toronto and
+ * Vancouver from 2026-09-30, at the published agreements' own rates: ACTRA's
+ * Independent Production Agreement in Toronto, the BC Master Production
+ * Agreement in Vancouver, and the Canadian Theatre Agreement on stage in both.
+ */
+export const CAREER_CITIES = ['us-ny-newyork', 'us-ca-losangeles', 'uk-eng-london', 'ie-lei-dublin', 'mx-cmx-mexicocity', 'ca-on-toronto', 'ca-bc-vancouver'] as const;
 export type CareerCity = (typeof CAREER_CITIES)[number];
 
 /**
@@ -44,6 +57,10 @@ export interface Agency {
   /** The showing it must see to offer. */
   bar: number;
   auditionsPerWeek: number;
+  /** The country its clients work in; American where not said. */
+  countryId?: string;
+  /** Its commission, where it isn't `AGENT_COMMISSION.rate`. */
+  commission?: number;
 }
 
 export const AGENCIES: readonly Agency[] = [
@@ -55,6 +72,58 @@ export const AGENCIES: readonly Agency[] = [
   { id: 'paradigm', name: 'Paradigm', tier: 2, bar: 66, auditionsPerWeek: 2.5 },
   { id: 'innovative', name: 'Innovative Artists', tier: 3, bar: 62, auditionsPerWeek: 2 },
   { id: 'buchwald', name: 'Buchwald', tier: 3, bar: 60, auditionsPerWeek: 2 },
+  // London (`UK_AGENCIES`): names checked against each agency's own site on
+  // 2026-09-29 and tiered as the trade press ranks them. What a showing must
+  // clear and the auditions a week are SLATE's estimates, by the American
+  // tiers'. The Personal Managers' Association sets no commission and only
+  // asks it agreed in writing; 12.5% is the middle of the 10% to 15% a
+  // guide gives, SLATE's reading.
+  { id: 'united-agents', name: 'United Agents', tier: 1, bar: 74, auditionsPerWeek: 3, countryId: 'uk', commission: 0.125 },
+  { id: 'curtis-brown', name: 'Curtis Brown', tier: 1, bar: 74, auditionsPerWeek: 3, countryId: 'uk', commission: 0.125 },
+  { id: 'independent-talent', name: 'Independent Talent Group', tier: 1, bar: 73, auditionsPerWeek: 3, countryId: 'uk', commission: 0.125 },
+  { id: 'hamilton-hodell', name: 'Hamilton Hodell', tier: 2, bar: 68, auditionsPerWeek: 2.5, countryId: 'uk', commission: 0.125 },
+  { id: 'conway-van-gelder-grant', name: 'Conway van Gelder Grant', tier: 2, bar: 67, auditionsPerWeek: 2.5, countryId: 'uk', commission: 0.125 },
+  { id: 'tavistock-wood', name: 'Tavistock Wood', tier: 2, bar: 66, auditionsPerWeek: 2.5, countryId: 'uk', commission: 0.125 },
+  { id: 'gordon-and-french', name: 'Gordon & French', tier: 3, bar: 62, auditionsPerWeek: 2, countryId: 'uk', commission: 0.125 },
+  { id: 'scott-marshall', name: 'Scott Marshall Partners', tier: 3, bar: 61, auditionsPerWeek: 2, countryId: 'uk', commission: 0.125 },
+  { id: 'lou-coulson', name: 'Lou Coulson Associates', tier: 3, bar: 60, auditionsPerWeek: 2, countryId: 'uk', commission: 0.125 },
+  // Dublin: names checked against each agency's own site on 2026-09-29
+  // (docs/research/world/research-ireland.json). None publishes its
+  // commission; 12.5% is the middle of the 10% to 15% Irish guides give,
+  // SLATE's reading, and the tiers, bars and auditions a week are SLATE's
+  // estimates, by London's. Castaway is a co-operative its actors run.
+  { id: 'lisa-richards', name: 'The Lisa Richards Agency', tier: 1, bar: 72, auditionsPerWeek: 2.5, countryId: 'ie', commission: 0.125 },
+  { id: 'the-agency', name: 'The Agency', tier: 1, bar: 72, auditionsPerWeek: 2.5, countryId: 'ie', commission: 0.125 },
+  { id: 'macfarlane-chard-ie', name: 'MacFarlane Chard Associates Ireland', tier: 2, bar: 66, auditionsPerWeek: 2, countryId: 'ie', commission: 0.125 },
+  { id: 'first-call', name: 'First Call Management', tier: 2, bar: 65, auditionsPerWeek: 2, countryId: 'ie', commission: 0.125 },
+  { id: 'morgan-the-agency', name: 'Morgan The Agency', tier: 3, bar: 60, auditionsPerWeek: 1.5, countryId: 'ie', commission: 0.125 },
+  { id: 'castaway', name: 'Castaway Actors Agency', tier: 3, bar: 58, auditionsPerWeek: 1.5, countryId: 'ie', commission: 0.125 },
+  // Mexico City: the four agencies checked on their own sites on
+  // 2026-09-29. None publishes its commission, and the 10% a search gives is
+  // Spain's; SLATE charges America's, its estimate. Tiers, bars and
+  // auditions a week are SLATE's, by Dublin's.
+  { id: 'talent-on-the-road', name: 'Talent On The Road', tier: 1, bar: 70, auditionsPerWeek: 2.5, countryId: 'mx' },
+  { id: 'shoot-management', name: 'Shoot Management MX', tier: 2, bar: 64, auditionsPerWeek: 2, countryId: 'mx' },
+  { id: 'look-management', name: 'LOOK Management', tier: 2, bar: 62, auditionsPerWeek: 2, countryId: 'mx' },
+  { id: 'glenda-artist', name: 'Glenda Artist Management', tier: 3, bar: 58, auditionsPerWeek: 1.5, countryId: 'mx' },
+  // Toronto and Vancouver, from 2026-09-30 (docs/research/world/research-canada-acting.json):
+  // names from StageMilk's Toronto list (2019), the Vancouver Actors Guide's
+  // directory and Lucas Talent's own site. Canadian agencies sign clients
+  // across the country and put them on tape, so SLATE doesn't tie one to its
+  // city. 15% is the commission ACTRA calls the industry's standard, on work
+  // the agent procures; the GST on it isn't charged here. Tiers, bars and
+  // auditions a week are SLATE's estimates, by London's, a little under for
+  // a market that sells much of its work to American productions.
+  { id: 'characters', name: 'The Characters Talent Agency', tier: 1, bar: 72, auditionsPerWeek: 3, countryId: 'ca', commission: 0.15 },
+  { id: 'gga', name: 'GGA', tier: 1, bar: 72, auditionsPerWeek: 3, countryId: 'ca', commission: 0.15 },
+  { id: 'lucas-talent', name: 'Lucas Talent', tier: 1, bar: 71, auditionsPerWeek: 3, countryId: 'ca', commission: 0.15 },
+  { id: 'meridian-artists', name: 'Meridian Artists', tier: 2, bar: 66, auditionsPerWeek: 2.5, countryId: 'ca', commission: 0.15 },
+  { id: 'ami-artist', name: 'AMI Artist Management', tier: 2, bar: 65, auditionsPerWeek: 2.5, countryId: 'ca', commission: 0.15 },
+  { id: 'hero-artists', name: 'Hero Artists', tier: 2, bar: 65, auditionsPerWeek: 2.5, countryId: 'ca', commission: 0.15 },
+  { id: 'connekt', name: 'Connekt Creative Agency', tier: 2, bar: 64, auditionsPerWeek: 2, countryId: 'ca', commission: 0.15 },
+  { id: 'edna', name: 'Edna Talent Management', tier: 3, bar: 60, auditionsPerWeek: 2, countryId: 'ca', commission: 0.15 },
+  { id: 'oldfield', name: 'Oldfield Talent Management', tier: 3, bar: 59, auditionsPerWeek: 2, countryId: 'ca', commission: 0.15 },
+  { id: 'alpha-artist', name: 'Alpha Artist Management', tier: 3, bar: 58, auditionsPerWeek: 1.5, countryId: 'ca', commission: 0.15 },
 ];
 export const AGENCY_SOURCE = 'https://oir.yale.edu/sites/default/files/alum_activities_drama_1.pdf; https://ocs.yale.edu/resources/entertainment-talent-agency-management-company-list/';
 
@@ -93,6 +162,52 @@ export const SAG_AFTRA = {
  * each week's check. Since 2023's Open Access anybody paid for theater work
  * can join; SLATE has an actor join on their first Equity contract.
  */
+/**
+ * ACTRA's membership (actra.ca/join and ACTRA Toronto's apprentice program,
+ * read 2026-09-30). An actor's first ACTRA engagement makes them an
+ * apprentice, $75 and $75 a year after; three qualifying credits make them a
+ * full member, for the $1,600 initiation fee less the apprentice fee paid.
+ * A full member's basic dues are $195 a year, and working dues 2.25% of
+ * gross earnings, taken from each check, the two together capped at $4,000
+ * a year. In British Columbia the branch is UBCP/ACTRA, whose own fees
+ * weren't read: SLATE charges ACTRA National's there too, its estimate. The
+ * work permits a non-member pays per engagement weren't found, and aren't
+ * charged; SLATE bills the basic dues half each May and November, as the
+ * American unions', and the apprentice's renewal each May.
+ */
+export const ACTRA = {
+  apprentice: 75_00,
+  credits: 3,
+  initiation: 1_600_00,
+  basicDues: 195_00,
+  workingDues: 0.0225,
+  duesCap: 4_000_00,
+  currency: 'CAD',
+  /**
+   * Under the IPA a performer short of full membership pays ACTRA's work
+   * permit a week of the job: $260 on a principal part, $210 on an actor's,
+   * and one who isn't Canadian $260 the first week and $175 after
+   * (research-actra2.json, the IPA 2025–2027). The producer's 12.5% on a
+   * non-member's fees is the producer's, and isn't the actor's to pay.
+   */
+  permitAfterFirstForeign: 175,
+  /**
+   * The producer's prepaid use: the IPA's "all uses" option, New Media
+   * included, 110% of the fees on television and 135% on a feature, paid
+   * with them and covering four years (B501); the BCMPA's the same, five
+   * years on a series. Which option a producer takes isn't published: SLATE
+   * reads the all-uses one, streaming being where the work is seen. After
+   * it, performers share 3.6% of the distributor's gross through ACTRA PRS,
+   * which no figure lets SLATE price, and it isn't paid.
+   */
+  prepaidTv: 1.1,
+  prepaidFeature: 1.35,
+  source: 'https://www.actra.ca/join/; https://actratoronto.com/apprentice-program/; the IPA 2025–2027 and the BCMPA 2025–2028',
+} as const;
+
+/** ANDA's dues, 15% of each payment through the union: 10% ordinary, 3.5% for retirement, 1.5% for welfare (laanda.org.mx, April 2019, the latest found). */
+export const ANDA = { dues: 0.15, source: 'https://laanda.org.mx/la-voz-del-actor/beneficios-de-ser-parte-de-la-anda/' } as const;
+
 export const EQUITY = {
   initiation: 1_800_00,
   initiationNow: 600_00,
@@ -120,14 +235,46 @@ export function rateOn(steps: RateSteps, day: string): Money {
  * (`weight`), the craft each asks (`bar`), how long each runs and how far
  * ahead it starts are SLATE's estimate.
  */
+/**
+ * Parts for an actor sixty or older, as a share of the parts for one younger:
+ * the share of speaking characters sixty or older against that age's share of
+ * the US population (19.9%, the 2015 Census), over the same for everybody
+ * younger. On film 10.7% of the speaking characters in the 100 top films of
+ * 2016 were sixty or older; on television 9.4% across the most popular
+ * Nielsen-rated series of 2016-17 (USC Annenberg with Humana). So a film's
+ * parts for a sixty-year-old are (10.7/19.9) / (89.3/80.1) of a younger
+ * actor's, 0.48, and a series' (9.4/19.9) / (90.6/80.1), 0.42. SLATE's
+ * estimates: the stage and an on-camera commercial take the two's middle, no
+ * count of their casts by age being published; a voice isn't seen, and its
+ * parts aren't thinned; and past eighty the share holds, no count of the
+ * very old on screen being published apart. Until 2026-09-28 an actor of
+ * ninety was sent to as many parts as one of thirty.
+ */
+export const AGE_ON_SCREEN = {
+  from: 60,
+  film: (10.7 / 19.9) / ((100 - 10.7) / (100 - 19.9)),
+  tv: (9.4 / 19.9) / ((100 - 9.4) / (100 - 19.9)),
+  source: 'https://assets.uscannenberg.org/docs/still-rare-still-ridiculed.pdf (film, 2016); https://today.usc.edu/usc-annenberg-humana-studies-suggest-relationship-between-tv-age-bias-and-health-of-seniors/ (television, 2016-17)',
+} as const;
+
+/** The share of a part's kind open to an actor of an age (`AGE_ON_SCREEN`). */
+export function partsForAge(role: Role, age: number): number {
+  if (age < AGE_ON_SCREEN.from || role.medium === 'voice') return 1;
+  if (role.after?.kind === 'film') return AGE_ON_SCREEN.film;
+  if (role.after?.kind === 'tv') return AGE_ON_SCREEN.tv;
+  return (AGE_ON_SCREEN.film + AGE_ON_SCREEN.tv) / 2;
+}
+
 export interface Role {
   id: string;
   label: string;
   /** Screen and stage work, or a voice session in a booth. */
   medium: 'screen' | 'stage' | 'voice';
-  union: 'sag' | 'equity';
+  union: 'sag' | 'equity' | 'equity-uk' | 'irish-equity' | 'anda' | 'actra' | 'caea';
   /** Per day on screen, per week on stage, per episode for a series regular. */
   steps: RateSteps;
+  /** The money its steps are written in; dollars where not said. */
+  currency?: string;
   /** Days on screen; on stage, rehearsal weeks, and weeks of performances. */
   units: readonly [number, number];
   rehearsalWeeks?: readonly [number, number];
@@ -156,11 +303,65 @@ export interface Role {
   after?: { kind: 'tv'; length: 'half' | 'hour' } | { kind: 'film'; budget: Money } | { kind: 'commercial'; voice: boolean };
   /** A booth session's hours, for a voice part. */
   sessionHours?: number;
+  /**
+   * Use paid with the fees, as a share of them (from later on 2026-09-30):
+   * an ACTRA producer's prepaid use, or a Canadian commercial's first year
+   * of television use, which a one-session job's share expresses exactly.
+   */
+  prepaid?: number;
+  /** A non-member's ACTRA work permit a week of the job, in dollars: an apprentice pays it too (`ACTRA`). */
+  permitWeekly?: number;
   /** Shot where the production goes, not always at home (`LOCATION`). */
   travels?: boolean;
   source: string;
 }
 
+const UK_TV = 'Pact/Equity TV Agreement rate card (casting directors’ guild mirror), 2024–2026 columns';
+const UK_CINEMA = 'Pact/Equity Cinema Films Agreement rates, 6 April 2025 to 5 January 2026';
+const UK_THEATRE = 'SOLT/Equity West End and UK Theatre/Equity agreements, 31 March 2025 to 5 April 2026';
+const UK_RADIO = 'Equity’s BBC audio rates summary, July 2023';
+const IE_FILM = 'Screen Producers Ireland and Irish Equity, Irish Film Agreement, from 1 February 2021';
+
+/**
+ * Mexico City's rates were all SLATE's estimate until later on 2026-09-30:
+ * ANDA keeps its tabuladores confidential (laanda.org.mx, "Tabuladores ANDA",
+ * 2026-09-29). Its salary agreements, though, are deposited with the federal
+ * labor registry, whose public repository serves their tables
+ * (`docs/research/world/research-mx-acting.json`), and from then the
+ * telenovela, the streaming series and the play are real figures. The film,
+ * dubbing and commercial rates stay estimates, as no producer or studio
+ * deposited a table for them. Each estimate is the American minimum for
+ * the like part in 2026, scaled by what a Mexican worker earns against an
+ * American: IMSS's average registered wage, MXN 662.80 a day at the end of
+ * January 2026 (imss.gob.mx/prensa/archivo/202602/075), a year of it against
+ * SSA's national average wage for 2024, $69,846.57, the latest published.
+ * The two years apart make it a little high. It comes to about a fifth.
+ */
+export const MEXICO_SCALE = (exchange(662_80 * 365, 'MXN', 'USD') ?? 662_80 * 365 / 18) / 69_846_57;
+const MX_EST = 'SLATE’s estimate: the American minimum for the like part, scaled by IMSS’s average wage against SSA’s (MEXICO_SCALE); ANDA’s tabuladores are confidential';
+/** An American minimum in dollar cents, as SLATE's Mexico City rate in peso cents. */
+const inMexico = (usd: Money): Money => Math.round((exchange(usd, 'USD', 'MXN') ?? usd * 18) * MEXICO_SCALE / 100) * 100;
+const MX: readonly CareerCity[] = ['mx-cmx-mexicocity'];
+
+/**
+ * Dublin's television, theater and radio rates are SLATE's estimate too, from
+ * 2026-09-29: Irish Equity's rate cards for them are for its members only.
+ * Each is British Equity's minimum for the like part, scaled by what a worker
+ * earns in Ireland against Britain: the CSO's average weekly earnings, €1,046.88
+ * in the second quarter of 2026 (preliminary), against the ONS's £756 in July
+ * 2026. It comes to a little over a sixth more, in euros.
+ */
+export const IRELAND_SCALE = 1_046_88 / (exchange(756_00, 'GBP', 'EUR') ?? 756_00 * 1.17);
+const IE_EST = 'SLATE’s estimate: British Equity’s minimum for the like part, scaled by the CSO’s average weekly earnings against the ONS’s (IRELAND_SCALE); Irish Equity’s rates are members-only';
+/** A British minimum in pence, as SLATE's Dublin rate in euro cents. */
+const inIreland = (gbp: Money): Money => Math.round((exchange(gbp, 'GBP', 'EUR') ?? gbp * 1.17) * IRELAND_SCALE);
+const IE: readonly CareerCity[] = ['ie-lei-dublin'];
+const IPA = 'ACTRA/CMPA/AQPM Independent Production Agreement 2025–2027, the AQPM’s rate chart (aqpm.ca, January 2025)';
+const BCMPA = 'UBCP/ACTRA BC Master Production Agreement 2025–2028 rate sheet (ubcpactra.ca, March 2025)';
+const CTA = 'Canadian Theatre Agreement 2024–2027 minimum fee booklet, CAEA and PACT (caea.com)';
+const NCA = 'ACTRA National Commercial Agreement rate chart, 1 June 2025 to 31 May 2026 (actra.ca)';
+const TO: readonly CareerCity[] = ['ca-on-toronto'];
+const VAN: readonly CareerCity[] = ['ca-bc-vancouver'];
 const AMPTP = 'https://amptp.org/wp-content/themes/amptp/assets/pdf/SAG-AFTRA/2026-30%20SAG-AFTRA%20Rates_2026-05-27%204931-9242-3576%20v.4.pdf';
 const SAGINDIE = 'https://www.sagindie.org/sagaftra/tv-theatrical-contract-2026/';
 const LORT = 'https://cdn.actorsequity.org/pages/lort-documents/LORTRatification.pdf';
@@ -208,6 +409,19 @@ export const GENRE_READS: Readonly<Record<string, Partial<Craft>>> = {
 };
 
 /**
+ * What a part itself may ask beside its genre, as a breakdown names it: a
+ * song, a fight, a dance, an accent, an intimate scene. Each is drawn on its
+ * own, by the medium: a stage part sings and fights more often, a screen
+ * part asks for an accent and intimacy more. How often is SLATE's estimate;
+ * casting services don't publish their breakdowns' tallies. Until
+ * 2026-09-28 a drama that wanted a fight or a song asked for neither.
+ */
+export const PART_DEMANDS: Readonly<Record<'screen' | 'stage', readonly (readonly [Skill, number])[]>> = {
+  screen: [['accents', 0.1], ['combat', 0.05], ['intimacy', 0.06], ['singing', 0.04], ['dance', 0.03]],
+  stage: [['accents', 0.12], ['combat', 0.08], ['intimacy', 0.04], ['singing', 0.1], ['dance', 0.06]],
+};
+
+/**
  * The audition beside the part, SLATE's estimate: a fifth of the read. In a
  * room the sides can change, so cold reading counts beside the technique and
  * the lines learned; on tape, the technique and the lines; in the booth the
@@ -218,7 +432,16 @@ export const AUDITION_READ = { share: 0.2 } as const;
 /** Lines learned on every job but the booth's, where the script is on the stand; a series or a play most. */
 export const MEMORIZE = { job: 0.3, long: 0.6 } as const;
 
-/** The major role's flat price, per day over the days it's priced on. */
+/**
+ * The major role's flat price, per day over the days it's priced on: a guest
+ * star's top of show, 10% over television's day performer rate for five days
+ * on a half-hour, eight on an hour. SAG-AFTRA's wage table gives $7,095 and
+ * $11,352 from 1 July 2025 ($1,290 × 1.1 × 5 and × 8); from 1 July 2026 SLATE
+ * raises it 3% a year, as the 2026 agreement raises the day rate ($1,246 to
+ * $1,283), its estimate, the 2026 table's Major Role figures not having been
+ * read. Until 2026-10-01 each year's figure was the year before's, $6,853
+ * and $10,965 being 2024-25's (`research-career-depth.json`).
+ */
 const perDay = (steps: RateSteps, days: number): RateSteps => steps.map(([from, cents]) => [from, Math.round(cents / days)] as const);
 
 export const ROLES: readonly Role[] = [
@@ -230,13 +453,13 @@ export const ROLES: readonly Role[] = [
   },
   {
     id: 'guest-half', label: 'Guest Star, A Half-Hour Series', medium: 'screen', union: 'sag',
-    steps: perDay([['2025-07-01', 6_853_00], ['2026-07-01', 7_057_00], ['2027-07-01', 7_266_00], ['2028-07-01', 7_486_00], ['2029-07-01', 7_711_00]], 5),
+    steps: perDay([['2025-07-01', 7_095_00], ['2026-07-01', 7_308_00], ['2027-07-01', 7_527_00], ['2028-07-01', 7_753_00], ['2029-07-01', 7_986_00]], 5),
     units: [5, 5], bar: 68, weight: 4, tiers: [1, 2], selfSubmit: false, cities: ['us-ca-losangeles'], leadDays: 7, reads: READS.screen,
     basis: 'week', after: { kind: 'tv', length: 'half' }, travels: true, source: AMPTP,
   },
   {
     id: 'guest-hour', label: 'Guest Star, An Hour Series', medium: 'screen', union: 'sag',
-    steps: perDay([['2025-07-01', 10_965_00], ['2026-07-01', 11_290_00], ['2027-07-01', 11_625_00], ['2028-07-01', 11_977_00], ['2029-07-01', 12_338_00]], 8),
+    steps: perDay([['2025-07-01', 11_352_00], ['2026-07-01', 11_693_00], ['2027-07-01', 12_044_00], ['2028-07-01', 12_405_00], ['2029-07-01', 12_777_00]], 8),
     units: [8, 8], bar: 72, weight: 4, tiers: [1, 2], selfSubmit: false, cities: BOTH, leadDays: 7, reads: READS.screen,
     basis: 'week', after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
   },
@@ -312,15 +535,16 @@ export const ROLES: readonly Role[] = [
     basis: 'week', after: { kind: 'tv', length: 'hour' }, travels: true, source: AMPTP,
   },
   {
-    // The 2025 Commercials Contracts' session fee, $822.30 from 1 April 2025 and $855.20 from 1 April 2026; the third year isn't published.
+    // The 2025 Commercials Contracts' session fee, $822.30 from 1 April 2025 and $855.20 from 1 April 2026; the third year's
+    // rate sheet isn't out, and its fee is the contract's ratified 3% raise on the second's.
     id: 'commercial', label: 'A Commercial, On Camera', medium: 'screen', union: 'sag',
-    steps: [['2025-04-01', 822_30], ['2026-04-01', 855_20]],
+    steps: [['2025-04-01', 822_30], ['2026-04-01', 855_20], ['2027-04-01', 880_86]],
     units: [1, 1], bar: 55, weight: 6, tiers: [1, 2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, reads: READS.commercial,
     basis: 'day', after: { kind: 'commercial', voice: false }, source: COMMERCIALS,
   },
   {
     id: 'commercial-vo', label: 'A Commercial, Voice-Over', medium: 'voice', union: 'sag',
-    steps: [['2025-04-01', 618_30], ['2026-04-01', 643_00]],
+    steps: [['2025-04-01', 618_30], ['2026-04-01', 643_00], ['2027-04-01', 662_29]],
     units: [1, 1], bar: 55, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: BOTH, leadDays: 5, reads: READS.voice,
     sessionHours: 2, after: { kind: 'commercial', voice: true }, source: COMMERCIALS,
   },
@@ -346,6 +570,226 @@ export const ROLES: readonly Role[] = [
     units: [3, 6], bar: 50, weight: 4, tiers: [3], selfSubmit: true, cities: BOTH, leadDays: 10, reads: READS.audiobook,
     sessionHours: 6, source: AUDIOBOOKS,
   },
+  // Britain, from 2026-09-29: Equity's minimums in pounds, researched the same
+  // day (docs/research/world/research-ukacting.json). The rates' dates are the
+  // agreements'; a 2026 figure where none was published stands at its last.
+  // No British residuals are kept. What a part asks (its bar, its weight,
+  // the tiers that send clients, how long before it starts) are SLATE's
+  // estimates by the American parts like them.
+  {
+    // Pact/Equity TV: the engagement fee, per episode, covering a day; £617 in 2025 and £596 in 2024.
+    id: 'uk-tv', label: 'A Part, A British Television Series', medium: 'screen', union: 'equity-uk', currency: 'GBP',
+    steps: [['2024-04-01', 596_00], ['2025-04-01', 617_00], ['2026-04-01', 635_50]],
+    units: [1, 2], bar: 62, weight: 10, tiers: [1, 2, 3], selfSubmit: true, cities: ['uk-eng-london'], leadDays: 5, reads: READS.screen, basis: 'day', source: UK_TV,
+  },
+  {
+    // Pact/Equity TV: the streaming service engagement fee.
+    id: 'uk-streaming', label: 'A Part, A Series For A Streaming Service', medium: 'screen', union: 'equity-uk', currency: 'GBP',
+    steps: [['2026-04-01', 848_00]],
+    units: [2, 5], bar: 68, weight: 4, tiers: [1, 2], selfSubmit: false, cities: ['uk-eng-london'], leadDays: 7, reads: READS.screen, basis: 'day', source: UK_TV,
+  },
+  {
+    // Pact/Equity cinema, £3m and over: £166 a day and the pre-bought uses, 280% more, from 6 April 2025.
+    id: 'uk-film-major', label: 'A Role, A British Feature Film', medium: 'screen', union: 'equity-uk', currency: 'GBP',
+    steps: [['2025-04-06', 630_80]],
+    units: [5, 15], bar: 76, weight: 2, tiers: [1], selfSubmit: false, cities: ['uk-eng-london'], leadDays: 21, reads: READS.screen, basis: 'day', source: UK_CINEMA,
+  },
+  {
+    // Pact/Equity cinema, £1m to £3m: 75% more for the uses.
+    id: 'uk-film-low', label: 'A Role, A Low Budget British Film', medium: 'screen', union: 'equity-uk', currency: 'GBP',
+    steps: [['2025-04-06', 290_50]],
+    units: [3, 10], bar: 64, weight: 4, tiers: [2, 3], selfSubmit: false, cities: ['uk-eng-london'], leadDays: 14, reads: READS.screen, basis: 'day', source: UK_CINEMA,
+  },
+  {
+    // Pact/Equity cinema, under £1m: 50% more for the uses.
+    id: 'uk-film-verylow', label: 'A Role, A Very Low Budget British Film', medium: 'screen', union: 'equity-uk', currency: 'GBP',
+    steps: [['2025-04-06', 249_00]],
+    units: [3, 10], bar: 58, weight: 5, tiers: [2, 3], selfSubmit: true, cities: ['uk-eng-london'], leadDays: 14, reads: READS.screen, basis: 'day', source: UK_CINEMA,
+  },
+  {
+    // SOLT/Equity West End, a theater of up to 799 seats, eight shows a week, 31 March 2025 to 5 April 2026.
+    id: 'uk-west-end', label: 'A Play In The West End', medium: 'stage', union: 'equity-uk', currency: 'GBP',
+    steps: [['2025-03-31', 745_57]],
+    units: [10, 16], rehearsalWeeks: [4, 5], bar: 74, weight: 2, tiers: [1, 2], selfSubmit: false, cities: ['uk-eng-london'], leadDays: 35, reads: READS.stage, source: UK_THEATRE,
+  },
+  {
+    // UK Theatre/Equity subsidized, the same at every grade.
+    id: 'uk-subsidised', label: 'A Play, A Subsidized British Theater', medium: 'stage', union: 'equity-uk', currency: 'GBP',
+    steps: [['2025-03-31', 547_29]],
+    units: [4, 6], rehearsalWeeks: [3, 4], bar: 62, weight: 4, tiers: [2, 3], selfSubmit: true, cities: ['uk-eng-london'], leadDays: 28, reads: READS.classical, source: UK_THEATRE,
+  },
+  {
+    // BBC radio drama: a full day, two broadcasts, from Equity's 2023 summary, the latest published.
+    id: 'uk-radio', label: 'A Part, BBC Radio Drama', medium: 'voice', union: 'equity-uk', currency: 'GBP',
+    steps: [['2023-07-01', 294_00]],
+    units: [1, 1], bar: 60, weight: 3, tiers: [1, 2, 3], selfSubmit: false, cities: ['uk-eng-london'], leadDays: 7, reads: READS.voice ?? READS.screen, sessionHours: 8, source: UK_RADIO,
+  },
+  // Ireland, from 2026-09-29: the one performers' schedule Irish Equity
+  // publishes, the 2021 film agreement with Screen Producers Ireland, which
+  // runs on until replaced; no successor was found. A day is its €158 basic,
+  // the use fee for the budget, and 8% holiday pay on the basic. Irish
+  // Equity's television, theater and radio rates are for its members only,
+  // so Dublin has no such parts in SLATE yet, and the cast's share of net
+  // profits isn't kept. What a part asks is SLATE's estimate, by London's.
+  {
+    // A film of €2.5 million and over, the use fee 280% of the basic: the Irish features and the productions that come to shoot there.
+    id: 'ie-film-major', label: 'A Role, An Irish Feature Film', medium: 'screen', union: 'irish-equity', currency: 'EUR',
+    steps: [['2021-02-01', 613_00]],
+    units: [5, 15], bar: 74, weight: 3, tiers: [1, 2], selfSubmit: false, cities: ['ie-lei-dublin'], leadDays: 21, reads: READS.screen, basis: 'day', source: IE_FILM,
+  },
+  {
+    // Over €1.25 million and up to €2.5 million: the use fee 75%.
+    id: 'ie-film-low', label: 'A Role, A Low Budget Irish Film', medium: 'screen', union: 'irish-equity', currency: 'EUR',
+    steps: [['2021-02-01', 289_00]],
+    units: [3, 10], bar: 64, weight: 4, tiers: [2, 3], selfSubmit: false, cities: ['ie-lei-dublin'], leadDays: 14, reads: READS.screen, basis: 'day', source: IE_FILM,
+  },
+  {
+    // €1.25 million and under: the use fee 50%.
+    id: 'ie-film-verylow', label: 'A Role, A Very Low Budget Irish Film', medium: 'screen', union: 'irish-equity', currency: 'EUR',
+    steps: [['2021-02-01', 250_00]],
+    units: [3, 10], bar: 58, weight: 5, tiers: [2, 3], selfSubmit: true, cities: ['ie-lei-dublin'], leadDays: 14, reads: READS.screen, basis: 'day', source: IE_FILM,
+  },
+  // Dublin's television, theater and radio, from 2026-09-29, each SLATE's estimate (`IRELAND_SCALE`) from the British part beside it.
+  {
+    // By Pact/Equity TV's episode fee, £635.50 from April 2026: RTÉ's and the streamers' Irish drama.
+    id: 'ie-tv', label: 'A Part, An Irish Television Series', medium: 'screen', union: 'irish-equity', currency: 'EUR',
+    steps: [['2026-04-01', inIreland(635_50)]],
+    units: [1, 2], bar: 62, weight: 8, tiers: [1, 2, 3], selfSubmit: true, cities: IE, leadDays: 5, reads: READS.screen, basis: 'day', source: IE_EST,
+  },
+  {
+    // By UK Theatre/Equity's subsidized minimum, £547.29 a week: the Abbey, the Gate and the companies that tour.
+    id: 'ie-theater', label: 'A Play, An Irish Theater', medium: 'stage', union: 'irish-equity', currency: 'EUR',
+    steps: [['2025-03-31', inIreland(547_29)]],
+    units: [4, 6], rehearsalWeeks: [3, 4], bar: 62, weight: 4, tiers: [2, 3], selfSubmit: true, cities: IE, leadDays: 28, reads: READS.classical, source: IE_EST,
+  },
+  {
+    // By BBC radio drama's day, £294: RTÉ's radio drama.
+    id: 'ie-radio', label: 'A Part, RTÉ Radio Drama', medium: 'voice', union: 'irish-equity', currency: 'EUR',
+    steps: [['2023-07-01', inIreland(294_00)]],
+    units: [1, 1], bar: 60, weight: 2, tiers: [1, 2, 3], selfSubmit: false, cities: IE, leadDays: 7, reads: READS.voice ?? READS.screen, sessionHours: 8, source: IE_EST,
+  },
+  // Mexico City, from 2026-09-29. What a part asks is SLATE's estimate. It's
+  // the dubbing capital of Spanish-speaking America, and the telenovela its
+  // daily work.
+  {
+    // Televisa's tabulador from 1 March 2024, a segunda parte, the supporting
+    // part nearest an American co-star: its contract pays a 7½-hour
+    // telenovela day as two half-hour chapters, 2 × MXN 1,093, and its two 3%
+    // bonuses, culture and efficiency. Televisa's later revisions weren't
+    // deposited, so 2024's stands. The production fee the press reports on
+    // top (MXN 5,000 to 20,000 a chapter, one actress's account, Milenio) isn't
+    // kept. Until later on 2026-09-30, SLATE's estimate from a co-star's
+    // day, MXN 4,444.
+    id: 'mx-telenovela', label: 'A Part, A Telenovela', medium: 'screen', union: 'anda', currency: 'MXN',
+    steps: [['2024-03-01', Math.round(2 * 1_093_00 * 1.06)]],
+    units: [1, 3], bar: 58, weight: 10, tiers: [1, 2, 3], selfSubmit: true, cities: MX, leadDays: 5, reads: READS.screen, basis: 'day', source: 'ANDA and Televisa Producciones, tabulador mínimo from 1 March 2024, deposited with the Centro Federal de Conciliación y Registro Laboral (repositorio.centrolaboral.gob.mx/contrato/640750)',
+  },
+  {
+    // Argos Televisión's tabulador for television or a digital platform, a
+    // primera parte, as it has no segunda: two half-hour chapters a day, as
+    // Televisa's contract counts a day (Argos's own rule wasn't read), MXN
+    // 1,355.60 each in 2025 and 0.41% more from 2026, with its two 3%
+    // bonuses. Until later on 2026-09-30, SLATE's estimate, MXN 4,444.
+    id: 'mx-streaming', label: 'A Part, A Series For A Streaming Service', medium: 'screen', union: 'anda', currency: 'MXN',
+    steps: [['2025-01-14', Math.round(2 * 1_355_60 * 1.06)], ['2026-01-01', Math.round(2 * 1_355_60 * 1.0041 * 1.06)]],
+    units: [2, 5], bar: 66, weight: 5, tiers: [1, 2], selfSubmit: false, cities: MX, leadDays: 7, reads: READS.screen, basis: 'day', source: 'ANDA and Argos Televisión, tabulador mínimo para televisión o plataforma digital, 2025, deposited with the Centro Federal de Conciliación y Registro Laboral (repositorio.centrolaboral.gob.mx/contrato/657954)',
+  },
+  {
+    // By a low budget film's day, $834.
+    id: 'mx-film', label: 'A Role, A Mexican Feature Film', medium: 'screen', union: 'anda', currency: 'MXN',
+    steps: [['2026-07-01', inMexico(834_00)]],
+    units: [3, 10], bar: 62, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: MX, leadDays: 14, reads: READS.screen, basis: 'day', source: MX_EST,
+  },
+  {
+    // Teatro UNAM's Carro de Comedias, 2025: MXN 12,000 a month, a week of
+    // it. ANDA's own theater payroll recommends MXN 600 a day, but no count
+    // of days a week was read. Until later on 2026-09-30, SLATE's estimate
+    // from an Off-Broadway week, MXN 3,006.
+    id: 'mx-theater', label: 'A Play In Mexico City', medium: 'stage', union: 'anda', currency: 'MXN',
+    steps: [['2025-01-01', Math.round((12_000_00 * 12) / 52)]],
+    units: [4, 9], rehearsalWeeks: [3, 4], bar: 60, weight: 3, tiers: [2, 3], selfSubmit: true, cities: MX, leadDays: 28, reads: READS.stage, source: 'Teatro UNAM, Carro de Comedias convocatoria 2025',
+  },
+  {
+    // By an animated voice's session, $1,246.
+    id: 'mx-dubbing', label: 'Dubbing, A Session', medium: 'voice', union: 'anda', currency: 'MXN',
+    steps: [['2026-07-01', inMexico(1_246_00)]],
+    units: [1, 3], bar: 58, weight: 6, tiers: [1, 2, 3], selfSubmit: false, cities: MX, leadDays: 5, reads: READS.voice, sessionHours: 4, source: MX_EST,
+  },
+  {
+    // By a commercial's session, $855.20.
+    id: 'mx-commercial', label: 'A Commercial, On Camera', medium: 'screen', union: 'anda', currency: 'MXN',
+    steps: [['2026-04-01', inMexico(855_20)]],
+    units: [1, 1], bar: 55, weight: 5, tiers: [1, 2, 3], selfSubmit: false, cities: MX, leadDays: 5, reads: READS.commercial, source: MX_EST,
+  },
+  // Toronto, from 2026-09-30, at the IPA's own rates. The agreement took
+  // effect on 26 January 2025 and rose 4% in 2026 and 3.5% in 2027; the page
+  // read didn't say on which day, and SLATE starts each on 1 January. A
+  // principal performer's day, an actor's (the IPA's lesser category, for a
+  // part of few lines), and a principal's week on a feature. ACTRA's use fees
+  // and residuals, its commercial agreement and voice work weren't read, and
+  // SLATE pays none of them yet.
+  {
+    id: 'ca-principal', label: 'A Principal Part, A Canadian Series', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2025-01-26', 935_25], ['2026-01-01', 972_75], ['2027-01-01', 1_006_75]],
+    units: [1, 3], bar: 60, weight: 10, tiers: [1, 2, 3], selfSubmit: false, cities: TO, leadDays: 5, reads: READS.screen, basis: 'day', prepaid: ACTRA.prepaidTv, permitWeekly: 260, source: IPA,
+  },
+  {
+    id: 'ca-actor', label: 'A Small Part, A Canadian Series', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2025-01-26', 631_25], ['2026-01-01', 656_50], ['2027-01-01', 679_50]],
+    units: [1, 2], bar: 52, weight: 8, tiers: [2, 3], selfSubmit: true, cities: TO, leadDays: 4, reads: READS.screen, basis: 'day', prepaid: ACTRA.prepaidTv, permitWeekly: 210, source: IPA,
+  },
+  {
+    id: 'ca-feature', label: 'A Role, A Canadian Feature Film', medium: 'screen', union: 'actra', currency: 'CAD',
+    // A fifth of the principal's week, $3,974.50, $4,133.50 and $4,278.25.
+    steps: [['2025-01-26', 794_90], ['2026-01-01', 826_70], ['2027-01-01', 855_65]],
+    units: [5, 15], bar: 64, weight: 4, tiers: [1, 2, 3], selfSubmit: false, cities: TO, leadDays: 14, reads: READS.screen, basis: 'week', prepaid: ACTRA.prepaidFeature, permitWeekly: 260, source: IPA,
+  },
+  // Vancouver, at the BCMPA's own rates, each from its published day.
+  {
+    id: 'bc-principal', label: 'A Principal Part, A Series Shot In Vancouver', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2024-03-31', 869_85], ['2025-03-30', 917_69], ['2026-03-29', 954_40], ['2027-04-04', 987_80]],
+    units: [1, 3], bar: 60, weight: 12, tiers: [1, 2, 3], selfSubmit: false, cities: VAN, leadDays: 5, reads: READS.screen, basis: 'day', prepaid: ACTRA.prepaidTv, permitWeekly: 260, source: BCMPA,
+  },
+  {
+    id: 'bc-actor', label: 'A Small Part, A Series Shot In Vancouver', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2024-03-31', 585_43], ['2025-03-30', 617_63], ['2026-03-29', 642_34], ['2027-04-04', 664_82]],
+    units: [1, 2], bar: 52, weight: 8, tiers: [2, 3], selfSubmit: true, cities: VAN, leadDays: 4, reads: READS.screen, basis: 'day', prepaid: ACTRA.prepaidTv, permitWeekly: 210, source: BCMPA,
+  },
+  {
+    id: 'bc-feature', label: 'A Role, A Feature Shot In Vancouver', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2024-03-31', 869_85], ['2025-03-30', 917_69], ['2026-03-29', 954_40], ['2027-04-04', 987_80]],
+    units: [3, 12], bar: 64, weight: 3, tiers: [1, 2, 3], selfSubmit: false, cities: VAN, leadDays: 14, reads: READS.screen, basis: 'day', prepaid: ACTRA.prepaidFeature, permitWeekly: 260, source: BCMPA,
+  },
+  // The Canadian Theatre Agreement's weekly minimum for an actor at a
+  // Category A theater, its seasons from late June. Which of Toronto's and
+  // Vancouver's companies sit in Category A the booklet doesn't say: SLATE's
+  // reading, for the houses a working actor auditions for.
+  // A commercial under the National Commercial Agreement, from later on
+  // 2026-09-30: its last published chart, 1 June 2025 to 31 May 2026, a
+  // principal's session on camera $939.50 and by voice $685, and a year of
+  // national television use at the chart's least, $743.30 and $363.75, SLATE
+  // reading one year's television run. A non-member's NCA permit isn't kept.
+  {
+    id: 'ca-commercial', label: 'A Commercial, On Camera', medium: 'screen', union: 'actra', currency: 'CAD',
+    steps: [['2025-06-01', 939_50]],
+    units: [1, 1], bar: 55, weight: 5, tiers: [1, 2, 3], selfSubmit: false, cities: [...TO, ...VAN], leadDays: 5, reads: READS.commercial, prepaid: 743.3 / 939.5, source: NCA,
+  },
+  {
+    id: 'ca-commercial-voice', label: 'A Commercial, The Voice', medium: 'voice', union: 'actra', currency: 'CAD',
+    steps: [['2025-06-01', 685_00]],
+    units: [1, 1], bar: 55, weight: 3, tiers: [1, 2, 3], selfSubmit: false, cities: [...TO, ...VAN], leadDays: 5, reads: READS.voice ?? READS.commercial, sessionHours: 2, prepaid: 363.75 / 685, source: NCA,
+  },
+  // Animation of more than ten minutes under the IPA, 2026: a principal's day, $681.75.
+  {
+    id: 'ca-animation', label: 'A Voice, An Animated Series', medium: 'voice', union: 'actra', currency: 'CAD',
+    steps: [['2026-01-01', 681_75]],
+    units: [1, 3], bar: 62, weight: 2, tiers: [1, 2], selfSubmit: false, cities: [...TO, ...VAN], leadDays: 7, reads: READS.animation, sessionHours: 4, prepaid: ACTRA.prepaidTv, permitWeekly: 260, source: IPA,
+  },
+  {
+    id: 'ca-theater', label: 'A Play, A Category A Theater', medium: 'stage', union: 'caea', currency: 'CAD',
+    steps: [['2024-06-24', 1_255_25], ['2025-06-23', 1_293_00], ['2026-06-22', 1_332_00]],
+    units: [3, 6], rehearsalWeeks: [3, 4], bar: 62, weight: 3, tiers: [1, 2, 3], selfSubmit: true, cities: [...TO, ...VAN], leadDays: 28, reads: READS.stage, source: CTA,
+  },
 ];
 
 /**
@@ -362,6 +806,24 @@ export const RECURRING = { seasonEpisodes: 13, share: 0.6, uplift: 1.2, from: '2
  * a night owl's or an early riser's trait bends it.
  */
 export const CALLS = { early: 2, earlyBefore: 9, late: 2 } as const;
+
+/**
+ * What a commercial sells, by roughly each category's share of US television
+ * advertising (automotive, retail, food and drink, pharmaceuticals,
+ * insurance and finance, telecoms and tech, restaurants, fashion, travel and
+ * the outdoors, pets), and political advertising, which SAG-AFTRA's
+ * commercials contracts cover too and which comes in the autumn of an
+ * election year at three times its share. The shares are SLATE's estimate
+ * from what the ad-spend trackers publish in outline.
+ */
+export const PRODUCTS: readonly (readonly [string, string, number])[] = [
+  ['automotive', 'A Car Brand', 0.14], ['retail', 'A Retailer', 0.12], ['food', 'A Food And Drink Brand', 0.14],
+  ['pharma', 'A Drug Maker', 0.12], ['finance', 'An Insurer Or A Bank', 0.12], ['telecom', 'A Phone Or Tech Company', 0.1],
+  ['restaurants', 'A Restaurant Chain', 0.08], ['fashion', 'A Fashion Brand', 0.05], ['outdoors', 'A Travel Or Outdoors Brand', 0.05],
+  ['pets', 'A Pet Brand', 0.03], ['political', 'A Political Campaign', 0.05],
+];
+/** Which interest a commercial's product speaks to, where one does. */
+export const PRODUCT_INTEREST: Readonly<Record<string, string>> = { automotive: 'cars', fashion: 'fashion', outdoors: 'nature', pets: 'animals', political: 'politics' };
 
 /**
  * What a job is filed under, SLATE's estimate by what gets made: on screen
@@ -401,6 +863,12 @@ export const WORK_COSTS = {
     'actors-access': { label: 'Actors Access PLUS', price: 68_00 },
     backstage: { label: 'Backstage', price: 199_92 },
     'casting-networks': { label: 'Casting Networks Premium', price: 299_90 },
+    // Britain's: £210 a year with VAT (£175 before it), the performer's membership (spotlight.com, 2026-09-29).
+    spotlight: { label: 'Spotlight', price: 210_00, currency: 'GBP', countryId: 'uk' },
+    // Ireland's: €196.50 a year and 23% VAT (spotlight.com/join-us/ireland, 2026-09-29).
+    'spotlight-ie': { label: 'Spotlight Ireland', price: 241_70, currency: 'EUR', countryId: 'ie' },
+    // Canada's: PRO at $12.99 a month, a year of it here, in Canadian dollars, which the page doesn't say (home.castingworkbook.com, 2026-09-30).
+    'casting-workbook': { label: 'Casting Workbook PRO', price: 155_88, currency: 'CAD', countryId: 'ca' },
   },
   reel: 250_00,
   wantReel: 0.4,
@@ -472,12 +940,16 @@ export const COMMERCIAL_RUN = { moreCycles: [0.45, 0.35, 0.2] as readonly number
  * California's seven-year cap, about six in practice; the option is taken
  * or dropped by about mid-June. Freshman network series have been renewed
  * about three in four times (2022–26, tallied); streaming renewed 44% of all
- * its series in 2025. A season's pay rises about 4% a season, built into the
+ * its series in 2025, and a new streaming series reached a second season 48%
+ * to 55% of the time each year from 2022 to 2025 (Luminate, "The Show Must Go
+ * Off", September 2026), which SLATE takes at the middle, 51.5%. Until
+ * 2026-09-28 a first season was renewed at the 44% of all of them. A
+ * season's pay rises about 4% a season, built into the
  * deal. A picked-up season begins about a year after the last began.
  */
 export const SERIES = {
   maxSeasons: 7,
-  renewal: { network: 0.75, svod: 0.44 },
+  renewal: { network: 0.75, svod: 0.44, svodFirst: 0.515 },
   raise: 0.04,
   optionMonth: 6,
   optionDay: 15,

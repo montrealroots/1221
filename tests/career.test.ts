@@ -8,13 +8,14 @@ import { createSave, quickSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { computeAnnualTax } from '@/engine/content/tax';
-import { AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
+import { AGE_ON_SCREEN, AGENCIES, AGENT_COMMISSION, EQUITY, ROLES, SAG_AFTRA, SHOWCASE_2029, WORK_COSTS, rateOn } from '@/engine/content/career';
 import {
-  AGENCY_TERM, AGENCY_TERM_KIND, AUDITION_KIND, CAREER_WEEK_KIND, DUES_KIND, FESTIVAL_KIND, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
-  acceptRefusal, beginCareer, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
+  AGENCY_TERM, DAY_TRIPS, AGENCY_TERM_KIND, AIRS_KIND, AUDITION_KIND, CAREER_WEEK_KIND, FILM_ROAD, DUES_KIND, FESTIVAL_KIND, PRESS_KIND, schedulePress, ESTIMATE, LEAVING, PAY_KIND, SHOWCASE_KIND, WORK_KIND,
+  acceptRefusal, beginCareer, closeStaleBookings, billDues, jobsClash, pruneBookings, publicityFor, schoolClash, bookingChance, careerOf, mayLeave, mealPenalty, offersFor, overtimeFor, paycheck, roleById, showcaseScore, weekOfAuditions, workDays,
   type Booking,
 } from '@/engine/systems/career';
-import { actingOf, evenCraft, repProduction, termAccount } from '@/engine/systems/school';
+import { actingOf, bindCeiling, evenCraft, repProduction, termAccount } from '@/engine/systems/school';
+import { RIVALS } from '@/engine/systems/rivals';
 import { ATTRIBUTES, attributesOf } from '@/engine/systems/attributes';
 import { rehome } from '@/engine/systems/household';
 import { healthOf } from '@/engine/systems/health';
@@ -28,6 +29,8 @@ import { TURNS } from '@/engine/systems/enjoyment';
 const NY = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, zone = NY) => instantFromZoned({ year, month, day, hour }, zone);
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
+/** Played by somebody who looks after themselves: rested, fed and steady each time the clock moves, as a player keeps a character. Since 2026-09-28 a run of off nights falls short at the evaluation. */
+const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 }); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); } };
 const pending = (sim: Simulation, kind: string) => sim.universe.scheduled.filter((i) => i.kind === kind && i.status === 'pending').sort((a, b) => a.at - b.at);
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title);
 const craft = (level: number): Craft => (evenCraft(level));
@@ -61,15 +64,17 @@ function offer(sim: Simulation, roleId: string, units: number, rehearsalWeeks = 
 describe('the showcase', () => {
   it('is booked in the last spring, in New York and a week later in Los Angeles, on the estimated 2029 dates', () => {
     const sim = createSave(1, 'show', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
-    play(sim, at(2029, 1, 8, 10));
+    tended(sim, at(2029, 1, 8, 10));
     const shows = pending(sim, SHOWCASE_KIND);
     expect(shows.map((s) => s.payload.cityId)).toEqual(['us-ny-newyork', 'us-ca-losangeles']);
     expect(zonedParts(shows[0]!.at, NY)).toMatchObject({ year: 2029, month: 4, day: SHOWCASE_2029.newYork.day, hour: 17 });
     expect(zonedParts(shows[1]!.at, 'America/Los_Angeles')).toMatchObject({ month: 5, day: 1, hour: 13 });
+    // The class's strongest by now, as a student who looked after themselves is (since 2026-09-28 the class competes, and one left to themselves can be outshone).
+    sim.player.craft = evenCraft(88);
     play(sim, shows[1]!.at + MS_HOUR);
     const career = careerOf(sim.player);
     expect(career.showcases).toHaveLength(2);
-    // The class's first choice reads high enough for the biggest agencies' bars.
+    // The class's strongest actor reads high enough for the biggest agencies' bars.
     expect(Math.max(...career.showcases.map((s) => s.score))).toBeGreaterThan(74);
     expect(career.offers.length + (career.agencyId ? 1 : 0)).toBeGreaterThan(0);
     for (const o of career.offers) expect(AGENCIES.find((a) => a.id === o.agencyId)!.bar).toBeLessThanOrEqual(Math.max(...career.showcases.map((s) => s.score)));
@@ -78,6 +83,8 @@ describe('the showcase', () => {
     expect(career.since).toBeUndefined();
     play(sim, at(2029, 6, 1, 12));
     expect(sim.player.school!.standing).toBe('graduated');
+    // The class, known after it, every one of them, by name (`systems/people.ts`).
+    expect(sim.player.contacts?.filter((c) => c.met.how === 'school').map((c) => c.name)).toEqual(sim.player.school!.classmates.map((c) => c.name));
     expect(career.since).toBeDefined();
     expect(pending(sim, CAREER_WEEK_KIND)).toHaveLength(1);
   }, 120_000);
@@ -173,13 +180,31 @@ function audition(sim: Simulation, mode: 'tape' | 'room', self = false) {
 }
 
 describe('an audition, on the day', () => {
-  it('on tape is made anywhere; in the room, only in its city', () => {
+  it('on tape is made anywhere; in the room, in its city or a day trip from it, the train paid', () => {
     const sim = signed('where', 2);
-    sim.player.currentLocationId = 'us-ct-newhaven';
+    sim.player.currentLocationId = 'us-ca-losangeles';
     expect(['done', 'booked']).toContain(audition(sim, 'tape').status);
     expect(audition(sim, 'room').status).toBe('missed');
     sim.player.currentLocationId = 'us-ny-newyork';
     expect(['done', 'booked']).toContain(audition(sim, 'room').status);
+    // From New Haven, Metro-North's day pass to Grand Central and back: until 2026-09-28 the room was missed.
+    sim.player.currentLocationId = 'us-ct-newhaven';
+    const fares = () => sim.universe.transactions.filter((t) => t.memo.startsWith('The train to New York')).length;
+    const before = fares();
+    expect(['done', 'booked']).toContain(audition(sim, 'room').status);
+    expect(fares()).toBe(before + 1);
+    expect(DAY_TRIPS['us-ct-newhaven']!['us-ny-newyork']!.fare).toBe(46_75);
+  });
+
+  it('in the room, for an actor away on a job, is made on tape and takes no strike', () => {
+    const sim = signed('on-set', 2);
+    const job = offer(sim, 'costar', 5, 0, sim.now - MS_DAY);
+    job.status = 'accepted';
+    sim.player.currentLocationId = 'us-ca-losangeles';
+    const done = audition(sim, 'room');
+    expect(done.mode).toBe('tape');
+    expect(['done', 'booked']).toContain(done.status);
+    expect(careerOf(sim.player).missed).toBe(0);
   });
 
   it('missed in hospital, counts for nothing against the agency’s three', () => {
@@ -191,7 +216,7 @@ describe('an audition, on the day', () => {
 
   it('missed three times of the agency’s, and not before, ends the representation; missing your own counts for nothing', () => {
     const sim = signed('three', 2);
-    sim.player.currentLocationId = 'us-ct-newhaven';
+    sim.player.currentLocationId = 'us-ca-losangeles';
     audition(sim, 'room', true);
     expect(careerOf(sim.player).missed).toBe(0);
     audition(sim, 'room');
@@ -351,6 +376,34 @@ describe('auditions', () => {
     }
   });
 
+  it('thin past sixty by the parts written for that age: film to 0.48, television to 0.42, a voice not at all', () => {
+    expect(AGE_ON_SCREEN.film).toBeCloseTo(0.482, 3);
+    expect(AGE_ON_SCREEN.tv).toBeCloseTo(0.418, 3);
+    const sim = pro('ageing');
+    attributesOf(sim, sim.player).reputation = 50;
+    const agency = AGENCIES.find((a) => a.tier === 2)!;
+    const tally = (age: number) => {
+      const by = { film: 0, tv: 0, voice: 0 };
+      for (let w = 0; w < 2000; w += 1) {
+        // The same age each week: the part's draw reads the age at the week.
+        const week = sim.now + w * 7 * MS_DAY;
+        sim.player.birthInstant = week - age * 365.2425 * MS_DAY;
+        for (const a of weekOfAuditions(sim, sim.player, week, agency, 'us-ny-newyork', 0)) {
+          const role = roleById(a.roleId);
+          if (role.medium === 'voice') by.voice += 1; else if (role.after?.kind === 'film') by.film += 1; else if (role.after?.kind === 'tv') by.tv += 1;
+        }
+      }
+      return by;
+    };
+    const young = tally(30);
+    const old = tally(70);
+    expect(old.film / young.film).toBeGreaterThan(AGE_ON_SCREEN.film * 0.85);
+    expect(old.film / young.film).toBeLessThan(AGE_ON_SCREEN.film * 1.15);
+    expect(old.tv / young.tv).toBeGreaterThan(AGE_ON_SCREEN.tv * 0.93);
+    expect(old.tv / young.tv).toBeLessThan(AGE_ON_SCREEN.tv * 1.07);
+    if (young.voice > 20) expect(old.voice).toBeGreaterThan(young.voice * 0.8);
+  });
+
   it('come to an unrepresented actor only from submitting themselves, for parts that take submissions', () => {
     const sim = pro('self');
     expect(weekOfAuditions(sim, sim.player, sim.now, undefined, 'us-ny-newyork', 0)).toEqual([]);
@@ -389,7 +442,7 @@ describe('auditions', () => {
     const sim = signed('miss', 3);
     play(sim, pending(sim, CAREER_WEEK_KIND)[0]!.at + MS_HOUR);
     const career = careerOf(sim.player);
-    sim.player.currentLocationId = 'us-ct-newhaven';
+    sim.player.currentLocationId = 'us-ca-losangeles';
     const room = career.auditions.find((a) => a.mode === 'room');
     const tape = career.auditions.find((a) => a.mode === 'tape');
     let weeks = 0;
@@ -536,16 +589,23 @@ describe('pay', () => {
     const overtime = careerOf(sim.player).days.reduce((sum, d, n) => sum + overtimeFor(roleById('costar'), 1_283_00, 1_283_00, d.hours, '2026-10-05') + mealPenalty(sim, sim.player, `${b.id}-${n + 1}`), 0);
     expect(careerOf(sim.player).days.map((d) => d.hours).every((h) => h >= 10 && h <= 12)).toBe(true);
     expect(overtime).toBeGreaterThan(0);
-    expect(-pay[0]!.postings.find((q) => q.amount < 0)!.amount).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime);
+    // And the fitting the day before, an hour at the day rate (`FITTING`), wages too.
+    const fitting = Math.round(1_283_00 / 8);
+    expect(-pay[0]!.postings.find((q) => q.amount < 0)!.amount).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime + fitting);
     expect(b.status).toBe('worked');
     expect(careerOf(sim.player).credits).toEqual([{ roleId: 'costar', year: 2026, cityId: 'us-ny-newyork' }]);
-    expect(sim.player.earnings!.years['2026']!.sag).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime);
+    // A castmate known from it, in the town it was worked in (`systems/people.ts`).
+    expect(sim.player.contacts?.map((c) => [c.met.how, c.cityId, c.hours])).toEqual([['work', 'us-ny-newyork', 0]]);
+    expect(sim.player.earnings!.years['2026']!.sag).toBe(Math.round(2 * 1_283_00 * 1.1) + overtime + fitting);
   });
 
   it('follows each contract’s steps, and holds past the last', () => {
     const day = roleById('costar').steps;
     expect([rateOn(day, '2026-06-30'), rateOn(day, '2026-07-01'), rateOn(day, '2029-07-01'), rateOn(day, '2031-01-01')]).toEqual([1_246_00, 1_283_00, 1_402_00, 1_402_00]);
-    expect(rateOn(roleById('guest-hour').steps, '2026-07-01') * 8).toBeCloseTo(11_290_00, -1);
+    // Top of show on an hour: SAG-AFTRA's $11,352 from 1 July 2025, and 3% on from 2026, SLATE's estimate.
+    expect(rateOn(roleById('guest-hour').steps, '2025-07-01') * 8).toBeCloseTo(11_352_00, -1);
+    expect(rateOn(roleById('guest-half').steps, '2025-07-01') * 5).toBeCloseTo(7_095_00, -1);
+    expect(rateOn(roleById('guest-hour').steps, '2026-07-01') * 8).toBeCloseTo(11_693_00, -1);
     expect(rateOn(roleById('broadway').steps, '2026-09-28')).toBe(2_799_00);
     expect(rateOn(roleById('lort-b').steps, '2027-01-01')).toBe(1_213_00);
     for (const r of ROLES) expect(r.tiers.length).toBeGreaterThan(0);
@@ -619,6 +679,66 @@ describe('the unions', () => {
   });
 });
 
+describe('the work', () => {
+  it('grows an actor toward how far they can grow, and never past it', () => {
+    const sim = signed('work-ceiling', 2);
+    const craft = sim.player.craft!;
+    // A point of room left in every skill: the work comes near it and slows, and never passes it.
+    const ceiling = Object.fromEntries(Object.entries(craft).map(([k, v]) => [k, v + 1])) as typeof craft;
+    sim.player.craftCeiling = ceiling;
+    bindCeiling(craft, ceiling);
+    const before = { ...craft };
+    const b = offer(sim, 'lort-b', 4, 4, sim.now + MS_DAY);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    tended(sim, workDays(b)[workDays(b).length - 1]!.at + MS_HOUR);
+    const keys = Object.keys(craft) as (keyof typeof craft)[];
+    expect(keys.some((k) => craft[k] > before[k])).toBe(true);
+    for (const k of keys) expect(craft[k]).toBeLessThanOrEqual(ceiling[k] + 1e-9);
+  });
+});
+
+describe('a stage run with nights the understudy played', () => {
+  it('ends when its last call passes, the covered nights unpaid, and credits it', () => {
+    // Until 2026-09-28 a night missed laid up left the run open for good, and the actor on a job for life.
+    const sim = signed('covered', 2);
+    const b = offer(sim, 'lort-b', 1, 1, sim.now + MS_DAY);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    const days = workDays(b);
+    const credits = careerOf(sim.player).credits.length;
+    // Laid up from the last three calls on.
+    tended(sim, days[days.length - 3]!.at - MS_HOUR);
+    healthOf(sim.player).injury = { kind: 'sprain', at: sim.now, until: sim.now + 30 * MS_DAY, offWorkUntil: sim.now + 30 * MS_DAY };
+    sim.advanceTo(days[days.length - 1]!.at + MS_HOUR);
+    expect(b.status).toBe('worked');
+    expect(b.missedNights).toBe(3);
+    expect(b.worked).toBe(days.length - 3);
+    expect(careerOf(sim.player).credits.length).toBe(credits + 1);
+  });
+
+  it('ends on a night worked after nights covered in the middle of it', () => {
+    const sim = signed('covered-middle', 2);
+    const b = offer(sim, 'lort-b', 1, 1, sim.now + MS_DAY);
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: b.id } }).ok).toBe(true);
+    const days = workDays(b);
+    tended(sim, days[days.length - 5]!.at - MS_HOUR);
+    // Laid up for two calls, then back for the last three.
+    healthOf(sim.player).injury = { kind: 'sprain', at: sim.now, until: days[days.length - 3]!.at - MS_HOUR, offWorkUntil: days[days.length - 3]!.at - MS_HOUR };
+    tended(sim, days[days.length - 1]!.at + MS_HOUR);
+    expect(b.missedNights).toBe(2);
+    expect(b.status).toBe('worked');
+  });
+
+  it('is closed on opening a save that holds one left open', () => {
+    const sim = signed('left-open', 2);
+    const b = offer(sim, 'lort-b', 1, 1, sim.now - 60 * MS_DAY);
+    b.status = 'accepted';
+    b.worked = 5;
+    closeStaleBookings(sim, sim.player);
+    expect(b.status).toBe('worked');
+    expect(b.missedNights).toBe(workDays(b).length - 5);
+  });
+});
+
 describe('a showcase missed', () => {
   it('says why: in hospital, or asleep', () => {
     for (const [seed, ward] of [['show-ward', true], ['show-asleep', false]] as const) {
@@ -685,19 +805,81 @@ describe('the attributes at work', () => {
     play(sim, at(2026, 10, 7, 12));
     expect(b.status).toBe('worked');
     expect(a.reputation).toBeCloseTo(earned([ATTRIBUTES.reputation.day, ATTRIBUTES.reputation.day, ATTRIBUTES.reputation.job]), 6);
-    expect(a.recognition).toBe(ATTRIBUTES.recognition.costar);
     expect(a.composure).toBeGreaterThan(composure);
+    // Recognition when the episode airs, by its audience: nothing at the wrap.
+    expect(a.recognition).toBe(0);
+    const airs = pending(sim, AIRS_KIND)[0]!;
+    play(sim, airs.at + MS_HOUR);
+    expect(a.recognition).toBeCloseTo(ATTRIBUTES.recognition.costar * Number(airs.payload.audience), 10);
   });
 
-  it('premieres a finished independent film at Tribeca the next June it can make', () => {
-    const sim = pro('attr-premiere');
+  it('sends a finished independent film to Tribeca in June if it gets in, to Brooklyn if not, or straight to streaming', () => {
+    const roads = new Set<string>();
+    for (const seed of ['attr-premiere', 'attr-premiere-2', 'attr-premiere-3', 'attr-premiere-4', 'attr-premiere-5', 'attr-premiere-6', 'attr-premiere-7', 'attr-premiere-8']) {
+      const sim = pro(seed);
+      const film = offer(sim, 'film-low', 1, 0, at(2026, 10, 5, 8));
+      expect(sim.execute({ kind: 'career.accept', payload: { bookingId: film.id } }).ok).toBe(true);
+      play(sim, at(2026, 10, 9, 12));
+      expect(film.status).toBe('worked');
+      const premiere = pending(sim, FESTIVAL_KIND)[0]!;
+      const road = String(premiere.payload.road);
+      roads.add(road);
+      expect(premiere.locationId).toBe('us-ny-newyork');
+      if (road === 'tribeca') expect(zonedParts(premiere.at, NY)).toMatchObject({ year: 2027, month: 6, day: 10, hour: 19 });
+      if (road === 'brooklyn') expect(zonedParts(premiere.at, NY)).toMatchObject({ year: 2027, month: 6, day: 1, hour: 19 });
+      if (road === 'streaming') expect(premiere.requiresPlayer).toBe(false);
+    }
+    expect(roads.size).toBeGreaterThan(1);
+    // About one in five gets into Tribeca, over many films.
+    const sim = pro('attr-roads');
+    const n = 2000;
+    const tribeca = Array.from({ length: n }, (_, k) => sim.rng('career.selection', sim.player.id, `f${k}`).next() < FILM_ROAD.tribeca).filter(Boolean).length;
+    expect(tribeca / n).toBeGreaterThan(0.17);
+    expect(tribeca / n).toBeLessThan(0.23);
+  });
+
+  it('puts a studio film’s weekly performer on a press day a week before it opens, and an independent’s on none', () => {
+    const press = (there: boolean) => {
+      const sim = pro('attr-press');
+      const film = offer(sim, 'film-weekly', 1, 0, at(2026, 10, 5, 8));
+      expect(sim.execute({ kind: 'career.accept', payload: { bookingId: film.id } }).ok).toBe(true);
+      play(sim, at(2026, 10, 14, 12));
+      expect(film.status).toBe('worked');
+      const day = pending(sim, PRESS_KIND)[0]!;
+      const premiere = pending(sim, FESTIVAL_KIND)[0]!;
+      expect(zonedParts(day.at, 'America/Los_Angeles')).toMatchObject({ ...zonedParts(premiere.at - 7 * MS_DAY, 'America/Los_Angeles'), hour: 10, minute: 0 });
+      expect(day).toMatchObject({ durationMinutes: 240, requiresPlayer: true, locationId: 'us-ca-losangeles' });
+      sim.advanceTo(day.at - MS_HOUR);
+      sim.player.currentLocationId = there ? 'us-ca-losangeles' : 'us-ny-newyork';
+      const recognition = attributesOf(sim, sim.player).recognition;
+      sim.advanceTo(day.at + MS_HOUR);
+      return { gained: attributesOf(sim, sim.player).recognition - recognition, news: careerOf(sim.player).news?.[0]?.source };
+    };
+    const kept = press(true);
+    expect(kept.gained).toBeCloseTo(RIVALS.press, 10);
+    expect(kept.news).toBe('Press Day');
+    expect(press(false).gained).toBe(0);
+    // An independent film's day performer is asked to none.
+    const sim = pro('attr-press-indie');
     const film = offer(sim, 'film-low', 1, 0, at(2026, 10, 5, 8));
     expect(sim.execute({ kind: 'career.accept', payload: { bookingId: film.id } }).ok).toBe(true);
     play(sim, at(2026, 10, 9, 12));
-    expect(film.status).toBe('worked');
-    const premiere = pending(sim, FESTIVAL_KIND)[0]!;
-    expect(premiere.locationId).toBe('us-ny-newyork');
-    expect(zonedParts(premiere.at, NY)).toMatchObject({ year: 2027, month: 6, day: 10, hour: 19 });
+    expect(pending(sim, PRESS_KIND)).toHaveLength(0);
+  });
+
+  it('puts a series regular on a press day a week before it airs', () => {
+    const sim = pro('attr-press-series');
+    const series = offer(sim, 'series-half', 13, 0, at(2026, 10, 5, 8));
+    expect(sim.execute({ kind: 'career.accept', payload: { bookingId: series.id } }).ok).toBe(true);
+    tended(sim, at(2027, 1, 20, 12));
+    expect(series.status).toBe('worked');
+    const airs = pending(sim, AIRS_KIND)[0]!;
+    const day = pending(sim, PRESS_KIND)[0]!;
+    expect(zonedParts(day.at, NY)).toMatchObject({ ...zonedParts(airs.at - 7 * MS_DAY, NY), hour: 10, minute: 0 });
+    // And none is put in the past: an opening under a week away has none.
+    const late = pending(sim, PRESS_KIND).length;
+    schedulePress(sim, sim.player, roleById('series-half'), sim.now + 3 * MS_DAY, 'us-ny-newyork');
+    expect(pending(sim, PRESS_KIND)).toHaveLength(late);
   });
 
   it('loses reputation for a walk-off', () => {
@@ -896,7 +1078,7 @@ describe('the school’s later years', () => {
     // Rehearsals start no earlier than the term.
     expect(repProduction(2).rehearsals.from).toBe('2027-08-23');
     const sim = createSave(1, 'rep', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
-    play(sim, at(2028, 8, 28, 10));
+    tended(sim, at(2028, 8, 28, 10));
     const school = sim.player.school!;
     expect(school.rep?.production).toBe('Yale Rep’s October Production');
     expect(school.rep?.kind).toBe(actingOf(sim.player.craft!) >= 77 ? 'role' : 'understudy');

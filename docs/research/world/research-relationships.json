@@ -1,0 +1,814 @@
+{
+  "meta": {
+    "title": "SLATE relationships research: meeting, dating, cohabitation, marriage, divorce, children, time, wellbeing",
+    "compiled": "2026-10-01",
+    "markets": ["US-NY (New York City)", "US-CA (Los Angeles)", "US-CT", "England (London)", "Ireland (Dublin)", "Canada-ON (Toronto)", "Canada-BC (Vancouver)", "Mexico-CDMX"],
+    "method": "WebSearch and WebFetch. Every figure carries a source URL and the date it was accessed. Where a figure came only through a search-engine summary or a secondary site rather than the primary publisher, sourceQuality says so. Nothing was estimated or invented; unknowns are null with a note.",
+    "sourceQualityKey": {
+      "primary": "Government, court, statistics office or the study itself, read directly",
+      "primary-via-summary": "Primary source, but the figure was read through a search summary and not opened directly",
+      "secondary": "Press, law-firm, industry or aggregator page reporting a primary figure",
+      "industry-survey": "Commercial survey (wedding sites, banks, dating apps): real data, non-official method",
+      "vendor-price": "Price observed by third-party price-tracking sites; apps vary price by age, region and platform"
+    },
+    "accessed": "2026-10-01",
+    "currencyNotes": "Amounts are in the local currency of the market: USD, GBP, EUR, CAD, MXN."
+  },
+
+  "meeting": {
+    "howCouplesMeet": {
+      "US": {
+        "heterosexualCouplesMetOnline2017": 0.39,
+        "heterosexualCouplesMetOnline2009": 0.22,
+        "sameSexCouplesMetOnline2017": 0.65,
+        "notes": "Rosenfeld, Thomas & Hausen (2019) PNAS, 'Disintermediating your friends', from the How Couples Meet and Stay Together (HCMST) 2017 survey. Online overtook meeting through friends as the most common way heterosexual couples met around 2013. The per-category shares for friends, bars, work, church and family in 2017 could not be read: the PDF did not extract and PNAS returned 403.",
+        "sources": [
+          {"url": "https://www.futurity.org/meet-online-matchmaking-couples-2140752-2/", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://web.stanford.edu/~mrosenfe/Rosenfeld_et_al_Disintermediating_Friends.pdf", "quality": "primary (not text-extractable)", "accessed": "2026-10-01"},
+          {"url": "https://www.thepinknews.com/2019/02/12/lgbt-online-dating-study/", "quality": "secondary", "note": "same-sex ~65% figure", "accessed": "2026-10-01"}
+        ]
+      },
+      "US_2021_overHalfOnline": {
+        "value": null,
+        "notes": "A secondary source says over 50% of couples who met in 2021 met online (HCMST 2020-2022 waves). Rosenfeld is quoted as saying dating apps specifically account for about 25-30%, steady since 2017, with the rest from other online venues. The '~60%' upper bound in the brief could not be traced to a primary figure, so it is left null.",
+        "datingAppsShareQuotedByRosenfeld": "25-30% (quoted, not a published table)",
+        "sources": [
+          {"url": "https://dailycitizen.focusonthefamily.com/most-american-couples-meet-online-survey-shows/", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://data.stanford.edu/hcmst", "quality": "primary (dataset home)", "accessed": "2026-10-01"}
+        ]
+      },
+      "otherMarkets": {"value": null, "notes": "No equivalent nationally representative how-couples-met survey was found for England, Ireland, Canada or Mexico."}
+    },
+    "friends": {
+      "dunbarLayers": {
+        "cumulativeSizes": [5, 15, 50, 150],
+        "innermost": 1.5,
+        "notes": "Dunbar's layered network: about 5 intimate/close support, 15 best friends, 50 good friends, 150 meaningful relationships. These are cognitive-limit estimates with individual variation, not a census of how many friends people have.",
+        "sources": [
+          {"url": "https://www.sciencedirect.com/science/article/pii/S0378873316301095", "quality": "primary-via-summary", "note": "Calling Dunbar's numbers (MacCarron, Kaski, Dunbar 2016)", "accessed": "2026-10-01"},
+          {"url": "https://www.technologyreview.com/2016/04/29/160438/your-brain-limits-you-to-just-five-bffs/", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "US_closeFriends_2021": {
+        "noCloseFriends": 0.12,
+        "threeOrFewer": 0.49,
+        "fourToNine": 0.36,
+        "tenOrMore": 0.13,
+        "comparison1990": {"tenOrMore": 0.33, "threeOrFewer": 0.27, "none": 0.03},
+        "whereCloseFriendsMet": {"work": 0.54, "school": 0.47, "throughExistingFriends": 0.40, "neighbourhood": 0.35, "online": 0.08},
+        "firstTurnToInCrisis": {"spouseOrPartner": 0.53, "friends": 0.16, "friends1990": 0.26},
+        "notes": "Survey Center on American Life, American Perspectives Survey, May 2021 (report June 2021). Some 1990 comparison values came through search summaries.",
+        "sources": [
+          {"url": "https://www.americansurveycenter.org/research/the-state-of-american-friendship-change-challenges-and-loss/", "quality": "primary", "accessed": "2026-10-01"}
+        ]
+      },
+      "US_closeFriends_Gallup2004": {
+        "meanCloseFriends": 8.6,
+        "sixOrMore": 0.45,
+        "threeToFive": 0.39,
+        "oneOrTwo": 0.14,
+        "sources": [{"url": "https://news.gallup.com/poll/10891/americans-satisfied-number-friends-closeness-friendships.aspx", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "newFriendsPerYear": {
+        "shareWhoMadeANewFriendInPast12Months_US2021": {"all": 0.46, "age18to29": 0.56, "age65plus": 0.41},
+        "lostTouchWithAtLeastAFewFriendsDuringPandemic": 0.47,
+        "averageNumberOfNewFriendsPerYear": null,
+        "notes": "No primary source gives a mean number of new friends made per year. The best available is the share of adults who made at least one new friend in a year.",
+        "sources": [{"url": "https://www.americansurveycenter.org/research/the-state-of-american-friendship-change-challenges-and-loss/", "quality": "primary", "accessed": "2026-10-01"}]
+      },
+      "hoursToBecomeFriends": {
+        "acquaintanceToCasualFriend": 50,
+        "casualFriendToFriend": 90,
+        "toCloseFriend": 200,
+        "unit": "hours spent together",
+        "notes": "Hall (2018), 'How many hours does it take to make a friend?', Journal of Social and Personal Relationships. Approximate thresholds ('roughly 50', '90', 'more than 200'). Hall also found the kind of time matters: casual talk and joking deepen a friendship, and time spent together at work counts for less.",
+        "sources": [{"url": "https://news.ku.edu/news/article/2018/03/06/study-reveals-number-hours-it-takes-make-friend", "quality": "primary (university release)", "accessed": "2026-10-01"}]
+      }
+    }
+  },
+
+  "dating": {
+    "appPrices": {
+      "notes": "Match Group and Bumble set prices dynamically by age, region, platform and promotion (Tinder charges users under about 28 less). These are observed list prices from price-tracking sites, not official price lists, because none are published. Monthly (1-month plan) unless stated.",
+      "tinder": {
+        "US_USD": {"plus": 24.99, "gold": 39.99, "platinum": 49.99, "sixMonthPerMonth": {"plus": 16.66, "gold": 23.33, "platinum": 29.99}},
+        "Canada_CAD": {"plus": 26.99, "gold": 39.99, "platinum": 53.99, "sixMonthPerMonth": {"plus": 13.33, "gold": 19.99, "platinum": 26.66}},
+        "UK_GBP": {"plus": 17.48, "gold": 26.48, "platinum": 35.00, "sixMonthPerMonth": {"plus": 8.84, "gold": 13.16, "platinum": 17.48}},
+        "Ireland_EUR": null,
+        "Mexico_MXN": null,
+        "sources": [
+          {"url": "https://www.swipestats.io/blog/tinder-plus-price", "quality": "vendor-price", "accessed": "2026-10-01"},
+          {"url": "https://www.androidauthority.com/tinder-plus-gold-platinum-3236244/", "quality": "vendor-price", "accessed": "2026-10-01"}
+        ]
+      },
+      "hinge": {
+        "US_USD": {"hingePlus": 29.99, "hingePlus3mo": 59.99, "hingePlus6mo": 89.99, "hingeX": 49.99, "hingeX3mo": 99.99, "hingeX6mo": 149.99},
+        "otherMarkets": null,
+        "notes": "Reviewers report Hinge+ at $29.99-32.99/month in the US.",
+        "sources": [{"url": "https://www.swipestats.io/blog/hinge-x-vs-hinge-plus", "quality": "vendor-price", "accessed": "2026-10-01"}]
+      },
+      "bumble": {
+        "US_USD_premiumMonthly": null,
+        "reportedRange": "US$32.99-59.99/month for Premium depending on source",
+        "notes": "Sources disagree too widely to give one figure. Left null.",
+        "sources": [
+          {"url": "https://www.swipestats.io/blog/bumble-premium", "quality": "vendor-price", "accessed": "2026-10-01"},
+          {"url": "https://www.vidaselect.com/bumble-premium", "quality": "vendor-price", "accessed": "2026-10-01"}
+        ]
+      }
+    },
+    "dateSpend": {
+      "US_averageDateAllIn_USD_2026": 189,
+      "US_averageDate_2025_USD": 168,
+      "US_millennialAverage_USD": 252,
+      "US_genZAverage_USD": 205,
+      "US_annualDatingSpend_USD": 2323,
+      "US_datesPerYear": 12,
+      "notes": "BMO Real Financial Progress Index (US), May 2026. 'All-in' covers dinner, drinks, transport and grooming before the date. This is the average date, not specifically a first date.",
+      "UK_expectedFirstDateCost_GBP": 37.85,
+      "UK_note": "From an older UK survey reported by HuffPost UK (March 2023), so its method is unclear. Treat it as indicative only.",
+      "otherMarkets": null,
+      "sources": [
+        {"url": "https://www.prnewswire.com/news-releases/date-flation-hits-hard-average-date-spend-nears-200--bmo-real-financial-progress-index-302684521.html", "quality": "industry-survey", "accessed": "2026-10-01"},
+        {"url": "https://www.cnbc.com/2026/05/23/date-flation-average-millennial-date-costs-252.html", "quality": "secondary", "accessed": "2026-10-01"},
+        {"url": "https://www.huffingtonpost.co.uk/entry/heres-what-brits-think-a-date-should-cost_uk_64185232e4b01ea5cd8f30fe", "quality": "secondary", "accessed": "2026-10-01"}
+      ]
+    },
+    "timeline": {
+      "firstDateToExclusive": {
+        "value": null,
+        "surveyIndications": {
+          "micGoogleConsumerSurvey": "average 6 dates to exclusivity, 9 to call it a couple; 45.2% had the exclusivity talk within a month, 28% within 1-2 months (n=3,058)",
+          "ipsos": "39% of Americans think three months is an acceptable time to discuss exclusivity"
+        },
+        "notes": "No academic or official figure was found. These are opinion and consumer surveys.",
+        "sources": [
+          {"url": "https://www.mic.com/life/are-couples-becoming-monogamous-too-fast-16340951", "quality": "industry-survey", "accessed": "2026-10-01"}
+        ]
+      },
+      "datingToEngagement_US_months": {
+        "value": 15,
+        "notes": "Industry survey reported in press. Not official.",
+        "sources": [{"url": "https://news3lv.com/news/offbeat/survey-reveals-us-couples-date-for-15-months-before-engagement-study-finds", "quality": "industry-survey", "accessed": "2026-10-01"}]
+      },
+      "datingToMovingIn": "see cohabitation.timeToMoveIn"
+    },
+    "secondDateRate": {
+      "value": null,
+      "notes": "Figures circulating online (20-50%, '37% from apps vs 45% via friends', 'coffee 45% vs dinner 39%') trace to aggregator pages (gitnux, zipdo) that cite surveys we could not find. Left null rather than adopt an untraceable number.",
+      "sources": [{"url": "https://tenr.co/blog/data-behind-first-date-success-rates", "quality": "secondary (untraceable)", "accessed": "2026-10-01"}]
+    }
+  },
+
+  "cohabitation": {
+    "timeToMoveIn": {
+      "academic_US": {
+        "within6Months": 0.361,
+        "within7to12Months": 0.25,
+        "over1YearUnder2Years": "slightly more than a quarter",
+        "notes": "Sassler (2004), 'The process of entering into cohabiting unions', Journal of Marriage and Family 66:491-505. This is a small qualitative sample of New York City cohabitors, so it is not nationally representative.",
+        "sources": [{"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3596820/", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "survey_US": {
+        "theKnot2024": {"under6Months": 0.26, "sixTo11Months": 0.35},
+        "sparefoot": "52% say 6-18 months is the right time",
+        "notes": "The Knot 2024 Relationship & Intimacy study, unmarried cohabiting couples.",
+        "sources": [
+          {"url": "https://www.theknot.com/content/how-long-should-you-date-before-moving-in-together", "quality": "industry-survey", "accessed": "2026-10-01"},
+          {"url": "https://www.sparefoot.com/blog/when-to-move-in-together", "quality": "industry-survey", "accessed": "2026-10-01"}
+        ]
+      },
+      "medianMonths": null
+    },
+    "splittingCosts": {
+      "UK_YouGov": {
+        "inPractice_bothWorking": {"fiftyFifty": 0.46, "proportionalToIncome": 0.38},
+        "whereIncomesSimilar_fiftyFifty": 0.69,
+        "whereOneEarnsNotablyMore_proportional": 0.49,
+        "publicViewOfFairest": {"proportional": 0.48, "fiftyFifty": 0.37},
+        "sources": [{"url": "https://yougov.com/en-gb/articles/50381-what-is-the-fairest-way-for-couples-to-split-household-bills", "quality": "industry-survey", "accessed": "2026-10-01"}]
+      },
+      "US": {
+        "millennialCohabitorsNotSplittingRentEvenly": 0.52,
+        "sources": [{"url": "https://www.cnbc.com/2023/08/11/half-of-millennial-couples-who-live-together-dont-split-rent-equally.html", "quality": "secondary", "accessed": "2026-10-01"}]
+      }
+    },
+    "legalRights": {
+      "US-NY": {
+        "commonLawMarriage": false,
+        "summary": "No common-law marriage can be formed in New York, however long a couple lives together. A common-law marriage validly formed in another state is recognized. Unmarried partners have no statutory property-division or maintenance claims and rely on contract law.",
+        "sources": [{"url": "https://askalawlibrarian.nycourts.gov/legalresearch/faq/413910", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "US-CA": {
+        "commonLawMarriage": false,
+        "summary": "Under Marvin v. Marvin (1976) 18 Cal.3d 660, agreements between unmarried cohabitants (express or implied, oral or written) are enforceable unless they rest on sexual services. Homemaking is valid consideration. There is no community-property claim without marriage or a registered domestic partnership.",
+        "sources": [{"url": "https://scocal.stanford.edu/opinion/marvin-v-marvin-27965/", "quality": "primary", "accessed": "2026-10-01"}]
+      },
+      "US-CT": {
+        "commonLawMarriage": false,
+        "summary": "Common-law marriage is not valid. Courts enforce express cohabitation agreements by ordinary contract principles (Connecticut Supreme Court, 1987), and may find an implied contract from conduct.",
+        "sources": [{"url": "https://www.jud.ct.gov/lawlib/Notebooks/Pathfinders/Cohabitation.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "England": {
+        "commonLawMarriage": false,
+        "summary": "Cohabitants have no automatic claims to each other's property, pension or maintenance, however long they lived together. 'Common-law marriage' is a myth in England and Wales. Claims come only through trusts and property law, or for children under Schedule 1 of the Children Act 1989 (law not fetched).",
+        "pendingReform": "The Ministry of Justice consultation 'A Fairer End to Relationships' ran 5 June to 14 August 2026. It proposes an opt-out scheme giving financial claims to cohabitants who have lived together at least 3 years or who share a child, plus intestacy reform. These are proposals only and not law as of 2026-10-01.",
+        "sources": [
+          {"url": "https://www.hja.net/expert-comments/opinion/dispute-resolution/a-fairer-end-to-relationships-what-the-2026-government-consultation-could-mean-for-cohabiting-couples", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://www.unit.law/insights/a-fairer-end-to-relationships-consultation", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://publications.parliament.uk/pa/cm5803/cmselect/cmwomeq/92/report.html", "quality": "primary", "accessed": "2026-10-01"}
+        ]
+      },
+      "Ireland": {
+        "summary": "Civil Partnership and Certain Rights and Obligations of Cohabitants Act 2010 (in force 1 January 2011). A 'qualified cohabitant' has lived with a partner at least 5 years, or 2 years with a child together, and must be financially dependent. They can apply under the redress scheme for property adjustment, pension adjustment, maintenance, or provision from the estate. The application must be made within 2 years of the relationship ending. If either partner is still married, that partner must have lived apart from their spouse for 4 of the previous 5 years.",
+        "qualifyingYears": 5,
+        "qualifyingYearsWithChild": 2,
+        "claimWindowYears": 2,
+        "sources": [{"url": "https://www.citizensinformation.ie/en/birth-family-relationships/problems-in-marriages-and-other-relationships/redress-scheme-for-cohabiting-couples/", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "Canada-ON": {
+        "summary": "Common-law partners have no right to equalization of net family property, whatever the length of the relationship. They may claim spousal support under Family Law Act s.29 after 3 years of continuous cohabitation, or in a relationship of some permanence with a child. Property claims rely on trust law (unjust enrichment) or a cohabitation agreement.",
+        "supportQualifyingYears": 3,
+        "sources": [
+          {"url": "https://devrylaw.ca/common-law-relationship-you-do-not-have-the-same-rights-as-married-spouses-in-ontario/", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://www.cleo.on.ca/en/publications/introfam/who-article", "quality": "secondary (legal clinic)", "accessed": "2026-10-01"}
+        ]
+      },
+      "Canada-BC": {
+        "summary": "Under the Family Law Act, unmarried spouses who lived in a marriage-like relationship for at least 2 years are treated like married spouses for property division. Family property is presumed to be split equally. Excluded property (pre-relationship assets, gifts, inheritances) stays separate, but its growth during the relationship is shared.",
+        "qualifyingYears": 2,
+        "sources": [{"url": "https://www2.gov.bc.ca/gov/content/life-events/divorce/family-justice/family-law/dealing-with-property-and-debt/common-law", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "Mexico-CDMX": {
+        "summary": "Concubinato under the Código Civil para el Distrito Federal: two people free to marry who live together steadily for at least 2 years, or for less time if they have a child together. It carries support (alimentos) and inheritance rights. There is no matrimonial property regime: property acquired together is divided under co-ownership rules.",
+        "qualifyingYears": 2,
+        "sources": [{"url": "https://abogadosencdmx.com/blog/concubinato-derechos-cdmx/", "quality": "secondary", "accessed": "2026-10-01"}]
+      }
+    }
+  },
+
+  "marriage": {
+    "requirements": {
+      "US-NY_NYC": {
+        "licenceFee": {"amount": 35, "currency": "USD"},
+        "waitingPeriodHours": 24,
+        "licenceValidDays": 60,
+        "notes": "City Clerk (Project Cupid online application, then an appointment). The 24-hour clock runs from the exact time printed on the licence. A judge can waive the wait free of charge.",
+        "sources": [{"url": "https://www.robynashleyweddings.com/blog/nyc-marriage-license-guide", "quality": "secondary", "accessed": "2026-10-01"}]
+      },
+      "US-CA_LosAngelesCounty": {
+        "publicLicenceFee": {"amount": 91, "currency": "USD"},
+        "confidentialLicenceFee": {"amount": 85, "currency": "USD"},
+        "civilCeremonyFee": {"amount": 35, "currency": "USD"},
+        "witnessFee": {"amount": 20, "currency": "USD"},
+        "waitingPeriodHours": 0,
+        "pendingChange": "In September 2025 the County Clerk asked to raise the fees to $176 public, $220 confidential, $44 ceremony and $26 witness. The Board of Supervisors put the increase on hold and sent it back for review. Whether it later passed was not verified.",
+        "notes": "California fees are set by county. The 'no waiting period' entry comes from general knowledge of California law and was not fetched; it needs verifying.",
+        "sources": [
+          {"url": "https://www.lavote.gov/home/county-clerk/marriage-licenses-ceremonies/fees/fees", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://www.nbclosangeles.com/news/local/la-county-delays-marriage-license-and-ceremony-fee-increase/3788216/", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "US-CT": {
+        "licenceFee": {"amount": 50, "currency": "USD"},
+        "licenceValidDays": 65,
+        "notes": "Issued by the town clerk of the town where the wedding takes place. Both parties appear in person with photo ID and take an oath.",
+        "sources": [{"url": "https://www.mansfieldct.gov/1722/Marriage-Licenses", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "England": {
+        "noticeFeePerPerson": {"amount": 46.50, "currency": "GBP", "effective": "2026-04-06", "previous": 42.00},
+        "noticeFeePerPersonHomeOfficeReferral": {"amount": 63.00, "currency": "GBP", "effective": "2026-04-06", "previous": 57.00},
+        "statutoryRegisterOfficeCeremonyFee": {"amount": 62, "currency": "GBP", "note": "As listed by Tower Hamlets; not cross-checked with the General Register Office"},
+        "certificateFee": {"amount": 12.50, "currency": "GBP"},
+        "noticeDisplayedDays": 28,
+        "minimumDaysNoticeBeforeCeremony": 29,
+        "noticeValidMonths": 12,
+        "notes": "Each partner pays the notice fee. Councils outside London were checked through search results only.",
+        "sources": [
+          {"url": "https://www.towerhamlets.gov.uk/lgnl/advice_and_benefits/Births-deaths-and-marriages/Register_office_fees.aspx", "quality": "primary", "accessed": "2026-10-01"},
+          {"url": "https://www.gov.uk/marriages-civil-partnerships/give-notice", "quality": "primary", "accessed": "2026-10-01"}
+        ]
+      },
+      "Ireland": {
+        "notificationFee": {"amount": 200, "currency": "EUR", "note": "Non-refundable. €50 for a same-sex couple already in an Irish civil partnership."},
+        "minimumNoticeMonths": 3,
+        "notes": "The 3-month notice applies to civil, religious and secular marriages. It is lodged in person with an HSE registrar, or by post if living abroad.",
+        "sources": [{"url": "https://www.citizensinformation.ie/en/birth-family-relationships/getting-married/notification-requirements-for-marriage/", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "Canada-ON_Toronto": {
+        "licenceFee": {"amount": 180, "currency": "CAD", "note": "No HST. The fee varies by municipality: $145-200 across Ontario."},
+        "licenceValidDays": 90,
+        "sources": [{"url": "https://www.toronto.ca/services-payments/venues-facilities-bookings/getting-married/applying-for-a-marriage-licence/", "quality": "primary", "accessed": "2026-10-01"}]
+      },
+      "Canada-BC": {
+        "licenceFee": {"amount": 100, "currency": "CAD"},
+        "licenceValidMonths": 3,
+        "marriageCommissionerBaseFee": {"amount": 75, "currency": "CAD", "note": "Plus tax, extra time, travel and parking"},
+        "notes": "Licences come from Service BC, licensed insurance agents and some notaries.",
+        "sources": [{"url": "https://www.peopleslawschool.ca/getting-married-guide/", "quality": "secondary (legal-education charity)", "accessed": "2026-10-01"}]
+      },
+      "Mexico-CDMX": {
+        "ceremonyAtJuzgado": {"amount": 1652, "currency": "MXN", "year": 2026},
+        "ceremonyAtHome": {"amount": 3319, "currency": "MXN", "year": 2026},
+        "outsideJurisdiction": {"amount": 10153, "currency": "MXN", "year": 2026},
+        "changeOfPropertyRegime": {"amount": 3319, "currency": "MXN", "year": 2026},
+        "notes": "Código Fiscal de la Ciudad de México 2026. Fees are adjusted each year in line with the UMA (+4.4% for 2026). Couples choose sociedad conyugal or separación de bienes at marriage.",
+        "sources": [
+          {"url": "https://heraldodemexico.com.mx/economia/2026/2/4/cuanto-cuesta-casarse-por-el-registro-civil-en-la-cdmx-en-2026-765725.html", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://www.eluniversal.com.mx/metropoli/costos-del-registro-civil-en-2026-bodas-divorcios-y-otros-tramites/", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      }
+    },
+    "ageAtFirstMarriage": {
+      "US": {
+        "CPS_2024_median": {"men": 30.2, "women": 28.6},
+        "ACS_2024_median": {"men": 30.8, "women": 28.8},
+        "ACS_2024_states": {"NY_women": 30.4, "CA_women": 30.4, "CT_men": 32.4, "NY_men": null, "CA_men": null, "CT_women": null},
+        "notes": "Census Bureau CPS series (MS-2) and NCFMR's analysis of ACS data give slightly different national medians. The state figures came only through a summary of NCFMR FP-26-01, which did not list every value.",
+        "sources": [
+          {"url": "https://census.gov/content/dam/Census/library/visualizations/time-series/demo/families-and-households/ms-2.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://www.bgsu.edu/ncfmr/resources/data/family-profiles/fp-26-01.html", "quality": "primary", "accessed": "2026-10-01"}
+        ]
+      },
+      "EnglandAndWales": {
+        "median_2022_oppositeSexFirstPartnership": {"men": 32.7, "women": 31.2},
+        "notes": "ONS 'Marriages in England and Wales: 2021 and 2022', released June 2024. Highest on record.",
+        "sources": [{"url": "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/marriagecohabitationandcivilpartnerships/bulletins/marriagesinenglandandwalesprovisional/2021and2022", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "Ireland": {
+        "average_2024_allOppositeSexMarriages": {"grooms": 37.7, "brides": 35.9},
+        "notes": "CSO Marriages 2024. This is the average age at any marriage, first or later, not first marriage only.",
+        "sources": [{"url": "https://www.cso.ie/en/releasesandpublications/ep/p-mar/marriages2024/keyfindings", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "Canada": {
+        "average_2016to2020_bothSexes": {"Canada": 31.5, "Ontario": 31.0, "BritishColumbia": 31.3},
+        "notes": "Statistics Canada, 'Widening gap in average age at first marriage' (2022), both sexes combined. Separate figures by sex were not available on that page.",
+        "sources": [{"url": "https://www150.statcan.gc.ca/n1/daily-quotidien/221114/cg-b007-eng.htm", "quality": "primary", "accessed": "2026-10-01"}]
+      },
+      "Mexico": {
+        "average_2024_allMarriages": {"men": 35.0, "women": 32.1},
+        "marriages2024": 486645,
+        "marriageRatePer1000Adults": 5.4,
+        "notes": "INEGI Estadística de Matrimonios (EMAT) 2024. All marriages, not first only. National, not CDMX.",
+        "sources": [{"url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/emat/emat2024_CP.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      }
+    },
+    "weddingCost": {
+      "US": {
+        "national_2025weddings": {"amount": 34200, "currency": "USD"},
+        "NYC": {"amount": 88000, "currency": "USD", "note": "The Knot also gives $75,005 for ceremony plus reception (July 2025), with a typical range of $32,380-101,190"},
+        "LosAngeles": {"amount": 44740, "currency": "USD", "typicalRange": [17480, 54840]},
+        "Connecticut": {"amount": 42000, "currency": "USD"},
+        "sources": [
+          {"url": "https://www.theknot.com/content/average-wedding-cost", "quality": "industry-survey", "accessed": "2026-10-01"},
+          {"url": "https://www.theknot.com/content/average-wedding-cost-nyc", "quality": "industry-survey", "accessed": "2026-10-01"},
+          {"url": "https://www.theknot.com/content/average-wedding-cost-los-angeles", "quality": "industry-survey", "accessed": "2026-10-01"}
+        ],
+        "notes": "The Knot 2026 Real Weddings Study: 10,474 US couples married in 2025."
+      },
+      "England": {
+        "UK_2026": {"amount": 20604, "currency": "GBP"},
+        "London_2026": {"amount": 26986, "currency": "GBP"},
+        "perGuestLondon": {"amount": 340, "currency": "GBP"},
+        "sources": [{"url": "https://bridebook.com/uk/article/average-wedding-cost-london", "quality": "industry-survey", "accessed": "2026-10-01"}],
+        "notes": "Bridebook UK Wedding Report 2026, about 7,000 couples."
+      },
+      "Ireland": {
+        "national": {"amount": 36641, "currency": "EUR", "note": "Excludes honeymoon. weddingsonline survey of more than 1,000 couples, December 2025."},
+        "averageGuests": 141,
+        "mealPerHead": {"amount": 107, "currency": "EUR"},
+        "sources": [{"url": "https://www.weddingsonline.ie/blog/the-real-cost-of-an-irish-wedding-in-2026-with-actual-numbers/", "quality": "industry-survey", "accessed": "2026-10-01"}]
+      },
+      "Canada": {
+        "Ontario": null,
+        "BritishColumbia": null,
+        "notes": "Figures found ($32,000 for Ontario, $35,000 for BC, $35,000-50,000 for Toronto) come from personal-finance blogs with no traceable survey behind them. Left null.",
+        "sources": [{"url": "https://wealthnorth.ca/personal-finance/how-much-does-it-cost/wedding-cost-canada/", "quality": "secondary (untraceable)", "accessed": "2026-10-01"}]
+      },
+      "Mexico": {
+        "national": {"amount": 180000, "currency": "MXN"},
+        "centralRegionIncludingCDMX": {"range": [160000, 170000], "currency": "MXN"},
+        "averageGuests": 197,
+        "perGuest": {"amount": 914, "currency": "MXN"},
+        "notes": "Bodas.com.mx Informe del Sector Nupcial 2025: 2,100 couples married in 2024.",
+        "sources": [{"url": "https://www.bodas.com.mx/articulos/organizacion-de-una-boda-datos-y-curiosidades-en-mexico--c10606", "quality": "industry-survey", "accessed": "2026-10-01"}]
+      }
+    },
+    "nameChange": {"value": null, "notes": "Optional item, not researched in this pass."}
+  },
+
+  "divorce": {
+    "ratesAndProbability": {
+      "US": {
+        "probabilityFirstMarriageSurvives20Years": {"women": 0.52, "men": 0.56},
+        "byEducation_women": {"bachelorsOrHigher": 0.78, "highSchoolOnly": 0.41},
+        "refinedDivorceRatePer1000MarriedWomen": {"2023": 14.4, "2024": 14.2, "peak1980": 22.6},
+        "stateRates2024": {"NY": null, "CA": null, "CT": null},
+        "notes": "Copen et al. (2012), NCHS National Health Statistics Report no. 49, from NSFG 2006-2010: the chance that a first marriage survives 20 years. Refined divorce rate from NCFMR FP-25-31, based on ACS. State figures are in that profile's table, which was not extracted.",
+        "sources": [
+          {"url": "https://stacks.cdc.gov/view/cdc/12055/cdc_12055_DS1.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://www.bgsu.edu/ncfmr/resources/data/family-profiles/fp-25-31.html", "quality": "primary", "accessed": "2026-10-01"}
+        ]
+      },
+      "EnglandAndWales": {
+        "divorces2023": 102678,
+        "ratePer1000Married2023": {"men": 8.6, "women": 8.5},
+        "medianDurationAtDivorceYears2023_oppositeSex": 12.7,
+        "shareOfMarriagesProjectedToEndInDivorce": 0.42,
+        "notes": "ONS Divorces in England and Wales 2023 (released 2 July 2025). The 42% figure is an older ONS projection, quoted second-hand.",
+        "sources": [{"url": "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/divorce/bulletins/divorcesinenglandandwales/2023/pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "Ireland": {
+        "crudeDivorceRatePer1000Persons2022": 0.9,
+        "EU27average2022": 1.6,
+        "notes": "CSO Measuring Ireland's Progress 2022. Joint lowest in the EU27, with Malta.",
+        "sources": [{"url": "https://www.cso.ie/en/releasesandpublications/ep/p-mip/measuringirelandsprogress2022/society/", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "Canada": {
+        "divorceRatePer1000MarriedPersons": {"1991": 12.7, "2020": 5.6},
+        "probabilityOfEverMarrying": {"1991": 0.74, "2020": 0.44},
+        "childrenAged1to17ExperiencedParentalSeparation2019": 0.18,
+        "notes": "Justice Canada, 'Marriage and divorce trends in Canada, 1921 to 2020'. The 2020 figures are depressed by COVID-19.",
+        "sources": [{"url": "https://justice.canada.ca/eng/rp-pr/jr/jf-pf/2026/mdt-tmd/index.html", "quality": "primary", "accessed": "2026-10-01"}]
+      },
+      "Mexico": {
+        "divorces2024": 161932,
+        "judicialShare": 0.896,
+        "administrativeShare": 0.104,
+        "divorcesPer100Marriages2024": 33.3,
+        "divorcesPer100Marriages2015": 22.2,
+        "divorceRatePer1000Adults2024": 1.79,
+        "averageAgeAtDivorce2024": {"women": 41.1, "men": 43.6},
+        "sources": [{"url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/ed/ed2024_RR.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      }
+    },
+    "procedure": {
+      "US-NY": {
+        "courtFees": {"indexNumber": 210, "noteOfIssueRJI": 125, "minimumTotal": 335, "currency": "USD"},
+        "ground": "No-fault: irretrievable breakdown for at least 6 months (DRL §170(7)), on one spouse's sworn statement.",
+        "waitingPeriodAfterFiling": "None by statute. The judgment is granted once property, support and custody issues are settled.",
+        "assetDivision": "Equitable distribution (DRL §236(B)): fair, not necessarily equal, weighed on statutory factors. Separate property (owned before marriage, gifts, inheritances) is excluded.",
+        "sources": [
+          {"url": "https://www.nycourts.gov/help/family-issues-divorce/uncontested-divorce-overview", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://divorce.law/statutes/new-york/", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "US-CA": {
+        "courtFees": {"firstPaperPetition": 435, "currency": "USD", "note": "The respondent's first appearance also carries a first-paper fee; amount not fetched"},
+        "waitingPeriod": "6 months from service of the summons or the respondent's appearance before the judgment can become final.",
+        "assetDivision": "Community property: the community estate must be divided equally in value (Family Code §2550), unless the spouses agree otherwise in writing.",
+        "sources": [
+          {"url": "https://divorce.law/guides/divorce-papers/california/", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://www.divorcenet.com/states/california/cafaq03", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "US-CT": {
+        "courtFees": {"filing": 360, "currency": "USD", "note": "As of March 2026, per a secondary source. Service by marshal is extra, about $50."},
+        "waitingPeriod": "90 days from the return date (C.G.S. §46b-67). It can be shortened when the parties have a signed agreement.",
+        "assetDivision": "All-property equitable distribution (C.G.S. §46b-81): the court may assign any property of either spouse, including property owned before marriage and inheritances, weighing statutory factors.",
+        "sources": [
+          {"url": "https://divorce.law/connecticut/", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://www.jud.ct.gov/lawlib/Notebooks/Pathfinders/EquitableDistribution.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"}
+        ]
+      },
+      "England": {
+        "courtFees": {"divorceApplication": 628, "currency": "GBP", "effective": "2026-07-13", "previous": 612, "previousEffective": "2025-04"},
+        "ground": "No-fault (Divorce, Dissolution and Separation Act 2020): a statement of irretrievable breakdown.",
+        "minimumTimeline": "20 weeks from issue before the conditional order can be applied for, then 6 weeks and 1 day before the final order: about 26 weeks minimum. Most take 7-12 months.",
+        "assetDivision": "Judicial discretion under Matrimonial Causes Act 1973 s.25, with the welfare of children first. Since White v White (2000) the result is checked against a 'yardstick of equality'. Departures from equal sharing follow needs, a short marriage, or a rare special contribution.",
+        "sources": [
+          {"url": "https://odonnellsolicitors.co.uk/blog/family-court-fees-increase-from-july-2026-what-you-need-to-know", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://www.citizensadvice.org.uk/family/how-to-separate1/getting-a-divorce-or-dissolution/", "quality": "secondary (advice charity)", "accessed": "2026-10-01"},
+          {"url": "https://en.wikipedia.org/wiki/White_v_White", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "Ireland": {
+        "courtFees": {"value": null, "note": "A secondary source says family-law proceedings are exempt from Circuit Court fees (the €130 civil bill fee does not apply). The courts.ie general fees page could not confirm it. Unverified."},
+        "livingApartRequirement": "2 years living apart out of the previous 3 (Family Law Act 2019, from 1 December 2019). Living under the same roof but not as a couple can count.",
+        "otherConditions": "No reasonable prospect of reconciliation. Proper provision made, or to be made, for spouses and dependent children.",
+        "assetDivision": "Court discretion to make 'proper provision' (Family Law (Divorce) Act 1996). There is no fixed equal-split rule.",
+        "sources": [
+          {"url": "https://www.gov.ie/en/department-of-justice-home-affairs-and-migration/press-releases/minister-flanagan-brings-parts-1-and-2-of-the-family-law-act-2019-into-operation-from-1-december-2019/", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://onlinelegalservices.ie/cost-of-divorce-in-ireland/", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "Canada-ON": {
+        "courtFees": {"application": 224, "setDownForDivorce": 445, "federalRegistration": 10, "certificate": 25, "currency": "CAD", "note": "One source gives the second payment as $408 (total $632); others say $445 (total $669, or $694 with the certificate). The official Ontario fee schedule could not be fetched (404). Treat as approximate."},
+        "ground": "Federal Divorce Act: breakdown of marriage, most commonly shown by living separate and apart for 1 year.",
+        "assetDivision": "Married spouses: equalization of net family property (Family Law Act Part I). The spouse whose net worth grew more during the marriage pays the other half the difference. Common-law partners are excluded.",
+        "sources": [
+          {"url": "https://legalboutique.ca/knowledge-base/process/divorce-court-fees-2026/", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://www.loopstranixon.com/insights/publication/equalization-of-net-family-property-in-ontario", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "Canada-BC": {
+        "courtFees": {"noticeOfFamilyClaim": 210, "federalRegistration": 10, "deskOrderRequisition": 80, "certificateOfDivorce": 40, "currency": "CAD"},
+        "ground": "Federal Divorce Act: usually 1 year living separate and apart.",
+        "assetDivision": "Family Law Act: family property and family debt are presumed to be shared equally. Excluded property keeps its pre-relationship value, but growth during the relationship is shared. The same rules apply to unmarried spouses of 2 or more years.",
+        "sources": [
+          {"url": "https://divorce.law/guides/filing-for-divorce/british-columbia/", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://www2.gov.bc.ca/gov/content/life-events/divorce/family-justice/family-law/dealing-with-property-and-debt/what-happens-to-family-property", "quality": "primary-via-summary", "accessed": "2026-10-01"}
+        ]
+      },
+      "Mexico-CDMX": {
+        "administrativeDivorceFee": {"amount": 1652, "currency": "MXN", "year": 2026},
+        "administrativeDivorceConditions": "Both spouses agree. No minor children or dependent adult children. Not pregnant. Sociedad conyugal already liquidated. At least 1 year since the wedding. About 15 business days at the Registro Civil.",
+        "judicialDivorce": "Divorcio incausado (unilateral, no grounds needed) before a family judge. Court costs are not quoted; total costs with lawyers run from tens to hundreds of thousands of pesos (secondary sources).",
+        "assetDivision": "Under sociedad conyugal, property acquired during the marriage is split 50/50 when the sociedad is liquidated. Under separación de bienes each spouse keeps their own property. The Código Civil para el Distrito Federal art. 267 compensation of up to 50% for a spouse who mainly kept house under separación de bienes is cited from general knowledge, not fetched, and needs verifying.",
+        "sources": [
+          {"url": "https://www.informador.mx/mexico/costos-del-registro-civil-en-cdmx-para-este-2026-20260104-0072.html", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://tramite.com.mx/registro-civil/divorcio-administrativo/", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://abogadosfamiliarescdmx.com/division-de-bienes/", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      }
+    }
+  },
+
+  "children": {
+    "costOfRaising": {
+      "US": {
+        "brookings_bornIn2015_toAge17": {"amount": 310605, "currency": "USD", "note": "Middle-income married couple with two children. USDA's 2017 estimate ($233,610) adjusted for the inflation actually seen. Excludes college."},
+        "sources": [{"url": "https://www.brookings.edu/wp-content/uploads/2022/08/Brookings_Cost-to-raise-a-child_inflation-adjusted-2.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "UK": {
+        "toAge18_couple": {"amount": 250000, "currency": "GBP"},
+        "toAge18_loneParent": {"amount": 290000, "currency": "GBP"},
+        "notes": "CPAG Cost of a Child in 2025 (October 2025). Minimum socially acceptable standard (Minimum Income Standard, Loughborough University), including rent and childcare.",
+        "sources": [{"url": "https://cpag.org.uk/news/cost-child-2025", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "Ireland": {
+        "weeklyMinimumByAge2025": {"infant": 79, "preSchool": 72, "primarySchool": 98, "secondLevel": 158, "currency": "EUR"},
+        "notes": "Vincentian MESL Research Centre, MESL 2025. Minimum essential standard, excluding childcare and housing.",
+        "sources": [{"url": "https://budgeting.ie/wp-content/uploads/2025/11/MESL-2025.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "Canada": {
+        "statcan_birthTo17_2017dollars": {"lowerIncome": 238190, "middleIncome": 293000, "higherIncome": 403910, "currency": "CAD"},
+        "statcan_annualRange_middleIncome": [15300, 17420],
+        "moneysense2023_annualAverage": {"amount": 16900, "currency": "CAD", "note": "Industry estimate"},
+        "notes": "Statistics Canada 11F0019M2023007, from the 2014-2017 Survey of Household Spending, in 2017 dollars, two-parent two-child families. National only, no provincial split.",
+        "sources": [
+          {"url": "https://www150.statcan.gc.ca/n1/pub/11f0019m/11f0019m2023007-eng.htm", "quality": "primary", "accessed": "2026-10-01"},
+          {"url": "https://www.moneysense.ca/columns/moneyflex/how-much-does-it-cost-to-raise-a-child-in-canada/", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "Mexico": {
+        "value": null,
+        "secondaryEstimates": "Press scenarios to age 18: MXN 1.5 million (public schooling), 4.4 million (mixed middle class), 9.2 million (private bilingual). Condusef is said to recommend a MXN 260,000 cushion for pregnancy through the first 9 months.",
+        "notes": "No official per-year figure was found. The scenario figures are press estimates.",
+        "sources": [{"url": "https://traccionmedia.com/cuanto-cuesta-criar-un-hijo-en-mexico-2026-la-cifra-exacta-por-etapa-entre-15m-y-92m-segun-los-tres-escenarios-reales", "quality": "secondary", "accessed": "2026-10-01"}]
+      }
+    },
+    "childcare": {
+      "US-NY": {
+        "stateInfantCenterAnnual2024": {"amount": 20439, "currency": "USD"},
+        "NYC_infantAnnual_comptroller": {"amount": 16250, "currency": "USD", "note": "NYC Comptroller, under age 2. Date not confirmed."},
+        "sources": [
+          {"url": "https://info.childcareaware.org/hubfs/Affordability_Analysis_Updated_2024.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://comptroller.nyc.gov/reports/child-care-affordability-and-the-benefits-of-universal-provision", "quality": "primary-via-summary", "accessed": "2026-10-01"}
+        ],
+        "subsidies": null
+      },
+      "US-CA": {
+        "stateInfantCenterAnnual2024": {"amount": 22628, "currency": "USD"},
+        "LACounty_infantCenter_NDCP75thPct": {"amount": 13363, "currency": "USD", "note": "US Department of Labor National Database of Childcare Prices, 75th-percentile market rate, as quoted by a secondary site. Year unclear."},
+        "sources": [{"url": "https://info.childcareaware.org/hubfs/Affordability_Analysis_Updated_2024.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"}],
+        "subsidies": null
+      },
+      "US-CT": {
+        "stateInfantCenterAnnual2024": {"amount": 18492, "currency": "USD"},
+        "sources": [{"url": "https://info.childcareaware.org/hubfs/Affordability_Analysis_Updated_2024.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"}],
+        "subsidies": null
+      },
+      "England-London": {
+        "under2_25hrsWeek_withEntitlement": {"innerLondon": 92.01, "outerLondon": 84.05, "currency": "GBP", "per": "week"},
+        "under2_25hrsWeek_noEntitlement": {"innerLondon": 230.02, "currency": "GBP", "per": "week"},
+        "entitlement": "From September 2025, eligible working parents of children from 9 months to school age get up to 30 funded hours a week for 38 weeks a year. Each parent must expect to earn at least 16 hours a week at the minimum wage, and neither may have adjusted net income of £100,000 or more.",
+        "sources": [
+          {"url": "https://www.coramfamilyandchildcare.org.uk/research/childcare-survey-2025/", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://educationhub.blog.gov.uk/2025/09/how-to-apply-for-30-hours-free-childcare-and-find-out-if-youre-eligible/", "quality": "primary-via-summary", "accessed": "2026-10-01"}
+        ],
+        "notes": "Coram Childcare Survey 2025. A 2026 survey exists but was not read."
+      },
+      "Ireland-Dublin": {
+        "medianWeeklyFullDayFee_beforeSubsidy_2023_24": {"DublinCity": 220.48, "DunLaoghaireRathdown": 258.57, "Fingal": 230.77, "SouthDublin": 226.00, "national": 190.00, "currency": "EUR"},
+        "NCS_universalSubsidy": {"perHour": 2.14, "maxHoursPerWeek": 45, "currency": "EUR", "since": "2024-09"},
+        "coreFundingMaxFullDayFee": {"amount": 295, "currency": "EUR", "per": "week", "co-paymentAfterUniversalSubsidyMax": 198.70},
+        "sources": [
+          {"url": "https://www.oireachtas.ie/en/debates/question/2025-11-12/870/", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://www.citizensinformation.ie/en/education/pre-school-education-and-childcare/national-childcare-scheme/", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://www.gov.ie/en/department-of-children-disability-and-equality/press-releases/minister-foley-announces-new-maximum-fee-cap-for-early-learning-and-childcare-services-alongside-390-million-in-state-funding-this-year-through-the-core-funding-scheme/", "quality": "primary-via-summary", "accessed": "2026-10-01"}
+        ],
+        "notes": "Pobal Early Years Sector Profile 2023/24, as given in Oireachtas written answers. Income-assessed NCS subsidies are higher than the universal rate; the rate table was not fetched."
+      },
+      "Canada-ON_Toronto": {
+        "CWELCC_dailyCap": {"amount": 22, "currency": "CAD", "since": "2025-01-01"},
+        "CWELCC_provincialAverage": {"amount": 19, "currency": "CAD", "per": "day"},
+        "tenDollarTarget": "Not reached. A Canada-Ontario extension announced 29 September 2026 (about $12 billion federal to March 2031) keeps the $22 cap and about $19 average at least until 30 June 2027.",
+        "appliesTo": "Children under 6 at licensed centres in CWELCC",
+        "sources": [
+          {"url": "https://torontobabyguide.ca/10-a-day-daycare-ontario-extended/", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://childcarecanada.org/documents/child-care-news/25/01/new-child-care-fees-take-effect-ontario-jan-1-here%E2%80%99s-what-families", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "Canada-BC_Vancouver": {
+        "CCFRI_monthlyReduction": {"infantToddlerGroup": 900, "infantToddlerFamily": 600, "preschoolGroup": 545, "preschoolFamily": 500, "schoolAgeGroup": 115, "schoolAgeFamilyInHome": 145, "currency": "CAD"},
+        "floor": "Fees are not reduced below $200/month ($10/day) full-time or $140/month ($7/day) part-time.",
+        "tenADaySites": "$10 a Day ChildCareBC centres charge $200/month full-time.",
+        "fromApril2026": "Centres in CCFRI must provide at least 9.5 hours a day before charging for extended hours.",
+        "averageUnsubsidisedFee": null,
+        "sources": [
+          {"url": "https://www2.gov.bc.ca/gov/content/family-social-supports/caring-for-young-children/childcarebc-programs/child-care-fee-reduction-initiative-provider-opt-in-status/information-for-families", "quality": "primary", "accessed": "2026-10-01"},
+          {"url": "https://news.gov.bc.ca/releases/2025ECC0051-001248", "quality": "primary-via-summary", "accessed": "2026-10-01"}
+        ]
+      },
+      "Mexico-CDMX": {
+        "IMSS_guarderia": "Free for workers in the IMSS mandatory regime. Children from 43 days to 4 years. Subcontracted centres may not charge tuition, registration or meals.",
+        "privateMonthlyAverageCDMX": {"amount": 5550, "currency": "MXN", "note": "Press figure. Range MXN 4,000 to over 10,000 in large cities."},
+        "sources": [
+          {"url": "https://www.altonivel.com.mx/guarderias-el-gasto-invisible-cuanto-cuesta-ser-madre-trabajadora-en-mexico/", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://www.milenio.com/negocios/finanzas-personales/guarderia-esto-es-lo-que-gasta-una-familia-al-mes-en-mexico", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      }
+    },
+    "parentalLeave": {
+      "actorContext": "US screen actors are usually paid as W-2 employees through production payroll companies, so state employee programmes (NY PFL, CA SDI/PFL, CT Paid Leave) normally cover them for the wages they earn on a job. Benefits are based on their earnings record, not on union membership. This is a general characterisation and was not fetched. No guaranteed paid parental leave benefit from SAG-AFTRA or the SAG-AFTRA Health Plan was found; contracts vary (an NPR SAG-AFTRA staff contract gives 20 weeks, but that covers NPR staff, not performers).",
+      "US-NY": {
+        "programme": "NY Paid Family Leave",
+        "weeks": 12,
+        "replacementRate": 0.67,
+        "maxWeekly2026": {"amount": 1228.53, "currency": "USD"},
+        "selfEmployed": "Voluntary opt-in for self-employed people.",
+        "sources": [{"url": "https://paidfamilyleave.ny.gov/2026", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "US-CA": {
+        "programme": "California Paid Family Leave (plus SDI pregnancy disability for the birth parent)",
+        "maxWeekly2026": {"amount": 1765, "currency": "USD"},
+        "weeksPFL": null,
+        "selfEmployed": "Only through Disability Insurance Elective Coverage (DIEC), which must have been held in the last 18 months.",
+        "sources": [{"url": "https://www.paidfamilyleave.org/faqs/im-an-independent-contractor-can-i-still-qualify-for-paid-family-leave-pfl-or-state-disability-insurance-sdi", "quality": "secondary", "accessed": "2026-10-01"}],
+        "notes": "PFL length (8 weeks) and 2025+ replacement rates (70-90%) were not verified in this pass."
+      },
+      "US-CT": {
+        "programme": "CT Paid Leave",
+        "weeks": 12,
+        "extraWeeksForPregnancyIncapacity": 2,
+        "maxWeekly2026": {"amount": 1016.40, "currency": "USD", "basis": "60 × state minimum wage ($16.94)"},
+        "formula": "95% of average weekly wage up to 40 × minimum wage ($677.60), plus 60% of the part above that, up to the maximum.",
+        "contribution": "0.5% of wages",
+        "selfEmployed": "Connecticut residents who are self-employed or sole proprietors may enrol.",
+        "sources": [
+          {"url": "https://www.ctpaidleave.org/for-businesses-and-employers/a-sole-proprietor", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://www.prudential.com/legislative-monitor-issue/CT-2026-updates", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "England": {
+        "SMP": "90% of average weekly earnings for 6 weeks, then the lower of £194.32 or 90% for 33 weeks (from April 2026; £187.18 in 2025/26).",
+        "maternityAllowance_selfEmployed": {"weekly2026_27": 194.32, "weekly2025_26": 187.18, "currency": "GBP", "weeks": 39, "condition": "Registered self-employed for at least 26 of the 66 weeks before the due week. Full rate needs Class 2 NICs paid (or treated as paid) for at least 13 of those 66 weeks."},
+        "selfEmployedFathersAndPartners": "No statutory paternity pay or Shared Parental Pay for the self-employed.",
+        "sources": [
+          {"url": "https://www.personneltoday.com/hr/statutory-maternity-paternity-sick-pay-rates-2026/", "quality": "secondary", "accessed": "2026-10-01"},
+          {"url": "https://www.turn2us.org.uk/get-support/information-for-your-situation/maternity-allowance/how-much-maternity-allowance-will-i-get", "quality": "secondary (charity)", "accessed": "2026-10-01"},
+          {"url": "https://committees.parliament.uk/writtenevidence/137268/html/", "quality": "primary (evidence to parliament)", "accessed": "2026-10-01"}
+        ]
+      },
+      "Ireland": {
+        "maternityBenefit": {"weekly2026": 299, "weeks": 26, "currency": "EUR", "selfEmployed": "Yes, with 52 PRSI Class S contributions in the relevant tax year."},
+        "paternityBenefit": {"weekly2026": 299, "weeks": 2, "currency": "EUR"},
+        "parentsBenefit": {"weekly2026": 299, "weeksPerParent": 9, "within": "first 2 years", "currency": "EUR"},
+        "sources": [
+          {"url": "https://www.gov.ie/en/department-of-social-protection/services/parents-benefit/", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://irishbenefits.ie/maternity-benefit-ireland/", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "Canada": {
+        "EI_selfEmployedSpecialBenefits": {
+          "optIn": true,
+          "waitMonthsAfterAgreement": 12,
+          "minimumNetSelfEmploymentEarnings_claims2026": 9254,
+          "minimumNetSelfEmploymentEarnings_claims2025": 8826,
+          "replacementRate": 0.55,
+          "maxWeekly2026": 729,
+          "maternityWeeks": 15,
+          "parentalWeeksStandard": null,
+          "parentalWeeksExtended": 61,
+          "currency": "CAD",
+          "notes": "Opting in means paying EI premiums on self-employment income for as long as the agreement lasts. The extended-parental replacement rate (33%) and the weeks figures come from general knowledge of the EI Act and were not fetched; verify against canada.ca."
+        },
+        "sources": [
+          {"url": "https://www.canada.ca/en/services/benefits/ei/ei-self-employed-workers.html", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://torontobabyguide.ca/self-employed-maternity-leave-ontario/", "quality": "secondary", "accessed": "2026-10-01"}
+        ]
+      },
+      "Mexico": {
+        "IMSS_maternity": {"days": 84, "split": "42 before and 42 after birth; 1-4 weeks may be moved to after the birth", "replacementRate": 1.0, "basis": "salario base de cotización", "eligibility": "30 weeks of contributions in the 12 months before the birth"},
+        "selfEmployed": null,
+        "notes": "Coverage for independent workers through voluntary IMSS incorporation was not confirmed.",
+        "sources": [{"url": "https://www.sofiasalud.com/blog/incapacidad-por-maternidad", "quality": "secondary", "accessed": "2026-10-01"}]
+      }
+    },
+    "fertility": {
+      "totalFertilityRate": {
+        "US_2024": 1.599,
+        "EnglandAndWales_2024": 1.41,
+        "Ireland_2024": 1.5,
+        "Canada_2024": 1.25,
+        "Ontario_2024": 1.21,
+        "BritishColumbia_2024": 1.02,
+        "Mexico_ENADID2023": 1.60,
+        "MexicoCity": null,
+        "notes": "CDMX is below 1.60 according to ENADID 2023. Press figures of 0.8 for CDMX and 1.2 nationally were seen but not traced to INEGI, so they are not used.",
+        "sources": [
+          {"url": "https://www.cdc.gov/nchs/data/vsrr/vsrr038.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/bulletins/birthsummarytablesenglandandwales/2024refreshedpopulations", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://www.cso.ie/en/releasesandpublications/ep/p-vsys/vitalstatisticsyearlysummary2024/", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://www150.statcan.gc.ca/n1/daily-quotidien/250924/dq250924d-eng.htm", "quality": "primary", "accessed": "2026-10-01"},
+          {"url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2024/ENADID/ENADID2023.pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"}
+        ]
+      },
+      "averageAgeOfMother_Canada2024": 31.8,
+      "conceptionProbabilityPerCycle": {
+        "ACOG": "In your 20s and early 30s, about 1 in 4 (25%) per month. ACOG is also widely quoted as saying under 5% per cycle by age 40. A secondary summary gave about 10%, so the age-40 figure is unconfirmed; the ACOG page returned 402.",
+        "Dunson2002_HumanReproduction": "Peak per-cycle fertility at age 20-24 is about 25-30%. Fertility declines from the late 20s, more sharply after 35. Exact parameters were not fetched.",
+        "Wesselink2017_AJOG_PRESTO_cumulativeAt12Cycles": {"age25to27": 0.793, "age40to45": 0.555},
+        "suggestedModelValues": null,
+        "notes": "Per-cycle values by single year of age are not given here because none were read from a primary table. The Wesselink 2017 cumulative figures came through a search summary of the abstract.",
+        "sources": [
+          {"url": "https://www.acog.org/womens-health/faqs/having-a-baby-after-age-35-how-aging-affects-fertility-and-pregnancy", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://pubmed.ncbi.nlm.nih.gov/28917614/", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+          {"url": "https://www.researchgate.net/publication/11388268_Changes_with_age_in_the_level_and_duration_of_fertility_in_the_menstrual_cycle", "quality": "primary-via-summary", "accessed": "2026-10-01"}
+        ]
+      }
+    }
+  },
+
+  "time": {
+    "US": {
+      "primaryChildcare_householdsWithChildUnder6_hoursPerDay": {
+        "2025": {"all": 2.3, "women": 2.8, "men": 1.7},
+        "2024": {"all": 2.5, "women": 3.0, "men": 2.0}
+      },
+      "primaryChildcare_householdsWithYoungestChild6to17_minutesPerDay_2025": 47,
+      "leisureAndSportsHoursPerDay_2025": 5.2,
+      "socializingCommunicating_2025": {"shareEngagedOnAverageDay": 0.30, "minutesPerDay": 35},
+      "marriedParentsTimeWithSpouse": {
+        "hoursPerDay_allMarriedParents": "just over 4",
+        "hoursPerDay_dualEarner": 3.2,
+        "notes": "Excludes sleep and working together. From ATUS 2003, via the HHS/ACF OPRE brief 'Spending Time Together'. Old data; no newer official figure was found.",
+        "sources": [{"url": "https://www.healthymarriageinfo.org/resource-detail/spending-time-together/", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "sources": [
+        {"url": "https://www.bls.gov/news.release/atus.nr0.htm", "quality": "primary", "note": "ATUS 2025 results", "accessed": "2026-10-01"},
+        {"url": "https://www.bls.gov/opub/ted/2025/daily-time-use-in-households-with-young-children-in-2024.htm", "quality": "primary", "accessed": "2026-10-01"}
+      ]
+    },
+    "UK": {
+      "unpaidChildcare_employedWithDependentChildren_minutesPerDay_March2022": {"women": 84, "men": 55},
+      "allParents_childcareMinutes": {"mothers": 93, "fathers": 36, "note": "Older ONS time-use analysis via a secondary summary. Year not confirmed."},
+      "timeWithPartner": null,
+      "sources": [{"url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/familiesandthelabourmarketengland/2021/pdf", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+    },
+    "otherMarkets": {"value": null, "notes": "Time-use figures for Ireland, Canada (GSS Time Use) and Mexico (ENUT, INEGI) were not researched in this pass."}
+  },
+
+  "wellbeing": {
+    "socialRelationshipsAndMortality": {
+      "holtLunstad2010": {
+        "studies": 148,
+        "participants": 308849,
+        "meanFollowUpYears": 7.5,
+        "oddsRatioSurvival_strongerRelationships": 1.50,
+        "notes": "PLoS Medicine 2010. A 50% higher likelihood of survival with stronger social relationships, comparable to stopping smoking.",
+        "sources": [{"url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2910600/", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      },
+      "holtLunstad2015": {
+        "mortalityOddsRatio": {"socialIsolation": 1.29, "loneliness": 1.26, "livingAlone": 1.32},
+        "notes": "Perspectives on Psychological Science 10(2):227-237. Adjusted for confounders.",
+        "sources": [{"url": "https://journals.sagepub.com/doi/full/10.1177/1745691614568352", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+      }
+    },
+    "marriage": {
+      "mortality_unmarriedVsMarried_Roelfs2011_HR": 1.24,
+      "Roelfs2011_CI95": [1.19, 1.30],
+      "Wang2020": "21 studies, 7.9 million people: being unmarried is associated with higher all-cause, cancer, CVD and coronary heart disease mortality. Stronger in men for CVD and all-cause.",
+      "lifeSatisfaction_Lucas2003": "German SOEP, 15 years: marriage brings a short-term rise in life satisfaction, then on average a full return to baseline, with wide individual variation.",
+      "sources": [
+        {"url": "https://pubmed.ncbi.nlm.nih.gov/21715646/", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+        {"url": "https://ghrp.biomedcentral.com/articles/10.1186/s41256-020-00133-8", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+        {"url": "https://www.researchgate.net/publication/10857177_Reexamining_Adaptation_and_the_Set_Point_Model_of_Happiness_Reactions_to_Changes_in_Marital_Status", "quality": "primary-via-summary", "accessed": "2026-10-01"}
+      ]
+    },
+    "divorce": {
+      "mortality_Sbarra2011": {"HR_all": 1.23, "HR_men": 1.31, "HR_women": 1.13, "studies": 32, "people": "6.5 million+", "countries": 11},
+      "lifeSatisfaction_Lucas2005": "German SOEP, 18 years, 30,000+ people: satisfaction falls in the run-up to divorce and recovers gradually, but stays below the original baseline. A new, lower level settles after about 5 years.",
+      "sources": [
+        {"url": "https://doi.org/10.1177/1745691611414724", "quality": "primary-via-summary", "accessed": "2026-10-01"},
+        {"url": "https://doi.org/10.1111/j.1467-9280.2005.01642.x", "quality": "primary-via-summary", "accessed": "2026-10-01"}
+      ]
+    },
+    "friendshipAndStress": {
+      "Heinrichs2003": "Biological Psychiatry 54:1389-1398. 37 men in the Trier Social Stress Test. Support from their best friend during preparation lowered the salivary cortisol response. Oxytocin plus support gave the lowest cortisol and the most calm.",
+      "effectSizes": null,
+      "sources": [{"url": "https://www.zora.uzh.ch/id/eprint/65188/", "quality": "primary-via-summary", "accessed": "2026-10-01"}]
+    }
+  }
+}

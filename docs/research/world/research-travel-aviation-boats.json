@@ -1,0 +1,693 @@
+{
+  "_meta": {
+    "retrieved": "2026-09-30",
+    "purpose": "Real published figures for a life-simulation game: rental-car fees and damage liability, airline change rules abroad, private-pilot training and rules, Northeast US boating season and boat-loan default law, and small powerboats outside the US.",
+    "conventions": {
+      "sourceType": "'primary' = the authority's or company's own page or document (statute, regulator, airline, rental company, marina, maker, school); 'secondary' = a third party reporting or reproducing it (tour operator, news, blog, broker, dealer listing of another maker's boat is treated as primary for that dealer's own price only).",
+      "confirmed": "true = the figure was read directly from the fetched page or document on the retrieval date; false = seen only in a search-engine excerpt, a secondary source, or a page that could not be fetched (403, time-out, JavaScript-loaded value).",
+      "currency": "Figures are in the currency the source prints. VAT included where the source says so."
+    },
+    "fetchProblems": "britishairways.com (holding page), aa.com (403), united.com (time-out), ryanair help centre (403), vuela.aeromexico.com (maintenance page), ecfr.gov/federalregister.gov (bot wall; Cornell LII used instead), several CT marina PDFs (403), quicksilver-boats.com (403), tc.canada.ca fee cells (loaded by script, blank in HTML)."
+  },
+
+  "rentalFees": {
+    "usAirportConcessionRecovery": {
+      "explanation": {
+        "value": "Airport concession recovery fee (CRF/ACFR) reimburses the renter-facing company for the concession fee the airport charges it, usually ~10% of gross; companies commonly bill 11.11% because the recovered fee is itself subject to the airport's 10% (0.10/0.90 = 11.11%).",
+        "source": "https://rentalverdict.com/tips/concession-recovery-fee/",
+        "publisher": "RentalVerdict",
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "The arithmetic is standard; the companies' own sites define the fee but do not print a percentage per airport (it appears only in a live quote)."
+      },
+      "hertzDefinition": {
+        "value": "Hertz defines 'Airport Concession Fee Recovery (ACFR)' as a fee 'to reimburse Hertz for concession fees paid to the airport (hotel or train station) for each rental'; no percentage is printed on the definitions page.",
+        "source": "https://www.hertz.ca/rentacar/productservice/index.jsp?targetPage=fee_definitions.jsp",
+        "publisher": "Hertz",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "JFK": {
+        "percent": null,
+        "note": "Not printed on Hertz, Avis or National JFK location pages (Avis JFK page: 'prices displayed exclude taxes and fees'). Secondary blogs cite ~10% to 11.25%; treat as unconfirmed.",
+        "source": "https://avis.com/amp/en/locations/us/ny/jamaica/jfk",
+        "publisher": "Avis",
+        "sourceType": "primary",
+        "confirmed": false
+      },
+      "LAX": {
+        "percent": 11.11,
+        "customerFacilityCharge": "$12.00 per transaction day from 2026-01-01 (raised from $9.00), capped at 5 transaction days per rental, per LAWA's CFC increase report.",
+        "sourcePercent": "https://myrentright.com/tips/lax-airport-rental-car",
+        "publisherPercent": "MyRentRight",
+        "sourceCFC": "https://www.lawa.org/sites/lawa/files/2026-01/LAX%20CFC%20Increase%20Report--FINAL--2025%20Dec%2030.pdf",
+        "publisherCFC": "Los Angeles World Airports",
+        "dateCFC": "2025-12-30",
+        "sourceType": "secondary (percent); primary (CFC)",
+        "confirmed": false,
+        "note": "The 11.11% is secondary. The CFC figures came from a search excerpt of LAWA's own report, not a direct read."
+      },
+      "BDL": {
+        "percent": null,
+        "customerFacilityCharge": "$8.40 per rental day (Connecticut Airport Authority charge at Bradley), per Hartford Business Journal.",
+        "source": "https://hartfordbusiness.com/article/bradley-airports-210m-ground-transportation-center-faces-financial-roadblocks/",
+        "publisher": "Hartford Business Journal",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Page returned 403; figure from search excerpt. Concession percentage at BDL not published by Avis/Hertz/Enterprise location pages; a secondary source says '~10%'."
+      },
+      "HVN": {
+        "percent": null,
+        "note": "Tweed-New Haven has Avis/Budget and Hertz counters; no published concession-fee percentage found.",
+        "source": "https://www.avis.com/en/locations/nam/us/ct/new-haven/hvn",
+        "publisher": "Avis",
+        "sourceType": "primary",
+        "confirmed": false
+      },
+      "SFO": {
+        "percent": null,
+        "customerFacilityCharge": "$10 per contract (flat) per a secondary guide; another source says $9/day. Unresolved.",
+        "source": "https://myrentright.com/tips/sfo-airport-rental-car",
+        "publisher": "MyRentRight",
+        "sourceType": "secondary",
+        "confirmed": false
+      }
+    },
+    "oneWayDropFees": {
+      "enterpriseUS": {
+        "value": "A drop charge is a fee for picking up at one location and returning to another; it 'varies depending on location and time of year' and, if due, is disclosed at the time of reservation (payable at pickup).",
+        "source": "https://www.enterprise.com/en/car-rental-faqs/us-general/car-rental-drop-charge.html",
+        "publisher": "Enterprise Rent-A-Car",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "No fixed schedule is published; amount is route- and date-priced."
+      },
+      "enterpriseEurope": {
+        "value": "One Way Fee: charged when the vehicle is not returned to the pickup address; 'determined by the location and conditions of your rental and the costs of transportation of the Vehicle'; listed in the reservation if scheduled, on the invoice if unscheduled.",
+        "source": "https://www.enterprise.com/content/dam/enterprise/eu-fee-schedules/eu-fee-schedule-english.pdf",
+        "publisher": "Enterprise (EU Rental Agreement Fee Schedule)",
+        "date": "2026-04-23",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "hertzIreland": {
+        "value": "One-way fees in the Republic of Ireland range from EUR 20 to EUR 120 (includes Dublin Airport to Shannon Airport); into Northern Ireland EUR 160 to EUR 300 depending on location. No fee when returned to the pickup location.",
+        "source": "https://reservations.celtictours.com/images/IrelandandUK-rentalterms-asof091825.pdf",
+        "publisher": "Celtic Tours (reproducing Hertz Ireland terms)",
+        "date": "2025-09-17",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "note": "Read directly from the tour operator's PDF of supplier terms."
+      },
+      "hertzUS": null,
+      "avisUS": null,
+      "sixt": null,
+      "noteOnNulls": "Hertz, Avis and Sixt do not publish a drop-fee table; the fee is quoted per itinerary."
+    },
+    "premiumLocationSurcharges": {
+      "enterpriseIreland": {
+        "value": "Premium Location Fee: 15% in home city, 19% at airport (e.g., Dublin Airport); not included in the rates.",
+        "source": "https://reservations.celtictours.com/images/IrelandandUK-rentalterms-asof091825.pdf",
+        "publisher": "Celtic Tours (reproducing Enterprise Ireland terms)",
+        "date": "2025-09-17",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "note": "A search summary attributed the 19% to Hertz; the document itself places it under Enterprise Ireland. Hertz Ireland's 'Airport / Location Service' charge is included in inclusive rates, amount not printed."
+      },
+      "enterpriseUK": {
+        "value": "Premium Location Fee 20.0% (subject to VAT) per a secondary reproduction; another secondary gives an airport surcharge of 17.50% for Enterprise London.",
+        "source": "https://www.sheencotravel.com/enterprise-uk-terms-conditions/",
+        "publisher": "Sheenco Travel (reproducing Enterprise UK terms)",
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "The Celtic Tours PDF line reads 'Premium Location Fee: Not included in the 20%' (garbled). Enterprise's own EU fee schedule defines the fee but prints no percentage."
+      },
+      "sixtHeathrow": {
+        "value": "About 21% of the total hire, per customer reviews; Sixt does not print it.",
+        "source": "https://www.tripadvisor.co.uk/Attraction_Review-g186338-d33025476-Reviews-SIXT_Car_Hire_London_Heathrow_Airport_T2_T3-London_England.html",
+        "publisher": "Tripadvisor user reviews",
+        "sourceType": "secondary",
+        "confirmed": false
+      },
+      "hertzHeathrow": {
+        "value": null,
+        "note": "Hertz UK lists a 'Premium Location fee' at Heathrow among rental conditions but no amount is published outside a quote.",
+        "source": "https://www.hertz.co.uk/p/car-hire/uk/london/london-heathrow-airport",
+        "publisher": "Hertz UK",
+        "sourceType": "primary",
+        "confirmed": false
+      }
+    },
+    "renterOwnInsuranceAndCards": {
+      "personalAutoPolicyUS": {
+        "value": "If the renter carries collision and comprehensive, the personal policy generally extends to a rental car with the same limits and deductible; the renter pays the deductible, a claim may raise premiums, and many insurers do not pay the rental company's loss-of-use or diminished-value charges (GEICO and Farmers said they do not; Nationwide and Liberty Mutual said they do with collision+comprehensive).",
+        "source": "https://www.wthr.com/article/news/investigations/13-investigates/surprised-drivers-facing-expensive-rental-car-fee-loss-of-use-thousands-insurance/531-f1f2e5d5-30d0-4cd6-84a5-328071e8eea6",
+        "publisher": "WTHR 13 Investigates",
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Varies by insurer and state; State Farm and GEICO consumer pages say the same in general terms."
+      },
+      "ontarioOPCF27": {
+        "value": "Ontario drivers need the optional OPCF 27 endorsement ('Liability for Damage to Non-Owned Automobile(s)') for their own policy to answer for damage to a rented car; it covers vehicles of 4,500 kg GVWR or less, on the perils carried, subject to a deductible and limit; commonly a 30-day limit on rentals.",
+        "source": "https://www.fsrao.ca/opcf-27-liability-damage-non-owned-automobiles-and-other-coverages-when-insured-persons-drive-rent-or-lease-other-automobiles",
+        "publisher": "Financial Services Regulatory Authority of Ontario",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "Summary from search excerpt; FSRA page not fetched."
+      },
+      "visaSignatureARCDW": {
+        "value": "Visa Signature Auto Rental CDW: must initiate and pay the entire rental with the card and decline the rental company's CDW/LDW; within the country of residence it is secondary (pays the personal-policy deductible plus unreimbursed valid administrative and loss-of-use charges); covers theft/collision up to actual cash value, valid loss-of-use, admin fees, reasonable towing; rental periods up to 15 consecutive days at home, 31 abroad; excludes expensive/exotic/antique cars, certain vans, open-bed vehicles, trucks, motorcycles, limousines, RVs; excludes personal liability and injury; no benefit for rentals in Israel, Jamaica, the Republic of Ireland or Northern Ireland; claim notice within 60 days, documents within 365 days.",
+        "source": "https://ecm.capitalone.com/WCM/card/visa-signature-guide-to-benefits-revised.pdf",
+        "publisher": "Capital One / Visa (Guide to Benefits, form VARCDW-2013, 04/14)",
+        "date": "2014-04",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Issuer-specific; some premium Visa Infinite cards give primary coverage."
+      },
+      "amexCRLDI": {
+        "value": "Amex-network 'USA and Canada Car Rental Loss & Damage Insurance' (Wells Fargo Propel 365, underwritten by Federal Insurance Co./Chubb): excess (secondary) coverage—renter must first claim on personal auto insurance; up to $50,000 per rental on actual-cash-value basis; rental must be charged entirely to the card and the rental company's damage coverage may be declined; max 31 consecutive days; excludes loss of use, trucks, RVs, pickups, minibuses, exotic/limited-edition cars, vehicles with replacement value over $50,000, and cars over 25 years old; claim notice within 45 days.",
+        "source": "https://www.americanexpress.com/content/dam/amex/us/network/documents/wellsfargopropel/propel365/Propel%20365_CardBenefits_Travel_Car%20rental%20loss%20and%20damage%20insurance_Terms.pdf",
+        "publisher": "American Express / Wells Fargo",
+        "date": "2013-09-16",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Amex's own consumer card pages add that CRLDI is not available in Australia, Italy and New Zealand (search excerpt, not fetched)."
+      },
+      "canadaVisaInfinite": {
+        "value": "Scotiabank Visa Infinite rental-car collision/loss damage insurance: most private passenger vehicles, up to 48 consecutive days, MSRP up to CAD 65,000; pay the full rental on the card and decline the agency's CDW/LDW.",
+        "source": "https://www.scotiabank.com/ca/common/pdf/credit_card/Infinite_RentCar_WEB_ENGLISH.pdf",
+        "publisher": "Scotiabank",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "From search excerpt; Canadian card certificates are usually primary for damage (not secondary to personal auto)—not verified in the certificate text."
+      }
+    },
+    "damageWithoutWaiver": {
+      "hertzUS": {
+        "value": "Without LDW the renter is responsible for 'the full value of the car at the time of rental, less its salvage value, plus expenses for towing, storage impound fees, an administrative fee and a reasonable charge for loss of use'. State caps: California—fair market value plus actual towing, storage, impound and an administrative fee, vandalism not related to theft capped at $500; Nevada—vandalism capped at $2,500; Illinois—non-theft damage capped at $15,500, theft $2,000 unless renter at fault; New York—actual and reasonable repair cost incl. towing/storage/impound, or fair market value before damage, whichever is less.",
+        "source": "https://www.hertz.com/rentacar/reservation/reviewmodifycancel/templates/rentalTerms.jsp?EOAG=FAT&KEYWORD=COVERAGES",
+        "publisher": "Hertz",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "enterpriseUKIreland": {
+        "value": "Damage-waiver excess per incident: UK GBP 1,750 (mini/compact) to GBP 2,700; Ireland EUR 2,000 to EUR 3,000 (premium). Excess protection reduces these to GBP/EUR 0-500. Administration fee for processing damage, loss or theft: GBP 78 or GBP 100 (UK), EUR 78 or EUR 100 (Ireland); up to GBP 45 / EUR 35 per fine processed.",
+        "source": "https://www.enterprise.com/content/dam/enterprise/eu-fee-schedules/eu-fee-schedule-english.pdf",
+        "publisher": "Enterprise (EU Rental Agreement Fee Schedule)",
+        "date": "2026-04-23",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Table columns are jumbled in the PDF text layer; the ranges are firm, the exact class-to-amount pairing is approximate."
+      },
+      "hertzIreland": {
+        "value": "Basic CDW damage excess held on the card: EUR 2,000 (groups A-B), 2,500 (C-D), 3,500 (E, F, Q, G, V, W), 4,000 (T, I, Y), 5,000 (N). Super Inclusive removes the excess but not tires, wheels, glass, keys or fuel.",
+        "source": "https://reservations.celtictours.com/images/IrelandandUK-rentalterms-asof091825.pdf",
+        "publisher": "Celtic Tours (reproducing Hertz Ireland terms)",
+        "date": "2025-09-17",
+        "sourceType": "secondary",
+        "confirmed": true
+      }
+    }
+  },
+
+  "airlineChanges": {
+    "ryanair": {
+      "value": "Flight change fee per passenger per one-way flight: EUR/GBP 45 online; EUR/GBP 60 via reservation centre or airport; plus any fare difference, no refund if the new fare is lower. Online changes up to 2.5 hours before the earlier of the original or new departure. Flexi Plus: no change fee, fare difference only.",
+      "source": "https://www.ryanair.com/us/en/useful-info/help-centre/fees",
+      "publisher": "Ryanair",
+      "date": null,
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "Figures from search-engine excerpt of Ryanair's help pages; direct fetch returned an empty table / 403."
+    },
+    "aerLingus": {
+      "value": "Online change fee per customer per flight: short-haul (Ireland/UK/Europe) EUR 40 / GBP 35 / USD 60; long-haul (Ireland-North America) EUR 100 / GBP 90 / USD 150; Cork/Knock/Shannon-Heathrow EUR 49 within 60 days, EUR 29 outside 60 days. Flex fares: date/time changes free, fare difference only. Business: no change fees. Fare difference applies on Saver, Plus and Smart.",
+      "source": "https://www.aerlingus.com/localized/en/modals/change-fee.html",
+      "publisher": "Aer Lingus",
+      "date": null,
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "A search excerpt of Aer Lingus pages adds transatlantic Saver EUR 140 / GBP 120 / USD 210 when changed through Guest Services or at the airport, and Smart EUR 59 / GBP 55 online (unconfirmed)."
+    },
+    "britishAirways": {
+      "value": null,
+      "secondaryClaims": "Long-haul economy families: Economy Basic (no checked bag; changes for a fee or not at all on some transatlantic joint-business fares), Economy Standard (change fee plus fare difference; blogs cite 'from GBP 100+'), Economy Flex (fare difference only). Short-haul Euro Traveller change fee reported as GBP 60 plus fare difference.",
+      "source": "https://www.britishairways.com/travel-partner-connect/our-products/fares/longhaul-fares",
+      "publisher": "British Airways",
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "ba.com served a 'high demand' holding page to every fetch; no BA-published figure could be read. Keep null for the fee amount."
+    },
+    "airCanada": {
+      "value": "Within Canada, per one way: Economy Basic 'No changes permitted'; Economy Standard CAD 100.00-120.00 change fee; Economy Flex, Comfort, Latitude 'No change fee'; fare difference applies when changing to a higher fare. Canada-US and international tables are on separate tabs (not captured).",
+      "source": "https://www.aircanada.com/ca/en/aco/home/legal/products-and-services.html",
+      "publisher": "Air Canada",
+      "date": null,
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "International Standard change fee not captured; secondary guides say it runs higher (about CAD 200+) and that international Flex may carry a fee. Air Canada paused change fees on tickets issued 2025-08-27 to 2025-09-12 (strike recovery), one change allowed, fare difference applies (https://www.aircanada.com/us/en/aco/home/book/travel-news-and-updates/2025/we-re-pausing-change-and-standard-seat-selection-fees.html, confirmed)."
+    },
+    "aeromexico": {
+      "value": "Basic fare: no changes and no refund after the 24-hour window. Classic fare change fees reported: domestic MXN 1,520 / USD 90; to USA USD 200 (first change free on flights from the US to Mexico); Canada USD 160-180; Central America/Caribbean USD 215-235; Europe USD 320-340; Japan USD 300-320, varying by season and days before departure.",
+      "source": "https://www.vuela.aeromexico.com/branded-fares/classic/",
+      "publisher": "Aeromexico",
+      "date": null,
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "Search excerpt of Aeromexico's own fare-family pages; the pages returned an error on fetch."
+    },
+    "usBasicEconomy": {
+      "united": {
+        "value": "Basic Economy is non-changeable except under the 24-hour flexible booking policy; 'the only way to make changes to a Basic Economy trip is to cancel your flights and book new ones.' No same-day changes.",
+        "source": "https://www.united.com/en/us/fly/travel/inflight/basic-economy.html",
+        "publisher": "United Airlines",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "Page timed out; wording from search excerpt of united.com."
+      },
+      "delta": {
+        "value": "Delta Main Basic: 'Ticket changes are not allowed after the 24-Hour Risk-Free Cancellation period, but the option to change or cancel for a fee may be available'; not eligible for same-day confirmed or standby.",
+        "source": "https://www.delta.com/us/en/onboard/onboard-experience/delta-main-basic",
+        "publisher": "Delta Air Lines",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Delta's wording now allows a fee-based change/cancel in some markets; 'no changes allowed' is not the whole rule for Delta."
+      },
+      "american": {
+        "value": "Basic Economy: no changes after the 24-hour window, not even for a fee (secondary sources); cancellations generally forfeit value.",
+        "source": "https://onemileatatime.com/guides/american-airlines-basic-economy/",
+        "publisher": "One Mile at a Time",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "aa.com returned 403."
+      }
+    }
+  },
+
+  "aviation": {
+    "pplCostUK": {
+      "marketRange": {
+        "value": "Budget GBP 14,000-16,500 for a full Part-FCL UK PPL in 2026; two-seat trainers GBP 210-240/hour, four-seaters GBP 250-280/hour. Package prices are advertised on the 45-hour legal minimum, but students typically need 55-60 hours.",
+        "source": "https://www.pplclub.co.uk/clubguides/cost-of-uk-ppl",
+        "publisher": "PPL Club",
+        "date": "2026",
+        "sourceType": "secondary",
+        "confirmed": true
+      },
+      "schoolExamples": {
+        "value": "FLYER's 2026 survey: Full Sutton Flying Centre (York) 55 h x GBP 220 = total GBP 14,066; Freedom Aviation (Cotswold Airport) 55 h x GBP 300 = GBP 19,401; hourly range GBP 185 (C152, Virage Aviation, Beccles) to GBP 315 (C152, Flight Training London, Elstree). Realistic UK total GBP 14,000-19,000.",
+        "source": "https://flyer.co.uk/feature/learn-to-fly-2026-what-does-it-cost-to-get-a-ppla-part-6-real-budgets-smarter-spending/",
+        "publisher": "FLYER magazine",
+        "date": "2026",
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "From search excerpt of the article series."
+      }
+    },
+    "pplCostIreland": {
+      "value": "Hotel Bravo Flying Club (Weston Airport, Dublin): solo EUR 160/h, dual EUR 175/h (confirmed on the club site). Club's older published breakdown (search excerpt): joining EUR 500 + 24 months membership EUR 1,560 + 45 h flying EUR 5,850 + ground school EUR 1,000 = EUR 8,910 at the legal minimum. National Flight Centre (Weston) PPL component of its ATPL reported at about EUR 13,000-15,000.",
+      "source": "https://hotelbravoflyingclub.com/ppl-costs-private-pilots-licence-weston/",
+      "publisher": "Hotel Bravo Flying Club",
+      "date": null,
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "Only the hourly rates were confirmed directly; the EUR 8,910 total is from a search excerpt and assumes exactly 45 h."
+    },
+    "pplCostCanada": {
+      "minimumHours": {
+        "value": "Transport Canada Standard 421.26: at least 45 hours flight training, including 17 h dual (3 h cross-country, 5 h instrument of which up to 3 h may be ground/sim) and 12 h solo (5 h cross-country incl. a 150 nm flight with 2 full-stop landings away from base); plus 40 h ground school.",
+        "source": "https://tc.canada.ca/en/corporate-services/acts-regulations/list-regulations/canadian-aviation-regulations-sor-96-433/standards/standard-421-flight-crew-permits-licences-ratings-canadian-aviation-regulations-cars",
+        "publisher": "Transport Canada",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "Content from search excerpts quoting the standard; TC page not fetched."
+      },
+      "schoolEstimate": {
+        "value": "Calgary Flying Club at the TC minimum: 45 h C172 @ CAD 220 = 9,900; 17 h dual instruction @ CAD 80 = 1,360; 3 h simulator @ CAD 135 = 405; flight test 500; written exam 200; ground school 450; supplies 325; total CAD 13,140+ before GST (medical not included). Club says students typically spend CAD 18,000-25,000; national average 85-90 h to be test-ready.",
+        "source": "https://calgaryflyingclub.com/private-pilot-license/",
+        "publisher": "Calgary Flying Club",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "faaThirdClassMedical": {
+      "validity": {
+        "value": "For private-pilot privileges a third-class certificate runs to the end of the 60th month after the exam month if under 40 on the exam date, the 24th month if 40 or older.",
+        "source": "https://www.law.cornell.edu/cfr/text/14/61.23",
+        "publisher": "Cornell LII (14 CFR 61.23(d))",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "cost": {
+        "value": "FAA does not set the fee; each AME does. Published examples: University of Utah Health USD 160 (any class; EKG USD 60 extra); New Jersey AME (flyingdoc.us) 3rd class USD 125, 2nd USD 150, 1st USD 175, cash/check only.",
+        "sources": [
+          {"url": "https://healthcare.utah.edu/occupational-medicine/faa-medical-exams", "publisher": "University of Utah Health", "sourceType": "primary", "confirmed": true},
+          {"url": "https://flyingdoc.us/our-fees-1", "publisher": "New Jersey Aviation Medical Examiner", "sourceType": "primary", "confirmed": true}
+        ],
+        "note": "Secondary roundups cite USD 70-200 nationally."
+      }
+    },
+    "basicMed": {
+      "value": "Alternative to a medical certificate (14 CFR 61.23(c)(3), Part 68): hold a US driver's license, have held a medical after 2006-07-14, complete the online medical course every 24 calendar months and a state-licensed physician's exam every 48 calendar months. Aircraft/ops limits (61.113(i), as expanded by the FAA Reauthorization Act of 2024, effective 2024-11-12): aircraft certificated for no more than 7 occupants, max takeoff weight 12,500 lb, no more than 6 passengers, at or below 18,000 ft MSL, not above 250 KIAS, within the US unless the foreign country allows it, not for compensation.",
+      "source": "https://www.law.cornell.edu/cfr/text/14/61.113",
+      "publisher": "Cornell LII (14 CFR 61.113(i)); FAA newsroom 'FAA Updates BasicMed Program'",
+      "date": "2024-11-12",
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "The older 6-occupant / 6,000 lb / 5-passenger limits still appear in many guides and are out of date."
+    },
+    "vfrWeatherMinimums": {
+      "value": {
+        "classB": "3 sm; clear of clouds",
+        "classCandD": "3 sm; 500 ft below, 1,000 ft above, 2,000 ft horizontal",
+        "classE_below10000MSL": "3 sm; 500 below, 1,000 above, 2,000 horizontal",
+        "classE_at_or_above10000MSL": "5 sm; 1,000 below, 1,000 above, 1 sm horizontal",
+        "classG_1200AGL_or_less": "Day: 1 sm, clear of clouds. Night: 3 sm, 500/1,000/2,000",
+        "classG_above1200AGL_below10000MSL": "Day: 1 sm, 500/1,000/2,000. Night: 3 sm, 500/1,000/2,000",
+        "classG_above1200AGL_at_or_above10000MSL": "5 sm; 1,000 below, 1,000 above, 1 sm horizontal",
+        "ceilingRule_91_155c": "No VFR beneath a ceiling within controlled airspace designated to the surface of an airport when the ceiling is less than 1,000 ft.",
+        "surfaceArea_91_155d": "At least 3 sm ground (or flight) visibility to take off, land or enter the pattern in a Class B, C, D or E surface area without a special VFR clearance."
+      },
+      "source": "https://www.law.cornell.edu/cfr/text/14/91.155",
+      "publisher": "Cornell LII (14 CFR 91.155)",
+      "date": null,
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "The two Class G rows above 1,200 ft AGL were not printed in the fetch summary; they are the regulation's standard values and are reproduced from the same table."
+    },
+    "rainAndThunderstorms": {
+      "legality": {
+        "value": "No rule bars a private pilot from flying in rain; what the rules require is that the flight stay within the VFR visibility and cloud-clearance minimums (91.155) and within the pilot's certificate (no IFR without a rating). Rain that cuts visibility below minimums, or cloud, ends the VFR flight.",
+        "source": "https://www.law.cornell.edu/cfr/text/14/91.155",
+        "publisher": "Cornell LII",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "This is an inference from the regulation's scope, stated in our own words."
+      },
+      "thunderstormAvoidance": {
+        "value": "FAA Aeronautical Information Manual, Thunderstorm Flying: 'Do avoid by at least 20 miles any thunderstorm identified as severe or giving an intense radar echo'; don't fly under a thunderstorm even if you can see through to the other side.",
+        "source": "https://faraim.org/faa/aim/chapter-7/section-7-1-27.html",
+        "publisher": "FAA AIM 7-1-27 (via faraim.org; formerly numbered 7-1-29)",
+        "date": "2025-02-20",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "faa.gov AIM page returned 403; quote from search excerpts of the AIM text."
+      },
+      "schoolLimits": {
+        "value": "Louisiana Tech flight SOP (Sept 2025): student-pilot solo local minimums 2,000 ft ceiling / 5 sm visibility, max wind 12 kt, max crosswind 5 kt (gust is the limiting value); cross-country 3,000/5, 12 kt, 5 kt. Private pilots (renters): 2,000/5 local, 15 kt wind, 10 kt crosswind. 'Unrestricted' status means no thunderstorms or SIGMETs within 20 NM of the airport; embedded thunderstorms or icing = dual only. Private students are introduced to a 15-kt crosswind in the simulator.",
+        "source": "https://www.latech.edu/documents/liberal-arts/aviation/SOP%20and%20Safety%20Proc%20Ver%200%20Sep%202025%20PDF.pdf",
+        "publisher": "Louisiana Tech University Professional Aviation",
+        "date": "2025-09",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Other schools cited in search excerpts use 8-10 kt solo crosswind limits or half the aircraft's demonstrated crosswind."
+      }
+    }
+  },
+
+  "boatSeason": {
+    "haulOutTiming": {
+      "value": "Northeast marinas run a May-to-October in-water season. Examples: Moriches Boat & Motor (Long Island) summer slips April 1-October 31; Westport CT town marinas May 1 to Labor Day and to October 31, no services November 1-30; Stonington CT 2020 season April 18-November 8; Clinton CT town ramp supervised April 1-November 1. Boat insurers in the Northeast typically set a lay-up period of November 1 to April 1 (some November 30 to April 1).",
+      "sources": [
+        {"url": "https://www.morichesboatandmotor.com/long-island-marina-boat-storage", "publisher": "Moriches Boat & Motor", "sourceType": "primary", "confirmed": true},
+        {"url": "https://www.westportct.gov/government/departments-a-z/parks-and-recreation/marinas-and-boating/marinas", "publisher": "Town of Westport CT", "sourceType": "primary", "confirmed": false},
+        {"url": "https://clintonct.org/624/Town-Marina", "publisher": "Town of Clinton CT", "sourceType": "primary", "confirmed": false},
+        {"url": "https://www.thehulltruth.com/northeast/152184-marine-insurance-lay-up-period.html", "publisher": "The Hull Truth forum (lay-up dates)", "sourceType": "secondary", "confirmed": false}
+      ],
+      "date": null
+    },
+    "winterStorageRates": {
+      "burrsMarinaCT": {
+        "value": "USD 72 per foot (USD 69.84 cash/check) for 2025-2026, including haul-out, power-wash, blocking, storage and spring relaunch (extra fee for wash-water removal); winterization and shrink-wrap by quote. Full for 2025-2026.",
+        "source": "https://burrsmarina.com/dockage",
+        "publisher": "Burr's Marina, New London CT",
+        "date": "2025",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "crockersBoatyardCT": {
+        "value": "2026/2027: outside storage USD 62-82 per foot; indoor USD 13.00 per sq ft; packages include hauling, bottom washing, blocking and spring relaunch. (Search excerpt for 2025/2026: USD 59-79/ft outside, USD 12.25/sq ft indoor.)",
+        "source": "https://crockersboatyardinc.com/winter-storage/",
+        "publisher": "Crocker's Boatyard, New London CT",
+        "date": "2026",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "norwalkCoveCT": {
+        "value": "2025 winter storage USD 89.75 per foot LOA.",
+        "source": "https://www.norwalkcove.com/wp/wp-content/uploads/norwalkcove.com/2025/09/2025-2026-Storage-Proposals-Winter-Only-Customers.pdf",
+        "publisher": "Norwalk Cove Marina, Norwalk CT",
+        "date": "2025-09",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "PDF 403; figure from search excerpt."
+      },
+      "allSeasonsMarineWorksCT": {
+        "value": "Dry-land storage USD 89/ft (LOA 25 ft and under), USD 94/ft over 25 ft; shrink-wrap USD 27/ft (to 25 ft), USD 29/ft over.",
+        "source": "https://www.allseasonsmarineworks.com/wp/wp-content/uploads/allseasonsmarineworks.com/2025/09/ASMW-Winter-Storage-Rates-2025-26.pdf",
+        "publisher": "All Seasons Marine Works (CT)",
+        "date": "2025-09",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "PDF 403; figures from search excerpt."
+      },
+      "marinaAtHighlandLakeCT": {
+        "value": "Outdoor storage with shrink-wrap included USD 47/ft.",
+        "source": "https://www.marinahighlandlake.com/winter-service",
+        "publisher": "The Marina at Highland Lake, Winsted CT",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "403; search excerpt."
+      },
+      "morichesNY": {
+        "value": "Winter rack storage (boats up to 23 ft) USD 75 per foot; summer slip USD 110 per foot (April 1-October 31).",
+        "source": "https://www.morichesboatandmotor.com/long-island-marina-boat-storage",
+        "publisher": "Moriches Boat & Motor, Center Moriches NY",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "winterizationAtHome": {
+      "value": "A trailered boat kept at home still needs winterizing in a freezing climate (fuel stabilizer, fogging, lower-unit oil, draining/antifreeze of water passages, battery off). Published dealer prices: Long Lake Marine (Naples, Maine) outboard 61-200 hp USD 599 + tax, 201-400 hp USD 699, jet/PWC USD 499, V6-V8 sterndrive USD 789; outdoor shrink-wrapped storage USD 1,750; non-customers may face a USD 300 inspection. Secondary guides: outboards under 30 hp USD 100-200 at a marina, over 30 hp USD 150-300; DIY materials about USD 50-70.",
+      "source": "https://www.longlakemarine.com/connecticut-boat-storage/",
+      "publisher": "Long Lake Marine (Maine; URL slug says Connecticut)",
+      "date": null,
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "No Connecticut or New York marina's outboard winterization price list was reachable; the nearest confirmed list is in Maine. A search excerpt quoted USD 519 for up to 60 hp at the same dealer."
+    },
+    "boatLoanDefault": {
+      "uccArticle9": {
+        "value": "Where no consumer statute displaces it, a boat loan is enforced under UCC Article 9: after default the secured party may take possession without judicial process if it proceeds without breach of the peace (9-609); must send reasonable authenticated notice before disposition (9-611, 9-613/9-614 for consumer goods); every aspect of the sale must be commercially reasonable (9-610); debtor is liable for any deficiency and entitled to any surplus (9-615), with the consumer-goods rebuttable-presumption / explanation rules (9-616, 9-626).",
+        "source": "https://www.law.cornell.edu/ucc/9/9-609",
+        "publisher": "Cornell LII (Uniform Commercial Code 9-609)",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "9-609 text confirmed; the other section summaries are from the uniform text, not fetched this session."
+      },
+      "documentedVesselsFederal": {
+        "value": "A preferred ship mortgage on a Coast Guard-documented (or state-titled) vessel may also be enforced in admiralty: civil action in rem against the vessel, and in personam against the mortgagor for the outstanding debt or any deficiency (46 U.S.C. 31325).",
+        "source": "https://www.law.cornell.edu/uscode/text/46/31325",
+        "publisher": "Cornell LII (46 U.S.C. 31325)",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "connecticut_36a_785": {
+        "value": "Covers boats. Connecticut's Retail Installment Sales Financing Act defines 'goods' as consumer goods (including motor vehicles) with aggregate cash price up to USD 75,000 and defines 'boat' (any watercraft other than a seaplane). On default the holder may retake without breach of the peace, else by legal process; may give 10 days' notice of intent to retake stating the cure; if no notice, must hold the goods 15 days for redemption; must send within 3 days a statement of the unaccelerated sum due and expenses; must resell 15-180 days after retaking with 10 days' notice; proceeds go to resale costs, then retaking/storage costs, then balance, surplus to buyer. Deficiency is barred except under (g): for a boat with cash price over USD 4,000 the creditor may recover only the balance plus expenses minus the boat's fair market value, prima facie the average of NADA Appraisal Guide for Boats (Eastern) average trade-in and highest retail value (or actual resale price if higher).",
+        "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "publisher": "Connecticut General Assembly (Gen. Stat. 36a-770, 36a-785)",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Boat language added by P.A. 94-134; the USD 4,000 threshold by P.A. 16-65; USD 75,000 'goods' cap per current text (P.A. 23-126 redefined goods). A boat over USD 75,000 cash price falls outside RISFA and back to UCC Article 9."
+      },
+      "california_ReesLevering": {
+        "value": "Does not cover boats. Civil Code 2981 defines 'motor vehicle' as a vehicle required to be registered under the Vehicle Code, bought primarily for personal or family use; vessels are not registered under that scheme, and trailers sold with vessels are specifically excluded.",
+        "source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=2981",
+        "publisher": "California Legislative Information",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "california_Unruh": {
+        "value": "Covers boats as 'goods' up to a price limit. Civil Code 1802.1: 'goods' are tangible chattels bought primarily for personal, family or household use, excluding Vehicle Code-registered vehicles, but including a trailer sold with a vessel. 1801.4 exempts the sale of any vessel whose cash price (with accessories and equipment) exceeds USD 25,000. Within Unruh: after repossession the holder must within 10 days give notice of intent to sell at public sale or retain in satisfaction (1812.2), buyer may redeem within 10 days of notice and at any time before sale (1812.2), at least 10 days' notice of a public sale (1812.3), proceeds go to sale expenses, retaking/storage/reconditioning costs incl. reasonable attorney fees, then balance (1812.4), and the holder may NOT recover any deficiency (1812.5). A boat over USD 25,000 is governed by the Commercial Code (UCC Article 9), where a deficiency is recoverable.",
+        "sources": [
+          "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1802.1",
+          "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1801.4",
+          "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1812.2",
+          "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1812.5"
+        ],
+        "publisher": "California Legislative Information",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    }
+  },
+
+  "boatsAbroad": {
+    "uk": {
+      "boatPrices": {
+        "jeanneauCapCamarat55CC": {
+          "value": "New 2026 Jeanneau Cap Camarat 5.5 CC Series 2 (5.48 m) with Honda BF100: GBP 39,995 inc VAT (dealer says over GBP 4,900 below RRP and includes over GBP 7,000 of options).",
+          "source": "https://morganmarine.com/boat/jeanneau-cap-camarat-5-5-cc-series-2/",
+          "publisher": "Morgan Marine (UK Jeanneau dealer)",
+          "date": "2026",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "Dealer offer, not the maker's list price; other 2026 UK listings at GBP 41,995."
+        },
+        "quicksilverActiv555Open": {
+          "value": null,
+          "note": "No UK new-boat list price was reachable (quicksilver-boats.com 403). A 2025 UK listing showed GBP 19,710 hull only (engine packages extra); used 2018-2021 with Mercury F100 GBP 22,950-25,950.",
+          "source": "https://uk.boats.com/boats-for-sale/?make=quicksilver&model=activ-555-open",
+          "publisher": "boats.com UK",
+          "sourceType": "secondary",
+          "confirmed": false
+        },
+        "beneteauFlyer": null,
+        "parker": null
+      },
+      "licence": {
+        "value": "No licence or certificate of competence is required to skipper a pleasure vessel under 24 m load-line length or under 80 GT in UK territorial waters or on the high seas. Inland waterways require a boat (navigation) licence, which needs a Boat Safety Scheme certificate and insurance; that is not an operator licence.",
+        "source": "https://www.rya.org.uk/regulations/pleasure-craft-regulations/",
+        "publisher": "Royal Yachting Association",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "ryaPowerboatLevel2": {
+        "value": "Two-day course. UKSA (West Cowes, Isle of Wight): from GBP 290 course only, GBP 330 residential. Other published prices (search excerpts): Sea Training Sussex GBP 295 weekday / 325 weekend; Flying Fish (Cowes) GBP 340; Solent Boat Training GBP 199-349 by season; University of Southampton GBP 149.25 members / 199 non-members.",
+        "source": "https://uksa.org/course/rya-powerboat-level-2/",
+        "publisher": "UKSA",
+        "date": "2026",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Only the UKSA figure was read directly."
+      },
+      "marinaTariffs": {
+        "mdlHamblePoint": {
+          "value": "Tariff valid to 31 March 2027, per metre LOA inc 20% VAT: monthly berthing up to 8 m GBP 110.60/m, 8.1-10 m 135.80, 10.1-12.5 m 158.75, 12.6 m+ 172.45 (min charge 7 m); daily visitor up to 12.5 m GBP 5.55/m; dry stack monthly up to 7 m GBP 99.80/m; storage ashore up to 10 m GBP 9.70/m/week. Trailer boating (trailer storage plus unlimited slipway, across MDL group) up to 5.9 m: GBP 372/m per year, GBP 262/m for summer (April-September), GBP 47.50/m per month. Annual berths are by quotation only (not printed).",
+          "source": "https://www.mdlmarinas.co.uk/_assets/hamble-point-april-2026-tariff.pdf",
+          "publisher": "MDL Marinas (Hamble Point Marina, Hamble, Southampton)",
+          "date": "2026-04",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "A 5.5 m boat on a trailer at Hamble Point: 5.5 x 372 = GBP 2,046 a year, or 5.5 x 262 = GBP 1,441 for the summer."
+        },
+        "limehouseMarina": {
+          "value": null,
+          "note": "Aquavista does not publish a per-metre tariff for Limehouse; prices are by contract. A houseboat seller quotes GBP 12,490-14,010 a year for its floating homes there, which is not comparable to a small powerboat berth.",
+          "source": "https://bluefieldhouseboats.com/m-series-houseboat-at-limehouse-marina",
+          "publisher": "Bluefield Houseboats",
+          "sourceType": "secondary",
+          "confirmed": false
+        }
+      }
+    },
+    "ireland": {
+      "boatPrice": {
+        "value": null,
+        "note": "No Irish dealer's price for a new 5-6 m outboard boat was found. Euro-zone listings: new Quicksilver Activ 555 Open with Mercury 40 hp Pro EUR 27,820 inc VAT (continental dealer); new Activ 555 Open EUR 34,800 inc VAT (yachtall); 2026 model EUR 42,442 (French dealer). Irish VAT (23%) differs from those countries, so they are indicative only.",
+        "source": "https://www.yachtall.com/en/boats/for-sale/quicksilver-activ-555",
+        "publisher": "Yachtall",
+        "sourceType": "secondary",
+        "confirmed": false
+      },
+      "licence": {
+        "value": "Ireland, like the UK, does not require a certificate of competency or licence to operate a leisure craft under 24 m / 80 t in its waters; minimum ages apply (reported as over 12 for most pleasure craft, over 16 for personal watercraft and fast power craft).",
+        "source": "https://www.citizensinformation.ie/en/travel-and-recreation/sport-and-leisure/licensing-of-boats-and-watercraft-in-ireland/",
+        "publisher": "Citizens Information (Ireland)",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "Page 403; content from search excerpts. Age limits come from S.I. 921/2005 (Pleasure Craft Safety Regulations) per the Code of Practice."
+      },
+      "ryaPowerboatLevel2": {
+        "value": "Irish National Sailing & Powerboat School, West Pier, Dún Laoghaire: EUR 325 for the two-day RYA Powerboat Level 2 (18-19 July 2026).",
+        "source": "https://courses.inss.ie/product/rya-powerboat-level-2-july-2026/",
+        "publisher": "Irish National Sailing & Powerboat School",
+        "date": "2026",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "dunLaoghaireMarina": {
+        "value": "Annual EUR 586.00/m (1 April-31 March); summer EUR 445.00/m (1 April-30 September); winter EUR 239.00/m (1 October-31 March); visitor monthly EUR 91.00/m, weekly EUR 24.00/m, nightly EUR 4.80/m; day visit (max 6 h) EUR 7.00.",
+        "source": "https://www.dlmarina.com/rates/",
+        "publisher": "Dún Laoghaire Marina",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "canada": {
+      "boatPrices": {
+        "princecraftSport175Max": {
+          "value": "2026 Princecraft Sport 175 MAX (5.3 m / 17 ft 5 in) with Mercury 115 Pro XS and galvanized single-axle braked trailer: MSRP CAD 68,235, dealer sale price CAD 63,485 (Edmonton, AB). Princecraft's own site shows prices only after a postal code is entered.",
+          "source": "https://www.barryjaysmarine.com/New-Inventory-2026-Princecraft-Boat-Sport-175-Max-Barry-Jay-s-and-Rainbow-Marine-17313474",
+          "publisher": "Barry Jay's and Rainbow Marine (Princecraft dealer)",
+          "date": "2026",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "Search excerpts give other 2026 Sport 175 MAX dealer figures of CAD 56,451-62,988 and a 2026 Sport 175 Max 115 hp MSRP of CAD 61,590; 2024 MSRP reported as CAD 46,689 with trailer."
+        },
+        "legend16XTR": {
+          "value": "2024 Legend 16 XTR (about 4.9 m) with Mercury 60 ELPT, trailer and top: retail CAD 58,999 (Ontario).",
+          "source": "https://www.legendboats.com/?boat-model=16-xtr-2024",
+          "publisher": "Legend Boats",
+          "date": "2024",
+          "sourceType": "primary",
+          "confirmed": true,
+          "note": "Maker's own printed price; slightly under 5 m."
+        },
+        "lowe": null
+      },
+      "pcoc": {
+        "value": "Anyone operating a motorized pleasure craft in Canada (any engine size, including electric trolling motors) must carry proof of competency, usually the Pleasure Craft Operator Card; exceptions: Nunavut and Northwest Territories. Minimum fine for operating without it reported as CAD 250.",
+        "source": "https://www.boaterexam.com/canada/regulations/",
+        "publisher": "BoaterExam (Transport Canada-accredited course provider)",
+        "date": null,
+        "sourceType": "secondary",
+        "confirmed": false,
+        "note": "Rule is in the Competency of Operators of Pleasure Craft Regulations (SOR/99-53); TC page not fetched."
+      },
+      "pleasureCraftLicence": {
+        "value": "Required for pleasure craft with engines totalling at least 10 hp (7.5 kW) principally kept in Canadian waters; since 31 December 2025 new, renewed and transferred licences are valid 5 years and carry a fee (reported as CAD 24, indexed to inflation each 1 April); updating details is free and required within 30 days. Wind-powered craft over 6 m need a licence from 31 December 2027.",
+        "feeAmount": 24,
+        "feeAmountInPrompt": 24.41,
+        "source": "https://tc.canada.ca/en/marine-transportation/vessel-licensing-registration/licensing-pleasure-craft-apply",
+        "publisher": "Transport Canada",
+        "date": "2026-01-06",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "5-year validity, 10 hp threshold and $0 update/cancel confirmed on TC pages; the dollar amount is injected by script and was blank in the fetched HTML. CAD 24 comes from Canadian Boating / CBC reports; CAD 24.41 (possibly the 1 April 2026 indexed figure) could not be confirmed."
+      }
+    }
+  },
+
+  "uncertain": [
+    "US airport concession recovery percentages at JFK, BDL, HVN and SFO are not printed by Hertz, Enterprise, Avis or Sixt outside a live quote; only LAX's 11.11% is widely reported, and even that is secondary.",
+    "Enterprise UK premium location percentage (20%?) and airport surcharge (17.5%?) conflict across secondary sources; Sixt Heathrow ~21% comes only from customer reviews.",
+    "British Airways change fees could not be read from ba.com; all BA figures are secondary and left null.",
+    "Ryanair, United, American and Aeromexico change rules were read from search-engine excerpts of their own pages, not direct fetches.",
+    "Air Canada international Economy Standard change fee not captured (only the within-Canada table).",
+    "Delta Main Basic now reads 'change or cancel for a fee may be available', so 'no changes on basic economy' is not uniformly true across the three US carriers.",
+    "Canada PCL fee: CAD 24 (reported) vs CAD 24.41 (unconfirmed, possibly indexed April 2026).",
+    "No Irish dealer price for a new 5-6 m powerboat and no maker list price for Quicksilver in the UK/Ireland; Beneteau Flyer, Parker and Lowe prices not found.",
+    "Limehouse Marina has no public per-metre tariff.",
+    "No Connecticut or New York outboard winterization price list was reachable; the confirmed list is from a Maine dealer.",
+    "Hotel Bravo (Ireland) EUR 8,910 PPL total and FLYER's UK school examples are from search excerpts.",
+    "AIM thunderstorm guidance quoted from a mirror (faraim.org) because faa.gov blocked the fetch; section is now numbered 7-1-27."
+  ]
+}

@@ -1,0 +1,750 @@
+{
+  "_meta": {
+    "retrieved": "2026-09-29",
+    "purpose": "Real published rules and figures for SLATE: car loan default and repossession, deficiency, credit reporting, trade-in vs private sale, holiday let rates and licensing.",
+    "fieldKey": "Each figure: value, unit, currency (where money), basis, source (URL), date (of the source or the rule's effective date, else the retrieval date), sourceType ('primary' = statute, regulator or authority page; 'secondary' = press, industry or data vendor), confirmed (true = read on the cited page during this retrieval; false = seen only in a search summary or inferred).",
+    "spelling": "American in the researcher's own words; statute quotations keep their original spelling.",
+    "neverInvented": "Where nothing is published, value is null and the note says so."
+  },
+
+  "repossession": {
+    "NewYork": {
+      "whenLenderMayRepossess": {
+        "value": "After default as the contract defines it (typically a missed payment); self-help repossession without a court order is allowed if it proceeds without breach of the peace.",
+        "unit": null,
+        "basis": "NY UCC 9-609(b): 'without judicial process, if it proceeds without breach of the peace.'",
+        "source": "https://www.nysenate.gov/legislation/laws/UCC/9-609",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "defaultDefinition": {
+        "value": null,
+        "unit": null,
+        "basis": "Neither NY UCC Article 9 nor any page found sets a number of missed payments; default is whatever the retail installment contract says.",
+        "source": "https://www.nysenate.gov/legislation/laws/UCC/9-609",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "No statutory missed-payment threshold found for New York."
+      },
+      "rightToCure": {
+        "value": null,
+        "unit": null,
+        "basis": "No New York statutory right-to-cure notice before repossession of a motor vehicle was found. New York's Motor Vehicle Retail Instalment Sales Act (Personal Property Law Art. 9) was not checked for one.",
+        "source": null,
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": false
+      },
+      "notifyOwnerAfterRepossession": {
+        "value": 24,
+        "unit": "hours",
+        "basis": "NY Vehicle and Traffic Law 425: the repossessor must report in person to the local police immediately after the repossession and notify the owner within 24 hours, personally or by registered or certified mail.",
+        "source": "https://www.nysenate.gov/legislation/laws/VAT/425",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "noticeBeforeSale": {
+        "value": null,
+        "unit": "days",
+        "basis": "UCC 9-611 requires a reasonable authenticated notification of disposition. The 10-day safe harbor in 9-612(b) applies only 'in a transaction other than a consumer transaction'; for a consumer car loan, timeliness is 'a question of fact' under 9-612(a).",
+        "source": "https://www.law.cornell.edu/ucc/9/9-612",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Read from the official UCC text (Cornell). New York's enacted 9-612 was not separately checked for non-uniform wording."
+      },
+      "rightToRedeem": {
+        "value": "Until the lender has collected, disposed of, or contracted to sell the car, or accepted it in satisfaction of the debt, by paying all obligations secured (the whole accelerated balance) plus reasonable expenses and attorney's fees.",
+        "unit": null,
+        "basis": "NY UCC 9-623.",
+        "source": "https://www.nysenate.gov/legislation/laws/UCC/9-623",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "rebatesAgainstDeficiency": {
+        "value": "Unused portions of financed add-ons (service contracts, GAP) must be rebated pro rata and credited to any deficiency, or paid by check if there is none.",
+        "unit": null,
+        "basis": "NY DFS industry letter, 18 July 2023.",
+        "source": "https://www.dfs.ny.gov/industry_guidance/industry_letters/il20230718_guidance_for_ancillary_products",
+        "date": "2023-07-18",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+
+    "Connecticut": {
+      "whenLenderMayRepossess": {
+        "value": "When the buyer is in default in any payment or other contract condition; without legal process only if the car can be retaken without breach of the peace. A Chapter 7 bankruptcy filing is not a default.",
+        "unit": null,
+        "basis": "Conn. Gen. Stat. 36a-785(a).",
+        "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "notifyPoliceAfterRepossession": {
+        "value": 2,
+        "unit": "hours",
+        "basis": "36a-785(a): where the car is taken without the buyer's knowledge, the local police must be notified not later than two hours after repossession (P.A. 15-42).",
+        "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "noticeOfIntentionToRepossess": {
+        "value": 10,
+        "unit": "days (minimum, before retaking)",
+        "basis": "36a-785(b): the holder MAY serve, not less than ten days before retaking, a notice stating the default, the cure required (including the dollar amount) and the date by which to cure. If served and not cured, the car may be retaken 'without any right of redemption'. This is Connecticut's right-to-cure notice; it is optional for the lender, and the redemption right in (c) is what the buyer gets if it is not sent.",
+        "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "redemptionPeriodIfNoNotice": {
+        "value": 15,
+        "unit": "days after retaking",
+        "basis": "36a-785(c): if no notice of intention was given, the holder keeps the car 15 days, during which the buyer may redeem by paying the UNACCELERATED amount due plus interest and reasonable retaking and storage costs, and then continue the contract as if no default occurred. The holder must mail a statement of the sum due within 3 days of retaking.",
+        "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "statementOfAmountDue": {
+        "value": 3,
+        "unit": "days after retaking",
+        "basis": "36a-785(c).",
+        "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "personalPropertyRetrieval": {
+        "value": 60,
+        "unit": "days (minimum availability)",
+        "basis": "36a-785(c)(2): personal property left in the car must be available for at least 60 days; a reasonable storage fee may be charged if retrieved more than 15 days after repossession.",
+        "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "compulsoryResaleWindow": {
+        "value": {"minDays": 15, "maxDays": 180},
+        "unit": "days after retaking",
+        "basis": "36a-785(d): must sell at public or private sale not less than 15 nor more than 180 days after retaking.",
+        "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "noticeBeforeSale": {
+        "value": 10,
+        "unit": "days (minimum written notice)",
+        "basis": "36a-785(d): not less than ten days' written notice of the time and place of a public sale or the time after which a private sale will be made.",
+        "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "saleStatement": {
+        "value": 30,
+        "unit": "days after resale",
+        "basis": "36a-785(e): itemized statement of how the proceeds were applied.",
+        "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+
+    "California": {
+      "defaultDefinition": {
+        "value": "Failure to make payments due, failure to keep insurance, failure to keep the car free of liens, or failure to perform other contract obligations. Filing for bankruptcy is not a default.",
+        "unit": null,
+        "basis": "Cal. Civ. Code 2983.3 (Rees-Levering Motor Vehicle Sales and Finance Act).",
+        "source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=2983.3",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "whenLenderMayRepossess": {
+        "value": "Self-help repossession without breach of the peace under Commercial Code 9609 (the California enactment of UCC 9-609).",
+        "unit": null,
+        "basis": "Cal. Com. Code 9609.",
+        "source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=COM&sectionNum=9609",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "Section not opened in this retrieval; stated from the uniform text."
+      },
+      "reinstatementRight": {
+        "value": "Conditional right to reinstate the contract after repossession, limited to once in any 12-month period and twice during the contract term; lender may refuse for listed reasons (false credit application, car hidden or moved out of state, car destroyed or impaired by neglect, threats or violence, criminal use and seizure).",
+        "unit": null,
+        "basis": "Cal. Civ. Code 2983.3.",
+        "source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=2983.3",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "noticeOfIntentToDispose": {
+        "value": 15,
+        "unit": "days (minimum, before sale; 20 if mailed out of state)",
+        "basis": "Cal. Civ. Code 2983.2: at least 15 days' written notice of intent to dispose, given within 60 days of repossession; it must state the reinstatement right or why none exists and warn of deficiency liability.",
+        "source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=2983.2",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "redemptionWindow": {
+        "value": 15,
+        "unit": "days from notice, extendable by 10 days on written request",
+        "basis": "Cal. Civ. Code 2983.2: redeem by paying the full contract balance.",
+        "source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=2983.2",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+
+    "EnglandAndUK": {
+      "scope": "Consumer Credit Act 1974 applies across the UK (England, Wales, Scotland, Northern Ireland) to regulated hire-purchase and conditional sale agreements. It does not give these protections to a personal loan used to buy a car, where the lender does not own the car.",
+      "defaultNoticeRequired": {
+        "value": "A creditor must serve a default notice before it may terminate the agreement, demand earlier payment or recover possession of goods.",
+        "unit": null,
+        "basis": "Consumer Credit Act 1974 s.87(1).",
+        "source": "https://www.legislation.gov.uk/ukpga/1974/39/section/87",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "s.87 not opened; s.88 (below), which sets the notice's contents and period, was."
+      },
+      "defaultNoticePeriod": {
+        "value": 14,
+        "unit": "days (minimum, after service)",
+        "basis": "CCA 1974 s.88(2): the date for remedying the breach 'must not be less than 14 days after the date of service'.",
+        "source": "https://www.legislation.gov.uk/ukpga/1974/39/section/88",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "protectedGoods": {
+        "value": 0.3333,
+        "unit": "fraction of total price paid",
+        "basis": "CCA 1974 s.90(1): once the debtor has paid at least one-third of the total price and the creditor still owns the goods, the creditor may not recover possession except on an order of the court. s.91: if it does, the agreement ends and the debtor is released and may recover all sums paid.",
+        "source": "https://www.legislation.gov.uk/ukpga/1974/39/section/90",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "The s.91 consequence is stated from the Act's structure; s.91 was not opened."
+      },
+      "voluntaryTermination": {
+        "value": 0.5,
+        "unit": "fraction of total price",
+        "basis": "CCA 1974 s.99 lets the debtor end a regulated HP or conditional sale agreement at any time before the final payment; s.100(1) caps liability at the amount by which one-half of the total price exceeds sums paid and due, unless the agreement provides for less. Reasonable-care damages may be added.",
+        "source": "https://www.legislation.gov.uk/ukpga/1974/39/section/100",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+
+    "Ireland": {
+      "scope": "Consumer Credit Act 1995, hire-purchase provisions. Much Irish car finance is hire purchase or PCP; the Act's HP rules apply to HP.",
+      "noticeBeforeEnforcement": {
+        "value": {"noticeLeadDays": 10, "cureDays": 21},
+        "unit": "days",
+        "basis": "CCA 1995 s.54: a creditor or owner may not recover possession of goods (other than to save them from imminent damage or theft) unless it served a notice at least 10 days before acting, specifying the breach and, if remediable, a remedy date not less than 21 days after service.",
+        "source": "https://www.irishstatutebook.ie/eli/1995/act/24/section/54/enacted/en/html",
+        "date": "1995 (as enacted)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Read from the as-enacted text. The page contains two variants of the lead-time wording ('at least 10 days' and 'not less than 10 days'). Later amendments to s.54 were not checked against a revised Act."
+      },
+      "oneThirdRule": {
+        "value": 0.3333,
+        "unit": "fraction of hire-purchase price paid or tendered",
+        "basis": "CCA 1995 s.64(1): once one-third of the hire-purchase price has been paid or tendered, the owner may recover the goods only by legal proceedings. Exception s.64(3): a vehicle abandoned or left unattended after proceedings have begun. If the owner repossesses in breach, the agreement ends (s.64(2)).",
+        "source": "https://www.irishstatutebook.ie/eli/1995/act/24/section/64/enacted/en/html",
+        "date": "1995 (as enacted)",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "voluntaryTermination": {
+        "value": 0.5,
+        "unit": "fraction of hire-purchase price",
+        "basis": "CCA 1995 s.63: the hirer may end the agreement at any time before the final payment falls due, paying the amount by which one-half of the hire-purchase price exceeds sums paid and due, or a smaller amount if the agreement says so.",
+        "source": "https://www.irishstatutebook.ie/eli/1995/act/24/section/63/enacted/en/html",
+        "date": "1995 (as enacted)",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+
+    "Ontario": {
+      "twoThirdsRule": {
+        "value": 0.6667,
+        "unit": "fraction of payment obligation paid",
+        "basis": "Consumer Protection Act, 2002 s.25(1): once the consumer under a future performance agreement has paid two-thirds or more, a repossession or resale clause is enforceable only with leave of the Superior Court of Justice. The Registrar of Bailiffs' bulletin says this applies to dealer-arranged car financing assigned to a third-party lender (supplier credit agreements); O. Reg. 17/05 s.11 excludes other credit agreements such as a direct bank loan.",
+        "source": "https://files.ontario.ca/mpbsd-cpo-rb/mpbsd-bailiffs-act-registrars-bulletin-two-thirds-rule-2017-en-2023-08-18.pdf",
+        "date": "2023-08-18 (file date in URL; bulletin first issued 2017)",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "noticeBeforeRepossession": {
+        "value": null,
+        "unit": null,
+        "basis": "Ontario's guidance says bailiffs need give no advance notice of seizure unless the contract requires it.",
+        "source": "https://www.ontario.ca/page/your-rights-when-dealing-bailiff",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "noticeBeforeSale": {
+        "value": 15,
+        "unit": "days (minimum written notice before disposition)",
+        "basis": "Personal Property Security Act, R.S.O. 1990 c.P.10, s.63(4): 'not less than fifteen days notice in writing'. The notice must say the collateral may be redeemed and the debtor may be liable for a deficiency.",
+        "source": "https://www.ontario.ca/laws/docs/elaws_statutes_90p10_ev004.doc",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Read from an e-Laws Word version of the Act (ev004), which may not be the current consolidation."
+      },
+      "rightToRedeem": {
+        "value": "Any time before the secured party disposes of or contracts to dispose of the car (PPSA s.66).",
+        "unit": null,
+        "basis": "PPSA s.66(1).",
+        "source": "https://www.ontario.ca/laws/docs/elaws_statutes_90p10_ev004.doc",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "pendingLaw": {
+        "value": "Consumer Protection Act, 2023 (Bill 142) carries the two-thirds rule forward but awaits proclamation.",
+        "unit": null,
+        "basis": "Search summaries only; proclamation status on 2026-09-29 not verified on an Ontario page.",
+        "source": "https://www.ola.org/en/legislative-business/bills/parliament-43/session-1/bill-142",
+        "date": "2023",
+        "sourceType": "primary",
+        "confirmed": false
+      }
+    },
+
+    "BritishColumbia": {
+      "twoThirdsRule": {
+        "value": 0.6667,
+        "unit": "fraction of total secured obligation paid",
+        "basis": "Personal Property Security Act [RSBC 1996] c.359 s.58(3): if the debtor under a consumer-goods security agreement has paid at least 2/3 of the total obligation, the secured party must not seize the goods; s.58(4) lets a court lift this.",
+        "source": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/96359_01",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "noticeBeforeSale": {
+        "value": 20,
+        "unit": "days (minimum, before disposition)",
+        "basis": "BC PPSA s.59(6): notice of disposition not less than 20 days before; s.59(9) bars it from mentioning deficiency liability where s.67 applies.",
+        "source": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/96359_01",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "redeemOrReinstate": {
+        "value": "Before disposition: redeem by paying the whole obligation, or for consumer goods reinstate by paying only the arrears (excluding acceleration) plus reasonable seizure costs.",
+        "unit": null,
+        "basis": "BC PPSA s.62(1).",
+        "source": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/96359_01",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "seizeOrSue": {
+        "value": "If the lender seizes, sells, keeps, or accepts surrender of consumer goods, the debtor's and any guarantor's remaining obligations are extinguished; it must choose between the car and a lawsuit.",
+        "unit": null,
+        "basis": "BC PPSA s.67(1)-(2). The rule is in the PPSA, not the Law and Equity Act as the brief guessed. s.67(9) lets a court set it aside for wilful or reckless damage to the goods.",
+        "source": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/96359_01",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+
+    "Mexico": {
+      "securityForm": {
+        "value": "Car loans are usually secured by a pledge that the borrower keeps possession of (prenda sin transmisión de posesión) under the Ley General de Títulos y Operaciones de Crédito (arts. 346 onward), and the lien is registered.",
+        "unit": null,
+        "basis": "LGTOC; UNAM legal commentary.",
+        "source": "https://revistas-colaboracion.juridicas.unam.mx/index.php/derecho-privado-ns/article/download/7132/6411",
+        "date": "2026-09-29",
+        "sourceType": "secondary",
+        "confirmed": false
+      },
+      "enforcement": {
+        "value": "No self-help repossession. The lender must go through a notary-led out-of-court procedure (if the borrower does not contest the debt, the amount or handing over the car) or a court: the special pledge-enforcement procedure in Código de Comercio Title III-Bis (arts. 1414 Bis to 1414 Bis 20) or a juicio ejecutivo mercantil, in which a court officer seizes (embarga) the car for public auction (remate).",
+        "unit": null,
+        "basis": "Código de Comercio arts. 1414 Bis ff. and 1391 ff.; BBVA México consumer guide.",
+        "source": "https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "Described from search summaries and legal commentary (vLex, SCJN AR 494/2018). The Código de Comercio PDF was not opened, and no statutory timetable of days was extracted."
+      },
+      "noticeAndCureDays": {
+        "value": null,
+        "unit": "days",
+        "basis": "Not extracted.",
+        "source": null,
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": false
+      }
+    }
+  },
+
+  "deficiency": {
+    "NewYork": {
+      "value": "Borrower owes the shortfall",
+      "unit": null,
+      "basis": "NY UCC 9-615(d)(2): 'the obligor is liable for any deficiency'.",
+      "source": "https://www.nysenate.gov/legislation/laws/UCC/9-615",
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "Connecticut": {
+      "value": "Barred except to the extent the balance plus retaking costs exceed the car's statutory fair market value (average NADA trade-in and highest retail, averaged) for cars with a cash price over $4,000, or the actual sale price if higher",
+      "unit": null,
+      "currency": "USD",
+      "basis": "Conn. Gen. Stat. 36a-785(f)-(h). Otherwise, after repossession 'the retail buyer ... shall not be liable for any balance due'. If the holder breaks the resale rules, the buyer may recover actual damages and no less than one-fourth of all payments made (36a-785(i)).",
+      "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": true,
+      "thresholdCashPrice": {"value": 4000, "unit": "USD aggregate cash price", "confirmed": true}
+    },
+    "California": {
+      "value": "Borrower owes the shortfall plus interest, if the lender followed the notice rules",
+      "unit": null,
+      "basis": "Cal. Civ. Code 2983.2: the notice must warn of deficiency liability with interest at the contract rate from disposition to judgment. Civ. Code 2983.8 limits deficiencies in some cases; it was not opened.",
+      "source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=2983.2",
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "EnglandAndUK": {
+      "value": "Borrower may owe the balance after sale, subject to the one-third rule and termination caps",
+      "unit": null,
+      "basis": "Not separately sourced. The CCA sections read here cap liability only on voluntary termination (s.100) and void wrongful repossession (s.91).",
+      "source": null,
+      "date": "2026-09-29",
+      "sourceType": "secondary",
+      "confirmed": false
+    },
+    "Ireland": {
+      "value": null,
+      "unit": null,
+      "basis": "Not researched beyond s.63 (voluntary termination at one-half) and s.64 (one-third rule).",
+      "source": null,
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": false
+    },
+    "Ontario": {
+      "value": "Borrower owes the shortfall",
+      "unit": null,
+      "basis": "PPSA s.64(3): 'Unless otherwise agreed ... or otherwise provided ... the debtor is liable for any deficiency.' Ontario's bailiff guidance also warns that a repossession 'may not clear the debt'.",
+      "source": "https://www.ontario.ca/laws/docs/elaws_statutes_90p10_ev004.doc",
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "BritishColumbia": {
+      "value": "No deficiency for consumer goods once the lender seizes (seize or sue)",
+      "unit": null,
+      "basis": "BC PPSA s.67(2).",
+      "source": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/96359_01",
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "Mexico": {
+      "value": null,
+      "unit": null,
+      "basis": "Not researched.",
+      "source": null,
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": false
+    },
+    "typicalFeesUS": {
+      "towingOrRepoFee": {
+        "value": {"min": 100, "max": 500},
+        "unit": "per repossession",
+        "currency": "USD",
+        "basis": "Consumer-finance websites' ranges (e.g. autohitch.com, firstquarterfinance.com, debtstoppers.com), not a survey or regulator figure.",
+        "source": "https://firstquarterfinance.com/how-much-are-repossession-fees/",
+        "date": "2026-09-29",
+        "sourceType": "secondary",
+        "confirmed": false
+      },
+      "storagePerDay": {
+        "value": {"min": 20, "max": 75},
+        "unit": "per day",
+        "currency": "USD",
+        "basis": "Same consumer-finance websites; the ranges vary between sites ($15-$30, $20-$50, $20-$75).",
+        "source": "https://www.autohitch.com/how-much-are-repossession-fees/",
+        "date": "2026-09-29",
+        "sourceType": "secondary",
+        "confirmed": false
+      },
+      "connecticutCap": {
+        "value": null,
+        "unit": null,
+        "basis": "Connecticut allows only 'actual and reasonable' retaking and storage expenses (36a-785(c),(e)); no dollar cap is published there.",
+        "source": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    }
+  },
+
+  "creditReporting": {
+    "US": {
+      "reportingPeriod": {
+        "value": 7,
+        "unit": "years",
+        "basis": "FCRA 15 U.S.C. 1681c(a)(4)-(5): collection or charged-off accounts and any other adverse item older than seven years may not be reported. Under 1681c(c)(1) the seven years for collection or charge-off start 180 days after the delinquency that led to them. Exemptions under 1681c(b) cover credit over $150,000 and jobs paying $75,000 or more.",
+        "source": "https://www.law.cornell.edu/uscode/text/15/1681c",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "bureauPractice": {
+        "value": 7,
+        "unit": "years from the first missed payment",
+        "basis": "Experian and myFICO say a repossession or voluntary surrender stays seven years from the original missed payment and is then deleted automatically.",
+        "source": "https://www.experian.com/blogs/ask-experian/how-long-does-voluntary-surrender-or-repossesion-stay-on-credit-report/",
+        "date": "2026-09-29",
+        "sourceType": "secondary",
+        "confirmed": true
+      },
+      "scoreImpact": {
+        "value": null,
+        "unit": "points",
+        "basis": "myFICO publishes no number: 'it's difficult to say exactly how much any individual item will decrease your FICO Scores.' Consumer sites cite 'up to 100 points' and '0-300 points', with larger drops from high starting scores; those are not scoring-model figures.",
+        "source": "https://www.myfico.com/credit-education/blog/repossession-fico-score",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true,
+        "secondaryRanges": {"value": "about 100 points; 0 to 300 points", "source": "https://credit.com/blog/how-much-will-a-car-repossession-hurt-my-credit-score-146118", "sourceType": "secondary", "confirmed": false}
+      }
+    },
+    "UK": {
+      "value": 6,
+      "unit": "years from the date of default",
+      "basis": "The ICO treats a default showing more than six years from the original default as unlikely to be fair; UK agencies (e.g. Experian UK) keep defaults six years.",
+      "source": "https://ico.org.uk/for-the-public/credit/",
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "Ireland": {
+      "value": 5,
+      "unit": "years after the loan is repaid, written off or discharged",
+      "basis": "CCPC: the Central Credit Register keeps information up to five years after a loan is repaid, written off or discharged. An unsettled default does not start the clock.",
+      "source": "https://www.ccpc.ie/manage-your-money/borrowing-money/your-credit-history",
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "Mexico": {
+      "value": 72,
+      "unit": "months",
+      "basis": "Ley para Regular las Sociedades de Información Crediticia art. 23: histories kept at least 72 months; continuous non-payment records must be deleted 72 months after first reported. Smaller-debt shorter periods in the same article were not extracted.",
+      "source": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LRSIC.pdf",
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": false,
+      "note": "From a search summary of the article; the PDF was not opened."
+    },
+    "Canada": {
+      "value": null,
+      "unit": null,
+      "basis": "Not researched for Ontario or BC.",
+      "source": null,
+      "date": "2026-09-29",
+      "sourceType": "primary",
+      "confirmed": false
+    }
+  },
+
+  "tradeIn": {
+    "gapUS": {
+      "kbbDefinition": {
+        "value": "Trade-In Value 'will likely be less than' Private Party Value because the dealer pays for safety inspections, reconditioning and other costs of doing business.",
+        "unit": null,
+        "basis": "Kelley Blue Book value definitions; no percentage is published.",
+        "source": "https://b2b.kbb.com/kbb-vehicle-values/definitions-of-our-values/",
+        "date": "2026-09-29",
+        "sourceType": "secondary",
+        "confirmed": true
+      },
+      "percentGap": {
+        "value": null,
+        "unit": "percent",
+        "basis": "KBB, Edmunds and CarGurus ('no dealership is going to offer you as much money ... as you could earn from a private sale', 2025-09-30) publish no average gap. Blog summaries cite 3-8% or $1,000-$3,000 on mainstream cars; those were not traced to a named study.",
+        "source": "https://www.cargurus.com/research/articles/the-truth-about-trade-ins",
+        "date": "2025-09-30",
+        "sourceType": "secondary",
+        "confirmed": true
+      }
+    },
+    "gapUK": {
+      "value": 407,
+      "unit": "average more from private sale than part exchange (about 4%)",
+      "currency": "GBP",
+      "basis": "Auto Express analysis of UKVD estimates for 1,000 random registrations listed on Carwow: private sale averaged £407, almost 4%, more. Less than 2% at 5,000-10,000 miles; almost 6% near 50,000 miles; about 4% above that.",
+      "source": "https://www.autoexpress.co.uk/sell-my-car/guides/part-exchange-vs-private-sale",
+      "date": "2024-09-24",
+      "sourceType": "secondary",
+      "confirmed": true,
+      "note": "No Which? or Autotrader UK figure was found."
+    },
+    "salesTaxTradeInCredit": {
+      "NewYork": {
+        "value": true,
+        "unit": null,
+        "basis": "Trade-in credit reduces the taxable receipt if the dealer intends to resell the trade-in (Tax Law 1101(b)(3)). Worked example: $22,500 less a $4,500 trade-in gives $18,000 taxable.",
+        "source": "https://www.tax.ny.gov/pubs_and_bulls/tg_bulletins/st/taxable_receipt.htm",
+        "date": "2014-11-03 (TB-ST-860 update)",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "Connecticut": {
+        "value": true,
+        "unit": null,
+        "basis": "Full trade-in credit when buying from a licensed dealer; tax 6.35%, or 7.75% for vehicles over $50,000. Private sales are taxed on the higher of NADA average trade-in value or the bill-of-sale price, with no trade-in credit.",
+        "source": "https://portal.ct.gov/dmv/vehicle-services/sales-tax-registrations",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true,
+        "rates": [{"value": 6.35, "unit": "percent"}, {"value": 7.75, "unit": "percent, vehicles over $50,000"}]
+      },
+      "California": {
+        "value": false,
+        "unit": null,
+        "basis": "Dealers report the full selling price and 'cannot deduct the allowance for the trade-in'. Example: a $20,000 car with a $4,000 trade-in is taxed on $20,000.",
+        "source": "https://cdtfa.ca.gov/industry/motor-vehicle-dealers/industry-topics.htm",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "UK": {
+        "value": null,
+        "unit": null,
+        "basis": "Not applicable: the UK has no sales tax on a consumer's car purchase. VAT is in the dealer's price and is not reduced by a part exchange at the buyer's level.",
+        "source": null,
+        "date": "2026-09-29",
+        "sourceType": "secondary",
+        "confirmed": false
+      }
+    }
+  },
+
+  "lets": {
+    "Edinburgh": {
+      "averageDailyRate": {
+        "value": 269,
+        "unit": "per night (ADR)",
+        "currency": "USD",
+        "basis": "AirDNA market page, trailing 12 months August 2025 to August 2026: 7,482 active Airbnb/Vrbo/Booking.com listings, 68% occupancy, $56.3K average annual revenue. A search snippet of the same page showed 7,489 listings and $56.2K, so the page updates. AirDNA shows USD; convert to GBP for SLATE.",
+        "source": "https://www.airdna.co/vacation-rental-data/app/gb/scotland/edinburgh/overview",
+        "date": "2026-08 (as of August 2026)",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "occupancy": {"value": 68, "unit": "percent"}
+      },
+      "controlArea": {
+        "value": "The whole City of Edinburgh Council area has been a short-term let control area since 5 September 2022. Using a dwelling that is not the host's principal home as a short-term let needs planning permission (Town and Country Planning (Scotland) Act 1997 s.26B; Short-Term Let Control Areas Regulations 2021), and permission must be obtained before applying for a licence.",
+        "unit": null,
+        "basis": "City of Edinburgh Council.",
+        "source": "https://www.edinburgh.gov.uk/business/short-term-lets-edinburgh",
+        "date": "2022-09-05",
+        "sourceType": "primary",
+        "confirmed": true
+      },
+      "licensing": {
+        "value": "Every short-term let in Scotland needs a licence (Civic Government (Scotland) Act 1982 (Licensing of Short-term Lets) Order 2022). New hosts needed one from 1 October 2022; existing hosts had to apply by 1 October 2023; the council gives 1 January 2025 as the final deadline. Operating unlicensed risks a fine of up to £2,500 and a one-year ban from applying.",
+        "unit": null,
+        "basis": "City of Edinburgh Council.",
+        "source": "https://www.edinburgh.gov.uk/business/short-term-lets-edinburgh",
+        "date": "2026-09-29",
+        "sourceType": "primary",
+        "confirmed": true,
+        "fine": {"value": 2500, "unit": "maximum", "currency": "GBP", "confirmed": true},
+        "licenceFee": {"value": null, "note": "Not shown on the page read; Edinburgh's fee schedule was not retrieved."}
+      },
+      "visitorLevy": {
+        "value": 5,
+        "unit": "percent of the accommodation cost, capped at 5 consecutive nights",
+        "basis": "Applies to paid overnight stays, short-term lets included (campsites excluded), from Friday 24 July 2026, including advance bookings made since 1 October 2025.",
+        "source": "https://www.edinburgh.gov.uk/news/article/14452/edinburgh-visitor-levy-comes-into-effect",
+        "date": "2026-07-23",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    },
+    "Belfast": {
+      "averageDailyRate": {
+        "value": 160,
+        "unit": "per night (ADR)",
+        "currency": "USD",
+        "basis": "AirDNA market page, trailing 12 months August 2025 to August 2026: 2,082 active listings, 58% occupancy, $30.4K average annual revenue. A search snippet of an older version showed $169 ADR, 52% occupancy and 2,954 listings.",
+        "source": "https://www.airdna.co/vacation-rental-data/app/gb/default/belfast/overview",
+        "date": "2026-08 (as of August 2026)",
+        "sourceType": "secondary",
+        "confirmed": true,
+        "occupancy": {"value": 58, "unit": "percent"},
+        "crossCheck": {"value": 185, "unit": "ADR", "currency": "USD", "basis": "AirROI, August 2025 to July 2026: 1,619 listings, 41.7% occupancy.", "source": "https://www.airroi.com/report/world/united-kingdom/northern-ireland/belfast", "sourceType": "secondary", "confirmed": true}
+      },
+      "certification": {
+        "value": "Anyone offering overnight accommodation to tourists for a fee in Northern Ireland, self-catering included, must hold a Tourism NI certificate before operating, under the Tourism (Northern Ireland) Order 1992. Tourism NI inspects every four years; failing to display the certificate is an offence carrying a fine up to level 4 on the standard scale. Certification is separate from planning permission.",
+        "unit": null,
+        "basis": "Tourism (Northern Ireland) Order 1992; nibusinessinfo.co.uk and Tourism NI pages via search summaries.",
+        "source": "https://www.legislation.gov.uk/nisi/1992/235",
+        "date": "1992",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "The Order and the nibusinessinfo page were not opened (nibusinessinfo returned 403). The level-4 fine and four-year inspection come from search summaries."
+      },
+      "regulatoryReview": {
+        "value": "The Department for the Economy consulted from 14 October 2025 to 6 January 2026 on updating the Categories Regulations under the 1992 Order. No change was enacted when the page was read.",
+        "unit": null,
+        "basis": "Department for the Economy news release.",
+        "source": "https://www.economy-ni.gov.uk/news/consultation-launched-statutory-regulation-tourist-accommodation",
+        "date": "2025-10-14",
+        "sourceType": "primary",
+        "confirmed": true
+      }
+    }
+  },
+
+  "uncertain": [
+    "New York: no statutory right to cure before repossession was found, but New York's Motor Vehicle Retail Instalment Sales Act (Personal Property Law Art. 9) was not checked.",
+    "UCC 9-612's 10-day safe harbor does not apply to consumer transactions; for a consumer car loan in New York the notice period is 'reasonable', a question of fact, with no fixed number of days.",
+    "Connecticut's 10-day notice of intention to repossess is optional for the lender. If it is sent and the buyer does not cure, the buyer loses the 15-day redemption right. It is the only Connecticut 'right to cure' notice found.",
+    "California's 2983.8 deficiency limits and Commercial Code 9609 were not opened.",
+    "Consumer Credit Act 1974 s.87 and s.91 were described from the Act's structure. Only s.88, s.90 and s.100 were read.",
+    "Ireland's Consumer Credit Act 1995 was read in its as-enacted text. Later amendments to ss.54, 63 and 64 were not checked, and the s.54 page shows two versions of the 10-day lead-time wording.",
+    "Ontario's PPSA text came from an e-Laws Word file (ev004) that may predate the current consolidation. Whether the Consumer Protection Act, 2023 has been proclaimed in force on 2026-09-29 was not verified.",
+    "Ontario's two-thirds rule applies to dealer-arranged (supplier credit) car financing. By O. Reg. 17/05 s.11 it does not reach a loan made directly by a bank.",
+    "The brief placed BC's seize-or-sue rule in the Law and Equity Act. It is in the Personal Property Security Act, s.67.",
+    "No statutory timetable in days was extracted for Mexico's enforcement procedures. The Código de Comercio and LGTOC PDFs were not opened.",
+    "No published average gap between trade-in and private-party value exists from KBB, Edmunds or CarGurus. The US 3-8% and $1,000-$3,000 figures circulate on blogs without a named study.",
+    "AirDNA reports ADR in US dollars and revises its pages continuously; its figures are vendor estimates, not official statistics.",
+    "Repossession and storage fee ranges are from consumer-finance websites, not surveys; no regulator publishes a typical figure."
+  ]
+}

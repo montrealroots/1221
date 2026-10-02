@@ -1,0 +1,750 @@
+{
+  "_meta": {
+    "compiled": "2026-09-30",
+    "purpose": "Identity documents, residence documents, vehicle ownership documents, license categories, the Canadian safety net and side income in Mexico, for a life simulation that models real rules and costs.",
+    "conventions": "Money is in local currency, with the currency code in the 'currency' field. 'confirmed' is true only when the figure was read from the publisher's own page or document during this session. It is false when the figure came from a secondary source, from a search-engine snippet that could not be opened, or from background knowledge. A null value means no primary figure was found or none is published. No figure here is invented.",
+    "sourceTypes": {
+      "primary-gov": "A government page, statute, regulation or official fee schedule",
+      "primary-issuer": "The body that issues the document, when it is not a government (for example the PASS-accredited issuer)",
+      "secondary-news": "A news outlet reporting an official figure",
+      "secondary-commercial": "A commercial site or marketplace",
+      "secondary-social": "A social media post"
+    }
+  },
+
+  "identity": {
+    "US": {
+      "realIdEnforcement": {
+        "value": "REAL ID enforcement at TSA checkpoints and certain federal facilities began May 7, 2025. A passport or other federally accepted ID still works instead.",
+        "date": "2025-05-07",
+        "url": "https://www.tsa.gov/real-id",
+        "publisher": "Transportation Security Administration",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "tsaConfirmIdFee": {
+        "value": 45, "currency": "USD",
+        "note": "Fee paid by a traveler who arrives at a TSA checkpoint without an acceptable ID (TSA ConfirmID).",
+        "url": "https://www.tsa.gov/real-id",
+        "publisher": "Transportation Security Administration",
+        "date": "2026-09-30 (page read)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "NY": {
+        "nonDriverId": {
+          "currency": "USD",
+          "fees": {
+            "under62_4yr": 10.00,
+            "under62_8yr": 14.00,
+            "under62_birthdayWithin6Months_4yr": 9.50,
+            "under62_birthdayWithin6Months_8yr": 13.50,
+            "age62plus_standard_10yr": 6.50,
+            "age62plus_realId_8yr": 6.00,
+            "age62plusOnSsi": 0,
+            "anyAgeOnTemporaryAssistance_4yr": 0
+          },
+          "realIdSurcharge": 0,
+          "enhancedSurcharge": 30.00,
+          "validityYears": "4 or 8 (10 for a standard card at 62 and over)",
+          "amendedCardFee": 5.00,
+          "note": "One table covers original, renewal and replacement. A REAL ID costs the same as a standard card. An Enhanced card adds $30 and works at land and sea borders with Canada, Mexico and the Caribbean.",
+          "url": "https://dmv.ny.gov/non-driver-id/non-driver-id-fees-and-refunds",
+          "publisher": "New York State DMV",
+          "date": "2026-09-30 (page read)",
+          "sourceType": "primary-gov",
+          "confirmed": true
+        },
+        "realIdDocuments": {
+          "value": "Proof of full legal name and identity, proof of Social Security number, and two proofs of New York residence issued within the last 365 days. A P.O. box is not accepted.",
+          "url": "https://dmv.ny.gov/driver-license/enhanced-or-real-id",
+          "publisher": "New York State DMV",
+          "sourceType": "primary-gov",
+          "confirmed": true
+        }
+      },
+      "CT": {
+        "nonDriverId": {
+          "value": 28, "currency": "USD",
+          "validityYears": "up to 7, expiring on the holder's birthday",
+          "url": "https://portal.ct.gov/dmv/resources/dmv-fees",
+          "publisher": "Connecticut DMV",
+          "date": "2026-09-30 (page read)",
+          "sourceType": "primary-gov",
+          "confirmed": true
+        },
+        "realIdUpgradeOffCycle": {
+          "value": 30, "currency": "USD",
+          "note": "Free at a normal renewal. A holder who wants REAL ID before renewal pays a $30 duplicate fee.",
+          "url": "https://portal.ct.gov/dmv/licenses-permits-ids/get-real-id",
+          "publisher": "Connecticut DMV",
+          "sourceType": "primary-gov",
+          "confirmed": true
+        },
+        "realIdDocuments": {
+          "value": "Proof of identity (US passport or birth certificate, naturalization certificate or permanent resident card), a Social Security card, and two pieces of mail from two different sources dated within 90 days. The card arrives by mail within 20 business days.",
+          "url": "https://portal.ct.gov/dmv/licenses-permits-ids/get-real-id",
+          "publisher": "Connecticut DMV",
+          "sourceType": "primary-gov",
+          "confirmed": true
+        }
+      },
+      "CA": {
+        "idCard": {
+          "regular": 40, "reducedFee": 11, "senior62plus": 0, "currency": "USD",
+          "validity": "Standard card: six birthdays after application. Senior card: eight birthdays.",
+          "note": "The same $40 applies to an original, renewal, replacement or change of information. A no-fee card is also available to a homeless person as defined by the McKinney-Vento Act. A search-engine summary showed $39. The fee page read directly shows $40, so $40 is used.",
+          "url": "https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/licensing-fees/",
+          "validityUrl": "https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/identification-id-cards/",
+          "publisher": "California DMV",
+          "date": "2026-09-30 (page read)",
+          "sourceType": "primary-gov",
+          "confirmed": true
+        },
+        "realIdDocuments": {
+          "value": "One proof of identity, a Social Security number, and two proofs of California residency from DMV's REAL ID list.",
+          "url": "https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/identification-id-cards/",
+          "publisher": "California DMV",
+          "sourceType": "primary-gov",
+          "confirmed": true
+        }
+      }
+    },
+    "UK": {
+      "nationalIdCard": {
+        "value": null,
+        "note": "The UK has no national identity card. The 2006 card was abolished by the Identity Documents Act 2010, and the cards stopped being legal documents on January 21, 2011. There is also no UK passport card.",
+        "url": "https://www.gov.uk/identitycards",
+        "publisher": "GOV.UK (Home Office)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "plannedDigitalId": {
+        "value": "A digital ID is planned, not yet issued. It is due to reach all citizens and legal residents by the end of this Parliament, will be free, and employers will be required to check it as proof of the right to work. It is still in design, and a public consultation is planned.",
+        "cost": 0, "currency": "GBP",
+        "date": "2026-03-18 (guidance last updated)",
+        "url": "https://www.gov.uk/government/publications/digital-id-scheme-explainer/digital-id-scheme-explainer",
+        "publisher": "GOV.UK (Cabinet Office / DSIT)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "passProofOfAgeCard": {
+        "value": 15, "urgent": 30, "currency": "GBP",
+        "note": "Post Office PASS card issued by CitizenCard, a nonprofit accredited under the PASS scheme, which the Home Office endorses. Standard delivery within 3 weeks; urgent delivery within 2 working days. No existing ID is needed to apply.",
+        "url": "https://www.postoffice.co.uk/identity/pass-card",
+        "publisher": "Post Office / CitizenCard",
+        "date": "2026-09-30 (search result)",
+        "sourceType": "primary-issuer",
+        "confirmed": false
+      },
+      "voterAuthorityCertificate": {
+        "value": 0, "currency": "GBP",
+        "note": "A free paper photo ID for voting in person in England, Scotland and Wales, for anyone registered to vote. It stays valid as long as the holder still looks like the photo.",
+        "url": "https://www.gov.uk/apply-for-photo-id-voter-authority-certificate",
+        "publisher": "GOV.UK",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "acceptedPhotoIdInPractice": {
+        "value": "Where photo ID is required: a passport, a UK photocard driving licence (full or provisional), or a Home Office status document.",
+        "url": "https://www.gov.uk/government/publications/proof-of-identity-checklist/proof-of-identity-checklist",
+        "publisher": "GOV.UK",
+        "sourceType": "primary-gov",
+        "confirmed": false
+      }
+    },
+    "IE": {
+      "passportCard": {
+        "value": 35, "currency": "EUR",
+        "validity": "5 years, or until the holder's passport book expires, whichever comes first",
+        "note": "Applications are online only, and only for Irish citizens who already hold a valid passport book. It works for travel within the EU/EEA, Switzerland and the UK. The adult 10-year passport book costs €75 online, and the book-plus-card bundle costs €100.",
+        "adultPassportBookOnline": 75,
+        "bookPlusCardBundle": 100,
+        "url": "https://www.ireland.ie/en/dfa/passports/passport-fees/",
+        "publisher": "Department of Foreign Affairs (Ireland)",
+        "date": "2026-09-30 (page read)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "publicServicesCard": {
+        "value": 0, "currency": "EUR",
+        "validity": "Up to 7 years",
+        "note": "Issued after SAFE identity registration, which takes about 15 minutes in person. If a person does not complete SAFE registration when asked, their welfare payments can be suspended.",
+        "url": "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/public-services-card/",
+        "publisher": "Citizens Information Board (Ireland)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      }
+    },
+    "CA": {
+      "ontarioPhotoCard": {
+        "value": 35, "replacementOrPhotoRetake": 10, "currency": "CAD",
+        "validityYears": 5,
+        "note": "For Ontario residents 16 and over who do not hold a driver's licence. The photo must be retaken every 10 years. The card arrives by mail in 4 to 6 weeks.",
+        "url": "https://www.ontario.ca/page/ontario-photo-card",
+        "publisher": "Government of Ontario (ServiceOntario)",
+        "date": "2026-09-30 (page read)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "bcServicesCard": {
+        "value": 0, "currency": "CAD",
+        "validity": "Photo card: no more than 5.5 years",
+        "note": "Free. When it is combined with a driver's licence, the licensing fees apply instead.",
+        "url": "https://www2.gov.bc.ca/gov/content/governments/government-id/bc-services-card/your-card/get-a-card",
+        "publisher": "Province of British Columbia",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "bcid": {
+        "new": 35, "renewal": 15, "currency": "CAD",
+        "minimumAge": 12,
+        "validityYears": 5,
+        "note": "Fees are from the schedule of the Motor Vehicle Fees Regulation (B.C. Reg. 334/91). The 5-year term comes from secondary sources and was not read in the regulation.",
+        "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/334_91",
+        "ageUrl": "https://icbc.com/driver-licensing/getting-licensed/Apply-for-a-bcid",
+        "publisher": "BC Laws / ICBC",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      }
+    },
+    "MX": {
+      "ineVoterCredential": {
+        "value": 0, "currency": "MXN",
+        "note": "Issued free to Mexican citizens 18 and over (17 when an election falls due). It is the de facto national ID. Applicants bring three originals: a birth certificate, a current photo ID (or one issued within the last 10 years), and proof of address no older than 3 months. Without the photo ID or proof of address, two witnesses can vouch instead. Foreign residents cannot get one. INE's FAQ page does not state the fee, but INE does not charge for the credential.",
+        "validityYears": 10,
+        "url": "https://ine.mx/credencial/documentos-necesarios/",
+        "faqUrl": "https://ine.mx/preguntas-frecuentes-credencial-para-votar/",
+        "publisher": "Instituto Nacional Electoral",
+        "sourceType": "primary-gov",
+        "confirmed": false,
+        "confirmedParts": "The requirements were confirmed. The zero fee and the 10-year validity are background knowledge and were not read on an INE page."
+      },
+      "curp": {
+        "value": 0, "currency": "MXN",
+        "note": "A CURP can be looked up and printed free at gob.mx/curp. The biometric CURP, which adds fingerprints, iris, photo and signature, is voluntary, free and done in person without an appointment.",
+        "url": "https://www.gob.mx/curp/",
+        "publisher": "RENAPO / Secretaría de Gobernación",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      }
+    }
+  },
+
+  "residence": {
+    "UK": {
+      "eVisa": {
+        "value": "Biometric residence permits have been replaced by eVisas, a digital record reached through a UKVI account. The last BRPs expired on December 31, 2024. Expired BRPs were accepted for travel until June 1, 2025, and stopped being accepted from June 2, 2025.",
+        "cost": 0, "currency": "GBP",
+        "url": "https://www.gov.uk/biometric-residence-permits",
+        "publisher": "GOV.UK (Home Office / UKVI)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      }
+    },
+    "IE": {
+      "irpCard": {
+        "value": 300, "currency": "EUR",
+        "note": "Charged at each registration and renewal, and paid by card only. Refugees and several other categories are exempt. The IRP is a chipped card holding the holder's photo and fingerprints, and it must be carried at all times.",
+        "url": "https://www.irishimmigration.ie/registering-your-immigration-permission/information-on-registering/irish-residence-permit/",
+        "publisher": "Immigration Service Delivery, Department of Justice (Ireland)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      }
+    },
+    "CA": {
+      "prCard": {
+        "value": 50, "currency": "CAD",
+        "note": "Charged for each renewal or replacement. The first card is free if the photo and address are sent within 180 days of becoming a permanent resident.",
+        "validityYears": 5,
+        "validityNote": "Five years is the usual term, but it was not read on the IRCC page, so the validity is unconfirmed.",
+        "url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+        "publisher": "Immigration, Refugees and Citizenship Canada",
+        "date": "2026-09-30 (page read)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "temporaryResidentDocuments": {
+        "currency": "CAD",
+        "workPermitPerPerson": 155.00,
+        "openWorkPermitHolderFee": 100.00,
+        "workPermitGroupOf3PlusPerformingArtists": "one capped group fee (amount not captured)",
+        "visitorRecordExtendStay": 100.00,
+        "visitorVisa": 100.00,
+        "studyPermit": 150.00,
+        "restoreStatus": 246.25,
+        "biometricsPerPerson": 85.00,
+        "url": "https://ircc.canada.ca/english/information/fees/fees.asp",
+        "publisher": "Immigration, Refugees and Citizenship Canada",
+        "date": "2026-09-30 (page read)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      }
+    },
+    "MX": {
+      "residenceCardFees2026": {
+        "currency": "MXN",
+        "legalBasis": "Ley Federal de Derechos, art. 8o. (last amended DOF Nov 7, 2025; amounts updated by the Resolución Miscelánea Fiscal 2026, DOF Dec 28, 2025)",
+        "visitanteSinPermisoRemunerado": 983.00,
+        "visitanteConPermisoRemunerado": 4340.77,
+        "visitanteTrabajadorFronterizo": 580.76,
+        "residenteTemporal_upTo1yr": 11140.74,
+        "residenteTemporal_2yr": 16693.36,
+        "residenteTemporal_3yr": 21142.58,
+        "residenteTemporal_4yr": 25057.82,
+        "residentePermanente": 13578.96,
+        "replacementCard_residents": 1779.93,
+        "renewal": "Same fee as the original document (art. 8o.)",
+        "workPermissionForResidenteTemporal_art13fIII": 4340.77,
+        "regularization_art10": 1847.13,
+        "exitReentryPermit_art13fII": 591.06,
+        "exemptions": "Temporary resident students, and people admitted under educational, cultural or scientific exchange agreements, pay nothing (art. 11).",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LFD.pdf",
+        "publisher": "Cámara de Diputados (official consolidated text)",
+        "date": "2025-12-28 (amounts in force for 2026)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "cardValidity": {
+        "value": "A Tarjeta de Residente Temporal is issued for 1 to 4 years in total. A Tarjeta de Residente Permanente has no expiry for adults.",
+        "url": "https://www.diputados.gob.mx/LeyesBiblio/pdf/LMigra.pdf",
+        "publisher": "Ley de Migración",
+        "sourceType": "primary-gov",
+        "confirmed": false,
+        "note": "From background knowledge of Ley de Migración arts. 52 and 54. This was not read in the text during this session."
+      }
+    },
+    "US": {
+      "greenCardI90": {
+        "paperFiling": 465, "onlineFiling": 415, "currency": "USD",
+        "note": "Form G-1055 fee schedule, edition 09/09/26. The PDF's table layout was scrambled, but these figures sat in the I-90 row and match the 2024 fee rule. Fee is $0 in the DHS-error, never-received and turning-14 cases.",
+        "validityYears": 10,
+        "validityNote": "A standard green card is valid for 10 years. A conditional card lasts 2 years and is handled with I-751 or I-829, not I-90. The 10-year term was not read on the page.",
+        "url": "https://www.uscis.gov/sites/default/files/document/forms/g-1055.pdf",
+        "publisher": "U.S. Citizenship and Immigration Services",
+        "date": "2026-09-09 (fee schedule edition)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      }
+    }
+  },
+
+  "titles": {
+    "US": {
+      "NY": {
+        "certificateOfTitle": {
+          "value": 50.00, "manufacturedHome": 125.00, "currency": "USD",
+          "note": "Covers vehicles, motorcycles, trailers and boats. Paid by check or money order to the Commissioner of Motor Vehicles, together with registration fees and sales tax. The duplicate title fee was not found on the page read.",
+          "url": "https://dmv.ny.gov/titles/apply-for-a-title-certificate-only",
+          "publisher": "New York State DMV",
+          "sourceType": "primary-gov",
+          "confirmed": true
+        }
+      },
+      "CA": {
+        "currency": "USD",
+        "transferFee": 15,
+        "replacementOrDuplicateTitle": 28,
+        "titleOnly": 28,
+        "electronicLienTitleRecord": 28,
+        "vehicleLicenseFeeRate": "0.65% of purchase price or value (with registration)",
+        "registrationBase": 76,
+        "chpFee": 34,
+        "note": "The $23 duplicate-title figure in the brief is out of date. DMV lists $28. Titles usually arrive by mail within 15 to 30 days.",
+        "url": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+        "publisher": "California DMV",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "CT": {
+        "titleFee": 25, "duplicateTitle": 25, "currency": "USD",
+        "url": "https://portal.ct.gov/dmv/resources/dmv-fees",
+        "publisher": "Connecticut DMV",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      }
+    },
+    "UK": {
+      "v5cLogbook": {
+        "newKeeperIssue": 0, "replacement": 25, "currency": "GBP",
+        "note": "DVLA issues the V5C free when a vehicle is registered or changes keeper. A replacement costs £25 whether ordered online (about 5 working days), by phone, by post with form V62, or at a Post Office. It is free if a keeper tells DVLA within 6 weeks that it never arrived.",
+        "url": "https://www.gov.uk/vehicle-log-book",
+        "publisher": "DVLA (GOV.UK)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      }
+    },
+    "IE": {
+      "vehicleRegistrationCertificate": {
+        "changeOfOwnership": 0, "replacement": 12, "currency": "EUR",
+        "note": "Change of ownership is free and can be done online through motortax.ie. A replacement VRC needs form RF134 witnessed at a Garda station, plus €12, and takes 5 to 10 working days. The €12 figure is from local-authority motor tax office pages.",
+        "url": "https://www.mayo.ie/en-ie/your-council/services/motor-tax/replacement-documents",
+        "ownershipUrl": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/buying-or-selling-a-vehicle/change-of-ownership/",
+        "publisher": "Mayo County Council (motor tax office) / Citizens Information",
+        "sourceType": "primary-gov",
+        "confirmed": false,
+        "confirmedNote": "Seen in search snippets from several council pages. The pages themselves were not opened (403)."
+      }
+    },
+    "CA": {
+      "ON": {
+        "vehiclePermit": 32, "currency": "CAD",
+        "note": "In Ontario, ownership is the vehicle permit. The seller must give the buyer a Used Vehicle Information Package and the signed Application for Transfer. The buyer registers within 6 days and pays 13% retail sales tax on the greater of the price or the Red Book wholesale value. Passenger plate renewal has cost $0 since March 13, 2022. The UVIP price was not captured.",
+        "url": "https://www.ontario.ca/page/driver-and-vehicle-fees",
+        "processUrl": "https://www.ontario.ca/page/buy-or-sell-used-vehicle-ontario",
+        "publisher": "Government of Ontario",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "BC": {
+        "transferOfTitle": 28, "registration": 18, "duplicatePermit": 18, "currency": "CAD",
+        "annualLicenceExample": "$53 for a passenger vehicle of 1,001 to 1,400 kg net weight",
+        "note": "ICBC handles registration, and a transfer uses form APV9T through an Autoplan broker. The buyer must register within 10 days. Fees are from the Motor Vehicle Fees Regulation schedule.",
+        "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/334_91",
+        "publisher": "BC Laws",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      }
+    },
+    "MX": {
+      "factura": {
+        "value": "Mexico has no government title. Ownership rests on the factura, the original CFDI sales invoice. A private sale is recorded by endorsing the back of the factura to the buyer with full names, date, place and the seller's signature, and it is checked against REPUVE. States then register the new owner.",
+        "cost": null,
+        "url": "https://chihuahua.gob.mx/contenidos/conoce-la-manera-correcta-de-endosar-una-factura-de-vehiculo",
+        "publisher": "Gobierno del Estado de Chihuahua",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "tarjetaDeCirculacionCDMX": {
+        "issueWithNewVehicle": 972, "renewalOrReplacement": 433, "currency": "MXN",
+        "validity": "3 years",
+        "note": "2026 figures as reported by the press. A Semovi page reached by search showed $257 for a replacement (payment key 36-15), which looks like a figure from an older year. Semovi's site refused the connection, so neither figure could be read at the source.",
+        "url": "https://www.unotv.com/estados/ciudad-de-mexico/pago-de-tarjeta-de-circulacion-2026-en-cdmx-cuanto-es-y-como-hacer-el-tramite-digital/",
+        "primaryUrl": "https://www.semovi.cdmx.gob.mx/tramites-y-servicios/vehiculos-particulares/automovil/control-vehicular-y-tarjeta-de-circulacion",
+        "publisher": "UnoTV (reporting Secretaría de Administración y Finanzas CDMX)",
+        "date": "2026",
+        "sourceType": "secondary-news",
+        "confirmed": false
+      }
+    }
+  },
+
+  "licenseCategories": {
+    "US": {
+      "NY": {
+        "classM": {
+          "currency": "USD",
+          "classMFeeRange_age21plus": "68.75 to 72.50 (77.75 to 82.50 in the MCTD)",
+          "classMFeeRange_overall": "21 to 120, depending on age, current licence status and the MCTD surcharge",
+          "addMToExistingLicence_amendmentFee": 12.50,
+          "mctdSurcharge": "$1 for every 6 months of validity",
+          "classDFee_age21plus": "64.25 to 67.50 (73.25 to 77.50 in the MCTD)",
+          "steps": "Minimum age 16. Pass a written test (14 of 20, including 2 of 4 road-sign questions) to get a motorcycle learner permit, then practice, then take a road test. Riders under 18 wait 6 months before the road test. A Class D holder who passes waits 7 days and then pays $12.50 to amend the licence to Class DM.",
+          "roadTestWaiver": "Waived for a valid New York licence holder with a learner permit who completes the MSF Basic RiderCourse (2 days, bike and helmet provided) or the 1-day BRC2 License Waiver (for riders on their own bike with at least a year on a permit). Proof must be presented within 2 years. Courses taken in other states do not count.",
+          "urls": ["https://dmv.ny.gov/driver-license/fees-refunds", "https://dmv.ny.gov/driver-license/get-a-motorcycle-learner-permit-and-license"],
+          "publisher": "New York State DMV",
+          "sourceType": "primary-gov",
+          "confirmed": true,
+          "gap": "The course tuition for the NY Motorcycle Safety Program was not captured."
+        },
+        "rvOver26000lb": {
+          "value": "A non-commercial driver of a recreational vehicle over 26,000 lb GVWR needs a Class D licence with an R endorsement, not a CDL. The endorsement needs a road test in the vehicle itself.",
+          "url": "https://dmv.ny.gov/forms/mv500c.pdf",
+          "publisher": "New York State DMV (MV-500C, class descriptions)",
+          "sourceType": "primary-gov",
+          "confirmed": false,
+          "note": "The DMV PDF could not be parsed, and the details came from secondary summaries. The endorsement itself exists, but the exact thresholds (26,000 lb or 40 ft?) need checking in MV-500C."
+        }
+      },
+      "CT": {
+        "motorcycleEndorsement": {
+          "currency": "USD",
+          "knowledgeAndVisionTest": 40,
+          "learnerPermit": 16,
+          "endorsementFee_learnerPage": 30,
+          "endorsementFee_feeSchedule": 5,
+          "steps": "Hold a valid Connecticut driver's licence. Pass a 16-question knowledge test and vision screening for a 60-day learner permit, renewable once per calendar year. The permit allows daylight riding only, in Connecticut only, with no passengers and no limited-access highways. Then complete a DMV-approved novice course; the certificate is valid 2 years and waives the DMV on-cycle test. Then add the M endorsement at a DMV office.",
+          "course": "The CONREP Basic Rider Course has 6 classroom hours and at least 11 on-cycle hours. Tuition was not captured.",
+          "urls": ["https://portal.ct.gov/dmv/licenses-permits-ids/get-learners-permit/get-motorcycle-learners-permit", "https://portal.ct.gov/dmv/resources/dmv-fees"],
+          "publisher": "Connecticut DMV / CT DOT",
+          "sourceType": "primary-gov",
+          "confirmed": true,
+          "conflict": "The learner-permit page gives $30 to add the endorsement. The DMV fee schedule gives '$5 each' for a motorcycle endorsement. See 'uncertain'."
+        }
+      },
+      "CA": {
+        "m1m2": {
+          "currency": "USD",
+          "originalOrRenewal": 46, "replacement": 37, "drivingRetest": 9,
+          "definitions": "M1: any two-wheeled motorcycle or motorized bicycle. M2: motorized bicycles, mopeds and motorized scooters only.",
+          "under21": "Must complete the CHP California Motorcyclist Safety Program Basic Rider Course (15 hours) and hold the permit for 6 months. The DL 389 certificate waives the skills test and must be submitted within 12 months.",
+          "age21plus": "Either the course with the DL 389, or the DMV skills test, with three attempts.",
+          "permitRestrictions": "No passengers, no freeways, no riding at night.",
+          "urls": ["https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/licensing-fees/", "https://www.dmv.ca.gov/portal/driver-education-and-safety/special-interest-driver-guides/motorcyclists-guide/"],
+          "publisher": "California DMV",
+          "sourceType": "primary-gov",
+          "confirmed": true
+        },
+        "housecarRv": {
+          "value": "A Class C licence covers a housecar (motorhome) up to 40 feet. A housecar over 40 feet and up to 45 feet needs a noncommercial Class B licence, which requires a law test, a vision test, a vehicle safety check, a skills test and a driving test. A housecar over 40 feet is limited to certain highways (VC §35400).",
+          "noncommercialClassBFee": 46, "currency": "USD",
+          "url": "https://www.dmv.ca.gov/portal/handbook/recreational-vehicles-and-trailers-handbook-2011/noncommercial-class-b-45-housecar-requirements/",
+          "publisher": "California DMV",
+          "sourceType": "primary-gov",
+          "confirmed": true,
+          "note": "The brief's '26,000 lb Class B for RVs' is the commercial threshold. For a private motorhome in California, length (40 ft) is the trigger. A trailer over 10,000 lb GVWR also needs the noncommercial Class A, but that was not verified in this session."
+        }
+      }
+    },
+    "UK": {
+      "fees": {
+        "currency": "GBP",
+        "theoryTestMotorcycleOrCar": 23,
+        "module1OffRoad": 15.50,
+        "module2OnRoad_weekday": 75,
+        "module2OnRoad_eveningWeekendBankHoliday": 88.50,
+        "carTest_weekday": 62,
+        "carTest_eveningWeekend": 75,
+        "rebookAfterFail": "Pay the full fee again",
+        "url": "https://www.gov.uk/driving-test-cost",
+        "publisher": "DVSA (GOV.UK)",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "cbt": {
+        "officialPrice": null,
+        "typicalRange": "£120 to £220; London about £160 to £205",
+        "currency": "GBP",
+        "rules": "Required before riding on the road. From 16 for a moped; from 17 for a motorcycle up to 125cc and 11 kW, on L plates. The full test must be passed within 2 years of CBT, or CBT must be taken again. Riding without a valid CBT: a fine of up to £1,000 and up to 6 points.",
+        "officialUrl": "https://www.gov.uk/motorcycle-cbt",
+        "priceUrls": ["https://www.rideto.com/blog/how-much-is-a-cbt-test/", "https://universalmct.co.uk/courses-prices/compulsory-basic-training-cbt-london/"],
+        "publisher": "GOV.UK (rules); training schools and RideTo (prices)",
+        "sourceType": "primary-gov (rules) / secondary-commercial (price)",
+        "confirmed": false,
+        "note": "GOV.UK says training schools set their own CBT prices, so there is no official figure. The range above is a market estimate."
+      },
+      "ages": {
+        "AM": 16, "A1": 17,
+        "A2": "19 (direct)",
+        "A": "24 by direct access, or 21 after holding A2 for 2 years (progressive access)",
+        "url": "https://www.gov.uk/ride-motorcycle-moped/bike-categories-ages-and-licence-requirements",
+        "publisher": "GOV.UK",
+        "sourceType": "primary-gov",
+        "confirmed": true
+      },
+      "c1": {
+        "value": "Category C1 covers vehicles of 3,500 to 7,500 kg maximum authorized mass, with a trailer up to 750 kg. Category B covers up to 3,500 kg, or 4,250 kg for a zero-emission vehicle. Anyone who passed a car test before January 1, 1997 usually already holds C1. Minimum age 18. A motorhome over 3,500 kg needs C1 for anyone who passed on or after January 1, 1997.",
+        "url": "https://www.gov.uk/driving-licence-categories",
+        "publisher": "GOV.UK (DVLA)",
+        "sourceType": "primary-gov",
+        "confirmed": true,
+        "note": "The minimum age of 18 came from INF52 and NI Direct summaries, not from the categories page."
+      }
+    },
+    "IE": {
+      "motorcycle": {
+        "currency": "EUR",
+        "drivingTestFee": 85,
+        "ibtHours": "16 hours for AM or A1 (modules 1 to 4). 18 hours for a first IBT on A2 or A (modules 1, 3 and 5).",
+        "ibtPrice": null,
+        "ibtPriceNote": "RSA says each approved instructor sets their own IBT price.",
+        "urls": ["https://www.rsa.ie/services/learner-drivers/driving-lessons/motorcycling-lessons-(ibt)", "https://www.rsa.ie/services/learner-drivers/faq/faqs-for-motorcycle-learner-drivers"],
+        "publisher": "Road Safety Authority (Ireland)",
+        "sourceType": "primary-gov",
+        "confirmed": false,
+        "confirmedNote": "Taken from RSA search snippets. RSA pages returned 403 when fetched."
+      }
+    },
+    "CA": {
+      "ON": {
+        "currency": "CAD",
+        "m1KnowledgeTest": 16.00,
+        "m2RoadTest": 53.75,
+        "m1Package": 78.75,
+        "m1PackageNote": "Covers the knowledge test, the M2 road test and a 90-day licence. A rider taking an approved safety course pays only the knowledge test and the 90-day licence.",
+        "driverLicenceOriginalOrRenewal": 90,
+        "steps": "Minimum age 16. The M1 is valid 90 days, and the first road test can be taken after 60 days. M1 rules: zero blood alcohol, daylight only, no passengers, roads under 80 km/h. The M2 needs 22 months (18 with an approved course) before the M exit test, and the whole process must be finished within 5 years. Motorcycle road tests run mid-May to mid-October.",
+        "urls": ["https://www.ontario.ca/page/get-motorcycle-licence", "https://www.ontario.ca/page/driver-and-vehicle-fees"],
+        "feeUrl": "https://tests.ca/ontario/m1-practice-test/",
+        "publisher": "Government of Ontario (rules, $90 licence); third-party test site (M1/M2 fees)",
+        "sourceType": "primary-gov (rules) / secondary-commercial (test fees)",
+        "confirmed": false,
+        "confirmedNote": "The rules and the $90 licence fee were confirmed. The DriveTest fee page (drivetest.ca/tests/fees) returned 403, so the M1 and M2 fees are unconfirmed. The M exit-test fee is null."
+      },
+      "BC": {
+        "currency": "CAD",
+        "knowledgeTest": 15,
+        "learnersLicence": 10,
+        "roadTestClass7or8": 35,
+        "roadTestClass5or6": 50,
+        "motorcycleSkillsTest": 50,
+        "licenceIssuedMoreThan4Years": 75,
+        "licenceIssued4YearsOrLess": 31,
+        "classLearnerFeeSeenElsewhere": 35,
+        "steps": "Get a Class 8 learner's licence (8L) with a knowledge test and vision screening. The motorcycle skills test comes after 30 days. The Class 8 road test comes after 12 months as a learner and leads to the novice stage (8N). The Class 6 road test comes after 24 months as a novice and gives a full Class 6.",
+        "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/334_91",
+        "stepsUrl": "https://www.partners.icbc.com/assets/1ukm9XAdRBtyPN2wdru82a/mv2023.pdf",
+        "publisher": "BC Laws (fees); ICBC (steps)",
+        "sourceType": "primary-gov",
+        "confirmed": true,
+        "note": "A snippet gave $35 for a Class 8 learner's licence. The regulation gives $10 for a photo learner's licence plus $15 for the knowledge test, which leaves the $35 unexplained. The 12- and 24-month waits are for new riders. Shorter routes for full Class 5 holders were not verified."
+      }
+    },
+    "MX": {
+      "cdmxMotorcycle": {
+        "currency": "MXN",
+        "typeA1_motorcycleOnly": 572,
+        "typeA2_carAndMotorcycle": 1142,
+        "validityYears": 3,
+        "permanentLicence": "The 'A' permanent licence (1,500 MXN, reinstated November 2024) is for cars only. Motorcycles are not included.",
+        "note": "Issue, replacement and renewal cost the same. Figures are from the press. Semovi's site refused the connection and the 2026 Código Fiscal text was not retrieved, so none was read at the source. An older Código Fiscal (art. 229) figure was 525 MXN for the A1.",
+        "url": "https://www.adn40.mx/ciudad/2026-02-10/vigencia-y-precio-la-licencia-para-motociclista-2026-en-la-cdmx/",
+        "primaryUrl": "https://semovi.cdmx.gob.mx/tramites-y-servicios/vehiculos-particulares/motocicleta/licencia/expedicion-de-licencia-tipo-a1",
+        "publisher": "ADN40 / Infobae (reporting Secretaría de Administración y Finanzas CDMX)",
+        "date": "2026-02-10",
+        "sourceType": "secondary-news",
+        "confirmed": false
+      }
+    }
+  },
+
+  "canadaSafetyNet": {
+    "eiRegular": {
+      "currency": "CAD",
+      "benefitRate": 0.55,
+      "maxWeekly2026": 729,
+      "maxInsurableEarnings2026": 68900,
+      "hoursToQualify": "420 to 700 insurable hours in the qualifying period, depending on the regional unemployment rate",
+      "qualifyingPeriod": "The 52 weeks before the claim, or the time since the last claim if that is shorter",
+      "waitingPeriod": "One week (7 consecutive days unemployed and unpaid)",
+      "weeksPayable": "14 to 45, depending on regional unemployment and insured hours",
+      "bestWeeksDivisor": "14 to 22 best weeks, depending on the region",
+      "familySupplement": "Up to 80% of earnings if net family income is $25,921 or less and the claimant has children receiving the Canada Child Benefit",
+      "taxable": true,
+      "url": "https://www.canada.ca/en/services/benefits/ei/ei-regular-benefit/benefit-amount.html",
+      "eligibilityUrl": "https://www.canada.ca/en/services/benefits/ei/ei-regular-benefit/eligibility.html",
+      "publisher": "Employment and Social Development Canada / Service Canada",
+      "date": "2026-01-01 (rates in effect)",
+      "sourceType": "primary-gov",
+      "confirmed": true
+    },
+    "eiSelfEmployedSpecial": {
+      "currency": "CAD",
+      "covers": "Special benefits only: maternity, parental, sickness, compassionate care and the two family caregiver benefits. There are never regular (job-loss) benefits.",
+      "minimumNetSelfEmployedEarnings_2025forClaimsIn2026": 9254,
+      "optInWaiting": "An agreement with the Canada Employment Insurance Commission must be in place for at least 12 months before any claim",
+      "premium2026": "$1.63 per $100 of earnings, up to $1,123.07 (Quebec: $1.30 per $100, up to $895.70)",
+      "maxWeekly2026": 729,
+      "url": "https://www.canada.ca/en/services/benefits/ei/ei-self-employed-workers.html",
+      "publisher": "Service Canada",
+      "sourceType": "primary-gov",
+      "confirmed": true
+    },
+    "performersAndEi": {
+      "value": "ACTRA performers generally work as self-employed independent contractors, so their performing work is not insurable employment and does not count toward regular EI. They can opt in to special benefits only. Hours from a separate employee job, such as a day job between bookings, are insurable and can qualify them for regular EI if they lose that job.",
+      "ruleSource": "Employment Insurance Act s.5. The Canada Revenue Agency decides insurability from the facts of each working relationship.",
+      "url": "https://www.actra.ca/wp-content/uploads/2022/08/2022-07-27_ACTRA-Submission_Reforming-Canadas-EI-program-FINAL.pdf",
+      "govUrl": "https://www.canada.ca/en/services/benefits/ei/ei-self-employed-workers.html",
+      "publisher": "ACTRA (submission to ESDC, July 27, 2022); Service Canada",
+      "date": "2022-07-27",
+      "sourceType": "primary-issuer (union position) / primary-gov (special benefits)",
+      "confirmed": true,
+      "caveat": "Some productions treat performers as employees and deduct EI. The situation depends on the engagement, so a simulation can model it per contract."
+    },
+    "ontarioWorks_single": {
+      "currency": "CAD",
+      "basicNeeds": 343,
+      "maxShelter": 390,
+      "total": 733,
+      "note": "Monthly. Shelter pays actual verified costs up to $390. These rates have been frozen since October 2018, and ontario.ca still shows $733 for a single person in 2026.",
+      "urls": ["https://www.ontario.ca/document/ontario-works-policy-directives/62-basic-needs", "https://www.ontario.ca/document/ontario-works-policy-directives/63-shelter", "https://www.ontario.ca/page/financial-assistance-ontario-works"],
+      "publisher": "Government of Ontario (Ministry of Children, Community and Social Services)",
+      "sourceType": "primary-gov",
+      "confirmed": true
+    },
+    "bcIncomeAssistance_single": {
+      "currency": "CAD",
+      "supportAllowance": 560,
+      "maxShelter": 500,
+      "total": 1060,
+      "effectiveDate": "2023-08-01",
+      "note": "Monthly figures for an employable single person, from the current rate table, which is still dated August 1, 2023. No general rate increase for 2025 or 2026 was found. The earnings exemption was not captured.",
+      "url": "https://www2.gov.bc.ca/gov/content/governments/policies-for-government/bcea-policy-and-procedure-manual/bc-employment-and-assistance-rate-tables/income-assistance-rate-table",
+      "publisher": "Province of British Columbia (Ministry of Social Development and Poverty Reduction)",
+      "sourceType": "primary-gov",
+      "confirmed": true
+    },
+    "contextBcMinimumWage": {
+      "value": 18.25, "currency": "CAD", "per": "hour",
+      "date": "2026-06-01",
+      "url": "https://news.gov.bc.ca/releases/2026LBR0021-000581",
+      "publisher": "BC Gov News",
+      "sourceType": "primary-gov",
+      "confirmed": false,
+      "note": "Taken from the headline of the release. The page was not opened."
+    }
+  },
+
+  "mexicoIncome": {
+    "minimumWage2026": {
+      "currency": "MXN",
+      "generalDaily": 315.04,
+      "generalMonthlyEquivalent": 9582.47,
+      "zlfnDaily": 440.87,
+      "zlfnMonthlyEquivalent": 13409.80,
+      "increase": "13% general, 5% northern border zone (ZLFN)",
+      "previous2025": {"generalDaily": 278.80, "zlfnDaily": 419.88},
+      "effective": "2026-01-01",
+      "url": "https://www.gob.mx/conasami/articulos/se-publican-en-el-diario-oficial-de-la-federacion-los-salarios-minimos-vigentes-a-partir-del-1-de-enero-de-2026",
+      "dofUrl": "https://dof.gob.mx/nota_detalle.php?codigo=5775534&fecha=09%2F12%2F2025",
+      "publisher": "CONASAMI (Comisión Nacional de los Salarios Mínimos); DOF",
+      "sourceType": "primary-gov",
+      "confirmed": true,
+      "note": "Mexico City is in the general zone. The monthly equivalent is the daily wage times 30.4."
+    },
+    "dubbingAnda": {
+      "tabuladorPublic": false,
+      "value": null,
+      "currency": "MXN",
+      "note": "ANDA gives its dubbing scale only to members, by email to trabajo@laanda.org.mx. There is one scale for every studio that signed the Contrato Homologado. Work is paid per loop, a line of about 15 to 20 seconds, within a minimum 'llamado' (call). Dubbing pays no royalties. SITATYR runs a separate scale.",
+      "url": "https://laanda.org.mx/la-voz-del-actor/tabuladores-anda/",
+      "publisher": "Asociación Nacional de Actores (ANDA)",
+      "sourceType": "primary-issuer",
+      "confirmed": true
+    },
+    "dubbingReportedFigures": {
+      "minimumCall_upTo6Loops_2023": 224,
+      "monthlyRange": "9,819 to 30,200 MXN a month, depending on the project",
+      "currency": "MXN",
+      "urls": ["https://x.com/EdurneKeel/status/1895228963959775731", "https://laverdadnoticias.com/dinero-inteligente/finanzas-personales/cuanto-gana-actor-doblaje"],
+      "publisher": "A dubbing performer on X (2023 scale, posted 2025); La Verdad Noticias",
+      "sourceType": "secondary-social / secondary-news",
+      "confirmed": false
+    },
+    "actingTeacherHourly_CDMX": {
+      "currency": "MXN",
+      "marketplaceAverage": 241,
+      "marketplaceFloor": 150,
+      "typicalRange": "250 to 550 per hour (Cronoshare, theater classes in CDMX); national average about 400",
+      "urls": ["https://www.superprof.mx/clases/actuacion/ciudad-de-mexico/", "https://www.cronoshare.com.mx/cuanto-cuesta/clases-teatro"],
+      "publisher": "Superprof México; Cronoshare",
+      "date": "2026",
+      "sourceType": "secondary-commercial",
+      "confirmed": false,
+      "note": "These are the prices teachers ask students on marketplaces. They are not a wage survey, and no official figure exists."
+    }
+  },
+
+  "uncertain": [
+    {"item": "Connecticut motorcycle endorsement fee", "detail": "The learner-permit page says $30 to add the M endorsement. The general fee schedule says 'Motorcycle Endorsement $5 each'. The $30 may bundle a duplicate-licence fee. Use $30 as the cost a rider actually pays, and flag it."},
+    {"item": "Ontario M1/M2/M test fees", "detail": "DriveTest's fee page returned 403. The $16, $53.75 and $78.75 figures came from a third-party site. The M exit-test fee is null."},
+    {"item": "Ireland learner permit and theory test fees", "detail": "Not confirmed. One search summary gave €45 for the learner permit, and the NDLS figure is commonly €35. Both are left out of the data. The motorcycle test at €85 came from an RSA snippet."},
+    {"item": "CDMX motorcycle licence and tarjeta de circulación 2026", "detail": "Figures came from the press (A1 572, A2 1,142, tarjeta 972 new / 433 renewal). Semovi refused the connection, and a Semovi snippet showed 257 for a replacement (older year?). Check against the Código Fiscal CDMX 2026 (arts. 222 and 229)."},
+    {"item": "NY R endorsement", "detail": "The details came from secondary summaries. The MV-500C PDF could not be parsed."},
+    {"item": "BC Class 8 learner $35", "detail": "Found in a snippet. It does not match the regulation's line items ($10 photo learner's licence + $15 knowledge test)."},
+    {"item": "PR card 5-year and green card 10-year validity; Mexican residence card terms; INE free and 10-year", "detail": "Standard facts, but not read on the issuing agency's page during this session."},
+    {"item": "UK CBT price", "detail": "No official price exists because training schools set it. £120 to £220 is a market range."},
+    {"item": "ANDA dubbing rates", "detail": "The scale is not public. The only figure (224 MXN for a minimum call of up to 6 loops, 2023) comes from a performer's social media post."},
+    {"item": "Irish vehicle registration certificate replacement €12", "detail": "Seen in several local-authority snippets. The pages returned 403."}
+  ]
+}

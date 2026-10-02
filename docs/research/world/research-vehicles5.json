@@ -1,0 +1,411 @@
+{
+  "meta": {
+    "compiled": "2026-09-30",
+    "method": "Web search plus direct reads of pages, PDFs and data files. 'confirmed: true' means the figure was read on the cited page or file itself; 'confirmed: false' means it came from a search-result summary or a secondary page and was not read on a primary source.",
+    "spelling": "American spelling in notes; quoted text keeps the source's spelling."
+  },
+  "motorcycle_licensing": {
+    "britain_progressive_access": [
+      {
+        "item": "UK motorcycle categories and ages",
+        "figure": "AM (mopeds 25-45 km/h) from 16; A1 (up to 125cc, 11 kW) from 17; A2 (up to 35 kW) from 19; A (unrestricted) from 21 via progressive access after holding A2 for at least 2 years (practical test only), or from 24 by direct access (CBT, theory and practical test).",
+        "url": "https://www.gov.uk/ride-motorcycle-moped/bike-categories-ages-and-licence-requirements",
+        "publisher": "GOV.UK (DVSA/DVLA)",
+        "date": "accessed 2026-09-30",
+        "confirmed": true
+      }
+    ],
+    "ireland_progressive_access": [
+      {
+        "item": "Irish motorcycle categories and ages",
+        "figure": "AM 16; A1 16; A2 18; A 20 via progressive access (after holding A2 for 2 years) or 24 via direct access.",
+        "url": "https://en.wikipedia.org/wiki/Driving_licence_in_the_Republic_of_Ireland",
+        "publisher": "Wikipedia (summarizing RSA/NDLS)",
+        "date": "accessed 2026-09-30",
+        "confirmed": true,
+        "note": "Ages A (24 direct / 20 progressive) and AM 16 were read on the page. The RSA and NDLS pages returned HTTP 403, so the primary source was not read."
+      },
+      {
+        "item": "Progressive A2 to A procedure in Ireland",
+        "figure": "After holding a full A2 for more than 2 years, complete 11 hours of specialized IBT for higher-powered motorcycles; odo.ie says no theory or driving test is then needed and gives a EUR 65 fee.",
+        "url": "https://www.rsa.ie/services/learner-drivers/get-qualified/motorcycle-any-size-and-motor-tricycle---a",
+        "publisher": "Road Safety Authority (RSA); corroborated by odo.ie guide (https://www.odo.ie/guides/motorcycle-licence-ireland)",
+        "date": "accessed 2026-09-30",
+        "confirmed": false,
+        "note": "The RSA page returned HTTP 403; the 11-hour IBT wording came from a search snippet of the RSA page. The odo.ie page was read, but it is secondary, and its claim that no test is needed was not checked against RSA."
+      }
+    ],
+    "new_york_msf_brc": [
+      {
+        "item": "Road test waiver",
+        "figure": "NY DMV waives the motorcycle road test for anyone who completes the MSF Basic RiderCourse at an approved New York provider.",
+        "url": "https://dmv.ny.gov/motorcycle-manual/motorcycle-manual-motorcycle-licenses-ownership-special-rules",
+        "publisher": "New York State DMV, Motorcycle Manual",
+        "date": "accessed 2026-09-30",
+        "confirmed": true,
+        "note": "According to search results, the waiver requires a valid NY license and a class M/MJ permit, and the completion card lapses two years after the course. These conditions were not read on the DMV page."
+      },
+      {
+        "item": "Basic RiderCourse fee (one provider)",
+        "figure": "USD 321 (Mohawk Valley Community College / Go Motorcycling, Utica and Watertown)",
+        "url": "https://www.gomotorcycling.net/basic-ridercourse/",
+        "publisher": "Go Motorcycling (Mohawk Valley Community College)",
+        "date": "accessed 2026-09-30",
+        "confirmed": true,
+        "note": "The DMV sets no fee, so prices vary by provider. A secondary site (getmotorcyclelicense.com) gives a statewide range of USD 199-398, which was not confirmed."
+      }
+    ],
+    "california_cmsp": [
+      {
+        "item": "Skills test waiver via DL 389",
+        "figure": "The DMV may waive the skills test for anyone presenting a valid DL 389 (it must be submitted within 12 months of issue), though an observation test may be required for a motorcycle-only license. Applicants under 21 must complete a CHP-approved course to get a permit and must hold the permit for 6 months.",
+        "url": "https://www.dmv.ca.gov/portal/driver-education-and-safety/special-interest-driver-guides/motorcyclists-guide/",
+        "publisher": "California DMV",
+        "date": "accessed 2026-09-30",
+        "confirmed": true
+      },
+      {
+        "item": "CMSP Motorcyclist Training Course price (one provider)",
+        "figure": "USD 425 for ages 21 and over; USD 395 for ages 20 and under; about 16 hours",
+        "url": "https://www.mre-corp.com/training/get-licensed/",
+        "publisher": "Motorcycle Rider Education Corp (CMSP training site)",
+        "date": "accessed 2026-09-30",
+        "confirmed": true,
+        "note": "Search results also cite CMSP program caps of USD 350 (21+) and USD 295 (20 and under) and a length of 15.5 hours, but the CMSP FAQ (cmsp.msi5.com) could not be reached. Treat those caps as unconfirmed and possibly outdated."
+      }
+    ],
+    "bc_class8_learner": [
+      {
+        "item": "Class 8L restrictions and timeline",
+        "figure": "Ride only in daylight; stay within sight of a supervisor who holds a full Class 6 and is 25 or older; no more than 60 km/h; no passengers; display the L sign; no hand-held or hands-free devices; zero alcohol and drugs. The skills test is allowed after 30 days on 8L and removes the supervisor and speed restrictions. The Class 8 road test is allowed after at least 12 months on the learner license (60 hours of practice recommended). Next is the Class 8 novice stage, at least 24 months, before the Class 6 road test. Fees: skills test not captured, Class 8 road test CAD 35, novice license CAD 75. An expired learner license means retaking the knowledge test.",
+        "url": "https://www.partners.icbc.com/assets/1ukm9XAdRBtyPN2wdru82a/mv2023.pdf",
+        "publisher": "ICBC, 'Preparing for your motorcycle licensing tests' (MV2023, revision 03/2026)",
+        "date": "2026-03",
+        "confirmed": true
+      }
+    ],
+    "moped_on_car_license": [
+      {
+        "jurisdiction": "New York",
+        "answer": "Partly. A Class D license covers Class B (20-30 mph) and Class C (up to 20 mph) limited-use motorcycles (mopeds). A Class A limited-use motorcycle (30-40 mph) needs an M license.",
+        "url": "https://dmv.ny.gov/driver-license/new-york-state-learner-permit-and-driver-license-class-descriptions",
+        "publisher": "New York State DMV",
+        "date": "accessed 2026-09-30",
+        "confirmed": true
+      },
+      {
+        "jurisdiction": "California",
+        "answer": "No. 'You must have a motorcycle license (M1 or M2) to drive a moped.' A Class C license is not enough.",
+        "url": "https://www.dmv.ca.gov/portal/vehicle-registration/new-registration/motorcycles-mopeds-and-scooters/",
+        "publisher": "California DMV",
+        "date": "accessed 2026-09-30",
+        "confirmed": true
+      },
+      {
+        "jurisdiction": "Ontario",
+        "answer": "No. A G license does not cover mopeds. They need an M license with the L condition (M1, then M2-L). M1 is valid 90 days, allows no road test for the first 60 days, and restricts riding to daylight with zero alcohol and no passengers.",
+        "url": "https://www.ontario.ca/page/get-motorcycle-licence",
+        "publisher": "Government of Ontario",
+        "date": "accessed 2026-09-30",
+        "confirmed": true
+      },
+      {
+        "jurisdiction": "British Columbia",
+        "answer": "Yes, with a full-privilege Class 5 or 7 license (not a learner license). A limited-speed motorcycle is 50cc or 1.5 kW or less, has a top speed of 70 km/h, and weighs 95 kg or less. A helmet is required, and the vehicle must be registered and insured.",
+        "url": "https://icbc.com/vehicle-registration/specialty-vehicles/moped-moped-scooters",
+        "publisher": "ICBC",
+        "date": "accessed 2026-09-30",
+        "confirmed": true
+      },
+      {
+        "jurisdiction": "England (Great Britain)",
+        "answer": "Only for car tests passed before 1 February 2001: those drivers may ride a moped (up to 50cc) without CBT. Drivers who passed on or after that date must complete CBT first and may then ride as learners on L plates.",
+        "url": "https://www.gov.uk/motorcycle-cbt",
+        "publisher": "GOV.UK (DVSA)",
+        "date": "accessed 2026-09-30",
+        "confirmed": true
+      },
+      {
+        "jurisdiction": "Ireland",
+        "answer": "Generally no for newer licenses. A full category B license issued before 21 October 2006 that covered mopeds carries AM entitlement, provided it has not been expired for more than 10 years. Others need category AM (from 16, with IBT).",
+        "url": "https://www.rsa.ie/services/learner-drivers/types-of-licences",
+        "publisher": "Road Safety Authority (RSA)",
+        "date": "accessed 2026-09-30",
+        "confirmed": false,
+        "note": "The RSA page returned HTTP 403 and the wording came from a search snippet. A driving-school page says 'many' B licenses carry moped entitlement, which is consistent only with the pre-2006 grandfathering."
+      }
+    ]
+  },
+  "motorcyclist_death_risk": [
+    {
+      "item": "US fatality rate per 100 million VMT, 2024",
+      "figure": "Motorcyclists 28.00; passenger-car occupants 1.05 (almost 27 times); light-truck occupants 0.63. 6,228 motorcyclists were killed in 2024, down from 6,366 in 2023.",
+      "url": "https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813824.pdf",
+      "publisher": "NHTSA, Traffic Safety Facts 2024 Data: Motorcycles (DOT HS 813 824)",
+      "date": "2026-07",
+      "confirmed": true,
+      "note": "The 2023 edition (DOT HS 813 732) gave 31.39 against 1.13, which search results called 'almost 28 times'. That figure was not read on the page."
+    },
+    {
+      "item": "GB motorcyclist fatality rate per billion vehicle miles, 2024",
+      "figure": "115 motorcyclist deaths per billion vehicle miles; 340 motorcyclists killed in 2024.",
+      "url": "https://www.gov.uk/government/statistics/reported-road-casualties-great-britain-motorcyclist-factsheet-2024/reported-road-casualties-great-britain-motorcyclist-factsheet-2024",
+      "publisher": "Department for Transport, Reported road casualties Great Britain: motorcyclist factsheet 2024",
+      "date": "2025-09-25",
+      "confirmed": true
+    },
+    {
+      "item": "GB fatality rate per billion passenger km by mode, 2024 (table RAS0203)",
+      "figure": "Car occupants 1.0 killed per billion passenger km; motorcycle users 66.3 (about 66 times). 10-year averages: car 1.1, motorcycle 70.9. Converted by Claude (x1.609): about 1.6 and 107 per billion passenger miles.",
+      "url": "https://assets.publishing.service.gov.uk/media/6937f3b0e447374889cd8f3d/ras0203.ods",
+      "publisher": "Department for Transport, table RAS0203",
+      "date": "2025 (2024 data)",
+      "confirmed": true,
+      "note": "Read from the downloaded ODS. The per-mile figures are Claude's unit conversion, not DfT's. A search snippet also cited 2.7 car-occupant deaths per billion vehicle miles against 115, but no DfT page was found stating it, so it is unconfirmed."
+    }
+  ],
+  "bicycle_theft": [
+    {
+      "item": "England and Wales (CSEW), year ending March 2026",
+      "figure": "17.6 incidents per 1,000 bicycle-owning households; 7.6 per 1,000 of all households; 1.7% of bicycle-owning households (0.7% of all households) victimized once or more; about 196,000 incidents.",
+      "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/crimeandjustice/datasets/crimeinenglandandwalesappendixtables/yearendingmarch2026/appendixtablesyemar2026.xlsx",
+      "publisher": "Office for National Statistics, Crime in England and Wales appendix tables (Tables A1a, A2a, A3a)",
+      "date": "2026-07-23",
+      "confirmed": true,
+      "note": "Read from the downloaded xlsx, last column. Police-recorded bicycle theft for the year ending March 2026 was 56,835 (Table A5a)."
+    },
+    {
+      "item": "England and Wales nature of bicycle theft, year ending March 2025",
+      "figure": "Median cost of stolen items GBP 250 (mean GBP 546); 42.4% cost GBP 200-499. About 62% of thefts happened at home (private, semi-private or street combined).",
+      "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/crimeandjustice/datasets/natureofcrimebicycletheft/yearendingmarch2025/nocbicyclethefttables202425.xlsx",
+      "publisher": "Office for National Statistics, Nature of crime: bicycle theft",
+      "date": "2026-03-26",
+      "confirmed": true,
+      "note": "The ONS tables give no recovery rate."
+    },
+    {
+      "item": "Toronto recovery share",
+      "figure": "Reported thefts by occurrence year, with the share recovered: 2022, 2,985 (0.23%); 2023, 2,987 (0.87%); 2024, 2,719 (0.70%); 2025, 2,125 (0.38%). For 2014-2025, 400 of 39,818 were recovered (1.00%).",
+      "url": "https://services.arcgis.com/S9th0jAJ7bqgIRjw/arcgis/rest/services/Bicycle_Thefts_Open_Data/FeatureServer/0",
+      "publisher": "Toronto Police Service, Public Safety Data Portal (Bicycle Thefts open data)",
+      "date": "queried 2026-09-30",
+      "confirmed": true,
+      "note": "Computed by Claude from the live feature service, grouped by OCC_YEAR and STATUS (STOLEN, RECOVERED or UNKNOWN). Counts are police reports, not a per-household rate. No Toronto household rate was found."
+    },
+    {
+      "item": "US NCVS / NYPD",
+      "figure": "Not found",
+      "url": "https://bjs.ojp.gov/data-collection/ncvs",
+      "publisher": "Bureau of Justice Statistics",
+      "date": "accessed 2026-09-30",
+      "confirmed": false,
+      "note": "The NCVS folds bicycle theft into household 'other theft' and publishes no bicycle-specific rate that could be found. No NYPD bicycle theft rate was found."
+    },
+    {
+      "item": "Ireland CSO",
+      "figure": "Not found",
+      "url": "https://www.cso.ie/en/surveys/householdsurveys/pastsurveys/crimeandvictimisationsurvey/",
+      "publisher": "Central Statistics Office",
+      "date": "accessed 2026-09-30",
+      "confirmed": false,
+      "note": "The last CSO Crime and Victimisation Survey was in 2019, according to search results. No 2024-2026 bicycle theft rate was found."
+    }
+  ],
+  "towing": {
+    "travel_trailer_prices": [
+      {
+        "item": "Jayco Jay Flight SLX (entry travel trailer), 2026",
+        "figure": "Series starting price USD 17,318, as stated on the 178DBS page. The 178DBS has an unloaded weight of 3,705 lb, a GVWR of 4,800 lb and sleeps 8.",
+        "url": "https://www.jayco.com/rvs/travel-trailers/2026-jay-flight-slx/178dbs/",
+        "publisher": "Jayco",
+        "date": "accessed 2026-09-30",
+        "confirmed": true,
+        "note": "A search snippet gave USD 16,943, which may be an older figure. The page did not say whether freight and prep are included."
+      },
+      {
+        "item": "Forest River Wildwood FSX 135ICE, 2026",
+        "figure": "MSRP USD 27,694",
+        "url": "https://www.rvwholesalers.com/forest-river-rvs/wildwood-fsx-le-travel-trailer",
+        "publisher": "Dealer listings (search result)",
+        "date": "accessed 2026-09-30",
+        "confirmed": false,
+        "note": "Came from a search snippet. The dealer page read showed no prices. Dealer 'MSRP' figures for Forest River are inflated against sale prices (one 2026 FSX 30VCX lists MSRP USD 63,331, sale USD 32,911)."
+      },
+      {
+        "item": "Bailey Discovery D4-2 (UK entry caravan)",
+        "figure": "RRP GBP 21,499 including 20% VAT, from 1 August 2026; MTPLM 998 kg; MRO 887 kg; 2 berths",
+        "url": "https://www.baileyofbristol.co.uk/touring-caravans/discovery/discovery-d4-2/",
+        "publisher": "Bailey of Bristol",
+        "date": "2026-08-01",
+        "confirmed": true
+      },
+      {
+        "item": "Swift Basecamp 2, 2026",
+        "figure": "From GBP 25,375 (Swift); dealers list GBP 23,995-26,145",
+        "url": "https://www.swiftgroup.co.uk/caravans/product/56224/basecamp/",
+        "publisher": "Swift Group",
+        "date": "accessed 2026-09-30",
+        "confirmed": false,
+        "note": "The Swift page returned HTTP 500, so the figure came from a search snippet."
+      }
+    ],
+    "hitch_install": [
+      {
+        "item": "US hitch installation",
+        "figure": "USD 100-600 on average, depending on parts and availability",
+        "url": "https://www.uhaul.com/Tips/Trailer-Hitches/How-To-Choose-Your-Trailer-Hitch-Installation-Provider-27153/",
+        "publisher": "U-Haul",
+        "date": "2023-09-13",
+        "confirmed": true,
+        "note": "Dated 2023, before the requested 2024-2026 window. Search snippets from U-Haul pages also give USD 100-200 labor and a USD 180-550 total; these were not read."
+      },
+      {
+        "item": "UK towbar supply and fitting (Halfords)",
+        "figure": "From GBP 350 (Brink towbar with wiring and programming)",
+        "url": "https://www.halfords.com/tow-bar-fitting.html",
+        "publisher": "Halfords",
+        "date": "accessed 2026-09-30",
+        "confirmed": false,
+        "note": "Came from a search snippet. The page as read showed no price, and a snippet says Halfords has paused towbar fitting."
+      }
+    ],
+    "license_rules": [
+      {
+        "jurisdiction": "Great Britain",
+        "figure": "Drivers who passed from 1 January 1997 can tow trailers up to 3,500 kg MAM (category BE), which DVLA adds at the next photocard renewal. Drivers who passed before 1 January 1997 can usually drive a combination up to 8,250 kg MAM.",
+        "url": "https://www.gov.uk/towing-with-car",
+        "publisher": "GOV.UK",
+        "date": "accessed 2026-09-30",
+        "confirmed": true
+      },
+      {
+        "jurisdiction": "Great Britain, the 2021 change",
+        "figure": "From 16 December 2021 the law removed the car-and-trailer test requirement for drivers who passed on or after 1 January 1997. DVSA stopped B+E tests on 20 September 2021.",
+        "url": "https://content.govdelivery.com/accounts/UKDVSA/bulletins/301309b",
+        "publisher": "DVSA bulletin (via search)",
+        "date": "2021-12",
+        "confirmed": false,
+        "note": "The dates came from search results. The gov.uk towing page read confirms the current rule but not the dates."
+      },
+      {
+        "jurisdiction": "Ireland",
+        "figure": "A category B license may tow a trailer up to 750 kg MAM, or a heavier trailer if the combined MAM is no more than 3,500 kg. BE is needed when the trailer exceeds 750 kg and the combination exceeds 3,500 kg; BE covers combinations up to 7,000 kg. Speed limit when towing: 80 km/h on all roads.",
+        "url": "https://www.odo.ie/guides/towing-caravan-trailer-ireland",
+        "publisher": "odo.ie (guide citing RSA/NDLS), April 2026 update",
+        "date": "2026-04",
+        "confirmed": true,
+        "note": "Read on the secondary guide. The RSA page (https://www.rsa.ie/road-safety/road-users/professional-drivers/vehicle-safety-legislation/light-trailers/towing-and-vehicle-towing-capacity) returned HTTP 403."
+      }
+    ]
+  },
+  "construction": [
+    {
+      "item": "US single-family build time, 2025 (Census Survey of Construction)",
+      "figure": "All homes: 8.8 months from permit to completion (1.4 months permit to start, 7.4 months start to completion). Built for sale 7.4 months; hired contractor (custom, on owner's land) 11.7 months; owner-built 14.3 months; built for rent 12.4 months.",
+      "url": "https://eyeonhousing.org/2026/09/single-family-home-construction-time-declines-in-2025/",
+      "publisher": "NAHB Eye on Housing (Na Zhao), from Census SOC",
+      "date": "2026-09-08",
+      "confirmed": true
+    },
+    {
+      "item": "US single-family build time, 2024",
+      "figure": "9.1 months in total (1.4 + 7.6). Built for sale 7.6 months; contractor-built about 12 months; owner-built 15.1 months; built for rent about 12.5 months.",
+      "url": "https://eyeonhousing.org/2025/09/single-family-homes-are-built-faster-in-2024/",
+      "publisher": "NAHB Eye on Housing (Na Zhao), from Census SOC",
+      "date": "2025-09-22",
+      "confirmed": true
+    },
+    {
+      "item": "Share of custom homes delayed",
+      "figure": "Not found",
+      "url": null,
+      "publisher": null,
+      "date": null,
+      "confirmed": false,
+      "note": "The SOC publishes average durations but no delay share. A search snippet attributed to an HBI/University of Denver study (https://hbi.org/wp-content/uploads/2025/05/HBI-Denver-Study.pdf) says labor shortages in 2024 stretched timelines for small and midsize builders by nearly two months on average and prevented about 19,000 homes. The PDF could not be downloaded, so the claim is unconfirmed."
+    },
+    {
+      "item": "Architect fee as share of construction cost, Canada (RAIC fee guide)",
+      "figure": "Category 7 (Custom Residence), average complexity, fee including basic engineering: 16.80% for CAD 500,000 to under 1M; 16.50% for CAD 1M to under 2M; 14.8% base for under CAD 500,000 (to be negotiated, minimum base). Simple 15.50 / 15.00; complex 19.50 / 18.75.",
+      "url": "https://architectsatplay.ca/sites/default/files/2024-09/guide_architectservicefees(e).pdf",
+      "publisher": "Royal Architectural Institute of Canada, 'A Guide to Determining Appropriate Fees for the Services of an Architect' (2009 edition, hosted 2024-09)",
+      "date": "2009 (copyright)",
+      "confirmed": true,
+      "note": "Claude read them from the PDF's text extraction; the table layout was partly garbled, and the values above come from the clearer 'WITH Basic Engineering' table. The guide recommends rather than surveys, and is older than the requested window. A 2019 edition exists (aanb.org), but its link returned 404."
+    },
+    {
+      "item": "Architect fee, UK (RIBA)",
+      "figure": "No percentage-of-cost figure is given. RIBA's homeowner guide splits the fee as stages 0-3 35%, stage 4 35%, stages 5-6 30%.",
+      "url": "https://www.riba.org/explore/find-an-architect/homeowners-digest/how-do-architects-calculate-fees/",
+      "publisher": "RIBA",
+      "date": "accessed 2026-09-30 (c) 2026",
+      "confirmed": true,
+      "note": "The 5-15% or 11-14% 'RIBA' ranges in search results come from third-party sites, not RIBA, and were not used."
+    },
+    {
+      "item": "Architect fee, US (AIA)",
+      "figure": "Not found",
+      "url": null,
+      "publisher": null,
+      "date": null,
+      "confirmed": false,
+      "note": "No AIA-published percentage was found. The 8-15% or 10-15% ranges in search results come from marketing sites."
+    }
+  ],
+  "rv_overnight_parking": [
+    {
+      "city": "New York City",
+      "finding": "There is no citywide RV-specific overnight ban on NYC311. An RV in a metered space pays the front meter. Commercially registered vehicles may not park on residential streets from 9 PM to 5 AM. No vehicle may stay in one spot more than 7 days unless signs say otherwise. Search results quote 34 RCNY 4-08 as barring any boat trailer, mobile home or mobile diagnostic vehicle from parking on any street for more than 24 hours, and a trailer not attached to a vehicle able to tow it.",
+      "url": "https://portal.311.nyc.gov/article/?kanumber=KA-01026",
+      "publisher": "NYC311",
+      "date": "accessed 2026-09-30",
+      "confirmed": true,
+      "note": "The NYC311 items are confirmed. The 24-hour mobile-home rule in 4-08 (https://codelibrary.amlegal.com/codes/newyorkcity/latest/NYCrules/0-0-0-63770) was NOT read because the page returned 403. There is no Walmart store in New York City."
+    },
+    {
+      "city": "Los Angeles",
+      "finding": "LAMC 80.69.4: oversize vehicles (over 22 ft long or over 7 ft high) may not park from 2 to 6 AM where signs are posted (Oversize Vehicle Restricted Areas). Residents can buy a USD 10 per day permit, up to 3 days. The 72-hour limit (LAMC 80.73.2) still applies. LAMC 85.02 (vehicle dwelling) barred dwelling in a vehicle from 9 PM to 6 AM on residential streets and within 500 ft of schools and parks. It lapsed on 1 July 2019 and was reinstated on 30 July 2019; its current status was not verified.",
+      "url": "https://prodpci.etimspayments.com/pbw/include/laopm/oversize_veh_permit.htm",
+      "publisher": "City of Los Angeles Parking Violations Bureau",
+      "date": "accessed 2026-09-30",
+      "confirmed": true,
+      "note": "The permit page was read. The 22 ft / 84 in definition and the 85.02 history came from search results and SMDP (https://www.smdp.com/van-living/, 2019, updated 2025-01-17). The amlegal LAMC pages returned 403."
+    },
+    {
+      "city": "Toronto",
+      "finding": "Toronto Municipal Code 950-400D(5) bars any vehicle from parking on any highway for longer than three hours, unless signs say otherwise. That rules out overnight on-street RV parking without a permit.",
+      "url": "https://www.toronto.ca/legdocs/municode/1184_950.pdf",
+      "publisher": "City of Toronto, Municipal Code Chapter 950",
+      "date": "consolidation page dated 2022-07-22",
+      "confirmed": true,
+      "note": "Also confirmed on Toronto 311 (https://www.toronto.ca/home/311-toronto-at-your-service/find-service-information/article/?kb=kA06g000001cw2sCAA): 'an unsigned maximum three-hour parking limit exists on public roads'. No Toronto Walmart policy was found."
+    },
+    {
+      "city": "Vancouver",
+      "finding": "Large vehicles may park on residential, park, school and church frontage streets for up to 3 hours between 6 AM and 10 PM, and not at all from 10 PM to 6 AM. A vehicle is large if it is taller than 2.2 m, longer than 6.4 m, heavier than 5,500 kg or seats 10 or more. Trailers are ineligible for permits. Street and Traffic By-law No. 2849, sections 17.5 and 20.",
+      "url": "https://vancouver.ca/streets-transportation/large-vehicles.aspx",
+      "publisher": "City of Vancouver",
+      "date": "accessed 2026-09-30",
+      "confirmed": false,
+      "note": "vancouver.ca and bylaws.vancouver.ca were behind a Cloudflare challenge or returned 403, so the rules came from search snippets of the city page."
+    },
+    {
+      "city": "London",
+      "finding": "No official source was found stating a London-wide rule. According to search results, no UK law bars sleeping in a legally parked vehicle, and boroughs restrict parking through Traffic Regulation Orders and signage. No official council or TfL page was read.",
+      "url": "https://content.tfl.gov.uk/parking-and-loading-legally.pdf",
+      "publisher": "Transport for London (not read)",
+      "date": null,
+      "confirmed": false,
+      "note": "There are no Walmart stores in the UK."
+    },
+    {
+      "city": "Walmart (US corporate policy)",
+      "finding": "Walmart states: 'we do permit RV parking on our store parking lots as we are able. Permission to park is extended by individual store managers, based on availability of parking space and local laws. Please contact management in each store...'",
+      "url": "https://corporate.walmart.com/askwalmart",
+      "publisher": "Walmart Inc., Ask Walmart FAQ",
+      "date": "accessed 2026-09-30",
+      "confirmed": true,
+      "note": "Local ordinances override the policy, so LA's 85.02 and OVO rules and Toronto and Vancouver bylaws apply on the street. No store-level policy was found for LA, Toronto or Vancouver Walmarts, and no Walmart Canada statement was found."
+    }
+  ]
+}

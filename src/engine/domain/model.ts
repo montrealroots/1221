@@ -13,8 +13,9 @@ import type { Instant, TimeZone } from '../core/time';
 import type { Money } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import type { ScheduledItem } from '../core/scheduler';
-import type { HistoryRecord } from '../core/audit';
 import type { HomeState } from '../systems/household';
+import type { Counter, OwnedHome, Purchase } from '../systems/homes';
+import type { Living, Stay } from '../systems/dwelling';
 import type { CreditState } from '../systems/credit';
 import type { AlertSettings } from '../systems/statements';
 import type { PaymentSettings } from '../systems/payments';
@@ -155,6 +156,42 @@ export interface Person {
    */
   home?: HomeState;
   /**
+   * The homes they own, lived in, let or empty; the one they're buying, until
+   * it closes; a seller's counter standing; and offers made on each listing
+   * (`systems/homes.ts`). From 2026-09-28; `owned`, a single home, was the
+   * first day's, and `migrate` makes it the first of `homes`.
+   */
+  homes?: OwnedHome[];
+  buying?: Purchase;
+  counter?: Counter;
+  offersMade?: Record<string, number>;
+  /**
+   * Where they're staying away from home on a job: a production's hotel, a
+   * sublet room, a friend's sofa, or a home of their own there
+   * (`systems/career.ts`); `systems/dwelling.ts` reads what it has.
+   */
+  stay?: Stay;
+  /** Their clothes, the state of the place, and a cleaner (`systems/dwelling.ts`). From 2026-09-28. */
+  living?: Living;
+  /**
+   * The papers they hold, each a record with its issuer, number, dates and
+   * status: passports, travel authorizations, visas and permissions to stay
+   * or work, driving licenses (`systems/documents.ts`). From 2026-09-29.
+   */
+  documents?: import('../systems/documents').PersonDocument[];
+  /** Journeys booked and taken (`systems/journey.ts`). */
+  journeys?: import('../systems/journey').Journey[];
+  /** Their progress toward a driving license where they live (`systems/licensing.ts`). */
+  licensing?: import('../systems/licensing').LicensingRecord;
+  /** The motorcycle license's path, kept apart from the car's (`systems/licensing.ts`, from 2026-09-30). */
+  motoLicensing?: import('../systems/licensing').LicensingRecord;
+  /** ConfirmID paid at a TSA checkpoint, good until then (`systems/identity.ts`, from 2026-09-30). */
+  confirmIdUntil?: number;
+  /** When a home's gain was last kept free of tax, which the exclusion waits two years to allow again. */
+  exclusionUsedAt?: number;
+  /** How many homes they've bought: England's first-time buyer's relief is for the first. */
+  homesOwned?: number;
+  /**
    * Their credit record and how the card is paid (`systems/credit.ts`). Not
    * `creditScore`: `migrate` sheds a field by that name that builds before 80
    * kept on the person.
@@ -183,6 +220,8 @@ export interface Person {
   school?: SchoolRecord;
   /** Their craft as an actor, 0 to 100 in each area (`content/school.ts`). */
   craft?: Craft;
+  /** How far their craft can grow, skill by skill (`CEILING` in `systems/school.ts`). */
+  craftCeiling?: Craft;
   /**
    * Presence, composure, reputation and recognition (`systems/attributes.ts`).
    * Kept as `attrs`: the migration sheds `attributes` and `reputation` from
@@ -193,10 +232,128 @@ export interface Person {
   career?: CareerRecord;
   /** What they've earned, by year and by quarter, for the return, unemployment and the unions' health plans (`systems/earnings.ts`). */
   earnings?: EarningsRecord;
+  /** A SAG-AFTRA pension begun: when, and what an early start leaves of it (`systems/pension.ts`). */
+  pensionStart?: { at: number; factor: number };
   /** Health cover after school: the unions' plans and the marketplace (`systems/health.ts`). */
   health?: HealthRecord;
   /** Unemployment insurance claims (`systems/unemployment.ts`). */
   unemployment?: UnemploymentRecord;
+  /** A Universal Credit claim, living in Britain (`systems/universalcredit.ts`). From 2026-09-29. */
+  universalCredit?: import('../systems/universalcredit').CreditClaim;
+  /** When they claimed the UK State Pension (`systems/statepension.ts`). */
+  statePensionFrom?: number;
+  /** Social Security claimed: from when, and the monthly benefit in dollars (`systems/socialsecurity.ts`). */
+  socialSecurity?: { from: number; monthlyUsd: number };
+  /** Ireland's State Pension claimed, and its week in euro cents; Mexico's Pensión para el Bienestar claimed (`systems/homepensions.ts`). */
+  irishPension?: { from: number; weeklyEur: number };
+  bienestarFrom?: number;
+  /** The cars they own and have owned (`systems/vehicles.ts`). */
+  vehicles?: import('../systems/vehicles').OwnedVehicle[];
+  /** The land they own and have owned (`systems/land.ts`). */
+  land?: import('../systems/land').Parcel[];
+  /** An offer on land accepted, a seller's counter, and the offers made (`systems/land.ts`). */
+  landBuying?: import('../systems/land').LandBuying;
+  /** A house being built on land they own (`systems/construction.ts`). */
+  building?: import('../systems/construction').Build;
+  /** What they own, and where each thing is (`systems/items.ts`, from 2026-10-01). */
+  items?: import('../systems/items').Item[];
+  /** Things bought to be delivered, and their deliveries (`systems/orders.ts`, from 2026-10-01). */
+  orders?: import('../systems/orders').Order[];
+  /** The outfit they chose to wear, and the one they have on (`systems/wardrobe.ts`, from 2026-10-01). */
+  dressed?: string[];
+  /** Outfits they've put together and named, the clothes they bought, and when their own wardrobe began (`systems/clothing.ts`, from 2026-10-01). */
+  outfits?: import('../systems/clothing').Outfit[];
+  clothesBought?: import('../systems/clothing').ClothesPurchase[];
+  clothesSince?: number;
+  /** Their blood alcohol as it stood, and the night's highest (`systems/alcohol.ts`, from 2026-10-01). */
+  alcohol?: import('../systems/alcohol').Alcohol;
+  /** Routines they've saved (`systems/routines.ts`, from 2026-10-01). */
+  routines?: import('../systems/routines').Routine[];
+  /** The people they know, met at school and at work (`systems/people.ts`, from 2026-10-01). */
+  contacts?: import('../systems/people').Contact[];
+  /** A gym they're a member of (`systems/gyms.ts`, from 2026-10-01). */
+  gym?: import('../systems/gyms').Membership;
+  /** A trip out on errands, while it's under way (`systems/trips.ts`, from 2026-10-01). */
+  trip?: import('../systems/trips').Trip;
+  /** The internet at home and the phone, by provider (`systems/telecom.ts`, from 2026-10-01). */
+  telecom?: import('../systems/telecom').Telecom;
+  /** A marriage, and a divorce under way (`systems/marriage.ts`, from 2026-10-01). */
+  marriage?: import('../systems/marriage').Marriage;
+  /** How a couple living together splits the rent and the bills: evenly unless by income. */
+  billSplit?: 'income';
+  /** Children, a child on the way, and trying for one (`systems/children.ts`, from 2026-10-01). */
+  children?: import('../systems/children').Child[];
+  pregnancy?: import('../systems/children').Pregnancy;
+  trying?: boolean;
+  /** An adoption or a surrogacy under way, and the adoptions made, for the return (`systems/adoption.ts`, from 2026-10-02). */
+  familyPath?: import('../systems/adoption').FamilyPath;
+  /** Your mother and father (`systems/parents.ts`, from 2026-10-02). */
+  parents?: import('../systems/parents').Parent[];
+  /** A personal trainer booked (`systems/trainers.ts`, from 2026-10-02). */
+  training?: import('../systems/trainers').Training;
+  /** This month's pre-purchase inspection of a used car (`systems/usedcars.ts`, from 2026-10-02). */
+  inspectedUsed?: import('../systems/usedcars').Inspected;
+  adopted?: import('../systems/adoption').Adopted[];
+  /** A dating app they're on (`systems/dating.ts`, from 2026-10-01). */
+  datingApp?: import('../systems/dating').DatingApp;
+  /** When their toiletries began to be counted, and when they last had their hair done (`systems/hygiene.ts`, from 2026-10-01). */
+  suppliesSince?: number;
+  groomedAt?: number;
+  /** The home whose utility accounts they hold (`systems/utilities.ts`, from 2026-10-01). */
+  utilitiesAt?: string;
+  /** A save's bed, sofa and gear from before items, each when it was bought; moved into `items` when first read. */
+  furniture?: Partial<Record<import('../content/furniture').Piece, number>>;
+  /** A soup kitchen's or a pantry's help, for a day the bank can't feed them (`systems/foodhelp.ts`, from 2026-10-01). */
+  foodHelp?: import('../systems/foodhelp').FoodHelpRecord;
+  /** When the mattress in their bed was replaced, if it has been (`systems/furniture.ts`). */
+  mattressAt?: number;
+  /** A move made in a rented truck they drive, not by movers (`truckFor` in `systems/furniture.ts`). */
+  moveBy?: 'truck';
+  /** Air conditioning units of their own, and when they were bought (`systems/appliances.ts`). */
+  acUnits?: number;
+  /** Countertop and portable machines of their own, and when each was bought (`systems/appliances.ts`). */
+  portables?: Partial<Record<import('../systems/appliances').Portable, number>>;
+  /** Cars rented on journeys (`systems/rentals.ts`). */
+  rentals?: import('../systems/rentals').Rental[];
+  /** A private pilot's certificate, and the training toward it (`systems/aviation.ts`). */
+  pilot?: import('../systems/aviation').PilotCertificate;
+  pilotTraining?: import('../systems/aviation').PilotTraining;
+  /** Pilot's licenses outside America, from 2026-09-30 (`systems/aviation.ts`). */
+  pilotLicences?: { authority: string; country: string; issuedAt: number; /** When its medical runs out, from 2026-10-01. */ medicalUntil?: number }[];
+  /** A plane of their own (`systems/aviation.ts`). */
+  /** The planes they own (`systems/aviation.ts`). A save from before 2026-10-01 held one, as `aircraft`, moved into the list on opening. */
+  planes?: import('../systems/aviation').OwnedAircraft[];
+  aircraft?: import('../systems/aviation').OwnedAircraft;
+  /** The boats they own, and the states whose operator's certificate they hold (`systems/boats.ts`). A save from before 2026-10-01 held one, as `boat`, moved into the list on opening. */
+  boats?: import('../systems/boats').OwnedBoat[];
+  /** Travel trailers and touring caravans of their own (`systems/caravans.ts`, from 2026-09-30). */
+  caravans?: import('../systems/caravans').OwnedCaravan[];
+  boat?: import('../systems/boats').OwnedBoat;
+  boatCertificates?: import('../content/boats').BoatState[];
+  /** Their driving record: points and a suspension (`systems/driving.ts`). */
+  driving?: import('../systems/driving').DrivingRecord;
+  /** Dublin's Housing Assistance Payment, from when (`systems/homebenefits.ts`). */
+  hap?: { since: number };
+  /** Their IMSS record under the 1997 law: days contributed, the AFORE account, the pension claimed (`systems/imss.ts`). */
+  imss?: import('../systems/imss').ImssRecord;
+  /** Canada's CPP paid in by year, and the pensions claimed (`systems/capensions.ts`, from 2026-09-30). */
+  caPensions?: import('../systems/capensions').CanadaPensions;
+  /** Citizenships taken since birth, by naturalization (`systems/citizenship.ts`, from 2026-09-30). */
+  naturalized?: { iso: string; at: number }[];
+  /** A naturalization being decided. */
+  naturalizing?: { iso: string; readyAt: number };
+  /** Registered for EI's special benefits as a self-employed Canadian (`systems/eiself.ts`, from 2026-09-30). */
+  ei?: import('../systems/eiself').EiRecord;
+  /** The body's clock a journey left out, and since when (`systems/jetlag.ts`). */
+  bodyClock?: import('../systems/jetlag').BodyClock;
+  /** Claims at home in Ireland and Mexico City (`systems/homebenefits.ts`), and when they moved home from abroad. */
+  jobseekers?: import('../systems/homebenefits').JobseekerClaim;
+  desempleo?: import('../systems/homebenefits').DesempleoClaim;
+  returnedHomeAt?: number;
+  /** A claim for assistance where they live: Ontario Works, BC Income Assistance or SNAP (`systems/assistance.ts`, from 2026-10-01). */
+  assistance?: import('../systems/assistance').AssistanceClaim;
+  /** When their US status ended while they stayed on, from 2026-10-01 (`systems/permission.ts`). */
+  usOutOfStatus?: number;
   /** Income tax returns, by year (`systems/taxreturn.ts`). */
   returns?: Record<string, TaxReturn>;
   /** Where they come from, for what a school's need assessment reads. Shown nowhere. */
@@ -205,6 +362,8 @@ export interface Person {
   fraud?: { accountId: string; which: 'debit' | 'credit'; amount: Money; at: Instant; learnedAt: Instant; statedAt: Instant; reportedAt?: Instant; carried?: Money; refunded?: Money }[];
 
   wellbeing: Wellbeing;
+  /** Height and weight, and the day's energy in and out (`systems/body.ts`). */
+  body?: import('../systems/body').Body;
 
   /** Primary spending account. */
   primaryAccountId?: Id;
@@ -323,7 +482,6 @@ export interface Notification {
  * them, unread, as it keeps any key SLATE no longer knows.
  */
 export interface Preferences {
-  reducedMotion: boolean;
   /**
    * How fast the world runs against real time. 'live' is one to one: a minute
    * of your evening is a minute of theirs. The faster settings are there for
@@ -439,7 +597,6 @@ export interface SaveUniverse {
   transactions: LedgerTransaction[];
 
   scheduled: ScheduledItem[];
-  history: HistoryRecord[];
   decisions: Record<Id, DecisionItem>;
   notifications: Notification[];
 
@@ -452,15 +609,7 @@ export interface SaveUniverse {
    */
   tutorial?: { read: string[] };
 
-  /** Idempotency keys already applied, mapped to their recorded result. */
-
   /** Counters used by systems that need per-save monotonic sequences. */
   counters: Record<string, number>;
 
-  /**
-   * Commands the engine itself raised while the clock was moving that failed.
-   * Kept so a background failure is visible in a diagnostic report rather than
-   * disappearing silently. Capped: this is a symptom log, not history.
-   */
-  engineFailures: { at: Instant; kind: string; error: string }[];
 }

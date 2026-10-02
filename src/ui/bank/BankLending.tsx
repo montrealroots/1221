@@ -14,11 +14,13 @@
 import { useState } from 'react';
 import { homeOf } from '@/engine/systems/earnings';
 import { useGame, useWorld } from '@/app/game-context';
-import { Panel } from '@/ui/components/primitives';
+import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { formatDate } from '@/engine/core/time';
+import { dateKey, formatDate } from '@/engine/core/time';
+import { LookRegion, Open, at } from '@/ui/looks';
 import type { Bank } from '@/engine/content/banks';
+import { countryOfIso } from '@/engine/content/bankdays';
 import { SWITCHING } from '@/engine/content/banks-lending';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { END_WORDS } from '@/engine/systems/accountlife';
@@ -60,6 +62,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
   const rule = SWITCHING[isoOf(homeOf(sim.player)) ?? ''];
 
   const [limit, setLimit] = useState('');
+  const [perUse, setPerUse] = useState(false);
   const [deposit, setDeposit] = useState('');
   const [borrow, setBorrow] = useState('');
   const [months, setMonths] = useState(String(lending.loan?.minMonths ?? 24));
@@ -138,7 +141,8 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
                 : 'None arranged.'}
               {od.rateTo !== undefined ? ` The bank prices it by your record, ${pct(od.rate)} to ${pct(od.rateTo)}.` : (current?.overdraftLimit ?? 0) > 0 ? '' : ` ${pct(od.rate)} a year on what’s used.`}
               {od.buffer !== undefined ? ` The first ${formatMoney(inSaveMoney(sim, od.buffer, bank.currency), cur, { cents: false })} is free.` : ''}
-              {od.monthlyFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.monthlyFee, bank.currency), cur)} a month while it’s arranged.` : ''}
+              {od.monthlyFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.monthlyFee, bank.currency), cur)} a month while it’s arranged${od.perUse ? `, or ${formatMoney(inSaveMoney(sim, od.perUse.fee, bank.currency), cur)} each time it’s used instead${od.perUse.oncePerDay ? ', once a day at most' : ''}` : ''}.` : ''}
+              {current?.overdraftPerUse ? ' You pay for it by the use.' : ''}
               {od.setupFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.setupFee, bank.currency), cur)} to set one up.` : ''}
               {od.yearlyFee !== undefined ? ` ${formatMoney(inSaveMoney(sim, od.yearlyFee, bank.currency), cur)} a year to have one.` : ''}
               {od.beyond ? ` Past the limit the bank still pays${od.beyond.rate !== undefined ? `, at ${pct(od.beyond.rate)} a year on the part beyond it` : ''}${od.beyond.fee !== undefined ? `, for ${formatMoney(inSaveMoney(sim, od.beyond.fee, bank.currency), cur)} an operation${od.beyond.maxPerMonth !== undefined ? `, at most ${od.beyond.maxPerMonth} a month` : ''}` : ''}${od.beyond.monthlyFee !== undefined ? `, and ${formatMoney(inSaveMoney(sim, od.beyond.monthlyFee, bank.currency), cur)} for a month it’s more than ${formatMoney(inSaveMoney(sim, od.beyond.graceUpTo ?? 0, bank.currency), cur, { cents: false })} past it${od.beyond.afterDays !== undefined && od.beyond.afterDays > 1 ? ` on ${od.beyond.afterDays} days or more` : ''}` : ''}.` : ''}
@@ -147,15 +151,20 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
               ? <p className="small muted" style={{ margin: 0 }}>{offer.refused}</p>
               : (
                 <>
-                  <p className="xs dim" style={{ margin: 0 }}>
+                  <Fine>
                     It would arrange {od.minLimit !== undefined ? `${money(offer.min)} to ` : 'up to '}{money(offer.max)} at {pct(offer.rate)}: a month of your wages is SLATE’s estimate of what a bank allows.
-                  </p>
+                  </Fine>
                   <div className="field-act">
                     <div className="field"><label htmlFor="od-limit">{`Overdraft Limit (${cur})`}</label><input id="od-limit" type="text" inputMode="decimal" value={limit} onChange={(e) => setLimit(e.target.value)} /></div>
                     <Gated feature="bank.arrange_overdraft" className="btn btn-sm" disabled={!limit}
-                      onClick={() => { if (run('bank.arrange_overdraft', { limit: cents(limit) }).ok) { toast('Overdraft arranged.', 'positive'); setLimit(''); } }}>
+                      onClick={() => { if (run('bank.arrange_overdraft', { limit: cents(limit), perUse }).ok) { toast('Overdraft arranged.', 'positive'); setLimit(''); } }}>
                       Arrange It
                     </Gated>
+                    {od.perUse && (
+                      <label className="row gap-1 small" style={{ alignItems: 'center' }}>
+                        <input type="checkbox" checked={perUse} onChange={(e) => setPerUse(e.target.checked)} /> Pay Per Use
+                      </label>
+                    )}
                   </div>
                 </>
               )}
@@ -170,7 +179,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
         )}
         {(current?.pendingItems?.length ?? 0) > 0 && od?.kind === 'per_item' && (
           <p className="small">
-            {current!.pendingItems!.reduce((n, one) => n + one.count, 0)} overdraft {current!.pendingItems!.reduce((n, one) => n + one.count, 0) === 1 ? 'fee is' : 'fees are'} held, {formatMoney(inSaveMoney(sim, od.fee * current!.pendingItems!.reduce((n, one) => n + one.count, 0), bank.currency), cur)}: each comes off after the end of {dayWords(nextBusinessDay(current!.pendingItems![0]!.day, bank.iso === 'US'))} unless the account is back to {od.graceUpTo !== undefined ? `−${formatMoney(inSaveMoney(sim, od.graceUpTo, bank.currency), cur)}` : 'zero'} or better.
+            {current!.pendingItems!.reduce((n, one) => n + one.count, 0)} overdraft {current!.pendingItems!.reduce((n, one) => n + one.count, 0) === 1 ? 'fee is' : 'fees are'} held, {formatMoney(inSaveMoney(sim, od.fee * current!.pendingItems!.reduce((n, one) => n + one.count, 0), bank.currency), cur)}: each comes off after the end of {dayWords(nextBusinessDay(current!.pendingItems![0]!.day, countryOfIso(bank.iso)))} unless the account is back to {od.graceUpTo !== undefined ? `−${formatMoney(inSaveMoney(sim, od.graceUpTo, bank.currency), cur)}` : 'zero'} or better.
           </p>
         )}
         {Math.floor(current?.odAccrued ?? 0) > 0 && (
@@ -181,7 +190,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
             The month’s deepest point so far is {money(current!.odPeak!)}; the commission on it would be {formatMoney(Math.max(Math.round(current!.odPeak! * od.commission.share), inSaveMoney(sim, od.commission.min, bank.currency)), cur)}{od.cap ? `, less whatever takes the month past the cap` : ''}.
           </p>
         )}
-        <p className="xs dim" style={{ marginTop: 'var(--s3)' }}>{od ? `Source: ${od.source}.` : bank.overdraft ?? ''}</p>
+        <Fine>{od ? `Source: ${od.source}.` : bank.overdraft ?? ''}</Fine>
         </>}
       </Panel>
       )}
@@ -196,11 +205,15 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
               {lending.term.minAmount !== undefined ? ` It takes ${formatMoney(inSaveMoney(sim, lending.term.minAmount, bank.currency), cur, { cents: false })} or more.` : ''}
               {lending.term.market ? ' The rate is the market’s average: the bank publishes none of its own.' : ''}
             </p>
-            {terms.map((t) => (
-              <p key={t.id} className="small strong" style={{ margin: 0 }}>
-                {money(t.balance)} at {pct(t.fixedRate ?? 0)}, ends {formatDate(t.maturesAt ?? sim.now, sim.zone)}.
-              </p>
-            ))}
+            {terms.length > 0 && (
+              <LookRegion className="col gap-1">
+                {terms.map((t) => (
+                  <p key={t.id} className="small strong" style={{ margin: 0 }}>
+                    <Open subject={at('account', t.id)}>{money(t.balance)}</Open> at {pct(t.fixedRate ?? 0)}, ends <Open subject={at('day', dateKey(t.maturesAt ?? sim.now, sim.homeZone))}>{formatDate(t.maturesAt ?? sim.now, sim.zone)}</Open>.
+                  </p>
+                ))}
+              </LookRegion>
+            )}
             <div className="field-act">
               <div className="field"><label htmlFor="term-amount">{`Term Deposit Amount (${cur})`}</label><input id="term-amount" type="text" inputMode="decimal" value={deposit} onChange={(e) => setDeposit(e.target.value)} /></div>
               <Gated feature="bank.open_term" className="btn btn-sm" disabled={!deposit}
@@ -208,14 +221,14 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
                 Put It Away
               </Gated>
             </div>
-            <p className="xs dim" style={{ margin: 0 }}>Source: {lending.term.source}.</p>
+            <Fine>Source: {lending.term.source}.</Fine>
           </div>
         )}
       </Panel>
       )}
 
       {show.includes('borrowing') && debt && (
-        <Panel title="In Collections" subtitle={`${money(-debt.balance)} owed`}>
+        <Panel title="In Collections" subtitle={<Open subject={at('account', debt.id)}>{`${money(-debt.balance)} owed`}</Open>} look={at('account', debt.id)}>
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
               {debt.institution} closed your account after it was overdrawn {bank.id.startsWith('fr-') ? `past its limit, on ${FRANCE.closingNoticeDays} days’ notice as French law asks` : `for ${ESTIMATE.closeAfterDays} days, SLATE’s estimate of how long a bank lets one run`}, and charged off what it couldn’t recover. It’s on your record until it’s paid.
@@ -239,13 +252,13 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
       )}
 
       {show.includes('borrowing') && (
-      <Panel title="Personal Loan" subtitle={loan ? `${money(-loan.balance)} owed` : lending.loan ? undefined : 'None on record'}>
+      <Panel title="Personal Loan" subtitle={loan ? <Open subject={at('account', loan.id)}>{`${money(-loan.balance)} owed`}</Open> : lending.loan ? undefined : 'None on record'} look={loan ? at('account', loan.id) : undefined}>
         {!lending.loan && !loan && <p className="small">{bank.name} publishes no personal loan rate SLATE found.</p>}
         {loan && (
           <div className="col gap-3">
             <p className="small" style={{ margin: 0 }}>
-              {money(-loan.balance)} owed at {pct(loan.apr ?? 0)} a year, {money(loan.loanPayment ?? 0)} a month{loan.loanMonths ? ` over the ${loan.loanMonths} months it was taken for` : ''}
-              {loanDue ? `, next on ${formatDate(loanDue.at, sim.zone)}` : ''}. A payment the account can’t make goes on your record.
+              <Open subject={at('account', loan.id)}>{money(-loan.balance)}</Open> owed at {pct(loan.apr ?? 0)} a year, {money(loan.loanPayment ?? 0)} a month{loan.loanMonths ? ` over the ${loan.loanMonths} months it was taken for` : ''}
+              {loanDue ? <>, next on <Open subject={at('day', dateKey(loanDue.at, sim.homeZone))}>{formatDate(loanDue.at, sim.zone)}</Open></> : ''}. A payment the account can’t make goes on your record.
             </p>
             <div>
               <Gated feature="bank.repay_loan" className="btn btn-sm" onClick={() => { if (run('bank.repay_loan', {}).ok) toast('Paid off.', 'positive'); }}>
@@ -279,7 +292,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
                 Borrow It
               </Gated>
             </div>
-            <p className="xs dim" style={{ margin: 0 }}>Source: {lending.loan.source}.</p>
+            <Fine>Source: {lending.loan.source}.</Fine>
           </div>
         )}
       </Panel>
@@ -301,7 +314,7 @@ export function BankLending({ bank, show }: { bank: Bank; show: readonly Lending
                 {chex.bank} reported you to ChexSystems on {formatDate(chex.at, sim.zone)}; it stands until {formatDate(chex.at + CHEX.years * 365 * 86_400_000, sim.zone)}. A bank here turns a report away about {Math.round((debt && debt.balance < 0 ? CHEX.declines.unpaid : CHEX.declines.paid) * 100)}% of the time, SLATE’s estimate, and the ones that have are left off the list. Source: {CHEX.source}.
               </p>
             )}
-            {rule && <p className="xs dim" style={{ margin: 0 }}>Source: {rule.source}.</p>}
+            {rule && <Fine>Source: {rule.source}.</Fine>}
             <div className="field-act">
               <div className="field"><label htmlFor="switch-to">Switch To</label><select id="switch-to" value={target} onChange={(e) => setTarget(e.target.value)}>
                 {/* The dearest current account first, the cheapest last. */}

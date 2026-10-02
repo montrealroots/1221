@@ -1,0 +1,221 @@
+{
+  "_meta": {
+    "researched": "2026-09-29",
+    "scope": "What a citizen returning home after years abroad (e.g. study + work in the US) can claim if out of work. Official government sources only for figures; press used only for cross-checks and marked as such.",
+    "rule": "Null means not confirmed from an official source."
+  },
+
+  "uk": {
+    "scheme": "Universal Credit (England, Scotland, Wales; Northern Ireland runs its own parallel UC)",
+    "standard_allowance": {
+      "single_25_plus_monthly_gbp": 424.90,
+      "single_under_25_monthly_gbp": 338.58,
+      "couple_one_or_both_25_plus_monthly_gbp": 666.97,
+      "prior_year_single_25_plus_monthly_gbp_2025_26": 400.14,
+      "effective": "2026-04 (2026/27 uprating; UC awards move at the first assessment period starting on/after the April uprating date)",
+      "sources": [
+        "https://www.gov.uk/government/publications/benefit-and-pension-rates-2026-to-2027/proposed-benefit-and-pension-rates-2026-to-2027",
+        "https://www.gov.uk/universal-credit/what-youll-get"
+      ]
+    },
+    "housing_element_lha": {
+      "rule": "Private renters get help up to the lower of actual rent and the Local Housing Allowance (LHA) rate for their Broad Rental Market Area (BRMA). A single claimant under 35 with no partner or children is usually limited to the shared accommodation rate (SAR, a room in a shared house); 35+ living alone gets the 1-bedroom rate.",
+      "rule_source": "https://www.gov.uk/housing-and-universal-credit/renting-from-private-landlord",
+      "freeze_note": "LHA rates from 1 April 2026 were set at the same levels that came into force on 1 April 2024 (a freeze), per the Rent Officers (Housing Benefit and Universal Credit Functions) (Modification) Order 2026.",
+      "freeze_source": "https://www.gov.uk/government/publications/local-housing-allowance-lha-rates-applicable-from-april-2026-to-march-2027",
+      "currency": "GBP per calendar month (UC monthly LHA rates, England)",
+      "effective": "2026-04-01 to 2027-03-31",
+      "source": "https://assets.publishing.service.gov.uk/media/69d654a2e1430e837a86f64a/england-rates-2026-to-2027.csv",
+      "source_page": "https://www.gov.uk/government/publications/universal-credit-local-housing-allowance-rates-2026-to-2027",
+      "inner_london": {
+        "Central London": { "sar": 829.83, "one_bed": 1439.97 },
+        "Inner East London": { "sar": 699.50, "one_bed": 1439.97 },
+        "Inner North London": { "sar": 708.27, "one_bed": 1439.97 },
+        "Inner South East London": { "sar": 650.00, "one_bed": 1295.50 },
+        "Inner South West London": { "sar": 685.00, "one_bed": 1420.00 },
+        "Inner West London": { "sar": 760.00, "one_bed": 1350.00 }
+      },
+      "outer_london": {
+        "North West London": { "sar": 621.33, "one_bed": 1100.00 },
+        "Outer East London": { "sar": 561.33, "one_bed": 1200.00 },
+        "Outer North East London": { "sar": 549.83, "one_bed": 1000.00 },
+        "Outer North London": { "sar": 595.00, "one_bed": 1150.00 },
+        "Outer South East London": { "sar": 600.00, "one_bed": 1050.00 },
+        "Outer South London": { "sar": 569.33, "one_bed": 950.00 },
+        "Outer South West London": { "sar": 591.50, "one_bed": 1200.00 },
+        "Outer West London": { "sar": 576.33, "one_bed": 1000.00 }
+      },
+      "housing_benefit_weekly_equivalents_note": "The VOA's Housing Benefit table (weekly) for the same period gives e.g. Central London CAT A (shared) 190.97, CAT B (1-bed) 331.39; Inner North London 163.00 / 331.39; Outer South London 131.02 / 218.63. Source: https://assets.publishing.service.gov.uk/media/697b8034f8f4a746d9572f47/2026-27_LHA_TABLES.xlsx (Table 4)."
+    },
+    "work_allowance": {
+      "applies_to": "Only claimants responsible for a child/young person, or with a disability/health condition affecting ability to work (limited capability for work). A single, childless, fit-for-work returner gets NO work allowance: the taper applies from the first pound earned.",
+      "lower_with_housing_monthly_gbp": 427,
+      "higher_no_housing_monthly_gbp": 710,
+      "prior_year_2025_26": { "lower": 411, "higher": 684 },
+      "effective": "2026-04",
+      "sources": [
+        "https://www.gov.uk/universal-credit/how-your-wages-affect-your-payments",
+        "https://www.gov.uk/government/publications/benefit-and-pension-rates-2026-to-2027/proposed-benefit-and-pension-rates-2026-to-2027"
+      ]
+    },
+    "taper": {
+      "rate": 0.55,
+      "text": "For every £1 you earn from working, your Universal Credit payment goes down by 55p.",
+      "source": "https://www.gov.uk/universal-credit/how-your-wages-affect-your-payments",
+      "effective": "in force 2026/27 (55% since 24 Nov 2021)"
+    },
+    "capital": {
+      "disregard_gbp": 6000,
+      "upper_limit_gbp": 16000,
+      "tariff_income": "£4.35 per month for each £250 (or part) between £6,000 and £16,000; no UC at all above £16,000",
+      "effective": "2026/27",
+      "sources": [
+        "https://www.gov.uk/universal-credit/what-youll-get",
+        "https://www.gov.uk/government/publications/benefit-and-pension-rates-2026-to-2027/proposed-benefit-and-pension-rates-2026-to-2027"
+      ]
+    },
+    "habitual_residence_test": {
+      "who_is_tested": "UK nationals have a right to reside but must still be actually habitually resident in the Common Travel Area (UK, Channel Islands, Isle of Man, Republic of Ireland). British citizenship alone does not exempt a returner.",
+      "who_passes": "Someone living in the CTA with a settled intention to remain, after an 'appreciable period' of actual residence; OR a returning former resident who resumes a previous habitual residence immediately on return.",
+      "appreciable_period": "ADM C1957: can be as little as a month; 'a period of between one and three months is likely to be appropriate'; cogent reasons needed for more than three months.",
+      "returning_resident_rule": "ADM C1959: a person previously habitually resident in the UK may resume that habitual residence immediately on return from living abroad; the only element bypassed is the appreciable period. C1960 factors: settled intention to remain; ability to make an informed decision about UK residence; ties/contacts kept or made while abroad; why they left and became habitually resident elsewhere; similarity of the new UK residence to the old; length of absence.",
+      "eu_route": "ADM C1962-C1964 (Swaddling): someone returning from another EU member state to resume previous CTA residence is habitually resident immediately on arrival. Does not apply to a return from the US.",
+      "exemptions": "UC Regs 2013 reg 9(4): exempt groups are refugees, humanitarian protection, leave outside the rules, certain EEA worker/family/permanent-residence categories, people removed to the UK by compulsion of law from another country, Afghan/Ukraine/Sudan/Israel-OPT scheme leavers, and (from 18 July 2025) persons who left a country the Government advised British nationals to leave or evacuated them from. There is no general exemption for a British citizen returning voluntarily from the US.",
+      "sources": [
+        "https://assets.publishing.service.gov.uk/media/693ac62a33c7ace9c4a42029/adm-c1.pdf",
+        "https://www.legislation.gov.uk/uksi/2013/376/regulation/9",
+        "https://www.legislation.gov.uk/uksi/2025/884/pdfs/uksiem_20250884_en_001.pdf"
+      ],
+      "effective": "ADM C1 as published Dec 2025 (media id 693ac62a...); reg 9 as amended 18 July 2025"
+    },
+    "first_payment": {
+      "wait": "It usually takes around 5 weeks to get your first payment (one monthly assessment period, then paid 7 days after it ends).",
+      "advance": "Advance available after claiming, before first payment; maximum is the amount of the first estimated payment; usually repaid within 24 months (deducted from later UC); usually decided the same day. No interest mentioned.",
+      "sources": [
+        "https://www.gov.uk/universal-credit/how-youre-paid",
+        "https://www.gov.uk/guidance/universal-credit-advances"
+      ],
+      "effective": "as of 2026-09"
+    }
+  },
+
+  "ie": {
+    "scheme": "Jobseeker's Allowance (means-tested; the returner is unlikely to have Irish PRSI contributions for Jobseeker's Benefit)",
+    "weekly_rate": {
+      "single_25_plus_eur": 254,
+      "age_18_24_living_independently_with_state_housing_support_eur": 254,
+      "age_18_24_not_living_independently_eur": 163.70,
+      "increase_for_qualified_adult_eur": 168.60,
+      "effective": "January 2026 (Budget 2026 +€10)",
+      "unpaid_waiting_days": 3,
+      "sources": [
+        "https://www.citizensinformation.ie/en/social-welfare/unemployed-people/jobseekers-allowance/"
+      ],
+      "source_page_edited": "2026-07-14"
+    },
+    "means_test": {
+      "summary": "Household income (incl. spouse/civil partner/cohabitant) expected over the next 12 months; own home excluded; most social welfare payments not counted. Weekly means are deducted from the maximum rate. Under-25s living with a parent are assessed on 'benefit and privilege' from parental income.",
+      "capital_formula_weekly_means": [
+        { "band": "first €20,000", "means": "nil" },
+        { "band": "next €10,000", "means": "€1 per €1,000" },
+        { "band": "next €10,000", "means": "€2 per €1,000" },
+        { "band": "over €40,000", "means": "€4 per €1,000" }
+      ],
+      "worked_example": "€55,000 savings = €90/week means",
+      "rent_a_room_disregard": "€14,000/yr (€269.23/wk)",
+      "source": "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/means-test-for-social-welfare-payments/means-test-for-jobseekers-allowance/",
+      "source_page_edited": "2026-03-10"
+    },
+    "habitual_residence_condition": {
+      "irish_citizens_exempt": false,
+      "text": "Irish citizens are not exempt... You do not have to be living in Ireland for a certain period of time to be considered habitually resident. If you have returned permanently to Ireland, you can be regarded as habitually resident on your return if you can show Ireland is now your main centre of interest and prove you are resuming your previous residence here.",
+      "five_factors": [
+        "Length and continuity of residence in Ireland",
+        "Length and purpose of any absence from Ireland",
+        "Nature and pattern of employment",
+        "Main centre of interest",
+        "Future intentions to live in Ireland"
+      ],
+      "returning_emigrant_guidance": "DSP guidelines: a returning Irish emigrant previously habitually resident who moved to work abroad may be regarded as habitually resident immediately on return if resuming long-term residence. Deciding Officers weigh purpose of return (e.g. foreign residence permit expired), stated intentions, verified arrangements (transfer of accounts/assets, ending foreign residence-based entitlements, Safe-Home help), length/continuity of previous Irish residence, employment record abroad, and maintained links. Evidence examples: belongings moved, car imported, job abroad ended, foreign lease ended, foreign accounts closed, studies abroad completed, no valid visa abroad.",
+      "form": "HRC1",
+      "appeal": "Social Welfare Appeals Office within 60 days",
+      "sources": [
+        "https://www.citizensinformation.ie/en/returning-to-ireland/applying-for-social-welfare/habitual-residence-condition/",
+        "https://www.citizensinformation.ie/en/social-welfare/irish-social-welfare-system/social-assistance-payments/habitual-residence-condition/"
+      ],
+      "source_page_edited": "2025-07-24 (general HRC page)"
+    },
+    "housing_assistance_payment": {
+      "basics": "Social housing support: must be on the local authority housing list (right to remain long-term, income below the social housing limit, in housing need). Tenant finds own private rental within HAP limits; council pays landlord monthly; tenant pays a weekly differential-rent contribution to the council based on income. Councils may go up to 35% above limits, or apply the couple rate to a single person. No income limit once on HAP.",
+      "max_monthly_rent_limits_eur": {
+        "Dublin City Council": { "one_adult_shared": 430, "couple_shared": 500, "one_adult": 660, "couple": 900 },
+        "Cork City Council": { "one_adult_shared": 300, "couple_shared": 330, "one_adult": 550, "couple": 650 }
+      },
+      "homeless_hap_dublin": "Single-person Dublin City limit €660 can reach €990 under Homeless HAP",
+      "source": "https://www.citizensinformation.ie/en/housing/renting-a-home/help-with-renting/housing-assistance-payment/",
+      "source_page_edited": "2025-05-12",
+      "social_housing_income_limits_eur": null
+    }
+  },
+
+  "mx": {
+    "federal_unemployment_benefit": {
+      "exists": false,
+      "note": "No federal unemployment insurance was found; the nearest national mechanism is the IMSS partial AFORE withdrawal below (drawing down one's own retirement savings). Absence stated from research, not from a single official statement.",
+      "source": null
+    },
+    "cdmx_seguro_de_desempleo": {
+      "program": "Programa Social 'Seguro de Desempleo' and component 'Seguro de Desempleo del Bienestar', Secretaría de Trabajo y Fomento al Empleo (STyFE)",
+      "monthly_amount_mxn": 3566.22,
+      "amount_rule": "Equal to the monthly UMA for the current fiscal year",
+      "max_payments": 3,
+      "max_total_mxn": 10698.66,
+      "general_population_eligibility": "CDMX resident; age 18 to 64 years 9 months; formal job for an employer with fiscal domicile in CDMX for at least six accumulated months counted from 1 January two years before the current fiscal year; not on another CDMX cash program nor receiving pension/retirement/subsidy equal or higher. Granted every two years, max twice in a lifetime.",
+      "returning_migrant_track": {
+        "eligible": "Personas migrantes connacionales repatriadas y/o de retorno voluntario (Mexican nationals repatriated or returning voluntarily): age 18 to 64y9m; CDMX resident; returned on/after 1 January of the year before the current fiscal year (for 2026: from 1 Jan 2025); validated by an 'oficio de canalización' from the Instituto Nacional de Migración (INM); not on another CDMX cash program nor receiving pension/subsidy or other employment. No CDMX work-history requirement is listed for this group.",
+        "frequency": "Once in a lifetime (única ocasión), under the Seguro de Desempleo del Bienestar component",
+        "documents": "Valid ID (passport, matrícula consular, constancia de repatriación from INM, etc.), CURP, INM canalization letter, sworn statement, commitment letter"
+      },
+      "application_window_note": "Registration is by convocatoria; tramites.cdmx.gob.mx/desempleo showed the application period as closed when checked 2026-09-29.",
+      "effective": "Reglas de Operación 2026, Gaceta Oficial de la Ciudad de México No. 1875, 8 June 2026; UMA 2026 values in force from 2026-02-01",
+      "sources": [
+        "http://www.segurodedesempleo.cdmx.gob.mx/normatividad/RO2026.pdf",
+        "http://www.segurodedesempleo.cdmx.gob.mx/normatividad/PMR_2026.pdf",
+        "https://tramites.cdmx.gob.mx/desempleo/"
+      ]
+    },
+    "uma_2026": {
+      "daily_mxn": 117.31,
+      "monthly_mxn": 3566.22,
+      "annual_mxn": 42794.64,
+      "effective": "2026-02-01",
+      "sources": [
+        "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/uma/uma2026.pdf",
+        "https://dof.gob.mx/nota_detalle.php?codigo=5778072&fecha=09%2F01%2F2026"
+      ],
+      "verification": "Values taken from search-result summaries of the INEGI/DOF publication and consistent with the $3,566.22 in the CDMX 2026 rules; the INEGI PDF itself was not opened."
+    },
+    "imss_afore_partial_withdrawal_unemployment": {
+      "eligibility": "At least 46 calendar days unemployed; not used in the previous 5 years; Modalidad A: individual account at least 3 years old and at least 12 bimonthly contribution periods; Modalidad B: account 5+ years old.",
+      "modalidad_a_amount": "30 days of last salario base de cotización, capped at 10 times the general minimum wage (per CONSAR text)",
+      "modalidad_b_amount": "Lesser of 90 days of average SBC over the last 250 weeks, or 11.5% of the RCV subaccount balance",
+      "consequence": "IMSS reduces credited contribution weeks in proportion to the amount withdrawn; weeks can be restored by repaying",
+      "resolution_time": "Max 15 business days (Afore files with IMSS within 10 business days of a complete application)",
+      "source": "https://www.consar.gob.mx/gobmx/aplicativo/catsar/Principal/TramiteExt.aspx?idTramite=13",
+      "effective": "in force as of 2026-09 (Ley del Seguro Social 1997, art. 191)"
+    }
+  },
+
+  "uncertain": [
+    "UK: the 2026/27 rates page URL still carries the slug 'proposed-benefit-and-pension-rates', but the figures match gov.uk/universal-credit/what-youll-get, so they are treated as final.",
+    "UK: LHA figures are England only. Scotland and Wales publish separate UC LHA tables, not collected here.",
+    "UK: whether a particular returner 'resumes' habitual residence at once or must serve 1-3 months is a case-by-case DWP decision. A US return gets no EU (Swaddling) automatic route.",
+    "IE: the social housing income limits (needed to get onto the housing list before HAP) were not confirmed. Null.",
+    "IE: HAP limits come from a Citizens Information page last edited 2025-05-12. No 2026 change was found, but none was confirmed either.",
+    "IE: the earnings disregard for part-time work on JA was not collected.",
+    "MX: the Modalidad A cap is quoted by CONSAR as '10 times the general minimum wage'. Since the 2016 de-indexation reform, legal references to the minimum wage as a unit of measure are generally read as UMA. Which one applies here was not confirmed.",
+    "MX: 'no federal unemployment insurance' comes from the absence of any found program, not from an official statement.",
+    "MX: the second-hand 2026 figure of '150 semanas cotizadas' for the AFORE withdrawal conflicts with CONSAR's '12 bimestres' (about 104 weeks) for Modalidad A. CONSAR's is used.",
+    "MX: the 2026 CDMX convocatoria window was closed on the official portal when checked (2026-09-29). Whether another window opens later in 2026 was not confirmed."
+  ]
+}

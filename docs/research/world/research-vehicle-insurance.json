@@ -1,0 +1,382 @@
+{
+  "_meta": {
+    "researchedOn": "2026-09-30",
+    "markets": ["New York", "Connecticut", "California", "England (UK)", "Ireland", "Ontario", "British Columbia", "Mexico City"],
+    "fieldConvention": "Each figure carries value, currency, url, publisher, date, sourceType ('primary'|'secondary'), confirmed (true only when the figure was read on the cited page or document during this research). null means no published figure was found; nothing was estimated or invented.",
+    "notes": [
+      "US state motorcycle averages are ValuePenguin's modeled quote averages for one rider profile (45-year-old single man, 2018 Honda CMX500 Rebel, full coverage 50/100/25 BI/PD, UM 50/100, $5,000 MedPay, $500 deductibles). They are quote samples, not market-wide averages of premiums actually paid.",
+      "UK figures are comparison-site medians of premiums paid by their own customers, which skew toward shoppers.",
+      "BC figures are computed from ICBC's Basic Insurance Tariff (primary, BCUC/Registrar-filed): base rate $903.55 x rate-class-and-territory factor for Territory D (Lower Mainland), at the $200,000 third-party liability limit. This is the Basic (compulsory) base-rate premium before the driver factor (DF), claims/discount factors, optional coverage and taxes, so it is not what an individual pays.",
+      "Ireland, Ontario and Canada-wide RV figures are broker/aggregator ranges, not averages computed from data; they are marked secondary and should be treated as estimates."
+    ]
+  },
+
+  "motorcycleInsurance": {
+    "newYork": {
+      "value": 324, "monthly": 27, "currency": "USD", "period": "year (derived: $27/month x 12)",
+      "coverage": "full coverage, one rider profile (see _meta)",
+      "url": "https://www.valuepenguin.com/average-cost-of-motorcycle-insurance",
+      "publisher": "ValuePenguin (LendingTree)", "date": "2026-09-25", "sourceType": "secondary", "confirmed": true,
+      "note": "The page states the monthly figure; the annual value is monthly x 12."
+    },
+    "connecticut": {
+      "value": 348, "monthly": 29, "currency": "USD", "period": "year (derived: $29/month x 12)",
+      "coverage": "full coverage, one rider profile (see _meta)",
+      "url": "https://www.valuepenguin.com/average-cost-of-motorcycle-insurance",
+      "publisher": "ValuePenguin (LendingTree)", "date": "2026-09-25", "sourceType": "secondary", "confirmed": true
+    },
+    "california": {
+      "value": 552, "monthly": 46, "currency": "USD", "period": "year (derived: $46/month x 12)",
+      "coverage": "full coverage, one rider profile (see _meta)",
+      "url": "https://www.valuepenguin.com/average-cost-of-motorcycle-insurance",
+      "publisher": "ValuePenguin (LendingTree)", "date": "2026-09-25", "sourceType": "secondary", "confirmed": true
+    },
+    "usNational": {
+      "value": 399, "monthly": 33, "currency": "USD", "period": "year",
+      "url": "https://www.valuepenguin.com/average-cost-of-motorcycle-insurance",
+      "publisher": "ValuePenguin (LendingTree)", "date": "2026-09-25", "sourceType": "secondary", "confirmed": true
+    },
+    "englandUK": {
+      "value": 291, "currency": "GBP", "period": "year",
+      "measure": "median: 51% of Confused.com motorbike customers paid this or less, January-March 2026 (all bike types, all riders)",
+      "url": "https://www.confused.com/motorbike-insurance",
+      "publisher": "Confused.com", "date": "2026-09-24", "sourceType": "secondary", "confirmed": true,
+      "note": "UK-wide, not England-only. No ABI average for motorcycles was found."
+    },
+    "ireland": {
+      "value": null, "rangeLow": 300, "rangeHigh": 600, "currency": "EUR", "period": "year",
+      "measure": "indicative range for experienced riders over 30 on smaller A1/A2 bikes, third party fire and theft; under-25s/novices/unrestricted A bikes EUR 800-1,500+; 35+ with 5+ years no-claims, garaged EUR 250-450",
+      "url": "https://www.odo.ie/guides/motorcycle-insurance-ireland",
+      "publisher": "odo.ie", "date": "2026-08", "sourceType": "secondary", "confirmed": true,
+      "note": "No published average from an Irish broker or the Central Bank's National Claims Information Database was found; NCID's private motor reporting covers cars. These are ranges from quote samples, not an average."
+    },
+    "ontario": {
+      "value": null, "rangeLow": 1500, "rangeHigh": 3500, "currency": "CAD", "period": "year",
+      "measure": "stated range of 'the average cost', no methodology",
+      "url": "https://www.ratehub.ca/insurance/motorcycle-insurance/ontario",
+      "publisher": "Ratehub.ca", "date": "2025-05-29", "sourceType": "secondary", "confirmed": true,
+      "note": "Ontario motorcycle insurance is private (FSRA-regulated). No FSRA or LowestRates published average was found."
+    },
+    "britishColumbia": {
+      "measure": "ICBC Basic base-rate premium, Territory D (Lower Mainland), $200K third-party liability, before driver factor/discounts, optional coverage and taxes",
+      "currency": "CAD", "period": "year",
+      "baseRate": 903.55,
+      "byRateClass": {
+        "310": {"description": "limited speed motorcycle (<=50cc or <=1.5 kW, <=70 km/h) and motorcycles 110cc or less", "factor": 0.531, "value": 479.79},
+        "311": {"description": "111-400cc", "factor": 0.742, "value": 670.43},
+        "312": {"description": "401-750cc", "factor": 1.438, "value": 1299.30},
+        "313": {"description": "751-1150cc", "factor": 1.559, "value": 1408.63},
+        "314": {"description": "over 1150cc", "factor": 2.170, "value": 1960.70}
+      },
+      "url": "https://www.icbc.com/assets/pa/6PyY5DEcoIT7z2ujjlwb3d/basic-tariff.pdf",
+      "publisher": "Insurance Corporation of British Columbia, Basic Insurance Tariff (Schedule B Table 4.14-A; Schedule C p.2, Twenty-First Revision effective 2026-09-01)",
+      "date": "2026-09-01", "sourceType": "primary", "confirmed": true,
+      "note": "Values are computed here as base rate x factor; the factors and base rate were read in the tariff. The rate-class-to-displacement mapping was read from a PDF text extraction whose table columns were misaligned; it agrees with the widely reported 311 = 111-400cc etc. Other territories differ (e.g., Territory P Cariboo: 310 $365.94, 311 $519.54, 312 $883.67, 313 $967.70, 314 $1,320.09). The 'base rate means $903.55' definition sits on a page marked Fourteenth Revision effective 2024-01-01 and was not superseded in the current consolidation."
+    },
+    "mexicoCity": {
+      "value": null, "currency": "MXN",
+      "note": "Skipped per instructions; caller already holds MXN 1,200-3,500/yr."
+    }
+  },
+
+  "scooterInsurance": {
+    "newYork": {
+      "basicValue": 312, "fullCoverageValue": 1975, "currency": "USD", "period": "year",
+      "measure": "Progressive quote for a New York City rider on a Vespa GTS 300 scooter (a 278cc scooter, not 50cc/125cc)",
+      "url": "https://www.valuepenguin.com/moped-and-scooter-insurance",
+      "publisher": "ValuePenguin (LendingTree)", "date": "2026-07-02", "sourceType": "secondary", "confirmed": true
+    },
+    "connecticut": { "value": null, "note": "No published scooter/moped average found. Mopeds (motor-driven cycles <50cc) are not registered with CT DMV (OLR 2024-R-0154)." },
+    "california": { "value": null, "note": "No published scooter/moped average found." },
+    "englandUK": {
+      "scooterMedian": 463.01, "mopedMedian": 288.17, "currency": "GBP", "period": "year",
+      "measure": "Confused.com customer medians, Q1 2026 (Confused.com's own 'scooter' and 'moped' bike-type categories; cc bands not stated)",
+      "url": "https://www.confused.com/motorbike-insurance",
+      "publisher": "Confused.com", "date": "2026-09-24", "sourceType": "secondary", "confirmed": true
+    },
+    "ireland": { "value": null, "note": "No published average found." },
+    "ontario": { "value": null, "note": "No published average found." },
+    "britishColumbia": {
+      "value": 479.79, "currency": "CAD", "period": "year",
+      "measure": "ICBC rate class 310 (limited speed motorcycle / <=110cc), Territory D, base-rate premium before driver factor; see motorcycleInsurance.britishColumbia",
+      "url": "https://www.icbc.com/assets/pa/6PyY5DEcoIT7z2ujjlwb3d/basic-tariff.pdf",
+      "publisher": "Insurance Corporation of British Columbia", "date": "2026-09-01", "sourceType": "primary", "confirmed": true
+    },
+    "mexicoCity": { "value": null, "note": "Skipped per instructions." }
+  },
+
+  "rvInsurance": {
+    "unitedStates": {
+      "motorhome": {
+        "value": 1052, "currency": "USD", "period": "year",
+        "measure": "Progressive countrywide average 12-month RV policy premium, 2024, motorhome",
+        "url": "https://www.progressive.com/answers/rv-insurance-cost/",
+        "publisher": "Progressive", "date": "2024-11-14", "sourceType": "primary", "confirmed": true,
+        "note": "Insurer's own book average; national, not state-specific. Liability-only motorhome policies 'start at $125/yr'."
+      },
+      "travelTrailer": {
+        "value": 594, "currency": "USD", "period": "year",
+        "measure": "Progressive countrywide average 12-month RV policy premium, 2024, travel trailer",
+        "url": "https://www.progressive.com/answers/rv-insurance-cost/",
+        "publisher": "Progressive", "date": "2024-11-14", "sourceType": "primary", "confirmed": true,
+        "note": "Towable trailers need no liability of their own in most states (the tow vehicle's liability extends); this is optional physical-damage-heavy cover."
+      },
+      "byState": { "newYork": null, "connecticut": null, "california": null, "note": "No state-level RV averages from a named insurer were found." }
+    },
+    "englandUK": {
+      "motorhome": {
+        "value": 598, "rangeLow": 233, "rangeHigh": 977, "currency": "GBP", "period": "year",
+        "medianByType": { "classBVanConversion": 395, "classCCoachbuilt": 396, "classAMotorhome": 440 },
+        "measure": "Quotezone Index average, comprehensive cover, motorhome data Aug 2025-present (n=46,963)",
+        "url": "https://www.quotezone.co.uk/motorhome-insurance",
+        "publisher": "Quotezone", "date": "2026-06", "sourceType": "secondary", "confirmed": true,
+        "note": "Mean (GBP 598) sits well above the type medians, meaning a long upper tail. Caravan Guard and Comfort Insurance publish no averages; MoneySuperMarket states it cannot give one."
+      },
+      "touringCaravan": {
+        "value": 141.21, "currency": "GBP", "period": "year",
+        "measure": "51% of Confused.com customers paid this or less (median), September 2024",
+        "url": "https://www.confused.com/caravan-insurance",
+        "publisher": "Confused.com", "date": "2024-09", "sourceType": "secondary", "confirmed": true
+      },
+      "staticCaravan": {
+        "value": 114.60, "currency": "GBP", "period": "year",
+        "measure": "51% of Confused.com customers paid this or less (median), September 2024",
+        "url": "https://www.confused.com/caravan-insurance",
+        "publisher": "Confused.com", "date": "2024-09", "sourceType": "secondary", "confirmed": true
+      }
+    },
+    "ireland": {
+      "motorhome": { "value": null, "note": "No published average found. One owner's blog reported EUR 379/yr comprehensive for a low-roof campervan (anecdote, not usable as an average): https://thetalesoftinyboots.com/campervan-insurance-ireland-insuring-a-low-roof-camper/" },
+      "caravan": { "value": null }
+    },
+    "ontario": {
+      "motorhome": {
+        "value": null, "rangeLow": 800, "rangeHigh": 2000, "currency": "CAD", "period": "year",
+        "measure": "broker's typical range for Class B or C motorhome; Class A $1,500-4,000+",
+        "url": "https://insuremycottage.ca/answers/how-much-does-rv-insurance-cost-ontario/",
+        "publisher": "InsureMyCottage (broker content)", "date": "2026", "sourceType": "secondary", "confirmed": false,
+        "note": "Read in search-result extract only, not on the page itself."
+      },
+      "travelTrailer": {
+        "value": null, "rangeLow": 250, "rangeHigh": 800, "currency": "CAD", "period": "year",
+        "url": "https://insuremycottage.ca/answers/how-much-does-rv-insurance-cost-ontario/",
+        "publisher": "InsureMyCottage (broker content)", "date": "2026", "sourceType": "secondary", "confirmed": false
+      }
+    },
+    "britishColumbia": {
+      "motorhome": {
+        "value": null, "rangeLow": 800, "rangeHigh": 2500, "currency": "CAD", "period": "year",
+        "url": "https://insurancebrokerbc.ca/blog/rv-insurance-bc-guide/",
+        "publisher": "insurancebrokerbc.ca (broker content)", "date": "2026", "sourceType": "secondary", "confirmed": false,
+        "note": "ICBC Basic for a pleasure-use motor home is rated in the private passenger classes (001/051) with the owner's driver factor, so no single tariff figure exists. Read in search-result extract only."
+      },
+      "travelTrailer": {
+        "value": null, "rangeLow": 300, "rangeHigh": 1200, "currency": "CAD", "period": "year",
+        "url": "https://insurancebrokerbc.ca/blog/rv-insurance-bc-guide/",
+        "publisher": "insurancebrokerbc.ca (broker content)", "date": "2026", "sourceType": "secondary", "confirmed": false
+      }
+    },
+    "mexicoCity": { "motorhome": null, "trailer": null, "note": "Nothing published found." }
+  },
+
+  "atv": {
+    "newYork": {
+      "registrationRequired": true,
+      "registrationFee": { "value": 12.50, "currency": "USD", "period": "year", "expires": "August 31 (April 30 for ATVs registered before 2005-04-01)" },
+      "plateFee": { "value": 12.50, "currency": "USD", "period": "one-time at first registration" },
+      "insuranceRequired": "Liability insurance required to operate anywhere in NY except the owner's own property.",
+      "url": "https://dmv.ny.gov/registration/register-an-atv",
+      "publisher": "New York State DMV", "date": null, "sourceType": "primary", "confirmed": true,
+      "note": "The brief's '$10?' is superseded: the DMV page says $12.50/yr plus a $12.50 plate fee."
+    },
+    "connecticut": {
+      "registrationRequired": "Yes, except when operated on premises owned or leased by the owner.",
+      "fees": { "registration": 30, "plate": 5, "cleanAirAct": 10, "total": 45, "currency": "USD", "term": "not stated on the fee page" },
+      "insuranceRequired": null,
+      "url": "https://portal.ct.gov/dmv/resources/dmv-fees",
+      "publisher": "Connecticut DMV", "date": null, "sourceType": "primary", "confirmed": true,
+      "note": "Registration is with DMV, not DEEP. DEEP governs where ATVs may ride (state lands largely closed; https://portal.ct.gov/deep/outdoor-recreation/atv-policy). Whether liability insurance is required is contradictory across secondary sources; left null."
+    },
+    "california": {
+      "registrationRequired": "OHV identification plate (green sticker if CARB-compliant, red sticker otherwise) for off-highway use",
+      "fee": { "value": 54, "currency": "USD", "period": "two years", "components": { "registration": 33, "chp": 10, "service": 7, "license": 4 }, "latePenalty": 27 },
+      "insuranceRequired": null,
+      "url": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+      "publisher": "California DMV", "date": "2026", "sourceType": "primary", "confirmed": true,
+      "note": "Fee funds the OHMVR Division/OHV Trust Fund. No state insurance mandate for off-highway use was found."
+    },
+    "englandUK": {
+      "offRoad": "No licence, registration or tax needed for off-road use; an optional DVLA off-road register exists (INF85).",
+      "onRoad": "Must be road-legal (type-approved), registered with DVLA with front and rear plates, taxed, MOT after 3 years, third-party insurance, full car (B) licence or pre-1997 B1.",
+      "agricultural": "Registered as a light agricultural vehicle; no vehicle tax, no MOT, but registration, plate and third-party insurance needed for road use.",
+      "roadTaxRate": null,
+      "url": "https://www.gov.uk/quad-bikes-the-rules",
+      "publisher": "GOV.UK", "date": null, "sourceType": "primary", "confirmed": true,
+      "note": "Most quads sold are not road-legal. A road-use quad's tax class/rate (limited use or PLG) was not quoted on the page."
+    },
+    "ireland": {
+      "offRoad": "Farm-only use off public roads needs no tax or insurance (secondary).",
+      "onRoad": "Must be registered with Revenue, taxed, insured, plated; full B licence to drive on a public road. A quad cannot be taxed at the motorcycle rate: with a tow bar it is taxed as a general haulage tractor, without one as a private vehicle by engine cc.",
+      "trainingRequirement": "Compulsory quad training course since November 2023 (secondary: southernstar.ie).",
+      "url": "https://www.sligococo.ie/Services/MotorTaxation/MotorTaxationGuidelines/QuadBikes/",
+      "publisher": "Sligo County Council Motor Taxation", "date": null, "sourceType": "primary", "confirmed": true
+    },
+    "ontario": {
+      "registrationRequired": true,
+      "fee": { "value": 38, "currency": "CAD", "what": "off-road vehicle permit and number plate (one-time)", "replacement": 20 },
+      "insuranceRequired": "Must be insured under a motor vehicle liability policy (and plated) except on land occupied by the owner and in exempt far-northern areas.",
+      "url": "https://www.ontario.ca/page/driver-and-vehicle-fees",
+      "insuranceUrl": "https://www.ontario.ca/page/driving-road-vehicle-orv",
+      "publisher": "Government of Ontario (ServiceOntario / MTO)", "date": "2024-07-25", "sourceType": "primary", "confirmed": true,
+      "note": "Minimum $200,000 third-party liability is widely stated by brokers; not confirmed on the government page."
+    },
+    "britishColumbia": {
+      "registrationRequired": true,
+      "fee": { "value": 48, "currency": "CAD", "what": "Certificate of Registration plus ICBC-issued number plate or sticker (one-time)" },
+      "insuranceRequired": "Not required for off-road use on the registration page; on-highway use (e.g., crossing a road) requires ICBC Basic under rate class 036.",
+      "onHighwayBasicPremium": { "value": 58.73, "currency": "CAD", "period": "year", "measure": "ICBC rate class 036 (ATV, other use), Territory D, $200K, base rate $903.55 x 0.065, before driver factor", "url": "https://www.icbc.com/assets/pa/6PyY5DEcoIT7z2ujjlwb3d/basic-tariff.pdf", "date": "2026-09-01", "sourceType": "primary", "confirmed": true },
+      "url": "https://www2.gov.bc.ca/gov/content/industry/crown-land-water/crown-land/crown-land-uses/off-road-vehicles/registration",
+      "publisher": "Province of British Columbia", "date": "2026-08-11", "sourceType": "primary", "confirmed": true
+    },
+    "mexicoCity": { "registrationRequired": null, "fee": null, "insuranceRequired": null, "note": "No published rule or fee found." },
+    "averageInsurancePremium": {
+      "unitedStates": {
+        "liabilityOnly": 88, "fullCoverage": 327, "currency": "USD", "period": "year",
+        "measure": "ValuePenguin average across Markel, Geico, Progressive, Dairyland, Allstate for a 30-year-old man in Green Bay, WI on a 2021 Honda FourTrax Rubicon",
+        "url": "https://www.valuepenguin.com/atv-insurance-coverage-cost-and-discounts",
+        "publisher": "ValuePenguin (LendingTree)", "date": "2026-06-30", "sourceType": "secondary", "confirmed": true,
+        "note": "Wisconsin profile; no NY/CT/CA-specific ATV averages found."
+      },
+      "englandUK": null, "ireland": null, "ontario": null, "britishColumbia": null, "mexicoCity": null
+    }
+  },
+
+  "ukVed": {
+    "motorcycle12Month": {
+      "zeroEmission": 27, "upTo150cc": 27, "cc151to400": 59, "cc401to600": 90, "over600cc": 125,
+      "currency": "GBP",
+      "url": "https://www.gov.uk/vehicle-tax-rate-tables/other-vehicle-tax-rates",
+      "publisher": "GOV.UK (DVLA)", "date": "read 2026-09-30; effective date not shown on page", "sourceType": "primary", "confirmed": true,
+      "note": "The brief's figures are confirmed as current. Zero-emission bikes are listed at the same GBP 27 as up-to-150cc bikes (consistent with the end of the electric-vehicle exemption on 2025-04-01, which was not itself read on this page)."
+    },
+    "tricycle12Month": { "zeroEmission": 27, "upTo150cc": 27, "allOther": 125, "currency": "GBP", "url": "https://www.gov.uk/vehicle-tax-rate-tables/other-vehicle-tax-rates", "publisher": "GOV.UK (DVLA)", "sourceType": "primary", "confirmed": true }
+  },
+
+  "canadaMotorcycleFees": {
+    "ontario": {
+      "annualPlateRenewal": {
+        "value": 0, "currency": "CAD",
+        "note": "Plate-sticker renewal fees for motorcycles and mopeds were cut to $0 on 2022-03-13 (previously $42 southern / $21 northern Ontario). Renewal is automatic and free where the vehicle is insured and has no unpaid fines or tolls; it still has to be valid each year.",
+        "url": "https://www.ontario.ca/page/renew-licence-plate-sticker",
+        "publisher": "Government of Ontario", "date": null, "sourceType": "primary", "confirmed": true
+      },
+      "newRegistration": {
+        "vehiclePermit": 32, "licencePlate": "15 - 300 (varies by plate type)", "currency": "CAD",
+        "url": "https://www.ontario.ca/page/driver-and-vehicle-fees",
+        "publisher": "Government of Ontario", "date": "2024-07-25", "sourceType": "primary", "confirmed": true,
+        "note": "The exact standard motorcycle plate fee is not itemized on the page."
+      },
+      "formerValidationFee": { "value": 42, "currency": "CAD", "note": "Historic southern-Ontario figure, no longer charged; stated in secondary sources (OFA, Global News)." }
+    },
+    "britishColumbia": {
+      "annualLicenceFee": {
+        "value": 33, "currency": "CAD", "period": "year",
+        "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/334_91",
+        "publisher": "BC Laws, Motor Vehicle Fees Regulation (B.C. Reg. 334/91)", "date": "consolidation current to 2026-09-22", "sourceType": "primary", "confirmed": true,
+        "note": "Confirmed. Collector/antique motorcycles $35. Motor homes $63-$125 by weight; trailers $23-$99 by GVW."
+      }
+    }
+  },
+
+  "ebikes": {
+    "newYork": {
+      "rule": "Class 1 and 2 (20 mph) statewide; Class 3 (25 mph) only in cities of 1M+ (NYC). E-bikes cannot be registered with DMV; no licence, registration or insurance. Faster devices are e-motos/mopeds/motorcycles subject to DMV registration, licensing and insurance. NYC DOT sets a 15 mph limit on city streets for e-bikes.",
+      "requiresNothing": true,
+      "url": "https://dmv.ny.gov/registration/electric-scooters-and-bicycles-and-other-unregistered-vehicles",
+      "publisher": "New York State DMV", "date": null, "sourceType": "primary", "confirmed": false,
+      "note": "Read via search-result extract of the DMV page, not fetched directly. Bills to require e-bike registration/insurance/licensing (e.g., S2599A/A339A 'Priscilla's Law' for NYC plates) were proposed, not enacted, as of this research."
+    },
+    "connecticut": {
+      "rule": "E-bike = operable pedals, motor under 750 W, Class 1/2 (20 mph) or 3 (28 mph). Not registered with DMV, no driver's licence. Since 2025-10-01 (HB 6862): all e-bike riders must wear a helmet; pedal-less electric bikes over 750 W are motor-driven cycles (driver's licence required); over 3,500 W are motorcycles (registration and insurance).",
+      "requiresNothing": true,
+      "url": "https://www.cga.ct.gov/2024/rpt/pdf/2024-R-0154.pdf",
+      "publisher": "Connecticut General Assembly, Office of Legislative Research (2024-R-0154)", "date": "2024-09-27", "sourceType": "primary", "confirmed": true,
+      "note": "The 2025 changes come from secondary reporting (CT Mirror, NBC Connecticut, Daily Campus), not confirmed on a statute page. Municipalities may require annual bicycle/e-bike licensing (OLR report)."
+    },
+    "california": {
+      "rule": "Class 1/2 (20 mph) and Class 3 (28 mph), motor under 750 W. 'A person operating an electric bicycle is not subject to the provisions of this code relating to financial responsibility, driver's licenses, registration, and license plate requirements.'",
+      "requiresNothing": true,
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=24016",
+      "publisher": "California Legislative Information, Vehicle Code 24016(b)", "date": null, "sourceType": "primary", "confirmed": true
+    },
+    "englandUK": {
+      "rule": "EAPC: continuous rated power no more than 250 W; no assistance above 15.5 mph; rider 14+. 'You do not need a licence to ride an EAPC and it does not need to be registered, taxed or insured.'",
+      "requiresNothing": true,
+      "url": "https://www.gov.uk/electric-bike-rules",
+      "publisher": "GOV.UK", "date": null, "sourceType": "primary", "confirmed": true
+    },
+    "ireland": {
+      "rule": "Since 2024-05-20 (Road Traffic and Roads Act 2023): pedelecs with max 250 W that cut off at 25 km/h and when pedaling stops are bicycles; no licence, registration, tax or insurance. Faster, more powerful or throttle-only bikes are e-mopeds requiring licence, registration, tax and insurance.",
+      "requiresNothing": true,
+      "url": "https://www.citizensinformation.ie/en/travel-and-recreation/e-scooters-e-bikes-and-e-mopeds/e-bikes/",
+      "publisher": "Citizens Information (Citizens Information Board)", "date": null, "sourceType": "primary", "confirmed": false,
+      "note": "Page returned 403 to direct fetch; content read via search-result extract and corroborated by irishcycle.com."
+    },
+    "ontario": {
+      "rule": "Motor max 500 W, assisted speed max 32 km/h, max weight 120 kg, rider 16+, approved helmet. E-bikes are treated as bicycles: no licence, insurance or registration, unless the pedals are removed (then a motor vehicle).",
+      "requiresNothing": true,
+      "url": "https://www.ontario.ca/page/riding-e-bike",
+      "publisher": "Government of Ontario", "date": "2024-07-19", "sourceType": "primary", "confirmed": true
+    },
+    "britishColumbia": {
+      "rule": "Motor Assisted Cycle (E-Bike) Regulation (in force 2024-04-05): standard e-bikes 500 W / 32 km/h, rider 16+, throttle allowed; light e-bikes 250 W / 25 km/h, no throttle, rider 14+. Helmet required. 'You do not need a driver's license or insurance to operate an e-bike in B.C.'",
+      "requiresNothing": true,
+      "url": "https://www2.gov.bc.ca/gov/content/transportation/driving-and-cycling/cycling/cycling-regulations-restrictions-rules/e-bikes",
+      "publisher": "Province of British Columbia", "date": "2025-11-04", "sourceType": "primary", "confirmed": true
+    },
+    "mexicoCity": {
+      "rule": "Pedal-assist e-bikes under 250 W with a 25 km/h maximum are exempt from plates and licence, but from 2026-07-01 must carry a free official Semovi hologram marking them exempt. Anything over 250 W (up to 1 kW) or over 25 km/h is a VEMEPE/VEP needing a plate, circulation card and licence.",
+      "requiresNothing": false,
+      "exemptHologramCost": { "value": 0, "currency": "MXN", "confirmed": true, "note": "Reported as free by Infobae; not confirmed on a Semovi page." },
+      "aboveThresholdCosts": {
+        "plate": { "value": 355, "currency": "MXN", "note": "Reduced from an originally announced MXN 709/710." },
+        "licenceA1": { "value": 572, "currency": "MXN" },
+        "licenceA2": { "value": 1142, "currency": "MXN" },
+        "deadline": "Vehicles bought before 2026-07-01 must be registered by 2026-11-20; sanctions from 2026-11-20."
+      },
+      "insuranceRequired": null,
+      "url": "https://www.infobae.com/mexico/2026/09/04/el-gobierno-confirma-que-scooters-y-bicicletas-electricas-ya-no-podran-circular-sin-placas-ni-licencia/",
+      "additionalUrls": [
+        "https://www.infobae.com/mexico/2026/05/12/que-es-el-holograma-obligatorio-para-bicicletas-electricas-exentas-de-placa-en-cdmx-y-como-obtenerlo/",
+        "https://www.ejecentral.com.mx/nuestro-eje/cdmx-comenzara-a-multar-motos-y-bicis-electricas-como-sacar-las-placas-a-350-pesos-esta-es-la-fecha-limite"
+      ],
+      "publisher": "Infobae México; Eje Central (reporting Semovi / Gaceta Oficial reform of the Reglamento de Tránsito)", "date": "2026-09-04", "sourceType": "secondary", "confirmed": true,
+      "note": "Not a 'requires nothing' market as of July 2026. Gaceta Oficial publication itself was not read. Earlier Infobae (May) said penalties for new vehicles began 2026-09-01; Eje Central (Sept 1) says sanctions start 2026-11-20."
+    }
+  },
+
+  "gear": {
+    "motorcycleHelmet": {
+      "item": "Bell Qualifier full-face helmet (DOT)",
+      "valueLow": 119.95, "valueHigh": 149.95, "currency": "USD",
+      "url": "https://www.revzilla.com/motorcycle/bell-qualifier-helmet",
+      "publisher": "RevZilla", "date": "2026-09-30", "sourceType": "primary", "confirmed": true,
+      "note": "Retail listing price by color/size; an entry-level helmet, not an average."
+    }
+  },
+
+  "uncertain": [
+    "ICBC rate-class mapping (310 = limited speed motorcycle and <=110cc; 311 = 111-400cc; 312 = 401-750cc; 313 = 751-1150cc; 314 = over 1150cc) was reconstructed from a column-misaligned PDF text extraction; it matches rider-forum reporting.",
+    "ICBC figures are base-rate premiums before the driver factor, so an experienced rider's discount (up to ~40%+) or a new rider's surcharge will move the real bill substantially.",
+    "US state motorcycle figures are one-profile quote samples; NY ($27/mo) coming in below the national average ($33/mo) reflects that profile, not all NY riders.",
+    "Ireland and Ontario motorcycle figures are ranges with no stated methodology; no data-based average was found for either.",
+    "Ontario and BC RV/trailer ranges were read only in search-result extracts (confirmed: false).",
+    "Progressive's RV averages are 2024 data (page dated 2024-11-14); no newer insurer-published figure found.",
+    "UK caravan medians are September 2024 data on a page dated 2024; no 2026 update found.",
+    "Connecticut ATV insurance requirement is contradictory across secondary sources; the CT DMV fee page does not give the registration term.",
+    "New York e-bike rule and Ireland e-bike rule were read via search extracts of the government pages (direct fetch failed).",
+    "Connecticut's 2025 e-bike changes (HB 6862, effective 2025-10-01) come from news reporting, not the statute text.",
+    "Mexico City e-bike/VEMEPE costs are from news reports of Semovi's announcements, not the Gaceta Oficial; the date sanctions start differs between reports.",
+    "No motorcycle, scooter, RV or ATV insurance average was found for Mexico City beyond the caller's existing motorcycle range; ATV rules in CDMX were not found."
+  ]
+}

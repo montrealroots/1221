@@ -1,0 +1,284 @@
+{
+  "_meta": {
+    "title": "Tenant-owned appliances, lodgers and room rents: real rules and figures",
+    "retrieved": "2026-09-30",
+    "places": ["New York City", "New Haven CT", "Los Angeles CA", "London", "Dublin", "Toronto", "Vancouver", "Mexico City"],
+    "conventions": {
+      "sourceType": "'primary' when the page is the statute, the government authority, or the company's own page for its own data or product; otherwise 'secondary'.",
+      "confirmed": "true when the figure or rule was read on the cited page (or in a direct fetch of it) during this retrieval; false when it came only from a search-engine summary, a secondary page, or a garbled extraction and should be re-checked before use.",
+      "nulls": "A null value means no published figure was found; the note says what was looked for."
+    },
+    "caveats": [
+      "Retail prices are listed prices seen on 2026-09-30 and move with sales; treat them as a point-in-time snapshot, not a fixed price.",
+      "Room-rent indices are asking rents from listing sites, not signed-lease rents."
+    ]
+  },
+
+  "tenantAppliances": {
+    "landlordDuty": {
+      "newYorkCity": {
+        "mustSupply": "Neither a stove nor a refrigerator is required by the Housing Maintenance Code; the required fixtures are a toilet, a bath or shower, a washbasin and a kitchen sink.",
+        "ifSupplied": "Appliances the landlord supplies (stove, refrigerator) must be kept in good and safe working order; a broken one is an HPD-enforceable condition, and an appliance promised in the lease or present at move-in must be maintained.",
+        "tenantOwnAppliance": "The landlord has no duty to repair an appliance the tenant brought.",
+        "sources": [
+          {"url": "https://www.brickunderground.com/rent/do-NYC-landlords-have-to-provide-appliances", "publisher": "Brick Underground", "date": null, "sourceType": "secondary", "confirmed": false},
+          {"url": "https://rentguidelinesboard.cityofnewyork.us/resources/faqs/repairs-maintenance/", "publisher": "NYC Rent Guidelines Board", "date": null, "sourceType": "primary", "confirmed": false}
+        ],
+        "note": "The rule was found in secondary summaries; the underlying section of the NYC Admin. Code (Title 27, Ch. 2) was not read directly in this pass. The '30-day Class B' repair timing for appliances appeared only on a law-firm blog and is not recorded as confirmed."
+      },
+      "california": {
+        "mustSupply": "Since January 1, 2026 (AB 628), Civil Code 1941.1 counts a working stove and a working refrigerator among the conditions of a habitable unit. Before 2026 there was no appliance duty.",
+        "exactText": {
+          "stove": "A stove that is maintained in good working order and capable of safely generating heat for cooking purposes.",
+          "refrigerator": "A refrigerator that is maintained in good working order and capable of safely storing food."
+        },
+        "tenantOwnRefrigerator": "Landlord and tenant may agree when the lease is signed that the tenant will provide and maintain their own refrigerator. There is no such opt-out for the stove.",
+        "recall": "A stove or refrigerator under a recall must be repaired or replaced within 30 days of the landlord receiving notice.",
+        "appliesTo": "Leases entered into, amended or extended on or after January 1, 2026; a lease running on unchanged is not covered until renewed.",
+        "otherAppliances": "No duty to supply a dishwasher, washer or dryer; if the landlord supplies one, general repair duties (Civil Code 1941) and the lease govern.",
+        "sources": [
+          {"url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1941.1", "publisher": "California Legislative Information", "date": "2026 (as amended by AB 628, Stats. 2025)", "sourceType": "primary", "confirmed": true}
+        ]
+      },
+      "connecticut": {
+        "mustSupply": "No duty to supply kitchen or laundry appliances.",
+        "ifSupplied": "CGS 47a-7(a)(4): the landlord must maintain in good and safe working order all electrical, plumbing, sanitary, heating, ventilating and other facilities and appliances, and elevators, supplied or required to be supplied by him.",
+        "sources": [
+          {"url": "https://law.justia.com/codes/connecticut/title-47a/chapter-830/section-47a-7/", "publisher": "Justia (text of Connecticut General Statutes)", "date": "2024", "sourceType": "secondary", "confirmed": true}
+        ],
+        "note": "Statute text quoted via Justia's reproduction; the official cga.ct.gov copy was not fetched."
+      },
+      "england": {
+        "mustSupply": "No duty to furnish or to supply white goods.",
+        "repairDuty": "Landlord and Tenant Act 1985 s11 makes the landlord keep in repair the structure and exterior and the installations for the supply of water, gas and electricity, for sanitation, and for space and water heating. s11 does not extend to fixtures, fittings and appliances that make use of the supply of water, gas or electricity, so a supplied washing machine or cooker is repaired under the tenancy agreement, not s11.",
+        "gasSafety": "Gas Safety (Installation and Use) Regulations 1998 reg. 36: the landlord must have gas appliances and flues it provides checked annually by a Gas Safe engineer. A tenant's own gas appliance is outside the landlord's check, but the pipework feeding it and any flue remain the landlord's duty.",
+        "sources": [
+          {"url": "https://www.legislation.gov.uk/ukpga/1985/70/section/11", "publisher": "legislation.gov.uk", "date": null, "sourceType": "primary", "confirmed": false},
+          {"url": "https://www.hse.gov.uk/GAS/domestic/faqlandlord.htm", "publisher": "Health and Safety Executive", "date": null, "sourceType": "primary", "confirmed": false},
+          {"url": "https://www.legislation.gov.uk/uksi/1998/2451/regulation/36", "publisher": "legislation.gov.uk", "date": null, "sourceType": "primary", "confirmed": false}
+        ],
+        "note": "Content summarized from search results that cite these pages; the pages were not fetched directly."
+      },
+      "ireland": {
+        "mustSupply": "Housing (Standards for Rented Houses) Regulations 2019 (S.I. 137/2019), reg. 7 (food preparation, storage and laundry): a 4-ring hob with oven and grill; a cooker hood or extractor fan venting to outside; a fridge and freezer or a fridge-freezer; a microwave oven; a sink with piped cold and hot water and a draining area; and access to a washing machine or to a communal laundry facility.",
+        "exception": "For lettings of 10 years or longer, the landlord need not supply the white goods.",
+        "lodgerNote": "These standards apply to tenancies; a room let in the owner's own home is a licence and need not meet them (see lodgerRules.ireland).",
+        "sources": [
+          {"url": "https://www.irishstatutebook.ie/eli/2019/si/137/made/en/print", "publisher": "Irish Statute Book (Office of the Attorney General)", "date": "2019", "sourceType": "primary", "confirmed": false}
+        ],
+        "note": "The list matches the statute's reg. 7 as summarized by several council guidance documents; the statute page itself was not fetched in this pass. Dishwasher and tumble dryer are not required."
+      },
+      "ontario": {
+        "mustSupply": "No duty to supply particular appliances.",
+        "ifSupplied": "Residential Tenancies Act, 2006 s20: the landlord must keep the unit, including appliances it supplies, in good repair. A broken supplied appliance must be repaired or replaced; the replacement need not be new or better, and may be used, if it works properly.",
+        "sources": [
+          {"url": "https://tribunalsontario.ca/documents/ltb/Brochures/Maintenance%20and%20Repairs.html", "publisher": "Landlord and Tenant Board (Tribunals Ontario)", "date": null, "sourceType": "primary", "confirmed": false}
+        ]
+      },
+      "britishColumbia": {
+        "mustSupply": "No duty to supply particular appliances.",
+        "ifSupplied": "Residential Tenancy Act s32: the landlord must keep the property in a state of repair that meets health, safety and housing standards; Policy Guideline 1 puts repair of appliances provided under the tenancy agreement on the landlord unless damage came from the tenant's deliberate act or neglect.",
+        "sources": [
+          {"url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/02078_01", "publisher": "BC Laws (King's Printer)", "date": null, "sourceType": "primary", "confirmed": false},
+          {"url": "https://www2.gov.bc.ca/assets/gov/housing-and-tenancy/residential-tenancies/policy-guidelines/gl01.pdf", "publisher": "Government of British Columbia, Residential Tenancy Branch", "date": null, "sourceType": "primary", "confirmed": false}
+        ]
+      },
+      "mexicoCity": {
+        "mustSupply": null,
+        "note": "Not researched in depth. Mexico City rentals are commonly let unfurnished without appliances ('sin línea blanca'); no statute requiring appliances was found in this pass."
+      }
+    },
+
+    "tenantMayInstallOwn": {
+      "general": "A lease usually bars alterations without the landlord's consent. Plumbing in a washer or dishwasher, or adding a 240V dryer circuit or a dryer vent, is an alteration and normally needs written consent. Countertop dishwashers and portable washers that fill from a kitchen faucet by a quick-connect adapter (or from a built-in tank) and drain into the sink make no change to the building and generally fall outside alteration clauses, though a lease can ban them expressly.",
+      "ontario": "Tenants may not make structural changes; a portable appliance with no permanent plumbing is generally allowed unless the lease prohibits it, and a breach is handled through the RTA notice process.",
+      "england": "Plumbing in a washing machine or dishwasher is an alteration; standard tenancy agreements (including the government's model agreement) require the landlord's written consent.",
+      "ireland": "Residential Tenancies Act 2004 s16: the tenant must not alter or improve the dwelling without the landlord's written consent.",
+      "sources": [
+        {"url": "https://www.justanswer.com/canada-law/b7gbk-1-ontario-want-portable-dishwasher.html", "publisher": "JustAnswer (lawyer Q&A)", "date": null, "sourceType": "secondary", "confirmed": false}
+      ],
+      "note": "These are norms, not a single rule; the England model-agreement clause and Irish s16 wording were not fetched in this pass.",
+      "prices": [
+        {"item": "Countertop dishwasher, 6 place settings", "brand": "Comfee", "market": "US", "price": 289.99, "currency": "USD", "retailer": "Comfee (own store)", "url": "https://shop.feelcomfee.com/products/white-countertop-portable-dishwasher", "sourceType": "primary", "confirmed": true, "note": "Walmart and Amazon listed it at $278.96-$309.99."},
+        {"item": "Countertop dishwasher with 5 L built-in tank (FDW05ASBWHA)", "brand": "Farberware", "market": "US", "price": null, "currency": "USD", "retailer": "various", "url": "https://www.walmart.com/ip/Farberware-Portable-Dishwasher-with-Built-In-Water-Tank-with-Baby-Care-and-Fruit-Wash-Settings-in-White-w-6-Place-Setting-Capacity-FDW05ASBWHA/414141614", "sourceType": "secondary", "confirmed": false, "note": "List price reported as $399.99; sale prices seen from $189.99 to $299.99. Tank model needs no faucet at all."},
+        {"item": "Portable washer, 1.6-1.7 cu ft, faucet quick-connect (BPWM16W)", "brand": "BLACK+DECKER", "market": "US", "price": 305.99, "currency": "USD", "retailer": "The Home Depot", "url": "https://www.homedepot.com/b/Appliances-Washers-Dryers-Washing-Machines-Portable-Washing-Machines/BLACK-DECKER/N-5yc1vZc3ovZe7c", "sourceType": "secondary", "confirmed": false, "note": "Manufacturer page confirms 1.6 cu ft, up to 11 lb, and a sink quick-connect adapter, water hose and drain hose; it showed no price."},
+        {"item": "Portable washer, 2.8 cu ft, on casters (GNW128PSMWW)", "brand": "GE", "market": "US", "price": 989.00, "currency": "USD", "retailer": "GE Appliances (own store)", "url": "https://www.geappliances.com/appliance/GE-Space-Saving-2-8-cu-ft-Capacity-Portable-Washer-with-Stainless-Steel-Basket-GNW128PSMWW", "sourceType": "primary", "confirmed": true, "note": "Sale price; list $1,099.00."},
+        {"item": "Compact electric dryer, 2.6 cu ft, 120V standard outlet (MCSDRY1S)", "brand": "Magic Chef", "market": "US", "price": 369.00, "currency": "USD", "retailer": "The Home Depot", "url": "https://homedepot.com/p/Magic-Chef-Compact-2-6-cu-ft-Electric-Dryer-in-White-MCSDRY1S/204984491", "sourceType": "secondary", "confirmed": false, "note": "Runs on a standard outlet; the owner's manual expects venting, so 'ventless' use indoors is not what the maker intends. Other Home Depot pages showed $409."},
+        {"item": "Table-top dishwasher, 6 place settings (RHTTDW6W)", "brand": "Russell Hobbs", "market": "UK", "price": 239.99, "currency": "GBP", "retailer": "B&Q", "url": "https://www.diy.com/departments/russell-hobbs-table-top-dishwasher-6-place-setting-white-rhttdw6w/5060440045677_BQ.prd", "sourceType": "secondary", "confirmed": false, "note": "Currys listed the silver RHTTDW6S at £269.00; RRP reported as £269.99."},
+        {"item": "Countertop dishwasher, 6 place settings (DDW631SDB)", "brand": "Danby", "market": "Canada", "price": 369.99, "currency": "CAD", "retailer": "Best Buy Canada / Canadian Tire", "url": "https://www.canadiantire.ca/en/pdp/danby-energy-star-portable-countertop-dishwasher-6-place-settings-silverware-basket-22-in-white-0432605p.html", "sourceType": "secondary", "confirmed": false},
+        {"item": "Portable dishwasher, 5 L (Avera DW01)", "brand": "Avera", "market": "Mexico", "price": 6939, "currency": "MXN", "retailer": "Coppel", "url": "https://www.coppel.com/lavavajillas", "sourceType": "secondary", "confirmed": false, "note": "Sale price; original 9,599 pesos."},
+        {"item": "Portable foldable washer", "brand": null, "market": "Mexico", "price": 1359, "currency": "MXN", "retailer": "Coppel", "url": "https://www.coppel.com/ct/linea-blanca/lavadoras/cat000474", "sourceType": "secondary", "confirmed": false, "note": "A small bucket-style unit, not comparable to the US full-function portables."},
+        {"item": "Countertop dishwasher", "brand": null, "market": "Ireland", "price": null, "currency": "EUR", "retailer": null, "url": null, "sourceType": null, "confirmed": false, "note": "No Irish retailer price was captured in this pass (Harvey Norman / DID Electrical would be the places to look)."},
+        {"item": "Ventless or portable dryer, UK/Ireland", "brand": null, "market": "UK/IE", "price": null, "currency": "GBP", "retailer": null, "url": null, "sourceType": null, "confirmed": false, "note": "Not captured. In the UK a condenser or heat-pump tumble dryer needs no vent and plugs into a standard socket."}
+      ]
+    }
+  },
+
+  "lodgerTax": {
+    "uk": {
+      "rule": "Rent a Room Scheme: up to £7,500 a year from letting furnished accommodation in one's only or main home is tax-free; halved to £3,750 if someone else also receives income from letting in that home. Works for owners and tenants alike (a resident landlord), but not for a home converted into separate flats.",
+      "howClaimed": "Automatic below the threshold, no action needed. Above it, a Self Assessment return is required, and the landlord chooses either to opt in (tax on receipts above £7,500, no expenses deductible) or to stay out and report actual income and expenses on the property pages.",
+      "threshold": 7500,
+      "currency": "GBP",
+      "sources": [
+        {"url": "https://www.gov.uk/rent-room-in-your-home/the-rent-a-room-scheme", "publisher": "GOV.UK (HMRC)", "date": null, "sourceType": "primary", "confirmed": true}
+      ]
+    },
+    "ireland": {
+      "rule": "Rent-a-Room Relief: gross income up to €14,000 a year from letting rooms in one's sole or main residence is exempt from income tax, PRSI and USC. If gross receipts exceed €14,000, the whole amount is taxable and no relief is given (a cliff, not an allowance).",
+      "threshold": 14000,
+      "currency": "EUR",
+      "since": "€14,000 from the 2022 tax year.",
+      "conditions": [
+        "The claimant lives in the residence and the rooms are part of it.",
+        "From January 1, 2019, lettings of 28 consecutive days or less (short-term, e.g. online platform stays) do not qualify, except where the occupant is a student, an incapacitated Irish resident, or stays at least 4 consecutive days a week for at least 4 consecutive weeks.",
+        "The income must still be declared on the return even though exempt."
+      ],
+      "sources": [
+        {"url": "https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/land-and-property/rent-a-room-relief/qualifying-conditions.aspx", "publisher": "Revenue Commissioners", "date": null, "sourceType": "primary", "confirmed": false},
+        {"url": "https://www.citizensinformation.ie/en/housing/owning-a-home/home-owners/renting-a-room-in-your-home/", "publisher": "Citizens Information Board", "date": null, "sourceType": "primary", "confirmed": false}
+      ],
+      "note": "Taken from Revenue and Citizens Information text as indexed by search; pages not fetched directly."
+    },
+    "us": {
+      "rule": "Rent from a room is taxable income reported on Schedule E, with expenses divided between the rented part and the personal part. Exception, IRC 280A(g): if a dwelling used as a home is rented fewer than 15 days in the year, the rent is not reported at all and the rental expenses are not deducted.",
+      "sources": [
+        {"url": "https://www.irs.gov/publications/p527", "publisher": "Internal Revenue Service (Publication 527, 2025)", "date": "2025", "sourceType": "primary", "confirmed": false}
+      ],
+      "note": "New York State and City, California and Connecticut then tax the same net income under their own income taxes."
+    },
+    "canada": {
+      "rule": "Net rent from a room is taxable income. Renting part of one's principal residence does not trigger a deemed disposition (so the principal residence exemption is kept) if the rental is ancillary to the home's use as a residence, there is no structural change, and no capital cost allowance is claimed.",
+      "sources": [
+        {"url": "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4036/rental-income.html", "publisher": "Canada Revenue Agency (Guide T4036)", "date": null, "sourceType": "primary", "confirmed": false}
+      ]
+    },
+    "mexico": {
+      "rule": "Income from letting property ('arrendamiento', Ley del ISR Title IV, Chapter III, arts. 114-118) is taxable for individuals. The landlord may deduct actual expenses under art. 115, or instead take the optional blind deduction of 35% of rental income without receipts, plus the year's property tax (predial). The option applies to all the properties the person lets.",
+      "blindDeductionPct": 35,
+      "sources": [
+        {"url": "https://wwwmatnp.sat.gob.mx/articulo/07893/articulo-115", "publisher": "Servicio de Administración Tributaria (SAT)", "date": null, "sourceType": "primary", "confirmed": false},
+        {"url": "http://m.sat.gob.mx/fichas_tematicas/declaracion_anual/Documents/Arrendamiento_CH.pdf", "publisher": "SAT", "date": null, "sourceType": "primary", "confirmed": false}
+      ],
+      "note": "Provisional monthly payments and the RESICO alternative regime were not researched."
+    }
+  },
+
+  "lodgerRules": {
+    "newYorkCity": {
+      "boarders": "NYC Housing Maintenance Code §27-2004 defines a 'family' as one person, or related persons, keeping a common household with not more than two boarders, roomers or lodgers (or not more than three unrelated persons). A household taking three or more boarders stops being a 'family' under the code, and §27-2078 governs rooms rented to boarders.",
+      "tenantRoommates": "Real Property Law §235-f (the Roommate Law): a single tenant on a lease may share with immediate family, one additional occupant and that occupant's dependent children, provided the tenant or spouse lives there as a primary residence; with two or more tenants on the lease, occupants not named may not exceed the number of tenants. The landlord may be told the occupant's name within 30 days of move-in or of a request.",
+      "sources": [
+        {"url": "https://codelibrary.amlegal.com/codes/newyorkcity/latest/NYCadmin/0-0-0-60039", "publisher": "NYC Administrative Code (American Legal Publishing)", "date": null, "sourceType": "primary", "confirmed": false},
+        {"url": "https://www.nysenate.gov/legislation/laws/RPP/235-F", "publisher": "New York State Senate", "date": null, "sourceType": "primary", "confirmed": false}
+      ]
+    },
+    "england": {
+      "status": "A lodger shares the resident landlord's home and is an 'excluded occupier' under the Protection from Eviction Act 1977: no assured shorthold tenancy, no court order needed to end it; 'reasonable notice' is required, usually at least one rent period (a week for weekly rent, a month for monthly).",
+      "rightToRent": "Right to rent immigration checks apply to lodgers in England, including for owner-occupiers and for tenants taking a lodger; the check must be done before the lodger moves in. Civil penalty of up to £5,000 per lodger for a first breach under the current code (higher for repeats).",
+      "consents": "Many mortgages require the lender's consent before taking a lodger; the home insurer must be told, or a claim may be refused or cover voided; a tenant needs the landlord's permission under most tenancy agreements.",
+      "sources": [
+        {"url": "https://england.shelter.org.uk/professional_resources/legal/renting/occupiers_with_limited_security/excluded_occupiers", "publisher": "Shelter England", "date": null, "sourceType": "secondary", "confirmed": false},
+        {"url": "https://assets.publishing.service.gov.uk/media/6878ea540263c35f52e4dd75/270625_Landlords_guide_to_Right_To_Rent_Checks-.pdf", "publisher": "Home Office", "date": "2025-06-27", "sourceType": "primary", "confirmed": false},
+        {"url": "https://england.shelter.org.uk/housing_advice/repossession/taking_in_a_lodger_if_you_have_mortgage_arrears", "publisher": "Shelter England", "date": null, "sourceType": "secondary", "confirmed": false}
+      ],
+      "note": "The Renters' Rights Act 2025 reforms to assured tenancies do not change the excluded-occupier status of lodgers; not re-verified in this pass. Right to rent applies only in England, not Wales, Scotland or Northern Ireland."
+    },
+    "ireland": {
+      "status": "A room let in the owner's own home is a licence, not a tenancy: the Residential Tenancies Acts do not apply, the letting is not registered with the RTB, the RTB dispute service is unavailable, minimum physical standards do not apply (unless HAP), and the owner may end it on reasonable notice.",
+      "sources": [
+        {"url": "https://www.citizensinformation.ie/en/housing/renting-a-home/tenants-rights-and-responsibilities/sharing-accommodation-with-your-landlord/", "publisher": "Citizens Information Board", "date": null, "sourceType": "primary", "confirmed": false}
+      ]
+    },
+    "canadaUsOther": {
+      "note": "Ontario RTA s5(i) excludes living accommodation where the occupant shares a kitchen or bathroom with the owner or owner's family who live there; BC RTA s4(c) excludes the same. Recorded from knowledge of the statutes, not fetched in this pass, so unconfirmed. California and Connecticut lodger-eviction rules (e.g., California Civil Code 1946.5 for a single lodger) were not researched.",
+      "confirmed": false
+    }
+  },
+
+  "roomRents": [
+    {
+      "place": "London", "figure": 915, "currency": "GBP", "period": "month", "asOf": "Q2 2026",
+      "detail": "Greater London average room rent; Inner London £979, Outer London £794; UK £761. Down 0.2% year on year for Greater London.",
+      "billsIncluded": true, "billsNote": "SpareRoom states its index is based on room ads inclusive of bills.",
+      "url": "https://www.spareroom.co.uk/content/info-landlords/rentalindex/", "publisher": "SpareRoom", "date": "2026-07", "sourceType": "primary", "confirmed": true
+    },
+    {
+      "place": "Dublin", "figure": 914, "currency": "EUR", "period": "month", "asOf": "Q1 2026",
+      "detail": "Average monthly rent for a double room in a house in Dublin, Daft.ie Rental Report 2026 Q1. Nationwide €806. Dublin room rents up 6.4% year on year; 1,006 rooms listed on May 1, 2026, down 31% year on year.",
+      "cityCentre": {"figure": 1080, "confirmed": false, "note": "Dublin City Centre row, apparently 'double in house (with ensuite)'; the PDF table did not extract cleanly so the label is uncertain."},
+      "billsIncluded": null,
+      "url": "https://www.rte.ie/documents/news/2026/05/daft.ie-rental-report-2026q1.pdf", "publisher": "Daft.ie (author Ronan Lyons), hosted by RTÉ", "date": "2026-05", "sourceType": "primary", "confirmed": true
+    },
+    {
+      "place": "New York City", "figure": 1515, "currency": "USD", "period": "month", "asOf": "Q2 2026 (updated July 2026)",
+      "detail": "SpareRoom average room rent, New York metro (NY/NJ). Q1 2026 press release gave $1,530. Manhattan neighborhoods run far higher (e.g., Greenwich Village about $2,550 in SpareRoom's neighborhood table).",
+      "billsIncluded": null,
+      "url": "https://www.spareroom.com/content/information-for-roommates/average-rents-us/", "publisher": "SpareRoom", "date": "2026-07", "sourceType": "primary", "confirmed": true
+    },
+    {
+      "place": "Los Angeles", "figure": 1338, "currency": "USD", "period": "month", "asOf": "Q2 2026 (updated July 2026)",
+      "detail": "SpareRoom average room rent, Los Angeles metro.",
+      "billsIncluded": null,
+      "url": "https://www.spareroom.com/content/information-for-roommates/average-rents-us/", "publisher": "SpareRoom", "date": "2026-07", "sourceType": "primary", "confirmed": true
+    },
+    {
+      "place": "New Haven CT", "figure": null, "currency": "USD", "period": "month", "asOf": null,
+      "detail": "No published room-rent average found. SpareRoom's US metro table (about 70 metros) does not list New Haven or Hartford. Whole-unit averages exist (e.g., RentCafe ~$1,800 all sizes, Sept 2026) but are not room rents and were not verified.",
+      "billsIncluded": null,
+      "url": "https://www.spareroom.com/content/information-for-roommates/average-rents-us/", "publisher": "SpareRoom", "date": "2026-07", "sourceType": "primary", "confirmed": true
+    },
+    {
+      "place": "Toronto", "figure": 1127, "currency": "CAD", "period": "month", "asOf": "May 2026",
+      "detail": "Rentals.ca average asking rent for shared accommodation, down 5.1% year on year; Ontario $992; B.C./Alberta/Ontario/Quebec combined $900.",
+      "billsIncluded": null,
+      "url": "https://rentals.ca/blog/rentals-ca-june-2026-rent-report", "publisher": "Rentals.ca / Urbanation", "date": "2026-06", "sourceType": "primary", "confirmed": false,
+      "note": "Read from the report's search-indexed text; the page returned HTTP 403 when fetched directly."
+    },
+    {
+      "place": "Vancouver", "figure": 1115, "currency": "CAD", "period": "month", "asOf": "May 2026",
+      "detail": "Rentals.ca average asking rent for shared accommodation, down 15.7% year on year.",
+      "billsIncluded": null,
+      "url": "https://rentals.ca/blog/rentals-ca-june-2026-rent-report", "publisher": "Rentals.ca / Urbanation", "date": "2026-06", "sourceType": "primary", "confirmed": false,
+      "note": "Same caveat as Toronto."
+    },
+    {
+      "place": "Mexico City", "figure": 12363, "currency": "MXN", "period": "month", "asOf": "2026 (month unclear)",
+      "detail": "Reported average price of a room in the capital attributed to Dada Room; Polanco up to about 17,500 pesos. A Dada Room survey found 26% of its users pay 6,000-8,000 pesos.",
+      "billsIncluded": null,
+      "url": "https://obras.expansion.mx/inmobiliario/2025/07/14/rentar-cuarto-en-cdmx-de-alternativa-economica-a-lujo", "publisher": "Expansión Obras (citing Dada Room)", "date": "2025-07-14", "sourceType": "secondary", "confirmed": false,
+      "note": "The search summary did not make clear which article carried the 12,363 figure or its date; the Expansión piece is the likeliest source. Treat as an unverified estimate. The World Cup (June-July 2026) inflated short-term rents in tourist districts."
+    }
+  ],
+
+  "billsAndVoids": {
+    "ukBillsIncluded": {
+      "finding": "UK room rents are normally quoted inclusive of bills: SpareRoom's index is built from bills-inclusive ads, and SpareRoom's lodger guidance says 95% of lodgers prefer bills included.",
+      "sources": [
+        {"url": "https://www.spareroom.co.uk/content/info-landlords/rentalindex/", "publisher": "SpareRoom", "date": "2026-07", "sourceType": "primary", "confirmed": true},
+        {"url": "https://static.spareroom.co.uk/downloads/spareroom_lodgers_guide.pdf", "publisher": "SpareRoom", "date": null, "sourceType": "primary", "confirmed": false}
+      ]
+    },
+    "otherMarketsBills": {
+      "finding": null,
+      "note": "No published share of bills-inclusive room rents found for the US, Ireland, Canada or Mexico. Daft.ie and Rentals.ca do not say whether their room figures include bills."
+    },
+    "voidPeriods": {
+      "finding": null,
+      "note": "No published average void period (days a spare room stays empty) was found for any of the eight places. Nearest proxy: Daft.ie reports stock and flow of room listings (Dublin: about 18,350 rooms listed in the 12 months to April 2026 against 1,006 on the market on May 1), which implies rooms turn over quickly but is not a void measure."
+    }
+  },
+
+  "uncertain": [
+    "SpareRoom UK: the Q1 2026 London release gave £978 while the Q2 2026 index page gives Greater London £915; £978 appears to be a different geography (likely central/inner London) or methodology. Use £915 (Greater London, Q2 2026) and treat £978 as unreconciled.",
+    "Dublin City Centre room rent (€1,080) comes from a PDF table that extracted with misaligned rows; the row label is uncertain.",
+    "Rentals.ca Toronto and Vancouver shared-accommodation figures are for May 2026 and were not read directly (403); later monthly reports may differ.",
+    "Mexico City room-rent average (12,363 pesos) has an unclear source and date.",
+    "New Haven has no published room-rent average; any figure would be a SLATE estimate and must be marked as such.",
+    "NYC HMC appliance rule, England s11/gas-safety detail, Irish S.I. 137/2019 list, Ontario/BC appliance duties, Irish Rent-a-Room conditions, IRS 280A(g), CRA principal-residence rule and SAT 35% deduction were all taken from search-indexed text of the cited pages or reliable secondary summaries, not fetched directly: marked confirmed:false, but they agree across several sources.",
+    "Ontario RTA s5(i) and BC RTA s4(c) exclusions for sharing a kitchen or bath with the owner, and California Civil Code 1946.5 for a single lodger, come from knowledge of the statutes and were not verified in this pass.",
+    "Retail prices vary by retailer and sale; Farberware's list price ($399.99) versus sale prices ($189.99-$299.99) is a wide spread.",
+    "Irish and UK prices for portable washers and ventless dryers, and any Irish countertop dishwasher price, were not captured.",
+    "Void periods for lodger rooms are unpublished in every market researched."
+  ]
+}

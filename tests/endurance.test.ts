@@ -92,11 +92,7 @@ function checkInvariants(sim: Simulation, label: string): void {
     }
   }
 
-  // --- History -------------------------------------------------------------
-  // Nothing in the record is dated after the moment we are standing in.
-  for (const entry of u.history) {
-    expect(entry.at <= u.now, `${label}: a history entry is dated in the future`).toBe(true);
-  }
+  // Nothing in the record is dated after the moment we are standing in. (A history of milestones was checked here until it went, 2026-10-02.)
   for (const txn of u.transactions) {
     expect(txn.at <= u.now, `${label}: transaction ${txn.id} is dated in the future`).toBe(true);
   }
@@ -173,7 +169,7 @@ describe('a universe left running', () => {
       people: Object.keys(u.people).length,
       transactions: u.transactions.length,
       balances: Object.entries(u.accounts).map(([id, a]) => [id, a.balance]).sort(),
-      history: u.history.map((h) => `${h.at}:${h.title}`),
+      notifications: u.notifications.map((n) => `${n.at}:${n.title}`),
     });
 
     const a = quickSave({}, 'determinism-seed');

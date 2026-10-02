@@ -10,10 +10,12 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { injuryOf } from '@/engine/systems/injury';
 import { quickSave } from '@/engine';
+import { wearTheDay } from '@/engine/systems/wardrobe';
 import type { Person, Personality } from '@/engine/domain/model';
 import {
-  LOOKING_AFTER, applyLookingAfter, freshWellbeing, lookAfterRefusal, mendsTo, readiness, type LookAfter,
+  LOOKING_AFTER, applyLookingAfter, freshWellbeing, lookAfterRefusal, mendsTo, minutesFor, readiness, type LookAfter,
 } from '@/engine/systems/life';
 import { ceilingAt } from '@/engine/content/lifespan';
 import { MS_DAY, MS_HOUR, MS_MINUTE } from '@/engine/core/time';
@@ -35,14 +37,23 @@ function doIt(sim: ReturnType<typeof quickSave>, action: LookAfter) {
 
 describe('looking after yourself', () => {
   for (const action of ACTIONS) {
-    it(`${action} spends exactly its own time on the clock`, () => {
+    it(`${action} spends exactly its own time on the clock, where the place and the weather allow it`, () => {
       const sim = quickSave();
       const w = sim.player.wellbeing;
       w.nourishment = 40; w.hygiene = 50; w.energy = 70;
+      // Clothes to wash and a place to clean.
+      sim.player.living = { tidy: 30 };
+      for (let i = 0; i < 7; i += 1) wearTheDay(sim, sim.player);
+      // A bath, a pool, a court, a terrace and fine weather are the home's and the day's to give (`systems/dwelling.ts`).
+      // A boat is its owner's (`systems/boats.ts`, tested in `tests/boats.test.ts`).
+      // A bicycle and an ATV are their owner's (`systems/outings.ts`, tested in `tests/outings.test.ts`).
+      // A lawn is a home's with a yard (`systems/lawns.ts`, tested in `tests/lawns.test.ts`).
+      if (lookAfterRefusal(sim, action) && ['bathe', 'swim', 'court', 'outside', 'boat', 'charter', 'ride', 'trail', 'mow'].includes(action)) return;
+      const minutes = minutesFor(sim, action);
       const before = sim.now;
       const result = doIt(sim, action);
       expect(result.ok, result.error).toBe(true);
-      expect(sim.now).toBe(before + LOOKING_AFTER[action].minutes * MS_MINUTE);
+      expect(sim.now).toBe(before + minutes * MS_MINUTE);
       expect(result.value?.doneAt).toBe(sim.now);
     });
   }
@@ -123,8 +134,11 @@ describe('looking after yourself', () => {
       const idle = quickSave({ wealth: 'inherited' });
       for (let day = 0; day < 56; day++) {
         for (const sim of [trained, idle]) expect(sim.execute({ kind: 'life.sleep', payload: { hours: night } }).ok).toBe(true);
-        const result = doIt(trained, 'exercise');
-        expect(result.ok, result.error).toBe(true);
+        // Hurt, the workout waits till it mends (`systems/injury.ts`).
+        if (!injuryOf(trained.player, trained.now)) {
+          const result = doIt(trained, 'exercise');
+          expect(result.ok, result.error).toBe(true);
+        } else trained.advanceTo(trained.now + LOOKING_AFTER.exercise.minutes * MS_MINUTE);
         const next = trained.now + (24 - night) * MS_HOUR - LOOKING_AFTER.exercise.minutes * MS_MINUTE;
         trained.advanceTo(next);
         idle.advanceTo(next);

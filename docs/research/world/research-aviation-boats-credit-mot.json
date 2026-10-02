@@ -1,0 +1,356 @@
+{
+  "_meta": {
+    "retrievalDate": "2026-09-30",
+    "method": "Web search plus direct fetches of primary pages, statutes, tariff APIs and PDFs. 'confirmed' is true only when the figure was read on the cited page or document itself during this session. Where a figure was seen only in a search-engine excerpt, or the page blocked retrieval, confirmed is false and the note says so. Nothing here is invented; unpublished values are null with a note.",
+    "sourceTypeKey": {
+      "primary": "The regulator, statute, tariff schedule, the business's own price page, or the study's own publication",
+      "secondary": "A third party reporting or analysing someone else's figures"
+    },
+    "spelling": "American spelling in our own words; quoted names and titles are left as published."
+  },
+
+  "medicalsAbroad": {
+    "unitedKingdom": {
+      "caaFee": {
+        "class2": { "amountGBP": 11.67, "appliesTo": "Class 2 initial, revalidation and renewal", "sourceUrl": "https://www.caa.co.uk/aeromedical-examiners/medical-standards/overview/", "publisher": "UK Civil Aviation Authority", "date": "Scheme of Charges in force from 2026-04-01", "sourceType": "primary", "confirmed": true, "note": "Paid to the CAA through the Cellma portal, separate from the examiner's fee. The earlier figure of £11.15 appears in older CAA text. Class 1 and Class 3 are £19.48." },
+        "lapl": { "amountGBP": null, "sourceUrl": "https://www.caa.co.uk/aeromedical-examiners/medical-standards/overview/", "publisher": "UK Civil Aviation Authority", "date": null, "sourceType": "primary", "confirmed": false, "note": "The CAA page does not state a separate LAPL charge. The pplclub.co.uk guide gives an administrative fee of about £15–£20 in general terms. Treat the LAPL CAA charge as unpublished on the page we read." }
+      },
+      "ameExamFees": [
+        { "provider": "Aviation Medicals Wessex", "ukClass2GBP": 180, "easaClass2GBP": 195, "ukLaplGBP": 180, "easaLaplGBP": 195, "ecgGBP": 85, "sourceUrl": "https://aviationmedicalswessex.co.uk/fees-1", "publisher": "Aviation Medicals Wessex", "date": null, "sourceType": "primary", "confirmed": true, "note": "Base fees; the ECG fee includes cardiology review if needed." },
+        { "provider": "The Aeromedical Centre (Aeromedicals), West Sussex RH20 3BQ", "class2InitialWithEcgGBP": 360, "class2RevalidationRenewalGBP": 216, "restingEcgGBP": 114, "sourceUrl": "https://aeromedicals.co.uk/fees/", "publisher": "Aeromedicals", "date": null, "sourceType": "primary", "confirmed": true, "note": "Prices include 20% VAT. LAPL not separately listed." },
+        { "provider": "General range (guide)", "ameFeeRangeGBP": [170, 250], "ecgExtraGBP": [40, 70], "audiogramExtraGBP": [40, 60], "sourceUrl": "https://www.pplclub.co.uk/clubguides/uk-medicals-guide", "publisher": "PPL Club", "date": "2025-09-10", "sourceType": "secondary", "confirmed": true, "note": "London clinics tend to sit at the top of the range." }
+      ],
+      "validityByAge": {
+        "class2": [
+          { "ageBand": "under 40", "months": 60, "rule": "A certificate issued before 40 stops being valid after the holder turns 42" },
+          { "ageBand": "40 to 50", "months": 24, "rule": "A certificate issued before 50 stops being valid after the holder turns 51" },
+          { "ageBand": "over 50", "months": 12 }
+        ],
+        "lapl": [
+          { "ageBand": "under 40", "months": 60, "rule": "A certificate issued before 40 stops being valid after the holder turns 42" },
+          { "ageBand": "over 40", "months": 24 }
+        ],
+        "sourceUrl": "https://www.legislation.gov.uk/eur/2011/1178/annex/IV/division/SUBPART+A/section/2/data.xht",
+        "publisher": "legislation.gov.uk (UK Part-MED, MED.A.045, retained Regulation (EU) 1178/2011)",
+        "date": null,
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Class 2 figures also appear on the CAA's 'Apply for a Class 2 medical certificate' page. Validity runs from the exam date on issue or renewal, and from the previous expiry on revalidation."
+      }
+    },
+    "ireland": {
+      "iaaFee": { "amountEUR": 22, "description": "MySRS usage charge on any application that may result in the issue of a medical certificate or report", "sourceUrl": "https://www.iaa.ie/docs/default-source/publications/corporate-publications/schedule-of-charges/iaa-schedule-of-charges---schedule-4---personnel-licensing.pdf?sfvrsn=fcd8eff3_8", "publisher": "Irish Aviation Authority, Schedule of Charges, Schedule 4 (Personnel Licensing), Version 2026/02", "date": "2026-06-05 (effective)", "sourceType": "primary", "confirmed": true, "note": "Read from the PDF's text; the layout's fee column is misaligned, and the raw-text extraction pairs this line with €22. The IAA issues no separate Class 2 certificate fee in that schedule." },
+      "ameExamFees": [
+        { "provider": "Dr Kieran Whyte (IAA-approved AME)", "class2EUR": 200, "laplEUR": 200, "class1RenewalEUR": 250, "sourceUrl": "https://www.drkieranwhyte.com/medicals-certifications/iaa-approved-aeromedical-examiner", "publisher": "Dr Kieran Whyte", "date": null, "sourceType": "primary", "confirmed": true, "note": "Extra fees for audiogram, ECG or bloods, not itemized." }
+      ],
+      "validityByAge": { "note": "Ireland applies EU Part-MED MED.A.045, identical in substance to the UK text above (Class 2: 60/24/12 months; LAPL: 60/24 months).", "sourceType": "primary", "confirmed": false, "sourceUrl": null }
+    },
+    "canada": {
+      "category3ExamFees": [
+        { "provider": "YOW Aviation Medicals (Ottawa)", "amountCAD": 240, "note": "Same price for all categories, in person or telemedicine; includes submitting the Medical Examination Report.", "sourceUrl": "http://yowmedicals.com/in-person", "publisher": "YOW Aviation Medicals", "date": null, "sourceType": "primary", "confirmed": true },
+        { "provider": "Peel Travel Clinic (Mississauga)", "amountCAD": 200, "sourceUrl": "https://peeltravelclinic.com/aviation-medicals-mississauga/", "publisher": "Peel Travel Clinic", "date": null, "sourceType": "primary", "confirmed": false, "note": "Seen in a search excerpt only." }
+      ],
+      "whoSetsTheFee": { "text": "The examiner (CAME) sets and charges the exam fee; Transport Canada does not set it.", "sourceUrl": "https://tc.canada.ca/en/aviation/medical-fitness-aviation/apply-manage-aviation-medical-certificate/how-apply", "publisher": "Transport Canada", "sourceType": "primary", "confirmed": true },
+      "transportCanadaFee": {
+        "currentCAD": 67.75,
+        "currentDescription": "Processing of a medical certificate for a pilot licence or permit other than a student pilot permit",
+        "proposedCategory3CAD": 105,
+        "proposedInForce": "2028",
+        "sourceUrl": "https://tc.canada.ca/en/corporate-services/consultations/fee-modernization-aviation-personnel-services/fee-proposal-civil-aviation-personnel-services",
+        "publisher": "Transport Canada",
+        "date": "consultation closed 2026-04-30",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Fees may be indexed each April 1. A student pilot permit medical carries no processing charge under the current wording."
+      },
+      "validityByAge": {
+        "privatePilotLicence": [ { "ageBand": "under 40", "months": 60 }, { "ageBand": "40 and over", "months": 24 } ],
+        "recreationalPermit": [ { "ageBand": "under 40", "months": 60 }, { "ageBand": "40 and over", "months": 24 } ],
+        "studentPilotPermit": [ { "ageBand": "any age", "months": 60 } ],
+        "sourceUrl": "https://laws-lois.justice.gc.ca/eng/regulations/SOR-96-433/section-404.04.html",
+        "publisher": "Justice Canada, Canadian Aviation Regulations s. 404.04(6)",
+        "date": "current to 2026-09-21; last amended 2026-06-17",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Validity follows the licence held, not the medical category, and is fixed by age at the exam. From 2026-06-17 validity is counted from the first day of the month after the exam (ATAC, https://www.atac.ca/post/changes-to-pilot-medical-certificate-validity, secondary)."
+      }
+    }
+  },
+
+  "mexicoTraining": {
+    "privatePilotMinimums": {
+      "totalHours": 40,
+      "dualInstructionHours": 20,
+      "soloHours": 5,
+      "crossCountryHours": 5,
+      "crossCountryRule": "Includes a route between points at least 270 km (150 NM) apart with at least two landings at different points",
+      "recencyHours": 5,
+      "recencyRule": "5 hours logged and certified by the Agency within the two months before applying",
+      "otherRequirements": "Theory-and-practice course with the restricted radiotelephone (RTAR) rating, and the theory and practical exams; applies to fixed-wing aircraft over 454 kg MTOW",
+      "sourceUrl": "https://www.gob.mx/cms/uploads/attachment/file/853104/reglamento-expedicion-permisos-licencias-certificados-capacidad-pta-30082023.pdf",
+      "publisher": "Government of Mexico, Reglamento para la Expedición de Permisos, Licencias y Certificados de Capacidad del Personal Técnico Aeronáutico, art. 50 (as amended DOF 2023-08-02)",
+      "date": "2023-08-02 (last amendment)",
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Schools commonly quote 40 flight hours plus a 1-hour check flight (41 total)."
+    },
+    "coursePrices": [
+      { "school": "Voláre (Guadalajara, Jalisco)", "totalMXN_weekday": 212350, "totalMXN_saturday": 226750, "enrollmentMXN": 3000, "monthlyTuitionMXN": 6300, "uniformMXN": 3500, "flightHourMXN": 4200, "flightHoursIncluded": 41, "simulatorHours": 5, "licenseAndCertificationMXN": 13000, "aircraft": "Cessna 172 and 182", "sourceUrl": "https://volare.pro/programas/piloto-privado", "publisher": "Voláre Escuela de Aviación", "date": null, "sourceType": "primary", "confirmed": true, "note": "Totals are the school's own approximate figures. Not Mexico City." },
+      { "school": "Aviatraining and Technology (Aviafly), Torreón, Coahuila", "trainingPermitMXN": 4700, "enrollmentMXN": 5600, "monthlyTuitionMXN": 7100, "months": 6, "simulatorHourMXN": 1000, "simulatorHours": 12, "cessna172FlightHourMXN": 4500, "flightHours": 44, "theoryExamOrderMXN": 6500, "flightExamOrderMXN": 7100, "licenseIssuanceMXN": 14500, "studyMaterialsMXN": 6400, "sourceUrl": "https://www.aviafly.mx/piloto-privado.html", "publisher": "Aviatraining and Technology", "date": null, "sourceType": "primary", "confirmed": true, "note": "Not Mexico City. Sum of listed items is MXN 297,400 (our arithmetic: 4,700 + 5,600 + 42,600 + 12,000 + 198,000 + 6,500 + 7,100 + 14,500 + 6,400 = 297,400)." },
+      { "school": "Alas Doradas (Aguascalientes, Querétaro, San Luis Potosí)", "enrollmentMXN": 9500, "monthlyTuitionMXN": 7500, "months": 6, "flightHourMXN": 4000, "flightHours": 41, "simulatorHourMXN": 500, "licenseApproxMXN": 25000, "sourceUrl": "https://formacionalasdoradas.com/piloto-privado/", "publisher": "Formación Alas Doradas", "date": null, "sourceType": "primary", "confirmed": true }
+    ],
+    "mexicoCityAreaCoursePrice": {
+      "valueMXN": null,
+      "note": "No Mexico City-area school we checked publishes a price. Escuela de Vuelo AIRE (Hangar 9, Atizapán airport, 40 hours on C150/C172/C182), PRAAT (CDMX/Atizapán, 'ask for prices by WhatsApp'), Lift Aviation (Atizapán), Escuela de Aviación México (CDMX) and Aeronáutica Vitar (Cuernavaca) all say to contact them. Press estimates: about MXN 200,000 for a private licence in 2020 (Radio Fórmula, 2022-05-18, secondary) and 'about 2,700 pesos per flight hour' (El Siglo de Torreón, 2024-09-17, secondary).",
+      "sourceUrls": [ "https://escueladevueloaire.com/piloto_privado/", "https://praat.com.mx/piloto-aviador-privado-de-ala-fija/", "https://www.liftmexico.com/", "https://www.radioformula.com.mx/nacional/2022/5/18/aifa-donde-puedo-aprender-pilotear-un-avion-cuanto-cuesta-716088.html", "https://www.elsiglodetorreon.com.mx/noticia/2024/las-10-mejores-escuelas-de-aviacion-en-mexico-precios.html" ]
+    },
+    "cessna172RentalPerHour": {
+      "schoolDualRatesMXN": [ { "school": "Aviafly (Torreón)", "perHourMXN": 4500, "aircraft": "Cessna 172" }, { "school": "Voláre (Guadalajara)", "perHourMXN": 4200, "aircraft": "Cessna 172/182" }, { "school": "Alas Doradas", "perHourMXN": 4000, "aircraft": "not stated" } ],
+      "soloRentalToLicensedPilotMXN": null,
+      "note": "No Mexican operator we found publishes a dry or solo rental rate for a C172 to a licensed pilot; published figures are school training hours. Charter (with pilot) C172 in Mérida quoted at USD 445/hour (search excerpt, cancunairplanetours.com) is air-taxi pricing, not rental.",
+      "sourceType": "primary",
+      "confirmed": true
+    },
+    "afacMedical": {
+      "psychophysicalExamMXN": 4267.00,
+      "unadjustedMXN": 4266.76,
+      "tariffCode": "05496316 'Aplicación del examen psicofísico al personal técnico aeronáutico'",
+      "validThrough": "2026-06-30",
+      "sourceUrl": "https://www.gob.mx/cms/uploads/attachment/file/1045160/catalogo-tarifas-2026-1-afac-29122025f.pdf",
+      "publisher": "Agencia Federal de Aviación Civil, Catálogo de Tarifas (issued 2025-12-29)",
+      "date": "2025-12-29",
+      "sourceType": "primary",
+      "confirmed": true,
+      "relatedFeesMXN": { "licenseIssueFlightCrew_art157_I_A": 2306, "licenseRevalidationFlightCrew_art157_II_A": 1145, "licenseReplacement": 854, "examForTrainingPermitOrLicense_art161": 3250 },
+      "history": "The exam rose from MXN 2,104 to 4,052.07 on 2025-01-20 (A21, https://a21.com.mx/aeronautica/2025/01/17/senalan-inconformidad-ante-alza-del-92-5-en-costo-de-examen-psicofisico-para-pta-2/, secondary).",
+      "note": "A second-half-2026 catalog was not found; the figure may have been adjusted from July 2026. Exam is taken at AFAC medical units or authorized examiners."
+    }
+  },
+
+  "aircraftDefault": {
+    "repossessionLaw": {
+      "selfHelp": { "text": "After default a secured party may take possession of the collateral, by judicial process or without it if it proceeds without breach of the peace.", "citation": "UCC § 9-609(a)-(b)", "sourceUrl": "https://www.law.cornell.edu/ucc/9/9-609", "publisher": "Legal Information Institute (Cornell)", "sourceType": "primary", "confirmed": true },
+      "noticeOfDisposition": { "text": "In a non-consumer transaction, a disposition notice sent 10 or more days before the earliest disposition date is timely; in a consumer transaction timeliness is a question of fact.", "citation": "UCC § 9-612", "sourceUrl": "https://www.law.cornell.edu/ucc/9/9-612", "publisher": "Legal Information Institute (Cornell)", "sourceType": "primary", "confirmed": true },
+      "deficiency": { "text": "Under the UCC the debtor stays liable for any deficiency after a commercially reasonable disposition (UCC § 9-615(d)); state consumer statutes can bar it (see below).", "sourceType": "primary", "confirmed": false, "note": "9-615 was not fetched this session; general UCC rule." },
+      "faaRegistry": {
+        "text": "The repossessor files FAA Form 8050-4 (Certificate of Repossession of Encumbered Aircraft), the security agreement if not already recorded, and, when repossession ended in a foreclosure sale, a bill of sale signed by the sheriff or auctioneer, with a new registration application and fee.",
+        "sourceUrls": [ "https://www.faa.gov/documentlibrary/media/form/ac8050-4.pdf", "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-C/part-47/subpart-A/section-47.11" ],
+        "publisher": "Federal Aviation Administration; 14 CFR 47.11",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "Content from search excerpts of the FAA/eCFR pages; not fetched in full. Liens are recorded at the FAA Aircraft Registry under 49 U.S.C. chapter 441."
+      }
+    },
+    "stateConsumerStatutes": {
+      "california": {
+        "coversAircraft": false,
+        "text": "The Unruh Act (Civil Code 1801 et seq.) 'shall not apply to any contract... for the sale of any aircraft required to be registered under the Federal Aviation Act of 1958'. Rees-Levering covers only vehicles registered under the Vehicle Code. So a California aircraft loan falls back on UCC Article 9, and the Unruh anti-deficiency rule (Civil Code 1812.5) does not reach it.",
+        "sourceUrls": [ "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1801.4", "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=2981", "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1812.5" ],
+        "publisher": "California Legislative Information",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "The same section excludes vessels whose cash price exceeds $25,000."
+      },
+      "connecticut": {
+        "coversAircraft": "yes, if bought primarily for personal use with an aggregate cash price of $75,000 or less",
+        "text": "The Retail Installment Sales Financing Act defines 'goods' as consumer goods up to $75,000 aggregate cash price (equipment up to $25,000), and covers both seller-financed contracts and 'installment loan contracts' (a loan to pay the purchase price, secured by the goods). Self-help only without breach of the peace; optional 10-day notice of intent to repossess; if no notice, a 15-day redemption period and a statement within 3 days; compulsory resale 15 to 180 days after retaking with at least 10 days' written notice; proceeds credited at the greater of sale price or fair retail market value. Deficiency is barred except for motor vehicles and boats over $4,000 cash price, so an aircraft under this act carries no deficiency.",
+        "citation": "Conn. Gen. Stat. §§ 36a-770, 36a-785",
+        "sourceUrl": "https://www.cga.ct.gov/current/pub/chap_669.htm",
+        "publisher": "Connecticut General Assembly",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "The no-deficiency reading for aircraft is our reading of the statute's text; no case law checked. Most aircraft cost more than $75,000 and fall outside the act."
+      },
+      "newYork": {
+        "coversAircraft": "only seller-financed retail instalment contracts, not bank loans",
+        "text": "Personal Property Law art. 10 (Retail Instalment Sales Act) defines 'goods' as all personal chattels sold for other than commercial or business use, excluding motor vehicles covered by articles 9 and 9-A. An aircraft bought for personal use on a seller's instalment contract is 'goods'; a direct loan from a bank is not a retail instalment contract. Neither article bars a deficiency, so UCC Article 9 governs enforcement.",
+        "sourceUrl": "https://www.nysenate.gov/legislation/laws/PEP/401",
+        "publisher": "New York State Senate",
+        "sourceType": "primary",
+        "confirmed": false,
+        "note": "The definition was confirmed; the conclusion about deficiency and bank loans is our inference and was not checked against case law."
+      }
+    },
+    "repossessionCosts": [
+      { "item": "Repossession specialist's fee", "amountUSD": [1500, 15000], "note": "Paid per job depending on size and scope, plus a small percentage of the recovery value when he also sells it.", "sourceUrl": "https://thehustle.co/airplane-repossession", "publisher": "The Hustle (Zachary Crockett)", "date": "2024-10-01", "sourceType": "secondary", "confirmed": true },
+      { "item": "Resale commission", "amountPercent": [6, 10], "note": "Commission of resale price reported by a careers site.", "sourceUrl": "https://www.jobmonkey.com/uniquejobs/airplane-repossession/", "publisher": "JobMonkey", "date": null, "sourceType": "secondary", "confirmed": false },
+      { "item": "Ferry flight, storage, legal", "amountUSD": null, "note": "No published fee schedule found for general-aviation repossession ferry flights or storage; lessor guides list them as cost heads without figures." }
+    ]
+  },
+
+  "boats": {
+    "irelandDealerPrice": [
+      { "model": "Jeanneau Cap Camarat 5.5 CC (2025, new)", "priceEUR": 56100, "vatIncluded": true, "dealer": "MGM Boats, Dublin", "sourceUrl": "https://www.rightboat.com/boats-for-sale/jeanneau/cap-camarat-5-5-cc/rb591673", "publisher": "Rightboat listing", "date": null, "sourceType": "primary", "confirmed": false, "note": "Seen in search excerpts; the listing page returned empty to our fetch. Engine not stated in the excerpt." },
+      { "model": "Jeanneau Cap Camarat 5.5 CC (2016, used), Westport, Co. Mayo", "priceEUR": 32500, "vatIncluded": true, "sourceType": "secondary", "confirmed": false, "sourceUrl": null, "note": "Search excerpt only." },
+      { "model": "Quicksilver Activ 555 Open", "priceEUR": null, "note": "No Irish dealer price found. The Apollo Duck Ireland listing we fetched was a UK dealer (Clipper Marine, Portland) at £17,500 for a 2014 boat. New packages with Mercury 100 hp appear at about €36,270–€39,900 at European dealers (search excerpt, not Irish).", "sourceUrl": "https://www.apolloduck.ie/boat/quicksilver-activ-555-open-for-sale/640536", "sourceType": "secondary", "confirmed": false }
+    ],
+    "irelandStorage": [
+      { "marina": "Malahide Marina (Dublin)", "rate": "€199 per metre LOA for six months, 1 October to 31 March, afloat or ashore", "extra": "€7 per metre environmental/waste charge; one month's hardstanding free per licence period", "sourceUrl": "https://www.malahidemarina.ie/berthage/", "publisher": "Malahide Marina", "sourceType": "primary", "confirmed": true, "note": "Winter package, not a trailer-parking rate. No Irish marina we checked publishes a separate boat-on-trailer rate on a readable page; Kilrush Marina's 2026 price list (https://kilrushmarina.ie/wp-content/uploads/2026/01/2026-Price-List.pdf) is an image PDF we could not read." },
+      { "marina": "Royal Cork Yacht Club / Crosshaven Boatyard", "rate": "Winter €118.70 per metre (1 Nov to 31 Mar); annual €250.69 per metre", "sourceType": "secondary", "confirmed": false, "sourceUrl": "https://www.royalcork.com/marina/", "note": "Search excerpt only." },
+      { "marina": "General range (guide)", "rate": "Open hardstand €70–€150 per month; lifts €100–€400 each", "sourceUrl": "https://storagefinder.co/ie/guides/boat-storage-cost-2026", "publisher": "StorageFinder", "sourceType": "secondary", "confirmed": false, "note": "Page redirected; search excerpt only. A modeled guide, not a marina's price." }
+    ],
+    "irelandInsurance": [
+      { "example": "RIBs and powerboats", "annualPremiumEUR": [400, 900], "note": "High-performance boats at the top of the range; marinas usually require €3–5 million liability cover.", "sourceUrl": "https://yachtsman.ie/blogs/boat-insurance-in-ireland-laws-costs-requirements", "publisher": "Yachtsman Euromarine", "date": "2026-04-14", "sourceType": "primary", "confirmed": true },
+      { "example": "Starting prices", "thirdPartyFromEUR": 200, "comprehensiveFromEUR": 230, "sourceUrl": "https://yachtsman.ie/", "publisher": "Yachtsman Euromarine", "sourceType": "primary", "confirmed": false, "note": "Search excerpt only." },
+      { "example": "Dinghies and small day boats", "annualPremiumEUR": [150, 300], "sourceType": "secondary", "confirmed": false, "sourceUrl": null, "note": "Search excerpt only." }
+    ],
+    "ontarioWinterization": [
+      { "provider": "Port of Call, Dunrobin (Ottawa River)", "outboardLabourCAD": { "1-15hp": 105, "16-60hp": 132, "60-100hp": 147, "101-195hp": 159, "200hp+": 174 }, "materials": "extra, itemized", "atShop": true, "sourceUrl": "https://portofcall.ca/winter-storage", "publisher": "Port of Call", "sourceType": "primary", "confirmed": true },
+      { "provider": "Shrink Wrap Muskoka (Muskoka, Lake Simcoe, Kawartha Lakes)", "mobileOutboardWinterizeCAD": 185, "mobileShrinkWrapPerFootCAD": 26, "mobileShrinkWrapMinimumCAD": 498, "comesToCustomer": true, "sourceUrl": "https://shrinkwrapmuskoka.com/", "publisher": "Shrink Wrap Muskoka", "sourceType": "primary", "confirmed": true },
+      { "provider": "Muskoka Boat Gallery (Port Carling)", "outboardWinterizeFlatCAD": 230, "shrinkWrapStoragePerFootCAD": 60, "unheatedIndoorPerFootCAD": 79.08, "pickupDeliveryCAD": { "0-20km": 125, "20-50km": 235, "100-200km": 345 }, "sourceUrl": "https://www.muskokaboatgallery.com/winter-service-boats-dealership--winter-service-rate", "publisher": "Muskoka Boat Gallery", "sourceType": "primary", "confirmed": true },
+      { "provider": "Harris Boat Works (Gores Landing, Rice Lake)", "fourStrokeWinterizeCAD": { "75-115hp": 444.49, "150hp": 498.56 }, "season": "2026-27", "sourceUrl": "https://www.harrisboatworks.ca/winter-storage", "publisher": "Harris Boat Works", "sourceType": "primary", "confirmed": false, "note": "Read from search excerpts of the page; the page itself returned 403." },
+      { "note": "Legacy Motor and Marine's mobile price list ($175/$200/$225/$250 by hp band) and North Bay Marina ($129–$299) are US businesses (North Bay Marina is in Selbyville, Delaware), so they are not Ontario figures." }
+    ],
+    "importUSCanada": {
+      "intoCanada": {
+        "duty": "Outboard motorboats not over 7.5 m are tariff item 8903.93.90: MFN 9.5%, United States Tariff (UST) and Mexico Tariff Free, UK Tariff Free. A US-origin boat qualifying under CUSMA enters free; a non-originating boat pays 9.5%.",
+        "sourceUrl": "https://www.cbsa-asfc.gc.ca/trade-commerce/tariff-tarif/2026/01-99/ch89-2026-eng.pdf",
+        "publisher": "Canada Border Services Agency, Customs Tariff chapter 89 (2026)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "gst": "5% GST on value plus duty (CBSA duties-and-taxes guide, modified 2026-09-17, https://www.cbsa-asfc.gc.ca/import/guide-3-eng.html, primary, confirmed through its worked example).",
+        "hst": { "text": "For a personal import into a participating province, CBSA collects HST (Ontario 13%) instead of GST alone.", "confirmed": false, "note": "Standard CBSA practice; not read on a page this session." },
+        "luxuryTax": "Vessels with a taxable amount over CAD 250,000 bear the Select Luxury Items Tax since 2022-09-01 (CBSA, https://www.cbsa-asfc.gc.ca/import/imp-mar-eng.html, modified 2022-08-29, primary, confirmed).",
+        "reporting": "Declare the boat to CBSA on first arrival and pay duty and taxes; by water, report at a designated marine site and call the Telephone Reporting Centre, 1-888-226-7277 (CBSA, primary; phone number from a search excerpt).",
+        "transportCanada": { "text": "Pleasure craft up to 24 m must meet the construction standards in force when built or imported and carry a compliance notice; Transport Canada says a vessel imported for personal use (not under contract or for resale) may not need one, with other exceptions in Part 8 of the Small Vessel Regulations. A powered boat must also be licensed (pleasure craft licence through Transport Canada) or registered.", "sourceUrl": "https://tc.canada.ca/en/marine-transportation/marine-safety/compliance-notices-pleasure-non-pleasure-craft", "publisher": "Transport Canada", "sourceType": "primary", "confirmed": false, "note": "The personal-use exemption came from a search excerpt of this TC page; our fetch of the page did not show it. No import inspection fee by Transport Canada was found." },
+        "trailer": "A trailer imported with the boat goes through the Registrar of Imported Vehicles (RIV) if under 15 years old; a fee of about CAD 295 is reported (BorderBuddy, secondary, not confirmed)."
+      },
+      "intoUnitedStates": {
+        "duty": "HTS 8903.93.20 outboard motorboats not over 7.5 m: general 1%, column 2 30%, special Free for programs including 'S' (USMCA), so a USMCA-originating boat from Canada enters duty-free (General Note 11).",
+        "sourceUrl": "https://hts.usitc.gov/reststop/search?keyword=8903.93",
+        "publisher": "US International Trade Commission, Harmonized Tariff Schedule",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "The 1.5% rate often quoted applies to motorboats other than outboard (and some other lines); the 2.7% line 8903.93.15 covers other small craft. USMCA treatment for Canadian-built boats needs origin qualification. Separate 2025 US additional duties on non-USMCA Canadian goods may apply; not checked for boats.",
+        "requirements": "Report to CBP on arrival; formal vessel entry on CBP Form 1300 within 48 hours when arriving by water; proof of ownership; EPA engine declaration Form 3520-21; Coast Guard Notice of Arrival where required (secondary sources: GHY International, Waggoner Guide; not confirmed on cbp.gov).",
+        "merchandiseProcessingFee": { "value": null, "note": "Formal entries carry the ad valorem MPF with a minimum and maximum; FY2026 figures not checked." }
+      }
+    },
+    "importUK": {
+      "duty": "UK Global Tariff: third-country duty 0.00% on pleasure motorboats (8903 93 90 00 and 8903 31 00 00); 35% additional duty on Russian or Belarusian origin.",
+      "vat": "20% import VAT.",
+      "sourceUrl": "https://www.trade-tariff.service.gov.uk/api/v2/commodities/8903939000",
+      "publisher": "HM Revenue & Customs, UK Trade Tariff",
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Relief: Temporary Admission for non-UK-resident owners, normally up to 24 months in Great Britain or 18 months in Northern Ireland (secondary)."
+    },
+    "importIreland": {
+      "duty": "EU third-country duty 1.70% on 8903 93 90 (outboard motorboats not over 7.5 m) for US origin; no additional US-specific measure shown for 2026-09-30. UK-originating boats enter free under the EU-UK Trade and Cooperation Agreement if origin is proved.",
+      "sourceUrl": "https://ec.europa.eu/taxation_customs/dds2/taric/measures.jsp?Lang=en&SimDate=20260930&Area=US&Taric=8903939000&LangDescr=en",
+      "publisher": "European Commission, TARIC",
+      "sourceType": "primary",
+      "confirmed": true,
+      "vat": { "ratePercent": 23, "basis": "customs value plus duty and costs to the point of entry", "confirmed": false, "note": "Ireland's standard VAT rate; not read on revenue.ie this session." },
+      "temporaryAdmission": "Non-EU-resident pleasure boats may enter without duty or VAT and must be re-exported within 18 months (Revenue, https://www.revenue.ie/en/customs/individuals/boats-aircraft/index.aspx, primary, confirmed).",
+      "note": "An EU resident bringing in a non-EU boat pays VAT at once. Irish pleasure boats pay no VRT; not checked this session."
+    }
+  },
+
+  "credit": {
+    "fico2011": {
+      "title": "Research Looks at How Mortgage Delinquencies Affect Scores (FICO Banking Analytics Blog)",
+      "author": "Joanne Gaskin",
+      "date": "2011-03-24",
+      "sourceUrl": "https://www.fico.com/blogs/risk-compliance/research-looks-at-how-mortgage-delinquencies-affect-scores/",
+      "publisher": "Fair Isaac Corporation",
+      "sourceType": "primary",
+      "confirmed": true,
+      "note": "Read from the two chart images in the post. Events are on a mortgage. Estimates assume everything else held constant (no new accounts, no new delinquency, similar debt).",
+      "rows": [
+        { "event": "30 days late on mortgage", "start680": { "scoreAfter": [600, 620], "pointsLost": [60, 80], "recover": "about 9 months" }, "start720": { "scoreAfter": [630, 650], "pointsLost": [70, 90], "recover": "about 2.5 years" }, "start780": { "scoreAfter": [670, 690], "pointsLost": [90, 110], "recover": "about 3 years" } },
+        { "event": "90 days late on mortgage", "start680": { "scoreAfter": [600, 620], "pointsLost": [60, 80], "recover": "about 3 years" }, "start720": { "scoreAfter": [610, 630], "pointsLost": [90, 110], "recover": "about 7 years" }, "start780": { "scoreAfter": [650, 670], "pointsLost": [110, 130], "recover": "about 7 years" } },
+        { "event": "Short sale / deed-in-lieu / settlement (no deficiency balance)", "start680": { "scoreAfter": [610, 630], "recover": "about 3 years" }, "start720": { "scoreAfter": [605, 625], "recover": "about 7 years" }, "start780": { "scoreAfter": [655, 675], "recover": "about 7 years" } },
+        { "event": "Short sale (with deficiency balance)", "start680": { "scoreAfter": [575, 595], "recover": "about 3 years" }, "start720": { "scoreAfter": [570, 590], "recover": "about 7 years" }, "start780": { "scoreAfter": [620, 640], "recover": "about 7 years" } },
+        { "event": "Foreclosure", "start680": { "scoreAfter": [575, 595], "recover": "about 3 years" }, "start720": { "scoreAfter": [570, 590], "recover": "about 7 years" }, "start780": { "scoreAfter": [620, 640], "recover": "about 7 years" } },
+        { "event": "Bankruptcy", "start680": { "scoreAfter": [530, 550], "recover": "about 5 years" }, "start720": { "scoreAfter": [525, 545], "recover": "about 7–10 years" }, "start780": { "scoreAfter": [540, 560], "recover": "about 7–10 years" } }
+      ],
+      "pointsLostNote": "Points lost are our arithmetic from the approximate starting score (680/720/780) to the published range."
+    },
+    "canadaRetention": {
+      "equifaxCanada": {
+        "latePayments": "up to 6 years from the date reported",
+        "collectionsAndChargeOffs": "6 years from the date of first delinquency on the account",
+        "judgments": "6 years",
+        "bankruptcyFirst": "6 years after discharge, or 7 years after filing if no discharge date",
+        "bankruptcySecond": "both remain 14 years after discharge",
+        "consumerProposal": "3 years after completion or 6 years from filing, whichever comes first",
+        "repossession": null,
+        "sourceUrl": "https://www.equifax.ca/personal/education/credit-report/articles/-/learn/how-long-does-information-stay-on-my-credit-report/",
+        "publisher": "Equifax Canada",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "Equifax does not list repossession separately; a repossession is reported on the account's trade line (commonly rated R8) and follows the 6-year account-history rule. That last point is from secondary sources and not confirmed."
+      },
+      "transUnionCanada": {
+        "latePayments": "up to 6 years",
+        "judgments": "6 years; 7 years in Newfoundland and Labrador, Ontario and Quebec; 10 years in Prince Edward Island",
+        "bankruptcyFirst": "6 years; 7 years in Newfoundland and Labrador, Ontario, Prince Edward Island and Quebec",
+        "bankruptcyRepeat": "14 years",
+        "consumerProposal": "3 years after paying off the proposal or 6 years after signing, whichever is earlier",
+        "collections": "6 years, counted from the date of default with the original creditor (secondary, springfinancial.ca / collectionagencies.ca, not confirmed)",
+        "repossession": null,
+        "sourceUrl": "https://www.canada.ca/en/financial-consumer-agency/services/credit-reports-score/information-credit-report.html",
+        "publisher": "Financial Consumer Agency of Canada",
+        "date": "2026-07-01 (modified)",
+        "sourceType": "primary",
+        "confirmed": true,
+        "note": "TransUnion's own FAQ returned 403. Province differences apply to judgments and bankruptcies at TransUnion; late payments and collections are 6 years everywhere."
+      }
+    }
+  },
+
+  "motByAge": {
+    "primaryDataset": { "name": "DVSA 'Anonymised MOT tests and results' bulk dataset", "publisher": "Driver and Vehicle Standards Agency", "license": "Open Government Licence v3.0", "note": "DVSA's own published age table we found (dvsa-com-05, 'vehicle initial test fail rate by age') covers HGVs, trailers and buses, not cars. Car figures by age come from third-party analyses of the bulk data." },
+    "analyses": [
+      {
+        "publisher": "motdata.uk", "dataYear": 2024, "date": "updated 2026-02", "sourceUrl": "https://motdata.uk/mot-fail-rates", "sourceType": "secondary", "confirmed": true, "measure": "first-time pass rate, cars",
+        "byAge": [
+          { "age": 3, "passPct": 89.3, "failPct": 10.7, "tests": 3362857 },
+          { "age": 4, "passPct": 88.9, "failPct": 11.1, "tests": 3246248 },
+          { "age": 5, "passPct": 87.4, "failPct": 12.6, "tests": 4283796 },
+          { "age": 6, "passPct": 85.8, "failPct": 14.2, "tests": 4237176 },
+          { "age": 7, "passPct": 83.9, "failPct": 16.1, "tests": 4360539 },
+          { "age": 8, "passPct": 81.7, "failPct": 18.3, "tests": 4524104 },
+          { "age": 9, "passPct": 79.5, "failPct": 20.5, "tests": 4378386 },
+          { "age": 10, "passPct": 77.2, "failPct": 22.8, "tests": 4057114 },
+          { "age": 11, "passPct": 75.3, "failPct": 24.7, "tests": 3632023 },
+          { "age": 12, "passPct": 73.6, "failPct": 26.4, "tests": 3099415 },
+          { "age": 13, "passPct": 71.9, "failPct": 28.1, "tests": 2792007 },
+          { "age": 14, "passPct": 70.3, "failPct": 29.7, "tests": 2657920 },
+          { "age": 15, "passPct": 69.5, "failPct": 30.5, "tests": 2353366 }
+        ],
+        "extra": "Search excerpts from the same publisher: failure peaks at 42.7% at 18–21 years and falls to 33.3% at 27–30 years, because neglected cars have been scrapped (not confirmed on the page).",
+        "note": "Fail percentages are 100 minus the published pass rate."
+      },
+      {
+        "publisher": "MOT Risk Index (I. Ivitskiy)", "dataYear": 2024, "date": "2026-09-24", "sourceUrl": "https://motriskindex.co.uk/statistics/mot-failure-rates/", "sourceType": "secondary", "confirmed": true, "measure": "initial failure rate (at least one failing defect), class 4 cars, 33,012,215 tests",
+        "byAge": [ { "age": 3, "failPct": 12.4 }, { "age": 18, "failPct": 43.9 }, { "age": "20+", "failPct": 41.0 } ],
+        "overall": "28.28% of initial tests found at least one failing defect; 22.8% strict fail rate after defects fixed at the test station",
+        "note": "Only the endpoints were quoted on the page; per-year values sit in the CSVs at https://github.com/ivitskiy/uk-mot-risk-index-dataset (CC BY 4.0)."
+      },
+      {
+        "publisher": "MOT Checkup", "date": "2026-05-18", "sourceUrl": "https://www.motcheckup.co.uk/research/state-of-uk-mot-2026", "sourceType": "secondary", "confirmed": true, "measure": "first-time pass rate, cohort-averaged",
+        "byAgeBand": [ { "band": "3 years (first MOT)", "passPct": 86.1, "failPct": 13.9 }, { "band": "4–7 years", "passPct": 78.4, "failPct": 21.6 }, { "band": "8–12 years", "passPct": 67.8, "failPct": 32.2 }, { "band": "13+ years", "passPct": 59.2, "failPct": 40.8 } ]
+      }
+    ],
+    "note": "The three analyses define failure differently (strict fail, fail including defects fixed during the test, cohort-averaged), so their numbers do not agree exactly. The pattern agrees: about 11–14% at the first MOT, about 23–32% at ten years, about 40–44% near 18–20 years. RAC, Autotrader and BookMyGarage age tables were not found."
+  },
+
+  "uncertain": [
+    "UK CAA charge for a LAPL medical: not stated on the CAA page read; the Class 2 charge is £11.67.",
+    "Ireland: validity periods were taken from the UK retained text of MED.A.045; the EU text is the same in substance but the EASA page was not read.",
+    "Canada: Peel Travel Clinic's $200 Category 3 fee was seen only in a search excerpt.",
+    "Mexico: no Mexico City-area school publishes a private-pilot price or C172 rate; figures given are from Guadalajara, Torreón and Aguascalientes schools. No published solo C172 rental rate for licensed pilots was found anywhere in Mexico.",
+    "Mexico: the AFAC psychophysical exam fee of MXN 4,267 is from the catalog valid through 2026-06-30; a July–December 2026 catalog was not found.",
+    "Aircraft default: UCC 9-615(d) deficiency rule and FAA Form 8050-4 filing steps were not read in full this session. The New York conclusion (seller contracts covered, bank loans not, deficiency allowed) and the Connecticut no-deficiency reading for aircraft are our readings of statute text without case law.",
+    "Aircraft repossession ferry-flight and storage costs: no published figures found.",
+    "Ireland boat prices: the only Irish dealer price (MGM Boats, Cap Camarat 5.5 CC, €56,100 incl. VAT) came from search excerpts; no Irish Quicksilver Activ 555 price was found.",
+    "Ireland trailer storage: no marina publishes a readable boat-on-trailer rate; Malahide's €199/m winter package is the closest confirmed figure.",
+    "Ontario: Harris Boat Works 2026-27 rates were read from search excerpts only (page returned 403).",
+    "Canada import: HST collection at the border for Ontario residents, the Transport Canada personal-use compliance-notice exemption, and the RIV trailer fee were not confirmed on primary pages.",
+    "US import: whether 2025 US additional duties on non-USMCA Canadian goods reach pleasure boats was not checked; the MPF amount for FY2026 was not checked.",
+    "Ireland import VAT 23% and the absence of VRT on boats were not read on revenue.ie this session.",
+    "Canada credit: neither bureau publishes a separate retention period for repossessions; 6 years via the account history is inferred."
+  ]
+}

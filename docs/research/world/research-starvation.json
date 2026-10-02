@@ -1,0 +1,390 @@
+{
+  "_meta": {
+    "compiled": "2026-09-29",
+    "method": "Abstracts read verbatim through Europe PMC's REST API (PubMed records); MEED CR233 read as the full PDF text; Feeding America FY2025 annual report read as the full PDF text; the 8 U.S.C. 1642(d) statute text from Cornell LII; the DOJ notice read on govinfo.gov. Where only a secondary source was reachable, the item says so. Figures that could not be confirmed are null."
+  },
+  "survivalLimits": [
+    {
+      "id": "henry-1990",
+      "figure": null,
+      "figureNote": "The exact men's and women's limits in the 1990 paper could NOT be confirmed. PubMed has no abstract for it, and the FAO AGRIS record shows only its opening sentences. See henry-2001 for the same author's figures.",
+      "meaning": "Henry proposed using BMI to define the lower limit of survival from starvation, and found that women survive to lower BMIs than men. He attributed this in part to women's larger fat mass and to fat being used ahead of lean tissue during starvation (as the paper's summary reports it).",
+      "source": {
+        "citation": "Henry CJK. Body mass index and the limits of human survival. Eur J Clin Nutr 1990;44(4):329-335. PMID 2364921.",
+        "url": "https://agris.fao.org/search/en/records/65e007af4c5aef494fe7a822",
+        "doi": null
+      },
+      "statedDate": "1990"
+    },
+    {
+      "id": "henry-2001",
+      "figure": {
+        "menFatalBMI": 13,
+        "menCV": "8.7%",
+        "womenFatalBMI": 11,
+        "womenCV": "14%",
+        "meanLowerLimitBMI": 12
+      },
+      "meaning": "Henry's later review of starvation deaths (subjects of normal weight who died of starvation, famine or anorexia nervosa) gives these figures: 'In males, a BMI of around 13 appears to be fatal'; 'females survive to a lower BMI of around 11, although with greater index variability (CV 14%)'; 'a mean BMI of 12 as the lower limit for human survival emerges - a value first proposed by James et al (1988)'. These are the author's own figures, and are probably the ones the 1990 paper is remembered for, but they were read here from the 2001 review as ENN summarizes it, not from the 1990 paper.",
+      "source": {
+        "citation": "Henry CJK. The biology of human starvation: some new insights. Nutrition Bulletin 2001;26:205-211; as summarized in 'The limits of human starvation', Field Exchange (ENN) issue 15.",
+        "url": "https://www.ennonline.net/fex/15/limits",
+        "doi": "10.1046/j.1467-3010.2001.00164.x"
+      },
+      "statedDate": "2001"
+    },
+    {
+      "id": "leiter-marliss-1982",
+      "figure": {
+        "subjects": "Northern Ireland hunger strikers (1981), from media reports",
+        "survivalDaysMean": null,
+        "bmiAtDeath": null
+      },
+      "figureNote": "The letter has no PubMed abstract and the JAMA page shows only a summary. A secondary summary (not verified against the letter) says 10 men, one dying at 45 days and nine surviving 57-73 days, with a mean of 61.6 +/- 2.5 days, and that the limit of total fasting in healthy non-obese men in their mid-to-late twenties is about 60 days. For comparison, CAIN lists the ten 1981 deaths at 46, 59, 60, 61, 61, 61, 62, 66, 71 and 73 days (mean 62.0).",
+      "meaning": "Their conclusion is that 'death occurred when fat stores were approaching exhaustion'. How long a person survives total fasting depends on fat stores as well as protein stores, not on protein alone. The authors reached this by combining anecdotal hunger-strike data with body composition, fuel homeostasis and responses to therapeutic fasts. So in a model, survival time without food should scale with fat mass.",
+      "source": {
+        "citation": "Leiter LA, Marliss EB. Survival during fasting may depend on fat as well as protein stores. JAMA 1982;248(18):2306-2307. PMID 7131684.",
+        "url": "https://jamanetwork.com/journals/jama/fullarticle/379609",
+        "doi": "10.1001/jama.1982.03330180066037"
+      },
+      "statedDate": "1982-11-12"
+    },
+    {
+      "id": "cain-1981-hunger-strike",
+      "figure": {
+        "deaths": 10,
+        "daysToDeath": [66, 59, 61, 61, 61, 46, 71, 73, 62, 60],
+        "min": 46,
+        "max": 73,
+        "mean": 62.0
+      },
+      "meaning": "How long the ten 1981 hunger strikers took to die (the cohort Leiter and Marliss used). These are total fasts, with water only, in young men of normal weight. It is a historical record, not a clinical study. The mean was computed here from CAIN's list.",
+      "source": {
+        "citation": "CAIN Web Service, Ulster University. Hunger Strike 1981 - List of Dead.",
+        "url": "https://cain.ulster.ac.uk/events/hstrike/dead.htm",
+        "doi": null
+      },
+      "statedDate": "1981"
+    },
+    {
+      "id": "collins-1995",
+      "figure": {
+        "patients": 573,
+        "setting": "Concern Worldwide Adult Therapeutic Centre, Baidoa, Somalia, 1992-93 famine",
+        "lowestSurvivableBMI": "< 10 kg/m2 (with specialized care)",
+        "priorAssumedLimit": 12
+      },
+      "meaning": "A BMI 'of less than 10 kg m-2 can be compatible with life, so long as specialized care is provided'. 'Many of the BMI values documented here are below the level of 12, previously thought to mark the limit of human adaptation to starvation.' The paper explains the low values partly by high ambient temperature, the Somalis' tall build, a gradual reduction in food intake and earlier chronic energy deficiency. Famine oedema was equally common in men and women, but men had more severe oedema and a poorer prognosis at any given severity. So for a model, survival below 12 happens only with therapeutic feeding and care, and BMI < 10 is survivable only in hospital.",
+      "source": {
+        "citation": "Collins S. The limit of human adaptation to starvation. Nat Med 1995;1(8):810-814. PMID 7585185. (The title is 'adaptation to starvation', not 'adult survival'.)",
+        "url": "https://www.nature.com/articles/nm0895-810",
+        "doi": "10.1038/nm0895-810"
+      },
+      "statedDate": "1995-08"
+    }
+  ],
+  "hazardBands": [
+    {
+      "id": "gbmc-2016",
+      "figure": {
+        "reference": "BMI 22.5-<25.0 (HR 1.00, 95% CI 0.99-1.01)",
+        "bands": [
+          { "bmi": "15.0-<18.5", "hr": 1.51, "ci95": [1.43, 1.59] },
+          { "bmi": "18.5-<20.0", "hr": 1.13, "ci95": [1.09, 1.17] },
+          { "bmi": "20.0-<22.5", "hr": 1.00, "ci95": [0.98, 1.02] },
+          { "bmi": "22.5-<25.0", "hr": 1.00, "ci95": [0.99, 1.01] }
+        ],
+        "below15": null
+      },
+      "meaning": "All-cause mortality hazard ratios adjusted for study, age and sex. The population was 3,951,455 never-smokers without chronic disease at recruitment who survived 5 years, with 385,879 deaths, drawn from 239 studies. The restrictions were meant to remove the smoking and sick-thin bias. The lowest band analysed was 15.0-<18.5, so nothing is given below 15.",
+      "source": {
+        "citation": "Global BMI Mortality Collaboration. Body-mass index and all-cause mortality: individual-participant-data meta-analysis of 239 prospective studies in four continents. Lancet 2016;388:776-786. PMID 27423262; PMC4995441.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4995441/",
+        "doi": "10.1016/S0140-6736(16)30175-1"
+      },
+      "statedDate": "2016-08-20"
+    },
+    {
+      "id": "zheng-2011-asia",
+      "figure": {
+        "reference": "BMI 22.6-25.0",
+        "bands": [
+          { "bmi": "<= 15.0", "riskFactorUpTo": 2.8, "population": "East Asians (Chinese, Japanese, Koreans)" }
+        ],
+        "southAsians": "Risk of death from any cause was raised at BMI <= 20.0 vs 22.6-25.0 in Indians and Bangladeshis (no single number in the abstract)"
+      },
+      "meaning": "This is the only large pooled cohort found with a separate BMI <= 15 band. In about 1.1 million people from 19 Asian cohorts, risk at BMI <= 15.0 was 'elevated ... by a factor of 2.8' relative to the lowest-risk range. The abstract says 'up to', and the exact HR and CI are in the paper's tables, which were not read.",
+      "source": {
+        "citation": "Zheng W, McLerran DF, Rolland B, et al. Association between body-mass index and risk of death in more than 1 million Asians. N Engl J Med 2011;364:719-729. PMID 21345101.",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa1010679",
+        "doi": "10.1056/NEJMoa1010679"
+      },
+      "statedDate": "2011-02-24"
+    },
+    {
+      "id": "bhaskaran-2018-uk",
+      "figure": {
+        "hrPer5UnitIncreaseBelow25": 0.81,
+        "ci95": [0.80, 0.82],
+        "impliedHrPer5UnitDecreaseBelow25": "about 1.23 (computed here as 1/0.81, not stated in the paper)",
+        "lifeExpectancyLossAt40_underweight_men_years": 4.3,
+        "lifeExpectancyLossAt40_underweight_women_years": 4.5,
+        "lifeExpectancyLossAt40_obese_men_years": 4.2,
+        "lifeExpectancyLossAt40_obese_women_years": 3.5
+      },
+      "meaning": "Never-smokers only: 1,969,648 people and 188,057 deaths from UK primary-care records (CPRD). The association is J-shaped. Below 25, each 5 units lower BMI raises mortality. Compared with healthy weight (18.5-24.9), underweight (<18.5) shortens life expectancy from age 40 by 4.3 years in men and 4.5 years in women. Lower BMI was also inversely associated with deaths from mental and behavioural causes, self-harm and accidents.",
+      "source": {
+        "citation": "Bhaskaran K, dos-Santos-Silva I, Leon DA, Douglas IJ, Smeeth L. Association of BMI with overall and cause-specific mortality: a population-based cohort study of 3.6 million adults in the UK. Lancet Diabetes Endocrinol 2018;6:944-953. PMID 30389323.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6249991/",
+        "doi": "10.1016/S2213-8587(18)30288-2"
+      },
+      "statedDate": "2018-12"
+    },
+    {
+      "id": "psc-2009",
+      "figure": {
+        "nadirBMI": "22.5-25",
+        "bandHRsBelow18_5": null
+      },
+      "meaning": "In 894,576 participants in 57 studies, 'Below the range 22.5-25 kg/m2, BMI was associated inversely with overall mortality, mainly because of strong inverse associations with respiratory disease and lung cancer. These inverse associations were much stronger for smokers than for non-smokers.' The paper also says 'The definite excess mortality below 22.5 kg/m2 is due mainly to smoking-related diseases, and is not fully explained.' The abstract gives no hazard ratio by band below 18.5, and the band figures in the paper's tables were not read.",
+      "source": {
+        "citation": "Prospective Studies Collaboration. Body-mass index and cause-specific mortality in 900 000 adults: collaborative analyses of 57 prospective studies. Lancet 2009;373:1083-1096. PMID 19299006; PMC2662372.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2662372/",
+        "doi": "10.1016/S0140-6736(09)60318-4"
+      },
+      "statedDate": "2009-03-28"
+    },
+    {
+      "id": "aune-2016",
+      "figure": {
+        "nadirNeverSmokers": "BMI 23-24",
+        "nadirHealthyNeverSmokers": "BMI 22-23",
+        "nadirNeverSmokersFollowup20yPlus": "BMI 20-22",
+        "bandRRsBelow18_5": null
+      },
+      "meaning": "This meta-analysis covered 230 cohorts, more than 30.3 million participants and more than 3.74 million deaths. It found a J-shaped curve in never-smokers. The authors warn that 'The increased risk of mortality observed in underweight people could at least partly be caused by residual confounding from prediagnostic disease.' The abstract gives no relative risk at a specific low BMI, and the curve values in the paper's figures were not read.",
+      "source": {
+        "citation": "Aune D, Sen A, Prasad M, et al. BMI and all cause mortality: systematic review and non-linear dose-response meta-analysis of 230 cohort studies with 3.74 million deaths among 30.3 million participants. BMJ 2016;353:i2156. PMID 27146380; PMC4856854.",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4856854/",
+        "doi": "10.1136/bmj.i2156"
+      },
+      "statedDate": "2016-05-04"
+    },
+    {
+      "id": "rosling-2011",
+      "figure": {
+        "patients": 201,
+        "deaths": 23,
+        "meanFollowupYears": 14.3,
+        "overallSMR": 10,
+        "smrBMIAbove11_5": "about 7",
+        "smrBMIBelow11_5": "above 30",
+        "deathsByCause": { "anorexiaStarvation": 6, "suicide": 9, "other": 8 },
+        "meanLowestBMIOfANDeaths": "10.69 (range 9.1-12.4), as MEED CR233 cites this study; nine AN deaths per MEED vs six per the abstract, a discrepancy not resolved here"
+      },
+      "meaning": "Swedish specialist eating-disorder unit, treated 1974-2000, followed to 2001 in the national Causes of Death Register. Mortality relative to the general population was about 7 times higher above BMI 11.5 and more than 30 times higher below it. The authors suggest stratifying risk in AN by BMI. This is the cohort MEED uses to justify BMI < 13 as high risk.",
+      "source": {
+        "citation": "Rosling AM, Sparén P, Norring C, von Knorring AL. Mortality of eating disorders: a follow-up study of treatment in a specialist unit 1974-2000. Int J Eat Disord 2011;44(4):304-310. PMID 21472749.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/21472749/",
+        "doi": "10.1002/eat.20827"
+      },
+      "statedDate": "2011-05"
+    },
+    {
+      "id": "hebebrand-1997",
+      "figure": {
+        "patients": 272,
+        "sex": "female",
+        "meanFollowupYears": 9.5,
+        "patientsBMIBelow13AtReferral": 100,
+        "totalDeaths": 12,
+        "deathsAmongBMIBelow13": 11
+      },
+      "meaning": "'Eleven of the 12 deceased patients were among these 100 patients' with BMI < 13 at referral. 'A body mass index less than 13 kg/m2 at referral indicates a substantial risk for chronic anorexia nervosa and death related to emaciation.' Crude deaths were 11/100 (11%) below BMI 13 against 1/172 (about 0.6%) at 13 or above, over about 9.5 years. The crude rates were computed here from the abstract's counts.",
+      "source": {
+        "citation": "Hebebrand J, Himmelmann GW, Herzog W, et al. Prediction of low body weight at long-term follow-up in acute anorexia nervosa by low body weight at referral. Am J Psychiatry 1997;154(4):566-569. PMID 9090350.",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/9090350/",
+        "doi": "10.1176/ajp.154.4.566"
+      },
+      "statedDate": "1997-04"
+    }
+  ],
+  "clinicalThresholds": [
+    {
+      "id": "meed-2022-adult-bmi",
+      "figure": {
+        "red_highImpendingRiskToLife": "BMI < 13",
+        "amber_alertToHighConcern": "BMI 13-14.9",
+        "green_lowImpendingRisk": "BMI > 15",
+        "rule": "one or more red ratings, or two or more amber ratings, should probably be considered high risk",
+        "muacProxy": "MUAC < 18 cm approx. BMI < 13 (red); 18-20 cm approx. BMI < 15.5 (amber); > 20 cm approx. BMI > 15.5 (green)",
+        "textRanges": "Low immediate risk to life: BMI 15-17.5; Medium risk: BMI 13-15; High risk of life-threatening malnutrition: BMI < 13"
+      },
+      "meaning": "This is the current UK Royal College of Psychiatrists guidance for adults (18 and over). It replaced MARSIPAN, and its thresholds are, as it says, those of 'the first edition of MARSIPAN for adults'. It rests the BMI < 13 high-risk cut-off on Rosling 2011. BMI is one row of a multi-factor table that also covers weight-loss rate, heart rate, blood pressure, temperature, bloods and ECG. It also says rapid weight loss at any BMI can be high risk.",
+      "source": {
+        "citation": "Royal College of Psychiatrists. Medical emergencies in eating disorders (MEED): guidance on recognition and management. College Report CR233. May 2022 (updated December 2025). Table 1 and 'BMI in adults' section.",
+        "url": "https://www.rcpsych.ac.uk/improving-care/campaigning-for-better-mental-health-policy/college-reports/2022-college-reports/cr233",
+        "doi": null
+      },
+      "statedDate": "2022-05 (updated 2025-12)"
+    },
+    {
+      "id": "marsipan-adult-bmi",
+      "figure": {
+        "lowRisk": "BMI 15-17.5",
+        "mediumRisk": "BMI 13-15",
+        "highRisk": "BMI < 13"
+      },
+      "meaning": "The MARSIPAN adult risk bands, now superseded by MEED CR233, which kept them. MARSIPAN has no 'BMI < 12 very high risk' band. See the 'uncertain' section.",
+      "source": {
+        "citation": "Robinson P, Jones WR. MARSIPAN: management of really sick patients with anorexia nervosa. BJPsych Advances 2018;24(1):20-32. (Summarizing RCPsych CR189, 2nd ed., 2014.)",
+        "url": "https://www.cambridge.org/core/journals/bjpsych-advances/article/marsipan-management-of-really-sick-patients-with-anorexia-nervosa/931F219709E53FC00F7832DD9910F915",
+        "doi": "10.1192/bja.2017.2"
+      },
+      "statedDate": "2018-01 (CR189 2nd ed. 2014)"
+    },
+    {
+      "id": "other-thresholds-cited-in-meed",
+      "figure": {
+        "DSM5_extremeAN": "BMI < 15",
+        "ICD11_6B80_dangerouslyLowWeight": "BMI < 14.0 (adults)",
+        "RANZCP_2014_psychiatricAdmission": "BMI < 14",
+        "RANZCP_2014_medicalAdmission": "BMI < 12",
+        "BritishColumbia_2010": "BMI 13-15 medium risk; < 13 high risk"
+      },
+      "meaning": "These are other published cut-offs as MEED CR233 reports them. They were read in MEED, not in each original source. Among them, BMI < 12 appears only as the Australian and New Zealand college's threshold for medical, not psychiatric, admission.",
+      "source": {
+        "citation": "Royal College of Psychiatrists CR233 (2022, updated 2025), 'BMI in adults' section, citing DSM-5, ICD-11 6B80, RANZCP 2014 and BC Eating Disorders CPG 2010.",
+        "url": "https://www.rcpsych.ac.uk/improving-care/campaigning-for-better-mental-health-policy/college-reports/2022-college-reports/cr233",
+        "doi": null
+      },
+      "statedDate": "2022-05"
+    }
+  ],
+  "foodAssistance": [
+    {
+      "id": "feeding-america-network",
+      "figure": {
+        "foodBanks": "more than 250",
+        "statewideAssociations": "over 20",
+        "agencyPartnersPantriesMealPrograms": "over 60,000",
+        "mealsProvidedFY2025": "5.9 billion (FY = 1 Jul 2024 - 30 Jun 2025; a meal = 1.2 lb of product; includes SNAP meals enabled by Feeding America's application assistance)"
+      },
+      "meaning": "This is the largest US hunger-relief network. Food banks supply local pantries and meal programs (soup kitchens), which give food directly to people. The annual report gives no people-served figure. A search snippet gave 'more than 46 million people each year' from Feeding America materials, but that was not verified on the page.",
+      "source": {
+        "citation": "Feeding America. Annual Report 2025 (fiscal year ended June 30, 2025).",
+        "url": "https://www.feedingamerica.org/sites/default/files/2025-12/FA_25AnnReport_DIGITAL_final.pdf",
+        "doi": null
+      },
+      "statedDate": "2025-12"
+    },
+    {
+      "id": "prwora-nonprofit-no-verification",
+      "figure": "8 U.S.C. 1642(d)",
+      "meaning": "'Subject to subsection (a), a nonprofit charitable organization, in providing any Federal public benefit ... or any State or local public benefit ..., is not required under this chapter to determine, verify, or otherwise require proof of eligibility of any applicant for such benefits.' Charitable food providers are not required by federal immigration-benefit law to check status. Food from private donations, such as churches and individual donors, is not a government benefit at all.",
+      "source": {
+        "citation": "8 U.S.C. § 1642(d) (PRWORA § 432(d)).",
+        "url": "https://www.law.cornell.edu/uscode/text/8/1642",
+        "doi": null
+      },
+      "statedDate": "1996 (in force)"
+    },
+    {
+      "id": "tefap-status-practice",
+      "figure": {
+        "federalDataRequired": "name, number of people in household, address, declaration of income",
+        "immigrationStatusCollected": "not required by USDA guidelines (as of Feb 2025)",
+        "eligibilityBasis": "state-set income and residency criteria; self-attestation form, no ID required federally"
+      },
+      "meaning": "Food banks distribute federal USDA commodities through TEFAP alongside donated food. Until 2025-26, USDA did not require status checks, so in practice pantries served anyone who attested to income and residence. States have latitude, and some ask for ID. This was read from trade press, because the USDA pages returned 403.",
+      "source": {
+        "citation": "Costanzo C. Food Banks and Pantries Seek to Welcome Immigrants. Food Bank News, 10 Feb 2025.",
+        "url": "https://foodbanknews.org/food-banks-and-pantries-seek-to-welcome-to-immigrants/",
+        "doi": null
+      },
+      "statedDate": "2025-02-10"
+    },
+    {
+      "id": "tefap-2026-citizenship-recommendation",
+      "figure": {
+        "status": "federal recommendation; states decide whether to adopt",
+        "scope": "TEFAP (USDA-supplied) food only",
+        "unaffected": "food donated by individuals, churches and community groups"
+      },
+      "meaning": "Under Executive Order 14218 (19 Feb 2025), USDA advised TEFAP state agencies in 2026 to consider citizenship checks for TEFAP food. As of July 2026 this was a recommendation, and states such as Nebraska had not decided. So a destitute undocumented adult can still get privately donated pantry and soup-kitchen food everywhere, and TEFAP food only where the state has not adopted checks. Separately, on 16 Jul 2025 the DOJ withdrew the 2001 order that had excepted community-level in-kind services such as soup kitchens from PRWORA, and chose to except nothing beyond the statute (90 FR 32023, effective 15 Aug 2025). How far that reaches federally funded soup kitchens was not established here.",
+      "source": {
+        "citation": "'Hungry Nebraskans may need to prove citizenship to access federally provided food', KNOP/WOWT (Gray), 16 Jul 2026; DOJ, Revised Specification Pursuant to PRWORA, 90 FR 32023-32026, 16 Jul 2025.",
+        "url": "https://www.wowt.com/2026/07/16/hungry-nebraskans-may-need-prove-citizenship-access-federally-provided-food-food-banks-fear-significant-strain/ ; https://www.govinfo.gov/content/pkg/FR-2025-07-16/html/2025-13318.htm",
+        "doi": null
+      },
+      "statedDate": "2026-07-16"
+    },
+    {
+      "id": "snap-noncitizen-obbba",
+      "figure": {
+        "eligibleAfterOBBBA_s10108": ["U.S. citizens", "U.S. nationals", "lawful permanent residents (LPRs)", "Cuban and Haitian entrants", "COFA citizens"],
+        "noLongerEligible": ["refugees", "asylees / withholding of removal", "parolees (until they become LPRs)"],
+        "lprWaitingPeriod": "generally the PRWORA 5-year bar, with existing exceptions",
+        "undocumented": "not eligible (never were)"
+      },
+      "meaning": "SNAP is closed to undocumented adults and, since the One Big Beautiful Bill Act of 2025 (§10108), to most humanitarian-status non-citizens. Only citizens, nationals, LPRs, Cuban and Haitian entrants and COFA citizens remain. USDA's 31 Oct 2025 guidance was challenged by DC and 21 states on 26 Nov 2025, and the outcome was not checked. Able-bodied adults without dependents also face OBBBA work requirements, whose details were not researched here. This was read from secondary summaries, because the USDA FNS pages returned 403.",
+      "source": {
+        "citation": "One Big Beautiful Bill Act, Pub. L. 119-21 (2025) §10108; USDA FNS 'SNAP Implementation of the One Big Beautiful Bill Act of 2025 - Alien SNAP Eligibility' (memo); Ballotpedia summary.",
+        "url": "https://www.fna.usda.gov/snap/obbb-alien-eligibility ; https://ballotpedia.org/Implementation_of_Supplemental_Nutrition_Assistance_Program_provisions_from_the_One_Big_Beautiful_Bill_Act_(2025)",
+        "doi": null
+      },
+      "statedDate": "2025-07-04 (enacted); USDA guidance 2025-10-31"
+    }
+  ],
+  "uncertain": [
+    {
+      "item": "Henry 1990's own male/female limits",
+      "figure": null,
+      "meaning": "Not confirmed from the 1990 paper. The 13 (men) / 11 (women) / 12 (mean) figures are confirmed only from Henry's 2001 review as ENN summarizes it.",
+      "source": { "citation": "Henry 1990, PMID 2364921", "url": "https://agris.fao.org/search/en/records/65e007af4c5aef494fe7a822" },
+      "statedDate": "1990"
+    },
+    {
+      "item": "Leiter & Marliss numeric figures (days, % weight lost, BMI at death)",
+      "figure": null,
+      "meaning": "No abstract was readable. A secondary summary said mean survival was 61.6 +/- 2.5 days and the limit about 60 days, and another said death comes at 40-50% weight loss (Wikipedia 'Hunger strike'). Neither was verified against the letter.",
+      "source": { "citation": "Leiter & Marliss 1982", "url": "https://jamanetwork.com/journals/jama/fullarticle/379609" },
+      "statedDate": "1982"
+    },
+    {
+      "item": "'BMI < 12 = very high risk' as a MARSIPAN/RCPsych band",
+      "figure": null,
+      "meaning": "Not found. MARSIPAN and MEED have three adult bands with < 13 as the top one. BMI < 12 appears only as RANZCP's threshold for medical admission, as MEED cites it.",
+      "source": { "citation": "RCPsych CR233", "url": "https://www.rcpsych.ac.uk/improving-care/campaigning-for-better-mental-health-policy/college-reports/2022-college-reports/cr233" },
+      "statedDate": "2022-05"
+    },
+    {
+      "item": "Population-cohort hazard ratios below BMI 15 (Western cohorts)",
+      "figure": null,
+      "meaning": "GBMC, PSC and Aune do not report a band below 15, and the only pooled figure found is Zheng 2011's factor of up to 2.8 at BMI <= 15 in East Asians. Below about 13, the only mortality data are clinical anorexia-nervosa cohorts (Rosling: SMR > 30 below BMI 11.5; Hebebrand: 11 of 12 deaths had BMI < 13 at referral) and famine therapeutic-feeding data (Collins). None of them gives a hazard curve.",
+      "source": { "citation": "see hazardBands", "url": null },
+      "statedDate": null
+    },
+    {
+      "item": "Reverse causation in the 15-18.5 band",
+      "figure": null,
+      "meaning": "Aune 2016 and PSC 2009 both say that part of the excess mortality among the underweight comes from pre-existing disease or smoking. GBMC's never-smoker, disease-free, 5-year-lag design is the cleanest estimate available (HR 1.51).",
+      "source": { "citation": "Aune 2016; PSC 2009", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4856854/" },
+      "statedDate": "2016"
+    },
+    {
+      "item": "Rosling 2011: count of AN/starvation deaths",
+      "figure": null,
+      "meaning": "The abstract says 6 died of AN/starvation, while MEED CR233, citing the same study, says 9 died of AN with a mean lowest BMI of 10.69 (range 9.1-12.4). This was not reconciled.",
+      "source": { "citation": "PMID 21472749; RCPsych CR233", "url": "https://pubmed.ncbi.nlm.nih.gov/21472749/" },
+      "statedDate": "2011"
+    },
+    {
+      "item": "Current (Sept 2026) status of TEFAP citizenship checks and of the SNAP OBBBA lawsuit",
+      "figure": null,
+      "meaning": "Which states adopted TEFAP citizenship checks after July 2026, and how the 21-state suit over the USDA SNAP guidance came out, were not checked.",
+      "source": { "citation": null, "url": null },
+      "statedDate": null
+    }
+  ]
+}

@@ -951,7 +951,7 @@ describe('the waking day', () => {
 
   it('says when a short sleep, under six hours, would be tonight’s night', () => {
     // A sleep the player chooses is the night of the day it ends in. The
-    // Sleep dialog suggests three hours at half past eleven before a call at
+    // Sleep dialog suggested three hours at half past eleven before a call at
     // three, and taken, they were up from half past two, at energy 10.9 and a
     // debt of 13.15 by eleven the next night, where moving the clock on
     // instead left 28.4 and 5.17. The dialog says so.
@@ -960,7 +960,9 @@ describe('the waking day', () => {
     sim.advanceTo(next(sim, 23) + 30 * MS_MINUTE);
     const midnight = next(sim, 0);
     sim.schedule({ at: midnight + 3 * MS_HOUR, kind: 'test.call', label: 'An Early Call', category: 'personal', requiresPlayer: true });
-    expect(suggestedSleep(sim).hours).toBe(3);
+    // Two hours, keeping the hour and a half to get up and there: it was three until 2026-09-28, never less, which slept through a call under four and a half hours off.
+    expect(suggestedSleep(sim).hours).toBe(2);
+    expect(sleepStandsForTheNight(sim, 2)).toBe(true);
     expect(sleepStandsForTheNight(sim, 3)).toBe(true);
     // Six hours is not a short night, and a whole one is the night whenever
     // it ends.
@@ -1324,7 +1326,8 @@ describe('migrations and validation', () => {
       // The parts this build has no screen for stay, untouched.
       expect(bag.households).toEqual({ household_000001: { id: 'household_000001', saveId: universe.meta.id } });
       expect(bag.tutorial).toEqual({ seen: {}, dismissed: false });
-      expect(universe.history).toEqual([]);
+      // The history of milestones went on 2026-10-02, and a save that had none still has none.
+      expect('history' in universe).toBe(false);
       expect(universe.meta.schemaVersion).toBe(SAVE_SCHEMA_VERSION);
       expect(validateUniverse(universe).ok, String(from)).toBe(true);
     }
@@ -1337,7 +1340,7 @@ describe('migrations and validation', () => {
     const sim = quickSave({}, 'this-line-83');
     expect(sim.execute({ kind: 'life.sleep', payload: { hours: 8 } }).ok).toBe(true);
     expect(sim.execute({ kind: 'calendar.schedule', payload: { title: 'lunch with mum at the café', at: sim.now + 2 * MS_DAY } }).ok).toBe(true);
-    expect(sim.universe.history.length).toBeGreaterThan(0);
+    expect(sim.universe.scheduled.length).toBeGreaterThan(0);
     sim.universe.meta.schemaVersion = 83;
     // 88 put on every person the moment their waking day began, which no save
     // before it had. This used to pass untouched because the save was written
@@ -1470,11 +1473,10 @@ describe('an older save catches up with the build', () => {
       ...universe.transactions.map((one) => one.id),
       ...universe.scheduled.map((one) => one.id),
       ...universe.notifications.map((one) => one.id),
-      ...universe.history.map((one) => one.id),
     ]);
     expect(onTheRecord.size, 'nothing on the record to collide with').toBeGreaterThan(20);
 
-    for (const ns of ['person', 'account', 'txn', 'sched', 'notice', 'history'] as const) {
+    for (const ns of ['person', 'account', 'txn', 'sched', 'notice'] as const) {
       for (let i = 0; i < 3; i += 1) {
         const id = sim.nextId(ns);
         expect(onTheRecord.has(id), `${id} is on the record already`).toBe(false);
@@ -1511,14 +1513,14 @@ describe('an older save catches up with the build', () => {
     const sim = quickSave({}, 'relabel-prose');
     const universe = sim.universe;
     universe.meta.schemaVersion = 9;
-    universe.history.push({
-      id: 'history_test', saveId: universe.meta.id, at: universe.now,
-      category: 'life', title: 'You were too exhausted to work.',
-      detail: 'A missed shift.', refs: [], significance: 10, public: false,
-    } as (typeof universe.history)[number]);
+    universe.notifications.push({
+      id: 'notice_sentence', saveId: universe.meta.id, at: universe.now,
+      category: 'system', title: 'You were too exhausted to work.',
+      body: 'A missed shift.', importance: 40, read: false,
+    } as (typeof universe.notifications)[number]);
 
     migrate(universe);
-    expect(universe.history.at(-1)?.title).toBe('You were too exhausted to work.');
+    expect(universe.notifications.at(-1)?.title).toBe('You were too exhausted to work.');
   });
 
   it('does not relabel a save that is already current', () => {

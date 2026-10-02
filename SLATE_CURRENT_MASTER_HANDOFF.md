@@ -4,7 +4,7 @@
 **Written for:** Claude Code Account 2, and any later session on either of the owner's two accounts, running on the owner's Windows machine under PowerShell 7. Start with "Start here", below.
 **Repository:** `github.com/yvcbcjhsy7-prog/1221`
 **Working branch:** `claude/slate-cleanup-e4apmx`
-**Verified at:** the handoff commit after the money system (2026-09-24, on Windows): three commits that keep each save in its country's currency (`5e60ce7`), give every character a day job at a real legal floor (`9a12c11`), and make living cost money, with rent, bills, food, a card and a credit record (`1180a04`) (§5, Money). Before them, the background commit (`d731521`), which lets the general interests change how much looking after yourself lifts the mood and asks what somebody did before acting (§5, Interests and background), after the dials commit (`448d68c`), which makes every wellbeing dial decide something (§5, Looking after yourself), after the looking-after commit (`f23ba99`), which gives the player eating, a shower, a workout and an hour unwinding beside sleep (`life.look_after`, §5), after the screenshot fix (`tools/screenshot.mjs` photographs the whole page) and the stale-words commit (`68d7011`), which corrects docs and comments, deletes dead code, and puts the weather decider's sweep on the cities it names (§10), after the Windows hygiene commit (`6d73116`), which changes only tooling and repository settings (§10, Portability). The last commit to change the game is the day's bounds fix (`96ca032`, 2026-09-24; §10): the screens take a day's bounds from the calendar, and a bedtime in the first hour of a day whose clocks skip midnight isn't late. Before it, the spring-forward rollover fix (`7aa9a99`, 2026-09-24): the rollover on the day after a clock change at midnight runs at midnight again. Before that, the fifth review's fixes (`d356640`, 2026-09-23): what the review of `1f75a13` confirmed. Before them, `1f75a13` (the fourth review's fixes) forfeited an unpaid night to a player who keeps them up in it, `0e80f13` fixed what the third review found, `fa24fe4` what the second found, `bd5b2ef` what three reviewers found before `main`, and before that the night-alone fix `4bfa0fa`: a night nobody chose is slept only when the clock carries them through it. Before that, the rollover fix: `7a373c2` charged the waking day as the clock moves (schema 88), and `14c1666` fixed what review found. Those seven reached `main` together by PR #19 on 2026-09-23, with the owner's approval, before the review of the last of them had reported (§0). Before them, the schema-87 commits: `20da24e` moved the save schema from 83 to 87 (§0.4), `f10f1b0` fixed what review found in it, `a5f1f53` corrected the documents and two comments, and `ed0cab7` (PR #18) merged them into `main`. Before those, `36d2cea` ("Fit the new step names, and match Review to them") was the last code commit, and every commit between it and `20da24e` leaves the build alone: `d0636b8` removes an unreferenced scratch file; `acf5e10`, `6c18b6b` and `63b757b` write and correct this file; `beda4d9` brings `CLAUDE.md` over; `ad44f5c` and `297dbfe` correct both files; `4aab498` merges the old `main` in without changing a file; and `cd8d6ef` (PR #17) carries this line into `main`.
+**Verified at:** the merge to `main` of 2026-10-02 (gate 2,493 tests, exit 0; ui-audit 0 problems at four widths); before it, `2247c553` (gate 2,490 tests, exit 0, 2026-10-02); before it, `becf9173` (gate 169 files, 2,260 tests); before it, `a76e05ca` (gate 166 files, 2,245 tests); before it, `34d85a3f` (gate 2,160 tests); before it, `e0ff2dc1` (gate 2,140 tests); before it, `391f5fd2` (gate 2,124 tests); before it, `027c77b9` (gate 2,110 tests); before it, `78ee590` ("give it downstream effects": REAL ID, farm leases, flight compensation, ferries, vehicle theft; gate 2,012 tests); before it, `f5639dd` ("Add it all": vehicle kinds, the dealer and leasing, assistance, stays and rentals; gate 1,983 tests); before that, `3773ab3` (the rest of the open items, 1,921 tests); before that, `4225610` (2026-09-30, the open items closed and boats abroad, gate 120 files and 1,906 tests); before it, `cf3be35` (Stages 7e, 7f and 8c, 1,873 tests); before that, `a742575` (Stage 7d, 1,859 tests); before that, `57d0e86` (Stage 7c, 1,834 tests); before that, `cfcd00a` (Stages 7 and 8, 1,824 tests); before that, `0971e85` (Stage 6, 1,801 tests); before that, `07b223b` (Stage 5 done, 1,790 tests); before that, `1ceb17f` (Stage 5a and land values over decades, 1,780 tests); before that, `dae0897` (Stage 4, land, 1,769 tests); before that, `0525ad8` (fuel, 1,748 tests); before that, `4443668` (every open item closed, Stage 3 and the played lives' fixes, 1,748 tests); before it, `19c013f` (Stage 3, 1,747 tests); before it, `38e9bb1` (Ireland and Mexico at home, 1,694 tests); before that, `10ae864` (a life outside the US and pensions, 1,670 tests); before that, `fe1671c` (Stage 2a, 1,647 tests); before that, `accdb66` (Stage 1b, 1,632 tests); before that, `4e1a2ac` (Stage 1a, 1,610 tests); before that, the handoff commit after the money system (2026-09-24, on Windows): three commits that keep each save in its country's currency (`5e60ce7`), give every character a day job at a real legal floor (`9a12c11`), and make living cost money, with rent, bills, food, a card and a credit record (`1180a04`) (§5, Money). Before them, the background commit (`d731521`), which lets the general interests change how much looking after yourself lifts the mood and asks what somebody did before acting (§5, Interests and background), after the dials commit (`448d68c`), which makes every wellbeing dial decide something (§5, Looking after yourself), after the looking-after commit (`f23ba99`), which gives the player eating, a shower, a workout and an hour unwinding beside sleep (`life.look_after`, §5), after the screenshot fix (`tools/screenshot.mjs` photographs the whole page) and the stale-words commit (`68d7011`), which corrects docs and comments, deletes dead code, and puts the weather decider's sweep on the cities it names (§10), after the Windows hygiene commit (`6d73116`), which changes only tooling and repository settings (§10, Portability). The last commit to change the game is the day's bounds fix (`96ca032`, 2026-09-24; §10): the screens take a day's bounds from the calendar, and a bedtime in the first hour of a day whose clocks skip midnight isn't late. Before it, the spring-forward rollover fix (`7aa9a99`, 2026-09-24): the rollover on the day after a clock change at midnight runs at midnight again. Before that, the fifth review's fixes (`d356640`, 2026-09-23): what the review of `1f75a13` confirmed. Before them, `1f75a13` (the fourth review's fixes) forfeited an unpaid night to a player who keeps them up in it, `0e80f13` fixed what the third review found, `fa24fe4` what the second found, `bd5b2ef` what three reviewers found before `main`, and before that the night-alone fix `4bfa0fa`: a night nobody chose is slept only when the clock carries them through it. Before that, the rollover fix: `7a373c2` charged the waking day as the clock moves (schema 88), and `14c1666` fixed what review found. Those seven reached `main` together by PR #19 on 2026-09-23, with the owner's approval, before the review of the last of them had reported (§0). Before them, the schema-87 commits: `20da24e` moved the save schema from 83 to 87 (§0.4), `f10f1b0` fixed what review found in it, `a5f1f53` corrected the documents and two comments, and `ed0cab7` (PR #18) merged them into `main`. Before those, `36d2cea` ("Fit the new step names, and match Review to them") was the last code commit, and every commit between it and `20da24e` leaves the build alone: `d0636b8` removes an unreferenced scratch file; `acf5e10`, `6c18b6b` and `63b757b` write and correct this file; `beda4d9` brings `CLAUDE.md` over; `ad44f5c` and `297dbfe` correct both files; `4aab498` merges the old `main` in without changing a file; and `cd8d6ef` (PR #17) carries this line into `main`.
 
 This is the one handoff. The owner's `CLAUDE.md` names `SLATE_CURRENT_MASTER_HANDOFF.md` as the only state that passes between sessions; `CLAUDE.md` itself carries the owner's rules. `PROJECT_HANDOFF.md` was retired in `b6f4061`, and keeping a single file stops two handoffs drifting apart. Earlier versions of this file are on GitHub `main` (as of `46f48f3`, 09-18) and, newer, at `4a00db8` (09-21), which is on no GitHub branch. Both describe the line the owner replaced on 2026-09-22 (see §1), so read them only as history.
 
@@ -14,6 +14,681 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
 
+> **Newest of all: "give it downstream effects" (`31d0d98` to `78ee590`).** Midway through, the owner overruled the house rule's use as a reason to leave things out: "If it doesn't have any downstream effects, give it some and that goes for everything that doesn't because engines can be built for these things while also being implemented to run cohesively and logically." So "not kept, by design, because it changes nothing" is no longer an answer. Build the engine that makes it bite, from research. Earlier "not kept" items with only that reason are open again. Research committed: `research-customization.json`, `research-custom-effects.json`, `research-home-contents.json`, `research-home-effects.json`, `research-land-2.json`, `research-travel-2.json`, `research-travel-3.json`, `research-victoria.json`.
+
+**Built:**
+- A boat's antifouling each April while it's kept in the water (`31d0d98`).
+- REAL ID at the TSA checkpoint (ConfirmID's $45 otherwise), the state ID card, and a starting license's REAL ID drawn at its state's published share (`cc9f96d`).
+- Farmland let to a farmer at each place's published cash rent, taxed as rent; a let field isn't ridden, split or joined (`cc9f96d`).
+- Compensation for a flight three hours late under EU261, UK261, the APPR or Mexico's law, where the airline was at fault (`0d37254`).
+- BC Ferries between Vancouver and Victoria, with Victoria's hotels (`78ee590`).
+- Vehicle theft at the published rates, recovered at the published share; full cover pays and liability doesn't (`78ee590`).
+
+**Done on 2026-09-30 since `78ee590`:**
+- The TV, console and speaker; the alarm; winter tires; foreign buyers' taxes; the land loan; construction's retention and certificate of occupancy (`27f8fd33` to `f58756ea`).
+- Canada as an acting market (`4bc6464e`).
+- Locks, lights and timers against burglary (`0a7c05a1`).
+- Electric cars with home charging, and window tint (`254b249f`); Britain's insurance loadings for declared modifications, and a respray, after it.
+
+**Then, the owner: "Build what's unbuilt" (2026-09-30), from `7b2802e9` to `027c77b9`.** Each item was researched, tested, mutation-tested and gated before the next:
+- Leases outside America: Canada's, and a PCP in Britain and Ireland (`a92c3491`).
+- Britain's modifications priced, and California's smog check and abatement fee (`7eff94e7`).
+- A green card, naturalization (a second citizenship, earned, never chosen at creation), and Mexico's foreign buyer permit (`266f4c26`). Federal Medicaid is now a citizen's or a five-year green card holder's.
+- OAS deferral and recovery, charging rewards, and BC's vacancy tax (`6af81cfa`).
+- EI for the self-employed, Ontario's and BC's drug plans, the GIS top-up, BC's Senior's Supplement (`ff8aab9b`).
+- ACTRA's prepaid use, permits, commercials and animation (`a390dc2d`).
+- Airline ID outside America, and the cards (`ab4eb000`).
+- A car on BC Ferries; before it, a drive to Victoria crossed free (`48076b33`).
+- SailRail, and the Irish Sea ferries' passport rule (`053c77a5`).
+- A rider's death risk, and a bicycle stolen in Britain (`8fbebfa7`).
+- A leased car taken back after three missed payments (`027c77b9`).
+
+**Played lives on this code, all with 0 errors and 0 anomalies:** New York (r1) died at 76, worth $1,506,720; London (r2) at 83, $1,850,950; Dublin (ie1) at 94, $47,558. Mexico City (w5) still starves at 32, which waits on the owner's call below.
+
+**Then the WORLD.md sweep, from `2ccd6ed4` to `391f5fd2`.** Each was tested, mutation-tested and gated before the next:
+- Motorcycle licensing (`2ccd6ed4`): New York's MSF course and California's CMSP course beside the tests, BC's Class 8 for a new rider, and a moped on a BC car license. Britain's and Ireland's progressive routes are for riders under 24, so a life never takes them.
+- Sleeping in a motorhome on the street (`d10733bf`): New York City only, up to seven nights. Toronto and Vancouver refuse it under their own bylaws; Los Angeles and London refuse because their rules couldn't be read.
+- A move in a rented U-Haul truck (`b7e740cd`), a standing choice on the Homes screen.
+- A caravan and towing (`391f5fd2`): Jayco in America and Bailey in Britain, towed behind a car whose maker rates it, with its fuel, speed, campground, registration and insurance. Research is in `research-towing2.json`.
+
+**Then the owner: "Keep going until you're completely finished with everything" (2026-09-30), from `bffd0903` to `e0ff2dc1`.** Four research passes are in `docs/research/world/`: `research-sweep3.json`, `research-sweep4.json`, `research-sweep5.json` and `research-mx-acting.json`. Built, each tested, mutation-tested and gated:
+- **Land foreclosure** (`bffd0903`): an unpaid land loan is foreclosed on the home's timings.
+- **Early lease end and buyout** (`3d2b37e4`): the Federal Reserve's constant-yield method.
+- **SNAP** (`b104b15b`): the excess shelter deduction and New York's gross limit. The tests caught a negative net income that paid above the maximum.
+- **Taxes** (`23068b9f`): BC's vacancy tax on a Canadian's empty home, and Britain's VED for vans and motorhomes.
+- **Mexico City pay** (`4bee5ff9`): telenovela, streaming and stage pay from ANDA's tables, which are deposited with the labor registry (CFCRL), where they are public. The real telenovela floor, MXN 2,317 a day, is about half the old estimate.
+- **Campgrounds** (`89b38507`): each night priced by its date. Fixed with it: a motorhome trip to a town without hotel figures was refused.
+- **Medi-Cal** (`0babc913`): California's state-funded Medi-Cal, restricted or full scope, its dental and its premium.
+- **WORLD.md** (`e0ff2dc1`): every remaining item re-researched, with why it stays out.
+
+**Process note:** `npx tsc --noEmit -p .` checks nothing here, because the root tsconfig only references the real ones. Use `-p tsconfig.app.json` for a quick typecheck; the gate was always right.
+
+**Still not kept, each with its reason in WORLD.md:**
+- An ATV on the road, and a trailer to land: the states bar ATVs from roads, and land has no position to drive to.
+- A motorcycle's and a plane's depreciation: no published curve exists. A used 172 holds its price, which is what SLATE does.
+- Horseshoe Bay to Nanaimo: Nanaimo isn't among the 1,391 towns loaded as `CITIES`.
+- An EU carrier's flights and the right to care: SLATE keeps no carriers.
+- Blocked on data: easements (how often a lot needs one), a house's delay, an architect's fee (no Canadian house needs one by law), empty legs, a share of cars tinted illegally, and ACTRA's 3.6% of distributor gross (SLATE keeps no distributor gross). Hotel late check-out changes nothing kept.
+- Mexico City dubbing, film and commercial pay stay estimates: no studio deposited a table.
+
+**Lives played on this code** (`$TEMP/livesK`, all with 0 errors). Each chunk loaded the code as it was then, so the later ones ran with food help:
+- New York r1 died at 76, worth $2,258,678. London r2 at 83, $1,850,950. Dublin ie1 at 94, €47,558. Los Angeles la1 at 95, $9,617,552; all of these had 0 anomalies.
+- Mexico City w5 died at 36 (it was 32), starving from 2032.
+- Toronto t2 died at 91, starving from 2031.
+- Both starve because acting pays below rent there, which is the owner's call on income.
+
+## The Final Master Build Command (from 2026-10-01): start here
+
+The owner's command and its addendum ("unlimited" means the breadth of options within every feature) are the work now. Read `docs/BACKLOG.md` first: fifteen stages in dependency order, with acceptance criteria. Read `docs/AI-INTEGRATION.md` for the built-in assistant: it needs the owner's own Console API key, and their subscriptions can't power it.
+
+Done and gated so far:
+- **Stage 1, possessions** (`0c9a3415`): `systems/items.ts`, `systems/orders.ts` and the Belongings screen. Furniture migrates into items at load, and belongings follow every move.
+- **Stage 2, catalogs** (`bd44d3cb`): `systems/catalog.ts`'s `arrange`, one builder per list in `systems/catalogs.ts`, and `ui/components/Catalog.tsx`. Every buy or book list is cheapest first, on a labeled basis.
+- **Navigation** (`34d85a3f`): the rail's Pinned and Recent groups, and a page pin.
+
+- **Stage 3, clothing, in part** (`e23a218c`): 1,198 real products from 74 retailers in America, Britain, Ireland, Canada and Mexico (`content/clothingcatalog.ts`, rebuilt by `tools/build-clothing.mjs` from the four `research-clothing-*.json` files). The garment is read from its name's head noun. Buying is in a store where SLATE has its address, or online at the retailer's fee, threshold and working days (`systems/clothing.ts`). New York's and Massachusetts's clothing exemptions are applied by item. Returns are unworn, inside the window. Dry cleaning is at real shops' lists (`content/garmentservices.ts`). Outfits are built from what's to hand, and worn-out garments are replaced on a free day. Garments are worn and washed one by one (`systems/wardrobe.ts`), replacing the 14-outfit counter, which a save from before wears into its starter wardrobe. Screen: Clothes, from Home's Home panel. Gate: 157 files, 2,180 tests; 43 mutations, all killed in the end. **Not yet:** alterations and fit (no body to fit, `docs/UNBITTEN.md`), size conversion, repair, resale, and packing into luggage.
+
+- **Stage 4, food** (`b1bd404b` and the commit after it): real restaurants and their menus in the eight towns, at a table, taken away or delivered, with each town's meal tax, the tip and a delivery app's fees (`systems/dining.ts`, `content/restaurants.ts` built by `tools/build-restaurants.mjs`); a pint at a bar, Widmark's blood alcohol, a hangover, NHTSA's crash risk on every drive and each jurisdiction's first offense when stopped (`systems/alcohol.ts`, decider `alcohol.arrest`). Screen: Food. Then 4c: groceries as food items with FoodKeeper shelf life (512 products, 9 chains, `content/groceries.ts` built by `tools/build-groceries.mjs`), 44 recipes cooked from stock with leftovers, the day's meals taken from what's ready before groceries are bought, and a drink at home (`systems/kitchen.ts`, `systems/pantry.ts`). (`8d3ab15d`).
+- **Stage 5, done** (`6e5bc091`, `ac00442c`): routines (`systems/routines.ts`); toiletries used up at weighed-use amounts, restocked on a free day, and 37 named barbers and salons (`systems/hygiene.ts`). The routines commit says 160 test files; the gate ran 161.
+- **Stage 13, in part** (`63cf7d3d`, `f982b053`): a fitting before screen work, paid by each union's rule, and an actor's own outfits lent at the union's allowance (`systems/fittings.ts`, `FITTING` in `systems/career.ts`); the Primetime Emmys and BAFTA Film, at the odds their published fields give, lifting recognition (`systems/awards.ts`, decider `awards.vote`). The other bodies publish fields of films or productions, not performances, and aren't modeled; negotiation and press are researched, not built.
+- **Luggage** (`faa55603`): every change of town goes through `moveTo` (`systems/luggage.ts`), which packs a carry-on with a week's clothes and the toiletries on leaving home and unpacks it on coming back. Until then a life on location had nothing to wear and no toothbrush every day away.
+- **Stage 9, in part** (`a76e05ca`): care at 35 named providers, their own doctor where chosen, an uninsured urgent visit at a provider's self-pay price (`systems/clinics.ts`). Booking with waits, referrals and pharmacy prices are researched (`research-health-visits.json`), not built.
+- **Stage 11, in part** (`8dc8eb7b`): utility setup charges where providers publish them, and power cuts at each distributor's published rate spoiling the fridge past four hours (`systems/utilities.ts`, decider `utilities.outage`).
+- **Stage 6, in part** (`1bde1b5b`): 28 named hotels, 327 rooms, each at its own booking engine's rates for three nights read with Playwright (`systems/hotels.ts`, `tools/build-hotels.mjs --reduce` from the raw capture); Marriott, Hilton and Hyatt refused the read.
+- **Stage 7, in part** (`6d03e264`, `becf9173`): stores sell in their own opening hours (`systems/errands.ts`); diesel at diesel's price, which had been charged at petrol's in America, Canada and Mexico City.
+- **The guide caught up** (`1511ed1a`): the Home and Career chapters said nothing about the clothes, food, routines, fittings and awards they opened; each now has a paragraph. The Travel chapter now names hotels by name.
+- **Stage 8, in part** (`f0b67fe1`): a driven car needs unscheduled repairs at RepairPal's 2026 rate for its model or make, severe at its share; an ordinary one at CarMD's $554.01, a severe one at three times the annual cost. A severe fault stops the car, a lit light fails New York's, Connecticut's and California's computer-read inspection, and either lowers the car's value. AAA's upkeep now has the expected repairs taken out of it. 28 named garages, a dealer for its own make only, booked in their own hours (`systems/repairs.ts`, `content/carshops.ts`, decider `vehicle.fault`). Not built: scheduled servicing, loaners, wraps, upholstery, audio, wheel fitment, the tint and lowering laws (`research-vehicle-shops.json`, which also corrects the NCT to €60 and California's lowering law as repealed).
+- **Stage 10, two parts** (`3be73e11`, `5a686a49`): the people a life knows, the Yale class at the degree and a castmate from each job, named as their country names people (`content/people.ts`, decider `social.person`). Invitations to a meal or home are answered with a stated reason, and Hall's hours make friends. Living alone is in the life table at Holt-Lunstad's 1.32, spread so the table stays everybody's. A partner: asked out, a couple from the ninth date, moving in with the rent and bills split evenly, breaking up. Both of the backlog's acceptance tests pass. Screen: People. Not built: dating apps, marriage, divorce, children (`research-relationships.json`).
+- **Stage 12, in part** (`6ce34e56`): a tennis court in seven surfaces and a half basketball court at Fixr's prices on the lot each needs, with lights; Play On Your Court by day or under lights at the 2024 Compendium's METs (tennis 6.8, shooting baskets 5.0); tennis upkeep $1,800 a year. Pickleball isn't built: the adult Compendium gives it no MET. Not built: rooms, finishes, special rooms, beds, fields, permits (`research-facilities.json`).
+- **Stage 12, beds** (`63da5f50`, names fixed in `6ea353bf`): IKEA frames and mattresses by each market's sizes; a mattress fits only its own size and market, so a British bed in America takes none sold there; a bed under 120 cm sleeps one, and a partner won't move in to it.
+- **The gate's blind spot, closed** (`6ea353bf`): title-case, label-sweep and cohesion listed files with `git ls-files`, so a file not yet committed was never swept by the gate meant to let it in. Beds passed that way with 32 lower-case names. They now list untracked files too.
+- **Stage 13, press** (`7fe5f858`): a press day the week before a studio film opens or a series airs, for its weekly performers only (SAG-AFTRA's day performers owe none), four unpaid hours as ACTRA's minimum, in the trades when kept.
+- **Stage 11, gyms** (`18f47d9f`): 22 named gyms in the eight towns at their own fees, terms and hours, taxed as each place taxes them (`content/gyms.ts`, `systems/gyms.ts`, panel on Routines). A member's gym trains as a gym does and its pool can be swum in.
+- **Gate at `18f47d9f`:** 2,306 tests, exit 0.
+- **The owner, 2026-10-01: "We'll do 14 last, let's finish the next 11 in full."** Every stage but 14 is to be finished in full, 14 last. Research for what was left was read the same day: `research-hired-services.json`, `research-clothing-services2.json`, `research-construction-process.json`, `research-household-economics.json`.
+- **Stage 7, done** (`50743fa0`): Run Errands, a trip of up to eight stops on foot or by car with somebody along; legs at the NHTS's and NTS's average trips and TomTom's traffic; fuel at a named station; meters by the minute; errand kilometers off the month's driving (`systems/trips.ts`).
+- **Stage 10, done** (`171ef3cc`, `080fa305`): a partner's own pay from their country's earnings; bills split evenly or by income; marriage, divorce and a married person's tax in each country (`systems/marriage.ts`); children, from conception at PRESTO's odds to eighteen, with the birth's cost, leave pay, the cost of raising and each country's child benefit and America's credit (`systems/children.ts`); Tinder and Hinge (`systems/dating.ts`). Not kept: adoption and surrogacy, custody, caring for parents.
+- **Gate at `080fa305`:** 2,343 tests, exit 0.
+- **Stage 3, done but for three things** (`0a72e420`): clothes fit the weight they were bought for, within a size's step; one grown out of is bought again; one too big is taken in at one of 11 named tailors at its price and days (`systems/tailoring.ts`). Not kept: the size label and its conversion, repair, resale.
+- **Stage 6, done but for requests** (`178f9357`): a named hotel's own check-out hour, its deposit held from arrival to check-out, its parking, a night more at its rate, and the folio on Travel.
+- **Stage 8, done but for four things** (`2e223352`, `5db02ce1`, `a8a1401f`):
+  - A wrap at three named shops, with cover changed after buying and Britain's £53.25 fee.
+  - Servicing by each maker's interval, at each market's chain price. A service a month or 1,000 km overdue is missed for good, voiding the warranty and taking 10% off a British car's worth.
+  - The maker's warranty: a fault repaired free at a dealer of the make.
+  - Collisions at ISO/Verisk's 4.16 a year in 100 cars, at each place's average claim. Full cover pays over a $500 deductible, and damage past the car's worth writes it off (`systems/carcare.ts`, decider `vehicle.collision`).
+  - While the car is in the shop: the dealer's published loaner, or a rental on the airport desk's terms, back the hour the car is ready, driving errands and Travel's By Rental (`systems/standin.ts`).
+  - Not kept: upholstery (no named shop in the towns), audio (no head-unit price kept), wheel fitment (alloys are sold fitted to their car), labor rates (one shop posts them).
+- **Stage 9, more** (`0a9c82bd`, `333369e4`):
+  - An emergency keeps you the department's median hours.
+  - A US pharmacy chosen fills generics at its own cash price.
+  - Travel insurance at each home market's price (`systems/travelinsurance.ts`):
+    - A trip missed or called off in hospital or laid up is paid back, to its limit less its excess.
+    - Care in another country is the insurer's.
+    - Uninsured, a visitor in America pays America's own price, less OHIP's out-of-country day rates for an Ontarian.
+  - Not kept: booking with waits and specialist referrals. GP waits aren't published in Ireland, Canada or Mexico City, and none of SLATE's conditions maps to a specialist without inventing one. A visitor's price outside America isn't kept either.
+- **Stage 11, more** (`6e76bd18`, `bcaf242f`):
+  - In the eight towns, the internet and phone are billed by named providers (`systems/telecom.ts`). An offer runs its months, then its published standard price; a room pays half the internet; switching owes a contract's months left; the phone is the country's cheapest plan, Mint's a year ahead. The atlas's telecom estimate comes out of the bills there.
+  - A letting agent in six towns, at its published fees (`systems/propertymanagers.ts`). Let yourself, a tenant moves in only while you're in town; an agent lets it while you're away.
+  - Not kept: electricity, gas and water by tariff (SLATE keeps no kWh or cubic meters), gardeners, chauffeurs, instructors and trades (nothing yet reads what they'd change).
+- **Gate at `bcaf242f`:** 2,390 tests, exit 0.
+- **Stage 12, done but for its list** (`de1b29ba`): a spare bedroom made a home gym, which trains as a gym does and lets for a gym's premium; a pool, a deck or a detached garage taken out, the pool's upkeep with it, a removed part no longer wearing. Not kept, each for want of a published rate or of anything SLATE reads: fields, floors and finishes, an architect's fee (no scale, only a rule of thumb), bids, change orders, overruns and lateness (only the share that ran over is published, never by how much), a failed inspection (no first-time failure rate anywhere), weather days (SLATE's wet days aren't calibrated to a contract's 0.10-inch days).
+- **Stages 13 and 15, closed** (`18f8d538`): no counteroffer over scale, nothing publishing how often one is met or an agent's increment; the walkthroughs' every step not working says what's built or why not.
+- **Gate at `18f8d538`:** 2,393 tests, exit 0.
+- **Lives replayed at `5de9dacc`** (seeds `death-1` in New York and `death-ldn` in London, modest; not the seeds of the earlier replays, which the handoff never named, so not comparable to them): New York died at 89 worth $4,874,860; London at 50 worth £46,704, a sudden death on the life table's draw in a steady life (its last year: pay about £30,000, condition 91, stress 0, treated hypertension, BMI 29, driving since 2046). 0 errors and 0 anomalies each. Run from `../slate-lives` with `probe/chunk.sh` in a background loop; the old `runlife-wt.sh` is gone.
+- **Data gaps, from 2026-10-02** (`docs/DATA-GAPS.md`): the owner asked for something to get the numbers the left-out items wait on. Each gap now lists the open dataset that answers it, or that none does. Tools in `tools/data/` compute a figure from raw data and write it with its source to `docs/research/world/derived-*.json` and to `src/engine/content/`:
+  - `wetdays.mjs`: NOAA days over 0.10 inch, so a build is held up by a wet stretch (`7a39a948`).
+  - `inspections.mjs`: LADBS's inspection results, so a build's inspection can fail (`3695d2b2`).
+  - `energy.mjs`: each country's household energy survey and price index, so energy is at 2025 prices and Mexico City's no longer runs four times too high (`e60bf3b2`). It uses `xlsx.mjs`, an unzip-based spreadsheet reader.
+  - `imss.mjs`: the IMSS's charges to non-members.
+  - Hand-read, where the source refuses scripts:
+    - England's visitor charging (`20149a95`).
+    - The Ontario, BC and Irish hospitals' charges to visitors (`652c64b5`).
+    - Pickleball's 4.1 METs (`142c88f6`).
+  - Every row of `docs/DATA-GAPS.md` now reads Got; what each still leaves out is said in its row.
+- **"Complete those in left out" (the owner, 2026-10-02), done** (`c7261cf4` to `2247c553`). Research first, in six files: `research-gaps-family.json`, `-construction.json`, `-cars-clothes.json`, `-hotels-health.json`, `-services.json` and `-awards-negotiation.json`. Then one gated, mutation-tested commit a module:
+  - Adoption and surrogacy by place, with America's credit (`7d3c9cd6`). Child support by each place's formula, including Connecticut's schedule read from its PDF by `tools/data/ctsupport.mjs` (`b083e7cc`). Parents who age, die and need care (`396b67b9`).
+  - Health: GP access and the emergency department by country and province; Scotland's visitors; a Toronto walk-in (`365edf51`).
+  - A personal trainer at a trial's measured 37% (`32cc2b29`).
+  - Ask For More on an offer, at a field study's 85% met and 12.45% raised; offers below a series regular stand (`2690b696`).
+  - The Academy Awards, the Tonys, the Oliviers and the Ariels (`c3351b05`). The Academy's field is counted from its Reminder List. The other three are derived from eligible productions and a published cast size, and labeled as proxies.
+  - A late check-out at the five hotels that publish its price. Checked out and leaving that day, the room is gone (`a447a0d5`).
+  - Construction (`2b9982b9`):
+    - Home works sign the cheapest of three bids within Checkbook's spread.
+    - They run late at Clever's 48% and Toolstation's 24%.
+    - They come in over at Angi's 43% and Toolstation's 55%.
+    - A new house pays for its plans, an architect's where New York's law asks one.
+    - An American house carries CoConstruct's $29,251 of change orders.
+  - Cars (`ee1543bc`): a used car has a fault at the AA's seven in ten, and a pre-purchase inspection reports it. A CarPlay stereo is paid for under full cover when the car is lost, to the insurer's cap.
+  - Clothes (`494beae2`): sold on Vinted, in a ThredUp bag or on Kijiji; sneakers wear out at six of 400 miles a run.
+  - A lawn grows in the town's season, mown by hand or by a named gardener. Toronto's 20 cm and New Haven's foot are enforced (`25cfb2af`).
+  - Electricity billed by each town's tariff for the days someone was home, against the atlas's typical month (`2247c553`). Mexico City's isn't; gas and water stay in the atlas's money.
+- **Gate at `2247c553`:** 2,490 tests, exit 0.
+- **Lives replayed at `ca7e52a1`** (seeds `death-1` in New York and `death-ldn` in London, modest, as at `5de9dacc`): New York died at 89 worth $4,878,945 (at `5de9dacc`, $4,874,860); London at 50 worth £47,054 (£46,704). 0 errors and 0 anomalies each.
+- **"Reads, bites, nothing decorative; the drill-down throughout; the UI and navigation; everything buildable" (the owner, 2026-10-02).**
+  - **The drill-down reaches every screen.** 49 look kinds (23 before), every screen wired: job, part, agency, manager, award, contact, child, parent, gym, trainer, routine, home, listing, parcel, item, garment, vehicle, journey, hotel, restaurant, bank, transaction, document, school, course and skill. `tests/looks.test.ts` plants a lived life in its world and crawls every kind. The Calendar's read-only modal went: an entry's words open looks, and the modal stays only behind Call It Off.
+  - **Navigation.** Every screen stays on Home, by the owner's word ("keep everything on the home page but in a perfect way"). Home lays its panels out in the five groups the screens' eyebrows name (`groupLabelOf` in `ui/shell/destinations.ts`). People, Food, Clothes, Routines and Belongings are panels of their own, each with live figures; the Home panel carried them as five buttons in its corner. `/` opens the rail's search from anywhere. For part of the day the rail carried every screen; that was reverted.
+  - **Alignment, at the shared component.** A quiet button (`.btn-ghost`) is its words with no box and no side padding, so they start where the line above starts. A table's first column starts on the panel's edge. A grouped panel stacks its title and button the same way. `tools/ui-audit.mjs` walks Home and every screen at four widths now (it stopped at creation before) and reports 0 problems. `tools/drill.mjs` answers the birthplace and reads the guide (it was stuck at creation); a full walk now takes more than ten minutes.
+  - **What was dead, settled** (`docs/UNBITTEN.md`, "Settled on 2026-10-02"): a garment's size label decides fit (`sizeFor`, `fitKgFor`); the history of milestones went with `core/audit.ts`; reduced motion, `Person.wearing`, a build's two counts, a land deal's and an order's dates went; a reversed debit's back-link is read; five screens read engine constants where they typed them. What a player chooses and only sees is recorded as such.
+  - **Creation:** height and weight moved from Identity to Starting Point, as Your Body Today. "Get A Place Of Your Own" reads "Rent A One-Bedroom", with the cost to move in; buying is Homes.
+  - Not built, each because it would change nothing: booking waits for a GP (a visit takes nothing from the body), and gas and water by tariff (heating runs while you're away; no typical water use is in the research).
+- **What's left:** Stage 14, with the owner's Console API key (`docs/AI-INTEGRATION.md`).
+- **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
+- **Stage 14** needs the owner's API key.
+- **Stage 15, in part** (`71e9dbb5`, `dbfe58bd`): `docs/DEVMAP.md`, built and checked by `tools/devmap.mjs` in the gate; `docs/WALKTHROUGHS.md`; the rail's search; panel actions wrap inside their card.
+- **Lives replayed on 2026-10-01** against Stages 3 to 5: New York died at 76 worth $1.13M, London at 83 worth £2.77M, 0 errors and 0 anomalies each. New York's clothing over its life came to $34,003, about $650 a year.
+
+In progress:
+- **Stage 6, hotels.** `research-hotels.json` (43 hotels, 162 rooms) has no dated rates: booking engines render them in JavaScript.
+
+Standing memories that bind this work: catalogs cheapest first; acting is the only career, with hired services allowed; "unlimited" means breadth of options.
+
+- **Blocked on data, with the reason in WORLD.md:** easements; hotel early check-in and late check-out fees; a construction delay's share; an architect's fee; a plane's depreciation; empty legs; ending a lease early; ACTRA's 3.6% share of a distributor's gross; a share of cars tinted illegally.
+
+**The owner's call, still open:** income outside acting for a life abroad.
+>
+> **Earlier: "Add it all" (`97ee85e` to `f5639dd`).** The owner asked what from the world-simulation spec hadn't been added, then said: "Add it all and don’t stop until its done." This box covers the nine commits since `3773ab3`. Each module was researched, tested, mutation-tested and gated before the next began. Research is in `docs/research/world/`: `research-stays-rentals.json`, `research-documents-safetynet.json`, `research-welfare.json`, `research-car-buying.json`, `research-vehicle-kinds.json`, `research-vehicle-insurance.json` and `research-kind-effects.json`.
+
+**Built:**
+- **Boats and planes, as many as the bank allows** (`97ee85e`): `boatsOf` and `planesOf` lists, each with its own loan and sale. Old saves move their one boat or plane into the list.
+- **Kinds of stay** (`acdbe9b`): motels, budget hotels, extended-stay suites and hostels where read; flexible and prepaid rate plans; a missed night's refund; hotel parking; a round trip by one's own car.
+- **Rentals** (`f1c2658`): a rental's class, by Kayak's prices at each airport, and the borders it may cross (US to Canada yes, US to Mexico no).
+- **Assistance** (`38673bd`, `bf2b37f`): Ontario Works, BC Income Assistance and SNAP onto an EBT card, at their published rates, limits and earnings rules. This is the Canadian safety net the Toronto life below lacked.
+- **At the dealer** (`88913a7`):
+  - A new American car sells 3.4% below its sticker (KBB, August 2026).
+  - The dealer's documentation fee: New York's and California's caps, Connecticut's average.
+  - An American lease at Toyota Financial Services' published terms: returned, or bought out at its residual.
+- **Motorcycles and scooters** (`54d8893`):
+  - 36 models, taxed and insured by engine size.
+  - The motorcycle license, a second track through the car's licensing code, on the same card.
+  - A rider injured at NHTSA's 391 per 100 million miles against a car occupant's 86.
+- **Motorhomes, campervans and vans** (`758de97`): a campground on a trip in one's own motorhome, at the region's named park; a move in one's own van instead of the movers.
+- **Bicycles, e-bikes and ATVs** (`f5639dd`): Go For A Ride, and Ride The ATV on acreage one owns.
+
+**Gate at `f5639dd`:** 1,983 tests. Every mutation was killed, or its survivor made into a test or a removed guard.
+
+**Still to build from the owner's spec,** each needing its research read first. Most of it is already in the scratchpad or `docs/research/world/`:
+- **Customization:** tint's legal limits, wraps, wheels, audio, accessibility, performance, and what insurers must be told.
+- **A home's contents:** IKEA by market, lighting, flooring, kitchens, baths, entertainment, security with its insurance discount, pools, an EV charger, and each item's life and effect.
+- **Construction choices:**
+  - Professionals' fees, cost by spec, NAHB's line items and Cost vs Value.
+  - Site work, demolition, multi-unit and condominium, retention and payment schedules, occupancy.
+- **Land:**
+  - Commercial land, agricultural values, a waterfront premium, islands.
+  - Utilities and connection, easements, land loans, deposits, leasing land out.
+  - Foreign ownership: Canada's ban to 2027-01-01, Mexico's fideicomiso.
+- **Travel:**
+  - Ferries, local transit's fares and caps, walking, taxis against rideshare.
+  - The airport's steps, missed connections, compensation (UK261, EU261, APPR) and bag fees.
+- **Documents:** national and state ID cards, the REAL ID rule, residence documents, title records.
+- **Canada as an acting market (done 2026-09-30):** Toronto and Vancouver are career cities, with ten Canadian agencies at 15%, the IPA's and the BCMPA's own rates, the Canadian Theatre Agreement's, ACTRA's apprentice and membership and its dues, and Casting Workbook. Two fixes came with it: a Londoner's own British work was withheld as a visitor's, and any non-SAG-AFTRA job, London's and Dublin's included, joined American Actors' Equity. Still not built: ACTRA's use fees and residuals, commercials and voice, UBCP's own fees, and a non-member's permit fee.
+- **Leftovers:**
+  - Fixed (`2e4babc`): the Career screen showed every actor America's agencies. It now lists the agencies of the country the actor works in.
+  - Rerun the played lives one at a time. Toronto w4 hasn't been rerun since assistance was built.
+
+**The owner's call, still open:** whether a life abroad gets some income outside acting. Mexico City's w5 life still starves at 32, because Mexico City acting pays less than a shared room and there has been no day job since the owner removed it on 2026-09-26. Nothing has been built for it.
+>
+> **Earlier, 2026-10-01: the rest of the open items (`d8227e3` to `3773ab3`).** The owner: "Finish any and everything in open, and don’t stop until you’re done." Six research files were committed with the work: `research-land-construction-2.json`, `research-aviation-boats-credit-mot.json`, `research-rentals-lets-charters-2.json`, `research-home-lodgers-movers-2.json`, `research-boats-ireland-border.json` and `research-open-final.json`.
+
+**Built:**
+- A car and driver between towns, at each city's company's hourly rate and minimum (`d8227e3`, `CHAUFFEURS` in `journey.ts`).
+- Land (`f31caffd`):
+  - A split's fee, from each authority's own schedule, and Ireland's map for the new site.
+  - At closing: a boundary survey (New York, Connecticut), a topographical survey (England), California's escrow, Ontario's lawyer and British Columbia's notary.
+- Conversions and construction (`6967aaf`):
+  - London's building control on a loft, a garage made a room and a basement.
+  - Builder's risk on an American build, and a structural warranty on a London one.
+  - The MOT failing by the car's age, 10.7% to 30.5%.
+  - A Canadian credit mark leaving the record after six years.
+- Travel (`44ad54a`):
+  - A damage waiver, taken or declined, in New York and Los Angeles. Declined, a crash owes the repair.
+  - JFK's concession fee and facility charge.
+  - Charters in Vancouver and from Howth.
+  - A jet within Ireland and Mexico, and across the Britain–Ireland and America–Mexico borders.
+  - British Airways' and Aeroméxico's change fees.
+  - A compact select, `.select-sm`, sized like `.btn-sm` for a choice inside a table row.
+- Home (`4fa37f9`):
+  - Portable washers and dryers priced in Britain, Ireland, Canada and Mexico.
+  - Central air adding 72.1% of its cost to an American house's value until it gives out.
+  - Movers between every pair of the five countries.
+  - A lodger's room taking its share of the home's costs on the American return (Publication 527).
+- Aviation (`41a344e`):
+  - Each license abroad's own medical, renewed on its country's terms; a lapsed one grounds its pilot.
+  - Training in Mexico.
+  - A plane taken back after three missed payments, sold after ten days, with the shortfall owed.
+  - Ontario's trailer winterizing.
+- Boats (`fe3c274`):
+  - A Dubliner's boat: the Cap Camarat at a Dublin dealer's €56,100, with no license or registration, kept at Dún Laoghaire.
+  - A boat carried across the US–Canada border when its owner moves: a settler's effects into Canada; into America free of duty under USMCA, with Connecticut's 2.99% and California's rate within a year of purchase.
+  - A financed boat repossessed under Ontario's PPSA.
+- The last researched gaps (`3773ab3`):
+  - Mexico's credit marks by the debt's size in UDIs (Banxico's tiers).
+  - A jet between America and Canada, with IRC 4262's 225-mile zone.
+  - Renovation permits in Toronto, Vancouver and Mexico City.
+  - Ontario's title insurance (TitlePLUS).
+  - Pearson's damage waiver.
+  - Volaris's change fee within Mexico.
+
+**Not kept, by design, each with its reason in `docs/WORLD.md`:**
+- A Phase I assessment.
+- Tint, exhaust and lift work.
+- The rest of a home's furniture.
+- A basic economy ticket.
+- A one-way drop fee.
+- An empty leg.
+- England's Right to Rent check.
+- A mark's fading by kind: FICO's recovery times would count again the months paid on time that SLATE's score already climbs back with.
+
+**Gate at `3773ab3`:** 120 files, 1,921 tests. Every mutation was killed, or its survivor made into a test or a removed guard.
+
+**Played lives:**
+- New York on `d8227e3` died at 83, with 0 errors and 0 anomalies.
+- London on `41a344e` died at 97, with 0 errors and 0 anomalies.
+- Toronto on `3773ab3` (seed w4) died at 35, with 0 errors and 1 anomaly: starvation from 2032. The same seed on `d8227e3`, where this session began, dies the same way with the same figures, so none of this session's work caused it. It is a gap nobody had recorded: an actor out of work in Toronto claims nothing, because SLATE pays unemployment only in New York, California and Connecticut. They lose the shared flat for a sofa in 2033, and their weight falls from 64 kg to 36. **Next module:** Canada's safety net, Employment Insurance (its hours test and weekly rate) and Ontario Works. It needs its own research first.
+- The owner asked for lives on the final code. Mexico City on `3773ab3` (seed w5) died at 31, with 0 errors and 2 anomalies: starvation from 2031, and tax owed more than a year after filing. The same seed on `d8227e3` gives the identical death and figures, so it predates this session. The life is a Mexican-born actor in New York who applied for OPT in 2029. OPT runs a year for an acting degree, and they stayed on without work authorization. In 2032 they booked 6 jobs and were paid for none. They lost the flat and starved. SLATE already offers work after OPT (WORLD.md, 2026-09-29), but this played life didn't take it. **To decide:** whether `probe/play-to-death.ts`'s player should act on OPT ending, or the engine should make an out-of-status life leave or stop booking unpayable work.
+- **Settled on 2026-10-01 (`b6183c8`), at the owner's word, "do whatever perfect for the foreign born graduate part":** a graduate's US status and its end (WORLD.md, Stage 1b). The same Mexico City seed on `b6183c8` now goes home to Mexico City in 2030 and books 5 jobs there in 2031, worth MX$14,085. It still starves at 31, from March 2032, for a different reason. WME, its American agency, drops it in September 2031, and no Mexican agency signs it until December 2033. Auditions fall from 76 a year to 9. The Seguro de Desempleo is sourced as once in a life, and SLATE has no day job since the owner removed it on 2026-09-26. **Next to look at:** how an actor come home is found by a local agency (`represent` and the offers in `systems/career.ts`), since 27 months unrepresented in the capital of Mexican television isn't how the business works.
+- **Then writing to the agencies (`5bcf260`).** On it, the w5 seed is represented again a month after WME drops it (LOOK Management, October 2031; Talent On The Road after that), and its auditions climb back to 92 a year. It still starves, now at 32, from June 2032: six Mexico City bookings in 2033 paid 1,399 in all, at SLATE's scaled estimate of ANDA's rates, which is less than a shared room in the city costs. With no day job (removed at the owner's word on 2026-09-26) and three months of the Seguro de Desempleo, an acting-only life in Mexico City can't pay its way. **This is the owner's call**: bring back some income outside acting for a life abroad, or keep acting-only and let it be as hard as it is.
+- New York, London and Dublin were also started on `3773ab3`. Claude Code stopped all three when the machine ran low on memory, so none of them finished. Run them again one at a time rather than in parallel.
+
+**A trap worth knowing:** `npx tsc -p . --noEmit` checks nothing here. The typecheck is `tsc -b` (`npm run typecheck`), which also covers the tests.
+
+**Still open, and why** (`docs/WORLD.md` has each line):
+- A lodger's use of the bills: DESNZ's figure is confounded by home size.
+- How long a room sits empty, and a holiday let's claim sizes: nobody publishes them.
+- No authority publishes an overrun, delay or first-inspection rate for building.
+- HomeBond's price in Ireland is unpublished.
+- What a built-in dishwasher adds to a home's value: nobody publishes it.
+- A repossession's ferry flight and storage: nobody publishes them.
+- A mattress's wear on SLATE's own terms.
+- Surveys in California, Ireland and Canada, and title insurance in British Columbia: no firm prints a price.
+- British Airways' long-haul change fee: ba.com refused to be read.
+- Tweed's concession charge, and damage waivers in New Haven and Vancouver: nobody publishes them.
+- A loft or a garage made a room in Toronto: the interior-alteration index wasn't read.
+- A boat carried between Britain and Ireland: neither country's relief was read.
+- Whether California credits Ontario's HST.
+>
+> **Earlier, 2026-09-30: the open items, closed where published (`eb1e7f4` to `f132d67`).** The owner: "Finish all those in open." Five research files were committed first (`research-lodgers.json`, `research-charter-abroad.json`, `research-credit-damage-movers.json`, `research-land-construction.json`, `research-travel-aviation-boats.json`).
+
+**Built:**
+- The drives to and from the airports for a flight of one's own or a charter (`eb1e7f4`).
+- **6d, lodgers** (`a996855`, `systems/lodgers.ts`): a spare bedroom let at each town's room rent, up to two. Taxed as each country taxes it: America's return, Britain's £7,500 Rent a Room Scheme, Ireland's €14,000 Rent-a-Room Relief, which is lost whole once passed.
+- A tenant's countertop dishwasher, portable washer and compact dryer (`5755770`).
+- Credit marks leave the record after America's seven years, Britain's six or Ireland's five, giving back the CFPB's measured 25 points (`4f2002a`, `markRecord`).
+- Movers in Ireland and between five pairs of countries (`5990e97`).
+- Boat charters from Marina del Rey, on the Thames and in Toronto (`eafed14`).
+- A plane on AOPA Finance's terms, the FAA medical and its renewal, and no visual flight in fog or a thunderstorm (`b37ef74`).
+- A mattress's wear and its replacement (`1620036`).
+- A holiday let's damage claim, at Airbnb's 0.02% of reservations with $1,000 or more (`9d6f0cd`, decider `travel.let_damage`).
+- A boat's Northeast winter (laid up November to April, stored or winterized) and a boat loan in default, under each state's law (`33b142e`).
+- Aer Lingus's and Air Canada's change fees for staying longer abroad (`0b7f497`).
+- Land's title insurance (TIRSA, CATIC, Old Republic) and the lawyer (`28087e7`).
+- A construction loan that becomes the house's mortgage (`8c6083d`).
+- London's building control on an extension, and Ireland's commencement notice (`aff2417`).
+- A light jet chartered within Britain or Canada (`80949a4`).
+- Learning to fly and flying oneself in Britain, Ireland and Canada, each country's own licence (`568c01b`).
+
+**Defect found and fixed:** every trip home was charged a hotel night too many. The 11 AM check-out found the traveler still in town, or on the way, and billed another night (`9a55999`).
+
+**Settled without code:** an appliance adds nothing to a home's value (Fannie Mae), which SLATE already did (`f132d67`). Rental fees were already on LAX's quote, and no other rental SLATE keeps prints one or incurs a one-way fee.
+
+**Gate at `f132d67`:** 120 files, 1,904 tests. Every mutation was killed, or its survivor made into a test or a removed guard.
+
+**Played lives:** London on `ec4b5c0` died at 97, 0 errors and 0 anomalies. Dublin on `f132d67` died at 75, 0 errors and 0 anomalies.
+
+**Then boats abroad** (`4225610`, `research-boats-abroad.json`): a Jeanneau in London, taken out with no license, kept on the Solent; a Princecraft in Toronto, with the operator card and Transport Canada's license, laid up November to April. Each is priced in its own money. Gate at `4225610`: 120 files, 1,906 tests.
+
+**Still open, and why:**
+- A boat in Ireland: no price was found. Importing a boat across a border: not researched.
+- Empty legs: no operator publishes how often one is offered.
+- A chauffeur, whom nothing needs.
+- A survey: its published averages disagree fourfold.
+- A structural warranty and builder's risk insurance: unpublished, or published ranges that disagree.
+- Charters in Ireland or Mexico, and training in Mexico.
+- A medical abroad, and conversions' building control: not read.
+- What a built-in appliance adds to a home's value.
+- A failure's rate by a car's age: DVSA publishes none.
+>
+> **Earlier, 2026-09-30: Stages 7e, 7f and 8c, and four defects the screenshots found (`11155cc` to `cf3be35`).**
+
+- **Boats, continued** (`11155cc`): Bayliner's own loan ($1,500 down, 6.5% over 144 months, a record of 740 taken as its "well-qualified"), and the boat coming along on its trailer within the three states.
+- **7e** (`6e67434`): an owner who isn't a pilot hires a commercial pilot for their own plane (61.133; the one piston rate published, $450 a half day and $900 a full one). Charter A Boat (Look After Yourself) goes out with a licensed captain in New York City (Go Sailing NYC, $1,050 for three hours and its suggested gratuity) or on Connecticut's shore (Island Mike, $600 for four hours).
+- **7f** (`ec4b5c0`): A Chartered Light Jet on Travel's By, between American airports. It uses Textron's CJ3 Gen2 figures, with one fuel stop past its range. It's billed at Paramount's middle rate for the flight there and back, plus the 7.5% excise tax and the segment fee.
+- **8c** (`f859276`): Stay Longer on a booked way home, once you're there. By air in America it costs the fare difference and no fee; a train is refunded on its terms and rebought. The hotel's or let's nights and the rental car's days are added.
+- **Not built, on purpose:** tint, exhaust and lift. Their rules are researched (`research-mods.json`), but a legal one changes nothing SLATE keeps, and an illegal one only fines and fails a car.
+- **Defects found in screenshots and fixed:**
+  - A domestic flight of one's own asked for a passport: the border check read an airport code as a town.
+  - Own flights offered the airline's 8 AM, 1 PM and 7 PM but booked 7, 8 and 9 AM.
+  - Every trip not by airline was listed "By Train".
+  - A destination stayed chosen after arriving in it (`cf3be35`).
+- **Tooling:** `tools/screenshot.mjs` steps (`SHOT_STEPS`) now run on a played save (`SHOT_SAVE`) too.
+
+Research committed: `research-charter.json`, `research-mods.json`. Gate at `cf3be35`: 118 files, 1,873 tests; every mutation killed, or its survivor made into a test or a removed guard.
+
+**Played lives:** New York on `a742575` died at 83 (5 failed inspections in about 62, near the published 6%). London on `ec4b5c0` died at 97 (5 MOT failures in 16, near 27.51%). Both had 0 errors and 0 anomalies.
+
+**Open, recorded in WORLD.md:**
+- A charter or boat abroad, and an empty leg.
+- A change to an airline's way home abroad.
+- A chauffeur, whom nothing yet needs.
+- A plane's loan.
+- A repossession's mark falling off.
+- A let's damage claim.
+- A mattress's wear.
+- Movers in Ireland and abroad.
+- A tenant's other appliances.
+- Bedrooms holding people (no household is kept).
+>
+> **Earlier, 2026-09-30: open items closed, and Stage 7d, boats (`8bc5a27` to `a742575`).** Still the owner's "We can continue idky you stopped": module to module without pausing.
+
+- **The record** (`8bc5a27`): a car loan's second missed payment reports the first as thirty days late (70 points, as a mortgage's), and a repossession takes 100 (the consumer sites' figure; myFICO publishes none).
+- **A tenant's air conditioning** (`90f8c08`): Buy Air Conditioning Units on Home, window or portable ones in America, Canada and Britain, theirs and moving with them. Ireland's and Mexico's kept price is a split system, which needs the landlord, so none is sold there.
+- **A failed inspection** (`3d9174b`, decider `vehicle.inspection`): each authority's published fail rate (MOT 27.51%, NCT 49.43%, New York 6.0% in the metro area and 6.41% upstate, Connecticut 7.4%), the repair and the retest paid. WORLD.md had said no rate was published; that was wrong.
+- **Movers and mattress fees** (`17fd91d`): moving home with a bed or sofa of one's own pays a one-bedroom's move, local or long distance by Angi's 100 miles; a bed in California or Connecticut carries the state's recycling fee.
+- **7d, a boat** (`a742575`, `systems/boats.ts`): Bayliner's Trophy T18 at $33,543, in the three American states, with Connecticut's 2.99% vessel tax, registration, insurance and a slip (none on its trailer at one's own house). Get A Boating Certificate before Take The Boat Out (Look After Yourself): three hours at 3.7 gallons an hour of marina gas.
+- The Cars screen's fine print had said trade-ins and repossession weren't kept, and that a car didn't count toward worth. All three had stopped being true on 2026-09-29; that sentence is gone.
+
+Research committed in `docs/research/world/`: `research-upkeep.json` (inspections, repairs, removals, mattresses) and `research-boats.json`. Gate at `a742575`: 117 files, 1,859 tests; every mutation killed or its survivor turned into a test or a removed guard.
+
+**Played lives:** Dublin on `57d0e86` died at 75, with 0 errors and 0 anomalies. New York on `a742575` died at 83, 0 errors and 0 anomalies.
+
+**Open, recorded in WORLD.md:**
+- Boats outside America, a boat's loan, and a boat moving with its owner.
+- Tint, exhaust and lift work.
+- Hiring a pilot.
+- A repossession's mark falling off after seven years.
+- A let's damage claim.
+- A mattress's wear (the one study isn't usable).
+- Movers in Ireland and abroad.
+- A tenant's other appliances.
+- A failure's rate by the car's age.
+- Bedrooms holding people (no household is kept).
+>
+> **Earlier, 2026-09-29: repossession, trade-ins, two more cities' lets and a plane of one's own (`791b462` to `57d0e86`).**
+
+- **3e, repossession** (`791b462`, `systems/repossession.ts`): a car loan's missed payments, counted on the loan (`missed`, `missedAmount`), take the car at each place's own point. Redeem It pays what the law says redeems it; otherwise it is sold after its notice, and the shortfall is owed as the place's law has it (British Columbia's ends the debt with the seizure).
+- **Lets in Edinburgh and Belfast** (`382491b`): each at its own rate; Edinburgh's 5% visitor levy falls on a stay's first five nights (`levyNights`).
+- **Trade-ins** (`4fee558`): buying a car can trade the one you own for its value against the price (`tradeInFor`, `tradeInValue`; Cars' Trade In select). Connecticut's sales tax labels were lowercase; `ab18a5d` made them Title Case.
+- **The screenshot walk opens a played life** (`b0fa23a`): `SHOT_SAVE=<a snapshot's json>` loads it into slot 1 and continues it, so screens a new game can't reach are photographed. It found "a unfinished" (now "an") and a sentence of net worth in two precisions (`f20fb99`, now one).
+- **7c, a plane of one's own** (`57d0e86`, `systems/aviation.ts`): Buy A Plane buys a used Cessna 172 at the median asked ($121,847, secondary), held at its price. Kept each month: a tiedown, insurance, the annual, the FAA's registration every seven years and an overhaul at 2,000 hours or twelve years. A pilot flies it for its fuel, where it was left (the leg's `routeId` is `own`). Owning asks no certificate; flying it does.
+
+Gate at `57d0e86`: 116 files, 1,834 tests; 5 mutations for 7c, all killed.
+
+**Played lives:** New York on `cfcd00a` died at 83; London on `ab18a5d` died at 97; each had 0 errors and 0 anomalies. Dublin on `57d0e86` died at 75, 0 errors and 0 anomalies.
+
+**Open, recorded in WORLD.md:** boats (being researched: `research-boats.json`); tint, exhaust and lift work; hiring a pilot; repossession's mark on the credit record; a let's damage claim; a mattress's wear; a failed inspection; appliances in a rented home; bedrooms holding people (no household is kept).
+>
+> **Earlier, 2026-09-29: every stage begun, Stages 7 and 8 (`8069515` to `cfcd00a`).** The owner: "We can continue idky you stopped." So the work runs module to module without pausing for a report (a saved memory).
+
+**Net worth** (`8069515`) now counts cars, land and a house going up. It also counts car loans, which sit on a book of every car loan rather than the person's own, and so had been missed.
+
+**Stage 8, rentals on a journey** (`research-rentals.json`):
+- **8a** (`3cd4bf1`, `systems/rentals.ts`, `content/rentals.ts`): Rent A Car There on a journey with its way home.
+  - Kayak's airport averages for the day rate.
+  - One company's own terms per airport: age and young driver surcharge with its cap, licence years, deposit hold released at return, waiver, excess on a crash.
+  - Each place's rental taxes by statute.
+  - Driven by Travel's By (`rental`) with a drive's risks; refunded in full if the journey never arrives.
+- **8b** (`6410030`, `content/lets.ts`, `letQuote` in `journey.ts`): Stay In A Holiday Let swaps a hotel.
+  - AirDNA's rate, Airbnb's 14.1% fee and each town's occupancy taxes.
+  - New York City's Local Law 18 and London's 90 nights refuse the booking.
+  - Airbnb's Moderate refunds.
+  - A let is a home of the town's kind with a kitchen (stay kind `let`).
+
+**Stage 7, vehicle work, boats and aircraft** (`research-vehiclework.json`):
+- **7a** (`8128b08`, `systems/inspections.ts`): each place's periodic inspection at its fee, on the car's monthly tick: New York yearly, Connecticut's emissions, the MOT, the NCT, Mexico City's verificación. The next one due shows on Cars.
+- **7b** (`cfcd00a`, `systems/aviation.ts`): Learn To Fly for an FAA private pilot certificate over six months (60 hours at $176, 20 dual at $75, the tests), then Fly Yourself between American towns in a rented 172 (its own leg mode `fly`).
+
+Gate at `cfcd00a`: 114 files, 1,824 tests. **Open, recorded in WORLD.md:**
+- Boats; owning an aircraft; tint, exhaust and lift work.
+- Edinburgh's and Belfast's lets.
+- A car's trade-in price and repossession.
+- Bedrooms holding people (no household).
+
+**Next:** lives on `cfcd00a`, and the open items.
+>
+> **Newest of all, 2026-09-29: Stage 6, a home's contents (`6a8faeb` to `0971e85`).**
+
+**Fix first** (`6a8faeb`): a house on farmland stood in the city the land was bought from. A played New York life moved into its upstate farmhouse and so lived in Manhattan. Each farmland market now names its town: Hudson, Litchfield and Bakersfield (SLATE's choice), and Naas, Millbrook and Sechelt (the councils whose fees it pays). The probe now buys land once, and builds only where the house would stand in the town it lives in.
+
+**Stage 6**:
+- **6a** (`44363ff`, `systems/appliances.ts`): a dishwasher, washer, dryer, air-conditioning units or central air fitted to a home owned. Each changes the fixture it is, so it does what the fixture already did: tidiness, the laundromat, hot nights, bills. Prices are Consumer Reports' and Which?'s, and retailer snippets in Ireland, Canada and Mexico. Each lasts NAHB's or DOE's life, then gives out.
+- **6b** (`7fa3599`): Build A Garage at Angi's $26,400, scaled to the town. Permits in the three American cities; exempt under England's Class E and Ireland's Class 3. A car kept there pays no resident permit.
+- **6c** (`0971e85`, `systems/furniture.ts`), which the owner asked to be finished: a bed (MALM and VALEVÅG) and a sofa (KIVIK) at IKEA's own regular prices in five countries, delivered and taxed. A home bought or built from 2026-09-29 comes empty (`bare`): the floor costs a sofa night's 0.08 of sleep, and unwinding without a sofa takes half the stress off. The pieces are the person's and move with them. Rentals and homes owned before stay furnished.
+
+Gate: 109 files, 1,801 tests.
+
+**Played lives on `6a8faeb` and `44363ff`:**
+- New York (on `07b223b`, before the farm-town fix): died at 86, 0 errors and 0 anomalies. This is the life that found the Manhattan farmhouse.
+- London: died at 97, 0 errors and 0 anomalies, bought no land, since farmland at its real price was never a quarter of its worth.
+- Dublin: died at 75, 0 errors and 0 anomalies, bought upstate land at 50 and rightly built nothing there.
+
+**Research ready for Stage 8**, rentals on a journey: an agent is writing `research-rentals.json` in the session scratchpad; copy it to `docs/research/world/` when it's used. **Open in Stage 6:** bedrooms holding people (no household is kept). **Next:** Stage 8, then Stage 7.
+>
+> **Newest of all, 2026-09-29: Stage 5 done, 5b and 5c (`e888f1a` to `07b223b`).** A browser walk (`SHOT_STEPS`) bought a New Haven lot and got four months into building a house on it. It found "Put It Up For Sale" offered on the lot being built on, removed in `e888f1a`.
+
+**Stage 5b** (`888edd7`), a house on farmland:
+- **America:** the region's figures with the state's fees; a town's permit isn't kept.
+- **Leinster:** SCSI's house and cost, planning at €65, Kildare's contribution and the commencement notice, after the eight weeks, the four-week appeal window and the notice's fourteen days.
+- **Ontario:** Cavan Monaghan's permit and charge, issued in the Building Code's ten business days.
+- **British Columbia:** the Sunshine Coast's permit and the Agricultural Land Reserve's 500 m².
+- **England:** none, by paragraph 84 of the NPPF, and the panel says so. The farmland walk confirmed the panel on five Connecticut acres.
+
+**Stage 5c** (`07b223b`, `systems/permits.ts`): the eight renovation jobs that change the building ask the place's permit:
+- New York's alteration permit.
+- Los Angeles's Table 1-A with plan check.
+- New Haven's permit and the state's education fee.
+- London: prior approval for a suite at £249 and 42 days; a householder application for more at £548 and eight weeks.
+- Dublin: exempt to 40 m², then €34 and twelve weeks.
+
+Gate at `07b223b`: 107 files, 1,790 tests; the commit message says 106 files, which is wrong. Mutations: 8 for 5b, 7 for 5c, all killed. **Next:** lives on `07b223b` with the probe taught to build a house on its land, then Stage 6, a home's contents (`docs/WORLD.md`).
+>
+> **Newest of all, 2026-09-29: Stage 5a, construction, and land values over decades (`2a50054`, `1ceb17f`).** The owner's word while lives played: "While lives are being played we can work on other things too." Lives now play from a detached worktree at `../slate-lives`, holding only the untracked `probe/play-to-death.ts` and `probe/chunk.sh` and a link to `node_modules`, run by `$TEMP/runlife-wt.sh`. It's only ever run from and removed, never merged. Development goes on in the main tree meanwhile.
+
+**Land-values fix.** The played London life found ten acres of English farmland at £9,300 in 2077, because one year's published change had been compounded forever. Now a lot moves with the town's home market (`marketAt`), and farmland takes its latest change for a year, then the market (`landValue`).
+
+**Stage 5a** (`systems/construction.ts`, `content/construction.ts`, research in `docs/research/world/research-construction.json`): a house on a lot one owns in New York, New Haven, Los Angeles or London.
+- Sizes and costs: the Census's 2025 sizes and contract price a square foot for the region; London's space standard and SLATE's labeled cost.
+- Bulk limits: R2's 0.75, the Baseline Mansionization Ordinance's 45%, RS-2's 30% coverage.
+- Fees: each place's own.
+- Stages: NAHB's seven, billed as each is done; an unpaid bill stops the work, and `build.pay` resumes it.
+- Finished: the house becomes a home owned (`ownBuilt` in `homes.ts`).
+- London's self-build levy is clawed back on a sale or letting within three years.
+
+It shows on the Land screen's Build A House panel, with the guide chapter Building A House. `tools/screenshot.mjs` gained `SHOT_STEPS` (press, row, fill, advance, shot) to reach screens that need time. Gate: 106 files, 1,780 tests; 21 mutations, all killed.
+
+**Played lives with land, on `691415d`:**
+- New York: died at 83, bought 10 acres upstate at 55 and held them to death, 0 errors and 0 anomalies.
+- London: died at 97, 0 errors and 0 anomalies, three farmland purchases, two sales when broke. This life found the land-value defect.
+- Dublin: stopped at 57 (2060) by Claude Code for low system memory and resumed from its checkpoint. Died at 75 in New York on an O-1, worth $27,769, 0 errors and 0 anomalies. At 44 it bought ten acres upstate after a counter-offer, and held them.
+
+**Next:** Stage 5b (building on farmland, which needs planning permission; renovation and extension), the probe taught to build, and lives on `1ceb17f`.
+>
+> **Newest of all, 2026-09-29: Stage 4, land (`0525ad8` to `dae0897`).** First, the Stage 3 replays on `4443668` finished. A New Yorker died at 86 worth $3.95M with the car re-registered in New York, a Londoner at 97 and a Dubliner at 75, all with 0 errors. The New Yorker spent 27 days starving in 2031, because fuel went into arrears. Fixed in `0525ad8`: fuel is bought with `spend`, and a month with no money for it is a month the car isn't driven. **Stage 4a** (`f37bc2c`, `content/land.ts`, `systems/land.ts`, research in `docs/research/world/research-land.json`):
+- Town lots at the FHFA's county land values, on each zoning's smallest buildable lot: New York's R2, New Haven's RS-2 and Los Angeles's R1.
+- London plots with planning permission, at the government's 2019 values.
+- Farmland at USDA's, Knight Frank's, SCSI and Teagasc's and FCC's values.
+- Each transfer tax on the side that pays it.
+- Property tax where it follows from published rates, with Proposition 13 on the price paid.
+- A sale after a broker's 125 days; splitting to the zoning's minimum; combining.
+
+**Stage 4b** (`dae0897`):
+- Listings, three a month for each market (decider `land.listings`).
+- Offers and a seller's counter (decider `land.market`).
+- The deposit as each place takes it: England's and Ireland's 10% on exchange, America's 1% and Canada's 5% on acceptance.
+- Thirty days to walk away; searches paid where there's a published fee (HM Land Registry's, a percolation test upstate).
+- The closing on the forty-fifth day, with England's Land Registry fee.
+- Also fixed: New York State's 0.65% on land in the city from $2 million.
+
+The Land screen opens from Home's Land panel and the guide's chapter Land. Gate: 105 files, 1,769 tests; 37 mutations across 4a and 4b, all killed. **Played lives:** the probe now buys the cheapest listing when it holds four times the asking price, and puts land up for sale when broke; results below when they finish. **Next:** Stage 5, construction on a parcel (`docs/WORLD.md`).
+>
+> **Newest of all, 2026-09-29: every open item closed, and Stage 3, vehicles (`3cabb45` to `4443668`).** The owner's word after Stage 2: "Pull from research but rebuild/build like we've been doing this whole time. Also cover everything that is still open." Closed: Ireland's means-tested pension, the Living Alone Increase and the Fuel Allowance (`irishWeekPaid`); Dublin's Housing Assistance Payment; Universal Credit, Jobseeker's Allowance and the Seguro de Desempleo on Papers, which until then only the engine could claim (a defect of this same day); coaches on thirteen corridors, each town's transit fare to a station, train cancellations at the operators' published shares, Belfast, Edinburgh and Toluca as towns with their trains and hotels; jet lag, the body clock catching up at the CDC's rates and nights sleeping worse till it has (`systems/jetlag.ts`); Dublin's television, theater and radio at SLATE's labeled estimate (`IRELAND_SCALE`); Mexico's IMSS pension on weeks of Mexican work (`systems/imss.ts`); visa applications for the ten pairs that need one (`content/visas.ts`). **Stage 3, vehicles, done** (`docs/WORLD.md`): a catalog of each market's best-sellers at the makers' prices (`tools/build-vehicles.mjs`), bought new or used with eight jurisdictions' taxes and fees and financed at published rates, insured, registered, depreciating on iSeeCars' points, driven every day at the published mileage and fuel prices (`systems/vehicles.ts`); driving as a journey's leg, with crashes at NHTSA's rate through the injury system, speeding tickets at New York's and England's rates with each place's fines and points, suspensions and Britain's and Ireland's novice revocations (`systems/driving.ts`); parking permits and a home's garage. Screens: Cars (Home's Cars panel, the guide's A Car Of Your Own); Travel's By takes the car. `tools/screenshot.mjs` reaches any screen (`SHOT_READ_GUIDE=1 SHOT_ROUTES=cars`). Gate: 104 files, 1,747 tests (commit `00e221d` misstates 1,729; it was 1,725). **Played lives, first round** (the probe buys the cheapest car once licensed and able): a New Yorker died at 57 worth $1.19M, a Londoner at 80, a Dubliner at 60, each 0 errors and 0 anomalies. They found three defects, fixed and pushed: an Irish agency petitioning the US for an O-1 yearly (`b5b3525`, an O-1 now needs an American petitioner); a car driven every day in a town its owner had left (`b5b3525`); a car left behind on moving home (`4443668`, it now moves where a road reaches and is registered there). Until 2026-09-29 this entry said the replays on `4443668` were not yet confirmed; they were rerun one at a time and passed (above). **Next:** Stage 4, land (`docs/WORLD.md`), planned from research by Claude, as the owner said.
+>
+> **Newest of all, 2026-09-29: Ireland and Mexico at home, and the career's trips flown (`145916e` to `38e9bb1`).** Continuing the owner's "Continue.": Ireland and Mexico the way the UK was done, then Stage 2. Done: Jobseeker's Allowance and the Seguro de Desempleo, and public care in both (`systems/homebenefits.ts`); each country's 2026 tax tables, USC and PRSI, the ISR tariff and IMSS (`content/tax.ts`); Dublin as one of the business's cities at the Irish Film Agreement's rates, its agencies and Spotlight Ireland; Mexico City's business at SLATE's labeled estimate (`MEXICO_SCALE`: American minimums scaled by IMSS's average wage against SSA's, since ANDA keeps its tabuladores confidential), its agencies and ANDA's 15% dues; Ireland's State Pension (Contributory) and Mexico's Pensión para el Bienestar (`systems/homepensions.ts`); the career's trips as journeys, the production's flight and the actor's own fare (`careerFlight`); an agency, and a manager, sending work in its own country only. Played to death: a Mexican life home to Mexico City before its business opened starved at 36, which is why it opened; replayed, a Mexican on OPT and a yearly O-1 in New York (257 credits, died at 51 of obesity and hypertension) and an Irish life home to Dublin (Jobseeker's Allowance through lean years, a partial Irish pension from 66, poor after it, died at 82), both 0 errors and 0 anomalies; an earlier Irish life lived to 102 on the full pension. **Known and open:** Dublin has only films (Irish Equity's other rates are members-only); Ireland's means-tested non-contributory pension and Housing Assistance aren't kept, so a partial-record Irish pensioner is poor; IMSS's own pension isn't kept. Then Stage 2c, trains (`content/rail.ts`, `systems/rail.ts`, `docs/WORLD.md`): eleven routes on the operators' own timetables, fares and punctuality, booked on Travel's By and taken by the career's trips. Then Stage 2d, business or first at IATA's five times economy. Travel's fields are four columns now, and `tools/screenshot.mjs` reaches any screen (`SHOT_READ_GUIDE=1 SHOT_ROUTES=workspace/travel`). **Next:** Stage 3, vehicles (`docs/WORLD.md`), which a car as a journey's leg waits on; AAA's 2026 costs, the IRS rate, fuel, parking and tolls are in `docs/research/world/research-cabins-car.json`. Jet lag is open until what it changes is settled (WORLD.md, Stage 2d).
+>
+> **Newest of all, 2026-09-29: a life outside the US, and pensions for everyone (`8ec6a6f` to `10ae864`).** Asked by the owner after the Stage 2a report: round trips as one booking; the foreign-born lives that ended broke; the O-1's letters. Done: a round trip is one ticket at BTS's round-trip share; every non-US tax table is read in its own money and UK National Insurance from its threshold; a citizen can move home to the town they were born in; London is one of the business's cities (`CAREER_CITIES`), with its parts at Equity's pounds, its agencies and Spotlight; a US return only for someone the US taxes (`owesUsReturn`); Universal Credit (`systems/universalcredit.ts`); the NHS for a British or Irish resident (`nhsShareOf`); the UK State Pension (`systems/statepension.ts`); US Social Security, which SLATE had never paid (`systems/socialsecurity.ts`); the O-1's letters from three productions' directors. Played to death: an American (Social Security $3,661 a month from 67) and a British life (home to London, worked to old age, UC through lean months, State Pension from 68, died at 96), both 0 errors and 0 anomalies. Gate: 93 files, 1,670 tests. **Next:** Ireland's and Mexico's businesses, care and safety nets the same way; then the rest of Stage 2 (rail, a car as a leg, cabins, the career's trips as journeys).
+>
+> **Newest of all, 2026-09-29: Stage 2a done — travel by air, with somewhere to stay (`fe1671c`).** A journey is booked on the Travel screen (Home's Travel panel; the guide's chapter Getting Around): a taxi to the airport, check-in, the flights, the border and bags, a taxi into town, and a hotel there, each leg at its local time, the whole one commitment on the calendar. Real: OurAirports' 3,266 airports (`tools/build-airports.mjs`), ACI's busiest hubs and each country's gateway, DOT's Q1 2026 fares (`tools/build-airfares.mjs`), BTS's 2025 delays and cancellations, the carriers' bag fees, TSA's arrival times, cities' taxi cards, published hotel rates and taxes (per diems where none is published). Modeled and said so: routes, schedules, international fares. Tests: `tests/journey.test.ts`; gate 87 files, 1,647 tests. **Next:** the rest of Stage 2 (rail, a car as a leg, cabins, the career's trips as journeys), then Stage 3, vehicles (`docs/WORLD.md`). The old line's vehicle, airline and hotel tables are in git at `62c30ca^` (`src/engine/content/vehicles.ts`, `airlines.ts`, `hotels.ts`): names worth checking and reusing, invented figures not.
+>
+> **Newest of all, 2026-09-29: Stage 1b done — the border and permission to work (`bc90d7b` to `accdb66`).** A job abroad is taken only if the actor could go and come back on the papers they hold, and asked again on the travel day (turned back, the production recasts). A home abroad is lived in only with the right to live there. Permission to work is its own check (`systems/permission.ts`, `content/workrules.ts`): an F-1 student doesn't act off campus; OPT after the degree (a represented actor's days count as work); an O-1B the agency petitions, decided on five kinds of evidence read from the career; a UK location shoot is a visitor's; Canada's C14 permit, a US citizen's issued at the border. A license is a resident's, is exchanged on moving where the authority says so, and renews within two years of lapsing. A body starved below a body mass index of 12 now ends the life. Played to death: a New York life (0 errors, 0 anomalies, passports renewed, Canadian permits issued at the border) and British, Irish and Mexican ones, which found every fix above. **The largest open issue** (`docs/WORLD.md`, stage 1b): a foreign-born life that isn't approved for an O-1 after OPT has nowhere to work, since SLATE's acting business is in the US only; the lives were broke from about thirty. Gate: 86 files, 1,632 tests. **Next:** Stage 2, journeys (`docs/WORLD.md`).
+>
+> **Newest of all, 2026-09-29: the world simulation begun, Stage 1a done (`4e1a2ac`).** The owner asked for housing, land, construction, vehicles, transport, travel, stays and identity to become one researched, connected world, built in verified stages. **`docs/WORLD.md` is the scope**: eight stages in dependency order, each with acceptance criteria, the evidence for what's done, and a coverage record of what's verified, modeled or missing. Stage 1a (papers) is done: passports for 15 citizenships, entry rules for 15 destinations by 15 citizenships, and driver's licenses earned step by step in 19 jurisdictions (`systems/documents.ts`, `systems/licensing.ts`, `content/licensepaths.ts`), on the Papers screen's Passport And Travel and Driving tabs, opened by the guide's chapter 14, Passports And Licenses. The research is committed in `docs/research/world/`, and `tools/build-entry.mjs`, `tools/build-licenses.mjs` and `tools/build-passports.mjs` build the content from it. Gate: 84 files, 1,610 tests. **Next:** Stage 1b (`docs/WORLD.md`): the entry check on a production abroad, which today moves the actor across a border unchecked; permission to work (OPT, O-1); then Stage 2, journeys. Spelling is American except an authority's own document names, allowlisted in `tools/spelling.mjs`; `tools/voice-check.mjs --fix <file>` now narrows to the files named, and the builders use it.
+>
+> **Newest of all, 2026-09-29: whole lives played to death, done.** The owner asked for full-life playthroughs to death until every bug and crash was gone. 45 lives were played: round 1 (17, the engine before the fixes), round 2 (24), round 3 (4, two of them a careless player). Every life reached death, aged 42 to 98, with no crash. Rounds 2 and 3 had 0 errors and 0 anomalies, and every yearly save-reload-diff was unchanged. New lives were started from twelve countries through the screens, and every workspace and tab was walked on saves aged 25 to 95. Found and fixed, each gated and pushed:
+>
+> - `52ab131` opening a save wiped the pay record (the day-job migration keyed on `earnings`), so the end screen said "Earned $0".
+> - `e2d207d` saves moved to IndexedDB: a long life overflowed local storage.
+> - `52a0ca9` a student laid up by an injury was dismissed; the term review now weighs growth against the room each student had to grow.
+> - `e8c741d` New Haven to New York by Metro-North day pass ($46.75), and a tape for an actor away on a job.
+> - `2a5a9e9` parts past sixty thinned by USC Annenberg's shares (film 0.48, TV 0.42).
+> - `171b3d0` the pension held to IRC 415(b) ($290,000 and the best three years).
+> - `3a9f408` federal tax withheld from the pension (the W-4P default), and a tax bill paid from savings too.
+> - `8d0eefc` tax owed is collected: 7% interest compounded daily, then CP501, CP503, CP504, LT11 and a levy on the bank accounts.
+> - `58da025` the IRS's substitute return for somebody who never files.
+> - `bfe8e8c` a stage run closes when its last call passes, including nights the understudy played; before this, one missed night left the actor on a job for life.
+> - `4a7de53` the Taxes page leads with the home country's returns and says what the IRS does.
+>
+> **The harness** is in `probe/` (gitignored, so it's on this machine only). `probe/play-to-death.ts` plays a life with daily invariants and a yearly reload diff; `PLAYER=careless` gives a player who never moves money, pays or files; `CHECKPOINT` and `CHUNK_SECONDS` let a life run in chunks. `probe/chunk.sh <out> <snaps> seed:place:wealth:player ...` plays the next chunk of a round, and each call fits a foreground command. Background batches get stopped by Claude Code's memory reaper: this machine has about 3 GB free, with OneDrive using 1.5 GB. `probe/summarize-lives.mjs`, `probe/ui-lives.mjs` (the built game walked on saves) and `probe/ui-create.mjs` round it out.
+>
+> **Then the owner asked for a real-world figure for how far skill grows, and it got one** (`6577d8d`). Each skill now grows toward where it began plus 26 points, fitted to McDaniel, Schmidt and Hunter (1988): experience correlates .49 with performance in the first three years and .15 after twelve (the fit reproduces .493 and .150, in `probe/calibrate-craft.mjs`). The fix exposed a rollback bug, fixed in `76f48cd`: a failed command restored the lists inside records as copies, not in place. Round 4 (4 lives, final engine) had 0 errors and 0 anomalies; acting plateaus at 75-78 by talent, and starting agencies, early pay (4k-1k) and estates (/usr/bin/bash.7M-M) now vary.
+>
+> **Newest of all, 2026-09-28, the three remodels.** The owner said "Do those three large remodels." Two commits, each gated:
+>
+> - **Body weight** (`31812d9`, `content/body.ts`, `systems/body.ts`). Every person has a height and a weight, drawn from the birth country's adults (NCD-RisC) or given at creation (imperial for a US birthplace, with a read-only body mass index). Weight follows a habitual intake, plus 134 kcal a meal eaten out, against Mifflin–St Jeor at the midpoint of the sexes' constants and the Compendium's MET values, moving at Hall's pace (23.9 kcal a day per kg, half-life 365 days). A working day is eaten back; a workout isn't; a broke day eats 40/76. BMI raises mortality (GBMC bands) and the onset of diabetes, hypertension and arthritis (Guh's ratios on the CDC's and Olmsted's rates). The `appetite` personality knob. Deciders `body.draw` and `health.onset`.
+> - **Injury** (`31812d9`, `content/injury.ts`, `systems/injury.ts`). Rates per 1,000 hours for a run, the gym, a swim, the stage and the set, plus everyday rates from the NHIS. Mended in clinical times; laid up excuses work as a hospital stay does; injured at work, workers' comp at New York's and California's 2026 rates. Decider `health.injury`.
+> - **Several credit cards at once** (the commit after it). `person.credit` is the record: the score, the late payments and a card on its way. It also carries the everyday card's own state (`primaryId`). Every other card's state is in `credit.cards[accountId]` (`CardState`), and `stateOf(person, card)` returns either one. Old saves need no migration: `ensurePrimary` sets the everyday card, and statement and due items without an `accountId` belong to it. A card can be applied for at any bank in the country that issues one, one per bank (`card.apply { bankId, transfer, fromId }`). Every card command takes an optional `accountId`, and `card.set_everyday` is new. When the everyday card closes, the next card takes its place. The record reads utilization across every card. A month paid as agreed counts once in total, each card adding its share, so the score now carries fractions and Home shows it rounded. A late payment on any card costs the full 50 points. On screen, the Cards tab shows one panel per card, an application panel with any issuer and a balance to move, each card's own offers, and each card under Your Cards. Home shows the combined total when several cards are held.
+>
+> Verified: the gate passed, with 1,553 tests in 79 files. Fifteen mutations of the multi-card claims were all killed; three survived the first run and got tighter tests. In a played two-year probe, a two-card life followed the same path as a one-card life; the one difference was the application's inquiry. Screenshots were taken of one card, the application and two cards. Left in UNBITTEN, all SLATE's estimates: how the score shares a month across cards, one card per bank, and the unmodeled history-length effect. One thing seen in passing and not introduced here: in the comfortable New York probe, a Chase statement went unpaid one month (`missed=1`) with $42k in the bank, on one card and two alike. It is worth a look at `autopayReach`.
+>
+> The three remodels the block below leaves for the owner were done here.
+>
+> **Newest of all, 2026-09-28, after the housing: the rest of UNBITTEN, worked through.** The owner said "Finish them" of the ledger's other open entries. Ten commits (`821a502` to `8b27112`), each gated; research by nine agents, every figure sourced in the code or marked SLATE's estimate:
+>
+> - **Dead words wired.** The crafts are met where the work puts an actor beside them (`CRAFTS_AT`, `systems/enjoyment.ts`; one a day, mood never ability); the people traits move how a classmate warms, how a slight cuts and what friends in a cast are worth (`bondWarmth`, `bondWound`, `company`); a part lost to a classmate after school sets them apart; classmates have their own presence. The performer title entry was wrong (school casting reads it) and is corrected. The tax engine's vehicle-rules entry outlived the rules and is settled.
+> - **Real terms charged.** US late fees held to the Reg Z safe harbor ($30/$41); Barclaycard's offer ends at a missed minimum; ATM owners' averages in the US and Australia; LCL's 21.02% and Crédit Agricole's usury ceiling; Canada's pay-per-use overdraft; Arion's and Íslandsbanki's savings tiers; MUFG's early-withdrawal rule; Swedbank Latvia's fee; Japan's and Korea's revolving minimums (`content/revolving.ts`); interest-charged plans (`content/plans.ts`); Santander Mexico's and the Korean cards' phone-bill bonuses; Mexico's fraud average.
+> - **Life abroad and at home.** Every bank keeps its own country's and region's holidays (`content/bankdays.ts`; a save loads its countries' holiday files with its places); a US town's energy is its state's (EIA RECS, `content/energy-us.ts`); a washer's hot water; a British or EEA citizen's UK allowance; Canada's Form T1287; Connecticut's 2026 premium assistance; unemployment claimed where the wages were earned; the pension's per-episode TV ceilings; Yale New Haven's charity, at billing for the uninsured and by application for the insured.
+> - **A part's own demands** (a song, a fight, a dance, an accent, an intimate scene) drawn at the audition, read and grown.
+> - **Built and taken back out**: Iceland's fee on a debit without funds, since SLATE's Icelandic banks decline any debit that would incur it.
+>
+> What's left in UNBITTEN is, first, figures nobody publishes (each checked and named there), and second, three remodels the owner sets the plan for, per the standing rule on large remodels: several credit cards at once (SLATE holds one; `person.credit` is singular and read everywhere), body weight (nothing keeps it, so obesity and a type 2 diagnosis's weight can't be read), and injury (the traits' and the stunts' costs wait on it). Gate at the end: 1,525 tests.
+>
+> **Newest of all, 2026-09-28, final: the housing items left open, finished.** The owner asked that every open item be finished and the weakest test made strong. Everything the homes and living entries of UNBITTEN listed as "not modeled" is built, with figures from three research agents:
+>
+> - **The return on a sale.** Depreciation taken is recaptured at up to 25% (§1(h)(6); `homeGain1250`, taxed at the lesser of 25% and the federal tax it adds, in NIIT and in the state's income); a let home's held passive losses are all freed the year it's sold or foreclosed (§469(g); `rentalDisposed`); a main home's exclusion is cut by the share of ownership before it was first lived in (§121(b)(5)).
+> - **Rates move and mortgages refinance.** Starting at Freddie Mac's 7.03% (US) and Moneyfacts' 5.64% five-year fix (UK) for September 2026, rates walk month by month (decider `homes.rates`, `rateShift`: at most 0.2 points a month, pulled a thirtieth back). `home.refinance` pays the loan off with a new one at today's rate over a full term, for 3% closing costs.
+> - **Scotland and Wales.** Their own council tax (Scotland's 1991 bands and shares, Band D £1,653.44; Wales's 2003 bands with a ninth, I, Band D £2,283), their own transfer taxes (LBTT with the 8% ADS; LTT with its higher rates). A flat's council tax is split by its bedrooms, the flatmates.
+> - **Inside the home.** Fixtures move an owned home's letting rent and its listing price (ApartmentAdvisor's premiums: in-unit laundry 5.57%, gym 4.86%, balcony 3.98%, AC 1.30%, dishwasher 1.07%). A rented flat keeps its published rent. Bills leave out the summer's cooling a home can't run (`COOLING_USE`) and add each washer and dryer load's electricity (DOE/EIA at 18.19¢). Renters insurance (`home.renters_insurance`, state premiums from the Triple-I) covers burglary (FBI, 8.2 a thousand homes a year) and a renter's building fire over a $500 deductible.
+> - **The strong buzz test.** `showcaseBuzz` is exported from the career week and tested at its function: 400 months, the share within 0.6–1.4× of `BUZZ.chance`, and nothing without a showcase, past 180 days, below every bar or already managed.
+>
+> Tests in `tests/homes-open.test.ts`, `tests/homes.test.ts` and `tests/records-bite.test.ts`. UNBITTEN's stale "property tax charged to no one" is corrected: an owned home pays it at the engine's rate. The non-housing entries of UNBITTEN (the crafts, the performer title and others) are still open. Verified: the gate passed with 1,493 tests in 71 files; seventeen mutations of the new claims were all killed (six survived the first run and got the tests that kill them: the 25% rate, the listing premium, the rate walk's pull and its use, the machines on the bills, and a renter's fire).
+>
+> **Newest of all, 2026-09-28, last: every told-back record made to count.** The owner asked that what changed nothing, and what was still open, be fixed. Wired (see UNBITTEN's "Settled on 2026-09-28"): `takesBack`, `BUZZ`, `localEdge`, a loan's last payment by `loanMonths`, breaches keeping a term short, `LastWork.heeded` from the director's note, `thesisSeen` from the final year's credits and reviews, `castListRead` from the cast list, a studio's rent, `person.stay` (hotel, sublet, sofa, own home) read by every home action and a night's heat, a failure told to the player. Deleted as copies of the ledger: residual totals, a year's residuals, a claim's weeks, work-study year hours, the failure log. Sleep greys out in a commitment; cash in hand counts toward what can be paid.
+>
+> **Newest of all, 2026-09-28, after living in a home: the whole-game sweep.** Four read-only audit agents (screens against the engine; cross-system cohesion; money and law; unread state) reported ~75 findings. Fixed in `a9b7e30` (the homes screens made true of the engine) and the commit after it: relocation, eviction, foreclosure and sale go to an empty home of theirs before a room or a sofa; a pending purchase or a job away blocks relocation; rent paid ahead is refunded on leaving; a former landlord's debt is no new landlord's notice; the place stands still while they're away; outdoor actions read the hour's weather as the panel does; rent received is income for the benefit tests; what's owed on homes counts in net worth; a mortgage shortfall is no longer taken for a bank's charge-off; a loan payment reaches savings only where linked, with its fee. Law: England's 5% surcharge on an additional home; Canada's tiered down payments and 20% to let; Ireland's and New Zealand's 30% to let; Ireland's 3.5 times for a buyer before; Northern Ireland's one-month deposit; the lender's 45% and 620 honestly sourced; a filing penalty to 22.5% on its own; 2026's long-term gain brackets; mortgage insurance's phase-out; depreciation not sheltered by the exclusion; a foreclosure's gain on the return; the $750,000 interest cap across homes; escrow ending at payoff without double tax; a tenant's deposit owed back when the bank can't; Band D for 2026–27, £2,392. Records that the screens show are listed as such in UNBITTEN; dead fields removed.
+>
+> **Newest of all, 2026-09-28, last: living in a home.** The owner asked for homes to be lived in: named kinds and the real fixtures of each, used every day, following where the home is, backed by research. Research ran in three parallel agents (fixtures and chores; renting and moving law; sizes and amenities), and every figure is sourced in the code's comments or marked SLATE's estimate.
+>
+> - **Kinds**: studio, apartment (a condo when owned in North America and Australia, a flat in Britain), penthouse (the top of a dense city's market, with a terrace), townhouse, house, mansion (5,000 sq ft and up; a country house in Britain). `isFlat` replaced the studio-or-condo checks.
+> - **Fixtures** (`Fixtures`, `drawFixtures` in `content/homes.ts`): bath, dishwasher, laundry (in-unit, washer only, the building's, none), cooling (central, units, none; America's by census region), outdoor (balcony, terrace, yard), gym (building, home). Listings carry them; a rented place is drawn at the move (`home.unit`, decider `homes.rental`).
+> - **Daily life** (`systems/dwelling.ts`, `life.look_after`): Cook A Meal / Eat A Meal, Order In (seven times the cost, LendingTree), Shower, Take A Bath (a tub), Work Out (a gym builds 1.2×, a fine-day run 1.1×, home 1×), Swim In The Pool (a warm day), Sit Outside (fine weather, a balcony, terrace or yard), Unwind, Do The Laundry (the home's way: own machines, a rack overnight, the building's for $3.50 a load, the laundromat for two hours and $5.75), Clean The Place (by size; ATUS). A wardrobe of fourteen outfits, one a day and one a workout; out of clean clothes the morning starts less fresh and the day weighs. Tidiness falls six a day (less with a dishwasher); under 40 it weighs. A free day keeps up roughly on its own; a working day (four hours of commitments) doesn't. `home.cleaner` hires a weekly cleaner ($45/hr, two hours at least).
+> - **Sleep**: a hot night without air conditioning sleeps worse (Minor et al. 2022: a thirtieth of a night over 25°C, a twentieth over 30°C).
+> - **Upkeep retuned to the Triple-I's claim rates**, and fire added.
+> - **Deposits** held to each place's law (`depositCapMonths`): New York and California one month even for a poor record, Connecticut two, England five weeks, Germany and Iceland three, and more. Until now only Britain's cap was read.
+> - The owner also set a standing standard for the screens: evenly aligned and compactly spaced (`.stats` grid, a test in `tests/interface.test.ts`).
+>
+> **Next, as the owner asked:** a sweep of the whole game so nothing is decoration and everything flows as one world.
+>
+> **Newest of all, 2026-09-28, later: "the full housing experience".** The owner asked for housing as full as everything else. Built on the homes of `d6dd351`, in one gated commit:
+>
+> - **The market turns over.** Each of a town's fifty places sells on its own one-to-four-month cycle and a new home comes on (decider `homes.listings` by slot and generation); a home unsold two months is cut 3%, at four 3% again.
+> - **Offers.** A price, a down payment, to live in or to let, with or without an inspection. The seller accepts, counters at halfway or refuses by how near the asking price it is, how long the home has sat and how hot the market is (`sellerFloor`, decider `homes.market`). 1% earnest money goes into escrow; the inspection's report (every part's age) comes on day five and the earnest comes back if called off by day ten; closing on day thirty, with a financing contingency.
+> - **Several homes.** `person.homes` replaced `owned` (`migrate` moves an old save's). A home not lived in is an investment: 15% down, 0.625% on the rate; a lender counts 75% of rent. Moving out or relocating leaves a home owned and empty; `home.move_in` moves back.
+> - **Letting** (`home.let`, `home.end_tenancy`): market rent by bedrooms (near HUD's ratios), a tenant found sooner nearer the market, a month's deposit held as a liability, rent on the first, renewals two in three at market or a move-out with damage kept from the deposit. A backyard cottage lets on its own.
+> - **Upkeep** (decider `homes.upkeep`): worn parts fail, likelier with the cube of wear; storms and gales damage worn roofs and hard freezes burst an empty home's pipes, read from the weather; insurance pays over a deductible, never wear, and a claim loads the premium for three years. Big work weighs on whoever lives there.
+> - **Borrowing** (`home.borrow`): a home equity loan to 80% of value less the mortgage, fifteen years.
+> - **Credit**: a mortgage paid on time adds to the record; thirty days late is reported.
+> - **Council tax** in England, by 1991 band from Band D's 2025–26 average, 25% off alone, ten instalments; renters pay it too.
+> - **The return** (`systems/taxreturn.ts`): itemizing when a home's interest (to $750,000 borrowed), property tax and state taxes (the 2025 act's cap and phase-down) and from 2026 mortgage insurance beat the standard deduction; rent less costs and 27.5-year depreciation, a loss only within the passive allowance, carried forward; a sale's gain with the $250,000 exclusion after two of five years, long-term at 0/15/20% plus the 3.8% investment tax.
+> - **Bills** of a home owned grow with its size; solar halves them and a pool adds its upkeep.
+>
+> The owner then asked for homes to be lived in: named kinds (apartment, townhouse, house, penthouse, mansion) with the fixtures of each (a shower, a kitchen to cook in, a bed, a washer and dryer where there's one), used every day, and the fixtures following where the home is. That is the next module, and after it a sweep of the whole game so nothing is decoration.
+>
+> **Newest of all, 2026-09-28: "Build it all".** The owner asked for the three things part B had left out. Each is its own gated commit.
+>
+> - **The pension, finished** (`1e38466`). A production counts to the Plan's $232,000 ceiling (`sagByProject`), a pension can start early from 55 with ten credits (`pension.start`, a quarter of a percent less a month under 65), and it goes on the return (`recordPension`).
+> - **A commercial agent** (`e509411`, `systems/commercial.ts`). CESD, DDO and Abrams sign on presence and record, send the commercial auditions (the theatrical agency then sends none), and are left on the commercials contract's own rule: after 120 days with no offer, then under $4,000 in 91. Renewed for three years when it booked one.
+> - **Homes** (`systems/homes.ts`, `content/homes.ts`, `content/homevalues-us.ts`, `ui/workspaces/HomesWorkspace.tsx`, route `/workspace/homes`). The owner asked mid-task for "50 homes per city in every state/region/country from cheapest to most expensive … real homes and addresses plus infinite amount of renovations catered to what that specific home could get". What was built:
+>   - **Fifty a town, cheapest first**, drawn per save (decider `homes.listings`) about the town's typical value: Zillow's Home Value Index for 12,485 US towns (`tools/build-home-values.mjs`, August 2026), the state's measured price-to-rent for other US towns, and SLATE's estimate by country elsewhere. Types are named as the country names them (a flat in Britain, a condo in America), sizes in square feet or meters.
+>   - **Addresses are not real listings.** Real people's homes and scraped listings were declined (their privacy, and Zillow's terms): each home is a common street name of its country with a number of SLATE's, labeled as the game's.
+>   - **Buying**: an offer, and a closing thirty days on. A lender reads the record (620) and two years' income (43% debt-to-income in America; 4.5 and 4 times income in Britain and Ireland). England's Stamp Duty Land Tax with first-time relief is real; other closing costs, rates and down payments are SLATE's estimates by country.
+>   - **Owning**: the mortgage on the first with the tax and insurance in escrow, mortgage insurance dropped at 78% (Homeowners Protection Act); cash owners pay tax in April and October halves. Property tax reads the place's rate and California's 2% cap. Late: a fee at 15 days, the record at 30, foreclosure at 120, the sale at 210, and the sofa. Net worth counts the home.
+>   - **Renovations without end**: 38 jobs, each tied to what the home has (a deck built can be rebuilt, a garage converted has no door). What a job adds is its return at sale times the wear of the part it replaces, so every part wears and can be done again. Costs and returns are SLATE's estimates: the Remodeling cost-against-value report's terms forbid its figures in software, so only its pattern was used.
+>   - **Selling**: listed, closed 45 days on, the agents and the loan paid, and a move into the rented home chosen.
+>   - **Not built** (in `docs/UNBITTEN.md`): the mortgage interest and property tax deductions, a sale's gain on the return, the record rising with mortgage payments, letting a home (so a backyard cottage earns nothing, and moving city waits for a sale), and Britain's banded council tax.
+>
+> Verified: the gate passed with 1,409 tests; eighteen mutations of the homes claims were all killed; the screen was checked at phone and desk width (`probe/homes-shot.mjs`, untracked). The owner still merges the branch to `main` themselves.
+>
+> **Newest, 2026-09-28, last: "everything that would make it perfect".** Account 2 did this at the owner's word. Each part below was its own gated commit.
+>
+> **A. The school**
+>
+> - **Stage work in the evaluation** (`350c362`). The evaluation reads the work on stage: a run mostly off falls short (`workFloor`), and a strong one is noted. The School's night bars are a student's, and the Rep's a professional's.
+> - **The director's note** (`350c362`) names what to work on.
+> - **The Rep's unannounced seasons** (`350c362`) are dealt from `REP_PLAYS`.
+> - **The Cabaret and the Summer Cabaret** (`2cc9c57`) have parts, plays (`SUMMER_PLAYS`), nights and a note.
+> - **Teachers' notes** (`9896f39`). Each course's teacher gives a note at the evaluation (`teachersNotes`).
+> - **Bonds with classmates** (`b4de8aa`). Classmates' `bond` makes them friends or rivals. Friends in a cast lift a night, and a rival taking the lead is named.
+>
+> **B. The business**
+>
+> - **Recognition and festivals** (`a9f85b8`). Recognition comes when the work is seen, by its audience. Television counts when it airs. An independent film gets into Tribeca one time in five, the Brooklyn Film Festival otherwise, or goes to streaming (`FILM_ROAD`, decider `career.selection`).
+> - **The class after Yale** (`29efaa4`, `systems/rivals.ts`, decider `career.rivals`). The class is signed at the showcase and books work monthly. A classmate is in the room at auditions now and then, and a better read takes the part. Deadline and Playbill carry it on Trade News and Your Class.
+> - **A commercial's product** (`d8c22fb`, `PRODUCTS`). It is read by Animals, Cars, Fashion, Nature and Politics (`PRODUCT_INTEREST`).
+> - **The SAG-AFTRA pension** (`d76ed1d`, `systems/pension.ts`). Credits, vesting and a pension from 65. An old save's day-job fund is paid out then too.
+> - **Not built, with the reasons:**
+>   - The commercials contract's own 91-day clause is not modeled. SLATE signs both contracts together, and the union then applies the TV/theatrical rules.
+>   - Property tax needs a home to own, a whole system, and is the owner's to ask for.
+>
+> **C. Polish**
+>
+> - **Sources folded.** The sources and estimates sit behind a "Sources And Estimates" line (`Fine`).
+> - **Phone width.** The screens fit a phone's width: the tabs wrap, table words stay whole, and wide tables scroll in their panel. `probe/mobile.mjs` (untracked) checks every screen.
+>
+> **Newest, 2026-09-28, later: the playthrough and its fixes.**
+>
+> **The playthrough.** `probe/play-life2.ts` (untracked) played twelve looked-after lives in the engine to July 2031, and two runs played the real screens, until low memory stopped them after their first legs. There were no errors, the ledger balanced, nobody was stranded, and every save reopened on the same minute.
+>
+> **What it found, and what was fixed:**
+>
+> 1. **Too easy.** All twelve lives finished first, with acting 95–97 and presence and composure at 99–100. The fixes:
+>    - `classmateFocus` went from 0.85 to 1.
+>    - `driveSpread` went from 0.15 to 0.25.
+>    - `sessionGain` went from 0.55 to 0.42.
+>    - A night now reads against what the part asks, at School or at the Rep (`nights.par`).
+>    - Composure gains are smaller, and a remarkable night adds less presence.
+>
+>    Six lives since then graduate at about 89, against a best classmate of 81–85. One finished second. Nights are mixed, presence lands at 71–79 and composure at about 69.
+> 2. **Sleep.** The Sleep dialog's suggestion was never under 3 hours, and slept through calls. It now suggests what is left before the call, half an hour at the least.
+> 3. **Clashing castings.** A third-year in the Rep's company was also cast in a thesis. They now play only at the Rep that term, and so do classmates at the Rep.
+> 4. **Repeated plays.** A play could come round twice. Each save now shuffles the list once and deals it out from the class's first year.
+> 5. **Offers that can't be taken.** `stillTakeable` drops the Take It from an offer once a clashing job is taken.
+> 6. **Notices.** Statement notices are off by default, but a statement with a payment due always notifies.
+> 7. **Stale text.** The welcome, the guide and character creation said the player was "the one the faculty wanted most". Corrected.
+> 8. **Names.** Given names now appear once in a class, as family names already did.
+> 9. **Unclaimed money.** The bank now writes 90 days before handing an account to the state (`ESCHEAT_NOTICE_DAYS`, the uniform act's 60 to 120 days). Keep The Account there reactivates it.
+>
+> **Newest, 2026-09-28: the school made as perfect as the owner asked, in six parts.** Account 2 found six failings in the school on the owner's question, and the owner said "Do all 6". The commits are `aeb08ee` and the one after it.
+>
+> 1. **The class competes.** Admits differ in overall talent (`ESTIMATE.talent`). The player is drawn from the class's top quarter, not above everyone. Each classmate has their own drive and is an actor or an actress (`Classmate`). `mateOf` fills both in for older saves.
+> 2. **Casting reads the skills.** Each play asks for its own skills (`content/plays.ts`, `readOf`). The chair places the class on the term's first play, then the best read takes the biggest part written for them (`partsFor`), with the balance in `castScore`.
+> 3. **Real plays.** Each save deals its own season of public-domain plays with their own characters (`playOf`), because the seasons the player is cast in aren't announced. A festival's new plays stay unnamed, with parts by size.
+> 4. **A night has a result.** `nightOf` (decider `school.night`) reads each night off, solid, strong or remarkable. The run keeps its nights, the director gives a note on the last one, and `lastWork` carries it to the next casting.
+> 5. **Understudying.** On call is a call at five that needs nobody at the theater and stops no clock. Sent on, the understudy is told, and the curtain goes on their calendar. Every understudy gets a run-through on the run's second dark Monday.
+> 6. **Classmates as people.**
+>    - The whole class is cast each term, with the player's castmates named and "Around The Class" on the Casting tab.
+>    - Classmates grow from their productions (`COMPANY_KIND`).
+>    - The third year's Rep company takes classmates too.
+>    - Each classmate has their own family name.
+>
+> Over six three-year runs, players began from first to eighth and played everything from The Moon to Lady Macbeth. One finished with no agency. The owner is walking through the school screen step by step, and is at Casting.
+>
 > **Parked by the owner, 2026-09-27: what is left, to come back to after the school walkthrough.** The owner asked for this list to be saved as it stood, and is first going through the school screen step by step, with the owner deciding each step. Come back to this list after that walkthrough. The recommendation given was the first item, real competition. It is a large remodel, so the owner sets the plan.
 >
 > 1. **Gameplay gaps a player would notice.**

@@ -1,0 +1,659 @@
+{
+  "meta": {
+    "subject": "What actors are actually paid in Mexico (Mexico City), 2018-2026, to replace the game's scaling of American union minimums",
+    "researched": "2026-09-30",
+    "currency": "MXN (pesos)",
+    "method": "WebSearch and WebFetch of press, ANDA's own site, Teatro UNAM, and the public repository of the Centro Federal de Conciliacion y Registro Laboral (CFCRL). Downloaded and parsed CCT salary-revision filings directly.",
+    "headline_finding": "ANDA's tabuladores are not all confidential. The CFCRL's public repository (repositorio.centrolaboral.gob.mx) holds salary-revision agreements that ANDA deposited, and some include the tabulador itself. Argos Television's 2025 filing includes 'sueldos_excel' spreadsheets containing ANDA's 'TABULADOR MINIMO PARA TELEVISION O PLATAFORMA DIGITAL', with every role tier and every programme length, plus the signed, stamped PDF of the same tables. Argos produces for streaming platforms as well as broadcast. This is the first real, citable ANDA minimum for TV/streaming. Dubbing (Diseno en Audio, Labodubb) and Televisa Producciones CCTs are also on file with the CFCRL, but the filings I could reach for them contain only voting records and no tables.",
+    "confirmed_rule": "confirmed: true only where the figure was read on the cited page or document itself (for the CFCRL files: in the downloaded spreadsheet or PDF).",
+    "caveats": [
+      "The ANDA TV/platform tabulador is per programme (or chapter), banded by the programme's running time (15 to 180 min). That reading comes from the sheet's own wording, 'POR CADA PROGRAMA O CAPITULO ... LAS SIGUIENTES CANTIDADES'. It is a contractual MINIMUM ('tabulador minimo'). Producers pay a separately negotiated 'pago por produccion' on top, per ANDA's own Nomina Virtual page and Lizy Martinez's account.",
+      "The tabulador is per employer. Argos Television's is the only one I read. ANDA says TV tabuladores are 'creados por produccion' (built per production).",
+      "There is no 'SEGUNDAS PARTES' row in the Argos tabulador. Tiers are ESTELARES, COESTELARES, PRIMERAS PARTES and TERCERAS PARTES (the last marked 'SOLO COMISIONADO SINDICAL').",
+      "Fetch budget (~40) was exceeded slightly (~50) because the CFCRL find was worth following."
+    ]
+  },
+  "dubbing": [
+    {
+      "item": "ANDA dubbing tabulador exists as a single standard table (not public)",
+      "figure": "Dubbing: one standardised tabulador; film: 11 tabuladores; theater/variety and TV: base tabuladores per production. ANDA: 'no debemos compartir los tabuladores completos ya que es informacion sensible'",
+      "url": "https://laanda.org.mx/la-voz-del-actor/tabuladores-anda/",
+      "publisher": "Asociacion Nacional de Actores (ANDA)",
+      "date": "undated (current page, read 2026-09-30)",
+      "confirmed": true,
+      "note": "Confirms why no official dubbing rate is published. No figures on the page."
+    },
+    {
+      "item": "ANDA minimum dubbing 'llamado' (up to 6 loops)",
+      "figure": "MXN 224 per llamado minimo (hasta 6 loops), 2023 tabulador",
+      "url": "https://x.com/EdurneKeel/status/1895228963959775731",
+      "publisher": "X post by @EdurneKeel (a self-described dubbing professional with tabulador access)",
+      "date": "2025-02 (post); figure is for 2023",
+      "confirmed": false,
+      "note": "Text seen only in the search-engine snippet: 'En 2023 (la ultima vez que accese al tabulador ANDA) el llamado minimo (hasta 6 loops) estaba en $224 pesos... no existe el pago de regalias en doblaje.' The page itself returned HTTP 402 to the fetcher. A social-media claim, not press. The only per-llamado dubbing figure found from 2018 on."
+    },
+    {
+      "item": "Dubbing pay unit: the loop",
+      "figure": "Loop = about 15-20 s of dialogue; each approved loop is billable; paid by volume delivered, not by hour or day",
+      "url": "https://laverdadnoticias.com/dinero-inteligente/finanzas-personales/cuanto-gana-actor-doblaje",
+      "publisher": "La Verdad Noticias",
+      "date": "2026",
+      "confirmed": false,
+      "note": "Page returned 403. Seen in search snippets only. Gives no peso-per-loop figure in the snippet."
+    },
+    {
+      "item": "Dubbing rates frozen",
+      "figure": "'Los actores aseguran que las tarifas no han experimentado un aumento en 15 anos'",
+      "url": "https://expansion.mx/empresas/2024/04/01/doblaje-mexicano-se-tambalea-inteligencia-artificial",
+      "publisher": "Expansion",
+      "date": "2024-04-01",
+      "confirmed": true,
+      "note": "No peso figure in the article."
+    },
+    {
+      "item": "ANDA vs SITATYR dubbing pay gap",
+      "figure": "At least 15% difference between ANDA and SITATYR members (Gwendolyne Flores); pay is calculated by quantity of words",
+      "url": "https://www.contrareplica.mx/nota--En-ley-de-doblaje-actores-piden-igualar-pagos-entre-ANDA-y-Sitatyr-202030156",
+      "publisher": "ContraReplica",
+      "date": "c. 2020 (date not shown on page)",
+      "confirmed": true,
+      "note": "Relative figure only."
+    },
+    {
+      "item": "Video game dubbing per role",
+      "figure": "MXN 300 (minor role) to MXN 10,000 (principal role)",
+      "url": "https://abcnoticias.mx/tendencia/2025/6/12/dia-del-doblaje-esto-es-lo-que-gana-un-actor-en-mexico-por-peliculas-series-mas-251771.html",
+      "publisher": "ABC Noticias",
+      "date": "2025-06-12",
+      "confirmed": true,
+      "note": "Unsourced in the article. The same piece gives Jobted's average of MXN 10,630/month and Glassdoor's 12,000-15,000/month for commercial dubbing, which are aggregator salary estimates, not rates."
+    },
+    {
+      "item": "Feature-film lead dubbing fee",
+      "figure": "MXN 10,000-30,000 per feature for a lead, up to MXN 100,000 for a recognised voice",
+      "url": "https://www.dineroenimagen.com/management/cuanto-gana-un-actor-de-doblaje/134471",
+      "publisher": "Dinero en Imagen",
+      "date": "not verified",
+      "confirmed": false,
+      "note": "Seen in a search summary only; page not fetched."
+    },
+    {
+      "item": "No royalties in Mexican dubbing",
+      "figure": "Paid once, at first dubbing: 'Tu puedes haber visto 300 veces Dragon Ball, que a nosotros nos pagaron aquella vez y nada mas'",
+      "url": "https://www.informador.mx/entretenimiento/por-que-los-actores-de-doblaje-en-mexico-no-reciben-regalias-20260427-0139.html",
+      "publisher": "El Informador",
+      "date": "2026-04-27",
+      "confirmed": true,
+      "note": "Mechanic, not a figure. The July 13, 2025 'Una sola voz' AI protest (El Financiero, 2025-07-13) demanded royalties and regulation; no rates were quoted in the coverage I read."
+    },
+    {
+      "item": "ANDA CCTs with dubbing studios on file at CFCRL",
+      "figure": "Diseno en Audio S.A. de C.V. (expediente CFCRL-CONTRATO-F-III-2023-8359/E-JFCA-CC-1837-2005-III; revision approved 40-0 on 2025-05-06, 41 workers with a vote); Labodubb S.A. de C.V. (CFCRL-CONTRATO-F-III-2023-8526/E-JFCA-CC-2142-2019-III; approved 32-0 on 2025-05-06)",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/682426",
+      "publisher": "Centro Federal de Conciliacion y Registro Laboral",
+      "date": "2025-05-19",
+      "confirmed": true,
+      "note": "Only the voting-result documents were attached to these records. The salary-revision filings that may carry the dubbing tabulador (as Argos's did) are probably separate records under the same expediente. Labodubb record: https://repositorio.centrolaboral.gob.mx/contrato/682372. Next step: search the repository for those two employers' 'revision salarial' tramites and download any 'sueldos_excel'."
+    },
+    {
+      "item": "Historical: Homer Simpson dub per episode",
+      "figure": "About MXN 600 per episode (Humberto Velez, until 2005)",
+      "url": "https://www.chilango.com/general/nota/2016/03/29/humberto-velez-el-papa-latino-de-homero-simpson/amp",
+      "publisher": "Chilango (and others)",
+      "date": "figure pre-2005",
+      "confirmed": false,
+      "note": "Outside the 2018-2026 window. Search snippet only."
+    }
+  ],
+  "telenovela": [
+    {
+      "item": "ANDA day rate on Televisa (per llamado)",
+      "figure": "'entre mil quinientos a dos mil quinientos pesos el dia de llamado' (MXN 1,500-2,500 per call day)",
+      "url": "https://www.milenio.com/virales/lizy-martinez-revela-pagan-a-actores-en-televisa-video",
+      "publisher": "Milenio",
+      "date": "2023-08-22",
+      "confirmed": true,
+      "note": "Actress Lizy Martinez. This is the ANDA-paid portion. Televisa adds a negotiated per-chapter production fee: 'desde los cinco mil, diez mil o veinte mil pesos por capitulo, hasta millones al mes'."
+    },
+    {
+      "item": "Same, earlier account",
+      "figure": "MXN 1,500-2,500 per day; carta de vestuario 'desde los 5 mil pesos hasta mas de un millon'; exclusivity 'desde los 10 mil, 20 mil pesos hasta mas de un millon' monthly (discontinued)",
+      "url": "https://www.infobae.com/america/mexico/2022/09/29/cuanto-cobran-los-actores-y-actrices-de-televisa/",
+      "publisher": "Infobae",
+      "date": "2022-09-29",
+      "confirmed": true,
+      "note": "Lizy Martinez, TikTok, as reported."
+    },
+    {
+      "item": "La Rosa de Guadalupe, lead per episode",
+      "figure": "'10 mil pesos por un episodio de un protagonico' (before ISR and ANDA commission); an episode is shot over 3-4 days",
+      "url": "https://www.elfinanciero.com.mx/entretenimiento/2023/11/07/actor-de-televisa-revela-cual-es-su-sueldo-por-capitulo-en-la-rosa-de-guadalupe/",
+      "publisher": "El Financiero",
+      "date": "2023-11-07",
+      "confirmed": true,
+      "note": "Actor Irvin Ruiz. The 3-4 days per episode comes from the search summary of the same coverage."
+    },
+    {
+      "item": "La Rosa de Guadalupe 2026: aspirante day rate, overtime, wardrobe, royalties",
+      "figure": "Aspirante: 'aproximadamente 2,800 pesos por dia de llamado'; overtime after 8 h at double, 'alrededor de 600 pesos por hora adicional'; carta de vestuario '7,000 pesos por capitulo para actores de rango medio'; lead up to '18,000 pesos por capitulo' (Lizeth Goca); royalties 'desde 130 pesos por transmision'",
+      "url": "https://www.infobae.com/mexico/2026/08/19/cuanto-dinero-gana-un-actor-de-la-rosa-de-guadalupe-en-2026-el-salario-que-televisa-ofrece-y-los-requisitos/",
+      "publisher": "Infobae (Marco Ruiz)",
+      "date": "2026-08-19",
+      "confirmed": true,
+      "note": "The newest figure. The 2,800 aspirante rate is not attributed to a named source in the article."
+    },
+    {
+      "item": "ANDA minimum per programme, TV or digital platform (Argos Television): see anda_minimums",
+      "figure": "60-min programme, 2025: Estelar 2,927.44; Coestelar 2,906.59; Primera parte 1,959.31; Tercera parte 1,369.87 (MXN, plus 3% culture bonus, 3% productivity bonus and a vacation/aguinaldo add-on)",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/657954",
+      "publisher": "CFCRL / ANDA-Argos Television CCT salary revision",
+      "date": "2025-01-14 to 2025-12-31",
+      "confirmed": true,
+      "note": "Applies to telenovela-style production for TV or a digital platform. See anda_minimums for the full table."
+    },
+    {
+      "item": "TV Azteca supporting actor per chapter",
+      "figure": "not found",
+      "url": "",
+      "publisher": "",
+      "date": "",
+      "confirmed": false,
+      "note": "No published TV Azteca per-chapter figure 2018-2026. ANDA has a CCT with Producciones Azteca Digital S.A. de C.V. on file (https://repositorio.centrolaboral.gob.mx/contrato/699144), where only a signed-document entry was surveyed."
+    }
+  ],
+  "streaming_series": [
+    {
+      "item": "ANDA 'Tabulador minimo para television o plataforma digital' (Argos Television, a producer for streaming platforms)",
+      "figure": "Per programme, 2025, 60-min programme: Estelar MXN 2,927.44; Coestelar 2,906.59; Primera parte 1,959.31; Tercera parte 1,369.87. 30-min: 1,757.34 / 1,512.57 / 1,355.60 / 971.42",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/657954",
+      "publisher": "CFCRL (deposited by ANDA and Argos Television S.A. de C.V.)",
+      "date": "2025-01-14 to 2025-12-31",
+      "confirmed": true,
+      "note": "Read from the 'sueldos_excel' spreadsheet attached to the record. The title explicitly covers 'PLATAFORMA DIGITAL'. A minimum only; it does not say what Netflix, Amazon or ViX productions pay above it."
+    },
+    {
+      "item": "Other ANDA CCTs with streaming-era producers",
+      "figure": "SPG Studios Mexico (CC-2162-2021-III): +3.69% on the tabulador for 2026-01-01 to 2026-12-31, signed 2026-02-09. Dynamo Contenidos (CFCRL-CONTRATO-III-2025-32653): 2026 salary revision filed. Fabula Contenidos MX and Imagen Estudios Productora also have CCTs on file.",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/701011",
+      "publisher": "CFCRL",
+      "date": "2026",
+      "confirmed": true,
+      "note": "The SPG convenio PDF says the tabuladores are annexed, but the annex was not among the downloadable files, so no SPG peso figures. Dynamo: https://repositorio.centrolaboral.gob.mx/contrato/700271."
+    },
+    {
+      "item": "No streaming royalties",
+      "figure": "Alejandro Calva (ANDA Secretary of Labor and Conflicts): 'No pagan, no hay regalias'",
+      "url": "https://la-lista.com/opinion/netflix-no-paga-regalias-en-mexico",
+      "publisher": "La-Lista",
+      "date": "not verified",
+      "confirmed": false,
+      "note": "Search summary only. Netflix contracts through independent producers, not directly with ANDA."
+    }
+  ],
+  "film": [
+    {
+      "item": "ANDA film tabuladores",
+      "figure": "11 separate film tabuladores, not public",
+      "url": "https://laanda.org.mx/la-voz-del-actor/tabuladores-anda/",
+      "publisher": "ANDA",
+      "date": "undated",
+      "confirmed": true,
+      "note": "No figures."
+    },
+    {
+      "item": "ANDA tabulador for independent Mexican film (weekly and daily rates by tier)",
+      "figure": "Exists; figures not readable",
+      "url": "https://es.scribd.com/document/412421408/20-Tabuladores-ANDA-para-peli-cula-mexicana-independiente",
+      "publisher": "Scribd upload",
+      "date": "May 2010 - May 2011",
+      "confirmed": false,
+      "note": "Outside the window, and the figures sit behind Scribd's viewer."
+    },
+    {
+      "item": "Lead in a medium-profile Mexican film",
+      "figure": "MXN 150,000-180,000 per film",
+      "url": "",
+      "publisher": "unattributed (search summary)",
+      "date": "unknown",
+      "confirmed": false,
+      "note": "The search summary gave no traceable source. Do not use without one."
+    },
+    {
+      "item": "Supporting actor day rate on a Mexican feature; IMCINE/EFICINE figure",
+      "figure": "not found",
+      "url": "https://www.imcine.gob.mx/media/2026/1/lineamientosdeoperacionfocine2026-file_69586621327c6.pdf",
+      "publisher": "IMCINE",
+      "date": "2026",
+      "confirmed": false,
+      "note": "FOCINE 2026 guidelines found but not searched for talent caps. EFICINE totals: MXN 650 million a year for production and 50 million for distribution (search summary)."
+    }
+  ],
+  "theater": [
+    {
+      "item": "ANDA 'Nomina virtual Hector Bonilla' recommended theater day rate",
+      "figure": "'La cantidad recomendada para esta nomina en especifico es de $600 pesos' per day (1-2 functions); third function the same day '+$600'; deductions ISR 60 + union dues 60 + extraordinary fee 30 = 150; net '$450.00 pesos por dia'. Example: '$3000 pesos por funcion, en donde $2,400 son ... Pago por Produccion y $600 pesos el pago por ANDA'",
+      "url": "https://laanda.org.mx/la-voz-del-actor/nomina-virtual-hector-bonilla-una-opcion-para-cotizar-tu-trabajo/",
+      "publisher": "ANDA",
+      "date": "undated (current page)",
+      "confirmed": true,
+      "note": "ANDA's own published figure, and the clearest publicly stated ANDA amount. It is the union-payroll floor; the production fee is negotiated on top."
+    },
+    {
+      "item": "Teatro UNAM Carro de Comedias 2025 cast pay",
+      "figure": "'$12,000.00 (Doce mil pesos 00/100 M.N.) mas IVA menos deducciones ... sueldo neto de $11,440.00' monthly, for 8 months (7 in 2025, 1 in 2026); rehearsals: '$12,000.00 ... mas IVA menos deducciones' total for 9 weeks (Jan 20 - Mar 31)",
+      "url": "https://teatrounam.com.mx/teatro/entradasteatro/convocatoria-carro-de-comedias-2025/",
+      "publisher": "Teatro UNAM",
+      "date": "2025",
+      "confirmed": true,
+      "note": "Six-person touring cast, paid by honorarios receipts. The 2024 call gave the same 12,000/11,440 (search summary)."
+    },
+    {
+      "item": "INBAL Compania Nacional de Teatro stable ensemble, monthly",
+      "figure": "'Actores de numero o emeritos: 40 mil pesos. Categoria A: 40 mil pesos. Categoria B: 35 mil pesos. Categoria C: 30 mil pesos. Categoria D: 25 mil pesos.' (PRAGEI program of INBAL)",
+      "url": "https://www.eluniversal.com.mx/espectaculos/el-teatro-de-los-elegidos-en-la-cnt/",
+      "publisher": "El Universal",
+      "date": "2025-06-23",
+      "confirmed": true,
+      "note": "Category D = 1-9 years' career. Monthly, salaried repertory, not per show."
+    },
+    {
+      "item": "Per-function ranges (amateur/professional/commercial)",
+      "figure": "Amateur 100-250; professional 500-2,500; commercial 1,000-5,000 per function",
+      "url": "https://answers.mx/cuanto-se-les-paga-a-los-actores-por-hacer-una-obra-de-teatro-de-unas-cuatro-funciones-a-la-semana.html",
+      "publisher": "answers.mx (Q&A site)",
+      "date": "unknown",
+      "confirmed": false,
+      "note": "Search-summary attribution uncertain, and a low-quality source."
+    }
+  ],
+  "commercial": [
+    {
+      "item": "On-camera commercial fee in Mexico",
+      "figure": "MXN 1,500-20,000 per campaign depending on duration and exposure",
+      "url": "",
+      "publisher": "unattributed (search summary)",
+      "date": "unknown",
+      "confirmed": false,
+      "note": "No traceable press or ANDA source found. No ANDA advertising tabulador located. Treat as unfound."
+    }
+  ],
+  "extras": [
+    {
+      "item": "Extras on La Rosa de Guadalupe",
+      "figure": "About MXN 500-600 per episode (an episode is shot over 3-4 days)",
+      "url": "https://www.elfinanciero.com.mx/entretenimiento/2023/11/07/actor-de-televisa-revela-cual-es-su-sueldo-por-capitulo-en-la-rosa-de-guadalupe/",
+      "publisher": "El Financiero",
+      "date": "2023-11-07",
+      "confirmed": true,
+      "note": "Irvin Ruiz. Per episode, not per day; the article does not say how many of the 3-4 days an extra works."
+    },
+    {
+      "item": "Extras in Mexico generally",
+      "figure": "About MXN 100 per day or 35 per hour",
+      "url": "",
+      "publisher": "unattributed (search summary)",
+      "date": "unknown",
+      "confirmed": false,
+      "note": "Not traceable. Casting-agency pages (Julio Toledo Extras, castingscinetv) showed no pay figures."
+    }
+  ],
+  "anda_minimums": [
+    {
+      "item": "ANDA TV/platform tabulador, Argos Television, 2025 (TV.NAC sheet; MXN per programme by programme length 15/30/60/90/120/150/180 min)",
+      "figure": "ESTELARES 1,156.93 / 1,757.34 / 2,927.44 / 4,382.93 / 5,464.12 / 6,558.48 / 7,664.92. COESTELARES - / 1,512.57 / 2,906.59 / 4,272.07 / 5,336.79 / 6,409.20 / 7,461.85. PRIMERAS PARTES 945.08 / 1,355.60 / 1,959.31 / 3,201.86 / 3,992.17 / 4,781.38 / 5,633.16. TERCERAS PARTES (solo comisionado sindical) 608.10 / 971.42 / 1,369.87 / 2,134.94 / 2,662.91 / 3,201.86 / 3,736.41. DIRECTOR DE ESCENA 487.36 / 1,251.33 / 1,941.75 / 2,912.08 / 3,645.31 / 4,382.93 / 5,097.50. Each row also carries a 'BONO DE CULTURA 3%', a 'BONO DE PRODUCTIVIDAD 3%' and 'VACACIONES Y AGUINALDO' (e.g. Estelar 60 min: 87.82 + 87.82 + 180.48)",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/657954",
+      "publisher": "CFCRL; parties ANDA (Marco Antonio Trevino Mieres, Ana Lourdes Garza Ponce) and Argos Television S.A. de C.V. (Rafael Villasante Guzman)",
+      "date": "2025-01-14 to 2025-12-31",
+      "confirmed": true,
+      "note": "Title: 'TABULADOR MINIMO PARA TELEVISION O PLATAFORMA DIGITAL PARA PROGRAMAS QUE SE TRANSMITAN LAS 24 HRS.' Spreadsheet file: https://registro.centrolaboral.gob.mx/documento-publico/download/2025|05|21|tramite-398320|sueldos_excel|2eU6CAs2HJfFJZMsEH5WyxmKi0Ch5pwgzAJVTFzW.xlsx (needs the Referer header set to the record page). The 2024 values sit beside them, e.g. Estelar 60 min 2,820.27."
+    },
+    {
+      "item": "Same tabulador, other sheets (2025)",
+      "figure": "Foreign actors (TV.NAC. EXT.): Estelar 30 min 2,352.27, 60 min 3,917.53, 180 min 10,270.75, plus a 'cuota de transito' to ANDA (60 min 980.20). Bilingual programmes (2 IDIOMAS): Estelar 60 min 8,775.74; Primera parte 60 min 5,869.16; Tercera parte 60 min 4,129.37. Programme spoken in a language other than Spanish (signed PDF p.5): Estelar 60 min 7,354; Coestelar 7,304; Primera parte 5,947; Tercera parte 3,461",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/657954",
+      "publisher": "CFCRL / ANDA-Argos",
+      "date": "2025",
+      "confirmed": true,
+      "note": "The non-Spanish sheet header reads: 'POR CADA PROGRAMA O CAPITULO HABLADO EN IDIOMA DISTINTO AL ESPANOL (O PRODUCCION EXTRANJERA) LAS SIGUIENTES CANTIDADES.'"
+    },
+    {
+      "item": "Argos-ANDA 2025 salary revision terms",
+      "figure": "4.21% split: 3.8% on the 'tabulador de salarios minimos' from 14 Jan 2025 to 31 Dec 2025, then 0.41% from 1 to 13 Jan 2026. Deposited within strike procedure ('procedimiento de huelga') number 1692/2024",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/657954",
+      "publisher": "CFCRL (convenio PDF, page 2)",
+      "date": "2025",
+      "confirmed": true,
+      "note": "The 2026 sheet (1-13 Jan 2026) gives Estelar 60 min 2,939.45; Primera parte 60 min 1,967.35."
+    },
+    {
+      "item": "SPG Studios Mexico 2026 increase",
+      "figure": "3.69% on the tabulador, 2026-01-01 to 2026-12-31; back pay due by 2026-03-31; signed 2026-02-09; registered by CFCRL 2026-08-04",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/701011",
+      "publisher": "CFCRL",
+      "date": "2026",
+      "confirmed": true,
+      "note": "A usable 2026 escalator for ANDA TV/platform minimums. The tabulador annex was not downloadable."
+    },
+    {
+      "item": "ANDA theater payroll recommended rate",
+      "figure": "MXN 600 per day (450 net)",
+      "url": "https://laanda.org.mx/la-voz-del-actor/nomina-virtual-hector-bonilla-una-opcion-para-cotizar-tu-trabajo/",
+      "publisher": "ANDA",
+      "date": "undated",
+      "confirmed": true,
+      "note": "See theater."
+    },
+    {
+      "item": "ANDA dubbing llamado minimum",
+      "figure": "MXN 224 (up to 6 loops), 2023",
+      "url": "https://x.com/EdurneKeel/status/1895228963959775731",
+      "publisher": "X post",
+      "date": "2025 post; 2023 figure",
+      "confirmed": false,
+      "note": "See dubbing."
+    },
+    {
+      "item": "ANDA registry facts",
+      "figure": "Registration 2394, expediente 10/05133, constituted 1949-01-03, Congreso del Trabajo federation; 120 contract proceedings listed; 7,410 members as of 2025-08-05 (search summary)",
+      "url": "https://repositorio.centrolaboral.gob.mx/asociacion/514",
+      "publisher": "CFCRL",
+      "date": "2026",
+      "confirmed": true,
+      "note": "The 7,410 membership figure came from the search summary, not my fetch. The page lists 120 records over 6 pages; only page 1 was surveyed. Pages 2-6 may hold more sueldos_excel tabuladores (Televisa Producciones, Diseno en Audio, Labodubb)."
+    }
+  ],
+  "summary": "Most important: ANDA's tabuladores are not wholly confidential. Collective-contract salary revisions deposited with the CFCRL are public, and Argos Television's 2025 filing includes ANDA's full 'Tabulador minimo para television o plataforma digital' as a spreadsheet and as a signed PDF. Its per-programme minimums, for 60-minute programmes in 2025: estelar MXN 2,927, coestelar 2,907, primera parte 1,959, tercera parte 1,370, plus 3% + 3% bonuses and a vacation/aguinaldo add-on. Increases were 3.8% for 2025 and 3.69% for 2026 (SPG Studios). ANDA's own site publishes the theater payroll floor (MXN 600 per day, 450 net). Teatro UNAM pays its touring cast MXN 12,000 a month and INBAL's CNT pays MXN 25,000-40,000 a month. Press gives the Televisa day rate (MXN 1,500-2,500 per llamado, ANDA portion, 2022-2023; about 2,800 for an aspirante in 2026, with overtime about 600/hour) and per-episode figures (lead MXN 10,000-18,000; extras 500-600 per episode). Dubbing has only a social-media figure (MXN 224 per llamado of up to 6 loops, 2023), though ANDA CCTs with Diseno en Audio and Labodubb sit in the same repository and their salary-revision filings may carry the dubbing tabulador. No sourced figures were found for film day rates, commercials, or Mexico City extras per day.",
+  "cfcrl_tables": [
+    {
+      "producer": "Televisa Producciones, S.A. de C.V. (CCT CC-156-1994-II)",
+      "year": "2024-03-01 onward (revision of 2024; +4.7% on salaries in force to 2024-02-29)",
+      "kind": "television: telenovelas, series, unitarios, programs ('TABULADORES MINIMOS PARA TELEVISION PARA PROGRAMAS QUE SE TRANSMITEN LAS 24 HRS')",
+      "tiers": [
+        "ESTELARES (incl. cantantes y actores comicos)",
+        "COESTELARES (exclusivamente telenovelas)",
+        "PRIMERAS PARTES (por persona)",
+        "SEGUNDAS PARTES (por persona)",
+        "TERCERAS PARTE (modelos, duetos, trios, coros; por persona)",
+        "DIRECTORES DE ESCENA"
+      ],
+      "unit": "MXN per programme or chapter, banded by the programme's broadcast length (15/30/60/90/120/150/180 min). The convenio calls them 'salarios por cuota diaria'. Under the CCT (clauses C.3-C.4), a 4-hour telenovela day is paid as one half-hour chapter and a 7:30 day as two half-hour chapters, so a full telenovela day = 2 x the 30-min figure.",
+      "amounts": {
+        "15 min": {
+          "estelar": 1137,
+          "coestelar": 0,
+          "primera": 875,
+          "segunda": 763,
+          "tercera": 569,
+          "director": 448
+        },
+        "30 min": {
+          "estelar": 1629,
+          "coestelar": 1400,
+          "primera": 1257,
+          "segunda": 1093,
+          "tercera": 904,
+          "director": 1159
+        },
+        "60 min": {
+          "estelar": 2715,
+          "coestelar": 2694,
+          "primera": 1819,
+          "segunda": 1513,
+          "tercera": 1275,
+          "director": 1799
+        },
+        "90 min": {
+          "estelar": 4056,
+          "coestelar": 3961,
+          "primera": 2966,
+          "segunda": 2169,
+          "tercera": 1983,
+          "director": 2697
+        },
+        "120 min": {
+          "estelar": 5070,
+          "coestelar": 4953,
+          "primera": 3704,
+          "segunda": 2723,
+          "tercera": 2469,
+          "director": 3381
+        },
+        "150 min": {
+          "estelar": 6076,
+          "coestelar": 5939,
+          "primera": 4430,
+          "segunda": 3254,
+          "tercera": 2966,
+          "director": 4056
+        },
+        "180 min": {
+          "estelar": 7107,
+          "coestelar": 6921,
+          "primera": 5228,
+          "segunda": 3796,
+          "tercera": 3460,
+          "director": 4729
+        },
+        "derived_full_7h30_telenovela_day (2 x 30-min rate, per clause C.4)": {
+          "estelar": 3258,
+          "coestelar": 2800,
+          "primera": 2514,
+          "segunda": 2186,
+          "tercera": 1808
+        },
+        "foreign actors (TABULADOR MINIMO PARA EXTRANJEROS), telenovela actors and groups of 3+": {
+          "30 min": 2296,
+          "60 min": 3830,
+          "90 min": 5725,
+          "120 min": 7157,
+          "150 min": 8584,
+          "180 min": 10012,
+          "cuota de transito to ANDA 30/60 min": "578 / 951"
+        },
+        "foreign soloist singers/dancers": {
+          "30 min": 4575,
+          "60 min": 7631,
+          "180 min": 20031
+        },
+        "programmes and telenovelas spoken in a language other than Spanish": {
+          "30 min": {
+            "estelar": 4883,
+            "coestelar": 4218,
+            "primera": 3800,
+            "segunda": 3266,
+            "tercera": 2731
+          },
+          "60 min": {
+            "estelar": 8138,
+            "coestelar": 8088,
+            "primera": 5454,
+            "segunda": 4546,
+            "tercera": 3835
+          }
+        }
+      },
+      "bonuses": "Separate 3% sheets on the same bands: 'APORTACION DEL 3% PARA FOMENTO DE ACTIVIDADES CULTURALES' (clausula 4a transitoria; e.g. estelar 60 min 81.45) and 'APORTACION DEL 3% PARA FOMENTO A LA EFICIENCIA' (same amounts); neither applies to overtime. CCT: overtime 'su pago sera al doble' (C.2); work on a statutory rest day pays a normal plus a double salary (C.11); minimum 10:30 h between llamados for the same programme, with any shortfall paid as overtime (cl. 22a-23a); llamados notified 24 h ahead; no actor is paid less than the quarter-hour rate even in shorter programmes (C.12). Effective workdays: 7:30 for a one-hour programme, 5:30 for a half-hour programme, 4:00 for a half-hour telenovela chapter (C.1).",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/640750",
+      "confirmed": true,
+      "note": "Read from the 'sueldos_excel' attachment (10 sheets, dated 'Ciudad de Mexico a 1ro. Marzo del 2024', signed for Televisa by Vladimir Martin Rivas Fonseca and Hugo Humberto Rios Martinez and for ANDA by Marco Antonio Trevino Mieres). The 4.7% figure and the 'cuota diaria' wording are from the convenio PDF, clauses SEGUNDA and SEXTA. Strike file 375/2024, settled 2024-02-26 by an Acta de Sancion de Convenio (95 workers). The clause text (C.1-C.12, 22a-23a) is from the full CCT scanned in the 2023 revision filing: https://repositorio.centrolaboral.gob.mx/contrato/4301 (sustento_registro_contrato, 2023-03-01 to 2024-02-29). A sheet labelled 'hoja 10' repeats the efficiency-bonus sheet with 3x the amounts (e.g. 244.14 at 60 min); it appears to be for non-Spanish programmes (it matches hoja 9)."
+    },
+    {
+      "producer": "Producciones Azteca Digital, S.A. de C.V. (TV Azteca)",
+      "year": "2023-06-07 to 2023-12-07, and 2023-12-08 to 2024-06-06 (two steps)",
+      "kind": "television ('TABULADOR GENERAL ASOCIACION NACIONAL DE ACTORES ... PRODUCCIONES AZTECA DIGITAL')",
+      "tiers": [
+        "ESTELARES (incl. cantantes y comicos de relevante prestigio)",
+        "COESTELARES",
+        "PRIMERAS PARTES (por persona)",
+        "SEGUNDAS PARTES (por persona)",
+        "TERCERAS PARTES (duetos, trios, modelos; por persona)",
+        "DIRECTORES DE ESCENA, CONDUCTORES, MAESTROS DE CEREMONIA Y NARRADORES",
+        "EXTRANJEROS"
+      ],
+      "unit": "MXN 'SALARIO' per programme or chapter, banded by programme length (15/30/60/90/120/180 min). The sheet's own notes call it 'sueldo diario' and refer to 'capitulos de un cuarto de hora'.",
+      "amounts": {
+        "period 2023-06-07..2023-12-07": {
+          "30 min": {
+            "estelar": 1556.42,
+            "coestelar": 1348.08,
+            "primera": 1169.27,
+            "segunda": 996.67,
+            "tercera": 844.29,
+            "director": 1107.07,
+            "extranjero": 1816.09
+          },
+          "60 min": {
+            "estelar": 2559.31,
+            "coestelar": 2078.87,
+            "primera": 1691.7,
+            "segunda": 1376.06,
+            "tercera": 1181.7,
+            "director": 1721.25,
+            "extranjero": 3044.43
+          },
+          "15 min": {
+            "estelar": 1085.3,
+            "coestelar": 943.81,
+            "primera": 822.53,
+            "segunda": 696.58,
+            "tercera": 533.32,
+            "director": 436.91
+          },
+          "180 min": {
+            "estelar": 7677.93,
+            "coestelar": 6236.6,
+            "primera": 5075.09,
+            "segunda": 4128.18,
+            "tercera": 3545.11
+          }
+        },
+        "period 2023-12-08..2024-06-06": {
+          "30 min": {
+            "estelar": 1600.89,
+            "coestelar": 1386.59,
+            "primera": 1202.67,
+            "segunda": 1025.14,
+            "tercera": 868.41,
+            "director": 1138.7,
+            "extranjero": 1867.97
+          },
+          "60 min": {
+            "estelar": 2632.43,
+            "coestelar": 2138.26,
+            "primera": 1740.03,
+            "segunda": 1415.38,
+            "tercera": 1215.46,
+            "director": 1770.42,
+            "extranjero": 3131.42
+          },
+          "15 min": {
+            "estelar": 1116.31,
+            "coestelar": 970.78,
+            "primera": 846.03,
+            "segunda": 716.48,
+            "tercera": 548.56,
+            "director": 449.4
+          },
+          "180 min": {
+            "estelar": 7897.3,
+            "coestelar": 6414.78,
+            "primera": 5220.09,
+            "segunda": 4246.13,
+            "tercera": 3646.39
+          }
+        },
+        "foreign figures of relevant prestige, daily salary": {
+          "2023-06..12": "3,288.49 (one-hour programme) / 1,962.21 (half-hour)",
+          "2023-12..2024-06": "3,382.44 / 2,018.26"
+        },
+        "cuota de transito, foreigners 60 min": "1,621.03 (then 1,667.35)"
+      },
+      "bonuses": "BONO 5% on each salary (e.g. estelar 60 min 127.97, then 131.62); 'FOMENTO DE ACTIVIDADES CULTURALES 3%' (e.g. 76.78, then 78.97). Vacations, vacation premium and aguinaldo are paid on the daily nominal salary using the factor 0.06169. The union delegate (comisionado sindical) is paid at the terceras-partes rate. Quarter-hour chapters pay 65% of these rates. Donation to the union fund: 785.18 (then 807.61) per half-hour programme, 1,278.00 (then 1,314.51) per one-hour programme.",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/16633",
+      "confirmed": true,
+      "note": "Read from the 'sueldos_excel' attachment (tramite-150789, deposited 2023-06-23; salary-revision folio CFCRL-REVISION-SALARIAL-20230608-30363-4262). Signed for Azteca by Claudia Maria Teja Maceira and Maricarmen Munguia Ramirez. No 150-minute column. The later Azteca records (699144, 611203) have no tables attached."
+    },
+    {
+      "producer": "Argos Television, S.A. de C.V.",
+      "year": "2025-01-14 to 2025-12-31 (+3.8%), then 2026-01-01 to 2026-01-13 (+0.41%)",
+      "kind": "television or digital platform ('TABULADOR MINIMO PARA TELEVISION O PLATAFORMA DIGITAL')",
+      "tiers": [
+        "ESTELARES",
+        "COESTELARES",
+        "PRIMERAS PARTES",
+        "TERCERAS PARTES (solo comisionado sindical)",
+        "DIRECTOR DE ESCENA"
+      ],
+      "unit": "MXN per programme or chapter, banded by programme length (15-180 min)",
+      "amounts": {
+        "30 min 2025": {
+          "estelar": 1757.34,
+          "coestelar": 1512.57,
+          "primera": 1355.6,
+          "tercera": 971.42,
+          "director": 1251.33
+        },
+        "60 min 2025": {
+          "estelar": 2927.44,
+          "coestelar": 2906.59,
+          "primera": 1959.31,
+          "tercera": 1369.87,
+          "director": 1941.75
+        },
+        "60 min Jan 2026": {
+          "estelar": 2939.45,
+          "coestelar": 2918.5,
+          "primera": 1967.35
+        },
+        "foreign estelar 60 min 2025": 3917.53,
+        "non-Spanish-language programme 60 min 2025 (signed PDF)": {
+          "estelar": 7354,
+          "coestelar": 7304,
+          "primera": 5947,
+          "tercera": 3461
+        }
+      },
+      "bonuses": "BONO DE CULTURA 3%, BONO DE PRODUCTIVIDAD 3%, and VACACIONES Y AGUINALDO (e.g. estelar 60 min: 87.82 + 87.82 + 180.48)",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/657954",
+      "confirmed": true,
+      "note": "Already in anda_minimums; repeated here so cfcrl_tables is complete. No segundas partes row. Strike procedure 1692/2024."
+    },
+    {
+      "producer": "SPG Studios Mexico, S. de R.L. de C.V. (CC-2162-2021-III)",
+      "year": "2026",
+      "kind": "television/platform",
+      "tiers": [],
+      "unit": "",
+      "amounts": {},
+      "bonuses": "",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/701011",
+      "confirmed": true,
+      "note": "The convenio states a 3.69% increase to the tabulador for 2026-01-01 to 2026-12-31 and says the tabuladores are annexed, but no table file is attached in the repository."
+    },
+    {
+      "producer": "Dubbing studios: Diseno en Audio (CC-1837-2005-III), Labodubb (CC-2142-2019-III), Doblaje Audio Traduccion / DAT (CC-1381-1995-III), SDI Media de Mexico, Grabaciones y Doblajes Internacionales, Genaud de Mexico",
+      "year": "2021-2025 filings",
+      "kind": "dubbing (doblaje)",
+      "tiers": [],
+      "unit": "",
+      "amounts": {},
+      "bonuses": "",
+      "url": "https://repositorio.centrolaboral.gob.mx/contrato/616226",
+      "confirmed": true,
+      "note": "NO DUBBING TABLE FOUND. The ANDA listing (all 6 pages, 120 records) has records for these studios, but they carry only legitimation entries (no attachments), JFCA deposit acuerdos (2021-10-29), CFCRL certificates, or vote results (Diseno en Audio 40-0 and Labodubb 32-0, both 2025-05-06). None attaches a salary spreadsheet or a tabulador, so no per-llamado or per-loop rate, and no loops-per-llamado count, could be read. Records: Diseno en Audio https://repositorio.centrolaboral.gob.mx/contrato/682426 / https://repositorio.centrolaboral.gob.mx/contrato/5186 / https://repositorio.centrolaboral.gob.mx/contrato/617773; Labodubb https://repositorio.centrolaboral.gob.mx/contrato/682372 / https://repositorio.centrolaboral.gob.mx/contrato/5173 / https://repositorio.centrolaboral.gob.mx/contrato/617654; DAT https://repositorio.centrolaboral.gob.mx/contrato/4048 / https://repositorio.centrolaboral.gob.mx/contrato/599926; SDI Media https://repositorio.centrolaboral.gob.mx/contrato/616226; GDI https://repositorio.centrolaboral.gob.mx/contrato/599589; Genaud https://repositorio.centrolaboral.gob.mx/contrato/599905. Iyuno, New Art Dub and Grupo Macias do not appear in ANDA's listing."
+    },
+    {
+      "producer": "Other ANDA employers in the listing (no tables)",
+      "year": "",
+      "kind": "various",
+      "tiers": [],
+      "unit": "",
+      "amounts": {},
+      "bonuses": "",
+      "url": "https://repositorio.centrolaboral.gob.mx/asociacion/514",
+      "confirmed": true,
+      "note": "Legitimation-only records, no tables: Dynamo Contenidos, Fabula Contenidos MX, Imagen Estudios Productora, TL Entertainment, Estudios Telemexico, Cruz Creative Studios, Garcia Tagliavini Producciones, PMS Audiovisual MX, Equipment and Film Design International, PS by Lemon, BTF Administra, Producciones Auditel, Teleset Mexico. Older records are nightclubs, restaurants and hotels (variety performers). About 40 pre-2023 records show no employer and no documents. No film or commercial-producer tabulador was attached anywhere."
+    }
+  ],
+  "summary_cfcrl": "Pages 1-6 of ANDA's CFCRL listing (120 records) were surveyed. Tables were attached in only two new places, Televisa Producciones (2024) and Producciones Azteca Digital/TV Azteca (2023-24), plus Argos (2025), which was already found. In all three the unit is pay per programme or chapter, banded by running time. For Televisa a 7:30 telenovela day pays two half-hour chapters. So the Televisa supporting-actor minimum day is: primera parte 2,514, segunda 2,186, tercera 1,808, estelar 3,258 (MXN, March 2024), plus 3% + 3% bonuses. Overtime is paid at double. No dubbing tabulador is attached for any studio, so per-loop and per-llamado dubbing rates remain unconfirmed."
+}
