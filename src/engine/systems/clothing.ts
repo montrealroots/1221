@@ -87,7 +87,7 @@ export const productById = (id: string): ClothingProduct | undefined => CLOTHING
  * Pennsylvania don't tax clothing, which their rules already say. In
  * Britain, Ireland and Mexico the tax is in the price.
  */
-export function clothingTax(cityId: string, at: Instant, p: ClothingProduct): number {
+export function clothingTax(cityId: string, at: Instant, p: Pick<ClothingProduct, 'price' | 'taxIncluded'>): number {
   if (p.taxIncluded) return 0;
   const rate = salesTaxRate(cityId, at, 'clothing');
   if (cityId.startsWith('us-ny-') && p.price < 110) return 0;

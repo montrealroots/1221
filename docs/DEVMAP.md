@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-243 commands; 237 named by a test, 6 not.
+245 commands; 239 named by a test, 6 not.
 
 ## aircraft
 
@@ -350,6 +350,13 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
 | `school.summer_cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
 | `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
+
+## sneakers
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `sneakers.buy` | `src/engine/systems/sneakers.ts` | `ClothesWorkspace.tsx` | `sneakers.test.ts` | Rent And A Roof |
+| `sneakers.sell` | `src/engine/systems/sneakers.ts` | `ClothesWorkspace.tsx` | `sneakers.test.ts` | Rent And A Roof |
 
 ## social
 

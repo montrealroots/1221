@@ -6,7 +6,9 @@
  * country they're in, cheapest first, and what they've bought, to take back
  * while they may.
  */
-import { useState } from 'react';
+import { SNEAKERS } from '@/engine/content/sneakers';
+import { goatPayout, sneakerOffers, sneakerRefusal } from '@/engine/systems/sneakers';
+import { Fragment, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { CatalogControls, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
@@ -85,6 +87,7 @@ export function ClothesWorkspace() {
         <Salons />
         <Shop />
         <Basket />
+        <Sneakers />
         <Bought />
         <Fine>
           The shops are real retailers and the clothes their real products, at the regular prices their pages listed on the date each was read, in the money of the country they’re sold in: with VAT or IVA in Britain, Ireland and Mexico, and with the town’s sales tax added in America and Canada, none on clothing under $110 an item in New York. A store sells where SLATE has its address; online, a retailer delivers in its own country, at its published fee, free over its threshold, in its working days, or its country’s middle figure where it published none, said so. A return is unworn and unwashed, inside the retailer’s window, to a store free where it takes them there, or by mail at its fee; the delivery isn’t refunded. Dry cleaning is a real shop’s list in the town, or New York’s at the town’s cost of living, and two days, SLATE’s estimate. The clothes a life begins with are unbranded, SLATE’s.
@@ -362,6 +365,69 @@ function Basket() {
               </div>
               {q && <div className="xs dim">{how === 'online' ? (q.delivery > 0 ? `Delivery ${money(q.delivery)}` : 'Delivered free') + `, arriving ${formatDate(q.arrivesAt!, sim.zone)}. ` : ''}{no ?? ''}</div>}
               <div><button type="button" className="btn btn-sm btn-primary" disabled={!out.open || Boolean(no)} title={no ?? out.reason} onClick={() => { const a = run<{ paid: number }>('clothes.checkout', { retailerId, how }); if (a.ok) toast(`Checked out at ${r?.name}, ${money(a.value!.paid)}.`, 'positive'); }}>{q ? `Check Out, ${money(q.total)}` : 'Check Out'}</button></div>
+            </div>
+          );
+        })}
+      </div>
+    </Panel>
+  );
+}
+
+/** Air Jordans: each pair's offers where you live, retail and resale, cheapest first, and selling one on (`sneakers.buy`, `sneakers.sell`). */
+function Sneakers() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const money = (c: number) => formatMoney(c, saveCurrency(sim.universe), { cents: false });
+  const buy = useFeature('sneakers.buy');
+  const sell = useFeature('sneakers.sell');
+  const [chosen, setChosen] = useState<string | undefined>();
+  const [size, setSize] = useState('10');
+  const listed = SNEAKERS.map((s) => ({ s, offers: sneakerOffers(sim, person, s.styleCode) })).filter((x) => x.offers.length > 0)
+    .sort((a, b) => a.offers[0]!.total - b.offers[0]!.total);
+  const owned = garmentsOf(person).filter((g) => g.spec?.styleCode);
+  if (listed.length === 0 && owned.length === 0) return null;
+  return (
+    <Panel title="Sneakers" subtitle="Air Jordans by style code: each retailer’s price where you live, and GOAT’s new and used asks in America">
+      <div className="col gap-3">
+        {listed.length > 0 && (
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Sneaker</th><th scope="col">Style Code</th><th scope="col" className="num">From</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+              <tbody>
+                {listed.map(({ s, offers }) => (
+                  <Fragment key={s.styleCode}>
+                    <tr>
+                      <td>{s.name}{s.colorway ? <div className="xs dim">{s.colorway}</div> : null}</td>
+                      <td className="mono small">{s.styleCode}</td>
+                      <td className="num mono">{money(offers[0]!.total)}</td>
+                      <td><button type="button" className="btn btn-sm btn-ghost" onClick={() => setChosen(chosen === s.styleCode ? undefined : s.styleCode)}>{chosen === s.styleCode ? 'Close' : 'See Offers'}</button></td>
+                    </tr>
+                    {chosen === s.styleCode && offers.map((o) => {
+                      const no = sneakerRefusal(sim, person, s.styleCode, o.key, o.sizes.includes(size) ? size : o.sizes[0]!);
+                      return (
+                        <tr key={o.key}>
+                          <td className="small">{o.seller}, {o.condition === 'new' ? 'New' : 'Used'}<div className="xs dim">{o.basis}{o.shipping === null ? '; its delivery isn’t kept' : ''}</div></td>
+                          <td>
+                            <label className="sr-only" htmlFor={`sneaker-size-${o.key}`}>Size</label>
+                            <select id={`sneaker-size-${o.key}`} value={o.sizes.includes(size) ? size : o.sizes[0]} onChange={(e) => setSize(e.target.value)}>{o.sizes.map((z) => <option key={z} value={z}>{z}</option>)}</select>
+                          </td>
+                          <td className="num mono">{money(o.total)}</td>
+                          <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('sneakers.buy', { styleCode: s.styleCode, offer: o.key, size: o.sizes.includes(size) ? size : o.sizes[0] }).ok) toast(`${s.name}, ordered from ${o.seller}.`, 'positive'); }}>Buy</button></td>
+                        </tr>
+                      );
+                    })}
+                  </Fragment>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {owned.map((g) => {
+          const q = goatPayout(sim, person, g);
+          return (
+            <div key={g.id} className="row gap-2" style={{ alignItems: 'baseline' }}>
+              <span className="small"><Open subject={at('garment', g.id)}>{g.label}</Open>{g.spec?.size ? `, ${g.spec.size}` : ''}</span>
+              <button type="button" className="btn btn-sm btn-ghost" disabled={!sell.open || typeof q === 'string'} title={typeof q === 'string' ? q : `GOAT’s ${q.condition} ask, $${q.ask}, less 9.5%, the $5 label and 2.9% to cash out`} onClick={() => { const a = run<{ paid: number }>('sneakers.sell', { itemId: g.id }); if (a.ok) toast(`Sold on GOAT, for ${money(a.value!.paid)}.`, 'positive'); }}>{typeof q === 'string' ? 'Sell On GOAT' : `Sell On GOAT, ${money(q.paid)}`}</button>
             </div>
           );
         })}

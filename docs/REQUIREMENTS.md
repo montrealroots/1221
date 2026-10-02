@@ -70,7 +70,7 @@ Correctness first, then the connected day the plan asks to be shown working
 
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
-| 20 | Product, offer, owned item distinct; variant persists | Partial | `ClothingProduct` is product and offer in one; `Item.spec` keeps size and color | An offer layer (seller, condition, price) and a variant id |
+| 20 | Product, offer, owned item distinct; variant persists | Partial | sneakers have product, offers (seller, condition, price) and an owned pair keeping code, size and condition (2026-10-02); `ClothingProduct` is still product and offer in one | The offer layer for the rest of clothing |
 | 21 | Stores with hours and stock; websites with destinations, shipping, tracking | Partial | `storesIn` city list; `purchaseQuote` fee, threshold, days | Branch records (address, hours, services, stock); destinations, shipping tiers, click-and-collect, payment choice, tracking stages |
 | 22a | Find, browse, search, filter | Complete | `clothingCatalog`, `arrange`; department and type facets (2026-10-02); tests/catalog, clothing | Size, color and material facets |
 | 22b | Product page, variant, compare offers | Partial | `Choose` in ClothesWorkspace | Product page with size chart and source; compare sellers |
@@ -81,7 +81,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 23 | Departments; petite, tall, extended, maternity, adaptive; nothing blocked by gender | Partial | No gender gate | `department`, fit range, browsing preference; adaptive and more maternity |
 | 24 | Subcategories (underwear styles, lingerie, hosiery, swimwear, thermals, cultural…) | Partial | 16 kinds, 11 slots | `subtype`; swimwear, shapewear, hosiery, slips, cultural clothing |
 | 25 | Fit by real measures and size charts | Partial | Size from BMI share (`sizeFor`) | Body measurements; charts per retailer; shoe and ring fit; waist-by-inseam |
-| 26 | Jordans and designer products, retail vs resale | Not implemented (Jordans), partial (designer) | 8 luxury retailers | Sneaker catalog with style codes and colorways; resale sellers and condition |
+| 26 | Jordans and designer products, retail vs resale | Partial, 2026-10-02 | 30 Air Jordans by style code (`content/sneakers.ts`): retail offers in five markets with tax, GOAT new and used asks with shipping in America, sold on GOAT at its fees; tests/sneakers.test.ts | StockX (refused the reads); GOAT outside America; designer resale (Vestiaire and The RealReal schedules are in the research, not built) |
 | 27a | Receive, store | Complete | delivery, `items.move`; tests/items | — |
 | 27b | Wear, layer, remove | Partial | one garment per slot; `dressRefusal` validates `dress` and `wear_outfit`; jewelry, watches and accessories chosen and worn with the outfit; sleepwear worn at night at home (2026-10-02) | Layers, undress |
 | 27c | Wash, dry, clean | Complete | `doLaundry`, dry cleaning; tests | Wash a chosen garment; air-dry or tumble |
