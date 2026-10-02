@@ -199,6 +199,11 @@ Done and gated so far:
     - Factory options in the quote, and a factory order not driven until it comes (`research-car-options.json`, which also holds seats and cargo, not yet read by anything).
   - **Build step 5, travel, begun** (`f8a5fbcb`): packing by hand, with garment volumes and a suitcase that fills.
   - **Build step 7, property, begun** (`46bb63b9`): a football pitch in three sizes, and friends over to play on any court or the pitch.
+  - **Build step 6, health, begun** (`963c3ee7`, `3c4cb8d6`, `95a3c7c0`, and the cargo reader `460fcf6c`):
+    - A doctor's visit is an appointment for the place's published wait (`research-appointments.json`), kept or missed.
+    - A lost driving license is replaced at its authority's fee, driven on or waited for as each law says (`research-replacements.json`).
+    - England's prescription prepayment certificate.
+  - **Lives replayed at `9656b8c6`** (seeds `death-1` in New York and `death-ldn` in London, modest, as before): New York died at 89 worth $4,851,865 (at `ca7e52a1`, $4,878,945); London at 50 worth £46,544 (£47,054). 0 errors and 0 anomalies each. Both are slightly lower, as expected from fuel bought by the tank, upkeep on every kilometer and subscriptions. The lives worktree `../slate-lives` is now detached at `9656b8c6`.
   - **Build step 8, home life, begun** (`f3c65c52`): streaming, music and game services billed monthly, Britain's and Ireland's TV licences as their laws ask, consoles (`research-homelife.json`).
 - **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
 - **Stage 14** needs the owner's API key.
