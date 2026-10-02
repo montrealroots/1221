@@ -23,6 +23,7 @@ import { PIECE_LABEL, type Piece } from '@/engine/content/furniture';
 import { bedAtHome, bedQuote, bedsIn, furnishRefusal, mattressCost, mattressRefusal, mattressWorn, owns, pieceCost } from '@/engine/systems/furniture';
 import { BED_MARKET, bedSize } from '@/engine/content/beds';
 import { RENTED_TRUCK } from '@/engine/content/furniture';
+import { pieceRefusal, piecesCatalog, seatsAtHome } from '@/engine/systems/furnishings';
 import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -590,6 +591,60 @@ function FitOut({ owned }: { owned: OwnedHome }) {
   );
 }
 
+/** IKEA's seats, tables and storage where they live (`systems/furnishings.ts`), cheapest first, by kind. */
+function FromIkea() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const all = piecesCatalog(sim, person);
+  const kinds = [...new Set(all.map((e) => e.facets!.kind!))];
+  const [kind, setKind] = useState('');
+  const shown = all.filter((e) => e.facets!.kind === (kind || kinds[0]));
+  const [count, setCount] = useState(1);
+  if (all.length === 0) return null;
+  const room = seatsAtHome(person);
+  return (
+    <div className="col gap-2">
+      <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+        <div className="strong small" style={{ marginRight: 'auto' }}>From IKEA</div>
+        <div className="field" style={{ margin: 0 }}>
+          <label htmlFor="ikea-kind">Kind</label>
+          <select id="ikea-kind" value={kind || kinds[0]} onChange={(e) => setKind(e.target.value)}>
+            {kinds.map((k) => <option key={k} value={k}>{k}</option>)}
+          </select>
+        </div>
+        <div className="field" style={{ margin: 0 }}>
+          <label htmlFor="ikea-count">How Many</label>
+          <select id="ikea-count" value={count} onChange={(e) => setCount(Number(e.target.value))}>
+            {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </div>
+      </div>
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Piece</th><th scope="col">Size</th><th scope="col">Does</th><th scope="col" className="num">Delivered</th><th scope="col"><span className="sr-only">Buy</span></th></tr></thead>
+          <tbody>
+            {shown.map((e) => {
+              const p = e.value;
+              const no = pieceRefusal(person, p.id, count);
+              return (
+                <tr key={e.id}>
+                  <td>{e.label}</td>
+                  <td className="small">{p.cm.every((x) => x !== null) ? `${p.cm.map((x) => Math.round(x!)).join(' × ')} cm` : '—'}</td>
+                  <td className="small">{p.kind === 'diningTable' ? (p.seats ? `Seats ${p.seats} At A Table` : '—') : p.seats ? `Seats ${p.seats}` : p.holdsL ? `Holds ${Math.round(p.holdsL)} Liters` : '—'}</td>
+                  <td className="num mono">{formatMoney((e.price ?? 0) * count, cur, { cents: false })}</td>
+                  <td><Gated feature="home.buy_piece" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_piece', { pieceId: p.id, quantity: count }).ok) toast(`${p.name}, delivered.`, 'positive'); }}>Buy From IKEA</Gated></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="xs dim">{`Seats for ${room.seats} and a table for ${room.table} at home now. Friends come over only to what there are seats for, and a dinner sits everyone at a table. A wardrobe, a frame, a chest or a bookcase holds its outside measure in liters, worked out from IKEA’s, and is filled from Belongings. IKEA’s regular price, with the town’s sales tax where it’s added, delivered at its large-item rate.`}</div>
+    </div>
+  );
+}
+
 /** Their own bed and sofa (`systems/furniture.ts`): theirs wherever they live, and what an empty home goes without. */
 function Furniture() {
   const { sim, run, toast } = useGame();
@@ -626,6 +681,7 @@ function Furniture() {
         </table>
       </div>
       {!owns(person, 'bed') && <ChooseABed cityId={where} />}
+      <FromIkea />
       <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="move-by">When You Move</label>

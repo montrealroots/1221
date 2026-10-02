@@ -31,6 +31,8 @@ import { tiresRefusal } from '@/engine/systems/tires';
 import { tintRefusal } from '@/engine/systems/tint';
 import { MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
 import { faultCost, inShopNow, laidUp, repairRefusal, shopsFor } from '@/engine/systems/repairs';
+import { duesOf, joinRefusal, tierById, tiersFor } from '@/engine/systems/roadside';
+import type { RoadsideTier } from '@/engine/content/roadside';
 import { FINISHES, WRAP_COLORS, coverRefusal, wrapCost, wrapRefusal, wrapShopsIn, type Finish } from '@/engine/systems/wraps';
 import { inWarranty, serviceCost, serviceDue, serviceRefusal, serviceWhat, servicingKept, warrantyOf } from '@/engine/systems/carcare';
 import { CAR_SHOPS } from '@/engine/content/carshops';
@@ -302,8 +304,56 @@ export function VehiclesWorkspace() {
         </Panel>
         <BoatPanel />
         <CaravanPanel />
+        <RoadsidePanel />
       </div>
     </>
+  );
+}
+
+/** Breakdown cover with the club where one lives (`systems/roadside.ts`): joined at its dues, a tow covered to its kilometers, the calls a year counted. */
+function RoadsidePanel() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const m = person.roadside;
+  const mine = m ? tierById(m.tierId) : undefined;
+  const tiers = tiersFor(sim, person);
+  const tow = (t: RoadsideTier) => (t.towKm === null ? 'Anywhere In The Country' : t.towKm === 0 ? (t.covers === 'gb' ? 'To A Nearby Garage' : 'Repaired At The Roadside') : `${Math.round(t.towKm)} km${t.longTowKm ? `, One Of ${Math.round(t.longTowKm)} km` : ''}`);
+  return (
+    <Panel title="Breakdown Cover" subtitle={mine ? `${mine.club}, ${mine.tier}` : 'A Motoring Club Where You Live'}>
+      <div className="col gap-3">
+        {m && mine && (
+          <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+            <span className="small">Paid to {formatDate(m.renewAt, sim.zone)}; {mine.calls === null ? 'unlimited calls' : `${m.used} of ${mine.calls} calls used this year`}; tows {tow(mine).toLowerCase()}.</span>
+            <Gated feature="roadside.leave" className="btn btn-sm btn-ghost" onClick={() => { if (run('roadside.leave', {}).ok) toast('Cover ends when what’s paid runs out; nothing more is taken.', 'positive'); }}>Leave The Club</Gated>
+          </div>
+        )}
+        {!m && (tiers.length === 0 ? <p className="small muted" style={{ margin: 0 }}>SLATE has no motoring club for where you live. In Mexico roadside help comes inside a car policy.</p> : (
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Cover</th><th scope="col" className="num">Dues</th><th scope="col">Tows</th><th scope="col" className="num">Calls A Year</th><th scope="col">Join</th></tr></thead>
+              <tbody>
+                {tiers.map((t) => {
+                  const d = duesOf(sim, person, t);
+                  const no = joinRefusal(sim, person, t.id);
+                  return (
+                    <tr key={t.id}>
+                      <td title={t.basis}>{t.club}, {t.tier}</td>
+                      <td className="num mono">{money(d.each)} A {d.period === 'month' ? 'Month' : 'Year'}{d.first > d.each ? `, ${money(d.first)} First` : ''}</td>
+                      <td>{tow(t)}</td>
+                      <td className="num">{t.calls ?? 'Unlimited'}</td>
+                      <td><Gated feature="roadside.join" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ paid: number }>('roadside.join', { tierId: t.id }); if (a.ok) toast(`A member, for ${money(a.value!.paid)}.`, 'positive'); }}>Join</Gated></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ))}
+        <Fine>A car that won’t go is towed: to the garage when its repair is booked, or on a journey the rest of the way. Without cover it’s the market’s tow; with it, free to the tier’s kilometers and the rest paid by the kilometer. Each club’s dues are its own page’s, or where it prices by ZIP the figure it publishes, as each row says.</Fine>
+      </div>
+    </Panel>
   );
 }
 

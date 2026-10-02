@@ -48,7 +48,8 @@ import { alarmMonth, renterAlarmFactor } from './alarm';
 import { securityFactor } from './homesecurity';
 import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
-import { restock, starterSupplies } from './hygiene';
+import { detergentFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
+import { amenitiesOf } from './hotels';
 import { starterLuggage } from './luggage';
 import { sunTimes } from '../core/sun';
 import { gymHere } from './gyms';
@@ -85,6 +86,8 @@ export interface Stay {
   kind: 'hotel' | 'sublet' | 'sofa' | 'own' | 'let'; cityId: string; unit?: RentedUnit;
   /** Checked out of a hotel or a let, leaving town that day (`roomGone`, from 2026-10-02). */
   out?: boolean;
+  /** A named hotel's, for its own gym and pool (`content/hotelamenities.ts`, from 2026-10-02). */
+  hotelId?: string;
 }
 
 /** A production's hotel room: a bath, central air, the hotel's gym, no kitchen of its own and the laundry sent out. */
@@ -132,7 +135,10 @@ export function stayPlace(sim: Simulation, person: Person): Place {
   // A holiday let: a home of the town's own, its kitchen cooked in (`content/lets.ts`, from 2026-09-29).
   if (stay?.kind === 'let' && stay.unit) return { type: stay.unit.type, size: stay.unit.size, fixtures: stay.unit.fixtures, keeps: false, shared: false, owned: false, cooks: true };
   if (stay?.kind === 'sofa') return { type: 'condo', size: 700, fixtures: SOFA_FIXTURES, keeps: false, shared: true, owned: false, cooks: true };
-  return { type: 'condo', size: 350, fixtures: HOTEL_FIXTURES, keeps: false, shared: false, owned: false, cooks: false };
+  // A named hotel's gym where it has one, none where it hasn't or nothing read says (from 2026-10-02); any other, the usual.
+  const amenities = stay?.kind === 'hotel' ? amenitiesOf(stay.hotelId) : undefined;
+  const fixtures = amenities ? { ...HOTEL_FIXTURES, gym: amenities.gym === true ? 'building' as const : 'none' as const } : HOTEL_FIXTURES;
+  return { type: 'condo', size: 350, fixtures, keeps: false, shared: false, owned: false, cooks: false };
 }
 
 /**
@@ -277,10 +283,12 @@ export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant):
   const l = livingOf(person);
   const way = laundryWay(sim, person);
   const { cost } = laundryCost(sim, person);
-  if (cost > 0 && !spend(sim, person, cost, way === 'none' ? 'The laundromat' : 'The laundry room', 'laundry')) return false;
-  // What's dirty and to hand goes in, dry-clean-only kept out (`systems/wardrobe.ts`).
+  // What's dirty and to hand goes in, dry-clean-only kept out (`systems/wardrobe.ts`), and a load's detergent each (from 2026-10-02).
   const washed = washableDirty(sim, person);
   const loads = Math.ceil(washed.length / GARMENTS_PER_LOAD);
+  if (!detergentFor(sim, person, loads)) return false;
+  if (cost > 0 && !spend(sim, person, cost, way === 'none' ? 'The laundromat' : 'The laundry room', 'laundry')) return false;
+  laundryDetergent(sim, person, loads);
   // A home's own machines run on its electricity, billed with the month.
   if (way === 'in-unit' || way === 'washer-only') l.loads = { washer: (l.loads?.washer ?? 0) + loads, dryer: (l.loads?.dryer ?? 0) + (way === 'in-unit' ? loads : 0) };
   washGarments(washed, finishedAt + LAUNDRY.readyHours[way] * MS_HOUR);
@@ -343,6 +351,7 @@ export function livingDay(sim: Simulation, person: Person): void {
   starterWardrobe(sim, person);
   starterTowels(sim, person);
   starterSupplies(sim, person);
+  starterCleaning(sim, person, place.fixtures.dishwasher);
   starterLuggage(sim, person);
   const w = person.wellbeing;
   // Left to themselves, somebody with a free day keeps up: the washing when it's nearly all worn, a tidy-up when the
@@ -353,7 +362,7 @@ export function livingDay(sim: Simulation, person: Person): void {
   // What's worn out, replaced the same way, on a day with time for the shops.
   if (free) replaceWornOut(sim, person);
   // And toiletries run out (`systems/hygiene.ts`).
-  if (free) restock(sim, person);
+  if (free) restock(sim, person, place.fixtures.dishwasher);
   if (!wearOutfit(sim, person)) {
     w.morale = clamp(w.morale - WORN_CLOTHES.morale * personalityOf(person, 'moraleSwing'), 0, 100);
   }
@@ -361,7 +370,8 @@ export function livingDay(sim: Simulation, person: Person): void {
   if (atHome(person)) wearForSleep(sim, person);
   // Away, the place stands as they left it: no mess made, and none cleared.
   if (!place.keeps || !atHome(person)) return;
-  l.tidy = clamp(l.tidy - TIDY.perDay * (place.fixtures.dishwasher ? TIDY.dishwasher : 1), 0, 100);
+  // A dishwasher saves the mess only with its tablets in (from 2026-10-02); without, the dishes are done by hand.
+  l.tidy = clamp(l.tidy - TIDY.perDay * (place.fixtures.dishwasher && dishwasherRuns(sim, person) ? TIDY.dishwasher : 1), 0, 100);
   if (free && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
   const day = zonedParts(sim.now, CITIES.require(person.home!.cityId).timeZone);
   const weekday = new Date(Date.UTC(day.year, day.month - 1, day.day)).getUTCDay();
@@ -437,6 +447,10 @@ export function fineWeatherRefusal(sim: Simulation, person: Person, doing: strin
 export function swimRefusal(sim: Simulation, person: Person): string | undefined {
   // A member's gym with a pool, indoors, open now (`systems/gyms.ts`, from 2026-10-01).
   if (gymHere(sim, person)?.pool) return undefined;
+  // A named hotel's own pool, while staying there; an outdoor one by the weather (from 2026-10-02).
+  const hotelPool = !atHome(person) && person.stay?.kind === 'hotel' && person.stay.cityId === person.currentLocationId && !person.stay.out ? amenitiesOf(person.stay.hotelId)?.pool : undefined;
+  if (hotelPool === 'indoor') return undefined;
+  if (hotelPool === 'outdoor') { const w = weatherNow(sim, person); return w && (wet(w.condition) || w.highC < FINE.swimC) ? 'It isn’t a day for the hotel’s pool.' : undefined; }
   const owned = livingIn(person);
   if (!atHome(person) || !owned?.facts.features.includes('pool')) return 'You have no pool.';
   const w = weatherNow(sim, person);

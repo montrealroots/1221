@@ -32,6 +32,7 @@ import {
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { cardOf, cardsOf, cardTerms, scoreIsANumberIn, scoreWord, stateOf } from '@/engine/systems/credit';
 import { HOUSING, OWNED, SOFA, arrearsOf, billsOf, depositBack, moveCost, moveRefusal, rentOf, troubles } from '@/engine/systems/household';
+import { wasteFeeOf } from '@/engine/systems/waste';
 import { latePenalty } from '@/engine/systems/taxreturn';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
@@ -1015,6 +1016,7 @@ function YourHome({ cur }: { cur: string }) {
   const away = useWorld((s) => (s.player.home && s.player.home.cityId !== s.player.currentLocationId ? s.player.home.cityId : undefined));
   const rent = useWorld((s) => rentOf(s, s.player));
   const bills = useWorld((s) => billsOf(s, s.player));
+  const bins = useWorld((s) => wasteFeeOf(s, s.player));
   const council = useWorld((s) => Math.round(rentersCouncilTax(s, s.player) / 10));
   const checking = useWorld((s) => Math.max(0, s.universe.accounts[s.player.primaryAccountId ?? '']?.balance ?? 0));
   // What leaves the bank, the old deposit back set against it, and why a move can't be made, as `move` has it.
@@ -1027,7 +1029,7 @@ function YourHome({ cur }: { cur: string }) {
       <Stat
         label="Where You Sleep"
         value={homeLabel}
-        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills + council)} a month on the first: ${money(rent)} rent and ${money(bills)} bills${council > 0 ? `, and ${money(council)} council tax, April to January` : ''}. Since ${formatDate(home!.since, sim.zone)}`}
+        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills + council)} a month on the first: ${money(rent)} rent and ${money(bills)} bills${bins > 0 ? ` (${money(bins)} of it the bins)` : ''}${council > 0 ? `, and ${money(council)} council tax, April to January` : ''}. Since ${formatDate(home!.since, sim.zone)}`}
       />
       <InternetControl />
       {home && home.kind !== 'sofa' && home.kind !== 'owned' && (

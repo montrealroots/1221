@@ -47,8 +47,9 @@ import { shutAt } from './errands';
 import { spend } from './household';
 import { expectedServicesUsd, repairShare } from './carcare';
 import type { OwnedVehicle } from './vehicles';
+import { townTow } from './roadside';
 
-export interface Fault { at: Instant; severe: boolean; /** The repair, US dollars. */ usd: number; /** A collision's damage, which insurance and not a warranty pays (`systems/carcare.ts`). */ collision?: boolean }
+export interface Fault { at: Instant; severe: boolean; /** The repair, US dollars. */ usd: number; /** A collision's damage, which insurance and not a warranty pays (`systems/carcare.ts`). */ collision?: boolean; /** Towed already, to a garage or onward (`systems/roadside.ts`, from 2026-10-02). */ towed?: boolean }
 export interface InShop { shopId: string; until: Instant; /** The shop's name where it isn't a garage of `content/carshops.ts`: a wrap shop's. */ name?: string }
 
 /** The states whose inspection reads the car's computer, and fails a lit check engine light. */
@@ -151,10 +152,12 @@ export function registerRepairs(sim: Simulation, find: (person: Person, id: stri
     const share = repairShare(s, v, m, shop.make, faultCost(v, cur), s.now);
     const bill = share.yours;
     if (!spend(s, person, bill, `Repair at ${shop.name}, the ${m.make} ${m.model}${share.why ? `, ${share.why}` : ''}`, 'vehicle')) throw new CommandError('The payment didn’t go through.');
+    // A car that won't go is towed there first, by the club or at the market's price (`systems/roadside.ts`, from 2026-10-02).
+    const towed = townTow(s, person, v, `the ${m.make} ${m.model} to ${shop.name}`);
     const until = readyAt(shop, v.fault!.severe, s.now);
     v.inShop = { shopId: shop.id, until };
     delete v.fault;
     if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'The Car Is In The Shop', body: `${shop.name} has the ${m.make} ${m.model} until ${formatTime(until, CITIES.require(shop.cityId).timeZone)}, ${formatDate(until, CITIES.require(shop.cityId).timeZone)}: ${formatMoney(bill, cur, { cents: false })}.`, importance: 30, route: '/workspace/vehicles' });
-    return { readyAt: until, paid: bill };
+    return { readyAt: until, paid: bill + towed };
   });
 }

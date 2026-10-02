@@ -126,13 +126,13 @@ Correctness first, then the connected day the plan asks to be shown working
 | 34a | Television | Partial, 2026-10-02 | `systems/homelife.ts`: 146 service tiers in five markets billed monthly; Britain's and Ireland's TV licences as their law asks; unwinding names live TV or a service; tests/homelife.test.ts | A programme; stop and resume |
 | 34b | Reading, music, gaming, hobbies | Partial, 2026-10-02 | music services billed; consoles bought; unwinding in a game needs one | Reading; hobbies; games owned |
 | 34c–f | Exercise, relaxation, sleep, time | Complete | life.ts; tests | — |
-| 35a | Cleaning | Partial | `tidy` scalar | Rooms, cleaning supplies |
-| 35b | Laundry | Complete | `doLaundry`; tests/wardrobe | Detergent; towels and bedding |
+| 35a | Cleaning | Partial | `tidy` scalar; the chains' cleaning products on sale (`content/cleaning.ts`), a dishwasher's tablets used, 184 cycles a year | Rooms; how fast sprays and sponges go (unpublished) |
+| 35b | Laundry | Complete | `doLaundry`, a load's detergent each, refused without; tests/wardrobe, tests/cleaning | Towels and bedding |
 | 35c | Organizing | Partial | spots | Rooms; capacity |
-| 35d | Waste | Not implemented | — | Bins, collection, recycling |
+| 35d | Waste | Partial, 2026-10-02 | `systems/waste.ts`: each research town's household charge in the bills (LA's schedule, Toronto, Vancouver, Dublin; London, Mexico City, New York and New Haven none) | Bin size and plan choice; collection days; bulky items |
 | 35e | Replacing supplies | Partial | automatic restock | Household consumables |
 | 35f | Appliance repair | Not implemented | appliances age out | Faults, repair visits |
-| 35g | Hosting | Partial | `social.invite` visit | Reads food, drink, tidiness, seats |
+| 35g | Hosting | Done, 2026-10-02 | `social.host` (`systems/hosting.ts`): several friends, dinner or drinks; seats and a table from the furniture; dinner paid at home's meal price; drinks poured from the kitchen's beer and wine; a mess noticed | — |
 | 35h | Cleaners and gardeners | Partial | weekly cleaner; gardener | Access, visit windows, work recorded |
 | 10 | Shortcuts follow the same rules | Partial | routines run through commands; tests/routines | Background top-ups bypass time and hours; favorites, repeat orders, scheduled routines |
 
@@ -171,7 +171,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 40d | Hours, appointments | Partial | closed shops refuse | Appointment slots |
 | 40e | Purchases carried or in the car until moved, within its cargo | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out | Cargo space by model |
 | 40g | Out of fuel | Not implemented | — | With the tank |
-| 40h | Breakdowns, delays | Partial | severe fault refuses | Mid-trip breakdown; tow |
+| 40h | Breakdowns, delays | Done, 2026-10-02 | severe fault refuses; `systems/roadside.ts`: a driven journey's fault on the road, a severe one towed onward; a tow to the garage; the clubs' cover by tier, dues, tow km and calls | How long the truck takes (unpublished); battery, tyre and lockout call-outs |
 | 40i | Where it's parked | Partial | town only | Spot level |
 
 ## Part 7. Property, building and space
@@ -188,7 +188,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 41l | Verified vs simulated | Partial | fine print says simulated | A `source` field |
 | 42 | Construction walkthrough | Partial | builds by stages (complete); home projects paid up front | Bid choice, stages and payments for projects, change orders, cancellation, acceptance |
 | 43a–b | Rooms, finishes | Not implemented / partial | parts with ages | Rooms; finish grade kept |
-| 43c | Furniture | Partial | 5 pieces | Wider catalog, each with a use |
+| 43c | Furniture | Partial | 5 pieces; from 2026-10-02 IKEA's seats, tables, wardrobes, frames, chests and bookcases (163 pieces, `systems/furnishings.ts`), seats and table places read by hosting, storage holding its outside measure | Desks, TV benches, coffee tables (no reader yet) |
 | 43d–h | Appliances, lighting, storage, security, utilities | Partial | fixtures; security | Fixture choice, lighting, capacity |
 | 43i | Special rooms | Partial, 2026-10-02 | home gym, theater, dance studio, library, soundproofed room, one to each spare bedroom; a walk-in closet and a sauna, at the cost guides' prices | What each room is used for beyond being kept |
 | 43j–l | Pools, gardens, outdoor kitchen, guesthouse, courts, track | Partial | pool, courts, ADU, pitch; a hot tub, putting green and sprinklers, the first two billed monthly (2026-10-02) | Gardens, greenhouse, outdoor kitchen use, guests in the ADU, track |
@@ -210,11 +210,11 @@ Correctness first, then the connected day the plan asks to be shown working
 | 47o | Home while away | Partial | bills run | House-sitter, mail, spoilage checked |
 | 48a–b | Search named properties by dates, guests, budget | Partial | 28 hotels in 8 towns | Guests, rooms, filters |
 | 48c | Compare total stay | Complete | `namedStayQuote`; tests/hotels | — |
-| 48d–f | Inspect rooms, extras, terms | Partial | bed, hours, deposit, parking | Amenities, accessibility, policies; extras |
+| 48d–f | Inspect rooms, extras, terms | Partial | bed, hours, deposit, parking; from 2026-10-02 each hotel's gym, pool, spa, breakfast, Wi-Fi, accessibility and pets shown, and its own cancellation deadline deciding the refund (`content/hotelamenities.ts`) | Extras bought (breakfast, early check-in, a pet's fee) |
 | 48g | Book and pay | Complete | `travel.book`; tests | Hotel-only booking |
 | 48h | Check-in requirements | Partial | age at booking | Check-in step |
 | 48i | A failed deposit isn't a granted stay | Done, 2026-10-02 | journey.ts `holdForDeposit`, `travel.pay_deposit`; rentals.ts `held`, `travel.pay_rental_deposit`; standin.ts refuses; tests/deposits.test.ts | — |
-| 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial or not implemented | — | A stay place; fixtures from the property; incidentals |
+| 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial | the named hotel's own gym and pool used while staying (`stayPlace`, `swimRefusal`) | Incidentals; the room's belongings |
 | 49a–b, e–g, i | Identity, driving, entry, residence, work, building approval | Complete | documents.ts, licensing.ts, permission.ts, permits.ts; tests | Appointments and evidence steps |
 | 49c–d | Boating, aviation | Partial | instant certificate; checkride always passes | Course, exam, failure, a document |
 | 49k | Loss and replacement | Partial, 2026-10-02 | passport; a driving license replaced at its authority's fee in all eight places, driven on meanwhile where an interim or the record allows, waited for in California (`documents.replace_license`); tests/replacements.test.ts | ID cards; the police report as its own step |

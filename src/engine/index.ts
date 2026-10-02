@@ -41,12 +41,15 @@ import { registerPhones } from './systems/phones';
 import { registerHomeLife } from './systems/homelife';
 import { registerAppointments } from './systems/appointments';
 import { registerCompanions } from './systems/companions';
+import { registerRoadside } from './systems/roadside';
+import { registerFurnishings } from './systems/furnishings';
+import { registerHosting } from './systems/hosting';
 import { registerClothing, starterWardrobe } from './systems/clothing';
 import { registerAlcohol } from './systems/alcohol';
 import { registerKitchen } from './systems/kitchen';
 import { registerRoutines } from './systems/routines';
 import { registerPartners, registerPeople } from './systems/people';
-import { registerHygiene, starterSupplies } from './systems/hygiene';
+import { registerHygiene, starterCleaning, starterSupplies } from './systems/hygiene';
 import { registerFittings } from './systems/fittings';
 import { starterLuggage } from './systems/luggage';
 import { registerAwards } from './systems/awards';
@@ -98,7 +101,7 @@ import { agencyById, closeStaleBookings, registerCareer } from './systems/career
 import { registerPension } from './systems/pension';
 import { registerCommercial } from './systems/commercial';
 import { homeById, registerHomes } from './systems/homes';
-import { registerDwelling } from './systems/dwelling';
+import { homePlace, registerDwelling } from './systems/dwelling';
 import { registerInjury } from './systems/injury';
 import { attributesOf } from './systems/attributes';
 import { bindCeiling, ceilingBefore, upgradeCraft } from './systems/school';
@@ -215,6 +218,9 @@ export function registerAllSystems(sim: Simulation): void {
   registerHomeLife(sim);
   registerAppointments(sim);
   registerCompanions(sim);
+  registerRoadside(sim);
+  registerFurnishings(sim);
+  registerHosting(sim);
   registerClothing(sim);
   registerAlcohol(sim);
   registerKitchen(sim);
@@ -362,6 +368,7 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   starterWardrobe(sim, sim.player);
   // And the toiletries (`systems/hygiene.ts`).
   starterSupplies(sim, sim.player);
+  starterCleaning(sim, sim.player, homePlace(sim, sim.player)?.fixtures.dishwasher ?? false);
   // And a suitcase to pack them in (`systems/luggage.ts`).
   starterLuggage(sim, sim.player);
   return sim;
@@ -379,6 +386,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId]) starterWardrobe(sim, sim.player);
   // A save from before 2026-10-01 kept no toiletries: its set is given (`systems/hygiene.ts`).
   if (universe.people[universe.playerId]) starterSupplies(sim, sim.player);
+  // And from 2026-10-02 its detergents.
+  if (universe.people[universe.playerId]) starterCleaning(sim, sim.player, homePlace(sim, sim.player)?.fixtures.dishwasher ?? false);
   if (universe.people[universe.playerId]) starterLuggage(sim, sim.player);
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
   if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);

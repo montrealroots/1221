@@ -41,6 +41,8 @@ import { flightFate } from './systems/journey';
 import { airlineAtFault } from './systems/compensation';
 import { mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
+import { onTheRoad } from './systems/roadside';
+import type { Journey } from './systems/journey';
 import { mayCollide } from './systems/carcare';
 import { buildInspectionFails, weatherDelay } from './systems/construction';
 import { monthsToMatch } from './systems/adoption';
@@ -440,6 +442,22 @@ defineDecider<{ sim: Simulation; car: number }, string>({
   decide: ({ sim, car }) => {
     const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
     return !mayBreak(sim, sim.player, v, modelById(v.modelId)!, sim.now, 0.5) ? 'goes' : v.fault!.severe ? 'severe' : 'light';
+  },
+});
+
+defineDecider<{ sim: Simulation; car: number }, string>({
+  id: 'vehicle.roadfault',
+  decides: 'A driven journey’s own kilometers bringing an unscheduled repair or not, at RepairPal’s visits a year over the kilometers a year a car is driven, severe at its share, and where on the road; swept at even odds.',
+  drawnIn: 'src/engine/systems/roadside.ts',
+  reads: {
+    car: (o, t) => ({ ...o, car: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), car: seed }),
+  decide: ({ sim, car }) => {
+    const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
+    const j = { id: `j-${car}`, fromCity: 'us-ny-newyork', toCity: 'us-ct-newhaven', leaveAt: sim.now, arriveAt: sim.now + 7_200_000 } as Journey;
+    return !onTheRoad(sim, sim.player, v, j, 130, 0.5) ? 'goes' : v.fault!.severe ? 'severe, towed' : 'light';
   },
 });
 
