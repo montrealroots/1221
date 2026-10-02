@@ -140,7 +140,7 @@ Correctness first, then the connected day the plan asks to be shown working
 
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
-| 36a | Make, model, year, body, trim, powertrain, drivetrain | Partial | `CarModel` | Year, body, transmission, drivetrain, tank or battery, seats, cargo |
+| 36a | Make, model, year, body, trim, powertrain, drivetrain | Partial | `CarModel`; the tank or battery, seats and cargo (read by the pump, errands' passengers and shopping), shown on Cars from 2026-10-02 | Year, body, transmission, drivetrain |
 | 36b | Kinds incl. trucks, boats, aircraft | Partial | 9 kinds; one boat, one plane | Pickup kind; boat and aircraft catalogs |
 | 36c | Market and seller, verified offerings | Partial | home market only | Seller entity; another market |
 | 36d | Condition, mileage, used listings | Partial | age and hidden fault | Individual listings: mileage, condition, history, seller |
