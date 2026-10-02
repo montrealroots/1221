@@ -34,6 +34,7 @@ import { WORK_RULES } from '@/engine/content/workrules';
 import { residenceFee, residenceIn, routeRefusal, settleRefusal } from '@/engine/systems/residence';
 import { REAL_ID } from '@/engine/content/identity';
 import { naturalizeRefusal } from '@/engine/systems/citizenship';
+import { credentialsOf } from '@/engine/systems/credentials';
 
 const KIND_WORD: Record<PersonDocument['kind'], string> = { passport: 'Passport', authorization: 'Travel Authorization', visa: 'Visa', license: 'Driving License', idp: 'International Driving Permit', permit: 'Permission To Work', idcard: 'State ID Card' };
 const STATUS_WORD: Record<PersonDocument['status'], string> = { pending: 'Being Decided', valid: 'In Force', lost: 'Reported Lost', cancelled: 'Canceled' };
@@ -210,6 +211,33 @@ function LicensePath({ track = 'car' }: { track?: VehicleClass }) {
   );
 }
 
+/** The boating and flying certificates held (`credentialsOf`). */
+function Credentials() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const held = credentialsOf(person);
+  if (held.length === 0) return null;
+  return (
+    <Panel title="Boating And Flying" subtitle="Certificates held">
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Certificate</th><th scope="col">Issued By</th><th scope="col">Had</th><th scope="col">Medical Runs Out</th></tr></thead>
+          <tbody>
+            {held.map((c) => (
+              <tr key={`${c.name}-${c.issuer}`}>
+                <td>{c.name}</td>
+                <td>{c.issuer}</td>
+                <td>{c.issuedAt !== undefined ? formatDate(c.issuedAt, sim.zone) : '—'}</td>
+                <td>{c.medicalUntil !== undefined ? formatDate(c.medicalUntil, sim.zone) : '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Panel>
+  );
+}
+
 export function DrivingPane() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -264,6 +292,7 @@ export function DrivingPane() {
       </Panel>
       <LicensePath />
       <LicensePath track="motorcycle" />
+      <Credentials />
     </div>
   );
 }
