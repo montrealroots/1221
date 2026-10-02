@@ -12,6 +12,7 @@ import { useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
 import { luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
+import { consolesHere, consolesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { ordersOf } from '@/engine/systems/orders';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
@@ -68,6 +69,7 @@ export function BelongingsWorkspace() {
         </Panel>
         <Suitcase />
         <Phones />
+        <WatchingAndPlaying />
         {items.length > 0 && (
           <Panel title="Each Thing">
             <LookRegion>
@@ -224,6 +226,75 @@ function Phones() {
             <span className="xs dim">{q.tradeIn > 0 ? `${money(q.tradeIn)} off for the trade-in, the maker's published most. ` : ''}{no ?? ''}</span>
           </div>
         )}
+      </div>
+    </Panel>
+  );
+}
+
+/** What a home watches, listens to and plays: the services where you live, the TV license, consoles, and unwinding in front of any of it (`systems/homelife.ts`). */
+function WatchingAndPlaying() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const money = (c: number) => formatMoney(c, saveCurrency(sim.universe), { cents: false });
+  const subscribe = useFeature('home.subscribe');
+  const unsubscribe = useFeature('home.unsubscribe');
+  const licence = useFeature('home.tv_licence');
+  const buyConsole = useFeature('home.console');
+  const unwind = useFeature('life.look_after');
+  const plans = plansHere(person).sort((a, b) => planPrice(sim, person, a) - planPrice(sim, person, b));
+  const mine = subscriptionsOf(person);
+  const [planId, setPlanId] = useState('');
+  const [consoleId, setConsoleId] = useState('');
+  const l = licenceHere(person);
+  const consoles = consolesHere(person);
+  if (plans.length === 0 && !l && consoles.length === 0) return null;
+  const plan = plans.find((x) => x.id === planId) ?? plans.find((x) => !mine.some((m) => m.id === x.id));
+  const pick = consoles.find((x) => x.id === consoleId) ?? consoles[0];
+  const ways = [{ how: 'live', label: 'Watch Live TV' }, ...mine.map((m) => ({ how: m.id, label: `Watch Or Listen: ${planById(m.id)?.label ?? m.id}` })), ...(consolesOwned(person).length ? [{ how: 'games', label: 'Play A Game' }] : [])];
+  return (
+    <Panel title="Watching, Listening And Playing" subtitle="The services where you live at their own prices, the TV license where the law asks one, and consoles">
+      <div className="col gap-3">
+        {mine.length > 0 && (
+          <div className="col gap-1">
+            {mine.map((m) => { const p = planById(m.id); return (
+              <div key={m.id} className="row gap-2" style={{ alignItems: 'baseline' }}>
+                <span className="small">{p?.label}, {p ? money(planPrice(sim, person, p)) : ''} A Month</span>
+                <button type="button" className="btn btn-sm btn-ghost" disabled={!unsubscribe.open} title={unsubscribe.reason} onClick={() => run('home.unsubscribe', { id: m.id })}>Cancel It</button>
+              </div>
+            ); })}
+          </div>
+        )}
+        {plan && (
+          <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+            <div className="field" style={{ margin: 0 }}>
+              <label htmlFor="homelife-plan">Service</label>
+              <select id="homelife-plan" value={plan.id} onChange={(e) => setPlanId(e.target.value)}>
+                {plans.filter((x) => !mine.some((m) => m.id === x.id)).map((x) => <option key={x.id} value={x.id}>{`${x.label}, ${money(planPrice(sim, person, x))} A Month`}</option>)}
+              </select>
+            </div>
+            <button type="button" className="btn btn-sm" disabled={!subscribe.open} title={subscribe.reason} onClick={() => { if (run('home.subscribe', { id: plan.id }).ok) toast(`${plan.label}, from today.`, 'positive'); }}>Subscribe</button>
+          </div>
+        )}
+        {l && (
+          <div className="row gap-2" style={{ alignItems: 'baseline', flexWrap: 'wrap' }}>
+            <span className="small">{licensed(person, sim.now) ? `${l.name}: yours runs to ${formatDate(person.tvLicence!.until, sim.zone)}` : `${l.name}: you have none`}</span>
+            <button type="button" className="btn btn-sm btn-ghost" disabled={!licence.open} title={licence.reason} onClick={() => { if (run('home.tv_licence', {}).ok) toast('Licensed for a year.', 'positive'); }}>{`Buy The License, ${money(Math.round(l.annual * 100))}`}</button>
+          </div>
+        )}
+        {pick && (
+          <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+            <div className="field" style={{ margin: 0 }}>
+              <label htmlFor="homelife-console">Console</label>
+              <select id="homelife-console" value={pick.id} onChange={(e) => setConsoleId(e.target.value)}>
+                {consoles.map((c) => <option key={c.id} value={c.id}>{`${c.model}${c.edition ? `, ${c.edition}` : ''}`}</option>)}
+              </select>
+            </div>
+            <button type="button" className="btn btn-sm btn-ghost" disabled={!buyConsole.open} title={buyConsole.reason} onClick={() => { const a = run<{ paid: number }>('home.console', { consoleId: pick.id }); if (a.ok) toast(`Bought, for ${money(a.value!.paid)}.`, 'positive'); }}>Buy The Console</button>
+          </div>
+        )}
+        <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+          {ways.map((w) => { const no = watchRefusal(sim, person, w.how); return <button key={w.how} type="button" className="btn btn-sm btn-ghost" disabled={!unwind.open || Boolean(no)} title={no ?? unwind.reason} onClick={() => { if (run('life.look_after', { action: 'unwind', how: w.how }).ok) toast('An hour to yourself.', 'positive'); }}>{w.label}</button>; })}
+        </div>
       </div>
     </Panel>
   );

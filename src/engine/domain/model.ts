@@ -261,6 +261,9 @@ export interface Person {
   orders?: import('../systems/orders').Order[];
   /** The outfit they chose to wear, and the one they have on (`systems/wardrobe.ts`, from 2026-10-01). */
   dressed?: string[];
+  /** Streaming, music and game services paid monthly, and a TV license (`systems/homelife.ts`, from 2026-10-02). */
+  subscriptions?: import('../systems/homelife').Subscription[];
+  tvLicence?: { until: number };
   /** Clothes put in the basket to check out together, a retailer at a time (`systems/clothing.ts`, from 2026-10-02). */
   basket?: import('../systems/clothing').BasketLine[];
   /** What they have on now, and since when: the day's outfit as it's put on, or what they changed into (`systems/wardrobe.ts`, from 2026-10-02). */

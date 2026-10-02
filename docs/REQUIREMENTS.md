@@ -123,8 +123,8 @@ Correctness first, then the connected day the plan asks to be shown working
 | 33i | Wash up | Not implemented | — | Dirty dishes, washing, dishwasher |
 | 33j | Restaurants, takeout, delivery, drinks | Complete | `food.dine`, `food.drink`; tests | — |
 | 33k | Reservations | Not implemented | — | Book a table ahead |
-| 34a | Television | Not implemented | TV is furniture | Watch: a service, a programme, stop and resume |
-| 34b | Reading, music, gaming, hobbies | Not implemented | all are "unwind" | Actions per activity |
+| 34a | Television | Partial, 2026-10-02 | `systems/homelife.ts`: 146 service tiers in five markets billed monthly; Britain's and Ireland's TV licences as their law asks; unwinding names live TV or a service; tests/homelife.test.ts | A programme; stop and resume |
+| 34b | Reading, music, gaming, hobbies | Partial, 2026-10-02 | music services billed; consoles bought; unwinding in a game needs one | Reading; hobbies; games owned |
 | 34c–f | Exercise, relaxation, sleep, time | Complete | life.ts; tests | — |
 | 35a | Cleaning | Partial | `tidy` scalar | Rooms, cleaning supplies |
 | 35b | Laundry | Complete | `doLaundry`; tests/wardrobe | Detergent; towels and bedding |
