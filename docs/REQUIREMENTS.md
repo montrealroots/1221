@@ -206,7 +206,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 46 | Manual packing | Partial, 2026-10-02 | volumes (`volumeOf`, `GARMENT_L` SLATE's estimate); items moved into the suitcase by hand and kept as packed on leaving; Pack For Me within the liters; Unpack | A stay to unpack into; a luggage catalog; checked bags against an airline's limits |
 | 47a–c, g, l | Planning, documents, booking, cancellation, charters and ferries | Complete | journey.ts; tests | Destinations limited to towns with stays |
 | 47d–f, h–k | Departure transport, connections, delays, changes, local transport, activities | Partial | — | Choices of ground transport; missed connections; rebooking choice; change the outbound; taxi and rideshare |
-| 47m | Companions | Not implemented | — | Travellers on a journey |
+| 47m | Companions | Partial, 2026-10-02 | `travel.companion`: a friend or partner from where you set out, own fares, a room split evenly, the waking hours together; tests/companions.test.ts | Several companions; a child along |
 | 47o | Home while away | Partial | bills run | House-sitter, mail, spoilage checked |
 | 48a–b | Search named properties by dates, guests, budget | Partial | 28 hotels in 8 towns | Guests, rooms, filters |
 | 48c | Compare total stay | Complete | `namedStayQuote`; tests/hotels | — |
