@@ -27,7 +27,7 @@ import { resaleOf, sellRefusal } from '@/engine/systems/resale';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
 import { groupLabelOf } from '@/ui/shell/destinations';
-import { buyRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal } from '@/engine/systems/clothing';
+import { buyRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
 const SLOT_LABEL: Readonly<Partial<Record<Slot, string>>> = {
@@ -446,6 +446,7 @@ function Bought() {
   const bought = useWorld((s) => [...(s.player.clothesBought ?? [])].reverse());
   const back = useFeature('clothes.return');
   const cancel = useFeature('clothes.cancel');
+  const again = useFeature('clothes.basket_add');
   if (bought.length === 0) return null;
   return (
     <Panel title="Bought">
@@ -468,6 +469,7 @@ function Bought() {
                   <td className="small">{(b.paidFrom ?? []).map((x) => sim.universe.accounts[x.accountId]?.name ?? 'An Account').join(', ') || '—'}</td>
                   <td className="small">{formatDate(b.at, sim.zone)}{b.canceledAt !== undefined ? ', canceled' : b.returnedAt !== undefined ? ', returned' : purchaseItems(person, b.id).some((i) => i.at.kind === 'order') ? ', on its way' : ''}</td>
                   <td>
+                    {(() => { const no = buyRefusal(person, againOptions(b)); return <button type="button" className="btn btn-sm btn-ghost" disabled={!again.open || Boolean(no)} title={no ?? again.reason} onClick={() => { if (run('clothes.basket_add', { ...againOptions(b) }).ok) toast('In the basket again.', 'positive'); }}>Buy Again</button>; })()}
                     {b.returnedAt === undefined && b.canceledAt === undefined && (
                       <div className="row gap-1" style={{ justifyContent: 'flex-end' }}>
                         {b.how === 'online' && purchaseItems(person, b.id).some((i) => i.at.kind === 'order') && <button type="button" className="btn btn-sm btn-ghost" disabled={!cancel.open || Boolean(cancelRefusal(person, b.id))} title={cancelRefusal(person, b.id) ?? cancel.reason} onClick={() => { if (run('clothes.cancel', { purchaseId: b.id }).ok) toast('Canceled, and refunded.', 'positive'); }}>Cancel The Order</button>}

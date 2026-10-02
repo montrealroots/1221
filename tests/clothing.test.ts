@@ -12,7 +12,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { CLOTHING_PRODUCTS } from '@/engine/content/clothingcatalog';
-import { buyRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, clothingTax, dryCleanPrice, productPrice, purchaseItems, purchaseQuote, retailerById, STARTER, starterWardrobe } from '@/engine/systems/clothing';
+import { againOptions, buyRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, clothingTax, dryCleanPrice, productPrice, purchaseItems, purchaseQuote, retailerById, STARTER, starterWardrobe } from '@/engine/systems/clothing';
 import { arrange } from '@/engine/systems/catalog';
 import { cleanOutfits, garmentsOf, outfitFor, washableDirty, wearTheDay } from '@/engine/systems/wardrobe';
 import { sizeFor } from '@/engine/systems/tailoring';
@@ -397,5 +397,18 @@ describe('a refund', () => {
     sim.must({ kind: 'clothes.return', payload: { purchaseId: third.id, how: 'store' } });
     expect(card.balance - c2 + checking.balance - b2).toBe(third.goods);
     expect(card.balance - c2).toBe(Math.round(third.goods * 0.25));
+  });
+});
+
+describe('buy again', () => {
+  it('puts the same product back in the basket, the same way, size and color', () => {
+    const sim = life('again');
+    const p = sim.player;
+    const t = CLOTHING_PRODUCTS.find((x) => x.retailer === 'us-uniqlo' && x.slot === 'top' && x.sizes.includes('M'))!;
+    sim.must({ kind: 'clothes.buy', payload: { productId: t.id, how: 'store', size: 'M', color: t.colors[0], quantity: 1 } });
+    const b = p.clothesBought!.at(-1)!;
+    expect(againOptions(b)).toEqual({ productId: t.id, how: 'store', size: 'M', color: t.colors[0], quantity: 1 });
+    sim.must({ kind: 'clothes.basket_add', payload: { ...againOptions(b) } });
+    expect(p.basket!.at(-1)).toMatchObject({ productId: t.id, size: 'M', color: t.colors[0] });
   });
 });

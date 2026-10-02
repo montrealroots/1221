@@ -61,6 +61,9 @@ export interface ClothesPurchase {
   count: number;
   /** What paid for it, each account's share, from 2026-10-02: what a return refunds to. */
   paidFrom?: { accountId: string; share: number }[];
+  /** The size and color chosen, from 2026-10-02: what Buy Again puts in the basket. */
+  size?: string;
+  color?: string;
   returnedAt?: Instant;
   /** Called off before it was delivered (from 2026-10-02). */
   canceledAt?: Instant;
@@ -222,7 +225,7 @@ export function checkoutClothes(sim: Simulation, person: Person, lines: readonly
   const made = lines.map((o, i) => {
     const p = productById(o.productId)!;
     const count = (o.quantity ?? 1) * p.pack;
-    const purchase: ClothesPurchase = { id: sim.nextId('purchase'), productId: p.id, retailerId: r.id, how, at: sim.now, goods: q.goods[i]!, count, ...(paidFrom.length ? { paidFrom } : {}) };
+    const purchase: ClothesPurchase = { id: sim.nextId('purchase'), productId: p.id, retailerId: r.id, how, at: sim.now, goods: q.goods[i]!, count, ...(paidFrom.length ? { paidFrom } : {}), ...(o.size ? { size: o.size } : {}), ...(o.color ? { color: o.color } : {}) };
     const spec: Record<string, string> = { purchase: purchase.id, ...(o.size ? { size: o.size } : {}), ...(o.color ? { color: o.color } : p.colors.length === 1 ? { color: p.colors[0]! } : {}) };
     // Bought for the body they have now, in the size chosen: a size off is made for a body a step heavier or lighter (`fitKgFor`, `systems/tailoring.ts`).
     const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods[i]! / count), spec, garment: { ...garmentOf(p), fitKg: fitKgFor(sim, person, p.sizes, o.size, p), ...((): { footCm?: number } => { const row = o.size ? shoeRow(person, p, o.size) : undefined; return row ? { footCm: row.footCm } : {}; })() } };
@@ -251,6 +254,9 @@ function paidFromSince(sim: Simulation, since: number): { accountId: string; sha
   const total = [...out.values()].reduce((x, y) => x + y, 0);
   return total > 0 ? [...out.entries()].map(([accountId, v]) => ({ accountId, share: v / total })) : [];
 }
+
+/** A purchase bought again as it was: its product, the same way, size and color, one of it, for the basket (from 2026-10-02). */
+export const againOptions = (b: ClothesPurchase): BuyOptions => ({ productId: b.productId, how: b.how, ...(b.size ? { size: b.size } : {}), ...(b.color ? { color: b.color } : {}), quantity: 1 });
 
 /** Buys one product: a checkout of one line. */
 export const buyClothes = (sim: Simulation, person: Person, o: BuyOptions): ClothesPurchase => checkoutClothes(sim, person, [o])[0]!;
