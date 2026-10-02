@@ -19,6 +19,7 @@ import { APPS, MATCHES, appPrice } from '@/engine/systems/dating';
 import { adoptRefusal, adoptionRoute, pathCost } from '@/engine/systems/adoption';
 import { Gated } from '@/ui/guide/Guide';
 import { supportLines } from '@/engine/systems/support';
+import { careHours, careRefusal, formatCare, needsCare, parentsOf, type Parent } from '@/engine/systems/parents';
 import { askingRefusal, contactsOf, inviteRefusal, levelOf, moveInRefusal, type Contact, type Invitation } from '@/engine/systems/people';
 
 /** What somebody is to you: who you live with, your partner, who you're seeing, or how near by the hours. */
@@ -60,6 +61,7 @@ export function PeopleWorkspace() {
         </Panel>
         {picked && <Invite contact={picked} key={picked.id} homeCity={person.home?.cityId} />}
         <Family />
+        <Parents />
         <DatingPanel />
       </div>
     </>
@@ -232,6 +234,32 @@ function Family() {
       <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
         <Gated feature="social.adopt" className="btn btn-sm btn-ghost" disabled={Boolean(noAdopt)} title={noAdopt ?? (route ? `${route.agency}, ${route.place}` : adopt.reason)} onClick={() => { if (run('social.adopt', { kind: 'adoption' }).ok) toast('Adoption started.', 'positive'); }}>{noAdopt ? 'Adopt' : `Adopt, ${money(pathCost(sim, person, 'adoption'))}`}</Gated>
         <Gated feature="social.adopt" className="btn btn-sm btn-ghost" disabled={Boolean(noSurrogate)} title={noSurrogate ?? 'Its costs paid at the start, the child born a pregnancy later.'} onClick={() => { if (run('social.adopt', { kind: 'surrogacy' }).ok) toast('A surrogacy, under way.', 'positive'); }}>{noSurrogate ? 'A Surrogacy' : `A Surrogacy, ${money(pathCost(sim, person, 'surrogacy'))}`}</Gated>
+      </div>
+    </Panel>
+  );
+}
+
+/** Your parents, and their care when they need it (`systems/parents.ts`). */
+function Parents() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const care = useFeature('family.care');
+  const parents = parentsOf(person);
+  if (!parents.length) return null;
+  const age = (p: Parent) => Math.floor((Math.min(sim.now, p.dies) - p.born) / (365.2425 * MS_DAY));
+  return (
+    <Panel title="Your Parents" subtitle={CITIES.require(parents[0]!.cityId).name}>
+      <div className="col gap-2 small">
+        {parents.map((p) => (
+          <div key={p.role} className="field-row">
+            <span>{`${p.role === 'mother' ? 'Your Mother' : 'Your Father'}, ${age(p)}${p.died ? ', Died' : needsCare(p, sim.now) ? `, Needs ${p.care!.kind === 'facility' ? 'A Care Home' : 'Care At Home'}` : ''}`}</span>
+            {needsCare(p, sim.now) && (['pay', 'give', 'none'] as const).map((how) => {
+              const no = careRefusal(person, p, how, sim.now);
+              const label = how === 'pay' ? `Pay For It, ${formatCare(sim, p)} A Month` : how === 'give' ? `Care For Them, ${Math.round(careHours(person))} Hours A Week` : 'Leave It To The State';
+              return <Gated key={how} feature="family.care" className="btn btn-sm btn-ghost" disabled={Boolean(no) || (p.how ?? 'none') === how} title={no ?? care.reason} onClick={() => { if (run('family.care', { role: p.role, how }).ok) toast('Done.', 'neutral'); }}>{label}</Gated>;
+            })}
+          </div>
+        ))}
       </div>
     </Panel>
   );

@@ -116,6 +116,7 @@ import { registerTravelInsurance } from './systems/travelinsurance';
 import { registerTelecom } from './systems/telecom';
 import { registerPropertyManagers } from './systems/propertymanagers';
 import { registerAdoption } from './systems/adoption';
+import { registerParents } from './systems/parents';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
 } from './world/bootstrap';
@@ -203,6 +204,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerMarriage(sim);
   registerChildren(sim);
   registerAdoption(sim);
+  registerParents(sim);
   registerDating(sim);
   registerTailoring(sim);
   registerHygiene(sim);

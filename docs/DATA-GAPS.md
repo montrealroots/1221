@@ -26,4 +26,4 @@ exists, this file says so, and the item stays out.
 | Used clothes' resale prices | 3 | Resale platforms' sold listings aren't open data | Out |
 | Labor rates by shop, upholstery, audio, wheel fitment | 8 | Shops' rate cards where posted; no open dataset | Out |
 | Gardeners, instructors, trades | 11 | Prices are researched; the effect needs a yard's growth or a lesson's gain, which no open dataset measures | Out |
-| Adoption, surrogacy, custody, caring for parents | 10 | Published, but SLATE's life has no parents and no separation's children to apply them to | Out |
+| Adoption, surrogacy, custody, child support, caring for parents | 10 | research-gaps-family.json; Connecticut's support schedule read from its PDF by `tools/data/ctsupport.mjs`; the ACL's long-term care odds | Got (`systems/adoption.ts`, `systems/support.ts`, `systems/parents.ts`); Ireland's child support has no formula, and none is paid. |

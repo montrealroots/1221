@@ -44,6 +44,7 @@ import { mayBreak } from './systems/repairs';
 import { mayCollide } from './systems/carcare';
 import { buildInspectionFails, weatherDelay } from './systems/construction';
 import { monthsToMatch } from './systems/adoption';
+import { careOf, deathOf } from './systems/parents';
 import { metAtWork } from './systems/people';
 import { mayDivorce } from './systems/marriage';
 import { mayConceive } from './systems/children';
@@ -435,6 +436,24 @@ defineDecider<{ sim: Simulation; car: number }, string>({
   decide: ({ sim, car }) => {
     const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
     return !mayBreak(sim, sim.player, v, modelById(v.modelId)!, sim.now, 0.5) ? 'goes' : v.fault!.severe ? 'severe' : 'light';
+  },
+});
+
+defineDecider<{ sim: Simulation; key: number; age: number }, string>({
+  id: 'family.parent',
+  decides: 'When a parent dies, by the life table for their country, and whether and when from 65 they need care, at the ACL’s 70% and its years, at home or in a facility.',
+  drawnIn: 'src/engine/systems/parents.ts',
+  reads: {
+    key: (o, t) => ({ ...o, key: Math.round(t * 400) }),
+    age: (o, t) => ({ ...o, age: 20 + Math.round(t * 60) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), key: seed, age: 30 + (seed % 40) }),
+  decide: ({ sim, key, age }) => {
+    const born = Date.UTC(2026, 0, 1) - age * 365.2425 * 86_400_000;
+    const dies = deathOf(sim, `p${key}`, born, 'us', Date.UTC(2026, 0, 1));
+    const care = careOf(sim, `p${key}`, 'mother', born, dies);
+    return `${Math.round((dies - born) / (365.2425 * 86_400_000))}${care ? `-${care.kind}` : ''}`;
   },
 });
 

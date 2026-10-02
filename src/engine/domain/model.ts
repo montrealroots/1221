@@ -289,6 +289,8 @@ export interface Person {
   trying?: boolean;
   /** An adoption or a surrogacy under way, and the adoptions made, for the return (`systems/adoption.ts`, from 2026-10-02). */
   familyPath?: import('../systems/adoption').FamilyPath;
+  /** Your mother and father (`systems/parents.ts`, from 2026-10-02). */
+  parents?: import('../systems/parents').Parent[];
   adopted?: import('../systems/adoption').Adopted[];
   /** A dating app they're on (`systems/dating.ts`, from 2026-10-01). */
   datingApp?: import('../systems/dating').DatingApp;
