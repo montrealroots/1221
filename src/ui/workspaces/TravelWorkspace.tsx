@@ -22,7 +22,7 @@ import { AIR } from '@/engine/content/air';
 import { caravansOf, towFor, towedLegs } from '@/engine/systems/caravans';
 import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS, inMotorhome, residentOf, refundRefusal } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
-import { companionRefusal } from '@/engine/systems/companions';
+import { companionRefusal, companionsOf } from '@/engine/systems/companions';
 import { contactsOf } from '@/engine/systems/people';
 import { arrange } from '@/engine/systems/catalog';
 import { rentalCatalog, stayCatalog } from '@/engine/systems/catalogs';
@@ -616,14 +616,17 @@ function AskAlong({ j }: { j: Journey }) {
   const [contactId, setContactId] = useState('');
   const ask = useFeature('travel.companion');
   const who = contactsOf(person).filter((c) => c.cityId === j.fromCity && !c.rival);
-  if (j.companionId) { const c = contactsOf(person).find((x) => x.id === j.companionId); return c ? <span className="xs dim">{`With ${c.name}`}</span> : null; }
-  if (who.length === 0 || companionRefusal(person, j.id, who[0]!.id).refused) return null;
-  const chosen = who.find((c) => c.id === contactId) ?? who[0]!;
+  const coming = companionsOf(j).map((id) => contactsOf(person).find((x) => x.id === id)).filter((x): x is NonNullable<typeof x> => Boolean(x));
+  const free = who.filter((c) => !companionRefusal(person, j.id, c.id).refused);
+  const withThem = coming.length ? <span className="xs dim">{`With ${coming.map((c) => c.name).join(', ')}`}</span> : null;
+  if (free.length === 0) return withThem;
+  const chosen = free.find((c) => c.id === contactId) ?? free[0]!;
   return (
     <span className="row gap-1" style={{ alignItems: 'center' }}>
+      {withThem}
       <label className="sr-only" htmlFor={`along-${j.id}`}>Who</label>
-      <select id={`along-${j.id}`} value={chosen.id} onChange={(e) => setContactId(e.target.value)} style={{ width: 'auto' }}>{who.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select>
-      <button type="button" className="btn btn-sm btn-ghost" disabled={!ask.open} title={ask.reason} onClick={() => { const a = run<{ accepted: boolean; reason?: string; repaid?: number }>('travel.companion', { journeyId: j.id, contactId: chosen.id }); if (a.ok) toast(a.value!.accepted ? `${chosen.name.split(' ')[0]} is coming${a.value!.repaid ? `, and paid back their half of the room, ${formatMoney(a.value!.repaid, saveCurrency(sim.universe))}` : ''}.` : `No: ${a.value!.reason}`, a.value!.accepted ? 'positive' : 'neutral'); }}>Ask A Friend Along</button>
+      <select id={`along-${j.id}`} value={chosen.id} onChange={(e) => setContactId(e.target.value)} style={{ width: 'auto' }}>{free.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select>
+      <button type="button" className="btn btn-sm btn-ghost" disabled={!ask.open} title={ask.reason} onClick={() => { const a = run<{ accepted: boolean; reason?: string; repaid?: number }>('travel.companion', { journeyId: j.id, contactId: chosen.id }); if (a.ok) toast(a.value!.accepted ? `${chosen.name.split(' ')[0]} is coming${a.value!.repaid ? `, and paid back their share of the room, ${formatMoney(a.value!.repaid, saveCurrency(sim.universe))}` : ''}.` : `No: ${a.value!.reason}`, a.value!.accepted ? 'positive' : 'neutral'); }}>Ask A Friend Along</button>
     </span>
   );
 }

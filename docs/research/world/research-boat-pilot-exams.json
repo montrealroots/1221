@@ -1,0 +1,542 @@
+{
+  "meta": {
+    "retrieved": "2026-10-02",
+    "subject": "Boating operator certificates (New York, Connecticut, California, Ontario/BC via Canada's PCOC, England, Ireland, Mexico) and the private pilot certificate (FAA, Transport Canada, UK CAA, IAA, AFAC): what the law asks, the course, the exam, retakes, prices and published pass rates.",
+    "why": "SLATE now issues a boating certificate at once on payment (src/engine/content/boats.ts BOAT_RULES[*].certificate: NY $15, CT $50, CA $10, ON C$49.95) and a pilot's knowledge test and checkride always pass (src/engine/systems/aviation.ts PILOT_TRAINING knowledgeTest 175, checkride 1,000). These figures are for building the course, the exam that can be failed, the retake rule and its wait.",
+    "conventions": "confirmed=true only when the figure was read on 2026-10-02 from the authority's or the provider's own page or PDF (fetched directly, or fetched with curl and read with pdftotext). confirmed=false means it came from a search engine's summary, a secondary site, or a page that refused the fetch. sourceType is 'primary' for the authority or the provider itself, else 'secondary'. Nothing is invented: where nothing was found the value is null with a note.",
+    "readDate": "2026-10-02"
+  },
+
+  "boating": [
+    {
+      "jurisdiction": "US-NY",
+      "credential": "New York Boating Safety Certificate (Brianna's Law)",
+      "law": {
+        "who": "Every operator of a motorized vessel, including personal watercraft and specialty craft, must have completed a state-approved safe boating course.",
+        "phaseIn": [
+          { "bornOnOrAfter": "1993-01-01", "requiredFrom": 2020 },
+          { "bornOnOrAfter": "1988-01-01", "requiredFrom": 2022 },
+          { "bornOnOrAfter": "1983-01-01", "requiredFrom": 2023 },
+          { "bornOnOrAfter": "1978-01-01", "requiredFrom": 2024 },
+          { "allOperators": true, "requiredFrom": 2025 }
+        ],
+        "minimumAgeForCourse": 10,
+        "validity": "life",
+        "sources": [
+          { "url": "https://parks.ny.gov/activities/boating/boating-education", "confirmed": true, "sourceType": "primary", "note": "All operators of motorized vessels; at least 10 to attend; certificates good for life; temporary certificate valid 90 days." },
+          { "url": "https://boatus.org/newyork", "confirmed": true, "sourceType": "secondary", "note": "Phase-in dates by birth date as listed by the BoatUS Foundation, an approved provider." }
+        ]
+      },
+      "course": {
+        "classroomMinimumHours": 8,
+        "online": true,
+        "note": "Classroom course is at least 8 hours (NYS Parks). Online courses are offered by approved providers; the BoatUS Foundation course has a 60-question final.",
+        "source": "https://parks.ny.gov/sites/default/files/CourseMaterialsInstructorGuide.pdf", "confirmed": true, "sourceType": "primary"
+      },
+      "exam": {
+        "questions": null,
+        "questionsNote": "The OPRHP classroom final's length isn't stated in the instructor guide. BoatUS's online final is 60 questions (boatus.org/newyork, confirmed).",
+        "passMarkPct": 76,
+        "closedBook": true,
+        "source": "https://parks.ny.gov/sites/default/files/CourseMaterialsInstructorGuide.pdf", "confirmed": true, "sourceType": "primary",
+        "quote": "This is a \"closed book\" examination and the required minimum passing score is 76%."
+      },
+      "retakes": { "allowed": null, "waitingPeriod": null, "note": "No retake rule found in NYS Parks pages or the instructor guide." },
+      "prices": [
+        { "item": "Permanent certificate, classroom route, age 18 or older", "amount": 10, "currency": "USD", "source": "https://parks.ny.gov/sites/default/files/CourseMaterialsInstructorGuide.pdf", "confirmed": true, "sourceType": "primary", "note": "\"OPRHP collects a $10.00 fee for issuance of the permanent boating safety certificate to anyone age eighteen or older\"; under 18 pays nothing to OPRHP. Volunteer instructors charge no fee; commercial instructors set their own." },
+        { "item": "Replacement certificate", "amount": 10, "currency": "USD", "source": "https://parks.ny.gov/activities/boating/boating-education", "confirmed": true, "sourceType": "primary" },
+        { "item": "BoatUS Foundation online course", "amount": 0, "currency": "USD", "source": "https://boatus.org/newyork", "confirmed": true, "sourceType": "primary", "note": "The only free online course New York approves; a free 90-day temporary certificate is printable." },
+        { "item": "BoatUS Foundation permanent plastic card", "amount": 15, "currency": "USD", "source": "https://boatus.org/newyork", "confirmed": true, "sourceType": "primary", "note": "The figure SLATE keeps now (US-NY certificate $15)." },
+        { "item": "Paid online courses (card included)", "amountLow": 39.99, "amountHigh": 79.95, "currency": "USD", "source": "https://www.boat-ed.com/newyork/", "confirmed": false, "sourceType": "secondary", "note": "Search summary: Recademics $39.99, Boaterexam $49.95, BOATsmart! $49.95, Boat-Ed $54.95, iLearnToBoat $74.95, Boat-Ed+ $79.95. NYS Parks: fees paid to online providers include the permanent certificate." }
+      ],
+      "passRate": null,
+      "passRateNote": "Not published by NYS Parks."
+    },
+
+    {
+      "jurisdiction": "US-CT",
+      "credential": "Connecticut Safe Boating Certificate (SBC) / Certificate of Personal Watercraft Operation (CPWO)",
+      "law": {
+        "who": "Connecticut residents, property owners and owners of CT-registered vessels operating a vessel; out-of-state visitors operating more than 60 days a year. Under 16 may operate without one under the direct supervision of a certified person 18 or older; certification can be had from 12.",
+        "source": "https://portal.ct.gov/DEEP/Boating/FAQs/FAQs-Certification", "confirmed": true, "sourceType": "primary"
+      },
+      "course": {
+        "classroomMinimumHours": 8,
+        "online": false,
+        "note": "8 hours minimum, instructor-led, NASBLA-approved, with a proctored exam; instructor-led virtual classes count, self-paced online courses do not.",
+        "source": "https://portal.ct.gov/DEEP/Boating/FAQs/FAQs-Certification", "confirmed": true, "sourceType": "primary"
+      },
+      "exam": { "questions": null, "passMarkPct": 80, "proctored": true, "source": "https://portal.ct.gov/DEEP/Boating/FAQs/FAQs-Certification", "confirmed": true, "sourceType": "primary" },
+      "equivalencyExam": {
+        "for": "experienced boaters, instead of the course",
+        "fee": 75, "currency": "USD",
+        "passMarkPct": 80,
+        "attemptsAllowed": 1,
+        "onFailure": "78% or below fails, and the examinee must then take the 8-hour approved course.",
+        "where": "Zoom or Marine Headquarters, Old Lyme; 8:30am",
+        "source": "https://portal.ct.gov/-/media/deep/boating/equivalency-exam-information.pdf?rev=3ed246e016344dd7b81ff47f75366ea4&hash=DEB00DA7941F506FAFF139F7B64F4C36", "confirmed": true, "sourceType": "primary",
+        "quote": "The equivalency exam may only be taken once."
+      },
+      "retakes": { "allowed": null, "waitingPeriod": null, "note": "No retake rule for the course exam found; the equivalency exam is once only." },
+      "prices": [
+        { "item": "Certificate (one-time)", "amount": 50, "currency": "USD", "source": "https://portal.ct.gov/DEEP/Boating/Certification/How-to-get-a-certificate-to-operate", "confirmed": true, "sourceType": "primary", "note": "Bought through the Online Sportsmen Licensing System about a week after the course. The FAQ page also prices a three-month temporary certificate at $50. The figure SLATE keeps now." },
+        { "item": "Course fee", "amount": null, "currency": "USD", "note": "Set by each course provider; not found on DEEP's pages." }
+      ],
+      "passRate": null
+    },
+
+    {
+      "jurisdiction": "US-CA",
+      "credential": "California Boater Card",
+      "law": {
+        "who": "Operators of motorized vessels on state waters.",
+        "phaseIn": [
+          { "from": "2018-01-01", "ages": "20 and younger" },
+          { "from": "2019-01-01", "ages": "25 and younger" },
+          { "from": "2020-01-01", "ages": "35 and younger" },
+          { "from": "2021-01-01", "ages": "40 and younger" },
+          { "from": "2022-01-01", "ages": "45 and younger" },
+          { "from": "2023-01-01", "ages": "50 and younger" },
+          { "from": "2024-01-01", "ages": "60 and younger" },
+          { "from": "2025-01-01", "ages": "all persons regardless of age" }
+        ],
+        "exemptions": "Rental vessel operators, out-of-state visitors under 60 days, international visitors under 90 days, those supervised by a cardholder, commercial fishing licence holders, USCG licence holders.",
+        "validity": "life",
+        "source": "https://californiaboatercard.com/faqs-2/", "confirmed": true, "sourceType": "primary"
+      },
+      "course": {
+        "onlineMinimumHours": 3,
+        "classroomOrHomeStudyHours": "up to 8",
+        "providers": 20,
+        "source": "https://californiaboatercard.com/faqs-2/", "confirmed": true, "sourceType": "primary",
+        "note": "20 approved providers listed at californiaboatercard.com/courses/, including the Division of Boating and Waterways itself and the BoatUS Foundation."
+      },
+      "exam": {
+        "questions": 60,
+        "passMarkPct": 80,
+        "source": "https://dbw.parks.ca.gov/?page_id=30826", "confirmed": true, "sourceType": "primary",
+        "note": "DBW's own free home-study course."
+      },
+      "retakes": { "allowed": "unlimited", "waitingPeriod": null, "source": "https://dbw.parks.ca.gov/?page_id=30826", "confirmed": true, "sourceType": "primary", "note": "No restriction on attempts; retake answer sheets come back with an unsuccessful result. Certificate arrives by mail in two to four weeks." },
+      "prices": [
+        { "item": "Boater Card (lifetime)", "amount": 10, "currency": "USD", "source": "https://californiaboatercard.com/faqs-2/", "confirmed": true, "sourceType": "primary", "note": "The figure SLATE keeps now." },
+        { "item": "Card application service fee", "amount": 1, "currency": "USD", "source": "https://dbw.parks.ca.gov/?page_id=30826", "confirmed": true, "sourceType": "primary", "note": "\"$10 fee for the California Boater Card application + $1 service fee\"." },
+        { "item": "Replacement card", "amount": 5, "currency": "USD", "source": "https://californiaboatercard.com/faqs-2/", "confirmed": true, "sourceType": "primary" },
+        { "item": "DBW home-study course and exam", "amount": 0, "currency": "USD", "source": "https://dbw.parks.ca.gov/?page_id=30826", "confirmed": true, "sourceType": "primary" },
+        { "item": "BoatUS Foundation online course (60-question final, 3-5 hours)", "amount": 0, "currency": "USD", "source": "https://boatus.org/free-courses/free-boating-safety-course/california/", "confirmed": true, "sourceType": "primary" },
+        { "item": "Paid online courses", "amountLow": 32.95, "amountHigh": 54.95, "currency": "USD", "source": "https://www.boat-ed.com/california/", "confirmed": false, "sourceType": "secondary", "note": "Search summary: Quick Boater Course $32.95, BOATERexam $49.95, Boat-Ed $54.95; the $10 card is on top." }
+      ],
+      "passRate": null
+    },
+
+    {
+      "jurisdiction": "CA (Ontario, British Columbia; federal)",
+      "credential": "Pleasure Craft Operator Card (PCOC), Transport Canada proof of competency",
+      "law": {
+        "who": "Operators of motorized pleasure craft must be competent and carry proof of competency on board (Competency of Operators of Pleasure Craft Regulations, s. 3(1)).",
+        "nonResidentExemption": "Non-residents whose craft is in Canada under 45 consecutive days, carrying proof of residency (s. 3(2)(b), 3(3)).",
+        "youthLimits": [
+          { "age": "under 12, unsupervised", "maxPower": "10 hp / 7.5 kW" },
+          { "age": "12 to 15, unsupervised", "maxPower": "40 hp / 30 kW" },
+          { "age": "under 16", "rule": "may not operate a personal watercraft, supervised or not" }
+        ],
+        "supervisionMeans": "a person 16 or older in the boat directly supervising",
+        "validity": "life",
+        "governmentFee": 0,
+        "sources": [
+          { "url": "https://laws.justice.gc.ca/eng/regulations/SOR-99-53/page-1.html", "confirmed": true, "sourceType": "primary" },
+          { "url": "https://tc.canada.ca/en/marine-transportation/preparing-operate-your-vessel/pleasure-craft-operator-card-pcoc", "confirmed": true, "sourceType": "primary", "note": "\"All fees for course, test and card services are established by the course providers\"; the card is valid for life." }
+        ]
+      },
+      "course": {
+        "onlineMinimumHours": 3,
+        "completionWindow": "up to 1 year",
+        "source": "https://tc.canada.ca/en/marine-transportation/marine-safety/standard-pleasure-craft-operator-card-testing-over-internet-tp-15080-e-2010", "confirmed": true, "sourceType": "primary",
+        "note": "TP 15080 s. 6.2: online study no less than three hours, each chapter with a minimum time."
+      },
+      "exam": {
+        "questions": 50,
+        "questionsNote": "TP 15080 s. 7.0(17) and (20) leave the count to Transport Canada's bank. Providers (BOATsmart!, CanBoat) state 50; some older sources say 36.",
+        "passMarkPct": 75,
+        "source": "https://tc.canada.ca/en/marine-transportation/marine-safety/standard-pleasure-craft-operator-card-testing-over-internet-tp-15080-e-2010", "confirmed": true, "sourceType": "primary",
+        "secondarySources": ["https://www.boatsmartexam.com/ca/pleasure-craft-operator-card/", "https://www.canboat.ca/pcoc-boating-license/additional-information/pcoc-exam/"]
+      },
+      "retakes": {
+        "rule": "One retest after 24 hours and within 30 days without repeating the study guide; failing the second test means the whole online course again (or a classroom course).",
+        "waitHours": 24,
+        "withinDays": 30,
+        "attemptsBeforeRestudy": 2,
+        "source": "https://tc.canada.ca/en/marine-transportation/marine-safety/standard-pleasure-craft-operator-card-testing-over-internet-tp-15080-e-2010", "confirmed": true, "sourceType": "primary",
+        "note": "TP 15080 s. 7.4(1) and 7.4(4). BOATsmart! and freecourse.ca charge nothing for the retest."
+      },
+      "prices": [
+        { "item": "BOATsmart! course, test and card, one boater", "amount": 49.95, "currency": "CAD", "source": "https://www.boatsmartexam.com/ca/", "confirmed": true, "sourceType": "primary", "note": "Family pricing: 2 boaters $42.46 each, 3 $37.46, 4+ $32.47. Unlimited retries. The figure SLATE keeps now (CA-ON C$49.95, marked secondary there; it is the provider's own page)." },
+        { "item": "BOATsmart! replacement card", "amount": 19.95, "currency": "CAD", "source": "https://www.boatsmartexam.com/ca/", "confirmed": true, "sourceType": "primary" },
+        { "item": "freecourse.ca course, test and card", "amount": 29.95, "currency": "CAD", "source": "https://www.freecourse.ca/", "confirmed": true, "sourceType": "primary", "note": "\"for a limited time\"; retries free; backup cards $6.95." },
+        { "item": "Boat-Ed+ Canada", "amount": 69.95, "currency": "CAD", "source": "https://www.boat-ed.com/canada/ontario/", "confirmed": false, "sourceType": "secondary", "note": "Search summary." }
+      ],
+      "passRate": null
+    },
+
+    {
+      "jurisdiction": "GB (England)",
+      "credential": "None required. RYA Powerboat Level 2 is the voluntary standard and the basis of the ICC.",
+      "law": {
+        "who": "No legal requirement to hold a licence to skipper a private vessel in UK waters.",
+        "source": "https://www.rya.org.uk/training/powerboat-courses/", "confirmed": false, "sourceType": "primary",
+        "note": "From the RYA, read through a search summary; the RYA course page fetched did not address the law."
+      },
+      "course": {
+        "name": "RYA Level 2 Powerboat Handling",
+        "days": 2,
+        "minimumAge": 12,
+        "commercialEndorsementAge": 17,
+        "exam": "Practical assessment through the course; no written pass mark published.",
+        "source": "https://www.rya.org.uk/course-finder/level-2-powerboat-handling/", "confirmed": true, "sourceType": "primary"
+      },
+      "prices": [
+        { "item": "RYA Powerboat Level 2, London Corinthian Sailing Club, Hammersmith", "amount": 400, "currency": "GBP", "source": "https://www.lcsc.org.uk/custom/rya-powerboat", "confirmed": true, "sourceType": "primary" },
+        { "item": "RYA Powerboat Level 2, Powerboat.London, River Thames", "amount": 499, "currency": "GBP", "source": "https://www.powerboat.london/product/rya-powerboat-level-2/", "confirmed": true, "sourceType": "primary", "note": "\"From: £499.00\"; a search summary had £525 for 2026 dates. Minimum age 12." },
+        { "item": "Other London providers", "amountLow": 300, "amountHigh": 525, "currency": "GBP", "source": "https://www.jetskiandpowerboattraining.co.uk/product/rya-powerboat-level-2-course-booking-2022/", "confirmed": false, "sourceType": "secondary", "note": "Search summary: Chas the Boat £450, Ahoy Centre £325, Jet Ski and Powerboat Training £300-£330." }
+      ],
+      "passRate": null
+    },
+
+    {
+      "jurisdiction": "IE",
+      "credential": "None required for a private recreational boat. Irish Sailing's National Powerboat Certificate is voluntary.",
+      "law": {
+        "who": "No licence for a private boat; a Passenger Boat Licence (€144, two years) only for carrying passengers commercially.",
+        "ageRules": [
+          "16 or over to operate or control a fast powerboat or a jet ski",
+          "Under 12 may not operate a mechanically propelled pleasure craft with an engine over 3.7 kW",
+          "Under 16 must wear a lifejacket at all times on all pleasure craft"
+        ],
+        "penalty": "€150 fixed fine, or up to €5,000 in the District Court",
+        "law": "Pleasure Craft (Personal Flotation Devices and Operation) (Safety) Regulations 2005, as amended 2012 and 2018",
+        "source": "https://www.citizensinformation.ie/en/travel-and-recreation/sport-and-leisure/licensing-of-boats-and-watercraft-in-ireland/", "confirmed": true, "sourceType": "primary",
+        "note": "WebFetch was refused (403); the page was read with curl."
+      },
+      "course": {
+        "name": "Irish Sailing National Powerboat Certificate (Level 2)",
+        "days": 2,
+        "exam": "Practical assessment; certificate with coastal endorsement, ICC on application.",
+        "source": "https://powerboatschool.ie/", "confirmed": true, "sourceType": "primary"
+      },
+      "prices": [
+        { "item": "National Powerboat Certificate, Powerboat School Dublin", "amount": 320, "currency": "EUR", "vatIncluded": true, "source": "https://powerboatschool.ie/", "confirmed": true, "sourceType": "primary", "note": "€295 each for two, €270 each for three or more." }
+      ],
+      "passRate": null
+    },
+
+    {
+      "jurisdiction": "MX",
+      "credential": "Certificado de Competencia como Patrón de Embarcaciones de Recreo y Deportivas, niveles I y II (SEMAR, Dirección General de Marina Mercante)",
+      "law": {
+        "who": "Whoever commands a recreational and sports vessel must carry a current certificate of the level its length asks: level I to 6 m length, level II to 15 m, level III above.",
+        "requirements": [
+          "Approved STCW-updated training course at a DGMM-authorized institution",
+          "FIDENA basic safety course (STCW)",
+          "Psychophysical fitness certificate from the Unidad de Protección y Medicina Preventiva en el Transporte, no older than two years",
+          "Sea time: level I asks 24 months as a marinero turístico; level II asks 24 months as level I patrón or 12 as patrón marinero turístico",
+          "Birth certificate and official ID"
+        ],
+        "validity": "5 years from the basic safety course record",
+        "responseDays": "10 working days",
+        "source": "https://www.gob.mx/cms/uploads/attachment/file/715062/SEMAR-2021-070-056-A.pdf", "confirmed": true, "sourceType": "primary",
+        "note": "The trámite is written for personnel who will 'laborar' (work) on recreational craft. Whether a private owner of a small boat must hold one to drive it himself is not settled by this ficha; see notes.worthChecking."
+      },
+      "exam": { "questions": null, "passMarkPct": null, "note": "No exam detail in the ficha; competence comes from the authorized course." },
+      "prices": [
+        { "item": "Derecho, certificate of competence (Ley Federal de Derechos art. 171 fr. III)", "amount": 822, "currency": "MXN", "source": "https://www.gob.mx/cms/uploads/attachment/file/715062/SEMAR-2021-070-056-A.pdf", "confirmed": true, "sourceType": "primary", "note": "The ficha is dated 2021 (homoclave SEMAR-2021-...); derechos are updated yearly, so the 2026 figure is likely higher." }
+      ],
+      "passRate": null
+    }
+  ],
+
+  "pilot": {
+    "requirements": [
+      {
+        "country": "US", "authority": "FAA", "credential": "Private Pilot Certificate, airplane single-engine land",
+        "minimumAge": 17,
+        "minHours": 40, "dualHours": 20, "soloHours": 10,
+        "detail": "3 hours cross-country training, 3 night (one flight over 100 nm, 10 full-stop landings), 3 on instruments, 3 of test preparation within 2 calendar months; 5 hours solo cross-country with one 150 nm flight of three full-stop landings.",
+        "sources": [
+          { "url": "https://www.law.cornell.edu/cfr/text/14/61.109", "confirmed": true, "sourceType": "primary", "note": "14 CFR 61.109(a); the eCFR redirected to a bot check." },
+          { "url": "https://www.law.cornell.edu/cfr/text/14/61.103", "confirmed": true, "sourceType": "primary" }
+        ]
+      },
+      {
+        "country": "CA", "authority": "Transport Canada", "credential": "Private Pilot Licence - Aeroplane",
+        "minHours": 45, "dualHours": 17, "soloHours": 12,
+        "detail": "Dual includes 3 cross-country and 5 instrument; solo includes 5 cross-country.",
+        "source": "https://tc.canada.ca/en/corporate-services/acts-regulations/list-regulations/canadian-aviation-regulations-sor-96-433/standards/standard-421-flight-crew-permits-licences-ratings-canadian-aviation-regulations-cars", "confirmed": false, "sourceType": "primary",
+        "note": "Hours from a search summary of CARs Standard 421. Brampton Flight Centre's own page confirms 'a minimum of 45 hours'."
+      },
+      {
+        "country": "GB", "authority": "UK CAA", "credential": "Part-FCL PPL(A)",
+        "minimumAge": 17,
+        "minHours": 40, "minHoursAtApprovedOrg": 35, "soloHours": 10, "simulatorHoursAllowed": 5,
+        "detail": "10 hours supervised solo, at least 5 solo cross-country with one of at least 270 km (150 nm). Part-MED Class 2 medical. Theory passes valid 24 months for the licence application.",
+        "medical": "Class 2",
+        "source": "https://www.caa.co.uk/general-aviation/pilot-licences/aeroplanes/private-pilot-licence-for-aeroplanes/", "confirmed": true, "sourceType": "primary",
+        "note": "The CAA page says 40 hours of instruction (35 at an approved training organisation); schools and SLATE's earlier research use 45, the EASA figure Ireland keeps. A CAA consultation (CAP 3094) proposes aligning to ICAO."
+      },
+      {
+        "country": "IE", "authority": "IAA (EASA Part-FCL)", "credential": "PPL(A)",
+        "minHours": 45, "dualHours": 25, "soloHours": 10,
+        "detail": "National Flight Centre, Weston: 45 hours with an instructor, 18 hours of briefings, 9 IAA theory exams, ELP check, Class 2 medical; 9 to 12 months.",
+        "source": "https://www.nfc.ie/private-pilot-licence-ppl", "confirmed": true, "sourceType": "primary",
+        "note": "45 hours confirmed on NFC's page; the 25 dual / 10 solo split is from a search summary (Part-FCL FCL.210.A)."
+      },
+      {
+        "country": "MX", "authority": "AFAC", "credential": "Licencia de Piloto Privado de Ala Fija",
+        "minimumAge": 18,
+        "minHours": 40, "dualHours": 20, "soloHours": 5,
+        "detail": "5 hours cross-country incl. a route of at least 270 km (150 nm) with two landings at different points; 5 hours certified within two months before applying; approved course certificate within two months; restricted aeronautical radiotelephone course; theory-practical exams set by the authority; psychophysical fitness certificate.",
+        "nationality": "The requisites ask for 'documento con el que acredite ser mexicano por nacimiento' (Mexican by birth).",
+        "source": "https://www.gob.mx/cms/uploads/attachment/file/826634/req-licencia-ala-fija-19052023.pdf", "confirmed": true, "sourceType": "primary"
+      }
+    ],
+
+    "knowledgeTest": [
+      {
+        "country": "US", "test": "FAA Private Pilot Airplane (PAR)",
+        "questions": 60, "timeHours": 2.5, "passMarkPct": 70,
+        "fee": 175, "currency": "USD",
+        "feeSource": "https://duffysaircraft.com/written_testing.html", "feeConfirmed": true, "feeSourceType": "primary",
+        "feeQuote": "The Federal Aviation Administration and PSI have established all aviation exam fees at $175",
+        "questionsSource": "https://mockcheckride.com/2025-update-faa-written-pass-rates-airman-knowledge-test-pass-rates/", "questionsConfirmed": false,
+        "retake": "No waiting period; the applicant needs training from an authorized instructor and that instructor's endorsement (14 CFR 61.49). Each attempt pays the fee again.",
+        "retakeSource": "https://www.law.cornell.edu/cfr/text/14/61.49", "retakeConfirmed": true
+      },
+      {
+        "country": "CA", "test": "Transport Canada PPAER",
+        "questions": 100, "timeHours": 3, "passMarkPct": 60,
+        "passRule": "60% overall and 60% in each of Air Law, Navigation, Meteorology and Aeronautics General Knowledge; under 60% overall rewrites the whole exam, a failed subject alone is rewritten as its supplement (CARs 421.26).",
+        "rewriteWait": { "firstFailureDays": 14, "secondFailureDays": 30, "thirdAndLater": "30 days plus 30 for each failure beyond two, up to 180" },
+        "source": "https://tc.canada.ca/sites/default/files/2025-07/TP_12880_E.pdf", "confirmed": true, "sourceType": "primary",
+        "fee": 105, "currency": "CAD",
+        "feeSource": "https://laws-lois.justice.gc.ca/eng/regulations/SOR-96-433/page-9.html", "feeConfirmed": true,
+        "feeNote": "CARs Schedule IV item 1: $105 when written before a Transport Canada employee, $65 (item 2) before another person. Transport Canada indexes fees to inflation every 1 April; a search summary gave $131.54 for the PPL exam now (unconfirmed)."
+      },
+      {
+        "country": "GB", "test": "UK CAA PPL(A) theoretical knowledge, nine papers",
+        "papers": 9, "passMarkPct": 75,
+        "window": "All papers within 18 months of the end of the month of the first attempt; passes valid 24 months for the licence application (FCL.025).",
+        "source": "https://www.caa.co.uk/general-aviation/pilot-licences/aeroplanes/private-pilot-licence-for-aeroplanes/", "confirmed": false, "sourceType": "primary",
+        "note": "Nine papers and the 24-month validity confirmed on the CAA page; the 75% pass mark and 18-month window from a search summary of FCL.025.",
+        "fee": 45, "currency": "GBP", "feeBasis": "per paper, Flight Training London (Elstree) 'Ground Exams (PPL): £45'",
+        "feeSource": "https://flighttraininglondon.co.uk/prices.html", "feeConfirmed": true
+      },
+      {
+        "country": "IE", "test": "IAA PPL theoretical knowledge, nine subjects",
+        "papers": 9, "passMarkPct": 75,
+        "fee": 29, "currency": "EUR", "feeBasis": "per subject (IAA Schedule of Charges, Schedule 4, effective 1 January 2026); not refunded if the exam isn't sat",
+        "feeSource": "https://www.iaa.ie/docs/default-source/publications/corporate-publications/schedule-of-charges/iaa-schedule-of-charges---schedule-4---personnel-licensing.pdf?sfvrsn=fcd8eff3_8", "feeConfirmed": true,
+        "note": "75% is the Part-FCL pass mark, not read from an IAA page (confirmed:false for the pass mark). A search summary had 'IAA theory exams cost €130', not borne out by the schedule."
+      },
+      {
+        "country": "MX", "test": "AFAC exámenes teórico-prácticos (sinodal)",
+        "questions": null, "passMarkPct": null,
+        "fee": 5556, "currency": "MXN", "feeBasis": "sinodal, theory and practical",
+        "feeSource": "https://aerocapacitacion.com/como-ser-piloto-aviador-en-mexico/", "feeConfirmed": false,
+        "note": "From a search summary that also gave permiso de formación MX$2,000 and expedición de licencia MX$6,000; the Ley Federal de Derechos article was not read."
+      }
+    ],
+
+    "checkride": [
+      {
+        "country": "US", "examiner": "Kelley Aviation LLC (Daniel Kelley, DPE), Iowa",
+        "fee": 1500, "currency": "USD",
+        "retest": "Own applicant: oral retest 75% of full fee, flight retest 50%; discontinuance $0. Another DPE's applicant: oral 100%, flight 50%.",
+        "payment": "Venmo, cash, flight school check or money order; no credit cards or personal checks.",
+        "source": "https://iowadpe.com/testing-fees/", "confirmed": true, "sourceType": "primary"
+      },
+      {
+        "country": "US", "examiner": "Denver DPE (APA and BJC airports, Colorado)",
+        "fee": 1200, "currency": "USD",
+        "retest": "50% ($600) within 60 days; full fee after. Unavoidable discontinuance within 60 days free; avoidable 50%.",
+        "source": "https://www.denverdpe.com/", "confirmed": true, "sourceType": "primary"
+      },
+      {
+        "country": "US", "examiner": "Range across examiners",
+        "feeLow": 600, "feeHigh": 1200, "currency": "USD",
+        "source": "https://daytonadpe.com/articles/how-much-does-a-dpe-cost/", "confirmed": true, "sourceType": "secondary",
+        "note": "Stated by a DPE (Thomas Dowell) on his own site as typical pricing for initial practical tests; he doesn't himself give checkrides. Search summaries: NYC $700-$1,000, DFW $500-$800 (Parrish Aviation), LA Flight School budgets $800-$1,200. The FAA publishes no fee schedule; each DPE sets his own, and it is owed pass or fail."
+      },
+      {
+        "country": "US", "rule": "Retest after a failed practical test",
+        "detail": "Additional training and an instructor's endorsement; no waiting period (14 CFR 61.49).",
+        "source": "https://www.law.cornell.edu/cfr/text/14/61.49", "confirmed": true, "sourceType": "primary"
+      },
+      {
+        "country": "CA", "item": "Brampton Flight Centre 'Private Flight Test & Fees'",
+        "fee": 1138.50, "currency": "CAD",
+        "source": "https://www.bramptonflightcentre.com/recreation/pilot-licenses-endorsements-ratings/private-pilot-licence/", "confirmed": true, "sourceType": "primary",
+        "note": "School's line, prices as of 1 September 2026. Government charges (CARs Schedule IV, confirmed): flight test by a TC employee $200 (item 5), licence issue $55 (item 6(a)), both before indexing. A search summary put a Flight Test Examiner's own fee near $400."
+      },
+      {
+        "country": "GB", "item": "PPL skill test",
+        "examinerFee": 250, "currency": "GBP",
+        "examinerFeeSource": "https://flighttraininglondon.co.uk/prices.html", "examinerFeeConfirmed": true,
+        "examinerFeeNote": "Flight Training London: 'PPL Flight exam: £250'. Search summaries put the UK range at £200-£300 (outliers £180-£424).",
+        "retest": "Fail one section: repeat that section only. Fail more than one: fail the test. Fail a passed section on the retake: fail the test. Fail twice: further training before another attempt.",
+        "retestSource": "https://www.caa.co.uk/general-aviation/learning-to-fly/practical-skill-test/", "retestConfirmed": true,
+        "licenceIssue": 263, "licenceIssueSource": "https://www.caa.co.uk/General-aviation/Pilot-licences/Applications/Process/Licence-fees-and-costs/", "licenceIssueConfirmed": true, "licenceIssueNote": "CAA 'Initial issue of PPL(A), (H)' £263."
+      },
+      {
+        "country": "IE", "item": "Licence issue",
+        "licenceIssue": 320, "currency": "EUR",
+        "source": "https://www.iaa.ie/docs/default-source/publications/corporate-publications/schedule-of-charges/iaa-schedule-of-charges---schedule-4---personnel-licensing.pdf?sfvrsn=fcd8eff3_8", "confirmed": true, "sourceType": "primary",
+        "note": "IAA Schedule 4, effective 1 January 2026: LAPL/PPL initial issue €320 (both the 5-year and the lifetime-validity lines); replacement €160. Examiner's skill-test fee for a PPL not found. A search summary's €460 issue fee is not borne out."
+      },
+      {
+        "country": "MX", "item": "Sinodal (practical included) and licence issue",
+        "fee": null, "currency": "MXN",
+        "note": "See knowledgeTest MX: MX$5,556 sinodal and MX$6,000 expedición, both from a search summary (confirmed:false)."
+      }
+    ],
+
+    "passRates": [
+      {
+        "country": "US", "test": "FAA Private Pilot Airplane knowledge test (PAR), calendar 2025",
+        "volume": 44657, "passRatePct": 89.56, "averageScorePct": 81.64,
+        "source": "https://www.faa.gov/data_research/aviation_data_statistics/test_statistics/CY2025_AKT_Volume_Report.pdf", "confirmed": true, "sourceType": "primary",
+        "context": "Same report: Sport Pilot Airplane 420 taken, 96.90% passed; all knowledge tests 293,516 taken, 89.56% passed."
+      },
+      {
+        "country": "US", "test": "FAA Private Pilot practical test (checkride), 2025",
+        "passRatePct": 75.1,
+        "source": "https://mockcheckride.com/faa-practical-test-pass-rates", "confirmed": false, "sourceType": "secondary",
+        "note": "The page says it is drawn from the 2025 FAA Airmen Statistics; not read from an FAA table. Not stated whether first attempts only."
+      },
+      {
+        "country": "US", "test": "FAA Private Pilot practical test, first attempt",
+        "passRatePct": 74.5, "year": 2023,
+        "history": "78% in 2021; 73.9% to 78% from 2014 to 2021. 2023 by examiner: DPEs 74.6%, FAA inspectors 59.1%.",
+        "source": "https://www.aopa.org/training-and-safety/flight-schools/flight-school-business/newsletter/2022/march/28/tracking-pass-rates", "confirmed": false, "sourceType": "secondary",
+        "note": "From a search summary that mixed AOPA and other industry pages; the AOPA page was not read."
+      },
+      { "country": "CA", "test": "PPAER and PPL flight test", "passRatePct": null, "note": "Not found." },
+      { "country": "GB", "test": "PPL theory and skill test", "passRatePct": null, "note": "Not found." },
+      { "country": "IE", "test": "PPL theory and skill test", "passRatePct": null, "note": "Not found." },
+      { "country": "MX", "test": "AFAC sinodal", "passRatePct": null, "note": "Not found." }
+    ],
+
+    "medical": [
+      {
+        "country": "US", "class": "Third class",
+        "feeSetBy": "the AME; the FAA sets no fee",
+        "validity": "Remainder of the month of issue plus 60 calendar months under 40, 24 at 40 and over (14 CFR 61.23)",
+        "source": "https://www.faa.gov/ame_guide/app_process/general/fees", "confirmed": false, "sourceType": "primary",
+        "note": "The FAA page refused the fetch (403); read through a search summary."
+      },
+      {
+        "country": "US", "class": "Third class", "provider": "Dr Tim Norcross, AME, Rolling Hills Estates (Los Angeles County)",
+        "fee": 140, "currency": "USD", "basis": "Class 1, 2 or 3 without EKG; Class 1 with EKG $160 (prices dated 2023 on the page)",
+        "source": "http://laflightdoctor.com/exam-and-fees/", "confirmed": true, "sourceType": "primary"
+      },
+      {
+        "country": "US", "class": "Third class", "provider": "Dr Glenn Dangelman, Manhattan",
+        "fee": 250, "currency": "USD", "basis": "second or third class; first class $300; EKG $25",
+        "source": "https://www.aviator.nyc/blog/faa-medical-certificate/", "confirmed": false, "sourceType": "secondary",
+        "note": "From a search summary; the fetched Aviator NYC page names Dr Dangelman but says only 'confirm current fees when you call', and gives the NYC range as $120-$200."
+      },
+      {
+        "country": "CA", "class": "Category 3",
+        "feeLow": 100, "feeHigh": 250, "currency": "CAD",
+        "source": "https://avcentral.ca/aviation-medical-guides/cat-3-medical/", "confirmed": false, "sourceType": "secondary",
+        "note": "CAMEs set their own fee. CARs Schedule IV item 21: Transport Canada's own processing of a medical certificate $55 (confirmed, before indexing)."
+      },
+      {
+        "country": "GB", "class": "Class 2",
+        "feeLow": 170, "feeHigh": 250, "currency": "GBP", "plus": "£15 CAA administrative fee online (Cellma)",
+        "source": "https://www.pplclub.co.uk/clubguides/uk-medicals-guide", "confirmed": false, "sourceType": "secondary",
+        "note": "Search summary; London tends to be dearer."
+      },
+      {
+        "country": "IE", "class": "Class 2",
+        "fee": 200, "currency": "EUR",
+        "source": "https://rotatepilot.com/pilot-cost/ireland", "confirmed": false, "sourceType": "secondary",
+        "note": "Search summary; another source said €120. No IAA AME's own price read."
+      },
+      { "country": "MX", "class": "Constancia de aptitud psicofísica (AFAC / Medicina de Aviación)", "fee": null, "note": "Not found." }
+    ],
+
+    "training": [
+      {
+        "city": "New York", "school": "Aviator NYC (Manhattan simulators; aircraft at Republic KFRG or Morristown KMMU)",
+        "totalLow": 12000, "totalHigh": 34000, "currency": "USD",
+        "basis": "Most students need 60-80 flight hours; pay as you go, no membership.",
+        "source": "https://www.aviator.nyc/blog/faa-medical-certificate/", "confirmed": true, "sourceType": "primary",
+        "alsoSecondary": "Aviation Training Center at Teterboro $14,000-$19,000 (search summary, confirmed:false)."
+      },
+      {
+        "city": "Los Angeles", "school": "Los Angeles Flight School, Van Nuys",
+        "programs": [
+          { "name": "Standard Private Pilot", "price": 10900, "loggedHours": 40, "dualHours": 30, "groundHours": 3, "aircraft": "Cessna, Piper or Diamond" },
+          { "name": "Comprehensive Private Pilot", "price": 15900, "loggedHours": 60, "dualHours": 50, "groundHours": 10 },
+          { "name": "Premium Private Pilot", "price": 22500, "loggedHours": 40, "dualHours": 30, "aircraft": "Cirrus SR22 Turbo" }
+        ],
+        "currency": "USD",
+        "excludes": "The FAA knowledge test fee, the DPE's checkride fee, the AME's medical fee.",
+        "source": "https://la-flightschool.com/pages/private-pilot-license-cost", "confirmed": true, "sourceType": "primary"
+      },
+      {
+        "city": "Toronto (Brampton)", "school": "Brampton Flight Centre",
+        "total": 14742.50, "currency": "CAD",
+        "lines": { "groundSchoolAndAssociates": 669.00, "dual25h": 7675.00, "groundBriefing10h": 880.00, "solo20h": 4380.00, "flightTestAndFees": 1138.50 },
+        "basis": "Transport Canada minimum 45 hours; 'On average students take 60 to 80 hours'. Prices as of 1 September 2026.",
+        "source": "https://www.bramptonflightcentre.com/recreation/pilot-licenses-endorsements-ratings/private-pilot-licence/", "confirmed": true, "sourceType": "primary"
+      },
+      {
+        "city": "London (Elstree)", "school": "Flight Training London",
+        "hourly": { "C152": 330, "PA28Warrior": 360, "PA28Archer": 368 },
+        "extras": { "groundSchoolPerHour": 40, "groundExamPerPaper": 45, "ppLFlightExam": 250 },
+        "currency": "GBP",
+        "packages": "A search summary gave PPL packages of £11,700 (C152) and £12,780 (PA28); the fetched page shows only hourly rates.",
+        "source": "https://flighttraininglondon.co.uk/prices.html", "confirmed": true, "sourceType": "primary"
+      },
+      {
+        "city": "Dublin (Weston)", "school": "Hotel Bravo Flying Club",
+        "total": 8910, "currency": "EUR",
+        "lines": { "joining": 500, "membership24Months": 1560, "flying45h": 5850, "groundSchool": 1000 },
+        "hourly": 145, "membershipMonthly": 65,
+        "source": "https://hotelbravoflyingclub.com/ppl-costs-private-pilots-licence-weston/", "confirmed": false, "sourceType": "primary",
+        "note": "The club's own page, but its TLS certificate had expired and the figures came from a search summary. SLATE keeps different Hotel Bravo rates (€175 dual, €160 solo) from earlier research; the two disagree and should be reconciled. National Flight Centre (Weston) publishes no price."
+      },
+      {
+        "city": "Mexico (Mexico City area)", "school": null,
+        "totalLow": 180000, "totalHigh": 350000, "currency": "MXN",
+        "source": "https://aerocapacitacion.com/como-ser-piloto-aviador-en-mexico/", "confirmed": false, "sourceType": "secondary",
+        "note": "Search summary range. PRAAT (CDMX, Querétaro, Atizapán, Puebla) publishes 230 h theory, 5 h simulator, 41 h flight but quotes price only by WhatsApp. SLATE already keeps Voláre's MX$212,350 (Guadalajara)."
+      }
+    ]
+  },
+
+  "notes": {
+    "notFound": [
+      "Pass rates for any boating certificate exam (NY, CT, CA, PCOC, RYA, Irish Sailing).",
+      "New York OPRHP classroom final exam's question count and any retake rule.",
+      "Connecticut course exam retake rule (only the equivalency exam's once-only rule was found).",
+      "Pass rates for the Transport Canada PPAER and flight test, the UK CAA PPL theory and skill test, the IAA PPL, and AFAC's sinodal.",
+      "An FAA-published table of practical test (checkride) pass rates; the 75.1% figure is a secondary site's reading of FAA Airmen Statistics.",
+      "An Irish examiner's PPL skill-test fee; an IAA AME's own Class 2 price; any Mexican aviation medical price.",
+      "AFAC's exam format (questions, pass mark) and the current Ley Federal de Derechos amounts for the pilot licence.",
+      "Mexico's rule, if any, for a private owner driving his own small boat without the SEMAR patrón certificate.",
+      "A London PPL package total read from a school's own page (only hourly rates were read)."
+    ],
+    "worthChecking": [
+      "SLATE's US-CT certificate basis ('$50 after an approved course') is borne out; the course itself is 8 hours instructor-led with a proctored 80% exam, and an experienced boater may instead sit a $75 once-only equivalency exam.",
+      "SLATE's CA-ON PCOC basis marks BOATsmart!'s C$49.95 as secondary; it is on BOATsmart!'s own page (confirmed here), and it includes unlimited retests. Cheaper approved providers exist (freecourse.ca C$29.95).",
+      "The PCOC retest wait (24 hours, one retest within 30 days, then the course again) and the PPAER rewrite waits (14, 30, then +30 per failure to 180 days) are the two published waiting periods a failed-exam mechanic can use; the FAA has none, only an instructor's endorsement after more training.",
+      "AFAC's private pilot licence requisites ask for proof of being Mexican by birth; a foreign resident in Mexico may not be able to get one, which SLATE's PILOT_SCHOOLS.mx doesn't model.",
+      "SEMAR's patrón certificate requires 24 months of sea time as a marinero turístico and is written for crew who work aboard; it reads as a professional credential, not a private boater's card. Check the Reglamento de la Ley de Navegación y Comercio Marítimos (arts. 150-173) before modelling a Mexican boat certificate.",
+      "The UK CAA PPL page says 40 hours of instruction (35 at an approved organisation), not the 45 that schools and SLATE's earlier research use.",
+      "Hotel Bravo's 2026 rate (€145 an hour, search summary) disagrees with the €175/€160 SLATE keeps; re-read the club's page when its certificate is renewed.",
+      "Transport Canada's CARs Schedule IV fees ($105 exam, $200 flight test, $55 licence, $55 medical processing) are pre-indexation; TC indexes every 1 April, and a search summary gave $131.54 for the PPL exam now.",
+      "The IAA licence issue fee is €320 (Schedule 4, effective 1 January 2026), and theory exams are €29 a subject; search summaries quoting €460 and €130 are wrong for 2026."
+    ]
+  }
+}
