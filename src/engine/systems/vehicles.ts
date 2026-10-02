@@ -43,6 +43,8 @@ import { registerWraps } from './wraps';
 import { mayCollide, registerCarCare, serviceMonth, servicingKept } from './carcare';
 import { NO_HISTORY_GB } from '../content/carcare';
 import { registerStandIn } from './standin';
+import { registerCarAudio } from './caraudio';
+import { registerUsedCars, usedFault } from './usedcars';
 import { faultCost, inShopNow, mayBreak, registerRepairs, upkeepPerKm } from './repairs';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -94,6 +96,8 @@ export interface OwnedVehicle {
   stolen?: { at: Instant; recoverAt?: Instant };
   /** An unscheduled repair it needs, and a garage that has it (`systems/repairs.ts`, from 2026-10-01). */
   fault?: import('./repairs').Fault;
+  /** A stereo fitted (`systems/caraudio.ts`, from 2026-10-02). */
+  stereo?: boolean;
   inShop?: import('./repairs').InShop;
   /** Kilometers driven on errands since the month's driving (`systems/trips.ts`), taken out of it. */
   errandKm?: number;
@@ -585,6 +589,9 @@ export function registerVehicles(sim: Simulation): void {
       delete old.loan;
       for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.vehicleId === old.id) s.timeline.cancel(item.id, s.now);
     }
+    // A used car comes with the fault it has, at the AA's seven in ten (`usedFault`, from 2026-10-02).
+    const hidden = usedFault(s, person, model.id, age, cityId, s.now);
+    if (hidden) v.fault = hidden;
     vehiclesOf(person).push(v);
     s.schedule({ at: s.now + 30 * MS_DAY, kind: VEHICLE_MONTH_KIND, label: 'The Car’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
     if (registers(model, j)) s.schedule({ at: v.registrationDue, kind: VEHICLE_RENEWAL_KIND, label: 'Registration Renewal', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
@@ -594,6 +601,8 @@ export function registerVehicles(sim: Simulation): void {
   registerRedeem(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerTint(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
   registerMods(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
+  registerCarAudio(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !x.lease));
+  registerUsedCars(sim, jurisdictionOf, homeOf);
   registerStandIn(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerCarCare(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
   registerWraps(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!, (v) => liabilityOffered(v.jurisdiction, modelById(v.modelId)!));

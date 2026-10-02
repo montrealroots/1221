@@ -293,6 +293,8 @@ export interface Person {
   parents?: import('../systems/parents').Parent[];
   /** A personal trainer booked (`systems/trainers.ts`, from 2026-10-02). */
   training?: import('../systems/trainers').Training;
+  /** This month's pre-purchase inspection of a used car (`systems/usedcars.ts`, from 2026-10-02). */
+  inspectedUsed?: import('../systems/usedcars').Inspected;
   adopted?: import('../systems/adoption').Adopted[];
   /** A dating app they're on (`systems/dating.ts`, from 2026-10-01). */
   datingApp?: import('../systems/dating').DatingApp;

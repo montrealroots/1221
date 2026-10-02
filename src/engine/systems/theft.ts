@@ -37,6 +37,7 @@ import { MS_DAY, formatDate } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import type { CarModel } from '../content/vehiclecatalog';
+import { stereoCover } from './caraudio';
 import type { OwnedVehicle } from './vehicles';
 
 const NYC = new Set(['us-ny-newyork', 'us-ny-brooklyn', 'us-ny-queens', 'us-ny-manhattan', 'us-ny-thebronx', 'us-ny-statenisland']);
@@ -101,7 +102,9 @@ export function mayBeStolen(sim: Simulation, person: Person, v: OwnedVehicle, m:
   const cur = saveCurrency(sim.universe);
   if (v.coverage === 'full') {
     // The insurer pays its value: the lender first, the rest to the owner.
-    const paid = currency === cur ? value : exchange(value, currency, cur) ?? value;
+    const car = currency === cur ? value : exchange(value, currency, cur) ?? value;
+    // And a stereo fitted, to its cap (`stereoCover`, from 2026-10-02).
+    const paid = car + stereoCover(sim, v, car);
     const owed = Math.min(paid, v.loan?.owed ?? 0);
     sim.post({ memo: `The ${label}, stolen, paid by the insurer`, category: 'vehicle', postings: [
       { accountId: person.primaryAccountId!, amount: paid - owed },

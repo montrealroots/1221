@@ -36,6 +36,7 @@ import { COLLISION, DEFAULT_INTERVAL, MEXICO_INTERVAL, SERVICE_INTERVAL, SERVICE
 import { CAR_SHOPS } from '../content/carshops';
 import { shutAt } from './errands';
 import { spend } from './household';
+import { stereoCover } from './caraudio';
 import type { OwnedVehicle } from './vehicles';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -136,7 +137,8 @@ export function mayCollide(sim: Simulation, person: Person, v: OwnedVehicle, m: 
   const cur = saveCurrency(sim.universe);
   if (cost >= value) {
     // Written off: full cover pays its value over the deductible; it's gone either way.
-    const paid = v.coverage === 'full' ? Math.max(0, value - deductible) : 0;
+    // And a stereo fitted, to its cap (`stereoCover`, from 2026-10-02).
+    const paid = v.coverage === 'full' ? Math.max(0, value - deductible) + stereoCover(sim, v, value) : 0;
     if (paid > 0 && person.primaryAccountId) sim.post({ memo: `The insurer, the ${m.make} ${m.model} written off`, category: 'vehicle', postings: [{ accountId: person.primaryAccountId, amount: paid }, { accountId: sim.nominalAccount('income', 'Insurance Paid').id, amount: -paid }] });
     v.soldAt = at;
     if (mine) sim.notify({ category: 'home', title: 'Your Car Was Written Off', body: `A collision did more damage than the ${m.make} ${m.model} was worth.${paid ? ` The insurer paid ${formatMoney(paid, cur, { cents: false })}.` : ' Liability cover pays nothing for your own car.'}`, importance: 80, route: '/workspace/vehicles' });

@@ -34,6 +34,8 @@ import { FINISHES, WRAP_COLORS, coverRefusal, wrapCost, wrapRefusal, wrapShopsIn
 import { inWarranty, serviceCost, serviceDue, serviceRefusal, serviceWhat, servicingKept, warrantyOf } from '@/engine/systems/carcare';
 import { CAR_SHOPS } from '@/engine/content/carshops';
 import { standInFor, standInQuote } from '@/engine/systems/standin';
+import { stereoQuote } from '@/engine/systems/caraudio';
+import { PRE_PURCHASE, inspectionPrice, reportOn } from '@/engine/systems/usedcars';
 import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
 const FUEL_WORD = { petrol: 'Gasoline', diesel: 'Diesel', hybrid: 'Hybrid', phev: 'Plug-In Hybrid', ev: 'Electric' } as const;
@@ -126,6 +128,7 @@ export function VehiclesWorkspace() {
                             <div className="row gap-1" style={{ flexWrap: 'wrap', justifyContent: 'flex-end', maxWidth: 240 }}>
                             {!tiresRefusal(v) && <Gated feature="vehicle.winter_tires" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.winter_tires', { vehicleId: v.id }); if (a.ok) toast(`Winter tires on, for ${money(a.value!.paid)}.`, 'positive'); }}>Winter Tires</Gated>}
                             {(['rear', 'full'] as const).filter((k) => !tintRefusal(v, k, glazed(v))).map((k) => <Gated key={k} feature="vehicle.tint" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number; legal: boolean }>('vehicle.tint', { vehicleId: v.id, kind: k }); if (a.ok) toast(a.value!.legal ? `Tinted, within the law here, for ${money(a.value!.paid)}.` : `Tinted darker than the law here allows, for ${money(a.value!.paid)}.`, a.value!.legal ? 'positive' : 'neutral'); }}>{k === 'rear' ? 'Tint The Back' : 'Tint All Round'}</Gated>)}
+                            <StereoControl v={v} />
                             <RepairControl v={v} />
                             <ServiceControl v={v} />
                             <WrapControl v={v} />
@@ -249,6 +252,7 @@ export function VehiclesWorkspace() {
                 if (a.ok) toast(`Bought, for ${money(a.value!.paid)} now${a.value!.monthly ? ` and ${money(a.value!.monthly)} a month` : ''}.`, 'positive');
               }}>Buy It</Gated>
               )}
+              {!leaseMonths && model && age > 0 && <InspectControl modelId={model.id} age={age} />}
             </div>
             <Fine>{lq && typeof lq !== 'string' ? `${lq.basis} ` : ''}{typeof q !== 'string' ? q.basis : q} Depreciation: {DEPRECIATION_SOURCE}. Loans: {LOAN_RATES.source}. Parking on the street at home is the resident’s permit where one’s kept, London’s by Westminster’s bands and Dublin’s, and nothing with a garage at a home you own.</Fine>
           </div>
@@ -409,6 +413,26 @@ function StandInControl({ v }: { v: OwnedVehicle }) {
 }
 
 /** A fault the car has, and the garages in its town that would take it (`systems/repairs.ts`). */
+/** A stereo with CarPlay fitted, where a retailer publishes the fitting (`vehicle.stereo`). */
+function StereoControl({ v }: { v: OwnedVehicle }) {
+  const { sim, run, toast } = useGame();
+  const q = stereoQuote(sim, v);
+  if (typeof q === 'string' || v.lease) return null;
+  return <Gated feature="vehicle.stereo" className="btn btn-sm btn-ghost" title={q.basis} onClick={() => { const a = run<{ paid: number }>('vehicle.stereo', { vehicleId: v.id }); if (a.ok) toast(`A stereo fitted, for ${formatMoney(a.value!.paid, saveCurrency(sim.universe))}.`, 'positive'); }}>{`Fit A Stereo, ${formatMoney(q.price, saveCurrency(sim.universe), { cents: false })}`}</Gated>;
+}
+
+/** A used car looked over before it's bought (`vehicle.inspect_used`), and what was found. */
+function InspectControl({ modelId, age }: { modelId: string; age: number }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const j = jurisdictionOf(homeOf(person));
+  if (!j) return null;
+  const report = reportOn(sim, person, modelId, age, homeOf(person));
+  if (report) return <span className="small">{report.fault ? `The inspection found a ${report.severe ? 'serious ' : ''}fault, about ${formatMoney(Math.round(report.usd! * 100), 'USD', { cents: false })} to mend.` : 'The inspection found nothing wrong.'}</span>;
+  const t = PRE_PURCHASE[j];
+  return <Gated feature="vehicle.inspect_used" className="btn btn-sm btn-ghost" title={`${t.name}'s pre-purchase inspection. The AA finds seven in ten used cars have a fault.`} onClick={() => { const a = run<{ fault: boolean }>('vehicle.inspect_used', { modelId, age }); if (a.ok) toast(a.value!.fault ? 'The inspector found a fault.' : 'The inspector found nothing wrong.', a.value!.fault ? 'neutral' : 'positive'); }}>{`Have It Inspected, ${formatMoney(inspectionPrice(sim, j), saveCurrency(sim.universe), { cents: false })}`}</Gated>;
+}
+
 function RepairControl({ v }: { v: OwnedVehicle }) {
   const { run, toast, sim } = useGame();
   const m = modelById(v.modelId)!;

@@ -68,6 +68,7 @@ import { powerDay } from './systems/utilities';
 import { careerOf } from './systems/career';
 import { counterOffer } from './systems/career';
 import { bidsFor, lateDays, overrunOf } from './systems/worksrisk';
+import { usedFault } from './systems/usedcars';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -498,6 +499,19 @@ defineDecider<{ sim: Simulation; build: number; stage: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), build: seed, stage: [1, 2, 4, 6][seed % 4]! }),
   decide: ({ sim, build, stage }) => String(buildInspectionFails(sim, `b${build}`, 'nyc', stage)),
+});
+
+defineDecider<{ sim: Simulation; age: number; month: number }, string>({
+  id: 'vehicle.used',
+  decides: 'Whether a used car on offer has a fault, at the AA’s seven in ten, and whether it is severe at RepairPal’s share for the model.',
+  drawnIn: 'src/engine/systems/usedcars.ts',
+  reads: {
+    age: (o, t) => ({ ...o, age: 1 + Math.round(t * 14) }),
+    month: (o, t) => ({ ...o, month: Math.round(t * 11) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), age: 1 + (seed % 14), month: seed % 12 }),
+  decide: ({ sim, age, month }) => { const f = usedFault(sim, sim.player, 'us-toyota-camry', age, 'us-ny-newyork', Date.UTC(2027, month, 15)); return f ? (f.severe ? 'severe' : 'fault') : 'sound'; },
 });
 
 defineDecider<{ sim: Simulation; job: number; days: number }, string>({
