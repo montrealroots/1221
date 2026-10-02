@@ -74,8 +74,8 @@ Correctness first, then the connected day the plan asks to be shown working
 | 21 | Stores with hours and stock; websites with destinations, shipping, tracking | Partial | `storesIn` city list; `purchaseQuote` fee, threshold, days | Branch records (address, hours, services, stock); destinations, shipping tiers, click-and-collect, payment choice, tracking stages |
 | 22a | Find, browse, search, filter | Complete | `clothingCatalog`, `arrange`; tests/catalog, clothing | Facets for size, color, material, price band |
 | 22b | Product page, variant, compare offers | Partial | `Choose` in ClothesWorkspace | Product page with size chart and source; compare sellers |
-| 22c | Cart, collection or delivery, review, pay | Not implemented | `clothes.buy` is one line | Cart, checkout, basket-level delivery threshold, payment choice |
-| 22d | Receipt and order record | Partial | `ClothesPurchase`, `Order` | Receipt lines; `Order` "returned" never set |
+| 22c | Cart, collection or delivery, review, pay | Done for clothes, 2026-10-02 | `clothes.basket_add`, `basket_remove`, `checkout`: one payment and one order per retailer, the threshold on the order | Groceries and toiletries in the basket; choosing the card |
+| 22d | Receipt and order record | Partial | `ClothesPurchase`, `Order`; `returned` set once all of an order is back (2026-10-02); the checkout's ledger entry names the retailer and count | Receipt lines as a document |
 | 22e | An unfulfilled order isn't usable | Complete | `at:{kind:'order'}` unreachable; tests/items | In-store pickup of an online order |
 | 22f | Store, use, return, repair, gift, resell | Partial | moves, laundry, return, resale; tests | Repair, gift, refund to the original payment |
 | 23 | Departments; petite, tall, extended, maternity, adaptive; nothing blocked by gender | Partial | No gender gate | `department`, fit range, browsing preference; adaptive and more maternity |

@@ -134,17 +134,9 @@ const calendarDays = (working: number): number => Math.ceil((working * 7) / 5);
 
 /** What a purchase would cost: the goods tax in, the delivery, and when it would arrive. */
 export function purchaseQuote(sim: Simulation, person: Person, o: BuyOptions): { goods: Money; delivery: Money; total: Money; arrivesAt?: Instant } | undefined {
-  const p = productById(o.productId);
-  const r = p && retailerById(p.retailer);
-  if (!p || !r) return undefined;
-  const qty = Math.max(1, Math.floor(o.quantity ?? 1));
-  const where = o.how === 'online' ? person.home?.cityId ?? person.currentLocationId : person.currentLocationId;
-  const goods = productPrice(sim, where, p) * qty;
-  if (o.how === 'store') return { goods, delivery: 0, total: goods };
-  // A threshold is on the goods before any sales tax.
-  const free = r.freeOver !== null && p.price * qty >= r.freeOver;
-  const delivery = free ? 0 : inSaveMoney(sim, Math.round((r.fee ?? 0) * 100), p.currency);
-  return { goods, delivery, total: goods + delivery, arrivesAt: sim.now + calendarDays(r.days ?? 5) * MS_DAY };
+  // A checkout of one line (`checkoutQuote`).
+  const q = checkoutQuote(sim, person, [o]);
+  return q && { goods: q.goods[0]!, delivery: q.delivery, total: q.total, ...(q.arrivesAt !== undefined ? { arrivesAt: q.arrivesAt } : {}) };
 }
 
 /** Why they can't buy it so, or nothing. */
@@ -172,32 +164,83 @@ function garmentOf(p: ClothingProduct): Garment {
   return { kind: p.kind, slot: p.slot, care: p.care === 'wipe' ? 'hand' : p.care, wears: 0, washes: 0 };
 }
 
-/** Buys clothes: paid now, and in hand from a store or on their way from an order. Each of a pack is its own garment. */
-export function buyClothes(sim: Simulation, person: Person, o: BuyOptions): ClothesPurchase {
-  const no = buyRefusal(person, o);
+/**
+ * What a checkout at one retailer comes to: each line's goods, and one
+ * delivery for the order, free where the order's goods before tax reach the
+ * retailer's threshold. Until 2026-10-02 each product was its own order, with
+ * its own fee and its own threshold, so three shirts from one shop paid three
+ * deliveries and never counted toward free shipping together.
+ */
+export function checkoutQuote(sim: Simulation, person: Person, lines: readonly BuyOptions[]): { goods: Money[]; delivery: Money; total: Money; arrivesAt?: Instant } | undefined {
+  if (lines.length === 0) return undefined;
+  const p0 = productById(lines[0]!.productId);
+  const r = p0 && retailerById(p0.retailer);
+  if (!p0 || !r) return undefined;
+  const how = lines[0]!.how;
+  const where = how === 'online' ? person.home?.cityId ?? person.currentLocationId : person.currentLocationId;
+  const goods = lines.map((o) => productPrice(sim, where, productById(o.productId)!) * Math.max(1, Math.floor(o.quantity ?? 1)));
+  const sum = goods.reduce((a, b) => a + b, 0);
+  if (how === 'store') return { goods, delivery: 0, total: sum };
+  // A threshold is on the goods before any sales tax.
+  const listed = lines.reduce((a, o) => a + productById(o.productId)!.price * Math.max(1, Math.floor(o.quantity ?? 1)), 0);
+  const free = r.freeOver !== null && listed >= r.freeOver;
+  const delivery = free ? 0 : inSaveMoney(sim, Math.round((r.fee ?? 0) * 100), p0.currency);
+  return { goods, delivery, total: sum + delivery, arrivesAt: sim.now + calendarDays(r.days ?? 5) * MS_DAY };
+}
+
+/** Why these lines can't be checked out together, or nothing: one retailer, one way, each line buyable. */
+export function checkoutRefusal(person: Person, lines: readonly BuyOptions[]): string | undefined {
+  if (lines.length === 0) return 'The basket is empty.';
+  const first = productById(lines[0]!.productId);
+  for (const o of lines) {
+    const no = buyRefusal(person, o);
+    if (no) return `${productById(o.productId)?.name ?? 'One of them'}: ${no}`;
+    if (productById(o.productId)!.retailer !== first?.retailer || o.how !== lines[0]!.how) return 'A checkout is one retailer’s, in a store or online.';
+  }
+  return undefined;
+}
+
+/**
+ * Checks out at one retailer: one payment for it all, in hand from a store
+ * or on one order with one delivery. Each line is its own purchase, for its
+ * returns; each of a pack its own garment.
+ */
+export function checkoutClothes(sim: Simulation, person: Person, lines: readonly BuyOptions[]): ClothesPurchase[] {
+  const no = checkoutRefusal(person, lines);
   if (no) throw new CommandError(no);
-  const p = productById(o.productId)!;
-  const r = retailerById(p.retailer)!;
-  const q = purchaseQuote(sim, person, o)!;
-  if (!spend(sim, person, q.total, `${r.name}: ${p.name}`, 'clothing')) throw new CommandError(`It comes to ${formatMoney(q.total, saveCurrency(sim.universe))}, more than you can pay.`);
-  const count = (o.quantity ?? 1) * p.pack;
-  const purchase: ClothesPurchase = { id: sim.nextId('purchase'), productId: p.id, retailerId: r.id, how: o.how, at: sim.now, goods: q.goods, count };
-  const spec: Record<string, string> = { purchase: purchase.id, ...(o.size ? { size: o.size } : {}), ...(o.color ? { color: o.color } : p.colors.length === 1 ? { color: p.colors[0]! } : {}) };
-  // Bought for the body they have now (`systems/tailoring.ts`).
-  // In the size chosen: a size off is made for a body a step heavier or lighter (`fitKgFor`, from 2026-10-02).
-  const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods / count), spec, garment: { ...garmentOf(p), fitKg: fitKgFor(sim, person, p.sizes, o.size) } };
-  if (o.how === 'online') {
-    const order = placeOrder(sim, person, { from: r.name, arrivesAt: q.arrivesAt!, to: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'wardrobe' }, paid: q.total }, Array.from({ length: count }, () => ({ ...line, garment: { ...line.garment } })));
-    purchase.orderId = order.id;
+  const r = retailerById(productById(lines[0]!.productId)!.retailer)!;
+  const how = lines[0]!.how;
+  const q = checkoutQuote(sim, person, lines)!;
+  const memo = lines.length === 1 ? `${r.name}: ${productById(lines[0]!.productId)!.name}` : `${r.name}: ${lines.length} items`;
+  if (!spend(sim, person, q.total, memo, 'clothing')) throw new CommandError(`It comes to ${formatMoney(q.total, saveCurrency(sim.universe))}, more than you can pay.`);
+  const made = lines.map((o, i) => {
+    const p = productById(o.productId)!;
+    const count = (o.quantity ?? 1) * p.pack;
+    const purchase: ClothesPurchase = { id: sim.nextId('purchase'), productId: p.id, retailerId: r.id, how, at: sim.now, goods: q.goods[i]!, count };
+    const spec: Record<string, string> = { purchase: purchase.id, ...(o.size ? { size: o.size } : {}), ...(o.color ? { color: o.color } : p.colors.length === 1 ? { color: p.colors[0]! } : {}) };
+    // Bought for the body they have now, in the size chosen: a size off is made for a body a step heavier or lighter (`fitKgFor`, `systems/tailoring.ts`).
+    const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods[i]! / count), spec, garment: { ...garmentOf(p), fitKg: fitKgFor(sim, person, p.sizes, o.size) } };
+    return { purchase, count, line };
+  });
+  if (how === 'online') {
+    const order = placeOrder(sim, person, { from: r.name, arrivesAt: q.arrivesAt!, to: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'wardrobe' }, paid: q.total }, made.flatMap((m) => Array.from({ length: m.count }, () => ({ ...m.line, garment: { ...m.line.garment } }))));
+    for (const m of made) m.purchase.orderId = order.id;
   } else {
-    // Carried home where home is in this town; on them otherwise.
+    // Carried home where home is in this town; on them otherwise, and in the car or arms on a trip (`stow`).
     const home = homeKeyOf(person.home);
     const at: Place = home && person.home!.cityId === person.currentLocationId ? { kind: 'home', home, spot: 'wardrobe' } : { kind: 'person' };
-    for (let i = 0; i < count; i += 1) stow(person, addItem(sim, person, { ...line, garment: { ...line.garment }, at, acquiredAt: sim.now }), sim.now);
+    for (const m of made) for (let i = 0; i < m.count; i += 1) stow(person, addItem(sim, person, { ...m.line, garment: { ...m.line.garment }, at, acquiredAt: sim.now }), sim.now);
   }
-  (person.clothesBought ??= []).push(purchase);
-  return purchase;
+  (person.clothesBought ??= []).push(...made.map((m) => m.purchase));
+  return made.map((m) => m.purchase);
 }
+
+/** Buys one product: a checkout of one line. */
+export const buyClothes = (sim: Simulation, person: Person, o: BuyOptions): ClothesPurchase => checkoutClothes(sim, person, [o])[0]!;
+
+/** A line in the basket, with its own id to take it out by. */
+export interface BasketLine extends BuyOptions { id: string }
+export const basketOf = (person: Person): BasketLine[] => (person.basket ??= []);
 
 // ---------------------------------------------------------------------------
 // Returns
@@ -255,9 +298,9 @@ export function returnClothes(sim: Simulation, person: Person, purchaseId: strin
   person.items = itemsOf(person).filter((i) => !gone.has(i.id));
   forget(person, gone);
   purchase.returnedAt = sim.now;
-  // The order it came on, all of it gone back.
+  // The order it came on, once all of it has gone back.
   const order = ordersOf(person).find((o) => o.id === purchase.orderId);
-  if (order) { order.status = 'returned'; order.endedAt = sim.now; }
+  if (order && (person.clothesBought ?? []).every((x) => x.orderId !== order.id || x.returnedAt !== undefined)) { order.status = 'returned'; order.endedAt = sim.now; }
   return back;
 }
 
@@ -295,7 +338,8 @@ export function cancelClothes(sim: Simulation, person: Person, purchaseId: strin
   const purchase = person.clothesBought!.find((x) => x.id === purchaseId)!;
   const r = retailerById(purchase.retailerId)!;
   const back = cancelOrder(sim, person, purchase.orderId!, `${r.name}: an order canceled, refunded`, 'clothing');
-  purchase.canceledAt = sim.now;
+  // The order goes whole: every purchase on it.
+  for (const x of person.clothesBought ?? []) if (x.orderId === purchase.orderId) x.canceledAt = sim.now;
   return back;
 }
 
@@ -529,6 +573,31 @@ export function registerClothing(sim: Simulation): void {
     return { purchaseId: buyClothes(s, s.player, { productId: p.productId, how: p.how === 'online' ? 'online' : 'store', size: p.size, color: p.color, quantity: p.quantity }).id };
   });
   sim.onCommand<{ purchaseId: string; how: 'store' | 'mail' }, { refunded: Money }>('clothes.return', (p, { sim: s }) => ({ refunded: returnClothes(s, s.player, String(p?.purchaseId), p?.how === 'mail' ? 'mail' : 'store') }));
+  // The basket: lines put in and taken out, then checked out a retailer at a time (from 2026-10-02).
+  sim.onCommand<BuyOptions, { lineId: string }>('clothes.basket_add', (p, { sim: s }) => {
+    const o: BuyOptions = { productId: String(p?.productId), how: p?.how === 'online' ? 'online' : 'store', ...(p?.size ? { size: String(p.size) } : {}), ...(p?.color ? { color: String(p.color) } : {}), quantity: p?.quantity === undefined ? 1 : Number(p.quantity) };
+    const no = buyRefusal(s.player, o);
+    if (no) throw new CommandError(no);
+    // Numbered from the purchases', which is what a line becomes.
+    const line: BasketLine = { ...o, id: s.nextId('purchase') };
+    basketOf(s.player).push(line);
+    return { lineId: line.id };
+  });
+  sim.onCommand<{ lineId: string }, { left: number }>('clothes.basket_remove', (p, { sim: s }) => {
+    const basket = basketOf(s.player);
+    if (!basket.some((l) => l.id === p?.lineId)) throw new CommandError('That isn’t in the basket.');
+    s.player.basket = basket.filter((l) => l.id !== p.lineId);
+    return { left: s.player.basket.length };
+  });
+  sim.onCommand<{ retailerId: string; how: 'store' | 'online' }, { purchaseIds: string[]; paid: Money }>('clothes.checkout', (p, { sim: s }) => {
+    const person = s.player;
+    const lines = basketOf(person).filter((l) => productById(l.productId)?.retailer === p?.retailerId && l.how === p?.how);
+    const q = checkoutQuote(s, person, lines);
+    const made = checkoutClothes(s, person, lines);
+    const done = new Set(lines.map((l) => l.id));
+    person.basket = basketOf(person).filter((l) => !done.has(l.id));
+    return { purchaseIds: made.map((m) => m.id), paid: q!.total };
+  });
   sim.onCommand<{ purchaseId: string }, { refunded: Money }>('clothes.cancel', (p, { sim: s }) => ({ refunded: cancelClothes(s, s.player, String(p?.purchaseId)) }));
   sim.onCommand<Record<string, never>, { count: number; paid: Money }>('clothes.dry_clean', (_p, { sim: s }) => dryClean(s, s.player));
   sim.onCommand<Record<string, never>, { count: number }>('clothes.collect', (_p, { sim: s }) => ({ count: collectCleaning(s, s.player) }));

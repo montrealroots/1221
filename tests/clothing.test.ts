@@ -12,7 +12,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { CLOTHING_PRODUCTS } from '@/engine/content/clothingcatalog';
-import { buyRefusal, cancelRefusal, clothingCatalog, clothingTax, dryCleanPrice, productPrice, purchaseItems, purchaseQuote, retailerById, STARTER, starterWardrobe } from '@/engine/systems/clothing';
+import { buyRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, clothingTax, dryCleanPrice, productPrice, purchaseItems, purchaseQuote, retailerById, STARTER, starterWardrobe } from '@/engine/systems/clothing';
 import { arrange } from '@/engine/systems/catalog';
 import { cleanOutfits, garmentsOf, outfitFor, washableDirty, wearTheDay } from '@/engine/systems/wardrobe';
 import { sizeFor } from '@/engine/systems/tailoring';
@@ -96,6 +96,67 @@ describe('buying', () => {
     expect(items[0]!.at.kind).toBe('order');
     sim.advanceBy(7 * MS_DAY + 60_000);
     expect(items[0]!.at.kind).toBe('home');
+  });
+});
+
+describe('the basket', () => {
+  it('checks a retailer out at once: one payment, one order, one delivery, free once the order passes the threshold', () => {
+    const sim = life('basket');
+    const uniqlo = retailerById('us-uniqlo')!;
+    const size = sizeFor(sim, sim.player, tee.sizes);
+    const line = { productId: tee.id, how: 'online' as const, size, color: tee.colors[0] };
+    // Two tees alone are under Uniqlo's free delivery; four are over it, together as one order.
+    expect(2 * tee.price).toBeLessThan(uniqlo.freeOver!);
+    for (let i = 0; i < 4; i += 1) sim.must({ kind: 'clothes.basket_add', payload: line });
+    expect(sim.player.basket).toHaveLength(4);
+    const q = checkoutQuote(sim, sim.player, sim.player.basket!)!;
+    expect(q.delivery).toBe(0);
+    // Each bought on its own would have paid four deliveries.
+    expect(purchaseQuote(sim, sim.player, line)!.delivery).toBe(Math.round(uniqlo.fee! * 100));
+    const removed = sim.player.basket![3]!.id;
+    sim.must({ kind: 'clothes.basket_remove', payload: { lineId: removed } });
+    sim.must({ kind: 'clothes.basket_add', payload: line });
+    const before = bank(sim);
+    const orders = ordersOf(sim.player).length;
+    const r = sim.must<{ purchaseIds: string[]; paid: number }>({ kind: 'clothes.checkout', payload: { retailerId: 'us-uniqlo', how: 'online' } });
+    expect(r.purchaseIds).toHaveLength(4);
+    expect(bank(sim)).toBe(before - r.paid);
+    expect(r.paid).toBe(q.total);
+    expect(ordersOf(sim.player).length).toBe(orders + 1);
+    expect(sim.universe.transactions.at(-1)!.memo).toBe('Uniqlo: 4 items');
+    expect(sim.player.basket).toEqual([]);
+    expect(sim.execute({ kind: 'clothes.checkout', payload: { retailerId: 'us-uniqlo', how: 'online' } }).error).toBe('The basket is empty.');
+  });
+
+  it('is one retailer’s at a time, and a British order called off goes whole', () => {
+    const sim = life('basket-gb', 'uk-eng-london');
+    const ok = (x: (typeof CLOTHING_PRODUCTS)[number]) => !buyRefusal(sim.player, { productId: x.id, how: 'online', size: sizeFor(sim, sim.player, x.sizes), color: x.colors[0] });
+    const p = CLOTHING_PRODUCTS.find((x) => x.market === 'GB' && retailerById(x.retailer)!.delivers && ok(x))!;
+    const other = CLOTHING_PRODUCTS.find((x) => x.market === 'GB' && x.retailer !== p.retailer && retailerById(x.retailer)!.delivers && ok(x))!;
+    const line = (x: typeof p) => ({ productId: x.id, how: 'online' as const, size: sizeFor(sim, sim.player, x.sizes), color: x.colors[0] });
+    expect(checkoutRefusal(sim.player, [line(p), line(other)])).toBe('A checkout is one retailer’s, in a store or online.');
+    sim.must({ kind: 'clothes.basket_add', payload: line(p) });
+    sim.must({ kind: 'clothes.basket_add', payload: line(p) });
+    const [a, b] = sim.must<{ purchaseIds: string[] }>({ kind: 'clothes.checkout', payload: { retailerId: p.retailer, how: 'online' } }).purchaseIds;
+    sim.must({ kind: 'clothes.cancel', payload: { purchaseId: a } });
+    const bought = sim.player.clothesBought!;
+    expect(bought.find((x) => x.id === b)!.canceledAt).toBe(sim.now);
+    expect(sim.execute({ kind: 'clothes.cancel', payload: { purchaseId: b } }).error).toBe('It’s called off already.');
+  });
+
+  it('won’t take what can’t be bought, and an order goes back as returned only when all of it has', () => {
+    const sim = life('basket-return');
+    expect(sim.execute({ kind: 'clothes.basket_add', payload: { productId: tee.id, how: 'online', size: 'XXXXL', color: tee.colors[0] } }).error).toBe('Choose one of its sizes.');
+    const line = { productId: tee.id, how: 'online' as const, size: sizeFor(sim, sim.player, tee.sizes), color: tee.colors[0] };
+    sim.must({ kind: 'clothes.basket_add', payload: line });
+    sim.must({ kind: 'clothes.basket_add', payload: line });
+    const [a, b] = sim.must<{ purchaseIds: string[] }>({ kind: 'clothes.checkout', payload: { retailerId: 'us-uniqlo', how: 'online' } }).purchaseIds;
+    sim.advanceBy(8 * MS_DAY);
+    const order = ordersOf(sim.player).at(-1)!;
+    sim.must({ kind: 'clothes.return', payload: { purchaseId: a, how: 'mail' } });
+    expect(order.status).toBe('delivered');
+    sim.must({ kind: 'clothes.return', payload: { purchaseId: b, how: 'mail' } });
+    expect(order.status).toBe('returned');
   });
 });
 

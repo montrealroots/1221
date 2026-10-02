@@ -25,7 +25,7 @@ import { resaleOf, sellRefusal } from '@/engine/systems/resale';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
 import { groupLabelOf } from '@/ui/shell/destinations';
-import { buyRefusal, cancelRefusal, clothingCatalog, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal } from '@/engine/systems/clothing';
+import { buyRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
 const SLOT_LABEL: Readonly<Partial<Record<Slot, string>>> = {
@@ -84,6 +84,7 @@ export function ClothesWorkspace() {
         <Bathroom />
         <Salons />
         <Shop />
+        <Basket />
         <Bought />
         <Fine>
           The shops are real retailers and the clothes their real products, at the regular prices their pages listed on the date each was read, in the money of the country they’re sold in: with VAT or IVA in Britain, Ireland and Mexico, and with the town’s sales tax added in America and Canada, none on clothing under $110 an item in New York. A store sells where SLATE has its address; online, a retailer delivers in its own country, at its published fee, free over its threshold, in its working days, or its country’s middle figure where it published none, said so. A return is unworn and unwashed, inside the retailer’s window, to a store free where it takes them there, or by mail at its fee; the delivery isn’t refunded. Dry cleaning is a real shop’s list in the town, or New York’s at the town’s cost of living, and two days, SLATE’s estimate. The clothes a life begins with are unbranded, SLATE’s.
@@ -257,6 +258,7 @@ function Choose({ productId }: { productId: string }) {
   const [color, setColor] = useState(p.colors[0] ?? '');
   const [quantity, setQuantity] = useState(1);
   const buy = useFeature('clothes.buy');
+  const add = useFeature('clothes.basket_add');
   const options = { productId, size: size || undefined, color: color || undefined, quantity };
   const inStore = { ...options, how: 'store' as const };
   const online = { ...options, how: 'online' as const };
@@ -290,6 +292,8 @@ function Choose({ productId }: { productId: string }) {
       </div>
       <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
         <button type="button" className="btn btn-sm" disabled={!buy.open || Boolean(storeNo)} title={storeNo ?? buy.reason} onClick={() => go('store')}>{`Buy In Store, ${money(storeQuote?.total ?? 0)}`}</button>
+        <button type="button" className="btn btn-sm btn-ghost" disabled={!add.open || Boolean(storeNo)} title={storeNo ?? add.reason} onClick={() => { if (run('clothes.basket_add', inStore).ok) toast(`${p.name}, in the basket to buy in store.`, 'positive'); }}>Add To Basket, In Store</button>
+        <button type="button" className="btn btn-sm btn-ghost" disabled={!add.open || Boolean(onlineNo)} title={onlineNo ?? add.reason} onClick={() => { if (run('clothes.basket_add', online).ok) toast(`${p.name}, in the basket to order online.`, 'positive'); }}>Add To Basket, Online</button>
         <button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(onlineNo)} title={onlineNo ?? buy.reason} onClick={() => go('online')}>
           {onlineQuote ? `Order Online, ${money(onlineQuote.total)}` : 'Order Online'}
         </button>
@@ -300,6 +304,54 @@ function Choose({ productId }: { productId: string }) {
         {r.returnDays !== null ? `Returns within ${r.returnDays} days, unworn.` : 'Its return window isn’t known.'}
       </div>
     </div>
+  );
+}
+
+/** What's in the basket, a checkout to each retailer and way, each with its own delivery once (`clothes.checkout`). */
+function Basket() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const lines = useWorld((s) => [...(s.player.basket ?? [])]);
+  const out = useFeature('clothes.checkout');
+  const drop = useFeature('clothes.basket_remove');
+  const money = (c: number) => formatMoney(c, saveCurrency(sim.universe));
+  if (lines.length === 0) return null;
+  const groups = new Map<string, BasketLine[]>();
+  for (const l of lines) { const key = `${productById(l.productId)?.retailer}|${l.how}`; groups.set(key, [...(groups.get(key) ?? []), l]); }
+  return (
+    <Panel title="Basket" subtitle="Each retailer’s checks out on its own: one payment, and online one delivery for the order">
+      <div className="col gap-3">
+        {[...groups.entries()].map(([key, group]) => {
+          const [retailerId, how] = key.split('|') as [string, 'store' | 'online'];
+          const r = retailerById(retailerId);
+          const q = checkoutQuote(sim, person, group);
+          const no = checkoutRefusal(person, group);
+          return (
+            <div key={key} className="col gap-1">
+              <div className="strong small">{r?.name ?? 'A Retailer'}, {how === 'online' ? 'Online' : 'In Store'}</div>
+              <div className="table-scroll">
+                <table>
+                  <thead><tr><th scope="col">Item</th><th scope="col">Size</th><th scope="col" className="num">How Many</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+                  <tbody>
+                    {group.map((l, i) => (
+                      <tr key={l.id}>
+                        <td>{productById(l.productId)?.name}{l.color ? <span className="xs dim"> · {l.color}</span> : null}</td>
+                        <td>{l.size ?? '—'}</td>
+                        <td className="num mono">{l.quantity ?? 1}</td>
+                        <td className="num mono">{q ? money(q.goods[i]!) : '—'}</td>
+                        <td><button type="button" className="btn btn-sm btn-ghost" disabled={!drop.open} title={drop.reason} onClick={() => run('clothes.basket_remove', { lineId: l.id })}>Take Out</button></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {q && <div className="xs dim">{how === 'online' ? (q.delivery > 0 ? `Delivery ${money(q.delivery)}` : 'Delivered free') + `, arriving ${formatDate(q.arrivesAt!, sim.zone)}. ` : ''}{no ?? ''}</div>}
+              <div><button type="button" className="btn btn-sm btn-primary" disabled={!out.open || Boolean(no)} title={no ?? out.reason} onClick={() => { const a = run<{ paid: number }>('clothes.checkout', { retailerId, how }); if (a.ok) toast(`Checked out at ${r?.name}, ${money(a.value!.paid)}.`, 'positive'); }}>{q ? `Check Out, ${money(q.total)}` : 'Check Out'}</button></div>
+            </div>
+          );
+        })}
+      </div>
+    </Panel>
   );
 }
 
