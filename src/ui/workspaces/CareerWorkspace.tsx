@@ -836,7 +836,7 @@ function AwardsPanel() {
   if (entries.length === 0 && open.length === 0) return null;
   const fee = formatMoney(emmyEntry(sim), saveCurrency(sim.universe));
   return (
-    <Panel title="Awards" subtitle="The Primetime Emmys and BAFTA Film: a network or a film enters its own; a guest performer enters themselves">
+    <Panel title="Awards" subtitle="The Emmys, BAFTA Film, The Academy Awards, The Tonys, The Oliviers And The Ariels: a network, a film or a production enters its own; a guest performer enters themselves">
       <div className="col gap-2">
         {open.map((b) => (
           <div key={b.id} className="row-between small">
@@ -850,7 +850,7 @@ function AwardsPanel() {
             <span className="mono">{e.won ? 'Won' : e.won === false ? 'Nominated' : e.nominated ? 'Nominated, The Ceremony To Come' : e.nominated === false ? 'Not Nominated' : 'Entered'}</span>
           </div>
         ))}
-        <Fine>A performance’s chance at a nomination is its category’s slots over the performances submitted the last year counted, weighed by how far above the part you stood, SLATE’s estimate; a nomination and a win lift your recognition, which sets what you’re paid over scale. The Oscars, Tonys, Oliviers and Ariels publish how many films or productions are eligible, not performances, so SLATE doesn’t put work up for them.</Fine>
+        <Fine>A performance’s chance at a nomination is its category’s slots over the performances submitted the last year counted, weighed by how far above the part you stood, SLATE’s estimate; a nomination and a win lift your recognition, which sets what you’re paid over scale. The Academy Awards’ field is counted from its Reminder List; the Tonys’, the Oliviers’ and the Ariels’ publish only how many productions or films are eligible, so their fields are those counts at a published cast size, SLATE’s estimate.</Fine>
       </div>
     </Panel>
   );

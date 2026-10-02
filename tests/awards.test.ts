@@ -6,9 +6,9 @@
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { MS_DAY, instantFromZoned } from '@/engine/core/time';
+import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
-import { beginCareer, careerOf, roleById, type Booking } from '@/engine/systems/career';
+import { beginCareer, careerOf, roleById, workDays, type Booking } from '@/engine/systems/career';
 import { evenCraft } from '@/engine/systems/school';
 import { attributesOf } from '@/engine/systems/attributes';
 import { AWARD_EFFECT, announceNominations, awardChances, awardYear, categoryName, categoryOf, enterForThem, entriesOf, entryRefusal, standout } from '@/engine/systems/awards';
@@ -109,5 +109,54 @@ describe('the vote', () => {
     const share = decided.filter((e) => e.nominated).length / 30;
     expect(share).toBeGreaterThan(0.05);
     expect(share).toBeLessThan(0.6);
+  });
+});
+
+describe('the Academy Awards, the Tonys, the Oliviers and the Ariels (from 2026-10-02)', () => {
+  it('a studio film’s supporting role, a play on Broadway, one in the West End and a Mexican feature go up, entered by the production', () => {
+    const sim = pro('aw-four');
+    const t = sim.now;
+    expect(categoryOf(worked(sim, 'film-weekly', t))).toEqual({ body: 'oscars', category: 'supporting', byNetwork: true });
+    expect(categoryOf(worked(sim, 'broadway', t))!.body).toBe('tonys');
+    expect(categoryOf(worked(sim, 'lort-a-plus', t))!.body).toBe('tonys');
+    expect(categoryOf(worked(sim, 'uk-west-end', t))!.body).toBe('oliviers');
+    expect(categoryOf(worked(sim, 'mx-film', t))!.body).toBe('ariel');
+    expect(categoryOf(worked(sim, 'lort-b', t))).toBeUndefined();
+    sim.player.performerTitle = 'actress';
+    expect(categoryName(sim.player, { body: 'ariel', category: 'coactuacion' })).toBe('Mejor Coactuación Femenina, The Ariels');
+    expect(categoryName(sim.player, { body: 'tonys', category: 'featured-play' })).toBe('Best Performance By An Actress In A Featured Role In A Play, The Tonys');
+  });
+
+  it('each counts toward its own ceremony year', () => {
+    const sim = pro('aw-four-year');
+    expect(awardYear(worked(sim, 'film-weekly', on(2026, 11, 2)), 'oscars')).toBe(2027);
+    expect(awardYear(worked(sim, 'broadway', on(2026, 4, 10)), 'tonys')).toBe(2026);
+    expect(awardYear(worked(sim, 'broadway', on(2026, 5, 10)), 'tonys')).toBe(2027);
+    expect(awardYear(worked(sim, 'uk-west-end', on(2026, 2, 10)), 'oliviers')).toBe(2026);
+    // The run whose last night falls on the window's 17 February counts; one a night later doesn't.
+    const lastNight = (bk: Booking) => zonedParts(workDays(bk).at(-1)!.at, 'Europe/London').day;
+    let start = on(2026, 2, 5);
+    const inLondon = (at: number) => ({ ...worked(sim, 'uk-west-end', at), cityId: 'uk-eng-london' as const });
+    while (lastNight(inLondon(start)) < 17) start += MS_DAY;
+    const closing = inLondon(start);
+    expect(lastNight(closing)).toBe(17);
+    expect(awardYear(closing, 'oliviers')).toBe(2026);
+    closing.starts += MS_DAY;
+    expect(lastNight(closing)).toBeGreaterThan(17);
+    expect(awardYear(closing, 'oliviers')).toBe(2027);
+    expect(awardYear(worked(sim, 'uk-west-end', on(2026, 2, 20)), 'oliviers')).toBe(2027);
+    expect(awardYear(worked(sim, 'mx-film', on(2026, 3, 1)), 'ariel')).toBe(2027);
+  });
+
+  it('a nomination’s odds are the counted or derived field’s', () => {
+    const sim = pro('aw-four-odds', roleById('film-weekly').bar);
+    const b = worked(sim, 'film-weekly', sim.now);
+    expect(awardChances(sim.player, b, 'oscars', 'supporting').nominated).toBeCloseTo((5 / 1075) * standout(sim.player, b), 6);
+    sim.player.performerTitle = 'actress';
+    expect(awardChances(sim.player, b, 'oscars', 'supporting').nominated).toBeCloseTo((5 / 790) * standout(sim.player, b), 6);
+    // 19 plays at 19.6 a production, the actresses' 42.4%.
+    expect(awardChances(sim.player, b, 'tonys', 'featured-play').nominated).toBeCloseTo((5 / Math.round(372.4 * (790 / 1865))) * standout(sim.player, b), 6);
+    expect(enterForThem(sim, sim.player)).toBe(1);
+    expect(entriesOf(sim.player)[0]).toMatchObject({ body: 'oscars', byThem: false });
   });
 });

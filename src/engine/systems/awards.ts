@@ -7,17 +7,23 @@
  * the guest categories, a regular in the supporting, comedy where the work
  * was one and drama otherwise. A co-star's few lines are under the 5% of the
  * episode the Academy asks of a guest performer, so a co-star isn't. A
- * British feature is put up for BAFTA Film, as supporting. The performer's
- * word, actor or actress, is the category's.
+ * British feature is put up for BAFTA Film, as supporting. From 2026-10-02 a
+ * studio film's supporting role goes up for the Academy Awards, a play on
+ * Broadway for the Tonys (featured, in a play), a play in the West End for
+ * the Oliviers (supporting) and a Mexican feature for the Ariels
+ * (coactuación). The performer's word, actor or actress, is the category's.
  *
  * **Who enters it.** A network enters its series regulars; a guest performer
  * enters themselves, by the entry deadline, at the Academy's $225; a film's
- * entrant enters its performances for BAFTA.
+ * or a production's entrant enters its performances for the others.
  *
  * **When.** The Emmys' year is work finished from 1 June to 31 May, decided
- * that July and given in September; BAFTA's is work finished in a calendar
- * year, decided the next January and given in February. That a film shot in
- * a year is released in it is SLATE's reading.
+ * that July and given in September; BAFTA's and the Academy's are work
+ * finished in a calendar year, given the next February and March; the Tonys'
+ * runs to the end of April and the Oliviers' to mid February, each given that
+ * spring; the Ariels' is a calendar year, given the next October. That a film
+ * shot in a year is released in it, and a play opens when its work ends, is
+ * SLATE's reading.
  *
  * **The vote.** A performance's chance at a nomination is the category's
  * slots over its submissions, weighed by how far the actor stood above the
@@ -38,14 +44,14 @@ import { dateKey, instantFromZoned, zonedParts, type Instant } from '../core/tim
 import { clamp } from '../core/rng';
 import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { AWARD_DATES, BAFTA_FIELDS, EMMY_ENTRY, EMMY_FIELDS, EMMY_NAMES, type AwardBody } from '../content/awards';
+import { AWARD_DATES, EMMY_ENTRY, EMMY_FIELDS, EMMY_NAMES, OTHER_FIELDS, OTHER_NAMES, type AwardBody } from '../content/awards';
 import { careerOf, levelFor, roleById, workDays, type Booking } from './career';
 import { earn, nudge } from './attributes';
 import { spend } from './household';
 
 export interface AwardEntry { bookingId: string; body: AwardBody; year: number; category: string; entered: Instant; byThem: boolean; nominated?: boolean; won?: boolean }
 
-const ZONE: Readonly<Record<AwardBody, string>> = { emmys: 'America/Los_Angeles', 'bafta-film': 'Europe/London' };
+const ZONE: Readonly<Record<AwardBody, string>> = { emmys: 'America/Los_Angeles', 'bafta-film': 'Europe/London', oscars: 'America/Los_Angeles', tonys: 'America/New_York', oliviers: 'Europe/London', ariel: 'America/Mexico_City' };
 /** A nomination's and a win's recognition and reputation, and the mood. SLATE's estimates. */
 export const AWARD_EFFECT = { nominated: { recognition: 4, reputation: 4, morale: 5 }, won: { recognition: 8, reputation: 8, morale: 10 } } as const;
 
@@ -61,27 +67,37 @@ export function categoryOf(booking: Booking): { body: AwardBody; category: strin
   if (role.id === 'series-half') return { body: 'emmys', category: 'supporting-comedy', byNetwork: true };
   if (role.id === 'series-hour') return { body: 'emmys', category: 'supporting-drama', byNetwork: true };
   if (role.id.startsWith('uk-film')) return { body: 'bafta-film', category: 'supporting', byNetwork: true };
+  if (role.id === 'film-weekly') return { body: 'oscars', category: 'supporting', byNetwork: true };
+  if (role.id === 'broadway' || role.id === 'lort-a-plus') return { body: 'tonys', category: 'featured-play', byNetwork: true };
+  if (role.id === 'uk-west-end') return { body: 'oliviers', category: 'supporting', byNetwork: true };
+  if (role.id === 'mx-film') return { body: 'ariel', category: 'coactuacion', byNetwork: true };
   return undefined;
 }
 
-/** The ceremony year a booking's work counts toward: the Emmys' June-to-May year, BAFTA's next. */
+/**
+ * The ceremony year a booking's work counts toward: the window its last day
+ * falls in, and that window's ceremony, the same year when it falls after the
+ * window closes (the Emmys, the Tonys, the Oliviers) and the next otherwise.
+ */
 export function awardYear(booking: Booking, body: AwardBody): number {
   const days = workDays(booking);
   const last = zonedParts(days[days.length - 1]!.at, ZONE[body]);
-  if (body === 'emmys') return last.month >= 6 ? last.year + 1 : last.year;
-  return last.year + 1;
+  const { windowEnds: [em, ed], ceremony: [cm] } = AWARD_DATES[body];
+  const windowYear = last.month > em || (last.month === em && last.day > ed) ? last.year + 1 : last.year;
+  return cm < em ? windowYear + 1 : windowYear;
 }
 
 /** A category's field and slots, for the performer's word. */
 function fieldOf(person: Person, body: AwardBody, category: string): { submissions: number; slots: number } {
   const word = person.performerTitle === 'actress' ? 'actress' : 'actor';
-  return body === 'emmys' ? EMMY_FIELDS[category]![word] : BAFTA_FIELDS[word];
+  return body === 'emmys' ? EMMY_FIELDS[category]![word] : OTHER_FIELDS[body][word];
 }
 
 /** The category as it's named, with the performer's word. */
 export function categoryName(person: Person, entry: Pick<AwardEntry, 'body' | 'category'>): string {
-  const word = person.performerTitle === 'actress' ? 'Actress' : 'Actor';
-  return entry.body === 'emmys' ? EMMY_NAMES[entry.category]!.replace('{title}', word) : `Supporting ${word}, BAFTA Film`;
+  const actress = person.performerTitle === 'actress';
+  const word = actress ? 'Actress' : 'Actor';
+  return entry.body === 'emmys' ? EMMY_NAMES[entry.category]!.replace('{title}', word) : OTHER_NAMES[entry.body].replace('{title}', word).replace('{genero}', actress ? 'Femenina' : 'Masculina');
 }
 
 /** How far above the part's bar they stood, as the vote weighs it. */
