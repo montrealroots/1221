@@ -41,6 +41,7 @@ import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
 import { onTheRoad } from './roadside';
+import { byTransit, type GroundWay } from './airportground';
 import { atTheCheckpoint, boardingIdRefusal } from './identity';
 import { caravansOf, towFor, towedLegs } from './caravans';
 import { claimDelay } from './compensation';
@@ -276,6 +277,16 @@ export function flightFate(sim: Simulation, person: Person, key: string): number
   return 0;
 }
 
+/** Why a canceled flight's fare can't be taken back instead of the next flight, or nothing: only before the next one leaves, from the airport. */
+export function refundRefusal(sim: Simulation, person: Person, journeyId: string): string | undefined {
+  const j = journeysOf(person).find((x) => x.id === journeyId);
+  if (!j || j.status !== 'underway' || !j.rebooked) return 'No flight of yours was canceled.';
+  const first = j.legs.find((l) => l.mode === 'flight');
+  if (!first) return 'No flight of yours was canceled.';
+  if (person.currentLocationId !== j.fromCity || sim.now >= first.departAt + AIR.rebookHours * MS_HOUR) return 'The next flight has gone, with you on it.';
+  return undefined;
+}
+
 /** Each flight's fate at the published rates: the minutes late in all, and whether one was canceled and rebooked. */
 function fly(sim: Simulation, person: Person, j: Journey): void {
   let late = 0;
@@ -453,7 +464,7 @@ export function registerJourneys(sim: Simulation): void {
     return { price: q.price, hotelBack };
   });
 
-  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean; hotelId?: string; room?: string }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean; hotelId?: string; room?: string; ground?: GroundWay }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
     const day = Number(p?.day);
@@ -468,6 +479,8 @@ export function registerJourneys(sim: Simulation): void {
     let back = round ? planBy(s, by, toCity, fromCity, Number(p!.returnDay), Number(p?.returnSlot ?? 0), bags, cabin, toCity) : undefined;
     if (typeof out === 'string') throw new CommandError(out);
     if (typeof back === 'string') throw new CommandError(back);
+    // To the airport and back by transit, where it was read (`systems/airportground.ts`, from 2026-10-02).
+    if (!by && p?.ground === 'transit') { out = byTransit(s, out); if (back) back = byTransit(s, back); }
     // A caravan behind one's own car (`systems/caravans.ts`, from 2026-09-30).
     let towing: string | undefined;
     if (p?.tow) {
@@ -598,6 +611,28 @@ export function registerJourneys(sim: Simulation): void {
     // Called off in hospital or laid up hurt, travel insurance pays what didn't come back (`systems/travelinsurance.ts`).
     const claimed = claimCancellation(s, person, first, halves.reduce((a, h) => a + (h.paidBy === 'production' ? 0 : h.total), 0) - refund, s.now);
     return { refund: refund + claimed };
+  });
+
+  // A flight the airline canceled: the next one, as booked for you, or the fare back instead, the choice the EU's and the
+  // UK's 261 give and the DOT's refund rule gives a passenger who doesn't fly (`research-airport-ground.json`, from 2026-10-02).
+  sim.onCommand<{ journeyId: string }, { refund: Money }>('travel.take_refund', (p, { sim: s }) => {
+    const person = s.player;
+    const no = refundRefusal(s, person, String(p?.journeyId));
+    if (no) throw new CommandError(no);
+    const j = journeysOf(person).find((x) => x.id === p.journeyId)!;
+    const back = partnerOf(person, j);
+    // The flights and the bags come back; the ride to the airport was had. A round trip's way home serves no purpose now and comes back too.
+    const flights = (x: Journey) => x.legs.filter((l) => l.mode === 'flight' || l.mode === 'check-in').reduce((a, l) => a + l.fare, 0);
+    let refund = flights(j) + (j.hotel ? hotelRefund(j.hotel, j.arriveAt, s.now) : 0);
+    const halves = [j, ...(back && back.status === 'booked' ? [back] : [])];
+    if (back && back.status === 'booked') refund += back.total;
+    for (const h of halves) {
+      h.status = 'canceled';
+      h.why = 'The airline canceled it, and you took the fare back.';
+      for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.journeyId === h.id) s.timeline.cancel(item.id, s.now);
+    }
+    if (refund > 0 && j.paidBy !== 'production') s.post({ memo: 'A canceled flight, the fare back', category: 'travel', postings: refundPostings(s, person, refund) });
+    return { refund };
   });
 
   sim.onSchedule(LEAVE_KIND, (item, s) => {
