@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-267 commands; 261 named by a test, 6 not.
+269 commands; 263 named by a test, 6 not.
 
 ## aircraft
 
@@ -245,6 +245,8 @@ Each command the player can run: the engine file that handles it, the screens th
 | `health.drop` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | **none** | Between Jobs |
 | `health.elect_cobra` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `worklife.test.ts` | Between Jobs |
 | `health.enroll` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `medicaluis.test.ts` `safetynet.test.ts` `worklife.test.ts` | Between Jobs |
+| `health.mobility` | `src/engine/systems/access.ts` | `PapersWorkspace.tsx` | `access.test.ts` | Between Jobs |
+| `health.parking_permit` | `src/engine/systems/access.ts` | `PapersWorkspace.tsx` | `access.test.ts` | Between Jobs |
 | `health.pay_bill` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `worklife.test.ts` | Between Jobs |
 | `health.prepay` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` | Between Jobs |
 | `health.treat` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carried.test.ts` | Between Jobs |

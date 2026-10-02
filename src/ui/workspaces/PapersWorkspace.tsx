@@ -20,6 +20,7 @@ import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA
 import { UNION_HEALTH } from '@/engine/content/career';
 import { deadline, owedOn, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
 import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, planOf, prepayRefusal, type Condition } from '@/engine/systems/health';
+import { PERMITS, permitRefusal, usesWheelchair } from '@/engine/systems/access';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
 import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
@@ -204,6 +205,7 @@ function HealthPane() {
   return (
     <div className="col gap-5">
       <YourDoctor />
+      <GettingAbout />
       <Panel title="Your Cover">
         <div className="grid grid-3">
           <Stat label="This Month" value={cover ? COVER_LABEL[cover] : 'None'} tone={cover ? undefined : 'warning'} />
@@ -510,6 +512,29 @@ function BenefitsPane() {
 }
 
 /** Their own doctor, from the practices in the town they live in, and where urgent and emergency care is had here. */
+/** A wheelchair, and a disability parking permit where you live (`systems/access.ts`). */
+function GettingAbout() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const wheelchair = usesWheelchair(person);
+  const permit = PERMITS[person.home?.cityId ?? ''];
+  const no = permitRefusal(person);
+  const cur = saveCurrency(sim.universe);
+  const fee = permit?.fee ? formatMoney(inSaveMoney(sim, Math.round(permit.fee * 100), permit.currency), cur) : permit?.fee === 0 ? 'Free' : 'Fee Not Published';
+  return (
+    <Panel title="Getting About" subtitle={wheelchair ? 'You use a wheelchair' : undefined}>
+      <div className="col gap-2">
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          <Gated feature="health.mobility" className="btn btn-sm btn-ghost" onClick={() => { if (run('health.mobility', { wheelchair: !wheelchair }).ok) toast(wheelchair ? 'Noted.' : 'Noted: hotels without wheelchair access won’t be booked.', 'positive'); }}>{wheelchair ? 'I Don’t Use A Wheelchair' : 'I Use A Wheelchair'}</Gated>
+          {wheelchair && permit && person.parkingPermit?.cityId !== person.home?.cityId && <Gated feature="health.parking_permit" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('health.parking_permit', {}).ok) toast(`${permit.name}, issued.`, 'positive'); }}>{`Apply For ${permit.name}, ${fee}`}</Gated>}
+          {person.parkingPermit && <span className="small">{permit?.name ?? 'A permit'}{permit?.freeMeters ? ', parking free at meters here' : ', meters still paid here'}</span>}
+        </div>
+        <div className="xs dim">A hotel whose own pages say it can’t take a wheelchair isn’t booked; one that doesn’t say is. With a permit, a meter is free where the town lets holders park free: New York, Los Angeles, Toronto, Dublin and Mexico City, not Westminster, New Haven or Vancouver.</div>
+      </div>
+    </Panel>
+  );
+}
+
 function YourDoctor() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);

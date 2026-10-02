@@ -83,6 +83,8 @@ export function namedStayRefusal(person: Person, hotelId: string, roomName: stri
   if (!roomRate(h, room, plan, from)) return plan === 'prepaid' ? 'It offers that room only on a refundable rate.' : 'It offers that room only paid ahead.';
   const age = (from - person.birthInstant) / (365.2425 * MS_DAY);
   if (h.minAge !== null && age < h.minAge) return `${h.name} checks in guests of ${h.minAge} or older.`;
+  // A wheelchair, where the hotel's own pages say it can't take one (`systems/access.ts`, from 2026-10-02).
+  if (person.mobility === 'wheelchair' && amenitiesOf(hotelId)?.accessible === false) return `${h.name} has no wheelchair access.`;
   return undefined;
 }
 

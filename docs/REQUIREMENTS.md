@@ -230,7 +230,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 51.1 | Prescriptions | Partial | paid at the counter; England's prepayment certificate, three months or a year (`health.prepay`, 2026-10-02) | A prescription, supply, refills, collection |
 | 51.2 | Insurance | Partial | deep cover engine | Claims and denials; private cover abroad |
 | 51.3 | Travel insurance | Complete | tests/travelinsurance | — |
-| 51.4 | Accessibility | Not implemented | — | A needs model and venue attributes |
+| 51.4 | Accessibility | Partial, 2026-10-02 | `systems/access.ts`: a wheelchair said on Papers; a hotel its own pages say can’t take one refused; a disability permit at each place’s fee, meters free where the town allows | Stations without step-free access, paratransit, accessible taxis, accessible homes |
 | 52.1–4 | Friends, dating, partners, marriage | Complete | people, dating, marriage; tests | More activities |
 | 52.5–6 | Parenting, caregiving | Partial | costs and benefits | A child's day; care given as time |
 | 52.7–9 | Lives of their own; shared activities; household | Partial | `declines()`; from 2026-10-02 a job of their own at the country's employment rate for their age, at work nine to five on the days ATUS says the employed work (`systems/availability.ts`, decider `social.availability`) | Interests, memory read; activities; chores |
