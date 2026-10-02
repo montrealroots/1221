@@ -69,6 +69,19 @@ describe('a fitting', () => {
     expect(b.fittingOwed).toBe(fittingFor(b, fit.at, 'USD')!.pay);
   });
 
+  it('isn’t paid when they aren’t there for it', () => {
+    const sim = pro('us-ny-newyork', 'fit-away');
+    const b = offer(sim, 'costar', 'us-ny-newyork');
+    sim.must({ kind: 'career.accept', payload: { bookingId: b.id } });
+    const fit = sim.universe.scheduled.find((i) => i.kind === FITTING_KIND && i.payload.bookingId === b.id)!;
+    sim.advanceTo(fit.at - MS_HOUR);
+    sim.player.currentLocationId = 'us-ct-newhaven';
+    sim.advanceTo(fit.at + 2 * MS_HOUR);
+    expect(b.fittingOwed).toBeUndefined();
+    expect(fit.status).toBe('missed');
+    expect(sim.universe.notifications.some((n) => n.title === 'Missed The Fitting')).toBe(true);
+  });
+
   it('owes nothing for a job let go before its fitting', () => {
     const sim = pro('us-ny-newyork', 'fit-let-go');
     const b = offer(sim, 'costar', 'us-ny-newyork');
