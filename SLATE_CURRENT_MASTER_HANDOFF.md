@@ -135,6 +135,16 @@ Done and gated so far:
 - **Stages 13 and 15, closed** (`18f8d538`): no counteroffer over scale, nothing publishing how often one is met or an agent's increment; the walkthroughs' every step not working says what's built or why not.
 - **Gate at `18f8d538`:** 2,393 tests, exit 0.
 - **Lives replayed at `5de9dacc`** (seeds `death-1` in New York and `death-ldn` in London, modest; not the seeds of the earlier replays, which the handoff never named, so not comparable to them): New York died at 89 worth $4,874,860; London at 50 worth £46,704, a sudden death on the life table's draw in a steady life (its last year: pay about £30,000, condition 91, stress 0, treated hypertension, BMI 29, driving since 2046). 0 errors and 0 anomalies each. Run from `../slate-lives` with `probe/chunk.sh` in a background loop; the old `runlife-wt.sh` is gone.
+- **Data gaps, from 2026-10-02** (`docs/DATA-GAPS.md`): the owner asked for something to get the numbers the left-out items wait on. Each gap now lists the open dataset that answers it, or that none does. Tools in `tools/data/` compute a figure from raw data and write it with its source to `docs/research/world/derived-*.json` and to `src/engine/content/`:
+  - `wetdays.mjs`: NOAA days over 0.10 inch, so a build is held up by a wet stretch (`7a39a948`).
+  - `inspections.mjs`: LADBS's inspection results, so a build's inspection can fail (`3695d2b2`).
+  - `energy.mjs`: each country's household energy survey and price index, so energy is at 2025 prices and Mexico City's no longer runs four times too high (`e60bf3b2`). It uses `xlsx.mjs`, an unzip-based spreadsheet reader.
+  - `imss.mjs`: the IMSS's charges to non-members.
+  - Hand-read, where the source refuses scripts:
+    - England's visitor charging (`20149a95`).
+    - The Ontario, BC and Irish hospitals' charges to visitors (`652c64b5`).
+    - Pickleball's 4.1 METs (`142c88f6`).
+  - Still to build: the academies' fields of performances, from IMDb's datasets. The rest are out, each with its reason.
 - **What's left:** Stage 14, with the owner's Console API key (`docs/AI-INTEGRATION.md`). Every other stage is done but for the researched-and-not-built list in its `docs/BACKLOG.md` row. The lives haven't been replayed since `1bd7dbf8`; the care-abroad and telecom changes move money in every life and are worth a replay.
 - **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
 - **Stage 14** needs the owner's API key.

@@ -16,12 +16,12 @@ exists, this file says so, and the item stays out.
 | A visitor's price for care in Ontario, British Columbia, Ireland and Mexico | 9 | The hospitals' own charges for patients from abroad, read by hand (Michael Garron in Toronto, Providence in Vancouver by a search's summary, St Vincent's in Dublin), and the IMSS's unit costs for non-members from the DOF: `tools/data/imss.mjs` | Got. A visitor's care there is charged so (`VISITOR_CARE`). |
 | A visitor's price for care in Scotland, and an Ontario doctor's visit | 9 | NHS Scotland's charging and Ontario's uninsured walk-in prices aren't published as a standard figure | Out |
 | A failed building inspection | 12 | Los Angeles's LADBS inspection records since 2023 (data.lacity.org), counted to each kind's share of visits failed: foundation 38%, framing 38%, rough 48%, final 37%: `tools/data/inspections.mjs`. NYC Open Data and Toronto publish requests, not results | Got. A house's inspection fails at those odds, waiting a reinspection's days and paying its fee (`buildInspectionFails`). |
-| A GP appointment's wait in Ireland, Canada and Mexico City | 9 | National surveys' published shares (Commonwealth Fund, CIHI, ENSANUT), where their microdata or tables give one | To research |
+| A GP appointment's wait in Ireland, Canada and Mexico City | 9 | Surveys publish the share seen the same or next day, but the only thing a wait would change is somebody going to urgent care instead, and no source measures how often that happens | Out |
 | Pickleball's energy | 12 | Doubles measured by portable calorimetry at 4.1 METs (15 adults, mean age 65); the singles figures read are a summary's | Got. A pickleball court is built and played on (`COURT_MET`). |
 | An architect's fee | 12 | No open dataset: fees are private contracts, and the bodies withdrew their scales | Out |
 | Bids, change orders, overruns, lateness | 12 | No open dataset for homes; public works' contract data doesn't describe a house | Out |
 | A counteroffer over scale, an agent's increment | 13 | No open dataset: deals are private | Out |
-| The Oscars', Tonys', Oliviers' and Ariels' fields of performances | 13 | The academies' eligibility lists, counted to performances | To research |
+| The Oscars', Tonys', Oliviers' and Ariels' fields of performances | 13 | Each academy's list of eligible productions, matched to IMDb's public datasets (title.basics, title.principals) and their credited performers counted: a large download and a title-matching job | To build |
 | Hotel requests granted | 6 | No open dataset | Out |
 | Used clothes' resale prices | 3 | Resale platforms' sold listings aren't open data | Out |
 | Labor rates by shop, upholstery, audio, wheel fitment | 8 | Shops' rate cards where posted; no open dataset | Out |
