@@ -99,7 +99,9 @@ export function outfitFor(sim: Simulation, person: Person, at: Instant = sim.now
   const shoes = pick('shoes');
   if (!under || !socks || !shoes) return undefined;
   const outer = pick('outer');
-  return [suit, dress, top, bottom, under, socks, shoes, ...(chosen.some((g) => g.garment.slot === 'outer') && outer ? [outer] : [])].filter((g): g is Item & { garment: Garment } => Boolean(g));
+  // And the jewelry, watches, belts and bags chosen with it, as many as they like (from 2026-10-02).
+  const extras = chosen.filter((g) => g.garment.slot === 'accessory');
+  return [suit, dress, top, bottom, under, socks, shoes, ...(chosen.some((g) => g.garment.slot === 'outer') && outer ? [outer] : []), ...extras].filter((g): g is Item & { garment: Garment } => Boolean(g));
 }
 
 /**
@@ -154,6 +156,14 @@ export function useTowel(sim: Simulation, person: Person, at: Instant = sim.now)
   const towel = garmentsOf(person).filter((g) => g.garment.slot === 'towel' && wearable(sim, person, g, at)).sort(freshest)[0];
   if (!towel) return false;
   wearOnce(towel);
+  return true;
+}
+
+/** A night in their own sleepwear at home: a clean pair to hand, the one on the go first, a wear toward its wash (ACI: 3 or 4); false where there's none (from 2026-10-02). */
+export function wearForSleep(sim: Simulation, person: Person, at: Instant = sim.now): boolean {
+  const pair = garmentsOf(person).filter((g) => g.garment.slot === 'sleep' && wearable(sim, person, g, at)).sort(freshest)[0];
+  if (!pair) return false;
+  wearOnce(pair);
   return true;
 }
 

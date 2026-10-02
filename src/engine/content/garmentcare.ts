@@ -52,5 +52,15 @@ export const CARE_BY_KIND: Readonly<Record<string, CareRule>> = {
   towel: { wearsBetween: 3, lifetimeWashes: null, source: 'Cleveland Clinic: wash a bath towel after three uses' },
 };
 
+/**
+ * What a garment takes up folded in a bag, liters, by where it goes on: SLATE's
+ * estimate, from 2026-10-02, so a suitcase fills as it would. No maker or
+ * survey publishes a packed garment's volume. A week's clothes by `PACK` comes
+ * to about 30 of a carry-on's 45 liters.
+ */
+export const GARMENT_L: Readonly<Record<Slot, number>> = {
+  top: 1, bottom: 1.5, dress: 1.5, suit: 4, outer: 5, underwear: 0.2, socks: 0.15, shoes: 4, sleep: 1, active: 0.8, accessory: 0.2, towel: 2,
+};
+
 /** The care rule for a kind of garment, or a T-shirt's where none is named. */
 export const careFor = (kind: string): CareRule => CARE_BY_KIND[kind] ?? CARE_BY_KIND['t-shirt']!;

@@ -29,6 +29,7 @@ import type { Person } from '../domain/model';
 import type { Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { PIECE_LABEL, type Piece } from '../content/furniture';
+import { GARMENT_L } from '../content/garmentcare';
 
 /** Where a thing is. */
 export type Place =
@@ -68,6 +69,8 @@ export interface Item {
   bulky?: boolean;
   /** A garment's kind, care and wear (`systems/wardrobe.ts`). */
   garment?: import('./wardrobe').Garment;
+  /** A phone: which, its color, its line, its battery and what's paid on it (`systems/phones.ts`, from 2026-10-02). */
+  device?: import('./phones').Device;
   /** Food: what it is, how much is left, and when it goes off (`systems/pantry.ts`). */
   food?: import('./pantry').Food;
   /** A toiletry: its kind and how much is left (`systems/hygiene.ts`). */
@@ -127,8 +130,16 @@ export function reachable(sim: Simulation, person: Person, place: Place): boolea
 /** Their items to hand now. */
 export const toHand = (sim: Simulation, person: Person): Item[] => itemsOf(person).filter((i) => reachable(sim, person, i.at));
 
+/** What a thing takes up, liters: its own figure; a garment folded (`GARMENT_L`, SLATE's estimate); a toiletry its contents (from 2026-10-02, until when a garment took up nothing). */
+export function volumeOf(item: Item): number {
+  if (item.volumeL !== undefined) return item.volumeL;
+  if (item.garment) return GARMENT_L[item.garment.slot];
+  if (item.supply) return item.supply.unit === 'ct' ? 0.05 : item.supply.left / 1000;
+  return 0;
+}
+
 /** How much of a container is used, liters. */
-export const usedL = (person: Person, holderId: string): number => itemsOf(person).filter((i) => i.at.kind === 'inside' && i.at.itemId === holderId).reduce((sum, i) => sum + (i.volumeL ?? 0) * i.quantity, 0);
+export const usedL = (person: Person, holderId: string): number => itemsOf(person).filter((i) => i.at.kind === 'inside' && i.at.itemId === holderId).reduce((sum, i) => sum + volumeOf(i) * i.quantity, 0);
 
 /** Why a thing can't go to a place now, or nothing where it can. */
 export function moveRefusal(sim: Simulation, person: Person, item: Item, to: Place): string | undefined {
@@ -143,7 +154,7 @@ export function moveRefusal(sim: Simulation, person: Person, item: Item, to: Pla
     // Nor inside something it holds.
     for (let at: Place | undefined = holder.at; at?.kind === 'inside'; at = itemById(person, at.itemId)?.at) if (at.itemId === item.id) return 'It holds that already.';
     const room = holder.holdsL - usedL(person, holder.id);
-    if ((item.volumeL ?? 0) * item.quantity > room) return `The ${holder.label} has ${Math.max(0, Math.floor(room))} liters left; the ${item.label} needs ${Math.ceil((item.volumeL ?? 0) * item.quantity)}.`;
+    if (volumeOf(item) * item.quantity > room + 1e-9) return `The ${holder.label} has ${Math.max(0, Math.floor(room))} liters left; the ${item.label} needs ${Math.ceil(volumeOf(item) * item.quantity)}.`;
   }
   return undefined;
 }

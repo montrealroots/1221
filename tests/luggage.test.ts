@@ -6,10 +6,11 @@
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { moveTo, suitcaseOf } from '@/engine/systems/luggage';
+import { moveTo, packedIn, suitcaseOf } from '@/engine/systems/luggage';
 import { cleanOutfits, garmentsOf } from '@/engine/systems/wardrobe';
 import { dailyCare, showerUses } from '@/engine/systems/hygiene';
-import { reachable } from '@/engine/systems/items';
+import { reachable, usedL, volumeOf } from '@/engine/systems/items';
+import { GARMENT_L } from '@/engine/content/garmentcare';
 
 const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
 
@@ -68,5 +69,45 @@ describe('a suitcase', () => {
     sim.player.dressed = [tops[tops.length - 1]!.id];
     moveTo(sim.player, 'us-ca-losangeles');
     expect(garmentsOf(sim.player).find((g) => g.id === tops[tops.length - 1]!.id)!.at.kind).toBe('inside');
+  });
+});
+
+describe('packing by hand', () => {
+  it('takes what was packed as it was, and packs a week only into an empty suitcase', () => {
+    const sim = life('bag-hand');
+    const bag = suitcaseOf(sim.player)!;
+    // Wait for the life's starter wardrobe and things to be given.
+    sim.advanceBy(26 * 3_600_000);
+    const shirt = garmentsOf(sim.player).find((g) => g.garment.slot === 'top' && g.at.kind === 'home')!;
+    const r = sim.execute({ kind: 'items.move', payload: { itemId: shirt.id, to: { kind: 'inside', itemId: bag.id } } });
+    expect(r.ok, r.error).toBe(true);
+    moveTo(sim.player, 'us-ca-losangeles');
+    expect(packedIn(sim.player, bag).map((i) => i.id)).toEqual([shirt.id]);
+  });
+
+  it('fills to the suitcase’s liters and no further, by hand or by Pack For Me', () => {
+    const sim = life('bag-full');
+    sim.advanceBy(26 * 3_600_000);
+    const bag = suitcaseOf(sim.player)!;
+    // A bag a third the size takes only what fits.
+    bag.holdsL = 15;
+    const a = sim.execute<{ packed: number; usedL: number }>({ kind: 'luggage.pack', payload: {} });
+    expect(a.ok, a.error).toBe(true);
+    expect(a.value!.usedL).toBeLessThanOrEqual(15 + 1e-9);
+    expect(a.value!.usedL).toBeGreaterThan(10);
+    expect(a.value!.usedL).toBeCloseTo(usedL(sim.player, bag.id), 9);
+    // A pair of jeans left at home doesn't fit what's left: refused, naming the room.
+    const jeans = garmentsOf(sim.player).find((g) => g.garment.slot === 'bottom' && g.at.kind === 'home')!;
+    expect(volumeOf(jeans)).toBe(GARMENT_L.bottom);
+    bag.holdsL = usedL(sim.player, bag.id) + 1;
+    expect(sim.execute({ kind: 'items.move', payload: { itemId: jeans.id, to: { kind: 'inside', itemId: bag.id } } }).error).toMatch(/has 1 liters left; the .+ needs 2./);
+    // Unpacked at home, everything back where it keeps.
+    const u = sim.execute<{ unpacked: number }>({ kind: 'luggage.unpack', payload: {} });
+    expect(u.ok, u.error).toBe(true);
+    expect(packedIn(sim.player, bag)).toHaveLength(0);
+    expect(sim.execute({ kind: 'luggage.unpack', payload: {} }).error).toBe('The suitcase is empty.');
+    // Away, it's packed and unpacked at home only.
+    sim.player.currentLocationId = 'us-ca-losangeles';
+    expect(sim.execute({ kind: 'luggage.pack', payload: {} }).error).toBe('You pack and unpack at home.');
   });
 });

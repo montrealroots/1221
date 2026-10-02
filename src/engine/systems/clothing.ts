@@ -87,7 +87,7 @@ export const productById = (id: string): ClothingProduct | undefined => CLOTHING
  * Pennsylvania don't tax clothing, which their rules already say. In
  * Britain, Ireland and Mexico the tax is in the price.
  */
-export function clothingTax(cityId: string, at: Instant, p: ClothingProduct): number {
+export function clothingTax(cityId: string, at: Instant, p: Pick<ClothingProduct, 'price' | 'taxIncluded'>): number {
   if (p.taxIncluded) return 0;
   const rate = salesTaxRate(cityId, at, 'clothing');
   if (cityId.startsWith('us-ny-') && p.price < 110) return 0;
@@ -118,7 +118,8 @@ export function clothingCatalog(sim: Simulation, cityId: string): CatalogEntry<C
     const r = retailerById(p.retailer)!;
     return {
       id: p.id, label: p.name, value: p, basis: 'Price, Tax In', price: productPrice(sim, cityId, p), priceKind: 'advertised' as const,
-      facets: { retailer: r.name, kind: KIND_LABEL[p.kind] ?? 'Other', where: r.storesIn.includes(cityId) ? 'In Store' : r.delivers ? 'Online' : 'Elsewhere' },
+      // The department and the retailer's own type of garment, as its site files it (from 2026-10-02).
+      facets: { retailer: r.name, kind: KIND_LABEL[p.kind] ?? 'Other', department: p.category, type: p.subcategory ?? p.category, where: r.storesIn.includes(cityId) ? 'In Store' : r.delivers ? 'Online' : 'Elsewhere' },
       words: `${p.brand} ${p.category} ${p.subcategory ?? ''} ${p.material ?? ''} ${p.colors.join(' ')}`,
     };
   });

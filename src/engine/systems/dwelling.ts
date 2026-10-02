@@ -46,7 +46,7 @@ import { drawFromBank, spend } from './household';
 import { heatIndexC, weatherAt, weatherOn } from './weather';
 import { alarmMonth, renterAlarmFactor } from './alarm';
 import { securityFactor } from './homesecurity';
-import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForExercise, wearTheDay } from './wardrobe';
+import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
 import { restock, starterSupplies } from './hygiene';
 import { starterLuggage } from './luggage';
@@ -357,6 +357,8 @@ export function livingDay(sim: Simulation, person: Person): void {
   if (!wearOutfit(sim, person)) {
     w.morale = clamp(w.morale - WORN_CLOTHES.morale * personalityOf(person, 'moraleSwing'), 0, 100);
   }
+  // The night in their own sleepwear, where they keep it (`wearForSleep`).
+  if (atHome(person)) wearForSleep(sim, person);
   // Away, the place stands as they left it: no mess made, and none cleared.
   if (!place.keeps || !atHome(person)) return;
   l.tidy = clamp(l.tidy - TIDY.perDay * (place.fixtures.dishwasher ? TIDY.dishwasher : 1), 0, 100);

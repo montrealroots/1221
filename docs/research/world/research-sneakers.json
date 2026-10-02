@@ -1,0 +1,3945 @@
+{
+  "meta": {
+    "topic": "Air Jordan retail and resale, sneaker marketplace fees and rules, luxury resale commissions",
+    "read": "2026-10-02",
+    "markets": [
+      "US",
+      "CA",
+      "MX",
+      "GB",
+      "IE"
+    ]
+  },
+  "retail": [
+    {
+      "line": "Air Jordan 1 High",
+      "name": "Air Jordan 1 High OG \"Royal\"",
+      "styleCode": "IQ5495-005",
+      "colorway": "Black/White/Game Royal",
+      "audience": "men",
+      "release": {
+        "date": "2026-10-10",
+        "source": "https://sneakerbardetroit.com/air-jordan-release-dates/",
+        "read": "2026-10-02"
+      },
+      "distribution": null,
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 185,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": "Nike US page showed it sold out (before its 10 October release date)",
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/IQ5495-005",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/t/x/IQ5495-005",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 1 High",
+      "name": "Air Jordan 1 Retro High OG 'Love Letter'",
+      "styleCode": "DZ5485-201",
+      "colorway": "Shadow Brown/Light British Tan/Team Red",
+      "audience": "men",
+      "release": {
+        "date": "2026-08-01",
+        "source": "https://sneakernews.com/2026/06/05/air-jordan-1-retro-high-og-love-the-game-much-love-and-respect-dz5485-201/",
+        "read": "2026-10-02",
+        "note": "Earlier reports gave 2 July; 1 August is the date the release coverage settled on (search summary)."
+      },
+      "distribution": "SNKRS and select Jordan Brand retailers",
+      "usRetailReported": {
+        "price": 185,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://athlonsports.com/kicks/air-jordan-1-high-og-love-letter-dz5485-201",
+        "read": "2026-10-02"
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 164.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "3",
+            "3.5",
+            "4",
+            "4.5",
+            "5",
+            "5.5",
+            "6 (EU 39)",
+            "6 (EU 40)",
+            "6.5",
+            "7",
+            "7.5",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "11.5",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17"
+          ],
+          "sizeSystem": "UK (Nike UK pages give EU equivalents)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/gb/t/x/DZ5485-201",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ie)",
+          "market": "IE",
+          "price": 179.99,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ie/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ca)",
+          "market": "CA",
+          "price": 235,
+          "currency": "CAD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ca/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/mx)",
+          "market": "MX",
+          "price": 4299,
+          "currency": "MXN",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/mx/w/jordan-calzado-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/gb/t/x/DZ5485-201",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 1 High",
+      "name": "Air Jordan 1 Retro High OG Flight Club",
+      "styleCode": "II9811-001",
+      "colorway": "Black/Sail/Gum Medium Brown/University Red",
+      "audience": "men",
+      "release": {
+        "date": "2026-04-11",
+        "source": "https://sneakernews.com/2026/03/25/air-jordan-1-retro-high-og-flight-club-ii9811-001/",
+        "read": "2026-10-02"
+      },
+      "distribution": "SNKRS and select Jordan Brand retailers",
+      "usRetailReported": {
+        "price": 185,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://sneakerbardetroit.com/air-jordan-1-high-og-flight-club/",
+        "read": "2026-10-02"
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 164.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "3",
+            "3.5",
+            "4",
+            "4.5",
+            "5",
+            "5.5",
+            "6 (EU 39)",
+            "6 (EU 40)",
+            "6.5",
+            "7",
+            "7.5",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "11.5",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17"
+          ],
+          "sizeSystem": "UK (Nike UK pages give EU equivalents)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/gb/t/x/II9811-001",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ie)",
+          "market": "IE",
+          "price": 179.99,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ie/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ca)",
+          "market": "CA",
+          "price": 187.99,
+          "currency": "CAD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ca/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02",
+          "note": "Below the CA$235 of the AJ1 High OG \"Love Letter\" on the same grid; probably a markdown, but the grid showed no was-price."
+        },
+        {
+          "retailer": "Nike (nike.com/mx)",
+          "market": "MX",
+          "price": 4299,
+          "currency": "MXN",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/mx/w/jordan-calzado-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/gb/t/x/II9811-001",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 1 Low",
+      "name": "Air Jordan 1 Retro Low OG \"Howard\"",
+      "styleCode": "IX8478-410",
+      "colorway": "College Navy/White/University Red",
+      "audience": "men",
+      "collaboration": "Howard University",
+      "release": {
+        "date": "2026-10-01",
+        "source": "https://sneakerbardetroit.com/air-jordan-release-dates/",
+        "read": "2026-10-02"
+      },
+      "distribution": null,
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 155,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": [
+            "M 7 / W 8.5",
+            "M 7.5 / W 9",
+            "M 8 / W 9.5",
+            "M 8.5 / W 10",
+            "M 9 / W 10.5",
+            "M 9.5 / W 11",
+            "M 10 / W 11.5",
+            "M 10.5 / W 12",
+            "M 11 / W 12.5",
+            "M 11.5 / W 13",
+            "M 12 / W 13.5",
+            "M 12.5 / W 14",
+            "M 13 / W 14.5",
+            "M 14 / W 15.5",
+            "M 15 / W 16.5",
+            "M 16 / W 17.5",
+            "M 17 / W 18.5"
+          ],
+          "sizeSystem": "US men's with US women's equivalent (Nike's M / W labels)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/IX8478-410",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/t/x/IX8478-410",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 1 Low",
+      "name": "Air Jordan 1 Retro Low OG \"Garden\" (Last Dance at the Garden)",
+      "styleCode": "IR0088-001",
+      "colorway": "Black/Summit White/Laser Fuchsia/Varsity Red",
+      "audience": "men",
+      "release": {
+        "date": "2026-09-26",
+        "source": "https://sneakernews.com/2026/09/14/air-jordan-1-low-og-last-dance-in-the-garden-ir0088-001/",
+        "read": "2026-10-02"
+      },
+      "distribution": "SNKRS, Foot Locker, Hibbett and Shiekh, full-family sizing (search summary)",
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 155,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": [
+            "M 7 / W 8.5",
+            "M 7.5 / W 9",
+            "M 8 / W 9.5",
+            "M 8.5 / W 10",
+            "M 9 / W 10.5",
+            "M 9.5 / W 11",
+            "M 10 / W 11.5",
+            "M 10.5 / W 12",
+            "M 11 / W 12.5",
+            "M 11.5 / W 13",
+            "M 12 / W 13.5",
+            "M 12.5 / W 14",
+            "M 13 / W 14.5",
+            "M 14 / W 15.5",
+            "M 15 / W 16.5",
+            "M 16 / W 17.5",
+            "M 17 / W 18.5",
+            "M 18 / W 19.5"
+          ],
+          "sizeSystem": "US men's with US women's equivalent (Nike's M / W labels)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/IR0088-001",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 144.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/gb/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/mx)",
+          "market": "MX",
+          "price": 3499,
+          "currency": "MXN",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/mx/w/jordan-calzado-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "note": "Sneakerjagers also listed €159.99 for Europe.",
+      "source": "https://www.nike.com/t/x/IR0088-001",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 1 Low",
+      "name": "Air Jordan 1 Low OG 'Laser'",
+      "styleCode": "IV6750-001",
+      "colorway": "Black/Summit White/Summit White/Varsity Red",
+      "audience": "men",
+      "release": {
+        "date": "2026-08-22",
+        "source": "https://sneakernews.com/2026/07/31/air-jordan-1-low-og-laser-iv6750-001/",
+        "read": "2026-10-02"
+      },
+      "distribution": "Nike.com, Foot Locker, Finish Line, DSG and Hibbett (search summary)",
+      "usRetailReported": {
+        "price": 165,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://sneakernews.com/2026/07/31/air-jordan-1-low-og-laser-iv6750-001/",
+        "read": "2026-10-02",
+        "note": "From a search summary of release coverage."
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/ca)",
+          "market": "CA",
+          "price": 210,
+          "currency": "CAD",
+          "taxIncluded": false,
+          "sizes": [
+            "M 7 / W 8.5",
+            "M 7.5 / W 9",
+            "M 8 / W 9.5",
+            "M 8.5 / W 10",
+            "M 9 / W 10.5",
+            "M 9.5 / W 11",
+            "M 10 / W 11.5",
+            "M 10.5 / W 12",
+            "M 11 / W 12.5",
+            "M 11.5 / W 13",
+            "M 12 / W 13.5",
+            "M 12.5 / W 14",
+            "M 13 / W 14.5"
+          ],
+          "sizeSystem": "US men's with US women's equivalent (Nike's M / W labels)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/ca/t/x/IV6750-001",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/ca/t/x/IV6750-001",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 1 Low",
+      "name": "Air Jordan 1 Low",
+      "styleCode": "553558-303",
+      "colorway": "Midnight Spruce/Pale Ivory/Light Orewood Brown",
+      "audience": "men",
+      "release": {
+        "date": null,
+        "source": null,
+        "read": null,
+        "note": "A core inline model, not a dated release."
+      },
+      "distribution": "Core inline model",
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 120,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": [
+            "M 7 / W 8.5",
+            "M 7.5 / W 9",
+            "M 8 / W 9.5",
+            "M 8.5 / W 10",
+            "M 9 / W 10.5",
+            "M 9.5 / W 11",
+            "M 10 / W 11.5",
+            "M 10.5 / W 12",
+            "M 11 / W 12.5",
+            "M 11.5 / W 13",
+            "M 12 / W 13.5",
+            "M 12.5 / W 14",
+            "M 13 / W 14.5",
+            "M 14 / W 15.5",
+            "M 15 / W 16.5",
+            "M 16 / W 17.5",
+            "M 17 / W 18.5",
+            "M 18 / W 19.5"
+          ],
+          "sizeSystem": "US men's with US women's equivalent (Nike's M / W labels)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/553558-303",
+          "read": "2026-10-02"
+        }
+      ],
+      "note": "Other colourways of the same core model on the grids read: 553558-136 at £119.99 (GB) and €129.99 (IE); 553558-048 at CA$150.",
+      "source": "https://www.nike.com/t/x/553558-303",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 3",
+      "name": "Air Jordan 3 Retro \"True Blue\"",
+      "styleCode": "IF4396-104",
+      "colorway": "White/True Blue/Fire Red",
+      "audience": "men",
+      "release": {
+        "date": "2026-07-18",
+        "source": "https://sneakerbardetroit.com/air-jordan-3-true-blue-if4396-104/",
+        "read": "2026-10-02"
+      },
+      "distribution": "SNKRS, Nike.com, Foot Locker, Finish Line, DSG and Hibbett, full-family sizing (search summary)",
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 230,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": [
+            "M 4 / W 5.5",
+            "M 5 / W 6.5",
+            "M 6 / W 7.5",
+            "M 7 / W 8.5",
+            "M 7.5 / W 9",
+            "M 8 / W 9.5",
+            "M 8.5 / W 10",
+            "M 9 / W 10.5",
+            "M 9.5 / W 11",
+            "M 10 / W 11.5",
+            "M 10.5 / W 12",
+            "M 11 / W 12.5",
+            "M 11.5 / W 13",
+            "M 12 / W 13.5",
+            "M 12.5 / W 14",
+            "M 13 / W 14.5",
+            "M 14 / W 15.5",
+            "M 15 / W 16.5",
+            "M 16 / W 17.5",
+            "M 17 / W 18.5",
+            "M 18 / W 19.5"
+          ],
+          "sizeSystem": "US men's with US women's equivalent (Nike's M / W labels)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/IF4396-104",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ca)",
+          "market": "CA",
+          "price": 290,
+          "currency": "CAD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ca/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "JD Sports",
+          "market": "GB",
+          "price": 190,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "7",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "12"
+          ],
+          "sizeSystem": "UK men's (sizes offered on the page)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.jdsports.co.uk/product/white-jordan-air-3-retro-true-blue/19755230/",
+          "read": "2026-10-02",
+          "note": "JD's page gives no Nike style code; matched by name and colour."
+        },
+        {
+          "retailer": "JD Sports",
+          "market": "IE",
+          "price": 210,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.jdsports.ie/men/mens-footwear/brand/jordan/",
+          "read": "2026-10-02",
+          "note": "Read from the category grid."
+        }
+      ],
+      "source": "https://www.nike.com/t/x/IF4396-104",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 3",
+      "name": "Air Jordan 3 'World's Best' (World's Best Dad)",
+      "styleCode": "IF4396-103",
+      "colorway": "Sail/University Red/Pale Ivory/Black",
+      "audience": "men",
+      "release": {
+        "date": "2026-05-16",
+        "source": "https://sneakernews.com/2026/04/01/air-jordan-3-worlds-best-dad/",
+        "read": "2026-10-02"
+      },
+      "distribution": null,
+      "usRetailReported": {
+        "price": 215,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://www.si.com/fannation/sneakers/news/5-iconic-air-jordans-under-retail-right-now",
+        "read": "2026-10-02"
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 189.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "6 (EU 40)",
+            "6.5",
+            "7",
+            "7.5",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "11.5",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17"
+          ],
+          "sizeSystem": "UK (Nike UK pages give EU equivalents)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/gb/t/x/IF4396-103",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ie)",
+          "market": "IE",
+          "price": 209.99,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ie/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/gb/t/x/IF4396-103",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 3",
+      "name": "Air Jordan 3 Retro \"Laser\"",
+      "styleCode": "JA1369-001",
+      "colorway": "Phantom/Palomino/Sail/University Red",
+      "audience": "men",
+      "release": {
+        "date": "2026-08-22",
+        "source": "https://sneakernews.com/2026/07/21/air-jordan-3-laser-ja1369-001/",
+        "read": "2026-10-02"
+      },
+      "distribution": "SNKRS and select Jordan Brand retailers",
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 230,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": [
+            "M 7 / W 8.5",
+            "M 7.5 / W 9",
+            "M 8 / W 9.5",
+            "M 8.5 / W 10",
+            "M 9 / W 10.5",
+            "M 9.5 / W 11",
+            "M 10 / W 11.5",
+            "M 10.5 / W 12",
+            "M 11 / W 12.5",
+            "M 11.5 / W 13",
+            "M 12 / W 13.5",
+            "M 12.5 / W 14",
+            "M 13 / W 14.5",
+            "M 14 / W 15.5",
+            "M 15 / W 16.5",
+            "M 16 / W 17.5",
+            "M 17 / W 18.5",
+            "M 18 / W 19.5"
+          ],
+          "sizeSystem": "US men's with US women's equivalent (Nike's M / W labels)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/JA1369-001",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ca)",
+          "market": "CA",
+          "price": 290,
+          "currency": "CAD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ca/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/mx)",
+          "market": "MX",
+          "price": 4499,
+          "currency": "MXN",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/mx/w/jordan-calzado-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/t/x/JA1369-001",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 3",
+      "name": "Air Jordan 3 Retro \"Fireside\" (women's)",
+      "styleCode": "CK9246-200",
+      "colorway": "Velvet Brown/Light British Tan/Rust Pink/Pearl White",
+      "audience": "women",
+      "release": {
+        "date": "2026-10-03",
+        "source": "https://sneakerbardetroit.com/air-jordan-release-dates/",
+        "read": "2026-10-02"
+      },
+      "distribution": null,
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 205,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": "Nike US page showed it sold out (before its 3 October release date)",
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/CK9246-200",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/t/x/CK9246-200",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 3",
+      "name": "Air Jordan 3 Retro 'Sport Renaissance' (women's)",
+      "styleCode": "CK9246-101",
+      "colorway": "White/Cement Grey/Fire Red/Multi-Colour",
+      "audience": "women",
+      "release": {
+        "date": null,
+        "source": null,
+        "read": null,
+        "note": "No release date found."
+      },
+      "distribution": null,
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 189.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "2.5",
+            "3",
+            "3.5",
+            "4",
+            "4.5",
+            "5",
+            "5.5",
+            "6",
+            "6.5",
+            "7",
+            "7.5",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "11.5",
+            "13"
+          ],
+          "sizeSystem": "UK women's",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/gb/t/x/CK9246-101",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ie)",
+          "market": "IE",
+          "price": 209.99,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ie/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "note": "GOAT files CK9246-101 under an older women's AJ3 'Orange Citrus'; Nike reuses style codes, so that GOAT price is not taken as this shoe's resale.",
+      "source": "https://www.nike.com/gb/t/x/CK9246-101",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 4",
+      "name": "Air Jordan 4 Retro \"Tour Yellow\" (Rare Air)",
+      "styleCode": "IO2463-102",
+      "colorway": "White/Dark Blue Grey/Black/Tour Yellow",
+      "audience": "men",
+      "release": {
+        "date": "2026-09-05",
+        "source": "https://sneakerbardetroit.com/air-jordan-4-tour-yellow-2026/",
+        "read": "2026-10-02"
+      },
+      "distribution": "SNKRS and select retailers, full-family sizing",
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 220,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": [
+            "M 7 / W 8.5",
+            "M 7.5 / W 9",
+            "M 8 / W 9.5",
+            "M 8.5 / W 10",
+            "M 9 / W 10.5",
+            "M 9.5 / W 11",
+            "M 10 / W 11.5",
+            "M 10.5 / W 12",
+            "M 11 / W 12.5",
+            "M 11.5 / W 13",
+            "M 12 / W 13.5",
+            "M 12.5 / W 14",
+            "M 13 / W 14.5",
+            "M 14 / W 15.5",
+            "M 15 / W 16.5",
+            "M 16 / W 17.5",
+            "M 17 / W 18.5",
+            "M 18 / W 19.5"
+          ],
+          "sizeSystem": "US men's with US women's equivalent (Nike's M / W labels)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/IO2463-102",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 189.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/gb/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ca)",
+          "market": "CA",
+          "price": 280,
+          "currency": "CAD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ca/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/mx)",
+          "market": "MX",
+          "price": 4599,
+          "currency": "MXN",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/mx/w/jordan-calzado-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "JD Sports",
+          "market": "GB",
+          "price": 190,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "10.5",
+            "11",
+            "12"
+          ],
+          "sizeSystem": "UK men's (sizes offered on the page)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.jdsports.co.uk/product/white-jordan-air-4-retro-tour-yellow/19764991/",
+          "read": "2026-10-02",
+          "note": "No Nike style code on the page; matched by name."
+        },
+        {
+          "retailer": "JD Sports",
+          "market": "IE",
+          "price": 210,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.jdsports.ie/men/mens-footwear/brand/jordan/",
+          "read": "2026-10-02",
+          "note": "Read from the category grid."
+        },
+        {
+          "retailer": "Foot Locker",
+          "market": "GB",
+          "price": 189.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "6",
+            "6.5",
+            "7",
+            "7.5",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "11.5",
+            "12"
+          ],
+          "sizeSystem": "UK men's",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.footlocker.co.uk/en/product/jordan-4-retro-tour-yellow-men-shoes/314109786104.html",
+          "read": "2026-10-02",
+          "note": "Supplier SKU IO2463-102 shown; \"VAT included\"; \"Excluded from discounts\"."
+        }
+      ],
+      "source": "https://www.nike.com/t/x/IO2463-102",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 4",
+      "name": "Air Jordan 4 Retro 'Comic'",
+      "styleCode": "JA1135-100",
+      "colorway": "Off-White/Anthracite/Fire Pink",
+      "audience": "men",
+      "release": {
+        "date": "2026-07-25",
+        "source": "https://www.sneakershouts.com/news/2026/7/24/now-available-air-jordan-4-retro-comic",
+        "read": "2026-10-02"
+      },
+      "distribution": null,
+      "usRetailReported": {
+        "price": 230,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://www.si.com/fannation/sneakers/news/air-jordan-4-comic-is-20-off-online",
+        "read": "2026-10-02",
+        "note": "SI (21 Sept 2026) reported Nike.com selling it at 20% off, $184."
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 189.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "6 (EU 40)",
+            "6.5",
+            "7",
+            "7.5",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "11.5",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17"
+          ],
+          "sizeSystem": "UK (Nike UK pages give EU equivalents)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/gb/t/x/JA1135-100",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ie)",
+          "market": "IE",
+          "price": 209.99,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ie/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ca)",
+          "market": "CA",
+          "price": 290,
+          "currency": "CAD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ca/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/mx)",
+          "market": "MX",
+          "price": 4999,
+          "currency": "MXN",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/mx/w/jordan-calzado-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "note": "GOAT lists this shoe under style code IO2362-100, not JA1135-100.",
+      "source": "https://www.nike.com/gb/t/x/JA1135-100",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 4",
+      "name": "Air Jordan 4 Retro 'Pearl Pink and Iced Carmine' (women's)",
+      "styleCode": "IB6716-600",
+      "colorway": "Pearl Pink/Coconut Milk/Muslin/Iced Carmine",
+      "audience": "women",
+      "release": {
+        "date": "2026-04-23",
+        "source": "https://sneakernews.com/2026/03/03/air-jordan-4-iced-carmine-ib6716-600/",
+        "read": "2026-10-02"
+      },
+      "distribution": "SNKRS and select retailers",
+      "usRetailReported": {
+        "price": 220,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://www.si.com/fannation/sneakers/news/5-iconic-air-jordans-under-retail-right-now",
+        "read": "2026-10-02"
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 189.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "2.5",
+            "3",
+            "3.5",
+            "4",
+            "4.5",
+            "5",
+            "5.5",
+            "6",
+            "6.5",
+            "7",
+            "7.5",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "11.5"
+          ],
+          "sizeSystem": "UK women's",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/gb/t/x/IB6716-600",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ie)",
+          "market": "IE",
+          "price": 209.99,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ie/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/gb/t/x/IB6716-600",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 4",
+      "name": "Air Jordan 4 Retro 'Flight Club'",
+      "styleCode": "IM4002-100",
+      "colorway": null,
+      "audience": "men",
+      "release": {
+        "date": "2026-01-17",
+        "source": "https://www.si.com/fannation/sneakers/news/air-jordan-4-flight-club-is-parked-on-shelves",
+        "read": "2026-10-02"
+      },
+      "distribution": null,
+      "usRetailReported": {
+        "price": 220,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://www.si.com/fannation/sneakers/news/air-jordan-4-flight-club-is-parked-on-shelves",
+        "read": "2026-10-02"
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 189.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/gb/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ie)",
+          "market": "IE",
+          "price": 209.99,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ie/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "note": "SI describes a Sail leather upper with black and University Red accents; Nike's colourway string was not read.",
+      "source": "https://www.nike.com/gb/w/jordan-shoes-37eefzy7ok",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 4",
+      "name": "Air Jordan 4 \"Toro\" (Toro Bravo)",
+      "styleCode": "FQ8138-600",
+      "colorway": "Fire Red/White/Black/Cement Grey (Nike MX: \"Rojo pasión/Negro/Gris cemento/Blanco\")",
+      "audience": "men",
+      "release": {
+        "date": "2026-05-30",
+        "source": "https://sneakerbardetroit.com/air-jordan-4-toro-bravo-2026/",
+        "read": "2026-10-02"
+      },
+      "distribution": "SNKRS, Foot Locker, Finish Line, Shiekh, Hibbett and DSG (search summary)",
+      "usRetailReported": {
+        "price": 220,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://sneakerbardetroit.com/air-jordan-4-toro-bravo-2026/",
+        "read": "2026-10-02"
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/mx)",
+          "market": "MX",
+          "price": 4599,
+          "currency": "MXN",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/mx/t/x/FQ8138-600",
+          "read": "2026-10-02",
+          "note": "Sizes not shown in the fetched page."
+        },
+        {
+          "retailer": "Foot Locker",
+          "market": "GB",
+          "price": 189.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "6",
+            "6.5",
+            "7",
+            "7.5",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "11.5",
+            "12",
+            "12.5",
+            "13"
+          ],
+          "sizeSystem": "UK men's",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.footlocker.co.uk/en/product/jordan-retro-4-toro-bravo-men-shoes/314109631904.html",
+          "read": "2026-10-02",
+          "note": "Supplier SKU FQ8138-600 shown; \"VAT included\"."
+        }
+      ],
+      "source": "https://www.nike.com/mx/t/x/FQ8138-600",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 4",
+      "name": "Air Jordan 4 Retro x J Balvin \"Amazonas\"",
+      "styleCode": "IW2872-700",
+      "colorway": "Lemonade/Lemonade (sneakerbardetroit); Nike's launch page calls the colourway \"Amazonas\"",
+      "audience": "men",
+      "collaboration": "J Balvin",
+      "release": {
+        "date": "2026-10-02",
+        "source": "https://www.nike.com/launch/r/IW2872-700",
+        "read": "2026-10-02",
+        "note": "Nike SNKRS launch page: 2 October at 2:00 PM."
+      },
+      "distribution": "Nike SNKRS launch",
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 225,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "SNKRS launch page",
+          "source": "https://www.nike.com/launch/r/IW2872-700",
+          "read": "2026-10-02"
+        }
+      ],
+      "note": "GOAT's URL slug calls it an Air Jordan 3 but its title says Air Jordan 4; Nike says Air Jordan 4.",
+      "source": "https://www.nike.com/launch/r/IW2872-700",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 5",
+      "name": "Air Jordan 5 Retro OG 'White Metallic'",
+      "styleCode": "HQ7978-103",
+      "colorway": "White/Metallic Silver/Black",
+      "audience": "men",
+      "release": {
+        "date": "2026-04-25",
+        "source": "https://www.sneakerfiles.com/air-jordan-5-white-metallic-2026/",
+        "read": "2026-10-02"
+      },
+      "distribution": "SNKRS and major Jordan Brand retailers, full-family sizing (search summary)",
+      "usRetailReported": {
+        "price": 215,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://www.nicekicks.com/air-jordan-5-white-metallic-hq7978-103-drop/",
+        "read": "2026-10-02",
+        "note": "From a search summary of release coverage."
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 189.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "6 (EU 40)",
+            "6.5",
+            "7",
+            "7.5",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "11.5",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17"
+          ],
+          "sizeSystem": "UK (Nike UK pages give EU equivalents)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/gb/t/x/HQ7978-103",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ie)",
+          "market": "IE",
+          "price": 209.99,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ie/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/gb/t/x/HQ7978-103",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 5",
+      "name": "Air Jordan 5 Retro \"Sunset\" (women's)",
+      "styleCode": "IV5678-102",
+      "colorway": "White/Fire Red/Sunset",
+      "audience": "women",
+      "release": {
+        "date": "2026-09-25",
+        "source": "https://sneakernews.com/2026/09/14/air-jordan-5-sunset-iv5678-102-release-date/",
+        "read": "2026-10-02"
+      },
+      "distribution": null,
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 205,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": [
+            "W 5 / M 3.5",
+            "W 5.5 / M 4",
+            "W 6 / M 4.5",
+            "W 6.5 / M 5",
+            "W 7 / M 5.5",
+            "W 7.5 / M 6",
+            "W 8 / M 6.5",
+            "W 8.5 / M 7",
+            "W 9 / M 7.5",
+            "W 9.5 / M 8",
+            "W 10 / M 8.5",
+            "W 10.5 / M 9",
+            "W 11 / M 9.5",
+            "W 11.5 / M 10",
+            "W 12 / M 10.5",
+            "W 12.5 / M 11",
+            "W 13 / M 11.5",
+            "W 13.5 / M 12",
+            "W 14 / M 12.5",
+            "W 14.5 / M 13",
+            "W 15.5 / M 14",
+            "W 16.5 / M 15"
+          ],
+          "sizeSystem": "US women's with US men's equivalent",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/IV5678-102",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/t/x/IV5678-102",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 5",
+      "name": "Air Jordan 5 \"Black Carolina\"",
+      "styleCode": "DD0587-008",
+      "colorway": "Negro/Blanco/Azul universitario (Black/White/University Blue)",
+      "audience": "men",
+      "release": {
+        "date": "2026-06-20",
+        "source": "https://www.sneakershouts.com/news/2026/6/20/now-available-air-jordan-5-retro-black-carolina",
+        "read": "2026-10-02"
+      },
+      "distribution": "SNKRS and select Jordan Brand stockists, full-family sizing",
+      "usRetailReported": {
+        "price": 220,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://www.nicekicks.com/air-jordan-5-black-carolina-dd0587-008-drop/",
+        "read": "2026-10-02",
+        "note": "From a search summary of release coverage."
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/mx)",
+          "market": "MX",
+          "price": 4499,
+          "currency": "MXN",
+          "taxIncluded": true,
+          "sizes": [
+            "25",
+            "25.5",
+            "26",
+            "26.5",
+            "27",
+            "27.5",
+            "28",
+            "28.5",
+            "29",
+            "29.5",
+            "30",
+            "30.5",
+            "31",
+            "32"
+          ],
+          "sizeSystem": "Mexican CM (centimetres)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/mx/t/x/DD0587-008",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/mx/t/x/DD0587-008",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 6",
+      "name": "Air Jordan 6 Retro 'Black and White' (Oreo)",
+      "styleCode": "CT8529-108",
+      "colorway": "White/Black",
+      "audience": "men",
+      "release": {
+        "date": "2026-08-08",
+        "source": "https://www.si.com/fannation/sneakers/news/10-iconic-air-jordan-sneakers-sitting-on-shelves-right-now",
+        "read": "2026-10-02"
+      },
+      "distribution": null,
+      "usRetailReported": {
+        "price": 215,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://www.si.com/fannation/sneakers/news/10-iconic-air-jordan-sneakers-sitting-on-shelves-right-now",
+        "read": "2026-10-02"
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/ca)",
+          "market": "CA",
+          "price": 270,
+          "currency": "CAD",
+          "taxIncluded": false,
+          "sizes": [
+            "M 7 / W 8.5",
+            "M 7.5 / W 9",
+            "M 8 / W 9.5",
+            "M 8.5 / W 10",
+            "M 9 / W 10.5",
+            "M 9.5 / W 11",
+            "M 10 / W 11.5",
+            "M 10.5 / W 12",
+            "M 11 / W 12.5",
+            "M 11.5 / W 13",
+            "M 12 / W 13.5",
+            "M 12.5 / W 14",
+            "M 13 / W 14.5"
+          ],
+          "sizeSystem": "US men's with US women's equivalent (Nike's M / W labels)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/ca/t/x/CT8529-108",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/ca/t/x/CT8529-108",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 9",
+      "name": "Air Jordan 9 Retro OG",
+      "styleCode": "IX6179-100",
+      "colorway": "White/Black/True Red",
+      "audience": "men",
+      "release": {
+        "date": null,
+        "source": null,
+        "read": null,
+        "note": "No release date found; GOAT has nothing under this code."
+      },
+      "distribution": null,
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/ca)",
+          "market": "CA",
+          "price": 270,
+          "currency": "CAD",
+          "taxIncluded": false,
+          "sizes": [
+            "M 7 / W 8.5",
+            "M 7.5 / W 9",
+            "M 8 / W 9.5",
+            "M 8.5 / W 10",
+            "M 9 / W 10.5",
+            "M 9.5 / W 11",
+            "M 10 / W 11.5",
+            "M 10.5 / W 12",
+            "M 11 / W 12.5",
+            "M 11.5 / W 13",
+            "M 12 / W 13.5",
+            "M 12.5 / W 14",
+            "M 13 / W 14.5"
+          ],
+          "sizeSystem": "US men's with US women's equivalent (Nike's M / W labels)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/ca/t/x/IX6179-100",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/ca/t/x/IX6179-100",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 11",
+      "name": "Air Jordan 11 Retro Low 'University Blue'",
+      "styleCode": "FV5104-100",
+      "colorway": "White/Black/University Blue",
+      "audience": "men",
+      "release": {
+        "date": "2026-04-18",
+        "source": "https://niketalk.com/threads/jordan-xi-low-university-blue-april-18-2026.698784/",
+        "read": "2026-10-02"
+      },
+      "distribution": null,
+      "usRetailReported": {
+        "price": 190,
+        "currency": "USD",
+        "taxIncluded": false,
+        "source": "https://www.si.com/fannation/sneakers/news/5-iconic-air-jordans-under-retail-right-now",
+        "read": "2026-10-02",
+        "note": "Sources disagree: $190 (SI, 11 Aug 2026) and $195 (SI, 17 Sept 2026)."
+      },
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 184.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "6 (EU 40)",
+            "6.5",
+            "7",
+            "7.5",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "11.5",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17"
+          ],
+          "sizeSystem": "UK (Nike UK pages give EU equivalents)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/gb/t/x/FV5104-100",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ie)",
+          "market": "IE",
+          "price": 199.99,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ie/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/mx)",
+          "market": "MX",
+          "price": 4399,
+          "currency": "MXN",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/mx/w/jordan-calzado-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "JD Sports",
+          "market": "GB",
+          "price": 185,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "7.5",
+            "9",
+            "10",
+            "10.5"
+          ],
+          "sizeSystem": "UK men's (sizes the page showed)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.jdsports.co.uk/product/white-jordan-air-11-retro-low-university-blue/19745762/",
+          "read": "2026-10-02",
+          "note": "No Nike style code on the page; matched by name."
+        }
+      ],
+      "source": "https://www.nike.com/gb/t/x/FV5104-100",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan 13",
+      "name": "Air Jordan 13 Retro \"Flint\"",
+      "styleCode": "IW3808-400",
+      "colorway": "Navy/Flint Grey/White/University Blue",
+      "audience": "men",
+      "release": {
+        "date": "2026-08-01",
+        "source": "https://www.si.com/fannation/sneakers/news/10-iconic-air-jordan-sneakers-sitting-on-shelves-right-now",
+        "read": "2026-10-02",
+        "note": "Moved twice before release (25 April, then 20 June) per Athlon."
+      },
+      "distribution": "Nike, Foot Locker, Finish Line, DSG, Shiekh and Hibbett (search summary)",
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 215,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": [
+            "M 7 / W 8.5",
+            "M 7.5 / W 9",
+            "M 8 / W 9.5",
+            "M 8.5 / W 10",
+            "M 9 / W 10.5",
+            "M 9.5 / W 11",
+            "M 10 / W 11.5",
+            "M 10.5 / W 12",
+            "M 11 / W 12.5",
+            "M 11.5 / W 13",
+            "M 12 / W 13.5",
+            "M 12.5 / W 14",
+            "M 13 / W 14.5",
+            "M 14 / W 15.5",
+            "M 15 / W 16.5",
+            "M 16 / W 17.5"
+          ],
+          "sizeSystem": "US men's with US women's equivalent (Nike's M / W labels)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/IW3808-400",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ca)",
+          "market": "CA",
+          "price": 270,
+          "currency": "CAD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ca/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/t/x/IW3808-400",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan (signature, current)",
+      "name": "Air Jordan 41 \"Ruby\" (University Red)",
+      "styleCode": "HV6474-601",
+      "colorway": "University Red/Infrared 23",
+      "audience": "unisex (basketball)",
+      "release": {
+        "date": "2026-10-25",
+        "source": "https://sneakerbardetroit.com/air-jordan-release-dates/",
+        "read": "2026-10-02",
+        "note": "sneakerbardetroit lists 25 October; Nike US showed the page sold out on 2 October while Nike IE listed it at €199.99."
+      },
+      "distribution": null,
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 205,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": "Nike US page showed it sold out",
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/HV6474-601",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ie)",
+          "market": "IE",
+          "price": 199.99,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ie/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/t/x/HV6474-601",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Air Jordan (signature, current)",
+      "name": "Air Jordan 40 \"28\" (Black and Barely Volt)",
+      "styleCode": "IR2084-001",
+      "colorway": "Black/Metallic Silver/Barely Volt",
+      "audience": "unisex (basketball)",
+      "release": {
+        "date": "2026-10-02",
+        "source": "https://www.nike.com/launch/r/IR2084-001",
+        "read": "2026-10-02",
+        "note": "SNKRS: 2 October at 2:00 PM."
+      },
+      "distribution": "Nike SNKRS launch",
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 200,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "SNKRS launch page",
+          "source": "https://www.nike.com/launch/r/IR2084-001",
+          "read": "2026-10-02"
+        }
+      ],
+      "note": "GOAT calls it \"Air Jordan 4028 'Black Volt'\".",
+      "source": "https://www.nike.com/launch/r/IR2084-001",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Jordan signature (Luka Dončić)",
+      "name": "Luka 5",
+      "styleCode": "HV8082-005",
+      "colorway": "Black/Purple Venom/Varsity Maize",
+      "audience": "unisex (basketball)",
+      "release": {
+        "date": "2026-10-01",
+        "source": "https://www.mensjournal.com/style/air-jordan-release-dates-october-2026",
+        "read": "2026-10-02",
+        "note": "From a search summary of the article."
+      },
+      "distribution": null,
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 135,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": [
+            "M 3.5 / W 5 through M 18 / W 19.5 (the page described the full run)"
+          ],
+          "sizeSystem": "US men's with US women's equivalent (Nike's M / W labels)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/HV8082-005",
+          "read": "2026-10-02"
+        }
+      ],
+      "source": "https://www.nike.com/t/x/HV8082-005",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Jordan signature (Luka Dončić)",
+      "name": "Luka 5 'Graffiti'",
+      "styleCode": "IR0963-100",
+      "colorway": "White/Black",
+      "audience": "unisex (basketball)",
+      "release": {
+        "date": null,
+        "source": null,
+        "read": null,
+        "note": "No release date found."
+      },
+      "distribution": null,
+      "offers": [
+        {
+          "retailer": "Nike (nike.com/gb)",
+          "market": "GB",
+          "price": 119.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "sizes": [
+            "6",
+            "6.5",
+            "7",
+            "7.5",
+            "8",
+            "8.5",
+            "9",
+            "9.5",
+            "10",
+            "10.5",
+            "11",
+            "11.5",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17"
+          ],
+          "sizeSystem": "UK (Nike UK pages give EU equivalents)",
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/gb/t/x/IR0963-100",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/ie)",
+          "market": "IE",
+          "price": 129.99,
+          "currency": "EUR",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/ie/w/jordan-shoes-37eefzy7ok",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/mx)",
+          "market": "MX",
+          "price": 3099,
+          "currency": "MXN",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/mx/w/jordan-calzado-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "note": "Foot Locker UK listed a Jordan Luka 5 (White-Black) at £119.99 on its grid, not confirmed as this code.",
+      "source": "https://www.nike.com/gb/t/x/IR0963-100",
+      "read": "2026-10-02"
+    },
+    {
+      "line": "Jordan signature (Jayson Tatum)",
+      "name": "Tatum 5 \"Sunrise\"",
+      "styleCode": "IO1746-401",
+      "colorway": "Bright Concord/Urban Lilac/China Rose/Bright Mango",
+      "audience": "unisex (basketball)",
+      "release": {
+        "date": "2026-10-15",
+        "source": "https://www.nike.com/t/x/IO1746-401",
+        "read": "2026-10-02",
+        "note": "Nike US page: \"Available 10/15 at 7:00 PDT\"."
+      },
+      "distribution": null,
+      "offers": [
+        {
+          "retailer": "Nike (nike.com)",
+          "market": "US",
+          "price": 135,
+          "currency": "USD",
+          "taxIncluded": false,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "product page",
+          "source": "https://www.nike.com/t/x/IO1746-401",
+          "read": "2026-10-02"
+        },
+        {
+          "retailer": "Nike (nike.com/mx)",
+          "market": "MX",
+          "price": 3199,
+          "currency": "MXN",
+          "taxIncluded": true,
+          "sizes": null,
+          "sizeSystem": null,
+          "status": null,
+          "readFrom": "category grid",
+          "source": "https://www.nike.com/mx/w/jordan-calzado-37eefzy7ok",
+          "read": "2026-10-02"
+        }
+      ],
+      "note": "sneakerbardetroit lists $125; Nike's own page says $135, which is used.",
+      "source": "https://www.nike.com/t/x/IO1746-401",
+      "read": "2026-10-02"
+    }
+  ],
+  "resale": [
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "553558-303",
+      "goatTitle": "Air Jordan 1 Low 'Midnight Spruce Pale Ivory Light Orewood Brown'",
+      "currency": "USD",
+      "goatListedRetail": 120,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-low-midnight-spruce-pale-ivory-light-orewood-brown-553558-303",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1826223&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 197,
+      "lastSale": null,
+      "note": "A core model on general sale at $120; GOAT asks above retail with no sale recorded, so not a market price."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "553558-303",
+      "goatTitle": "Air Jordan 1 Low 'Midnight Spruce Pale Ivory Light Orewood Brown'",
+      "currency": "USD",
+      "goatListedRetail": 120,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-low-midnight-spruce-pale-ivory-light-orewood-brown-553558-303",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1826223&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "7",
+      "sizeSystem": "US men's",
+      "lowestAsk": 194,
+      "lastSale": null,
+      "sizesWithNewAsks": 18,
+      "note": "A core model on general sale at $120; GOAT asks above retail with no sale recorded, so not a market price."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "CK9246-200",
+      "goatTitle": "Wmns Air Jordan 3 Retro 'Fireside'",
+      "currency": "USD",
+      "goatListedRetail": 205,
+      "source": "https://www.goat.com/sneakers/wmns-air-jordan-3-retro-fireside-ck9246-200",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1758931&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "8",
+      "sizeSystem": "US women's",
+      "lowestAsk": 167,
+      "lastSale": 167
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "CT8529-108",
+      "goatTitle": "Air Jordan 6 Retro 'Oreo' 2026",
+      "currency": "USD",
+      "goatListedRetail": null,
+      "source": "https://www.goat.com/sneakers/air-jordan-6-oreo-2026-ct8529-108",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1729522&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 149,
+      "lastSale": 164
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "CT8529-108",
+      "goatTitle": "Air Jordan 6 Retro 'Oreo' 2026",
+      "currency": "USD",
+      "goatListedRetail": null,
+      "source": "https://www.goat.com/sneakers/air-jordan-6-oreo-2026-ct8529-108",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1729522&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "9.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 149,
+      "lastSale": 149,
+      "sizesWithNewAsks": 24
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "CT8529-108",
+      "goatTitle": "Air Jordan 6 Retro 'Oreo' 2026",
+      "currency": "USD",
+      "goatListedRetail": null,
+      "source": "https://www.goat.com/sneakers/air-jordan-6-oreo-2026-ct8529-108",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1729522&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: badly damaged)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "12",
+      "sizeSystem": "US men's",
+      "lowestAsk": 112,
+      "lastSale": null
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "DD0587-008",
+      "goatTitle": "Air Jordan 5 Retro 'Black Carolina / UNC' 2026",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-5-retro-black-university-blue-2026-dd0587-008",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1711594&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 235,
+      "lastSale": 233
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "DD0587-008",
+      "goatTitle": "Air Jordan 5 Retro 'Black Carolina / UNC' 2026",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-5-retro-black-university-blue-2026-dd0587-008",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1711594&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "9.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 230,
+      "lastSale": 229,
+      "sizesWithNewAsks": 18
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "DD0587-008",
+      "goatTitle": "Air Jordan 5 Retro 'Black Carolina / UNC' 2026",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-5-retro-black-university-blue-2026-dd0587-008",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1711594&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: good condition)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "11.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 186,
+      "lastSale": 246
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "DZ5485-201",
+      "goatTitle": "Air Jordan 1 High OG 'Love The Game'",
+      "currency": "USD",
+      "goatListedRetail": 185,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-high-og-love-the-game-dz5485-201",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1752063&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 128,
+      "lastSale": 117
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "DZ5485-201",
+      "goatTitle": "Air Jordan 1 High OG 'Love The Game'",
+      "currency": "USD",
+      "goatListedRetail": 185,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-high-og-love-the-game-dz5485-201",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1752063&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "9",
+      "sizeSystem": "US men's",
+      "lowestAsk": 109,
+      "lastSale": 114,
+      "sizesWithNewAsks": 25
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "FQ8138-600",
+      "goatTitle": "Air Jordan 4 Retro 'Toro Bravo' 2026",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-4-retro-toro-bravo-2026-fq8138-600",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1653296&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 186,
+      "lastSale": 185
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "FQ8138-600",
+      "goatTitle": "Air Jordan 4 Retro 'Toro Bravo' 2026",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-4-retro-toro-bravo-2026-fq8138-600",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1653296&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "9",
+      "sizeSystem": "US men's",
+      "lowestAsk": 177,
+      "lastSale": 199,
+      "sizesWithNewAsks": 20
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "FQ8138-600",
+      "goatTitle": "Air Jordan 4 Retro 'Toro Bravo' 2026",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-4-retro-toro-bravo-2026-fq8138-600",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1653296&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: no original box)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "11",
+      "sizeSystem": "US men's",
+      "lowestAsk": 107,
+      "lastSale": 113
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "FV5104-100",
+      "goatTitle": "Air Jordan 11 Retro Low 'UNC' 2026",
+      "currency": "USD",
+      "goatListedRetail": 190,
+      "source": "https://www.goat.com/sneakers/air-jordan-11-retro-low-unc-2026-fv5104-100",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1638428&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 133,
+      "lastSale": 149
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "FV5104-100",
+      "goatTitle": "Air Jordan 11 Retro Low 'UNC' 2026",
+      "currency": "USD",
+      "goatListedRetail": 190,
+      "source": "https://www.goat.com/sneakers/air-jordan-11-retro-low-unc-2026-fv5104-100",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1638428&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "8",
+      "sizeSystem": "US men's",
+      "lowestAsk": 126,
+      "lastSale": 145,
+      "sizesWithNewAsks": 17
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "FV5104-100",
+      "goatTitle": "Air Jordan 11 Retro Low 'UNC' 2026",
+      "currency": "USD",
+      "goatListedRetail": 190,
+      "source": "https://www.goat.com/sneakers/air-jordan-11-retro-low-unc-2026-fv5104-100",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1638428&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: good condition)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "11",
+      "sizeSystem": "US men's",
+      "lowestAsk": 96,
+      "lastSale": 96
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "HQ7978-001",
+      "goatTitle": "Air Jordan 5 Retro 'Halloween'",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-5-retro-halloween-hq7978-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1758936&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 287,
+      "lastSale": 287,
+      "note": "Not yet released (17 Oct per sneakerbardetroit, $215 reported retail); a pre-release sale."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "HQ7978-103",
+      "goatTitle": "Air Jordan 5 Retro 'White Metallic' 2026",
+      "currency": "USD",
+      "goatListedRetail": 215,
+      "source": "https://www.goat.com/sneakers/air-jordan-5-retro-white-metallic-2026-hq7978-103",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1640963&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 169,
+      "lastSale": 169
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "HQ7978-103",
+      "goatTitle": "Air Jordan 5 Retro 'White Metallic' 2026",
+      "currency": "USD",
+      "goatListedRetail": 215,
+      "source": "https://www.goat.com/sneakers/air-jordan-5-retro-white-metallic-2026-hq7978-103",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1640963&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "9",
+      "sizeSystem": "US men's",
+      "lowestAsk": 163,
+      "lastSale": 176,
+      "sizesWithNewAsks": 18
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "HQ7978-103",
+      "goatTitle": "Air Jordan 5 Retro 'White Metallic' 2026",
+      "currency": "USD",
+      "goatListedRetail": 215,
+      "source": "https://www.goat.com/sneakers/air-jordan-5-retro-white-metallic-2026-hq7978-103",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1640963&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: good condition)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "13",
+      "sizeSystem": "US men's",
+      "lowestAsk": 124,
+      "lastSale": 139
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "HV6474-601",
+      "goatTitle": "Air Jordan 41 'University Red'",
+      "currency": "USD",
+      "goatListedRetail": 205,
+      "source": "https://www.goat.com/sneakers/air-jordan-41-university-red-hv6474-601",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1775713&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 584,
+      "lastSale": null,
+      "note": "Not yet released (25 Oct per sneakerbardetroit); asks only, no sales. Speculative."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "HV6474-601",
+      "goatTitle": "Air Jordan 41 'University Red'",
+      "currency": "USD",
+      "goatListedRetail": 205,
+      "source": "https://www.goat.com/sneakers/air-jordan-41-university-red-hv6474-601",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1775713&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "7",
+      "sizeSystem": "US men's",
+      "lowestAsk": 584,
+      "lastSale": null,
+      "sizesWithNewAsks": 15,
+      "note": "Not yet released (25 Oct per sneakerbardetroit); asks only, no sales. Speculative."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "HV8082-005",
+      "goatTitle": "Air Jordan Luka 5 'Black Purple Venom Varsity Maize'",
+      "currency": "USD",
+      "goatListedRetail": 135,
+      "source": "https://www.goat.com/sneakers/air-jordan-luka-5-black-purple-venom-varsity-maize-hv8082-005",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1828401&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 233,
+      "lastSale": null,
+      "note": "No sale recorded on GOAT."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "HV8082-005",
+      "goatTitle": "Air Jordan Luka 5 'Black Purple Venom Varsity Maize'",
+      "currency": "USD",
+      "goatListedRetail": 135,
+      "source": "https://www.goat.com/sneakers/air-jordan-luka-5-black-purple-venom-varsity-maize-hv8082-005",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1828401&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "9.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 233,
+      "lastSale": null,
+      "sizesWithNewAsks": 25,
+      "note": "No sale recorded on GOAT."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IB6716-600",
+      "goatTitle": "Wmns Air Jordan 4 Retro 'Iced Carmine'",
+      "currency": "USD",
+      "goatListedRetail": 225,
+      "source": "https://www.goat.com/sneakers/wmns-air-jordan-4-retro-iced-carmine-ib6716-600",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1738560&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "8",
+      "sizeSystem": "US women's",
+      "lowestAsk": 159,
+      "lastSale": 159
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IB6716-600",
+      "goatTitle": "Wmns Air Jordan 4 Retro 'Iced Carmine'",
+      "currency": "USD",
+      "goatListedRetail": 225,
+      "source": "https://www.goat.com/sneakers/wmns-air-jordan-4-retro-iced-carmine-ib6716-600",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1738560&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "13",
+      "sizeSystem": "US women's",
+      "lowestAsk": 145,
+      "lastSale": 145,
+      "sizesWithNewAsks": 21
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IB6716-600",
+      "goatTitle": "Wmns Air Jordan 4 Retro 'Iced Carmine'",
+      "currency": "USD",
+      "goatListedRetail": 225,
+      "source": "https://www.goat.com/sneakers/wmns-air-jordan-4-retro-iced-carmine-ib6716-600",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1738560&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: good condition)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "7",
+      "sizeSystem": "US women's",
+      "lowestAsk": 152,
+      "lastSale": 163
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IF4396-103",
+      "goatTitle": "Air Jordan 3 Retro 'World’s Best Dad'",
+      "currency": "USD",
+      "goatListedRetail": 215,
+      "source": "https://www.goat.com/sneakers/air-jordan-3-retro-world-s-best-dad-if4396-103",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1640961&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 127,
+      "lastSale": 125
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IF4396-103",
+      "goatTitle": "Air Jordan 3 Retro 'World’s Best Dad'",
+      "currency": "USD",
+      "goatListedRetail": 215,
+      "source": "https://www.goat.com/sneakers/air-jordan-3-retro-world-s-best-dad-if4396-103",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1640961&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "10.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 119,
+      "lastSale": 138,
+      "sizesWithNewAsks": 19
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IF4396-103",
+      "goatTitle": "Air Jordan 3 Retro 'World’s Best Dad'",
+      "currency": "USD",
+      "goatListedRetail": 215,
+      "source": "https://www.goat.com/sneakers/air-jordan-3-retro-world-s-best-dad-if4396-103",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1640961&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: no original box)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "10.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 105,
+      "lastSale": null
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IF4396-104",
+      "goatTitle": "Air Jordan 3 'True Blue' 2026",
+      "currency": "USD",
+      "goatListedRetail": 230,
+      "source": "https://www.goat.com/sneakers/air-jordan-3-true-blue-2026-if4396-104",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1773219&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 196,
+      "lastSale": 196
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IF4396-104",
+      "goatTitle": "Air Jordan 3 'True Blue' 2026",
+      "currency": "USD",
+      "goatListedRetail": 230,
+      "source": "https://www.goat.com/sneakers/air-jordan-3-true-blue-2026-if4396-104",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1773219&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "8.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 184,
+      "lastSale": 184,
+      "sizesWithNewAsks": 25
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IF4396-104",
+      "goatTitle": "Air Jordan 3 'True Blue' 2026",
+      "currency": "USD",
+      "goatListedRetail": 230,
+      "source": "https://www.goat.com/sneakers/air-jordan-3-true-blue-2026-if4396-104",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1773219&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: badly damaged)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "12",
+      "sizeSystem": "US men's",
+      "lowestAsk": 158,
+      "lastSale": null
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "II9811-001",
+      "goatTitle": "Air Jordan 1 High OG 'Flight Club'",
+      "currency": "USD",
+      "goatListedRetail": 185,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-high-og-flight-club-ii9811-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1723319&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 125,
+      "lastSale": 125
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "II9811-001",
+      "goatTitle": "Air Jordan 1 High OG 'Flight Club'",
+      "currency": "USD",
+      "goatListedRetail": 185,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-high-og-flight-club-ii9811-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1723319&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "13",
+      "sizeSystem": "US men's",
+      "lowestAsk": 113,
+      "lastSale": 135,
+      "sizesWithNewAsks": 26
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IM4002-100",
+      "goatTitle": "Air Jordan 4 Retro 'Flight Club'",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-4-retro-flight-club-im4002-100",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1707102&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 156,
+      "lastSale": 156
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IM4002-100",
+      "goatTitle": "Air Jordan 4 Retro 'Flight Club'",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-4-retro-flight-club-im4002-100",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1707102&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "12",
+      "sizeSystem": "US men's",
+      "lowestAsk": 152,
+      "lastSale": 149,
+      "sizesWithNewAsks": 25
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IM4002-100",
+      "goatTitle": "Air Jordan 4 Retro 'Flight Club'",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-4-retro-flight-club-im4002-100",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1707102&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: good condition)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "12",
+      "sizeSystem": "US men's",
+      "lowestAsk": 114,
+      "lastSale": 136
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IO1746-401",
+      "goatTitle": "Air Jordan Tatum 5 Sunrise 'Bright Concord Bright Mango'",
+      "currency": "USD",
+      "goatListedRetail": 135,
+      "source": "https://www.goat.com/sneakers/air-jordan-tatum-5-sunrise-bright-concord-bright-mango-io1746-401",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1819448&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 520,
+      "lastSale": null,
+      "note": "Not yet released (15 Oct); asks only, no sales. Speculative."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IO1746-401",
+      "goatTitle": "Air Jordan Tatum 5 Sunrise 'Bright Concord Bright Mango'",
+      "currency": "USD",
+      "goatListedRetail": 135,
+      "source": "https://www.goat.com/sneakers/air-jordan-tatum-5-sunrise-bright-concord-bright-mango-io1746-401",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1819448&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "7",
+      "sizeSystem": "US men's",
+      "lowestAsk": 520,
+      "lastSale": null,
+      "sizesWithNewAsks": 15,
+      "note": "Not yet released (15 Oct); asks only, no sales. Speculative."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IO2463-102",
+      "goatTitle": "Air Jordan 4 Retro 'Rare Air - Tour Yellow' 2026",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-4-retro-rare-air-tour-yellow-io2463-102",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1709894&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 162,
+      "lastSale": 162
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IO2463-102",
+      "goatTitle": "Air Jordan 4 Retro 'Rare Air - Tour Yellow' 2026",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-4-retro-rare-air-tour-yellow-io2463-102",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1709894&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "9.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 155,
+      "lastSale": 155,
+      "sizesWithNewAsks": 18
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IO2463-102",
+      "goatTitle": "Air Jordan 4 Retro 'Rare Air - Tour Yellow' 2026",
+      "currency": "USD",
+      "goatListedRetail": 220,
+      "source": "https://www.goat.com/sneakers/air-jordan-4-retro-rare-air-tour-yellow-io2463-102",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1709894&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: badly damaged)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "9.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 142,
+      "lastSale": null
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IQ5495-005",
+      "goatTitle": "Air Jordan 1 Retro High OG 'Royal' 2026",
+      "currency": "USD",
+      "goatListedRetail": 185,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-retro-high-og-royal-2026-iq5495-005",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1729521&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 195,
+      "lastSale": 258
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IQ5495-005",
+      "goatTitle": "Air Jordan 1 Retro High OG 'Royal' 2026",
+      "currency": "USD",
+      "goatListedRetail": 185,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-retro-high-og-royal-2026-iq5495-005",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1729521&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "8",
+      "sizeSystem": "US men's",
+      "lowestAsk": 179,
+      "lastSale": 192,
+      "sizesWithNewAsks": 15
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IR0088-001",
+      "goatTitle": "Air Jordan 1 Low OG 'Last Dance At The Garden'",
+      "currency": "USD",
+      "goatListedRetail": 140,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-low-og-last-dance-at-the-garden-ir0088-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1778342&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 132,
+      "lastSale": 132
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IR0088-001",
+      "goatTitle": "Air Jordan 1 Low OG 'Last Dance At The Garden'",
+      "currency": "USD",
+      "goatListedRetail": 140,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-low-og-last-dance-at-the-garden-ir0088-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1778342&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "8",
+      "sizeSystem": "US men's",
+      "lowestAsk": 116,
+      "lastSale": 116,
+      "sizesWithNewAsks": 23
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IR0963-100",
+      "goatTitle": "Air Jordan Luka 5 'Graffiti'",
+      "currency": "USD",
+      "goatListedRetail": 135,
+      "source": "https://www.goat.com/sneakers/air-jordan-luka-5-graffiti-ir0963-100",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1779798&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 156,
+      "lastSale": 225
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IR0963-100",
+      "goatTitle": "Air Jordan Luka 5 'Graffiti'",
+      "currency": "USD",
+      "goatListedRetail": 135,
+      "source": "https://www.goat.com/sneakers/air-jordan-luka-5-graffiti-ir0963-100",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1779798&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "8",
+      "sizeSystem": "US men's",
+      "lowestAsk": 156,
+      "lastSale": null,
+      "sizesWithNewAsks": 18
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IR0963-100",
+      "goatTitle": "Air Jordan Luka 5 'Graffiti'",
+      "currency": "USD",
+      "goatListedRetail": 135,
+      "source": "https://www.goat.com/sneakers/air-jordan-luka-5-graffiti-ir0963-100",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1779798&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: good condition)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "11",
+      "sizeSystem": "US men's",
+      "lowestAsk": 49,
+      "lastSale": null
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IR2084-001",
+      "goatTitle": "Air Jordan 4028 'Black Volt'",
+      "currency": "USD",
+      "goatListedRetail": 205,
+      "source": "https://www.goat.com/sneakers/air-jordan-4028-black-volt-ir2084-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1713620&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 481,
+      "lastSale": 300
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IR2084-001",
+      "goatTitle": "Air Jordan 4028 'Black Volt'",
+      "currency": "USD",
+      "goatListedRetail": 205,
+      "source": "https://www.goat.com/sneakers/air-jordan-4028-black-volt-ir2084-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1713620&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "8",
+      "sizeSystem": "US men's",
+      "lowestAsk": 412,
+      "lastSale": 275,
+      "sizesWithNewAsks": 15
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IV5678-102",
+      "goatTitle": "Air Jordan Wmns 5 Retro OG 'Sunset' 2026",
+      "currency": "USD",
+      "goatListedRetail": 225,
+      "source": "https://www.goat.com/sneakers/air-jordan-5-retro-og-sunset-2026-iv5678-102",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1758281&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "8",
+      "sizeSystem": "US women's",
+      "lowestAsk": 217,
+      "lastSale": 217
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IV5678-102",
+      "goatTitle": "Air Jordan Wmns 5 Retro OG 'Sunset' 2026",
+      "currency": "USD",
+      "goatListedRetail": 225,
+      "source": "https://www.goat.com/sneakers/air-jordan-5-retro-og-sunset-2026-iv5678-102",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1758281&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "6",
+      "sizeSystem": "US women's",
+      "lowestAsk": 217,
+      "lastSale": 233,
+      "sizesWithNewAsks": 22
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IV6750-001",
+      "goatTitle": "Air Jordan 1 Low OG 'Laser'",
+      "currency": "USD",
+      "goatListedRetail": 125,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-low-og-laser-iv6750-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1758802&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 109,
+      "lastSale": 112
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IV6750-001",
+      "goatTitle": "Air Jordan 1 Low OG 'Laser'",
+      "currency": "USD",
+      "goatListedRetail": 125,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-low-og-laser-iv6750-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1758802&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "11",
+      "sizeSystem": "US men's",
+      "lowestAsk": 95,
+      "lastSale": 103,
+      "sizesWithNewAsks": 24
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IW2872-700",
+      "goatTitle": "J. Balvin x Air Jordan 4 Retro 'Amazonas / Lemonade'",
+      "currency": "USD",
+      "goatListedRetail": 225,
+      "source": "https://www.goat.com/sneakers/j-balvin-x-air-jordan-3-retro-lemonade-iw2872-700",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1716874&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 248,
+      "lastSale": 247
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IW2872-700",
+      "goatTitle": "J. Balvin x Air Jordan 4 Retro 'Amazonas / Lemonade'",
+      "currency": "USD",
+      "goatListedRetail": 225,
+      "source": "https://www.goat.com/sneakers/j-balvin-x-air-jordan-3-retro-lemonade-iw2872-700",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1716874&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "4.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 233,
+      "lastSale": null,
+      "sizesWithNewAsks": 25
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IW3808-400",
+      "goatTitle": "Air Jordan 13 Retro 'Flint' 2026",
+      "currency": "USD",
+      "goatListedRetail": 215,
+      "source": "https://www.goat.com/sneakers/air-jordan-13-retro-flint-2026-iw3808-400",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1711596&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 159,
+      "lastSale": 162
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IW3808-400",
+      "goatTitle": "Air Jordan 13 Retro 'Flint' 2026",
+      "currency": "USD",
+      "goatListedRetail": 215,
+      "source": "https://www.goat.com/sneakers/air-jordan-13-retro-flint-2026-iw3808-400",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1711596&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "11.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 154,
+      "lastSale": 154,
+      "sizesWithNewAsks": 18
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IW3808-400",
+      "goatTitle": "Air Jordan 13 Retro 'Flint' 2026",
+      "currency": "USD",
+      "goatListedRetail": 215,
+      "source": "https://www.goat.com/sneakers/air-jordan-13-retro-flint-2026-iw3808-400",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1711596&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: good condition)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "7.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 129,
+      "lastSale": null
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IX8478-410",
+      "goatTitle": "Air Jordan 1 Low OG 'Howard University'",
+      "currency": "USD",
+      "goatListedRetail": 125,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-low-og-howard-university-ix8478-410",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1750925&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 237,
+      "lastSale": null,
+      "note": "Released 1 Oct; no sale recorded yet."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "IX8478-410",
+      "goatTitle": "Air Jordan 1 Low OG 'Howard University'",
+      "currency": "USD",
+      "goatListedRetail": 125,
+      "source": "https://www.goat.com/sneakers/air-jordan-1-low-og-howard-university-ix8478-410",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1750925&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "13",
+      "sizeSystem": "US men's",
+      "lowestAsk": 225,
+      "lastSale": null,
+      "sizesWithNewAsks": 21,
+      "note": "Released 1 Oct; no sale recorded yet."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "JA1135-100",
+      "goatTitle": "Air Jordan 4 Retro 'Comic'",
+      "currency": "USD",
+      "goatListedRetail": 225,
+      "source": "https://www.goat.com/sneakers/air-jordan-4-retro-comic-io2362-100",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1758800&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 128,
+      "lastSale": 128,
+      "note": "GOAT lists it as IO2362-100."
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "JA1135-100",
+      "goatTitle": "Air Jordan 4 Retro 'Comic'",
+      "currency": "USD",
+      "goatListedRetail": 225,
+      "source": "https://www.goat.com/sneakers/air-jordan-4-retro-comic-io2362-100",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1758800&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: good condition)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "9.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 124,
+      "lastSale": null
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "JA1369-001",
+      "goatTitle": "Air Jordan 3 Retro 'Laser Palomino'",
+      "currency": "USD",
+      "goatListedRetail": 230,
+      "source": "https://www.goat.com/sneakers/air-jordan-3-laser-ja1369-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1796992&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "lowest ask and last sale at the reference size",
+      "size": "10",
+      "sizeSystem": "US men's",
+      "lowestAsk": 164,
+      "lastSale": 199
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "JA1369-001",
+      "goatTitle": "Air Jordan 3 Retro 'Laser Palomino'",
+      "currency": "USD",
+      "goatListedRetail": 230,
+      "source": "https://www.goat.com/sneakers/air-jordan-3-laser-ja1369-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1796992&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "new (GOAT new_no_defects, box in good condition)",
+      "measure": "cheapest new ask across all sizes",
+      "size": "7.5",
+      "sizeSystem": "US men's",
+      "lowestAsk": 149,
+      "lastSale": 164,
+      "sizesWithNewAsks": 18
+    },
+    {
+      "marketplace": "GOAT",
+      "market": "US",
+      "styleCode": "JA1369-001",
+      "goatTitle": "Air Jordan 3 Retro 'Laser Palomino'",
+      "currency": "USD",
+      "goatListedRetail": 230,
+      "source": "https://www.goat.com/sneakers/air-jordan-3-laser-ja1369-001",
+      "dataSource": "https://www.goat.com/web-api/v1/product_variants/buy_bar_data?productTemplateId=1796992&countryCode=US (the JSON GOAT's own product page loads)",
+      "read": "2026-10-02",
+      "condition": "used (GOAT box condition: good condition)",
+      "measure": "cheapest used ask across all sizes",
+      "size": "12",
+      "sizeSystem": "US men's",
+      "lowestAsk": 179,
+      "lastSale": null
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "DZ5485-201",
+      "name": "Air Jordan 1 High OG 'Love Letter'",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "average resale price across sizes, as reported",
+      "size": null,
+      "sizeSystem": null,
+      "averageResale": 138,
+      "asOf": "2026-09-17",
+      "source": "https://www.si.com/fannation/sneakers/news/10-iconic-air-jordan-sneakers-sitting-on-shelves-right-now",
+      "read": "2026-10-02",
+      "quote": "average resale price is $138",
+      "note": "Reported by Sports Illustrated FanNation from StockX. StockX's own pages could not be read: the fetched HTML carries no market data, and direct requests were refused (HTTP 403)."
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "IO2463-102",
+      "name": "Air Jordan 4 \"Rare Air - Tour Yellow\"",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "average resale price across sizes, as reported",
+      "size": null,
+      "sizeSystem": null,
+      "averageResale": 179,
+      "asOf": "2026-09-17",
+      "source": "https://www.si.com/fannation/sneakers/news/10-iconic-air-jordan-sneakers-sitting-on-shelves-right-now",
+      "read": "2026-10-02",
+      "quote": "average resale price is $179",
+      "note": "Reported by Sports Illustrated FanNation from StockX. StockX's own pages could not be read: the fetched HTML carries no market data, and direct requests were refused (HTTP 403)."
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "IO2463-102",
+      "name": "Air Jordan 4 \"Rare Air - Tour Yellow\"",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "average resale price across sizes, as reported",
+      "size": null,
+      "sizeSystem": null,
+      "averageResale": 186,
+      "asOf": "2026-09-12",
+      "source": "https://www.si.com/fannation/sneakers/news/air-jordan-4-rare-air-tour-yellow-is-grounded-on-shelves",
+      "read": "2026-10-02",
+      "quote": "Average resale price of $186; almost every size currently has an asking price below that",
+      "note": "Reported by Sports Illustrated FanNation from StockX. StockX's own pages could not be read: the fetched HTML carries no market data, and direct requests were refused (HTTP 403)."
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "CT8529-108",
+      "name": "Air Jordan 6 \"Oreo\"",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "average resale price across sizes, as reported",
+      "size": null,
+      "sizeSystem": null,
+      "averageResale": 175,
+      "asOf": "2026-09-17",
+      "source": "https://www.si.com/fannation/sneakers/news/10-iconic-air-jordan-sneakers-sitting-on-shelves-right-now",
+      "read": "2026-10-02",
+      "quote": "average resale price is $175",
+      "note": "Reported by Sports Illustrated FanNation from StockX. StockX's own pages could not be read: the fetched HTML carries no market data, and direct requests were refused (HTTP 403)."
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "FV5104-100",
+      "name": "Air Jordan 11 Low \"University Blue\"",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "average resale price across sizes, as reported",
+      "size": null,
+      "sizeSystem": null,
+      "averageResale": 133,
+      "asOf": "2026-09-17",
+      "source": "https://www.si.com/fannation/sneakers/news/10-iconic-air-jordan-sneakers-sitting-on-shelves-right-now",
+      "read": "2026-10-02",
+      "quote": "average resale price is $133",
+      "note": "Reported by Sports Illustrated FanNation from StockX. StockX's own pages could not be read: the fetched HTML carries no market data, and direct requests were refused (HTTP 403)."
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "FV5104-100",
+      "name": "Air Jordan 11 Low \"University Blue\"",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "average resale price across sizes, as reported",
+      "size": null,
+      "sizeSystem": null,
+      "averageResale": 138,
+      "asOf": "2026-08-11",
+      "source": "https://www.si.com/fannation/sneakers/news/5-iconic-air-jordans-under-retail-right-now",
+      "read": "2026-10-02",
+      "quote": "$138 average",
+      "note": "Reported by Sports Illustrated FanNation from StockX. StockX's own pages could not be read: the fetched HTML carries no market data, and direct requests were refused (HTTP 403)."
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "IF4396-103",
+      "name": "Air Jordan 3 \"World's Best\"",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "average resale price across sizes, as reported",
+      "size": null,
+      "sizeSystem": null,
+      "averageResale": 158,
+      "asOf": "2026-08-11",
+      "source": "https://www.si.com/fannation/sneakers/news/5-iconic-air-jordans-under-retail-right-now",
+      "read": "2026-10-02",
+      "quote": "$158 average",
+      "note": "Reported by Sports Illustrated FanNation from StockX. StockX's own pages could not be read: the fetched HTML carries no market data, and direct requests were refused (HTTP 403)."
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "IB6716-600",
+      "name": "Air Jordan 4 \"Pearl Pink and Iced Carmine\" (W)",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "average resale price across sizes, as reported",
+      "size": null,
+      "sizeSystem": null,
+      "averageResale": 151,
+      "asOf": "2026-08-11",
+      "source": "https://www.si.com/fannation/sneakers/news/5-iconic-air-jordans-under-retail-right-now",
+      "read": "2026-10-02",
+      "quote": "$151 average",
+      "note": "Reported by Sports Illustrated FanNation from StockX. StockX's own pages could not be read: the fetched HTML carries no market data, and direct requests were refused (HTTP 403)."
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "JA1135-100",
+      "name": "Air Jordan 4 \"Comic\"",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "average resale price across sizes, as reported",
+      "size": null,
+      "sizeSystem": null,
+      "averageResale": 165,
+      "asOf": "2026-09-21",
+      "source": "https://www.si.com/fannation/sneakers/news/air-jordan-4-comic-is-20-off-online",
+      "read": "2026-10-02",
+      "quote": "average resale price of $165, the asking price is below that in most sizes",
+      "note": "Reported by Sports Illustrated FanNation from StockX. StockX's own pages could not be read: the fetched HTML carries no market data, and direct requests were refused (HTTP 403)."
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "IM4002-100",
+      "name": "Air Jordan 4 \"Flight Club\"",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "average resale price across sizes, as reported",
+      "size": null,
+      "sizeSystem": null,
+      "averageResale": 179,
+      "asOf": "2026-03-07",
+      "source": "https://www.si.com/fannation/sneakers/news/air-jordan-4-flight-club-is-parked-on-shelves",
+      "read": "2026-10-02",
+      "quote": "average resale price $179; most sizes below retail",
+      "note": "Reported by Sports Illustrated FanNation from StockX. StockX's own pages could not be read: the fetched HTML carries no market data, and direct requests were refused (HTTP 403)."
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "IF4396-104",
+      "name": "Air Jordan 3 \"True Blue\"",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "average resale price across sizes, as reported",
+      "size": null,
+      "sizeSystem": null,
+      "averageResale": 221,
+      "asOf": "2026-07-19",
+      "source": "https://www.si.com/fannation/sneakers/news/air-jordan-3-true-blue-is-sitting-on-shelves",
+      "read": "2026-10-02",
+      "quote": "the average resale price is $221 in adult sizes on StockX",
+      "note": "Reported by Sports Illustrated FanNation from StockX. StockX's own pages could not be read: the fetched HTML carries no market data, and direct requests were refused (HTTP 403)."
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "IF4396-104",
+      "name": "Air Jordan 3 \"True Blue\"",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "qualitative, as reported",
+      "averageResale": null,
+      "asOf": "2026-09-17",
+      "source": "https://www.si.com/fannation/sneakers/news/10-iconic-air-jordan-sneakers-sitting-on-shelves-right-now",
+      "read": "2026-10-02",
+      "quote": "well below $200 in most sizes"
+    },
+    {
+      "marketplace": "StockX",
+      "market": "US",
+      "styleCode": "JA1369-001",
+      "name": "Air Jordan 3 \"Laser\"",
+      "currency": "USD",
+      "condition": "new (Verified Marketplace)",
+      "measure": "qualitative, as reported",
+      "averageResale": null,
+      "asOf": "2026-09-17",
+      "source": "https://www.si.com/fannation/sneakers/news/10-iconic-air-jordan-sneakers-sitting-on-shelves-right-now",
+      "read": "2026-10-02",
+      "quote": "south of $200 in most sizes"
+    },
+    {
+      "marketplace": "StockX",
+      "market": "GB",
+      "styleCode": null,
+      "currency": "GBP",
+      "measure": null,
+      "averageResale": null,
+      "lowestAsk": null,
+      "lastSale": null,
+      "source": "https://stockx.com/en-gb/air-jordan-4-retro-rare-air-tour-yellow",
+      "read": "2026-10-02",
+      "note": "StockX UK refused the request (HTTP 403). No UK resale price was obtained for any shoe."
+    }
+  ],
+  "marketplaces": [
+    {
+      "marketplace": "StockX",
+      "section": "Verified Marketplace (new items)",
+      "role": "seller",
+      "fees": {
+        "transactionFeeBySellerLevel": [
+          {
+            "level": 1,
+            "rate": 0.09,
+            "qualifies": "starting level"
+          },
+          {
+            "level": 2,
+            "rate": 0.085,
+            "qualifies": "12 sales and $1,500 in a quarter"
+          },
+          {
+            "level": 3,
+            "rate": 0.08,
+            "qualifies": "40 sales and $5,000 in a quarter"
+          },
+          {
+            "level": 4,
+            "rate": 0.075,
+            "qualifies": "200 sales and $25,000 in a quarter"
+          },
+          {
+            "level": 5,
+            "rate": 0.07,
+            "qualifies": "800 sales and $100,000 in a quarter"
+          }
+        ],
+        "paymentProcessingRate": 0.03,
+        "minimumSellerFee": [
+          {
+            "market": "US",
+            "amount": 5,
+            "currency": "USD"
+          },
+          {
+            "market": "CA",
+            "amount": 7,
+            "currency": "CAD"
+          },
+          {
+            "market": "GB",
+            "amount": 4.5,
+            "currency": "GBP"
+          },
+          {
+            "market": "IE",
+            "amount": 5,
+            "currency": "EUR",
+            "note": "the European Union figure"
+          },
+          {
+            "market": "MX",
+            "amount": 100,
+            "currency": "MXN"
+          }
+        ],
+        "shippingDeductedFromPayout": [
+          {
+            "market": "US",
+            "amount": 5,
+            "currency": "USD"
+          },
+          {
+            "market": "CA",
+            "amount": 6,
+            "currency": "CAD"
+          },
+          {
+            "market": "GB",
+            "amount": 4,
+            "currency": "GBP"
+          },
+          {
+            "market": "IE",
+            "amount": 11,
+            "currency": "EUR"
+          },
+          {
+            "market": "MX",
+            "amount": 30,
+            "currency": "USD",
+            "note": "Mexico is not listed by name; \"All Other Markets\" is $30 USD"
+          }
+        ],
+        "shippingNote": "Per single item; prepaid label provided; deducted from the payout."
+      },
+      "source": "https://stockx.com/help/articles/what-are-stockxs-fees-for-sellers",
+      "shippingSource": "https://stockx.com/help/articles/How-much-does-shipping-cost-for-sellers",
+      "read": "2026-10-02",
+      "note": "Seller Level is measured on quarterly sales. StockX has run limited-time 0% processing promotions (stockx.com/news/seller-payment-processing-fees/), not reflected here. A failed-verification penalty fee exists, but the help page read gives no amount (\"Penalty fee details can be found in ... your Payout Statement\"); a search summary put it at $15, unconfirmed, so it is left null.",
+      "penaltyFee": null
+    },
+    {
+      "marketplace": "StockX",
+      "section": "Verified Marketplace (new items)",
+      "role": "buyer",
+      "fees": {
+        "processingFee": null,
+        "processingFeeRule": "dynamic: based on item price, location and market conditions; fixed once an offer is placed",
+        "shipping": null,
+        "shippingRule": "not fixed: set by item price, size, type, carrier rates and destination; shown before purchase",
+        "taxes": "import duties and sales tax by shipping address"
+      },
+      "source": "https://stockx.com/help/articles/what-are-stockx-fees-for-buyers",
+      "shippingSource": "https://stockx.com/help/articles/how-much-does-shipping-cost-for-buyers",
+      "read": "2026-10-02"
+    },
+    {
+      "marketplace": "StockX",
+      "section": "Listings Marketplace (used and unique items)",
+      "role": "seller and buyer",
+      "fees": {
+        "sellerFees": 0,
+        "sellerNote": "no standard selling, processing or shipping fees; seller keeps the sale price less any penalty or return-related fees",
+        "buyerProcessingRate": 0.03,
+        "buyerProcessingMinimum": {
+          "amount": 3.95,
+          "currency": "USD"
+        },
+        "buyerShipping": "by item size, weight and category",
+        "optionalVerificationFee": {
+          "amount": 12.5,
+          "currency": "USD"
+        }
+      },
+      "source": "https://stockx.com/help/articles/what-are-stockx-fees-for-buyers",
+      "sellerSource": "https://stockx.com/help/articles/what-are-stockxs-fees-for-sellers",
+      "read": "2026-10-02"
+    },
+    {
+      "marketplace": "StockX",
+      "section": "No Fee Resale",
+      "role": "seller",
+      "fees": {
+        "sellerFees": 0
+      },
+      "rule": "An item bought new on the Verified Marketplace, delivered after 10 July 2024, still in its delivered condition with the StockX tag, and resold within 90 days of delivery pays no transaction, processing or shipping fee. Not for items sent to Flex or Store at StockX.",
+      "source": "https://stockx.com/help/articles/what-is-no-fee-resale",
+      "read": "2026-10-02"
+    },
+    {
+      "marketplace": "StockX",
+      "section": "Conditions",
+      "role": "rules",
+      "conditions": {
+        "verifiedMarketplace": "Sneakers must be brand new and include the original box, free from signs of use, damage or tampering. StockX also sells \"B-Grade\" items.",
+        "listingsMarketplace": [
+          "New: unworn, no signs of wear; original packaging where applicable",
+          "New - Other: unworn, no signs of wear; original tags or accessories may be missing and flaws may be present",
+          "Used: shows signs of wear"
+        ]
+      },
+      "source": "https://stockx.com/help/articles/What-is-the-condition-of-items-sold-on-StockX",
+      "read": "2026-10-02"
+    },
+    {
+      "marketplace": "StockX",
+      "section": "Authentication",
+      "role": "rules",
+      "authentication": "A Verified Marketplace item ships from the seller to a StockX Verification Center (unless it comes from a StockX Verified Seller), where it is inspected against StockX condition guidelines, including its box and accessories, then shipped on to the buyer; typically 1-2 business days after arrival. An item that fails is generally returned to the seller and a penalty fee charged; counterfeits may be turned over to authorities. Listings Marketplace items are verified only if the buyer pays the $12.50 option.",
+      "source": "https://stockx.com/help/articles/what-does-the-verification-process-entail-for-sellers",
+      "read": "2026-10-02"
+    },
+    {
+      "marketplace": "GOAT",
+      "section": "Selling",
+      "role": "seller",
+      "fees": {
+        "commissionBySellerRating": [
+          {
+            "rating": "90 or above",
+            "rate": 0.095,
+            "canadaRate": 0.124
+          },
+          {
+            "rating": "70-89",
+            "rate": 0.15,
+            "canadaRate": 0.179
+          },
+          {
+            "rating": "50-69",
+            "rate": 0.2,
+            "canadaRate": 0.229
+          },
+          {
+            "rating": "below 50",
+            "rate": 0.25,
+            "canadaRate": 0.279
+          }
+        ],
+        "ratingRule": "All sellers start at 90; each seller cancellation costs 10 points, each successful sale adds 2.",
+        "sellerFee": [
+          {
+            "market": "US",
+            "amount": 0,
+            "currency": "USD",
+            "note": "drop-off"
+          },
+          {
+            "market": "US",
+            "amount": 5,
+            "currency": "USD",
+            "note": "prepaid shipping"
+          },
+          {
+            "market": "CA",
+            "amount": 0,
+            "currency": "USD",
+            "note": "drop-off"
+          },
+          {
+            "market": "CA",
+            "amount": 5,
+            "currency": "USD",
+            "note": "prepaid shipping"
+          },
+          {
+            "market": "GB",
+            "amount": 2,
+            "currency": "USD",
+            "note": "drop-off"
+          },
+          {
+            "market": "GB",
+            "amount": 5,
+            "currency": "USD",
+            "note": "prepaid shipping"
+          },
+          {
+            "market": "IE",
+            "amount": 12,
+            "currency": "USD"
+          },
+          {
+            "market": "MX",
+            "amount": 5,
+            "currency": "USD"
+          }
+        ],
+        "cashOutRate": 0.029,
+        "cashOutNote": "ACH direct deposit or PayPal; cash-out allowed once earnings exceed $25.",
+        "cancellationFee": {
+          "amount": 10,
+          "currency": "USD",
+          "note": "confirmed order cancelled, or not shipped within 3 business days"
+        },
+        "inactiveAccountFee": {
+          "amount": 1,
+          "currency": "USD",
+          "per": "month",
+          "note": "after two years without activity, in listed US states only"
+        }
+      },
+      "note": "All GOAT fees are in US dollars. Selling from outside the US is \"only available to select sellers\". Commission and seller fee come off the listing price.",
+      "source": "https://www.goat.com/fees",
+      "updated": "2026-08-01",
+      "read": "2026-10-02"
+    },
+    {
+      "marketplace": "GOAT",
+      "section": "Buying",
+      "role": "buyer",
+      "fees": {
+        "usShipping": [
+          {
+            "service": "Standard (48 contiguous states)",
+            "amount": 14.95
+          },
+          {
+            "service": "Standard (Hawaii, Alaska)",
+            "amount": 27.95
+          },
+          {
+            "service": "Instant, Next Day",
+            "amount": 27.95
+          },
+          {
+            "service": "Instant, Same Day (Manhattan only)",
+            "amount": 30
+          },
+          {
+            "service": "Order Upgrade (Priority)",
+            "amount": 12,
+            "note": "plus tax"
+          }
+        ],
+        "currency": "USD",
+        "taxes": "Sales tax or VAT by shipping address; non-US buyers pay their own duties.",
+        "returnWindowDays": 30,
+        "returnRefund": "GOAT Credit, less shipping both ways and any priority fee; a return processing fee of up to 15% of the item price may apply",
+        "notReturnable": "used items, Defect, Pre-Release, Final Sale, Vintage, Sample, auction and GOAT Storage items"
+      },
+      "source": "https://www.goat.com/returns",
+      "updated": "2026-06-12",
+      "read": "2026-10-02"
+    },
+    {
+      "marketplace": "GOAT",
+      "section": "Conditions",
+      "role": "rules",
+      "conditions": {
+        "shoeConditions": [
+          "new_no_defects",
+          "new_with_defects",
+          "used"
+        ],
+        "boxConditions": [
+          "good_condition",
+          "missing_lid",
+          "badly_damaged",
+          "no_original_box"
+        ],
+        "goatCleanGrades": [
+          "Like New: minimal to no signs of wear",
+          "Excellent: slight wear on tread with minimal creasing",
+          "Very Good: gentle wear with some creasing, scratches and/or slight discoloration",
+          "Good: moderate wear with visible creasing, scuffing and/or discoloration"
+        ],
+        "listingRule": "The seller lists by SKU and enters the condition; used or new-with-defects items need photos. The item must ship in the condition listed."
+      },
+      "source": "https://www.goat.com/selling",
+      "conditionCodesSource": "GOAT product-variant data (see resale dataSource)",
+      "gradesSource": "https://www.goat.com/returns",
+      "read": "2026-10-02"
+    },
+    {
+      "marketplace": "GOAT",
+      "section": "Authentication",
+      "role": "rules",
+      "authentication": "Most items ship from the seller to GOAT for review before going to the buyer (7-12 business days to a US buyer). GOAT verifies \"by a variety of means, such as digital authentication, in-hand verification, and/or machine learning technology\", and says some products are verified without physical examination. An item found inauthentic or not as described: GOAT supplies the same item or a full refund, at its option.",
+      "source": "https://www.goat.com/verification",
+      "read": "2026-10-02"
+    }
+  ],
+  "luxuryResale": [
+    {
+      "marketplace": "Vestiaire Collective",
+      "model": "marketplace (the seller sets the price)",
+      "schedule": [
+        {
+          "currency": "USD",
+          "markets": [
+            "US"
+          ],
+          "bands": [
+            {
+              "from": 0,
+              "to": 83,
+              "sellingFee": {
+                "fixed": 10
+              },
+              "paymentProcessing": {
+                "fixed": 3
+              }
+            },
+            {
+              "from": 83,
+              "to": 16667,
+              "sellingFee": {
+                "rate": 0.12
+              },
+              "paymentProcessing": {
+                "rate": 0.03
+              }
+            },
+            {
+              "from": 16667,
+              "to": null,
+              "sellingFee": {
+                "fixed": 2000
+              },
+              "paymentProcessing": {
+                "rate": 0.03
+              }
+            }
+          ],
+          "minimumListing": 18
+        },
+        {
+          "currency": "CAD",
+          "markets": [
+            "CA"
+          ],
+          "bands": [
+            {
+              "from": 0,
+              "to": 125,
+              "sellingFee": {
+                "fixed": 15
+              },
+              "paymentProcessing": {
+                "fixed": 4
+              }
+            },
+            {
+              "from": 125,
+              "to": 25000,
+              "sellingFee": {
+                "rate": 0.12
+              },
+              "paymentProcessing": {
+                "rate": 0.03
+              }
+            },
+            {
+              "from": 25000,
+              "to": null,
+              "sellingFee": {
+                "fixed": 3000
+              },
+              "paymentProcessing": {
+                "rate": 0.03
+              }
+            }
+          ],
+          "minimumListing": 34
+        },
+        {
+          "currency": "GBP",
+          "markets": [
+            "GB"
+          ],
+          "bands": [
+            {
+              "from": 0,
+              "to": 83,
+              "sellingFee": {
+                "fixed": 10
+              },
+              "paymentProcessing": {
+                "fixed": 3
+              }
+            },
+            {
+              "from": 83,
+              "to": 16667,
+              "sellingFee": {
+                "rate": 0.12
+              },
+              "paymentProcessing": {
+                "rate": 0.03
+              }
+            },
+            {
+              "from": 16667,
+              "to": null,
+              "sellingFee": {
+                "fixed": 2000
+              },
+              "paymentProcessing": {
+                "rate": 0.03
+              }
+            }
+          ],
+          "minimumListing": 14,
+          "effectiveFrom": "2026-03-09"
+        },
+        {
+          "currency": "EUR",
+          "markets": [
+            "IE"
+          ],
+          "bands": [
+            {
+              "from": 0,
+              "to": 75,
+              "sellingFee": {
+                "fixed": 12
+              },
+              "paymentProcessing": {
+                "fixed": 3
+              }
+            },
+            {
+              "from": 75,
+              "to": 15000,
+              "sellingFee": {
+                "rate": 0.17
+              },
+              "paymentProcessing": {
+                "rate": 0.03
+              }
+            },
+            {
+              "from": 15000,
+              "to": null,
+              "sellingFee": {
+                "fixed": 2500
+              },
+              "paymentProcessing": {
+                "rate": 0.03
+              }
+            }
+          ],
+          "minimumListing": 16,
+          "effectiveFrom": "2026-06-09"
+        }
+      ],
+      "rules": "Listing is free; the selling fee and the payment processing fee come off the sale price. Fees include VAT/GST/US sales tax where applicable. The text gives processing as \"3% (min $3 / £3 / 4 CAD)\"; the table shows that minimum as a fixed fee in the lowest band. Vestiaire may change the structure within the cap in its Seller T&Cs.",
+      "effectiveFrom": "2025-07-18 (USD, CAD and others); GBP 2026-03-09; EUR 2026-06-09",
+      "mexico": "No MXN schedule is published.",
+      "source": "https://faq.vestiairecollective.com/hc/en-gb/articles/24659638721425-Seller-Selling-Fees",
+      "usSource": "https://faq.vestiairecollective.com/hc/en-us/articles/24659638721425-Seller-Selling-Fees",
+      "tableImages": [
+        "https://faq.vestiairecollective.com/hc/article_attachments/47531420682769",
+        "https://faq.vestiairecollective.com/hc/article_attachments/47531422427665"
+      ],
+      "read": "2026-10-02",
+      "note": "The EUR band (17%, €75-€15,000) was read from the fee-table image on the page; GBP, USD and CAD are also in the article text. The image draws the bands as \"[€0 - €75]\", \"[€75 - €15 000]\", \"[€15 000 +]\", so which band a price exactly on a boundary falls in is not stated."
+    },
+    {
+      "marketplace": "The RealReal",
+      "model": "consignment (TRR prices and sells; the consignor is paid a commission)",
+      "schedule": null,
+      "rules": {
+        "commission": "Net Selling Price x the applicable Commission Rate from therealreal.com/commission-chart. Net Selling Price is the sold price less discounts and promotions, excluding taxes and shipping.",
+        "tierBasis": "The rate depends on the consignor's Net Sales within a one-year Commission Window; each new window starts at the highest rate reached in the previous one.",
+        "discount": "TRR may apply an immediate 20% discount to an item's initial sale price unless agreed otherwise.",
+        "payment": "Processed from the 15th of each month for the previous month's sales; a paper cheque may carry a processing fee.",
+        "headline": "\"Receive up to 85% of each item's sale price.\""
+      },
+      "source": "https://www.therealreal.com/consignor_terms",
+      "sourceCopy": "https://web.archive.org/web/20260501021237/https://www.therealreal.com/consignor_terms",
+      "read": "2026-10-02",
+      "note": "The band-by-band chart is at https://www.therealreal.com/commission-chart, which refused every request (HTTP 403, a bot wall), and the Wayback Machine has no copy since 2020. Left null rather than filled from secondary blogs, which disagree with each other (e.g. \"20% under $100\", \"45% for $150-$199\", \"70% for handbags $1,500-$4,999\", \"up to 85% on watches over $7,500\"). The consignor terms were read from the Wayback copy of 1 May 2026, since the live page also refused."
+    }
+  ],
+  "notes": [
+    "Read on 2026-10-02. Prices are numbers in the major unit of the stated currency.",
+    "taxIncluded: Nike, JD Sports and Foot Locker prices in Britain and Ireland include VAT (Foot Locker UK says \"VAT included\"). Nike US and Nike Canada prices are before sales tax/GST/HST. Mexican prices are taken as IVA-inclusive because Mexico's consumer law (Ley Federal de Protección al Consumidor, art. 7 Bis) requires the total price, taxes included, to be shown; Nike MX's page does not say so itself.",
+    "Sizes are given only where the product page itself was read. Nike US/CA show M/W pairs (women's = men's + 1.5); Nike UK shows UK sizes with EU equivalents; Nike MX shows CM. JD Sports and Foot Locker lists are the sizes their pages offered that day, so they reflect stock. Null means the price came from a category grid.",
+    "Release dates come from sneaker press (sneakernews, sneakerbardetroit, SI, Sneaker Shouts) or Nike SNKRS launch pages; ones read only through a search summary say so. Nike product pages show no release date apart from SNKRS launch pages and \"Available\" notices.",
+    "Nike US showed IQ5495-005 (AJ1 High Royal), CK9246-200 (AJ3 Fireside) and HV6474-601 (AJ41) as sold out before their release dates; the price is Nike's, the availability is not.",
+    "Couldn't read: Foot Locker US and Canada (HTTP 400), Finish Line (403), Innvictus Mexico (403), StockX product pages (no market data in the fetched page; 403 to direct requests). So StockX figures are SI FanNation's reported averages, not last sales by size, and StockX UK prices weren't obtained at all. GOAT has no GBP data: its data for country GB still comes back in USD, with different asks, so no UK resale figure is given.",
+    "GOAT figures are listing prices before the buyer's shipping ($14.95 US standard) and tax. A null lastSale means GOAT showed no sale for that size. The reference size is US men's 10, or US women's 8 for women's shoes. Pre-release asks (AJ41, Tatum 5) are speculative, not market value.",
+    "Style-code caveats: GOAT lists the AJ4 'Comic' under IO2362-100 (Nike: JA1135-100). GOAT maps CK9246-101 to an older AJ3 'Orange Citrus' (Nike UK: Sport Renaissance), so no resale is given for it. GOAT's retail field differs from Nike's price for several shoes, so it is kept separately as goatListedRetail.",
+    "On the date read, most 2026 general-release retros (True Blue, Laser AJ3, Tour Yellow, Comic, Love Letter, Flight Club AJ1 and AJ4, AJ11 Low University Blue, World's Best, White Metallic, Flint, Oreo, Toro Bravo, Garden) traded below retail on GOAT, and SI reports the same on StockX. Collaborations and limited launches traded above: J Balvin AJ4, Howard AJ1 Low (asks only), Halloween AJ5 and Royal AJ1 High (pre-release), and Black Carolina AJ5 just above."
+  ]
+}

@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-241 commands; 235 named by a test, 6 not.
+249 commands; 243 named by a test, 6 not.
 
 ## aircraft
 
@@ -288,7 +288,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `items.move` | `src/engine/systems/items.ts` | `BelongingsWorkspace.tsx` | `items.test.ts` | Rent And A Roof |
+| `items.move` | `src/engine/systems/items.ts` | `BelongingsWorkspace.tsx` | `items.test.ts` `luggage.test.ts` | Rent And A Roof |
 
 ## land
 
@@ -309,6 +309,13 @@ Each command the player can run: the engine file that handles it, the screens th
 | `life.look_after` | `src/engine/systems/life.ts` | `RoutinesWorkspace.tsx` `TimeControls.tsx` | `assistant.test.ts` `boats.test.ts` `carried.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `household.test.ts` `hygiene.test.ts` `kitchen.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `outings.test.ts` `resale.test.ts` `routines.test.ts` `trainers.test.ts` `wardrobe.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
 | `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `aviation.test.ts` `carried.test.ts` `connected-day.test.ts` `extend.test.ts` `integrity.test.ts` `journey.test.ts` `lets.test.ts` `licensing.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `rentals.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
+## luggage
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `luggage.pack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `luggage.test.ts` | Rent And A Roof |
+| `luggage.unpack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `luggage.test.ts` | Rent And A Roof |
+
 ## pension
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
@@ -321,6 +328,15 @@ Each command the player can run: the engine file that handles it, the screens th
 | `pension.social_security` | `src/engine/systems/socialsecurity.ts` | `CareerWorkspace.tsx` | `socialsecurity.test.ts` | The Business |
 | `pension.start` | `src/engine/systems/pension.ts` | `CareerWorkspace.tsx` | `pension.test.ts` | The Business |
 | `pension.state` | `src/engine/systems/statepension.ts` | `CareerWorkspace.tsx` | `statepension.test.ts` | The Business |
+
+## phone
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `phone.activate` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
+| `phone.battery` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
+| `phone.buy` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
+| `phone.protect` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
 
 ## pilot
 
@@ -343,6 +359,13 @@ Each command the player can run: the engine file that handles it, the screens th
 | `school.call_in_sick` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
 | `school.summer_cabaret` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
 | `school.take_shift` | `src/engine/systems/school.ts` | `SchoolWorkspace.tsx` | `school.test.ts` | Drama School |
+
+## sneakers
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `sneakers.buy` | `src/engine/systems/sneakers.ts` | `ClothesWorkspace.tsx` | `sneakers.test.ts` | Rent And A Roof |
+| `sneakers.sell` | `src/engine/systems/sneakers.ts` | `ClothesWorkspace.tsx` | `sneakers.test.ts` | Rent And A Roof |
 
 ## social
 

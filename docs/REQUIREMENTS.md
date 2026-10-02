@@ -70,9 +70,9 @@ Correctness first, then the connected day the plan asks to be shown working
 
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
-| 20 | Product, offer, owned item distinct; variant persists | Partial | `ClothingProduct` is product and offer in one; `Item.spec` keeps size and color | An offer layer (seller, condition, price) and a variant id |
+| 20 | Product, offer, owned item distinct; variant persists | Partial | sneakers have product, offers (seller, condition, price) and an owned pair keeping code, size and condition (2026-10-02); `ClothingProduct` is still product and offer in one | The offer layer for the rest of clothing |
 | 21 | Stores with hours and stock; websites with destinations, shipping, tracking | Partial | `storesIn` city list; `purchaseQuote` fee, threshold, days | Branch records (address, hours, services, stock); destinations, shipping tiers, click-and-collect, payment choice, tracking stages |
-| 22a | Find, browse, search, filter | Complete | `clothingCatalog`, `arrange`; tests/catalog, clothing | Facets for size, color, material, price band |
+| 22a | Find, browse, search, filter | Complete | `clothingCatalog`, `arrange`; department and type facets (2026-10-02); tests/catalog, clothing | Size, color and material facets |
 | 22b | Product page, variant, compare offers | Partial | `Choose` in ClothesWorkspace | Product page with size chart and source; compare sellers |
 | 22c | Cart, collection or delivery, review, pay | Done for clothes, 2026-10-02 | `clothes.basket_add`, `basket_remove`, `checkout`: one payment and one order per retailer, the threshold on the order | Groceries and toiletries in the basket; choosing the card |
 | 22d | Receipt and order record | Partial | `ClothesPurchase`, `Order`; `returned` set once all of an order is back (2026-10-02); the checkout's ledger entry names the retailer and count | Receipt lines as a document |
@@ -81,15 +81,15 @@ Correctness first, then the connected day the plan asks to be shown working
 | 23 | Departments; petite, tall, extended, maternity, adaptive; nothing blocked by gender | Partial | No gender gate | `department`, fit range, browsing preference; adaptive and more maternity |
 | 24 | Subcategories (underwear styles, lingerie, hosiery, swimwear, thermals, cultural…) | Partial | 16 kinds, 11 slots | `subtype`; swimwear, shapewear, hosiery, slips, cultural clothing |
 | 25 | Fit by real measures and size charts | Partial | Size from BMI share (`sizeFor`) | Body measurements; charts per retailer; shoe and ring fit; waist-by-inseam |
-| 26 | Jordans and designer products, retail vs resale | Not implemented (Jordans), partial (designer) | 8 luxury retailers | Sneaker catalog with style codes and colorways; resale sellers and condition |
+| 26 | Jordans and designer products, retail vs resale | Partial, 2026-10-02 | 30 Air Jordans by style code (`content/sneakers.ts`): retail offers in five markets with tax, GOAT new and used asks with shipping in America, sold on GOAT at its fees; tests/sneakers.test.ts | StockX (refused the reads); GOAT outside America; designer resale (Vestiaire and The RealReal schedules are in the research, not built) |
 | 27a | Receive, store | Complete | delivery, `items.move`; tests/items | — |
-| 27b | Wear, layer, remove | Partial | one garment per slot; `dressRefusal` validates `dress` and `wear_outfit` (2026-10-02) | Layers, undress, sleepwear, accessories worn |
+| 27b | Wear, layer, remove | Partial | one garment per slot; `dressRefusal` validates `dress` and `wear_outfit`; jewelry, watches and accessories chosen and worn with the outfit; sleepwear worn at night at home (2026-10-02) | Layers, undress |
 | 27c | Wash, dry, clean | Complete | `doLaundry`, dry cleaning; tests | Wash a chosen garment; air-dry or tumble |
 | 27d | Alter, repair | Partial | take in only | Hem, let out; damage and repair |
-| 27e | Pack, unpack | Partial (automatic) | luggage.ts | Manual packing (§46) |
+| 27e | Pack, unpack | Done, 2026-10-02 | luggage.ts; by hand on Belongings, Pack For Me, Unpack (§46) | — |
 | 27f | Gift, return, resell, replace | Partial | return, resell, replace | Gift |
 | 27g | Outfits from owned, reachable items; worn outfit persists | Done, 2026-10-02 | `outfitRefusal`, `reachable`; `Person.wornNow`, set as the day dresses them or they change; read by the sale refusal and Clothes | — |
-| 28 | Phones and electronics as devices, activation, plans, finance, trade-in | Not implemented (device), partial (plan) | `MOBILE` plan billed | Device catalog and item, activation, plan choice, finance, trade-in, repair; messages and contacts |
+| 28 | Phones and electronics as devices, activation, plans, finance, trade-in | Partial, 2026-10-02 | `systems/phones.ts`: 273 phones on the makers' stores in five markets; outright or a maker's 0% plan (prepaid lines kept out where the plan says); trade-in at the published most; activation at the carrier's SIM charge; battery wear by Apple's 1,000-cycle figure and replacement; cover billed monthly; tests/phones.test.ts | Screens breaking (no published rate); theft and loss claims; carrier device plans; credit approval; other electronics |
 | 29 | Jewelry and watches as pieces, commissions, servicing, insurance, resale | Partial (catalog only) | about 121 pieces as garments | A `jewel` record, worn, a safe, servicing, insurance rider, fair resale, commissions |
 | 30 | Orders: states, destination, failed delivery, cancellation, return, refund once | Partial | `Order`, `deliver` once; `returned` set and `clothes.cancel` where the law gives it, GB and IE (2026-10-02) | Shipped and out-for-delivery, failed delivery, partial returns, refund to the payment |
 
@@ -203,7 +203,7 @@ Correctness first, then the connected day the plan asks to be shown working
 
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
-| 46 | Manual packing | Not implemented (automatic) | luggage.ts `pack`/`unpack` | Volumes; a packing screen; presets through `moveRefusal`; a stay to unpack into; repack; a luggage catalog |
+| 46 | Manual packing | Partial, 2026-10-02 | volumes (`volumeOf`, `GARMENT_L` SLATE's estimate); items moved into the suitcase by hand and kept as packed on leaving; Pack For Me within the liters; Unpack | A stay to unpack into; a luggage catalog; checked bags against an airline's limits |
 | 47a–c, g, l | Planning, documents, booking, cancellation, charters and ferries | Complete | journey.ts; tests | Destinations limited to towns with stays |
 | 47d–f, h–k | Departure transport, connections, delays, changes, local transport, activities | Partial | — | Choices of ground transport; missed connections; rebooking choice; change the outbound; taxi and rideshare |
 | 47m | Companions | Not implemented | — | Travellers on a journey |

@@ -8,7 +8,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { addItem, homeKeyOf, type Item } from '@/engine/systems/items';
-import { CHANGE_MINUTES, chosenMissing, cleanOutfits, garmentsOf, outfitFor, wearTheDay, wornNow, washableDirty, dryCleanDirty, type Garment } from '@/engine/systems/wardrobe';
+import { CHANGE_MINUTES, chosenMissing, cleanOutfits, garmentsOf, outfitFor, wearForSleep, wearTheDay, wornNow, washableDirty, dryCleanDirty, type Garment } from '@/engine/systems/wardrobe';
 import { doLaundry, wearOutfit } from '@/engine/systems/dwelling';
 import type { Slot, Care } from '@/engine/content/garmentcare';
 import { sellRefusal } from '@/engine/systems/resale';
@@ -99,6 +99,25 @@ describe('a day’s outfit', () => {
     expect(sim.execute({ kind: 'clothes.change', payload: { itemIds: [shirt.id, b.jeans.id, b.under[2]!.id] } }).error).toBe('Boxers is in the wash.');
     shirt.paid = 30_00;
     expect(sellRefusal(sim, sim.player, shirt as never)).toBe('You’re wearing it.');
+  });
+
+  it('wears the jewelry chosen with the day’s outfit, and sleepwear at night to its wash', () => {
+    const sim = life('ward-extras');
+    const b = basics(sim);
+    const watch = wear(sim, 'Watch', 'watch', 'accessory')[0]!;
+    const ring = wear(sim, 'Ring', 'ring', 'accessory')[0]!;
+    sim.player.dressed = [b.tees[0]!.id, watch.id, ring.id];
+    expect(wearTheDay(sim, sim.player)).toBe(true);
+    expect(sim.player.wornNow!.itemIds).toEqual(expect.arrayContaining([watch.id, ring.id]));
+    // Pajamas: three or four nights to a wash, ACI's.
+    const pj = wear(sim, 'Pajamas', 'pajamas', 'sleep')[0]!;
+    for (let i = 0; i < 4; i += 1) expect(wearForSleep(sim, sim.player)).toBe(true);
+    expect(pj.garment!.dirty).toBe(true);
+    expect(wearForSleep(sim, sim.player)).toBe(false);
+    // The day's turn at home puts a clean pair on for the night.
+    const fresh = wear(sim, 'Pajamas', 'pajamas', 'sleep')[0]!;
+    sim.advanceBy(26 * HOUR);
+    expect(fresh.garment!.wears).toBeGreaterThan(0);
   });
 
   it('dries a shower at home on a towel, three uses to its wash, and says when none is clean', () => {

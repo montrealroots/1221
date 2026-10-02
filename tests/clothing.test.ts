@@ -99,6 +99,19 @@ describe('buying', () => {
   });
 });
 
+describe('browsing', () => {
+  it('filters by the department and the retailer’s own type of garment', () => {
+    const sim = life('browse');
+    const entries = clothingCatalog(sim, 'us-ny-newyork');
+    const jewelry = arrange(entries, { filters: { department: 'jewelry' } });
+    expect(jewelry.length).toBeGreaterThan(0);
+    expect(jewelry.every((e) => e.value.category === 'jewelry')).toBe(true);
+    const jeans = arrange(entries, { filters: { type: 'jeans' } });
+    expect(jeans.length).toBeGreaterThan(0);
+    expect(jeans.every((e) => e.value.subcategory === 'jeans')).toBe(true);
+  });
+});
+
 describe('the basket', () => {
   it('checks a retailer out at once: one payment, one order, one delivery, free once the order passes the threshold', () => {
     const sim = life('basket');
