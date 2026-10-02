@@ -31,7 +31,7 @@ import { BMI_EDGES, BODY_BY_COUNTRY, BODY_DEFAULT } from '../content/body';
 import { CITIES } from '../content/geography';
 import type { Garment } from './wardrobe';
 import { CLOTHING_RETAILERS } from '../content/clothingcatalog';
-import { SIZE_CHARTS } from '../content/sizecharts';
+import { SHOE_CHARTS, SIZE_CHARTS, type ShoeRow } from '../content/sizecharts';
 
 export const FIT = { band: 0.075, weekDays: 7 } as const;
 const UNSIZED: ReadonlySet<Slot> = new Set(['shoes', 'socks', 'accessory']);
@@ -95,10 +95,25 @@ export function bmiShare(country: string, bmi: number): number {
  * or chest for a top and by waist for a bottom. Not given, or with no chart,
  * the size is read from your body mass index, as before.
  */
-export interface Measures { department: 'women' | 'men'; chestCm?: number; waistCm?: number; hipCm?: number }
+export interface Measures { department: 'women' | 'men'; chestCm?: number; waistCm?: number; hipCm?: number; /** A foot's length, heel to toe (from later on 2026-10-02). */ footCm?: number }
 
 /** What a garment is, for its chart: its retailer and the slot it's worn in. */
-export interface Sized { retailer: string; slot: Slot }
+export interface Sized { retailer: string; slot: Slot; brand?: string }
+
+/** A market's shoe label on a brand's chart: America's and Canada's US sizes, Britain's and Ireland's UK, Mexico's own. */
+const SHOE_LABEL: Readonly<Record<string, 'US' | 'UK' | 'MX'>> = { US: 'US', CA: 'US', GB: 'UK', IE: 'UK', MX: 'MX' };
+
+/** A shoe's row on its brand's chart for a size, and the label matching; nothing without a chart. */
+export function shoeRow(person: Person, p: Sized, size?: string): ShoeRow | undefined {
+  const m = person.measures;
+  const r = CLOTHING_RETAILERS.find((x) => x.id === p.retailer);
+  if (!m || !r || p.slot !== 'shoes') return undefined;
+  const chart = SHOE_CHARTS.find((c) => c.market === r.market && c.department === m.department && (c.brand === p.brand || c.brand === r.name));
+  const key = SHOE_LABEL[r.market];
+  if (!chart || !key) return undefined;
+  if (size === undefined) return m.footCm === undefined ? undefined : chart.rows.find((row) => row.footCm >= m.footCm!);
+  return chart.rows.find((row) => row[key] !== null && String(row[key]).trim().toUpperCase() === size.trim().toUpperCase());
+}
 
 /** Your size by a retailer's own chart, where you've given your measurements and it keeps one; nothing otherwise. */
 export function chartSize(person: Person, p: Sized, sizes: readonly string[]): string | undefined {
@@ -106,6 +121,13 @@ export function chartSize(person: Person, p: Sized, sizes: readonly string[]): s
   if (!m) return undefined;
   const r = CLOTHING_RETAILERS.find((x) => x.id === p.retailer);
   const group = p.slot === 'bottom' ? 'bottoms' : p.slot === 'top' || p.slot === 'outer' || p.slot === 'dress' || p.slot === 'active' ? 'tops' : undefined;
+  // Shoes by foot length, on the brand's own chart.
+  if (p.slot === 'shoes' && r) {
+    const row = shoeRow(person, p);
+    const key = SHOE_LABEL[r.market];
+    const label = row && key && row[key] !== null ? String(row[key]).trim().toUpperCase() : undefined;
+    return label ? sizes.find((s) => s.trim().toUpperCase() === label) : undefined;
+  }
   if (!r || !group) return undefined;
   const chart = SIZE_CHARTS.find((c) => c.market === r.market && c.department === m.department && c.group === group && (c.retailer === r.name || c.retailer.startsWith(`${r.name} (`)));
   const mine = group === 'bottoms' ? m.waistCm : m.chestCm;
@@ -144,6 +166,7 @@ export function fitKgFor(sim: Simulation, person: Person, sizes: readonly string
 export function measuresRefusal(m: Partial<Measures>): string | undefined {
   if (m.department !== 'women' && m.department !== 'men') return 'Choose whose charts to size by.';
   for (const v of [m.chestCm, m.waistCm, m.hipCm]) if (v !== undefined && !(Number.isFinite(v) && v >= 40 && v <= 220)) return 'Each measurement in centimeters, from 40 to 220.';
+  if (m.footCm !== undefined && !(Number.isFinite(m.footCm) && m.footCm >= 10 && m.footCm <= 40)) return 'A foot in centimeters, from 10 to 40.';
   return undefined;
 }
 
@@ -152,6 +175,8 @@ export const tailorById = (id: string): Tailor | undefined => TAILORS.find((t) =
 
 /** How a garment sits now: as it should, too big, or grown out of. */
 export function fitOf(person: Person, g: Garment): 'fits' | 'big' | 'small' {
+  // A shoe shorter than the foot doesn't go on (from later on 2026-10-02).
+  if (g.slot === 'shoes') return g.footCm !== undefined && person.measures?.footCm !== undefined && person.measures.footCm > g.footCm ? 'small' : 'fits';
   const kg = person.body?.weightKg;
   if (g.fitKg === undefined || kg === undefined || UNSIZED.has(g.slot)) return 'fits';
   const ratio = kg / g.fitKg - 1;

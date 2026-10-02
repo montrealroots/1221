@@ -39,6 +39,8 @@ export interface Garment {
   dryUntil?: Instant;
   /** The weight it was bought or last altered for (`systems/tailoring.ts`, from 2026-10-01); an older save's fits as it is. */
   fitKg?: number;
+  /** A shoe's foot length on its brand's chart, where it was bought by one (`shoeRow` in `systems/tailoring.ts`, from later on 2026-10-02). */
+  footCm?: number;
 }
 
 /**

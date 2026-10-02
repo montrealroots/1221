@@ -42,7 +42,7 @@ import { expenseFor, spend } from './household';
 import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place } from './items';
 import { cancelOrder, ordersOf, placeOrder } from './orders';
 import { stow } from './trips';
-import { fitOf, fitKgFor, measuresRefusal, sizeFor, type Measures } from './tailoring';
+import { fitOf, fitKgFor, measuresRefusal, shoeRow, sizeFor, type Measures } from './tailoring';
 import { bodyOf } from './body';
 import { CHANGE_MINUTES, changeInto, dryCleanDirty, garmentsOf, unwearable, wearTheDay, type Garment } from './wardrobe';
 
@@ -220,7 +220,7 @@ export function checkoutClothes(sim: Simulation, person: Person, lines: readonly
     const purchase: ClothesPurchase = { id: sim.nextId('purchase'), productId: p.id, retailerId: r.id, how, at: sim.now, goods: q.goods[i]!, count };
     const spec: Record<string, string> = { purchase: purchase.id, ...(o.size ? { size: o.size } : {}), ...(o.color ? { color: o.color } : p.colors.length === 1 ? { color: p.colors[0]! } : {}) };
     // Bought for the body they have now, in the size chosen: a size off is made for a body a step heavier or lighter (`fitKgFor`, `systems/tailoring.ts`).
-    const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods[i]! / count), spec, garment: { ...garmentOf(p), fitKg: fitKgFor(sim, person, p.sizes, o.size, p) } };
+    const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods[i]! / count), spec, garment: { ...garmentOf(p), fitKg: fitKgFor(sim, person, p.sizes, o.size, p), ...((): { footCm?: number } => { const row = o.size ? shoeRow(person, p, o.size) : undefined; return row ? { footCm: row.footCm } : {}; })() } };
     return { purchase, count, line };
   });
   if (how === 'online') {
@@ -569,7 +569,7 @@ export function registerClothing(sim: Simulation): void {
   sim.onCommand<Partial<Measures> & { clear?: boolean }, { kept: boolean }>('clothes.measures', (p, { sim: s }) => {
     const person = s.player;
     if (p?.clear) { delete person.measures; return { kept: false }; }
-    const m: Partial<Measures> = { department: p?.department, ...(p?.chestCm !== undefined ? { chestCm: Number(p.chestCm) } : {}), ...(p?.waistCm !== undefined ? { waistCm: Number(p.waistCm) } : {}), ...(p?.hipCm !== undefined ? { hipCm: Number(p.hipCm) } : {}) };
+    const m: Partial<Measures> = { department: p?.department, ...(p?.chestCm !== undefined ? { chestCm: Number(p.chestCm) } : {}), ...(p?.waistCm !== undefined ? { waistCm: Number(p.waistCm) } : {}), ...(p?.hipCm !== undefined ? { hipCm: Number(p.hipCm) } : {}), ...(p?.footCm !== undefined ? { footCm: Number(p.footCm) } : {}) };
     const no = measuresRefusal(m);
     if (no) throw new CommandError(no);
     person.measures = m as Measures;

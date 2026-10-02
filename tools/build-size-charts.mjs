@@ -20,6 +20,15 @@ for (const r of j.retailers) {
   charts.push({ retailer: r.retailer, market: r.market, department: r.department, group, rows, source: r.source ?? null, confirmed: r.confirmed === true });
 }
 
+// Shoes: a brand's or retailer's sizes for a market and department, each with the foot length it fits where published.
+const shoes = [];
+for (const r of j.shoes) {
+  if (r.department !== 'women' && r.department !== 'men') continue;
+  const rows = (r.rows ?? []).filter((row) => typeof row.footCm === 'number').map((row) => ({ footCm: row.footCm, US: row.US ?? null, UK: row.UK ?? null, EU: row.EU ?? null, MX: row.MX ?? null }));
+  if (rows.length < 2) continue;
+  shoes.push({ brand: r.brand ?? r.retailer, market: r.market, department: r.department, rows, source: r.source ?? null, confirmed: r.confirmed === true });
+}
+
 const body = `/**
  * SLATE — retailers' own size charts (from 2026-10-02), built by
  * \`tools/build-size-charts.mjs\` from \`docs/research/world/research-size-charts.json\`.
@@ -37,6 +46,11 @@ export interface ChartRow { labels: readonly string[]; bust: Range | null; chest
 export interface SizeChart { retailer: string; market: string; department: 'women' | 'men'; group: 'tops' | 'bottoms'; rows: readonly ChartRow[]; source: string | null; confirmed: boolean }
 
 export const SIZE_CHARTS: readonly SizeChart[] = JSON.parse(${JSON.stringify(JSON.stringify(charts))});
+
+/** A brand's shoe sizes, each with the foot length it fits, centimeters, and its label in each system the chart gives. */
+export interface ShoeRow { footCm: number; US: number | string | null; UK: number | string | null; EU: number | string | null; MX: number | string | null }
+export interface ShoeChart { brand: string; market: string; department: 'women' | 'men'; rows: readonly ShoeRow[]; source: string | null; confirmed: boolean }
+export const SHOE_CHARTS: readonly ShoeChart[] = JSON.parse(${JSON.stringify(JSON.stringify(shoes))});
 `;
 writeFileSync(OUT, body);
-console.log('charts', charts.length);
+console.log('charts', charts.length, 'shoes', shoes.length);
