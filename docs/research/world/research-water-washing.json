@@ -1,0 +1,620 @@
+{
+ "meta": {
+  "topic": "Showers, baths, personal-care product amounts, household water and sewer tariffs, per-person water use, washing up, water heaters",
+  "read": "2026-10-02",
+  "towns": ["New York", "Los Angeles", "New Haven CT", "Toronto", "Vancouver", "London", "Dublin", "Mexico City"],
+  "rule": "confirmed:true only where the figure was read on the publisher's own page or PDF (fetched directly, or as a Wayback Machine copy of that page where the live site blocked automated reads, which the note says). confirmed:false where only a search summary or third party was seen. Null where nothing usable was found.",
+  "units": "HCF/CCF = 100 cubic feet = 748.052 US gallons = 2.83168 m3. Vancouver 'unit' = 100 cubic feet = 2,831.6 litres. 1 US gallon = 3.78541 litres."
+ },
+ "showers": [
+  {
+   "country": "US and Canada (single-family homes, 23 utilities)",
+   "measure": "average shower duration",
+   "figure": 7.8,
+   "unit": "minutes per shower",
+   "source": "https://www.circleofblue.org/wp-content/uploads/2016/04/WRF_REU2016.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Water Research Foundation, Residential End Uses of Water Version 2 (REU2016), Executive Report: 'The average duration held steady at 7.8 minutes per shower. The flow rate decreased just 0.1 gallon per minute.' The PDF is the WRF executive report hosted by Circle of Blue, not on wrf.org itself."
+  },
+  {
+   "country": "US and Canada",
+   "measure": "average shower flow rate",
+   "figure": 2.1,
+   "unit": "US gallons per minute (7.9 L/min)",
+   "source": "https://home-water-works.org/indoor-use/showers",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Alliance for Water Efficiency's Home Water Works, reporting REU2016: 'The average American shower uses approximately 15.8 gallons (59.8 liters) and lasts for 7.8 minutes at an average flow rate of 2.1 gallons per minute (7.9 lpm).' The REU2016 executive report itself states only that flow fell 0.1 gpm since 1999, so the 2.1 is read from AWE, who publish REU results."
+  },
+  {
+   "country": "US and Canada",
+   "measure": "average volume per shower",
+   "figure": 15.8,
+   "unit": "US gallons per shower (59.8 L)",
+   "source": "https://home-water-works.org/indoor-use/showers",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Same AWE page as above."
+  },
+  {
+   "country": "US and Canada",
+   "measure": "shower water per person per day",
+   "figure": 11.1,
+   "unit": "US gallons per capita per day",
+   "source": "https://www.circleofblue.org/wp-content/uploads/2016/04/WRF_REU2016.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "REU2016 Figure 5 (REU1999 11.6 gpcd). AWE page also gives 11.1 gpcd, 19% of an individual's indoor use."
+  },
+  {
+   "country": "US and Canada",
+   "measure": "shower water per household per day (all water) and hot water per household per day",
+   "figure": { "allWater": 26.9, "hotWater": 17.8 },
+   "unit": "US gallons per household per day",
+   "source": "https://www.circleofblue.org/wp-content/uploads/2016/04/WRF_REU2016.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Figure 1 (shower 26.9 gphd, 20% of indoor use) and Table 1 (hot water sub-sample of 94 homes: shower 17.8 gphd, 39.1% of household hot water; total hot water 45.5 gphd = 33.2% of indoor use)."
+  },
+  {
+   "country": "US and Canada",
+   "measure": "share of shower water that is hot",
+   "figure": 0.66,
+   "unit": "fraction (derived)",
+   "source": "https://www.circleofblue.org/wp-content/uploads/2016/04/WRF_REU2016.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Derived, not printed: 17.8 hot gphd / 26.9 total gphd = 0.662. Caveat: the hot figure is from a 94-home sub-sample and the total from the full end-use sample, so the ratio is an estimate."
+  },
+  {
+   "country": "UK",
+   "measure": "average shower duration",
+   "figure": 7.5,
+   "unit": "minutes per shower",
+   "source": "https://www.energysavingtrust.org.uk/sites/default/files/reports/AtHomewithWater(7).pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Energy Saving Trust, At Home with Water (2013, Water Energy Calculator self-reports): 'People generally spend seven-and-a-half minutes in the shower'; 87% do not exceed ten minutes; 45% shower five minutes or less; 13% over ten minutes. One/two-person households under 7 minutes, five-person households nearly 9."
+  },
+  {
+   "country": "UK",
+   "measure": "standard mixer shower flow and volume",
+   "figure": { "litresPerMinute": 8, "litresPerShower": 60 },
+   "unit": "L/min; litres per average shower",
+   "source": "https://www.energysavingtrust.org.uk/sites/default/files/reports/AtHomewithWater(7).pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "'Taking an average length shower, with a standard mixer showerhead (approximately eight litres/min), still uses less water (60 litres) than a typical bath (80 litres).' Eco showerheads regulate to 6 to 8 L/min; electric showers 'as little as 3.5 litres per minute'."
+  },
+  {
+   "country": "UK",
+   "measure": "shower type mix in homes",
+   "figure": { "electric": 0.35, "standardMixer": 0.31, "standardPower": 0.18, "ecoMixer": 0.11, "ecoPower": 0.05 },
+   "unit": "share of household showers",
+   "source": "https://www.energysavingtrust.org.uk/sites/default/files/reports/AtHomewithWater(7).pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "EST Figure 10. Electric (instantaneous) showers heat their own water at the head, so roughly a third of UK showers do not draw on the boiler or cylinder."
+  },
+  {
+   "country": "UK",
+   "measure": "showers and baths per person per week",
+   "figure": { "showers": 4.4, "baths": 1.3 },
+   "unit": "per person per week",
+   "source": "https://www.energysavingtrust.org.uk/sites/default/files/reports/AtHomewithWater(7).pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "In households that used their bath, each person took about two baths a week."
+  },
+  {
+   "country": "UK",
+   "measure": "metered shower studies (directly fed showers)",
+   "figure": { "litresPerShower": 28.4, "minutes": 5.8, "litresPerMinute": 5.3, "showersPerPersonPerWeek": 5.01, "recordedMinutes": 6.47 },
+   "unit": "litres, minutes, L/min",
+   "source": "https://www.ncm-pcdb.org.uk/sap/filelibrary/pdf/WWHRS-Instantaneous_Shower-Method_Statement_24_09_2021.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "SAP WWHRS method statement (BRE, 24/09/2021) citing a WRc study of 233 unmetered homes (28.4 L, 5.8 min, 5.3 L/min from combi/electric showers) and a 204-home occupant study (5.01 showers per person per week, 6.47 min). Also cites the Market Transformation Programme figure of 41 litres per shower across all shower types."
+  },
+  {
+   "country": "UK",
+   "measure": "shower-head (mixed) temperature and drain temperature",
+   "figure": { "showerHeadC": 41, "drainC": 35 },
+   "unit": "degrees C",
+   "source": "https://www.ncm-pcdb.org.uk/sap/filelibrary/pdf/WWHRS-Instantaneous_Shower-Method_Statement_24_09_2021.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "'Typical shower head water temperatures of 41°C measured in the laboratory by Liverpool John Moores University ... water temperature falls by 5.9°C in the shower, giving a drain temperature of 35.1°C.' SAP 2005 used hot 60°C, cold 10°C, mix 41°C, giving a hot fraction of 0.62."
+  },
+  {
+   "country": "UK",
+   "measure": "cold mains water temperature by month (SAP 2009 Table G2)",
+   "figure": { "Jan": 11.1, "Feb": 10.8, "Mar": 11.8, "Apr": 14.7, "May": 16.1, "Jun": 18.2, "Jul": 21.3, "Aug": 19.2, "Sep": 18.8, "Oct": 16.3, "Nov": 13.3, "Dec": 11.8 },
+   "unit": "degrees C",
+   "source": "https://www.ncm-pcdb.org.uk/sap/filelibrary/pdf/WWHRS-Instantaneous_Shower-Method_Statement_24_09_2021.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Read from the method statement's monthly table (SAP 2009 table G2, based on an EST study). The pdftotext layout split Nov/Dec onto a separate column; the Nov 13.3 and Dec 11.8 placement is the most likely reading."
+  },
+  {
+   "country": "US",
+   "measure": "water heater rating test inlet and delivery temperatures",
+   "figure": { "inletF": 58, "inletC": 14.4, "deliveryF": 125, "deliveryC": 51.7 },
+   "unit": "degrees F / C",
+   "source": "https://www.ecfr.gov/current/title-10/chapter-II/subchapter-D/part-430/subpart-B/appendix-Appendix%20E%20to%20Subpart%20B%20of%20Part%20430",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "10 CFR 430 Subpart B Appendix E, 2.3 Supply Water Temperature 58°F ± 2°F; 2.4 Outlet Water Temperature 125°F ± 5°F. A test convention, not measured mains temperatures in any town (read through the eCFR renderer API)."
+  },
+  {
+   "country": "any",
+   "measure": "energy to heat water",
+   "figure": { "kJPerLitrePerK": 4.19, "kWhPerLitrePerK": 0.001164 },
+   "unit": "kJ/(litre·K); kWh/(litre·K)",
+   "source": "https://www.ncm-pcdb.org.uk/sap/filelibrary/pdf/WWHRS-Instantaneous_Shower-Method_Statement_24_09_2021.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "SAP method statement: 'CP 4.19 kJ/litre/K'. kWh value = 4.19 / 3600, computed. Heater efficiency is separate and not included."
+  },
+  {
+   "country": "Canada",
+   "measure": "Canadian shower minutes or flow",
+   "figure": null,
+   "unit": null,
+   "source": null,
+   "read": "2026-10-02",
+   "confirmed": false,
+   "note": "No separate Canadian figure found. REU2016's sample is 'across North America' and includes Canadian utilities, so its 7.8 minutes covers Canada as part of a pooled figure."
+  }
+ ],
+ "baths": [
+  {
+   "country": "UK",
+   "measure": "typical bath volume",
+   "figure": 80,
+   "unit": "litres per bath",
+   "source": "https://www.energysavingtrust.org.uk/sites/default/files/reports/AtHomewithWater(7).pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "'a typical bath (80 litres)'. Bath is 8% of household water by use (EST Figure 1)."
+  },
+  {
+   "country": "US and Canada",
+   "measure": "bath water per person per day and per household per day",
+   "figure": { "gpcd": 1.5, "gphd": 4.4, "hotGphd": 2.6 },
+   "unit": "US gallons per day",
+   "source": "https://www.circleofblue.org/wp-content/uploads/2016/04/WRF_REU2016.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "REU2016: bathtubs rose from 1.2 gpcd (1999) to 1.5 gpcd (2016); children 12 and under increased bath use. Per-bath volume is not in the executive report (see notFound)."
+  }
+ ],
+ "products": [
+  {
+   "product": "hair conditioner",
+   "figure": 13.13,
+   "unit": "grams per application (mean)",
+   "source": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "EPA Exposure Factors Handbook 2011, Chapter 17, Table 17-53 (Loretz et al. 2008): N=297 women 18-69, SD 11.22, median 10.21, 90th 27.32, range 0.84-87.86; lognormal GM 9.78, GSD 2.20. CTFA survey value in Table 17-3: 12.4 g per application."
+  },
+  {
+   "product": "facial cleanser",
+   "figure": 2.57,
+   "unit": "grams per application (mean)",
+   "source": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Table 17-53 (Loretz et al. 2008), lathering and non-lathering, N=295, SD 1.78."
+  },
+  {
+   "product": "shampoo",
+   "figure": 11.76,
+   "unit": "grams per application (mean)",
+   "source": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Table 17-41 (Loretz et al. 2006), N=340 women 19-65, SD 8.77, lognormal GM 9.32. CTFA survey value in Table 17-3: 16.4 g per application. The pdftotext layout of Table 17-41 was scrambled; mean and SD rows were read by column position."
+  },
+  {
+   "product": "body wash",
+   "figure": 11.3,
+   "unit": "grams per application (mean)",
+   "source": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Table 17-41 (Loretz et al. 2006), N=340, SD 6.9. Same layout caveat."
+  },
+  {
+   "product": "shaving cream",
+   "figure": 1.73,
+   "unit": "grams per application",
+   "source": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Table 17-3 (CTFA survey of 20 companies), 'Shave Cream 1.73'. Loretz et al. did not study shaving cream. Frequency columns for shave cream were partly blank in the table."
+  },
+  {
+   "product": "bath soap (bar)",
+   "figure": 2.6,
+   "unit": "grams per application",
+   "source": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Table 17-3 (CTFA). Bubble bath 5.0 g per application in the same table."
+  },
+  {
+   "product": "toothpaste",
+   "figure": 2.092,
+   "unit": "grams per day (mean, users)",
+   "source": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Table 17-50 (Hall et al. 2007, EU data): mean 2.092 g/day, SD 0.577, median 2.101. Per-day, not per-brushing."
+  },
+  {
+   "product": "solid antiperspirant",
+   "figure": 0.61,
+   "unit": "grams per application (mean)",
+   "source": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Table 17-41 (Loretz et al. 2006), SD 0.56."
+  }
+ ],
+ "tariffs": [
+  {
+   "town": "New York",
+   "item": "water, metered",
+   "figure": 5.35,
+   "unit": "USD per 100 cubic feet",
+   "source": "https://www.nyc.gov/assets/nycwaterboard/downloads/pdf/rates/fy2027_rates.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "NYC Water Board rate schedule effective July 1, 2026 (FY2027): '$5.35 per one hundred cubic feet. One hundred cubic feet is approximately equal to 748.052 gallons.'"
+  },
+  {
+   "town": "New York",
+   "item": "sewer (wastewater)",
+   "figure": 1.59,
+   "unit": "multiple of the water charge (159%)",
+   "source": "https://www.nyc.gov/assets/nycwaterboard/downloads/pdf/rates/fy2027_rates.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Wastewater charge is 159% of the water charge, so 5.35 x 1.59 = $8.51 per HCF and $13.86 combined, both computed. A search summary of the FY27 proposal gave a combined $13.50, which does not match 5.35 + 8.51, so use the computed figure."
+  },
+  {
+   "town": "New York",
+   "item": "minimum charge",
+   "figure": 0.49,
+   "unit": "USD per day per water meter",
+   "source": "https://www.nyc.gov/assets/nycwaterboard/downloads/pdf/rates/fy2027_rates.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Applies in any bill period where metered charges would be lower. Most NYC renters do not pay water directly; it is billed to the building owner."
+  },
+  {
+   "town": "Los Angeles",
+   "item": "water, Schedule A single-dwelling residential, Tier 1 / Tier 2",
+   "figure": { "janJun2026": { "tier1": 12.495, "tier2": 14.681 }, "julDec2026": { "tier1": 11.794, "tier2": 14.278 } },
+   "unit": "USD per HCF (total consumption charge including adjustment factors)",
+   "source": "https://www.ladwp.com/account/customer-service/water-rates/schedule-residential",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "LADWP Schedule A, within city limits. No separate fixed service charge listed. Tier 1 allotment depends on lot size, temperature zone and season (bimonthly allotment tables)."
+  },
+  {
+   "town": "Los Angeles",
+   "item": "water, Schedule B multi-dwelling residential, Tier 1 / Tier 2",
+   "figure": { "janJun2026": { "tier1": 11.586, "tier2": 15.181 }, "julDec2026": { "tier1": 10.885, "tier2": 14.778 } },
+   "unit": "USD per HCF",
+   "source": "https://www.ladwp.com/account/customer-service/water-rates/schedule-b-multiple-unit-residential",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Tier 1 block = the highest of 88% of 2007-09 winter use, 88% of Dec 2014-Mar 2015 winter use, or a minimum of 24 HCF monthly, times days in the period."
+  },
+  {
+   "town": "Los Angeles",
+   "item": "sewer service charge (LA Sanitation)",
+   "figure": 9.28,
+   "unit": "USD per HCF",
+   "source": "https://sanitation.lacity.gov/explanation-lasan-charges-and-fees",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "'For FY 2025-26: The current SSC rate is $9.28 per HCF.' Page still showed FY2025-26 on read date; the FY2026-27 rate was not found. Single-family and up-to-4-unit volume is set from winter water use (lowest use in the Rainy Season Review Period, reduced by a Dry Winter Compensation Factor); 5+ unit buildings billed on 92% of metered water in FY2025-26. Low-income: 31% off the first 18 HCF per bimonthly bill."
+  },
+  {
+   "town": "New Haven CT",
+   "item": "water, Regional Water Authority, 5/8-inch meter",
+   "figure": { "serviceChargePerMonth": 23.63, "consumptionPerCcf": 5.41 },
+   "unit": "USD per month; USD per 100 cubic feet",
+   "source": "https://www.rwater.com/docs/default-source/default-document-library/july-2-2026-all-service-areas-rate-schedule_final.pdf?sfvrsn=9a0aece3_3",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "RWA rate schedule effective July 2, 2026 (approved April 2026, about 3.4% revenue increase). The PDF's columns came out interleaved; the 5/8\" reading is checked against RWA's own page: a typical 5/8\" customer using 5 CCF pays $50.68 a month (23.63 + 5 x 5.41 = 50.68). Larger meters pay lower per-CCF rates (4.965, 4.674, 4.340)."
+  },
+  {
+   "town": "New Haven CT",
+   "item": "sewer, Greater New Haven WPCA",
+   "figure": { "perCcfAboveMinimum": 5.5, "quarterlyMinimum": 82.5, "monthlyMinimum": 27.5, "adminFee": 18.0 },
+   "unit": "USD",
+   "source": "https://gnhwpca.com/custom-service/sewer-rates/",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Fiscal year July 1, 2026 to June 30, 2027: '$5.50 per CCF' for usage over the minimum; quarterly billing $82.50 minimum plus $18.00 administration fee; monthly $27.50 minimum plus $18.00. 82.50 / 5.50 = 15 CCF per quarter covered by the minimum is computed, not stated."
+  },
+  {
+   "town": "Toronto",
+   "item": "water and wastewater, Block 1 domestic",
+   "figure": { "paidOnTime": 4.8629, "paidLate": 5.1188 },
+   "unit": "CAD per m3",
+   "source": "https://www.toronto.ca/services-payments/property-taxes-utilities/utility-bill/water-rates-fees/",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Effective January 1, 2026 (3.75% increase). Block 1 covers all consumption up to 5,000 m3 a year. Council's Appendix A titles it the 'Water and Wastewater Consumption Rate', so it covers both; no fixed service charge for a household. https://www.toronto.ca/legdocs/mmis/2025/ex/bgrd/backgroundfile-260473.pdf"
+  },
+  {
+   "town": "Vancouver",
+   "item": "flat annual water and sewer, single family dwelling",
+   "figure": { "water2026": 867, "sewer2026": 1238, "withSuiteOrLaneway": { "water": 1176, "sewer": 1671 }, "withSuiteAndLaneway": { "water": 1486, "sewer": 2105 }, "strataDuplexPerUnit": { "water": 587, "sewer": 837 } },
+   "unit": "CAD per year",
+   "source": "https://vancouver.ca/home-property-development/flat-rates.aspx",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Live site blocked automated reads (Cloudflare); read from the Wayback Machine copy of the City's page captured 2026-01-13 (https://web.archive.org/web/20260113150131/https://vancouver.ca/home-property-development/flat-rates.aspx). Billed on the July property tax notice. Sewer 2025 was $1,173, 2024 $856. Apartment renters normally pay this through rent or strata."
+  },
+  {
+   "town": "Vancouver",
+   "item": "metered water and sewer",
+   "figure": { "waterHighSeasonMay1Oct15": 5.128, "waterLowSeason": 4.091, "sewerYearRound": 7.96, "meterServiceChargePerBillingPeriod_17to25mm": 41 },
+   "unit": "CAD per unit (100 cubic feet = 2,831.6 litres); CAD per billing period",
+   "source": "https://vancouver.ca/home-property-development/metered-rates.aspx",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "2026 rates; 'The listed rates per unit reflect the 5% billing discount'. Read from the Wayback copy captured 2026-09-05 (https://web.archive.org/web/20260905112816/https://vancouver.ca/home-property-development/metered-rates.aspx) because the live site blocked automated reads."
+  },
+  {
+   "town": "London",
+   "item": "Thames Water metered household, water and wastewater",
+   "figure": { "waterPerM3": 2.7346, "wastewaterPerM3": 1.4721, "waterStandingPerYear": 66.87, "wastewaterStandingPerYear": 128.13, "wastewaterStandingWithSurfaceWaterRebate": 80.43 },
+   "unit": "GBP",
+   "source": "https://www.thameswater.co.uk/help/account-and-billing/understand-your-bill/metered-customers",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "From 1 April 2026 (2026/27). Thames says 1 m3 is 'an estimated 25 quick showers'. Whether wastewater volume is charged on 100% or a reduced share of metered water was not stated on this page."
+  },
+  {
+   "town": "Dublin",
+   "item": "domestic water and wastewater",
+   "figure": 0,
+   "unit": "EUR (no domestic charge)",
+   "source": "https://www.citizensinformation.ie/en/housing/water-and-coasts/water-charges/",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "'Currently, Uisce Éireann does not charge households for water supply or wastewater services and there is no timeline for when Excess Use Charge will be introduced.'"
+  },
+  {
+   "town": "Dublin",
+   "item": "excess use charge rules (not in force)",
+   "figure": { "thresholdLitresPerYear": 213000, "extraPerPersonAbove4": 25000, "eurPer1000LitresWater": 1.85, "eurPer1000LitresWastewater": 1.85, "capPerYear": 500 },
+   "unit": "litres; EUR",
+   "source": "https://assets.gov.ie/234245/636dc798-7126-4c46-b90a-7b5ef4233fee.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Government information note and Citizens Information (Water Charges Plan 2024): threshold is 1.7 x average household use; €1.85 per m3 each for water and wastewater (€3.70 combined); unmetered excess users charged the €500 cap. Charges need a legal framework first; the Department said in March 2025 they are 'not being considered at this time'."
+  },
+  {
+   "town": "Mexico City",
+   "item": "SACMEX domestic metered water (Código Fiscal Art. 172), full tariff before subsidy",
+   "figure": { "blocksLitresPerBimester": ["0-15000", "15001-20000", "20001-30000", "30001-40000", "40001-50000", "50001-70000", "70001-90000", "90001-120000", ">120000"], "minimumFee": [652.35, 652.35, 869.78, 1304.66, 1739.56, 2174.44, 3233.30, 4386.73, 6684.05], "per1000LitresAboveLowerLimit": [0.00, 43.50, 43.50, 43.50, 43.50, 52.94, 57.68, 76.59, 119.13] },
+   "unit": "MXN per bimester (two months)",
+   "source": "https://transparencia.finanzas.cdmx.gob.mx/repositorio/public/upload/repositorio/Tesoreria/123/b/Criterio_9/123_XV%20Suministro%20de%20Agua.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Tesorería de la CDMX extract of Art. 172 (PDF created 2025-04-14, so these are the 2025 Código Fiscal figures; 2026 values were not confirmed). Charge = minimum fee for the block + per-1,000-litre fee over the block's lower limit. Covers supply and discharge to drainage (no separate sewer bill). Subsidies by manzana class are applied (see next row)."
+  },
+  {
+   "town": "Mexico City",
+   "item": "SACMEX domestic metered water after subsidy, by manzana class",
+   "figure": {
+    "popular": { "minimumFee": [56.72, 56.72, 81.30, 159.16, 318.12, 550.07, 1241.07, 2116.98, 4386.57], "per1000": [0.00, 4.92, 7.79, 15.90, 23.20, 34.55, 43.81, 75.67, 119.13] },
+    "baja": { "minimumFee": [64.30, 64.30, 119.12, 266.73, 475.98, 769.57, 1512.47, 2420.83, 4690.41], "per1000": [0.00, 10.97, 14.77, 20.93, 29.37, 37.14, 45.43, 75.67, 119.13] },
+    "media": { "minimumFee": [212.74, 212.74, 349.79, 649.88, 1005.11, 1387.92, 2234.63, 3369.10, 5638.68], "per1000": [0.00, 27.42, 30.02, 35.53, 38.29, 42.33, 56.74, 75.67, 119.13] },
+    "alta": { "minimumFee": [255.27, 255.27, 398.89, 720.07, 1101.25, 1508.39, 2381.05, 3515.52, 5785.11], "per1000": [0.00, 28.73, 32.13, 38.13, 40.73, 43.63, 56.74, 75.67, 119.13] }
+   },
+   "unit": "MXN per bimester, same nine blocks as above",
+   "source": "https://transparencia.finanzas.cdmx.gob.mx/repositorio/public/upload/repositorio/Tesoreria/123/b/Criterio_9/123_XV%20Suministro%20de%20Agua.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "2025 Código Fiscal. Unmetered or tandeo (rationed-supply) homes pay a fixed bimonthly fee of $4,727.61 less subsidy: popular $141.80, baja $225.02, media $569.27, alta $974.34. A third-party calculator (calculoseguro.mx, unconfirmed) quoted different 2026 per-m3 blocks; not used."
+  }
+ ],
+ "perPersonUse": [
+  {
+   "country": "US (single-family indoor)",
+   "figure": 58.6,
+   "unit": "US gallons per capita per day (indoor) = 221.8 L",
+   "source": "https://www.circleofblue.org/wp-content/uploads/2016/04/WRF_REU2016.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "REU2016; was 69.3 gpcd in REU1999. Household indoor 138 gphd. Indoor only, excludes irrigation."
+  },
+  {
+   "country": "Canada (residential)",
+   "figure": 223,
+   "unit": "litres per person per day",
+   "source": "https://www150.statcan.gc.ca/n1/daily-quotidien/231114/cg-d002-eng.htm",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Statistics Canada, Survey of Drinking Water Plants 2021 (table 38-10-0271). 2019: 216. Ontario 187 (2019: 172); British Columbia 286 (2019: 274). Residential sector, from plant data, includes outdoor use."
+  },
+  {
+   "country": "England and Wales",
+   "figure": 137,
+   "unit": "litres per person per day",
+   "source": "https://www.discoverwater.co.uk/amount-we-use",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "April 2024 to March 2025. Metered 122, unmetered 175. EST (2013) self-report estimate was 142 L/person and 349 L/home."
+  },
+  {
+   "country": "Ireland",
+   "figure": 125000,
+   "unit": "litres per household per year (average)",
+   "source": "https://www.citizensinformation.ie/en/housing/water-and-coasts/water-charges/",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "'The average amount of water used by a household in Ireland is 125,000 litres per year.' The 2021 government note instead describes 213,000 L as 1.7 x average (implying about 125,000 L) and mentions 345 L/day average household use. Per-person figure not read."
+  },
+  {
+   "country": "Mexico City",
+   "figure": null,
+   "unit": "litres per person per day",
+   "source": "https://revistacitymanager.com/ciudades-verdes/sabias-que-diariamente-por-habitante-en-la-ciudad-de-mexico-se-consumen-320-litros-de-agua/",
+   "read": "2026-10-02",
+   "confirmed": false,
+   "note": "Search results attributed to SACMEX figures of 288, 307, 320, 366 and 380 L/person/day across press articles; none read on a SACMEX page, and they conflict, so no figure is given. SACMEX's cuidarelagua.cdmx.gob.mx refused connection."
+  }
+ ],
+ "washingUp": [
+  {
+   "country": "US",
+   "measure": "kitchen and food clean-up (ATUS 020203), all persons",
+   "figure": 9.0,
+   "unit": "minutes per day (0.15 h)",
+   "source": "https://www.bls.gov/tus/tables/a1-2025.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "ATUS Table A-1, 2025 annual averages: total 0.15 h, men 0.08 h, women 0.21 h; 25.0% engaged per day (men 16.1%, women 33.5%). 2024: 0.13 h, 22.4% engaged. The 2025 PDF was read via a copy fetched from bls.gov earlier on 2026-10-02 (bls.gov now refuses scripted requests). Collection paused 1 Oct to 12 Nov 2025 by the shutdown."
+  },
+  {
+   "country": "US",
+   "measure": "kitchen and food clean-up, people who did it",
+   "figure": 34.8,
+   "unit": "minutes per day (0.58 h)",
+   "source": "https://www.bls.gov/tus/tables/a1-2025.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "2025: total 0.58 h, men 0.52 h, women 0.62 h. Whole food preparation and clean-up category: 0.71 h all persons, 1.09 h among the 65.2% who did it."
+  },
+  {
+   "country": "UK",
+   "measure": "washing up / dishwashing minutes per day",
+   "figure": null,
+   "unit": "minutes per day",
+   "source": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/bulletins/timeuseintheuk/23septemberto1october2023",
+   "read": "2026-10-02",
+   "confirmed": false,
+   "note": "ONS time-use bulletins report 'making food and drinks' (about 48 minutes a day in March 2024, per search summary) but no separate washing-up figure was found."
+  },
+  {
+   "country": "UK",
+   "measure": "washing-up habits",
+   "figure": { "handWashesPerWeek": 10, "dishwasherRunsPerWeek": 3, "useBowlShare": 0.86, "shareOfDomesticWater": 0.05, "dishwasherOwnership": 0.41 },
+   "unit": "per household; shares",
+   "source": "https://www.energysavingtrust.org.uk/sites/default/files/reports/AtHomewithWater(7).pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "EST 2013: average household washes dishes by hand ten times a week and runs a dishwasher three times; 86% use a bowl; washing up is about 5% of domestic water (hand 4%, dishwasher 1% in Figure 1); 41% own a dishwasher."
+  },
+  {
+   "country": "US",
+   "measure": "ENERGY STAR dishwasher vs hand washing",
+   "figure": { "waterSavedPerYearGallons": 8400, "lifetimeSavingVsStandardGallons": 5800, "runningCostPerYearUSD": 50 },
+   "unit": "US gallons; USD",
+   "source": "https://www.energystar.gov/products/dishwashers",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "'A new ENERGY STAR certified dishwasher uses less than half as much energy as washing dishes by hand and saves 8,400 gallons of water each year.' Per-cycle and per-hand-wash gallons not on this page."
+  },
+  {
+   "country": "US",
+   "measure": "dishwasher water per cycle",
+   "figure": { "efficientMaxGallons": 3.5, "olderModelGallons": "10 to 15" },
+   "unit": "US gallons per cycle",
+   "source": "https://home-water-works.org/indoor-use/dishwasher",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "AWE: older dishwashers about 10 to 15 gallons (37.8 to 56.7 L) per load; ENERGY STAR models '3.5 gallons or less per cycle' and save about 3,870 gallons over their life. REU2016: dishwashers 2.2 gphd per household."
+  },
+  {
+   "country": "Germany / Europe (study)",
+   "measure": "hand washing 12 place settings",
+   "figure": { "meanLitres": 103, "rangeLitres": "30 to 450", "dishwasherLitres": "15 to 30" },
+   "unit": "litres",
+   "source": "https://www.choice.com.au/home-and-living/kitchen/dishwashers/articles/dishwasher-vs-washing-by-hand",
+   "read": "2026-10-02",
+   "confirmed": false,
+   "note": "University of Bonn work (Stamminger, Schencking), as reported in search summaries of CHOICE. The Bonn repository (bonndoc) and De Gruyter review (Tenside Surfactants Detergents 2022, doi 10.1515/tsd-2022-2423) both refused automated reads."
+  }
+ ],
+ "heaters": [
+  {
+   "country": "US",
+   "figure": { "naturalGas": 59.33, "electricity": 57.04, "propane": 4.12, "fuelOilKerosene": 2.62, "other": 0.41, "allHomes": 123.53, "tankless": 8.03 },
+   "unit": "million housing units by main water heater fuel (gas 48.0%, electric 46.2% computed)",
+   "source": "https://www.eia.gov/consumption/residential/data/2020/hc/pdf/HC%208.9.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "EIA RECS 2020 Table HC8.9 (final release March 2023). Single-family detached: gas 40.37 M, electric 31.21 M of 77.07 M; apartments in 5+ unit buildings: gas 8.79 M, electric 13.32 M of 22.84 M (Table HC8.1). Size: small 13.28 M, medium 55.37 M, large 46.85 M, tankless 8.03 M."
+  },
+  {
+   "country": "Canada",
+   "figure": { "naturalGas": 0.486, "electricity": 0.483 },
+   "unit": "share of water heater stock, 2019",
+   "source": "https://oee.nrcan.gc.ca/corporate/statistics/neud/dpa/showTable.cfm?type=HB&sector=res&juris=00&rn=17&year=2020&page=4",
+   "read": "2026-10-02",
+   "confirmed": false,
+   "note": "NRCan National Energy Use Database 'Residential Water Heating Energy Use and Water Heater Stock Share', from a search summary; the NRCan server refused connections on the read date."
+  },
+  {
+   "country": "Mexico",
+   "figure": { "homesUsingAnyWaterHeater": 0.435, "heatersInUseMillions": 14.6, "gasMillions": 11, "solarMillions": 2 },
+   "unit": "share of homes; millions of heaters",
+   "source": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2018/EstSociodemo/ENCEVI2018.pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "INEGI ENCEVI 2018 press release 541/18: 43.5% of homes use some water heater; 14.6 M in use, 11 M gas, 2 M solar; over 70% of gas heaters are in the temperate region (which includes Mexico City), where 20% of heater-using homes have solar. Use of a heater by climate region read as 48%, 56% and 9% from a chart."
+  },
+  {
+   "country": "UK",
+   "figure": { "electricShowerShare": 0.35 },
+   "unit": "share of household showers that heat their own water",
+   "source": "https://www.energysavingtrust.org.uk/sites/default/files/reports/AtHomewithWater(7).pdf",
+   "read": "2026-10-02",
+   "confirmed": true,
+   "note": "Only the shower-level split was found. A household-level gas vs electric water-heating share for the UK was not read (see worthChecking)."
+  },
+  {
+   "country": "Ireland",
+   "figure": null,
+   "unit": null,
+   "source": null,
+   "read": "2026-10-02",
+   "confirmed": false,
+   "note": "No published gas vs electric water-heater share found."
+  }
+ ],
+ "notes": {
+  "notFound": [
+   "Per-bath volume for North America (REU2016 executive report gives only bath gpcd and gphd).",
+   "A Canadian shower minutes or flow figure separate from REU2016's pooled North American sample.",
+   "LA Sanitation sewer service charge for FY2026-27 (the LASAN page still showed FY2025-26 $9.28 per HCF).",
+   "UK (ONS) minutes per day spent washing up.",
+   "Mexico City litres per person per day on a SACMEX page (press figures range 288 to 380 and conflict).",
+   "Ireland water-heater fuel shares.",
+   "2026 Código Fiscal Art. 172 tariff tables for Mexico City (2025 tables used)."
+  ],
+  "worthChecking": [
+   "NYC combined water and sewer: 5.35 x 2.59 = $13.86 per HCF computed from the schedule; a search summary of the FY27 proposal said $13.50, which looks wrong.",
+   "Whether Thames Water bills wastewater on 100% of metered water or a 95% return-to-sewer allowance.",
+   "NRCan water-heater stock shares for Canada, Ontario and BC (server down on read date).",
+   "UK household water-heating fuel share (English Housing Survey or DESNZ Energy Consumption in the UK).",
+   "Bonn manual dishwashing figures (103 L per 12 place settings) on the publisher's page.",
+   "EPA Table 17-41 values were read through a scrambled text layout; recheck shampoo 11.76 g and body wash 11.3 g against the rendered PDF.",
+   "ENERGY STAR 'up to 27 gallons by hand' appears on third-party pages only."
+  ]
+ }
+}

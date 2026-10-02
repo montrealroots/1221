@@ -18,7 +18,7 @@ import { groceryCatalog } from '@/engine/systems/kitchen';
 import { salonsIn, toiletryCatalog } from '@/engine/systems/hygiene';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { contactsOf } from '@/engine/systems/people';
-import { leg, runErrands, tripRefusal, type Stop, driverIn } from '@/engine/systems/trips';
+import { leg, runErrands, tripRefusal, type Stop, driverIn, garagesIn } from '@/engine/systems/trips';
 import { sessionPrice, trainersIn } from '@/engine/systems/trainers';
 import { METER, STATIONS } from '@/engine/content/errandtrips';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -190,6 +190,7 @@ function ErrandsPanel() {
   const [by, setBy] = useState<'car' | 'foot'>('foot');
   const [vehicleId, setVehicleId] = useState('');
   const [passengers, setPassengers] = useState<string[]>([]);
+  const [garageId, setGarageId] = useState('');
   const [driven, setDriven] = useState(false);
   const driver = driverIn(here);
   const [stops, setStops] = useState<(Stop & { label: string })[]>([]);
@@ -236,6 +237,15 @@ function ErrandsPanel() {
               </select>
             </div>
           )}
+          {by === 'car' && garagesIn(person.currentLocationId).length > 0 && (
+            <div className="field">
+              <label htmlFor="errand-park">Park At</label>
+              <select id="errand-park" value={garageId} onChange={(e) => setGarageId(e.target.value)}>
+                <option value="">The Meter</option>
+                {garagesIn(person.currentLocationId).map((g) => <option key={g.id} value={g.id} title={g.basis}>{g.name}</option>)}
+              </select>
+            </div>
+          )}
           {friends.length > 0 && (
             <div className="field">
               <span className="small">With</span>
@@ -258,7 +268,7 @@ function ErrandsPanel() {
           </div>
           <button type="button" className="btn btn-sm btn-ghost" disabled={!picked || stops.length >= 8} onClick={() => picked && setStops([...stops, { kind: picked.kind, payload: picked.payload, leg: picked.leg, label: picked.label }])}>Add The Stop</button>
           <button type="button" className="btn btn-sm" disabled={!go.open || !park.open || !fuel.open || Boolean(no) || Boolean(person.trip)} title={no ?? go.reason ?? park.reason ?? fuel.reason} onClick={() => {
-            const r = runErrands(sim, { by, ...(by === 'car' && car ? { vehicleId: car.id } : {}), ...(passengers.length ? { passengerIds: passengers } : {}), ...(withDriver ? { driven: true } : {}), stops }, (kind, payload) => run(kind, payload, { silent: true }));
+            const r = runErrands(sim, { by, ...(by === 'car' && car ? { vehicleId: car.id } : {}), ...(passengers.length ? { passengerIds: passengers } : {}), ...(withDriver ? { driven: true } : {}), ...(garageId ? { garageId } : {}), stops }, (kind, payload) => run(kind, payload, { silent: true }));
             if (r.stopped) toast(`Home again after ${r.done} of ${stops.length}: ${stops[r.stopped.step]!.label} couldn’t be done. ${r.stopped.error}`, 'negative');
             else toast(`Home again, all ${stops.length} done.`, 'positive');
             setStops([]);
@@ -274,7 +284,7 @@ function ErrandsPanel() {
             if (!run('errand.go', { to: picked.leg, ...start }).ok) return;
             const before = sim.now;
             const done = run(picked.kind, picked.payload);
-            if (sim.player.trip?.by === 'car' && picked.kind !== 'errand.fuel') run('errand.park', { minutes: (sim.now - before) / 60_000 }, { silent: true });
+            if (sim.player.trip?.by === 'car' && picked.kind !== 'errand.fuel') run('errand.park', { minutes: (sim.now - before) / 60_000, ...(garageId ? { garageId } : {}) }, { silent: true });
             if (done.ok) toast(`${picked.label}: done.`, 'positive');
           }}>{person.trip ? 'Go To This Stop Next' : 'Go Now, A Stop At A Time'}</button>
           {person.trip && <button type="button" className="btn btn-sm" disabled={!go.open} title={go.reason} onClick={() => { if (run('errand.go', { to: 'home' }).ok) toast('Home again.', 'positive'); }}>Go Home</button>}
