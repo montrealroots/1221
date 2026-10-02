@@ -86,7 +86,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 27b | Wear, layer, remove | Partial | one garment per slot; `dressRefusal` validates `dress` and `wear_outfit`; jewelry, watches and accessories chosen and worn with the outfit; sleepwear worn at night at home (2026-10-02) | Layers, undress |
 | 27c | Wash, dry, clean | Complete | `doLaundry`, dry cleaning; tests | Wash a chosen garment; air-dry or tumble |
 | 27d | Alter, repair | Partial | take in only | Hem, let out; damage and repair |
-| 27e | Pack, unpack | Partial (automatic) | luggage.ts | Manual packing (§46) |
+| 27e | Pack, unpack | Done, 2026-10-02 | luggage.ts; by hand on Belongings, Pack For Me, Unpack (§46) | — |
 | 27f | Gift, return, resell, replace | Partial | return, resell, replace | Gift |
 | 27g | Outfits from owned, reachable items; worn outfit persists | Done, 2026-10-02 | `outfitRefusal`, `reachable`; `Person.wornNow`, set as the day dresses them or they change; read by the sale refusal and Clothes | — |
 | 28 | Phones and electronics as devices, activation, plans, finance, trade-in | Not implemented (device), partial (plan) | `MOBILE` plan billed | Device catalog and item, activation, plan choice, finance, trade-in, repair; messages and contacts |
@@ -203,7 +203,7 @@ Correctness first, then the connected day the plan asks to be shown working
 
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
-| 46 | Manual packing | Not implemented (automatic) | luggage.ts `pack`/`unpack` | Volumes; a packing screen; presets through `moveRefusal`; a stay to unpack into; repack; a luggage catalog |
+| 46 | Manual packing | Partial, 2026-10-02 | volumes (`volumeOf`, `GARMENT_L` SLATE's estimate); items moved into the suitcase by hand and kept as packed on leaving; Pack For Me within the liters; Unpack | A stay to unpack into; a luggage catalog; checked bags against an airline's limits |
 | 47a–c, g, l | Planning, documents, booking, cancellation, charters and ferries | Complete | journey.ts; tests | Destinations limited to towns with stays |
 | 47d–f, h–k | Departure transport, connections, delays, changes, local transport, activities | Partial | — | Choices of ground transport; missed connections; rebooking choice; change the outbound; taxi and rideshare |
 | 47m | Companions | Not implemented | — | Travellers on a journey |

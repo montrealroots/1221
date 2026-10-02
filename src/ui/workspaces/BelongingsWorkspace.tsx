@@ -10,6 +10,7 @@ import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
+import { luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
 import { ordersOf } from '@/engine/systems/orders';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -63,6 +64,7 @@ export function BelongingsWorkspace() {
             <Stat label="On Their Way" value={String(coming.length)} note={coming.length ? `The next arrives ${formatDate(Math.min(...coming.map((o) => o.arrivesAt)), sim.zone)}` : 'No orders outstanding'} />
           </div>
         </Panel>
+        <Suitcase />
         {items.length > 0 && (
           <Panel title="Each Thing">
             <LookRegion>
@@ -110,5 +112,29 @@ export function BelongingsWorkspace() {
         <Fine>A thing at home is to hand only at home; one in a car, only where the car is; one in a bag, wherever the bag is. An order’s things are yours from when you pay, and to hand when they’re delivered. A move brings your belongings with it.</Fine>
       </div>
     </>
+  );
+}
+
+/** The suitcase: what's in it and how full, packed by hand on Each Thing, or a week's packed for you (`luggage.pack`). */
+function Suitcase() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const bag = suitcaseOf(person);
+  const pack = useFeature('luggage.pack');
+  const empty = useFeature('luggage.unpack');
+  if (!bag) return null;
+  const used = usedL(person, bag.id);
+  const inIt = packedIn(person, bag);
+  const no = luggageRefusal(sim, person);
+  return (
+    <Panel title="Suitcase" subtitle={`${bag.label}: ${Math.round(used)} of ${bag.holdsL} liters packed, ${inIt.length} ${inIt.length === 1 ? 'thing' : 'things'}`}>
+      <div className="col gap-2">
+        <p className="small muted" style={{ margin: 0 }}>Move what you want into it on Each Thing, or have a week’s clothes and the bathroom’s things packed for you. Leaving home takes it as you packed it; an empty one is packed for you as you go.</p>
+        <div className="row gap-1">
+          <button type="button" className="btn btn-sm" disabled={!pack.open || Boolean(no)} title={no ?? pack.reason} onClick={() => { const a = run<{ packed: number }>('luggage.pack', {}); if (a.ok) toast(`${a.value!.packed} packed.`, 'positive'); }}>Pack For Me</button>
+          <button type="button" className="btn btn-sm btn-ghost" disabled={!empty.open || Boolean(no) || inIt.length === 0} title={no ?? empty.reason} onClick={() => { const a = run<{ unpacked: number }>('luggage.unpack', {}); if (a.ok) toast(`${a.value!.unpacked} put away.`, 'positive'); }}>Unpack</button>
+        </div>
+      </div>
+    </Panel>
   );
 }
