@@ -73,6 +73,7 @@ import { mealsFromStock } from './pantry';
 import { partnerStays } from './people';
 import { billShare } from './marriage';
 import { TELECOM_OF_BILLS, billedApart, telecomLines } from './telecom';
+import { electricityAdjustment } from './electricity';
 import { carryCaravans } from './caravans';
 
 export const RENT_KIND = 'home.rent';
@@ -240,9 +241,11 @@ export function atlasBillsOf(sim: Simulation, person: Person): Money {
   const place = homePlace(sim, person);
   const cooling = place?.fixtures.cooling ?? 'central';
   const machines = atTown(person.home.cityId, machineUsd(person), saveCurrency(sim.universe));
-  if (person.home.kind !== 'owned') return Math.round(flat * billsFactor(person.home.cityId, billed, cooling)) + machines;
+  // The electricity used at the utility's tariff, against the typical month the atlas carries (`systems/electricity.ts`, from 2026-10-02).
+  const used = electricityAdjustment(sim, person, billed);
+  if (person.home.kind !== 'owned') return Math.round(flat * billsFactor(person.home.cityId, billed, cooling)) + machines + used;
   const { factor, poolUsd } = ownedBillsFactor(person);
-  return Math.round(flat * factor * billsFactor(person.home.cityId, billed, cooling) + atTown(person.home.cityId, poolUsd, saveCurrency(sim.universe))) + machines;
+  return Math.round(flat * factor * billsFactor(person.home.cityId, billed, cooling) + atTown(person.home.cityId, poolUsd, saveCurrency(sim.universe))) + machines + used;
 }
 
 /**
@@ -896,7 +899,7 @@ export function registerHousehold(sim: Simulation): void {
     for (const one of monthOrder(s, person, rent, bills)) if (one === 'rent') payRent(s, person, rent); else payBills(s, person, bills);
     // The internet and the phone, each by its provider, the internet shared as the bills are (`systems/telecom.ts`).
     for (const line of telecomLines(s, person, item.at)) payBills(s, person, line.shared ? Math.round(line.amount * share) : line.amount, line.memo);
-    if (person.living) delete person.living.loads;
+    if (person.living) { delete person.living.loads; delete person.living.billDays; delete person.living.homeDays; }
     const owed = arrearsOf(s, person) - before;
     if (owed > 0) {
       s.notify({

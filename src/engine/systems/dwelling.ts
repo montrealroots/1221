@@ -231,6 +231,9 @@ export interface Living {
   alarm?: boolean;
   /** The month's loads in the home's own machines, for the bills. */
   loads?: { washer: number; dryer: number };
+  /** The month's days counted, and those at home, for the electricity used (`systems/electricity.ts`, from 2026-10-02). */
+  billDays?: number;
+  homeDays?: number;
   /** A cleaner every week, and the day of the week they come, 0 for Sunday. */
   cleaner?: { day: number };
 }
