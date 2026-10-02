@@ -166,7 +166,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 39f | Refuel at a station | Done, 2026-10-02 | `vehicle.refuel` at a named station to full at the pump price; `errand.fuel` fills the tank; a leg short of fuel is refused | Choosing an amount short of full |
 | 39g | Charging | Done, 2026-10-02 | public to full over 50 kW's time, at home to 80% with a charger; the month charges at a fifth | — |
 | 40a | Several destinations | Complete | `runErrands`; tests/trips | More stop kinds |
-| 40b | Change the plan mid-trip | Partial | one-click run | Step-by-step trip |
+| 40b | Change the plan mid-trip | Done, 2026-10-02 | a whole trip, or a stop at a time with the next chosen as you go and Go Home | — |
 | 40c | Parking | Partial | meter by the minute | Lots and garages; limits |
 | 40d | Hours, appointments | Partial | closed shops refuse | Appointment slots |
 | 40e | Purchases carried or in the car until moved, within its cargo | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out | Cargo space by model |
