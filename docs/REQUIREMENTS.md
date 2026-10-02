@@ -214,7 +214,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 48g | Book and pay | Complete | `travel.book`; tests | Hotel-only booking |
 | 48h | Check-in requirements | Partial | age at booking | Check-in step |
 | 48i | A failed deposit isn't a granted stay | Done, 2026-10-02 | journey.ts `holdForDeposit`, `travel.pay_deposit`; rentals.ts `held`, `travel.pay_rental_deposit`; standin.ts refuses; tests/deposits.test.ts | — |
-| 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial | the named hotel's own gym and pool used while staying (`stayPlace`, `swimRefusal`) | Incidentals; the room's belongings |
+| 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial | the named hotel's own gym and pool used while staying (`stayPlace`, `swimRefusal`); its breakfast; the room given at its own check-in hour, or at once where early check-in is free (`roomReadyAt`) | Incidentals; the room's belongings; early check-in bought (no hotel publishes its price) |
 | 49a–b, e–g, i | Identity, driving, entry, residence, work, building approval | Complete | documents.ts, licensing.ts, permission.ts, permits.ts; tests | Appointments and evidence steps |
 | 49c–d | Boating, aviation | Partial | instant certificate; checkride always passes | Course, exam, failure, a document |
 | 49k | Loss and replacement | Partial, 2026-10-02 | passport; a driving license replaced at its authority's fee in all eight places, driven on meanwhile where an interim or the record allows, waited for in California (`documents.replace_license`); tests/replacements.test.ts | ID cards; the police report as its own step |

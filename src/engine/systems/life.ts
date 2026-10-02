@@ -626,7 +626,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if ((action === 'eat' || action === 'order') && w.nourishment >= FULL) return 'You aren’t hungry.';
   if ((action === 'eat' || action === 'order' || action === 'laundry') && canPay(sim, person) < costFor(sim, action) && !(action === 'eat' && kitchenMeal(sim, person))) return 'You can’t afford it.';
   if ((action === 'wash' || action === 'bathe') && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
-  if ((action === 'wash' || action === 'bathe') && !atHome(person) && roomGone(person)) return 'You’ve checked out, and the room is gone until you leave.';
+  if ((action === 'wash' || action === 'bathe') && !atHome(person) && roomGone(person)) return person.stay?.readyAt !== undefined ? `The room isn’t ready until ${formatTime(person.stay.readyAt, sim.zone)}.` : 'You’ve checked out, and the room is gone until you leave.';
   if (action === 'bathe' && !place?.fixtures.bathtub) return atHome(person) ? 'There’s no bath where you live, only a shower.' : 'There’s no bath where you’re staying, only a shower.';
   if ((action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
   if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court') { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
