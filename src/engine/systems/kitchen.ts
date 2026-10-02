@@ -139,10 +139,17 @@ export function amountIn(ingredient: Extract<Ingredient, { food: string | null }
   return from === 'ct' ? need * perCount : Math.max(1, Math.ceil(need / perCount));
 }
 
-/** What a recipe lacks here now: the appliances, and each ingredient short. Nothing where it can be cooked. */
-export function cookRefusal(sim: Simulation, person: Person, recipeId: string): string | undefined {
+/** The servings a recipe can be cooked for: one to three times what it makes, a recipe scaled as a cook scales it (from 2026-10-02; until then always what it makes). */
+export const servingsRange = (r: Recipe): { least: number; most: number } => ({ least: 1, most: r.servings * 3 });
+
+/** What a recipe lacks here now, for so many servings: the appliances, and each ingredient short. Nothing where it can be cooked. */
+export function cookRefusal(sim: Simulation, person: Person, recipeId: string, servings?: number): string | undefined {
   const r = recipeById(recipeId);
   if (!r) return 'No such recipe.';
+  const n = servings ?? r.servings;
+  const range = servingsRange(r);
+  if (!Number.isInteger(n) || n < range.least || n > range.most) return `From ${range.least} to ${range.most} servings.`;
+  const scale = n / r.servings;
   const place = placeOf(sim, person);
   if (!place?.cooks) return 'There’s no kitchen where you are.';
   const missing = r.appliances.filter((a) => !KITCHEN.has.has(a));
@@ -151,22 +158,22 @@ export function cookRefusal(sim: Simulation, person: Person, recipeId: string): 
     if (!i.food) return true;
     const stock = stockOf(sim, person, i.food);
     const unit = stock[0]?.food.unit ?? 'g';
-    return stock.reduce((sum, s) => sum + s.food.left, 0) < amountIn(i, unit, 1) - 1e-9;
+    return stock.reduce((sum, s) => sum + s.food.left, 0) < amountIn(i, unit, scale) - 1e-9;
   });
   if (short.length) return `You’re short of ${short.map((i) => i.name).join(', ')}.`;
   return undefined;
 }
 
-/** Cooks a recipe: its ingredients used, one serving eaten, the rest in the fridge. The portions left. */
-export function cook(sim: Simulation, person: Person, recipeId: string): number {
-  const no = cookRefusal(sim, person, recipeId);
+/** Cooks a recipe for so many servings: its ingredients used at that scale, one serving eaten, the rest in the fridge. The portions left. */
+export function cook(sim: Simulation, person: Person, recipeId: string, servings?: number): number {
+  const no = cookRefusal(sim, person, recipeId, servings);
   if (no) throw new CommandError(no);
   const busy = occupiedAt(sim, sim.now);
   if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`);
   const r = recipeById(recipeId)!;
   for (const i of r.ingredients) {
     if (i.cupboard || !i.food) continue;
-    let need = amountIn(i, stockOf(sim, person, i.food)[0]!.food.unit, 1);
+    let need = amountIn(i, stockOf(sim, person, i.food)[0]!.food.unit, (servings ?? r.servings) / r.servings);
     for (const s of stockOf(sim, person, i.food)) {
       if (need <= 1e-9) break;
       const used = Math.min(need, s.food.left);
@@ -177,7 +184,7 @@ export function cook(sim: Simulation, person: Person, recipeId: string): number 
   }
   sim.advanceTo(sim.now + (r.minutes ?? KITCHEN.minutes) * 60_000);
   applyLookingAfter(person, 'eat', sim.now);
-  const left = r.servings - 1;
+  const left = (servings ?? r.servings) - 1;
   if (left > 0) {
     const where = homeKeyOf(person.home);
     addItem(sim, person, {
@@ -186,6 +193,22 @@ export function cook(sim: Simulation, person: Person, recipeId: string): number 
     });
   }
   return left;
+}
+
+/**
+ * What the kitchen can feed them with now, before any money is spent: a meal
+ * that's ready, the soonest to spoil first; else a recipe the stock makes,
+ * the quickest, when they're free to cook it. Read by Look After Yourself's
+ * eat (from 2026-10-02; until then it paid a meal's money however full the
+ * fridge was).
+ */
+export function kitchenMeal(sim: Simulation, person: Person): { ready: Stocked } | { recipeId: string } | undefined {
+  if (!placeOf(sim, person)?.cooks) return undefined;
+  const ready = mealsReady(sim, person)[0];
+  if (ready) return { ready };
+  if (occupiedAt(sim, sim.now)) return undefined;
+  const quickest = RECIPES.filter((r) => !cookRefusal(sim, person, r.id)).sort((a, b) => (a.minutes ?? KITCHEN.minutes) - (b.minutes ?? KITCHEN.minutes) || a.id.localeCompare(b.id))[0];
+  return quickest ? { recipeId: quickest.id } : undefined;
 }
 
 /** Eats a portion of what's ready: a dish, a ready meal or a pizza, heated. */
@@ -221,7 +244,7 @@ export function registerKitchen(sim: Simulation): void {
     }
   });
   sim.onCommand<{ productId: string; quantity?: number }, { paid: Money }>('food.buy_groceries', (p, { sim: s }) => ({ paid: buyGroceries(s, s.player, String(p?.productId), Number(p?.quantity ?? 1)) }));
-  sim.onCommand<{ recipeId: string }, { left: number }>('food.cook', (p, { sim: s }) => ({ left: cook(s, s.player, String(p?.recipeId)) }));
+  sim.onCommand<{ recipeId: string; servings?: number }, { left: number }>('food.cook', (p, { sim: s }) => ({ left: cook(s, s.player, String(p?.recipeId), p?.servings === undefined ? undefined : Number(p.servings)) }));
   sim.onCommand<{ itemId?: string }, { ate: true }>('food.eat_ready', (p, { sim: s }) => {
     if (s.player.wellbeing.nourishment >= 90) throw new CommandError('You aren’t hungry.');
     // Without one named, what's ready that goes off soonest: a routine's "eat something ready".

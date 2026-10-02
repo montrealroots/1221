@@ -1749,6 +1749,12 @@ export function registerCareer(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const booking = person && careerOf(person).bookings.find((b) => b.id === item.payload.bookingId);
     if (!person || !booking || booking.status !== 'accepted') return;
+    // Paid for being there: out of town, asleep, in hospital or laid up, it's missed and not paid (until 2026-10-02 it was paid wherever they were).
+    if (!present(person, item.at, workCityOf(booking))) {
+      item.status = 'missed';
+      if (isPlayer(person)) s.notify({ category: 'career', title: 'Missed The Fitting', body: `You weren’t at wardrobe’s fitting for ${roleById(booking.roleId).label}, so it isn’t paid.`, importance: 55, route: '/workspace/career' });
+      return;
+    }
     const fit = fittingFor(booking, item.at, saveCurrency(s.universe));
     if (fit && fit.pay > 0) booking.fittingOwed = (booking.fittingOwed ?? 0) + fit.pay;
   });

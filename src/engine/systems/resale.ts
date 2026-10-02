@@ -52,6 +52,7 @@ export function sellRefusal(sim: Simulation, person: Person, g: Garb | undefined
   if (g.garment.dirty || g.condition <= 0) return 'Only clean clothes that aren’t worn out sell.';
   if (!g.paid) return 'Its price new isn’t known, so it isn’t sold.';
   if (!reachable(sim, person, g.at)) return 'It isn’t to hand.';
+  if (person.wornNow?.itemIds.includes(g.id)) return 'You’re wearing it.';
   const market = marketOf(person.home?.cityId ?? person.currentLocationId);
   if (!market || market === 'MX') return 'No source gives what clothes sell for here.';
   return undefined;

@@ -172,6 +172,19 @@ Done and gated so far:
   - **Creation:** height and weight moved from Identity to Starting Point, as Your Body Today. "Get A Place Of Your Own" reads "Rent A One-Bedroom", with the cost to move in; buying is Homes.
   - Not built, each because it would change nothing: booking waits for a GP (a visit takes nothing from the body), and gas and water by tariff (heating runs while you're away; no typical water use is in the research).
 - **What's left:** Stage 14, with the owner's Console API key (`docs/AI-INTEGRATION.md`).
+- **Stage 14, built and off** (`65720751`): the assistant proposes ordinary commands, each tried and put back by `Simulation.preview` before the player sees it. It is off until the owner sets `ANTHROPIC_API_KEY` on Base44 (`docs/AI-INTEGRATION.md`, "Built, 2026-10-02").
+- **The master plan (the owner, 2026-10-02: "SLATE — Complete Master Development Plan And Implementation Command").** `docs/REQUIREMENTS.md` (`46758957`) holds every requested walkthrough against the code, with its status, and an eight-step build order. Keep it current with each commit; it is the open-work map for the plan, beside `docs/UNBITTEN.md`.
+  - **Build step 1, done:** the five places that broke a rule.
+    - A deposit the bank can't cover holds the room or the car until paid, or the day ends (`60b12bed`).
+    - An outfit goes on only when every piece can, and a swap on the day is told (`238af0d0`).
+    - An order goes back as "returned", and is canceled before delivery where British or Irish law gives the right (`40e4c5bb`).
+    - A fitting is paid only when the actor is there (`354e578d`).
+    - Look After Yourself eats from the kitchen before it spends (`0011bc17`).
+  - **Build step 2, the connected day, under way:**
+    - A fuel tank or battery on every rated vehicle (`systems/fueltank.ts`). The month's driving fills up at a quarter of a tank; errands burn from the tank and are refused when it runs short; there are Fill Up and Charge buttons. Capacities come from `docs/research/world/research-tanks.json` through `tools/build-tanks.mjs` into `content/tanks.ts`.
+    - What's worn now (`Person.wornNow`), with Change Into These Now taking `CHANGE_MINUTES`.
+    - Cooking by servings.
+    - Still to come in step 2: the shower walkthrough, washing up, purchases carried until unloaded, the dress check for acting, and the connected-day test with save and load.
 - **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
 - **Stage 14** needs the owner's API key.
 - **Stage 15, in part** (`71e9dbb5`, `dbfe58bd`): `docs/DEVMAP.md`, built and checked by `tools/devmap.mjs` in the gate; `docs/WALKTHROUGHS.md`; the rail's search; panel actions wrap inside their card.

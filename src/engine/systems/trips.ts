@@ -37,6 +37,7 @@ import { standInFor } from './standin';
 import { DRIVERS, type DriverService } from '../content/drivers';
 import type { Instant } from '../core/time';
 import { tireFactor } from './tires';
+import { burn, capacityOf, levelOf, rangeKm } from './fueltank';
 
 export interface Trip { by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; fuel: Money; km: number; /** Out in the car's stand-in, its rental's id (`systems/standin.ts`). */ standInId?: string; /** A driver hired to drive it, and when they set out (`content/drivers.ts`, from 2026-10-01). */ driver?: { id: string; from: Instant } }
 export interface Stop { kind: string; payload: Record<string, unknown>; leg: LegKind }
@@ -128,7 +129,15 @@ export function registerTrips(sim: Simulation): void {
     const here = person.currentLocationId;
     const l = leg(here, trip.by, p?.to === 'errand' ? 'errand' : 'shopping');
     const v = carOf(person, trip);
-    if (v && trip.driver) {
+    // Your own car runs on what's in its tank (`systems/fueltank.ts`, from 2026-10-02): a leg it can't make is refused
+    // here, and the leg's upkeep is the month's. Until then each leg's fuel was charged, and paid at the end.
+    const tanked = v && !trip.standInId && capacityOf(modelById(v.modelId)!) !== undefined;
+    if (tanked && !burn(v, l.km)) throw new CommandError(`There isn’t enough in the tank to get there: ${Math.round(rangeKm(v) ?? 0)} km left, and the leg is ${l.km.toFixed(1)}. Stop for fuel first.`);
+    if (v && tanked) {
+      v.errandKm = (v.errandKm ?? 0) + l.km;
+      v.km = (v.km ?? 0) + l.km;
+      if (!trip.driver) drive(s, person, v.jurisdiction, l.km, s.now, `${v.id}-errand-${s.now}`, kindOf(modelById(v.modelId)!), tireFactor(v, s.now));
+    } else if (v && trip.driver) {
       // Driven by the driver hired: the car's fuel and kilometers, and none of the road's risks to you.
       trip.fuel += runningCost(s, v, l.km);
       v.errandKm = (v.errandKm ?? 0) + l.km;
@@ -179,6 +188,12 @@ export function registerTrips(sim: Simulation): void {
     if (!trip || trip.by !== 'car') throw new CommandError('You aren’t out in the car.');
     const stations = STATIONS[person.currentLocationId] ?? [];
     const station = stations[Math.max(0, Math.min(stations.length - 1, Number(p?.station) || 0))] ?? 'a station';
+    // Your own car's tank filled there, as Fill Up fills it (`systems/fueltank.ts`).
+    const v = carOf(person, trip);
+    if (v && !trip.standInId && capacityOf(modelById(v.modelId)!) !== undefined) {
+      if (levelOf(v) >= 1 - 1e-6) { s.advanceTo(s.now + FUEL_STOP_MINUTES * 60_000); return { paid: payFuel(s, person, trip, station) }; }
+      return s.execute<{ paid: Money }>({ kind: 'vehicle.refuel', payload: { vehicleId: v.id, station: Number(p?.station) || 0 } }).value ?? { paid: 0 };
+    }
     s.advanceTo(s.now + FUEL_STOP_MINUTES * 60_000);
     return { paid: payFuel(s, person, trip, station) };
   });

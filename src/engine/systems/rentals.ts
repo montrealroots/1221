@@ -23,7 +23,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts, startOfNextDay, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
@@ -38,6 +38,7 @@ import type { JourneyLeg } from './journey';
 
 export const RENTAL_PICKUP_KIND = 'rental.pickup';
 export const RENTAL_RETURN_KIND = 'rental.return';
+export const RENTAL_DEPOSIT_KIND = 'travel.rental_deposit_due';
 const GRACE_MS = 29 * 60_000;
 
 export interface Rental {
@@ -50,9 +51,13 @@ export interface Rental {
   days: number;
   /** What was paid, in the save's money. */
   paid: Money;
-  status: 'booked' | 'out' | 'returned' | 'canceled';
+  /** `held`: at the desk, the deposit not yet held (from 2026-10-02). */
+  status: 'booked' | 'held' | 'out' | 'returned' | 'canceled';
   /** Where the car is while it's out. */
   at?: string;
+  /** A deposit the bank couldn't cover at the desk, and when the hold ends (from 2026-10-02). */
+  depositDue?: Money;
+  heldUntil?: Instant;
   /** The damage waiver offered, taken. */
   waived?: boolean;
   /** Its class, from 2026-10-01; a small car before. */
@@ -148,13 +153,15 @@ export function rentalDriven(sim: Simulation, person: Person, routeId: string, f
 }
 
 /** The desk's deposit, held on the card until the car goes back; none held where the bank can't cover it. */
-export function holdDeposit(sim: Simulation, person: Person, r: Rental, deposit: Money): void {
+/** Holds a rental's deposit, and says whether it could. Until 2026-10-02 a deposit the bank couldn't cover went unheld, and the car went out anyway. */
+export function holdDeposit(sim: Simulation, person: Person, r: Rental, deposit: Money): boolean {
   const t = RENTALS[r.cityId]!;
   const draw = drawFromBank(sim, person, deposit, false, true);
-  if (draw.short !== 0) return;
+  if (draw.short !== 0) return false;
   const escrow = sim.openAccount({ id: sim.nextId('account'), kind: 'escrow', name: 'Rental Car Deposit', ownerId: person.id, institution: t.company, openedAt: sim.now, category: 'rental-deposit' });
   sim.post({ memo: `${t.company}’s deposit, held`, category: 'travel', postings: [...draw.postings, { accountId: escrow.id, amount: deposit }] });
   r.escrowAccountId = escrow.id;
+  return true;
 }
 
 /** What a crash in this rental costs, in what money: a dealer's loaner is driven on your own cover, no desk's excess (`systems/standin.ts`). */
@@ -214,11 +221,48 @@ export function registerRentals(sim: Simulation, journeys: { journeysOf: (p: Per
       for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === RENTAL_RETURN_KIND && one.payload.rentalId === r.id) s.timeline.cancel(one.id, s.now);
       return;
     }
-    r.status = 'out';
-    r.at = r.cityId;
     const q = rentalQuote(s, person, r.cityId, r.pickupAt, r.returnAt, true, r.waived === true);
     const deposit = typeof q === 'string' ? 0 : q.deposit;
-    if (deposit > 0) holdDeposit(s, person, r, deposit);
+    if (deposit > 0 && !holdDeposit(s, person, r, deposit)) {
+      // At the desk, not on the road: the car is held until the deposit is, or the day ends.
+      r.status = 'held';
+      r.depositDue = deposit;
+      const until = startOfNextDay(s.now + 6 * MS_HOUR, CITIES.require(r.cityId).timeZone);
+      r.heldUntil = until;
+      s.schedule({ at: until, kind: RENTAL_DEPOSIT_KIND, label: 'The Rental Deposit, Due', category: 'personal', priority: 27, payload: { personId: person.id, rentalId: r.id } });
+      if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'The Car Is Held At The Desk', body: `The desk needs a deposit of ${formatMoney(deposit, saveCurrency(s.universe))} the bank can’t cover. Pay it on Travel by the end of the day, or the booking is given up and refunded.`, importance: 80, route: '/workspace/travel' });
+      return;
+    }
+    r.status = 'out';
+    r.at = r.cityId;
+  });
+
+  sim.onCommand<{ rentalId: string }, { paid: Money }>('travel.pay_rental_deposit', (p, { sim: s }) => {
+    const person = s.player;
+    const r = rentalsOf(person).find((x) => x.id === p?.rentalId);
+    if (!r || r.status !== 'held' || !r.depositDue) throw new CommandError('No car is held for a deposit.');
+    if (r.heldUntil !== undefined && s.now >= r.heldUntil) throw new CommandError('The hold has run out.');
+    const due = r.depositDue;
+    if (!holdDeposit(s, person, r, due)) throw new CommandError(`The deposit is ${formatMoney(due, saveCurrency(s.universe))}, more than the bank holds.`);
+    r.status = 'out';
+    r.at = r.cityId;
+    delete r.depositDue;
+    delete r.heldUntil;
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === RENTAL_DEPOSIT_KIND && one.payload.rentalId === r.id) s.timeline.cancel(one.id, s.now);
+    return { paid: due };
+  });
+
+  sim.onSchedule(RENTAL_DEPOSIT_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const r = person ? rentalsOf(person).find((x) => x.id === item.payload.rentalId) : undefined;
+    if (!person || !r || r.status !== 'held') return;
+    // Given up, and refunded as a car never picked up is: no company publishes a charge for it.
+    r.status = 'canceled';
+    delete r.depositDue;
+    delete r.heldUntil;
+    s.post({ memo: 'A rental car held for a deposit, given up and refunded', category: 'travel', postings: [{ accountId: person.primaryAccountId!, amount: r.paid }, { accountId: s.nominalAccount('expense', 'Travel').id, amount: -r.paid }] });
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === RENTAL_RETURN_KIND && one.payload.rentalId === r.id) s.timeline.cancel(one.id, s.now);
+    if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'The Rental Is Given Up', body: `The deposit wasn’t paid, so the desk kept the car; ${formatMoney(r.paid, saveCurrency(s.universe))} came back.`, importance: 70, route: '/workspace/travel' });
   });
 
   sim.onSchedule(RENTAL_RETURN_KIND, (item, s) => {

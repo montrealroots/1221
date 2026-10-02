@@ -30,6 +30,7 @@ import { RIDE_MODELS } from '../content/ridecatalog';
 import { CHARGING, EV_MODELS, evIncentives } from '../content/evcatalog';
 import { chargingRewards, homeShareOf, kwhPrice } from './charging';
 import { registerTint, tintAtInspection, tintFuelFactor, tintOnTheRoad, type TintKind } from './tint';
+import { everydayFuel } from './fueltank';
 import { modLoading, registerMods } from './mods';
 import { ATV_FEES, ATV_INSURANCE } from '../content/rides';
 import { BC, BIKE_FEES, BIKE_INSURANCE, RV_FEES, RV_INSURANCE, CA_STATE, CMX, CT, DEALER_DOC_FEE, DEPRECIATION, FUEL, GB, IE_MOTOR_TAX, INSURANCE, KM_A_YEAR, LOAN_RATES, NY, NY_REGISTRATION_BY_WEIGHT, ON, PERMITS, UNRATED_FUEL_USD_PER_KM, US_NEW_BELOW_STICKER, type Jurisdiction } from '../content/vehiclefees';
@@ -101,6 +102,8 @@ export interface OwnedVehicle {
   inShop?: import('./repairs').InShop;
   /** Kilometers driven on errands since the month's driving (`systems/trips.ts`), taken out of it. */
   errandKm?: number;
+  /** How full its tank or battery is, 0 to 1 (`systems/fueltank.ts`, from 2026-10-02); an older save's is full. */
+  fuelLevel?: number;
   /** A wrap in film over the paint (`systems/wraps.ts`, from 2026-10-01). */
   wrap?: import('./wraps').Wrap;
   /** Its services, and when one was first missed (`systems/carcare.ts`, from 2026-10-01). */
@@ -126,6 +129,9 @@ export function runningCost(sim: Simulation, v: OwnedVehicle, km: number, homeSh
   // Upkeep less the repairs drawn as faults (`systems/repairs.ts`); until 2026-10-01 all of AAA's.
   return fuelCost + inSave(sim, Math.round(km * upkeepPerKm(m, v.jurisdiction)), 'USD');
 }
+
+/** Upkeep for a distance in the save's money: AAA's, less the repairs drawn as faults (`systems/repairs.ts`). */
+export const upkeepCost = (sim: Simulation, v: OwnedVehicle, km: number): Money => inSave(sim, Math.round(km * upkeepPerKm(modelById(v.modelId)!, v.jurisdiction)), 'USD');
 
 /** A month of everyday driving, in kilometers: the place's published year, over twelve. */
 export const monthKm = (v: OwnedVehicle) => KM_A_YEAR[v.jurisdiction] / 12;
@@ -659,11 +665,17 @@ export function registerVehicles(sim: Simulation): void {
     if (!v.repossessed && !missing && !forOutings(m) && !v.fault?.severe && !inShopNow(v, s.now) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m), m.cc).ok) {
       // The month's everyday driving, less what errands have already driven and paid for (`systems/trips.ts`).
       const km = Math.max(0, monthKm(v) - (v.errandKm ?? 0));
+      const errandKm = v.errandKm ?? 0;
       v.errandKm = 0;
-      const run = runningCost(s, v, km, homeShareOf(person));
+      // Through the tank where one is kept (`systems/fueltank.ts`, from 2026-10-02): the month's fill-ups, and
+      // upkeep on every kilometer, the errands' too, whose fuel came out of the tank. Tried on a copy, and kept if paid.
+      const trial = { ...v };
+      const filled = everydayFuel(s, trial, km, homeShareOf(person));
+      const run = filled ? filled.cost + upkeepCost(s, v, km + errandKm) : runningCost(s, v, km, homeShareOf(person));
       // Fuel is bought at the pump, by the bank or the card: a month neither can pay for, the car isn't driven. Until
       // 2026-09-29 the fuel went into arrears as if it had been burned, and a New York life starved paying for it.
       if (spend(s, person, run, `Fuel and upkeep, the ${m.make} ${m.model}`, 'vehicle')) {
+        if (filled) v.fuelLevel = trial.fuelLevel;
         // The utility's rewards for charging at home off the peak (`systems/charging.ts`).
         const reward = m.fuel === 'ev' && m.kwhPer100km ? chargingRewards(s, person, v.jurisdiction, (km * m.kwhPer100km * homeShareOf(person)) / 100, v.monthsCharged ?? 0, zonedParts(item.at, s.homeZone).month) : 0;
         if (reward > 0) { s.post({ memo: 'Charging rewards, the month', category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: reward }, { accountId: s.nominalAccount('income', 'Charging Rewards').id, amount: -reward }] }); v.monthsCharged = (v.monthsCharged ?? 0) + 1; }

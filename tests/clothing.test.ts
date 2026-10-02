@@ -12,11 +12,12 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { CLOTHING_PRODUCTS } from '@/engine/content/clothingcatalog';
-import { buyRefusal, clothingCatalog, clothingTax, dryCleanPrice, productPrice, purchaseItems, purchaseQuote, retailerById, STARTER, starterWardrobe } from '@/engine/systems/clothing';
+import { buyRefusal, cancelRefusal, clothingCatalog, clothingTax, dryCleanPrice, productPrice, purchaseItems, purchaseQuote, retailerById, STARTER, starterWardrobe } from '@/engine/systems/clothing';
 import { arrange } from '@/engine/systems/catalog';
 import { cleanOutfits, garmentsOf, outfitFor, washableDirty, wearTheDay } from '@/engine/systems/wardrobe';
 import { sizeFor } from '@/engine/systems/tailoring';
 import { reachable } from '@/engine/systems/items';
+import { ordersOf } from '@/engine/systems/orders';
 
 const life = (seed: string, city = 'us-ny-newyork') => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const bank = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
@@ -95,6 +96,39 @@ describe('buying', () => {
     expect(items[0]!.at.kind).toBe('order');
     sim.advanceBy(7 * MS_DAY + 60_000);
     expect(items[0]!.at.kind).toBe('home');
+  });
+});
+
+describe('an order called off, or sent back', () => {
+  it('in Britain, before it comes, by law: refunded whole, delivery too, and never delivered', () => {
+    const sim = life('cancel-gb', 'uk-eng-london');
+    const p = CLOTHING_PRODUCTS.find((x) => x.market === 'GB' && retailerById(x.retailer)!.delivers && !buyRefusal(sim.player, { productId: x.id, how: 'online', size: sizeFor(sim, sim.player, x.sizes), color: x.colors[0] }))!;
+    const before = bank(sim);
+    sim.must({ kind: 'clothes.buy', payload: { productId: p.id, how: 'online', size: sizeFor(sim, sim.player, p.sizes), color: p.colors[0] } });
+    const bought = sim.player.clothesBought!.at(-1)!;
+    const order = ordersOf(sim.player).at(-1)!;
+    expect(bank(sim)).toBe(before - order.paid);
+    expect(cancelRefusal(sim.player, bought.id)).toBeUndefined();
+    expect(sim.must<{ refunded: number }>({ kind: 'clothes.cancel', payload: { purchaseId: bought.id } }).refunded).toBe(order.paid);
+    expect(bank(sim)).toBe(before);
+    expect(order.status).toBe('canceled');
+    expect(purchaseItems(sim.player, bought.id)).toHaveLength(0);
+    expect(sim.universe.scheduled.some((x) => x.status === 'pending' && x.payload.orderId === order.id)).toBe(false);
+    expect(sim.execute({ kind: 'clothes.cancel', payload: { purchaseId: bought.id } }).error).toBe('It’s called off already.');
+    sim.advanceBy(14 * MS_DAY);
+    expect(order.status).toBe('canceled');
+    expect(purchaseItems(sim.player, bought.id)).toHaveLength(0);
+  });
+
+  it('in America, not by SLATE’s guess at a retailer’s terms; delivered, it goes back, and the order says so', () => {
+    const sim = life('cancel-us');
+    sim.must({ kind: 'clothes.buy', payload: { productId: tee.id, how: 'online', size: sizeFor(sim, sim.player, tee.sizes), color: tee.colors[0] } });
+    const bought = sim.player.clothesBought!.at(-1)!;
+    expect(sim.execute({ kind: 'clothes.cancel', payload: { purchaseId: bought.id } }).error).toMatch(/doesn’t know Uniqlo’s terms/);
+    sim.advanceBy(7 * MS_DAY + 60_000);
+    expect(cancelRefusal(sim.player, bought.id)).toMatch(/delivered/);
+    sim.must({ kind: 'clothes.return', payload: { purchaseId: bought.id, how: 'mail' } });
+    expect(ordersOf(sim.player).find((o) => o.id === bought.orderId)!.status).toBe('returned');
   });
 });
 

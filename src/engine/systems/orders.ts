@@ -17,6 +17,7 @@ import type { Person } from '../domain/model';
 import type { Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { addItem, homeKeyOf, itemsOf, type Item, type Place } from './items';
+import { expenseFor } from './household';
 
 export const ORDER_KIND = 'items.order_arrives';
 
@@ -28,8 +29,10 @@ export interface Order {
   /** Where it's sent. */
   to: Place;
   paid: Money;
-  status: 'placed' | 'delivered' | 'returned';
+  /** `returned` once all of it has gone back, `canceled` called off before it came (both set from 2026-10-02; until then `returned` was declared and never set). */
+  status: 'placed' | 'delivered' | 'returned' | 'canceled';
   deliveredAt?: Instant;
+  endedAt?: Instant;
 }
 
 export const ordersOf = (person: Person): Order[] => (person.orders ??= []);
@@ -64,6 +67,23 @@ export function deliver(sim: Simulation, person: Person, orderId: string): boole
   order.deliveredAt = sim.now;
   if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'A Delivery', body: `Your order from ${order.from} has arrived.`, importance: 30, route: BELONGINGS_ROUTE });
   return true;
+}
+
+/**
+ * An order called off before it's delivered: its items gone from it, its
+ * delivery stood down, off the calendar too, and what was paid, delivery
+ * and all, refunded. The caller says whether it may be.
+ */
+export function cancelOrder(sim: Simulation, person: Person, orderId: string, memo: string, category: string): Money {
+  const order = ordersOf(person).find((o) => o.id === orderId);
+  if (!order) return 0;
+  person.items = itemsOf(person).filter((i) => !(i.at.kind === 'order' && i.at.orderId === orderId));
+  for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === ORDER_KIND && one.payload.orderId === orderId) sim.timeline.cancel(one.id, sim.now);
+  const account = person.primaryAccountId;
+  if (account && order.paid > 0) sim.post({ memo, category, postings: [{ accountId: account, amount: order.paid }, { accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount: -order.paid }] });
+  order.status = 'canceled';
+  order.endedAt = sim.now;
+  return order.paid;
 }
 
 const BELONGINGS_ROUTE = '/workspace/belongings';

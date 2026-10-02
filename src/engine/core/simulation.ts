@@ -547,6 +547,43 @@ export class Simulation {
     }
   }
 
+  /**
+   * A command tried and put back: what it would do now, by the same rules and
+   * refusals as `execute`, and the world exactly as it was afterwards. The
+   * built-in assistant shows a proposal this way before the player takes it
+   * (`systems/assistant.ts`, from 2026-10-02).
+   */
+  preview<R = unknown, T = undefined>(command: Command<Record<string, unknown>, R>, read?: (sim: Simulation) => T): CommandResult<R> & { notices: string[]; read?: T } {
+    if (this.depth > 0 || this.advancing) return { ok: false, error: 'A proposal is tried only while the clock is still.', notices: [] };
+    const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);
+    const eventsBefore = this.pendingEvents.length;
+    const noticesBefore = this.universe.notifications.length;
+    let result: CommandResult<R>;
+    let notices: string[] = [];
+    let seen: T | undefined;
+    try {
+      result = this.execute<R>(command);
+      // Whatever the caller asked to read, in the world the command left, before it is put back.
+      if (result.ok && read) seen = read(this);
+    } finally {
+      // Read what it said before the log is put back.
+      notices = this.universe.notifications.slice(noticesBefore).map((n) => n.title);
+      restoreUniverse(this.universe, snapshot);
+      this.pendingEvents.length = eventsBefore;
+    }
+    return { ...result, notices, ...(seen !== undefined ? { read: seen } : {}) };
+  }
+
+  /** A reading of the world that leaves it untouched, whatever the reading's helpers set up on the way (from 2026-10-02). */
+  peek<T>(read: (sim: Simulation) => T): T {
+    const snapshot: UniverseSnapshot = snapshotUniverse(this.universe);
+    try {
+      return read(this);
+    } finally {
+      restoreUniverse(this.universe, snapshot);
+    }
+  }
+
   /** Throws on failure. For internal call sites that treat failure as a bug. */
   must<R = unknown>(command: Command<Record<string, unknown>, R>): R {
     const result = this.execute<R>(command);

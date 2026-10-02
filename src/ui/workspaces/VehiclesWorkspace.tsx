@@ -35,6 +35,8 @@ import { FINISHES, WRAP_COLORS, coverRefusal, wrapCost, wrapRefusal, wrapShopsIn
 import { inWarranty, serviceCost, serviceDue, serviceRefusal, serviceWhat, servicingKept, warrantyOf } from '@/engine/systems/carcare';
 import { CAR_SHOPS } from '@/engine/content/carshops';
 import { standInFor, standInQuote } from '@/engine/systems/standin';
+import { FILL, capacityOf, fillQuote, fillRefusal, levelOf, rangeKm } from '@/engine/systems/fueltank';
+import { homeShareOf } from '@/engine/systems/charging';
 import { stereoQuote } from '@/engine/systems/caraudio';
 import { PRE_PURCHASE, inspectionPrice, reportOn } from '@/engine/systems/usedcars';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -99,7 +101,7 @@ export function VehiclesWorkspace() {
                     const m = modelById(v.modelId)!;
                     return (
                       <tr key={v.id}>
-                        <td><Open subject={at('vehicle', v.id)}>{m.make} {m.model}</Open></td>
+                        <td><Open subject={at('vehicle', v.id)}>{m.make} {m.model}</Open><FuelGauge v={v} /></td>
                         <td><Open subject={at('day', dateKey(v.boughtAt, sim.homeZone))}>{formatDate(v.boughtAt, sim.zone)}</Open>{v.ageAtPurchase ? `, ${v.ageAtPurchase} Years Old` : ', New'}</td>
                         <td className="num mono"><Open subject={at('vehicle', v.id)}>{v.lease ? 'Leased' : inHome(valueOf(v, sim.now), m.currency)}</Open></td>
                         <td className="num mono">{v.lease ? `${money(v.lease.monthly)} A Month, ${v.lease.monthsLeft} Left` : v.loan ? <Open subject={at('vehicle', v.id)}>{money(v.loan.owed)}</Open> : 'None'}</td>
@@ -131,6 +133,7 @@ export function VehiclesWorkspace() {
                             <div className="row gap-1" style={{ flexWrap: 'wrap', justifyContent: 'flex-end', maxWidth: 240 }}>
                             {!tiresRefusal(v) && <Gated feature="vehicle.winter_tires" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.winter_tires', { vehicleId: v.id }); if (a.ok) toast(`Winter tires on, for ${money(a.value!.paid)}.`, 'positive'); }}>Winter Tires</Gated>}
                             {(['rear', 'full'] as const).filter((k) => !tintRefusal(v, k, glazed(v))).map((k) => <Gated key={k} feature="vehicle.tint" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number; legal: boolean }>('vehicle.tint', { vehicleId: v.id, kind: k }); if (a.ok) toast(a.value!.legal ? `Tinted, within the law here, for ${money(a.value!.paid)}.` : `Tinted darker than the law here allows, for ${money(a.value!.paid)}.`, a.value!.legal ? 'positive' : 'neutral'); }}>{k === 'rear' ? 'Tint The Back' : 'Tint All Round'}</Gated>)}
+                            <FuelControl v={v} />
                             <StereoControl v={v} />
                             <RepairControl v={v} />
                             <ServiceControl v={v} />
@@ -421,6 +424,35 @@ function StandInControl({ v }: { v: OwnedVehicle }) {
 }
 
 /** A fault the car has, and the garages in its town that would take it (`systems/repairs.ts`). */
+/** How full its tank or battery is, and how far that goes (`systems/fueltank.ts`). */
+function FuelGauge({ v }: { v: OwnedVehicle }) {
+  const cap = capacityOf(modelById(v.modelId)!);
+  if (!cap) return null;
+  const range = rangeKm(v);
+  return <div className="xs dim">{cap.unit === 'kWh' ? 'Battery' : 'Tank'} {Math.round(levelOf(v) * 100)}%{range !== undefined ? `, ${Math.round(range)} km` : ''} of {Math.round(cap.size)} {cap.unit === 'kWh' ? 'kWh' : 'Liters'}{cap.estimated ? ' (SLATE’s Estimate)' : ''}</div>;
+}
+
+/** Filled at a station in its town, or charged: publicly, or at home on a charger (`vehicle.refuel`). */
+function FuelControl({ v }: { v: OwnedVehicle }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const m = modelById(v.modelId)!;
+  const cur = saveCurrency(sim.universe);
+  const ev = m.fuel === 'ev';
+  const ways = ev ? [false, ...(homeShareOf(person) > 0 ? [true] : [])] : [false];
+  return (
+    <>
+      {ways.map((home) => {
+        if (fillRefusal(person, v.id, home)) return null;
+        const q = fillQuote(sim, v, ev && home ? FILL.batteryTo : 1, home);
+        if (!q) return null;
+        const label = ev ? (home ? 'Charge At Home' : 'Charge It') : 'Fill Up';
+        return <Gated key={String(home)} feature="vehicle.refuel" className="btn btn-sm btn-ghost" title={`${q.amount.toFixed(1)} ${q.unit === 'kWh' ? 'kWh' : 'liters'} at the place’s ${ev ? (home ? 'home' : 'public') + ' price' : 'pump price'}`} onClick={() => { const a = run<{ paid: number }>('vehicle.refuel', { vehicleId: v.id, ...(home ? { home: true } : {}) }); if (a.ok) toast(`${ev ? 'Charged' : 'Filled'}, for ${formatMoney(a.value!.paid, cur)}.`, 'positive'); }}>{`${label}, ${formatMoney(q.cost, cur, { cents: false })}`}</Gated>;
+      })}
+    </>
+  );
+}
+
 /** A stereo with CarPlay fitted, where a retailer publishes the fitting (`vehicle.stereo`). */
 function StereoControl({ v }: { v: OwnedVehicle }) {
   const { sim, run, toast } = useGame();

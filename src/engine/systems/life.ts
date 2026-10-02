@@ -33,6 +33,8 @@ import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
+import { cook, kitchenMeal } from './kitchen';
+import { takePortion } from './pantry';
 import { cleanOutfits, washableDirty } from './wardrobe';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { GROOMING, dailyCare, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
@@ -434,11 +436,24 @@ export function registerLife(sim: Simulation): void {
       // The hour is lived first, and charged as waking like any other, so
       // what it does is on top of what the hour already cost.
       const cost = costFor(s, action);
+      // Eaten from the kitchen first: what's ready, or a recipe the stock makes, cooked as Cook It cooks it.
+      const kitchen = action === 'eat' ? kitchenMeal(s, s.player) : undefined;
+      if (kitchen && 'recipeId' in kitchen) {
+        const before = { ...s.player.wellbeing };
+        cook(s, s.player, kitchen.recipeId);
+        const changed: Partial<Wellbeing> = {};
+        for (const key of Object.keys(before) as (keyof Wellbeing)[]) {
+          const moved = (s.player.wellbeing[key] ?? 0) - (before[key] ?? 0);
+          if (moved !== 0) changed[key] = moved;
+        }
+        return { doneAt: s.now, changed };
+      }
       s.advanceTo(s.now + minutesFor(s, action) * 60_000);
       const person = s.player;
       // A meal is bought as it's cooked (`systems/household.ts`), and a delivered one at delivery's price.
       // A payment that doesn't go through leaves them unfed: the command fails, and the time with it.
-      if (action === 'eat' && !spend(s, person, cost, cooks(s, person) ? 'A meal' : 'A meal out', 'food')) throw new CommandError('The payment didn’t go through.');
+      if (kitchen) takePortion(person, kitchen.ready);
+      else if (action === 'eat' && !spend(s, person, cost, cooks(s, person) ? 'A meal' : 'A meal out', 'food')) throw new CommandError('The payment didn’t go through.');
       if (action === 'order' && !spend(s, person, cost, 'A meal delivered', 'food')) throw new CommandError('The payment didn’t go through.');
       if (action === 'laundry' && !doLaundry(s, person, s.now)) throw new CommandError('The payment didn’t go through.');
       if (action === 'boat' && !spend(s, person, cost, 'Gas for the boat, at the marina', 'vehicle')) throw new CommandError('The payment didn’t go through.');
@@ -600,7 +615,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   const busy = action === 'eat' ? undefined : occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   if ((action === 'eat' || action === 'order') && w.nourishment >= FULL) return 'You aren’t hungry.';
-  if ((action === 'eat' || action === 'order' || action === 'laundry') && canPay(sim, person) < costFor(sim, action)) return 'You can’t afford it.';
+  if ((action === 'eat' || action === 'order' || action === 'laundry') && canPay(sim, person) < costFor(sim, action) && !(action === 'eat' && kitchenMeal(sim, person))) return 'You can’t afford it.';
   if ((action === 'wash' || action === 'bathe') && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
   if ((action === 'wash' || action === 'bathe') && !atHome(person) && roomGone(person)) return 'You’ve checked out, and the room is gone until you leave.';
   if (action === 'bathe' && !place?.fixtures.bathtub) return atHome(person) ? 'There’s no bath where you live, only a shower.' : 'There’s no bath where you’re staying, only a shower.';

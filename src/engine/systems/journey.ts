@@ -26,11 +26,11 @@ import type { Simulation } from '../core/simulation';
 import { CAMPGROUNDS, HOTEL_PARKING, STAY_CLASS_LABEL, type RatePlan, type StayClass } from '../content/staytypes';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, MS_HOUR, formatDate, formatTime, instantFromZoned, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, MS_HOUR, formatDate, formatTime, instantFromZoned, zonedParts, startOfNextDay, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
-import { expenseFor } from './household';
+import { expenseFor, inTheBank } from './household';
 import { AIR, fareUsd, groundLeg } from '../content/air';
 import { owe, payFromBank } from './household';
 import { present } from './career';
@@ -90,7 +90,7 @@ export interface Journey {
   /** A round trip's two journeys share a trip, booked, paid and canceled together. */
   tripId?: string;
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
-  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string }; /** Its deposit held now, and returned at check-out. */ deposit?: Money; returned?: Money; /** A late check-out bought, and its hour (`systems/latecheckout.ts`, from 2026-10-02). */ lateUntil?: Instant };
+  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string }; /** Its deposit held now, and returned at check-out. */ deposit?: Money; returned?: Money; /** A deposit the bank couldn't cover at arrival: the room held, not given, until the end of that day (from 2026-10-02). */ depositDue?: Money; heldUntil?: Instant; /** The stay given up, the deposit never paid. */ forfeited?: boolean; /** A late check-out bought, and its hour (`systems/latecheckout.ts`, from 2026-10-02). */ lateUntil?: Instant };
   /** A holiday let there instead (`content/lets.ts`, from 2026-09-29): its nights, price and the service fee in it. */
   let?: { nights: number; price: Money; fee: Money; basis: string; checkOutAt: Instant };
   /** Business or first, where not economy (from 2026-09-29). */
@@ -552,7 +552,7 @@ export function registerJourneys(sim: Simulation): void {
     }
     out.total += q.stay;
     // The rental car kept to the new day.
-    const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'out'));
+    const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'held' || r.status === 'out'));
     if (car) {
       car.returnAt = leaveAt;
       car.days = rentalDays(car.pickupAt, leaveAt);
@@ -648,6 +648,37 @@ export function registerJourneys(sim: Simulation): void {
     if (rebooked || late > 15) tell(rebooked ? 'A Flight Canceled' : 'A Flight Late', rebooked ? `The airline put you on the next one: you’ll arrive about ${Math.round(late / 60)} hours late.` : `You’ll arrive about ${late} minutes late.`);
   });
 
+  sim.onCommand<{ journeyId: string }, { paid: Money }>('travel.pay_deposit', (p, { sim: s }) => {
+    const person = s.player;
+    const no = depositRefusal(s, person, String(p?.journeyId));
+    if (no) throw new CommandError(no);
+    const j = journeysOf(person).find((x) => x.id === p.journeyId)!;
+    const due = j.hotel!.depositDue!;
+    if (!payFromBank(s, person, due, `${hotelById(j.hotel!.named!.hotelId)?.name ?? 'The hotel'}, the deposit held`, 'travel')) throw new CommandError('Your bank declined the payment.');
+    j.hotel!.deposit = due;
+    delete j.hotel!.depositDue;
+    delete j.hotel!.heldUntil;
+    // The key, and the room.
+    if (person.stay?.kind === 'hotel' && person.stay.cityId === j.toCity) delete person.stay.out;
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === DEPOSIT_DUE_KIND && one.payload.journeyId === j.id) s.timeline.cancel(one.id, s.now);
+    return { paid: due };
+  });
+
+  sim.onSchedule(DEPOSIT_DUE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const j = person ? journeysOf(person).find((x) => x.id === item.payload.journeyId) : undefined;
+    if (!person || !j?.hotel?.depositDue) return;
+    // Given up: what the hotel's terms give back comes back, as a cancellation on the day would (`hotelRefund`).
+    const back = hotelRefund(j.hotel, j.arriveAt, s.now);
+    if (back > 0) s.post({ memo: 'A hotel stay given up, the deposit unpaid', category: 'travel', postings: refundPostings(s, person, back) });
+    j.hotel.forfeited = true;
+    delete j.hotel.depositDue;
+    delete j.hotel.heldUntil;
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === CHECKOUT_KIND && one.payload.journeyId === j.id) s.timeline.cancel(one.id, s.now);
+    if (person.stay?.kind === 'hotel' && person.stay.cityId === j.toCity) person.stay = { kind: 'sofa', cityId: j.toCity };
+    if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'Hotel Stay Given Up', body: `Unpaid, the deposit cost you the room: it went to another guest${back > 0 ? `, and ${formatMoney(back, saveCurrency(s.universe))} came back` : ''}. A friend’s sofa until you leave.`, importance: 85, route: '/workspace/travel' });
+  });
+
   sim.onSchedule(CHECKOUT_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     if (person) checkOut(s, person, String(item.payload.cityId), String(item.payload.journeyId));
@@ -689,6 +720,11 @@ export function registerJourneys(sim: Simulation): void {
       // A named hotel's deposit, held at arrival and returned at check-out (`depositFor`, from 2026-10-01).
       const deposit = j.hotel.named ? depositFor(s, j.hotel.named.hotelId, j.hotel.nights) : 0;
       if (deposit > 0 && payFromBank(s, person, deposit, `${hotelById(j.hotel.named!.hotelId)!.name}, the deposit held`, 'travel')) j.hotel.deposit = deposit;
+      else if (deposit > 0) {
+        // The bank can't cover the deposit: the room is held, not given, until the day ends (from 2026-10-02; until
+        // then the stay was granted whether the deposit was paid or not).
+        holdForDeposit(s, person, j, deposit);
+      }
       s.schedule({ at: j.hotel.checkOutAt, kind: CHECKOUT_KIND, label: 'Hotel Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id, cityId: j.toCity } });
     }
     if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: `In ${CITIES.require(j.toCity).name}`, body: `${j.lateMinutes ? `${j.lateMinutes} minutes late. ` : ''}You’re here.`, importance: 55 });
@@ -716,6 +752,28 @@ export function trainRefund(sim: Simulation, j: Journey, route: import('../conte
 }
 
 /** Check-out: gone from the town, nothing; still there and not home, another night at the rate, or a friend's sofa if the bank can't pay for it. */
+export const DEPOSIT_DUE_KIND = 'travel.deposit_due';
+
+/** The room held for a deposit the bank couldn't cover: no key until it's paid, and given up when the day ends. */
+function holdForDeposit(sim: Simulation, person: Person, j: Journey, deposit: Money): void {
+  const zone = CITIES.require(j.toCity).timeZone;
+  j.hotel!.depositDue = deposit;
+  // Until the day ends, or the next one for an arrival in its last six hours, so a late flight is not given up in minutes.
+  j.hotel!.heldUntil = startOfNextDay(sim.now + 6 * MS_HOUR, zone);
+  person.stay = { kind: 'hotel', cityId: j.toCity, out: true };
+  sim.schedule({ at: j.hotel!.heldUntil, kind: DEPOSIT_DUE_KIND, label: 'Hotel Deposit Due', category: 'personal', priority: 25, payload: { personId: person.id, journeyId: j.id } });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'personal', title: 'Room Held For A Deposit', body: `${hotelById(j.hotel!.named!.hotelId)?.name ?? 'The hotel'} needs a deposit of ${formatMoney(deposit, saveCurrency(sim.universe))} that the bank can’t cover. The room is held until the end of the day; pay it on Travel, or the stay is given up.`, importance: 85, route: '/workspace/travel' });
+}
+
+/** Why a held room's deposit can't be paid now, or nothing. */
+export function depositRefusal(sim: Simulation, person: Person, journeyId: string): string | undefined {
+  const j = journeysOf(person).find((x) => x.id === journeyId);
+  if (!j?.hotel?.depositDue) return 'No deposit is due on that stay.';
+  if (j.hotel.heldUntil !== undefined && sim.now >= j.hotel.heldUntil) return 'Too late: the hold has run out.';
+  if (inTheBank(sim, person) < j.hotel.depositDue) return `A deposit of ${formatMoney(j.hotel.depositDue, saveCurrency(sim.universe))} is more than the bank holds.`;
+  return undefined;
+}
+
 function checkOut(sim: Simulation, person: Person, cityId: string, journeyId: string): void {
   // The deposit comes back at check-out, wherever they are (`depositFor`, from 2026-10-01).
   const held = journeysOf(person).find((j) => j.id === journeyId)?.hotel;
@@ -815,7 +873,7 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
     if (!longer) return streetRefusal(back.fromCity, nights) ?? 'The stay can’t run longer.';
     stay = longer.price + per * nights - out.hotel.price;
   }
-  const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'out'));
+  const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'held' || r.status === 'out'));
   let rental = 0;
   if (car) {
     const q = rentalQuote(sim, person, car.cityId, car.pickupAt, legs[0]!.departAt, true, car.waived === true, car.cls ?? 'small');

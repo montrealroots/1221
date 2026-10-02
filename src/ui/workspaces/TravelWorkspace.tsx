@@ -301,7 +301,7 @@ export function TravelWorkspace() {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
                           if (a.ok) toast(a.value!.refund > 0 ? `Canceled: ${money(a.value!.refund)} back.` : 'Canceled: the fares aren’t refunded.', 'positive');
                         }}>Cancel It</Gated>
-                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}{j.status === 'arrived' && <CheckOutLate j={j} />}</div></td>
+                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}{j.status === 'arrived' && <CheckOutLate j={j} />}<PayDeposits j={j} /></div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -518,6 +518,19 @@ function CheckOutLate({ j }: { j: Journey }) {
   );
 }
 
+/** A deposit the bank couldn't cover on arrival: the room or the car held until it's paid, or the day ends. */
+function PayDeposits({ j }: { j: Journey }) {
+  const { sim, run, toast } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const car = rentalsOf(sim.player).find((r) => r.journeyId === j.id && r.status === 'held');
+  return (
+    <>
+      {j.hotel?.depositDue ? <Gated feature="travel.pay_deposit" className="btn btn-sm btn-ghost" onClick={() => { if (run('travel.pay_deposit', { journeyId: j.id }).ok) toast('The room is yours.', 'positive'); }}>{`Pay The Deposit, ${formatMoney(j.hotel.depositDue, cur, { cents: false })}`}</Gated> : null}
+      {car?.depositDue ? <Gated feature="travel.pay_rental_deposit" className="btn btn-sm btn-ghost" onClick={() => { if (run('travel.pay_rental_deposit', { rentalId: car.id }).ok) toast('The car is yours until it’s due back.', 'positive'); }}>{`Pay The Car’s Deposit, ${formatMoney(car.depositDue, cur, { cents: false })}`}</Gated> : null}
+    </>
+  );
+}
+
 /** A hotel stay's folio: the room and its taxes, parking, and the deposit held and returned. */
 function Folio({ hotel }: { hotel: NonNullable<Journey['hotel']> }) {
   const { sim } = useGame();
@@ -528,6 +541,8 @@ function Folio({ hotel }: { hotel: NonNullable<Journey['hotel']> }) {
     `${named ? `, ${hotel.named!.room}` : 'The Room'}, ${money(hotel.price - (hotel.parking ?? 0))}`,
     ...(hotel.parking ? [`Parking, ${money(hotel.parking)}`] : []),
     ...(hotel.deposit ? [`Deposit Held, ${money(hotel.deposit)}`] : []),
+    ...(hotel.depositDue ? [`Deposit Due, ${money(hotel.depositDue)}, The Room Held`] : []),
+    ...(hotel.forfeited ? ['Given Up, The Deposit Unpaid'] : []),
     ...(hotel.returned ? [`Deposit Returned, ${money(hotel.returned)}`] : []),
     ...(named?.checkOut ? [`Check-Out ${named.checkOut}`] : []),
   ];

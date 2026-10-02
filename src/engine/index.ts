@@ -108,6 +108,7 @@ import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
 import { registerGyms } from './systems/gyms';
 import { registerTrips } from './systems/trips';
+import { registerFuelTank } from './systems/fueltank';
 import { registerMarriage } from './systems/marriage';
 import { registerChildren } from './systems/children';
 import { registerDating } from './systems/dating';
@@ -210,6 +211,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerPartners(sim);
   registerGyms(sim);
   registerTrips(sim);
+  registerFuelTank(sim);
   registerMarriage(sim);
   registerChildren(sim);
   registerAdoption(sim);

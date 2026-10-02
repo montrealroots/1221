@@ -27,7 +27,8 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, type Instant } from '../core/time';
+import { MS_DAY, formatTime, type Instant } from '../core/time';
+import { occupiedAt } from './life';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { CITIES } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
@@ -39,10 +40,10 @@ import { inSaveMoney } from './banking';
 import { atTown } from './homes';
 import { expenseFor, spend } from './household';
 import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place } from './items';
-import { ordersOf, placeOrder } from './orders';
+import { cancelOrder, ordersOf, placeOrder } from './orders';
 import { fitOf, fitKgFor, sizeFor } from './tailoring';
 import { bodyOf } from './body';
-import { dryCleanDirty, garmentsOf, wearTheDay, type Garment } from './wardrobe';
+import { CHANGE_MINUTES, changeInto, dryCleanDirty, garmentsOf, unwearable, wearTheDay, type Garment } from './wardrobe';
 
 /** A purchase of clothes: what, from whom, how, and what the goods cost; and whether it went back. */
 export interface ClothesPurchase {
@@ -58,6 +59,8 @@ export interface ClothesPurchase {
   /** How many garments it brought: a pack's each. */
   count: number;
   returnedAt?: Instant;
+  /** Called off before it was delivered (from 2026-10-02). */
+  canceledAt?: Instant;
 }
 
 /** An outfit they've put together and named. */
@@ -251,6 +254,47 @@ export function returnClothes(sim: Simulation, person: Person, purchaseId: strin
   person.items = itemsOf(person).filter((i) => !gone.has(i.id));
   forget(person, gone);
   purchase.returnedAt = sim.now;
+  // The order it came on, all of it gone back.
+  const order = ordersOf(person).find((o) => o.id === purchase.orderId);
+  if (order) { order.status = 'returned'; order.endedAt = sim.now; }
+  return back;
+}
+
+/**
+ * Where an order may be called off before it comes, by law: in Britain the
+ * Consumer Contracts Regulations 2013 and in Ireland the European Union
+ * (Consumer Information, Cancellation and Other Rights) Regulations 2013
+ * (S.I. 484/2013) give a buyer at a distance the right to cancel from the
+ * order until 14 days after delivery, refunded in full with the standard
+ * delivery paid. In America, Canada and Mexico it's each retailer's own
+ * terms, which SLATE doesn't hold.
+ */
+export const CANCEL_BY_LAW: Readonly<Partial<Record<ClothingMarket, string>>> = {
+  GB: 'the Consumer Contracts Regulations 2013',
+  IE: 'S.I. 484/2013',
+};
+
+/** Why an order of clothes can't be called off now, or nothing. */
+export function cancelRefusal(person: Person, purchaseId: string): string | undefined {
+  const purchase = (person.clothesBought ?? []).find((x) => x.id === purchaseId);
+  if (!purchase) return 'That isn’t something you bought.';
+  if (purchase.canceledAt !== undefined) return 'It’s called off already.';
+  const order = ordersOf(person).find((o) => o.id === purchase.orderId);
+  if (!order) return 'Bought in a store, it’s yours: it can be returned.';
+  if (order.status !== 'placed') return 'It’s been delivered: it can be returned.';
+  const r = retailerById(purchase.retailerId)!;
+  if (!CANCEL_BY_LAW[r.market]) return `SLATE doesn’t know ${r.name}’s terms for calling an order off; it can be returned once it comes.`;
+  return undefined;
+}
+
+/** Calls an order of clothes off before it's delivered: refunded whole, delivery too. */
+export function cancelClothes(sim: Simulation, person: Person, purchaseId: string): Money {
+  const no = cancelRefusal(person, purchaseId);
+  if (no) throw new CommandError(no);
+  const purchase = person.clothesBought!.find((x) => x.id === purchaseId)!;
+  const r = retailerById(purchase.retailerId)!;
+  const back = cancelOrder(sim, person, purchase.orderId!, `${r.name}: an order canceled, refunded`, 'clothing');
+  purchase.canceledAt = sim.now;
   return back;
 }
 
@@ -327,6 +371,18 @@ export function outfitRefusal(sim: Simulation, person: Person, itemIds: readonly
   return undefined;
 }
 
+/** Why these garments can't be put on now, or nothing: an outfit, each piece of it clean, dry, fitting and to hand (from 2026-10-02; until then a dirty piece was taken and silently swapped on the day). */
+export function dressRefusal(sim: Simulation, person: Person, itemIds: readonly string[]): string | undefined {
+  const no = outfitRefusal(sim, person, itemIds);
+  if (no) return no;
+  for (const id of itemIds) {
+    const item = itemById(person, id) as Item & { garment: Garment };
+    const why = unwearable(sim, person, item);
+    if (why) return `${item.label} is ${why}.`;
+  }
+  return undefined;
+}
+
 /** Puts together an outfit and names it. */
 export function saveOutfit(sim: Simulation, person: Person, name: string, itemIds: readonly string[]): Outfit {
   const title = name.trim();
@@ -377,7 +433,7 @@ export function starterWardrobe(sim: Simulation, person: Person): boolean {
   person.clothesSince = sim.now;
   const l = person.living;
   if (l && l.dirty !== undefined) {
-    for (let i = 0; i < Math.min(l.dirty, 13); i += 1) wearTheDay(sim, person);
+    for (let i = 0; i < Math.min(l.dirty, 13); i += 1) wearTheDay(sim, person, sim.now, false);
     delete l.clean;
     delete l.dirty;
     delete l.drying;
@@ -461,20 +517,37 @@ export function registerClothing(sim: Simulation): void {
     return { purchaseId: buyClothes(s, s.player, { productId: p.productId, how: p.how === 'online' ? 'online' : 'store', size: p.size, color: p.color, quantity: p.quantity }).id };
   });
   sim.onCommand<{ purchaseId: string; how: 'store' | 'mail' }, { refunded: Money }>('clothes.return', (p, { sim: s }) => ({ refunded: returnClothes(s, s.player, String(p?.purchaseId), p?.how === 'mail' ? 'mail' : 'store') }));
+  sim.onCommand<{ purchaseId: string }, { refunded: Money }>('clothes.cancel', (p, { sim: s }) => ({ refunded: cancelClothes(s, s.player, String(p?.purchaseId)) }));
   sim.onCommand<Record<string, never>, { count: number; paid: Money }>('clothes.dry_clean', (_p, { sim: s }) => dryClean(s, s.player));
   sim.onCommand<Record<string, never>, { count: number }>('clothes.collect', (_p, { sim: s }) => ({ count: collectCleaning(s, s.player) }));
   sim.onCommand<{ itemIds: string[] }, { dressed: string[] }>('clothes.dress', (p, { sim: s }) => {
     const ids = Array.isArray(p?.itemIds) ? p.itemIds.map(String) : [];
-    const no = outfitRefusal(s, s.player, ids);
+    const no = dressRefusal(s, s.player, ids);
     if (no) throw new CommandError(no);
     s.player.dressed = ids;
     return { dressed: ids };
+  });
+  // Changed into, now: the time it takes, each piece a wear, and what they have on (from 2026-10-02).
+  sim.onCommand<{ itemIds: string[] }, { wearing: string[] }>('clothes.change', (p, { sim: s }) => {
+    const person = s.player;
+    const ids = Array.isArray(p?.itemIds) ? p.itemIds.map(String) : [];
+    if (ids.length === 0) throw new CommandError('Choose what to put on.');
+    const no = dressRefusal(s, person, ids);
+    if (no) throw new CommandError(no);
+    const busy = occupiedAt(s, s.now);
+    if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
+    s.advanceTo(s.now + CHANGE_MINUTES * 60_000);
+    changeInto(s, person, ids.map((id) => itemById(person, id) as Item & { garment: Garment }));
+    person.dressed = ids;
+    return { wearing: ids };
   });
   sim.onCommand<{ name: string; itemIds: string[] }, { outfitId: string }>('clothes.save_outfit', (p, { sim: s }) => ({ outfitId: saveOutfit(s, s.player, String(p?.name ?? ''), Array.isArray(p?.itemIds) ? p.itemIds.map(String) : []).id }));
   sim.onCommand<{ outfitId: string }, { dressed: string[] }>('clothes.wear_outfit', (p, { sim: s }) => {
     const outfit = (s.player.outfits ?? []).find((o) => o.id === p?.outfitId);
     if (!outfit) throw new CommandError('No such outfit.');
     if (outfit.itemIds.length === 0) throw new CommandError('None of it is yours any more.');
+    const no = dressRefusal(s, s.player, outfit.itemIds);
+    if (no) throw new CommandError(no);
     s.player.dressed = [...outfit.itemIds];
     return { dressed: s.player.dressed };
   });
