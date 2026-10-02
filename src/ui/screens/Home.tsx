@@ -52,6 +52,7 @@ import { levelOf } from '@/engine/systems/people';
 import { kitchenStock } from '@/engine/systems/kitchen';
 import { mealsReady } from '@/engine/systems/pantry';
 import { groupLabelOf } from '@/ui/shell/destinations';
+import { underWay } from '@/engine/systems/underway';
 import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
 export function Home() {
@@ -764,9 +765,23 @@ function YourRoutines() {
 
 /** What you own besides clothes and food, and how much of it is at home. */
 function YourBelongings() {
+  const { sim } = useGame();
   const things = useWorld((s) => (s.player.items ?? []).filter((i) => !i.garment && !i.food));
   const atHome = things.filter((i) => i.at.kind === 'home').length;
-  return <Stat label="Things You Own" value={String(things.length)} note={`${atHome} at home`} />;
+  // Everything in progress, soonest first (`systems/underway.ts`, from 2026-10-02).
+  const pending = useWorld((s) => underWay(s, s.player));
+  return (
+    <div className="col gap-2">
+      <Stat label="Things You Own" value={String(things.length)} note={`${atHome} at home`} />
+      {pending.length > 0 && (
+        <div className="col gap-1">
+          <div className="small muted">Under Way</div>
+          {pending.slice(0, 6).map((u) => <div key={`${u.kind}-${u.label}-${u.until}`} className="small">{u.label}<span className="xs dim">{` · ${formatDate(u.until, sim.zone)}`}</span></div>)}
+          {pending.length > 6 && <div className="xs dim">{`And ${pending.length - 6} more`}</div>}
+        </div>
+      )}
+    </div>
+  );
 }
 
 /**
