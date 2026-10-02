@@ -17,7 +17,9 @@
  * America pays America's own uninsured price, and from 2026-10-02 one in
  * England nothing for A&E or a GP and 150% of the tariff for a stay, less
  * what OHIP pays an Ontarian out of the country; elsewhere SLATE keeps no
- * visitor's price and
+ * visitor's price (from later on 2026-10-02, a hospital's own charges in
+ * Ontario, British Columbia and Ireland and the IMSS's in Mexico, `VISITOR_CARE`;
+ * Scotland and an Ontario doctor's visit still without one) and
  * the traveler's own cover's share holds (`careAway`, read by
  * `careFor` in `systems/health.ts`).
  */
@@ -34,6 +36,7 @@ import { homeOf } from './earnings';
 import { payFromBank } from './household';
 import { inHospital } from './health';
 import { laidUp } from './injury';
+import { IRELAND_CTA, VISITOR_CARE } from '../content/visitorcare';
 import { journeysOf, partnerOf, type Journey } from './journey';
 
 export interface TripPolicy { market: TravelMarket; premium: Money; from: Instant; to: Instant }
@@ -115,8 +118,12 @@ export function careAway(sim: Simulation, person: Person, care: 'visit' | 'urgen
   if (!here || !home || here === home) return homeShare;
   // The price a visitor is charged where they are, where SLATE keeps one: America's, or England's (`ENGLAND_VISITOR`).
   const england = here === 'uk' && CITIES.get(person.currentLocationId)?.parentId === 'uk-eng';
+  // Elsewhere, a hospital's own charges for patients from abroad, and the IMSS's in Mexico (`VISITOR_CARE`, from later on 2026-10-02).
+  const prices = here === 'ie' && home === 'uk' ? IRELAND_CTA : VISITOR_CARE[CITIES.get(person.currentLocationId)?.parentId ?? ''] ?? VISITOR_CARE[here];
+  const unit = !prices ? undefined : care === 'stay' ? prices.stayDay * stayDays : care === 'emergency' ? prices.emergency : care === 'urgent' ? prices.urgent : prices.visit;
   const local = here === 'us' ? usUninsured
     : england ? (home === 'ie' || care !== 'stay' ? 0 : inSave(sim, ENGLAND_VISITOR.stayGbp * ENGLAND_VISITOR.markup, 'GBP'))
+    : unit !== undefined ? inSave(sim, unit, prices!.currency)
     : undefined;
   let owed = homeShare;
   if (local !== undefined) {

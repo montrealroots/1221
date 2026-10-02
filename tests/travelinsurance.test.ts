@@ -178,3 +178,37 @@ describe('care away from home', () => {
     expect(careAway(mex, mex.player, 'stay', 0, bill, 3, false, mex.now)).toBe(bill - inSave(mex, 35_000, 'USD'));
   });
 });
+
+describe('a visitor’s care in Canada, Ireland and Mexico', () => {
+  const cad = (sim: Simulation, n: number) => inSave(sim, n, 'CAD');
+  it('is the hospital’s own charge for patients from abroad, or the IMSS’s', () => {
+    const ny = life('us-ny-newyork', 'ti-visitor');
+    ny.player.currentLocationId = 'ca-on-toronto';
+    expect(careAway(ny, ny.player, 'emergency', 0, 300_000, 3, false, ny.now)).toBe(cad(ny, 1_025));
+    expect(careAway(ny, ny.player, 'stay', 0, 3_000_000, 3, false, ny.now)).toBe(cad(ny, 3_100 * 3));
+    // An Ontario doctor's visit has no published price for somebody uninsured: the home share holds.
+    expect(careAway(ny, ny.player, 'visit', 12_345, 30_000, 3, false, ny.now)).toBe(12_345);
+    ny.player.currentLocationId = 'ca-bc-vancouver';
+    expect(careAway(ny, ny.player, 'stay', 0, 3_000_000, 2, false, ny.now)).toBe(cad(ny, 8_359 * 2));
+    expect(careAway(ny, ny.player, 'visit', 0, 30_000, 3, false, ny.now)).toBe(cad(ny, 167));
+    ny.player.currentLocationId = 'ie-lei-dublin';
+    expect(careAway(ny, ny.player, 'emergency', 0, 300_000, 3, false, ny.now)).toBe(inSave(ny, 300, 'EUR'));
+    expect(careAway(ny, ny.player, 'stay', 0, 3_000_000, 3, false, ny.now)).toBe(inSave(ny, 1_210 * 3, 'EUR'));
+    ny.player.currentLocationId = 'mx-cmx-mexicocity';
+    expect(careAway(ny, ny.player, 'stay', 0, 3_000_000, 3, false, ny.now)).toBe(inSave(ny, 15_764 * 3, 'MXN'));
+    expect(careAway(ny, ny.player, 'emergency', 0, 300_000, 3, false, ny.now)).toBe(inSave(ny, 3_111, 'MXN'));
+  });
+
+  it('takes a Briton in Ireland as resident, and a Canadian in another province on their own plan', () => {
+    const ldn = life('uk-eng-london', 'ti-cta');
+    ldn.player.currentLocationId = 'ie-lei-dublin';
+    expect(careAway(ldn, ldn.player, 'emergency', 0, 300_000, 3, false, ldn.now)).toBe(inSave(ldn, 100, 'EUR'));
+    expect(careAway(ldn, ldn.player, 'stay', 0, 3_000_000, 3, false, ldn.now)).toBe(0);
+    // An injury unit, the resident's €75, and a GP's €55.
+    expect(careAway(ldn, ldn.player, 'urgent', 0, 300_000, 3, false, ldn.now)).toBe(inSave(ldn, 75, 'EUR'));
+    expect(careAway(ldn, ldn.player, 'visit', 0, 300_000, 3, false, ldn.now)).toBe(inSave(ldn, 55, 'EUR'));
+    const tor = life('ca-on-toronto', 'ti-province');
+    tor.player.currentLocationId = 'ca-bc-vancouver';
+    expect(careAway(tor, tor.player, 'stay', 0, 3_000_000, 3, true, tor.now)).toBe(0);
+  });
+});
