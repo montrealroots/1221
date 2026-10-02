@@ -80,7 +80,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 22f | Store, use, return, repair, gift, resell | Partial | moves, laundry, return, resale; tests | Repair, gift, refund to the original payment |
 | 23 | Departments; petite, tall, extended, maternity, adaptive; nothing blocked by gender | Partial | No gender gate | `department`, fit range, browsing preference; adaptive and more maternity |
 | 24 | Subcategories (underwear styles, lingerie, hosiery, swimwear, thermals, cultural…) | Partial | 16 kinds, 11 slots | `subtype`; swimwear, shapewear, hosiery, slips, cultural clothing |
-| 25 | Fit by real measures and size charts | Partial, 2026-10-02 | measurements given and the charts sized by (`clothes.measures`); 130 retailers' own charts (`content/sizecharts.ts`): a top by chest or bust, a bottom by waist (`chartSize`); body mass index otherwise | Shoe and ring fit; waist-by-inseam; hips read |
+| 25 | Fit by real measures and size charts | Partial, 2026-10-02 | measurements given and the charts sized by (`clothes.measures`); 130 retailers' own charts (`content/sizecharts.ts`): a top by chest or bust, a bottom by waist (`chartSize`); a shoe by foot length on 45 brands' charts, one shorter than the foot not worn (`shoeRow`); body mass index otherwise | Ring fit; waist-by-inseam; hips read |
 | 26 | Jordans and designer products, retail vs resale | Partial, 2026-10-02 | 30 Air Jordans by style code (`content/sneakers.ts`): retail offers in five markets with tax, GOAT new and used asks with shipping in America, sold on GOAT at its fees; tests/sneakers.test.ts | StockX (refused the reads); GOAT outside America; designer resale (Vestiaire and The RealReal schedules are in the research, not built) |
 | 27a | Receive, store | Complete | delivery, `items.move`; tests/items | — |
 | 27b | Wear, layer, remove | Partial | one garment per slot; `dressRefusal` validates `dress` and `wear_outfit`; jewelry, watches and accessories chosen and worn with the outfit; sleepwear worn at night at home (2026-10-02) | Layers, undress |
@@ -100,7 +100,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 31a | Reach an accessible bathroom | Partial | `lookAfterRefusal` | Rooms; a shared or busy bathroom |
 | 31b | Shower or bath | Complete | `wash`/`bathe`; tests/looking-after | — |
 | 31c | Supplies and towel | Done, 2026-10-02 | `showerUses` by grams; bath towels as items (`starterTowels`, `useTowel`) | Buying towels |
-| 31d | Products, duration, routine | Not implemented | `take()` picks the first | Choose product, minutes, conditioner |
+| 31d | Products, duration, routine | Partial, 2026-10-02 | `take()` picks the first; conditioner used after the shampoo where bought, Loretz's 13.13 g a use | Choose product; the shower's minutes (REU2016's 7.8, read in `research-water-washing.json`, against the 20 the action takes with drying and dressing) |
 | 31e | Perform; time; hygiene | Complete | life.ts | — |
 | 31f | Water and energy | Not implemented | `powerDay` spoils food only | Hot water by heater and outage; water and energy billed |
 | 31g | Dry off, change, used towel to laundry | Done, 2026-10-02 | a home shower uses a towel, three uses to the wash (Cleveland Clinic), washed with the clothes; `clothes.change` after | — |
@@ -109,7 +109,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 32b | Filter by occasion, type, size, color, condition | Partial, 2026-10-02 | Belongings filters by kind, clean or not, condition, color and size, and finds by name (`systems/itemfacets.ts`) | Occasion tags (no source tags garments by occasion) |
 | 32c | Pieces and layers | Partial | one per slot | Layering |
 | 32d | Change, with time and a worn state | Done, 2026-10-02 | `clothes.change`: `CHANGE_MINUTES` (SLATE's estimate), each piece a wear, `wornNow`; tests/wardrobe.test.ts | — |
-| 32e | Removed items stored or to the hamper | Not implemented | — | Hamper spot; take-off choice |
+| 32e | Removed items stored or to the hamper | Done, 2026-10-02 | the laundry basket, a spot at home: what you have on goes Into The Laundry Basket to be washed with the next load, put back where its kind is kept; left out, it's worn again until its count (`toBasket`) | — |
 | 32f | Save an outfit | Complete | tests/clothing, wardrobe | — |
 | 32g | Never silently replace a garment | Done, 2026-10-02 | `chosenMissing`; `wearTheDay` tells what stood in and why; tests/wardrobe.test.ts | — |
 | 33a | Inspect supplies and equipment | Partial | Kitchen panel | Equipment from installed appliances |
@@ -161,16 +161,16 @@ Correctness first, then the connected day the plan asks to be shown working
 | 38f | Storage, mechanical upgrades | Partial | GB only | Racks, boxes; beyond GB |
 | 38i | Alternative transport | Complete (repairs) | `vehicle.stand_in`; tests | Wrap and interior work too |
 | 39a–b | Tank or charge, range | Done, 2026-10-02 | `systems/fueltank.ts`: 117 makers' capacities (`content/tanks.ts`), level, range, gauge on Vehicles; tests/fueltank.test.ts | 14 models without a published figure take SLATE's estimate, labeled |
-| 39c–d | Stops, belongings, passengers | Partial | errands; one passenger; shopping held to the maker's cargo liters (2026-10-02) | Several passengers by the seats |
+| 39c–d | Stops, belongings, passengers | Done, 2026-10-02 | errands; shopping held to the maker's cargo liters; as many passengers as the maker's seats hold beside the driver, any number on foot, none at work (`tripRefusal`) | — |
 | 39e | Route and time | Complete | tests/driving, trips, journey | — |
 | 39f | Refuel at a station | Done, 2026-10-02 | `vehicle.refuel` at a named station to full at the pump price; `errand.fuel` fills the tank; a leg short of fuel is refused | Choosing an amount short of full |
 | 39g | Charging | Done, 2026-10-02 | public to full over 50 kW's time, at home to 80% with a charger; the month charges at a fifth | — |
 | 40a | Several destinations | Complete | `runErrands`; tests/trips | More stop kinds |
 | 40b | Change the plan mid-trip | Done, 2026-10-02 | a whole trip, or a stop at a time with the next chosen as you go and Go Home | — |
-| 40c | Parking | Partial | meter by the minute | Lots and garages; limits |
+| 40c | Parking | Partial | meter by the minute; from 2026-10-02 a named garage chosen for an errand's stops, by its own units up to its day (`content/garages.ts`: LA, New Haven, Toronto, Vancouver, the City of London, Dublin) | Manhattan's garages (a "from" price only); time limits |
 | 40d | Hours, appointments | Partial | closed shops refuse | Appointment slots |
 | 40e | Purchases carried or in the car until moved, within its cargo | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out | Cargo space by model |
-| 40g | Out of fuel | Not implemented | — | With the tank |
+| 40g | Out of fuel | Partial | an errand's leg burns from the tank (`burn`) and is refused short of the next stop, a fuel stop filling it; a journey by road buys along the way | Running dry on the road: drivers who don't stop (the AA Ireland's 10.5% of call-outs are fuel) |
 | 40h | Breakdowns, delays | Done, 2026-10-02 | severe fault refuses; `systems/roadside.ts`: a driven journey's fault on the road, a severe one towed onward; a tow to the garage; the clubs' cover by tier, dues, tow km and calls | How long the truck takes (unpublished); battery, tyre and lockout call-outs |
 | 40i | Where it's parked | Partial | town only | Spot level |
 
@@ -206,9 +206,9 @@ Correctness first, then the connected day the plan asks to be shown working
 | 46 | Manual packing | Partial, 2026-10-02 | volumes (`volumeOf`, `GARMENT_L` SLATE's estimate); items moved into the suitcase by hand and kept as packed on leaving; Pack For Me within the liters; Unpack | A stay to unpack into; a luggage catalog; checked bags against an airline's limits |
 | 47a–c, g, l | Planning, documents, booking, cancellation, charters and ferries | Complete | journey.ts; tests | Destinations limited to towns with stays |
 | 47d–f, h–k | Departure transport, connections, delays, changes, local transport, activities | Partial | from 2026-10-02: to and from the airport By Taxi or By Transit at each town's read fare (`systems/airportground.ts`); a canceled flight's fare taken back instead of the next one, the way home with it (`travel.take_refund`) | Missed connections; change the outbound; rideshare; airport parking |
-| 47m | Companions | Partial, 2026-10-02 | `travel.companion`: a friend or partner from where you set out, own fares, a room split evenly, the waking hours together; tests/companions.test.ts | Several companions; a child along |
+| 47m | Companions | Partial, 2026-10-02 | `travel.companion`: friends or a partner from where you set out, as many as the room sleeps by its listed beds (two where unread), own fares, the room split evenly again with each who joins, the waking hours together; tests/companions.test.ts | A child along |
 | 47o | Home while away | Partial | bills run | House-sitter, mail, spoilage checked |
-| 48a–b | Search named properties by dates, guests, budget | Partial | 28 hotels in 8 towns | Guests, rooms, filters |
+| 48a–b | Search named properties by dates, guests, budget | Partial | 28 hotels in 8 towns; from 2026-10-02 filtered by what their own pages state (a gym, a pool, breakfast included, wheelchair access, pets) and by most for the stay (`hotelHas`) | Guests; several rooms |
 | 48c | Compare total stay | Complete | `namedStayQuote`; tests/hotels | — |
 | 48d–f | Inspect rooms, extras, terms | Partial | bed, hours, deposit, parking; from 2026-10-02 each hotel's gym, pool, spa, breakfast, Wi-Fi, accessibility and pets shown, and its own cancellation deadline deciding the refund (`content/hotelamenities.ts`) | Extras bought (breakfast, early check-in, a pet's fee) |
 | 48g | Book and pay | Complete | `travel.book`; tests | Hotel-only booking |
@@ -216,7 +216,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 48i | A failed deposit isn't a granted stay | Done, 2026-10-02 | journey.ts `holdForDeposit`, `travel.pay_deposit`; rentals.ts `held`, `travel.pay_rental_deposit`; standin.ts refuses; tests/deposits.test.ts | — |
 | 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial | the named hotel's own gym and pool used while staying (`stayPlace`, `swimRefusal`); its breakfast; the room given at its own check-in hour, or at once where early check-in is free (`roomReadyAt`) | Incidentals; the room's belongings; early check-in bought (no hotel publishes its price) |
 | 49a–b, e–g, i | Identity, driving, entry, residence, work, building approval | Complete | documents.ts, licensing.ts, permission.ts, permits.ts; tests | Appointments and evidence steps |
-| 49c–d | Boating, aviation | Partial | instant certificate; checkride always passes | Course, exam, failure, a document |
+| 49c–d | Boating, aviation | Partial | instant boating certificate (pass marks published, no pass rates); from 2026-10-02 the FAA knowledge test failed at its own 89.56% pass rate and the checkride at the secondary 75.1%, each taken again a month on, a checkride retest at half the fee (decider `pilot.tests`) | Boating exams' failure (no rate published); a document |
 | 49k | Loss and replacement | Partial, 2026-10-02 | passport; a driving license replaced at its authority's fee in all eight places, driven on meanwhile where an interim or the record allows, waited for in California (`documents.replace_license`); tests/replacements.test.ts | ID cards; the police report as its own step |
 
 ## Part 9. Healthcare, people, career, services

@@ -125,3 +125,15 @@ describe('the bins', () => {
     expect(fee(dub)).toBe(inSaveMoney(dub, 2400, 'EUR'));
   });
 });
+
+describe('bought again', () => {
+  it('with a week’s use left, not only once it’s out', () => {
+    const sim = life('us-ny-newyork', 'clean-low');
+    const det = suppliesOf(sim.player).find((i) => i.supply.kind === 'laundry-detergent')!;
+    det.supply.left = 10;
+    expect(restock(sim, sim.player, false)).toBe(0);
+    det.supply.left = 1;
+    expect(restock(sim, sim.player, false)).toBe(1);
+    expect(left(sim, 'laundry-detergent')).toBeGreaterThan(1);
+  });
+});

@@ -24,7 +24,7 @@ import type { Person } from '../domain/model';
 import type { Instant } from '../core/time';
 import { careFor, type Care, type Slot } from '../content/garmentcare';
 import { fitOf } from './tailoring';
-import { itemsOf, reachable, type Item } from './items';
+import { itemsOf, reachable, type Item, homeKeyOf, type Spot } from './items';
 
 /** What makes an item a garment: its kind (a care rule's), where it goes on, how it's cleaned, and its wear. */
 export interface Garment {
@@ -39,6 +39,8 @@ export interface Garment {
   dryUntil?: Instant;
   /** The weight it was bought or last altered for (`systems/tailoring.ts`, from 2026-10-01); an older save's fits as it is. */
   fitKg?: number;
+  /** A shoe's foot length on its brand's chart, where it was bought by one (`shoeRow` in `systems/tailoring.ts`, from later on 2026-10-02). */
+  footCm?: number;
 }
 
 /**
@@ -123,6 +125,29 @@ export function changeInto(sim: Simulation, person: Person, items: readonly (Ite
   person.wornNow = { itemIds: items.map((g) => g.id), since: sim.now };
 }
 
+/** Where a garment is put away at home: shoes and coats in the wardrobe, the rest in the drawers, as a life's first wardrobe is. */
+export const keptIn = (slot: Slot): Spot => (slot === 'shoes' || slot === 'outer' ? 'wardrobe' : 'drawers');
+
+/**
+ * Taken off and put in the laundry basket, the master plan's §32e (from
+ * 2026-10-02): to be washed now, whatever its kind's count of wears says.
+ * Left out of it, a garment is put away and worn again until its count
+ * comes, as before. Only at home, where the basket is.
+ */
+export function toBasketRefusal(sim: Simulation, person: Person, item: (Item & { garment?: Garment }) | undefined): string | undefined {
+  if (!item?.garment) return 'That isn’t a garment of yours.';
+  if (item.garment.care === 'dry-clean') return 'It goes to the dry cleaner, not in the wash.';
+  if (!person.home || person.home.cityId !== person.currentLocationId || !reachable(sim, person, item.at)) return 'The basket is at home.';
+  if (item.at.kind === 'home' && item.at.spot === 'hamper') return 'It’s in the basket.';
+  return undefined;
+}
+
+export function toBasket(person: Person, item: Item & { garment: Garment }): void {
+  const home = homeKeyOf(person.home)!;
+  item.garment.dirty = true;
+  item.at = { kind: 'home', home, spot: 'hamper' };
+}
+
 /** A wear: counted toward its wash, and in the wash at its kind's count. */
 function wearOnce(item: Item & { garment: Garment }): void {
   item.garment.wears += 1;
@@ -187,6 +212,8 @@ export const dryCleanDirty = (sim: Simulation, person: Person): (Item & { garmen
 /** Washes garments: clean once dry, each wash its share of the kind's life off its condition. */
 export function washGarments(items: readonly (Item & { garment: Garment })[], dryAt: Instant): void {
   for (const item of items) {
+    // Out of the laundry basket, put away where its kind is kept (from 2026-10-02).
+    if (item.at.kind === 'home' && item.at.spot === 'hamper') item.at = { ...item.at, spot: keptIn(item.garment.slot) };
     const life = careFor(item.garment.kind).lifetimeWashes;
     item.garment.dirty = false;
     item.garment.wears = 0;

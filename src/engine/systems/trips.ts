@@ -11,8 +11,12 @@
  * the end. A car's errand kilometers come out of the month's everyday
  * driving, which is the rest of the place's average (`errandKm`), so no
  * kilometer's fuel is paid twice, and carry the road's risks as it does. A stop with the car parked pays its meter
- * for the minutes it took. Somebody you know can come along: the trip's
- * hours are time together (`systems/people.ts`).
+ * for the minutes it took. People you know can come along: the trip's
+ * hours are time together (`systems/people.ts`). In a car, as many as its
+ * maker's seats hold beside the driver, a hired driver taking one (its
+ * seats in `content/caroptions.ts`; one where they weren't read, as before
+ * 2026-10-02, when only one could come); on foot, any number. One at work
+ * then can't come (`systems/availability.ts`).
  *
  * Not kept: a ticket for an unpaid or overstayed meter, SLATE always
  * paying for the time; how often meters are checked isn't published.
@@ -28,6 +32,9 @@ import { FUEL_STOP_MINUTES, LEG_KM, METER, MIN_PER_KM, STATIONS, WALK_KM, WALK_K
 import { UNRATED_FUEL_USD_PER_KM } from '../content/vehiclefees';
 import { spend } from './household';
 import { meterFree } from './access';
+import { inSaveMoney } from './banking';
+import { GARAGES, type Garage } from '../content/garages';
+import { atWork, atWorkReason } from './availability';
 import { contactsOf } from './people';
 import { laidUp } from './repairs';
 import { stolenNow } from './theft';
@@ -42,7 +49,7 @@ import { homeKeyOf, itemById, itemsOf, volumeOf, type Item, type Spot } from './
 import { specOf } from './caroptions';
 import { burn, capacityOf, levelOf, rangeKm } from './fueltank';
 
-export interface Trip { /** What was bought on the way, carried or in the car until the trip is home (from 2026-10-02). */ shopping?: { itemId: string; spot?: Spot; at: Instant }[]; by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; fuel: Money; km: number; /** Out in the car's stand-in, its rental's id (`systems/standin.ts`). */ standInId?: string; /** A driver hired to drive it, and when they set out (`content/drivers.ts`, from 2026-10-01). */ driver?: { id: string; from: Instant } }
+export interface Trip { /** What was bought on the way, carried or in the car until the trip is home (from 2026-10-02). */ shopping?: { itemId: string; spot?: Spot; at: Instant }[]; by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; /** From 2026-10-02, everybody along; `passengerId` was the only one before. */ passengerIds?: string[]; fuel: Money; km: number; /** Out in the car's stand-in, its rental's id (`systems/standin.ts`). */ standInId?: string; /** A driver hired to drive it, and when they set out (`content/drivers.ts`, from 2026-10-01). */ driver?: { id: string; from: Instant } }
 export interface Stop { kind: string; payload: Record<string, unknown>; leg: LegKind }
 
 const market = (cityId: string): 'na' | 'eu' => (['us', 'ca'].includes(CITIES.get(cityId)?.countryId ?? '') ? 'na' : 'eu');
@@ -65,6 +72,17 @@ export function meterCost(sim: Simulation, cityId: string, minutes: number, pers
   return cur === m.currency ? cents : exchange(cents, m.currency, cur) ?? cents;
 }
 
+/** The garages in a town an errand's car can be left at instead of the meter (`content/garages.ts`, from 2026-10-02). */
+export const garagesIn = (cityId: string): Garage[] => GARAGES.filter((g) => g.cityId === cityId);
+
+/** A garage's charge for so many minutes, by its own units up to its day's maximum, in the save's money. */
+export function garageCost(sim: Simulation, g: Garage, minutes: number, ev = false): Money {
+  if (minutes <= 0) return 0;
+  const units = Math.ceil(minutes / g.unitMinutes - 1e-9);
+  const local = Math.min(units * (ev && g.evUnitPrice !== undefined ? g.evUnitPrice : g.unitPrice), g.dailyMax ?? Infinity);
+  return inSaveMoney(sim, Math.round(local * 100), g.currency);
+}
+
 /** The driver for hire in a town, if one publishes its price. */
 export const driverIn = (cityId: string): DriverService | undefined => DRIVERS.find((d) => d.cityId === cityId);
 
@@ -77,7 +95,8 @@ export function driverCost(sim: Simulation, d: DriverService, minutes: number, k
 }
 
 /** Why a trip can't start this way, or nothing. */
-export function tripRefusal(sim: Simulation, person: Person, by: 'car' | 'foot', vehicleId?: string, passengerId?: string, driven = false): string | undefined {
+export function tripRefusal(sim: Simulation, person: Person, by: 'car' | 'foot', vehicleId?: string, passengers?: string | readonly string[], driven = false): string | undefined {
+  const along = passengers === undefined ? [] : typeof passengers === 'string' ? [passengers] : [...passengers];
   const here = person.currentLocationId;
   if (by === 'car') {
     const v = vehiclesOf(person).find((x) => x.id === vehicleId && x.soldAt === undefined);
@@ -100,11 +119,18 @@ export function tripRefusal(sim: Simulation, person: Person, by: 'car' | 'foot',
       if (!may.ok) return may.why ?? 'You may not drive here.';
     }
   }
-  if (passengerId) {
-    const c = contactsOf(person).find((x) => x.id === passengerId);
+  if (by === 'car' && along.length > 0) {
+    const v = vehiclesOf(person).find((x) => x.id === vehicleId)!;
+    const seats = specOf(v.modelId)?.seats;
+    const room = seats ? seats - 1 - (driven ? 1 : 0) : 1;
+    if (along.length > room) return room <= 0 ? 'There’s no seat for anybody else.' : `It seats ${room} beside ${driven ? 'you and the driver' : 'you'}.`;
+  }
+  for (const id of along) {
+    const c = contactsOf(person).find((x) => x.id === id);
     if (!c) return 'You don’t know them.';
     if (c.rival) return `${c.name.split(' ')[0]} would rather not.`;
     if (c.cityId !== here) return `${c.name.split(' ')[0]} lives in ${CITIES.require(c.cityId).name}.`;
+    if (atWork(sim, c, sim.now, 60)) return atWorkReason(c);
   }
   return undefined;
 }
@@ -168,18 +194,19 @@ function payFuel(sim: Simulation, person: Person, trip: Trip, station: string): 
 
 export function registerTrips(sim: Simulation): void {
   // A leg on the road: to the next stop, or home, which ends the trip.
-  sim.onCommand<{ to: LegKind | 'home'; by?: 'car' | 'foot'; vehicleId?: string; passengerId?: string; driven?: boolean }, { minutes: number; km: number }>('errand.go', (p, { sim: s }) => {
+  sim.onCommand<{ to: LegKind | 'home'; by?: 'car' | 'foot'; vehicleId?: string; passengerId?: string; passengerIds?: string[]; driven?: boolean }, { minutes: number; km: number }>('errand.go', (p, { sim: s }) => {
     const person = s.player;
     let trip = person.trip;
     if (!trip) {
       if (p?.to === 'home') throw new CommandError('You’re home already.');
       const by = p?.by === 'car' ? 'car' : 'foot';
       const driven = by === 'car' && p?.driven === true;
-      const no = tripRefusal(s, person, by, p?.vehicleId, p?.passengerId, driven);
+      const along = p?.passengerIds?.map(String) ?? (p?.passengerId ? [String(p.passengerId)] : []);
+      const no = tripRefusal(s, person, by, p?.vehicleId, along, driven);
       if (no) throw new CommandError(no);
       const own = by === 'car' ? vehiclesOf(person).find((x) => x.id === p!.vehicleId) : undefined;
       const standIn = own ? standInFor(person, own) : undefined;
-      trip = person.trip = { by, ...(by === 'car' ? { vehicleId: String(p!.vehicleId) } : {}), ...(p?.passengerId ? { passengerId: String(p.passengerId) } : {}), fuel: 0, km: 0, ...(standIn ? { standInId: standIn.id } : {}), ...(driven ? { driver: { id: driverIn(person.currentLocationId)!.id, from: s.now } } : {}) };
+      trip = person.trip = { by, ...(by === 'car' ? { vehicleId: String(p!.vehicleId) } : {}), ...(along.length ? { passengerIds: along } : {}), fuel: 0, km: 0, ...(standIn ? { standInId: standIn.id } : {}), ...(driven ? { driver: { id: driverIn(person.currentLocationId)!.id, from: s.now } } : {}) };
     }
     const here = person.currentLocationId;
     const l = leg(here, trip.by, p?.to === 'errand' ? 'errand' : 'shopping');
@@ -212,8 +239,8 @@ export function registerTrips(sim: Simulation): void {
     }
     trip.km += l.km;
     s.advanceTo(s.now + Math.round(l.minutes * 60_000));
-    const c = trip.passengerId ? contactsOf(person).find((x) => x.id === trip!.passengerId) : undefined;
-    if (c) { c.hours += l.minutes / 60; c.lastSeen = s.now; }
+    const along = (trip.passengerIds ?? (trip.passengerId ? [trip.passengerId] : [])).map((id) => contactsOf(person).find((x) => x.id === id)).filter((x): x is NonNullable<typeof x> => Boolean(x));
+    for (const c of along) { c.hours += l.minutes / 60; c.lastSeen = s.now; }
     if (p?.to === 'home') {
       unload(s, person, trip);
       if (trip.fuel > 0) payFuel(s, person, trip, (STATIONS[here] ?? ['a station'])[0]!);
@@ -221,17 +248,26 @@ export function registerTrips(sim: Simulation): void {
         const d = DRIVERS.find((x) => x.id === trip!.driver!.id)!;
         spend(s, person, driverCost(s, d, (s.now - trip.driver.from) / 60_000, trip.km), `${d.name}, driving your car`, 'vehicle', true);
       }
-      if (c) c.memory.unshift({ at: s.now, what: `Came along on your errands, ${trip.km.toFixed(1)} km` });
+      for (const c of along) c.memory.unshift({ at: s.now, what: `Came along on your errands, ${trip.km.toFixed(1)} km` });
       delete person.trip;
     }
     return { minutes: l.minutes, km: l.km };
   });
 
   // The meter, for the minutes a stop took, with the car parked at it.
-  sim.onCommand<{ minutes: number }, { paid: Money }>('errand.park', (p, { sim: s }) => {
+  sim.onCommand<{ minutes: number; garageId?: string }, { paid: Money }>('errand.park', (p, { sim: s }) => {
     const person = s.player;
     if (!person.trip || person.trip.by !== 'car') throw new CommandError('You aren’t out in the car.');
     const minutes = Math.max(0, Number(p?.minutes) || 0);
+    // A garage of the town's, where one was chosen (from 2026-10-02); the meter otherwise.
+    const garage = p?.garageId ? garagesIn(person.currentLocationId).find((g) => g.id === p.garageId) : undefined;
+    if (p?.garageId && !garage) throw new CommandError('There’s no such garage in this town.');
+    if (garage) {
+      const ev = modelById(vehiclesOf(person).find((v) => v.id === person.trip!.vehicleId)?.modelId ?? '')?.fuel === 'ev';
+      const paid = garageCost(s, garage, minutes, ev);
+      if (paid > 0 && !spend(s, person, paid, `Parking, ${garage.name}`, 'vehicle')) throw new CommandError('The garage didn’t take the payment.');
+      return { paid };
+    }
     const paid = meterCost(s, person.currentLocationId, minutes, person);
     if (paid > 0 && !spend(s, person, paid, `Parking, ${METER[person.currentLocationId]!.zone}`, 'vehicle')) throw new CommandError('The meter didn’t take the payment.');
     return { paid };
@@ -263,15 +299,15 @@ export interface ErrandRun { done: number; stopped?: { step: number; error: stri
  * executor given. It stops at the first stop that can't be done, and still
  * comes home.
  */
-export function runErrands(sim: Simulation, plan: { by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; driven?: boolean; stops: Stop[] }, exec: (kind: string, payload: Record<string, unknown>) => CommandResult = (kind, payload) => sim.execute({ kind, payload })): ErrandRun {
+export function runErrands(sim: Simulation, plan: { by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; passengerIds?: string[]; driven?: boolean; garageId?: string; stops: Stop[] }, exec: (kind: string, payload: Record<string, unknown>) => CommandResult = (kind, payload) => sim.execute({ kind, payload })): ErrandRun {
   let done = 0;
   let stopped: ErrandRun['stopped'];
   for (const [i, stop] of plan.stops.entries()) {
-    const go = exec('errand.go', { to: stop.leg, ...(i === 0 ? { by: plan.by, vehicleId: plan.vehicleId, passengerId: plan.passengerId, ...(plan.driven ? { driven: true } : {}) } : {}) });
+    const go = exec('errand.go', { to: stop.leg, ...(i === 0 ? { by: plan.by, vehicleId: plan.vehicleId, passengerId: plan.passengerId, ...(plan.passengerIds ? { passengerIds: plan.passengerIds } : {}), ...(plan.driven ? { driven: true } : {}) } : {}) });
     if (!go.ok) return { done, stopped: { step: i, error: go.error ?? 'You couldn’t set out.' } };
     const before = sim.now;
     const r = exec(stop.kind, stop.payload);
-    if (plan.by === 'car' && stop.kind !== 'errand.fuel') exec('errand.park', { minutes: (sim.now - before) / 60_000 });
+    if (plan.by === 'car' && stop.kind !== 'errand.fuel') exec('errand.park', { minutes: (sim.now - before) / 60_000, ...(plan.garageId ? { garageId: plan.garageId } : {}) });
     if (!r.ok) { stopped = { step: i, error: r.error ?? 'It couldn’t be done.' }; break; }
     done += 1;
   }

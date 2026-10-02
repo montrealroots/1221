@@ -1,0 +1,1083 @@
+{
+  "meta": {
+    "title": "Parking garages and lots, restaurant reservation policies, selling a car privately versus trading in",
+    "towns": ["New York", "Los Angeles", "New Haven CT", "Toronto", "Vancouver", "London", "Dublin", "Mexico City"],
+    "readDate": "2026-10-02",
+    "method": "WebSearch and WebFetch, plus curl of operator pages where the fetch tool was blocked. confirmed:true only where the figure was read from the operator's or publisher's own page on the read date. A search-engine summary, an aggregator/reseller page, a directory, or a news report of someone else's policy is confirmed:false. Nothing here is invented; a missing figure is null with a note.",
+    "blockedSources": [
+      "parking.greenp.com (Incapsula block on every request)",
+      "ncp.co.uk (HTTP 403 and Cloudflare challenge)",
+      "q-park.co.uk and q-park.ie (pages load but say 'No tariffs available online')",
+      "edmunds.com (403)",
+      "help.opentable.com (client-rendered; fetch returned no article text)",
+      "resy.com and helpdesk.resy.com (client-rendered)",
+      "restaurantpatrickguilbaud.ie, pujol.com.mx, gymkhanalondon.com (403)",
+      "pos.toasttab.com and businesswire.com (403)",
+      "mercadolibre.com.mx (403)"
+    ]
+  },
+
+  "garages": [
+    {
+      "town": "New York",
+      "operator": "Icon Parking",
+      "facility": "Herald Square Parking Garage, 113 W. 29th St., New York, NY 10001",
+      "firstHour": 28.00,
+      "additionalHourOrBands": null,
+      "dailyMax": null,
+      "overnight": null,
+      "monthly": null,
+      "rateRangeNote": "Page states 'Parking starting from $28/hour' and 'Rates usually range from $28.00 to $64.00, depending on how long you stay and the day of the week'; no band table, early bird or overnight figures shown. Prices can be higher during special events.",
+      "hours": "24 hours, 7 days",
+      "capacity": 529,
+      "currency": "USD",
+      "taxIncluded": null,
+      "source": "https://parkmobile.io/parking/locations/ny/new-york-city-parking/parking-lot/icon-parking-herald-square-parking-garage",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "ParkMobile is a booking reseller, not Icon itself; read directly but not the operator's own page. Online booking prices, not the posted drive-up board."
+    },
+    {
+      "town": "New York",
+      "operator": "Icon Parking",
+      "facility": "Several Manhattan garages (MPC Parking LLC, Midtown East; 101 West End, Upper West Side; Liberty View, Financial District)",
+      "rateRangeNote": "Search summary of ParkMobile listings: MPC $14.00-$55.00; 101 West End $17.00-$67.00; Liberty View $32.00-$70.00, by length of stay and day of week; all open 24/7.",
+      "currency": "USD",
+      "taxIncluded": null,
+      "source": "https://parkmobile.io/parking/locations/ny/new-york-city-parking/parking-lot/icon-parking-mpc-parking-llc-garage",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Search summary only."
+    },
+    {
+      "town": "New York",
+      "operator": "Edison ParkFast",
+      "facility": "332 W. 44th St.; 50 W. 44th St.; 88 Leonard St.",
+      "rateRangeNote": "Search summary of ParkMobile listings: 332 W. 44th from $25; 50 W. 44th $22.00-$55.00; 88 Leonard $30.00-$62.00; all 24/7.",
+      "currency": "USD",
+      "taxIncluded": null,
+      "source": "https://parkmobile.io/parking/locations/ny/new-york-city-parking/parking-lot/edison-parkfast-50-w-44th-st-garage",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Search summary only; no 1-hour versus 24-hour split found."
+    },
+    {
+      "town": "New York",
+      "operator": "Icon Parking (industry article on its own site)",
+      "facility": "Manhattan, general",
+      "monthly": 570,
+      "earlyBird": "$18-$21 Mon-Fri, out by 6pm or within 12 hours",
+      "overnight": "$40-$60",
+      "weekend": "$20-$37",
+      "currency": "USD",
+      "taxIncluded": null,
+      "source": "https://iconparking.com/resources/much-parking-nyc/",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "Read from Icon's own page, but the article is dated 2022-09-19, so these are 2022 figures. 'About $570' monthly average."
+    },
+    {
+      "town": "Los Angeles",
+      "operator": "City of Los Angeles General Services Department",
+      "facility": "The L.A. Mall garage, 225 N. Los Angeles St.",
+      "rate": "$4.00 each 20 minutes",
+      "firstHour": 12.00,
+      "firstHourNote": "Derived: three 20-minute units at $4.00.",
+      "dailyMax": 25.00,
+      "overnight": null,
+      "overnightNote": "Not offered: 'Vehicles left in the garage after 6 P.M. may be cited and towed'.",
+      "monthly": null,
+      "hours": "Monday to Friday, 5 A.M. - 6 P.M.",
+      "currency": "USD",
+      "taxIncluded": null,
+      "source": "https://gsd.lacity.gov/parking-services/",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Los Angeles",
+      "operator": "City of Los Angeles General Services Department",
+      "facility": "Pershing Square Garage, 530 S Olive St.",
+      "rate": "$3.00 each 15 minutes",
+      "firstHour": 12.00,
+      "firstHourNote": "Derived: four 15-minute units at $3.00.",
+      "dailyMax": 20.00,
+      "eveningAndWeekendFlat": 9.00,
+      "eveningNote": "'After 5:00 p.m. and weekends $9.00'",
+      "monthly": null,
+      "hours": null,
+      "currency": "USD",
+      "taxIncluded": null,
+      "source": "https://gsd.lacity.gov/parking-services/",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Los Angeles",
+      "operator": "City of Los Angeles General Services Department",
+      "facility": "Lot 7, 140 N. Judge John Aiso St.",
+      "rate": "Flat $13.00 until 5:00 pm; flat $10.00 after 5:00 pm; pay in advance",
+      "hours": "Monday-Friday, and 8:00 A.M.-8:00 P.M. Saturday and Sunday",
+      "currency": "USD",
+      "taxIncluded": null,
+      "source": "https://gsd.lacity.gov/parking-services/",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "Lot 2 is listed as 'CLOSED UNDER CONSTRUCTION'."
+    },
+    {
+      "town": "Los Angeles",
+      "operator": "Ovation Hollywood (formerly Hollywood & Highland) garage, 6801 Hollywood Blvd",
+      "dailyMax": 25.00,
+      "validation": "Retail/restaurant validation $3.00; cinema validation $3.00",
+      "currency": "USD",
+      "taxIncluded": null,
+      "source": "https://parking.com/los-angeles/lot/6801-hollywood-boulevard",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Search summary; the page itself returned ECONNRESET. Operator not confirmed (LAZ was asked for; not found)."
+    },
+    {
+      "town": "New Haven CT",
+      "operator": "New Haven Parking Authority",
+      "facility": "Temple Street Garage, 1 Temple Street, New Haven, CT 06510",
+      "firstHour": 4.00,
+      "additionalHour": 4.00,
+      "dailyMax": 22.00,
+      "eveningMax": "$9 (6PM-3AM)",
+      "earlyBird": "$18 (in by 10AM, out by 7PM)",
+      "weekendDay": "$10 (9AM-4PM Sat/Sun)",
+      "weekender": "$25 (Friday 7PM - Monday 7AM)",
+      "monthly": 165.00,
+      "monthlyCityEmployee": 110.00,
+      "monthlyRailCommuter": 107.00,
+      "hours": "24 hours, every day",
+      "currency": "USD",
+      "taxIncluded": null,
+      "source": "https://parknewhaven.com/parking/temple-street-garage-office/",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "No tax statement on the page. A search summary also mentioned a 12-hour session limit for EV charging."
+    },
+    {
+      "town": "New Haven CT",
+      "operator": "New Haven Parking Authority",
+      "facility": "Temple Medical Center Garage, 230 George Street, New Haven, CT 06510",
+      "firstHour": 4.00,
+      "additionalHour": 4.00,
+      "dailyMax": 22.00,
+      "earlyBird": "$18 (in by 9AM, out by 6PM)",
+      "monthly": 165.00,
+      "monthlyNote": "requires permit",
+      "evCharging": "$0.33/kWh, $1 activation, 12-hour session limit, 1-hour grace, $4/hour idle fee",
+      "hours": "Monday-Friday 7AM-7PM; Saturday-Sunday CLOSED",
+      "currency": "USD",
+      "taxIncluded": null,
+      "source": "https://parknewhaven.com/parking/temple-medical-garage/",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "operator": "Impark",
+      "facility": "One Toronto Street (Lot #530), One Toronto Street, Toronto, ON M5C 3B2; entrance Court Street; underground, 226 spaces",
+      "rate": "$4.00 per 20 minutes or less",
+      "firstHour": 12.00,
+      "firstHourNote": "Derived: three 20-minute units, assuming the $4.00 repeats; the page states only '$4.00 (20 minutes or less)'.",
+      "dailyMax": 27.00,
+      "dailyMaxWindow": "6 AM-7 PM, Mon to Fri",
+      "eveningMax": "$7.00, 5 PM-6 AM, Mon to Sun",
+      "weekendHoliday": "$7.00 flat, 6 AM-5 PM Sat, Sun and holidays",
+      "event": "$35.00 (event rates vary)",
+      "monthlyTenant": 305.00,
+      "monthlyPublic": 360.00,
+      "hours": "24/7 access",
+      "currency": "CAD",
+      "taxIncluded": null,
+      "taxNote": "'Applicable taxes may apply'; 'In case of discrepancy, posted lot rates prevail'.",
+      "source": "https://impark.com/1-toronto-street/",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "operator": "Green P (Toronto Parking Authority)",
+      "facility": "Downtown core carparks generally (for example Carpark 043, St. Lawrence Garage, 2 Church Street; Carpark 034, 20 Dundas Square)",
+      "rateRangeNote": "Search summary: downtown Green P lots charge $4.50-$6.00 per half-hour on weekdays, daily maximums $25-$36 by lot, many drop to $1-$2 per half-hour after 6 p.m., some have a $9.00 night maximum (6pm-7am). Each lot posts its own rate.",
+      "currency": "CAD",
+      "taxIncluded": null,
+      "source": "https://parking.greenp.com/carpark/43_2-church-street-st-lawrence-garage/",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "parking.greenp.com blocked every request (Incapsula). The summary was built partly from third-party blogs (drivee.ca). The City of Toronto open-data Green P file has per-lot rates but was last updated 2019-07-23, too old to use."
+    },
+    {
+      "town": "Vancouver",
+      "operator": "EasyPark",
+      "facility": "Lot 1, 535 Hornby St",
+      "firstHour": 10.50,
+      "additionalHour": 10.50,
+      "dailyMax": 40.00,
+      "dayMax6amTo6pm": 28.50,
+      "earlyBird": "$23.00 (in before 9am)",
+      "eveningFlat": "$11.50, 6pm-6am",
+      "monthly": 280.00,
+      "monthlyCategory": "Random Ungated",
+      "hours": "24 hours (EasyPark lot list)",
+      "currency": "CAD",
+      "taxIncluded": true,
+      "taxNote": "'Daily parking rates include GST & Parking Sales Tax (29%)'. 'Monthly parking rates exclude GST & Parking Sales Tax'.",
+      "source": "https://www.easypark.ca/find-parking/locations-and-lot-information/lot-details/535-hornby-st",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "The page's '29%' looks like GST 5% plus Vancouver-area parking sales tax 24%; the split is not stated on the page."
+    },
+    {
+      "town": "Vancouver",
+      "operator": "EasyPark",
+      "facility": "Lot 2, 150 West Pender St",
+      "firstHour": 8.50,
+      "additionalHour": 8.50,
+      "dailyMax": 32.25,
+      "dayMax6amTo6pm": 19.25,
+      "eveningMax": "$13.00, 6pm-6am at $8.50 per hour",
+      "eventRates": "FIFA rate $45; general event $38",
+      "monthly": 210.00,
+      "monthlyCategory": "Random gated, 24/7 controlled access",
+      "currency": "CAD",
+      "taxIncluded": true,
+      "taxNote": "'Daily parking rates include GST & Parking Sales Tax 29%'.",
+      "source": "https://www.easypark.ca/find-parking/locations-and-lot-information/lot-details/150-west-pender-st",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Vancouver",
+      "operator": "EasyPark",
+      "facility": "Lot 31, 160 Water St (Gastown)",
+      "rate": "$4.98 per half hour",
+      "firstHour": 9.96,
+      "firstHourNote": "Derived: two half-hours at $4.98.",
+      "dailyMax": 36.95,
+      "dayMax6amTo6pm": 21.00,
+      "eveningMax": 15.95,
+      "secondRateSet": "Page also shows a set at $3.75 per half hour with $15.50 day max and $12.50 evening max, and '$28.00 Daily max Thurs-Sat'; which part of the two-parkade lot it applies to is not clear from the text.",
+      "monthlyRandomUngated": 200.00,
+      "monthlyRandomGated": 245.00,
+      "bicycleLockUp": 35.00,
+      "payment": "Visa, MasterCard, American Express; cash not accepted",
+      "currency": "CAD",
+      "taxIncluded": true,
+      "taxNote": "'parking rates include GST & Parking Sales Tax (29%)'",
+      "source": "https://www.easypark.ca/find-parking/locations-and-lot-information/lot-details/160-water-st",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "A third-party directory (dtesvancouver.com) still shows an older $2.75 per half hour / $22.00 max; the operator page supersedes it."
+    },
+    {
+      "town": "London",
+      "operator": "City of London Corporation",
+      "facility": "Baynard House Car Park (City of London)",
+      "hourlyByVehicle": {
+        "electricHydrogenHybrid": 4.50,
+        "petrolFrom2005": 5.80,
+        "dieselFrom2015": 5.80,
+        "anyOtherVehicle": 8.10
+      },
+      "chargedHours": "Monday-Friday 6am-7pm and Saturday 6am-1:30pm",
+      "outsideChargedHours": "One-off fee by vehicle type: £4.50 to £8.10; the same one-off applies per day on bank and public holidays",
+      "dailyMax": null,
+      "dailyMaxNote": "No daily cap stated on the page.",
+      "seasonCommercial": "£2,500 per quarter",
+      "seasonResidential": "£250 per quarter or £800 per year (City of London residents only); from 1 April 2027 £200 per quarter or £600 per year",
+      "motorcyclesBicycles": "Free in designated bays",
+      "blueBadge": "Normal rates apply",
+      "currency": "GBP",
+      "taxIncluded": null,
+      "source": "https://www.cityoflondon.gov.uk/services/parking/car-parks/baynard-house-car-park",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "London",
+      "operator": "City of London Corporation",
+      "facility": "London Wall Car Park (City of London)",
+      "hourlyByVehicle": {
+        "electricHydrogenHybrid": 4.50,
+        "petrolFrom2005": 5.80,
+        "dieselFrom2015": 5.80,
+        "anyOtherVehicle": 8.10
+      },
+      "chargedHours": "Monday-Friday 6am-7pm and Saturday 6am-1:30pm",
+      "outsideChargedHours": "One-off £4.50 / £5.80 / £8.10 by vehicle type",
+      "seasonCommercial": "£2,500 per quarter",
+      "seasonResidential": "£250 per quarter or £800 per year (City residents, excluding Barbican Estate residents from 8 September 2026)",
+      "currency": "GBP",
+      "taxIncluded": null,
+      "source": "https://www.cityoflondon.gov.uk/services/parking/car-parks/london-wall-car-park",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "A search summary also reported a £45.00 single-visit 00:00-23:59 tariff on Saba's page for London Wall (https://www.sabaparking.co.uk/en/car-park/london-wall-car-park), not read directly."
+    },
+    {
+      "town": "London",
+      "operator": "NCP",
+      "facility": "London Soho Brewer St (20 spaces, 2.30 m height limit)",
+      "bands": [
+        { "upTo": "1 hour", "price": 15.00 },
+        { "upTo": "2 hours", "price": 30.00 },
+        { "upTo": "3 hours", "price": 45.00 },
+        { "upTo": "24 hours", "price": 60.00 }
+      ],
+      "evening": "£25.00 (5:00 PM - 11:59 PM)",
+      "currency": "GBP",
+      "taxIncluded": null,
+      "source": "https://www.ncp.co.uk/find-a-car-park/car-parks/london-brewer-st/",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Search summary only; ncp.co.uk returned 403 to the fetch tool and a bot challenge to curl."
+    },
+    {
+      "town": "London",
+      "operator": "Q-Park",
+      "facility": "Park Lane (W1K 7AN, 1,017 spaces) and Leicester Square (Whitcomb Street WC2H 7DT, 247 spaces)",
+      "tariffs": null,
+      "hours": "Monday-Sunday 24-7",
+      "currency": "GBP",
+      "source": "https://www.q-park.co.uk/en-gb/cities/london/park-lane/",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "Operator pages read; they state 'No tariffs available online'."
+    },
+    {
+      "town": "Dublin",
+      "operator": "Park Rite",
+      "facility": "Fleet Street Car Park, 52-57 Fleet Street, Dublin 2, D02 A375 (Q-Park-branded, 393 spaces, 2.1 m)",
+      "firstHour": 4.20,
+      "additionalHour": 4.20,
+      "evening": "€12.50 (6pm-8am)",
+      "dailyMax": null,
+      "monthly": null,
+      "monthlyNote": "Long-term parking sold through Q-Park.ie; season price only shown at checkout.",
+      "hours": "Mon-Sun open 24 hours",
+      "currency": "EUR",
+      "taxIncluded": null,
+      "source": "https://www.parkrite.ie/fleet",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Dublin",
+      "operator": "Park Rite",
+      "facility": "Irish Life Car Park, Irish Life Centre, Gardiner Street Lower, Dublin 1, D01 Y7V2",
+      "firstHour": 4.00,
+      "additionalHour": 4.00,
+      "dailyMax": 40.00,
+      "saturday": 18.00,
+      "evening": "€10 (17:30-23:00)",
+      "overnight": "€18 (17:30-09:00)",
+      "hours": "Mon-Fri 06:30-23:00; Saturday 08:00-23:00; Sunday 10:00-21:00",
+      "currency": "EUR",
+      "taxIncluded": null,
+      "source": "https://www.parkrite.ie/irish-life",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Dublin",
+      "operator": "APCOA",
+      "facility": "APCOA Drury Street, 59-62 Drury Street, D02 V261 (465 spaces, 2.00 m)",
+      "firstHour": 4.50,
+      "additionalHour": 4.50,
+      "evening": 12.00,
+      "overnight": 14.00,
+      "season": "Quarterly, half-yearly and yearly season tickets offered; prices not shown",
+      "hours": "24/7",
+      "currency": "EUR",
+      "taxIncluded": null,
+      "source": "https://www.apcoa.ie/location-overview/location/dublin/apcoa-drury-street-dublin",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "Drury Street was formerly Park Rite; older third-party pages still list it under Park Rite at €4.00-€4.20/hour."
+    },
+    {
+      "town": "Dublin",
+      "operator": "Q-Park",
+      "facility": "Christchurch, 2 Werburgh St, Dublin D08 X981 (213 spaces)",
+      "tariffs": null,
+      "hours": "Monday-Sunday 24-7",
+      "currency": "EUR",
+      "source": "https://www.q-park.ie/en-gb/cities/dublin/christchurch/",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "Operator page states 'No tariffs available online'. Third-party pre-book listings (parkpnp.com) quoted €18 day / €24 24-hour / 5-hour shopper deals; not used."
+    },
+    {
+      "town": "Mexico City",
+      "operator": "ecoParq (Secretaría de Movilidad, on-street parquímetros)",
+      "facility": "Street meters in ecoParq zones",
+      "rate": "$3.40 pesos por cada 15 minutos",
+      "firstHour": 13.60,
+      "firstHourNote": "Derived: four 15-minute units.",
+      "hours": "Standard zones Monday-Friday 08:00-20:00; Polanco extended Wednesday-Saturday 08:00-01:00; Roma/Hipódromo extended Thursday-Saturday 08:00-01:00",
+      "effective": "2026-01-01",
+      "currency": "MXN",
+      "taxIncluded": null,
+      "source": "https://www.ecoparq.cdmx.gob.mx/preguntasfrecuentes/preguntas-frecuentes",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "This is street parking, not a garage; the regulated garage (estacionamiento público) tariff is in garageRules."
+    },
+    {
+      "town": "Mexico City",
+      "operator": "Private estacionamientos públicos, Centro Histórico",
+      "rateRangeNote": "Search summary: private garages in the Centro Histórico charge roughly 35 to 70 pesos per hour.",
+      "currency": "MXN",
+      "taxIncluded": null,
+      "source": "https://miituo.com/blog/parquimetros-cdmx/",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Search summary of a third-party blog; no named garage operator's published tariff was found."
+    }
+  ],
+
+  "garageRules": [
+    {
+      "town": "New York",
+      "rule": "NYC parking tax on rental parking spaces in Manhattan",
+      "rate": 0.18375,
+      "detail": "'The current tax on rental parking spaces in Manhattan is 18.375%.' The Manhattan Resident Parking Tax Exemption 'lowers the amount of tax by 8%, reducing the amount of tax you must pay to 10.375%' (resident, individually owned, registered to a Manhattan primary residence, monthly or longer rental, personal use).",
+      "otherBoroughs": "Not stated on this page; a search summary gives 10.375% as the standard rate, which matches the exempt figure.",
+      "source": "https://www.nyc.gov/site/finance/vehicles/vehicles-manhattan-resident-parking-tax-exemption.page",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Los Angeles",
+      "rule": "City of Los Angeles Parking Occupancy Tax",
+      "rate": 0.10,
+      "detail": "Each occupant of a parking facility in the City pays 10% of the parking fee, collected by the operator; administered by the Office of Finance. FY24-25 receipts about $140 million.",
+      "source": "https://codelibrary.amlegal.com/codes/los_angeles/latest/lamc/0-0-0-127528",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Search summary of LAMC Sec. 21.15.2 and the Office of Finance POT compliance guide; not read directly."
+    },
+    {
+      "town": "Vancouver",
+      "rule": "Parking sales tax plus GST as posted by EasyPark",
+      "rate": 0.29,
+      "detail": "EasyPark posts 'Daily parking rates include GST & Parking Sales Tax (29%)' and 'Monthly parking rates exclude GST & Parking Sales Tax'.",
+      "source": "https://www.easypark.ca/find-parking/locations-and-lot-information/lot-details/535-hornby-st",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "The split between the regional (TransLink) parking sales tax and GST is not given on the page."
+    },
+    {
+      "town": "London",
+      "rule": "Westminster on-street tariffs by zone (from 2 March 2026), with a diesel surcharge",
+      "detail": "Search summary: hourly Zone A £4.55, B £3.69, C £2.09, D £3.05, E £6.30, F £6.60, G £6.60; up to a 50% surcharge on pre-2015 diesel vehicles.",
+      "currency": "GBP",
+      "source": "https://www.westminster.gov.uk/media/document/new-charges-from-mon-2-march-2026",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "The Westminster parking-zones page was read and confirms the diesel surcharge scheme, but the tariffs are in a linked PDF that was not read. On-street, not garages; no London-wide cap on private garage prices was found."
+    },
+    {
+      "town": "Mexico City",
+      "rule": "Ley de Establecimientos Mercantiles, Art. 50 (2023 reform): regulated tariffs for estacionamientos públicos",
+      "detail": "Garages must charge in 15-minute fractions from the first hour, at the same price for each fraction (previously the full first hour was charged). Each of the 16 alcaldías authorizes tariffs by zone, road type and traffic flow; tariffs are verified annually and published in the Gaceta Oficial. Differentiated rates by vehicle size are no longer allowed. The 2023 reform also made garages liable for damage or theft.",
+      "maxTariffPublished": {
+        "amount": 46.68,
+        "unit": "MXN per hour",
+        "year": 2024,
+        "scope": "Tláhuac and Cuajimalpa, the only two alcaldías that had published regulated tariffs by 2024"
+      },
+      "currency": "MXN",
+      "source": "https://www.cronista.com/mexico/finanzas-economia/confirmado-habra-tarifa-maxima-para-estacionar-el-auto-en-cdmx-estas-son-las-alcaldias-mas-caras/",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "News report read directly (El Cronista), not the Gaceta itself. The law's PDF (paot.org.mx) could not be text-extracted. No 2025 or 2026 tariff published for Cuauhtémoc, Miguel Hidalgo or Benito Juárez was found."
+    },
+    {
+      "town": "Toronto",
+      "rule": "No municipal cap on private garage rates found; Green P is the city's own operator",
+      "source": null,
+      "readDate": "2026-10-02",
+      "confirmed": false
+    }
+  ],
+
+  "reservations": [
+    {
+      "town": "general",
+      "platform": "OpenTable",
+      "policy": "Restaurants may ask for a credit card to secure a reservation; if it is changed or missed outside the restaurant's cancellation window, the restaurant (not OpenTable) decides whether and how much to charge, and only the restaurant can refund. The policy is shown at booking and in the confirmation email. The restaurant sees only the card's last four digits and type.",
+      "bookingHorizon": "Restaurants set how far ahead guests can book, reportedly from 1 to 365 days; most release 14-30 days ahead.",
+      "source": "https://help.opentable.com/s/article/What-are-cancellation-no-show-and-deposit-policies?language=en_US",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Help page is client-rendered and returned no text to the fetch tool; this is a search summary."
+    },
+    {
+      "town": "general",
+      "platform": "OpenTable",
+      "policy": "From late 2025 (remaining restaurants early 2026) OpenTable adds a 2% service fee to online payments including no-show fees, deposits and prepaid experiences; restaurants may absorb it or pass it to the diner. Example: Pizzata Pizzeria & Birreria (Philadelphia) charges a $15 per-person no-show fee with a 20-minute grace period.",
+      "serviceFeeRate": 0.02,
+      "currency": "USD",
+      "source": "https://www.inquirer.com/food/restaurants/opentable-service-fee-no-show-restaurant-reservation-20260114.html",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Philadelphia Inquirer report of 2026-01-14 quoting an OpenTable spokesperson; read directly, but it is a news report, not OpenTable's own page."
+    },
+    {
+      "town": "general",
+      "platform": "Resy",
+      "policy": "Restaurants that charge a cancellation fee, require a card on file, or take prepayment make Resy ask for a card at booking. Cancellation timing and fee are shown before booking and in the confirmation. Fees are not charged automatically: the restaurant charges them manually in Resy OS. A no-show can mean a fee or forfeiting a prepayment.",
+      "bookingHorizon": "Restaurant-set rolling window; commonly 14-30 days, some 60-90. One count of 50 confirmed Resy rooms: 12 open 30 days ahead, 8 at 14, 7 at 21, 6 at 28; range 6-60 days.",
+      "source": "https://helpdesk.resy.com/how-do-i-charge-a-cancellation-or-no-show-fee-HJQXfP7Lu",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Resy help pages are client-rendered; search summary. Booking-window counts come from reservationfinder.io, a third party."
+    },
+    {
+      "town": "New York",
+      "restaurant": "Carbone (Greenwich Village)",
+      "platform": "Resy",
+      "deposit": "$25 per person at lunch, $50 per person at dinner, applied to the bill",
+      "cancellationWindow": "Forfeited if cancelled less than 12 hours before lunch, or after 12 PM on the day of a dinner reservation",
+      "bookingHorizon": "Reported as 30 days on Resy",
+      "currency": "USD",
+      "source": "https://resy.com/cities/new-york-ny/venues/carbone",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Search summary; the Resy venue page returned no policy text to the fetch tool."
+    },
+    {
+      "town": "Los Angeles",
+      "restaurant": "Providence (Hollywood)",
+      "cardRequired": true,
+      "fee": 375,
+      "feeBasis": "per person",
+      "cancellationWindow": "'cancel no less than 7 days before your reservation time'; also applies to same-day reservations",
+      "bookingHorizon": "'up to two months in advance'",
+      "currency": "USD",
+      "source": "https://providencela.com/reservations/",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Los Angeles",
+      "restaurant": "République",
+      "largeParty": "Kitchen Tables or the Alcove for 8-16 guests at $135 per person for a multi-course, family-style meal",
+      "fee": null,
+      "currency": "USD",
+      "source": "https://republiquela.com/",
+      "readDate": "2026-10-02",
+      "confirmed": true,
+      "note": "No cancellation or no-show fee stated on the home page."
+    },
+    {
+      "town": "New Haven CT",
+      "restaurant": "Shell & Bones Oyster Bar and Grill",
+      "platform": "OpenTable or phone",
+      "cardRequired": "For parties of 6 or more",
+      "fee": 25,
+      "feeBasis": "per person",
+      "cancellationWindow": "'No-shows or cancellations made less tha[n] 24hrs may be subject to a charge of $25 per person'",
+      "maxParty": 18,
+      "bookingHorizon": "60 days in advance",
+      "currency": "USD",
+      "source": "https://www.shellandbones.com/visit",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "restaurant": "Sushi Masaki Saito",
+      "platform": "Tock",
+      "fee": 400,
+      "feeBasis": "per person",
+      "cancellationWindow": "48 hours for parties of 2-4; at least 7 days for parties of 5 or more; also charged for reducing the guest count inside the window",
+      "currency": "CAD",
+      "source": "https://www.masakisaito.ca/book/",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "restaurant": "Daphne; Prime Seafood Palace; Kaiseki Yu-zen Hashimoto",
+      "fees": [
+        { "restaurant": "Daphne (Financial District)", "fee": 25, "basis": "per person", "window": "48 hours" },
+        { "restaurant": "Prime Seafood Palace", "fee": 35, "basis": "per guest", "window": "48 hours" },
+        { "restaurant": "Kaiseki Yu-zen Hashimoto", "fee": 350, "basis": "per person", "window": "full charge for cancellation or no-show on the day" }
+      ],
+      "otherReported": "Giulietta and Osteria Giulia up to $75 per person; Alo $50 (search summary of a second Streets of Toronto article).",
+      "currency": "CAD",
+      "source": "https://streetsoftoronto.com/food/restaurants/restaurants-in-toronto-are-nailing-diners-with-no-show-fees/",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Streets of Toronto article of 2024-07-23, read directly; not the restaurants' own pages."
+    },
+    {
+      "town": "Vancouver",
+      "restaurant": "St. Lawrence (Powell Street)",
+      "fee": 60,
+      "feeBasis": "per guest",
+      "cancellationWindow": "Rescheduling and cancellations accepted up to 48 hours before; inside that, $60 per guest, also for party-size changes. Parties over 6 need 4 days' notice.",
+      "maxParty": 6,
+      "bookingHorizon": "'Reservations are available three months in advance.'",
+      "currency": "CAD",
+      "source": "https://www.stlawrencerestaurant.com/reserve",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "town": "Vancouver",
+      "restaurant": "Burdock & Co",
+      "deposit": 20,
+      "depositBasis": "per person",
+      "currency": "CAD",
+      "source": "https://www.vancouverisawesome.com/food-and-drink/reservations-vancouver-michelin-one-star-restaurants-2024-9625412",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Search summary of a news article."
+    },
+    {
+      "town": "London",
+      "restaurant": "Dorian (Notting Hill)",
+      "platform": "SevenRooms",
+      "deposit": 50,
+      "depositBasis": "per person, taken at booking, deducted from the bill",
+      "cancellationWindow": "No changes or cancellations within 7 days of the visit; two-hour seating",
+      "currency": "GBP",
+      "source": "https://www.sevenrooms.com/reservations/dorianrestaurant",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Search summary. Time Out (2025-02-26) reported a £25-a-head no-show charge at Dorian earlier; the later figure is £50."
+    },
+    {
+      "town": "London",
+      "restaurant": "Minimum spends reported by Time Out",
+      "fees": [
+        { "restaurant": "Gymkhana (Mayfair)", "minimumSpend": 100, "basis": "per head, from November 2024, citing cancellations, no-shows, bots and resale sites" },
+        { "restaurant": "Hutong (The Shard)", "minimumSpend": 80, "basis": "Friday and Saturday nights" },
+        { "restaurant": "Chutney Mary (St James's)", "minimumSpend": 60, "basis": "minimum" },
+        { "restaurant": "The Foyer & Reading Room, Claridge's", "minimumSpend": 50, "basis": "per person" },
+        { "restaurant": "Jean-Georges at The Connaught", "minimumSpend": 65, "basis": "per person" },
+        { "restaurant": "Benares (Mayfair)", "minimumSpend": 50, "basis": "minimum" }
+      ],
+      "currency": "GBP",
+      "source": "https://www.timeout.com/london/news/why-are-so-many-london-restaurants-introducing-a-minimum-spend-022625",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Time Out London, 2025-02-26, read directly; a news report. Michelin Guide (2020) reported St. John charging £20 for no-shows; it is common in UK cities for a card to be charged around £20 a head."
+    },
+    {
+      "town": "Dublin",
+      "restaurant": "Restaurant Patrick Guilbaud",
+      "fee": 100,
+      "feeBasis": "per person",
+      "cancellationWindow": "Cancelled within 48 hours of the booking, or a no-show; the restaurant tries to reconfirm 3-4 days before",
+      "currency": "EUR",
+      "source": "https://restaurantpatrickguilbaud.ie/reservations/",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Search summary of the restaurant's own page; the page returned 403 to the fetch tool."
+    },
+    {
+      "town": "Dublin",
+      "restaurant": "Craft (Harold's Cross); Variety Jones (Thomas Street)",
+      "fees": [
+        { "restaurant": "Craft", "deposit": 15, "basis": "per person for groups of 8 or more", "window": "48 hours' notice" },
+        { "restaurant": "Variety Jones", "fee": 25, "basis": "for no-shows or late cancellations" }
+      ],
+      "statistic": "Variety Jones saw 20 no-shows in its first month and a 40% cancellation/no-show rate on one Saturday (the All-Ireland final replay).",
+      "currency": "EUR",
+      "source": "https://www.irishtimes.com/special-reports/business-of-hospitality/how-restaurants-are-handling-no-shows-and-cancellations-1.4027401",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Irish Times, 2019-10-11, read directly; dated and a news report."
+    },
+    {
+      "town": "Mexico City",
+      "restaurant": "Pujol (Polanco); Niddo (Juárez); Sud 777 (Pedregal)",
+      "fees": [
+        { "restaurant": "Pujol", "fee": 2565, "basis": "per person", "window": "less than 24 hours' notice, no-show, or change in guest count" },
+        { "restaurant": "Niddo", "fee": 350, "basis": "per person", "window": "less than 24 hours' notice or no-show" },
+        { "restaurant": "Sud 777", "fee": 1000, "basis": "per person", "window": "less than 24 hours' notice or no-show" }
+      ],
+      "cardRequired": true,
+      "currency": "MXN",
+      "source": "https://www.sdpnoticias.com/negocios/cuanto-cuesta-cancelar-una-reservacion-en-pujol-y-niddo-sale-caro-decirle-que-no-al-mole-madre/",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "SDP Noticias article of 2022-09-08, read directly. Pujol's own FAQ page (https://pujol.com.mx/eng/preguntas_frecuentes/cuales-son-sus-politicas-de-cancelacion/) returned 403; a search summary of it gave a 24-hour window and a penalty of '100 dollars per person' — currency (USD or MXN) unverified."
+    }
+  ],
+
+  "reservationShares": [
+    {
+      "scope": "United States",
+      "figure": "12% of diners always make a dinner reservation; 34% sometimes; over 50% never or rarely. Among regulars, 83% reserve versus 48% of non-regulars. 65% of those who book go directly to the restaurant's website.",
+      "source": "https://pos.toasttab.com/blog/data/restaurant-wait-times-and-reservations-data",
+      "readDate": "2026-10-02",
+      "confirmed": false,
+      "note": "Toast/Resy survey data via search summary; the Toast page and the Business Wire release (2025-11-18) returned 403."
+    },
+    {
+      "scope": "Global top restaurants",
+      "figure": "94.29% of top global restaurants enforce cancellation fees (Mandoe Media study, as quoted).",
+      "source": "https://streetsoftoronto.com/food/restaurants/restaurants-in-toronto-are-nailing-diners-with-no-show-fees/",
+      "readDate": "2026-10-02",
+      "confirmed": false
+    }
+  ],
+
+  "reservationRules": [
+    {
+      "jurisdiction": "Quebec (not one of the eight towns; the nearest Canadian rule and a model for the others)",
+      "rule": "Maximum no-show fee $10 per person, for reservations of 2 or more. No fee if cancelled at least 3 hours before, if at least one member of the party shows up, or if the merchant failed its obligations. The fee must be disclosed before booking, cancellation must be easy, a reminder with a cancellation link must be sent 6-48 hours before, and no-show fees may not be charged in advance.",
+      "currency": "CAD",
+      "source": "https://www.opc.gouv.qc.ca/en/consumer/topic/restaurant-reservation",
+      "readDate": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "jurisdiction": "New York, Los Angeles, New Haven, Toronto, Vancouver, London, Dublin, Mexico City",
+      "rule": null,
+      "note": "No town- or state/province-level rule capping or regulating restaurant no-show fees was found for any of the eight towns.",
+      "confirmed": false
+    }
+  ],
+
+  "carSale": {
+    "values": [
+      {
+        "place": "United States",
+        "publisher": "Kelley Blue Book",
+        "statement": "Trade-in Value is KBB's estimate of what a consumer can expect to receive from a dealer for a trade-in vehicle, assuming an accurate appraisal of condition. 'This value will likely be less than the Kelley Blue Book Private Party Value because the reselling dealer incurs the cost of safety inspections, reconditioning and other costs of doing business.' Private Party Value is 'the starting point for negotiation of a used-car sale between a private buyer and seller', an 'as is' value without warranties.",
+        "gapPercent": null,
+        "gapNote": "KBB's definitions page gives no fixed percentage; the gap is per vehicle.",
+        "source": "https://b2b.kbb.com/kbb-vehicle-values/definitions-of-our-values/",
+        "readDate": "2026-10-02",
+        "confirmed": true
+      },
+      {
+        "place": "United States",
+        "publisher": "Various (secondary)",
+        "statement": "Search summaries report trade-in values averaging 10-20% below private party (attributed to KBB), private sales yielding 15-25% more, and a Carvana-attributed study showing private-party values 46% above dealer offers on average (75% under $20,000; 43% over $20,000).",
+        "source": "https://www.keysavvy.com/blog/is-it-better-to-trade-in-or-sell-my-car",
+        "readDate": "2026-10-02",
+        "confirmed": false,
+        "note": "Secondary blogs, not KBB, Edmunds or Carvana pages; treat as unverified ranges."
+      },
+      {
+        "place": "United States",
+        "publisher": "Edmunds",
+        "statement": "Average trade-in equity reached a record $13,330 in Q2 2026. Average transaction price of 3-year-old used vehicles $32,461 in Q2 2026 (up 4% year over year); $31,216 in Q2 2025.",
+        "currency": "USD",
+        "source": "https://www.edmunds.com/car-news/insights-q2-2026-used-car-report.html",
+        "readDate": "2026-10-02",
+        "confirmed": false,
+        "note": "edmunds.com returned 403; search summary. Edmunds' private-party versus trade-in gap as a percentage was not found."
+      },
+      {
+        "place": "United States",
+        "publisher": "Cox Automotive",
+        "statement": "Average used listing price $27,239 in August 2026, 7% above a year earlier and the highest since December 2022.",
+        "currency": "USD",
+        "source": "https://www.coxautoinc.com/insights/used-vehicle-inventory-august-2026/",
+        "readDate": "2026-10-02",
+        "confirmed": true
+      }
+    ],
+
+    "time": [
+      {
+        "place": "United States",
+        "publisher": "Cox Automotive (vAuto)",
+        "metric": "Used-vehicle days' supply at dealers, at the current retail sales pace",
+        "series": [
+          { "month": "2026-01", "days": 48 },
+          { "month": "2026-02", "days": 42 },
+          { "month": "2026-03", "days": 37, "note": "record low since at least 2019 when the vAuto data begins" },
+          { "month": "2026-05", "days": 45 },
+          { "month": "2026-06", "days": 47 },
+          { "month": "2026-07", "days": 46 },
+          { "month": "2026-08", "days": 44, "note": "2.13 million units in inventory; 1.50 million estimated retail sales; vehicles under $15,000 at 29 days' supply" }
+        ],
+        "source": "https://www.coxautoinc.com/insights/used-vehicle-inventory-august-2026/",
+        "readDate": "2026-10-02",
+        "confirmed": true,
+        "note": "March (published 2026-04-17) and August read directly; January, February, May, June and July from search summaries of the matching Cox pages. This is dealer stock, not private-sale time."
+      },
+      {
+        "place": "Canada",
+        "publisher": "AutoTrader.ca",
+        "metric": "Average time for a private sale",
+        "days": 30,
+        "statement": "'The average private sale takes approximately 30 days.'",
+        "source": "https://www.autotrader.ca/sell-my-car/marketplace/",
+        "readDate": "2026-10-02",
+        "confirmed": true
+      }
+    ],
+
+    "listing": [
+      {
+        "place": "United States",
+        "site": "Facebook Marketplace",
+        "fee": 0,
+        "statement": "Vehicle listings are free for private sellers: no listing fee, no commission, no renewal charge; fees apply only to checkout payments or ads, which vehicle sales rarely use.",
+        "currency": "USD",
+        "source": "https://www.inventorysource.com/does-facebook-marketplace-charge-fees/",
+        "readDate": "2026-10-02",
+        "confirmed": false,
+        "note": "Search summary; Meta's own help page was not read. The same applies in Canada, the UK, Ireland and Mexico."
+      },
+      {
+        "place": "United States",
+        "site": "eBay Motors (ebay.com)",
+        "insertionFee": "$34 for vehicles $15,000 or less; $79 over $15,000",
+        "finalValueFee": "None: 'we don't charge a final value fee when your vehicle sells'",
+        "depositProcessingFee": "2.8% of the deposit amount when the buyer pays the deposit in checkout",
+        "currency": "USD",
+        "source": "https://www.ebay.com/help/selling/fees-credits-invoices/motors-fees?id=4127",
+        "readDate": "2026-10-02",
+        "confirmed": true,
+        "note": "Search summaries of third-party guides describe an older structure (free insertion; $60/$125 successful listing fee for low-volume sellers). The ebay.com page read on 2026-10-02 says insertion $34/$79 and no final value fee."
+      },
+      {
+        "place": "Canada",
+        "site": "eBay Motors (ebay.ca)",
+        "insertionFee": "Free for low-volume sellers (Cars & Trucks)",
+        "successfulListingFee": "$60 for vehicles up to $2,000; $125 above $2,000",
+        "currency": "CAD",
+        "source": "https://www.ebay.ca/help/selling/fees-credits-invoices/motors-fees?id=4127",
+        "readDate": "2026-10-02",
+        "confirmed": true
+      },
+      {
+        "place": "United States",
+        "site": "Autotrader (Private Seller Exchange, shared with Kelley Blue Book)",
+        "listingFee": "$9 for cars under $10,000; $49 at $10,000 and above",
+        "saleFee": "0.99% of the sale price, minimum $99, when the car sells (seller protection)",
+        "currency": "USD",
+        "source": "https://www.autotrader.com/marketplace",
+        "readDate": "2026-10-02",
+        "confirmed": false,
+        "note": "Search summary of third-party guides; Autotrader's adviser page returned 'site currently unavailable'."
+      },
+      {
+        "place": "Canada",
+        "site": "AutoTrader.ca",
+        "listingFee": 0,
+        "statement": "'There is no cost to list your private vehicle on AutoTrader's marketplace.' Optional paid promotions ('super or turbo ads'); prices not shown on the page (a third-party guide gives $49.95-$99.95).",
+        "currency": "CAD",
+        "source": "https://www.autotrader.ca/sell-my-car/marketplace/",
+        "readDate": "2026-10-02",
+        "confirmed": true
+      },
+      {
+        "place": "Canada",
+        "site": "Kijiji / Kijiji Autos",
+        "listingFee": 0,
+        "statement": "Private sellers can post one free car, truck or SUV ad at a time with no commission; above the per-household free-ad limit in Cars & Vehicles a flat listing fee applies, giving a 31-day ad.",
+        "overLimitFee": null,
+        "overLimitFeeNote": "Amount not found; the Kijiji help page now redirects and returned 404.",
+        "currency": "CAD",
+        "source": "https://www.kijijiautos.ca/sell-my-car/",
+        "readDate": "2026-10-02",
+        "confirmed": false
+      },
+      {
+        "place": "United Kingdom",
+        "site": "Auto Trader UK",
+        "packages": [
+          { "package": "Basic (2 weeks)", "upTo1000": 0, "from1001to10000": 36.95, "over10000": 39.95 },
+          { "package": "Standard (3 weeks)", "upTo1000": 9.95, "from1001to10000": 46.95, "over10000": 49.95 },
+          { "package": "Premium", "upTo1000": 19.95, "from1001to10000": 58.95, "over10000": 64.95 },
+          { "package": "Ultimate (until sold)", "upTo1000": 24.95, "from1001to10000": 74.95, "over10000": 84.95 }
+        ],
+        "currency": "GBP",
+        "taxIncluded": null,
+        "source": "https://theusedcarguy.co.uk/sell-my-car-online/selling-my-car-privately-autotrader/",
+        "readDate": "2026-10-02",
+        "confirmed": false,
+        "note": "Search summary of a third-party page; autotrader.co.uk was not read. A 2026-03-05 SwapAuto article gives ranges of £20-£30, £35-£80 and £90+ by car value."
+      },
+      {
+        "place": "Ireland",
+        "site": "DoneDeal",
+        "listingFee": null,
+        "note": "No current price list found. A 2023 boards.ie thread reports €28 for a car ad, €7 to bump, top tier almost €50, and another user paying €9.99. Not confirmed.",
+        "currency": "EUR",
+        "source": "https://www.boards.ie/discussion/2058319282/donedeal-ads-huge-price-hike",
+        "readDate": "2026-10-02",
+        "confirmed": false
+      },
+      {
+        "place": "Mexico",
+        "site": "Mercado Libre (autos)",
+        "packages": [
+          { "exposure": "Mínima (no home-page presence)", "price": 0, "days": null },
+          { "exposure": "Media (no home-page presence)", "price": 381, "days": 30 },
+          { "exposure": "Alta (vehicles home page)", "price": 546, "days": 30 },
+          { "exposure": "Máxima (vehicles home page)", "price": 922, "days": 30 }
+        ],
+        "saleCommission": 0,
+        "saleCommissionNote": "No sale commission: the seller keeps 100% of the price.",
+        "currency": "MXN",
+        "taxIncluded": null,
+        "source": "https://www.autofact.com.mx/blog/comprar-carro/tramites/vender-auto-mercadolibre",
+        "readDate": "2026-10-02",
+        "confirmed": false,
+        "note": "Search summary; mercadolibre.com.mx returned 403. Mercado Libre's page title 'Vende tu auto gratis' confirms a free tier exists."
+      }
+    ],
+
+    "transfer": [
+      {
+        "place": "New York (state DMV)",
+        "titleFee": 50.00,
+        "statement": "'The title certificate fee is $50.00' (manufactured homes $125). Ownership passes when the seller signs the title.",
+        "otherCosts": "Sales tax is collected by the DMV from the buyer on the price declared on form DTF-802; registration within 10 days of purchase (search summary).",
+        "currency": "USD",
+        "source": "https://dmv.ny.gov/titles/certificate-of-title",
+        "readDate": "2026-10-02",
+        "confirmed": true
+      },
+      {
+        "place": "California (DMV)",
+        "transferFee": 15,
+        "statement": "Transfer (VC §9255): $15.",
+        "otherCosts": "Use tax on private sales not stated on the page.",
+        "currency": "USD",
+        "source": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+        "readDate": "2026-10-02",
+        "confirmed": true
+      },
+      {
+        "place": "Connecticut (DMV)",
+        "titleFee": 25,
+        "statement": "CT DMV's fee page shows a $25 title fee on vehicle registrations.",
+        "otherCosts": "Search summary: sales tax 6.35% on private sales (7.75% over $50,000), on the higher of the bill of sale or NADA average trade-in; passenger registration $120 for three years; $10 administrative fee, $10 lien fee when applicable.",
+        "currency": "USD",
+        "source": "https://portal.ct.gov/dmv/resources/dmv-fees",
+        "readDate": "2026-10-02",
+        "confirmed": true,
+        "note": "Only the $25 title fee was confirmed on the page; the tax and registration figures are unconfirmed."
+      },
+      {
+        "place": "Ontario (ServiceOntario)",
+        "vehiclePermitFee": 32,
+        "uvipFee": 20,
+        "statement": "Vehicle permit (all vehicles) $32; licence plate with permit $59 if new plates are needed. The seller is legally required to give the buyer a $20 Used Vehicle Information Package. Buyers usually pay 13% RST on the greater of price or wholesale value, collected at registration. Register as the new owner within 6 days.",
+        "rstRate": 0.13,
+        "deadlineDays": 6,
+        "currency": "CAD",
+        "source": "https://www.ontario.ca/page/register-vehicle-permit-and-licence-plate",
+        "sourcesAlso": ["https://www.ontario.ca/page/used-vehicle-information-package", "https://www.ontario.ca/page/buy-or-sell-used-vehicle-ontario"],
+        "readDate": "2026-10-02",
+        "confirmed": true
+      },
+      {
+        "place": "British Columbia (ICBC)",
+        "transferFee": null,
+        "statement": "Search summaries: Transfer/Tax Form APV9T is free; buyer takes it, the signed registration and a bill of sale to an Autoplan broker within 10 days; PST collected at transfer on the greater of price or Canadian Black Book wholesale value: 12% under $125,000, 15% $125,000-$149,999, 20% $150,000+ (no GST on private sales). One summary gives a $28 title/ownership transfer fee and $18 plate fee.",
+        "pstRate": 0.12,
+        "currency": "CAD",
+        "source": "https://assets.ctfassets.net/nnc41duedoho/5gRw4qHg7GWH5i285ytAa9/4a49605e005cb0af8dbd20ee898b32ff/transfer-tax-form.pdf",
+        "readDate": "2026-10-02",
+        "confirmed": false,
+        "note": "ICBC's buying-a-used-vehicle page returned 404; the $28 fee could not be traced to ICBC and the acera.ca page read had no amounts."
+      },
+      {
+        "place": "United Kingdom (DVLA)",
+        "fee": 0,
+        "statement": "Telling DVLA online is free (search summary) and uses the V5C's 11-digit reference; vehicle tax is cancelled and full remaining months refunded. Failing to tell DVLA can mean a fine of up to £1,000.",
+        "currency": "GBP",
+        "source": "https://www.gov.uk/sold-bought-vehicle",
+        "readDate": "2026-10-02",
+        "confirmed": false,
+        "note": "gov.uk page read: it confirms the online service, its hours (Mon-Fri 7am-9pm, Sat-Sun 7am-8pm) and the tax refund, but does not itself state 'free' or the fine."
+      },
+      {
+        "place": "Ireland (Motor Tax / Department of Transport)",
+        "fee": 0,
+        "statement": "No charge for registering a change of ownership at motor tax offices, online or at the Vehicle Registration Unit; online change updates the NVDF in real time; a new Vehicle Registration Certificate takes about 2-5 days. Pre-1993 vehicles use form RF200 at a Motor Taxation Office.",
+        "currency": "EUR",
+        "source": "https://laois.ie/finance/motor-tax/motor-vehicle-change-of-ownership-registration",
+        "readDate": "2026-10-02",
+        "confirmed": false,
+        "note": "Search summary of council pages; the Cork and Citizens Information pages did not return the text."
+      },
+      {
+        "place": "Mexico City (SEMOVI / Secretaría de Administración y Finanzas)",
+        "fee": 417.00,
+        "feeLatestReported": 433,
+        "statement": "Official trámite page lists the cambio de propietario for automobiles at $417.00, legal basis Código Fiscal de la Ciudad de México arts. 219 fr. V, 221, 223 fr. V, 224 fr. IV. El Imparcial (2026-07-04) reports $433 for 2026. Deadline 15 business days after purchase. Requires ID, CDMX proof of address, proof of ownership, current tarjeta de circulación, payment, and no tenencia debts.",
+        "deadlineBusinessDays": 15,
+        "currency": "MXN",
+        "source": "https://www.cdmx.gob.mx/public/InformacionTramite.xhtml?idTramite=1935",
+        "sourcesAlso": ["https://www.elimparcial.com/dinero/2026/07/04/compraste-un-carro-seminuevo-estos-documentos-acreditan-que-eres-el-nuevo-propietario-y-el-cambio-de-dueno-en-cdmx-cuesta-433-pesos-durante-2026/"],
+        "readDate": "2026-10-02",
+        "confirmed": true,
+        "note": "The government page's $417 may not have been updated for the 2026 Código Fiscal; the 2026 vehicle-control tariff PDF (https://cdmxassets.s3.us-east-1.amazonaws.com/media/files-pdf/control-vehicular/2026/CONT_VEH_CV_2026.pdf) should settle it."
+      }
+    ],
+
+    "shares": [
+      {
+        "place": "United States",
+        "publisher": "Cox Automotive",
+        "statement": "'While roughly 45% of used vehicle sales are private party—neighbor to neighbor deals—the growing majority are retail sales closed at dealerships.'",
+        "privatePartyShare": 0.45,
+        "source": "https://coxautoinc.com/market-insights/commentary-independent-dealers-are-poised-to-thrive-as-driving-force-in-recovery",
+        "readDate": "2026-10-02",
+        "confirmed": true,
+        "note": "Article dated 2021-05-21; no newer Cox figure found."
+      },
+      {
+        "place": "United Kingdom",
+        "statement": "A PistonHeads forum thread claims only 5.6% of cars on Autotrader UK are private ads.",
+        "source": "https://www.pistonheads.com/gassing/topic.asp?h=0&f=23&t=1567669&i=20",
+        "readDate": "2026-10-02",
+        "confirmed": false,
+        "note": "Forum claim; this is the share of listings, not of sales."
+      }
+    ]
+  },
+
+  "notes": {
+    "notFound": [
+      "Any NYC garage operator's own posted rate board (Icon, Edison, SP+): only ParkMobile resale prices, which do not say whether the 18.375% tax is included.",
+      "LAZ or ABM published rates for a named downtown LA garage.",
+      "Green P per-lot 2026 rates from the operator (site blocked); the open-data file is from 2019.",
+      "NCP and Q-Park London tariffs from the operator (NCP blocked; Q-Park says no tariffs online).",
+      "Q-Park Dublin tariffs (not published online); Park Rite and Q-Park monthly season prices.",
+      "A named Mexico City garage operator's tariff, and any 2025/2026 Gaceta tariff for Cuauhtémoc, Miguel Hidalgo or Benito Juárez.",
+      "Overnight rates for most US garages.",
+      "OpenTable's and Resy's own help text (client-rendered); a platform-wide default card-hold amount does not exist — the restaurant sets it.",
+      "A typical large-party deposit as a single published figure (examples: Craft €15/person for 8+; Shell & Bones card required for 6+; Sushi Masaki Saito 7 days' notice for 5+; République $135/person for 8-16).",
+      "Any city or state/provincial rule on restaurant no-show fees in the eight towns (only Quebec's was found).",
+      "Edmunds' own private-party versus trade-in gap percentage.",
+      "Days to sell privately in the US, UK, Ireland or Mexico.",
+      "DoneDeal's current ad price list; Kijiji's over-limit listing fee.",
+      "ICBC's own transfer fee figure.",
+      "Private-sale share for Canada, UK, Ireland and Mexico."
+    ],
+    "worthChecking": [
+      "Westminster tariff PDF 'Hours of control & parking tariffs, from March 2026' for confirmed on-street figures.",
+      "CDMX 2026 Control Vehicular tariff PDF to settle cambio de propietario at $417 versus $433.",
+      "Whether the NYC 18.375% applies to transient (hourly) parking as well as monthly rentals: the DOF page frames it for 'rental parking spaces'; NYC parking tax is generally charged on all Manhattan garage parking and is commonly included in posted rates.",
+      "The split of EasyPark's 29% between GST and the TransLink parking sales tax.",
+      "eBay.com's Motors fee page now shows a $34/$79 insertion fee with no final value fee, which contradicts third-party guides; re-read before relying on it.",
+      "Autotrader US Private Seller Exchange fees ($9/$49 listing plus 0.99%, min $99) on autotrader.com directly.",
+      "Pujol's own FAQ for the currency of its 'US$100 / MXN 2,565' per-person penalty.",
+      "Dorian's current deposit (£50 per person, 7-day window) on SevenRooms directly.",
+      "Impark One Toronto Street's 20-minute rate: whether $4.00 repeats per 20 minutes or is only the first-20-minute charge.",
+      "Cox Automotive's annual forecast PDF for total used sales (about 39-40 million) against used retail (about 20 million), which would give a current non-dealer share."
+    ]
+  }
+}

@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { MEDICAL_KIND, NOT_VISUAL, OWN_172, buyAircraftRefusal, hiredPilotUsd, licensedIn, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts, medicalMonthsAt, planesOf } from '@/engine/systems/aviation';
+import { MEDICAL_KIND, NOT_VISUAL, OWN_172, buyAircraftRefusal, hiredPilotUsd, licensedIn, jetCharterUsd, ownHourCost, planCharterJet, planFlyYourself, trainRefusal, trainingCosts, medicalMonthsAt, planesOf, PILOT_PASS, PILOT_TRAINING, passesPilotTest } from '@/engine/systems/aviation';
 import { weatherOn } from '@/engine/systems/weather';
 import { netWorth } from '@/engine/systems/finance';
 import { journeysOf, slotOf } from '@/engine/systems/journey';
@@ -103,10 +103,12 @@ describe('learning to fly', () => {
     fund(sim, 30_000);
     expect(sim.execute({ kind: 'pilot.train', payload: {} }).ok).toBe(true);
     expect(sim.player.pilotTraining!.monthsDone).toBe(4);
-    sim.advanceBy(100 * MS_DAY);
+    // The rest of the months, then the knowledge test and the checkride a month apart, each taken again a month on when failed (from 2026-10-02).
+    for (let i = 0; i < 30 && sim.player.pilotTraining!.status !== 'certified'; i += 1) sim.advanceBy(31 * MS_DAY);
     expect(sim.player.pilot?.authority).toBe('FAA');
     expect(sim.player.pilotTraining!.status).toBe('certified');
     expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Flight training, a month'))).toHaveLength(6);
+    expect(sim.universe.transactions.some((t) => t.memo === 'The knowledge test')).toBe(true);
     // The medical with the first month, and the certificate's own months from the training's start.
     expect(sim.universe.transactions.filter((t) => t.memo === 'Flight training, a month, and the medical')).toHaveLength(1);
     const firstMonth = sim.universe.transactions.find((t) => t.memo === 'Flight training, a month, and the medical')!;
@@ -404,5 +406,47 @@ describe('a pilot’s medical, the weather, and a loan on a plane', () => {
     deep.advanceBy(11 * MS_DAY);
     const shortfall = deep.universe.transactions.filter((t) => t.memo.startsWith('Plane loan short after its sale'));
     expect(shortfall[0]!.postings.filter((p) => p.amount > 0).reduce((x, p) => x + p.amount, 0)).toBe(inSave(deep, 8_250_00, 'USD'));
+  });
+});
+
+describe('the tests', () => {
+  it('are passed at the published shares, and a failed one taken again: the checkride’s retest at half the fee', () => {
+    const sim = save('us-ny-newyork', 'fly-tests');
+    let knowledge = 0;
+    let checkride = 0;
+    for (let i = 0; i < 2000; i += 1) {
+      if (passesPilotTest(sim, sim.player, 'knowledge', i)) knowledge += 1;
+      if (passesPilotTest(sim, sim.player, 'checkride', i)) checkride += 1;
+    }
+    expect(knowledge / 2000).toBeCloseTo(PILOT_PASS.knowledge, 1);
+    expect(checkride / 2000).toBeCloseTo(PILOT_PASS.checkride, 1);
+    // A life that fails its first checkride pays half for the retest.
+    fund(sim, 60_000);
+    sim.must({ kind: 'pilot.train', payload: {} });
+    const t = sim.player.pilotTraining!;
+    t.monthsDone = PILOT_TRAINING.months;
+    t.knowledgePassed = true;
+    let attempt = 0;
+    while (passesPilotTest(sim, sim.player, 'checkride', attempt)) attempt += 1;
+    t.checkrides = attempt;
+    for (let i = 0; i < 6 && t.status !== 'certified'; i += 1) sim.advanceBy(31 * MS_DAY);
+    const retests = sim.universe.transactions.filter((x) => x.memo === 'The checkride, a retest');
+    expect(retests.length).toBeGreaterThan(0);
+    expect(retests[0]!.postings.filter((x) => x.amount > 0).reduce((q, x) => q + x.amount, 0)).toBe(inSave(sim, Math.round(PILOT_TRAINING.checkride * PILOT_PASS.retestShare * 100), 'USD'));
+  });
+});
+
+describe('a failed knowledge test', () => {
+  it('is taken again a month on, a fresh attempt, until passed', () => {
+    let seed = 0;
+    let sim = save('us-ny-newyork', 'fly-k0');
+    while (passesPilotTest(sim, sim.player, 'knowledge', 0)) { seed += 1; sim = save('us-ny-newyork', 'fly-k' + seed); }
+    fund(sim, 60_000);
+    sim.must({ kind: 'pilot.train', payload: {} });
+    const t = sim.player.pilotTraining!;
+    t.monthsDone = PILOT_TRAINING.months;
+    for (let i = 0; i < 20 && t.status !== 'certified'; i += 1) sim.advanceBy(31 * MS_DAY);
+    expect(t.status).toBe('certified');
+    expect(sim.universe.transactions.filter((x) => x.memo === 'The knowledge test').length).toBeGreaterThan(1);
   });
 });

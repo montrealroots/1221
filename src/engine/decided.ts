@@ -45,6 +45,7 @@ import { onTheRoad } from './systems/roadside';
 import { machinesDay } from './systems/appliancefaults';
 import { mayRefer } from './systems/appointments';
 import { atWork, works } from './systems/availability';
+import { passesPilotTest } from './systems/aviation';
 import type { Contact } from './systems/people';
 import type { Journey } from './systems/journey';
 import { mayCollide } from './systems/carcare';
@@ -505,6 +506,18 @@ defineDecider<{ sim: Simulation; who: number }, string>({
     const w = works(sim, c, sim.now);
     return !w.employed ? 'not working' : !w.daytime ? 'works other hours' : atWork(sim, c, sim.now - (sim.now % 86_400_000) + 15 * 3_600_000, 60) ? 'at work' : 'off today';
   },
+});
+
+defineDecider<{ sim: Simulation; attempt: number }, string>({
+  id: 'pilot.tests',
+  decides: 'A private pilot’s knowledge test and checkride, passed or failed at the FAA’s 89.56% for the test and the secondary 75.1% for the checkride (PILOT_PASS); swept at even odds.',
+  drawnIn: 'src/engine/systems/aviation.ts',
+  reads: {
+    attempt: (o, t) => ({ ...o, attempt: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), attempt: seed }),
+  decide: ({ sim, attempt }) => `${passesPilotTest(sim, sim.player, 'knowledge', attempt, 0.5) ? 'test passed' : 'test failed'}, ${passesPilotTest(sim, sim.player, 'checkride', attempt, 0.5) ? 'checkride passed' : 'checkride failed'}`,
 });
 
 defineDecider<{ sim: Simulation; booking: number }, string>({

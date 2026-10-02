@@ -18,7 +18,7 @@ import { groceryCatalog } from '@/engine/systems/kitchen';
 import { salonsIn, toiletryCatalog } from '@/engine/systems/hygiene';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { contactsOf } from '@/engine/systems/people';
-import { leg, runErrands, tripRefusal, type Stop, driverIn } from '@/engine/systems/trips';
+import { leg, runErrands, tripRefusal, type Stop, driverIn, garagesIn } from '@/engine/systems/trips';
 import { sessionPrice, trainersIn } from '@/engine/systems/trainers';
 import { METER, STATIONS } from '@/engine/content/errandtrips';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -189,7 +189,8 @@ function ErrandsPanel() {
   const friends = contactsOf(person).filter((c) => c.cityId === here && !c.rival);
   const [by, setBy] = useState<'car' | 'foot'>('foot');
   const [vehicleId, setVehicleId] = useState('');
-  const [passengerId, setPassengerId] = useState('');
+  const [passengers, setPassengers] = useState<string[]>([]);
+  const [garageId, setGarageId] = useState('');
   const [driven, setDriven] = useState(false);
   const driver = driverIn(here);
   const [stops, setStops] = useState<(Stop & { label: string })[]>([]);
@@ -206,7 +207,7 @@ function ErrandsPanel() {
   ];
   const picked = options.find((o) => o.key === choice) ?? options[0];
   const withDriver = by === 'car' && driven && Boolean(driver);
-  const no = tripRefusal(sim, person, by, car?.id, passengerId || undefined, withDriver) ?? (stops.length === 0 ? 'Add a stop.' : undefined);
+  const no = tripRefusal(sim, person, by, car?.id, passengers, withDriver) ?? (stops.length === 0 ? 'Add a stop.' : undefined);
   const each = leg(here, by, 'shopping');
   return (
     <Panel title="Run Errands" subtitle={`A leg is about ${each.km.toFixed(1)} km, ${Math.round(each.minutes)} minutes${by === 'car' ? (METER[here] ? `; parking at ${METER[here]!.zone}` : '; no meter rate published here') : ' on foot'}`}>
@@ -236,13 +237,27 @@ function ErrandsPanel() {
               </select>
             </div>
           )}
-          <div className="field">
-            <label htmlFor="errand-with">With</label>
-            <select id="errand-with" value={passengerId} onChange={(e) => setPassengerId(e.target.value)}>
-              <option value="">Nobody</option>
-              {friends.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-            </select>
-          </div>
+          {by === 'car' && garagesIn(person.currentLocationId).length > 0 && (
+            <div className="field">
+              <label htmlFor="errand-park">Park At</label>
+              <select id="errand-park" value={garageId} onChange={(e) => setGarageId(e.target.value)}>
+                <option value="">The Meter</option>
+                {garagesIn(person.currentLocationId).map((g) => <option key={g.id} value={g.id} title={g.basis}>{g.name}</option>)}
+              </select>
+            </div>
+          )}
+          {friends.length > 0 && (
+            <div className="field">
+              <span className="small">With</span>
+              <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+                {friends.map((c) => (
+                  <label key={c.id} className="small row gap-1" style={{ alignItems: 'center' }}>
+                    <input type="checkbox" checked={passengers.includes(c.id)} onChange={() => setPassengers((a) => (a.includes(c.id) ? a.filter((x) => x !== c.id) : [...a, c.id]))} />{c.name}
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
         <div className="field-row">
           <div className="field">
@@ -253,7 +268,7 @@ function ErrandsPanel() {
           </div>
           <button type="button" className="btn btn-sm btn-ghost" disabled={!picked || stops.length >= 8} onClick={() => picked && setStops([...stops, { kind: picked.kind, payload: picked.payload, leg: picked.leg, label: picked.label }])}>Add The Stop</button>
           <button type="button" className="btn btn-sm" disabled={!go.open || !park.open || !fuel.open || Boolean(no) || Boolean(person.trip)} title={no ?? go.reason ?? park.reason ?? fuel.reason} onClick={() => {
-            const r = runErrands(sim, { by, ...(by === 'car' && car ? { vehicleId: car.id } : {}), ...(passengerId ? { passengerId } : {}), ...(withDriver ? { driven: true } : {}), stops }, (kind, payload) => run(kind, payload, { silent: true }));
+            const r = runErrands(sim, { by, ...(by === 'car' && car ? { vehicleId: car.id } : {}), ...(passengers.length ? { passengerIds: passengers } : {}), ...(withDriver ? { driven: true } : {}), ...(garageId ? { garageId } : {}), stops }, (kind, payload) => run(kind, payload, { silent: true }));
             if (r.stopped) toast(`Home again after ${r.done} of ${stops.length}: ${stops[r.stopped.step]!.label} couldn’t be done. ${r.stopped.error}`, 'negative');
             else toast(`Home again, all ${stops.length} done.`, 'positive');
             setStops([]);
@@ -263,13 +278,13 @@ function ErrandsPanel() {
         {/* A stop at a time, the plan changed as you go (from 2026-10-02): each leg and stop the same commands a whole trip runs. */}
         <div className="row gap-1" style={{ flexWrap: 'wrap', alignItems: 'baseline' }}>
           {person.trip && <span className="small">{`Out ${person.trip.by === 'car' ? 'in the car' : 'on foot'}, ${person.trip.km.toFixed(1)} km so far`}</span>}
-          <button type="button" className="btn btn-sm btn-ghost" disabled={!go.open || !picked || (!person.trip && Boolean(tripRefusal(sim, person, by, car?.id, passengerId || undefined, withDriver)))} title={go.reason} onClick={() => {
+          <button type="button" className="btn btn-sm btn-ghost" disabled={!go.open || !picked || (!person.trip && Boolean(tripRefusal(sim, person, by, car?.id, passengers, withDriver)))} title={go.reason} onClick={() => {
             if (!picked) return;
-            const start = person.trip ? {} : { by, ...(by === 'car' && car ? { vehicleId: car.id } : {}), ...(passengerId ? { passengerId } : {}), ...(withDriver ? { driven: true } : {}) };
+            const start = person.trip ? {} : { by, ...(by === 'car' && car ? { vehicleId: car.id } : {}), ...(passengers.length ? { passengerIds: passengers } : {}), ...(withDriver ? { driven: true } : {}) };
             if (!run('errand.go', { to: picked.leg, ...start }).ok) return;
             const before = sim.now;
             const done = run(picked.kind, picked.payload);
-            if (sim.player.trip?.by === 'car' && picked.kind !== 'errand.fuel') run('errand.park', { minutes: (sim.now - before) / 60_000 }, { silent: true });
+            if (sim.player.trip?.by === 'car' && picked.kind !== 'errand.fuel') run('errand.park', { minutes: (sim.now - before) / 60_000, ...(garageId ? { garageId } : {}) }, { silent: true });
             if (done.ok) toast(`${picked.label}: done.`, 'positive');
           }}>{person.trip ? 'Go To This Stop Next' : 'Go Now, A Stop At A Time'}</button>
           {person.trip && <button type="button" className="btn btn-sm" disabled={!go.open} title={go.reason} onClick={() => { if (run('errand.go', { to: 'home' }).ok) toast('Home again.', 'positive'); }}>Go Home</button>}

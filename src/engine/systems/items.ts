@@ -41,10 +41,10 @@ export type Place =
   | { kind: 'service'; serviceId: string; readyAt: Instant };
 
 /** The spots a home keeps things in. Rooms come with Stage 12 of the backlog. */
-export type Spot = 'floor' | 'wardrobe' | 'drawers' | 'fridge' | 'freezer' | 'pantry' | 'bathroom' | 'storage';
+export type Spot = 'floor' | 'wardrobe' | 'drawers' | 'fridge' | 'freezer' | 'pantry' | 'bathroom' | 'storage' | 'hamper';
 export const SPOT_LABEL: Readonly<Record<Spot, string>> = {
   floor: 'In The Rooms', wardrobe: 'The Wardrobe', drawers: 'The Drawers', fridge: 'The Fridge', freezer: 'The Freezer',
-  pantry: 'The Pantry', bathroom: 'The Bathroom', storage: 'Storage',
+  pantry: 'The Pantry', bathroom: 'The Bathroom', storage: 'Storage', hamper: 'The Laundry Basket',
 };
 
 export interface Item {

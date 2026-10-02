@@ -13,7 +13,7 @@ import { PREPAID_OFF, STAY_CLASS_LABEL, type RatePlan, type StayClass } from '@/
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
-import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { MS_DAY, dateKey, formatDateTime, formatTime, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
@@ -22,7 +22,7 @@ import { AIR } from '@/engine/content/air';
 import { caravansOf, towFor, towedLegs } from '@/engine/systems/caravans';
 import { asRoundTrip, bookRefusal, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS, inMotorhome, residentOf, refundRefusal } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
-import { companionRefusal } from '@/engine/systems/companions';
+import { companionRefusal, companionsOf } from '@/engine/systems/companions';
 import { contactsOf } from '@/engine/systems/people';
 import { arrange } from '@/engine/systems/catalog';
 import { rentalCatalog, stayCatalog } from '@/engine/systems/catalogs';
@@ -35,7 +35,7 @@ import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
 import { breakfastPrice, breakfastRefusal } from '@/engine/systems/hotelbreakfast';
 import { byTransit, transitOffered, type GroundWay } from '@/engine/systems/airportground';
-import { amenitiesOf, amenityLine, freeCancelUntil, hotelById, hotelsIn, namedStayQuote } from '@/engine/systems/hotels';
+import { HOTEL_WANT_LABEL, amenitiesOf, amenityLine, freeCancelUntil, hotelById, hotelHas, hotelsIn, namedStayQuote, type HotelWant } from '@/engine/systems/hotels';
 import { insuranceQuote } from '@/engine/systems/travelinsurance';
 import { lateQuote } from '@/engine/systems/latecheckout';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -70,6 +70,8 @@ export function TravelWorkspace() {
   const [hotelPick, setHotelPick] = useState('');
   const [ratePlan, setRatePlan] = useState<RatePlan>('flexible');
   const [ground, setGround] = useState<GroundWay>('taxi');
+  const [wants, setWants] = useState<HotelWant[]>([]);
+  const [budget, setBudget] = useState('');
   const [daysThere, setDaysThere] = useState(4);
   const [tow, setTow] = useState(false);
   // A town chosen before arriving in it isn't a destination from it: until 2026-09-30 it stayed chosen, the list showing
@@ -122,7 +124,7 @@ export function TravelWorkspace() {
   const arrival = outPlan ? outPlan[outPlan.length - 1]!.arriveAt : day;
   // The named hotels' rooms in the town on this rate, cheapest first, priced for the nights.
   const rooms = toCity && cls === 'hotel' && !own && stayNights > 0 ? hotelsIn(toCity).flatMap((h) => h.rooms.map((r) => ({ key: `${h.id}|${r.name}`, hotel: h, room: r, quote: namedStayQuote(sim, h.id, r.name, ratePlan, arrival, stayNights) })))
-    .filter((x) => x.quote).sort((a, b) => a.quote!.price - b.quote!.price) : [];
+    .filter((x) => x.quote && hotelHas(x.hotel.id, wants) && (!budget || x.quote.price <= centsFromTyped(budget))).sort((a, b) => a.quote!.price - b.quote!.price) : [];
   const picked = rooms.find((x) => x.key === hotelPick);
   const hotel = picked ? picked.quote : toCity && !own && stayNights > 0 ? stayPrice(sim, toCity, stayNights, 1, cls, ratePlan, residentOf(person, toCity), arrival) : undefined;
   const plan = outPlan ? [...outPlan, ...(backPlan ?? [])] : undefined;
@@ -230,6 +232,18 @@ export function TravelWorkspace() {
                     {arrange(stayCatalog(sim, toCity, stayNights, ratePlan, residentOf(person, toCity), inMotorhome(person, mode) || Boolean(towing), outPlan ? outPlan[outPlan.length - 1]!.arriveAt : day)).map((e) => <option key={e.id} value={e.id}>{`${e.label}, ${catalogPrice(e, (c) => formatMoney(c, saveCurrency(sim.universe), { cents: false }))} The Stay`}</option>)}
                   </select>
                 </div>
+                {toCity && cls === 'hotel' && !own && stayNights > 0 && hotelsIn(toCity).length > 0 && (
+                  <div className="field">
+                    <span className="small">Hotels With</span>
+                    <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+                      {(Object.keys(HOTEL_WANT_LABEL) as HotelWant[]).map((w) => (
+                        <label key={w} className="small row gap-1" style={{ alignItems: 'center' }}><input type="checkbox" checked={wants.includes(w)} onChange={() => setWants((a) => (a.includes(w) ? a.filter((x) => x !== w) : [...a, w]))} />{HOTEL_WANT_LABEL[w]}</label>
+                      ))}
+                    </div>
+                    <label htmlFor="travel-budget" className="small">At Most, The Stay</label>
+                    <input id="travel-budget" inputMode="decimal" value={budget} onChange={(e) => setBudget(e.target.value)} style={{ width: '8rem' }} />
+                  </div>
+                )}
                 {rooms.length > 0 && (
                   <div className="field">
                     <label htmlFor="travel-hotel">Hotel</label>
@@ -602,14 +616,17 @@ function AskAlong({ j }: { j: Journey }) {
   const [contactId, setContactId] = useState('');
   const ask = useFeature('travel.companion');
   const who = contactsOf(person).filter((c) => c.cityId === j.fromCity && !c.rival);
-  if (j.companionId) { const c = contactsOf(person).find((x) => x.id === j.companionId); return c ? <span className="xs dim">{`With ${c.name}`}</span> : null; }
-  if (who.length === 0 || companionRefusal(person, j.id, who[0]!.id).refused) return null;
-  const chosen = who.find((c) => c.id === contactId) ?? who[0]!;
+  const coming = companionsOf(j).map((id) => contactsOf(person).find((x) => x.id === id)).filter((x): x is NonNullable<typeof x> => Boolean(x));
+  const free = who.filter((c) => !companionRefusal(person, j.id, c.id).refused);
+  const withThem = coming.length ? <span className="xs dim">{`With ${coming.map((c) => c.name).join(', ')}`}</span> : null;
+  if (free.length === 0) return withThem;
+  const chosen = free.find((c) => c.id === contactId) ?? free[0]!;
   return (
     <span className="row gap-1" style={{ alignItems: 'center' }}>
+      {withThem}
       <label className="sr-only" htmlFor={`along-${j.id}`}>Who</label>
-      <select id={`along-${j.id}`} value={chosen.id} onChange={(e) => setContactId(e.target.value)} style={{ width: 'auto' }}>{who.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select>
-      <button type="button" className="btn btn-sm btn-ghost" disabled={!ask.open} title={ask.reason} onClick={() => { const a = run<{ accepted: boolean; reason?: string; repaid?: number }>('travel.companion', { journeyId: j.id, contactId: chosen.id }); if (a.ok) toast(a.value!.accepted ? `${chosen.name.split(' ')[0]} is coming${a.value!.repaid ? `, and paid back their half of the room, ${formatMoney(a.value!.repaid, saveCurrency(sim.universe))}` : ''}.` : `No: ${a.value!.reason}`, a.value!.accepted ? 'positive' : 'neutral'); }}>Ask A Friend Along</button>
+      <select id={`along-${j.id}`} value={chosen.id} onChange={(e) => setContactId(e.target.value)} style={{ width: 'auto' }}>{free.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select>
+      <button type="button" className="btn btn-sm btn-ghost" disabled={!ask.open} title={ask.reason} onClick={() => { const a = run<{ accepted: boolean; reason?: string; repaid?: number }>('travel.companion', { journeyId: j.id, contactId: chosen.id }); if (a.ok) toast(a.value!.accepted ? `${chosen.name.split(' ')[0]} is coming${a.value!.repaid ? `, and paid back their share of the room, ${formatMoney(a.value!.repaid, saveCurrency(sim.universe))}` : ''}.` : `No: ${a.value!.reason}`, a.value!.accepted ? 'positive' : 'neutral'); }}>Ask A Friend Along</button>
     </span>
   );
 }
