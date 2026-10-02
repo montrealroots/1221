@@ -39,7 +39,7 @@ import { inSaveMoney } from './banking';
 import { atTown } from './homes';
 import { expenseFor, spend } from './household';
 import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place } from './items';
-import { ordersOf, placeOrder } from './orders';
+import { cancelOrder, ordersOf, placeOrder } from './orders';
 import { fitOf, fitKgFor, sizeFor } from './tailoring';
 import { bodyOf } from './body';
 import { dryCleanDirty, garmentsOf, unwearable, wearTheDay, type Garment } from './wardrobe';
@@ -58,6 +58,8 @@ export interface ClothesPurchase {
   /** How many garments it brought: a pack's each. */
   count: number;
   returnedAt?: Instant;
+  /** Called off before it was delivered (from 2026-10-02). */
+  canceledAt?: Instant;
 }
 
 /** An outfit they've put together and named. */
@@ -251,6 +253,47 @@ export function returnClothes(sim: Simulation, person: Person, purchaseId: strin
   person.items = itemsOf(person).filter((i) => !gone.has(i.id));
   forget(person, gone);
   purchase.returnedAt = sim.now;
+  // The order it came on, all of it gone back.
+  const order = ordersOf(person).find((o) => o.id === purchase.orderId);
+  if (order) { order.status = 'returned'; order.endedAt = sim.now; }
+  return back;
+}
+
+/**
+ * Where an order may be called off before it comes, by law: in Britain the
+ * Consumer Contracts Regulations 2013 and in Ireland the European Union
+ * (Consumer Information, Cancellation and Other Rights) Regulations 2013
+ * (S.I. 484/2013) give a buyer at a distance the right to cancel from the
+ * order until 14 days after delivery, refunded in full with the standard
+ * delivery paid. In America, Canada and Mexico it's each retailer's own
+ * terms, which SLATE doesn't hold.
+ */
+export const CANCEL_BY_LAW: Readonly<Partial<Record<ClothingMarket, string>>> = {
+  GB: 'the Consumer Contracts Regulations 2013',
+  IE: 'S.I. 484/2013',
+};
+
+/** Why an order of clothes can't be called off now, or nothing. */
+export function cancelRefusal(person: Person, purchaseId: string): string | undefined {
+  const purchase = (person.clothesBought ?? []).find((x) => x.id === purchaseId);
+  if (!purchase) return 'That isn’t something you bought.';
+  if (purchase.canceledAt !== undefined) return 'It’s called off already.';
+  const order = ordersOf(person).find((o) => o.id === purchase.orderId);
+  if (!order) return 'Bought in a store, it’s yours: it can be returned.';
+  if (order.status !== 'placed') return 'It’s been delivered: it can be returned.';
+  const r = retailerById(purchase.retailerId)!;
+  if (!CANCEL_BY_LAW[r.market]) return `SLATE doesn’t know ${r.name}’s terms for calling an order off; it can be returned once it comes.`;
+  return undefined;
+}
+
+/** Calls an order of clothes off before it's delivered: refunded whole, delivery too. */
+export function cancelClothes(sim: Simulation, person: Person, purchaseId: string): Money {
+  const no = cancelRefusal(person, purchaseId);
+  if (no) throw new CommandError(no);
+  const purchase = person.clothesBought!.find((x) => x.id === purchaseId)!;
+  const r = retailerById(purchase.retailerId)!;
+  const back = cancelOrder(sim, person, purchase.orderId!, `${r.name}: an order canceled, refunded`, 'clothing');
+  purchase.canceledAt = sim.now;
   return back;
 }
 
@@ -473,6 +516,7 @@ export function registerClothing(sim: Simulation): void {
     return { purchaseId: buyClothes(s, s.player, { productId: p.productId, how: p.how === 'online' ? 'online' : 'store', size: p.size, color: p.color, quantity: p.quantity }).id };
   });
   sim.onCommand<{ purchaseId: string; how: 'store' | 'mail' }, { refunded: Money }>('clothes.return', (p, { sim: s }) => ({ refunded: returnClothes(s, s.player, String(p?.purchaseId), p?.how === 'mail' ? 'mail' : 'store') }));
+  sim.onCommand<{ purchaseId: string }, { refunded: Money }>('clothes.cancel', (p, { sim: s }) => ({ refunded: cancelClothes(s, s.player, String(p?.purchaseId)) }));
   sim.onCommand<Record<string, never>, { count: number; paid: Money }>('clothes.dry_clean', (_p, { sim: s }) => dryClean(s, s.player));
   sim.onCommand<Record<string, never>, { count: number }>('clothes.collect', (_p, { sim: s }) => ({ count: collectCleaning(s, s.player) }));
   sim.onCommand<{ itemIds: string[] }, { dressed: string[] }>('clothes.dress', (p, { sim: s }) => {

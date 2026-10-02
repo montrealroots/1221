@@ -25,7 +25,7 @@ import { resaleOf, sellRefusal } from '@/engine/systems/resale';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
 import { groupLabelOf } from '@/ui/shell/destinations';
-import { buyRefusal, clothingCatalog, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal } from '@/engine/systems/clothing';
+import { buyRefusal, cancelRefusal, clothingCatalog, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
 const SLOT_LABEL: Readonly<Partial<Record<Slot, string>>> = {
@@ -307,6 +307,7 @@ function Bought() {
   const person = useWorld((s) => s.player);
   const bought = useWorld((s) => [...(s.player.clothesBought ?? [])].reverse());
   const back = useFeature('clothes.return');
+  const cancel = useFeature('clothes.cancel');
   if (bought.length === 0) return null;
   return (
     <Panel title="Bought">
@@ -326,10 +327,11 @@ function Bought() {
                   <td>{(() => { const first = purchaseItems(person, b.id).find((i) => i.garment); return first ? <Open subject={at('garment', first.id)}>{p?.name ?? 'Clothes'}</Open> : (p?.name ?? 'Clothes'); })()}{b.count > 1 ? <span className="xs dim"> · {b.count}</span> : null}</td>
                   <td className="small">{r?.name}</td>
                   <td className="num mono">{money(b.goods)}</td>
-                  <td className="small">{formatDate(b.at, sim.zone)}{b.returnedAt !== undefined ? ', returned' : purchaseItems(person, b.id).some((i) => i.at.kind === 'order') ? ', on its way' : ''}</td>
+                  <td className="small">{formatDate(b.at, sim.zone)}{b.canceledAt !== undefined ? ', canceled' : b.returnedAt !== undefined ? ', returned' : purchaseItems(person, b.id).some((i) => i.at.kind === 'order') ? ', on its way' : ''}</td>
                   <td>
-                    {b.returnedAt === undefined && (
+                    {b.returnedAt === undefined && b.canceledAt === undefined && (
                       <div className="row gap-1" style={{ justifyContent: 'flex-end' }}>
+                        {b.how === 'online' && purchaseItems(person, b.id).some((i) => i.at.kind === 'order') && <button type="button" className="btn btn-sm btn-ghost" disabled={!cancel.open || Boolean(cancelRefusal(person, b.id))} title={cancelRefusal(person, b.id) ?? cancel.reason} onClick={() => { if (run('clothes.cancel', { purchaseId: b.id }).ok) toast('Canceled, and refunded.', 'positive'); }}>Cancel The Order</button>}
                         <button type="button" className="btn btn-sm btn-ghost" disabled={!back.open || Boolean(storeNo)} title={storeNo ?? back.reason} onClick={() => { if (run('clothes.return', { purchaseId: b.id, how: 'store' }).ok) toast('Returned, and refunded.', 'positive'); }}>Return In Store</button>
                         <button type="button" className="btn btn-sm btn-ghost" disabled={!back.open || Boolean(mailNo)} title={mailNo ?? back.reason} onClick={() => { if (run('clothes.return', { purchaseId: b.id, how: 'mail' }).ok) toast('Sent back, and refunded.', 'positive'); }}>{fee !== undefined && fee > 0 ? `Return By Mail, ${money(fee)}` : 'Return By Mail'}</button>
                       </div>

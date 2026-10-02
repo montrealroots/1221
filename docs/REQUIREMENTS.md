@@ -30,7 +30,8 @@ Correctness first, then the connected day the plan asks to be shown working
    ends). A saved outfit was worn though a piece was out of
    reach, and a piece that couldn't be worn was silently swapped, until
    2026-10-02 (§32g, §27b; now refused, and a swap on the day is told). An
-   order's "returned" state is declared and never set (§30). A fitting is
+   order's "returned" state was declared and never set until 2026-10-02
+   (§30; now set, and an order can be canceled where the law gives it). A fitting is
    paid without the actor there (§53.5). Look After Yourself's "eat" pays
    money and never touches the kitchen (§33g).
 2. **The connected day (§62).** A fuel tank and refuelling at a station
@@ -89,7 +90,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 27g | Outfits from owned, reachable items; worn outfit persists | Partial | `outfitRefusal`, `reachable` | The worn outfit itself (`wearing`, deleted 2026-10-02, to come back as a real worn state) |
 | 28 | Phones and electronics as devices, activation, plans, finance, trade-in | Not implemented (device), partial (plan) | `MOBILE` plan billed | Device catalog and item, activation, plan choice, finance, trade-in, repair; messages and contacts |
 | 29 | Jewelry and watches as pieces, commissions, servicing, insurance, resale | Partial (catalog only) | about 121 pieces as garments | A `jewel` record, worn, a safe, servicing, insurance rider, fair resale, commissions |
-| 30 | Orders: states, destination, failed delivery, cancellation, return, refund once | Partial | `Order`, `deliver` once | Shipped and out-for-delivery, failed delivery, cancel, partial returns, the returned state, refund to the payment |
+| 30 | Orders: states, destination, failed delivery, cancellation, return, refund once | Partial | `Order`, `deliver` once; `returned` set and `clothes.cancel` where the law gives it, GB and IE (2026-10-02) | Shipped and out-for-delivery, failed delivery, partial returns, refund to the payment |
 
 ## Part 5. Daily life
 
