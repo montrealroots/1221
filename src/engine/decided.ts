@@ -42,6 +42,7 @@ import { airlineAtFault } from './systems/compensation';
 import { mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
 import { mayCollide } from './systems/carcare';
+import { weatherDelay } from './systems/construction';
 import { metAtWork } from './systems/people';
 import { mayDivorce } from './systems/marriage';
 import { mayConceive } from './systems/children';
@@ -434,6 +435,19 @@ defineDecider<{ sim: Simulation; car: number }, string>({
     const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
     return !mayBreak(sim, sim.player, v, modelById(v.modelId)!, sim.now, 0.5) ? 'goes' : v.fault!.severe ? 'severe' : 'light';
   },
+});
+
+defineDecider<{ sim: Simulation; build: number; month: number }, string>({
+  id: 'build.weather',
+  decides: 'The extra days a wetter stretch than usual adds to an outdoor stage of a house being built, drawn around NOAA’s mean wet days for its months (WET_DAYS).',
+  drawnIn: 'src/engine/systems/construction.ts',
+  reads: {
+    build: (o, t) => ({ ...o, build: Math.round(t * 400) }),
+    month: (o, t) => ({ ...o, month: Math.round(t * 11) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), build: seed, month: seed % 12 }),
+  decide: ({ sim, build, month }) => String(weatherDelay(sim, `b${build}`, 'us-ny-newyork', 2, 60, Date.UTC(2027, month, 1))),
 });
 
 defineDecider<{ sim: Simulation; car: number }, string>({

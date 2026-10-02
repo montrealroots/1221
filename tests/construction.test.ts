@@ -12,7 +12,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { LAND_MARKETS } from '@/engine/content/land';
 import { SQFT_PER_M2, STAGES } from '@/engine/content/construction';
-import { buildFees, buildQuote, buildRefusal, mostFloor, type BuildQuote } from '@/engine/systems/construction';
+import { buildFees, buildQuote, buildRefusal, mostFloor, type BuildQuote, weatherDelay } from '@/engine/systems/construction';
 import { parcelsOf, type Parcel } from '@/engine/systems/land';
 import { homesOf, paymentFor } from '@/engine/systems/homes';
 
@@ -27,6 +27,8 @@ const fee = (q: BuildQuote, re: RegExp) => q.fees.find((l) => re.test(l.label))!
 const memoed = (sim: Simulation, re: RegExp) => sim.universe.transactions.filter((t) => re.test(t.memo));
 /** New York's 5% held back of a stage's bill until the house is finished (`RETENTION`, from 2026-09-30). */
 const held = (amount: number) => Math.round(amount * 0.05);
+/** To the quoted finish, and on a day at a time while a wetter stretch than usual has the house still building (`weatherDelay`). */
+const toFinish = (sim: Simulation, by: number) => { sim.advanceTo(by + MS_DAY); for (let d = 0; d < 365 && sim.player.building && sim.player.building.stoppedAt === undefined; d += 1) sim.advanceBy(MS_DAY); };
 
 describe('what building costs', () => {
   it('prices New York at the Northeast’s $179.30 a square foot, with DOB’s $0.06 a square foot, and fits only what R2’s 0.75 takes', () => {
@@ -146,7 +148,7 @@ describe('building it', () => {
     expect(buildRefusal(sim, sim.player, p.id, 'ne-owner', true)).toMatch(/being built already/);
     // Being built on, it isn't sold or split.
     expect(sim.execute({ kind: 'land.sell', payload: { parcelId: p.id } }).error).toMatch(/being built/);
-    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    toFinish(sim, r.value!.finishesBy);
     const bills = memoed(sim, /^The contractor, /);
     expect(bills).toHaveLength(STAGES.length);
     // Each stage less New York's 5% retention, released thirty days after it's finished.
@@ -181,7 +183,7 @@ describe('building it', () => {
     expect(sim.execute({ kind: 'build.start', payload: { parcelId: p.id, designId: 'ne-owner' } }).ok).toBe(true);
     sim.advanceBy((q.permitDays + 1) * MS_DAY);
     for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && !a.nominal && a.balance > 0 && a.kind !== 'escrow') a.balance = 0;
-    sim.advanceBy((q.stages[0]!.days + 1) * MS_DAY);
+    for (let d = 0; d < 120 && sim.player.building!.stoppedAt === undefined; d += 1) sim.advanceBy(MS_DAY);
     const b = sim.player.building!;
     expect(b.unpaid).toBe(q.stages[0]!.amount - held(q.stages[0]!.amount));
     expect(b.retained).toBe(held(q.stages[0]!.amount));
@@ -206,7 +208,7 @@ describe('building it', () => {
     fund(sim, inSave(sim, q.total, 'GBP'));
     const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'nds-3b5p', live: true } });
     expect(r.ok, r.error).toBe(true);
-    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    toFinish(sim, r.value!.finishesBy);
     const home = homesOf(sim.player).find((h) => h.facts.address === 'Your House In Croydon')!;
     expect(home.clawback!.amount).toBe(inSave(sim, q.spared, 'GBP'));
     const sold = sim.execute({ kind: 'home.sell', payload: { homeId: home.id } });
@@ -224,7 +226,7 @@ describe('building it', () => {
     fund(sim, inSave(sim, q.total, 'USD'));
     const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'ne-owner' } });
     expect(r.ok, r.error).toBe(true);
-    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    toFinish(sim, r.value!.finishesBy);
     const home = homesOf(sim.player).find((h) => h.facts.address === 'Your House On Farmland Upstate')!;
     expect(home.facts.lot).toBe(435_600);
     // In Hudson, not in the city the land was bought from.
@@ -239,7 +241,7 @@ describe('building it', () => {
     fund(sim, inSave(sim, q.total + 200_000_00, 'GBP'));
     const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'nds-2b4p', live: true } });
     expect(r.ok, r.error).toBe(true);
-    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    toFinish(sim, r.value!.finishesBy);
     const home = homesOf(sim.player).find((h) => h.facts.address === 'Your House In Havering')!;
     sim.advanceTo(home.clawback!.until + MS_DAY);
     expect(sim.execute({ kind: 'home.sell', payload: { homeId: home.id } }).ok).toBe(true);
@@ -260,7 +262,7 @@ describe('a construction loan', () => {
     const loanFees = inSave(sim, Math.round((1_100 + (lent / 100) * 0.0025 + 1_400) * 100), 'USD');
     expect(before - sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(inSave(sim, q.feesTotal, 'USD') + loanFees);
     const account = Object.values(sim.universe.accounts).find((a) => a.category === 'construction-loan')!;
-    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    toFinish(sim, r.value!.finishesBy);
     // The owner's tenth of each stage; the lender's nine-tenths on the loan.
     const bills = memoed(sim, /^The contractor, /);
     const own10 = bills.reduce((a, t) => a + t.postings.filter((x) => x.amount > 0).reduce((b, x) => b + x.amount, 0), 0);
@@ -310,7 +312,7 @@ describe('retention and the certificate of occupancy', () => {
     fund(sim, inSave(sim, q.total, 'USD'));
     const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'ne-owner' } });
     expect(r.ok, r.error).toBe(true);
-    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    toFinish(sim, r.value!.finishesBy);
     expect(memoed(sim, /retention released/)).toHaveLength(0);
     sim.advanceBy(31 * MS_DAY);
     const release = memoed(sim, /retention released/);
@@ -325,7 +327,7 @@ describe('retention and the certificate of occupancy', () => {
     fund(sim, inSave(sim, q.total, 'GBP'));
     const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'nds-3b5p', live: true } });
     expect(r.ok, r.error).toBe(true);
-    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    toFinish(sim, r.value!.finishesBy);
     expect(memoed(sim, /half the retention at completion/)).toHaveLength(1);
     expect(memoed(sim, /retention released/)).toHaveLength(0);
     sim.advanceBy(92 * MS_DAY);
@@ -339,11 +341,48 @@ describe('retention and the certificate of occupancy', () => {
     fund(sim, inSave(sim, q.total + 100_000_00, 'USD'));
     const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'w-owner' } });
     expect(r.ok, r.error).toBe(true);
-    sim.advanceTo(r.value!.finishesBy + MS_DAY);
+    toFinish(sim, r.value!.finishesBy);
     const home = homesOf(sim.player).find((h) => h.cityId === 'us-ca-losangeles')!;
     expect(sim.execute({ kind: 'home.move_in', payload: { homeId: home.id } }).error).toMatch(/certificate of occupancy/);
     sim.advanceBy(22 * MS_DAY);
     const moved = sim.execute({ kind: 'home.move_in', payload: { homeId: home.id } });
     expect(moved.ok, moved.error).toBe(true);
   });
+});
+
+describe('the weather', () => {
+  it('adds a wetter stretch’s days to an outdoor stage, as often and as much as NOAA’s wet days make it, and none indoors', () => {
+    const sim = save('us-ny-newyork', 'build-weather');
+    const mean = (cityId: string, stage: number, month: number) => {
+      let sum = 0;
+      for (let k = 0; k < 400; k += 1) sum += weatherDelay(sim, `k${k}`, cityId, stage, 60, Date.UTC(2027, month, 1));
+      return sum / 400;
+    };
+    // Sixty days of a New York spring: about fourteen wet days, and a wetter stretch's few days above them now and then.
+    expect(mean('us-ny-newyork', 2, 3)).toBeGreaterThan(1);
+    expect(mean('us-ny-newyork', 2, 3)).toBeLessThan(4);
+    // A Los Angeles summer barely rains; Vancouver's winter is wetter than New York's spring.
+    expect(mean('us-ca-losangeles', 2, 6)).toBeLessThan(0.3);
+    expect(mean('ca-bc-vancouver', 2, 10)).toBeGreaterThan(mean('us-ny-newyork', 2, 3));
+    // Indoors, and where no station is kept, nothing.
+    expect(mean('us-ny-newyork', 4, 3)).toBe(0);
+    expect(mean('fr-idf-paris', 2, 3)).toBe(0);
+  });
+});
+
+describe('a wet build', () => {
+  it('finishes later by the days the weather added', () => {
+    const sim = save('us-ny-newyork', 'build-wet');
+    const p = own(sim, /Queens/, 2_850 / 43_560, 380_000_00);
+    const q = buildQuote(p, 'ne-owner', true) as BuildQuote;
+    fund(sim, inSave(sim, q.total * 2, 'USD'));
+    const r = sim.execute<{ finishesBy: number }>({ kind: 'build.start', payload: { parcelId: p.id, designId: 'ne-owner' } });
+    expect(r.ok, r.error).toBe(true);
+    let added = 0;
+    let d = 0;
+    for (; d < 900 && sim.player.building; d += 1) { added = sim.player.building.weatherDays ?? 0; sim.advanceBy(MS_DAY); }
+    expect(added).toBeGreaterThan(0);
+    // Finished no sooner than the quote and the weather's days together.
+    expect(sim.now).toBeGreaterThanOrEqual(r.value!.finishesBy + (added - 1) * MS_DAY);
+  }, 120_000);
 });

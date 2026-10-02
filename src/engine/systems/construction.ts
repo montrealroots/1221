@@ -23,12 +23,21 @@
  * contract sets one, and paid after completion (`RETENTION`), and a house
  * waits for its certificate of occupancy where a wait is published
  * (`OCCUPANCY_WAIT_DAYS`).
+ *
+ * From 2026-10-02, the weather (`weatherDelay`): an outdoor stage (the site,
+ * the foundations, the frame, the outside, and the final steps' driveway and
+ * landscaping) meets the wet days its months bring at the town's station,
+ * days over 0.10 inch, as a contract counts them (NOAA, `content/wetdays.ts`),
+ * drawn around their mean. The times above are measured, so they hold an
+ * ordinary season's rain already; a wetter stretch than usual adds its extra
+ * days, and no money, a weather delay being excusable but not compensable
+ * (research-construction-process.json). A drier one doesn't finish early.
  */
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, formatDate, type Instant } from '../core/time';
+import { MS_DAY, formatDate, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { LAND_MARKETS } from '../content/land';
@@ -36,6 +45,7 @@ import { OCCUPANCY_WAIT_DAYS, RETENTION, BC_PERMIT, BUILDERS_RISK_A_MONTH, BUILD
 import { parcelsOf, type Parcel } from './land';
 import { HOME, ownBuilt, paymentFor } from './homes';
 import { expenseFor, inTheBank, owe, payFromBank } from './household';
+import { WET_DAYS } from '../content/wetdays';
 import { CITIES } from '../content/geography';
 
 export const BUILD_STAGE_KIND = 'build.stage';
@@ -70,6 +80,8 @@ export interface Build {
   unpaid?: Money;
   stoppedAt?: Instant;
   log: { at: Instant; line: string }[];
+  /** Days the weather has added, from 2026-10-02 (`weatherDelay`). */
+  weatherDays?: number;
 }
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
@@ -202,8 +214,34 @@ export function buildRefusal(sim: Simulation, person: Person, parcelId: string, 
 
 const say = (sim: Simulation, person: Person, title: string, body: string, importance = 60) => { if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title, body, importance, route: '/workspace/land' }); };
 
+/** The stages built outdoors, by index: the site, the foundations, the frame, the outside, the final steps. */
+const OUTDOOR = new Set([0, 1, 2, 3, 6]);
+
+/** A stage's days of a wetter stretch than its months usually bring: none indoors, none where no station is kept. */
+export function weatherDelay(sim: Simulation, key: string, cityId: string, stage: number, days: number, from: Instant): number {
+  const wet = WET_DAYS[cityId];
+  if (!wet || !OUTDOOR.has(stage)) return 0;
+  const zone = CITIES.require(cityId).timeZone;
+  let expected = 0;
+  for (let d = 0; d < days; d += 1) {
+    const p = zonedParts(from + d * MS_DAY, zone);
+    expected += wet.days[p.month - 1]! / new Date(Date.UTC(p.year, p.month, 0)).getUTCDate();
+  }
+  // Poisson around the mean (Knuth's way), the count of rare days in a span.
+  const rng = sim.rng('build.weather', key, String(stage), String(from));
+  const limit = Math.exp(-expected);
+  let drawn = 0;
+  for (let prod = rng.next(); prod > limit; prod *= rng.next()) drawn += 1;
+  return Math.max(0, drawn - Math.round(expected));
+}
+
 function next(sim: Simulation, person: Person, b: Build): void {
-  sim.schedule({ at: sim.now + b.days[b.stage]! * MS_DAY, kind: BUILD_STAGE_KIND, label: `${STAGES[b.stage]!.name} Done`, category: 'home', priority: 30, payload: { personId: person.id } });
+  const delay = weatherDelay(sim, `${person.id}-${b.parcelId}`, b.cityId, b.stage, b.days[b.stage]!, sim.now);
+  if (delay > 0) {
+    b.weatherDays = (b.weatherDays ?? 0) + delay;
+    b.log.push({ at: sim.now, line: `${STAGES[b.stage]!.name}: a wetter stretch than usual, ${delay} ${delay === 1 ? 'day' : 'days'} more` });
+  }
+  sim.schedule({ at: sim.now + (b.days[b.stage]! + delay) * MS_DAY, kind: BUILD_STAGE_KIND, label: `${STAGES[b.stage]!.name} Done`, category: 'home', priority: 30, payload: { personId: person.id } });
 }
 
 /** A stage's bill paid: its inspection, then the next stage, or the house finished. */
