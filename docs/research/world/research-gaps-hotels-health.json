@@ -1,0 +1,262 @@
+{
+  "meta": {
+    "title": "SLATE research gaps: hotel early check-in / late check-out requests; uninsured walk-in prices (Toronto); NHS Scotland overseas-visitor charging and costs; GP same/next-day access and ED substitution",
+    "compiledOn": "2026-10-02",
+    "dateRead": "2026-10-02 (pages read 2026-10-01/02)",
+    "method": "WebSearch, WebFetch and curl. PDFs and .xlsx workbooks were downloaded and parsed locally (a ToUnicode-aware PDF text extractor and an xlsx sheet dumper written for this pass), so figures marked 'page' from a PDF/xlsx were read in the document itself. Nothing is invented; where nothing is published the value is null with the reason.",
+    "verificationLevels": {
+      "page": "Read on the cited page or in the cited document itself.",
+      "search-summary": "Taken only from the search engine's summary of the cited page; the page itself was not read (usually HTTP 403). Re-check before shipping as a hard figure.",
+      "derived": "Arithmetic on figures read on the page; the formula is given."
+    },
+    "relatedFiles": [
+      "docs/research/world/research-sweep4.json (Premier Inn, Travelodge, Maldron Kevin St/Belfast, Marriott/Hilton/IHG/Hyatt loyalty late check-out)",
+      "docs/research/world/research-travel4.json (Marriott Marquis USD 99 guaranteed early check-in, 1 Hotels, Nobu)",
+      "docs/research/world/research-health-visits.json (providers and waits; its ie-gp-wait, ca-gp-wait entries were null and are filled below)"
+    ],
+    "cautions": [
+      "A WebFetch summary of Scottish CEL 09 (2010) claimed the text says overseas visitors 'should be charged the full cost'. The PDF was then parsed locally and contains no such sentence; it says Boards should 'recover the cost of NHS treatment'. The fetcher's quote was a fabrication and is not used.",
+      "Third-party figures seen in search summaries but NOT traced to the hotel (Travelodge IE EUR 10, The Dean EUR 20, Travelodge UK GBP 10, Accor Gold 2pm) are listed as notes only, never as values."
+    ]
+  },
+
+  "hotelRequests": {
+    "summary": "Of SLATE's 28 hotels, the hotel's own site publishes a hard early/late price for only a few: Hotel Catedral (late check-out to 19:00, MXN 553 flat), Freehand LA (late to 15:00 at 50% of the nightly rate; early from 12:00 for an unstated 'small fee'), The Beverly Hills Hotel (late to 16:00 at 50% of best available rate; search-summary), Omni New Haven (late from USD 50; search-summary), The Hoxton Holborn (GBP 10/hour to 16:00; search-summary; free 'Flexy Time' for direct bookings 72h ahead, page). Every other hotel says 'subject to availability' and either 'additional fees may apply' with no amount, or nothing. No hotel guarantees early check-in except by booking the previous night (Beverly Hills Hotel, Four Seasons Toronto and Mexico City say so).",
+    "grantRateStatistic": {
+      "value": null,
+      "why": "No published industry survey (J.D. Power NAGSI, Skift, STR, Oracle Hospitality, chain disclosures) reports the share of early check-in or late check-out requests that hotels grant. Searches on 2026-10-01/02 found only uncited blog figures ('68% of hotels more likely to grant...', '30% of guests request late check-out', '75% of hotels offer late check-out') attributed vaguely to 'Hotel News Resource' or similar, with no methodology; these must not be used. research-sweep4.json reached the same conclusion on 2026-09-30.",
+      "adjacentFigures": [
+        { "figure": "37% of travelers willing to pay more for early check-in / late check-out", "publisher": "Oracle Hospitality consumer study (2022)", "url": "https://www.oracle.com/news/announcement/oracle-hospitality-in-2025-consumer-research-study-2022-06-01/", "verification": "search-summary", "note": "Demand/willingness to pay, not a grant rate. oracle.com returned 403." },
+        { "figure": "23% of travelers worldwide prefer the option to check out later and would pay more for it", "publisher": "Booking.com 2024 study (as summarised)", "url": "https://revenue-hub.com/fact-guests-will-buy-an-early-check-in-and-late-check-out/", "verification": "search-summary", "note": "Not traced to a Booking.com primary release. Demand, not grant rate." }
+      ]
+    },
+    "hotels": [
+      { "id": "pod-times-square", "hotel": "Pod Times Square", "cityId": "us-ny-newyork",
+        "earlyCheckIn": { "value": "free when available (no separate fee)", "text": "\"We offer early check-in when available, upon arrival.\" The mandatory facility fee, USD 29.84 per room per night incl. tax, lists early check-in and late check-out when available among what it covers.", "url": "https://www.thepodhotel.com/pod-times-square/frequently-asked-questions", "verification": "page" },
+        "lateCheckOut": { "value": "free if available; no latest time stated", "text": "\"Late check-out is based on availability. Please reach out to our front desk on the morning of your departure day.\" Standard check-out 13:00.", "url": "https://www.thepodhotel.com/pod-times-square/frequently-asked-questions", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": null },
+      { "id": "ace-hotel-brooklyn", "hotel": "Ace Hotel Brooklyn", "cityId": "us-ny-newyork",
+        "earlyCheckIn": { "value": null, "text": "\"Check-in is after 3pm. If you arrive early, we can hold your bags... until your room is available.\" No fee stated.", "url": "https://acehotel.com/brooklyn/frequently-asked-questions/", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "\"Check out is noon... we'll do what we can to accommodate.\" No fee stated.", "url": "https://acehotel.com/brooklyn/frequently-asked-questions/", "verification": "page" },
+        "subjectToAvailability": true,
+        "loyalty": { "text": "Members booking direct receive early check-in and late check-out (a search summary called it 'guaranteed'); no times stated.", "url": "https://acehotel.com/brooklyn/offers/", "verification": "search-summary" },
+        "notes": "A USD 50 late check-out charge seen in one guest review is not the hotel's figure and is not used." },
+      { "id": "the-plaza", "hotel": "The Plaza", "cityId": "us-ny-newyork",
+        "earlyCheckIn": { "value": null, "text": "\"Though we cannot guarantee early check-in, we will do our best to accommodate you.\" Check-in 15:00.", "url": "https://www.theplazany.com/faq/", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "Check-out 12:00; FAQ gives no late check-out fee or terms.", "url": "https://www.theplazany.com/faq/", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": "ALL Accor (Fairmont-managed); see brandPolicies.allAccor" },
+      { "id": "freehand-los-angeles", "hotel": "Freehand Los Angeles", "cityId": "us-ca-losangeles",
+        "earlyCheckIn": { "value": { "from": "12:00", "fee": null, "feeNote": "'a small fee', amount not published" }, "text": "\"You can also check in early from 12pm PST for a small fee, subject to availability.\"", "url": "https://freehandhotels.com/los-angeles/faq/", "verification": "page" },
+        "lateCheckOut": { "value": { "until": "15:00", "fee": "50% of the nightly room rate", "after15": "full nightly room rate plus taxes" }, "text": "\"late check-out is available until 3pm PST for 50% of the nightly room rate. Any check-out after 3:00 PM would incur a charge for the full nightly room rate plus applicable taxes.\"", "url": "https://freehandhotels.com/los-angeles/faq/", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": null },
+      { "id": "hollywood-roosevelt", "hotel": "The Hollywood Roosevelt", "cityId": "us-ca-losangeles",
+        "earlyCheckIn": { "value": null, "text": "\"Early check-in is based on availability and cannot be guaranteed in advance.\" Check-in 15:00.", "url": "https://www.thehollywoodroosevelt.com/faq", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "\"Late check-out is also based on availability and may be arranged for an additional fee.\" No amount; check-out 12:00.", "url": "https://www.thehollywoodroosevelt.com/faq", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": null },
+      { "id": "beverly-hills-hotel", "hotel": "The Beverly Hills Hotel", "cityId": "us-ca-losangeles",
+        "earlyCheckIn": { "value": null, "text": "Early check-in 'offered upon availability'; to guarantee arrival before 15:00, 'book the previous night'.", "url": "https://www.dorchestercollection.com/los-angeles/the-beverly-hills-hotel/faq", "verification": "search-summary" },
+        "lateCheckOut": { "value": { "until": "16:00", "fee": "50% of the best available daily rate", "after16": "an additional night" }, "text": "\"Late check-out (until 4pm) is chargeable at 50% of the best available daily rate... check-outs after 4pm will be charged an additional night's stay.\" Check-out 12:00.", "url": "https://www.dorchestercollection.com/los-angeles/the-beverly-hills-hotel/faq", "verification": "search-summary" },
+        "subjectToAvailability": true, "loyalty": null,
+        "notes": "dorchestercollection.com returned 403 to WebFetch and curl; the exact page within the domain (FAQ or booking terms) is uncertain." },
+      { "id": "la-quinta-new-haven", "hotel": "La Quinta Inn & Suites by Wyndham New Haven", "cityId": "us-ct-newhaven",
+        "earlyCheckIn": { "value": null, "text": "Hotel page's policy text did not load. Third-party summaries: check-in 15:00; early 'may be available at an additional cost'. No hotel-published fee.", "url": "https://www.wyndhamhotels.com/laquinta/new-haven-connecticut/la-quinta-new-haven/overview", "verification": "search-summary" },
+        "lateCheckOut": { "value": null, "text": "Check-out 11:00; late 'may be available'; no fee published.", "url": "https://www.wyndhamhotels.com/laquinta/new-haven-connecticut/la-quinta-new-haven/overview", "verification": "search-summary" },
+        "subjectToAvailability": true, "loyalty": "Wyndham Rewards; see brandPolicies.wyndhamRewards" },
+      { "id": "omni-new-haven", "hotel": "Omni New Haven Hotel at Yale", "cityId": "us-ct-newhaven",
+        "earlyCheckIn": { "value": null, "text": "Check-in 16:00; early check-in requested via a 'Special Requests form'; no fee stated.", "url": "https://www.omnihotels.com/hotels/new-haven-yale/property-details/policies", "verification": "search-summary" },
+        "lateCheckOut": { "value": { "feeFrom": 50, "currency": "USD" }, "text": "Check-out 11:00; late check-out 'may be available for an additional charge, starting at $50'.", "url": "https://www.omnihotels.com/hotels/new-haven-yale/property-details/policies", "verification": "search-summary" },
+        "subjectToAvailability": true,
+        "loyalty": { "text": "Omni Select Guest: Champion late check-out to 15:00, Icon to 18:00, 'based on availability'.", "url": "https://www.omnihotels.com/loyalty/member-benefits", "verification": "search-summary" },
+        "notes": "omnihotels.com returned 403 to WebFetch and curl." },
+      { "id": "study-at-yale", "hotel": "The Study at Yale", "cityId": "us-ct-newhaven",
+        "earlyCheckIn": { "value": null, "text": "The hotel's site publishes no FAQ or policy text (homepage checked; /faq 404). OTA listings only: check-in 15:00, early/late 'may be available at an additional cost'.", "url": "https://www.thestudyatyale.com/", "verification": "search-summary" },
+        "lateCheckOut": { "value": null, "text": "Check-out 12:00 (OTA); no fee published by the hotel.", "url": "https://www.thestudyatyale.com/", "verification": "search-summary" },
+        "subjectToAvailability": null, "loyalty": null },
+      { "id": "travelodge-kings-cross-royal-scot", "hotel": "Travelodge London Kings Cross Royal Scot", "cityId": "uk-eng-london",
+        "earlyCheckIn": { "value": { "from": "12:00", "fee": null }, "text": "\"Allows you to check in from 12 noon (normally 3 pm).\" 'Charges apply'; price not on the page.", "url": "https://www.travelodge.co.uk/about/extend-your-stay/", "verification": "page" },
+        "lateCheckOut": { "value": { "until": "14:00", "fee": null }, "text": "\"Allows you to check out up until 2 pm (normally 12 noon).\" 'Charges apply'; price not on the page.", "url": "https://www.travelodge.co.uk/about/extend-your-stay/", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": null,
+        "notes": "GBP price appears only in the booking basket. A GBP 10 per service figure exists only in third-party search summaries (research-sweep4.json, unconfirmed)." },
+      { "id": "premier-inn-county-hall", "hotel": "Premier Inn London County Hall", "cityId": "uk-eng-london",
+        "earlyCheckIn": { "value": { "from": "11:00", "fee": null }, "text": "\"For an additional fee*, you can start your stay sooner with early check-in from 11am... Early check-in is subject to availability and not available at all Premier Inn hotels.\"", "url": "https://www.premierinn.com/gb/en/faq/arriving-and-departing.html", "verification": "page" },
+        "lateCheckOut": { "value": { "until": "14:00", "fee": null }, "text": "Booking-extras data on the page: late checkout 'Check out at 2pm instead of 12pm'; 'cannot be booked within {hours} hours of your departure'. No GBP amount in the page data.", "url": "https://www.premierinn.com/gb/en/faq/arriving-and-departing.html", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": null,
+        "notes": "A GBP 10 (UK) / EUR 10 (ROI) early check-in price appears only in a search summary (research-sweep4.json, unconfirmed)." },
+      { "id": "hoxton-holborn", "hotel": "The Hoxton, Holborn", "cityId": "uk-eng-london",
+        "earlyCheckIn": { "value": "free via Flexy Time for direct bookings made at least 72 hours ahead", "text": "\"You can choose your own check-in/out time for free with our Flexy Time initiative, which is available to anyone who books direct on our website up to 72 hours in advance.\" Standard check-in 14:00.", "url": "https://thehoxton.com/london/holborn/faqs/", "verification": "page" },
+        "lateCheckOut": { "value": { "flexyTime": "free (direct booking, 72h ahead; not for back-to-back stays)", "otherwise": { "perHour": 10, "currency": "GBP", "until": "16:00" } }, "text": "Reception 'may extend your check-out time for just £10 an hour up till 4pm, subject to availability'. Standard check-out 12:00.", "url": "https://thehoxton.com/london/holborn/faqs/", "verification": "search-summary", "note": "Flexy Time read on the page; the GBP 10/hour line only in the search summary of the same URL." },
+        "subjectToAvailability": true, "loyalty": null },
+      { "id": "the-savoy", "hotel": "The Savoy", "cityId": "uk-eng-london",
+        "earlyCheckIn": { "value": null, "text": "\"Check-in time is guaranteed from 3.00pm\"; early arrivals get luggage storage and use of facilities; no fee stated.", "url": "https://www.thesavoylondon.com/faqs", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "Check-out 12:00; FAQ gives no fee. Search summary: 'Late check-out is available for a fee (subject to availability)', no amount.", "url": "https://www.thesavoylondon.com/faqs", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": "ALL Accor (Fairmont-managed); see brandPolicies.allAccor" },
+      { "id": "travelodge-plus-dublin-city-centre", "hotel": "Travelodge PLUS Dublin City Centre", "cityId": "ie-lei-dublin",
+        "earlyCheckIn": { "value": null, "text": "\"If you wish to check-in earlier, you can do so by buying an early check-in extra at the time of booking or directly at the hotel. These services are subject to availability.\" No price on the page.", "url": "https://www.travelodge.ie/responsibilities/terms-and-conditions", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "\"You must check-out before midday... If you wish to check-out later then you can do so by buying a late check-out extra at the time of booking. If you fail to check-out by the stipulated time, we will make an additional charge equivalent to the flexible rate... for one night's stay.\" No price or latest time.", "url": "https://www.travelodge.ie/responsibilities/terms-and-conditions", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": null,
+        "notes": "Terms say check-out before midday; SLATE's hotels.ts records 11:00, so check that against the hotel page. EUR 10 seen only in a third-party search summary; not used." },
+      { "id": "maldron-parnell-square", "hotel": "Maldron Hotel Parnell Square", "cityId": "ie-lei-dublin",
+        "earlyCheckIn": { "value": { "from": "08:00", "fee": null }, "text": "\"An early check-in can be arranged from 8am at an additional charge and depending on availability on the day.\"", "url": "https://www.maldronhotels.com/parnell-square/faqs/", "verification": "page" },
+        "lateCheckOut": { "value": { "until": "15:00", "fee": null }, "text": "\"A late check-out is available until 3.00pm at an additional charge and depending on availability on the day.\"", "url": "https://www.maldronhotels.com/parnell-square/faqs/", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": null,
+        "notes": "No amount for this hotel. Maldron Kevin Street (Dublin) publishes EUR 10/hour late check-out until 15:00 (research-sweep4.json, page), but that is a different hotel." },
+      { "id": "dean-dublin", "hotel": "The Dean Dublin", "cityId": "ie-lei-dublin",
+        "earlyCheckIn": { "value": null, "text": "\"Priority Early Check-in & Late Check-out – ...Let us know in advance and we'll do our best to accommodate you.\" Direct-booking benefit; no fee or time stated.", "url": "https://thedeanhotels.com/book-direct", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "Same direct-booking line; no fee or time on the hotel's site.", "url": "https://thedeanhotels.com/book-direct", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": { "text": "Priority (best-effort) early/late for direct bookers.", "url": "https://thedeanhotels.com/book-direct", "verification": "page" },
+        "notes": "EUR 20 early / EUR 20 late seen only in a search summary built from OTA listings; not used." },
+      { "id": "westbury-dublin", "hotel": "The Westbury", "cityId": "ie-lei-dublin",
+        "earlyCheckIn": { "value": null, "text": "\"Early check-in can be provided subject to availability.\" No fee stated.", "url": "https://www.doylecollection.com/hotels/the-westbury-hotel/contact-us/frequently-asked-questions", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "\"Late check-out is available at The Westbury subject to availability and must be requested through the Front Desk.\" No fee stated.", "url": "https://www.doylecollection.com/hotels/the-westbury-hotel/contact-us/frequently-asked-questions", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": null },
+      { "id": "chelsea-toronto", "hotel": "Chelsea Hotel, Toronto", "cityId": "ca-on-toronto",
+        "earlyCheckIn": { "value": null, "text": "No FAQ or policy page on the hotel's site (/en/faq/ 404). OTA listings: 'available for a fee, subject to availability', no amount.", "url": "https://www.chelseatoronto.com/en/", "verification": "search-summary" },
+        "lateCheckOut": { "value": null, "text": "Same; no amount published by the hotel.", "url": "https://www.chelseatoronto.com/en/", "verification": "search-summary" },
+        "subjectToAvailability": true, "loyalty": null },
+      { "id": "drake-toronto", "hotel": "The Drake Hotel", "cityId": "ca-on-toronto",
+        "earlyCheckIn": { "value": null, "text": "FAQ does not mention early check-in. \"Check-in any time after 3PM; check-out at 11AM.\"", "url": "https://thedrake.ca/faq/", "verification": "page" },
+        "lateCheckOut": { "value": "fee applies (amount not published)", "text": "\"A late check-out fee applies to all late check-out requests and are subject to availability.\"", "url": "https://thedrake.ca/faq/", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": null },
+      { "id": "fairmont-royal-york", "hotel": "Fairmont Royal York", "cityId": "ca-on-toronto",
+        "earlyCheckIn": { "value": null, "text": "\"Early check-in and late check-out are available by request only, based on availability. Additional fees may apply.\"", "url": "https://www.thefairmontroyalyork.com/stay/guest-services/", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "Same sentence; no amount or latest time.", "url": "https://www.thefairmontroyalyork.com/stay/guest-services/", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": "ALL Accor; see brandPolicies.allAccor" },
+      { "id": "four-seasons-toronto", "hotel": "Four Seasons Hotel Toronto", "cityId": "ca-on-toronto",
+        "earlyCheckIn": { "value": null, "text": "Recommends 'booking the room for the prior night' to guarantee immediate access; otherwise early check-in on request. No fee stated.", "url": "https://www.fourseasons.com/toronto/accommodations/", "verification": "search-summary" },
+        "lateCheckOut": { "value": null, "text": "'Reserving an additional night will guarantee access to your guest room until you depart'; otherwise bag storage and fitness facilities. No fee stated.", "url": "https://www.fourseasons.com/toronto/accommodations/", "verification": "search-summary" },
+        "subjectToAvailability": true, "loyalty": null,
+        "notes": "fourseasons.com returned 403. A brand page https://www.fourseasons.com/landing-pages/corporate/late-checkout-terms-and-conditions/ exists but could not be read." },
+      { "id": "days-inn-vancouver-downtown", "hotel": "Days Inn by Wyndham Vancouver Downtown", "cityId": "ca-bc-vancouver",
+        "earlyCheckIn": { "value": null, "text": "The overview page's policy accordion did not render. OTA listings: 'may be available at an additional cost'. No hotel-published fee.", "url": "https://www.wyndhamhotels.com/days-inn/vancouver-british-columbia/days-inn-vancouver-downtown/overview", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "Same.", "url": "https://www.wyndhamhotels.com/days-inn/vancouver-british-columbia/days-inn-vancouver-downtown/overview", "verification": "page" },
+        "subjectToAvailability": null, "loyalty": "Wyndham Rewards; see brandPolicies.wyndhamRewards" },
+      { "id": "sandman-signature-vancouver-downtown", "hotel": "Sandman Signature Vancouver Downtown Hotel", "cityId": "ca-bc-vancouver",
+        "earlyCheckIn": { "value": null, "text": "Hotel page lists check-in 15:00 only; nothing on early check-in.", "url": "https://www.sandmanhotels.com/signature-vancouver-downtown", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "Hotel page lists check-out 12:00 only. A different Sandman property (Vancouver Davie Street) says: \"Additional charges may apply for guests who are departing late, and after 6pm a full night charge may be incurred.\"", "url": "https://directory.sandmanhotels.com/vancouver-davie-street/guest-services/", "verification": "page", "note": "Not confirmed for the Signature." },
+        "subjectToAvailability": null, "loyalty": null },
+      { "id": "fairmont-hotel-vancouver", "hotel": "Fairmont Hotel Vancouver", "cityId": "ca-bc-vancouver",
+        "earlyCheckIn": { "value": null, "text": "\"Late check-out or early check-in is by request only and based on availability. Additional fees may apply.\"", "url": "https://www.fairmont-hotel-vancouver.com/stay/guest-services/", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "Same sentence; no amount or time.", "url": "https://www.fairmont-hotel-vancouver.com/stay/guest-services/", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": "ALL Accor; see brandPolicies.allAccor" },
+      { "id": "fairmont-pacific-rim", "hotel": "Fairmont Pacific Rim", "cityId": "ca-bc-vancouver",
+        "earlyCheckIn": { "value": null, "text": "Guest-services page gives only \"Check in time is 3:00pm. Check-out time is 12:00pm (noon).\" No early/late policy published.", "url": "https://www.fairmont.com/en/hotels/vancouver/fairmont-pacific-rim/guest-services.html", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "Not published on the hotel page.", "url": "https://www.fairmont.com/en/hotels/vancouver/fairmont-pacific-rim/guest-services.html", "verification": "page" },
+        "subjectToAvailability": null, "loyalty": "ALL Accor; see brandPolicies.allAccor" },
+      { "id": "rosewood-hotel-georgia", "hotel": "Rosewood Hotel Georgia", "cityId": "ca-bc-vancouver",
+        "earlyCheckIn": { "value": null, "text": "Hotel policy page states only \"Check-in: 4 pm; Checkout: 12 noon.\"", "url": "https://www.rosewoodhotels.com/en/hotel-georgia-vancouver/hotel-policy", "verification": "page" },
+        "lateCheckOut": { "value": null, "text": "Not on the policy or services pages. OTA summaries: 'by request only and based on availability. Additional fees may apply.'", "url": "https://www.rosewoodhotels.com/en/hotel-georgia-vancouver/hotel-policy", "verification": "page" },
+        "subjectToAvailability": null, "loyalty": null },
+      { "id": "hotel-catedral", "hotel": "Hotel Catedral", "cityId": "mx-cmx-mexicocity",
+        "earlyCheckIn": { "value": null, "text": "Policies file does not mention early check-in (search summary: preference to direct bookers, subject to availability).", "url": "https://www.hotelcatedral.com/policies.md", "verification": "page" },
+        "lateCheckOut": { "value": { "until": "19:00", "fee": 553, "currency": "MXN", "basis": "flat" }, "text": "\"Late check-out until | 19:00\"; \"Late check-out fee | MXN $553 (subject to availability)\". Check-in 15:00, check-out 13:00. File last updated 2026-09-25.", "url": "https://www.hotelcatedral.com/policies.md", "verification": "page" },
+        "subjectToAvailability": true, "loyalty": null },
+      { "id": "four-seasons-mexico-city", "hotel": "Four Seasons Hotel Mexico City", "cityId": "mx-cmx-mexicocity",
+        "earlyCheckIn": { "value": null, "text": "Recommends 'booking the room for the prior night to guarantee immediate access'; otherwise subject to availability. No fee.", "url": "https://www.fourseasons.com/mexico/accommodations/", "verification": "search-summary" },
+        "lateCheckOut": { "value": null, "text": "'Reserving an additional night will guarantee access to your guest room until you depart.' No fee on the hotel's site.", "url": "https://www.fourseasons.com/mexico/accommodations/", "verification": "search-summary" },
+        "subjectToAvailability": true, "loyalty": null, "notes": "fourseasons.com returned 403." }
+    ],
+    "brandPolicies": {
+      "allAccor": { "text": "Classic: none. Silver: late check-out. Gold: early check-in OR late check-out. Platinum and Diamond: early check-in AND late check-out. 'Upon request (subject to availability)'; none guaranteed; no times on the page.", "url": "https://all.accor.com/loyalty-program/cards-status-benefits-details/index.en.shtml", "verification": "page", "note": "A Gold 14:00 time appears only in third-party guides; not Accor's statement." },
+      "wyndhamRewards": { "text": "Gold, Platinum, Diamond: free late check-out on request, 'not to exceed two hours after the hotel's standard checkout time', subject to availability. Platinum and Diamond: free early check-in on request. Blue: neither.", "url": "https://www.wyndhamhotels.com/wyndham-rewards/faqs/member-levels", "verification": "page", "alsoUrl": "https://www.wyndhamhotels.com/wyndham-rewards/member-levels" },
+      "omniSelectGuest": { "text": "Champion late check-out to 15:00, Icon to 18:00, based on availability.", "url": "https://www.omnihotels.com/loyalty/member-benefits", "verification": "search-summary" }
+    }
+  },
+
+  "health": {
+    "torontoUninsuredWalkIn": [
+      { "clinic": "Appletree Medical Group (Toronto/Ottawa chain; e.g. 275 Dundas St W walk-in)", "value": 110.10, "currency": "CAD", "item": "Visit with Family Physician - Standard Fee (*includes Quebec-insured patients)", "other": { "nursePractitionerVisit": "CAD 49.00 / CAD 98.67 (standard / ages 50+ as laid out on the sheet)", "eveningNPVisitAfter16": 69.00, "noShowSpecialists": 100.00 }, "url": "https://appletreemedicalgroup.com/wp-content/uploads/2026/02/AMG-UninsuredServices-MAR2.pdf", "listedOn": "https://appletreemedicalgroup.com/patient-resources/ ('Private Services & Specialist Consultations Price List – 2026', 'Updated March 26')", "verification": "page", "note": "Read in the PDF itself. The PDF's two-column layout makes the pairing of the NP rows ambiguous; the family-physician row is unambiguous ('Visit with Family Physician - Standard Fee ... $110.10')." },
+      { "clinic": "Infinity Health Centre, 39 Lower Simcoe St, Toronto ON M5J 3A6", "value": 180, "currency": "CAD", "item": "\"Non-OHIP Visits: $180\"", "other": { "doctorNote": "CAD 45+", "missedAppointment": 20, "uninsuredPhysical": 260 }, "url": "https://infinityhealthcentre.com/health-services/walk-in-clinic/", "verification": "page" },
+      { "clinic": "Lockwood Clinic, Toronto", "value": 100, "currency": "CAD", "item": "\"you can expect a walk-in clinic visit to cost an average of $100CDN. This may be higher or lower but this is an average estimate.\"", "url": "https://lockwoodclinic.com/how-much-is-a-doctor-visit-without-ohip/", "verification": "page", "note": "The clinic's own stated average estimate, not a fixed tariff; mark as estimate in game." }
+    ],
+
+    "nhsScotlandOverseasVisitors": {
+      "regulation": { "name": "The National Health Service (Charges to Overseas Visitors) (Scotland) Regulations 1989 (SI 1989/364), as amended", "url": "https://www.legislation.gov.uk/uksi/1989/364", "verification": "page", "latestAmendment": { "name": "The National Health Service (Charges to Overseas Visitors) (Scotland) Amendment Regulations 2025 (SSI 2025/280)", "made": "2025-10-07", "inForce": "2025-10-08", "effect": "Inserts regulation 4D exempting people evacuated from Gaza for treatment (and accompanying persons), with charges from 2025-09-15 not made or repaid.", "url": "https://www.legislation.gov.uk/ssi/2025/280/made", "verification": "page" } },
+      "freeServices": {
+        "aAndE": { "value": true, "text": "Reg. 3(a): no charge for services at a hospital accident and emergency department or casualty department. NHS inform: 'Emergency treatment is free of charge in: accident and emergency (A&E); a casualty department; NHS walk-in centres that provide services like those in A&E.'", "url": "https://www.legislation.gov.uk/uksi/1989/364/regulation/3", "alsoUrl": "https://www.nhsinform.scot/care-support-and-rights/health-rights/access/healthcare-for-overseas-visitors", "verification": "page" },
+        "gp": { "value": true, "text": "Reg. 3(b): no charge for services provided otherwise than at or by a hospital (except an oral health assessment, dental examination, eye examination or sight test), which covers GP care. NHS inform: 'If you are registered as a temporary resident, you will not need to pay to see the GP.'", "url": "https://www.legislation.gov.uk/uksi/1989/364/regulation/3", "alsoUrl": "https://www.nhsinform.scot/care-support-and-rights/health-rights/access/healthcare-for-overseas-visitors", "verification": "page" },
+        "otherExemptServices": "Reg. 3: family planning; Schedule 1 notifiable diseases; STI clinics; detention under the Mental Health (Care and Treatment) (Scotland) Act 2003; treatment required by a community payback order.",
+        "charged": { "text": "NHS inform: 'You may be charged if you're admitted to hospital as an inpatient or if you're registered as an outpatient.' NHS Forth Valley: 'All treatment provided which is deemed immediately necessary may be chargeable. This includes Inpatient, Outpatient and Daycase treatment.'", "url": "https://www.nhsinform.scot/care-support-and-rights/health-rights/access/healthcare-for-overseas-visitors", "alsoUrl": "https://nhsforthvalley.com/health-services/healthcare-for-overseas-visitors/", "verification": "page" }
+      },
+      "chargeRate": {
+        "value": "the cost of treatment (100%); no uplift is published for Scotland",
+        "percentOfCost": 100,
+        "text": "Scottish Government CEL 09 (2010), 9 April 2010, para 12: 'The Scottish Government expects NHS Boards to take all reasonable steps to recover the cost of NHS treatment from those overseas visitors who are liable to charges under the Regulations.' Neither the 1989 Regulations (reg. 2 says Boards 'make and recover... charges' with no formula) nor NHS inform nor NHS Forth Valley publishes a percentage uplift.",
+        "url": "https://www.publications.scot.nhs.uk/files/cel2010-09.pdf",
+        "verification": "page",
+        "england150": { "text": "The 150% of the NHS national tariff applies in England (NHS (Charges to Overseas Visitors) Regulations 2015 as amended in 2017). It is not Scottish law.", "url": "https://commonslibrary.parliament.uk/research-briefings/sn03051/", "verification": "search-summary" },
+        "note": "Treat the 100% as 'cost recovery, no published uplift', not as a stated percentage. Boards do not publish their invoice tariffs. The natural cost basis is the PHS Scottish Health Service Costs figures below."
+      },
+      "costBook": {
+        "publisher": "Public Health Scotland, Scottish Health Service Costs, year ended 31 March 2024 (published 25 Feb 2025; NHS Tayside data revised 8 Apr 2025). NHS Borders is excluded from the Scotland totals.",
+        "whyNot2024_25": "The 2024/25 release (11 Aug 2026) published only summary tables (R100T, R086, R910, R920, R921), with no specialty cost-per-case workbooks, because NHS boards were moving to PLICS. 2023/24 is the latest year with per-case figures.",
+        "url2024_25": "https://publichealthscotland.scot/publications/scottish-health-service-costs/scottish-health-service-costs-summary-for-financial-year-2024-to-2025/",
+        "figures": [
+          { "measure": "Inpatient net cost per case, all specialties excl. long stay, Scotland", "value": 4587.75, "currency": "GBP", "discharges": 1067442, "url": "https://publichealthscotland.scot/media/31635/r040-23_24.xlsx", "table": "R040", "verification": "page" },
+          { "measure": "Inpatient gross cost per case, all specialties excl. long stay", "value": 4851.48, "currency": "GBP", "url": "https://publichealthscotland.scot/media/31635/r040-23_24.xlsx", "table": "R040", "verification": "page" },
+          { "measure": "Average length of stay, all specialties excl. long stay", "value": 4.554, "unit": "days", "url": "https://publichealthscotland.scot/media/31635/r040-23_24.xlsx", "table": "R040", "verification": "page" },
+          { "measure": "Inpatient net cost per day, all specialties excl. long stay", "value": 1007.31, "currency": "GBP", "verification": "derived", "formula": "4587.75 / 4.554 (R040 net cost per case / average length of stay)", "note": "PHS does not publish a per-day figure in R040. This is derived." },
+          { "measure": "Inpatient net cost per case, General medicine", "value": 2508.37, "currency": "GBP", "averageLengthOfStayDays": 3.484, "derivedPerDay": 720.03, "url": "https://publichealthscotland.scot/media/31635/r040-23_24.xlsx", "table": "R040", "verification": "page", "perDayVerification": "derived" },
+          { "measure": "Inpatient net cost per case, General surgery (excl. vascular)", "value": 4254.29, "currency": "GBP", "averageLengthOfStayDays": 3.474, "url": "https://publichealthscotland.scot/media/31635/r040-23_24.xlsx", "table": "R040", "verification": "page" },
+          { "measure": "Inpatient net cost per case, Orthopaedics", "value": 7639.15, "currency": "GBP", "averageLengthOfStayDays": 5.708, "url": "https://publichealthscotland.scot/media/31635/r040-23_24.xlsx", "table": "R040", "verification": "page" },
+          { "measure": "Inpatient net cost per case, Geriatric assessment", "value": 6230.04, "currency": "GBP", "averageLengthOfStayDays": 11.615, "url": "https://publichealthscotland.scot/media/31635/r040-23_24.xlsx", "table": "R040", "verification": "page" },
+          { "measure": "Day case net cost per case, all specialties excl. long stay", "value": 1516.57, "currency": "GBP", "cases": 475463, "url": "https://publichealthscotland.scot/media/31632/r04x-23_24.xlsx", "table": "R04X", "verification": "page" },
+          { "measure": "Outpatient net cost per attendance, all specialties", "value": 242.99, "currency": "GBP", "attendances": 6971907, "url": "https://publichealthscotland.scot/media/31632/r04x-23_24.xlsx", "table": "R04X", "verification": "page" }
+        ],
+        "boardExamples": [
+          { "board": "NHS Greater Glasgow & Clyde", "inpatientNetCostPerCase": 4843.97, "url": "https://publichealthscotland.scot/media/31632/r04x-23_24.xlsx", "verification": "page" },
+          { "board": "NHS Lothian (Edinburgh)", "inpatientNetCostPerCase": 5358.13, "url": "https://publichealthscotland.scot/media/31632/r04x-23_24.xlsx", "verification": "page" }
+        ]
+      }
+    },
+
+    "gpAccessAndSubstitution": {
+      "commonwealthFund2023": {
+        "survey": "Commonwealth Fund 2023 International Health Policy Survey (adults 18+, 10 countries; fieldwork 2023). It is the latest general-adult wave; the 2024 wave surveyed adults 65+ only.",
+        "sameOrNextDayHeadline": {
+          "definition": "Last time sick or needed care, got an appointment the same or next day. Base excludes 'did not need an appointment', 'not sure', 'declined', and 'never able to get one'.",
+          "values": { "Canada": 26, "US": 43, "UK": 47, "CMWFaverage": 42, "Netherlands": 54, "Germany": 51, "Switzerland": 45, "Australia": 42, "Sweden": 37, "France": 36, "NewZealand": 35 },
+          "unit": "percent", "url": "https://www.cihi.ca/en/international-survey-shows-canada-lags-behind-peer-countries-in-access-to-primary-health-care", "published": "2024-03-21", "verification": "page",
+          "check": "Reproduced from the raw table below: Canada 22.25/(100-6.81-4.36-0.41-2.99)=26.0; US 33.85/(100-7.28-12.56-0.27-0.98)=42.9; UK 39.58/(100-6.40-3.76-0.31-4.83)=46.7."
+        },
+        "q9RawDistribution": {
+          "question": "Q9: Last time you were sick or needed to see a doctor or a nurse, how quickly could you get an appointment? (excludes ED visits)",
+          "unit": "percent of all respondents",
+          "rows": {
+            "Canada": { "sameDay": 14.01, "nextDay": 8.24, "d2to5": 23.56, "d6to7": 11.56, "d8to14": 10.35, "over2Weeks": 17.71, "neverAble": 2.99, "didNotNeed": 6.81, "notSure": 4.36, "declined": 0.41 },
+            "Ontario": { "sameDay": 13.37, "nextDay": 8.17, "d2to5": 25.39, "d6to7": 11.60, "d8to14": 12.15, "over2Weeks": 16.64, "neverAble": 1.79, "didNotNeed": 6.09, "notSure": 4.39, "declined": 0.41 },
+            "BritishColumbia": { "sameDay": 12.97, "nextDay": 6.57, "d2to5": 23.07, "d6to7": 11.65, "d8to14": 11.90, "over2Weeks": 23.47, "neverAble": 2.09, "didNotNeed": 4.54, "notSure": 3.06, "declined": 0.69 },
+            "US": { "sameDay": 20.59, "nextDay": 13.27, "d2to5": 24.27, "d6to7": 6.57, "d8to14": 6.15, "over2Weeks": 8.07, "neverAble": 0.98, "didNotNeed": 7.28, "notSure": 12.56, "declined": 0.27 },
+            "UK": { "sameDay": 30.14, "nextDay": 9.44, "d2to5": 20.99, "d6to7": 7.94, "d8to14": 8.32, "over2Weeks": 7.88, "neverAble": 4.83, "didNotNeed": 6.40, "notSure": 3.76, "declined": 0.31 }
+          },
+          "url": "https://www.cihi.ca/sites/default/files/document/cmwf-2023-data-tables-en.xlsx", "sheet": "Q9 (Access to care)", "verification": "page",
+          "landingPage": "https://www.cihi.ca/en/commonwealth-fund-survey-2023"
+        },
+        "edCouldHaveBeenTreatedByRegularDoctor": {
+          "question": "Q20: The last time you went to the hospital emergency department, was it for a condition that you thought could have been treated by the doctors or staff at the place where you usually get medical care... if they had been available?",
+          "base": "Respondents who used an ED in the past 2 years (CIHI: those with a regular provider who visited the ED)",
+          "yesPercent": { "Canada": 38.02, "Ontario": 35.40, "BritishColumbia": 41.72, "US": 40.69, "UK": 31.21, "Australia": 26.53, "France": 23.10, "Germany": 25.73, "Netherlands": 27.44, "NewZealand": 33.20, "Sweden": 32.07, "Switzerland": 35.79 },
+          "url": "https://www.cihi.ca/sites/default/files/document/cmwf-2023-data-tables-en.xlsx", "sheet": "Q20 (Access to care)", "verification": "page",
+          "corroboration": [
+            { "text": "CIHI: 'Of Canadians who have a primary care provider and visited the ED, 2 in 5 reported that their last ED visit could have been managed at their usual place of care'; '75% of Canadians who reported that their ED visit could have been managed elsewhere also reported not being able to get a same- or next-day appointment.'", "url": "https://www.cihi.ca/en/international-survey-shows-canada-lags-behind-peer-countries-in-access-to-primary-health-care", "verification": "page" },
+            { "text": "Health Foundation: UK 31%, Canada 38%, US 41%.", "url": "https://www.health.org.uk/reports-and-analysis/briefings/feeling-the-pressure-what-the-2023-commonwealth-fund-survey-reveals", "verification": "search-summary" }
+          ]
+        }
+      },
+      "ireland": {
+        "commonwealthFund": "Ireland is not in the Commonwealth Fund survey.",
+        "officialStatistic": { "value": null, "why": "No ICGP, Healthy Ireland or CSO publication of GP wait days or same-day access was found. The CSO Irish Health Survey and Healthy Ireland report GP visit rates and cost barriers, not waits." },
+        "poll": { "survey": "Ipsos B&A poll for the Irish Examiner, 'Rural Ireland Thinks'", "published": "2026-09-18", "values": { "waitedTwoDaysOrMorePercent": 54, "noWaitAtAllPercent": 26, "leinsterExDublinTwoDaysOrMorePercent": 67, "munsterTwoDaysOrMorePercent": 53 }, "population": "rural Ireland (not Dublin)", "url": "https://www.irishexaminer.com/news/arid-41912527.html", "verification": "page", "note": "Sample size not stated in the article. The same 54% was reported in the previous wave. Respondents are rural, so it does not measure Dublin; use it only as an indication for Ireland." }
+      },
+      "mexico": {
+        "imssUmfWait": {
+          "survey": "IMSS Encuesta de Calidad (ENCAL 2025), first level of care (Unidades de Medicina Familiar), executive report; fieldwork October–November 2025 in 262 first-level units; adult patients interviewed at the end of their visit",
+          "values": { "averageDaysFromAppointmentRequestToCare": 29, "percentWaitingTwoWeeksOrMore": 76, "percentWithAppointmentSatisfiedWithWaitInUnit": 87, "waitingRoomMinutesThresholdWhereSatisfactionFalls": "35–40", "percentAlsoUsedCareOutsideIMSSLastYear": 31, "ofThose_privateDoctorPercent": 60, "ofThose_pharmacyAdjacentClinicPercent": 25 },
+          "text": "'29 días promedio entre solicitud de cita y atención'; '76% de usuarios espera 2 semanas o más'; '87% de los usuarios que acuden con cita reporta estar satisfecho o muy satisfecho con la espera en la unidad'; 'cada 10 minutos adicionales de espera reducen la probabilidad de alta satisfacción en 4.5%'.",
+          "url": "https://www.imss.gob.mx/sites/all/statics/pdf/estadisticas/ENCAL/2025/reporte_ejecutivo_1nivel.pdf", "verification": "page"
+        },
+        "ensanut": { "value": null, "why": "ENSANUT national reports do not publish days-to-appointment at an IMSS UMF. The state-level ENSANUT Continua 2022 Guanajuato report gives an average waiting-room wait of 54.6 minutes and consultation of 37.3 minutes, across all institutions in that state.", "url": "https://ensanut.insp.mx/encuestas/ensanutgto2022/doctos/informes/Informe_ENSANUT_Continua_Gto2022.pdf", "verification": "search-summary" },
+        "olderFigure": { "value": 91, "unit": "minutes", "text": "Average wait for a consultation at IMSS, from CIEP 'Sistema Universal de Salud: Retos de cobertura y financiamiento', as reported by Saludiario 2022-03-05.", "url": "https://www.saludiario.com/tiempo-de-espera-consulta-medica-imss/", "verification": "page", "note": "Secondary report. The CIEP data year is not stated. ENCAL 2025 supersedes it." }
+      }
+    }
+  }
+}

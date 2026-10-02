@@ -1,0 +1,1512 @@
+{
+  "meta": {
+    "title": "SLATE family research gaps: adoption, surrogacy, separation with children, and a person's parents (ages, lifespan, care costs, caregiving)",
+    "compiled": "2026-10-02",
+    "places": [
+      "US-NY",
+      "US-CA",
+      "US-CT",
+      "England",
+      "Ireland",
+      "Canada-ON",
+      "Canada-BC",
+      "Mexico-CDMX"
+    ],
+    "method": "WebSearch and WebFetch, plus three PDFs downloaded and text-extracted locally (Justice Canada 2025 simplified tables for Ontario and BC, CareScout Cost of Care Survey 2025 ranked state tables). Every figure carries its source URL, the date read, and how it was read: 'page' means the page or PDF itself was opened and the figure read from it; 'search-summary' means the figure came through a search engine's summary of the listed URL and the page was not opened. Nothing was estimated; where nothing is published the value is null with a reason.",
+    "readKey": {
+      "page": "Figure read from the page or document itself",
+      "search-summary": "Figure read from a search engine summary of the listed source; not opened directly"
+    },
+    "knownBefore": "research-relationships.json had no adoption, surrogacy, child-support, custody or elder-care figures. src/engine/content/children.ts (2026-10-01) says 'adoption and surrogacy not being kept' — conception, birth costs, self-employed leave and raising costs only.",
+    "currencyNotes": "Amounts are in the place's own currency: USD (NY, CA, CT), GBP (England), EUR (Ireland), CAD (ON, BC), MXN (CDMX) unless a source quotes USD for Mexico, which is flagged."
+  },
+  "adoption": {
+    "routes": {
+      "note": "The four routes asked for, by place. Each place's entry lists what is published for each.",
+      "domesticInfantAgency": "A newborn placed by birth parents through a licensed private agency (US, ON, BC) or, in England, Ireland and CDMX, through the public system only (no private fee-charging infant route).",
+      "fosterToAdopt": "Adopting a child from public care (US county/state agencies, England local authority/regional adoption agencies, Ireland Tusla, Ontario Children's Aid Societies, BC MCFD, CDMX DIF).",
+      "international": "Intercountry adoption under the Hague Convention, approved by the home jurisdiction.",
+      "stepparent": "A parent's spouse/partner adopting their stepchild through a court order."
+    },
+    "US": {
+      "federalTaxCredit2026": {
+        "maxQualifiedExpensesPerChild": 17670,
+        "maxQualifiedExpensesPerChild2025": 17280,
+        "refundablePortion2026": 5120,
+        "phaseOutBeginsMAGI": 265080,
+        "phaseOutCompleteMAGI": 305080,
+        "currency": "USD",
+        "notes": "The refundable portion is new from 2025 under the One Big Beautiful Bill Act. The phase-out MAGI range came through the search summary only; the IRS newsroom page read did not state it.",
+        "sources": [
+          {
+            "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill",
+            "read": "page",
+            "date": "2026-10-02",
+            "covers": "max $17,670 and refundable $5,120"
+          },
+          {
+            "url": "https://www.currentfederaltaxdevelopments.com/blog/2025/10/9/2026-inflation-adjustments-for-tax-professionals-revenue-procedure-2025-32-analysis",
+            "read": "search-summary",
+            "date": "2026-10-02",
+            "covers": "phase-out $265,080 to $305,080"
+          }
+        ]
+      },
+      "nationalCostRanges": {
+        "fosterCare": {
+          "low": 0,
+          "high": 2500
+        },
+        "privateDomesticInfant": {
+          "low": 20000,
+          "high": 45000
+        },
+        "privateDomesticInfantAlt": {
+          "low": 30000,
+          "high": 60000,
+          "note": "Adoption Network Law Center's agency range; independent (attorney) adoption $25,000-$45,000"
+        },
+        "international": {
+          "low": 25000,
+          "high": 50000,
+          "note": "'$50,000+'; fees go to both the US agency and the sending country"
+        },
+        "currency": "USD",
+        "sources": [
+          {
+            "url": "https://www.findlaw.com/family/adoption/costs-of-adopting-fact-sheet-for-families.html",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://adoptionnetwork.com/adoptive-parents/how-to-adopt/adoption-costs/how-much-does-it-cost/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "domesticInfantWait": {
+        "shareMatchedWithin12Months": 0.63,
+        "year": 2015,
+        "notes": "Adoptive Families' Adoption Cost & Timing survey (2015 data, its latest published). A secondary aggregator quotes 60% for a later year without a traceable primary, so it is not used.",
+        "sources": [
+          {
+            "url": "https://www.adoptivefamilies.com/resources/adoption-news/adoption-cost-timing-2016-2017-survey-results/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "stepparent": {
+        "cost": null,
+        "reason": "No state-published fee schedule found for NY, CA or CT stepparent adoption beyond ordinary court filing fees; private attorney fees only."
+      }
+    },
+    "US-NY": {
+      "eligibility": {
+        "minAge": 18,
+        "singleApplicants": true,
+        "marriedMustAdoptJointly": true,
+        "notes": "Any adult may adopt. A married applicant's spouse must join unless separated by decree or living apart 3+ years. A home study is required.",
+        "sources": [
+          {
+            "url": "https://ocfs.ny.gov/programs/adoption/FAQ.php",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://www.findlaw.com/state/new-york-law/new-york-adoption-laws.html",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "agencyFees_SpenceChapin": {
+        "agency": "Spence-Chapin Services to Families and Children (New York City)",
+        "preAdoptConsultation": 125,
+        "homeStudyApplicationFee": 175,
+        "domesticHomeStudy": 2000,
+        "domesticHomeStudyUpdate": 1000,
+        "internationalHomeStudy": 2500,
+        "internationalHomeStudyNote": "two installments of $1,250",
+        "concurrentInternationalAndDomesticHomeStudies": 4600,
+        "postPlacementReportFrom": 500,
+        "courtReportDomesticFinalization": 250,
+        "domesticInfantProgramFee": 51000,
+        "domesticInfantProgramFeeRead": "search-summary",
+        "currency": "USD",
+        "notes": "The fee page carries no date. The $51,000 domestic program fee came from a search summary of Spence-Chapin's pages, not from the fee page read.",
+        "sources": [
+          {
+            "url": "https://spence-chapin.org/adoption-fees-ny/",
+            "read": "page",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://fosterlove.com/blog/how-much-does-it-cost-to-adopt-a-child-in-new-york",
+            "read": "search-summary",
+            "date": "2026-10-02",
+            "covers": "$51,000 program fee"
+          }
+        ]
+      },
+      "fosterAdoptionSubsidy": {
+        "rule": "From 1 September 2023 all initial NY adoption subsidy agreements pay 100% of the applicable foster care board rate, for children with special needs or hard to place.",
+        "monthlyAmount": null,
+        "reason": "Board rates vary by county and child age; not collected here.",
+        "sources": [
+          {
+            "url": "https://ocfs.ny.gov/programs/adoption/post-adoption/glossary.php",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      }
+    },
+    "US-CA": {
+      "stateFees": {
+        "independentAdoptionInvestigationFee": 4500,
+        "independentAdoptionFeeWithValidPreplacementOrHomeStudy": 1550,
+        "independentAdoptionMinReducedFee": 500,
+        "agencyAdoptionFeeMax": 500,
+        "agencyAdoptionOtherCostsTypical": "about $100-$300 (fingerprinting, medical, filing)",
+        "currency": "USD",
+        "notes": "Family Code 8810 (independent adoption, petitions filed on/after 1 Oct 2008). Public agency adoptions charge no more than $500, which may be deferred, reduced or waived.",
+        "sources": [
+          {
+            "url": "https://codes.findlaw.com/ca/family-code/fam-sect-8810/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://policy.dcfs.lacounty.gov/Policy?id=5728",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "eligibility": {
+        "minAge": null,
+        "reason": "Not read this session."
+      }
+    },
+    "US-CT": {
+      "eligibility": {
+        "minAge": 21,
+        "singleApplicants": true,
+        "notes": "DCF: at least 21; marital status not restricted.",
+        "sources": [
+          {
+            "url": "https://portal.ct.gov/dcf/knowledge-base/articles/foster-care-and-adoption/adoption/adoption-requirements",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "fosterCareAdoptionFee": 0,
+      "privateAgencyRange": {
+        "low": 20000,
+        "high": 45000,
+        "currency": "USD",
+        "read": "search-summary"
+      },
+      "homeStudy_FamilyAndChildrensAgency": {
+        "domesticHomeStudy": 2450,
+        "currency": "USD",
+        "feeScheduleDate": "2025-07-01",
+        "sources": [
+          {
+            "url": "https://www.familyandchildrensagency.org/wp-content/uploads/2025/07/Adoption-Fee-Schedule_NEW-7.1.2025.pdf",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "subsidy": {
+        "rule": "Special-needs children adopted from DCF or a CT licensed agency qualify for a financial and/or medical subsidy; payments may run to age 18, medical subsidy to 21 if still a CT resident.",
+        "sources": [
+          {
+            "url": "https://portal.ct.gov/dcf/knowledge-base/articles/foster-care-and-adoption/adoption/subsidized-adoption-program",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      }
+    },
+    "England": {
+      "eligibility": {
+        "minAge": 21,
+        "maxAge": null,
+        "maxAgeNote": "No upper age limit.",
+        "singleApplicants": true,
+        "whoMayApply": "single, married, civil partners, unmarried couples (same or opposite sex), or the partner of the child's parent",
+        "sources": [
+          {
+            "url": "https://www.gov.uk/child-adoption",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "agencyFees": {
+        "value": 0,
+        "notes": "UK adoption agencies cannot charge for adopting; applicants may pay court fees, checks and travel."
+      },
+      "approvalProcess": {
+        "stage1Months": 2,
+        "stage2Months": 4,
+        "totalMonthsTarget": 6,
+        "minPlacementBeforeOrderWeeks": 10,
+        "sources": [
+          {
+            "url": "https://www.pkc.gov.uk/media/40932/The-Adoption-Process/pdf/Adoption_Process_and_Timelines.pdf?m=638090408405430000",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "adoptionOrderCourtFee": {
+        "value": 207,
+        "form": "A58",
+        "asAt": "2025-04-01",
+        "currency": "GBP",
+        "notes": "Fee remission via form EX160. The family court fee list may have moved since; GOV.UK's parental-order fee was quoted at £270 in 2026, so this £207 is an April 2025 figure.",
+        "sources": [
+          {
+            "url": "https://divorce.wikivorce.com/guides-children/forms/form-a58-apply-for-an-adoption-order.html",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "intercountryDfEFee": {
+        "value": 2500,
+        "currency": "GBP",
+        "notes": "GOV.UK: non-refundable DfE fee for processing an application to adopt from overseas. Older local guides quote £1,975.",
+        "sources": [
+          {
+            "url": "https://www.gov.uk/child-adoption/adopting-a-child-from-overseas",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "timesFromCare_2025": {
+        "entryToPlacementMonths": 19,
+        "placementToOrderMonths": 9,
+        "entryToAdoptionMonths": 27,
+        "meanAgeAtAdoption": "3 years 2 months",
+        "sources": [
+          {
+            "url": "https://explore-education-statistics.service.gov.uk/find-statistics/children-looked-after-in-england-including-adoptions/2025",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "adoptersApprovedAndWaiting": {
+        "value": 1350,
+        "period": "Q3 2025-26",
+        "notes": "Adoption & Special Guardianship Leadership Board; 590 children placed and 590 adopters approved that quarter.",
+        "sources": [
+          {
+            "url": "https://www.coram.org.uk/wp-content/uploads/2026/03/ASG-Q3-2025-2026-Headline-Measures-2.pdf",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "taxCredit": {
+        "value": null,
+        "reason": "The UK has no adoption tax credit; support is statutory adoption leave and pay, not collected here."
+      }
+    },
+    "Ireland": {
+      "eligibility": {
+        "minAge": 21,
+        "notes": "Adoption Act 2010 ss.33-34. Single applicants, married couples, civil partners and cohabiting couples (3+ years) may apply; the age and couple-type details beyond 21 came through summary only.",
+        "sources": [
+          {
+            "url": "https://www.citizensinformation.ie/en/birth-family-relationships/adoption-and-fostering/intercountry-adoption/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "fees": {
+        "value": 0,
+        "notes": "No fees are charged by the Adoption Authority of Ireland, Tusla or an accredited body; applicants may pay their GP for medical reports and for certificates."
+      },
+      "assessmentDurationMonthsMin": 18,
+      "assessmentNote": "Tusla assessment 'will take a minimum of 18 months' (summary of AAI FAQ; the FAQ page returned 404 when opened).",
+      "domesticAdoptionOrders2023": {
+        "total": 90,
+        "stepparent": 47,
+        "longTermFosterCare": 30,
+        "infantsPlacedFromBirth": 8,
+        "extendedFamily": 5,
+        "notes": "Only about five to seven infants are placed for adoption in Ireland each year (AAI).",
+        "sources": [
+          {
+            "url": "https://aai.gov.ie/en/faqs.html",
+            "read": "search-summary (page 404 when fetched)",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://www.rte.ie/news/ireland/2024/0826/1466770-ireland-adoption/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "taxCredit": {
+        "value": null,
+        "reason": "No adoption tax credit found; Adoptive Benefit (leave pay) exists but was not collected here."
+      }
+    },
+    "Canada": {
+      "federalAdoptionExpenseCredit": {
+        "maxEligibleExpenses2025": 19580,
+        "maxEligibleExpenses2026": 19972,
+        "currency": "CAD",
+        "notes": "Non-refundable, line 31300, at the lowest federal rate on eligible expenses per child (licensed agency fees, court and legal costs, travel, translation). The 2026 figure came via search summary of Finance Canada's tax-expenditure report.",
+        "sources": [
+          {
+            "url": "https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/about-your-tax-return/tax-return/completing-a-tax-return/deductions-credits-expenses/line-31300-adoption-expenses.html",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://www.canada.ca/en/department-finance/services/publications/federal-tax-expenditures/2026/part-4.html",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      }
+    },
+    "Canada-ON": {
+      "privateDomestic": {
+        "licenseeFees": {
+          "low": 15000,
+          "high": 30000,
+          "currency": "CAD"
+        },
+        "extra": "Homestudy and parent training charged on top",
+        "homestudyMonths": "4-6 (SAFE homestudy, mandatory)",
+        "PRIDETrainingHours": 27,
+        "pageUpdated": "2026-08-12",
+        "sources": [
+          {
+            "url": "https://www.ontario.ca/page/private-domestic-adoption",
+            "read": "page",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "publicCAS": {
+        "fee": 0,
+        "notes": "Children's Aid Societies charge nothing for home studies, training or adoption; completing the requirements may take up to a year.",
+        "sources": [
+          {
+            "url": "https://www.oacas.org/childrens-aid-child-protection/adoption/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "eligibility": {
+        "minAge": null,
+        "reason": "The Ontario page read states no age limit or single-applicant rule."
+      }
+    },
+    "Canada-BC": {
+      "ministryMCFD": {
+        "fee": 0,
+        "adoptionEducationProgramFee": 95,
+        "currency": "CAD",
+        "sources": [
+          {
+            "url": "https://belongingnetwork.com/adoption-permanency/adoption/eligibility-costs-timeline/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "privateLicensedAgencies": [
+        "Sunrise Family Services (Sunrise Adoption)",
+        "Adoption Centre of BC"
+      ],
+      "privateFees": {
+        "low": 15000,
+        "high": 30000,
+        "currency": "CAD",
+        "read": "search-summary",
+        "notes": "Same range as quoted for Canadian private licensees generally; BC agencies' own schedules were not read.",
+        "sources": [
+          {
+            "url": "https://content.sproutfamily.ca/content-library/private-adoption",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      }
+    },
+    "Mexico-CDMX": {
+      "eligibility": {
+        "minAge": 25,
+        "minAgeGapYears": 17,
+        "singleApplicants": true,
+        "sameSexCouples": true,
+        "sources": [
+          {
+            "url": "https://www.unotv.com/estados/ciudad-de-mexico/como-adoptar-un-nino-o-nina-del-dif-en-la-cdmx-requisitos-proceso-y-costos/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://www.chilango.com/adopcion/que-se-necesita-para-adoptar-un-nino-adopcion-en-la-cdmx-requisitos/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "fee": {
+        "value": 0,
+        "notes": "Adoption through DIF Ciudad de México is free."
+      },
+      "waitingTime": {
+        "value": null,
+        "reason": "No published average duration for DIF CDMX adoptions was found."
+      },
+      "privateInfantRoute": {
+        "value": null,
+        "reason": "No fee-charging private infant-agency route found; adoption runs through DIF and the family court."
+      }
+    }
+  },
+  "surrogacy": {
+    "US-NY": {
+      "legality": "compensated gestational surrogacy legal",
+      "since": "2021-02-15",
+      "law": "Child-Parent Security Act",
+      "traditionalSurrogacy": "prohibited",
+      "parentage": "Pre-birth parentage orders available; contracts must include the Surrogate's Bill of Rights; intended parents pay for the surrogate's independent counsel.",
+      "sources": [
+        {
+          "url": "https://www.abramslaw.com/practice-areas/surrogacy-agency-legal-counsel/new-york-surrogacy-law-cpsa-requirements/",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "US-CA": {
+      "legality": "compensated and altruistic gestational surrogacy legal; contracts enforceable",
+      "parentage": "Pre-birth judgment of parentage available (summary; statute section not read)",
+      "sources": [
+        {
+          "url": "https://www.hatch.us/en/blog/california-surrogacy-laws",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "US-CT": {
+      "legality": "compensated surrogacy legal; gestational and traditional contracts enforceable",
+      "law": "Conn. Gen. Stat. 7-48a and the Connecticut Parentage Act",
+      "parentage": "Pre-birth parentage orders available to genetic and non-genetic intended parents",
+      "sources": [
+        {
+          "url": "https://www.kleinfertilitylaw.com/surrogacy-lawyer/united-states-surrogacy-law/connecticut",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "US_totalCost": {
+      "totalLow": 150000,
+      "totalHigh": 250000,
+      "allInclusiveFixedPriceExample": 189500,
+      "components": {
+        "agencyFee": "~$20,000-$40,000",
+        "surrogateCompensation": "$60,000-$70,000+",
+        "surrogateHealthInsurance": "$15,000-$30,000",
+        "surrogateExpensesAndPayments": "$10,000-$15,000",
+        "legal": "$3,000-$15,000",
+        "counseling": "~$7,000",
+        "IVFOrEmbryoTransfer": "up to $25,000"
+      },
+      "currency": "USD",
+      "notes": "Circle Surrogacy's breakdown (content dated 01/2026); $189,500 is its fixed-price programme. Other agencies quote $120,000-$180,000; the range is the agency's own, not a survey.",
+      "sources": [
+        {
+          "url": "https://www.circlesurrogacy.com/post/surrogacy-costs-breakdown",
+          "read": "page",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "England": {
+      "legality": "altruistic only; commercial surrogacy banned and advertising for profit is criminal",
+      "payments": "Reasonable expenses only (undefined in law). Brilliant Beginnings: typical surrogate payments £12,000-£18,000; Surrogacy UK: commonly £10,000-£15,000.",
+      "totalBudget": {
+        "low": 50000,
+        "high": 60000,
+        "currency": "GBP",
+        "note": "Brilliant Beginnings' 'healthy overall budget' for gestational surrogacy; it also says most journeys fall between £15,000 and £30,000 depending on cycles and donors"
+      },
+      "parentalOrder": {
+        "form": "C51",
+        "applyFrom": "6 weeks after birth",
+        "applyBefore": "child is 6 months old",
+        "courtFee": 270,
+        "currency": "GBP",
+        "notes": "The surrogate is the legal mother at birth until the order is made.",
+        "sources": [
+          {
+            "url": "https://www.gov.uk/legal-rights-when-using-surrogates-and-donors/become-the-childs-legal-parent",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://www.rwkgoodman.com/info-hub/what-is-a-parental-order-in-surrogacy/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "url": "https://brilliantbeginnings.co.uk/what-is-a-realistic-budget-for-costs-and-expenses-for-a-uk-surrogacy-journey/",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        },
+        {
+          "url": "https://surrogacyuk.org/2023/08/26/understanding-the-cost-of-surrogacy/",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "Ireland": {
+      "legality": "altruistic only under the Health (Assisted Human Reproduction) Act 2024 (signed 2 July 2024); its surrogacy provisions, including s.204 parental orders, were reported not yet commenced",
+      "currentPractice": "Until commencement surrogacy is unregulated; the birth mother is the legal mother. Intending parents abroad may pay intermediaries; domestically only legal fees and reasonable expenses.",
+      "totalCost": {
+        "value": null,
+        "reason": "No Irish domestic cost published; Irish parents mostly use foreign (often US or Canadian) programmes."
+      },
+      "sources": [
+        {
+          "url": "https://www.citizensinformation.ie/en/birth-family-relationships/adoption-and-fostering/surrogacy/",
+          "read": "search-summary (page returned 403)",
+          "date": "2026-10-02"
+        },
+        {
+          "url": "https://academic.oup.com/lawfam/article/39/1/ebae024/7991388",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "Canada": {
+      "legality": "altruistic only (Assisted Human Reproduction Act 2004); paying a surrogate or advertising to is a criminal offence, up to $500,000 fine and 10 years on indictment",
+      "reimbursedExpensesTypical": {
+        "low": 25000,
+        "high": 45000,
+        "currency": "CAD",
+        "note": "receipted expenses over a full journey"
+      },
+      "Canada-ON": {
+        "parentage": "All Families Are Equal Act 2016: with a written pre-conception agreement and independent legal advice, the surrogate consents in writing no earlier than 7 days after birth and no court order is needed; during those 7 days the surrogate and intended parents share parental rights."
+      },
+      "Canada-BC": {
+        "parentage": "Family Law Act s.29: written pre-conception agreement plus the surrogate's written consent after birth makes the intended parents the legal parents without a court order."
+      },
+      "sources": [
+        {
+          "url": "https://www.sensiblesurrogacy.com/surrogacy-in-canada/",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        },
+        {
+          "url": "https://www.ontariomidwives.ca/surrogates-parentage",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        },
+        {
+          "url": "https://www2.gov.bc.ca/assets/gov/law-crime-and-justice/about-bc-justice-system/legislation-policy/fla/part3.pdf",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "Mexico-CDMX": {
+      "legality": "not regulated by statute in CDMX (a 2010 law was approved but never published); the SCJN recognised gestational surrogacy, paid or unpaid, as constitutionally protected on 3 June 2021, and in February 2026 set guidelines letting a judge order the birth registration where a notarised surrogacy agreement exists",
+      "parentage": "Judge-supervised filiation process, not automatic registration",
+      "totalCostUSD": {
+        "low": 60000,
+        "high": 90000,
+        "currency": "USD",
+        "note": "Clinic/agency quotes for international intended parents; Mexican sources quote $50,000-$80,000. Surrogate compensation $10,000-$20,000. Commercial quotes, not a survey."
+      },
+      "sources": [
+        {
+          "url": "https://politica.expansion.mx/mexico/2026/02/12/que-dice-la-corte-sobre-la-gestacion-subrogada-estos-son-los-nuevos-lineamientos",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        },
+        {
+          "url": "https://www.zonadocs.mx/2021/06/13/maternidad-subrogada-en-mexico-que-aprobo-la-suprema-corte/",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        },
+        {
+          "url": "https://carem.mx/costos-de-la-subrogacion-en-mexico/",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    }
+  },
+  "separationWithChildren": {
+    "US-NY": {
+      "custodyDefault": "No presumption either way (DRL s.70: neither parent has a prima facie right to custody); best interests of the child; no 50/50 presumption.",
+      "childSupport_CSSA": {
+        "percentOfCombinedParentalIncome": {
+          "1": 0.17,
+          "2": 0.25,
+          "3": 0.29,
+          "4": 0.31,
+          "5plus": 0.35,
+          "5plusNote": "no less than 35%"
+        },
+        "combinedIncomeCap": 193000,
+        "capEffective": "2026-03-01",
+        "previousCap": 183000,
+        "aboveCap": "Court discretion whether to apply the percentages above the cap",
+        "split": "Pro rata to each parent's share of combined income",
+        "currency": "USD",
+        "sources": [
+          {
+            "url": "https://suffolkdivorcelawyer.com/new-york-child-support-maintenance-income-caps-2026/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://divorce.law/guides/news/new-york-child-support-maintenance-caps-2026/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "url": "https://www.barrowslevy.com/childs-best-interest-custody-ny/",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "US-CA": {
+      "custodyDefault": "Family Code 3040(e): no preference or presumption for or against joint legal, joint physical or sole custody. Family Code 3080: joint custody presumed in the child's best interest only where the parents agree to it.",
+      "childSupport_guideline": {
+        "formula": "CS = K[HN - (H%)(TN)]",
+        "terms": {
+          "CS": "monthly child support for one child",
+          "K": "share of combined income allocated to support",
+          "HN": "high earner's net monthly disposable income",
+          "H%": "high earner's share of physical-custody time",
+          "TN": "combined net monthly disposable income"
+        },
+        "kIncomeAllocation": [
+          {
+            "TNMonthlyFrom": 0,
+            "TNMonthlyTo": 2900,
+            "fraction": "0.165 + TN/82,857"
+          },
+          {
+            "TNMonthlyFrom": 2901,
+            "TNMonthlyTo": 5000,
+            "fraction": "0.131 + TN/42,149"
+          },
+          {
+            "TNMonthlyFrom": 5001,
+            "TNMonthlyTo": 10000,
+            "fraction": "0.25"
+          },
+          {
+            "TNMonthlyFrom": 10001,
+            "TNMonthlyTo": 15000,
+            "fraction": "0.10 + 1,499/TN"
+          },
+          {
+            "TNMonthlyFrom": 15001,
+            "TNMonthlyTo": null,
+            "fraction": "0.12 + 1,200/TN"
+          }
+        ],
+        "kTimeMultiplier": null,
+        "childrenMultipliers": {
+          "2": 1.6,
+          "3": 2,
+          "4": 2.3
+        },
+        "childrenMultipliersNote": "Values for 5 or more children are in the statute but were not read this session; left out rather than filled from memory.",
+        "lowIncomeAdjustment": "Rebuttable presumption where the obligor's net disposable income is below full-time minimum-wage gross (40 hrs x 52 weeks)",
+        "effective": "Brackets and fractions as amended by SB 343, effective 1 September 2024 (first change since 1992)",
+        "currency": "USD",
+        "sources": [
+          {
+            "url": "https://california.public.law/codes/family_code_section_4055",
+            "read": "page",
+            "date": "2026-10-02"
+          }
+        ],
+        "kTimeMultiplierReason": "FC 4055 also scales K by the high earner's time share; the exact wording was not captured in the fetch, so it is not recorded here."
+      },
+      "sources": [
+        {
+          "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=FAM&sectionNum=3080.",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "US-CT": {
+      "custodyDefault": "C.G.S. 46b-56a: joint custody presumed in the child's best interests only where the parents agree to it; otherwise best interests, no 50/50 presumption.",
+      "childSupport_guidelines": {
+        "model": "Income shares: a schedule of basic obligation by combined net weekly income and number of children, split pro rata",
+        "scheduleTopCombinedNetWeekly": 6000,
+        "previousScheduleTop": 4000,
+        "newGuidelinesEffective": "2026-08-01",
+        "aboveSchedule": "Case by case under statutory criteria",
+        "example": {
+          "combinedNetWeekly": 4000,
+          "children": 1,
+          "basicObligationWeekly": 622,
+          "split": "75%/25% income shares: $466 and $156"
+        },
+        "supportEnds": "Later of high-school graduation or age 19",
+        "sharedCustody": "Grounds for deviation; new 2026 deviation where parents have substantially equal income",
+        "currency": "USD",
+        "notes": "The full 2026 schedule PDF (portal.ct.gov) was not extracted; only the worked example is recorded.",
+        "sources": [
+          {
+            "url": "https://www.familylawsoftware.com/determining-child-support-in-connecticut-a-practitioners-guide-to-the-2026-guidelines/",
+            "read": "page",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://portal.ct.gov/dss/-/media/dss-beta/pdf/children-and-family-support/csguidelines.pdf?rev=0ec708ae8a96485387b73fa50c0e35a7",
+            "read": "not opened",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "url": "https://www.womenslaw.org/laws/ct/statutes/ss-46b-56a-joint-custody-definition-presumption-conciliation-parental",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "England": {
+      "custodyDefault": "Children Act 1989 s.1(2A): a presumption that each parent's involvement furthers the child's welfare, meaning involvement of some kind, not any particular division of time. Reports dated 2026 describe the government repealing this presumption; whether repeal is in force was not confirmed.",
+      "childSupport_CMS": {
+        "basisOfIncome": "Paying parent's gross weekly income",
+        "basicRate_upTo800PerWeek": {
+          "1": 0.12,
+          "2": 0.16,
+          "3plus": 0.19
+        },
+        "basicPlus_800to3000PerWeek": {
+          "1": 0.09,
+          "2": 0.12,
+          "3plus": 0.15
+        },
+        "reducedRate": "Gross £100.01-£199.99 a week: £7 plus a percentage of income over £100",
+        "flatRate": "£7 a week at £100 or less, or on certain benefits",
+        "otherChildrenInPayersHomeReduction": {
+          "1": 0.11,
+          "2": 0.14,
+          "3plus": 0.16
+        },
+        "currency": "GBP",
+        "sources": [
+          {
+            "url": "https://nidirect.gov.uk/articles/child-maintenance-rates-explained",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://researchbriefings.files.parliament.uk/documents/CBP-7770/CBP-7770.pdf",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "url": "https://transparencyproject.org.uk/repealing-the-presumption-an-explainer/",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        },
+        {
+          "url": "https://www.goodmanray.com/news/2026/07/repealing-presumption-of-parental-contact/",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "Ireland": {
+      "custodyDefault": "Best interests (Guardianship of Infants Act 1964 as amended by the Children and Family Relationships Act 2015). Married parents are joint guardians. An unmarried father becomes a guardian automatically only after living with the mother for 12 consecutive months including at least 3 months after the birth; otherwise by agreement or court order.",
+      "childSupport": {
+        "formula": null,
+        "reason": "Ireland has no statutory child-maintenance formula; amounts are agreed or set by the court on both parents' means, needs and care time.",
+        "districtCourtMaxPerChildWeekly": 500,
+        "previousMaxPerChildWeekly": 150,
+        "districtCourtMaxLumpSumPerChild": 50000,
+        "currency": "EUR",
+        "notes": "Limits raised by the Family Courts Act 2024; commencement date not confirmed in this session.",
+        "sources": [
+          {
+            "url": "https://www.lawsociety.ie/gazette/in-depth/2025/jan-feb/family-fortunes/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://www.custodyxchange.com/locations/ireland/child-maintenance.php",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "url": "https://onefamily.ie/information-service-helpline/family-law/guardianship/",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "Canada-ON": {
+      "custodyDefault": "Children's Law Reform Act (2021 amendments) and Divorce Act: 'decision-making responsibility' and 'parenting time' replace custody and access; no presumption for shared decision-making or equal time; best interests.",
+      "childSupport_FederalTables2025": {
+        "effective": "2025-10-01",
+        "basis": "Paying parent's gross annual income, monthly amount",
+        "oneChildMonthly": {
+          "30000": 240,
+          "50000": 450,
+          "75000": 695,
+          "100000": 932,
+          "125000": 1131,
+          "150000": 1327
+        },
+        "twoChildrenMonthly": {
+          "30000": 501,
+          "50000": 744,
+          "75000": 1144,
+          "100000": 1517,
+          "125000": 1829,
+          "150000": 2135
+        },
+        "over150000": {
+          "1": "1327 + 0.76% of income over $150,000",
+          "2": "2135 + 1.22%",
+          "3": "2781 + 1.54%",
+          "4": "3310 + 1.86%"
+        },
+        "currency": "CAD",
+        "sources": [
+          {
+            "url": "https://www.justice.gc.ca/eng/fl-df/child-enfant/fcsg-lfpae/2025/pdf/ona.pdf",
+            "read": "page (PDF text-extracted)",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "url": "https://www.canlii.org/en/commentary/doc/2022CanLIIDocs557",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "Canada-BC": {
+      "custodyDefault": "Family Law Act s.39: both parents are guardians while living together and remain so after separation unless a court orders otherwise; s.40(4): no presumption that parenting time should be shared equally.",
+      "childSupport_FederalTables2025": {
+        "effective": "2025-10-01",
+        "oneChildMonthly": {
+          "30000": 259,
+          "50000": 468,
+          "75000": 708,
+          "100000": 955,
+          "125000": 1176,
+          "150000": 1383
+        },
+        "twoChildrenMonthly": {
+          "30000": 481,
+          "50000": 792,
+          "75000": 1166,
+          "100000": 1549,
+          "125000": 1893,
+          "150000": 2215
+        },
+        "over150000": {
+          "1": "1383 + 0.84% of income over $150,000",
+          "2": "2215 + 1.28%",
+          "3": "2881 + 1.66%",
+          "4": "3426 + 1.98%"
+        },
+        "currency": "CAD",
+        "sources": [
+          {
+            "url": "https://www.justice.gc.ca/eng/fl-df/child-enfant/fcsg-lfpae/2025/pdf/bca.pdf",
+            "read": "page (PDF text-extracted)",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "url": "https://wiki.clicklaw.bc.ca/index.php/Guardianship,_Parenting_Arrangements_and_Contact",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    "Mexico-CDMX": {
+      "custodyDefault": "Código Civil CDMX art. 282: parents may agree on custody, including shared custody; failing agreement the family judge decides, hearing the child. The former automatic provisional custody to the mother for children under 12 was declared unconstitutional by the SCJN First Chamber.",
+      "childSupport_pensionAlimenticia": {
+        "statutoryPercent": null,
+        "reason": "No legal percentage; art. 311 requires proportionality between the payer's means and the child's needs, set case by case.",
+        "judicialPracticeReference": {
+          "perChildOfNetIncome": "15%-30%",
+          "oneChild": "15%-20%",
+          "twoChildren": "25%-30%",
+          "twoChildrenAndSpouse": "30%-40%",
+          "usualCeiling": "50% of total income (some sources say 40%)"
+        },
+        "indexation": "Art. 311: amounts set by agreement or judgment rise automatically at least by the annual INPC (consumer price) increase",
+        "notes": "Practice ranges are lawyers' published guidance, not law.",
+        "sources": [
+          {
+            "url": "https://laleydice.mx/guias/pension-alimenticia-cdmx/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://abogadosfamiliarescdmx.com/pension-alimenticia/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "url": "https://leyes-mx.com/codigo_civil_ciudad_de_mexico/282.htm",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        },
+        {
+          "url": "https://colungaabogados.com.mx/elimina-scjn-preferencia-en-custodia-a-madres-de-familia/",
+          "read": "search-summary",
+          "date": "2026-10-02"
+        }
+      ]
+    }
+  },
+  "parents": {
+    "parentsAgeAtBirth": {
+      "US": {
+        "meanMotherAgeFirstBirth": 27.5,
+        "year": 2023,
+        "meanFatherAgeAllBirths": 32.1,
+        "fatherYear": 2022,
+        "fatherNote": "All births, not first births; from a study of 46 million US births 2011-2022",
+        "sources": [
+          {
+            "url": "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-09.pdf",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://www.givelegacy.com/resources/average-age-fathers-united-states-paternal-age-trends-2026",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "England": {
+        "standardisedMeanAgeMothersAllBirths": 31,
+        "standardisedMeanAgeFirstTimeMothers": 29.4,
+        "standardisedMeanAgeFathersAllBirths": 33.9,
+        "year": 2024,
+        "geography": "England and Wales",
+        "sources": [
+          {
+            "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/bulletins/birthsummarytablesenglandandwales/2024refreshedpopulations",
+            "read": "page",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "Ireland": {
+        "meanAgeFirstTimeMothers": 31.7,
+        "meanAgeAllMothers": 33.3,
+        "meanAgeAllFathers": 35.5,
+        "year": 2024,
+        "sources": [
+          {
+            "url": "https://www.cso.ie/en/releasesandpublications/ep/p-vsys/vitalstatisticsyearlysummary2024/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "Canada": {
+        "meanMotherAgeFirstBirth": 31.3,
+        "meanMotherAgeAllBirths2024": 31.8,
+        "meanFatherAge": null,
+        "fatherReason": "Not found in a StatCan release this session",
+        "notes": "First-birth figure via the Vanier Institute citing StatCan; year not stated in the summary",
+        "sources": [
+          {
+            "url": "https://vanierinstitute.ca/resource/a-portrait-of-mothers-in-canada-in-2026/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "Mexico": {
+        "meanMotherAgeFirstBirth": 22,
+        "year": 2020,
+        "geography": "Mexico (national), Inmujeres analysis",
+        "CDMXSpecific": null,
+        "CDMXReason": "No CDMX first-birth mean found; INEGI's ENR reports most first births at ages 20-24",
+        "meanFatherAge": null,
+        "sources": [
+          {
+            "url": "https://proyectodiez.mx/promedio-de-edad-para-ser-madre-se-mantiene-en-22-anos-en-mexico/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      }
+    },
+    "lifeExpectancyAtBirth": {
+      "US": {
+        "male": 76.5,
+        "female": 81.4,
+        "total": 79,
+        "year": 2024,
+        "sources": [
+          {
+            "url": "https://cdc.gov/nchs/products/databriefs/db548.htm",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "UK": {
+        "male": 79.1,
+        "female": 83,
+        "atAge65Male": 18.7,
+        "atAge65Female": 21.2,
+        "period": "2022-2024",
+        "notes": "UK figures; England-only figures not read",
+        "sources": [
+          {
+            "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/bulletins/nationallifetablesunitedkingdom/2022to2024",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "Ireland": {
+        "male": 81.3,
+        "female": 84.5,
+        "year": 2023,
+        "sources": [
+          {
+            "url": "https://www.cso.ie/en/releasesandpublications/ep/p-cnlecdi/thechangingnatureoflifeexpectancyandcausesofdeathinireland1922-2023/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "Canada": {
+        "male": 80.03,
+        "female": 84.29,
+        "total": 82.16,
+        "year": 2024,
+        "BCFemale": 85.07,
+        "Ontario": null,
+        "OntarioReason": "The Daily did not give Ontario; StatCan table 13-10-0837-01 not read",
+        "sources": [
+          {
+            "url": "https://www150.statcan.gc.ca/n1/daily-quotidien/260113/dq260113b-eng.htm",
+            "read": "page",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "Mexico-CDMX": {
+        "male": 74.1,
+        "female": 80.4,
+        "year": 2026,
+        "basis": "CONAPO projection",
+        "year2025": {
+          "male": 74,
+          "female": 80.2
+        },
+        "sources": [
+          {
+            "url": "https://x.com/CONAPO_mx/status/2057283096123146481",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      }
+    },
+    "costOfCare": {
+      "US_CareScout2025": {
+        "survey": "CareScout (Genworth) Cost of Care Survey 2025, fieldwork July-November 2025, state medians, tables dated 03/06/26",
+        "inHomeNonMedicalCaregiver": {
+          "basis": "Annual at 44 hrs/week x 52 weeks; hourly as reported",
+          "US-NY": {
+            "hourly": 35,
+            "monthly": 6673,
+            "annual": 80080
+          },
+          "US-CA": {
+            "hourly": 40,
+            "monthly": 7627,
+            "annual": 91520
+          },
+          "US-CT": {
+            "hourly": 36,
+            "monthly": 6864,
+            "annual": 82368
+          }
+        },
+        "assistedLivingPrivateOneBedroom": {
+          "US-NY": {
+            "monthly": 7110,
+            "annual": 85320
+          },
+          "US-CA": {
+            "monthly": 7000,
+            "annual": 84000,
+            "note": "called Residential Care Facility in California"
+          },
+          "US-CT": {
+            "monthly": 9118,
+            "annual": 109410
+          }
+        },
+        "nursingHomeSemiPrivate": {
+          "US-NY": {
+            "daily": 510,
+            "monthly": 15528,
+            "annual": 186332
+          },
+          "US-CA": {
+            "daily": 400,
+            "monthly": 12167,
+            "annual": 146000
+          },
+          "US-CT": {
+            "daily": 500,
+            "monthly": 15208,
+            "annual": 182500
+          }
+        },
+        "nursingHomePrivate": {
+          "US-NY": {
+            "daily": 550,
+            "monthly": 16729,
+            "annual": 200750
+          },
+          "US-CA": {
+            "daily": 499,
+            "monthly": 15178,
+            "annual": 182135
+          },
+          "US-CT": {
+            "daily": 550,
+            "monthly": 16729,
+            "annual": 200750
+          }
+        },
+        "adultDayHealth": {
+          "US-NY": {
+            "daily": 144,
+            "monthly": 3120,
+            "annual": 37440
+          },
+          "US-CA": {
+            "daily": 94,
+            "monthly": 2037,
+            "annual": 24440
+          },
+          "US-CT": {
+            "daily": 109,
+            "monthly": 2362,
+            "annual": 28340
+          }
+        },
+        "skilledNursingInHomeHourly": {
+          "US-NY": 120,
+          "US-CA": 110,
+          "US-CT": null,
+          "US-CTReason": "insufficient data in survey"
+        },
+        "homeHealthAideNote": "The 2025 survey reports 'Non-Medical Caregiver (In-Home Care)' and 'Skilled Nursing in the Home'; it has no separate 'home health aide' line as earlier editions did.",
+        "nationalMedians": {
+          "assistedLivingMonthly": 6200,
+          "nursingSemiPrivateMonthly": 9581,
+          "nursingPrivateMonthly": 10798,
+          "read": "search-summary"
+        },
+        "currency": "USD",
+        "extractionNote": "Read with pdftotext -raw; the -layout extraction misaligns columns in this PDF and was discarded.",
+        "sources": [
+          {
+            "url": "https://assets.carescout.com/x/5c90319b6a/298701.pdf",
+            "read": "page (PDF text-extracted)",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "England": {
+        "selfFunderWeekly_carehomeCoUk_Sep2025": {
+          "UKResidential": 1298,
+          "UKNursing": 1535,
+          "LondonResidential": 1548,
+          "LondonNursing": 1759,
+          "NorthEastResidential": 1112,
+          "EastOfEnglandResidential": 1359,
+          "EastOfEnglandNursing": 1606,
+          "currency": "GBP",
+          "sources": [
+            {
+              "url": "https://www.carehome.co.uk/advice/care-home-fees-and-costs-how-much-do-you-pay",
+              "read": "search-summary",
+              "date": "2026-10-02"
+            }
+          ]
+        },
+        "LaingBuisson2025_26": {
+          "residentialWeekly": 1300,
+          "nursingWeekly": 1600,
+          "note": "'around'; read via a secondary site; the LaingBuisson report itself is paywalled",
+          "sources": [
+            {
+              "url": "https://lottie.org/fees-funding/care-home-costs/",
+              "read": "search-summary",
+              "date": "2026-10-02"
+            }
+          ]
+        }
+      },
+      "Ireland": {
+        "fairDeal_NHSS": {
+          "incomeContributionSingle": 0.8,
+          "incomeContributionCouple": "40% of combined assessable income",
+          "assetContributionSingleAnnual": 0.075,
+          "assetContributionCoupleAnnual": 0.0375,
+          "assetDisregardSingle": 36000,
+          "assetDisregardCouple": 72000,
+          "homeCap": "Principal residence counted for 3 years only: at most 22.5% of its value (single), 11.25% (couple)",
+          "workedExample": "Single, €240.30 weekly income, €200,000 home: contributes €428.78 a week; HSE pays the rest",
+          "currency": "EUR",
+          "sources": [
+            {
+              "url": "https://www2.hse.ie/services/schemes-allowances/fair-deal-scheme/financial-assessment/",
+              "read": "page",
+              "date": "2026-10-02"
+            }
+          ]
+        },
+        "privateNursingHomeWeekly2026": {
+          "low": 1200,
+          "high": 1450,
+          "currency": "EUR",
+          "basis": "NTPF-agreed prices for private homes, as reported",
+          "sources": [
+            {
+              "url": "https://findcare.ie/advice/fair-deal-explained-2026",
+              "read": "search-summary",
+              "date": "2026-10-02"
+            }
+          ]
+        }
+      },
+      "Canada-ON": {
+        "longTermCareCoPayment_from_2026-07-01": {
+          "basicDaily": 70,
+          "basicMonthly": 2129.17,
+          "semiPrivateDaily": 84.4,
+          "semiPrivateMonthly": 2567.17,
+          "privateDaily": 100.01,
+          "privateMonthly": 3041.97,
+          "rateReduction": "Basic accommodation only; likely to qualify with income under $27,338",
+          "previous_from_2025-07-01": {
+            "basicDaily": 68.56,
+            "basicMonthly": 2085.37
+          },
+          "currency": "CAD",
+          "pageUpdated": "2026-07-10",
+          "sources": [
+            {
+              "url": "https://www.ontario.ca/page/paying-long-term-care",
+              "read": "page",
+              "date": "2026-10-02"
+            }
+          ]
+        }
+      },
+      "Canada-BC": {
+        "publiclyFundedLTC": {
+          "rule": "80% of after-tax income / 12, for after-tax income of $19,500+; lower incomes keep at least $325 a month",
+          "minMonthly2026": 1507.7,
+          "maxMonthly2026": 4142.6,
+          "minMaxRead": "search-summary",
+          "currency": "CAD",
+          "sources": [
+            {
+              "url": "https://www2.gov.bc.ca/gov/content/health/accessing-health-care/home-community-care/care-options-and-cost/long-term-care-services",
+              "read": "page",
+              "date": "2026-10-02",
+              "covers": "80% rule and $325 allowance; min/max not on page"
+            },
+            {
+              "url": "https://carecompare.ca/blog/bc-long-term-care-cost-guide",
+              "read": "search-summary",
+              "date": "2026-10-02",
+              "covers": "2026 min $1,507.70, max $4,142.60"
+            }
+          ]
+        }
+      },
+      "Mexico-CDMX": {
+        "privateResidenceMonthly": {
+          "low": 8000,
+          "high": 70000,
+          "currency": "MXN",
+          "tiers": {
+            "basic": "8,000-16,000",
+            "midLevel": "30,000-45,000",
+            "premium": "25,000-50,000+ (source's own overlapping ranges)"
+          },
+          "notes": "Commercial directory's ranges, not an official survey. DIF and charitable homes exist but no published fee was found.",
+          "sources": [
+            {
+              "url": "https://canitas.mx/asilos-y-retiros-en/ciudad-de-mexico/",
+              "read": "search-summary",
+              "date": "2026-10-02"
+            }
+          ]
+        },
+        "publicLTC": {
+          "value": null,
+          "reason": "No government long-term-care co-payment schedule exists for CDMX comparable to Ontario's or BC's."
+        }
+      }
+    },
+    "caregiving": {
+      "US_AARP_NAC_2025": {
+        "caregivers": 63000000,
+        "shareOfAdults": 0.24,
+        "shareOfAdultsNote": "'one in four'",
+        "meanHoursPerWeek": 27,
+        "share40PlusHours": 0.24,
+        "caringForParent": 0.4,
+        "caringForParentInLaw": 0.07,
+        "caringForSpouse": 0.15,
+        "sandwichShare": 0.29,
+        "released": "2025-07-24",
+        "sources": [
+          {
+            "url": "https://www.aarp.org/press/releases/2025-07-24-new-report-reveals-crisis-point-for-americas-63-million-family-caregivers.html",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "England_Census2021": {
+        "shareOfResidents5PlusProvidingUnpaidCare": 0.089,
+        "share50PlusHoursWeekly": 0.028,
+        "carers9HoursOrLess": 1700000,
+        "carers50PlusHours": 1400000,
+        "UKUnpaidCarers": 5800000,
+        "parentShare": {
+          "value": null,
+          "reason": "The Census does not ask who is cared for. Carers UK's State of Caring 2024 (self-selected survey): 33% cared for a parent/parent-in-law; the Family Resources Survey: 35% cared for a parent outside their household, 7% inside."
+        },
+        "sources": [
+          {
+            "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandwellbeing/bulletins/unpaidcareenglandandwales/census2021",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          },
+          {
+            "url": "https://www.carersuk.org/policy-and-research/key-facts-and-figures/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "Ireland_Census2022": {
+        "regularUnpaidCarers": 299128,
+        "femaleShare": 0.61,
+        "shareUpTo14HoursWeekly": 0.46,
+        "share43PlusHoursWeekly": 0.29,
+        "parentShare": null,
+        "parentReason": "Not published in the summary read",
+        "sources": [
+          {
+            "url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpp4/censusofpopulation2022profile4-disabilityhealthandcarers/keyfindings/",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "Canada_CSS2022": {
+        "shareAged15PlusUnpaidCareForAdults": 0.21,
+        "caringForParentShareOfAdultCaregivers": 0.53,
+        "medianHoursPerWeek": 8,
+        "medianHoursWomen": 10,
+        "medianHoursMen": 6,
+        "spouseOrAdultChildCaregiversHours": 20,
+        "fieldwork": "2022-07-25 to 2022-08-28",
+        "sources": [
+          {
+            "url": "https://www150.statcan.gc.ca/n1/daily-quotidien/221108/dq221108b-eng.htm",
+            "read": "page",
+            "date": "2026-10-02"
+          }
+        ]
+      },
+      "Mexico_ENASIC2022": {
+        "caregivers15Plus": 31700000,
+        "womenShare": 0.751,
+        "meanHoursWomen": 37.9,
+        "meanHoursMen": 25.6,
+        "primaryCaregiverMeanHoursWomen": 38.9,
+        "primaryCaregiverMeanHoursMen": 30.6,
+        "parentShare": null,
+        "parentReason": "Care for older adults is a category but the parent share was not in the summary read",
+        "sources": [
+          {
+            "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2023/ENASIC/ENASIC_23.pdf",
+            "read": "search-summary",
+            "date": "2026-10-02"
+          }
+        ]
+      }
+    }
+  }
+}
