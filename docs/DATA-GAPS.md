@@ -20,7 +20,7 @@ exists, this file says so, and the item stays out.
 | Pickleball's energy | 12 | Doubles measured by portable calorimetry at 4.1 METs (15 adults, mean age 65); the singles figures read are a summary's | Got. A pickleball court is built and played on (`COURT_MET`). |
 | An architect's fee | 12 | No open dataset: fees are private contracts, and the bodies withdrew their scales | Out |
 | Bids, change orders, overruns, lateness | 12 | No open dataset for homes; public works' contract data doesn't describe a house | Out |
-| A counteroffer over scale, an agent's increment | 13 | No open dataset: deals are private | Out |
+| A counteroffer over scale | 13 | No actors' data; the nearest measured is a 2025 NBER field study of job offers (85% met, 12.45% raised); Variety on scale offers below series regular | Got (`counterOffer`), the stand-in labeled. |
 | The Oscars', Tonys', Oliviers' and Ariels' fields of performances | 13 | Each academy's list of eligible productions, matched to IMDb's public datasets (title.basics, title.principals) and their credited performers counted: a large download and a title-matching job | To build |
 | Hotel requests granted | 6 | No open dataset | Out |
 | Used clothes' resale prices | 3 | Resale platforms' sold listings aren't open data | Out |

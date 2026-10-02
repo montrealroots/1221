@@ -354,6 +354,8 @@ export interface Booking {
   location?: string;
   /** A later season's rate, in US cents, above the minimum by the season's raises. */
   rate?: Money;
+  /** Asked for more once (`counterOffer`, from 2026-10-02). */
+  countered?: boolean;
   /** A series regular's season, and the first season's booking, which names the series. */
   season?: number;
   seriesId?: string;
@@ -1398,6 +1400,58 @@ export function closeStaleBookings(sim: Simulation, person: Person): void {
   }
 }
 
+/** An offer put to the player: its terms, Take It where it can be taken, Ask For More where it hasn't been asked, and Pass. */
+function presentOffer(s: Simulation, person: Person, booking: Booking): void {
+  const role = roleById(booking.roleId);
+  const cur = saveCurrency(s.universe);
+  const zone = zoneOf(booking.cityId);
+  const span2 = role.series
+    ? `A season of ${role.series.episodes} episodes over ${role.series.weeks} weeks`
+    : role.medium !== 'stage'
+    ? `${booking.units} ${booking.units === 1 ? (role.medium === 'voice' ? 'session' : 'day') : (role.medium === 'voice' ? 'sessions' : 'days')}`
+    : `${booking.rehearsalWeeks} weeks of rehearsal and ${booking.units} of performances`;
+  // One that can't be taken says why, and offers only a pass: until
+  // 2026-09-27 it offered Take It, which the command then refused.
+  const cannot = acceptRefusal(s, person, booking);
+  s.requireDecision({
+    urgency: 95, category: 'career', title: `Booked: ${role.label}${booking.product ? `, For ${PRODUCTS.find(([id]) => id === booking.product)![1]}` : ''}`,
+    detail: `${span2} from ${formatDate(booking.starts, zone)}, in ${CITIES.require(workCityOf(booking)).name}${booking.location ? ', on location' : ''}, at ${formatMoney(unitRate(booking, booking.starts, cur), cur)} a ${role.series ? 'episode' : role.medium === 'voice' ? 'session' : role.medium === 'screen' ? 'day' : 'week'}. ${cannot ? `You can’t take it: ${cannot}` : `Answer by ${formatDateTime(booking.dueAt, zone)}.`}`,
+    route: '/workspace/career', dueAt: booking.dueAt, refType: 'booking', refId: booking.id,
+    actions: [
+      ...(cannot ? [] : [{ label: 'Take It', commandKind: 'career.accept', payload: { bookingId: booking.id } }]),
+      ...(cannot || booking.countered ? [] : [{ label: 'Ask For More', commandKind: 'career.counter', payload: { bookingId: booking.id } }]),
+      { label: 'Pass', commandKind: 'career.pass', payload: { bookingId: booking.id } },
+    ],
+  });
+}
+
+/**
+ * Asking for more on an offer, from 2026-10-02
+ * (`research-gaps-awards-negotiation.json`): no source publishes how an
+ * actor's counter goes, and the nearest measured is a 2025 NBER field study
+ * of job offers (Cullen and others): 85% of counters got something, and
+ * countering raised pay 12.45% on average; withdrawals, far rarer than
+ * feared, aren't sized, and none is drawn. Below a series regular in American
+ * television, and for a commercial, Variety (2023) reports offers made at
+ * scale, take it or leave it: there the counter changes nothing. One counter
+ * an offer.
+ */
+export const COUNTER = { met: 0.85, raise: 0.1245 } as const;
+const TAKE_IT_OR_LEAVE_IT = new Set(['costar', 'guest-half', 'guest-hour', 'recurring', 'commercial', 'commercial-vo']);
+
+/** Whether a counter is met (decider `career.counter`), and the offer's new rate in its role's money, or why it can't be asked. */
+export function counterOffer(sim: Simulation, person: Person, booking: Booking, odds?: number): { met: boolean; rate?: Money } | string {
+  if (booking.status !== 'offered') return 'That isn’t an offer open to you.';
+  if (booking.countered) return 'You’ve asked once already.';
+  booking.countered = true;
+  const role = roleById(booking.roleId);
+  if (TAKE_IT_OR_LEAVE_IT.has(role.id)) return { met: false };
+  if (sim.rng('career.counter', person.id, booking.id).next() >= (odds ?? COUNTER.met)) return { met: false };
+  const now = booking.rate ?? rateOn(role.steps, dayKey(booking.starts, zoneOf(workCityOf(booking))));
+  booking.rate = Math.round(now * (1 + COUNTER.raise));
+  return { met: true, rate: booking.rate };
+}
+
 export function registerCareer(sim: Simulation): void {
   const personOf = (item: { payload: Record<string, unknown> }) => sim.universe.people[String(item.payload.personId)];
   const isPlayer = (person: Person) => person.id === sim.universe.playerId;
@@ -1587,25 +1641,7 @@ export function registerCareer(sim: Simulation): void {
     feel(person, 'booked');
     s.schedule({ at: booking.dueAt, kind: LAPSE_KIND, label: 'An Offer Lapses', category: 'system', priority: 20, payload: { personId: person.id, bookingId: booking.id } });
     if (!isPlayer(person)) return;
-    const cur = saveCurrency(s.universe);
-    const zone = zoneOf(booking.cityId);
-    const span2 = role.series
-      ? `A season of ${role.series.episodes} episodes over ${role.series.weeks} weeks`
-      : role.medium !== 'stage'
-      ? `${booking.units} ${booking.units === 1 ? (role.medium === 'voice' ? 'session' : 'day') : (role.medium === 'voice' ? 'sessions' : 'days')}`
-      : `${booking.rehearsalWeeks} weeks of rehearsal and ${booking.units} of performances`;
-    // One that can't be taken says why, and offers only a pass: until
-    // 2026-09-27 it offered Take It, which the command then refused.
-    const cannot = acceptRefusal(s, person, booking);
-    s.requireDecision({
-      urgency: 95, category: 'career', title: `Booked: ${role.label}${booking.product ? `, For ${PRODUCTS.find(([id]) => id === booking.product)![1]}` : ''}`,
-      detail: `${span2} from ${formatDate(booking.starts, zone)}, in ${CITIES.require(workCityOf(booking)).name}${booking.location ? ', on location' : ''}, at ${formatMoney(unitRate(booking, booking.starts, cur), cur)} a ${role.series ? 'episode' : role.medium === 'voice' ? 'session' : role.medium === 'screen' ? 'day' : 'week'}. ${cannot ? `You can’t take it: ${cannot}` : `Answer by ${formatDateTime(booking.dueAt, zone)}.`}`,
-      route: '/workspace/career', dueAt: booking.dueAt, refType: 'booking', refId: booking.id,
-      actions: [
-        ...(cannot ? [] : [{ label: 'Take It', commandKind: 'career.accept', payload: { bookingId: booking.id } }]),
-        { label: 'Pass', commandKind: 'career.pass', payload: { bookingId: booking.id } },
-      ],
-    });
+    presentOffer(s, person, booking);
   });
 
   sim.onSchedule(LAPSE_KIND, (item, s) => {
@@ -2150,6 +2186,18 @@ export function registerCareer(sim: Simulation): void {
     stillTakeable(s, person);
     if (isPlayer(person)) reportBooking(s, person, role);
   }
+
+  sim.onCommand<{ bookingId: string }, { met: boolean }>('career.counter', (p, { sim: s }) => {
+    const person = s.player;
+    const booking = careerOf(person).bookings.find((b) => b.id === p?.bookingId);
+    if (!booking) throw new CommandError('That isn’t an offer open to you.');
+    const r = counterOffer(s, person, booking);
+    if (typeof r === 'string') throw new CommandError(r);
+    closeDecision(s, booking.id);
+    presentOffer(s, person, booking);
+    s.notify({ category: 'career', title: r.met ? 'They Came Up' : 'The Offer Stands', body: r.met ? `${roleById(booking.roleId).label}: they met you part of the way, at ${formatMoney(unitRate(booking, booking.starts, saveCurrency(s.universe)), saveCurrency(s.universe))}.` : `${roleById(booking.roleId).label}: the offer stands as it was.`, importance: 50, route: '/workspace/career' });
+    return { met: r.met };
+  });
 
   sim.onCommand<{ bookingId: string }, { passed: true }>('career.pass', (p, { sim: s }) => {
     const booking = careerOf(s.player).bookings.find((b) => b.id === p.bookingId);

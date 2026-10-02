@@ -332,6 +332,7 @@ function AuditionsPane() {
                   {acceptRefusal(sim, person, b)
                     ? <span className="xs dim">{acceptRefusal(sim, person, b)}</span>
                     : <Gated feature="career.accept" onClick={() => { if (run('career.accept', { bookingId: b.id }).ok) toast('Taken. The days are on your calendar.', 'positive'); }}>Take It</Gated>}
+                  {!acceptRefusal(sim, person, b) && !b.countered && <Gated feature="career.counter" onClick={() => { const a = run<{ met: boolean }>('career.counter', { bookingId: b.id }); if (a.ok) toast(a.value!.met ? 'They came up.' : 'The offer stands.', a.value!.met ? 'positive' : 'neutral'); }}>Ask For More</Gated>}
                   <Gated feature="career.pass" onClick={() => { run('career.pass', { bookingId: b.id }); }}>Pass</Gated>
                 </span>
               </div>

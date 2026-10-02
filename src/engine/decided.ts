@@ -66,6 +66,7 @@ import { impairedDrive } from './systems/alcohol';
 import { announceNominations, entriesOf } from './systems/awards';
 import { powerDay } from './systems/utilities';
 import { careerOf } from './systems/career';
+import { counterOffer } from './systems/career';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -436,6 +437,22 @@ defineDecider<{ sim: Simulation; car: number }, string>({
   decide: ({ sim, car }) => {
     const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
     return !mayBreak(sim, sim.player, v, modelById(v.modelId)!, sim.now, 0.5) ? 'goes' : v.fault!.severe ? 'severe' : 'light';
+  },
+});
+
+defineDecider<{ sim: Simulation; booking: number }, string>({
+  id: 'career.counter',
+  decides: 'Whether a production meets an actor’s ask for more on an offer, at the 85% a 2025 field study of job offers measured; swept at even odds.',
+  drawnIn: 'src/engine/systems/career.ts',
+  reads: {
+    booking: (o, t) => ({ ...o, booking: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), booking: seed }),
+  decide: ({ sim, booking }) => {
+    const b = { id: `b${booking}`, roleId: 'film-weekly', status: 'offered', starts: Date.UTC(2027, 0, 4), cityId: 'us-ny-newyork' } as never;
+    const r = counterOffer(sim, sim.player, b, 0.5);
+    return typeof r === 'string' ? r : r.met ? 'met' : 'stands';
   },
 });
 
