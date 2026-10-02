@@ -120,6 +120,7 @@ import { registerParents } from './systems/parents';
 import { registerTrainers } from './systems/trainers';
 import { registerLateCheckOut } from './systems/latecheckout';
 import { registerResale } from './systems/resale';
+import { registerLawns } from './systems/lawns';
 import {
   createUniverse, defaultConfig, wealthIn, type NewSaveConfig,
 } from './world/bootstrap';
@@ -192,6 +193,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerTravelInsurance(sim);
   registerLateCheckOut(sim);
   registerResale(sim);
+  registerLawns(sim, homeById);
   registerAviation(sim);
   registerOwnedAircraft(sim);
   registerBoats(sim);

@@ -46,6 +46,8 @@ const LOVED_IN: Record<LookAfter, readonly string[]> = {
   charter: ['nature', 'sport'],
   laundry: ['fashion'],
   tidy: ['design'],
+  // A lawn is time outdoors, and a garden's (from 2026-10-02).
+  mow: ['nature'],
   // An hour to yourself goes on what you'd spend an evening on.
   // Film History and Film Preservation are an evening with the old films.
   unwind: ['art', 'design', 'film', 'film_history', 'film_preservation', 'games', 'history', 'music', 'photography', 'technology', 'television', 'theatre', 'writing'],

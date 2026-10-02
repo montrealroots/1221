@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-232 commands; 226 named by a test, 6 not.
+233 commands; 226 named by a test, 7 not.
 
 ## aircraft
 
@@ -254,6 +254,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.end_tenancy` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | **none** | Rent And A Roof |
 | `home.fit` | `src/engine/systems/appliances.ts` | `HomesWorkspace.tsx` | `appliances.test.ts` | Rent And A Roof |
 | `home.furnish` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `furniture.test.ts` `gear.test.ts` | Rent And A Roof |
+| `home.gardener` | `src/engine/systems/lawns.ts` | `HomesWorkspace.tsx` | **none** | Rent And A Roof |
 | `home.internet` | `src/engine/systems/telecom.ts` | `Home.tsx` | `telecom.test.ts` | Rent And A Roof |
 | `home.let` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
 | `home.manager` | `src/engine/systems/propertymanagers.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
@@ -300,7 +301,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `life.look_after` | `src/engine/systems/life.ts` | `RoutinesWorkspace.tsx` `TimeControls.tsx` | `boats.test.ts` `carried.test.ts` `courts.test.ts` `dwelling.test.ts` `household.test.ts` `hygiene.test.ts` `looking-after.test.ts` `outings.test.ts` `resale.test.ts` `routines.test.ts` `trainers.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
+| `life.look_after` | `src/engine/systems/life.ts` | `RoutinesWorkspace.tsx` `TimeControls.tsx` | `boats.test.ts` `carried.test.ts` `courts.test.ts` `dwelling.test.ts` `household.test.ts` `hygiene.test.ts` `lawns.test.ts` `looking-after.test.ts` `outings.test.ts` `resale.test.ts` `routines.test.ts` `trainers.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
 | `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `aviation.test.ts` `carried.test.ts` `extend.test.ts` `integrity.test.ts` `journey.test.ts` `lets.test.ts` `licensing.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `rentals.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
 
 ## pension

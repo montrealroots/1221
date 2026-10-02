@@ -507,7 +507,7 @@ function LookAfterMenu() {
       </button>
       {open && (
         <div className="menu" role="menu" aria-label="Look After Yourself">
-          {(Object.keys(LOOKING_AFTER) as LookAfter[]).filter((action) => (action !== 'boat' || boatOf(sim.player)) && (action !== 'charter' || charterAt(sim.player.currentLocationId)) && (action !== 'ride' || bikeHere(sim.player)) && (action !== 'trail' || vehiclesOf(sim.player).some((v) => v.soldAt === undefined && kindOf(modelById(v.modelId)!) === 'atv'))).map((action) => {
+          {(Object.keys(LOOKING_AFTER) as LookAfter[]).filter((action) => (action !== 'boat' || boatOf(sim.player)) && (action !== 'mow' || (sim.player.homes ?? []).some((h) => h.facts.features.includes('yard'))) && (action !== 'charter' || charterAt(sim.player.currentLocationId)) && (action !== 'ride' || bikeHere(sim.player)) && (action !== 'trail' || vehiclesOf(sim.player).some((v) => v.soldAt === undefined && kindOf(modelById(v.modelId)!) === 'atv'))).map((action) => {
             const { does } = LOOKING_AFTER[action];
             const label = labelFor(sim, action);
             const minutes = minutesFor(sim, action);

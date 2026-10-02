@@ -34,6 +34,7 @@ import {
 } from '@/engine/systems/homes';
 import { CAREER_CITIES } from '@/engine/content/career';
 import { managerIn } from '@/engine/systems/propertymanagers';
+import { LAWNS, MOWN_CM, gardenerPrice } from '@/engine/systems/lawns';
 import { inTheBank } from '@/engine/systems/household';
 
 type HomesTab = 'sale' | 'yours';
@@ -42,6 +43,22 @@ const HOMES_TABS: readonly { id: HomesTab; label: string }[] = [
   { id: 'sale', label: 'For Sale' },
   { id: 'yours', label: 'Your Homes' },
 ];
+
+/** A home's lawn: how long it is, and a gardener by the visit (`home.gardener`). */
+function LawnRow({ owned }: { owned: OwnedHome }) {
+  const { sim, run, toast } = useGame();
+  const lawn = owned.facts.features.includes('yard') && LAWNS[owned.cityId] && !owned.tenancies.some((t) => t.unit === 'main' && t.status === 'let') ? owned.lawn ?? { cm: MOWN_CM } : undefined;
+  if (!lawn) return null;
+  const g = LAWNS[owned.cityId]!.gardener;
+  const price = formatMoney(gardenerPrice(sim, owned.cityId), saveCurrency(sim.universe), { cents: false });
+  const limit = LAWNS[owned.cityId]!.limitCm;
+  return (
+    <div className="row-between small">
+      <span>{`The Lawn, ${Math.round(lawn.cm)} cm${limit ? ` (The City’s Limit ${Math.round(limit)} cm)` : ''}${lawn.noticeAt ? ', A Notice To Cut It' : ''}`}</span>
+      <Gated feature="home.gardener" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.gardener', { homeId: owned.id, on: !lawn.gardener }).ok) toast(lawn.gardener ? 'No gardener now.' : `${g.name}, every ${g.everyDays === 7 ? 'week' : 'two weeks'} in the season.`, 'positive'); }}>{lawn.gardener ? 'Let The Gardener Go' : `Hire A Gardener, ${price} A Visit`}</Gated>
+    </div>
+  );
+}
 
 export function HomesWorkspace() {
   const owns = useWorld((s) => (s.player.homes ?? []).length > 0);
@@ -401,6 +418,8 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
             <div className="xs dim">{borrowing && noBorrow ? noBorrow : `A home equity loan at ${pct(equityRate(sim.player, owned))} over ${HOME.equityYears} years, paid monthly with the home’s other payments.`}</div>
           </div>
         )}
+
+        <LawnRow owned={owned} />
 
         <div className="col gap-2">
           <div className="strong small">Work On It{owned.works.length > 0 ? ` · ${owned.works.length} under way` : ''}</div>

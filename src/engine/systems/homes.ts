@@ -484,6 +484,8 @@ export interface Tenancy {
 
 export interface OwnedHome {
   id: string;
+  /** Its lawn, where it has a yard (`systems/lawns.ts`, from 2026-10-02). */
+  lawn?: import('./lawns').Lawn;
   /** The letting agent managing it, where one is hired (`systems/propertymanagers.ts`, from 2026-10-01). */
   manager?: string;
   /** A house just built, not to be lived in before its certificate of occupancy (`systems/construction.ts`, from 2026-09-30). */

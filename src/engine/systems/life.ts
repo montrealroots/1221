@@ -39,6 +39,8 @@ import { GROOMING, dailyCare, groomingQuote, groomingRefusal, salonById, showerU
 import { trainedSession } from './trainers';
 import { roomGone } from './latecheckout';
 import { runInShoes } from './resale';
+import { MOWN_CM, MOW_MINUTES, lawnOf, mow } from './lawns';
+import { livingIn } from './homes';
 import {
   DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
   swimRefusal, trainingAt, wearOutfit, courtAt, courtRefusal, COURT_MET,
@@ -451,6 +453,8 @@ export function registerLife(sim: Simulation): void {
       if (action === 'charter' && !spend(s, person, cost, `A boat chartered with its captain, ${charterAt(person.currentLocationId)?.operator ?? ''}`, 'personal')) throw new CommandError('The payment didn’t go through.');
       // A workout or a swim is an outfit worn.
       if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court') wearOutfit(s, person, true);
+      // The lawn cut (`systems/lawns.ts`, from 2026-10-02).
+      if (action === 'mow') { const home = livingIn(person); if (home) mow(home, s.now); }
       const before = { ...person.wellbeing };
       // Eaten out where there's no kitchen: a restaurant's meal too.
       if (action === 'eat' && !cooks(s, person)) eatsOut(person);
@@ -505,7 +509,7 @@ export function registerLife(sim: Simulation): void {
  * Each takes real time off the clock, and the clock charges that time as
  * waking before the action pays out.
  */
-export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy';
+export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'mow';
 
 export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
   eat: { label: 'Eat A Meal', minutes: 40, does: 'Cooked at home, or a meal out: feeds you, and lifts the mood by as much as you needed it' },
@@ -523,6 +527,8 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
   laundry: { label: 'Do The Laundry', minutes: 20, does: 'Washes what you’ve worn: in your own machines, the building’s, or at the laundromat' },
   tidy: { label: 'Clean The Place', minutes: 60, does: 'A clean home, which stops a mess weighing on you' },
+  // From 2026-10-02 (`systems/lawns.ts`): the 1.9 hours ATUS finds a day of lawn and garden care takes.
+  mow: { label: 'Mow The Lawn', minutes: MOW_MINUTES, does: 'Cuts the grass at the home you live in to 5 cm, ahead of any notice from the city' },
 };
 
 /** What a bath's soak takes off stress beyond a shower's: SLATE's estimate. */
@@ -592,6 +598,9 @@ export function costFor(sim: Simulation, action: LookAfter): number {
   return 0;
 }
 
+/** The lawn of the home they live in, where it has one. */
+const homeLawn = (person: Person) => { const home = livingIn(person); return home ? lawnOf(home) : undefined; };
+
 export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | undefined {
   const w = sim.player.wellbeing;
   const person = sim.player;
@@ -616,6 +625,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'laundry' && !person.home) return 'You have nowhere to keep clothes.';
   if (action === 'tidy' && !(atHome(person) && place?.keeps)) return 'It isn’t your place to clean.';
   if (action === 'tidy' && livingOf(person).tidy >= 90) return 'The place is clean.';
+  if (action === 'mow') { const lawn = atHome(person) ? homeLawn(person) : undefined; if (!lawn) return 'There’s no lawn of yours here.'; if (lawn.cm < MOWN_CM + 1) return 'It’s cut.'; }
   const end = sim.now + minutesFor(sim, action) * 60_000;
   const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);
   if (clash) return `${clash.label} is at ${formatTime(clash.at, sim.zone)}, and there isn’t time.`;
