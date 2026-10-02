@@ -210,11 +210,11 @@ Correctness first, then the connected day the plan asks to be shown working
 | 47o | Home while away | Partial | bills run | House-sitter, mail, spoilage checked |
 | 48a–b | Search named properties by dates, guests, budget | Partial | 28 hotels in 8 towns | Guests, rooms, filters |
 | 48c | Compare total stay | Complete | `namedStayQuote`; tests/hotels | — |
-| 48d–f | Inspect rooms, extras, terms | Partial | bed, hours, deposit, parking | Amenities, accessibility, policies; extras |
+| 48d–f | Inspect rooms, extras, terms | Partial | bed, hours, deposit, parking; from 2026-10-02 each hotel's gym, pool, spa, breakfast, Wi-Fi, accessibility and pets shown, and its own cancellation deadline deciding the refund (`content/hotelamenities.ts`) | Extras bought (breakfast, early check-in, a pet's fee) |
 | 48g | Book and pay | Complete | `travel.book`; tests | Hotel-only booking |
 | 48h | Check-in requirements | Partial | age at booking | Check-in step |
 | 48i | A failed deposit isn't a granted stay | Done, 2026-10-02 | journey.ts `holdForDeposit`, `travel.pay_deposit`; rentals.ts `held`, `travel.pay_rental_deposit`; standin.ts refuses; tests/deposits.test.ts | — |
-| 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial or not implemented | — | A stay place; fixtures from the property; incidentals |
+| 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial | the named hotel's own gym and pool used while staying (`stayPlace`, `swimRefusal`) | Incidentals; the room's belongings |
 | 49a–b, e–g, i | Identity, driving, entry, residence, work, building approval | Complete | documents.ts, licensing.ts, permission.ts, permits.ts; tests | Appointments and evidence steps |
 | 49c–d | Boating, aviation | Partial | instant certificate; checkride always passes | Course, exam, failure, a document |
 | 49k | Loss and replacement | Partial, 2026-10-02 | passport; a driving license replaced at its authority's fee in all eight places, driven on meanwhile where an interim or the record allows, waited for in California (`documents.replace_license`); tests/replacements.test.ts | ID cards; the police report as its own step |

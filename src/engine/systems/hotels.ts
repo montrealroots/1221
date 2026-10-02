@@ -19,11 +19,50 @@ import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { HOTELS, type Hotel, type HotelRoom } from '../content/hotels';
+import { HOTEL_AMENITIES, type HotelAmenities } from '../content/hotelamenities';
+import { instantFromZoned, zonedParts } from '../core/time';
 import type { RatePlan } from '../content/staytypes';
 import { nightRateFor } from './stays';
 
 export const hotelById = (id: string): Hotel | undefined => HOTELS.find((h) => h.id === id);
 export const hotelsIn = (cityId: string): Hotel[] => HOTELS.filter((h) => h.cityId === cityId);
+export const amenitiesOf = (hotelId: string | undefined): HotelAmenities | undefined => (hotelId ? HOTEL_AMENITIES.find((a) => a.id === hotelId) : undefined);
+
+/** What a named hotel has, as its own pages or a booking site's said, for the screen: what's known, in a line. */
+export function amenityLine(hotelId: string): string {
+  const a = amenitiesOf(hotelId);
+  if (!a) return '';
+  const bits: string[] = [];
+  if (a.gym !== null) bits.push(a.gym ? 'a gym' : 'no gym');
+  if (a.pool !== null) bits.push(a.pool === 'none' ? 'no pool' : `an ${a.pool} pool`);
+  if (a.spa) bits.push('a spa');
+  if (a.breakfast?.included !== null && a.breakfast) bits.push(a.breakfast.included ? 'breakfast included' : a.breakfast.price !== null ? `breakfast ${a.breakfast.price} ${a.breakfast.currency ?? ''} a person`.trim() : 'breakfast extra');
+  if (a.wifiFree !== null) bits.push(a.wifiFree ? 'free Wi-Fi' : 'paid Wi-Fi');
+  if (a.accessible !== null) bits.push(a.accessible ? 'accessible rooms' : 'no wheelchair access');
+  if (a.pets?.allowed !== null && a.pets) bits.push(a.pets.allowed ? (a.pets.fee ? `pets at ${a.pets.fee} ${a.pets.currency ?? ''} a ${a.pets.per ?? 'stay'}` : 'pets welcome') : 'no pets');
+  return bits.length ? `${bits.join(', ')}.`.replace(/^./, (c) => c.toUpperCase()) : '';
+}
+
+/** A flexible rate's refund, until a day before arrival where a hotel's own terms aren't known: SLATE's reading of the usual terms. */
+export const FREE_CANCEL_HOURS = 24;
+
+/**
+ * Until when a stay booked on a flexible rate is called off free (from
+ * 2026-10-02): a named hotel's own deadline, so many hours before arrival,
+ * at its named hour of the day that falls on (Pod Times Square's 3 p.m. the
+ * day before, Travelodge's noon on the day); a day before arrival otherwise.
+ */
+export function freeCancelUntil(hotelId: string | undefined, arriveAt: Instant): Instant {
+  const c = amenitiesOf(hotelId)?.cancel;
+  const h = hotelId ? hotelById(hotelId) : undefined;
+  if (!c || !h) return arriveAt - FREE_CANCEL_HOURS * 3_600_000;
+  const by = c.by?.match(/^(\d{1,2}):(\d{2})/);
+  if (!by) return arriveAt - c.hours * 3_600_000;
+  const zone = CITIES.require(h.cityId).timeZone;
+  const p = zonedParts(arriveAt, zone);
+  // Every hotel that names an hour gives its hours in whole days.
+  return instantFromZoned({ year: p.year, month: p.month, day: p.day - c.hours / 24, hour: Number(by[1]), minute: Number(by[2]) }, zone);
+}
 
 /** A room's rate for a night on a plan, in the hotel's money, and whether it's the mean of other nights. Nothing where it offers no such rate. */
 export function roomRate(h: Hotel, room: HotelRoom, plan: RatePlan, night: Instant): { rate: number; estimated: boolean } | undefined {

@@ -33,7 +33,7 @@ import { ownPlaceIn, stayPrice, stayClassesIn } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
-import { hotelById, hotelsIn, namedStayQuote } from '@/engine/systems/hotels';
+import { amenitiesOf, amenityLine, freeCancelUntil, hotelById, hotelsIn, namedStayQuote } from '@/engine/systems/hotels';
 import { insuranceQuote } from '@/engine/systems/travelinsurance';
 import { lateQuote } from '@/engine/systems/latecheckout';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -227,10 +227,13 @@ export function TravelWorkspace() {
                   <label htmlFor="travel-rate">Rate</label>
                   <select id="travel-rate" value={ratePlan} onChange={(e) => setRatePlan(e.target.value === 'prepaid' ? 'prepaid' : 'flexible')}>
                     <option value="prepaid">{`Prepaid, ${Math.round(PREPAID_OFF * 1000) / 10}% Off, Not Refunded`}</option>
-                    <option value="flexible">Flexible, Free To A Day Before</option>
+                    <option value="flexible">{picked?.hotel && amenitiesOf(picked.hotel.id)?.cancel ? 'Flexible, Free To The Hotel’s Deadline' : 'Flexible, Free To A Day Before'}</option>
                   </select>
                 </div>
               </div>
+            )}
+            {picked && (
+              <div className="xs dim">{amenityLine(picked.hotel.id)}{ratePlan === 'flexible' ? ` Free to call off until ${formatDateTime(freeCancelUntil(picked.hotel.id, arrival), CITIES.require(picked.hotel.cityId).timeZone)}.` : ''}</div>
             )}
             {plan && (
               <LookRegion>

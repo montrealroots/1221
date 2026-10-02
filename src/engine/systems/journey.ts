@@ -49,7 +49,7 @@ import { laidUp } from './repairs';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
 import { moveTo } from './luggage';
-import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking } from './hotels';
+import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking, freeCancelUntil } from './hotels';
 import { claimCancellation } from './travelinsurance';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
 
@@ -116,13 +116,11 @@ export const CHECKOUT_KIND = 'travel.checkout';
 
 /** A hotel's check-out, eleven in the morning, SLATE's reading of the usual hour. */
 export const CHECKOUT_HOUR = 11;
-/** A hotel booked on a flexible rate is refunded until a day before arrival: SLATE's reading of the usual terms. */
-export const HOTEL_FREE_UNTIL_HOURS = 24;
 
 /**
  * What comes back of a hotel called off, from 2026-10-01
  * (`docs/research/world/research-stays-rentals.json`): on a flexible rate,
- * all of it until a day before arrival, and after that all but its first
+ * all of it until a day before arrival (from 2026-10-02 a named hotel's own deadline, `freeCancelUntil`), and after that all but its first
  * night, which a late cancellation or a no-show costs, the rest released as
  * hotels do; paid ahead on the prepaid rate, nothing. Its parking comes back
  * whole, as nothing was parked. Until then a late cancellation or a missed
@@ -139,7 +137,8 @@ export function hotelRefund(hotel: NonNullable<Journey['hotel']>, arriveAt: Inst
   const parking = hotel.parking ?? 0;
   if (hotel.plan === 'prepaid') return parking;
   const rooms = hotel.price - parking;
-  if (arriveAt - now >= HOTEL_FREE_UNTIL_HOURS * MS_HOUR) return hotel.price;
+  // A named hotel's own deadline (from 2026-10-02); a day before arrival otherwise.
+  if (now <= freeCancelUntil(hotel.named?.hotelId, arriveAt) && now < arriveAt) return hotel.price;
   return parking + rooms - Math.round(rooms / Math.max(1, hotel.nights));
 }
 
@@ -441,7 +440,7 @@ export function registerJourneys(sim: Simulation): void {
     const j = journeysOf(person).find((x) => x.id === p?.journeyId);
     if (!j || j.status !== 'booked') throw new CommandError('That isn’t a journey you have booked.');
     if (!j.hotel) throw new CommandError('A let takes the place of the journey’s hotel.');
-    if (j.arriveAt - s.now < HOTEL_FREE_UNTIL_HOURS * MS_HOUR) throw new CommandError('Too close to arrival to cancel the hotel free.');
+    if (s.now > freeCancelUntil(j.hotel.named?.hotelId, j.arriveAt) || s.now >= j.arriveAt) throw new CommandError('Too close to arrival to cancel the hotel free.');
     if (j.hotel.plan === 'prepaid') throw new CommandError('The hotel was paid ahead on a rate that isn’t refunded.');
     const q = letQuote(s, j.toCity, j.hotel.nights);
     if (typeof q === 'string') throw new CommandError(q);
@@ -721,7 +720,8 @@ export function registerJourneys(sim: Simulation): void {
       person.stay = { kind: 'let', cityId: j.toCity, unit: drawRental(s, person, j.toCity, false, s.now) };
       s.schedule({ at: j.let.checkOutAt, kind: CHECKOUT_KIND, label: 'Holiday Let Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id, cityId: j.toCity } });
     } else if (j.hotel) {
-      person.stay = { kind: 'hotel', cityId: j.toCity };
+      // A named hotel's own gym and pool, where it's named (`stayPlace`, from 2026-10-02).
+      person.stay = { kind: 'hotel', cityId: j.toCity, ...(j.hotel.named ? { hotelId: j.hotel.named.hotelId } : {}) };
       // A named hotel's deposit, held at arrival and returned at check-out (`depositFor`, from 2026-10-01).
       const deposit = j.hotel.named ? depositFor(s, j.hotel.named.hotelId, j.hotel.nights) : 0;
       if (deposit > 0 && payFromBank(s, person, deposit, `${hotelById(j.hotel.named!.hotelId)!.name}, the deposit held`, 'travel')) j.hotel.deposit = deposit;
