@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-257 commands; 251 named by a test, 6 not.
+258 commands; 252 named by a test, 6 not.
 
 ## aircraft
 
@@ -186,7 +186,8 @@ Each command the player can run: the engine file that handles it, the screens th
 | `documents.real_id` | `src/engine/systems/identity.ts` | `Documents.tsx` | `identity.test.ts` | Passports And Licenses |
 | `documents.renew_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `identity.test.ts` `licensing.test.ts` `motorcycles.test.ts` | Passports And Licenses |
 | `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `residence.test.ts` | Passports And Licenses |
-| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `border.test.ts` `documents.test.ts` `journey.test.ts` | Passports And Licenses |
+| `documents.replace_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `replacements.test.ts` | Passports And Licenses |
+| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `border.test.ts` `documents.test.ts` `journey.test.ts` `replacements.test.ts` | Passports And Licenses |
 | `documents.residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
 | `documents.settle` | `src/engine/systems/residence.ts` | `Documents.tsx` | `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
 

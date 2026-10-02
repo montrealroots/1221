@@ -7,6 +7,8 @@
  * drive. Every figure is the engine's own, and each rule names its source.
  */
 
+import { replaceRefusal } from '@/engine/systems/licensing';
+import { LICENSE_REPLACEMENT } from '@/engine/content/replacements';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
@@ -63,6 +65,7 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
                   {d.status === 'valid' && !expired && (
                     <Gated feature="documents.report_lost" className="btn btn-sm btn-ghost" onClick={() => { if (run('documents.report_lost', { documentId: d.id }).ok) toast(`${KIND_WORD[d.kind]} reported lost and canceled.`, 'positive'); }}>Report Lost</Gated>
                   )}
+                  {d.kind === 'license' && d.status === 'lost' && (() => { const no = replaceRefusal(sim.player, d.id); const rule = LICENSE_REPLACEMENT[d.issuer]; return <Gated feature="documents.replace_license" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (rule?.first ? `It needs ${rule.first} first, free.` : undefined)} onClick={() => { const a = run<{ readyAt: number }>('documents.replace_license', { documentId: d.id }); if (a.ok) toast(rule && !rule.driveMeanwhile && rule.days ? `Replaced; the card comes ${formatDate(a.value!.readyAt, sim.zone)}, and until then you can’t drive.` : 'Replaced; you may drive meanwhile.', 'positive'); }}>{rule ? `Replace It, ${formatMoney(Math.round(rule.fee * 100), rule.currency, { cents: false })}` : 'Replace It'}</Gated>; })()}
                 </td>
               </tr>
             );

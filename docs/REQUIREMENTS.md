@@ -217,7 +217,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial or not implemented | — | A stay place; fixtures from the property; incidentals |
 | 49a–b, e–g, i | Identity, driving, entry, residence, work, building approval | Complete | documents.ts, licensing.ts, permission.ts, permits.ts; tests | Appointments and evidence steps |
 | 49c–d | Boating, aviation | Partial | instant certificate; checkride always passes | Course, exam, failure, a document |
-| 49k | Loss and replacement | Partial | passport only | Licence and ID replacement |
+| 49k | Loss and replacement | Partial, 2026-10-02 | passport; a driving license replaced at its authority's fee in all eight places, driven on meanwhile where an interim or the record allows, waited for in California (`documents.replace_license`); tests/replacements.test.ts | ID cards; the police report as its own step |
 
 ## Part 9. Healthcare, people, career, services
 
