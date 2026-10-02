@@ -72,7 +72,7 @@ Correctness first, then the connected day the plan asks to be shown working
 |---|---|---|---|---|
 | 20 | Product, offer, owned item distinct; variant persists | Partial | `ClothingProduct` is product and offer in one; `Item.spec` keeps size and color | An offer layer (seller, condition, price) and a variant id |
 | 21 | Stores with hours and stock; websites with destinations, shipping, tracking | Partial | `storesIn` city list; `purchaseQuote` fee, threshold, days | Branch records (address, hours, services, stock); destinations, shipping tiers, click-and-collect, payment choice, tracking stages |
-| 22a | Find, browse, search, filter | Complete | `clothingCatalog`, `arrange`; tests/catalog, clothing | Facets for size, color, material, price band |
+| 22a | Find, browse, search, filter | Complete | `clothingCatalog`, `arrange`; department and type facets (2026-10-02); tests/catalog, clothing | Size, color and material facets |
 | 22b | Product page, variant, compare offers | Partial | `Choose` in ClothesWorkspace | Product page with size chart and source; compare sellers |
 | 22c | Cart, collection or delivery, review, pay | Done for clothes, 2026-10-02 | `clothes.basket_add`, `basket_remove`, `checkout`: one payment and one order per retailer, the threshold on the order | Groceries and toiletries in the basket; choosing the card |
 | 22d | Receipt and order record | Partial | `ClothesPurchase`, `Order`; `returned` set once all of an order is back (2026-10-02); the checkout's ledger entry names the retailer and count | Receipt lines as a document |
@@ -83,7 +83,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 25 | Fit by real measures and size charts | Partial | Size from BMI share (`sizeFor`) | Body measurements; charts per retailer; shoe and ring fit; waist-by-inseam |
 | 26 | Jordans and designer products, retail vs resale | Not implemented (Jordans), partial (designer) | 8 luxury retailers | Sneaker catalog with style codes and colorways; resale sellers and condition |
 | 27a | Receive, store | Complete | delivery, `items.move`; tests/items | — |
-| 27b | Wear, layer, remove | Partial | one garment per slot; `dressRefusal` validates `dress` and `wear_outfit` (2026-10-02) | Layers, undress, sleepwear, accessories worn |
+| 27b | Wear, layer, remove | Partial | one garment per slot; `dressRefusal` validates `dress` and `wear_outfit`; jewelry, watches and accessories chosen and worn with the outfit; sleepwear worn at night at home (2026-10-02) | Layers, undress |
 | 27c | Wash, dry, clean | Complete | `doLaundry`, dry cleaning; tests | Wash a chosen garment; air-dry or tumble |
 | 27d | Alter, repair | Partial | take in only | Hem, let out; damage and repair |
 | 27e | Pack, unpack | Partial (automatic) | luggage.ts | Manual packing (§46) |

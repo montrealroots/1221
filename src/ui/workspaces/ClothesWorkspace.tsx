@@ -131,6 +131,8 @@ function WhatToWear() {
   const onNow = useWorld((s) => wornNow(s.player));
   const change = useFeature('clothes.change');
   const [picked, setPicked] = useState<Partial<Record<Slot, string>>>({});
+  const extras = ready.filter((g) => g.garment.slot === 'accessory');
+  const [jewels, setJewels] = useState<string[]>(() => (person.dressed ?? []).filter((id) => extras.some((g) => g.id === id)));
   const [name, setName] = useState('');
   const dress = useFeature('clothes.dress');
   const save = useFeature('clothes.save_outfit');
@@ -139,7 +141,7 @@ function WhatToWear() {
   const slots = (Object.keys(SLOT_LABEL) as Slot[]).filter((slot) => ready.some((g) => g.garment.slot === slot));
   // The choice for each part: what they picked, else what the day would put on.
   const choice = (slot: Slot) => picked[slot] ?? ready.find((g) => g.garment.slot === slot && today.includes(g.id))?.id ?? '';
-  const ids = slots.map(choice).filter(Boolean);
+  const ids = [...slots.map(choice).filter(Boolean), ...jewels.filter((id) => extras.some((g) => g.id === id))];
   return (
     <Panel title="What To Wear" subtitle="Your choice is worn while it’s clean and to hand; whatever it leaves out, what’s already on the go, then the least washed">
       <LookRegion className="col gap-3">
@@ -161,6 +163,19 @@ function WhatToWear() {
               <input id="outfit-name" value={name} placeholder="For an audition" onChange={(e) => setName(e.target.value)} />
             </div>
           </div>
+        )}
+        {extras.length > 0 && (
+          <fieldset className="col gap-1" style={{ border: 0, padding: 0, margin: 0 }}>
+            <legend className="small muted" style={{ padding: 0 }}>Jewelry, Watches And Accessories</legend>
+            <div className="row gap-3" style={{ flexWrap: 'wrap' }}>
+              {extras.map((g) => (
+                <label key={g.id} className="row gap-1 small">
+                  <input type="checkbox" checked={jewels.includes(g.id)} onChange={(e) => setJewels(e.target.checked ? [...jewels, g.id] : jewels.filter((id) => id !== g.id))} />
+                  {named(g)}
+                </label>
+              ))}
+            </div>
+          </fieldset>
         )}
         <div className="row gap-1">
           <button type="button" className="btn btn-sm" disabled={!dress.open || slots.length === 0} title={dress.reason} onClick={() => { if (run('clothes.dress', { itemIds: ids }).ok) toast('Chosen to wear.', 'positive'); }}>Wear These</button>
@@ -215,7 +230,7 @@ function Shop() {
   return (
     <Panel title={`Shops In ${town}`} subtitle={`${entries.length} products from ${new Set(entries.map((e) => (e.value as ClothingProduct).retailer)).size} retailers`}>
       <div className="col gap-3">
-        <CatalogControls id="clothes-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ kind: 'Kind', retailer: 'Retailer' }} />
+        <CatalogControls id="clothes-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ department: 'Department', type: 'Type', kind: 'Kind', retailer: 'Retailer', where: 'Where' }} />
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Product</th><th scope="col">Retailer</th><th scope="col">Where</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
