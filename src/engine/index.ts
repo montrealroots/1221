@@ -44,6 +44,7 @@ import { registerCompanions } from './systems/companions';
 import { registerRoadside } from './systems/roadside';
 import { registerFurnishings } from './systems/furnishings';
 import { registerHosting } from './systems/hosting';
+import { registerHotelBreakfast } from './systems/hotelbreakfast';
 import { registerClothing, starterWardrobe } from './systems/clothing';
 import { registerAlcohol } from './systems/alcohol';
 import { registerKitchen } from './systems/kitchen';
@@ -221,6 +222,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerRoadside(sim);
   registerFurnishings(sim);
   registerHosting(sim);
+  registerHotelBreakfast(sim);
   registerClothing(sim);
   registerAlcohol(sim);
   registerKitchen(sim);

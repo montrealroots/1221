@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-264 commands; 258 named by a test, 6 not.
+265 commands; 259 named by a test, 6 not.
 
 ## aircraft
 
@@ -286,6 +286,12 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.take_lodger` | `src/engine/systems/lodgers.ts` | `HomesWorkspace.tsx` | `lodgers.test.ts` | Rent And A Roof |
 | `home.tv_licence` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` | Rent And A Roof |
 | `home.unsubscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` | Rent And A Roof |
+
+## hotel
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `hotel.breakfast` | `src/engine/systems/hotelbreakfast.ts` | `TravelWorkspace.tsx` | `hotelbreakfast.test.ts` | Getting Around |
 
 ## hygiene
 

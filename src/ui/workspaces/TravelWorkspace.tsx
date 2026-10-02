@@ -33,6 +33,7 @@ import { ownPlaceIn, stayPrice, stayClassesIn } from '@/engine/systems/stays';
 import { hoursOut } from '@/engine/systems/jetlag';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
+import { breakfastPrice, breakfastRefusal } from '@/engine/systems/hotelbreakfast';
 import { amenitiesOf, amenityLine, freeCancelUntil, hotelById, hotelsIn, namedStayQuote } from '@/engine/systems/hotels';
 import { insuranceQuote } from '@/engine/systems/travelinsurance';
 import { lateQuote } from '@/engine/systems/latecheckout';
@@ -306,7 +307,7 @@ export function TravelWorkspace() {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
                           if (a.ok) toast(a.value!.refund > 0 ? `Canceled: ${money(a.value!.refund)} back.` : 'Canceled: the fares aren’t refunded.', 'positive');
                         }}>Cancel It</Gated>
-                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <AskAlong j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}{j.status === 'arrived' && <CheckOutLate j={j} />}<PayDeposits j={j} /></div></td>
+                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <AskAlong j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}{j.status === 'arrived' && <><CheckOutLate j={j} /><HotelBreakfast j={j} /></>}<PayDeposits j={j} /></div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -507,6 +508,20 @@ function StayLonger({ j }: { j: Journey }) {
         if (run('travel.extend', { journeyId: j.id, day: j.leaveAt + days * MS_DAY, slot: slotOf(j) }).ok) toast(`Staying ${days} ${days === 1 ? 'day' : 'days'} longer.`, 'positive');
       }}>{typeof q === 'string' ? 'Stay Longer' : `Stay Longer (${formatMoney(q.total, cur, { cents: false })})`}</Gated>
     </div>
+  );
+}
+
+/** Breakfast at the named hotel where you're staying, at its own price or with the room (`hotel.breakfast`). */
+function HotelBreakfast({ j }: { j: Journey }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  if (!j.hotel?.named || person.currentLocationId !== j.toCity || person.stay?.hotelId !== j.hotel.named.hotelId) return null;
+  const price = breakfastPrice(sim, person);
+  if (price === undefined) return null;
+  const no = breakfastRefusal(sim, person);
+  const cur = saveCurrency(sim.universe);
+  return (
+    <Gated feature="hotel.breakfast" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('hotel.breakfast', {}).ok) toast('Breakfast, at the hotel.', 'positive'); }}>{price ? `Have Breakfast, ${formatMoney(price, cur)}` : 'Have Breakfast, Included'}</Gated>
   );
 }
 

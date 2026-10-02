@@ -88,6 +88,8 @@ export interface Stay {
   out?: boolean;
   /** A named hotel's, for its own gym and pool (`content/hotelamenities.ts`, from 2026-10-02). */
   hotelId?: string;
+  /** The day breakfast was had at the hotel (`systems/hotelbreakfast.ts`, from 2026-10-02). */
+  breakfastOn?: string;
 }
 
 /** A production's hotel room: a bath, central air, the hotel's gym, no kitchen of its own and the laundry sent out. */

@@ -1,0 +1,307 @@
+{
+  "meta": {
+    "title": "Getting between town and airport, and a passenger's choices when a flight is canceled or badly delayed",
+    "read": "2026-10-02",
+    "builtOn": "src/engine/content/air.ts keeps taxi flat fares at JFK, LAX, LHR (Heathrow Express), YVR, ATL and MSY, and GO Airport Shuttle New Haven to JFK/LGA from $79. This file adds every other option found, and re-reads the ones SLATE keeps.",
+    "confirmedMeans": "confirmed:true only when the figure was read on the operator's or the authority's own page on 2026-10-02. A figure from a search summary, a third-party guide, or a summary of a blocked page is confirmed:false.",
+    "nullMeans": "fare or minutes null: not found on a page that could be read; never estimated here.",
+    "blockedPages": "Returned 403/404/bot-challenge to the fetcher on 2026-10-02: flylax.com, yvr.ca, torontopearson.com, tfl.gov.uk, gatwickexpress.com, stanstedexpress.com fare pages, jfkairport.com/laguardiaairport.com/newarkairport.com parking pages, dublinairport.com parking, transportation.gov refunds page, ecfr.gov, metro.cdmx.gob.mx, metrobus.cdmx.gob.mx, cttransit.com (certificate error). Figures for those come from search summaries and are marked confirmed:false."
+  },
+  "ground": [
+    { "cityId": "us-ny-newyork", "airport": "JFK", "mode": "taxi", "name": "Yellow taxi flat fare, Manhattan to/from JFK", "fare": 70, "currency": "USD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.nyc.gov/site/tlc/passengers/taxi-fare.page", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Plus $0.50 MTA State Surcharge, $1.00 Improvement Surcharge, $2.50 NY State Congestion Surcharge (yellow, Manhattan south of 96th St), $0.75 MTA congestion pricing toll (south of 60th St), $2.00 Airport Access Fee on pickups at JFK, $5.00 rush hour surcharge for JFK (4pm-8pm weekdays, not legal holidays); tolls and tip extra. SLATE's air.ts carries 70 + 0.5 + 1 + 2.5 + 0.75." },
+    { "cityId": "us-ny-newyork", "airport": "JFK", "mode": "transit", "name": "AirTrain JFK (to/from Jamaica or Howard Beach)", "fare": 8.75, "currency": "USD", "per": "person", "minutes": null, "frequency": "every 5-15 minutes", "source": "https://www.jfkairport.com/to-from-airport/air-train", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Children under 5 free. Rolling 30-day cap $43.50. Group fare $8.75 first rider + $4.50 each additional, up to 5, $26.75 max. Contactless or OMNY. Between terminals under 10 minutes and free. Full overnight disruptions 10/5-10/15 (10pm-6am) with free replacement buses." },
+    { "cityId": "us-ny-newyork", "airport": "JFK", "mode": "transit", "name": "Subway (A, E or J to Sutphin Blvd-Archer Av, or A to Howard Beach) + AirTrain", "fare": 11.75, "currency": "USD", "per": "person", "minutes": null, "frequency": null, "source": "https://www.mta.info/guides/airports/jfk", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "MTA's combined figure; the AirTrain cannot be paid with unlimited passes. Lefferts Blvd-bound A trains do not serve the airport." },
+    { "cityId": "us-ny-newyork", "airport": "JFK", "mode": "transit", "name": "LIRR (Penn Station, Grand Central or Atlantic Terminal) to Jamaica + AirTrain", "fare": 14, "currency": "USD", "per": "person", "minutes": null, "frequency": null, "source": "https://www.mta.info/guides/airports/jfk", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "MTA gives a range of $14-$16 including the AirTrain; fare is the low end (off-peak), $16 the high end." },
+    { "cityId": "us-ny-newyork", "airport": "JFK", "mode": "rideshare", "name": "Port Authority for-hire vehicle airport access fee (Uber, Lyft, car services)", "fare": 3.5, "currency": "USD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.amny.com/columnists/op-ed-the-port-authority-grinch-plans-to-double-passenger-airport-access-fees-this-holiday-season/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: $3.50 per pickup and per drop-off at JFK and LGA from 15 March 2026 (was $2.50), Port Authority schedule phasing to $4.50 in 2027 and $5.00 in 2028. Not read on the Port Authority's own page." },
+    { "cityId": "us-ny-newyork", "airport": "JFK", "mode": "parking", "name": "Long-Term Lot 9", "fare": 55, "currency": "USD", "per": "day", "minutes": null, "frequency": null, "source": "https://www.triplypro.com/blog/jfk-long-term-parking-9", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary citing a Port Authority Schedule of Charges effective 28 May 2026: $55 first 24 hours, $27.50 each additional 12 hours. An earlier 2026 schedule had $49 / $24.50 and a $39 prebook daily maximum. jfkairport.com parking page returned 404." },
+    { "cityId": "us-ny-newyork", "airport": "JFK", "mode": "parking", "name": "Terminal garages (Blue T4 / Yellow T5 / Red T8)", "fare": 94, "currency": "USD", "per": "day", "minutes": null, "frequency": null, "source": "https://www.triplypro.com/blog/jfk-airport-parking-price", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: daily maximums $94 Blue (T4), $89 Yellow (T5), $74 Red (T8)." },
+
+    { "cityId": "us-ny-newyork", "airport": "LGA", "mode": "transit", "name": "Q70 LaGuardia Link bus (to Jackson Heights-Roosevelt Av / 74 St-Broadway subway, and LIRR Woodside)", "fare": 0, "currency": "USD", "per": "person", "minutes": null, "frequency": null, "source": "https://www.laguardiaairport.com/to-from-airport/public-transportation", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Free, Terminals B and C. Onward subway fare not on this page. Five bus routes serve LGA (Q70, M60 SBS, Q48, Q72 and one more); their fares and frequencies were not on the page." },
+    { "cityId": "us-ny-newyork", "airport": "LGA", "mode": "taxi", "name": "Yellow taxi, metered, to/from LaGuardia", "fare": null, "currency": "USD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.nyc.gov/site/tlc/passengers/taxi-fare.page", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "No flat fare. Meter: $3.00 initial, $0.70 per 1/5 mile above 12 mph or per 60 seconds in slow traffic; plus $5.00 LGA surcharge, $2.00 Airport Access Fee on pickups, $0.50 MTA, $1.00 improvement, $2.50 congestion (Manhattan south of 96th), $0.75 congestion pricing toll (south of 60th), $2.50 rush hour 4-8pm weekdays, $1.00 overnight 8pm-6am; tolls and tip extra." },
+    { "cityId": "us-ny-newyork", "airport": "LGA", "mode": "rideshare", "name": "Port Authority for-hire vehicle airport access fee", "fare": 3.5, "currency": "USD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.amny.com/columnists/op-ed-the-port-authority-grinch-plans-to-double-passenger-airport-access-fees-this-holiday-season/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "As for JFK: $3.50 each pickup and drop-off from 15 March 2026, per search summary." },
+    { "cityId": "us-ny-newyork", "airport": "LGA", "mode": "parking", "name": "Terminal B Garage", "fare": 80, "currency": "USD", "per": "day", "minutes": null, "frequency": null, "source": "https://www.triplypro.com/blog/laguardia-airport-terminal-b-parking-rates", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary (verified April 2026 by the guide): $80/day drive-up, $55/day pre-booked at parking.laguardiaairport.com; $5 first 30 minutes then $10 per 30 minutes." },
+
+    { "cityId": "us-ny-newyork", "airport": "EWR", "mode": "transit", "name": "NJ Transit New York Penn Station to Newark Liberty Airport station + AirTrain Newark", "fare": 16.8, "currency": "USD", "per": "person", "minutes": 60, "frequency": null, "source": "https://www.mta.info/guides/airports/newark-ewr", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "About 1 hour from Penn Station; AirTrain leg 15-20 minutes. Trains run 5am-1am, not 24/7. Buy 'NWK Airport', which includes the AirTrain. A search summary gives $17.25 as a 2026 fare (worth checking)." },
+    { "cityId": "us-ny-newyork", "airport": "EWR", "mode": "transit", "name": "PATH (World Trade Center to Newark Penn) + NJ Transit train + AirTrain", "fare": 14.95, "currency": "USD", "per": "person", "minutes": null, "frequency": null, "source": "https://www.mta.info/guides/airports/newark-ewr", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "PATH $3 + NJ Transit $11.95 including AirTrain." },
+    { "cityId": "us-ny-newyork", "airport": "EWR", "mode": "transit", "name": "PATH + NJ Transit bus #62", "fare": 4.9, "currency": "USD", "per": "person", "minutes": null, "frequency": null, "source": "https://www.mta.info/guides/airports/newark-ewr", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "PATH $3 + bus $1.90. The overnight option when trains are not running." },
+    { "cityId": "us-ny-newyork", "airport": "EWR", "mode": "transit", "name": "AirTrain Newark alone (to NJ Transit / Amtrak station)", "fare": 8.75, "currency": "USD", "per": "person", "minutes": 7, "frequency": "every 15 minutes between Terminals B and C from 11pm to 5am; daytime frequency not stated", "source": "https://www.newarkairport.com/to-from-airport/air-train", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Charged only if you have no rail ticket to the airport station. Station to Terminal C 7 min, B 11 min, A 20 min (extra shuttle or 15-minute walk). Free between terminals, parking, hotels, rental cars." },
+    { "cityId": "us-ny-newyork", "airport": "EWR", "mode": "taxi", "name": "NYC yellow taxi, Manhattan to Newark (metered)", "fare": null, "currency": "USD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.nyc.gov/site/tlc/passengers/taxi-fare.page", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Metered fare plus $20.00 Newark Surcharge plus tolls and the usual surcharges. Taxis from EWR into NYC are New Jersey cabs on the airport's own rate schedule, not found." },
+    { "cityId": "us-ny-newyork", "airport": "EWR", "mode": "rideshare", "name": "Port Authority for-hire vehicle airport access fee", "fare": null, "currency": "USD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.uber.com/blog/understanding-new-jersey-rider-prices", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "A Port Authority airport access surcharge applies at Newark as at JFK/LGA; the 2026 amount at EWR was not stated in what was read. It was $2.50 per pickup/drop-off before the 2026 increase." },
+    { "cityId": "us-ny-newyork", "airport": "EWR", "mode": "parking", "name": "P6 Economy Lot", "fare": 35, "currency": "USD", "per": "day", "minutes": null, "frequency": null, "source": "https://www.triplypro.com/blog/ewr-p6-parking-rates", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: $35 first 24 hours drive-up, $17.50 per 12 hours after; about $21/day pre-booked." },
+    { "cityId": "us-ny-newyork", "airport": "EWR", "mode": "parking", "name": "P4 Daily Garage", "fare": 60, "currency": "USD", "per": "day", "minutes": null, "frequency": null, "source": "https://www.triplypro.com/blog/newark-airport-parking-daily-rates", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: $60/day drive-up, about $38/day pre-booked." },
+
+    { "cityId": "us-ca-losangeles", "airport": "LAX", "mode": "shuttle", "name": "LAX FlyAway bus (Union Station / Van Nuys)", "fare": 12.75, "currency": "USD", "per": "person", "minutes": null, "frequency": "every 30 minutes, every 20 minutes at peak", "source": "https://www.lawa.org/commutelax/transit", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "LAWA (the airport operator) page. Contactless card or FlyAway app only; cash not accepted. discoverlosangeles.com still shows an older $9.75. flylax.com/flyaway returned 403." },
+    { "cityId": "us-ca-losangeles", "airport": "LAX", "mode": "transit", "name": "Metro C Line or K Line to LAX/Metro Transit Center, then LAX shuttle", "fare": 1.75, "currency": "USD", "per": "person", "minutes": null, "frequency": "every 10 minutes", "source": "https://www.lawa.org/commutelax/transit", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Metro buses 111, 117, 102, 120, 232 also $1.75 one direction. Local municipal buses $0.35-$1.25." },
+    { "cityId": "us-ca-losangeles", "airport": "LAX", "mode": "taxi", "name": "Taxi flat fare LAX to/from downtown", "fare": 51.15, "currency": "USD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.tripadvisor.com/ShowTopic-g32655-i61-k14627605-LAX_Taxi_Flat_Rate-Los_Angeles_California.html", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Plus $4.00 surcharge on trips originating at LAX. Flat-rate area bounded by Alameda St, Santa Monica Fwy, Harbor Fwy, Cesar E. Chavez, Union Station and Chinatown. Same as air.ts; LADOT's own page not reached on 2026-10-02." },
+    { "cityId": "us-ca-losangeles", "airport": "LAX", "mode": "rideshare", "name": "LAX airport surcharge on Uber/Lyft pickup or drop-off", "fare": 4, "currency": "USD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.nbclosangeles.com/news/local/lax-rideshare-uber-lyft-taxi-fees/3859573/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: $4 now; the Board of Airport Commissioners approved $6 at the LAX-it lot and $12 at the terminal curb, taking effect when the SkyLink people mover opens." },
+    { "cityId": "us-ca-losangeles", "airport": "LAX", "mode": "parking", "name": "Economy Parking", "fare": 35, "currency": "USD", "per": "day", "minutes": null, "frequency": "free shuttle every 10-15 minutes", "source": "https://www.parkon.com/info/lax-airport-how-much-is-parking", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary." },
+    { "cityId": "us-ca-losangeles", "airport": "LAX", "mode": "parking", "name": "Central Terminal Area garages P1-P7", "fare": 60, "currency": "USD", "per": "day", "minutes": null, "frequency": null, "source": "https://www.parkon.com/info/lax-airport-how-much-is-parking", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: up to $60/day general, $70 premium, $75 valet. Another summary gave short-term $7 first hour then $6 per 30 min with $50 per 24 hours max (conflicting; worth checking)." },
+
+    { "cityId": "us-ct-newhaven", "airport": "HVN", "mode": "transit", "name": "CT Transit Route 206 bus", "fare": null, "currency": "USD", "per": "person", "minutes": null, "frequency": "Mon-Sat 6:30am-9:30pm, Sun/holidays 7:00am-7:00pm (headway not given)", "source": "https://flytweed.com/ground-transportation/", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Fare not on the airport page; cttransit.com fare page failed certificate check. CT Transit local fare appears as $1.75 in search results (confirmed:false)." },
+    { "cityId": "us-ct-newhaven", "airport": "HVN", "mode": "taxi", "name": "Taxi (M7 Ride, pre-book 203-777-7777)", "fare": null, "currency": "USD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://flytweed.com/ground-transportation/", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "All taxi fares include a $3.75 airport fee; base fare not published. Uber and Lyft also serve HVN." },
+    { "cityId": "us-ct-newhaven", "airport": "HVN", "mode": "shuttle", "name": "Via NHV microtransit to Tweed", "fare": 10, "currency": "USD", "per": "person", "minutes": null, "frequency": null, "source": "https://visitnewhaven.com/visitor-info/transportation/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary. Same source mentions $10/day parking at Union Station with a 10-minute airport shuttle." },
+    { "cityId": "us-ct-newhaven", "airport": "HVN", "mode": "parking", "name": "Lot A (1-minute walk)", "fare": 39, "currency": "USD", "per": "day", "minutes": 1, "frequency": null, "source": "https://parkhvn.com/", "read": "2026-10-02", "confirmed": true, "taxIncluded": false, "note": "Drive-up $5/hour or $39/day; reserved from $35/day. Operated by LAZ Parking for Tweed-New Haven Airport. Taxes (6.35% CT sales tax per search) and reservation fees extra." },
+    { "cityId": "us-ct-newhaven", "airport": "HVN", "mode": "parking", "name": "Lot B (3-minute walk)", "fare": 29, "currency": "USD", "per": "day", "minutes": 3, "frequency": null, "source": "https://parkhvn.com/", "read": "2026-10-02", "confirmed": true, "taxIncluded": false, "note": "Drive-up $4/hour or $29/day; reserved from $25/day." },
+    { "cityId": "us-ct-newhaven", "airport": "HVN", "mode": "parking", "name": "Lot C (8-minute walk)", "fare": 25, "currency": "USD", "per": "day", "minutes": 8, "frequency": null, "source": "https://parkhvn.com/", "read": "2026-10-02", "confirmed": true, "taxIncluded": false, "note": "Drive-up $3/hour or $25/day; reserved from $20/day. Free ADA shuttle." },
+    { "cityId": "us-ct-newhaven", "airport": "HVN", "mode": "parking", "name": "Park & Ride, Long Wharf Garage", "fare": 17, "currency": "USD", "per": "day", "minutes": null, "frequency": "shuttle at :00 and :30", "source": "https://parkhvn.com/", "read": "2026-10-02", "confirmed": true, "taxIncluded": false, "note": "Reserved only, from $17/day; not available for Tuesday/Wednesday entries." },
+    { "cityId": "us-ct-newhaven", "airport": "JFK", "mode": "shuttle", "name": "GO Airport Shuttle shared van New Haven to JFK", "fare": 79, "currency": "USD", "per": "person", "minutes": null, "frequency": null, "source": "https://gowithus.com/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "The figure SLATE already keeps in air.ts ('from $79'). On 2026-10-02 goairportshuttle.com redirected to gowithus.com, whose homepage gives no route fares (booking tool only); not re-confirmed." },
+    { "cityId": "us-ct-newhaven", "airport": "LGA", "mode": "shuttle", "name": "GO Airport Shuttle shared van New Haven to LaGuardia", "fare": 79, "currency": "USD", "per": "person", "minutes": null, "frequency": null, "source": "https://gowithus.com/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "As for JFK; not re-confirmed." },
+    { "cityId": "us-ct-newhaven", "airport": "JFK", "mode": "transit", "name": "Metro-North New Haven Line to Grand Central, then subway/LIRR + AirTrain", "fare": null, "currency": "USD", "per": "person", "minutes": null, "frequency": null, "source": "https://flytweed.com/ground-transportation/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Route only; the Metro-North New Haven-Grand Central fare was not read. Onward legs as the us-ny-newyork JFK/LGA rows." },
+    { "cityId": "us-ct-newhaven", "airport": "BDL", "mode": "transit", "name": "Amtrak / CTrail Hartford Line New Haven to Windsor Locks, then CT Transit Route 24 bus", "fare": null, "currency": "USD", "per": "person", "minutes": 57, "frequency": "train about every 4 hours (per search); Route 24 every 20 minutes 4:10am-12:30am, weekdays only", "source": "https://trainsinthevalley.org/how-to-get-to-bradley-airport-on-public-transit/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: train $13-30, 57 minutes; Route 24 bus $1.75, no weekend or holiday service. Alternative: CT Transit Bradley Flyer from downtown Hartford, $1.75, about hourly, 7 days." },
+
+    { "cityId": "ca-on-toronto", "airport": "YYZ", "mode": "transit", "name": "UP Express Union Station to Pearson, single ticket", "fare": 12.35, "currency": "CAD", "per": "person", "minutes": 28, "frequency": null, "source": "https://www.upexpress.com/en/fares", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Adult 13-64. Fares by distance. 28 minutes from https://www.upexpress.com/en/schedules. Frequency not on the pages read (widely given as every 15 minutes; not confirmed)." },
+    { "cityId": "ca-on-toronto", "airport": "YYZ", "mode": "transit", "name": "UP Express Union Station to Pearson, PRESTO or credit-card tap", "fare": 9.25, "currency": "CAD", "per": "person", "minutes": 28, "frequency": null, "source": "https://www.upexpress.com/en/ways-to-pay/presto-fares", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Adult." },
+    { "cityId": "ca-on-toronto", "airport": "YYZ", "mode": "transit", "name": "TTC 900 Airport Express bus from Kipling Station (Line 2)", "fare": 3.3, "currency": "CAD", "per": "person", "minutes": 23, "frequency": "about 5:30am-2am Mon-Sat, 8:15am-2:15am Sunday", "source": "https://www.ttc.ca/riding-the-ttc/Service-to-the-airport/Toronto-Pearson-International-Airport", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Single TTC fare: $3.30 PRESTO/credit tap, $3.35 cash (https://www.ttc.ca/Fares-and-passes). Travel time 20-25 minutes (23 is the midpoint). Route 952 Lawrence West: same fare, about 75 minutes, weekday peaks only (6-9am, 3-7pm)." },
+    { "cityId": "ca-on-toronto", "airport": "YYZ", "mode": "taxi", "name": "Airport taxi/limo flat rate to downtown (GTAA zone tariff)", "fare": null, "currency": "CAD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.torontopearson.com/en/transportation/taxis-and-limos", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "GTAA sets zone flat rates for licensed airport taxis and limos; the official zone table could not be read (bot challenge). Search summaries give $60-75 to downtown; not recorded as a figure." },
+    { "cityId": "ca-on-toronto", "airport": "YYZ", "mode": "taxi", "name": "Pearson Airport Limousine pre-booked flat rate, downtown (private taxi / sedan)", "fare": 100, "currency": "CAD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.pearsonairportlimousine.com/downtown-toronto-flat-rates/", "read": "2026-10-02", "confirmed": true, "taxIncluded": false, "note": "Operator's own page. Plus 13% HST, 15% mandatory gratuity, $15 GTAA airport pickup fee; taxi van $115, SUV $155. 407 ETR tolls extra. Not the GTAA rank tariff." },
+    { "cityId": "ca-on-toronto", "airport": "YYZ", "mode": "parking", "name": "Daily Park (Terminal 1 / Terminal 3)", "fare": 42, "currency": "CAD", "per": "day", "minutes": null, "frequency": null, "source": "https://parkingguidehub.com/toronto-pearson-airport-parking/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: $42 daily max, $235 weekly max first 7 days. Express Park $59/day." },
+    { "cityId": "ca-on-toronto", "airport": "YYZ", "mode": "parking", "name": "Value Park Garage", "fare": 32, "currency": "CAD", "per": "day", "minutes": null, "frequency": "Terminal Link train, 6-12 minutes to T1/T3", "source": "https://www.torontopearson.com/en/transportation-and-parking/parking/value-park-garage", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary of the blocked official page: $32/day, $160 weekly max first 7 days. Value Park Lot about $24-25/day." },
+
+    { "cityId": "ca-bc-vancouver", "airport": "YVR", "mode": "transit", "name": "Canada Line YVR-Airport to downtown, weekday before 6:30pm (2 zones + YVR AddFare), cash/contactless", "fare": 11.6, "currency": "CAD", "per": "person", "minutes": null, "frequency": null, "source": "https://www.translink.ca/transit-fares/pricing-and-fare-zones", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Derived from the page: 2-zone cash/contactless $5.10 + $6.50 YVR Airport AddFare (fares rose ~5% on 1 July 2026). Compass stored value: $4.20 + $6.50 = $10.70. After 6:30pm weekdays and all weekend, 1-zone: $3.50 + $6.50 = $10.00 ($2.85 + $6.50 = $9.35 stored value). That YVR to downtown crosses 2 zones is SLATE's reading, not stated on the page. AddFare applies at all times to journeys starting at YVR-Airport, Sea Island Centre or Templeton; monthly-pass holders exempt. Run time not read." },
+    { "cityId": "ca-bc-vancouver", "airport": "YVR", "mode": "taxi", "name": "YVR taxi flat fare, Zone 208 (Downtown / Canada Place)", "fare": 46, "currency": "CAD", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.vancouvertourism.org/yvr-to-downtown/", "read": "2026-10-02", "confirmed": false, "taxIncluded": true, "note": "Search summary: $39.90 before GST, $42 with GST, $46 with GST and the $4 Passenger Load / premium location charge; same as air.ts. The Passenger Transportation Board page (https://www.ptboard.bc.ca/rule-9-common-rate-metro-vancouver, confirmed) sets YVR flat fare zones ($24-$47 with GST in Vancouver zones), the $4.00 premium location charge, and the meter: $3.75 flag for the first 45.95 m, $0.10 per 45.95 m (~$2.18/km), $0.10 per 9.25 s waiting." },
+    { "cityId": "ca-bc-vancouver", "airport": "YVR", "mode": "parking", "name": "Value Long Term lot", "fare": 31, "currency": "CAD", "per": "day", "minutes": null, "frequency": null, "source": "https://parkingguidehub.com/vancouver-airport-yvr-parking/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: $4.50/hr, $31 daily, $165 weekly. jetSet $36/day." },
+    { "cityId": "ca-bc-vancouver", "airport": "YVR", "mode": "parking", "name": "Terminal Parkade", "fare": 67.75, "currency": "CAD", "per": "day", "minutes": null, "frequency": null, "source": "https://parkingguidehub.com/vancouver-airport-yvr-parking/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: first 30 minutes free, then $14.75 per half hour (as given; worth checking), $67.75 daily." },
+
+    { "cityId": "gb-eng-london", "airport": "LHR", "mode": "transit", "name": "Heathrow Express, on-the-day single, Standard", "fare": 26, "currency": "GBP", "per": "person", "minutes": 15, "frequency": "every 15 minutes (4 trains an hour)", "source": "https://www.heathrowexpress.com/", "read": "2026-10-02", "confirmed": true, "taxIncluded": true, "note": "Paddington to T2&3 15 min, T5 +6 min. Advance single from £10 (30+ days ahead); same-day return £30; return £42; Premier+ single £32. Children 15 and under free in Standard with a paying adult. Same as air.ts." },
+    { "cityId": "gb-eng-london", "airport": "LHR", "mode": "transit", "name": "Elizabeth line, Zone 1 to Heathrow, pay as you go", "fare": 15.5, "currency": "GBP", "per": "person", "minutes": null, "frequency": null, "source": "https://www.headforpoints.com/2025/12/13/tfl-hikes-elizabeth-line-fares-to-heathrow/", "read": "2026-10-02", "confirmed": false, "taxIncluded": true, "note": "Search summary: £15.50 flat at all times from 1 March 2026 (was £13.90); Zone 1-6 daily cap £16.30. tfl.gov.uk returned 403." },
+    { "cityId": "gb-eng-london", "airport": "LHR", "mode": "transit", "name": "Piccadilly line, Zone 1 to Heathrow, pay as you go", "fare": 5.9, "currency": "GBP", "per": "person", "minutes": null, "frequency": null, "source": "https://www.businesstraveller.com/business-travel/all-heathrow-zone-1-tube-and-elizabeth-line-fares-rise-to-peak-rate/", "read": "2026-10-02", "confirmed": false, "taxIncluded": true, "note": "Search summary: always charged at the peak rate, £5.90 from March 2026 (was £5.80)." },
+    { "cityId": "gb-eng-london", "airport": "LHR", "mode": "taxi", "name": "Licensed black cab, metered, Heathrow to central London", "fare": null, "currency": "GBP", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.thetravelmagazine.net/heathrow-taxi-prices-2026-how-much-should-you-pay/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary of TfL's 2026 fare card: minimum fare £4.40 from 25 April 2026; £1.60 extra from a Heathrow rank; £6 extra for a Heathrow terminal drop-off; typical Heathrow-central London £70-£120. Tariff 1 Mon-Fri 05:00-20:00; Tariff 2 Mon-Fri 20:00-22:00 and weekends 05:00-22:00." },
+    { "cityId": "gb-eng-london", "airport": "LHR", "mode": "parking", "name": "Heathrow Short Stay, on the day", "fare": 98, "currency": "GBP", "per": "day", "minutes": null, "frequency": null, "source": "https://www.heathrow.com/transport-and-directions/heathrow-parking/heathrow-short-stay-parking", "read": "2026-10-02", "confirmed": true, "taxIncluded": true, "note": "From 6 January 2026: 0-29 min £8.00; 30-44 £12.50; 45-59 £15.50; 1-2 h £20; 2-3 h £24; 3-4 h £28; 4-5 h £35; 5-6 h £44; 6-9 h £63; 9-12 h £78; 12-24 h £98; each further 24 h £98. Pre-booked online prices are lower. Long Stay not read (search: ~£46.80 first day)." },
+    { "cityId": "gb-eng-london", "airport": "LHR", "mode": "parking", "name": "Terminal forecourt drop-off charge", "fare": 7, "currency": "GBP", "per": "vehicle", "minutes": 10, "frequency": null, "source": "https://airportdropoffcharges.co.uk/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: £7 for 10 minutes." },
+
+    { "cityId": "gb-eng-london", "airport": "LGW", "mode": "transit", "name": "Gatwick Express, London Victoria, walk-up single", "fare": 20.5, "currency": "GBP", "per": "person", "minutes": null, "frequency": null, "source": "https://freetoursbyfoot.com/gatwick-express-to-london/", "read": "2026-10-02", "confirmed": false, "taxIncluded": true, "note": "Search summary: £20.50 online anytime single, £23 at the station, £24 contactless, advance from £14.90. gatwickexpress.com returned 403." },
+    { "cityId": "gb-eng-london", "airport": "LGW", "mode": "transit", "name": "Thameslink / Southern to London Bridge", "fare": null, "currency": "GBP", "per": "person", "minutes": 42, "frequency": null, "source": "https://www.omio.co.uk/trains/gatwick-airport/london-bridge-t0pbq", "read": "2026-10-02", "confirmed": false, "taxIncluded": true, "note": "Search summary: average 42 min, fastest 29; singles roughly £12-18 off-peak, £18-22 peak (range, not recorded as a fare)." },
+    { "cityId": "gb-eng-london", "airport": "LGW", "mode": "taxi", "name": "Black cab / taxi, Gatwick to central London (metered)", "fare": null, "currency": "GBP", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.welcomepickups.com/london/gatwick-airport-taxi/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Metered, no set fare; search summary says £90-£120 typical daytime." },
+    { "cityId": "gb-eng-london", "airport": "LGW", "mode": "parking", "name": "Gatwick official parking (Short/Mid/Long Stay, valet, robotic)", "fare": null, "currency": "GBP", "per": "day", "minutes": null, "frequency": "Long Stay 10-12 min free transfer", "source": "https://www.gatwickairport.com/parking.html", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "Products and walk/transfer times read; prices are quote-only, not published on the page. Short Stay 4-min walk, Mid Stay 6-min walk." },
+    { "cityId": "gb-eng-london", "airport": "LGW", "mode": "parking", "name": "Terminal forecourt drop-off charge", "fare": 10, "currency": "GBP", "per": "vehicle", "minutes": 10, "frequency": null, "source": "https://airportdropoffcharges.co.uk/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: raised to £10 for 10 minutes in March 2026." },
+
+    { "cityId": "gb-eng-london", "airport": "STN", "mode": "transit", "name": "Stansted Express to London Liverpool Street", "fare": 21.9, "currency": "GBP", "per": "person", "minutes": 48, "frequency": "every 15 minutes during the day, 7 days a week", "source": "https://www.stanstedexpress.com/", "read": "2026-10-02", "confirmed": false, "taxIncluded": true, "note": "Minutes, frequency and 'advance from £9.90' read on the operator's homepage (confirmed). The £21.90 standard single is from a search summary (not confirmed)." },
+    { "cityId": "gb-eng-london", "airport": "STN", "mode": "shuttle", "name": "National Express coach Stansted to London", "fare": 7, "currency": "GBP", "per": "person", "minutes": 45, "frequency": "up to every 9 minutes", "source": "https://www.nationalexpress.com/en/destinations/london/stansted-to-london", "read": "2026-10-02", "confirmed": false, "taxIncluded": true, "note": "Search summary: from £7 one-way, 'as little as 45 minutes'." },
+    { "cityId": "gb-eng-london", "airport": "STN", "mode": "parking", "name": "Stansted Long Stay (pre-book)", "fare": 59.99, "currency": "GBP", "per": "vehicle", "minutes": 7, "frequency": null, "source": "https://www.stanstedairport.com/parking/", "read": "2026-10-02", "confirmed": true, "taxIncluded": true, "note": "'From' price for an 8-day stay, not a day rate. Others: Mid Stay from £64.99 (8 days, turn-up allowed), Short Stay from £74.99 (7 days), Meet & Greet from £79 (8 days), JetParks from £58.99 (8 days)." },
+    { "cityId": "gb-eng-london", "airport": "STN", "mode": "parking", "name": "Terminal forecourt drop-off charge", "fare": 10, "currency": "GBP", "per": "vehicle", "minutes": 15, "frequency": null, "source": "https://airportdropoffcharges.co.uk/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: £10 for 15 minutes from March 2026; overstaying 15-30 minutes £28." },
+
+    { "cityId": "ie-dublin", "airport": "DUB", "mode": "shuttle", "name": "Dublin Express coach (782/783/784) to city", "fare": 9, "currency": "EUR", "per": "person", "minutes": 14, "frequency": "every 7.5 minutes; first from T1 03:05, last 00:35", "source": "https://www.dublinexpress.ie/dublin-city/dublin-airport-to-dublin-city", "read": "2026-10-02", "confirmed": true, "taxIncluded": true, "note": "From €9 one-way online; fastest 14 minutes. Two 20 kg bags + soft hand luggage included. Search summary gives city-to-airport €7 adult, €2.50 child (not confirmed)." },
+    { "cityId": "ie-dublin", "airport": "DUB", "mode": "shuttle", "name": "Aircoach 700 to city centre", "fare": 6, "currency": "EUR", "per": "person", "minutes": 30, "frequency": "up to every 15 minutes, 24/7", "source": "https://www.aircoach.ie/dublin", "read": "2026-10-02", "confirmed": true, "taxIncluded": true, "note": "Online single €6, return €8. 20-40 minutes (30 is the midpoint). Fare at the stop not given." },
+    { "cityId": "ie-dublin", "airport": "DUB", "mode": "transit", "name": "Dublin Bus 16 / 41 (TFI 90 Minute Fare)", "fare": 2, "currency": "EUR", "per": "person", "minutes": null, "frequency": null, "source": "https://about.leapcard.ie/about/fares-discounts", "read": "2026-10-02", "confirmed": true, "taxIncluded": true, "note": "Adult Leap €2.00; cash €2.40. Zone 1 daily cap €6.00. That routes 16 (24-hour) and 41 serve the airport is from a search summary." },
+    { "cityId": "ie-dublin", "airport": "DUB", "mode": "taxi", "name": "Taxi, NTA national maximum fare (metered)", "fare": null, "currency": "EUR", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.transportforireland.ie/fares/taxi-fares/", "read": "2026-10-02", "confirmed": true, "taxIncluded": true, "note": "From 1 December 2024, no 2026 change shown. Standard (8am-8pm Mon-Sat): €4.40 initial, then €1.32/km or €0.47/min for the next 15 km; €1.72/km or €0.61/min beyond (beyond-tier from search). Premium (8pm-8am, Sunday): €5.40 initial, €1.81/km or €0.64/min. Special (00-04 Sat/Sun, Christmas/New Year): €5.40, €2.20/km or €0.78/min. Pre-booking fee €3 (search). Airport-to-city fare via the TFI estimator only." },
+    { "cityId": "ie-dublin", "airport": "DUB", "mode": "parking", "name": "Short Term car park", "fare": 50, "currency": "EUR", "per": "day", "minutes": null, "frequency": null, "source": "https://www.chill.ie/blog/dublin-airport-parking-guide/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary, conflicting: €4 first hour, €6 each hour after, €50 daily max; another source €3 / €4.50 / €40." },
+    { "cityId": "ie-dublin", "airport": "DUB", "mode": "parking", "name": "Express Red (long term)", "fare": 25, "currency": "EUR", "per": "day", "minutes": null, "frequency": "shuttle every 10 minutes", "source": "https://www.chill.ie/blog/dublin-airport-parking-guide/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: drive-up €25/day. Holiday Blue €20/day drive-up, 15-min shuttle." },
+
+    { "cityId": "mx-cdmx-mexicocity", "airport": "MEX", "mode": "transit", "name": "Metrobús Line 4 airport service (from Amajac on Reforma to T1 and T2)", "fare": 30, "currency": "MXN", "per": "person", "minutes": null, "frequency": "Mon-Sat 04:30-24:00; Sun and holidays 05:00-24:00", "source": "https://www.infobae.com/mexico/2026/07/29/viaja-al-aicm-por-30-pesos-horarios-paradas-y-costos-de-la-linea-l4-del-metrobus-que-te-lleva-de-reforma-al-aeropuerto-sin-trafico/", "read": "2026-10-02", "confirmed": false, "taxIncluded": true, "note": "Search summary. $30 vs $6 on other Metrobús lines; Tarjeta de Movilidad Integrada or contactless. Free for people with disabilities, under-5s and INAPAM holders. metrobus.cdmx.gob.mx refused connection." },
+    { "cityId": "mx-cdmx-mexicocity", "airport": "MEX", "mode": "transit", "name": "Metro Line 5, Terminal Aérea station (by T1)", "fare": 5, "currency": "MXN", "per": "person", "minutes": null, "frequency": null, "source": "https://www.infobae.com/mexico/2025/12/26/metro-cdmx-clara-brugada-confirma-la-tarifa-para-2026/", "read": "2026-10-02", "confirmed": false, "taxIncluded": true, "note": "Search summary: Metro fare held at 5 pesos for 2026. metro.cdmx.gob.mx refused connection." },
+    { "cityId": "mx-cdmx-mexicocity", "airport": "MEX", "mode": "taxi", "name": "Authorized airport taxi (taxi autorizado), prepaid by zone at arrivals booths", "fare": null, "currency": "MXN", "per": "vehicle", "minutes": null, "frequency": null, "source": "https://www.aicm.com.mx/pasajeros/servicios/prestadores-de-servicios/transportes/taxis", "read": "2026-10-02", "confirmed": true, "taxIncluded": null, "note": "AICM's page lists the authorized companies (TaxiRide, Yellow Cab, Sitio 300, Nueva Imagen, Confort, Casadey, Porto Taxi, Prho Taxi, T&M, PSTA, Aerotaxi) but publishes no zone fares. Search summaries: 200-1,400 MXN by zone and company; Historic Center ~260-320, Roma Norte ~300-380, Polanco ~350-420 (Sitio 300 465; Porto Taxi up to 950). Not recorded as figures." },
+    { "cityId": "mx-cdmx-mexicocity", "airport": "MEX", "mode": "parking", "name": "AICM Terminal 1 national parking", "fare": 391, "currency": "MXN", "per": "day", "minutes": null, "frequency": null, "source": "https://www.eluniversal.com.mx/autopistas/esto-cuesta-el-estacionamiento-del-aeropuerto-internacional-de-la-cdmx/", "read": "2026-10-02", "confirmed": false, "taxIncluded": null, "note": "Search summary: 1-30 min $30, 31-45 min $45, 46-60 min $60 per full hour; 7-24 h maximum $391; valet $61 plus time; lost ticket $442 plus time. Alternative official lot at Estadio GNP: $40/hour, $350/day max, free AICM bus to T2." }
+  ],
+  "rebooking": [
+    {
+      "jurisdiction": "EU (Regulation (EC) No 261/2004)",
+      "rule": "Applies to flights departing an EU airport, and to flights arriving in the EU on an EU carrier. Cancellation: Article 5. Long delay: Article 6. Denied boarding: Article 4.",
+      "choices": {
+        "trigger": "Cancellation; or departure delay of 5 hours or more (Art. 6(1)(iii), refund option only); or denied boarding.",
+        "options": [
+          "(a) reimbursement within seven days of the full cost of the ticket at the price paid, for parts not made and parts made if the flight no longer serves its purpose, plus where relevant a return flight to the first point of departure",
+          "(b) re-routing, under comparable transport conditions, to the final destination at the earliest opportunity",
+          "(c) re-routing, under comparable transport conditions, to the final destination at a later date at the passenger's convenience, subject to availability of seats"
+        ]
+      },
+      "compensation": {
+        "byDistance": [
+          { "upToKm": 1500, "amount": 250, "currency": "EUR" },
+          { "fromKm": 1500, "upToKm": 3500, "amount": 400, "currency": "EUR", "note": "also all intra-EU flights over 1,500 km" },
+          { "fromKm": 3500, "amount": 600, "currency": "EUR" }
+        ],
+        "halvedWhenReroutedArrivingWithin": { "upTo1500km": "2 hours", "1500to3500km": "3 hours", "over3500km": "4 hours" },
+        "cancellationNoticeExemptions": [
+          "told at least 14 days before departure: no compensation",
+          "told 7-14 days before and re-routed to depart no more than 2 hours early and arrive less than 4 hours late: none",
+          "told under 7 days before and re-routed to depart no more than 1 hour early and arrive less than 2 hours late: none"
+        ],
+        "delay": "Arrival 3 hours or more late carries the same compensation (CJEU Sturgeon, C-402/07 and C-432/07, 2009); not in the EU text itself.",
+        "extraordinaryCircumstances": "No compensation if the carrier proves extraordinary circumstances that could not have been avoided even if all reasonable measures had been taken.",
+        "paidAs": "cash, bank transfer or cheque; travel vouchers only with the passenger's signed agreement"
+      },
+      "care": {
+        "delayThresholds": "2 hours or more for flights up to 1,500 km; 3 hours or more for 1,500-3,500 km and intra-EU over 1,500 km; 4 hours or more otherwise. Always for cancellations.",
+        "provided": [
+          "meals and refreshments in reasonable relation to the waiting time",
+          "hotel accommodation where a stay of one or more nights becomes necessary",
+          "transport between the airport and the accommodation",
+          "two telephone calls, telex or fax messages, or e-mails"
+        ],
+        "extraordinaryCircumstances": "Care is still owed."
+      },
+      "source": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32004R0261",
+      "read": "2026-10-02",
+      "confirmed": true,
+      "note": "Amounts, Art. 8 choices and Art. 9 care read from EUR-Lex and the parallel UK text. A revision was agreed by Parliament and Council on 15 June 2026 and approved by MEPs on 7 July 2026 (646-12), reportedly keeping the 3-hour threshold and the €250/€400/€600 grid (search summaries, confirmed:false); its in-force date and other changes are worth checking."
+    },
+    {
+      "jurisdiction": "UK (retained Regulation 261/2004 as amended, 'UK261')",
+      "rule": "Applies to flights departing a UK airport, and to flights arriving in the UK on a UK or EU carrier. Same structure as the EU text, amounts in sterling.",
+      "choices": {
+        "trigger": "Cancellation; departure delay of 5 hours or more (refund option); denied boarding.",
+        "options": [
+          "(a) reimbursement within seven days of the full cost of the ticket at the price at which it was bought",
+          "(b) re-routing, under comparable transport conditions, to the final destination at the earliest opportunity",
+          "(c) re-routing, under comparable transport conditions, to the final destination at a later date at the passenger's convenience, subject to availability of seats"
+        ]
+      },
+      "compensation": {
+        "byDistance": [
+          { "upToKm": 1500, "amount": 220, "currency": "GBP" },
+          { "fromKm": 1500, "upToKm": 3500, "amount": 350, "currency": "GBP" },
+          { "fromKm": 3500, "amount": 520, "currency": "GBP" }
+        ],
+        "halvedWhenReroutedArrivingWithin": { "upTo1500km": "2 hours", "1500to3500km": "3 hours", "over3500km": "4 hours" },
+        "delay": "Art. 6(3): 'In case of a delay of three hours or more in reaching the final destination, the passengers concerned have the right to compensation laid down in Article 7.' Inserted 14 December 2023 by the Aviation (Consumers) (Amendment) Regulations 2023 (SI 2023/1370), so the UK has the Sturgeon rule in statute.",
+        "cancellationNoticeExemptions": "As the EU: 14 days; 7-14 days with re-routing (depart ≤2 h early, arrive <4 h late); under 7 days with re-routing (depart ≤1 h early, arrive <2 h late).",
+        "extraordinaryCircumstances": "No compensation if the carrier proves extraordinary circumstances that could not have been avoided even if all reasonable measures had been taken."
+      },
+      "care": {
+        "delayThresholds": "2 hours (≤1,500 km), 3 hours (1,500-3,500 km), 4 hours (otherwise); hotel when the new departure is at least the day after.",
+        "provided": [
+          "meals and refreshments in reasonable relation to the waiting time",
+          "hotel accommodation where one or more nights' stay becomes necessary",
+          "transport between the airport and the accommodation",
+          "two telephone calls, telex or fax messages, or e-mails"
+        ]
+      },
+      "source": "https://www.legislation.gov.uk/eur/2004/261/article/7",
+      "read": "2026-10-02",
+      "confirmed": true,
+      "note": "Articles 5, 6, 7, 8 and 9 read on legislation.gov.uk (each at /eur/2004/261/article/N)."
+    },
+    {
+      "jurisdiction": "US (DOT automatic refund rule, 14 CFR Part 260, final rule April 2024; FAA Reauthorization Act of 2024)",
+      "rule": "A passenger is owed a refund when the airline cancels or significantly changes a flight and the passenger does not accept the alternative transportation or travel credit offered. There is no federal cash compensation for delays or cancellations.",
+      "choices": {
+        "options": [
+          "accept the airline's rebooking or alternative transportation",
+          "accept a travel credit or voucher (only if the passenger chooses it)",
+          "decline both and receive an automatic cash refund to the original form of payment"
+        ],
+        "significantChange": [
+          "domestic flight departing 3 or more hours earlier or arriving 3 or more hours later than scheduled",
+          "international flight departing 6 or more hours earlier or arriving 6 or more hours later than scheduled",
+          "change of departure or arrival airport",
+          "more connections than originally scheduled",
+          "downgrade to a lower class of service",
+          "connections at different airports, or a less accessible aircraft or connecting airport for a passenger with a disability"
+        ],
+        "refundTiming": "within 7 business days for credit-card purchases; within 20 calendar days for other forms of payment",
+        "refundForm": "cash or the original form of payment, not vouchers unless the passenger chooses them"
+      },
+      "compensation": {
+        "delayOrCancellation": null,
+        "note": "None required by federal rule. DOT withdrew in 2025 the proposed rule that would have required compensation (from $200) for controllable disruptions (search summary, confirmed:false). Compensation is owed only for involuntary denied boarding (14 CFR 250, not researched here).",
+        "bagFee": "Checked-bag fee refunded if a mishandled-bag report is filed and the bag is not delivered within 12 hours of a domestic flight's arrival at the gate, or 15-30 hours for an international flight depending on flight length.",
+        "ancillary": "Fees for extra services paid for and not provided (wifi, seat selection, inflight entertainment) are refunded."
+      },
+      "care": {
+        "required": null,
+        "note": "No federal requirement for meals or hotels. Large US airlines' own commitments are on DOT's Airline Customer Service Dashboard (not read here)."
+      },
+      "effective": "Key automatic-refund provisions from 16 May 2024 (FAA Reauthorization Act); remaining provisions from 28 October 2024.",
+      "source": "https://www.transportation.gov/briefing-room/what-airline-passengers-need-know-about-dots-automatic-refund-rule",
+      "read": "2026-10-02",
+      "confirmed": false,
+      "note": "transportation.gov refunds page returned 403 and ecfr.gov redirected to a block page; all of this is from search summaries of DOT's own pages. Rules are well established but not read first-hand on 2026-10-02."
+    },
+    {
+      "jurisdiction": "Canada (Air Passenger Protection Regulations, SOR/2019-150)",
+      "rule": "Flights to, from and within Canada. Obligations depend on whether the disruption is within the airline's control, within its control but required for safety, or outside its control.",
+      "choices": {
+        "rebookingLargeCarrier": [
+          "the next available flight operated by the airline or a partner, from the original airport, on a reasonable route",
+          "if that would not depart within 9 hours of the original departure: a flight on any airline, including non-partners, from the same airport",
+          "if nothing can be found within 48 hours (outside-control disruptions): any airline, from any nearby airport"
+        ],
+        "rebookingSmallCarrier": "the next available flight operated by the airline or a partner from the same airport",
+        "refund": "If the alternative is unacceptable to the passenger, or the trip no longer serves its purpose, a refund of the unused portion (and the used portion if no purpose), to the original form of payment; for within-control disruptions, the passenger who declines the alternative also gets the minimum compensation $400 (large) / $125 (small).",
+        "categories": {
+          "withinControl": "rebooking or refund, standards of treatment, compensation",
+          "withinControlSafety": "rebooking or refund, standards of treatment, no compensation",
+          "outsideControl": "rebooking or refund only"
+        }
+      },
+      "compensation": {
+        "trigger": "Disruption within the airline's control and not required for safety, notified less than 14 days before departure, arrival 3 or more hours late.",
+        "largeCarrier": [ { "arrivalDelayHours": "3-6", "amount": 400, "currency": "CAD" }, { "arrivalDelayHours": "6-9", "amount": 700, "currency": "CAD" }, { "arrivalDelayHours": "9+", "amount": 1000, "currency": "CAD" } ],
+        "smallCarrier": [ { "arrivalDelayHours": "3-6", "amount": 125, "currency": "CAD" }, { "arrivalDelayHours": "6-9", "amount": 250, "currency": "CAD" }, { "arrivalDelayHours": "9+", "amount": 500, "currency": "CAD" } ],
+        "largeCarrierDefinition": "transported 2 million or more passengers worldwide in each of the two preceding years (Air Canada, WestJet, Porter, Flair, Air Transat, Sunwing per CTA)",
+        "form": "money (cash, cheque, transfer) by default; vouchers only if the passenger chooses and they are worth more",
+        "claim": "file with the airline within one year; airline has 30 days to pay or explain (search summary)"
+      },
+      "care": {
+        "trigger": "Within-control disruptions (including safety-related) after a 2-hour wait.",
+        "provided": [ "food and drink in reasonable quantities", "access to a means of communication", "hotel or comparable accommodation and transport to it when an overnight wait is needed" ],
+        "note": "Care thresholds from the regulation as commonly stated; the CTA page fetched did not quote them."
+      },
+      "source": "https://protection-passager-passenger.otc-cta.gc.ca/en/refunds-and-compensation/flight-delays-cancellations-rebooking-refunds-compensation",
+      "read": "2026-10-02",
+      "confirmed": true,
+      "note": "Categories, rebooking tiers, compensation table and money-by-default read on the CTA's own page. Refund detail, claim deadline and care thresholds are not quoted from it (worth checking). Amending regulations (Canada Gazette I, 21 December 2024) would drop the three categories in favour of compensation unless 'exceptional circumstances', with the burden on the airline; their entry into force was not confirmed by 2026-10-02."
+    },
+    {
+      "jurisdiction": "Mexico (Ley de Aviación Civil, art. 47 Bis, with art. 52)",
+      "rule": "Domestic and international flights by Mexican concessionaires/permit holders, for delays and cancellations attributable to the airline.",
+      "choices": {
+        "trigger": "Cancellation attributable to the airline, or delay over 4 hours (treated as cancellation).",
+        "options": [
+          "refund of the ticket price (or of the unflown portion) plus compensation of at least 25% of the ticket price",
+          "transport on the first available flight, with meals, lodging when an overnight stay is needed, and ground transport to and from the lodging",
+          "transport at a later date convenient to the passenger, plus compensation of at least 25% of the ticket price"
+        ]
+      },
+      "compensation": {
+        "delayTiers": [
+          { "delay": "over 1 hour, under 4 hours", "owed": "compensation under the airline's own published policy: discounts on future flights, or food and non-alcoholic drinks" },
+          { "delay": "over 2 hours, under 4 hours", "owed": "food, drinks, access to phone calls and email, and a partial compensation (vouchers or refund) of not less than 7.5% of the ticket price" },
+          { "delay": "over 4 hours, or cancellation", "owed": "the cancellation options above, with compensation of at least 25% of the ticket or unused segment" }
+        ],
+        "notice": "The airline must notify schedule changes by phone, email, text or other electronic means at least 24 hours in advance (art. 47 Bis frac. III).",
+        "overbooking": "Next available flight at no cost plus at least 25% of the ticket price (Profeco)."
+      },
+      "care": {
+        "provided": [ "food and non-alcoholic drinks (delays over 1 hour, per airline policy)", "phone and email access (over 2 hours)", "lodging and ground transport if an overnight stay is needed on the first-available-flight option" ]
+      },
+      "source": "https://www.gob.mx/profeco/prensa/profeco-recuerda-a-las-personas-consumidoras-sus-derechos-en-caso-de-retrasos-o-cancelaciones-de-vuelos?idiom=es-MX",
+      "read": "2026-10-02",
+      "confirmed": true,
+      "note": "Profeco (federal consumer authority) page read for the tiers, the 25% minimum and the overbooking rule. The 7.5% figure and fraction numbering come from a non-official mirror of the law text (https://leyes-mx.com/ley_de_aviacion_civil/47%20Bis.htm, confirmed:false); the official DOF/diputados.gob.mx text was not read."
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "Official run times for: Canada Line YVR to Waterfront, Elizabeth line and Piccadilly line to Heathrow, Gatwick Express, subway/LIRR + AirTrain to JFK, Q70 to LGA, Metrobús L4 and Metro L5 to AICM.",
+      "UP Express frequency (operator pages read gave none).",
+      "GTAA's official Pearson taxi/limo zone flat-rate table (torontopearson.com bot challenge).",
+      "NJ airport taxi flat-rate schedule from EWR into Manhattan.",
+      "LGA bus routes M60 SBS, Q48, Q72 and the fifth route: fares and headways.",
+      "Rideshare airport fees at YYZ, YVR, LHR, LGW, STN, DUB and MEX.",
+      "Gatwick official parking day rates (quote-only on the site).",
+      "Heathrow Long Stay day rate on Heathrow's own page.",
+      "Dublin Airport official car park rates (official page 404).",
+      "Official AICM zone taxi fares (AICM publishes the company list only).",
+      "GO Airport Shuttle New Haven-JFK/LGA fare on the operator's page (booking tool only after the gowithus.com redirect); New Haven-EWR and New Haven-BDL shared ride fares.",
+      "Metro-North New Haven Line fare to Grand Central.",
+      "CT Transit fare page (certificate error)."
+    ],
+    "worthChecking": [
+      "NJ Transit NY Penn-Newark Airport: MTA says $16.80, a 2026 search summary says $17.25.",
+      "LAX FlyAway $12.75 (LAWA) vs $9.75 (Discover Los Angeles, likely stale).",
+      "LAX rideshare and taxi access fee rising from $4 to $6 (LAX-it) / $12 (terminal) on SkyLink's opening.",
+      "Port Authority for-hire access fee at JFK/LGA $3.50 from 15 March 2026, $4.50 in 2027, $5.00 in 2028; EWR's 2026 figure.",
+      "JFK Long-Term Lot 9: $55 (May 2026 schedule) vs $49 (January 2026).",
+      "YVR AddFare $6.50 (TransLink page, after 1 July 2026 increase) vs the long-standing $5 still quoted elsewhere.",
+      "YVR Terminal Parkade '$14.75 per half hour' looks like a misread; check the hourly rate.",
+      "EU261 revision: political agreement 15 June 2026, EP vote 7 July 2026; check Council adoption, publication and in-force date and any changes to care, rerouting and refund timing.",
+      "Canada APPR amendments (Canada Gazette I, 21 Dec 2024): whether they are now in force and replace the three-category scheme.",
+      "US DOT refund rule text on ecfr.gov (14 CFR 260) once reachable; DOT's 2025-26 deregulatory actions may have altered parts of the 2024 rule.",
+      "Mexico art. 47 Bis 7.5% figure against the official DOF text.",
+      "Dublin Airport short-term daily max (€50 vs €40) and Express Red/Holiday Blue rates on dublinairport.com.",
+      "Dublin taxi tariff: NTA reviews every two years; a late-2026 review may change the €4.40/€1.32 figures.",
+      "AirTrain JFK overnight shutdowns 5-15 October 2026 (replacement buses)."
+    ]
+  }
+}
