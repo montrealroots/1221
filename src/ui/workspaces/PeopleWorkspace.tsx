@@ -16,6 +16,8 @@ import { diningQuote } from '@/engine/systems/dining';
 import { billShare, divorceTerms, marriageCost, marryRefusal } from '@/engine/systems/marriage';
 import { childBenefit, childrenOf, raisingMonth, tryRefusal } from '@/engine/systems/children';
 import { APPS, MATCHES, appPrice } from '@/engine/systems/dating';
+import { adoptRefusal, adoptionRoute, pathCost } from '@/engine/systems/adoption';
+import { Gated } from '@/ui/guide/Guide';
 import { askingRefusal, contactsOf, inviteRefusal, levelOf, moveInRefusal, type Contact, type Invitation } from '@/engine/systems/people';
 
 /** What somebody is to you: who you live with, your partner, who you're seeing, or how near by the hours. */
@@ -208,11 +210,14 @@ function Together({ contact }: { contact: Contact }) {
 
 /** Children, and a child on the way (`systems/children.ts`). */
 function Family() {
-  const { sim } = useGame();
+  const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const kids = childrenOf(person);
-  if (!kids.length && !person.pregnancy) return null;
+  const adopt = useFeature('social.adopt');
   const cur = saveCurrency(sim.universe);
+  const noAdopt = adoptRefusal(sim, person, 'adoption', sim.now);
+  const noSurrogate = adoptRefusal(sim, person, 'surrogacy', sim.now);
+  const route = adoptionRoute(person);
   const money = (c: number) => formatMoney(c, cur, { cents: false });
   const age = (born: number) => Math.floor((sim.now - born) / (365.2425 * MS_DAY));
   return (
@@ -220,6 +225,11 @@ function Family() {
       <div className="col gap-1 small">
         {person.pregnancy && <div>{`A Baby Due ${formatDate(person.pregnancy.due, sim.zone)}`}</div>}
         {kids.map((k) => <div key={k.id}>{`${k.name}, ${age(k.born)}`}</div>)}
+        {person.familyPath && <div>{`${person.familyPath.kind === 'adoption' ? 'Adopting: A Child Expected' : 'A Surrogacy: The Baby Due'} ${formatDate(person.familyPath.arrives, sim.zone)}`}</div>}
+      </div>
+      <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+        <Gated feature="social.adopt" className="btn btn-sm btn-ghost" disabled={Boolean(noAdopt)} title={noAdopt ?? (route ? `${route.agency}, ${route.place}` : adopt.reason)} onClick={() => { if (run('social.adopt', { kind: 'adoption' }).ok) toast('Adoption started.', 'positive'); }}>{noAdopt ? 'Adopt' : `Adopt, ${money(pathCost(sim, person, 'adoption'))}`}</Gated>
+        <Gated feature="social.adopt" className="btn btn-sm btn-ghost" disabled={Boolean(noSurrogate)} title={noSurrogate ?? 'Its costs paid at the start, the child born a pregnancy later.'} onClick={() => { if (run('social.adopt', { kind: 'surrogacy' }).ok) toast('A surrogacy, under way.', 'positive'); }}>{noSurrogate ? 'A Surrogacy' : `A Surrogacy, ${money(pathCost(sim, person, 'surrogacy'))}`}</Gated>
       </div>
     </Panel>
   );

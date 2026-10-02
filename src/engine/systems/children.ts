@@ -16,9 +16,9 @@
  * (\`systems/taxreturn.ts\`). At eighteen a child is grown, and costs and
  * brings nothing more.
  *
- * Not kept: a child's own day, custody and child support after a
- * separation, and childcare beside the cost of raising (which counts it,
- * where the estimate does).
+ * A child may come by adoption or a surrogacy too (`systems/adoption.ts`,
+ * from 2026-10-02). Not kept: a child's own day, and childcare beside the
+ * cost of raising (which counts it, where the estimate does).
  */
 
 import type { Simulation } from '../core/simulation';
@@ -61,7 +61,7 @@ export function tryRefusal(person: Person): string | undefined {
   const c = livesWithPartner(person);
   if (!c) return 'You try for a child with a partner you live with.';
   if (person.pregnancy) return 'A child is on the way.';
-  if (!carrierOf(person, c)) return 'Neither of you can carry a child, and SLATE keeps no adoption or surrogacy yet.';
+  if (!carrierOf(person, c)) return 'Neither of you can carry a child: Adopt, or a surrogacy where the law lets it.';
   return undefined;
 }
 

@@ -41,6 +41,7 @@ import { personalityOf } from './personality';
 import { citizenOf } from './documents';
 import { spouseIncomeFor } from './marriage';
 import { childTaxCredit } from './children';
+import { adoptionCredit } from './adoption';
 import { payeeAccount } from './cash';
 
 export const TAX_SEASON_KIND = 'tax.season';
@@ -465,7 +466,10 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   gainTax = Math.round(gainTax + HOME_TAX.niitRate * Math.min(investment, Math.max(0, taxed + gainLong + gain1250 - usd(HOME_TAX.niitFrom, into))));
   const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
   // The Child Tax Credit (`systems/children.ts`, from 2026-10-01): off the tax, and the refundable part of what's left paid back.
-  const ctc = childTaxCredit(person, year, income + (spouse ?? 0), spouse !== undefined, into);
+  const kids = childTaxCredit(person, year, income + (spouse ?? 0), spouse !== undefined, into);
+  // And the federal adoption credit, for an adoption made final this year (`systems/adoption.ts`, from 2026-10-02).
+  const adopt = adoptionCredit(person, year, income + (spouse ?? 0), into);
+  const ctc = { credit: kids.credit + adopt.credit, refundable: kids.refundable + adopt.refundable };
   const before = federalBefore - foreignCredit + gainTax;
   const offTax = Math.min(Math.max(0, before), ctc.credit);
   const federal = before - offTax - Math.min(ctc.credit - offTax, ctc.refundable);

@@ -43,6 +43,7 @@ import { mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
 import { mayCollide } from './systems/carcare';
 import { buildInspectionFails, weatherDelay } from './systems/construction';
+import { monthsToMatch } from './systems/adoption';
 import { metAtWork } from './systems/people';
 import { mayDivorce } from './systems/marriage';
 import { mayConceive } from './systems/children';
@@ -435,6 +436,18 @@ defineDecider<{ sim: Simulation; car: number }, string>({
     const v = { id: `car-${car}`, modelId: 'us-toyota-camry', jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0 } as OwnedVehicle;
     return !mayBreak(sim, sim.player, v, modelById(v.modelId)!, sim.now, 0.5) ? 'goes' : v.fault!.severe ? 'severe' : 'light';
   },
+});
+
+defineDecider<{ sim: Simulation; at: number }, string>({
+  id: 'social.adopt',
+  decides: 'The months until an agency matches a newborn with an adopter, each at the chance America’s 63% within a year gives; and an adopted child’s name.',
+  drawnIn: 'src/engine/systems/adoption.ts',
+  reads: {
+    at: (o, t) => ({ ...o, at: Math.round(t * 1_000) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), at: seed * 13 }),
+  decide: ({ sim, at }) => String(monthsToMatch(sim, sim.player, 0.63, at)),
 });
 
 defineDecider<{ sim: Simulation; build: number; stage: number }, string>({
