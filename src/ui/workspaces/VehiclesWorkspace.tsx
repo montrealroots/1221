@@ -110,7 +110,7 @@ export function VehiclesWorkspace() {
                     const m = modelById(v.modelId)!;
                     return (
                       <tr key={v.id}>
-                        <td><Open subject={at('vehicle', v.id)}>{m.make} {m.model}</Open><FuelGauge v={v} />{v.deliveredAt !== undefined && v.deliveredAt > sim.now ? <div className="xs dim">{`On Order: It Comes ${formatDate(v.deliveredAt, sim.zone)}`}</div> : null}{v.interior ? <div className="xs dim">{v.interior.parts.map((d) => `${PART_LABEL[d.part]} In ${d.color} ${MATERIAL_LABEL[d.material]}${d.stitching ? `, ${d.stitching} Stitching` : ''}`).join(' · ')}</div> : null}</td>
+                        <td><Open subject={at('vehicle', v.id)}>{m.make} {m.model}</Open><FuelGauge v={v} /><CarSpecs modelId={v.modelId} />{v.deliveredAt !== undefined && v.deliveredAt > sim.now ? <div className="xs dim">{`On Order: It Comes ${formatDate(v.deliveredAt, sim.zone)}`}</div> : null}{v.interior ? <div className="xs dim">{v.interior.parts.map((d) => `${PART_LABEL[d.part]} In ${d.color} ${MATERIAL_LABEL[d.material]}${d.stitching ? `, ${d.stitching} Stitching` : ''}`).join(' · ')}</div> : null}</td>
                         <td><Open subject={at('day', dateKey(v.boughtAt, sim.homeZone))}>{formatDate(v.boughtAt, sim.zone)}</Open>{v.ageAtPurchase ? `, ${v.ageAtPurchase} Years Old` : ', New'}</td>
                         <td className="num mono"><Open subject={at('vehicle', v.id)}>{v.lease ? 'Leased' : inHome(valueOf(v, sim.now), m.currency)}</Open></td>
                         <td className="num mono">{v.lease ? `${money(v.lease.monthly)} A Month, ${v.lease.monthsLeft} Left` : v.loan ? <Open subject={at('vehicle', v.id)}>{money(v.loan.owed)}</Open> : 'None'}</td>
@@ -355,6 +355,15 @@ function RoadsidePanel() {
       </div>
     </Panel>
   );
+}
+
+/** What a car carries, from its maker: seats, cargo and what its tank or battery holds (`specOf`, `capacityOf`), each read by the errands, the shopping and the pump. */
+function CarSpecs({ modelId }: { modelId: string }) {
+  const m = modelById(modelId);
+  const spec = specOf(modelId);
+  const cap = m ? capacityOf(m) : undefined;
+  const bits = [spec?.seats ? `Seats ${spec.seats}` : undefined, spec?.cargoL ? `${Math.round(spec.cargoL)} L Of Cargo` : spec?.bedL ? `A ${Math.round(spec.bedL)} L Bed` : undefined, cap ? `${Math.round(cap.size)} ${cap.unit}${cap.estimated ? ' (Estimate)' : ''}` : undefined].filter(Boolean);
+  return bits.length ? <div className="xs dim">{bits.join(' · ')}</div> : null;
 }
 
 /** Caravans of one's own (`systems/caravans.ts`): bought and kept at a house of one's own, towed behind a car with a towbar its maker rates for it. */

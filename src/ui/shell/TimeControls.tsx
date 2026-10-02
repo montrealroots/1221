@@ -23,6 +23,7 @@ import {
 } from '@/engine/core/time';
 import { PLAN_KIND } from '@/engine/world/plans';
 import { lovedIn } from '@/engine/systems/enjoyment';
+import { shortfallBuy } from '@/engine/systems/hygiene';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { INTEREST_BY_ID } from '@/engine/content/interests';
 import { spokenList } from '@/ui/looks/words';
@@ -507,6 +508,8 @@ function LookAfterMenu() {
       </button>
       {open && (
         <div className="menu" role="menu" aria-label="Look After Yourself">
+          {/* Short of detergent for the washing: bought in place, the cheapest here, where a store's open (`shortfallBuy`). */}
+          {refusals.laundry === 'There isn’t enough laundry detergent at home for it.' && (() => { const buy = shortfallBuy(sim, sim.player, 'laundry-detergent'); return buy ? <button type="button" role="menuitem" className="menu-item" onClick={() => { setOpen(false); if (run('hygiene.buy', { productId: buy.toiletry.id }).ok) toast(`${buy.toiletry.name}, bought.`, 'positive'); }}><span className="menu-item-label">Buy Laundry Detergent</span><span className="menu-item-detail">{`${buy.toiletry.name} · ${formatMoney(buy.price, saveCurrency(sim.universe))}`}</span></button> : null; })()}
           {(Object.keys(LOOKING_AFTER) as LookAfter[]).filter((action) => (action !== 'boat' || boatOf(sim.player)) && (action !== 'mow' || (sim.player.homes ?? []).some((h) => h.facts.features.includes('yard'))) && (action !== 'charter' || charterAt(sim.player.currentLocationId)) && (action !== 'ride' || bikeHere(sim.player)) && (action !== 'trail' || vehiclesOf(sim.player).some((v) => v.soldAt === undefined && kindOf(modelById(v.modelId)!) === 'atv'))).map((action) => {
             const { does } = LOOKING_AFTER[action];
             const label = labelFor(sim, action);

@@ -462,6 +462,8 @@ export function registerLife(sim: Simulation): void {
       if (kitchen) takePortion(person, kitchen.ready);
       else if (action === 'eat' && !spend(s, person, cost, cooks(s, person) ? 'A meal' : 'A meal out', 'food')) throw new CommandError('The payment didn’t go through.');
       if (action === 'order' && !spend(s, person, cost, 'A meal delivered', 'food')) throw new CommandError('The payment didn’t go through.');
+      // The washing's own reason where it fails after the time is spent (from 2026-10-02; until then every failure read as a payment's).
+      if (action === 'laundry' && !detergentFor(s, person, Math.ceil(washableDirty(s, person).length / GARMENTS_PER_LOAD))) throw new CommandError('There isn’t enough laundry detergent at home for it.');
       if (action === 'laundry' && !doLaundry(s, person, s.now)) throw new CommandError('The payment didn’t go through.');
       if (action === 'boat' && !spend(s, person, cost, 'Gas for the boat, at the marina', 'vehicle')) throw new CommandError('The payment didn’t go through.');
       if (action === 'charter' && !spend(s, person, cost, `A boat chartered with its captain, ${charterAt(person.currentLocationId)?.operator ?? ''}`, 'personal')) throw new CommandError('The payment didn’t go through.');

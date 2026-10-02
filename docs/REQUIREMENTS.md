@@ -77,7 +77,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 22c | Cart, collection or delivery, review, pay | Done for clothes, 2026-10-02 | `clothes.basket_add`, `basket_remove`, `checkout`: one payment and one order per retailer, the threshold on the order | Groceries and toiletries in the basket; choosing the card |
 | 22d | Receipt and order record | Partial | `ClothesPurchase`, `Order`; `returned` set once all of an order is back (2026-10-02); the checkout's ledger entry names the retailer and count | Receipt lines as a document |
 | 22e | An unfulfilled order isn't usable | Complete | `at:{kind:'order'}` unreachable; tests/items | In-store pickup of an online order |
-| 22f | Store, use, return, repair, gift, resell | Partial | moves, laundry, return, resale; tests | Repair, gift, refund to the original payment |
+| 22f | Store, use, return, repair, gift, resell | Partial | moves, laundry, return, resale; from 2026-10-02 a return refunded to what paid, the card or the bank, in its shares (`paidFrom`), shown as Paid With; a thing given to a friend here, theirs from then and remembered (`items.give`); tests | Repair |
 | 23 | Departments; petite, tall, extended, maternity, adaptive; nothing blocked by gender | Partial | No gender gate | `department`, fit range, browsing preference; adaptive and more maternity |
 | 24 | Subcategories (underwear styles, lingerie, hosiery, swimwear, thermals, cultural…) | Partial | 16 kinds, 11 slots | `subtype`; swimwear, shapewear, hosiery, slips, cultural clothing |
 | 25 | Fit by real measures and size charts | Partial, 2026-10-02 | measurements given and the charts sized by (`clothes.measures`); 130 retailers' own charts (`content/sizecharts.ts`): a top by chest or bust, a bottom by waist (`chartSize`); a shoe by foot length on 45 brands' charts, one shorter than the foot not worn (`shoeRow`); body mass index otherwise | Ring fit; waist-by-inseam; hips read |
@@ -87,7 +87,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 27c | Wash, dry, clean | Complete | `doLaundry`, dry cleaning; tests | Wash a chosen garment; air-dry or tumble |
 | 27d | Alter, repair | Partial | take in only | Hem, let out; damage and repair |
 | 27e | Pack, unpack | Done, 2026-10-02 | luggage.ts; by hand on Belongings, Pack For Me, Unpack (§46) | — |
-| 27f | Gift, return, resell, replace | Partial | return, resell, replace | Gift |
+| 27f | Gift, return, resell, replace | Done, 2026-10-02 | return, resell, replace; give (`items.give`) | — |
 | 27g | Outfits from owned, reachable items; worn outfit persists | Done, 2026-10-02 | `outfitRefusal`, `reachable`; `Person.wornNow`, set as the day dresses them or they change; read by the sale refusal and Clothes | — |
 | 28 | Phones and electronics as devices, activation, plans, finance, trade-in | Partial, 2026-10-02 | `systems/phones.ts`: 273 phones on the makers' stores in five markets; outright or a maker's 0% plan (prepaid lines kept out where the plan says); trade-in at the published most; activation at the carrier's SIM charge; battery wear by Apple's 1,000-cycle figure and replacement; cover billed monthly; tests/phones.test.ts | Screens breaking (no published rate); theft and loss claims; carrier device plans; credit approval; other electronics |
 | 29 | Jewelry and watches as pieces, commissions, servicing, insurance, resale | Partial (catalog only) | about 121 pieces as garments | A `jewel` record, worn, a safe, servicing, insurance rider, fair resale, commissions |
@@ -134,13 +134,13 @@ Correctness first, then the connected day the plan asks to be shown working
 | 35f | Appliance repair | Done, 2026-10-02 | `systems/appliancefaults.ts`: washer, dishwasher and fridge faults at Consumer Reports' and Which?'s rates (decider `home.appliance_fault`); the laundromat, washing by hand, a spoiled fridge; the landlord's mended free next morning, one's own booked at each market's price | Dryer and air conditioning faults (no rate with a period published) |
 | 35g | Hosting | Done, 2026-10-02 | `social.host` (`systems/hosting.ts`): several friends, dinner or drinks; seats and a table from the furniture; dinner paid at home's meal price; drinks poured from the kitchen's beer and wine; a mess noticed | — |
 | 35h | Cleaners and gardeners | Partial | weekly cleaner; gardener | Access, visit windows, work recorded |
-| 10 | Shortcuts follow the same rules | Partial | routines run through commands; tests/routines | Background top-ups bypass time and hours; favorites, repeat orders, scheduled routines |
+| 10 | Shortcuts follow the same rules | Partial | routines run through commands; tests/routines; from 2026-10-02 Buy Again puts a past purchase back in the basket the same way, size and color, by the same refusals (`againOptions`) | Background top-ups bypass time and hours; favorites, scheduled routines |
 
 ## Part 6. Vehicles and movement
 
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
-| 36a | Make, model, year, body, trim, powertrain, drivetrain | Partial | `CarModel` | Year, body, transmission, drivetrain, tank or battery, seats, cargo |
+| 36a | Make, model, year, body, trim, powertrain, drivetrain | Partial | `CarModel`; the tank or battery, seats and cargo (read by the pump, errands' passengers and shopping), shown on Cars from 2026-10-02 | Year, body, transmission, drivetrain |
 | 36b | Kinds incl. trucks, boats, aircraft | Partial | 9 kinds; one boat, one plane | Pickup kind; boat and aircraft catalogs |
 | 36c | Market and seller, verified offerings | Partial | home market only | Seller entity; another market |
 | 36d | Condition, mileage, used listings | Partial | age and hidden fault | Individual listings: mileage, condition, history, seller |
@@ -203,20 +203,20 @@ Correctness first, then the connected day the plan asks to be shown working
 
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
-| 46 | Manual packing | Partial, 2026-10-02 | volumes (`volumeOf`, `GARMENT_L` SLATE's estimate); items moved into the suitcase by hand and kept as packed on leaving; Pack For Me within the liters; Unpack | A stay to unpack into; a luggage catalog; checked bags against an airline's limits |
+| 46 | Manual packing | Partial, 2026-10-02 | 57 bags on sale at their makers' and retailers' prices, each holding its maker's liters, and the one that goes away chosen (`luggage.buy`, `luggage.choose`); volumes (`volumeOf`, `GARMENT_L` SLATE's estimate); items moved into the suitcase by hand and kept as packed on leaving; Pack For Me within the liters; Unpack | A stay to unpack into; checked bags against an airline's limits |
 | 47a–c, g, l | Planning, documents, booking, cancellation, charters and ferries | Complete | journey.ts; tests | Destinations limited to towns with stays |
 | 47d–f, h–k | Departure transport, connections, delays, changes, local transport, activities | Partial | from 2026-10-02: to and from the airport By Taxi or By Transit at each town's read fare (`systems/airportground.ts`); a canceled flight's fare taken back instead of the next one, the way home with it (`travel.take_refund`) | Missed connections; change the outbound; rideshare; airport parking |
 | 47m | Companions | Partial, 2026-10-02 | `travel.companion`: friends or a partner from where you set out, as many as the room sleeps by its listed beds (two where unread), own fares, the room split evenly again with each who joins, the waking hours together; tests/companions.test.ts | A child along |
-| 47o | Home while away | Partial | bills run | House-sitter, mail, spoilage checked |
+| 47o | Home while away | Partial | bills run; the fridge's food goes off on its own dates while away, a power cut or a broken fridge spoiling it sooner | House-sitter, mail |
 | 48a–b | Search named properties by dates, guests, budget | Partial | 28 hotels in 8 towns; from 2026-10-02 filtered by what their own pages state (a gym, a pool, breakfast included, wheelchair access, pets) and by most for the stay (`hotelHas`) | Guests; several rooms |
 | 48c | Compare total stay | Complete | `namedStayQuote`; tests/hotels | — |
 | 48d–f | Inspect rooms, extras, terms | Partial | bed, hours, deposit, parking; from 2026-10-02 each hotel's gym, pool, spa, breakfast, Wi-Fi, accessibility and pets shown, and its own cancellation deadline deciding the refund (`content/hotelamenities.ts`) | Extras bought (breakfast, early check-in, a pet's fee) |
 | 48g | Book and pay | Complete | `travel.book`; tests | Hotel-only booking |
-| 48h | Check-in requirements | Partial | age at booking | Check-in step |
+| 48h | Check-in requirements | Partial | age at booking; a deposit held at arrival; from 2026-10-02 the room at the hotel's own check-in hour (`roomReadyAt`) | ID asked at the desk |
 | 48i | A failed deposit isn't a granted stay | Done, 2026-10-02 | journey.ts `holdForDeposit`, `travel.pay_deposit`; rentals.ts `held`, `travel.pay_rental_deposit`; standin.ts refuses; tests/deposits.test.ts | — |
 | 48j–n | Room, belongings, facilities, extend, charges, check-out | Partial | the named hotel's own gym and pool used while staying (`stayPlace`, `swimRefusal`); its breakfast; the room given at its own check-in hour, or at once where early check-in is free (`roomReadyAt`) | Incidentals; the room's belongings; early check-in bought (no hotel publishes its price) |
 | 49a–b, e–g, i | Identity, driving, entry, residence, work, building approval | Complete | documents.ts, licensing.ts, permission.ts, permits.ts; tests | Appointments and evidence steps |
-| 49c–d | Boating, aviation | Partial | instant boating certificate (pass marks published, no pass rates); from 2026-10-02 the FAA knowledge test failed at its own 89.56% pass rate and the checkride at the secondary 75.1%, each taken again a month on, a checkride retest at half the fee (decider `pilot.tests`) | Boating exams' failure (no rate published); a document |
+| 49c–d | Boating, aviation | Partial | instant boating certificate (pass marks published, no pass rates); certificates held listed on Papers (`credentialsOf`); from 2026-10-02 the FAA knowledge test failed at its own 89.56% pass rate and the checkride at the secondary 75.1%, each taken again a month on, a checkride retest at half the fee (decider `pilot.tests`) | Boating exams' failure (no rate published) |
 | 49k | Loss and replacement | Partial, 2026-10-02 | passport; a driving license replaced at its authority's fee in all eight places, driven on meanwhile where an interim or the record allows, waited for in California (`documents.replace_license`); tests/replacements.test.ts | ID cards; the police report as its own step |
 
 ## Part 9. Healthcare, people, career, services
@@ -250,6 +250,6 @@ Correctness first, then the connected day the plan asks to be shown working
 | 55 | An assistant that proposes validated actions | Complete in code, not activated | systems/assistant.ts, askAssistant, ui/assistant; tests/assistant | Customization builder and development roles; the owner's key |
 | 56 | Supported connection, costs, credentials, works without it | Complete in code | docs/AI-INTEGRATION.md | Activation by the owner |
 | 57 | New mechanics reviewed, never run against saves | Partial | proposals only | A development-proposal role |
-| 58 | Navigation keeps context | Partial | breadcrumbs, pins, `/` search; a recipe short of something buys it in place and cooks (`food.buy_short`, 2026-10-02) | The same in place for other shortfalls |
+| 58 | Navigation keeps context | Partial | breadcrumbs, pins, `/` search; a recipe short of something buys it in place and cooks (`food.buy_short`, 2026-10-02) | Others beyond detergent (from 2026-10-02 laundry short of detergent offers Buy Laundry Detergent, the cheapest open here, `shortfallBuy`) |
 | 59 | Activity states, recovery, no duplicates | Partial, 2026-10-02 | `underWay`: orders, a car on order or at a shop, appointments, journeys, a held rental, documents being issued and works, in one list on Home | Resuming an interrupted activity |
 | 62 | The connected day, shown working | Shown, 2026-10-02 | tests/connected-day.test.ts: shower, change, a car errand on the tank with a fuel stop, cooking by servings, save and load, leftovers eaten before money, bed and the next day's outfit | No washing up (§33i) |

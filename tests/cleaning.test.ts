@@ -7,10 +7,10 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import { instantFromZoned } from '@/engine/core/time';
+import { instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { CLEANING } from '@/engine/content/cleaning';
-import { DISHWASHER_CYCLES_A_DAY, dishwasherRuns, keepsCleaning, restock, starterCleaning, suppliesOf, toiletryCatalog } from '@/engine/systems/hygiene';
+import { DISHWASHER_CYCLES_A_DAY, dishwasherRuns, keepsCleaning, restock, shortfallBuy, starterCleaning, suppliesOf, toiletryCatalog } from '@/engine/systems/hygiene';
 import { doLaundry, homePlace } from '@/engine/systems/dwelling';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { LA_SOLID_RESOURCES, wasteFeeOf } from '@/engine/systems/waste';
@@ -135,5 +135,19 @@ describe('bought again', () => {
     det.supply.left = 1;
     expect(restock(sim, sim.player, false)).toBe(1);
     expect(left(sim, 'laundry-detergent')).toBeGreaterThan(1);
+  });
+});
+
+describe('a shortfall bought in place', () => {
+  it('is the cheapest here while a store is open, and nothing while none is', () => {
+    const sim = life('us-ny-newyork', 'clean-short');
+    const zone = 'America/New_York';
+    const p = zonedParts(sim.now + 86_400_000, zone);
+    sim.universe.now = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 12, minute: 0, second: 0 }, zone);
+    const buy = shortfallBuy(sim, sim.player, 'laundry-detergent');
+    expect(buy).toBeDefined();
+    expect(buy!.toiletry.kind).toBe('laundry-detergent');
+    sim.universe.now = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 3, minute: 0, second: 0 }, zone);
+    expect(shortfallBuy(sim, sim.player, 'laundry-detergent')).toBeUndefined();
   });
 });

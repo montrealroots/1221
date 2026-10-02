@@ -12,7 +12,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { CLOTHING_PRODUCTS } from '@/engine/content/clothingcatalog';
-import { buyRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, clothingTax, dryCleanPrice, productPrice, purchaseItems, purchaseQuote, retailerById, STARTER, starterWardrobe } from '@/engine/systems/clothing';
+import { againOptions, buyRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, clothingTax, dryCleanPrice, productPrice, purchaseItems, purchaseQuote, retailerById, STARTER, starterWardrobe } from '@/engine/systems/clothing';
 import { arrange } from '@/engine/systems/catalog';
 import { cleanOutfits, garmentsOf, outfitFor, washableDirty, wearTheDay } from '@/engine/systems/wardrobe';
 import { sizeFor } from '@/engine/systems/tailoring';
@@ -368,5 +368,47 @@ describe('the day’s turn of the wardrobe', () => {
     expect(washableDirty(sim, sim.player).length).toBeGreaterThan(0);
     sim.advanceBy(MS_DAY);
     expect(washableDirty(sim, sim.player).filter((g) => g.garment.wears > 1 || g.garment.kind !== 'jeans').length).toBeLessThan(5);
+  });
+});
+
+describe('a refund', () => {
+  it('goes back to what paid: the bank where it paid, the card where that did', () => {
+    const sim = life('refund-card');
+    const p = sim.player;
+    const card = Object.values(sim.universe.accounts).find((a) => a.ownerId === p.id && a.kind === 'credit_card' && !a.closedAt)!;
+    const checking = Object.values(sim.universe.accounts).find((a) => a.ownerId === p.id && a.kind === 'checking' && !a.closedAt)!;
+    const tee = CLOTHING_PRODUCTS.find((x) => x.retailer === 'us-uniqlo' && x.slot === 'top' && x.sizes.includes('M'))!;
+    const buy = () => { sim.must({ kind: 'clothes.buy', payload: { productId: tee.id, how: 'store', size: 'M', color: tee.colors[0], quantity: 1 } }); return p.clothesBought!.at(-1)!; };
+    const first = buy();
+    expect(first.paidFrom).toEqual([{ accountId: checking.id, share: 1 }]);
+    // Paid on the card, it goes back on the card.
+    const second = buy();
+    second.paidFrom = [{ accountId: card.id, share: 1 }];
+    const cardBefore = card.balance;
+    const bankBefore = checking.balance;
+    sim.must({ kind: 'clothes.return', payload: { purchaseId: second.id, how: 'store' } });
+    expect(card.balance - cardBefore).toBe(second.goods);
+    expect(checking.balance).toBe(bankBefore);
+    // Split, it's split back the same.
+    const third = buy();
+    third.paidFrom = [{ accountId: card.id, share: 0.25 }, { accountId: checking.id, share: 0.75 }];
+    const c2 = card.balance;
+    const b2 = checking.balance;
+    sim.must({ kind: 'clothes.return', payload: { purchaseId: third.id, how: 'store' } });
+    expect(card.balance - c2 + checking.balance - b2).toBe(third.goods);
+    expect(card.balance - c2).toBe(Math.round(third.goods * 0.25));
+  });
+});
+
+describe('buy again', () => {
+  it('puts the same product back in the basket, the same way, size and color', () => {
+    const sim = life('again');
+    const p = sim.player;
+    const t = CLOTHING_PRODUCTS.find((x) => x.retailer === 'us-uniqlo' && x.slot === 'top' && x.sizes.includes('M'))!;
+    sim.must({ kind: 'clothes.buy', payload: { productId: t.id, how: 'store', size: 'M', color: t.colors[0], quantity: 1 } });
+    const b = p.clothesBought!.at(-1)!;
+    expect(againOptions(b)).toEqual({ productId: t.id, how: 'store', size: 'M', color: t.colors[0], quantity: 1 });
+    sim.must({ kind: 'clothes.basket_add', payload: { ...againOptions(b) } });
+    expect(p.basket!.at(-1)).toMatchObject({ productId: t.id, size: 'M', color: t.colors[0] });
   });
 });

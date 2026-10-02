@@ -11,10 +11,12 @@ import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
-import { luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
+import { bagsOf, buyLuggageRefusal, luggageCatalog, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
 import { consolesHere, consolesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { ordersOf } from '@/engine/systems/orders';
+import { giveRefusal } from '@/engine/systems/gifts';
+import { contactsOf } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -73,6 +75,7 @@ export function BelongingsWorkspace() {
           </div>
         </Panel>
         <Suitcase />
+        <Luggage />
         <Phones />
         <WatchingAndPlaying />
         {items.length > 0 && (
@@ -125,6 +128,7 @@ export function BelongingsWorkspace() {
                                     {options.map((o) => <option key={o.key} value={o.key}>{o.label}</option>)}
                                   </select>
                                   <button type="button" className="btn btn-sm btn-ghost" disabled={!move.open || !to} title={move.reason} onClick={() => { if (to && run('items.move', { itemId: item.id, to }).ok) toast(`The ${item.label}, moved.`, 'positive'); }}>Move It</button>
+                                  <GiveTo itemId={item.id} label={item.label} />
                                 </div>
                               ) : <div className="xs dim" style={{ textAlign: 'right' }}>{here ? 'Stays Where It Is' : 'Not To Hand'}</div>}
                             </td>
@@ -142,6 +146,82 @@ export function BelongingsWorkspace() {
         {items.length === 0 && <Panel title="Your Belongings"><p className="small muted" style={{ margin: 0 }}>You own nothing here yet beyond your home and vehicles. What you buy appears here, where it’s put.</p></Panel>}
         <Fine>A thing at home is to hand only at home; one in a car, only where the car is; one in a bag, wherever the bag is. An order’s things are yours from when you pay, and to hand when they’re delivered. A move brings your belongings with it.</Fine>
       </div>
+    </>
+  );
+}
+
+/** Bags: the ones owned, which goes away, and the ones on sale where you live, cheapest first (`systems/luggage.ts`). */
+function Luggage() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const buy = useFeature('luggage.buy');
+  const choose = useFeature('luggage.choose');
+  const cur = saveCurrency(sim.universe);
+  const owned = bagsOf(person);
+  const going = suitcaseOf(person);
+  const shop = luggageCatalog(sim, person);
+  const [type, setType] = useState('');
+  const types = [...new Set(shop.map((x) => x.piece.type))];
+  const shown = shop.filter((x) => !type || x.piece.type === type);
+  if (shop.length === 0 && owned.length < 2) return null;
+  const TYPE: Record<string, string> = { 'carry-on': 'Carry-On', medium: 'Medium', large: 'Large', duffel: 'Duffel', backpack: 'Backpack' };
+  return (
+    <Panel title="Bags" subtitle={going ? `${going.label} Goes Away With You` : 'None Yet'}>
+      <div className="col gap-2">
+        {owned.length > 1 && (
+          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+            {owned.map((b) => <button key={b.id} type="button" className="btn btn-sm btn-ghost" disabled={!choose.open || b.id === going?.id} title={choose.reason} onClick={() => { if (run('luggage.choose', { itemId: b.id }).ok) toast(`${b.label} goes away with you now.`, 'positive'); }}>{b.id === going?.id ? `${b.label}, Going` : `Take The ${b.label}`}</button>)}
+          </div>
+        )}
+        {shop.length > 0 && (
+          <>
+            <div className="field" style={{ margin: 0, maxWidth: '14rem' }}>
+              <label htmlFor="bag-type">Kind</label>
+              <select id="bag-type" value={type} onChange={(e) => setType(e.target.value)}>
+                <option value="">Any</option>
+                {types.map((t) => <option key={t} value={t}>{TYPE[t] ?? t}</option>)}
+              </select>
+            </div>
+            <div className="table-scroll">
+              <table>
+                <thead><tr><th scope="col">Bag</th><th scope="col" className="num">Holds</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Buy</span></th></tr></thead>
+                <tbody>
+                  {shown.slice(0, 12).map(({ piece, price }) => {
+                    const no = buyLuggageRefusal(person, piece.id);
+                    return (
+                      <tr key={piece.id}>
+                        <td>{piece.brand} {piece.model}<div className="xs dim">{TYPE[piece.type] ?? piece.type}{piece.retailer ? `, ${piece.retailer}` : ''}</div></td>
+                        <td className="num">{piece.liters} L</td>
+                        <td className="num mono">{formatMoney(price, cur, { cents: false })}</td>
+                        <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('luggage.buy', { pieceId: piece.id }).ok) toast(`${piece.brand} ${piece.model}, bought.`, 'positive'); }}>Buy The Bag</button></td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
+      </div>
+    </Panel>
+  );
+}
+
+/** Giving a thing to a friend here (`items.give`): theirs from then, and remembered. */
+function GiveTo({ itemId, label }: { itemId: string; label: string }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const give = useFeature('items.give');
+  const here = contactsOf(person).filter((c) => !giveRefusal(sim, person, itemId, c.id));
+  const [to, setTo] = useState('');
+  if (here.length === 0) return null;
+  const chosen = here.find((c) => c.id === to) ?? here[0]!;
+  return (
+    <>
+      <select aria-label={`Give the ${label} to`} value={chosen.id} disabled={!give.open} onChange={(e) => setTo(e.target.value)}>
+        {here.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+      </select>
+      <button type="button" className="btn btn-sm btn-ghost" disabled={!give.open} title={give.reason} onClick={() => { if (run('items.give', { itemId, contactId: chosen.id }).ok) toast(`The ${label}, given to ${chosen.name.split(' ')[0]}.`, 'positive'); }}>Give It</button>
     </>
   );
 }
