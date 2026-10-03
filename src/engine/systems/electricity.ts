@@ -49,6 +49,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { showerKwhDelta } from './hotwater';
 import type { Person } from '../domain/model';
 import { saveCurrency, type Money } from '../core/money';
 import { atHome } from './dwelling';
@@ -110,8 +111,10 @@ export function kwhUsed(person: Person, cityId: string): number | undefined {
 export function electricityAdjustment(sim: Simulation, person: Person, month: number): Money {
   const cityId = person.home?.cityId;
   const t = cityId ? TARIFFS[cityId] : undefined;
-  const used = cityId ? kwhUsed(person, cityId) : undefined;
-  if (!t || used === undefined) return 0;
+  const base = cityId ? kwhUsed(person, cityId) : undefined;
+  if (!t || base === undefined) return 0;
+  // An electric heater's showers past the average, or short of it (`systems/hotwater.ts`, from 2026-10-03).
+  const used = base + showerKwhDelta(sim, person, month);
   const days = DAYS[month - 1]!;
   const typical = t.typicalKwh * KIND_SHARE[person.home!.kind]!;
   return inSave(sim, t.bill(used, month, days) - t.bill(typical, month, days), t.currency);

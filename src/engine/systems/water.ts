@@ -32,9 +32,18 @@
  * average: America's 221.8 liters indoors (REU2016), Ontario's 187
  * (Statistics Canada), and a metered home's 122 in England and Wales
  * (Discover Water). A day away uses none.
+ *
+ * **Showers and baths, metered** (from 2026-10-03, `research-water-washing.json`):
+ * the average's own showers come out and the player's go in, so showering
+ * oftener than the average costs more and less often less. America's and
+ * Canada's shower is REU2016's 7.8 minutes at 7.9 liters a minute, 59.8
+ * liters, and its 11.1 gallons a person a day comes to 0.70 showers; Britain's
+ * is the Energy Saving Trust's 60 liters, 4.4 a week, and a bath 80 liters, 1.3
+ * a week. A bath elsewhere isn't metered: no volume for one was read there.
  */
 
 import type { Simulation } from '../core/simulation';
+import { CITIES } from '../content/geography';
 import type { Person } from '../domain/model';
 import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
@@ -72,13 +81,32 @@ export function billedWater(sim: Simulation, person: Person): boolean {
   return home.kind === 'owned' && Boolean(place) && !isFlat(place!.type);
 }
 
-/** The month's liters used at home: each of the household a day there. */
+/** A shower's and a bath's liters, and how many of each a person takes a day, by country. */
+export const WASHING: Readonly<Record<string, { showerL: number; showersADay: number; bathL?: number; bathsADay?: number }>> = {
+  us: { showerL: 59.8, showersADay: (11.1 * 3.78541) / 59.8 },
+  ca: { showerL: 59.8, showersADay: (11.1 * 3.78541) / 59.8 },
+  gb: { showerL: 60, showersADay: 4.4 / 7, bathL: 80, bathsADay: 1.3 / 7 },
+};
+
+/** The month's liters used at home: each of the household a day there, the player's own showers and baths in place of the average's. */
 export function litersUsed(person: Person, cityId: string, month: number): number {
   const t = WATER_TARIFFS[cityId];
   if (!t) return 0;
   const l = person.living;
   const days = l?.billDays ? l.homeDays ?? 0 : DAYS[month - 1]!;
-  return t.perPersonLiters * householdOf(person) * days;
+  const average = t.perPersonLiters * householdOf(person) * days;
+  const w = WASHING[CITIES.get(cityId)?.countryId === 'uk' ? 'gb' : CITIES.get(cityId)?.countryId ?? ''];
+  if (!w || !l?.billDays || t.perPersonLiters === 0) return average;
+  const showers = ((l.showers ?? 0) - w.showersADay * days) * w.showerL;
+  const baths = w.bathL && w.bathsADay ? ((l.baths ?? 0) - w.bathsADay * days) * w.bathL : 0;
+  return average + showers + baths;
+}
+
+/** A shower or a bath at home, counted toward the month's water. */
+export function countWash(person: Person, bath: boolean): void {
+  if (!person.living) return;
+  if (bath) person.living.baths = (person.living.baths ?? 0) + 1;
+  else person.living.showers = (person.living.showers ?? 0) + 1;
 }
 
 /** The month's water and sewer, in the save's money; nothing where the town doesn't bill this home. */

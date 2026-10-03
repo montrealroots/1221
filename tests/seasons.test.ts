@@ -4,6 +4,7 @@
  * cold or wet ones, each keeping its year's total.
  */
 import { describe, expect, it } from 'vitest';
+import { HEATER_SHARE } from '@/engine/systems/hotwater';
 import { homePlace, machineUsd } from '@/engine/systems/dwelling';
 import { quickSave } from '@/engine';
 import { instantFromZoned } from '@/engine/core/time';
@@ -52,16 +53,22 @@ describe('the bills', () => {
   });
 
   it('are paid on the 1st for the month just gone, at the home', () => {
-    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true });
-    const flat = costsAt('us-ny-newyork', sim.player.home!.kind, saveCurrency(sim.universe), sim.now).bills;
-    // The home's air conditioning decides the cooling in them, and its own machines' loads are added (`systems/dwelling.ts`).
-    const cooling = homePlace(sim, sim.player)!.fixtures.cooling;
-    const machines = () => atTown('us-ny-newyork', machineUsd(sim.player), saveCurrency(sim.universe));
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 12 }, 'America/New_York'));
-    // Less the phone and internet, billed by their providers from 2026-10-01 (`telecomPartOf`).
-    expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 1, cooling)) + machines() - telecomPartOf(sim, sim.player));
-    sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 10, hour: 12 }, 'America/New_York'));
-    expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 2, cooling)) + machines() - telecomPartOf(sim, sim.player));
+    // A home whose water isn't heated electrically: an electric heater's showers are metered (`systems/hotwater.ts`), and this life takes none.
+    const share = HEATER_SHARE.us!;
+    const was = share.electric;
+    (share as { electric: number }).electric = 0;
+    try {
+      const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true });
+      const flat = costsAt('us-ny-newyork', sim.player.home!.kind, saveCurrency(sim.universe), sim.now).bills;
+      // The home's air conditioning decides the cooling in them, and its own machines' loads are added (`systems/dwelling.ts`).
+      const cooling = homePlace(sim, sim.player)!.fixtures.cooling;
+      const machines = () => atTown('us-ny-newyork', machineUsd(sim.player), saveCurrency(sim.universe));
+      sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 1, hour: 12 }, 'America/New_York'));
+      // Less the phone and internet, billed by their providers from 2026-10-01 (`telecomPartOf`).
+      expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 1, cooling)) + machines() - telecomPartOf(sim, sim.player));
+      sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 10, hour: 12 }, 'America/New_York'));
+      expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 2, cooling)) + machines() - telecomPartOf(sim, sim.player));
+    } finally { (share as { electric: number }).electric = was; }
   });
 });
 

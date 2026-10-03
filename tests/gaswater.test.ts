@@ -13,13 +13,21 @@ import { countHomeDay, electricityAdjustment, KIND_SHARE } from '@/engine/system
 import { billsOf } from '@/engine/systems/household';
 import { zonedParts } from '@/engine/core/time';
 import { GAS_TARIFFS, gasAdjustment } from '@/engine/systems/gas';
-import { WATER_TARIFFS, billedWater, waterBillOf } from '@/engine/systems/water';
+import { WASHING, WATER_TARIFFS, billedWater, litersUsed, waterBillOf } from '@/engine/systems/water';
 import { ownBuilt, type HomeFacts } from '@/engine/systems/homes';
 import { newContact, contactsOf } from '@/engine/systems/people';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const inSave = (sim: Simulation, units: number, from: string) => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
-const month = (sim: Simulation, home: number, of: number) => { sim.player.living ??= { tidy: 80 }; delete sim.player.living.billDays; delete sim.player.living.homeDays; for (let d = 0; d < of; d += 1) countHomeDay(sim.player, d < home); };
+/** A month of so many days home, showering and bathing as often as the country's average (`WASHING`). */
+const month = (sim: Simulation, home: number, of: number) => {
+  sim.player.living ??= { tidy: 80 };
+  delete sim.player.living.billDays; delete sim.player.living.homeDays;
+  for (let d = 0; d < of; d += 1) countHomeDay(sim.player, d < home);
+  const w = WASHING[sim.player.home?.cityId?.startsWith('uk-') ? 'gb' : sim.player.home?.cityId?.slice(0, 2) ?? ''];
+  sim.player.living.showers = (w?.showersADay ?? 0) * home;
+  sim.player.living.baths = (w?.bathsADay ?? 0) * home;
+};
 const house = (sim: Simulation, cityId: string, type: HomeFacts['type'] = 'house') => {
   const facts: HomeFacts = { type, address: 'Test House', beds: 3, baths: 2, size: 1_200, built: 2000, features: [], parts: {}, hoaUsd: 0 };
   const owned = ownBuilt(sim, sim.player, { cityId, facts, price: 600_000_00, closing: 0 });
@@ -79,6 +87,33 @@ describe('water', () => {
     // A room pays its share of the standing charges.
     (sim.player.home as { kind: string }).kind = 'shared';
     expect(waterBillOf(sim, sim.player, 11)).toBe(inSave(sim, standing * KIND_SHARE.shared!, 'GBP'));
+  });
+
+  it('meters the player’s own showers and baths against the average', () => {
+    const sim = life('uk-eng-london', 'water-showers');
+    sim.player.home = { ...sim.player.home!, kind: 'own' } as never;
+    month(sim, 30, 30);
+    const average = litersUsed(sim.player, 'uk-eng-london', 11);
+    expect(average).toBeCloseTo(122 * 30, 6);
+    sim.player.living!.showers! += 10;
+    expect(litersUsed(sim.player, 'uk-eng-london', 11)).toBeCloseTo(average + 10 * 60, 6);
+    sim.player.living!.baths! += 2;
+    expect(litersUsed(sim.player, 'uk-eng-london', 11)).toBeCloseTo(average + 10 * 60 + 2 * 80, 6);
+    // Never showering at home, the average's showers come out.
+    sim.player.living!.showers = 0; sim.player.living!.baths = 0;
+    expect(litersUsed(sim.player, 'uk-eng-london', 11)).toBeCloseTo(average - 30 * (4.4 / 7) * 60 - 30 * (1.3 / 7) * 80, 6);
+    // In America a shower is REU2016's 59.8 liters, and a bath isn't metered.
+    expect(WASHING.us!.showerL).toBe(59.8);
+    expect(WASHING.us!.bathL).toBeUndefined();
+  });
+
+  it('a shower at home counts toward it', () => {
+    const sim = life('uk-eng-london', 'water-count');
+    sim.player.wellbeing.hygiene = 20;
+    sim.player.living ??= { tidy: 80 };
+    const before = sim.player.living.showers ?? 0;
+    expect(sim.execute({ kind: 'life.look_after', payload: { action: 'wash' } }).ok).toBe(true);
+    expect(sim.player.living!.showers).toBe(before + 1);
   });
 
   it('is in a renter’s rent elsewhere, and billed to the owner of a house, by the town’s own tariff', () => {

@@ -18,6 +18,7 @@
  */
 
 import { drive, riderDeath } from './systems/driving';
+import { waterHeaterOf } from './systems/hotwater';
 import { landAnswer, listingsFor } from './systems/land';
 import { trainFate } from './systems/rail';
 import { RAIL_ROUTES } from './content/rail';
@@ -511,6 +512,23 @@ defineDecider<{ sim: Simulation; day: number; minute: number }, string>({
     const zone = CITIES.require(home.cityId).timeZone;
     const midnight = startOfDay(sim.now + day * MS_DAY, zone);
     return bathroomWait(sim, sim.player, midnight + (6.5 * 60 + minute) * 60_000, 10) > 0 ? 'waits' : 'free';
+  },
+});
+
+defineDecider<{ sim: Simulation; home: number; country: number }, string>({
+  id: 'homes.water_heater',
+  decides: 'The fuel that heats a home\'s water, at its country\'s published share: America\'s EIA RECS 2020, Canada\'s NRCan, Britain\'s electric showers (HEATER_SHARE).',
+  drawnIn: 'src/engine/systems/hotwater.ts',
+  reads: {
+    home: (o, t) => ({ ...o, home: Math.round(t * 40) }),
+    country: (o, t) => ({ ...o, country: Math.round(t * 2) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), home: seed % 40, country: seed % 3 }),
+  decide: ({ sim, home, country }) => {
+    const cityId = ['us-ny-newyork', 'ca-on-toronto', 'uk-eng-london'][country]!;
+    sim.player.home = { ...sim.player.home!, cityId, since: home * MS_DAY };
+    return waterHeaterOf(sim, sim.player) ?? 'none';
   },
 });
 

@@ -311,6 +311,9 @@ export interface Living {
   /** The month's days counted, and those at home, for the electricity used (`systems/electricity.ts`, from 2026-10-02). */
   billDays?: number;
   homeDays?: number;
+  /** Showers and baths taken at home this billing month (from 2026-10-03), metered against the average (`systems/water.ts`). */
+  showers?: number;
+  baths?: number;
   /** A cleaner every week, and the day of the week they come, 0 for Sunday. */
   cleaner?: { day: number; /** Given a key, from 2026-10-02: they let themselves in. */ key?: boolean };
 }

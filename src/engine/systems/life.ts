@@ -39,6 +39,7 @@ import { watchRefusal } from './homelife';
 import { takePortion } from './pantry';
 import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty, wearForSwim } from './wardrobe';
 import { SITTING_MET } from './coldstress';
+import { countWash } from './water';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
@@ -487,6 +488,8 @@ export function registerLife(sim: Simulation): void {
       applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : action === 'ride' || action === 'court' ? TRAINING.run : 1, action === 'unwind' && atHome(person) ? unwindComfort(person) : 1);
       // A shower or a bath uses its soap and shampoo, and without them doesn't leave them as clean (`systems/hygiene.ts`).
       if (action === 'wash' || action === 'bathe') person.wellbeing.hygiene = Math.min(person.wellbeing.hygiene ?? 100, showerUses(s, person));
+      // Metered at home, against the average (`systems/water.ts`, from 2026-10-03).
+      if ((action === 'wash' || action === 'bathe') && atHome(person)) countWash(person, action === 'bathe');
       // Dried on one of their own towels at home, a use toward its wash; a hotel, a let or a gym gives its own (`useTowel`, from 2026-10-02).
       if ((action === 'wash' || action === 'bathe') && atHome(person) && !useTowel(s, person) && person.id === s.universe.playerId) s.notify({ category: 'home', title: 'No Clean Towel', body: 'Every towel to hand is in the wash or still drying: put a load on.', importance: 25, route: '/workspace/clothes' });
       // An hour of it, at its injury rate (`content/injury.ts`).
