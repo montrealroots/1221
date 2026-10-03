@@ -4,6 +4,7 @@
  * flat-share's bathroom.
  */
 import { describe, expect, it } from 'vitest';
+import { contactsOf, newContact } from '@/engine/systems/people';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_HOUR, startOfDay } from '@/engine/core/time';
@@ -29,7 +30,7 @@ describe('the rooms', () => {
   it('are a let room’s 11.5 m² in a flat-share, or the home’s own size; built-in storage by bedrooms', () => {
     const sim = life('us-ny-newyork', 'rooms-of');
     flatShare(sim);
-    expect(roomsOf(sim, sim.player)).toEqual({ floorM2: 11.5, closetL: 1.0 * 2.3 * 1_000, flatmates: 2 });
+    expect(roomsOf(sim, sim.player)).toEqual({ floorM2: 11.5, closetL: 1.0 * 2.3 * 1_000, flatmates: 2, bathrooms: 1 });
     ownFlat(sim, 650, 2);
     const r = roomsOf(sim, sim.player)!;
     expect(r.floorM2).toBeCloseTo(650 * 0.092903, 6);
@@ -128,6 +129,28 @@ describe('a flat-share’s bathroom', () => {
     expect(bathroomWait(sim, sim.player, day + 12 * MS_HOUR, 20)).toBe(0);
     ownFlat(sim);
     for (let m = 0; m < 120; m += 5) expect(bathroomWait(sim, sim.player, day + 6.5 * MS_HOUR + m * 60_000, 20)).toBe(0);
+  });
+
+  it('a partner living there shares a one-bathroom home’s mornings, and not where there’s a second', () => {
+    const sim = life('us-ny-newyork', 'rooms-partner');
+    ownFlat(sim);
+    const zone = CITIES.require(sim.player.home!.cityId).timeZone;
+    const day = startOfDay(sim.now, zone);
+    const morning = () => { let w = 0; for (let m = 0; m < 120; m += 5) w = Math.max(w, bathroomWait(sim, sim.player, day + 6.5 * MS_HOUR + m * 60_000, 20)); return w; };
+    expect(morning()).toBe(0);
+    const partner = newContact(sim, sim.player, sim.player.home!.cityId, 'rooms-partner-c', { at: sim.now, how: 'school' });
+    partner.livesWith = sim.now;
+    contactsOf(sim.player).push(partner);
+    expect(roomsOf(sim, sim.player)!.bathrooms).toBe(1);
+    expect(morning()).toBeGreaterThan(0);
+    // At most a shower of yours that would run into theirs, and theirs.
+    expect(morning()).toBeLessThanOrEqual(Math.ceil(20 + 7.8));
+    // A house of two bathrooms: the partner's shower is in the other.
+    const facts: HomeFacts = { type: 'house', address: 'Test House', beds: 3, baths: 2, size: 1_400, built: 2000, features: [], parts: {}, hoaUsd: 0 };
+    const owned = ownBuilt(sim, sim.player, { cityId: sim.player.home!.cityId, facts, price: 600_000_00, closing: 0 });
+    sim.player.home = { kind: 'owned', cityId: owned.cityId, homeId: owned.id, since: sim.now };
+    expect(roomsOf(sim, sim.player)!.bathrooms).toBe(2);
+    expect(morning()).toBe(0);
   });
 
   it('a shower then takes the wait as well', () => {
