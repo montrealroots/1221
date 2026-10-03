@@ -22,6 +22,8 @@
         "Option B: collect the accumulated mail at the local Post Office; it must be picked up within 10 days or it is returned to the senders."
       ],
       "longerThanMax": "For longer than 30 days USPS directs customers to a forwarding service.",
+      "parcelsHeld": true,
+      "parcelsText": "USPS Hold Mail pauses ALL mail delivery (letters and packages) to an address, and cannot hold a single package. Read on the USPS FAQ article on 2026-10-03.",
       "url": "https://faq.usps.com/articles/Knowledge/USPS-Hold-Mail-The-Basics",
       "secondaryUrl": "https://www.usps.com/manage/hold-mail.htm",
       "date": "2026-10-02",

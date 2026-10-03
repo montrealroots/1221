@@ -4,6 +4,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { heldUntil, holdBack } from './away';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
@@ -144,6 +145,9 @@ export function registerIdentity(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const doc = person ? documentsOf(person).find((d) => d.id === item.payload.documentId) : undefined;
     if (!doc || doc.status !== 'pending') return;
+    // The post held at home, the card waits for the hold's end (`systems/away.ts`).
+    const held = heldUntil(person!, item.at, false);
+    if (held !== undefined) { holdBack(s, item, held); return; }
     doc.status = 'valid';
     doc.issuedAt = item.at;
   });

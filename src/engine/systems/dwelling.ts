@@ -49,7 +49,6 @@ import { securityFactor } from './homesecurity';
 import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
 import { detergentFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
-import { contactsOf } from './people';
 import { amenitiesOf } from './hotels';
 import { machinesDay } from './appliancefaults';
 import { starterLuggage } from './luggage';
@@ -58,6 +57,7 @@ import { gymHere } from './gyms';
 import { personalityOf } from './personality';
 import { burgleValuables, scheduledMonth } from './valuables';
 import { homeKeyOf } from './items';
+import { someoneHome } from './away';
 
 // ---------------------------------------------------------------------------
 // The place somebody lives
@@ -251,7 +251,8 @@ export const CLEANING = { baseMinutes: 60, sqftPerMinute: 40, most: 240, cleaner
  * When a weekly cleaner comes, from 2026-10-02: ten in the morning, SLATE's
  * reading of a cleaner's visit, for as long as the clean takes them. Without a
  * key they can't get in unless a person's home then: you, in town and not
- * held anywhere else by a commitment, or a partner who lives with you. A visit
+ * held anywhere else by a commitment, or a partner who lives with you, and from
+ * 2026-10-03 a house sitter staying (`someoneHome` in `systems/away.ts`). A visit
  * missed isn't cleaned and isn't charged, no cleaner's lockout fee being
  * published.
  */
@@ -261,12 +262,10 @@ export const CLEANER_VISIT = { hour: 10 } as const;
 export function cleanerGetsIn(sim: Simulation, person: Person, dayStart: Instant): boolean {
   const l = livingOf(person);
   if (l.cleaner?.key) return true;
-  if (contactsOf(person).some((c) => c.livesWith !== undefined)) return true;
-  const place = placeOf(sim, person);
-  if (!place || !atHome(person)) return false;
+  const place = homePlace(sim, person);
+  if (!place) return false;
   const from = dayStart + CLEANER_VISIT.hour * MS_HOUR;
-  const to = from + cleaningMinutes(place) * CLEANING.cleanerSpeed * 60_000;
-  return !sim.universe.scheduled.some((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < to && x.at + x.durationMinutes * 60_000 > from && (x.payload.personId === undefined || x.payload.personId === person.id));
+  return someoneHome(sim, person, from, from + cleaningMinutes(place) * CLEANING.cleanerSpeed * 60_000);
 }
 /** Out of clean clothes: the morning's freshness, and the mood. */
 export const WORN_CLOTHES = { hygiene: 55, morale: 1 };

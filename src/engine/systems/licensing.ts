@@ -22,6 +22,7 @@
  * class, the class on the same card; renewing the car license carries it.
  */
 
+import { heldUntil, holdBack } from './away';
 import { LICENSE_REPLACEMENT } from '../content/replacements';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
@@ -465,6 +466,9 @@ export function registerLicensing(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     const doc = person ? documentsOf(person).find((d) => d.id === item.payload.documentId) : undefined;
     if (!doc || doc.status !== 'pending') return;
+    // The post held at home, the card waits for the hold's end (`systems/away.ts`).
+    const held = heldUntil(person!, item.at, false);
+    if (held !== undefined) { holdBack(s, item, held); return; }
     doc.status = 'valid';
     doc.issuedAt = item.at;
   });
