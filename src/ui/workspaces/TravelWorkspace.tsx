@@ -22,7 +22,8 @@ import { AIR } from '@/engine/content/air';
 import { caravansOf, towFor, towedLegs } from '@/engine/systems/caravans';
 import { asRoundTrip, bookRefusal, changeQuote, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS, inMotorhome, residentOf, refundRefusal } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
-import { companionRefusal, companionsOf } from '@/engine/systems/companions';
+import { childFare, childRefusal, childrenAlong, companionRefusal, companionsOf } from '@/engine/systems/companions';
+import { childrenOf } from '@/engine/systems/children';
 import { contactsOf } from '@/engine/systems/people';
 import { arrange } from '@/engine/systems/catalog';
 import { rentalCatalog, stayCatalog } from '@/engine/systems/catalogs';
@@ -349,7 +350,7 @@ export function TravelWorkspace() {
                           const a = run<{ refund: number }>('travel.cancel', { journeyId: j.id });
                           if (a.ok) toast(a.value!.refund > 0 ? `Canceled: ${money(a.value!.refund)} back.` : 'Canceled: the fares aren’t refunded.', 'positive');
                         }}>Cancel It</Gated>
-                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <AskAlong j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}{j.status === 'booked' && <ChangeFlight j={j} />}{j.status === 'arrived' && <><CheckOutLate j={j} /><HotelBreakfast j={j} /></>}<PayDeposits j={j} />{j.status === 'underway' && j.rebooked && <TakeTheRefund j={j} />}</div></td>
+                      )}{j.status === 'booked' && <InsureIt j={j} />}{j.status === 'booked' && <AskAlong j={j} />}{j.status === 'booked' && <BringAChild j={j} />}{j.status === 'booked' && <RentACar j={j} />}{j.status === 'booked' && <StayInALet j={j} />}{j.status === 'booked' && <StayLonger j={j} />}{j.status === 'booked' && <ChangeFlight j={j} />}{j.status === 'arrived' && <><CheckOutLate j={j} /><HotelBreakfast j={j} /></>}<PayDeposits j={j} />{j.status === 'underway' && j.rebooked && <TakeTheRefund j={j} />}</div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -648,6 +649,33 @@ function Folio({ hotel }: { hotel: NonNullable<Journey['hotel']> }) {
 }
 
 /** A friend or partner asked along on a journey from where they live: each pays their own fare, a room shared and split (`travel.companion`). */
+/** A child of yours along, at the airlines' child fares (`travel.child`). */
+function BringAChild({ j }: { j: Journey }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const [childId, setChildId] = useState('');
+  const kids = childrenOf(person);
+  const along = childrenAlong(j).map((id) => kids.find((k) => k.id === id)?.name).filter((n): n is string => Boolean(n));
+  const free = kids.filter((k) => !childRefusal(sim, person, j.id, k.id));
+  const withThem = along.length ? <span className="xs dim">{`With ${along.join(', ')}`}</span> : null;
+  if (free.length === 0) return withThem;
+  const chosen = free.find((k) => k.id === childId) ?? free[0]!;
+  const back = partnerOf(person, j);
+  const fare = [j, ...(back && back.leaveAt > j.leaveAt ? [back] : [])].reduce((a, x) => a + (childFare(sim, x, chosen) as number), 0);
+  const cur = saveCurrency(sim.universe);
+  return (
+    <span className="row gap-1" style={{ alignItems: 'center' }}>
+      {withThem}
+      <label className="sr-only" htmlFor={`child-${j.id}`}>Which Child</label>
+      <select id={`child-${j.id}`} value={chosen.id} onChange={(e) => setChildId(e.target.value)} style={{ width: 'auto' }}>{free.map((k) => <option key={k.id} value={k.id}>{k.name}</option>)}</select>
+      <Gated feature="travel.child" className="btn btn-sm btn-ghost" onClick={() => {
+        const a = run<{ paid: number }>('travel.child', { journeyId: j.id, childId: chosen.id });
+        if (a.ok) toast(`${chosen.name.split(' ')[0]} is coming${a.value!.paid ? `, for ${formatMoney(a.value!.paid, cur)}` : ''}.`, 'positive');
+      }}>{fare > 0 ? `Bring Your Child, ${formatMoney(fare, cur, { cents: false })}` : 'Bring Your Child'}</Gated>
+    </span>
+  );
+}
+
 function AskAlong({ j }: { j: Journey }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);

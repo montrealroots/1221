@@ -98,6 +98,8 @@ export interface Journey {
   parked?: { vehicleId: string; iata: string };
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
   hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string }; /** Its deposit held now, and returned at check-out. */ deposit?: Money; returned?: Money; /** A deposit the bank couldn't cover at arrival: the room held, not given, until the end of that day (from 2026-10-02). */ depositDue?: Money; heldUntil?: Instant; /** The stay given up, the deposit never paid. */ forfeited?: boolean; /** Photo ID asked at the desk and none shown: no room until one is (from 2026-10-02). */ idDue?: boolean; /** A late check-out bought, and its hour (`systems/latecheckout.ts`, from 2026-10-02). */ lateUntil?: Instant };
+  /** Children of yours along, from 2026-10-03 (`systems/companions.ts`). */
+  childIds?: string[];
   /** Somebody you know along, from 2026-10-02 (`systems/companions.ts`). */
   companionId?: string;
   /** Everybody along, from later on 2026-10-02, and what they've paid back of the room between them. */
@@ -1094,7 +1096,7 @@ export function changeQuote(sim: Simulation, person: Person, journeyId: string, 
   if (j.bookingId) return 'A job’s journey is the production’s to change.';
   const back = partnerOf(person, j);
   if (back && back.leaveAt < j.leaveAt) return 'The way home is moved by staying longer.';
-  if ((j.companionIds?.length ?? 0) > 0 || j.companionId) return 'Everyone along has a ticket of their own on it.';
+  if ((j.companionIds?.length ?? 0) > 0 || j.companionId || (j.childIds?.length ?? 0) > 0) return 'Everyone along has a ticket of their own on it.';
   if (j.hotel?.plan === 'prepaid') return 'A prepaid room is non-refundable, so its nights can’t move.';
   const fee = changeFee(sim, j.fromCity, j.toCity, j.leaveAt);
   if (fee === undefined) return 'SLATE keeps no airline’s change fee for this flight, so it isn’t moved.';
