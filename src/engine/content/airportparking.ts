@@ -1,11 +1,13 @@
 /**
  * SLATE — leaving one's own car at the airport (the master plan's §47, from
  * 2026-10-02; `docs/research/world/research-airport-parking.json`, each
- * airport's own tariff read that day, two secondhand as marked).
+ * airport's own tariff read that day, three secondhand as marked).
  *
  * The cheapest long-stay car park whose drive-up tariff was read, by airport:
  * JFK's Long-Term Lot 9, $55 the first 24 hours and $27.50 each 12 after
- * (the Port Authority's schedule of charges, from 28 May 2026); LaGuardia's
+ * (the Port Authority's schedule of charges, from 28 May 2026); Newark's
+ * Economy Lot P6, $35 the first 24 hours and $17.50 each 12 after (its
+ * schedule of charges from 2024, read through a search's copy); LaGuardia's
  * Terminal A garage, its $75 a day most; LAX's Budget Parking, the old Lot E,
  * $20 a day (LAX's own page as the Internet Archive kept it in January
  * 2026, the live one refusing to be read); Bradley's Lot 4, $7 a day or $42
@@ -15,7 +17,7 @@
  * Garage, C$32 a day or C$160 a week before HST (Pearson's pages as a search
  * index kept them); Vancouver's Value Long Term, C$29.50 a day or C$159.75 a
  * week with its parking tax; Mexico City's, MX$391 a day at most. A part of
- * a day is a day, or a part of JFK's 12 hours twelve hours: SLATE's reading
+ * a day is a day, or a part of JFK's or Newark's 12 hours twelve hours: SLATE's reading
  * of a tariff charged by the day.
  */
 
@@ -23,6 +25,7 @@ export interface AirportParking { iata: string; lot: string; currency: string; f
 
 export const AIRPORT_PARKING: readonly AirportParking[] = [
   { iata: 'JFK', lot: 'Long-Term Lot 9', currency: 'USD', first: 55, firstHours: 24, then: 27.5, thenHours: 12, confirmed: true },
+  { iata: 'EWR', lot: 'Economy Parking Lot P6', currency: 'USD', first: 35, firstHours: 24, then: 17.5, thenHours: 12, confirmed: false },
   { iata: 'LGA', lot: 'Terminal A Garage', currency: 'USD', first: 75, firstHours: 24, then: 75, thenHours: 24, confirmed: true },
   { iata: 'LAX', lot: 'Budget Parking', currency: 'USD', first: 20, firstHours: 24, then: 20, thenHours: 24, confirmed: false },
   { iata: 'BDL', lot: 'Lot 4', currency: 'USD', first: 7, firstHours: 24, then: 7, thenHours: 24, weekly: 42, confirmed: true },
