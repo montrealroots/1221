@@ -35,4 +35,4 @@ exists, this file says so, and the item stays out.
 | Photo ID at a hotel's desk | 48h | Each of SLATE's 28 hotels' own policy pages (research-hotel-id.json) | Got for 11 (`deskAccepts`); four say so only on booking sites, and are left out. |
 | Furniture assembly | 45 | IKEA Mexico publishes 9% of the price, 2.5% for a sofa; elsewhere Taskrabbit quotes each item in the cart, read by hand per piece; no maker publishes how long assembling takes | Open. |
 | A private car sale's time and price | 37k | research-car-sale.json: AutoTrader.ca's 30 days a private sale; elsewhere dealers' days on forecourt; Britain's 10–15% private over a dealer (MoneyHelper, via Autotrader) | Open: no American, British, Irish or Mexican private figure, and no American gap. |
-| Letting out a shirt or a dress | 27d | Proper Cloth's reference gives trousers and jackets only; a tailor's or maker's own allowance for shirts and dresses | Open. |
+| Letting out a shirt or a dress | 27d | Proper Cloth's reference gives trousers and jackets only; the trade's 'an inch or two' at a shirt's chest | Got as SLATE's estimate: half a size out (`ALTER_STEPS`). |
