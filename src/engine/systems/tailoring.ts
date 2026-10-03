@@ -200,7 +200,29 @@ export function chartSize(person: Person, p: Sized, sizes: readonly string[]): s
 }
 
 /** Your size in a garment's run, or nothing where it comes in one size: by the retailer's chart where it can be, by body mass index otherwise. */
+/**
+ * A listing's lengths (from 2026-10-03): its regular sizes, and its petite and
+ * tall cuts where it lists them as "PETITE 4" or "TALL 4", as J.Crew does.
+ * Petite is Marks & Spencer's own: a woman 160 cm tall or shorter. No
+ * retailer's own page gave a height for tall that was read, so a tall cut is
+ * chosen by hand.
+ */
+export const PETITE_CM = 160;
+export function cutOf(sizes: readonly string[], cut: 'regular' | 'petite' | 'tall'): string[] {
+  const prefix = /^(PETITE|TALL)\s+/i;
+  if (cut === 'regular') return sizes.filter((s) => !prefix.test(s));
+  return sizes.filter((s) => s.toUpperCase().startsWith(`${cut.toUpperCase()} `));
+}
+const bare = (s: string) => s.replace(/^(PETITE|TALL)\s+/i, '');
+
+/** Your size in a listing: the petite cut where you're petite and it has one, by its chart or your body mass index. */
 export function sizeFor(sim: Simulation, person: Person, sizes: readonly string[], p?: Sized): string | undefined {
+  const petite = cutOf(sizes, 'petite');
+  if (petite.length > 0 && person.measures?.department !== 'men' && bodyOf(sim, person).heightCm <= PETITE_CM) {
+    const mine = sizeFor(sim, person, petite.map(bare), p);
+    return mine === undefined ? undefined : petite.find((s) => bare(s) === mine);
+  }
+  if (petite.length > 0 || cutOf(sizes, 'tall').length > 0) return sizeFor(sim, person, cutOf(sizes, 'regular'), p);
   const run = sizeRun(sizes);
   if (run.length === 0) return undefined;
   const charted = p ? chartSize(person, p, run) : undefined;
@@ -212,6 +234,10 @@ export function sizeFor(sim: Simulation, person: Person, sizes: readonly string[
 
 /** The weight a garment in a size is made for: yours in your size, a step either way for each size off. */
 export function fitKgFor(sim: Simulation, person: Person, sizes: readonly string[], chosen: string | undefined, p?: Sized): number {
+  // A petite or tall cut is sized within its own run, as a regular one is.
+  const cut = chosen && /^PETITE\s/i.test(chosen) ? 'petite' : chosen && /^TALL\s/i.test(chosen) ? 'tall' : undefined;
+  if (cut) return fitKgFor(sim, person, cutOf(sizes, cut).map(bare), bare(chosen!), p);
+  if (cutOf(sizes, 'regular').length < sizes.length) return fitKgFor(sim, person, cutOf(sizes, 'regular'), chosen, p);
   const kg = bodyOf(sim, person).weightKg;
   const run = sizeRun(sizes);
   const mine = sizeFor(sim, person, sizes, p);
@@ -235,7 +261,8 @@ export const tailorById = (id: string): Tailor | undefined => TAILORS.find((t) =
 export function fitOf(person: Person, g: Garment): 'fits' | 'big' | 'small' {
   // A shoe shorter than the foot doesn't go on (from later on 2026-10-02).
   if (g.slot === 'shoes') return g.footCm !== undefined && person.measures?.footCm !== undefined && person.measures.footCm > g.footCm ? 'small' : 'fits';
-  const kg = person.body?.weightKg;
+  // A pregnancy's gain makes clothes tight, but not a maternity garment, cut for it (from 2026-10-03).
+  const kg = person.body ? person.body.weightKg + (g.maternity ? 0 : person.body.bumpKg ?? 0) : undefined;
   if (g.fitKg === undefined || kg === undefined || UNSIZED.has(g.slot)) return 'fits';
   const ratio = kg / g.fitKg - 1;
   return ratio > FIT.band ? 'small' : ratio < -FIT.band ? 'big' : 'fits';

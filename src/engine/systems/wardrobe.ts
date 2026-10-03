@@ -42,6 +42,8 @@ export interface Garment {
   fitKg?: number;
   /** Let out by a tailor, its seams' spare cloth used (`systems/tailoring.ts`, from 2026-10-02). */
   letOut?: true;
+  /** Cut for a pregnancy, from 2026-10-03: a pregnancy's gain doesn't make it tight. */
+  maternity?: true;
   /** A shoe's foot length on its brand's chart, where it was bought by one (`shoeRow` in `systems/tailoring.ts`, from later on 2026-10-02). */
   footCm?: number;
 }

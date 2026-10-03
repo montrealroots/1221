@@ -197,9 +197,13 @@ export function buyRefusal(person: Person, o: BuyOptions): string | undefined {
   return undefined;
 }
 
+/** A maternity line, by its name as its retailer writes it. */
+export const isMaternity = (p: Pick<ClothingProduct, 'name'>): boolean => /\bmaternity\b|\bmaternidad\b/i.test(p.name);
+
 /** A garment's wear and care, from a product. A wipe-clean garment is never in the wash, so its care doesn't come up. */
+
 function garmentOf(p: ClothingProduct): Garment {
-  return { kind: p.kind, slot: p.slot, care: p.care === 'wipe' ? 'hand' : p.care, wears: 0, washes: 0 };
+  return { kind: p.kind, slot: p.slot, care: p.care === 'wipe' ? 'hand' : p.care, wears: 0, washes: 0, ...(isMaternity(p) ? { maternity: true as const } : {}) };
 }
 
 /**
