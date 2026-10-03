@@ -31,6 +31,9 @@ import { inSaveMoney } from './banking';
 import { payFromBank } from './household';
 import { addItem, homeKeyOf, itemsOf } from './items';
 import { bareHome, owns } from './furniture';
+import { fitRefusal } from './rooms';
+import { occupiedAt } from './life';
+import { formatTime, type Instant } from '../core/time';
 
 /** A furnished home's: a three-seat sofa and a table for four, its chairs among the seats. SLATE's reading. */
 export const FURNISHED = { seats: 3 + 4, table: 4 } as const;
@@ -65,12 +68,15 @@ export function piecesCatalog(sim: Simulation, person: Person): CatalogEntry<Cat
   })).sort((a, b) => a.price! - b.price!);
 }
 
-export function pieceRefusal(person: Person, pieceId: string, quantity: number): string | undefined {
+export function pieceRefusal(person: Person, pieceId: string, quantity: number, sim?: Simulation): string | undefined {
   const p = pieceById(pieceId);
   if (!p) return 'That isn’t on sale.';
   if (!person.home || person.home.kind === 'sofa') return 'You have no home of your own to put it in.';
   if (CITIES.get(person.home.cityId)?.countryId !== p.country) return 'IKEA sells that in another country.';
   if (!(Number.isInteger(quantity) && quantity >= 1 && quantity <= 12)) return 'From one to twelve.';
+  // It has to fit in the rooms (`systems/rooms.ts`, from 2026-10-03).
+  const [w, d] = p.cm;
+  if (sim && w && d) return fitRefusal(sim, person, ((w * d) / 10_000) * quantity);
   return undefined;
 }
 
@@ -85,30 +91,83 @@ export function seatsAtHome(person: Person): { seats: number; table: number } {
   for (const i of itemsOf(person)) {
     if (i.at.kind !== 'home' || i.at.home !== home) continue;
     const p = pieceOfItem(i.kind);
-    if (!p?.seats) continue;
+    // Flat-packed, it seats nobody yet.
+    if (!p?.seats || i.flatPacked) continue;
     if (p.kind === 'diningTable') table += p.seats * i.quantity;
     else seats += p.seats * i.quantity;
   }
   return { seats, table };
 }
 
+/**
+ * Putting it together (from 2026-10-03; `research-furniture.json`, IKEA's own
+ * assembly pages read 2026-09-29). An IKEA piece comes flat-packed, and
+ * seats nobody and holds nothing until it's put together: by IKEA's service
+ * when it's bought, or by you, an hour a piece, SLATE's estimate, nobody
+ * publishing a piece's time. The service's price where IKEA gives one: in
+ * Mexico 2.5% of a sofa's price and 9% of anything else's; elsewhere only a
+ * least, taken as each piece's: from $52 in America (Taskrabbit's minimum),
+ * C$45 in Canada and £33 in Britain; in Ireland Creative Fitting's €40
+ * call-out, once, its rate a piece unpublished and not added.
+ */
+export const ASSEMBLY: Readonly<Record<string, { currency: string; perPiece?: number; callOut?: number; share?: { sofa: number; other: number } }>> = {
+  us: { currency: 'USD', perPiece: 52 },
+  ca: { currency: 'CAD', perPiece: 45 },
+  uk: { currency: 'GBP', perPiece: 33 },
+  ie: { currency: 'EUR', callOut: 40 },
+  mx: { currency: 'MXN', share: { sofa: 0.025, other: 0.09 } },
+};
+/** Minutes to put a piece together yourself. SLATE's estimate. */
+export const ASSEMBLE_MINUTES = 60;
+
+/** IKEA putting so many of a piece together, in the save's money; nothing where it isn't offered. */
+export function assemblyFee(sim: Simulation, p: CatalogPiece, quantity: number): Money | undefined {
+  const a = ASSEMBLY[p.country];
+  if (!a) return undefined;
+  if (a.share) return inSaveMoney(sim, Math.round(p.price * (p.kind === 'sofa' ? a.share.sofa : a.share.other) * quantity * 100), a.currency);
+  if (a.callOut !== undefined) return inSaveMoney(sim, a.callOut * 100, a.currency);
+  return inSaveMoney(sim, Math.round(a.perPiece! * quantity * 100), a.currency);
+}
+
+/** Whether a thing of theirs can be put together now, and why not. */
+export function assembleRefusal(person: Person, itemId: string): string | undefined {
+  const item = itemsOf(person).find((i) => i.id === itemId);
+  if (!item) return 'That isn’t yours.';
+  if (!item.flatPacked) return 'It’s put together.';
+  if (!(item.at.kind === 'home' && item.at.home === homeKeyOf(person.home) && person.home?.cityId === person.currentLocationId)) return 'It’s put together where it is, at home.';
+  return undefined;
+}
+
 export function registerFurnishings(sim: Simulation): void {
-  sim.onCommand<{ pieceId: string; quantity?: number }, { paid: Money }>('home.buy_piece', (p, { sim: s }) => {
+  sim.onCommand<{ pieceId: string; quantity?: number; assembly?: boolean }, { paid: Money }>('home.buy_piece', (p, { sim: s }) => {
     const person = s.player;
     const quantity = Number(p?.quantity ?? 1);
-    const no = pieceRefusal(person, String(p?.pieceId), quantity);
+    const no = pieceRefusal(person, String(p?.pieceId), quantity, s);
     if (no) throw new CommandError(no);
     const piece = pieceById(String(p.pieceId))!;
-    const paid = piecePrice(s, person.home!.cityId, piece) * quantity;
-    if (!payFromBank(s, person, paid, `IKEA, ${piece.name}${quantity > 1 ? ` × ${quantity}` : ''}, delivered`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
+    const fee = p.assembly ? assemblyFee(s, piece, quantity) : 0;
+    if (fee === undefined) throw new CommandError('IKEA doesn’t put it together there.');
+    const paid = piecePrice(s, person.home!.cityId, piece) * quantity + fee;
+    if (!payFromBank(s, person, paid, `IKEA, ${piece.name}${quantity > 1 ? ` × ${quantity}` : ''}, delivered${fee ? ' and put together' : ''}`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
     const [w, d, h] = piece.cm;
     const volumeL = w && d && h ? (w * d * h) / 1000 : undefined;
     // Each one its own, so each can be filled; chairs come as many as were bought.
     const each = STORAGE.has(piece.kind) ? quantity : 1;
     for (let n = 0; n < each; n += 1) {
       addItem(s, person, { kind: `ikea:${piece.id}`, label: `${piece.name} ${KIND_LABEL[piece.kind]}`, quantity: STORAGE.has(piece.kind) ? 1 : quantity, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid: Math.round(paid / each), bulky: true,
-        ...(volumeL !== undefined ? { volumeL } : {}), ...(STORAGE.has(piece.kind) && piece.holdsL ? { holdsL: piece.holdsL } : {}) });
+        ...(volumeL !== undefined ? { volumeL } : {}), ...(STORAGE.has(piece.kind) && piece.holdsL ? { holdsL: piece.holdsL } : {}), ...(fee ? {} : { flatPacked: true as const }) });
     }
     return { paid };
+  });
+  sim.onCommand<{ itemId: string }, { doneAt: Instant }>('items.assemble', (p, { sim: s }) => {
+    const person = s.player;
+    const no = assembleRefusal(person, String(p?.itemId));
+    if (no) throw new CommandError(no);
+    const busy = occupiedAt(s, s.now);
+    if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
+    const item = itemsOf(person).find((i) => i.id === p.itemId)!;
+    s.advanceTo(s.now + ASSEMBLE_MINUTES * 60_000);
+    delete item.flatPacked;
+    return { doneAt: s.now };
   });
 }

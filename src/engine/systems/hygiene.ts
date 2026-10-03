@@ -54,13 +54,15 @@ export const KEPT = ['body-wash', 'shampoo', 'toothpaste', 'toothbrush', 'deodor
 /**
  * The cleaning a home uses up, counted from 2026-10-02 (`content/cleaning.ts`): a wash's laundry detergent, a load each, and
  * a dishwasher's tablet a cycle, at the 184 cycles a year the Department of Energy's test procedure takes for a household's
- * use. Dish soap, sprays, bleach, paper towels, bin bags and sponges are on sale and kept, not used up: nobody publishes how
- * fast a household gets through them.
+ * use. Sprays, bleach, paper towels, bin bags and sponges are on sale and kept, not used up: nobody publishes how fast a
+ * household gets through them. Dish soap was among them until 2026-10-03; from then a washing-up uses the teaspoon a
+ * sinkful the American Cleaning Institute gives, 4.93 ml, a sinkful a day's dishes (`washUp` in `systems/dwelling.ts`).
  */
-export const CLEANING_KEPT = ['laundry-detergent', 'dishwasher-detergent'] as const;
+export const CLEANING_KEPT = ['laundry-detergent', 'dishwasher-detergent', 'dish-soap'] as const;
+export const DISH_SOAP_ML = 4.93;
 export const DISHWASHER_CYCLES_A_DAY = 184 / 365;
 /** A week's use of each, below which it's bought again: two loads of a person's one or two a week (`LAUNDRY`), and a week of dishwasher cycles. */
-export const CLEANING_LOW: Readonly<Record<(typeof CLEANING_KEPT)[number], number>> = { 'laundry-detergent': 2, 'dishwasher-detergent': 7 * DISHWASHER_CYCLES_A_DAY };
+export const CLEANING_LOW: Readonly<Record<(typeof CLEANING_KEPT)[number], number>> = { 'laundry-detergent': 2, 'dishwasher-detergent': 7 * DISHWASHER_CYCLES_A_DAY, 'dish-soap': 7 * DISH_SOAP_ML };
 /** Everything the chains sell for the bathroom and for cleaning. */
 const TOILETRIES: readonly Toiletry[] = [...BATHROOM, ...CLEANING];
 
@@ -163,6 +165,13 @@ export function detergentFor(sim: Simulation, person: Person, loads: number): bo
 /** The laundry detergent for so many loads, used, where it's counted. */
 export function laundryDetergent(sim: Simulation, person: Person, loads: number): void {
   if (keepsCleaning(person) && loads > 0) take(sim, person, ['laundry-detergent'], loads);
+}
+
+/** Sinkfuls of washing-up's dish soap used; false where there's none at home. A life that doesn't count its cleaning always has it. */
+export function dishSoapFor(sim: Simulation, person: Person, sinkfuls: number, use = true): boolean {
+  if (!keepsCleaning(person)) return true;
+  if (!use) return toHand(sim, person, 'dish-soap').length > 0;
+  return take(sim, person, ['dish-soap'], sinkfuls * DISH_SOAP_ML);
 }
 
 /** A day's share of a dishwasher's cycles, its tablets used; false where there are none, and the dishes are done by hand. */
@@ -269,7 +278,20 @@ export function restock(sim: Simulation, person: Person, dishwasher = false): nu
 /** A salon's tip, the custom's middle: Emily Post's 15 to 20% in America and Canada, Debrett's 10% in Britain, 5 to 10% in Ireland, AFAR's 10 to 20% in Mexico. */
 export const SALON_TIP: Readonly<Record<string, number>> = { US: 0.175, CA: 0.175, GB: 0.1, IE: 0.075, MX: 0.15 };
 /** Minutes for a service whose list gives none, and what a visit does for the mood. SLATE's estimates. */
-export const GROOMING = { minutes: 45, morale: 3 } as const;
+export const GROOMING = { minutes: 45, morale: 3, dueWeeks: 4 } as const;
+
+/**
+ * What a visit does for the mood, by how due it was (from 2026-10-03, until
+ * when the last visit was shown and read by nothing): the whole of it four
+ * weeks or more after the last, the soonest any stylist PureWow asked would
+ * cut short hair again (`research-hygiene.json`), and less the sooner, as a
+ * meal lifts the mood by as much as it was needed. A first visit, the whole.
+ */
+export function groomingLift(person: Person, at: Instant): number {
+  const last = lastGroomed(person);
+  const due = last === undefined ? 1 : Math.min(1, (at - last) / (GROOMING.dueWeeks * 7 * MS_DAY));
+  return GROOMING.morale * due;
+}
 
 /** A service at a salon: its price with the tip, in the save's money, and its minutes; nothing where the price isn't known. */
 export function groomingQuote(sim: Simulation, s: Salon, service: string): { price: Money; tip: Money; minutes: number } | undefined {

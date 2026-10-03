@@ -21,7 +21,12 @@
  * (FedEx and Angus Reid, read secondhand) over Pitney Bowes' 34 parcels a
  * person, 0.294%, a rough floor. Ireland and Mexico publish no count, and
  * none is taken there. Each is an average over every parcel, whoever was
- * home: no source says how much being in changes it, so it doesn't.
+ * home. Until 2026-10-03 being in changed nothing; from then a parcel
+ * delivered with somebody home, a partner, a sitter or the player in town
+ * and free (`someoneHome` in `systems/away.ts`), is handed over and not
+ * left, and one left is taken at the same average, which understates a
+ * doorstep's, no source giving the split. With the post held where its hold
+ * takes parcels, an order waits for the hold's end.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -31,6 +36,7 @@ import type { Money } from '../core/money';
 import { addItem, homeKeyOf, itemsOf, type Item, type Place } from './items';
 import { expenseFor } from './household';
 import { CITIES } from '../content/geography';
+import { heldUntil, holdBack, someoneHome } from './away';
 
 export const ORDER_KIND = 'items.order_arrives';
 
@@ -86,9 +92,16 @@ export function deliver(sim: Simulation, person: Person, orderId: string): boole
   const order = ordersOf(person).find((o) => o.id === orderId);
   if (!order || order.status !== 'placed') return false;
   const to = destination(person, order.to);
+  // The post held, a parcel it takes waits for the hold's end (`systems/away.ts`).
+  const held = to.kind === 'home' ? heldUntil(person, sim.now, true, to.home) : undefined;
+  if (held !== undefined) {
+    holdBack(sim, { kind: ORDER_KIND, label: `A Delivery From ${order.from}`, category: 'home', priority: 30, payload: { personId: person.id, orderId } }, held);
+    return false;
+  }
   order.status = 'delivered';
   order.deliveredAt = sim.now;
-  if (to.kind === 'home' && takenFromDoor(sim, person, orderId)) {
+  const handedOver = to.kind === 'home' && to.home === homeKeyOf(person.home) && someoneHome(sim, person, sim.now, sim.now);
+  if (to.kind === 'home' && !handedOver && takenFromDoor(sim, person, orderId)) {
     const taken = itemsOf(person).filter((i) => i.at.kind === 'order' && i.at.orderId === orderId);
     // Clothes taken are bought again as a worn-out garment is (`replaceWornOut` in `systems/clothing.ts`).
     for (const i of taken) if (i.garment) (person.garmentsToReplace ??= []).push({ kind: i.garment.kind, slot: i.garment.slot, care: i.garment.care, label: i.label });

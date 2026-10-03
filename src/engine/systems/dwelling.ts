@@ -48,8 +48,7 @@ import { alarmMonth, renterAlarmFactor } from './alarm';
 import { securityFactor } from './homesecurity';
 import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
-import { detergentFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
-import { contactsOf } from './people';
+import { detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
 import { amenitiesOf } from './hotels';
 import { machinesDay } from './appliancefaults';
 import { starterLuggage } from './luggage';
@@ -58,6 +57,7 @@ import { gymHere } from './gyms';
 import { personalityOf } from './personality';
 import { burgleValuables, scheduledMonth } from './valuables';
 import { homeKeyOf } from './items';
+import { someoneHome } from './away';
 
 // ---------------------------------------------------------------------------
 // The place somebody lives
@@ -230,6 +230,23 @@ export const LAUNDRY = {
 
 /** How fast a home gets untidy a day, a dishwasher's saving, where it starts to weigh, and what it weighs. SLATE's estimates. */
 export const TIDY = { perDay: 6, dishwasher: 0.75, messy: 40, morale: 1, stress: 1, tidiedUp: 70 };
+/**
+ * Washing up by hand, from 2026-10-03: a day's dishes are 38 minutes, the
+ * 230 hours a year Energy Star says its dishwasher saves over washing by hand,
+ * and a sinkful, at the American Cleaning Institute's teaspoon of dish soap
+ * (`dishSoapFor` in `systems/hygiene.ts`). The sink holds three days' before
+ * nothing more is cooked, SLATE's estimate of a home's crockery.
+ */
+export const WASH_UP = { minutesADay: (230 * 60) / 365, full: 3 } as const;
+
+/** The dishes washed by hand: all of them, a sinkful a day's, where there's dish soap. */
+export function washUp(sim: Simulation, person: Person): boolean {
+  const l = livingOf(person);
+  const days = l.dishes ?? 0;
+  if (days <= 0 || !dishSoapFor(sim, person, Math.ceil(days))) return false;
+  delete l.dishes;
+  return true;
+}
 
 /** A day spent working: four hours or more of a commitment that needed them, in the day just gone. */
 export function busyDay(sim: Simulation, person: Person): boolean {
@@ -251,7 +268,8 @@ export const CLEANING = { baseMinutes: 60, sqftPerMinute: 40, most: 240, cleaner
  * When a weekly cleaner comes, from 2026-10-02: ten in the morning, SLATE's
  * reading of a cleaner's visit, for as long as the clean takes them. Without a
  * key they can't get in unless a person's home then: you, in town and not
- * held anywhere else by a commitment, or a partner who lives with you. A visit
+ * held anywhere else by a commitment, or a partner who lives with you, and from
+ * 2026-10-03 a house sitter staying (`someoneHome` in `systems/away.ts`). A visit
  * missed isn't cleaned and isn't charged, no cleaner's lockout fee being
  * published.
  */
@@ -261,12 +279,10 @@ export const CLEANER_VISIT = { hour: 10 } as const;
 export function cleanerGetsIn(sim: Simulation, person: Person, dayStart: Instant): boolean {
   const l = livingOf(person);
   if (l.cleaner?.key) return true;
-  if (contactsOf(person).some((c) => c.livesWith !== undefined)) return true;
-  const place = placeOf(sim, person);
-  if (!place || !atHome(person)) return false;
+  const place = homePlace(sim, person);
+  if (!place) return false;
   const from = dayStart + CLEANER_VISIT.hour * MS_HOUR;
-  const to = from + cleaningMinutes(place) * CLEANING.cleanerSpeed * 60_000;
-  return !sim.universe.scheduled.some((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < to && x.at + x.durationMinutes * 60_000 > from && (x.payload.personId === undefined || x.payload.personId === person.id));
+  return someoneHome(sim, person, from, from + cleaningMinutes(place) * CLEANING.cleanerSpeed * 60_000);
 }
 /** Out of clean clothes: the morning's freshness, and the mood. */
 export const WORN_CLOTHES = { hygiene: 55, morale: 1 };
@@ -282,6 +298,8 @@ export interface Living {
   dirty?: number;
   drying?: { count: number; readyAt: Instant }[];
   tidy: number;
+  /** Days of dishes in the sink, washed by hand (`WASH_UP`, from 2026-10-03). */
+  dishes?: number;
   /** Renters insurance on what's inside, paid monthly. */
   rentersInsurance?: boolean;
   /** A renter's burglar alarm, monitored, which goes where they go (`systems/alarm.ts`, from 2026-09-30). */
@@ -423,8 +441,14 @@ export function livingDay(sim: Simulation, person: Person): void {
   if (atHome(person)) wearForSleep(sim, person);
   // Away, the place stands as they left it: no mess made, and none cleared.
   if (!place.keeps || !atHome(person)) return;
-  // A dishwasher saves the mess only with its tablets in (from 2026-10-02); without, the dishes are done by hand.
-  l.tidy = clamp(l.tidy - TIDY.perDay * (place.fixtures.dishwasher && dishwasherRuns(sim, person) ? TIDY.dishwasher : 1), 0, 100);
+  // A dishwasher saves the mess only with its tablets in (from 2026-10-02); without, the dishes are done by hand. Until
+  // 2026-10-03 that was a quarter more mess every day; from then the day's dishes go in the sink, and the quarter more is
+  // made only on a day that finds yesterday's still there (`WASH_UP`). A free day washes them up with the tidying.
+  const machine = place.fixtures.dishwasher && dishwasherRuns(sim, person);
+  const piled = !machine && (l.dishes ?? 0) > 0;
+  l.tidy = clamp(l.tidy - TIDY.perDay * (piled ? 1 : TIDY.dishwasher), 0, 100);
+  if (machine) delete l.dishes; else l.dishes = Math.min(WASH_UP.full, (l.dishes ?? 0) + 1);
+  if (free) washUp(sim, person);
   if (free && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
   const day = zonedParts(sim.now, CITIES.require(person.home!.cityId).timeZone);
   const weekday = new Date(Date.UTC(day.year, day.month - 1, day.day)).getUTCDay();

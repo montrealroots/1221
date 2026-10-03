@@ -44,6 +44,7 @@ import { tireFactor, tireInsuranceFactor, tiresMonth } from './tires';
 import { byRoad as roadBetween, drive } from './driving';
 import { registerWraps } from './wraps';
 import { mayCollide, registerCarCare, serviceMonth, servicingKept } from './carcare';
+import { registerCarSale } from './carsale';
 import { NO_HISTORY_GB } from '../content/carcare';
 import { registerStandIn } from './standin';
 import { registerCarAudio } from './caraudio';
@@ -101,6 +102,8 @@ export interface OwnedVehicle {
   fault?: import('./repairs').Fault;
   /** A stereo fitted (`systems/caraudio.ts`, from 2026-10-02). */
   stereo?: boolean;
+  /** Listed for a private sale (`systems/carsale.ts`, from 2026-10-03). */
+  listed?: import('./carsale').Listing;
   inShop?: import('./repairs').InShop;
   /** Kilometers driven on errands since the month's driving (`systems/trips.ts`), taken out of it. */
   errandKm?: number;
@@ -431,6 +434,31 @@ export function tradeInFor(sim: Simulation, cityId: string, v: OwnedVehicle): { 
   return { value: toJ(tradeInValue(sim, v)), payoff: toJ(v.loan?.owed ?? 0), label: `${m.make} ${m.model}` };
 }
 
+/** Whether a car of theirs can be sold now, and why not. */
+export function sellRefusal(sim: Simulation, person: Person, vehicleId: string): string | undefined {
+  const v = vehiclesOf(person).find((x) => x.id === vehicleId && x.soldAt === undefined);
+  if (!v) return 'That isn’t a car you own.';
+  if (v.repossessed) return 'The lender has it: redeem it, or it’s sold for the loan.';
+  if (stolenNow(v, sim.now)) return 'It’s been stolen.';
+  if (v.lease) return 'A leased car is the lessor’s to sell: at the lease’s end it’s returned or bought out.';
+  return undefined;
+}
+
+/**
+ * A car sold for a price in the save's money: the loan paid off first, what's
+ * left to the bank, and a loan bigger than the car paid from it; what it had
+ * booked stood down. What came to them after the loan.
+ */
+export function sellVehicle(sim: Simulation, person: Person, v: OwnedVehicle, value: Money, memo: string): Money {
+  const payoff = v.loan?.owed ?? 0;
+  sim.post({ memo, category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: value - payoff }, { accountId: sim.nominalAccount('liability_other', 'Car Loans').id, amount: payoff }, { accountId: sim.nominalAccount('income', 'Car Sold').id, amount: -value }] });
+  v.soldAt = sim.now;
+  delete v.loan;
+  delete v.listed;
+  for (const item of sim.universe.scheduled) if (item.status === 'pending' && item.payload.vehicleId === v.id) sim.timeline.cancel(item.id, sim.now);
+  return value - payoff;
+}
+
 /** A car's value now, in its money: its price new less what the curve says it's lost, and less a repair it needs (`systems/repairs.ts`). */
 export function valueOf(v: OwnedVehicle, at: Instant): Money {
   // In Britain, a car whose servicing wasn't kept is worth less (`NO_HISTORY_GB`, from 2026-10-01).
@@ -639,23 +667,8 @@ export function registerVehicles(sim: Simulation): void {
     for (const one of s.universe.scheduled) if (one.status === 'pending' && one.payload.vehicleId === v.id) s.timeline.cancel(one.id, s.now);
   });
 
-  sim.onCommand<{ vehicleId: string }, { value: Money }>('vehicle.sell', (p, { sim: s }) => {
-    const person = s.player;
-    const v = vehiclesOf(person).find((x) => x.id === p?.vehicleId && x.soldAt === undefined);
-    if (!v) throw new CommandError('That isn’t a car you own.');
-    if (v.repossessed) throw new CommandError('The lender has it: redeem it, or it’s sold for the loan.');
-    if (stolenNow(v, s.now)) throw new CommandError('It’s been stolen.');
-    if (v.lease) throw new CommandError('A leased car is the lessor’s to sell: at the lease’s end it’s returned or bought out.');
-    const value = inSave(s, valueOf(v, s.now), modelById(v.modelId)!.currency);
-    const payoff = v.loan?.owed ?? 0;
-    const into = person.primaryAccountId!;
-    // The sale pays the loan off first; what's left comes to the bank, and a loan bigger than the car is paid from it.
-    s.post({ memo: `Sold the ${modelById(v.modelId)!.make} ${modelById(v.modelId)!.model}`, category: 'vehicle', postings: [{ accountId: into, amount: value - payoff }, { accountId: s.nominalAccount('liability_other', 'Car Loans').id, amount: payoff }, { accountId: s.nominalAccount('income', 'Car Sold').id, amount: -value }] });
-    v.soldAt = s.now;
-    delete v.loan;
-    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.vehicleId === v.id) s.timeline.cancel(item.id, s.now);
-    return { value: value - payoff };
-  });
+  // Sold to a dealer at its offer, or listed to sell privately (`systems/carsale.ts`, from 2026-10-03; until then sold at once at its full value).
+  registerCarSale(sim);
 
   sim.onSchedule(VEHICLE_MONTH_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];

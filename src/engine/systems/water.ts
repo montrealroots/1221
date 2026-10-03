@@ -1,0 +1,96 @@
+/**
+ * SLATE — water and sewer billed by the town's own tariff, to whoever the
+ * town bills (the master plan's "Still Open", from 2026-10-03;
+ * `docs/research/world/research-water-washing.json` and
+ * `research-gaps-services.json`, read 2026-10-02). Until then no home paid
+ * for water at all: the atlas's bills are power, heat, phone and internet.
+ *
+ * **Who's billed.** In London Thames Water bills whoever lives there, a
+ * renter as much as an owner, so every home there pays, a room its share of
+ * the standing charges as of the bills. Elsewhere the utility bills the
+ * property's owner: a renter's water is in the rent, as New York's, Toronto's
+ * and Vancouver's own pages say, and an owner pays for a house; an owned
+ * flat's is the building's. Ireland charges households nothing.
+ *
+ * **The tariffs**, metered, with sewer:
+ * - New York: $5.35 a hundred cubic feet, sewer 159% of it, and at least
+ *   49 cents a day (the Water Board, from July 2026).
+ * - Los Angeles: LADWP's Schedule A tier 1, $12.495 a hundred cubic feet to
+ *   June and $11.794 from July (the allotment for tier 2 is by lot and zone,
+ *   and isn't kept), and LA Sanitation's sewer, $9.28 then $10.13.
+ * - New Haven: the RWA's $23.63 a month and $5.41 a hundred cubic feet, and
+ *   the WPCA's $27.50 a month covering 5, $5.50 each above and $18 to bill.
+ * - Toronto: $4.8629 a cubic meter, water and wastewater, paid on time.
+ * - Vancouver: the flat year, $867 water and $1,238 sewer for a house, billed
+ *   whatever is used.
+ * - London: Thames Water's £2.7346 a cubic meter of water and £1.4721 of
+ *   wastewater, and £66.87 and £128.13 a year standing.
+ * Mexico City's SACMEX blocks are read, but no use a person is published
+ * (the figures quoted conflict), so it isn't billed.
+ *
+ * **What's used**: each person living there a day at home, the published
+ * average: America's 221.8 liters indoors (REU2016), Ontario's 187
+ * (Statistics Canada), and a metered home's 122 in England and Wales
+ * (Discover Water). A day away uses none.
+ */
+
+import type { Simulation } from '../core/simulation';
+import type { Person } from '../domain/model';
+import { saveCurrency, type Money } from '../core/money';
+import { exchange } from '../content/currency';
+import { isFlat } from '../content/homes';
+import { homePlace } from './dwelling';
+import { contactsOf } from './people';
+import { KIND_SHARE } from './electricity';
+
+const DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const HCF_LITERS = 2_831.68;
+
+interface WaterTariff { currency: string; perPersonLiters: number; renters: boolean; bill: (liters: number, month: number, days: number, flat: boolean) => number }
+
+export const WATER_TARIFFS: Readonly<Record<string, WaterTariff>> = {
+  'us-ny-newyork': { currency: 'USD', perPersonLiters: 221.8, renters: false, bill: (l, _m, d) => Math.max(0.49 * d, 5.35 * (l / HCF_LITERS)) * 2.59 },
+  'us-ca-losangeles': { currency: 'USD', perPersonLiters: 221.8, renters: false, bill: (l, m) => (l / HCF_LITERS) * (m <= 6 ? 12.495 + 9.28 : 11.794 + 10.13) },
+  'us-ct-newhaven': { currency: 'USD', perPersonLiters: 221.8, renters: false, bill: (l) => { const ccf = l / HCF_LITERS; return 23.63 + 5.41 * ccf + 27.5 + 18 + 5.5 * Math.max(0, ccf - 5); } },
+  'ca-on-toronto': { currency: 'CAD', perPersonLiters: 187, renters: false, bill: (l) => 4.8629 * (l / 1_000) },
+  'ca-bc-vancouver': { currency: 'CAD', perPersonLiters: 0, renters: false, bill: (_l, _m, _d, flat) => (flat ? 587 + 837 : 867 + 1_238) / 12 },
+  'uk-eng-london': { currency: 'GBP', perPersonLiters: 122, renters: true, bill: (l, _m, d) => (l / 1_000) * (2.7346 + 1.4721) + ((66.87 + 128.13) * d) / 365 },
+};
+
+const inSave = (sim: Simulation, units: number, currency: string): Money => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
+
+/** Who lives in the home: them, and a partner living with them. */
+export const householdOf = (person: Person): number => 1 + contactsOf(person).filter((c) => c.livesWith !== undefined).length;
+
+/** Whether the town bills this home its water: every home where the occupier's billed, or a house of their own. */
+export function billedWater(sim: Simulation, person: Person): boolean {
+  const home = person.home;
+  const t = home ? WATER_TARIFFS[home.cityId] : undefined;
+  if (!home || !t || home.kind === 'sofa') return false;
+  if (t.renters) return true;
+  const place = homePlace(sim, person);
+  return home.kind === 'owned' && Boolean(place) && !isFlat(place!.type);
+}
+
+/** The month's liters used at home: each of the household a day there. */
+export function litersUsed(person: Person, cityId: string, month: number): number {
+  const t = WATER_TARIFFS[cityId];
+  if (!t) return 0;
+  const l = person.living;
+  const days = l?.billDays ? l.homeDays ?? 0 : DAYS[month - 1]!;
+  return t.perPersonLiters * householdOf(person) * days;
+}
+
+/** The month's water and sewer, in the save's money; nothing where the town doesn't bill this home. */
+export function waterBillOf(sim: Simulation, person: Person, month: number): Money {
+  if (!billedWater(sim, person)) return 0;
+  const home = person.home!;
+  const t = WATER_TARIFFS[home.cityId]!;
+  const days = DAYS[month - 1]!;
+  const place = homePlace(sim, person);
+  const whole = t.bill(litersUsed(person, home.cityId, month), month, days, Boolean(place && isFlat(place.type)));
+  // A room pays its share of the standing charges, as of the bills; its own use in full.
+  const share = home.kind === 'shared' ? KIND_SHARE.shared! : 1;
+  const standing = t.bill(0, month, days, false);
+  return inSave(sim, (whole - standing) + standing * share, t.currency);
+}

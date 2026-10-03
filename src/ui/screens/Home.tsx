@@ -33,6 +33,7 @@ import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
 import { cardOf, cardsOf, cardTerms, scoreIsANumberIn, scoreWord, stateOf } from '@/engine/systems/credit';
 import { HOUSING, OWNED, SOFA, arrearsOf, billsOf, depositBack, moveCost, moveRefusal, rentOf, troubles } from '@/engine/systems/household';
 import { wasteFeeOf } from '@/engine/systems/waste';
+import { waterOf } from '@/engine/systems/household';
 import { latePenalty } from '@/engine/systems/taxreturn';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { YALE_DRAMA } from '@/engine/content/school';
@@ -43,6 +44,8 @@ import { Gated, LockedPanel, useFeature } from '@/ui/guide/Guide';
 import { resolveIncomeTaxLayers } from '@/engine/content/tax';
 import { homeOf } from '@/engine/systems/earnings';
 import { TIDY, cleanerCost, livingOf, placeOf, rentersPremium } from '@/engine/systems/dwelling';
+import { holdQuote, holdRefusal, holdRuleFor, sitterFee, sitterRefusal } from '@/engine/systems/away';
+import { FURNISHABLE, closetUsedL, furnishedM2, roomsOf } from '@/engine/systems/rooms';
 import { cleanOutfits, dryCleanDirty, garmentsOf, washableDirty } from '@/engine/systems/wardrobe';
 import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } from '@/engine/content/homes';
 import { alarmRefusal, alarmed } from '@/engine/systems/alarm';
@@ -960,6 +963,8 @@ function YourPlace({ cur }: { cur: string }) {
     drying: garmentsOf(s.player).filter((g) => (g.garment.dryUntil ?? 0) > s.now).length,
   }));
   const premium = useWorld((s) => rentersPremium(s, s.player));
+  // The rooms' floor and built-in storage (`systems/rooms.ts`).
+  const rooms = useWorld((s) => { const r = roomsOf(s, s.player); return r ? { room: r.floorM2 * FURNISHABLE, taken: furnishedM2(s.player), closet: r.closetL, used: closetUsedL(s.player), flatmates: r.flatmates } : undefined; });
   const hasAlarm = useWorld((s) => alarmed(s.player));
   const noAlarm = useWorld((s) => alarmRefusal(s.player));
   const home = useWorld((s) => s.player.home);
@@ -990,6 +995,8 @@ function YourPlace({ cur }: { cur: string }) {
       <div className="muted">{has.join(' · ')}</div>
       <div className="stats">
         <Stat label="Clean Outfits" value={`${clothes.outfits}`} note={clothes.drying > 0 ? `${clothes.drying} drying` : clothes.toWash > 0 ? `${clothes.toWash} to wash` : clothes.toDryClean > 0 ? `${clothes.toDryClean} for the dry cleaner` : 'All washed'} tone={clothes.outfits <= 2 ? 'warning' : undefined} />
+        {rooms && <Stat label="Floor Furnished" value={`${rooms.taken.toFixed(1)} m²`} note={`Of ${rooms.room.toFixed(1)} m² there's room to furnish`} tone={rooms.taken > rooms.room * 0.9 ? 'warning' : undefined} />}
+        {rooms && <Stat label="Built-In Storage" value={`${Math.round(rooms.used)} L`} note={`Of ${Math.round(rooms.closet)} L${rooms.flatmates ? `; a bathroom shared with ${rooms.flatmates}` : ''}`} tone={rooms.used > rooms.closet * 0.9 ? 'warning' : undefined} />}
         {place.keeps && <Stat label="Tidy" value={`${Math.round(living.tidy)}`} note={living.tidy < TIDY.messy ? 'A mess, and it weighs on you' : living.cleaner ? 'A cleaner comes weekly' : 'Out of a hundred'} tone={living.tidy < TIDY.messy ? 'warning' : undefined} />}
       </div>
       {place.keeps && (home.kind === 'own' || home.kind === 'shared') && (
@@ -1025,6 +1032,49 @@ function YourPlace({ cur }: { cur: string }) {
             : <Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.cleaner', { on: true }).ok) toast('A cleaner comes every Friday.', 'positive'); }}>Hire A Cleaner ({formatMoney(cleaner, cur, { cents: false })} A Week)</Gated>}
         </div>
       )}
+      {home.kind !== 'sofa' && <WhileAway cur={cur} />}
+    </div>
+  );
+}
+
+/**
+ * The home while it's empty (`systems/away.ts`): the post held for some
+ * days, and a house sitter for some nights, each somebody or something that
+ * keeps a parcel from the door.
+ */
+function WhileAway({ cur }: { cur: string }) {
+  const { sim, run, toast } = useGame();
+  const [days, setDays] = useState(7);
+  const [nights, setNights] = useState(7);
+  const hold = useWorld((s) => (s.player.mailHold && s.player.mailHold.releaseAt > s.now ? { ...s.player.mailHold } : undefined));
+  const rule = useWorld((s) => holdRuleFor(s.player));
+  const quote = useWorld((s) => holdQuote(s, s.player, days), [days]);
+  const noHold = useWorld((s) => holdRefusal(s, s.player, days), [days]);
+  const sitter = useWorld((s) => (s.player.sitter && s.player.sitter.until > s.now ? { ...s.player.sitter } : undefined));
+  const noSitter = useWorld((s) => sitterRefusal(s.player, nights, s.now), [nights]);
+  const sitterCost = useWorld((s) => sitterFee(s, s.player, nights), [nights]);
+  return (
+    <div className="col gap-2">
+      <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+        {hold
+          ? <><span className="small">{`${hold.service} holds the post from ${formatDate(hold.from, sim.zone)} to ${formatDate(hold.until, sim.zone)}; it comes ${formatDate(hold.releaseAt, sim.zone)}${hold.parcels ? '' : ', parcels delivered meanwhile'}.`}</span>
+            <Gated feature="home.end_hold" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.end_hold', {}).ok) toast('The post comes again.', 'positive'); }}>End The Hold</Gated></>
+          : rule && <><div className="field" style={{ margin: 0 }}>
+              <label htmlFor="hold-days">Days To Hold The Post</label>
+              <input id="hold-days" type="number" style={{ width: '8rem' }} min={rule.leastDays} max={rule.mostDays ?? 365} value={days} onChange={(e) => setDays(Math.max(1, Math.min(rule.mostDays ?? 365, Number(e.target.value) || 1)))} />
+            </div>
+            <Gated feature="home.hold_mail" className="btn btn-sm" disabled={Boolean(noHold)} title={noHold ?? (quote ? `From ${formatDate(quote.from, sim.zone)}${rule.parcels ? ', parcels too' : ', letters only'}${rule.confirmed ? '' : '; its prices read secondhand'}` : undefined)} onClick={() => { if (run('home.hold_mail', { days }).ok) toast('The post is held.', 'positive'); }}>{`Hold The Post (${quote && quote.fee > 0 ? formatMoney(quote.fee, cur) : 'Free'})`}</Gated></>}
+      </div>
+      <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+        {sitter
+          ? <><span className="small">{`A house sitter stays to ${formatDate(sitter.until, sim.zone)}.`}</span>
+            <Gated feature="home.end_sitter" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.end_sitter', {}).ok) toast('The sitter’s gone.', 'positive'); }}>Send The Sitter Home</Gated></>
+          : <><div className="field" style={{ margin: 0 }}>
+              <label htmlFor="sitter-nights">Nights Of House Sitting</label>
+              <input id="sitter-nights" type="number" style={{ width: '8rem' }} min={1} max={90} value={nights} onChange={(e) => setNights(Math.max(1, Math.min(90, Number(e.target.value) || 1)))} />
+            </div>
+            <Gated feature="home.sitter" className="btn btn-sm" disabled={Boolean(noSitter)} title={noSitter ?? 'Somebody home to take parcels in and let the cleaner in'} onClick={() => { if (run('home.sitter', { nights }).ok) toast('A sitter’s staying.', 'positive'); }}>{`Book A House Sitter${sitterCost > 0 ? ` (${formatMoney(sitterCost, cur)})` : ''}`}</Gated></>}
+      </div>
     </div>
   );
 }
@@ -1044,6 +1094,7 @@ function YourHome({ cur }: { cur: string }) {
   const rent = useWorld((s) => rentOf(s, s.player));
   const bills = useWorld((s) => billsOf(s, s.player));
   const bins = useWorld((s) => wasteFeeOf(s, s.player));
+  const water = useWorld((s) => waterOf(s, s.player));
   const council = useWorld((s) => Math.round(rentersCouncilTax(s, s.player) / 10));
   const checking = useWorld((s) => Math.max(0, s.universe.accounts[s.player.primaryAccountId ?? '']?.balance ?? 0));
   // What leaves the bank, the old deposit back set against it, and why a move can't be made, as `move` has it.
@@ -1056,7 +1107,7 @@ function YourHome({ cur }: { cur: string }) {
       <Stat
         label="Where You Sleep"
         value={homeLabel}
-        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills + council)} a month on the first: ${money(rent)} rent and ${money(bills)} bills${bins > 0 ? ` (${money(bins)} of it the bins)` : ''}${council > 0 ? `, and ${money(council)} council tax, April to January` : ''}. Since ${formatDate(home!.since, sim.zone)}`}
+        note={home?.kind === 'sofa' ? SOFA.note : `${money(rent + bills + council)} a month on the first: ${money(rent)} rent and ${money(bills)} bills${bins > 0 || water > 0 ? ` (${[bins > 0 ? `${money(bins)} of it the bins` : '', water > 0 ? `${money(water)} the water` : ''].filter(Boolean).join(', ')})` : ''}${council > 0 ? `, and ${money(council)} council tax, April to January` : ''}. Since ${formatDate(home!.since, sim.zone)}`}
       />
       <InternetControl />
       {home && home.kind !== 'sofa' && home.kind !== 'owned' && (

@@ -75,6 +75,8 @@ import { partnerStays } from './people';
 import { billShare } from './marriage';
 import { TELECOM_OF_BILLS, billedApart, telecomLines } from './telecom';
 import { electricityAdjustment } from './electricity';
+import { gasAdjustment } from './gas';
+import { waterBillOf } from './water';
 import { carryCaravans } from './caravans';
 
 export const RENT_KIND = 'home.rent';
@@ -217,7 +219,8 @@ export function rentOf(sim: Simulation, person: Person): Money {
 }
 
 /**
- * The month's bills: power, heat, phone, internet and getting about. Paid on
+ * The month's bills: power, heat, phone, internet and getting about, and from
+ * 2026-10-03 the water where the town bills it (`systems/water.ts`). Paid on
  * the 1st for the month just gone, whose heating and cooling the home's
  * climate sets (`billsFactor`); a year's come to what they did when every
  * month's was the same.
@@ -225,8 +228,17 @@ export function rentOf(sim: Simulation, person: Person): Money {
 export function billsOf(sim: Simulation, person: Person): Money {
   // Where the internet and the phone are billed by their providers, their part comes out (`systems/telecom.ts`, from 2026-10-01);
   // the rubbish collection goes in, where the town charges for it (`systems/waste.ts`, from 2026-10-02).
-  return Math.max(0, atlasBillsOf(sim, person) - telecomPartOf(sim, person)) + wasteFeeOf(sim, person);
+  return Math.max(0, atlasBillsOf(sim, person) - telecomPartOf(sim, person)) + wasteFeeOf(sim, person) + waterOf(sim, person);
 }
+
+/** The month a bill on the 1st is for: the month just gone, or this one on any other day. */
+function billedMonth(sim: Simulation, person: Person): number {
+  const p = zonedParts(sim.now, CITIES.require(person.home!.cityId).timeZone);
+  return p.day === 1 ? (p.month === 1 ? 12 : p.month - 1) : p.month;
+}
+
+/** The month's water and sewer, where the town bills this home for it. */
+export const waterOf = (sim: Simulation, person: Person): Money => (person.home ? waterBillOf(sim, person, billedMonth(sim, person)) : 0);
 
 /** The atlas's estimate of the phone and internet in a home's bills, where their providers bill them instead; nothing elsewhere. */
 export function telecomPartOf(sim: Simulation, person: Person): Money {
@@ -239,14 +251,14 @@ export function telecomPartOf(sim: Simulation, person: Person): Money {
 export function atlasBillsOf(sim: Simulation, person: Person): Money {
   const flat = costsOf(sim, person)?.bills ?? 0;
   if (!flat || !person.home) return flat;
-  const p = zonedParts(sim.now, CITIES.require(person.home.cityId).timeZone);
-  const billed = p.day === 1 ? (p.month === 1 ? 12 : p.month - 1) : p.month;
+  const billed = billedMonth(sim, person);
   // The summer's cooling as far as the home's air conditioning runs; the machines' loads in the month (`systems/dwelling.ts`).
   const place = homePlace(sim, person);
   const cooling = place?.fixtures.cooling ?? 'central';
   const machines = atTown(person.home.cityId, machineUsd(person), saveCurrency(sim.universe));
   // The electricity used at the utility's tariff, against the typical month the atlas carries (`systems/electricity.ts`, from 2026-10-02).
-  const used = electricityAdjustment(sim, person, billed);
+  // And the gas the same way (`systems/gas.ts`, from 2026-10-03).
+  const used = electricityAdjustment(sim, person, billed) + gasAdjustment(sim, person, billed);
   if (person.home.kind !== 'owned') return Math.round(flat * billsFactor(person.home.cityId, billed, cooling)) + machines + used;
   const { factor, poolUsd } = ownedBillsFactor(person);
   return Math.round(flat * factor * billsFactor(person.home.cityId, billed, cooling) + atTown(person.home.cityId, poolUsd, saveCurrency(sim.universe))) + machines + used;

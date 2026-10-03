@@ -1,0 +1,18 @@
+{
+  "read": "2026-10-03",
+  "what": "A typical residential natural gas customer's year, by state: the state's residential consumption over its residential customers, 2024.",
+  "sources": {
+    "consumption": "https://www.eia.gov/dnav/ng/ng_cons_sum_a_EPG0_vrs_mmcf_a.htm",
+    "customers": "https://www.eia.gov/dnav/ng/ng_cons_num_a_EPG0_VN3_Count_a.htm"
+  },
+  "method": "Both EIA Natural Gas Annual tables were fetched as HTML on 2026-10-03 and the 2024 columns read. Mcf a customer = MMcf x 1,000 / customers. Therms = Mcf x 10.36, at 1,036 Btu a cubic foot, EIA's heat content of gas delivered to consumers. A ccf is a tenth of an Mcf.",
+  "states": {
+    "NY": { "consumptionMmcf2024": 400445, "customers2024": 4617162, "mcfPerCustomer": 86.73, "thermsPerYear": 898.5, "thermsPerMonth": 74.9 },
+    "CA": { "consumptionMmcf2024": 419503, "customers2024": 11428636, "mcfPerCustomer": 36.71, "thermsPerYear": 380.3, "thermsPerMonth": 31.7 },
+    "CT": { "consumptionMmcf2024": 47637, "customers2024": 597512, "mcfPerCustomer": 79.73, "ccfPerYear": 797.3, "ccfPerMonth": 66.4 }
+  },
+  "notes": [
+    "An average over every residential gas customer, heating or not, across the year; no month's share is kept.",
+    "The 2025 consumption column (NY 450,867, CA 408,468, CT 53,091 MMcf) has no 2025 customer count beside it yet, so 2024 is used."
+  ]
+}

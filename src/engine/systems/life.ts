@@ -33,12 +33,13 @@ import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPayFor, fedOn, mealOf, spend } from './household';
-import { cook, kitchenMeal } from './kitchen';
+import { SINK_FULL, cook, kitchenMeal, sinkFull } from './kitchen';
+import { bathroomWait } from './rooms';
 import { watchRefusal } from './homelife';
 import { takePortion } from './pantry';
 import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty } from './wardrobe';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
-import { GROOMING, dailyCare, detergentFor, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
+import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
 import { roomGone } from './latecheckout';
 import { runInShoes } from './resale';
@@ -46,7 +47,7 @@ import { MOWN_CM, MOW_MINUTES, lawnOf, mow } from './lawns';
 import { livingIn } from './homes';
 import {
   DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
-  swimRefusal, trainingAt, wearOutfit, courtAt, courtRefusal, COURT_MET,
+  swimRefusal, trainingAt, wearOutfit, courtAt, courtRefusal, COURT_MET, WASH_UP, washUp,
 } from './dwelling';
 
 // ---------------------------------------------------------------------------
@@ -419,8 +420,8 @@ export function registerLife(sim: Simulation): void {
     const q = groomingQuote(s, salon, String(p.service))!;
     if (!spend(s, person, q.price + q.tip, salon.name, 'personal')) throw new CommandError('The payment didn’t go through.');
     s.advanceTo(s.now + q.minutes * 60_000);
+    person.wellbeing.morale = clamp(person.wellbeing.morale + groomingLift(person, s.now) * personalityOf(person, 'moraleSwing'), 0, 100);
     person.groomedAt = s.now;
-    person.wellbeing.morale = clamp(person.wellbeing.morale + GROOMING.morale * personalityOf(person, 'moraleSwing'), 0, 100);
     return { doneAt: s.now, paid: q.price + q.tip };
   });
 
@@ -471,6 +472,7 @@ export function registerLife(sim: Simulation): void {
       if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court') wearOutfit(s, person, true);
       // The lawn cut (`systems/lawns.ts`, from 2026-10-02).
       if (action === 'mow') { const home = livingIn(person); if (home) mow(home, s.now); }
+      if (action === 'washup') washUp(s, person);
       const before = { ...person.wellbeing };
       // Eaten out where there's no kitchen: a restaurant's meal too.
       if (action === 'eat' && !cooks(s, person)) eatsOut(person);
@@ -527,7 +529,7 @@ export function registerLife(sim: Simulation): void {
  * Each takes real time off the clock, and the clock charges that time as
  * waking before the action pays out.
  */
-export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'mow';
+export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'washup' | 'mow';
 
 export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
   eat: { label: 'Eat A Meal', minutes: 40, does: 'Cooked at home, or a meal out: feeds you, and lifts the mood by as much as you needed it' },
@@ -545,6 +547,7 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
   laundry: { label: 'Do The Laundry', minutes: 20, does: 'Washes what you’ve worn: in your own machines, the building’s, or at the laundromat' },
   tidy: { label: 'Clean The Place', minutes: 60, does: 'A clean home, which stops a mess weighing on you' },
+  washup: { label: 'Wash Up', minutes: 38, does: 'The dishes in the sink washed by hand, so the kitchen can be cooked in and they don’t add to the mess' },
   // From 2026-10-02 (`systems/lawns.ts`): the 1.9 hours ATUS finds a day of lawn and garden care takes.
   mow: { label: 'Mow The Lawn', minutes: MOW_MINUTES, does: 'Cuts the grass at the home you live in to 5 cm, ahead of any notice from the city' },
 };
@@ -597,6 +600,9 @@ export function minutesFor(sim: Simulation, action: LookAfter): number {
   if (action === 'laundry') return LAUNDRY.minutes[laundryWay(sim, sim.player)];
   if (action === 'charter') return Math.round((charterAt(sim.player.currentLocationId)?.hours ?? 3) * 60);
   if (action === 'tidy') { const place = placeOf(sim, sim.player); return place ? cleaningMinutes(place) : LOOKING_AFTER.tidy.minutes; }
+  if (action === 'washup') return Math.max(1, Math.round(WASH_UP.minutesADay * (livingOf(sim.player).dishes ?? 1)));
+  // In a flat-share, waiting for the bathroom first (`bathroomWait` in `systems/rooms.ts`, from 2026-10-03).
+  if (action === 'wash' || action === 'bathe') return LOOKING_AFTER[action].minutes + bathroomWait(sim, sim.player, sim.now, LOOKING_AFTER[action].minutes);
   return LOOKING_AFTER[action].minutes;
 }
 
@@ -627,6 +633,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   if ((action === 'eat' || action === 'order') && w.nourishment >= FULL) return 'You aren’t hungry.';
   if ((action === 'eat' || action === 'order' || action === 'laundry') && canPayFor(sim, person, action === 'laundry' ? 'laundry' : 'food') < costFor(sim, action) && !(action === 'eat' && kitchenMeal(sim, person))) return 'You can’t afford it.';
+  if (action === 'eat' && cooks(sim, person) && !kitchenMeal(sim, person) && sinkFull(person)) return SINK_FULL;
   if ((action === 'wash' || action === 'bathe') && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
   if ((action === 'wash' || action === 'bathe') && !atHome(person) && roomGone(person)) return person.stay?.readyAt !== undefined ? `The room isn’t ready until ${formatTime(person.stay.readyAt, sim.zone)}.` : 'You’ve checked out, and the room is gone until you leave.';
   if (action === 'bathe' && !place?.fixtures.bathtub) return atHome(person) ? 'There’s no bath where you live, only a shower.' : 'There’s no bath where you’re staying, only a shower.';
@@ -644,6 +651,9 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'laundry' && !detergentFor(sim, person, Math.ceil(washableDirty(sim, person).length / GARMENTS_PER_LOAD))) return 'There isn’t enough laundry detergent at home for it.';
   if (action === 'tidy' && !(atHome(person) && place?.keeps)) return 'It isn’t your place to clean.';
   if (action === 'tidy' && livingOf(person).tidy >= 90) return 'The place is clean.';
+  if (action === 'washup' && !(atHome(person) && place?.keeps)) return 'It isn’t your sink.';
+  if (action === 'washup' && !livingOf(person).dishes) return 'There’s nothing to wash up.';
+  if (action === 'washup' && !dishSoapFor(sim, person, 1, false)) return 'There’s no dish soap at home.';
   if (action === 'mow') { const lawn = atHome(person) ? homeLawn(person) : undefined; if (!lawn) return 'There’s no lawn of yours here.'; if (lawn.cm < MOWN_CM + 1) return 'It’s cut.'; }
   const end = sim.now + minutesFor(sim, action) * 60_000;
   const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);
@@ -692,7 +702,7 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
     const washed = 100 - (w.hygiene ?? 80);
     w.hygiene = 100;
     w.stress = clamp(w.stress - washed * 0.1 - (action === 'bathe' ? BATH_RELIEF * personalityOf(person, 'stressRecovery') * relief : 0), 0, 100);
-  } else if (action === 'laundry') {
+  } else if (action === 'laundry' || action === 'washup') {
     // The clothes are the wardrobe's (`doLaundry`); the chore itself does nothing to the dials.
   } else if (action === 'tidy') {
     livingOf(person).tidy = 100;

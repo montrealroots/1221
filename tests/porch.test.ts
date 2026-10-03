@@ -2,6 +2,7 @@
  * A parcel taken from the door (`takenFromDoor` in `systems/orders.ts`,
  * from 2026-10-02): delivered to a home, it's stolen at the market's count
  * of parcels stolen over parcels delivered, and what was in it is gone.
+ * From 2026-10-03 only when nobody's home to take it in; these are away.
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
@@ -28,6 +29,7 @@ describe('a parcel at the door', () => {
   it('taken, leaves nothing of the order, and says so', () => {
     const sim = life('us-ny-newyork', 'porch-take');
     const p = sim.player;
+    p.currentLocationId = 'uk-eng-london';
     const order = placeOrder(sim, p, { from: 'A Shop', arrivesAt: sim.now + MS_DAY, to: { kind: 'home', home: homeKeyOf(p.home)!, spot: 'floor' }, paid: 10_00 }, [{ kind: 'custom', label: 'A Thing', quantity: 1, condition: 1 }]);
     const was = PARCEL_THEFT.us!;
     (PARCEL_THEFT as Record<string, number>).us = 1;
@@ -43,6 +45,7 @@ describe('a parcel at the door', () => {
   it('taken with clothes in it, has them bought again on a free day, as a worn-out garment is', () => {
     const sim = life('us-ny-newyork', 'porch-clothes');
     const p = sim.player;
+    p.currentLocationId = 'uk-eng-london';
     const order = placeOrder(sim, p, { from: 'Uniqlo', arrivesAt: sim.now + MS_DAY, to: { kind: 'home', home: homeKeyOf(p.home)!, spot: 'drawers' }, paid: 10_00 }, [{ kind: 'x', label: 'Socks', quantity: 1, condition: 1, garment: { kind: 'socks', slot: 'socks', care: 'wash', wears: 0, washes: 0 } }]);
     const was = PARCEL_THEFT.us!;
     (PARCEL_THEFT as Record<string, number>).us = 1;

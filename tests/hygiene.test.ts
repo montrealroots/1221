@@ -10,7 +10,7 @@ import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { TOILETRIES } from '@/engine/content/hygiene';
 import { homeKeyOf } from '@/engine/systems/items';
-import { USE, WITHOUT, dailyCare, groomingQuote, groomingRefusal, keepsSupplies, restock, salonById, showerUses, suppliesOf, toiletryCatalog, toiletryPrice } from '@/engine/systems/hygiene';
+import { GROOMING, USE, WITHOUT, dailyCare, groomingLift, groomingQuote, groomingRefusal, keepsSupplies, restock, salonById, showerUses, suppliesOf, toiletryCatalog, toiletryPrice } from '@/engine/systems/hygiene';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const bank = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
@@ -21,8 +21,8 @@ describe('toiletries', () => {
   it('a life starts with the cheapest of each kind where it lives, in the bathroom', () => {
     const sim = life('us-ny-newyork', 'hyg-start');
     expect(keepsSupplies(sim.player)).toBe(true);
-    // From 2026-10-02 the home's detergents too, kept in storage (tests/cleaning.test.ts).
-    const bathroom = suppliesOf(sim.player).filter((i) => !i.supply.kind.endsWith('-detergent'));
+    // From 2026-10-02 the home's detergents too, and from 2026-10-03 its dish soap, kept in storage (tests/cleaning.test.ts).
+    const bathroom = suppliesOf(sim.player).filter((i) => !i.supply.kind.endsWith('-detergent') && i.supply.kind !== 'dish-soap');
     expect(bathroom.map((i) => i.supply.kind).sort()).toEqual(['body-wash', 'deodorant', 'shampoo', 'toothbrush', 'toothpaste']);
     expect(bathroom.every((i) => i.at.kind === 'home' && i.at.spot === 'bathroom')).toBe(true);
     // Where SLATE keeps no chain's toiletries, none are counted.
@@ -136,6 +136,24 @@ describe('a barber or a salon', () => {
     expect(sim.now - start).toBe(30 * 60_000);
     expect(sim.player.groomedAt).toBe(sim.now);
     expect(sim.player.wellbeing.morale).toBeGreaterThan(morale - 0.5);
+  });
+
+  it('lifts the mood by how due it was: the whole of it four weeks on, half at two, the whole the first time', () => {
+    const sim = life('uk-eng-london', 'groom-due');
+    const p = sim.player;
+    expect(groomingLift(p, sim.now)).toBe(GROOMING.morale);
+    p.groomedAt = sim.now - 14 * MS_DAY;
+    expect(groomingLift(p, sim.now)).toBeCloseTo(GROOMING.morale / 2, 9);
+    p.groomedAt = sim.now - 40 * MS_DAY;
+    expect(groomingLift(p, sim.now)).toBe(GROOMING.morale);
+    // Back to back, the second barely lifts it.
+    const pall = salonById('pall-mall-barbers-trafalgar-square-london')!;
+    p.wellbeing.morale = 50;
+    sim.must({ kind: 'hygiene.groom', payload: { salonId: pall.id, service: 'mens-cut' } });
+    const after = p.wellbeing.morale;
+    sim.must({ kind: 'hygiene.groom', payload: { salonId: pall.id, service: 'mens-cut' } });
+    expect(p.wellbeing.morale - after).toBeLessThan(0.1);
+    expect(after - 50).toBeGreaterThan(1);
   });
 
   it('isn’t had in another town, nor where the price isn’t known', () => {

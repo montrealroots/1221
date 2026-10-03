@@ -6,6 +6,7 @@
  */
 import { Fragment, useState } from 'react';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { assembleRefusal } from '@/engine/systems/furnishings';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { useFeature } from '@/ui/guide/Guide';
@@ -49,6 +50,7 @@ export function BelongingsWorkspace() {
   const person = useWorld((s) => s.player);
   const items = itemsOf(person);
   const move = useFeature('items.move');
+  const assemble = useFeature('items.assemble');
   const [target, setTarget] = useState<Record<string, string>>({});
   const [filter, setFilter] = useState<FacetFilter>({});
   const places = placesNow(sim, person, items);
@@ -123,7 +125,7 @@ export function BelongingsWorkspace() {
                         const to = options.find((o) => o.key === chosen)?.place;
                         return (
                           <tr key={item.id}>
-                            <td><Open subject={item.garment ? at('garment', item.id) : at('item', item.id)}>{item.label}</Open></td>
+                            <td><Open subject={item.garment ? at('garment', item.id) : at('item', item.id)}>{item.label}</Open>{item.flatPacked ? <span className="xs dim"> · Flat-Packed</span> : null}</td>
                             <td className="num mono">{item.quantity}</td>
                             <td className="num mono"><Open subject={item.garment ? at('garment', item.id) : at('item', item.id)}>{Math.round(item.condition * 100)}%</Open></td>
                             <td className="small">{item.holdsL ? `${Math.round(usedL(person, item.id))} Of ${item.holdsL} L` : '—'}</td>
@@ -135,8 +137,9 @@ export function BelongingsWorkspace() {
                                   </select>
                                   <button type="button" className="btn btn-sm btn-ghost" disabled={!move.open || !to} title={move.reason} onClick={() => { if (to && run('items.move', { itemId: item.id, to }).ok) toast(`The ${item.label}, moved.`, 'positive'); }}>Move It</button>
                                   <GiveTo itemId={item.id} label={item.label} />
+                                  {item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? 'An hour'} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}
                                 </div>
-                              ) : <div className="xs dim" style={{ textAlign: 'right' }}>{here ? 'Stays Where It Is' : 'Not To Hand'}</div>}
+                              ) : item.flatPacked && here ? <div className="row gap-1" style={{ justifyContent: 'flex-end' }}>{item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? 'An hour'} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}</div> : <div className="xs dim" style={{ textAlign: 'right' }}>{here ? 'Stays Where It Is' : 'Not To Hand'}</div>}
                             </td>
                           </tr>
                         );
