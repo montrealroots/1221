@@ -5,6 +5,7 @@
  */
 
 import { tradeInFor } from '@/engine/systems/vehicles';
+import { dealerOffer, listRefusal, listingQuote, privateValue, saleRefusal } from '@/engine/systems/carsale';
 import { redemption } from '@/engine/systems/repossession';
 import { boatsOf, boatQuote, buyBoatRefusal, certified, certifyRefusal, onItsTrailer } from '@/engine/systems/boats';
 import { BOAT_LOAN, BOAT_RULES, T18, isBoatState } from '@/engine/content/boats';
@@ -150,10 +151,7 @@ export function VehiclesWorkspace() {
                             <CoverControl v={v} />
                             <ModifyControl v={v} />
                             {!v.hitch && towRating(v) > 0 && <Gated feature="vehicle.hitch" className="btn btn-sm btn-ghost" disabled={Boolean(hitchRefusal(sim, person, v))} title={hitchRefusal(sim, person, v) ?? `Rated to tow ${Math.round(towRating(v))} kg`} onClick={() => { const a = run<{ paid: number }>('vehicle.hitch', { vehicleId: v.id }); if (a.ok) toast(`A towbar fitted, for ${money(a.value!.paid)}.`, 'positive'); }}>Fit A Towbar</Gated>}
-                            <Gated feature="vehicle.sell" className="btn btn-sm btn-ghost" onClick={() => {
-                              const a = run<{ value: number }>('vehicle.sell', { vehicleId: v.id });
-                              if (a.ok) toast(`Sold: ${money(a.value!.value)} to you after the loan.`, 'positive');
-                            }}>Sell It</Gated>
+                            <SaleControl v={v} />
                             </div>
                           )}
                         </td>
@@ -632,6 +630,31 @@ function CoverControl({ v }: { v: OwnedVehicle }) {
 }
 
 /** Its servicing, by the maker's interval, and its warranty (`systems/carcare.ts`). */
+/** Sold to a dealer now for its offer, or listed privately at the site's fee to sell for its value in about a month (`systems/carsale.ts`). */
+function SaleControl({ v }: { v: OwnedVehicle }) {
+  const { run, toast, sim } = useGame();
+  const no = useWorld((s) => saleRefusal(s, s.player, v.id), [v]);
+  const noList = useWorld((s) => listRefusal(s, s.player, v.id), [v]);
+  const offer = useWorld((s) => dealerOffer(s, v), [v]);
+  const worth = useWorld((s) => privateValue(s, v), [v]);
+  const listing = useWorld((s) => listingQuote(s, v), [v]);
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur, { cents: false });
+  if (v.listed) return (
+    <>
+      <span className="xs dim">{`Listed On ${v.listed.platform}, A Buyer About ${formatDate(v.listed.sellsAt, sim.zone)}`}</span>
+      <Gated feature="vehicle.unlist" className="btn btn-sm btn-ghost" onClick={() => { if (run('vehicle.unlist', { vehicleId: v.id }).ok) toast('Taken down.', 'neutral'); }}>Take The Listing Down</Gated>
+      <Gated feature="vehicle.sell" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ value: number }>('vehicle.sell', { vehicleId: v.id }); if (a.ok) toast(`Sold to a dealer: ${money(a.value!.value)} to you after the loan.`, 'positive'); }}>{`Sell To A Dealer, ${money(offer)}`}</Gated>
+    </>
+  );
+  return (
+    <>
+      <Gated feature="vehicle.sell" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? 'Today, for less than a private buyer pays'} onClick={() => { const a = run<{ value: number }>('vehicle.sell', { vehicleId: v.id }); if (a.ok) toast(`Sold to a dealer: ${money(a.value!.value)} to you after the loan.`, 'positive'); }}>{`Sell To A Dealer, ${money(offer)}`}</Gated>
+      {listing && <Gated feature="vehicle.list" className="btn btn-sm btn-ghost" disabled={Boolean(noList)} title={noList ?? `On ${listing.platform}${listing.confirmed ? '' : ', its terms read secondhand'}: about ${money(worth)} in a month, when you're in town for the buyer`} onClick={() => { if (run('vehicle.list', { vehicleId: v.id }).ok) toast(`Listed on ${listing.platform}.`, 'positive'); }}>{`List It For Sale${listing.fee > 0 ? `, ${formatMoney(listing.fee, cur)}` : ''}`}</Gated>}
+    </>
+  );
+}
+
 function ServiceControl({ v }: { v: OwnedVehicle }) {
   const { run, toast, sim } = useGame();
   const m = modelById(v.modelId)!;

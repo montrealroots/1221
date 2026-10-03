@@ -179,8 +179,9 @@ describe('owning one', () => {
     const owed = v.loan!.owed;
     const s = sim.execute<{ value: number }>({ kind: 'vehicle.sell', payload: { vehicleId: v.id } });
     expect(s.ok, s.error).toBe(true);
-    // Worth less than the loan a month on, the destination charge and a month's value gone: the rest comes from the bank.
-    expect(s.value!.value).toBe(usd(worth) - owed);
+    // Sold to a dealer, from 2026-10-03, for KBB's worked example's $3,815 under its value (`systems/carsale.ts`); worth
+    // less than the loan a month on, the destination charge and a month's value gone: the rest comes from the bank.
+    expect(s.value!.value).toBe(usd(worth - 381_500) - owed);
     expect(s.value!.value).toBeLessThan(0);
     expect(vehiclesOf(sim.player)[0]!.soldAt).toBeDefined();
   });
