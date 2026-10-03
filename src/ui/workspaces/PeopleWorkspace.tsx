@@ -27,6 +27,8 @@ import { groupLabelOf } from '@/ui/shell/destinations';
 import { homeCourts } from '@/engine/systems/dwelling';
 import { hostRefusal, type Gathering } from '@/engine/systems/hosting';
 import { seatsAtHome } from '@/engine/systems/furnishings';
+import { RECIPES } from '@/engine/content/groceries';
+import { cookRefusal, servingsRange } from '@/engine/systems/kitchen';
 import { clubById, clubsIn, joinClubRefusal, joinFee, membershipsOf } from '@/engine/systems/clubs';
 const COURT_LABEL = { tennis: 'Tennis', basketball: 'Basketball', pickleball: 'Pickleball', football: 'Football' } as const;
 import { HALL } from '@/engine/content/people';
@@ -133,9 +135,12 @@ function HaveFriendsOver() {
   const [what, setWhat] = useState<Gathering>('dinner');
   const [day, setDay] = useState(1);
   const [hour, setHour] = useState(19);
+  const [recipeId, setRecipeId] = useState('');
   const today = zonedParts(sim.now, zone);
   const when = instantFromZoned({ year: today.year, month: today.month, day: today.day, hour, minute: 0 }, zone) + day * MS_DAY;
   const room = seatsAtHome(person);
+  // A recipe that cooks for everyone, as the kitchen has it now; it's checked again on the night.
+  const recipes = RECIPES.filter((r) => servingsRange(r).most >= asked.length + 1);
   const no = hostRefusal(sim, person, asked, when, what);
   const toggle = (id: string) => setAsked((a) => (a.includes(id) ? a.filter((x) => x !== id) : [...a, id]));
   return (
@@ -168,13 +173,22 @@ function HaveFriendsOver() {
               {Array.from({ length: 13 }, (_, i) => i + 10).map((h) => <option key={h} value={h}>{`${String(h).padStart(2, '0')}:00`}</option>)}
             </select>
           </div>
+          {what === 'dinner' && (
+            <div className="field">
+              <label htmlFor="host-recipe">Cook</label>
+              <select id="host-recipe" value={recipeId} onChange={(e) => setRecipeId(e.target.value)}>
+                <option value="">Nothing Particular, At A Meal’s Price</option>
+                {recipes.map((r) => <option key={r.id} value={r.id}>{`${r.name}${cookRefusal(sim, person, r.id, asked.length + 1) ? ' (Not In The Kitchen Now)' : ''}`}</option>)}
+              </select>
+            </div>
+          )}
           <Gated feature="social.host" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-            const a = run<{ coming: string[]; declined: { contactId: string; reason: string }[] }>('social.host', { contactIds: asked, at: when, what });
+            const a = run<{ coming: string[]; declined: { contactId: string; reason: string }[] }>('social.host', { contactIds: asked, at: when, what, ...(what === 'dinner' && recipeId ? { recipeId } : {}) });
             if (a.ok) { toast(a.value!.coming.length ? `${a.value!.coming.length} coming${a.value!.declined.length ? `; ${a.value!.declined.map((d) => d.reason).join(' ')}` : '.'}` : `Nobody can come: ${a.value!.declined.map((d) => d.reason).join(' ')}`, a.value!.coming.length ? 'positive' : 'neutral'); setAsked([]); }
           }}>Ask Them Over</Gated>
         </div>
         {no && asked.length > 0 && <div className="xs dim">{no}</div>}
-        <div className="xs dim">A dinner is cooked for everyone at what a meal at home costs here, and sits everyone at your table; each guest is poured a drink from the beer and wine in the kitchen, as far as it goes. A home in a mess is noticed.</div>
+        <div className="xs dim">A dinner is cooked for everyone at what a meal at home costs here, or from a recipe you choose where the kitchen has it for everyone on the night, and sits everyone at your table; each guest is poured a drink from the beer and wine in the kitchen, as far as it goes. A home in a mess is noticed.</div>
       </div>
     </Panel>
   );

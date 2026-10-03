@@ -1,0 +1,598 @@
+{
+  "meta": {
+    "topic": "Vehicles, deeper: maker specs and trims for SLATE's catalog models, replacement tyres and wheels, lighting upgrades and their legality, body trim, audio, roof racks and boxes, door panels and carpets",
+    "date": "2026-10-03",
+    "method": "Models sampled from src/engine/content/vehiclecatalog.ts (US: Ford F-150, Chevrolet Silverado, Toyota RAV4, Honda CR-V, Ram 1500, GMC Sierra, Chevrolet Equinox, Toyota Camry; CA: Hyundai Tucson, Nissan Rogue; MX: Nissan Versa; GB: Ford Puma, Kia Sportage, Nissan Qashqai, Vauxhall Corsa, VW Golf; IE: Toyota Corolla). Pages were read with WebFetch; Shopify retailers' and makers' own stores were read through their public product JSON (/products/<handle>.js, /collections/<c>/products.json), which is the store's own price data. 'confirmed' is true only where the figure was read on the publisher's own page or store feed; figures from search-engine summaries or third parties are confirmed:false with a note. Most US maker sites (toyota.com, honda.com, chevrolet.com, hyundaiusa.com), Crutchfield, Tire Rack, Walmart, Summit Racing and Canadian Tire refused automated reading (403, CAPTCHA or bot wall) on 2026-10-03; Halfords product pages render prices by script, so the HTML carried none. Prices are as shown on the read date; US and Canadian prices are before sales tax, UK/IE/MX retail prices include VAT/IVA unless noted.",
+    "sampledModels": [
+      "us-ford-f-series", "us-chevrolet-silverado", "us-toyota-rav4", "us-honda-cr-v", "us-ram-pickup-1500-heavy-duty",
+      "us-gmc-sierra", "us-chevrolet-equinox", "us-toyota-camry", "ca-hyundai-tucson", "ca-nissan-rogue",
+      "mx-nissan-versa", "gb-ford-puma", "gb-kia-sportage", "gb-nissan-qashqai", "gb-volkswagen-golf", "ie-toyota-corolla"
+    ]
+  },
+  "specs": [
+    {
+      "model": "Honda CR-V", "market": "US", "modelYear": 2027, "bodyStyle": "compact SUV",
+      "trims": [
+        {"trim": "LX", "drivetrain": "2WD (FWD)", "powertrain": "1.5T", "transmission": "CVT", "msrp": 31520},
+        {"trim": "LX", "drivetrain": "AWD", "powertrain": "1.5T", "transmission": "CVT", "msrp": 33020},
+        {"trim": "EX", "drivetrain": "2WD (FWD)", "powertrain": "1.5T", "transmission": "CVT", "msrp": 33550},
+        {"trim": "EX", "drivetrain": "AWD", "powertrain": "1.5T", "transmission": "CVT", "msrp": 35050},
+        {"trim": "EX-L", "drivetrain": "2WD (FWD)", "powertrain": "1.5T", "transmission": "CVT", "msrp": 35800},
+        {"trim": "EX-L", "drivetrain": "AWD", "powertrain": "1.5T", "transmission": "CVT", "msrp": 37300},
+        {"trim": "Sport Hybrid", "drivetrain": "2WD (FWD)", "powertrain": "two-motor hybrid", "transmission": "hybrid (e-CVT)", "msrp": 36030},
+        {"trim": "Sport Hybrid", "drivetrain": "AWD", "powertrain": "two-motor hybrid", "transmission": "hybrid (e-CVT)", "msrp": 37530},
+        {"trim": "TrailSport Hybrid", "drivetrain": "AWD", "powertrain": "two-motor hybrid", "transmission": "hybrid (e-CVT)", "msrp": 39200},
+        {"trim": "Sport-L Hybrid", "drivetrain": "2WD (FWD)", "powertrain": "two-motor hybrid", "transmission": "hybrid (e-CVT)", "msrp": 39125},
+        {"trim": "Sport-L Hybrid", "drivetrain": "AWD", "powertrain": "two-motor hybrid", "transmission": "hybrid (e-CVT)", "msrp": 40625},
+        {"trim": "Sport Touring Hybrid", "drivetrain": "AWD", "powertrain": "two-motor hybrid", "transmission": "hybrid (e-CVT)", "msrp": 42950}
+      ],
+      "destination": 1550, "unit": "USD, MSRP excluding destination", "currency": "USD",
+      "url": "https://hondanews.com/en-US/honda-automobiles/releases/release-5acd4d89f745189a21ef2396a500175b-2027-honda-cr-v-pricing-and-epa-ratings",
+      "date": "2026-09-09 (release); read 2026-10-03", "confirmed": true,
+      "note": "The release gives the powertrain as '1.5T/CVT' or 'Hybrid'; 'e-CVT' for the hybrid is a label of convenience, not quoted. SLATE's catalog row is the 2026 LX 2WD; Honda's 2026 release (hondanews, same series) gave the 2026 LX 2WD at $30,920 + $1,395 destination per search summary (not re-read)."
+    },
+    {
+      "model": "Honda CR-V", "market": "US", "modelYear": 2026,
+      "trims": [
+        {"trim": "LX 2WD", "msrp": 30920}, {"trim": "LX AWD", "msrp": 32420}, {"trim": "EX 2WD", "msrp": 33150}, {"trim": "EX AWD", "msrp": 34650},
+        {"trim": "EX-L 2WD", "msrp": 35400}, {"trim": "EX-L AWD", "msrp": 36900}, {"trim": "Sport Hybrid 2WD", "msrp": 35630}, {"trim": "Sport Hybrid AWD", "msrp": 37130},
+        {"trim": "TrailSport Hybrid AWD", "msrp": 38800}, {"trim": "Sport-L Hybrid 2WD", "msrp": 38725}, {"trim": "Sport-L Hybrid AWD", "msrp": 40225}, {"trim": "Sport Touring Hybrid AWD", "msrp": 42250}
+      ],
+      "destination": 1395, "unit": "USD, MSRP excluding destination", "currency": "USD",
+      "url": "https://hondanews.com/en-US/honda-automobiles/releases/release-0d29cf91ab5515b985a1c286910fb0f9-2026-honda-cr-v-pricing-and-epa-ratings",
+      "date": "2026-10-03", "confirmed": false, "note": "From a search-engine summary of Honda's release; the page itself was not opened."
+    },
+    {
+      "model": "Toyota RAV4", "market": "US", "modelYear": 2026, "bodyStyle": "compact SUV (sixth generation)",
+      "startingMsrp": 31900, "startingBasis": "Hybrid FWD (LE), excluding Dealer Processing and Handling fee",
+      "drivetrainByGrade": {
+        "LE": "Hybrid FWD/AWD", "XLE Premium": "Hybrid FWD/AWD", "SE": "Hybrid FWD/AWD; PHEV AWD", "XSE": "Hybrid AWD; PHEV AWD",
+        "Limited": "Hybrid AWD", "Woodland": "Hybrid AWD; PHEV AWD", "GR SPORT": "PHEV AWD"
+      },
+      "transmission": "continuously variable (hybrid: planetary-type CVT with two motor-generators)",
+      "unit": "USD", "currency": "USD",
+      "url": "https://pressroom.toyota.com/the-next-adventure-begins-2026-rav4-arrives-this-winter/",
+      "date": "2025-10-22 (release); read 2026-10-03", "confirmed": true,
+      "note": "The release gave only the $31,900 starting price; PHEV pricing was due 'in the first half of 2026'."
+    },
+    {
+      "model": "Toyota RAV4", "market": "US", "modelYear": 2026,
+      "trims": [
+        {"trim": "LE Hybrid", "msrp": 31900}, {"trim": "SE Hybrid", "msrp": 34700}, {"trim": "XLE Premium Hybrid", "msrp": 36100},
+        {"trim": "Woodland Hybrid", "msrp": 39900}, {"trim": "XSE Hybrid", "msrp": 41300}, {"trim": "Limited Hybrid", "msrp": 43300},
+        {"trim": "SE PHEV", "msrp": 41500}, {"trim": "Woodland PHEV", "msrp": 45300}, {"trim": "XSE PHEV", "msrp": 47200}, {"trim": "GR SPORT PHEV", "msrp": 48500}
+      ],
+      "dealerProcessingAndHandling": 1095, "unit": "USD, starting MSRP excluding DPH", "currency": "USD",
+      "url": "https://pressroom.toyota.com/",
+      "date": "2026-10-03", "confirmed": false, "note": "Per-grade prices and the $1,095 DPH came from a search summary restricted to pressroom.toyota.com; the specific release page was not opened."
+    },
+    {
+      "model": "Toyota Camry", "market": "US", "modelYear": 2026, "bodyStyle": "midsize sedan, hybrid only",
+      "trims": [{"trim": "LE", "msrp": 29600}, {"trim": "SE", "msrp": 32100}, {"trim": "XLE", "msrp": 34800}, {"trim": "XSE", "msrp": 36000}],
+      "awdAdder": 1525, "drivetrain": "FWD; Electronic On-Demand AWD available on every grade", "unit": "USD", "currency": "USD",
+      "url": "https://www.edmunds.com/car-news/2026-toyota-camry-pricing-guide.html",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "Search summary (cars.com/Edmunds/toyota.com results); Edmunds and toyota.com refused direct reading. That AWD is available on all five grades (incl. Nightshade) was in a pressroom.toyota.com search summary, also not opened."
+    },
+    {
+      "model": "Chevrolet Equinox", "market": "US", "modelYear": 2026, "engine": "1.5L turbo I4",
+      "trims": [
+        {"trim": "LT", "drivetrain": "FWD", "priceInclDestination": 30795}, {"trim": "LT", "drivetrain": "AWD", "priceInclDestination": 32795},
+        {"trim": "ACTIV", "drivetrain": "FWD", "priceInclDestination": 35595}, {"trim": "ACTIV", "drivetrain": "AWD", "priceInclDestination": 37595},
+        {"trim": "RS", "drivetrain": "FWD", "priceInclDestination": 35595}, {"trim": "RS", "drivetrain": "AWD", "priceInclDestination": 37595}
+      ],
+      "destination": 1995, "unit": "USD including destination freight charge", "currency": "USD",
+      "url": "https://gmauthority.com/blog/2025/12/2026-chevy-equinox-gets-second-price-increase/",
+      "date": "2025-12-23 (article); read 2026-10-03", "confirmed": false,
+      "note": "Read on GM Authority (trade press), not chevrolet.com, which refused. Transmission not stated there."
+    },
+    {
+      "model": "Ford F-150", "market": "US", "modelYear": 2026,
+      "trims": [{"trim": "XL", "priceInclDestination": 42125}, {"trim": "STX", "priceInclDestination": 44650}, {"trim": "XLT", "priceInclDestination": 47690}, {"trim": "Lariat", "priceInclDestination": 62355}],
+      "rangeInclDestination": [42125, 114420], "destination": 2795, "unit": "USD", "currency": "USD",
+      "url": "https://www.ford.com/build-price/f150/choose-model",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary of ford.com / Ford Authority results; not opened. Drivetrain (4x2/4x4) and cab not split in the summary."
+    },
+    {
+      "model": "Ram 1500", "market": "US", "modelYear": 2026,
+      "trims": [{"trim": "Tradesman", "msrp": 41575}, {"trim": "Big Horn", "msrp": 47280}, {"trim": "Laramie", "msrp": 61480}],
+      "unit": "USD starting MSRP (destination basis unclear)", "currency": "USD",
+      "url": "https://trimatlas.com/compare/ram/1500/2026/",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "Search summary of third-party sites; one source gave Tradesman at $44,775 on a different basis. research-car-options.json already holds the $42,025 Tradesman Quad Cab 4x2 figure from window stickers."
+    },
+    {
+      "model": "GMC Sierra 1500", "market": "US", "modelYear": 2026,
+      "trims": [
+        {"trim": "Pro", "priceInclDestination": 41095}, {"trim": "SLE", "priceInclDestination": 51495}, {"trim": "Elevation", "priceInclDestination": 53295},
+        {"trim": "SLT", "priceInclDestination": 57895}, {"trim": "AT4", "priceInclDestination": 69795}, {"trim": "AT4X", "priceInclDestination": 82395},
+        {"trim": "Denali", "priceInclDestination": 69390}, {"trim": "Denali Ultimate", "priceInclDestination": 86190}
+      ],
+      "destination": 2795, "unit": "USD including destination", "currency": "USD",
+      "url": "https://gmauthority.com/blog/2025/12/2026-gmc-sierra-1500-gets-price-increase/",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary of GM Authority; not opened."
+    },
+    {
+      "model": "Nissan Rogue", "market": "CA", "modelYear": 2026, "drivetrain": "AWD across the lineup",
+      "trims": [
+        {"trim": "S AWD", "msrp": 34848, "sellingPrice": 37697}, {"trim": "SV AWD", "msrp": 38698, "sellingPrice": 41547},
+        {"trim": "Dark Armor", "msrp": 41098, "sellingPrice": 43897}, {"trim": "Rock Creek AWD", "msrp": 42048, "sellingPrice": 44897},
+        {"trim": "Platinum AWD", "msrp": 46648, "sellingPrice": 49497}
+      ],
+      "freightAndPdi": 2080, "unit": "CAD; MSRP excludes destination, taxes and fees", "currency": "CAD",
+      "url": "https://canada.nissannews.com/en-CA/releases/2026-nissan-rogue-pricing-announced-for-canada",
+      "date": "2025-08-06 (release); read 2026-10-03", "confirmed": true,
+      "note": "Transmission not stated in the release."
+    },
+    {
+      "model": "Hyundai Tucson", "market": "CA", "modelYear": 2026,
+      "drivetrain": "All-Wheel Drive standard on all current trims", "powertrains": ["2.5L gasoline", "Hybrid (HEV)", "Plug-in Hybrid (PHEV)"],
+      "trimsNamed": ["Preferred", "Preferred with Trend Package", "N Line", "Ultimate", "Hybrid Night Edition"],
+      "url": "https://www.hyundaicanada.com/en/showroom/2026/tucson",
+      "date": "2026-10-03", "confirmed": true, "note": "Prices are only in the Build & Price tool, which did not render; no trim prices read."
+    },
+    {
+      "model": "Nissan Versa", "market": "MX", "modelYear": 2026, "bodyStyle": "sedan", "engine": "1.6L 4-cylinder, 118 HP, 110 lb-ft",
+      "trims": [
+        {"trim": "Sense Base", "transmission": "TM (manual)", "listPrice": 374900}, {"trim": "Sense", "transmission": "TM (manual)", "listPrice": 382900},
+        {"trim": "Sense", "transmission": "CVT", "listPrice": 406900}, {"trim": "Advance", "transmission": "TM (manual)", "listPrice": 428900},
+        {"trim": "Advance", "transmission": "CVT", "listPrice": 439900}, {"trim": "Exclusive", "transmission": "CVT", "listPrice": 470900}
+      ],
+      "unit": "MXN list price (precio de lista), IVA included", "currency": "MXN",
+      "url": "https://www.nissan.com.mx/versa/",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "The page also shows lower 'CrediNissan' finance prices (e.g. Sense Base $309,990) valid 1 Oct - 2 Nov 2026 with Nissan credit only."
+    },
+    {
+      "model": "Ford Puma", "market": "GB", "bodyStyle": "compact crossover SUV, 5-door, 5-seat",
+      "engine": "1.0-litre EcoBoost 3-cylinder 48V mild hybrid: 125 PS, 155 PS (ST-Line X), 170 PS (ST)",
+      "startingPrice": 27145, "startingBasis": "Puma Titanium Manual, recommended price (a GBP 1,000 discount was also shown)",
+      "unit": "GBP", "currency": "GBP",
+      "url": "https://www.ford.co.uk/cars/puma",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "model": "Kia Sportage", "market": "GB",
+      "trims": [{"trim": "Pure", "fromPrice": 31395}, {"trim": "GT-Line Hybrid", "fromPrice": 37395}, {"trim": "GT-Line S Hybrid", "fromPrice": 42595}],
+      "powertrains": "petrol and hybrid; hybrid 1.6 T-GDi 235 bhp with all-wheel drive; PHEV 'coming soon'",
+      "unit": "GBP 'from' price", "currency": "GBP",
+      "url": "https://www.kia.com/uk/new-cars/sportage/",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "model": "Nissan Qashqai", "market": "GB",
+      "trims": [{"trim": "Acenta Premium", "fromPrice": 31145}, {"trim": "N-Connecta", "fromPrice": 33615}, {"trim": "N-Design", "fromPrice": 35535}, {"trim": "Tekna", "fromPrice": 35535}, {"trim": "Tekna+", "fromPrice": 41135}],
+      "powertrains": "e-POWER hybrid (up to 65.7 mpg) and mild hybrid (up to 45.6 mpg)",
+      "unit": "GBP 'from' price", "currency": "GBP",
+      "url": "https://www.nissan.co.uk/vehicles/new-vehicles/qashqai/prices-specifications.html",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "model": "Volkswagen Golf", "market": "GB", "bodyStyle": "hatchback",
+      "trimsNamed": ["Life", "Match", "Style", "R-Line", "Black Edition", "GTE", "GTI", "GTI Clubsport", "R"],
+      "powertrains": "petrol, plug-in hybrid, mild hybrid (mHEV); 115 to 333 PS", "transmissions": ["6-speed manual", "6-speed DSG", "7-speed DSG"],
+      "url": "https://www.volkswagen.co.uk/en/new/golf.html",
+      "date": "2026-10-03", "confirmed": true, "note": "No prices on the overview page."
+    },
+    {
+      "model": "Toyota Corolla Hatchback", "market": "IE", "engine": "Hybrid 140 (140 HP)", "fromPrice": 33220,
+      "unit": "EUR, excludes delivery", "currency": "EUR",
+      "url": "https://www.toyota.ie/new-cars/corolla-hatchback",
+      "date": "2026-10-03", "confirmed": true
+    }
+  ],
+  "rimsTires": [
+    {
+      "item": "Michelin CrossClimate 2, 225/65R17 102H (RAV4/CR-V size)", "retailer": "BJ's Tire Center", "market": "US",
+      "pricePerTire": 234.99, "setOf4AfterDiscounts": 899.96, "installation": 80.00,
+      "unit": "USD", "currency": "USD",
+      "url": "https://tires.bjs.com/tires/view/267909/michelin-crossclimate-2-225-65r17/",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Promotions shown: $40 off a set of 4 (to 2026-10-19) and $80 installation discount with four Michelin tires (to 2026-10-31). Installation figure as shown; whether per set or per tire was not stated in what was read."
+    },
+    {
+      "item": "Michelin CrossClimate2, 225/65R17", "retailer": "Tire Rack", "market": "US",
+      "pricePerTire": 224.99, "unit": "USD", "currency": "USD",
+      "url": "https://www.tirerack.com/tires/tires.jsp?tireMake=Michelin&tireModel=CrossClimate2&partnum=265HR7CC2",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary; the Tire Rack page returned 'currently unavailable'. Walmart and Summit Racing were also given at $224.99 in the summary."
+    },
+    {
+      "item": "Discount Tire installation: what's included", "retailer": "Discount Tire", "market": "US",
+      "included": ["labor", "valve stems or TPMS rebuild kits", "mounting", "balancing", "tire disposal fees", "visual inspection", "Life of Tire Maintenance (inspections, pressure checks, rotations, rebalancing, flat repairs, prorated road hazard)"],
+      "url": "https://www.discounttire.com/learn/tire-installation-cost",
+      "date": "2026-10-03", "confirmed": true, "note": "The page names no dollar figure for installation."
+    },
+    {
+      "item": "Costco Tire Center installation package: what's included", "retailer": "Costco", "market": "US",
+      "included": ["lifetime inflation pressure checks", "tire balancing", "tire rotations", "flat repairs", "new rubber valve stems (TPMS stems extra)", "nitrogen inflation"],
+      "url": "https://tires.costco.com/CostcoAdvantage",
+      "date": "2026-10-03", "confirmed": true, "note": "No package price on the page. Costco's FAQ says it installs only Costco-purchased tires."
+    },
+    {
+      "item": "Costco installation package price", "retailer": "Costco", "market": "US", "pricePerTire": 21.99, "unit": "USD", "currency": "USD",
+      "url": "https://carserviceland.com/costco-tire-installation-cost/",
+      "date": "2026-10-03", "confirmed": false, "note": "Third-party blogs via search summary; not shown on costco.com pages read."
+    },
+    {
+      "item": "205/55 R16 tyres, fully fitted (Golf/Octavia-class size)", "retailer": "Blackcircles", "market": "GB",
+      "cheapest": {"tyre": "Westlake ZuperEco Z-107 (V)", "price": 50.44},
+      "dearest": {"tyre": "Michelin CrossClimate 3 (V)", "price": 110.99},
+      "selected": [
+        {"tyre": "Kumho Ecowing ES31 (V)", "price": 69.99}, {"tyre": "Michelin Primacy 4 (V)", "price": 84.99}, {"tyre": "Pirelli P7 Cinturato (V)", "price": 84.99},
+        {"tyre": "Goodyear EfficientGrip Performance 2 (V)", "price": 97.99}, {"tyre": "Continental Eco Contact 5 (H)", "price": 99.99}, {"tyre": "Bridgestone Turanza 6 (V)", "price": 104.99}
+      ],
+      "includes": "delivery, fitting, balancing, new rubber valve and disposal of old tyres",
+      "unit": "GBP per tyre, fitted", "currency": "GBP",
+      "url": "https://www.blackcircles.com/tyres/205-55-r16",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "item": "215/55 R17 tyres, fully fitted (Puma-class size)", "retailer": "Blackcircles", "market": "GB",
+      "cheapest": {"tyre": "Royal Black Royal Performance (W/98)", "price": 58.99},
+      "dearest": {"tyre": "Michelin CrossClimate 3 (W/98)", "price": 180.99},
+      "selected": [
+        {"tyre": "Kumho Ecsta PS71 (W)", "price": 99.99}, {"tyre": "Hankook Ventus Prime 4 (W)", "price": 121.99}, {"tyre": "Continental Ultra Contact (W)", "price": 125.99},
+        {"tyre": "Goodyear EfficientGrip Performance 2 (W)", "price": 137.99}, {"tyre": "Bridgestone Turanza T005 (V)", "price": 139.99}, {"tyre": "Michelin Primacy 5 (V)", "price": 142.99}
+      ],
+      "unit": "GBP per tyre, fitted", "currency": "GBP",
+      "url": "https://www.blackcircles.com/tyres/215-55-r17",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "item": "Kwik Fit tyre price basis", "retailer": "Kwik Fit", "market": "GB",
+      "includes": "VAT, tyre, replacement valve, wheel balancing and disposal of old tyre; no cash-and-carry; mobile fitting may cost extra",
+      "url": "https://www.kwik-fit.com/tyres/search/results/215/55/17",
+      "date": "2026-10-03", "confirmed": true, "note": "No tyre listings rendered in the fetched page, so no prices."
+    },
+    {
+      "item": "Michelin CrossClimate 2 CUV 225/65R17 102H", "retailer": "The Wheel Shop", "market": "CA",
+      "pricePerTire": 282.03, "unit": "CAD", "currency": "CAD",
+      "url": "https://www.thewheelshop.ca/products/michelin-crossclimate-2-cuv-225-65r17-102h-all-weather-tire",
+      "date": "2026-10-03", "confirmed": true, "note": "Read from the store's own product feed (store currency CAD)."
+    },
+    {
+      "item": "Michelin CrossClimate2 225/65R17 102H", "retailer": "Point S Canada / Tire Direct", "market": "CA",
+      "pricePerTire": {"Point S": 269.99, "Tire Direct (regular)": 260.95}, "unit": "CAD", "currency": "CAD",
+      "url": "https://point-s.ca/en/tires/michelin/cross-climate-2",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary; Point S refused direct reading."
+    },
+    {
+      "item": "Canadian Tire installation", "retailer": "Canadian Tire", "market": "CA",
+      "mountAndBalanceSetOf4": 150, "onRimSeasonalSwap": 75, "unit": "CAD", "currency": "CAD",
+      "url": "https://cansumer.ca/change-winter-tires-cost/",
+      "date": "2026-10-03", "confirmed": false, "note": "Third-party sites via search summary; canadiantire.ca installation page returned 404."
+    },
+    {
+      "item": "Michelin Energy XM2+ 185/65R15 88H (Versa size)", "retailer": "Costco México", "market": "MX",
+      "pricePerTire": 2599.00, "unit": "MXN", "currency": "MXN",
+      "url": "https://www.costco.com.mx/Ferreteria-Llantas-y-Automotriz/Llantas/Automoviles/Llanta-Michelin-Energy-XM2-18565R15-88H/tire/p/589009",
+      "date": "2026-10-03", "confirmed": true, "note": "Page says tyres can be installed at the tire center the same day; no installation price shown."
+    },
+    {
+      "item": "Michelin Energy XM2 185/65R15 88H", "retailer": "Neumarket", "market": "MX",
+      "pricePerTire": 2624.00, "regularPrice": 4164.00, "unit": "MXN", "currency": "MXN",
+      "url": "https://neumarket.com.mx/products/michelin-energy-xm2-185-65r15-88h",
+      "date": "2026-10-03", "confirmed": true, "note": "Free delivery in Mexico in 3-5 business days; no fitting."
+    },
+    {
+      "item": "Michelin Energy XM2+ 185/65R15, other Mexican retailers", "market": "MX",
+      "prices": {"Mercado Libre": 2490, "Mister Llantas": 2587.50, "Coppel": 3219, "Sears (sold by Michelin)": 3259, "Prodynamics": 3187},
+      "unit": "MXN per tyre", "currency": "MXN",
+      "url": "https://www.sears.com.mx/producto/2848050/llanta-185-65-r15-michelin-energy-xm2-88h",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary."
+    },
+    {
+      "item": "Michelin Primacy 5 205/55 R16 91V", "market": "IE",
+      "prices": {"Discount Tyres & Autocare, fitted": 145, "Oponeo.ie, unfitted, + EUR 3.44 EcoFee": 106, "Tirendo.ie, unfitted": 125.43},
+      "unit": "EUR per tyre", "currency": "EUR",
+      "url": "https://www.discounttyres.ie/michelin-tyres-offer.html",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary; psv.ie ('tyre prices from EUR 45 including fitting and balancing') dropped the connection."
+    },
+    {
+      "item": "Konig aftermarket wheels, price per wheel by model (maker's own store)", "retailer": "Konig (konigwheels.com)", "market": "US",
+      "ranges": [
+        {"model": "Hypergram (flow formed)", "sizes": "15-19 in", "min": 205.77, "max": 394.49},
+        {"model": "Dekagram (flow formed)", "sizes": "15-19 in", "min": 210.46, "max": 430.24},
+        {"model": "Hyperspec (flow formed)", "sizes": "15-19 in", "min": 217.36, "max": 413.00},
+        {"model": "Octrix (flow formed)", "sizes": "17-19 in", "min": 240.00, "max": 315.98, "example": "5x112 17x8 ET42 Smoked Platinum, 240.00"},
+        {"model": "Backbone (cast)", "min": 186.24, "max": 306.75},
+        {"model": "Runlite (cast)", "sizes": "16-18 in", "min": 190.33, "max": 317.72},
+        {"model": "Control (cast)", "sizes": "14-18 in", "min": 158.88, "max": 283.77},
+        {"model": "Incident (cast)", "min": 131.79, "max": 217.10},
+        {"model": "Ampliform (flow formed)", "sizes": "17-20 in", "min": 289.95, "max": 505.07},
+        {"model": "F6SX (forged)", "sizes": "17-18 in", "min": 633.66, "max": 696.20, "example": "5x114.3 17x8 ET40 Race Bronze"},
+        {"model": "F1M / F3S (forged)", "sizes": "17-19 in", "min": 633.66, "max": 922.76},
+        {"model": "F5R (forged)", "sizes": "18-19 in", "min": 661.98, "max": 914.50}
+      ],
+      "unit": "USD per wheel", "currency": "USD",
+      "url": "https://www.konigwheels.com/products.json",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Read from Konig's own store feed (106 products). Per-wheel basis is inferred from the variant structure (one size/offset/finish per variant), not stated."
+    },
+    {
+      "item": "Enkei / Gram Lights / Volk wheels, 18x9.5 5x114.3", "retailer": "SubiMods", "market": "US",
+      "prices": {"Enkei T6R": 357.30, "Enkei TSR-X": 357.30, "Gram Lights 57DR": "576.34-605.64", "Volk Racing TE37 SAGA S-Plus": 1127.00},
+      "unit": "USD per wheel", "currency": "USD",
+      "url": "https://subimods.com/collections/wheels",
+      "date": "2026-10-03", "confirmed": true, "note": "Read from the store's own product feed."
+    }
+  ],
+  "lighting": [
+    {
+      "item": "UK MOT: halogen headlamps converted to HID or LED", "market": "GB",
+      "rule": "Existing halogen headlamp units on vehicles first used on or after 1 April 1986 must not be converted to be used with HID or LED bulbs; such a conversion fails under 4.1.4 (c) 'Light source and lamp not compatible' — a Major defect. Complete replacement headlamp units manufactured with HID/LED sources do not trigger this failure.",
+      "section": "MOT inspection manual, cars and passenger vehicles, 4.1.4 Compliance with requirements, defect (c)",
+      "url": "https://www.gov.uk/guidance/mot-inspection-manual-for-private-passenger-and-light-commercial-vehicles/4-lamps-reflectors-and-electrical-equipment",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "item": "US FMVSS No. 108 provisions on replacement equipment and replaceable-bulb headlamps", "market": "US",
+      "rule": "S6.7.1.1: each replacement lamp must be designed to conform to all requirements of the standard for that type of lamp and include all functions of the lamp it replaces. S6.5.3.4.1: replaceable bulb headlamps must use light sources conforming to appendix A or B of 49 CFR part 564. S6.7.1.3 notes the responsibilities of manufacturers, distributors, dealers and repair businesses under 49 U.S.C. 30122 (making safety devices inoperative).",
+      "url": "https://www.law.cornell.edu/cfr/text/49/571.108",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "Read on Cornell LII's reproduction of 49 CFR 571.108; ecfr.gov redirected to a bot-unblock page. Section numbers as given by the reading model; verify against eCFR."
+    },
+    {
+      "item": "No LED replaceable headlamp light sources listed under Part 564; NHTSA findings against Putco Nitro-Lux and Diode Dynamics SL1", "market": "US",
+      "rule": "LED light sources are permitted in integral-beam headlamps meeting FMVSS 108, but no LED replaceable bulb has been listed for halogen replaceable-bulb headlamps; NHTSA found Putco Nitro-Lux and Diode Dynamics SL1 bulbs exceeded luminous flux limits and failed dimensional requirements.",
+      "url": "https://static.nhtsa.gov/odi/rcl/2021/RCLRPT-21E006-1588.PDF",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary; the NHTSA Part 573 report PDF could not be read as text."
+    },
+    {
+      "item": "SYLVANIA H11 SilverStar ULTRA halogen headlight bulb, 2 pack", "retailer": "Sylvania (maker's store)", "market": "US",
+      "price": 63.99, "unit": "USD per 2-pack", "currency": "USD",
+      "url": "https://www.sylvania-automotive.com/sylvania-h11-silverstar-ultra-halogen-headlight-bulb-2-pack/H11SU.BP2.html",
+      "date": "2026-10-03", "confirmed": true, "note": "Direct replacement, no modification; 12-month warranty."
+    },
+    {
+      "item": "Sylvania SilverStar Ultra H11, 2 pack, at other US retailers", "market": "US",
+      "prices": {"AutoZone (H11SU-2)": 61.49, "Walmart": 48.75, "Meijer": 48.99}, "unit": "USD", "currency": "USD",
+      "url": "https://www.autozone.com/p/sylvania-silverstar-ultra-multi-purpose-light-bulb-h11su-2/452065",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary."
+    },
+    {
+      "item": "Halfords bulb fitting service", "retailer": "Halfords", "market": "GB",
+      "pricePerBulb": 11, "unit": "GBP", "currency": "GBP",
+      "url": "https://help.halfords.com/wss/motoring-products/bulbs-blades-batteries/replace-bulbs-in-pairs",
+      "date": "2026-10-03", "confirmed": true, "note": "Covers headlight, interior and exterior bulbs; fitted while you wait."
+    },
+    {
+      "item": "Halfords Advanced LEDr H7 477 headlight bulb, twin pack (LED)", "retailer": "Halfords", "market": "GB",
+      "price": 37.99, "unit": "GBP per twin pack", "currency": "GBP",
+      "legality": "Marked 'For off-road use only' — not road legal in a headlamp",
+      "url": "https://www.halfords.com/motoring/bulbs/halfords-advanced-ledr-h7-477-headlight-bulb-twin-pack-200915.html",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary; Halfords renders prices by script so the fetched HTML had none."
+    },
+    {
+      "item": "Philips X-tremeVision Pro150 H7 (halogen, +150%), twin pack", "market": "GB",
+      "prices": {"Euro Car Parts": 37.49, "Car Parts 4 Less": 39.49, "HIDs Direct": 29.95, "Powerbulbs": 25.49}, "unit": "GBP", "currency": "GBP",
+      "url": "https://www.eurocarparts.com/p/philips-12v-h7-x-treme-vision-pro150-150-brighter-upgrade-twin-pack-48177022s",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary."
+    }
+  ],
+  "bodyTrim": [
+    {
+      "item": "Maxton Design body parts for VW Golf 8 GTI / R-Line", "retailer": "Maxton Design USA", "market": "US",
+      "prices": [
+        {"part": "Front Splitter V.1 / V.4 / V.5 / V.7 (gloss black)", "price": 305.99}, {"part": "Front Splitter V.6", "price": 388.99},
+        {"part": "Front Splitter + Flaps V.2 / V.3", "price": 371.99}, {"part": "Racing Durability Front Splitter", "price": 361.99},
+        {"part": "Side Skirts Diffusers (V.1/V.3/V.4)", "price": 305.99}, {"part": "Side Skirts Diffusers + Flaps V.2", "price": 371.99},
+        {"part": "Rear Valance V.2 / V.3 / V.4", "price": 295.99}, {"part": "Rear Side Splitters", "price": 145.99},
+        {"part": "Central Rear Splitter", "price": 199.99}, {"part": "Spoiler Cap 3D", "price": 235.99},
+        {"part": "Front Bumper Wings (Canards)", "price": 176.99}, {"part": "Bonnet Extension", "price": 249.99},
+        {"part": "Racing Durability Rear Diffuser V.2", "price": "290.99 (black) / 366.99 (black with red core)"}
+      ],
+      "unit": "USD per part", "currency": "USD",
+      "url": "https://maxtondesignusa.net/collections/golf-gti-mk8",
+      "date": "2026-10-03", "confirmed": true, "note": "Read from the store's own collection feed. Ships from the USA."
+    },
+    {
+      "item": "Maxton Design parts for other SLATE catalog models", "retailer": "Maxton Design USA", "market": "US",
+      "prices": [
+        {"part": "Side Skirts Diffusers, Toyota RAV4 Mk5", "price": 305.99}, {"part": "Spoiler Cap, Toyota RAV4 Mk5", "price": 199.99},
+        {"part": "Front Splitter V.1, Hyundai Tucson Mk4", "price": 305.99}, {"part": "Front Splitter V.2, Hyundai Tucson Mk4", "price": 388.99},
+        {"part": "Spoiler Cap, Hyundai Tucson Mk4", "price": 199.99}, {"part": "Front Splitter, Hyundai Tucson Mk4 Facelift", "price": 305.99},
+        {"part": "Front Splitter, Shelby F150 Super Snake", "price": 336.99}, {"part": "Side Skirts Diffusers, Shelby F150 Super Snake", "price": 388.99},
+        {"part": "Central Rear Splitter, Shelby F150 Super Snake", "price": 316.99}
+      ],
+      "unit": "USD per part, gloss black", "currency": "USD",
+      "url": "https://maxtondesignusa.net/collections/toyota",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "From the toyota, hyundai and ford collection feeds. No Maxton parts matched Qashqai, Sportage, Corsa, Puma or Octavia in the USA store; the Ford F-150 parts are for the Shelby Super Snake only."
+    },
+    {
+      "item": "Maxton Design Front Splitter V.4, VW Golf GTI/GTE/GTD/R-Line Mk8", "retailer": "Royal Body Kits", "market": "GB",
+      "prices": {"Gloss Black": 141.00, "Gloss Black with white or red accent": 148.00}, "unit": "GBP", "currency": "GBP",
+      "url": "https://www.royalbodykits.com/products/maxton-design-front-splitter-v-4-volkswagen-golf-gti-gte-gtd-r-line-mk8",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Read from the store's own product feed; store currency GBP. Whether VAT is included was not shown in the feed."
+    },
+    {
+      "item": "Body styling fitting prices", "retailer": "Delta Styling (Carlton Motor Sport Ltd, Billingley, Barnsley S72 0JE)", "market": "GB",
+      "prices": {"Standard spoilers": "from 40.00", "Front/rear splitters": "from 50.00", "Front/rear bumpers": "from 80.00", "Side skirts (pair)": "from 80.00", "Full body kits": "from 100.00", "Delta full low line kit and spoiler": "from 100.00"},
+      "unit": "GBP, labour", "currency": "GBP",
+      "url": "https://deltastyling.com/fitting/",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Prices depend on the item, the car's condition and extra time such as filling before fitting. Painting not included."
+    },
+    {
+      "item": "US body kit installation labour, by type", "publisher": "Vicrez Installer Network", "market": "US",
+      "ranges": {"Lip kit": "200-800", "Front bumper kit": "500-1,500", "Full body kit (unpainted)": "800-2,500", "Full body kit (with paint)": "1,500-4,000", "Widebody kit (basic)": "2,000-5,000", "Widebody (full conversion with paint)": "3,000-8,000+", "Carbon fibre kit": "1,500-6,000+"},
+      "unit": "USD, labour only unless noted", "currency": "USD",
+      "url": "https://installers.vicrez.com/guides/body-kit-installation-cost",
+      "date": "2026-03 (guide); read 2026-10-03", "confirmed": true,
+      "note": "Publisher states these are shop quotes it collected in early 2026 from US installers — a survey, not one shop's price list."
+    },
+    {
+      "item": "Genuine Toyota rear spoiler, 2025+ Camry (PT955-03251-xx, colour-keyed)", "market": "US",
+      "msrp": 90.00, "unit": "USD", "currency": "USD",
+      "url": "https://parts.elmhursttoyota.com/oem-parts/toyota-genuine-toyota-2025-camry-hybrid-rear-spoiler-089-wind-chill-pearl-pt9550325100",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary; the dealer parts page refused reading. The figure looks low for a painted spoiler and should be checked."
+    }
+  ],
+  "audio": [
+    {
+      "item": "Geek Squad car audio installation (hardware not included)", "retailer": "Best Buy", "market": "US",
+      "prices": {"In-dash car stereo install with touchscreen": 149.99, "In-dash car stereo install without touchscreen": 99.99, "Standard speaker installation": 99.99, "Component speaker installation": 149.99},
+      "unit": "USD", "currency": "USD",
+      "url": "https://www.bestbuy.com/site/auto-tech-services/car-audio-installation/pcmcat1553539170913.c?id=pcmcat1553539170913",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "A search summary instead gave standard speaker $79.99 and component $129.99; the page read on the day says $99.99 and $149.99."
+    },
+    {
+      "item": "Geek Squad amplifier installation (hardware not included)", "retailer": "Best Buy", "market": "US",
+      "prices": {"2-channel or mono amplifier installation": 199.99, "4-channel amplifier installation": 249.99}, "unit": "USD", "currency": "USD",
+      "url": "https://www.bestbuy.com/product/4-channel-amplifier-installation-hardware-not-included/JCQ66HT66S",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "Search summary; the product page timed out. Vehicle-specific parts and non-standard labour are extra, estimated before work."
+    },
+    {
+      "item": "Car speakers at Crutchfield", "retailer": "Crutchfield", "market": "US",
+      "prices": {"JBL Concert Series 621, 6-1/2\" 2-way, pair": 69.99, "Kicker 46CSC654 CS 6-1/2\" 2-way, pair": 79.96, "Rockford Fosgate R165X3 Prime 6-1/2\" 3-way, pair": 79.99, "Kicker 51KSC6504 KS 6-1/2\" 2-way, pair": 129.99},
+      "unit": "USD", "currency": "USD",
+      "url": "https://www.crutchfield.com/g_473750/6-6-1-2-6-3-4-Speakers.html",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary restricted to crutchfield.com; Crutchfield refused direct reading (403)."
+    },
+    {
+      "item": "4-channel car amplifiers at Crutchfield", "retailer": "Crutchfield", "market": "US",
+      "prices": {"Kicker 47KEY200.4": 299.99, "JL Audio JD400/4": 299.99, "Rockford Fosgate R2-500X4": 359.99, "JL Audio RD400/4": 379.99},
+      "unit": "USD", "currency": "USD",
+      "url": "https://www.crutchfield.com/g_347050/4-channel-Amps.html",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary; not opened."
+    },
+    {
+      "item": "Crutchfield MasterSheet (vehicle-specific removal instructions)", "retailer": "Crutchfield", "market": "US",
+      "price": "free with a stereo or speaker purchase; 9.99 alone", "unit": "USD", "currency": "USD",
+      "url": "https://www.crutchfield.com/about/mastersheets.aspx",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary. No Crutchfield professional-installation price was found; Crutchfield sells parts and instructions for self-install."
+    },
+    {
+      "item": "Halfords car audio fitting and speakers", "retailer": "Halfords", "market": "GB",
+      "prices": {"Head unit fitting, from": 110, "Speaker pair fitting": 60, "Pioneer TS-R1750S coaxial speakers, pair": 45.00, "Pioneer TS-G670 17cm coaxial speakers, pair": 34.99},
+      "unit": "GBP", "currency": "GBP",
+      "url": "https://www.halfords.com/technology/car-audio/car-speakers/",
+      "date": "2026-10-03", "confirmed": false, "note": "Search summary; Halfords pages render prices by script and the fetched HTML had none."
+    }
+  ],
+  "racksBoxes": [
+    {
+      "item": "Thule roof racks", "market": "US", "retailer": "Thule (maker's store)",
+      "prices": {"WingBar Edge system (black), from": 649.85, "WingBar Evo system, from": 544.90, "SquareBar Evo system, from": 444.90, "ProBar Evo system, from": 524.90,
+        "WingBar Edge 77 bar": 144.95, "WingBar Evo 108 bars": 279.95, "SquareBar Evo 108 bars": 179.95, "ProBar Evo 175": 199.95,
+        "Edge Flush Rail feet": 359.95, "Evo Flush Rail / Raised Rail / Clamp feet": 264.95, "Rapid Gutter Low": 279.95, "Rapid Podium": 269.95,
+        "Caprock L platform": 1059.95, "One-Key System 2-pack": 54.95},
+      "unit": "USD", "currency": "USD", "url": "https://www.thule.com/en-us/roof-rack", "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "item": "Thule roof racks", "market": "CA", "retailer": "Thule (maker's store)",
+      "prices": {"WingBar Edge system, from": 804.85, "WingBar Evo system, from": 679.90, "SquareBar Evo system, from": 529.90, "ProBar Evo system, from": 679.90,
+        "WingBar Edge 77": 174.95, "WingBar Evo 108": 349.95, "SquareBar Evo 108": 199.95, "ProBar Evo 175": 259.95,
+        "Feet (Edge/Evo Flush Rail, Fixpoint, Raised Rail, Clamp)": "329.95-454.95", "Rapid Podium": 339.95, "Caprock L": 1249.95, "One-Key System 2-pack": 69.95},
+      "unit": "CAD", "currency": "CAD", "url": "https://www.thule.com/en-ca/roof-rack", "date": "2026-10-03", "confirmed": true,
+      "note": "Free shipping over CAD 229.99."
+    },
+    {
+      "item": "Thule roof racks", "market": "GB", "retailer": "Thule (maker's store)",
+      "prices": {"WingBar Edge (black) complete": 379.97, "WingBar Evo (aluminium) complete": 291.98, "SquareBar Evo (black) complete": 229.98, "ProBar Evo complete": 339.98,
+        "SlideBar Evo complete": 384.98, "SmartRack XT (aluminium)": 219.99, "SmartRack XT (black SquareBar)": 194.99, "Caprock S": 779.99, "Caprock rail mounts": 299.99},
+      "unit": "GBP", "currency": "GBP", "url": "https://www.thule.com/en-gb/roof-rack", "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "item": "Thule roof racks", "market": "IE", "retailer": "Thule (maker's store)",
+      "prices": {"WingBar Edge (black) complete": 439.95, "WingBar Evo complete": 334.90, "SquareBar Evo complete": 268.45, "ProBar Evo complete": 391.90, "SlideBar Evo complete": 444.95,
+        "SmartRack XT AluminiumBar": 249.95, "SmartRack XT SquareBar": 219.95, "WingBar Edge 77": 96.95, "WingBar Evo 108": 157.95, "SquareBar Evo 108": 91.50, "Caprock S": 919.95, "Feet range": "96.95-284.95"},
+      "unit": "EUR", "currency": "EUR", "url": "https://www.thule.com/en-ie/roof-rack", "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "item": "Thule roof racks", "market": "MX", "retailer": "Thule (maker's store)",
+      "prices": {"WingBar Edge 77": 2694.17, "WingBar Evo 108": 4628.33, "SquareBar Evo 108": 1961.27, "Edge Flush Rail": 5155.01, "Evo Flush Rail": 4407.83, "Caprock crossbar kit": 5826.79, "Caprock rail mount (Tacoma)": 10753.20},
+      "unit": "MXN", "currency": "MXN", "url": "https://www.thule.com/es-mx/roof-rack", "date": "2026-10-03", "confirmed": true,
+      "note": "Several complete systems showed '0 MXN' (price not set on the Mexican store); those are omitted."
+    },
+    {
+      "item": "Thule Motion 3 L roof box (450 L / 16 cu ft; max load 165 lb / 75 kg)", "retailer": "Thule (maker's store)",
+      "prices": {"US": 1099.95, "CA": 1329.95}, "unit": "USD / CAD", "currency": "USD, CAD",
+      "url": "https://www.thule.com/en-us/cargo-carrier/car-top-carrier/thule-motion-3-l-_-639750",
+      "date": "2026-10-03", "confirmed": true, "note": "Shown 'temporarily out of stock' online in both markets. CA page: https://www.thule.com/en-ca/cargo-carrier/car-top-carrier/thule-motion-3-l-_-639750"
+    },
+    {
+      "item": "Thule roof boxes", "market": "GB", "retailer": "Thule (maker's store)",
+      "prices": {"Motion 3 Sport (300 L)": 629.99, "Force 3 L Sport (300 L)": 499.99, "Vector M (360 L)": 1499.99, "Pulse 2 M (400 L)": 459.99},
+      "unit": "GBP", "currency": "GBP", "url": "https://www.thule.com/en-gb/cargo-carrier/car-top-carrier/thule-motion-3-l-_-639750", "date": "2026-10-03", "confirmed": true,
+      "note": "The en-gb Motion 3 L URL returned the roof-box listing rather than the product."
+    },
+    {
+      "item": "Thule roof boxes, other US sizes", "market": "US",
+      "prices": {"Motion 3 XL": 1149.95, "Motion 3 XXL": 1249.95, "Motion 3 XL Low": 1149.95, "Motion 3 XXL Low": 1249.95, "Force 3 L": 879.95, "Pulse 2 L": 749.95},
+      "unit": "USD", "currency": "USD", "url": "https://www.thule.com/en-us/cargo-carrier/car-top-carrier/thule-motion-3-xl-_-639850", "date": "2026-10-03", "confirmed": false,
+      "note": "Search summary restricted to thule.com; pages not opened."
+    },
+    {
+      "item": "Yakima roof rack components", "market": "US", "retailer": "Yakima (maker's store)",
+      "prices": {"JetStream crossbars (pair)": 270.00, "CoreBar steel aero crossbars (pair)": 229.00, "RoundBar steel (pair)": 150.00, "HD Bar (pair)": 319.00,
+        "TimberLine towers (4) raised rails": 275.00, "BaseLine towers (4) naked roof": 275.00, "SkyLine towers (4) fixed points/tracks": 275.00, "SightLine towers (4) flush rails": 275.00,
+        "BaseClip": 75.00, "SightClip": 150.00, "Landing Pad": 75.00, "TimberLine FX integrated crossbar": 300.00},
+      "unit": "USD", "currency": "USD", "url": "https://www.yakima.com/collections/roof-racks", "date": "2026-10-03", "confirmed": true,
+      "note": "A full Yakima rack is towers + clips/pads + a bar pair, each sold separately."
+    },
+    {
+      "item": "Yakima roof boxes", "market": "US", "retailer": "Yakima (maker's store)",
+      "prices": {"SkyBox 12 Carbonite (12 cu ft)": 469.00, "SkyBox 16 Carbonite (16)": 599.00, "SkyBox 21 Carbonite (21)": 819.00, "RocketBox Pro 14 (14)": 599.00, "DeepSpace 10 (10)": 649.00,
+        "CBX 16 (16)": 699.00, "CBX 18 (18)": 769.00, "SkyBox NX LG (16)": 799.00, "SkyBox NX XL (18)": 849.00, "SkyBox NX XXL (22)": 949.00, "GrandTour Lo (15)": 879.00},
+      "unit": "USD", "currency": "USD", "url": "https://www.yakima.com/collections/cargo-boxes", "date": "2026-10-03", "confirmed": true
+    }
+  ],
+  "doorPanelsCarpets": [
+    {
+      "item": "Door panel retrim service", "business": "GSM Sport Seats (sportseats4u.co.uk), Nottingham showroom", "market": "GB",
+      "prices": {"Front door panel, vinyl / spacer fabric / vinyl and fabric": 154.99, "Front door panel, leather / leather and Alcantara / Alcantara": 196.66,
+        "Rear door panel, spacer fabric / vinyl and fabric": 133.33, "Rear door panel, leather / leather and Alcantara / Alcantara": 171.66},
+      "unit": "GBP per panel, incl. VAT", "currency": "GBP",
+      "url": "https://www.sportseats4u.co.uk/product-category/racing-seat-harness-roll-cages-brands/cobra-seats/auto-styling-bespoke-retrimming/door-panel-upholstery/",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "item": "Molded replacement carpet, 2018-2024 Toyota Camry 4-door (Auto Custom Carpets, made in USA)", "retailer": "Stock Interiors", "market": "US",
+      "price": 237.95, "options": {"Neon cut pile": "+35.69", "Heat and sound insulation": 34.95, "Jute padding": 25.95, "Carpet by the yard": 56.95},
+      "unit": "USD, carpet only (DIY install; may need trimming)", "currency": "USD",
+      "url": "https://www.stockinteriors.com/autocarpet/23946",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "item": "US upholstery cost ranges (door panel, carpet)", "publisher": "carupholsterycost.com", "market": "US",
+      "ranges": {"Door panel per panel, cloth/vinyl": "180-450", "Door panel per panel, leather": "320-750", "Set of 4 door panels, cloth/vinyl": "700-1,800", "Carpet replacement": "220-1,200", "Upholstery labour per hour": "50-150"},
+      "unit": "USD", "currency": "USD",
+      "url": "https://www.carupholsterycost.com/door-upholstery-cost/",
+      "date": "2026-10-03", "confirmed": false, "note": "A cost-guide site, not a shop, via search summary. Kept only as a cross-check; not a shop's published price."
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "US maker spec pages (toyota.com, automobiles.honda.com, chevrolet.com, hyundaiusa.com) and chevrolet.com.mx, vauxhall.co.uk, skoda.ie all refused automated reading or 404'd; no maker-page trims/prices for Silverado, Equinox (maker), Camry (maker), F-150 (maker), Ram, Sierra (maker), Tucson US, Corsa, Aveo MX, Octavia IE.",
+      "Hyundai Canada Tucson trim prices (only in Build & Price).",
+      "VW UK Golf trim prices (overview page shows none).",
+      "Any directly read Tire Rack, Discount Tire, Walmart or Costco US tire price; Discount Tire's per-tire installation fee; Costco's installation package price on costco.com.",
+      "Canadian Tire tire prices and installation fees on canadiantire.ca.",
+      "Kwik Fit tyre prices (listing did not render).",
+      "A UK aftermarket wheel retailer's prices (Wolfrace, BBS UK feeds unavailable).",
+      "Mexican tyre fitting (montaje/balanceo) fees at a named shop.",
+      "Ireland RSA page on HID/LED retrofits (403); Ireland and Canada LED-retrofit rules not re-read this session (research-customization.json holds an RSA URL).",
+      "Halfords LED and halogen bulb prices on halfords.com itself (script-rendered).",
+      "Crutchfield prices read directly (403), and any Crutchfield professional-installation price (it sells parts and instructions, not installs).",
+      "Best Buy Canada (bestbuy.ca) car audio installation prices.",
+      "Car audio prices/installation in Ireland, Canada (other than US Best Buy) and Mexico.",
+      "Thule US roof-box listing page (404); Yakima Canada/UK prices.",
+      "A US, Canadian, Irish or Mexican upholstery shop's own published door-panel or carpet-fitting price list; a carpet fitting labour price from any shop."
+    ],
+    "worthChecking": [
+      "Best Buy speaker install: page read 2026-10-03 says Standard $99.99 / Component $149.99, while search snippets say $79.99 / $129.99 — prices may vary by promotion or region.",
+      "BJ's $80 installation: whether it is per set of four or per tyre was not stated in what was read.",
+      "Genuine Toyota Camry 2025+ rear spoiler $90 MSRP (search summary) looks low for a colour-keyed part.",
+      "FMVSS 108 section numbers (S6.7.1.1, S6.5.3.4.1, S6.7.1.3) were read on Cornell LII, not eCFR.",
+      "Royal Body Kits GBP prices: VAT treatment not visible in the store feed.",
+      "Konig per-wheel basis inferred from variant structure.",
+      "Honda CR-V: SLATE's catalog is the 2026 model year; the 2027 release (2026-09-09) raised LX 2WD to $31,520 and destination to $1,550.",
+      "Nissan Mexico Versa CrediNissan prices are promotional (1 Oct - 2 Nov 2026) and conditional on Nissan credit."
+    ]
+  }
+}

@@ -15,7 +15,7 @@ import { CITIES } from '@/engine/content/geography';
 import { arrange } from '@/engine/systems/catalog';
 import { diningQuote, diningRefusal, menuCatalog, restaurantById, type DineHow } from '@/engine/systems/dining';
 import { bacAt, drinkRefusal, pintPrice } from '@/engine/systems/alcohol';
-import { cookRefusal, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice } from '@/engine/systems/kitchen';
+import { cookRefusal, cookingClash, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice } from '@/engine/systems/kitchen';
 import { MEAL_KEYS } from '@/engine/systems/pantry';
 import { RECIPES } from '@/engine/content/groceries';
 import { SPOT_LABEL } from '@/engine/systems/items';
@@ -209,7 +209,7 @@ function Recipes() {
   const cookable = useFeature('food.cook');
   const shopFor = useFeature('food.buy_short');
   const [serves, setServes] = useState<Record<string, number>>({});
-  const rows = RECIPES.map((r) => ({ r, n: serves[r.id] ?? r.servings, no: cookRefusal(sim, person, r.id, serves[r.id] ?? r.servings) })).sort((a, b) => Number(Boolean(a.no)) - Number(Boolean(b.no)) || a.r.name.localeCompare(b.r.name));
+  const rows = RECIPES.map((r) => ({ r, n: serves[r.id] ?? r.servings, no: cookRefusal(sim, person, r.id, serves[r.id] ?? r.servings) ?? cookingClash(sim, r.id) })).sort((a, b) => Number(Boolean(a.no)) - Number(Boolean(b.no)) || a.r.name.localeCompare(b.r.name));
   const ready = rows.filter((x) => !x.no).length;
   return (
     <Panel title="Recipes" subtitle={`${ready} of ${RECIPES.length} can be cooked with what’s in the kitchen`}>

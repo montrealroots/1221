@@ -26,6 +26,13 @@
  * FoodSafety.gov gives cooked leftovers (3, the safe end). A portion is
  * reheated in five minutes, SLATE's estimate, and eaten; the day's meals
  * take from them first (`mealsFromStock`).
+ *
+ * **Cooking's time** (from 2026-10-03): a recipe isn't started that would run
+ * into something they're due at. **For the household**: a partner living with
+ * them, home, eats a serving of what's cooked with them, the meal's time
+ * counting to the two of them; and a dinner for friends at home is cooked from
+ * a recipe where the stock makes it for everyone (`social.host`), its money
+ * spent only where it can't be.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -46,6 +53,7 @@ import { WASH_UP, atHome, livingOf, placeOf } from './dwelling';
 export const sinkFull = (person: Person): boolean => atHome(person) && (livingOf(person).dishes ?? 0) >= WASH_UP.full;
 export const SINK_FULL = 'The sink’s full: wash up first.';
 import { applyLookingAfter, occupiedAt } from './life';
+import { contactsOf } from './people';
 import { drinkGrams, marketOf as drinkingMarketOf } from './alcohol';
 import { closedNow } from './errands';
 import { stow } from './trips';
@@ -171,6 +179,31 @@ export function cookRefusal(sim: Simulation, person: Person, recipeId: string, s
   return undefined;
 }
 
+/** Something they're due at that cooking a recipe now would run into, or nothing. */
+export function cookingClash(sim: Simulation, recipeId: string): string | undefined {
+  const r = recipeById(recipeId);
+  if (!r) return undefined;
+  const end = sim.now + (r.minutes ?? KITCHEN.minutes) * 60_000;
+  const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);
+  return clash ? `${clash.label} is at ${formatTime(clash.at, sim.zone)}, and there isn’t time to cook it.` : undefined;
+}
+
+/** A recipe's ingredients taken from stock for so many servings, the soonest to go off first. */
+export function takeIngredients(sim: Simulation, person: Person, recipeId: string, servings?: number): void {
+  const r = recipeById(recipeId)!;
+  for (const i of r.ingredients) {
+    if (i.cupboard || !i.food) continue;
+    let need = amountIn(i, stockOf(sim, person, i.food)[0]!.food.unit, (servings ?? r.servings) / r.servings);
+    for (const s of stockOf(sim, person, i.food)) {
+      if (need <= 1e-9) break;
+      const used = Math.min(need, s.food.left);
+      s.food.left -= used;
+      need -= used;
+      if (s.food.left <= 1e-9) person.items = (person.items ?? []).filter((x) => x.id !== s.id);
+    }
+  }
+}
+
 /**
  * What a recipe is short of for so many servings, and the cheapest packs in
  * reach that make it up: each missing food's cheapest product in a store here
@@ -212,21 +245,17 @@ export function cook(sim: Simulation, person: Person, recipeId: string, servings
   if (no) throw new CommandError(no);
   const busy = occupiedAt(sim, sim.now);
   if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`);
+  const clash = cookingClash(sim, recipeId);
+  if (clash) throw new CommandError(clash);
   const r = recipeById(recipeId)!;
-  for (const i of r.ingredients) {
-    if (i.cupboard || !i.food) continue;
-    let need = amountIn(i, stockOf(sim, person, i.food)[0]!.food.unit, (servings ?? r.servings) / r.servings);
-    for (const s of stockOf(sim, person, i.food)) {
-      if (need <= 1e-9) break;
-      const used = Math.min(need, s.food.left);
-      s.food.left -= used;
-      need -= used;
-      if (s.food.left <= 1e-9) person.items = (person.items ?? []).filter((x) => x.id !== s.id);
-    }
-  }
-  sim.advanceTo(sim.now + (r.minutes ?? KITCHEN.minutes) * 60_000);
+  takeIngredients(sim, person, recipeId, servings);
+  const minutes = r.minutes ?? KITCHEN.minutes;
+  sim.advanceTo(sim.now + minutes * 60_000);
   applyLookingAfter(person, 'eat', sim.now);
-  const left = (servings ?? r.servings) - 1;
+  // A partner living with them, home, eats with them.
+  const partner = atHome(person) ? contactsOf(person).find((c) => c.livesWith !== undefined) : undefined;
+  if (partner) { partner.hours += minutes / 60; partner.lastSeen = sim.now; }
+  const left = (servings ?? r.servings) - 1 - (partner && (servings ?? r.servings) > 1 ? 1 : 0);
   if (left > 0) {
     const where = homeKeyOf(person.home);
     addItem(sim, person, {
