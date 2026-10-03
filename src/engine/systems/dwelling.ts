@@ -68,6 +68,8 @@ import { someoneHome } from './away';
 export interface RentedUnit {
   type: HomeType;
   beds: number;
+  /** Bathrooms with a shower, from 2026-10-03 (`SECOND_BATH_SHARE`); one where unset. */
+  baths?: number;
   size: number;
   /** A room in a flat shared with others. */
   shared: boolean;
@@ -107,6 +109,21 @@ const HOTEL_FIXTURES: Fixtures = { bathtub: true, dishwasher: false, laundry: 'n
 const SOFA_FIXTURES: Fixtures = { bathtub: false, dishwasher: false, laundry: 'none', cooling: 'none', outdoor: 'none', gym: 'none' };
 
 /** Draws a rented flat, or a room in a shared one, in a town: the kind of place a renter there gets. */
+/**
+ * The share of renters' homes with two complete bathrooms or more (from
+ * 2026-10-03; the American Housing Survey 2023, the Census Bureau's own API,
+ * `research-home-gaps.json`): the New York metro's 11.4%, Los Angeles's
+ * 30.9%, and the country's 33.5% for New Haven, which isn't an AHS metro. A
+ * rental of two bedrooms or more has a second at it, SLATE's reading being
+ * that a one-bedroom has one; the survey doesn't split them by bedrooms.
+ * Elsewhere no renters' share was read, and a rental keeps one.
+ */
+export const SECOND_BATH_SHARE: Readonly<Record<string, number>> = {
+  'us-ny-newyork': (315.2 + 61.8 + 56.9) / 3823.2,
+  'us-ca-losangeles': (548.5 + 138.5 + 76.8) / 2473.2,
+  us: (11_821 + 2_464 + 1_025 + 210) / 46_311,
+};
+
 export function drawRental(sim: Simulation, person: Person, cityId: string, shared: boolean, key: number): RentedUnit {
   const city = CITIES.require(cityId);
   const rng = sim.rng('homes.rental', person.id, cityId, shared ? 'room' : 'flat', key);
@@ -119,7 +136,10 @@ export function drawRental(sim: Simulation, person: Person, cityId: string, shar
   const size = Math.round((shared ? 700 + 300 * beds : rng.int(620, 820)) / 10) * 10;
   // A renter's place sits low in the market: the first third, a shared house a little higher.
   const fixtures = drawFixtures(rng, { countryId: city.countryId, latitude: city.latitude, longitude: city.longitude, dense }, type, rng.float(0.1, 0.4), type === 'house' && rng.next() < 0.6);
-  return { type, beds, size, shared, fixtures };
+  // A second bathroom with a shower, for a home of two bedrooms or more, at the metro's renters' share (from 2026-10-03).
+  const second = SECOND_BATH_SHARE[cityId] ?? (city.countryId === 'us' ? SECOND_BATH_SHARE.us : undefined);
+  const baths = beds >= 2 && second !== undefined && rng.next() < second ? 2 : 1;
+  return { type, beds, size, shared, fixtures, ...(baths > 1 ? { baths } : {}) };
 }
 
 /** A home owned's fixtures: as listed, or drawn for one bought before they were kept. */
