@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-285 commands; 280 named by a test, 5 not.
+286 commands; 281 named by a test, 5 not.
 
 ## aircraft
 
@@ -491,6 +491,12 @@ Each command the player can run: the engine file that handles it, the screens th
 | `vehicle.tint` | `src/engine/systems/tint.ts` | `VehiclesWorkspace.tsx` | `mods.test.ts` `tint.test.ts` | A Car Of Your Own |
 | `vehicle.winter_tires` | `src/engine/systems/tires.ts` | `VehiclesWorkspace.tsx` | `tires.test.ts` | A Car Of Your Own |
 | `vehicle.wrap` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `wraps.test.ts` | A Car Of Your Own |
+
+## watch
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `watch.battery` | `src/engine/systems/watches.ts` | `BelongingsWorkspace.tsx` | `watches.test.ts` | Rent And A Roof |
 
 ## world
 

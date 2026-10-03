@@ -17,6 +17,7 @@ import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneR
 import { ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
 import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
+import { batteryOptions, batteryRefusal, batteryYears, stopped } from '@/engine/systems/watches';
 import { owedOn, pawnTermsIn, pawnsOf, pledgeQuote, pledgeRefusal } from '@/engine/systems/pawn';
 import { lockedAway, safeCatalog, safesAtHome, scheduleRefusal, scheduledPremium, valuablesOf } from '@/engine/systems/valuables';
 import { contactsOf } from '@/engine/systems/people';
@@ -206,6 +207,7 @@ function Valuables() {
   const sched = useFeature('valuables.schedule');
   const pledge = useFeature('pawn.pledge');
   const redeem = useFeature('pawn.redeem');
+  const battery = useFeature('watch.battery');
   const broker = pawnTermsIn(person.currentLocationId);
   const pledges = pawnsOf(person);
   const cur = saveCurrency(sim.universe);
@@ -219,14 +221,14 @@ function Valuables() {
         {pieces.length > 0 && (
           <div className="table-scroll">
             <table>
-              <thead><tr><th scope="col">Piece</th><th scope="col">Where</th><th scope="col" className="num">Paid</th><th scope="col"><span className="sr-only">Safe</span></th><th scope="col"><span className="sr-only">Insurance</span></th>{broker && <th scope="col"><span className="sr-only">Pawn</span></th>}</tr></thead>
+              <thead><tr><th scope="col">Piece</th><th scope="col">Where</th><th scope="col" className="num">Paid</th><th scope="col"><span className="sr-only">Safe</span></th><th scope="col"><span className="sr-only">Insurance</span></th><th scope="col"><span className="sr-only">Battery</span></th>{broker && <th scope="col"><span className="sr-only">Pawn</span></th>}</tr></thead>
               <tbody>
                 {pieces.filter((i) => i.at.kind !== 'service').map((i) => {
                   const inSafe = lockedAway(person, i);
                   const noSched = i.scheduled ? undefined : scheduleRefusal(sim, person, i);
                   return (
                     <tr key={i.id}>
-                      <td>{i.label}</td>
+                      <td>{i.label}{stopped(i, sim.now) && <span className="xs dim"> · Stopped</span>}</td>
                       <td className="small">{whereWords(person, i.at)}</td>
                       <td className="num mono">{i.paid ? formatMoney(i.paid, cur) : '—'}</td>
                       <td>{inSafe
@@ -235,6 +237,7 @@ function Valuables() {
                       <td>{i.scheduled
                         ? <button type="button" className="btn btn-sm btn-ghost" disabled={!sched.open} title={`${formatMoney(scheduledPremium(i), cur)} a month`} onClick={() => { if (run('valuables.schedule', { itemId: i.id, on: false }).ok) toast(`${i.label}, no longer scheduled.`, 'positive'); }}>Unschedule It</button>
                         : <button type="button" className="btn btn-sm btn-ghost" disabled={!sched.open || Boolean(noSched)} title={noSched ?? `${formatMoney(scheduledPremium(i), cur)} a month, paid in full without a deductible`} onClick={() => { if (run('valuables.schedule', { itemId: i.id, on: true }).ok) toast(`${i.label}, scheduled.`, 'positive'); }}>Schedule It</button>}</td>
+                      <td>{batteryYears(i) !== undefined && (() => { const opt = batteryOptions(sim, person, i)[0]; const no = opt ? batteryRefusal(sim, person, i.id, opt.service.id) : 'No battery change is published where you are.'; return <button type="button" className="btn btn-sm btn-ghost" disabled={!battery.open || Boolean(no)} title={no ?? `${opt!.service.name}, back in a week`} onClick={() => { if (run('watch.battery', { itemId: i.id, serviceId: opt!.service.id }).ok) toast(`${i.label}, away for its battery.`, 'positive'); }}>{opt ? `Change The Battery, ${formatMoney(opt.price, cur)}` : 'Change The Battery'}</button>; })()}</td>
                       {broker && (() => { const no = pledgeRefusal(sim, person, [i.id]); return <td><button type="button" className="btn btn-sm btn-ghost" disabled={!pledge.open || Boolean(no)} title={no ?? `A loan of ${formatMoney(pledgeQuote(sim, person, [i.id]).loan, cur)} from ${broker.lender}`} onClick={() => { if (run('pawn.pledge', { itemIds: [i.id] }).ok) toast(`${i.label}, pledged.`, 'positive'); }}>Pawn It</button></td>; })()}
                     </tr>
                   );

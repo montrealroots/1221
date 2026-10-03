@@ -24,6 +24,7 @@ import type { Person } from '../domain/model';
 import type { Instant } from '../core/time';
 import { careFor, type Care, type Slot } from '../content/garmentcare';
 import { fitOf } from './tailoring';
+import { stopped } from './watches';
 import { itemsOf, reachable, type Item, homeKeyOf, type Spot } from './items';
 
 /** What makes an item a garment: its kind (a care rule's), where it goes on, how it's cleaned, and its wear. */
@@ -63,6 +64,8 @@ export function unwearable(sim: Simulation, person: Person, item: Item & { garme
   const fit = fitOf(person, g);
   if (fit !== 'fits') return fit === 'small' ? 'too small now' : 'too big now';
   if (!reachable(sim, person, item.at)) return 'not to hand';
+  // A quartz watch whose battery has run down has stopped (`systems/watches.ts`, from 2026-10-02).
+  if (stopped(item, at)) return 'stopped, its battery run down';
   return undefined;
 }
 
