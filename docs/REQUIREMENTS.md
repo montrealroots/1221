@@ -91,7 +91,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 27g | Outfits from owned, reachable items; worn outfit persists | Done, 2026-10-02 | `outfitRefusal`, `reachable`; `Person.wornNow`, set as the day dresses them or they change; read by the sale refusal and Clothes | — |
 | 28 | Phones and electronics as devices, activation, plans, finance, trade-in | Partial, 2026-10-02 | `systems/phones.ts`: 273 phones on the makers' stores in five markets; outright or a maker's 0% plan (prepaid lines kept out where the plan says); trade-in at the published most; activation at the carrier's SIM charge; battery wear by Apple's 1,000-cycle figure and replacement; cover billed monthly; tests/phones.test.ts | Screens breaking (no published rate); theft and loss claims; carrier device plans; credit approval; other electronics |
 | 29 | Jewelry and watches as pieces, commissions, servicing, insurance, resale | Partial, 2026-10-02 | about 121 pieces as garments, worn with the outfit; a burglary takes those at home not locked in a safe or worn; safes at named sellers' prices, holding their liters (`valuables.buy_safe`, `valuables.lock_up`, `valuables.take_out`); a standard policy pays up to its published jewelry limit (Lemonade, TD, Aviva, GNP); a piece scheduled is paid in full for a premium each month (`valuables.schedule`, the rate SLATE's arithmetic on Lemonade's averages); sold on as clothes are (`clothes.sell`, `systems/resale.ts`): Vinted's 28% of the new price in Britain and Ireland, a ThredUp bag in America, Kijiji's half in Canada | Servicing and batteries (no battery lives read yet), pawn (loans are a share of a resale value no source gives for most pieces), commissions |
-| 30 | Orders: states, destination, failed delivery, cancellation, return, refund once | Partial | `Order`, `deliver` once; `returned` set and `clothes.cancel` where the law gives it, GB and IE (2026-10-02); a return refunded to what paid, the card or the bank, in its shares (`paidFrom`, 2026-10-02) | Shipped and out-for-delivery; failed delivery (`research-failed-delivery.json`: every carrier read leaves a parcel without a signature unless the shipper asks for one, and no retailer of SLATE's publishes which of its orders do, so nobody home changes no order yet); partial returns |
+| 30 | Orders: states, destination, failed delivery, cancellation, return, refund once | Partial | `Order`, `deliver` once; `returned` set and `clothes.cancel` where the law gives it, GB and IE (2026-10-02); a return refunded to what paid, the card or the bank, in its shares (`paidFrom`, 2026-10-02); a basket returned a purchase at a time, the order marked returned once all of it is back (`returnClothes`) | Shipped and out-for-delivery; failed delivery (`research-failed-delivery.json`: every carrier read leaves a parcel without a signature unless the shipper asks for one, and no retailer of SLATE's publishes which of its orders do, so nobody home changes no order yet) |
 
 ## Part 5. Daily life
 
@@ -102,10 +102,10 @@ Correctness first, then the connected day the plan asks to be shown working
 | 31c | Supplies and towel | Done, 2026-10-02 | `showerUses` by grams; bath towels as items (`starterTowels`, `useTowel`) | Buying towels |
 | 31d | Products, duration, routine | Partial, 2026-10-02 | the product chosen first used before the others of its kind, then an open bottle before a new one, and the chosen one bought again where it's sold (`hygiene.use_first`, `inUseOrder`); conditioner used after the shampoo where bought, Loretz's 13.13 g a use | the shower's minutes (REU2016's 7.8, read in `research-water-washing.json`, against the 20 the action takes with drying and dressing) |
 | 31e | Perform; time; hygiene | Complete | life.ts | — |
-| 31f | Water and energy | Not implemented | `powerDay` spoils food only | Hot water by heater and outage; water and energy billed |
+| 31f | Water and energy | Partial | electricity billed at each town's own tariff on the kWh the home used (`systems/electricity.ts`); a power cut spoils the fridge and freezer (`powerDay`, `spoilWithoutPower`) | Hot water by heater and outage; water billed apart from the atlas's bills |
 | 31g | Dry off, change, used towel to laundry | Done, 2026-10-02 | a home shower uses a towel, three uses to the wash (Cleveland Clinic), washed with the clothes; `clothes.change` after | — |
 | 31h | Grooming at home | Partial | salon, teeth, deodorant | Shave, hair, makeup at home; preferences |
-| 32a | Browse wardrobe, drawers, luggage | Partial | `reachable`, WhatToWear | Browse by location |
+| 32a | Browse wardrobe, drawers, luggage | Done | `reachable`, WhatToWear; Belongings grouped by where each thing is, Where Things Are | — |
 | 32b | Filter by occasion, type, size, color, condition | Partial, 2026-10-02 | Belongings filters by kind, clean or not, condition, color and size, and finds by name (`systems/itemfacets.ts`) | Occasion tags (no source tags garments by occasion) |
 | 32c | Pieces and layers | Partial | one per slot | Layering |
 | 32d | Change, with time and a worn state | Done, 2026-10-02 | `clothes.change`: `CHANGE_MINUTES` (SLATE's estimate), each piece a wear, `wornNow`; tests/wardrobe.test.ts | — |
@@ -120,17 +120,17 @@ Correctness first, then the connected day the plan asks to be shown working
 | 33f | Serve self or others | Partial | self only | Guests and household |
 | 33g | Eat | Done, 2026-10-02 | `food.eat_ready`; `look_after eat` reads `kitchenMeal`: what's ready, else a recipe the stock makes, before money; tests/kitchen.test.ts | — |
 | 33h | Leftovers, freshness | Complete | tests/kitchen | Freezing |
-| 33i | Wash up | Not implemented | — | Dirty dishes, washing, dishwasher |
+| 33i | Wash up | Partial | a dishwasher's tablets used, 184 cycles a year (`dishwasherRuns`), cutting the day's mess; without one the dishes are done by hand in the tidy | Dirty dishes as things; a wash-up step |
 | 33j | Restaurants, takeout, delivery, drinks | Complete | `food.dine`, `food.drink`; tests | — |
 | 33k | Reservations | Not implemented | — | Book a table ahead |
 | 34a | Television | Partial, 2026-10-02 | `systems/homelife.ts`: 146 service tiers in five markets billed monthly; Britain's and Ireland's TV licences as their law asks; unwinding names live TV or a service; tests/homelife.test.ts | A programme; stop and resume |
 | 34b | Reading, music, gaming, hobbies | Partial, 2026-10-02 | music services billed; consoles bought; unwinding in a game needs one; a reader unwinds with pleasure only with something to read at home: the town’s library card, free to a resident (8 libraries, each one’s own page), or a paperback or an e-reader at a named seller’s price, cheapest first (`reading.library_card`, `reading.buy`) | Hobbies; games owned; books read through |
 | 34c–f | Exercise, relaxation, sleep, time | Complete | life.ts; tests | — |
 | 35a | Cleaning | Partial | `tidy` scalar; the chains' cleaning products on sale (`content/cleaning.ts`), a dishwasher's tablets used, 184 cycles a year | Rooms; how fast sprays and sponges go (unpublished) |
-| 35b | Laundry | Complete | `doLaundry`, a load's detergent each, refused without; tests/wardrobe, tests/cleaning | Towels and bedding |
-| 35c | Organizing | Partial | spots | Rooms; capacity |
+| 35b | Laundry | Complete | `doLaundry`, a load's detergent each, refused without; tests/wardrobe, tests/cleaning; towels a garment each shower wears toward its wash (`useTowel`) | Bedding |
+| 35c | Organizing | Partial | spots; a bag's, a safe's and IKEA storage's liters, refused when full (`moveRefusal`) | Rooms; a home spot's own capacity |
 | 35d | Waste | Partial, 2026-10-02 | `systems/waste.ts`: each research town's household charge in the bills (LA's schedule, Toronto, Vancouver, Dublin; London, Mexico City, New York and New Haven none) | Bin size and plan choice; collection days; bulky items |
-| 35e | Replacing supplies | Partial | automatic restock | Household consumables |
+| 35e | Replacing supplies | Partial | automatic restock; laundry and dishwasher detergent used up and bought again with a week's use left | Cleaning sprays and sponges, sold but never used up (how fast they go is unpublished) |
 | 35f | Appliance repair | Done, 2026-10-02 | `systems/appliancefaults.ts`: washer, dishwasher and fridge faults at Consumer Reports' and Which?'s rates (decider `home.appliance_fault`); the laundromat, washing by hand, a spoiled fridge; the landlord's mended free next morning, one's own booked at each market's price | Dryer and air conditioning faults (no rate with a period published) |
 | 35g | Hosting | Done, 2026-10-02 | `social.host` (`systems/hosting.ts`): several friends, dinner or drinks; seats and a table from the furniture; dinner paid at home's meal price; drinks poured from the kitchen's beer and wine; a mess noticed | — |
 | 35h | Cleaners and gardeners | Partial | weekly cleaner; gardener; from 2026-10-02 the cleaner comes at ten, SLATE's reading, getting in with a key or with somebody home, a visit missed not cleaned or charged (`cleanerGetsIn`) | Work recorded |
@@ -169,7 +169,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 40b | Change the plan mid-trip | Done, 2026-10-02 | a whole trip, or a stop at a time with the next chosen as you go and Go Home | — |
 | 40c | Parking | Partial | meter by the minute; from 2026-10-02 a named garage chosen for an errand's stops, by its own units up to its day (`content/garages.ts`: LA, New Haven, Toronto, Vancouver, the City of London, Dublin) | Manhattan's garages (a "from" price only); time limits |
 | 40d | Hours, appointments | Partial | closed shops refuse | Appointment slots |
-| 40e | Purchases carried or in the car until moved, within its cargo | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out | Cargo space by model |
+| 40e | Purchases carried or in the car until moved, within its cargo | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out; refused past the model's cargo liters or a pickup's bed | — |
 | 40g | Out of fuel | Partial | an errand's leg burns from the tank (`burn`) and is refused short of the next stop, a fuel stop filling it; a journey by road buys along the way | Running dry on the road: drivers who don't stop (the AA Ireland's 10.5% of call-outs are fuel) |
 | 40h | Breakdowns, delays | Done, 2026-10-02 | severe fault refuses; `systems/roadside.ts`: a driven journey's fault on the road, a severe one towed onward; a tow to the garage; the clubs' cover by tier, dues, tow km and calls | How long the truck takes (unpublished); battery, tyre and lockout call-outs |
 | 40i | Where it's parked | Partial | town only | Spot level |
@@ -191,7 +191,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 43c | Furniture | Partial | 5 pieces; from 2026-10-02 IKEA's seats, tables, wardrobes, frames, chests and bookcases (163 pieces, `systems/furnishings.ts`), seats and table places read by hosting, storage holding its outside measure | Desks, TV benches, coffee tables (no reader yet) |
 | 43d–h | Appliances, lighting, storage, security, utilities | Partial | fixtures; security | Fixture choice, lighting, capacity |
 | 43i | Special rooms | Partial, 2026-10-02 | home gym, theater, dance studio, library, soundproofed room, one to each spare bedroom; a walk-in closet and a sauna, at the cost guides' prices | What each room is used for beyond being kept |
-| 43j–l | Pools, gardens, outdoor kitchen, guesthouse, courts, track | Partial | pool, courts, ADU, pitch; a hot tub, putting green and sprinklers, the first two billed monthly (2026-10-02) | Gardens, greenhouse, outdoor kitchen use, guests in the ADU, track |
+| 43j–l | Pools, gardens, outdoor kitchen, guesthouse, courts, track | Partial | pool, courts, ADU, pitch; a lawn grown through the town's season and mown by you or a gardener to its height rule (`systems/lawns.ts`); a hot tub, putting green and sprinklers, the first two billed monthly (2026-10-02) | Garden beds, greenhouse, outdoor kitchen use, guests in the ADU, track |
 | 43m | Football field, solo and with friends | Partial, 2026-10-02 | three pitch sizes on the lot, turf at the published middle and a drainage base; Come Over To Play for any court or the pitch, at the game's METs, stopped by weather or dark; tests/courts.test.ts | Solo drills (no published MET for them); lights for a pitch; natural grass |
 | 44a–b | Space, ownership | Complete | `projectRefusal`, `mostFloor` | — |
 | 44c–d | Permission, structure, access | Partial / not implemented | permits | Refusal outcome; structural checks |
@@ -210,7 +210,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 47o | Home while away | Partial | bills run; the fridge's food goes off on its own dates while away, a power cut or a broken fridge spoiling it sooner | House-sitter, mail |
 | 48a–b | Search named properties by dates, guests, budget | Partial | 28 hotels in 8 towns; from 2026-10-02 filtered by what their own pages state (a gym, a pool, breakfast included, wheelchair access, pets) and by most for the stay (`hotelHas`) | Guests; several rooms |
 | 48c | Compare total stay | Complete | `namedStayQuote`; tests/hotels | — |
-| 48d–f | Inspect rooms, extras, terms | Partial | bed, hours, deposit, parking; from 2026-10-02 each hotel's gym, pool, spa, breakfast, Wi-Fi, accessibility and pets shown, and its own cancellation deadline deciding the refund (`content/hotelamenities.ts`) | Extras bought (breakfast, early check-in, a pet's fee) |
+| 48d–f | Inspect rooms, extras, terms | Partial | bed, hours, deposit, parking; from 2026-10-02 each hotel's gym, pool, spa, breakfast, Wi-Fi, accessibility and pets shown, and its own cancellation deadline deciding the refund (`content/hotelamenities.ts`); breakfast bought at its own price, free where the room includes it (`hotel.breakfast`) | Extras bought (early check-in, a pet's fee) |
 | 48g | Book and pay | Complete | `travel.book`; tests | Hotel-only booking |
 | 48h | Check-in requirements | Partial | age at booking; a deposit held at arrival; from 2026-10-02 the room at the hotel's own check-in hour (`roomReadyAt`) | ID asked at the desk: of the research's hotels only citizenM New York Times Square, Graduate New Haven and The Shelbourne state photo ID at check-in, and none of the three is among SLATE's 28, which have published rates |
 | 48i | A failed deposit isn't a granted stay | Done, 2026-10-02 | journey.ts `holdForDeposit`, `travel.pay_deposit`; rentals.ts `held`, `travel.pay_rental_deposit`; standin.ts refuses; tests/deposits.test.ts | — |
@@ -232,15 +232,15 @@ Correctness first, then the connected day the plan asks to be shown working
 | 51.3 | Travel insurance | Complete | tests/travelinsurance | — |
 | 51.4 | Accessibility | Partial, 2026-10-02 | `systems/access.ts`: a wheelchair said on Papers; a hotel its own pages say can’t take one refused; a disability permit at each place’s fee, meters free where the town allows | Stations without step-free access, paratransit, accessible taxis, accessible homes |
 | 52.1–4 | Friends, dating, partners, marriage | Complete | people, dating, marriage; tests | More activities |
-| 52.5–6 | Parenting, caregiving | Partial | costs and benefits | A child's day; care given as time |
+| 52.5–6 | Parenting, caregiving | Partial | costs and benefits; care given to a parent, as stress a month by the carer's hours (`family.care`) | A child's day; care given as time |
 | 52.7–9 | Lives of their own; shared activities; household | Partial | `declines()`; from 2026-10-02 a job of their own at the country's employment rate for their age, at work nine to five on the days ATUS says the employed work (`systems/availability.ts`, decider `social.availability`) | Interests, memory read; activities; chores |
 | 53.1–2, 4, 6–9 | Representation, auditions, contracts, work, travel, press, awards | Complete | career.ts; tests | Breakdowns; attending a ceremony |
 | 53.3, 10–11 | Preparation, professional contacts, dressing for the room | Partial | coaching | Prep time; casting contacts; a dress check |
 | 53.5 | Fittings | Done, 2026-10-02 | paid only when `present`, missed otherwise; tests/fittings.test.ts | — |
 | 53.12 | Products never confer ability | Complete | `bookingChance` | Self-tape kit documented as recording quality |
-| 54.1–5 | Staff, lessons, sports, memberships, community | Partial or not implemented | cleaner, gardener, trainer, gym | Lessons, clubs, leagues, community |
+| 54.1–5 | Staff, lessons, sports, memberships, community | Partial or not implemented | cleaner, gardener, trainer, gym; acting and improv classes (`career.class`), flight training (`pilot.train`) | Sports and hobby lessons, clubs, leagues, community |
 | 54.7, 10 | Electricity, internet and phone | Complete | electricity.ts, telecom.ts; tests | Supplier choice; internet outages |
-| 54.8–9, 11–12 | Gas, water, waste, outages | Partial or not implemented | atlas estimate | Accounts and tariffs; outages |
+| 54.8–9, 11–12 | Gas, water, waste, outages | Partial | atlas estimate; utility accounts opened on moving in with published set-up charges (`settleIn`); each town's waste charge (`wasteFeeOf`); power cuts (`powerDay`) | Gas and water tariffs; water and gas outages |
 | 54.13 | No unrelated jobs | Complete | — | — |
 
 ## Part 10. The assistant and the way through
@@ -252,4 +252,4 @@ Correctness first, then the connected day the plan asks to be shown working
 | 57 | New mechanics reviewed, never run against saves | Partial | proposals only | A development-proposal role |
 | 58 | Navigation keeps context | Partial | breadcrumbs, pins, `/` search; a recipe short of something buys it in place and cooks (`food.buy_short`, 2026-10-02) | Others beyond detergent (from 2026-10-02 laundry short of detergent offers Buy Laundry Detergent, the cheapest open here, `shortfallBuy`) |
 | 59 | Activity states, recovery, no duplicates | Partial, 2026-10-02 | `underWay`: orders, a car on order or at a shop, appointments, journeys, a held rental, documents being issued and works, in one list on Home | Resuming an interrupted activity |
-| 62 | The connected day, shown working | Shown, 2026-10-02 | tests/connected-day.test.ts: shower, change, a car errand on the tank with a fuel stop, cooking by servings, save and load, leftovers eaten before money, bed and the next day's outfit | No washing up (§33i) |
+| 62 | The connected day, shown working | Shown, 2026-10-02 | tests/connected-day.test.ts: shower, change, a car errand on the tank with a fuel stop, cooking by servings, save and load, leftovers eaten before money, bed and the next day's outfit | No wash-up step (§33i): the dishwasher's tablets and the tidy stand for it |
