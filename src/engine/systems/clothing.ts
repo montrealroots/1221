@@ -690,7 +690,7 @@ export function registerClothing(sim: Simulation): void {
   sim.onCommand<Partial<Measures> & { clear?: boolean }, { kept: boolean }>('clothes.measures', (p, { sim: s }) => {
     const person = s.player;
     if (p?.clear) { delete person.measures; return { kept: false }; }
-    const m: Partial<Measures> = { department: p?.department, ...(p?.chestCm !== undefined ? { chestCm: Number(p.chestCm) } : {}), ...(p?.waistCm !== undefined ? { waistCm: Number(p.waistCm) } : {}), ...(p?.hipCm !== undefined ? { hipCm: Number(p.hipCm) } : {}), ...(p?.footCm !== undefined ? { footCm: Number(p.footCm) } : {}) };
+    const m: Partial<Measures> = { department: p?.department, ...(p?.chestCm !== undefined ? { chestCm: Number(p.chestCm) } : {}), ...(p?.waistCm !== undefined ? { waistCm: Number(p.waistCm) } : {}), ...(p?.hipCm !== undefined ? { hipCm: Number(p.hipCm) } : {}), ...(p?.footCm !== undefined ? { footCm: Number(p.footCm) } : {}), ...(p?.fingerMm !== undefined ? { fingerMm: Number(p.fingerMm) } : {}) };
     const no = measuresRefusal(m);
     if (no) throw new CommandError(no);
     person.measures = m as Measures;

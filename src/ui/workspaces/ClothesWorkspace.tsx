@@ -653,8 +653,9 @@ function YourMeasurements() {
   const [waist, setWaist] = useState(m?.waistCm ? String(m.waistCm) : '');
   const [hip, setHip] = useState(m?.hipCm ? String(m.hipCm) : '');
   const [foot, setFoot] = useState(m?.footCm ? String(m.footCm) : '');
+  const [finger, setFinger] = useState(m?.fingerMm ? String(m.fingerMm) : '');
   const num = (v: string) => (v.trim() === '' ? undefined : Number(v));
-  const save = () => { if (run('clothes.measures', { department, chestCm: num(chest), waistCm: num(waist), hipCm: num(hip), footCm: num(foot) }).ok) toast('Your sizes now come from each retailer’s chart where it has one.', 'positive'); };
+  const save = () => { if (run('clothes.measures', { department, chestCm: num(chest), waistCm: num(waist), hipCm: num(hip), footCm: num(foot), fingerMm: num(finger) }).ok) toast('Your sizes now come from each retailer’s chart where it has one.', 'positive'); };
   return (
     <Panel title="Your Measurements" subtitle={m ? `Sized By The ${m.department === 'women' ? 'Women’s' : 'Men’s'} Charts` : 'By Body Mass Index Until Given'}>
       <div className="col gap-2">
@@ -670,10 +671,11 @@ function YourMeasurements() {
           <div className="field"><label htmlFor="measure-waist">Waist, Centimeters</label><input id="measure-waist" inputMode="decimal" value={waist} onChange={(e) => setWaist(e.target.value)} /></div>
           <div className="field"><label htmlFor="measure-hip">Hips, Centimeters</label><input id="measure-hip" inputMode="decimal" value={hip} onChange={(e) => setHip(e.target.value)} /></div>
           <div className="field"><label htmlFor="measure-foot">Foot, Centimeters</label><input id="measure-foot" inputMode="decimal" value={foot} onChange={(e) => setFoot(e.target.value)} /></div>
+          <div className="field"><label htmlFor="measure-finger">Ring Finger Around, Millimeters</label><input id="measure-finger" inputMode="decimal" value={finger} onChange={(e) => setFinger(e.target.value)} /></div>
           <Gated feature="clothes.measures" className="btn btn-sm" onClick={save}>Keep These</Gated>
           {m && <Gated feature="clothes.measures" className="btn btn-sm btn-ghost" onClick={() => { if (run('clothes.measures', { clear: true }).ok) toast('Sized by body mass index again.', 'positive'); }}>Forget Them</Gated>}
         </div>
-        <div className="xs dim">A top is sized by chest or bust, a bottom by waist and a shoe by foot length, and a shoe shorter than your foot won’t go on, against the retailer’s own chart for its market, where SLATE keeps one (H&M, Uniqlo, Zara, Gap, Old Navy, Levi’s, Marks & Spencer, Next and more). Elsewhere, and until you give them, your size is read from your body mass index.</div>
+        <div className="xs dim">A top is sized by chest or bust, a bottom by waist and hips, a dress by bust and hips, a ring by the finger around on H.Samuel’s chart, and a shoe by foot length, and a shoe shorter than your foot won’t go on, against the retailer’s own chart for its market, where SLATE keeps one (H&M, Uniqlo, Zara, Gap, Old Navy, Levi’s, Marks & Spencer, Next and more). Elsewhere, and until you give them, your size is read from your body mass index.</div>
       </div>
     </Panel>
   );
