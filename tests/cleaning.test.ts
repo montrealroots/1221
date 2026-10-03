@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { CLEANING } from '@/engine/content/cleaning';
-import { DISHWASHER_CYCLES_A_DAY, dishwasherRuns, keepsCleaning, restock, shortfallBuy, starterCleaning, suppliesOf, toiletryCatalog } from '@/engine/systems/hygiene';
+import { DISHWASHER_CYCLES_A_DAY, SPRAY_G, dishwasherRuns, keepsCleaning, restock, shortfallBuy, sprayUsed, starterCleaning, suppliesOf, toiletryCatalog } from '@/engine/systems/hygiene';
 import { doLaundry, homePlace } from '@/engine/systems/dwelling';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { LA_SOLID_RESOURCES, wasteFeeOf } from '@/engine/systems/waste';
@@ -65,6 +65,20 @@ describe('detergents', () => {
     expect(left(sim, 'dishwasher-detergent')).toBeCloseTo(10 - DISHWASHER_CYCLES_A_DAY, 9);
     without(sim, 'dishwasher-detergent');
     expect(dishwasherRuns(sim, p)).toBe(false);
+  });
+
+  it('a clean of the place uses the Dutch diary study’s 27 g of spray, and an empty one is bought again', () => {
+    const sim = life('us-ny-newyork', 'clean-spray');
+    const before = left(sim, 'all-purpose-cleaner');
+    expect(before).toBeGreaterThan(SPRAY_G);
+    sim.player.living = { ...(sim.player.living ?? {}), tidy: 20 };
+    const r = sim.execute({ kind: 'life.look_after', payload: { action: 'tidy' } });
+    expect(r.ok, r.error).toBe(true);
+    expect(left(sim, 'all-purpose-cleaner')).toBe(before - SPRAY_G);
+    without(sim, 'all-purpose-cleaner');
+    expect(sprayUsed(sim, sim.player)).toBe(false);
+    restock(sim, sim.player, false);
+    expect(left(sim, 'all-purpose-cleaner')).toBeGreaterThan(0);
   });
 
   it('what’s run out is bought again, the dishwasher’s only where there is one', () => {

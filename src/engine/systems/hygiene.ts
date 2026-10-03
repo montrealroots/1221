@@ -55,15 +55,19 @@ export const KEPT = ['body-wash', 'shampoo', 'toothpaste', 'toothbrush', 'deodor
 /**
  * The cleaning a home uses up, counted from 2026-10-02 (`content/cleaning.ts`): a wash's laundry detergent, a load each, and
  * a dishwasher's tablet a cycle, at the 184 cycles a year the Department of Energy's test procedure takes for a household's
- * use. Sprays, bleach, paper towels, bin bags and sponges are on sale and kept, not used up: nobody publishes how fast a
- * household gets through them. Dish soap was among them until 2026-10-03; from then a washing-up uses the teaspoon a
+ * use. Bleach, paper towels, bin bags and sponges are on sale and kept, not used up: nobody publishes how fast a household
+ * gets through them, nor how much a use takes. An all-purpose spray was among them until 2026-10-03; from then each cleaning
+ * of the place uses the 27 g a use the Dutch diary study weighed (Weegels and van Veen, via the EPA's Exposure Factors
+ * Handbook, chapter 17), a milliliter taken as a gram, and it's bought again below a use's worth (`research-home-gaps.json`).
+ * Dish soap was among them until 2026-10-03; from then a washing-up uses the teaspoon a
  * sinkful the American Cleaning Institute gives, 4.93 ml, a sinkful a day's dishes (`washUp` in `systems/dwelling.ts`).
  */
-export const CLEANING_KEPT = ['laundry-detergent', 'dishwasher-detergent', 'dish-soap'] as const;
+export const CLEANING_KEPT = ['laundry-detergent', 'dishwasher-detergent', 'dish-soap', 'all-purpose-cleaner'] as const;
+export const SPRAY_G = 27;
 export const DISH_SOAP_ML = 4.93;
 export const DISHWASHER_CYCLES_A_DAY = 184 / 365;
 /** A week's use of each, below which it's bought again: two loads of a person's one or two a week (`LAUNDRY`), and a week of dishwasher cycles. */
-export const CLEANING_LOW: Readonly<Record<(typeof CLEANING_KEPT)[number], number>> = { 'laundry-detergent': 2, 'dishwasher-detergent': 7 * DISHWASHER_CYCLES_A_DAY, 'dish-soap': 7 * DISH_SOAP_ML };
+export const CLEANING_LOW: Readonly<Record<(typeof CLEANING_KEPT)[number], number>> = { 'laundry-detergent': 2, 'dishwasher-detergent': 7 * DISHWASHER_CYCLES_A_DAY, 'dish-soap': 7 * DISH_SOAP_ML, 'all-purpose-cleaner': SPRAY_G };
 /** Everything the chains sell for the bathroom and for cleaning. */
 const TOILETRIES: readonly Toiletry[] = [...BATHROOM, ...CLEANING];
 
@@ -203,6 +207,11 @@ export const keepsCleaning = (person: Person): boolean => person.cleaningSince !
 /** Whether there's the laundry detergent for so many loads to hand. */
 export function detergentFor(sim: Simulation, person: Person, loads: number): boolean {
   return !keepsCleaning(person) || toHand(sim, person, 'laundry-detergent').reduce((n, i) => n + i.supply.left, 0) + 1e-9 >= loads;
+}
+
+/** A cleaning of the place's spray, used where it's counted and there's some; true where it was. */
+export function sprayUsed(sim: Simulation, person: Person): boolean {
+  return keepsCleaning(person) && take(sim, person, ['all-purpose-cleaner'], SPRAY_G);
 }
 
 /** The laundry detergent for so many loads, used, where it's counted. */

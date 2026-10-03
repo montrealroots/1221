@@ -316,6 +316,8 @@ export interface Living {
   baths?: number;
   /** A cleaner every week, and the day of the week they come, 0 for Sunday. */
   cleaner?: { day: number; /** Given a key, from 2026-10-02: they let themselves in. */ key?: boolean };
+  /** The cleaner's visits, the latest first, the last twelve kept (from 2026-10-03): when, what it cost, or that they couldn't get in. */
+  cleanerLog?: CleanerVisit[];
 }
 
 export function livingOf(person: Person): Living {
@@ -327,6 +329,10 @@ export function livingOf(person: Person): Living {
 export function wearOutfit(sim: Simulation, person: Person, exercise = false): boolean {
   return exercise ? wearForExercise(sim, person) : wearTheDay(sim, person);
 }
+
+/** A visit of the cleaner's: cleaned and paid, unpaid and so not cleaned, or shut out. */
+export interface CleanerVisit { at: Instant; paid?: Money; unpaid?: true; shutOut?: true }
+const logCleaner = (l: Living, v: CleanerVisit) => { l.cleanerLog = [v, ...(l.cleanerLog ?? [])].slice(0, 12); };
 
 /** How long cleaning the place takes them. */
 export const cleaningMinutes = (place: Place): number => Math.min(CLEANING.most, Math.round(CLEANING.baseMinutes + place.size / CLEANING.sqftPerMinute));
@@ -460,8 +466,13 @@ export function livingDay(sim: Simulation, person: Person): void {
   if (l.cleaner && weekday === l.cleaner.day) {
     if (cleanerGetsIn(sim, person, sim.now)) {
       const cost = cleanerCost(sim, person);
-      if (drawFromBank(sim, person, cost).short === 0 && spend(sim, person, cost, 'The cleaner', 'cleaning')) l.tidy = 100;
-    } else if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'The Cleaner Couldn’t Get In', body: 'Nobody was home when they came, and they have no key; you weren’t charged.', importance: 30, route: '/home' });
+      const paid = drawFromBank(sim, person, cost).short === 0 && spend(sim, person, cost, 'The cleaner', 'cleaning');
+      if (paid) l.tidy = 100;
+      logCleaner(l, { at: sim.now, ...(paid ? { paid: cost } : { unpaid: true }) });
+    } else {
+      logCleaner(l, { at: sim.now, shutOut: true });
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'The Cleaner Couldn’t Get In', body: 'Nobody was home when they came, and they have no key; you weren’t charged.', importance: 30, route: '/home' });
+    }
   }
   if (l.tidy < TIDY.messy) {
     w.morale = clamp(w.morale - TIDY.morale * personalityOf(person, 'moraleSwing'), 0, 100);

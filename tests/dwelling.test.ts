@@ -129,6 +129,27 @@ describe('the place', () => {
     expect(spotless).toBe(true);
     const paid = Object.values(sim.universe.transactions).some((t) => t.memo === 'The cleaner');
     expect(paid).toBe(true);
+    // And the visit is recorded, with what it cost (from 2026-10-03).
+    const log = livingOf(sim.player).cleanerLog ?? [];
+    expect(log.length).toBeGreaterThan(0);
+    expect(log[0]!.paid ?? (log[0]!.shutOut ? 'shut' : 'unpaid')).toBe(cost);
+  });
+
+  it('a visit nobody let them in for is recorded as that, and not charged', () => {
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'cleaner-out');
+    const p = sim.player;
+    sim.must({ kind: 'home.cleaner', payload: { on: true } });
+    // Held elsewhere through every visit, with no key.
+    sim.onSchedule('test.busy', () => undefined);
+    for (let d = 0; d < 9; d += 1) {
+      const dayStart = sim.now - (sim.now % 86_400_000) + d * MS_DAY;
+      sim.schedule({ at: dayStart + CLEANER_VISIT.hour * 3_600_000 - 3_600_000, kind: 'test.busy', label: 'Busy', category: 'career', priority: 10, requiresPlayer: true, durationMinutes: 600, payload: { personId: p.id } });
+    }
+    for (let d = 0; d < 8; d += 1) sim.advanceBy(MS_DAY);
+    const log = livingOf(sim.player).cleanerLog ?? [];
+    expect(log.length).toBeGreaterThan(0);
+    expect(log[0]!.shutOut).toBe(true);
+    expect(sim.universe.transactions.some((t) => t.memo === 'The cleaner')).toBe(false);
   });
 
   it('a mess weighs: stress climbs on working days in one, and not in a clean home', () => {

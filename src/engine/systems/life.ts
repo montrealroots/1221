@@ -41,7 +41,7 @@ import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty, wearForSwim }
 import { SITTING_MET } from './coldstress';
 import { countWash } from './water';
 import { readFor } from './reading';
-import { SHAVE, shave, shaveReady } from './hygiene';
+import { SHAVE, shave, shaveReady, sprayUsed } from './hygiene';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
@@ -479,6 +479,8 @@ export function registerLife(sim: Simulation): void {
       else if (action === 'exercise' || action === 'ride' || action === 'court') wearOutfit(s, person, true);
       // The lawn cut (`systems/lawns.ts`, from 2026-10-02).
       if (action === 'mow') { const home = livingIn(person); if (home) mow(home, s.now); }
+      // The place's spray, where there's some (from 2026-10-03).
+      if (action === 'tidy') sprayUsed(s, person);
       if (action === 'washup') washUp(s, person);
       const before = { ...person.wellbeing };
       // Eaten out where there's no kitchen: a restaurant's meal too.

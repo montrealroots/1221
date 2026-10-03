@@ -951,7 +951,7 @@ function YourCareer({ cur }: { cur: string }) {
 const SECURITY_LABEL: Readonly<Record<Device, string>> = { windows: 'Fit Window Locks', timers: 'Buy Lamp Timers', lights: 'Fit An Outside Motion Light' };
 
 function YourPlace({ cur }: { cur: string }) {
-  const { run, toast } = useGame();
+  const { sim, run, toast } = useGame();
   const place = useWorld((s) => placeOf(s, s.player));
   const living = useWorld((s) => ({ ...livingOf(s.player) }));
   const cleaner = useWorld((s) => cleanerCost(s, s.player));
@@ -1031,6 +1031,9 @@ function YourPlace({ cur }: { cur: string }) {
             ? <><Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => run('home.cleaner', { on: false })}>Let The Cleaner Go</Gated><Gated feature="home.cleaner_key" className="btn btn-sm btn-ghost" title="Without a key the cleaner gets in only when you or a partner are home at ten" onClick={() => { if (run('home.cleaner_key', { give: !living.cleaner!.key }).ok) toast(living.cleaner!.key ? 'The key back.' : 'They let themselves in now.', 'positive'); }}>{living.cleaner.key ? 'Take The Key Back' : 'Give The Cleaner A Key'}</Gated></>
             : <Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.cleaner', { on: true }).ok) toast('A cleaner comes every Friday.', 'positive'); }}>Hire A Cleaner ({formatMoney(cleaner, cur, { cents: false })} A Week)</Gated>}
         </div>
+      )}
+      {place.keeps && (living.cleanerLog?.length ?? 0) > 0 && (
+        <p className="xs dim" style={{ margin: 0 }}>{`The cleaner’s visits: ${living.cleanerLog!.slice(0, 4).map((v) => `${formatDate(v.at, sim.zone)}, ${v.paid !== undefined ? formatMoney(v.paid, cur, { cents: false }) : v.unpaid ? 'not paid, so not cleaned' : 'couldn’t get in'}`).join('; ')}.`}</p>
       )}
       {home.kind !== 'sofa' && <WhileAway cur={cur} />}
     </div>
