@@ -1,0 +1,475 @@
+{
+  "meta": {
+    "topic": "Chance that a parcel left unattended at a home's door is stolen, by market",
+    "markets": ["US", "CA", "GB", "IE", "MX"],
+    "dateRead": "2026-10-02",
+    "method": "Publisher pages read with WebFetch where reachable; PDFs downloaded and text-extracted with pdftotext. confirmed:true only when the figure was read on the publisher's own page or document. Ofcom (ofcom.org.uk) returned HTTP 403 / a Cloudflare challenge to every fetch, so its figures are recorded from search-result summaries as confirmed:false.",
+    "caveats": [
+      "No market publishes a per-parcel theft rate, and no carrier, regulator or survey found publishes the share of parcels left unattended. Every per-parcel figure below is a derivation, and divides thefts by ALL parcels, not by parcels left unattended.",
+      "Because thefts happen almost entirely to parcels left unattended, the true chance per unattended parcel = (thefts / all parcels) / (share of parcels left unattended). That share is < 1 and unpublished, so each derived figure is a FLOOR for the per-unattended-parcel chance, not the figure itself.",
+      "Theft surveys disagree by a factor of ~6 in the US (37M to 228M packages a year). They are commissioned by security/e-commerce vendors, online, and self-reported; 'stolen' is not separated from 'lost' or 'not delivered' in most of them.",
+      "Parcel volumes (Pitney Bowes, Ofcom) count all parcels generated, including business-to-business and returns, so a per-household-delivery denominator would be smaller and the per-parcel chance higher."
+    ]
+  },
+  "theftSurveys": [
+    {
+      "market": "US",
+      "publisher": "Security.org",
+      "title": "Package Theft Annual Report (2025 edition)",
+      "url": "https://www.security.org/package-theft/annual-report/",
+      "figures": {
+        "packagesStolenPerYear": 37000000,
+        "packagesStolenQuote": "We estimate that 37 million packages will be stolen this year, totaling more than $8 billion in merchandise.",
+        "adultsWithTheftLast3Months": 9000000,
+        "adultsWithTheftLast3MonthsQuote": "9 million adults have had a package stolen in just the last three months.",
+        "lifetimeShare": "1 in 4 Americans (64 million) have had a package stolen at some point",
+        "averageStolenPackageValueUSD": 222,
+        "shipmentsPerAdultPerYear": 65,
+        "deliveriesPerYearNational": "more than 22 billion",
+        "holidayQuarterPackagesPerAdult": 25,
+        "holidayQuarterQuote": "Each adult expecting 25 packages between October and December — twice as many as in the average three-month stretch.",
+        "housingType": "Apartment and condo residents about 3.5 times as likely as single-family-home residents to have had a theft in the recent 3-month period"
+      },
+      "sample": 3307,
+      "surveyDate": "2025-10",
+      "methodQuote": "In October 2025, Security.org polled 3,307 American adults about their personal experiences with package theft. The poll was conducted online. Participants' responses were weighted to be representative of the age, sex, and ethnicity of the U.S. population according to the Census.",
+      "pageLastUpdated": "2026-09-08",
+      "dateRead": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "market": "US",
+      "publisher": "SafeWise",
+      "title": "2025 U.S. Package Theft Report and Worst Metro Cities for Porch Pirates",
+      "url": "https://www.safewise.com/research/porch-pirate-package-theft/",
+      "figures": {
+        "shareWithTheftLast12Months": 0.31,
+        "shareWithTheftLast12MonthsPrior": 0.37,
+        "packagesStolenPerYear": 104300000,
+        "victimsWithMultipleThefts": 0.75
+      },
+      "sample": 2500,
+      "surveyDate": "2025-08",
+      "method": "20-question online survey fielded August 2025 via Pollfish (Random Device Engagement), 50 respondents per state.",
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "The page as read describes the 2,500 as respondents who experienced package theft, which sits awkwardly with a 31% incidence figure; the sampling frame is unclear. No holiday or empty-home breakdown."
+    },
+    {
+      "market": "US",
+      "publisher": "Omnisend",
+      "title": "U.S. Porch Piracy Report 2025",
+      "url": "https://www.omnisend.com/porch-pirates/",
+      "figures": {
+        "householdShareWithTheft2025": 0.297,
+        "packagesStolen2025": 228000000,
+        "theftsPerHousehold2025": 1.8,
+        "lossPerHouseholdUSD": 101,
+        "shareOfIncidentsInDecember": 0.272,
+        "shareOfIncidentsInNovember": 0.211
+      },
+      "sample": 1000,
+      "surveyDate": "2026-04 (early April)",
+      "method": "Blend of FBI state residential-larceny data adjusted for under-reporting (25% weight) and a nationally representative CINT online survey of 1,000 US adults, margin of error 3% (75% weight).",
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "Highest US estimate by far. 1.8 thefts per 'average household' is not reconcilable with 29.7% incidence and 228M packages without knowing their household count; treat as an outlier."
+    },
+    {
+      "market": "US",
+      "publisher": "USPS Office of Inspector General",
+      "title": "Package Theft in the United States, Report RISC-WP-25-002",
+      "url": "https://www.uspsoig.gov/sites/default/files/reports/2025-05/RISC-WP-25-002.pdf",
+      "figures": {
+        "packagesStolen2024Floor": 58000000,
+        "quote": "With at least 58 million packages stolen in 2024 ... There is no single authoritative source for package theft data, and surveys vary in estimating the volume and costs associated with package theft.",
+        "annualLossRangeUSD": "5.2 billion (2023, Finder) to 16 billion (2024, SafeWise)",
+        "costPerStolenPackageUSD": "50 to 204"
+      },
+      "reportDate": "2025-05-15",
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "A federal review of the vendor surveys, not a survey itself. The 58M is Security.org's 2024 estimate. It also cites a 2018 Nextdoor member survey (2,000 members, May 2018) in which 62% had experienced package theft, a self-selected sample."
+    },
+    {
+      "market": "CA",
+      "publisher": "FedEx Express Canada (poll by Angus Reid)",
+      "title": "Holiday Package Theft Survey 2024",
+      "url": "https://www.cp24.com/news/canada/2024/12/07/one-out-of-10-canadians-had-packages-stolen-in-the-past-year-survey/",
+      "figures": {
+        "shareWithTheftPastYear": 0.10,
+        "shareWithTheftPastYearPriorSurvey2023": 0.16,
+        "shareWithTheftLifetime": 0.19,
+        "shareWorried": 0.67
+      },
+      "sample": 1517,
+      "surveyDate": "2024-10-09 to 2024-10-11",
+      "method": "Angus Reid online poll for FedEx.",
+      "dateRead": "2026-10-02",
+      "confirmed": false,
+      "note": "Read on CP24 (news report), not on a FedEx or Angus Reid page. No count of packages stolen is published for Canada."
+    },
+    {
+      "market": "GB",
+      "publisher": "Quadient UK",
+      "title": "Parcel theft research 2025 ('porch pirates strike every seven seconds')",
+      "url": "https://www.quadient.com/en-gb/news/stolen-peace-of-mind-porch-pirates-strike-every-seven-seconds-in-the-uk",
+      "figures": {
+        "homesWithTheftLast12Months": 4830000,
+        "valueStolenGBP": 666500000,
+        "rateQuote": "one package stolen every seven seconds",
+        "victimsChangedDeliveryInstructions": 0.38,
+        "victimsStartedUsingLockers": 0.30
+      },
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "Quadient's own page gives no sample or method. Trade-press reports (Commercial Motor, Motor Transport, retailrewired.co.uk, Nov 2025; not readable / secondary) add: one in six UK households affected; a 2,000-adult consumer survey; FOI responses from 27 of 45 police forces; police-recorded doorstep theft up 77%; 1,144 thefts reported to police in December 2024; 'nearly 60%' of thefts between 9am and 5pm 'when many homes are empty'. Those secondary figures are confirmed:false."
+    },
+    {
+      "market": "GB",
+      "publisher": "iParcelBox (reporting the same Quadient/FOI research)",
+      "title": "New research reveals UK parcel theft hit £666.5m in the last year",
+      "url": "https://www.iparcelbox.com/2025_theft_report/",
+      "figures": {
+        "householdsWithTheftLast12Months": 4830000,
+        "yearOnYearChange": 0.31,
+        "averageStolenParcelValueGBP": 138,
+        "averageStolenParcelValueGBPPrior": 102,
+        "policeReportingRatio": "1 in 353 thefts reported to police",
+        "source": "FOI responses from 27 of the UK's 45 police forces"
+      },
+      "dateRead": "2026-10-02",
+      "confirmed": false,
+      "note": "Secondary (a parcel-box vendor), consistent with Quadient. £666.5m / £138 = 4.83M parcels, matching 'one every seven seconds' (4.51M a year)."
+    },
+    {
+      "market": "GB",
+      "publisher": "Citizens Advice",
+      "title": "Citizens Advice sounds the alarm on parcel delivery market as ten people have parcels lost or stolen per minute",
+      "url": "https://www.citizensadvice.org.uk/about-us/media-centre/press-releases/citizens-advice-sounds-the-alarm-on-parcel-delivery-market-as-ten-people-have-parcels-lost-or-stolen-per-minute/",
+      "figures": {
+        "adultsWithParcelLostOrStolenLastYear": 5500000,
+        "shareOfAdults": 0.10,
+        "receivedSorryYouWereOutWhileHome": 0.38
+      },
+      "releaseDate": "2021-07-30",
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "'Lost or stolen' combined; sample not given in the release. Older than the Quadient figures."
+    },
+    {
+      "market": "IE",
+      "status": "not found",
+      "note": "No Irish parcel-theft incidence survey found (searched ComReg, An Post, news). ComReg's 2021 consumer research (doc 21/59) lists 'left outside' only as a reason for dissatisfaction."
+    },
+    {
+      "market": "MX",
+      "status": "not found",
+      "note": "No Mexican survey of doorstep parcel theft found. AMVO publishes online-fraud figures (e.g. 33% reported some online-shopping fraud in the prior two years, 2023) and Mexican press covers 'paquetes fantasma' and fake-courier scams, which are different crimes and must not stand in for doorstep theft."
+    }
+  ],
+  "parcelVolumes": [
+    {
+      "market": "US",
+      "publisher": "Pitney Bowes",
+      "title": "Parcel Shipping Index 2026 report (2025 data)",
+      "url": "https://www.pitneybowes.com/content/dam/pitneybowes/us/en/shipping-index/dmr-5127-parcel-shipping-index-report-2026-ebook.pdf",
+      "year": 2025,
+      "parcelsTotal": 23100000000,
+      "parcelsPerPerson": 67,
+      "parcelsPerHousehold": 171,
+      "parcelsTotalPriorYear": 22400000000,
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "Parcels shipped (all segments: B2C, B2B, C2C, returns), not parcels delivered to homes."
+    },
+    {
+      "market": "US",
+      "publisher": "Security.org",
+      "url": "https://www.security.org/package-theft/annual-report/",
+      "year": 2025,
+      "shipmentsPerAdult": 65,
+      "deliveriesNational": "more than 22 billion",
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "Security.org's own denominator, consistent with Pitney Bowes."
+    },
+    {
+      "market": "CA",
+      "publisher": "Pitney Bowes",
+      "title": "Parcel Shipping Index 2023 (2022 data)",
+      "url": "https://www.pitneybowes.com/content/dam/pitneybowes/us/en/shipping-index/23-mktc-03596-2023_global_parcel_shipping_index_ebook-web.pdf",
+      "year": 2022,
+      "parcelsTotal": 1300000000,
+      "parcelsPerPerson": 34,
+      "parcelsPerHousehold": 125,
+      "canadaPostParcels2022": 241000000,
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "Latest Canada figure found; the 2026 Pitney Bowes report covers the US only."
+    },
+    {
+      "market": "CA",
+      "publisher": "Canada Post",
+      "title": "2024 results news release",
+      "url": "https://www.canadapost-postescanada.ca/cpc/en/our-company/news-and-media/corporate-news/news-release/2025-05-28-canada-post-reports-841-million-loss-before-tax-for-2024",
+      "year": 2024,
+      "parcelVolumeDecline": 56000000,
+      "parcelVolumeDeclineShare": 0.199,
+      "derivedCanadaPostParcels2023": 281400000,
+      "derivedCanadaPostParcels2024": 225400000,
+      "derivation": "2023 = 56,000,000 / 0.199 = 281.4M; 2024 = 281.4M - 56M = 225.4M (Canada Post only, not the whole market; 2024 depressed by the Q4 strike)",
+      "addressesServed": "more than 17.6 million",
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "Canada Post does not state its parcel piece count on the pages read; only the decline. Derived values are labelled as such."
+    },
+    {
+      "market": "GB",
+      "publisher": "Ofcom",
+      "title": "Post monitoring report: postal services in the financial year 2024-25 (published 3 December 2025)",
+      "url": "https://www.ofcom.org.uk/siteassets/resources/documents/postal-services/monitoring-reports/2024-25/post-monitoring-report---postal-services-in-the-financial-year-2024-25.pdf",
+      "year": "2024-25",
+      "parcelsMeasuredTotal": 4200000000,
+      "parcelsDomestic": 3600000000,
+      "outOfHomeShare": 0.12,
+      "dateRead": "2026-10-02",
+      "confirmed": false,
+      "note": "Ofcom returned HTTP 403 (Cloudflare) to every fetch; figures taken from search-result text quoting the report ('Total measured parcel volumes increased by 7.1% to 4.2 billion items in 2024-25'; 'out-of-home volumes accounted for 12% of total measured parcel volumes')."
+    },
+    {
+      "market": "GB",
+      "publisher": "Pitney Bowes",
+      "title": "Parcel Shipping Index 2023 (2022 data)",
+      "url": "https://www.pitneybowes.com/content/dam/pitneybowes/us/en/shipping-index/23-mktc-03596-2023_global_parcel_shipping_index_ebook-web.pdf",
+      "year": 2022,
+      "parcelsTotal": 5100000000,
+      "parcelsPerPerson": 75,
+      "parcelsPerHousehold": 181,
+      "dateRead": "2026-10-02",
+      "confirmed": true
+    },
+    {
+      "market": "GB",
+      "publisher": "Citizens Advice (Opinium)",
+      "url": "https://www.citizensadvice.org.uk/about-us/media-centre/press-releases/parcel-problems-reach-record-as-15-million-people-are-let-down-on-the/",
+      "year": 2025,
+      "adultsReceivingParcelFromBig5CarriersLastMonth": 41156645,
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "Recipients, not parcel counts."
+    },
+    {
+      "market": "IE",
+      "publisher": "ComReg (via RTÉ / Post & Parcel)",
+      "title": "Parcel data for Ireland: 2018-2023 (ComReg 24/88, 30 Oct 2024)",
+      "url": "https://www.comreg.ie/publication/parcel-data-for-ireland-2018-2023",
+      "year": 2023,
+      "parcelsDeliveredBySevenOperators": 140730000,
+      "parcelsDomestic": 88200000,
+      "peak2021": 161900000,
+      "operators": ["An Post", "DPD", "DHL", "FedEx", "UPS", "Fastway", "GLS"],
+      "dateRead": "2026-10-02",
+      "confirmed": false,
+      "note": "ComReg's publication page is confirmed to exist but does not show the numbers, and the PDF was not retrievable; the volumes come from RTÉ (2024-11-07) and Post & Parcel reporting of it."
+    },
+    {
+      "market": "IE",
+      "publisher": "ComReg / Frontier Economics",
+      "title": "E-commerce parcel delivery in Ireland (ComReg 21/59, 4 June 2021)",
+      "url": "https://www.comreg.ie/media/2021/06/ComReg-2159.pdf",
+      "year": 2016,
+      "parcelsPerCapita": 22,
+      "quote": "Ireland ranked as the second largest market in the EU (third if including also the UK) with 22 parcels per capita delivered on average during 2016, well above the EU and UK average of 17.",
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "Old (2016) and itself citing WIK Consulting."
+    },
+    {
+      "market": "MX",
+      "status": "not found",
+      "note": "Mexico is not in the Pitney Bowes index. AMVO gives 67.2 million digital buyers and MXN 789.7 billion of online sales in 2024 but no parcel count. No regulator parcel-volume series found."
+    }
+  ],
+  "leftUnattended": [
+    {
+      "market": "GB",
+      "publisher": "Ofcom",
+      "figure": "Out-of-home deliveries (lockers, parcel shops) were 12% of measured parcel volumes in 2024-25",
+      "value": 0.12,
+      "url": "https://www.ofcom.org.uk/siteassets/resources/documents/postal-services/monitoring-reports/2024-25/post-monitoring-report---postal-services-in-the-financial-year-2024-25.pdf",
+      "dateRead": "2026-10-02",
+      "confirmed": false,
+      "note": "Not a doorstep share: it only says 88% went to an address. The split of those 88% between handed over, neighbour, safe place and doorstep is not published."
+    },
+    {
+      "market": "GB",
+      "publisher": "Citizens Advice (Opinium, 8,000 adults, 29 Aug-27 Sep 2025, released 19 Nov 2025)",
+      "figure": "37% had a problem with their most recent delivery; among the problems, 'parcel being left in an insecure location (24%)' and 'driver leaving before they had time to get to the door (29%)'",
+      "url": "https://www.citizensadvice.org.uk/about-us/media-centre/press-releases/parcel-problems-reach-record-as-15-million-people-are-let-down-on-the/",
+      "derivedShareOfLastDeliveriesLeftInsecurely": 0.0888,
+      "derivation": "0.37 x 0.24 = 0.0888, IF the 24% is of those with a problem. The release's wording leaves the base ambiguous; if the 24% is of all recipients, the share is 0.24.",
+      "dateRead": "2026-10-02",
+      "confirmed": true,
+      "note": "'Insecure location' is the respondent's complaint, a subset of all unattended drops; consented safe places are not counted."
+    },
+    {
+      "market": "US/GB",
+      "publisher": "Statista Consumer Insights (chart, 2025-08-05)",
+      "figure": "Being handed the package at the front door is the most common way to receive parcels in the US, UK and Germany; automated parcel stations used in the past 12 months by 11% (US), 17% (UK); parcel shop/post office 17-26%",
+      "url": "https://statista.com/chart/34933/most-common-ways-to-receive-parcels",
+      "dateRead": "2026-10-02",
+      "confirmed": false,
+      "note": "The chart page gives no number for 'left at the door' and no sample; it measures people who used a method in 12 months, not a share of parcels."
+    },
+    {
+      "market": "US",
+      "status": "not found",
+      "note": "No US carrier (USPS, UPS, FedEx, Amazon) publishes the share of residential deliveries left without a handover."
+    },
+    {
+      "market": "CA/IE/MX",
+      "status": "not found",
+      "note": "No share of unattended drops published."
+    }
+  ],
+  "emptyHomeAndHolidayLinks": [
+    {
+      "market": "US",
+      "figure": "December 27.2% and November 21.1% of the year's theft incidents (48.3% in two months)",
+      "source": "Omnisend",
+      "url": "https://www.omnisend.com/porch-pirates/",
+      "confirmed": true
+    },
+    {
+      "market": "US",
+      "figure": "Adults expect 25 packages October-December, twice an average three-month stretch",
+      "source": "Security.org",
+      "url": "https://www.security.org/package-theft/annual-report/",
+      "confirmed": true,
+      "note": "Implies the holiday spike in theft is largely volume; with 48.3% of incidents in Nov-Dec, theft per parcel in those months is still above the yearly rate."
+    },
+    {
+      "market": "GB",
+      "figure": "Nearly 60% of thefts between 9am and 5pm 'when many homes are empty'; December 2024 the peak month (1,144 police reports)",
+      "source": "Quadient 2025 research as reported by Commercial Motor / Motor Transport",
+      "url": "https://motortransport.co.uk/industry-news/record-rise-in-doorstep-parcel-theft-driving-use-of-parcel-lockers-new-resarch-reveals/52655.article",
+      "confirmed": false,
+      "note": "Not on Quadient's own page as read. No published figure links theft to the number of days a parcel sits or to the household being away overnight or on holiday."
+    }
+  ],
+  "derived": [
+    {
+      "market": "US",
+      "perParcelUnattended": 0.00168,
+      "formula": "packagesStolenPerYear / deliveriesPerYear (floor for per-unattended-parcel chance; divide by the unpublished unattended share for the true figure)",
+      "inputs": {
+        "packagesStolenPerYear": "37,000,000 (Security.org 2025, confirmed)",
+        "deliveriesPerYear": "22,000,000,000 (Security.org 2025, confirmed)"
+      },
+      "note": "Low estimate: 37M / 22.0bn = 0.168% per delivered parcel. Same publisher for numerator and denominator, so the most internally consistent US figure. Mid estimate: SafeWise 104.3M / Pitney Bowes 23.1bn = 0.452%. High estimate: Omnisend 228M / 23.1bn = 0.987%. Recommended central value 0.168% to 0.452%; Omnisend's is an outlier."
+    },
+    {
+      "market": "US",
+      "perParcelUnattended": 0.00452,
+      "formula": "SafeWise packagesStolenPerYear / Pitney Bowes parcels 2025",
+      "inputs": {
+        "packagesStolenPerYear": "104,300,000 (SafeWise 2025, confirmed)",
+        "parcelsPerYear": "23,100,000,000 (Pitney Bowes 2025, confirmed)"
+      },
+      "note": "Mixed publishers. Floor, as above."
+    },
+    {
+      "market": "US",
+      "perParcelUnattended": 0.00987,
+      "formula": "Omnisend packagesStolen2025 / Pitney Bowes parcels 2025",
+      "inputs": {
+        "packagesStolen": "228,000,000 (Omnisend 2025, confirmed)",
+        "parcelsPerYear": "23,100,000,000 (Pitney Bowes 2025, confirmed)"
+      },
+      "note": "Upper bound; method blends FBI larceny data with a 1,000-person survey."
+    },
+    {
+      "market": "US",
+      "perParcelUnattended": null,
+      "formula": "Holiday multiplier = (share of thefts in Nov-Dec / share of parcels in Nov-Dec)",
+      "inputs": {
+        "theftShareNovDec": "0.483 (Omnisend, confirmed)",
+        "parcelShareNovDec": "not published as a two-month figure; Security.org gives only Oct-Dec = 2x an average quarter"
+      },
+      "note": "Not computed: the parcel share for November-December alone is not published. If Oct-Dec carries 2/5 of the year's parcels (25 of ~62.5, Security.org) that is a three-month window and cannot be divided into a two-month theft share without inventing an input."
+    },
+    {
+      "market": "GB",
+      "perParcelUnattended": 0.00107,
+      "formula": "parcelsStolenPerYear / measuredParcelsPerYear, where parcelsStolenPerYear = seconds per year / 7",
+      "inputs": {
+        "parcelsStolenPerYear": "31,536,000 / 7 = 4,505,143 (Quadient 2025 'one every seven seconds', confirmed)",
+        "measuredParcelsPerYear": "4,200,000,000 (Ofcom 2024-25, confirmed:false)"
+      },
+      "note": "4.505M / 4.2bn = 0.107%. Removing Ofcom's 12% out-of-home volume (never left at a door): 4.505M / (4.2bn x 0.88 = 3.696bn) = 0.122%. Using 4.83M (iParcelBox: £666.5m / £138) gives 0.115% and 0.131%. Floor, as above."
+    },
+    {
+      "market": "GB",
+      "perParcelUnattended": 0.00122,
+      "formula": "parcelsStolenPerYear / (measuredParcels x (1 - outOfHomeShare))",
+      "inputs": {
+        "parcelsStolenPerYear": "4,505,143 (Quadient, confirmed)",
+        "measuredParcels": "4,200,000,000 (Ofcom, confirmed:false)",
+        "outOfHomeShare": "0.12 (Ofcom, confirmed:false)"
+      },
+      "note": "Per parcel delivered to an address. Still a floor for per-unattended parcel, since most address deliveries are handed over or left with a neighbour."
+    },
+    {
+      "market": "CA",
+      "perParcelUnattended": 0.00294,
+      "formula": "shareOfPeopleWithTheftPerYear x theftsPerVictim / parcelsPerPerson, with theftsPerVictim set to 1 (minimum)",
+      "inputs": {
+        "shareOfPeopleWithTheftPerYear": "0.10 (FedEx/Angus Reid, Oct 2024, confirmed:false)",
+        "theftsPerVictim": "not published for Canada; 1 used as the minimum, not as an estimate",
+        "parcelsPerPerson": "34 (Pitney Bowes, 2022 data, confirmed)"
+      },
+      "note": "Rough and weak: 0.10 / 34 = 0.294%. Years differ (2024 survey, 2022 volume), the survey base is adults while parcels per person is over the whole population, and one household theft may be reported by several adults. No Canadian count of stolen packages exists to do this properly."
+    },
+    {
+      "market": "IE",
+      "perParcelUnattended": null,
+      "formula": "n/a",
+      "inputs": {
+        "theftsPerYear": "not found",
+        "parcelsPerYear": "140,730,000 (ComReg 2023, confirmed:false)"
+      },
+      "note": "No Irish theft-incidence figure; not derived."
+    },
+    {
+      "market": "MX",
+      "perParcelUnattended": null,
+      "formula": "n/a",
+      "inputs": {
+        "theftsPerYear": "not found",
+        "parcelsPerYear": "not found"
+      },
+      "note": "Neither input exists; not derived."
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "Share of parcels left unattended (doorstep / safe place without handover) in any of the five markets.",
+      "Any figure tying theft risk to how many days a parcel sits, or to a household being away (holiday, travel); the nearest is Quadient's ~60% of UK thefts between 9am and 5pm (secondary).",
+      "Ireland: any parcel-theft survey.",
+      "Mexico: any doorstep parcel-theft survey and any national parcel-volume series.",
+      "Canada: a count of packages stolen per year and post-2022 whole-market parcel volume.",
+      "Canada Post's absolute parcel piece count on the pages read (only the 56M / 19.9% decline).",
+      "Ofcom's report text itself (blocked by Cloudflare / 403)."
+    ],
+    "worthChecking": [
+      "Ofcom 'Measuring user experience of parcel delivery to residential addresses 2025' (https://www.ofcom.org.uk/siteassets/resources/documents/postal-services/monitoring-reports/2024-25/measuring-user-experience-of-parcel-delivery-to-residential-addresses-2025.pdf) and its technical report: likely to give where the last parcel was left (handed over / safe place / neighbour), which is the missing unattended share for GB. Blocked to automated fetch; open in a browser.",
+      "Ofcom postal volumes CSV 2024-25 to confirm 4.2bn and the 12% out-of-home share.",
+      "ComReg 24/88 PDF to confirm Ireland's 140.73M, and any later ComReg parcel data (2024).",
+      "Crime Survey for England and Wales / Statistics Canada GSS / INEGI ENVIPE: theft-from-outside-dwelling categories that might isolate parcel theft with an official sample.",
+      "Pitney Bowes discontinued the multi-country index after the 2023 edition (2022 data); a later Canada/UK figure may exist in a regional release.",
+      "Citizens Advice: confirm whether the 24% 'left in an insecure location' is a share of all recipients or of the 37% with a problem.",
+      "Amazon / Canada Post / An Post delivery-photo or safe-drop policies, which may state how often a safe drop is used."
+    ]
+  }
+}

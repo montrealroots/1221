@@ -32,6 +32,6 @@ exists, this file says so, and the item stays out.
 | A pawn loan | 29 | Each place's pawn law and named pawnbrokers' own terms (research-pawn.json), the loan a share of the resale value `systems/resale.ts` already gives | Being read. |
 | Which orders need a signature | 30 | The carriers' rules are read (research-failed-delivery.json): a parcel is left without one unless the shipper asks; each retailer's own shipping page would say which of its orders do | Open. |
 | A parcel left at the door while nobody's home | 30, 47o | Package-theft surveys divided by parcels received a year, by market (research-parcel-theft.json) | Being read. |
-| Photo ID at a hotel's desk | 48h | Each of SLATE's 28 hotels' own policy pages (research-hotel-id.json); only three hotels without published rates were found stating it before | Being read. |
+| Photo ID at a hotel's desk | 48h | Each of SLATE's 28 hotels' own policy pages (research-hotel-id.json) | Got for 11 (`deskAccepts`); four say so only on booking sites, and are left out. |
 | Furniture assembly | 45 | IKEA Mexico publishes 9% of the price, 2.5% for a sofa; elsewhere Taskrabbit quotes each item in the cart, read by hand per piece; no maker publishes how long assembling takes | Open. |
 | Letting out a shirt or a dress | 27d | Proper Cloth's reference gives trousers and jackets only; a tailor's or maker's own allowance for shirts and dresses | Open. |
