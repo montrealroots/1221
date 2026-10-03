@@ -7,6 +7,12 @@
  * keeps its own state in its own system. This reads them all into one list,
  * soonest first, each with when it's due and the screen it belongs to, so
  * nothing in progress is out of sight and nothing is started twice.
+ *
+ * What was stopped partway is listed too, from 2026-10-03, each with what
+ * picks it up where it was left: a program partway through, a book begun,
+ * flight training stopped, a build stopped on a bill unpaid. Until then
+ * each could be taken up again only from its own screen, and nothing said
+ * it was waiting.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -21,6 +27,9 @@ import { documentsOf } from './documents';
 import { appointmentsOf } from './appointments';
 import { rentalsOf } from './rentals';
 import { MACHINE_LABEL, faultsOf, type Machine } from './appliancefaults';
+import { finished, programmeById } from './programmes';
+import { NOVEL_WORDS, bookInHand } from './reading';
+import { PILOT_TRAINING } from './aviation';
 
 export interface UnderWay { kind: 'order' | 'car' | 'shop' | 'appointment' | 'journey' | 'document' | 'works' | 'rental' | 'repair'; label: string; until: Instant; route: string }
 
@@ -42,4 +51,24 @@ export function underWay(sim: Simulation, person: Person): UnderWay[] {
   for (const h of person.homes ?? []) for (const w of h.works) if (w.doneAt > now) out.push({ kind: 'works', label: `${PROJECTS.find((p) => p.id === w.projectId)?.label ?? 'Works'}, ${h.facts.address}`, until: w.doneAt, route: '/workspace/homes' });
   for (const [m, f] of Object.entries(faultsOf(person)) as [Machine, NonNullable<ReturnType<typeof faultsOf>[Machine]>][]) if (f.fixAt !== undefined && f.fixAt > now) out.push({ kind: 'repair', label: `The ${MACHINE_LABEL[m]}, Being Mended`, until: f.fixAt, route: '/home' });
   return out.sort((a, b) => a.until - b.until || a.label.localeCompare(b.label));
+}
+
+/** Something stopped partway, and the command that picks it up where it was left. */
+export interface Partway { kind: 'program' | 'book' | 'pilot' | 'build'; label: string; note: string; since: Instant; route: string; resume: { command: string; payload: Record<string, unknown>; label: string } }
+
+/** What was left partway, the last left first. */
+export function leftPartway(person: Person): Partway[] {
+  const out: Partway[] = [];
+  for (const [id, w] of Object.entries(person.watching ?? {})) {
+    const p = programmeById(id);
+    if (!p || finished(p, w)) continue;
+    out.push({ kind: 'program', label: p.title, note: `Season ${w.season + 1}, episode ${w.episode + 1}${w.minute > 0 ? `, ${w.minute} minutes in` : ''}`, since: w.at, route: '/workspace/belongings', resume: { command: 'tv.watch', payload: { programmeId: id, to: 'episode' }, label: w.minute > 0 ? 'Finish The Episode' : 'Watch The Next' } });
+  }
+  const book = bookInHand(person);
+  if (book?.readWords) out.push({ kind: 'book', label: book.label, note: `${Math.round((100 * book.readWords) / NOVEL_WORDS)}% read`, since: book.acquiredAt, route: '/workspace/belongings', resume: { command: 'life.look_after', payload: { action: 'unwind', how: 'read' }, label: 'Read For An Hour' } });
+  const t = person.pilotTraining;
+  if (t?.status === 'stopped') out.push({ kind: 'pilot', label: 'Flight Training', note: t.monthsDone >= PILOT_TRAINING.months ? 'Stopped at the tests' : `Stopped after ${t.monthsDone} of ${PILOT_TRAINING.months} months`, since: t.startedAt, route: '/workspace/travel', resume: { command: 'pilot.train', payload: {}, label: 'Take It Up Again' } });
+  const b = person.building;
+  if (b?.unpaid !== undefined) out.push({ kind: 'build', label: 'Your House, Being Built', note: 'Stopped on a bill unpaid', since: b.stoppedAt ?? 0, route: '/workspace/homes', resume: { command: 'build.pay', payload: {}, label: 'Pay The Bill' } });
+  return out.sort((a, b) => b.since - a.since);
 }

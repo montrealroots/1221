@@ -45,7 +45,7 @@ import { takePortion } from './pantry';
 import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty, wearForSwim } from './wardrobe';
 import { SITTING_MET } from './coldstress';
 import { countWash } from './water';
-import { readFor } from './reading';
+import { bookInHand, readFor } from './reading';
 import { SHAVE, shave, shaveReady, sprayUsed } from './hygiene';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
@@ -463,7 +463,8 @@ export function registerLife(sim: Simulation): void {
       // Unwinding in front of the TV or a game, at home, by what the place's law and what you pay for allow (`systems/homelife.ts`).
       if (action === 'unwind' && p.how) {
         if (!atHome(s.player)) throw new CommandError('That’s at home.');
-        const no = watchRefusal(s, s.player, String(p.how));
+        // With a book of their own, from 2026-10-03: picked up where it was left (`systems/reading.ts`).
+        const no = p.how === 'read' ? (bookInHand(s.player) ? undefined : 'There’s no book at home you haven’t read through.') : watchRefusal(s, s.player, String(p.how));
         if (no) throw new CommandError(no);
       }
 
@@ -496,7 +497,7 @@ export function registerLife(sim: Simulation): void {
       if (action === 'charter' && !spend(s, person, cost, `A boat chartered with its captain, ${charterAt(person.currentLocationId)?.operator ?? ''}`, 'personal')) throw new CommandError('The payment didn’t go through.');
       // A workout or a swim is an outfit worn.
       // A reader unwinding at home with a book of their own reads it (`readFor`, from 2026-10-03).
-      const reads = action === 'unwind' && atHome(person) && lovedIn(person, 'unwind').includes('reading');
+      const reads = action === 'unwind' && atHome(person) && (p.how === 'read' || (!p.how && lovedIn(person, 'unwind').includes('reading')));
       if (action === 'swim') wearForSwim(s, person);
       else if (action === 'exercise' || action === 'ride' || action === 'court') wearOutfit(s, person, true);
       // The lawn cut (`systems/lawns.ts`, from 2026-10-02).

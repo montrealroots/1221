@@ -22,7 +22,7 @@ import type { Person } from '../domain/model';
 import type { Instant } from '../core/time';
 import { PROGRAMMES, type Programme } from '../content/programmes';
 import { SERVICES } from '../content/homelife';
-import { marketOf, subscriptionsOf, watchRefusal } from './homelife';
+import { marketOf, planPrice, plansHere, subscriptionsOf, watchRefusal } from './homelife';
 import { applyLookingAfter, lookAfterRefusal } from './life';
 import { atHome } from './dwelling';
 import { unwindComfort } from './furniture';
@@ -48,6 +48,15 @@ export function wayFor(person: Person, p: Programme): string | undefined {
   const mine = subscriptionsOf(person).find((s) => p.ways.includes(SERVICES.find((x) => x.id === s.id)?.service ?? ''));
   if (mine) return mine.id;
   return p.ways.includes('live') ? 'live' : undefined;
+}
+
+/** The cheapest plan where they live that shows it, to subscribe in place; nothing where none does or one of theirs already does. */
+export function cheapestPlanFor(sim: Simulation, person: Person, p: Programme): { id: string; label: string; monthly: number } | undefined {
+  if (wayFor(person, p)) return undefined;
+  return plansHere(person)
+    .filter((plan) => p.ways.includes(SERVICES.find((x) => x.id === plan.id)?.service ?? ''))
+    .map((plan) => ({ id: plan.id, label: plan.label, monthly: planPrice(sim, person, plan) }))
+    .sort((a, b) => a.monthly - b.monthly)[0];
 }
 
 /** Why it can't be watched now, or nothing. */

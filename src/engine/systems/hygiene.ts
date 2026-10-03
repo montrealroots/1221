@@ -292,6 +292,32 @@ export function shortfallBuy(sim: Simulation, person: Person, kind: string): { t
   return { toiletry: t, price: toiletryPrice(sim, person.currentLocationId, t) };
 }
 
+/**
+ * What each way of looking after yourself uses up, by kind, each group one
+ * of which does (from 2026-10-03): a shower's cleanser and shampoo, the
+ * tidying's spray, the washing-up's dish soap, the washing's detergent.
+ */
+export const USED_BY: Readonly<Partial<Record<string, readonly (readonly string[])[]>>> = {
+  wash: [['body-wash', 'soap'], ['shampoo']],
+  bathe: [['body-wash', 'soap'], ['shampoo']],
+  tidy: [['all-purpose-cleaner']],
+  washup: [['dish-soap']],
+  laundry: [['laundry-detergent']],
+};
+
+/** What's run out at home for something they'd do, each with the cheapest open here to buy it in place (`shortfallBuy`); nothing where a life doesn't count it. */
+export function shortfallsFor(sim: Simulation, person: Person, action: string, short = false): { label: string; toiletry: Toiletry; price: Money }[] {
+  const out: { label: string; toiletry: Toiletry; price: Money }[] = [];
+  for (const group of USED_BY[action] ?? []) {
+    const counted = CLEANING_KEPT.includes(group[0] as (typeof CLEANING_KEPT)[number]) ? keepsCleaning(person) : keepsSupplies(person);
+    // `short`: some to hand, but not enough for it (the washing's loads).
+    if (!counted || (!short && group.some((kind) => toHand(sim, person, kind).length > 0))) continue;
+    const buy = group.map((kind) => shortfallBuy(sim, person, kind)).find(Boolean);
+    if (buy) out.push({ label: KIND_LABEL[buy.toiletry.kind] ?? buy.toiletry.kind, ...buy });
+  }
+  return out;
+}
+
 /** The detergents a home begins with, once, beside its toiletries: laundry detergent, and the dishwasher's where it has one. */
 export function starterCleaning(sim: Simulation, person: Person, dishwasher: boolean): boolean {
   if (keepsCleaning(person) || !keepsSupplies(person) || !person.home) return false;

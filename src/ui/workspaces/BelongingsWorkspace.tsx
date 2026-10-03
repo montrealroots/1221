@@ -14,7 +14,7 @@ import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
 import { bagsOf, buyLuggageRefusal, luggageCatalog, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
-import { finished, placeIn, programmeRefusal, programmesHere } from '@/engine/systems/programmes';
+import { cheapestPlanFor, finished, placeIn, programmeRefusal, programmesHere } from '@/engine/systems/programmes';
 import { consolesHere, consolesOwned, gamesHere, gamesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, claimQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { orderStage, ordersOf } from '@/engine/systems/orders';
@@ -580,6 +580,7 @@ function WatchingAndPlaying() {
                 </select>
               </div>
               <span className="small">{finished(show, at) ? 'Watched to the end.' : `On ${show.service}${show.confirmed ? '' : ' (its episodes read secondhand)'}: season ${at.season + 1} of ${show.seasons.length}, episode ${at.episode + 1} of ${show.seasons[at.season]![0]}${at.minute > 0 ? `, ${at.minute} minutes in` : ''}.`}</span>
+              {(() => { const plan = cheapestPlanFor(sim, person, show); return plan ? <button type="button" className="btn btn-sm btn-ghost" disabled={!subscribe.open} title={subscribe.reason} onClick={() => { if (run('home.subscribe', { id: plan.id }).ok) toast(`${plan.label}, from now.`, 'positive'); }}>{`Subscribe: ${plan.label}, ${money(plan.monthly)} A Month`}</button> : null; })()}
               <button type="button" className="btn btn-sm btn-ghost" disabled={!watchTv.open || Boolean(no)} title={no ?? watchTv.reason} onClick={() => watch('episode')}>{at.minute > 0 ? 'Finish The Episode' : 'Watch An Episode'}</button>
               <button type="button" className="btn btn-sm btn-ghost" disabled={!watchTv.open || Boolean(no)} title={no ?? watchTv.reason} onClick={() => watch('hour')}>Watch For An Hour</button>
             </div>

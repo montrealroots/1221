@@ -40,6 +40,9 @@ export const NOVEL_WORDS = Math.round(66_900_000 / 694);
 /** A book of one's own at home not yet read through. */
 const unread = (person: Partial<Pick<Person, 'items' | 'home'>>) => { const home = homeKeyOf(person.home as Person['home']); return (person.items ?? []).filter((i) => i.kind.startsWith('book:') && !i.readThrough && i.at.kind === 'home' && i.at.home === home); };
 
+/** The book they'd pick up: the one furthest into, else the first that came; nothing where none's at home unread. */
+export const bookInHand = (person: Partial<Pick<Person, 'items' | 'home'>>) => unread(person).sort((a, b) => (b.readWords ?? 0) - (a.readWords ?? 0) || a.acquiredAt - b.acquiredAt)[0];
+
 /** Something to read at the home they live in: the town's library card, an unread book or an e-reader there. */
 export function hasSomethingToRead(person: Pick<Person, 'home'> & Partial<Pick<Person, 'items' | 'libraryCard'>>): boolean {
   if (person.home && person.libraryCard === person.home.cityId) return true;
@@ -49,7 +52,7 @@ export function hasSomethingToRead(person: Pick<Person, 'home'> & Partial<Pick<P
 
 /** Some minutes read at home: the book they're reading, the one begun first; read through, it's done. The book finished, or nothing. */
 export function readFor(sim: Simulation, person: Person, minutes: number): string | undefined {
-  const book = unread(person).sort((a, b) => (b.readWords ?? 0) - (a.readWords ?? 0) || a.acquiredAt - b.acquiredAt)[0];
+  const book = bookInHand(person);
   if (!book) return undefined;
   book.readWords = (book.readWords ?? 0) + minutes * READ_WPM;
   if (book.readWords < NOVEL_WORDS) return undefined;
