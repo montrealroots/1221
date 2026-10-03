@@ -153,7 +153,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 37h | Ownership requirements | Partial | checked when driving | Title and registration step |
 | 37i | Not drivable until delivered | Partial, 2026-10-02 | a factory order isn't driven until it comes, its weeks the dealers' or a leasing company's published figures; stock is driven away | A stock car's collection day (no published figure); home delivery fees |
 | 37j | Use and maintain | Complete | carcare, repairs; tests | — |
-| 37k | Sell or trade | Partial | instant sale | Listing, buyer, time |
+| 37k | Sell or trade | Partial | instant sale | Listing, buyer, time: of `research-car-sale.json`, only AutoTrader.ca measures a private sale (about 30 days); Autotrader UK's 29 days, Cox's 44 and iSeeCars' 53 are dealers' stock, and only Britain's 10–15% between a private sale and a dealer's, read secondhand, is published |
 | 38a | Wraps and finishes | Partial | two cities | More shops; removal; partial wraps |
 | 38b–c | Trim, lighting, body, rims, tires | Not implemented / partial | winter tires; alloys (GB) | Catalogs |
 | 38d, g–l | Seats, upholstery, materials, stitching; the leopard interior | Partial, 2026-10-02 | `systems/interiors.ts`: seats, headliner and wheel in leather, vinyl, Alcantara, leopard vinyl or faux fur, colors and stitching chosen; an itemized estimate (suppliers' prices, the trade's hours at $75); a Katzkin kit at its own price; four named shops in New York and Los Angeles; the design kept with the car; tests/interiors.test.ts | Door panels and carpets; other towns (no shop publishes a price); original covers returned; revisions |
