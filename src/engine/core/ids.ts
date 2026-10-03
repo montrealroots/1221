@@ -23,10 +23,11 @@ export type Id = string;
  * something in this build actually creates. Since 2026-10-01 that is the
  * player, money, the clock, the logs (two since the history went, 2026-10-02), documents, journeys, vehicles,
  * land, possessions and their orders (`systems/items.ts`), clothes bought and outfits
- * put together (`systems/clothing.ts`), routines (`systems/routines.ts`), and the people a life knows (`systems/people.ts`).
+ * put together (`systems/clothing.ts`), routines (`systems/routines.ts`), the people a life knows (`systems/people.ts`),
+ * and from later on 2026-10-02 pledges at a pawnbroker (`systems/pawn.ts`).
  */
 export const ID_NAMESPACES = [
-  'person', 'account', 'txn', 'sched', 'notice', 'decision', 'document', 'journey', 'vehicle', 'parcel', 'item', 'order', 'purchase', 'outfit', 'routine', 'contact',
+  'person', 'account', 'txn', 'sched', 'notice', 'decision', 'document', 'journey', 'vehicle', 'parcel', 'item', 'order', 'purchase', 'outfit', 'routine', 'contact', 'pawn',
 ] as const;
 
 export type IdNamespace = typeof ID_NAMESPACES[number];

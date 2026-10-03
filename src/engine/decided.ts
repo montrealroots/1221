@@ -77,6 +77,7 @@ import { careerOf } from './systems/career';
 import { counterOffer } from './systems/career';
 import { bidsFor, lateDays, overrunOf } from './systems/worksrisk';
 import { usedFault } from './systems/usedcars';
+import { takenFromDoor } from './systems/orders';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -478,6 +479,18 @@ defineDecider<{ sim: Simulation }, string>({
     const broke = machinesDay(sim, sim.player, 0.5);
     return broke.length === 0 ? 'none' : broke.sort().join(', ');
   },
+});
+
+defineDecider<{ sim: Simulation; parcel: number }, string>({
+  id: 'orders.porch',
+  decides: 'A parcel delivered to a home taken from the door, at the market’s parcels stolen over parcels delivered (PARCEL_THEFT); swept at even odds.',
+  drawnIn: 'src/engine/systems/orders.ts',
+  reads: {
+    parcel: (o, t) => ({ ...o, parcel: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), parcel: seed }),
+  decide: ({ sim, parcel }) => (takenFromDoor(sim, sim.player, `o${parcel}`, 0.5) ? 'taken' : 'left'),
 });
 
 defineDecider<{ sim: Simulation; visit: number }, string>({

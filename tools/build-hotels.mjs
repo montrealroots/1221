@@ -35,6 +35,8 @@ if (process.argv[2] === '--reduce') {
 }
 
 const hotels = JSON.parse(readFileSync('docs/research/world/research-hotels.json', 'utf8')).hotels;
+// Photo ID at the desk, read on each hotel's own page (research-hotel-id.json, 2026-10-02): only a confirmed, every-stay rule.
+const ids = new Map(JSON.parse(readFileSync('docs/research/world/research-hotel-id.json', 'utf8')).hotels.filter((x) => x.photoIdAtCheckIn === true && x.confirmed === true).map((x) => [x.hotel, x]));
 const rates = JSON.parse(readFileSync(RATES, 'utf8')).rates;
 const out = [];
 for (const h of hotels) {
@@ -53,6 +55,8 @@ for (const h of hotels) {
   out.push({
     id: h.id, name: h.name, brand: h.brand ?? null, cityId: h.city, address: h.address ?? null,
     checkIn: h.checkIn ?? null, checkOut: h.checkOut ?? null, minAge: h.policies?.minCheckInAge ?? null,
+    // What the desk takes: a passport or the INE where that's all it names, as Hotel Catedral does; else any government photo ID.
+    photoId: ids.has(h.name) ? (/\bINE\b/.test(ids.get(h.name).whatIdAccepted ?? '') ? 'passport-ine' : 'any') : null,
     fee: fee && typeof fee.amount === 'number' ? { amount: fee.amount, currency: fee.currency, name: fee.name ?? 'Resort fee', taxIncluded: fee.taxIncluded === true } : null,
     deposit: dep && typeof dep.amount === 'number' && dep.amount > 0 ? { amount: dep.amount, currency: dep.currency ?? hotelCurrency(h.city), per: /night/i.test(dep.basis ?? '') ? 'night' : 'stay' } : null,
     parking: parkOpts[0] ?? null,
@@ -83,6 +87,8 @@ export interface HotelRoom {
 export interface Hotel {
   id: string; name: string; brand: string | null; cityId: string; address: string | null;
   checkIn: string | null; checkOut: string | null; minAge: number | null;
+  /** Photo ID asked at check-in for every stay, where its own page says so (from 2026-10-02): any government photo ID, or a passport or the INE. */
+  photoId: 'any' | 'passport-ine' | null;
   /** A resort, destination or facility fee a night, where it charges one. */
   fee: { amount: number; currency: string; name: string; taxIncluded: boolean } | null;
   /** The deposit held at arrival, a stay's or a night's, returned at check-out. */

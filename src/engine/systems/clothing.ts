@@ -552,9 +552,23 @@ export function cheapestOf(sim: Simulation, person: Person, kind: string, slot: 
  * What the bank can't pay for isn't bought, and the worn ones stay.
  */
 export function replaceWornOut(sim: Simulation, person: Person): number {
+  // Garments in a parcel taken from the door, bought again first, the same way (from 2026-10-02).
+  let rebought = 0;
+  for (const lost of [...(person.garmentsToReplace ?? [])]) {
+    const pick = cheapestOf(sim, person, lost.kind, lost.slot);
+    if (!pick) { person.garmentsToReplace = (person.garmentsToReplace ?? []).filter((x) => x !== lost); continue; }
+    try {
+      buyClothes(sim, person, { productId: pick.product.id, how: pick.how, size: pick.size, color: pick.color, quantity: 1 });
+      person.garmentsToReplace = (person.garmentsToReplace ?? []).filter((x) => x !== lost);
+      rebought += 1;
+    } catch (e) {
+      if (!(e instanceof CommandError)) throw e;
+    }
+  }
+  if (person.garmentsToReplace?.length === 0) delete person.garmentsToReplace;
   // Worn out, or no longer fitting the body (`systems/tailoring.ts`); not one away being altered.
   const worn = garmentsOf(person).filter((g) => g.condition <= 0 || (fitOf(person, g.garment) !== 'fits' && g.at.kind !== 'service'));
-  if (worn.length === 0) return 0;
+  if (worn.length === 0) return rebought;
   const groups = new Map<string, (Item & { garment: Garment })[]>();
   for (const g of worn) groups.set(`${g.garment.slot}:${g.garment.kind}`, [...(groups.get(`${g.garment.slot}:${g.garment.kind}`) ?? []), g]);
   let replaced = 0;
@@ -587,7 +601,7 @@ export function replaceWornOut(sim: Simulation, person: Person): number {
     forget(person, gone);
     replaced += gone.size;
   }
-  return replaced;
+  return replaced + rebought;
 }
 
 export function registerClothing(sim: Simulation): void {

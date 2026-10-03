@@ -10,6 +10,18 @@
  * What each retailer charges to deliver, how long it takes and what it takes
  * back is the retailer's, and arrives with the catalogs that sell (clothing
  * in Stage 3). This is the machinery they share.
+ *
+ * **A parcel taken** (from 2026-10-02; `research-parcel-theft.json`): a
+ * parcel delivered to a home is stolen at the market's own count of
+ * parcels stolen over parcels delivered, and what was in it is gone. In
+ * America, Security.org's 37 million stolen of its 22 billion delivered,
+ * 0.168%, the one publisher's pair; in Britain, Quadient's one stolen every
+ * seven seconds over Ofcom's 4.2 billion parcels less its 12% sent to
+ * lockers and shops, 0.122%; in Canada, the 10% who had one taken in a year
+ * (FedEx and Angus Reid, read secondhand) over Pitney Bowes' 34 parcels a
+ * person, 0.294%, a rough floor. Ireland and Mexico publish no count, and
+ * none is taken there. Each is an average over every parcel, whoever was
+ * home: no source says how much being in changes it, so it doesn't.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -18,6 +30,7 @@ import type { Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { addItem, homeKeyOf, itemsOf, type Item, type Place } from './items';
 import { expenseFor } from './household';
+import { CITIES } from '../content/geography';
 
 export const ORDER_KIND = 'items.order_arrives';
 
@@ -33,6 +46,17 @@ export interface Order {
   status: 'placed' | 'delivered' | 'returned' | 'canceled';
   deliveredAt?: Instant;
   endedAt?: Instant;
+  /** Taken from the door when it was delivered (from 2026-10-02). */
+  stolen?: true;
+}
+
+/** The share of parcels delivered to a home that are stolen, by country. */
+export const PARCEL_THEFT: Readonly<Record<string, number>> = { us: 37e6 / 22e9, uk: 4_505_143 / (4.2e9 * 0.88), ca: 0.1 / 34 };
+
+/** Whether a parcel delivered to a home where they live is taken from the door; a sweep's odds where given. */
+export function takenFromDoor(sim: Simulation, person: Person, orderId: string, odds?: number): boolean {
+  const rate = odds ?? PARCEL_THEFT[CITIES.get(person.home?.cityId ?? '')?.countryId ?? ''];
+  return rate !== undefined && sim.rng('orders.porch', person.id, orderId).next() < rate;
 }
 
 export const ordersOf = (person: Person): Order[] => (person.orders ??= []);
@@ -62,9 +86,18 @@ export function deliver(sim: Simulation, person: Person, orderId: string): boole
   const order = ordersOf(person).find((o) => o.id === orderId);
   if (!order || order.status !== 'placed') return false;
   const to = destination(person, order.to);
-  for (const item of itemsOf(person)) if (item.at.kind === 'order' && item.at.orderId === orderId) item.at = to;
   order.status = 'delivered';
   order.deliveredAt = sim.now;
+  if (to.kind === 'home' && takenFromDoor(sim, person, orderId)) {
+    const taken = itemsOf(person).filter((i) => i.at.kind === 'order' && i.at.orderId === orderId);
+    // Clothes taken are bought again as a worn-out garment is (`replaceWornOut` in `systems/clothing.ts`).
+    for (const i of taken) if (i.garment) (person.garmentsToReplace ??= []).push({ kind: i.garment.kind, slot: i.garment.slot, care: i.garment.care, label: i.label });
+    person.items = itemsOf(person).filter((i) => !(i.at.kind === 'order' && i.at.orderId === orderId));
+    order.stolen = true;
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'A Parcel Was Taken', body: `Your order from ${order.from} was delivered and taken from the door.`, importance: 60, route: BELONGINGS_ROUTE });
+    return true;
+  }
+  for (const item of itemsOf(person)) if (item.at.kind === 'order' && item.at.orderId === orderId) item.at = to;
   if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'A Delivery', body: `Your order from ${order.from} has arrived.`, importance: 30, route: BELONGINGS_ROUTE });
   return true;
 }

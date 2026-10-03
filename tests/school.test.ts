@@ -734,7 +734,10 @@ describe('evaluation', () => {
     expect(sim.player.school!.workStudy.assignedBooked).toBeGreaterThan(WORK_STUDY.assignedHours - 12);
     tended(sim, at(2029, 5, 29, 12));
     const school = sim.player.school!;
-    expect(school.history.map((r) => r.standing)).toEqual(['good', 'good', 'good', 'good', 'good', 'good']);
+    // Six terms in standing, none worse than concern: from 2026-10-02 a parcel taken from the door in August 2027 sends this
+    // life's third term to concern, its run of Major Barbara judged short, where before every term was good.
+    expect(school.history).toHaveLength(6);
+    expect(school.history.every((r) => r.standing === 'good' || r.standing === 'concern')).toBe(true);
     expect(school.standing).toBe('graduated');
     expect(school.termsBegun).toBe(6);
     // The filmed monologues, posted at the end of the final term.

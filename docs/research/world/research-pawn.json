@@ -1,0 +1,277 @@
+{
+  "meta": {
+    "topic": "Pawning jewelry and watches: legal maximum interest and fees, loan term, grace, renewal, forfeit and surplus, and how the loan amount is set",
+    "date": "2026-10-02",
+    "method": "Each figure was read on the statute's or regulator's own page, or on a named pawnbroker's own page. confirmed:true means it was read there on 2026-10-02. confirmed:false means it came only from a search-engine summary or a secondary page, and the note says why.",
+    "places": ["New York City", "Los Angeles", "New Haven", "Toronto", "Vancouver", "London", "Dublin", "Mexico City"],
+    "currencyNote": "Amounts are in the jurisdiction's currency: USD for New York, California and Connecticut; CAD for Ontario and British Columbia; GBP for England; IEP (pre-euro Irish pounds, shillings and pence) as enacted in the Irish 1964 Act, and EUR for current Irish practice; MXN for Mexico."
+  },
+  "places": [
+    {
+      "place": "New York City (New York State)",
+      "law": "New York General Business Law, Article 5 (Collateral Loan Brokers), sections 46, 48, 49 and 50",
+      "maxRate": { "monthlyPercent": 4, "minimumMonthlyChargeUSD": 0.25, "basis": "GBL §46: no collateral loan broker may take more than four percent a month. A minimum interest charge of 25 cents a month is allowed on any loan." },
+      "fees": "GBL §46 requires the rates to be displayed and to comply with the federal Truth in Lending Act. On a sale, §50 allows the broker to deduct the loan, interest due, the auctioneer's commission where there is one, lawful extra care charges, and advertising costs. No separate storage or set-up fee schedule appears in §46.",
+      "termDays": { "minimumHoldBeforeSale": 120, "maximumInterestPeriodMonths": 15, "basis": "GBL §48: no pledge may be sold until it has been in the broker's possession for four months (recorded here as 120 days; the statute counts months, not days). GBL §46: no interest may be charged for more than fifteen months from the date of the loan." },
+      "grace": "GBL §49: written notice of the intended sale must be mailed to the pledgor at least 30 days before the sale. For a public auction, notice must also run for at least six days in at least two daily newspapers in the city. If the broker buys the pledge back at its own auction, the pledgor may reclaim it within ten days by paying the loan, the interest, the auctioneer's commission, lawful extra care charges and the advertising cost.",
+      "renewal": "GBL §46: if the borrower asks for an extension, the broker may collect interest for a further period of up to fifteen months from the date of the extension.",
+      "forfeit": "GBL §48: the sale may be public or private, and each pledge must be offered individually. A public sale must use a licensed New York auctioneer. A private sale must be commercially reasonable under the UCC. GBL §50: any surplus after the loan, interest, commission, extra care charges and advertising is paid to the person entitled to redeem. The pledgor must be told in writing within 30 days. Surplus unclaimed for one year goes to the State Comptroller as abandoned property.",
+      "loanShare": { "percentOfResaleValueMin": 15, "percentOfResaleValueMax": 60, "source": "National Pawnbrokers Association (US trade body), not a statute", "url": "https://nationalpawnbrokers.org/2022/11/03/npa-mentioned-in-the-news-how-do-pawn-shop-loans-work/", "confirmed": true },
+      "quote": "\"no collateral loan broker shall ask, demand or receive any greater rate of interest than four per centum per month\" (GBL §46); \"No pawn or pledge made with a collateral loan broker shall be sold until the same shall have remained four months in his possession\" (GBL §48)",
+      "url": "https://www.nysenate.gov/legislation/laws/GBS/46",
+      "sources": [
+        { "what": "rate, minimum charge, 15-month interest cap, extension", "url": "https://www.nysenate.gov/legislation/laws/GBS/46", "confirmed": true },
+        { "what": "four-month hold, sale method", "url": "https://www.nysenate.gov/legislation/laws/GBS/48", "confirmed": true },
+        { "what": "30-day notice, newspaper notice, 10-day reclaim after broker buy-back", "url": "https://www.nysenate.gov/legislation/laws/GBS/49", "confirmed": true },
+        { "what": "surplus to pledgor, 30-day notice of surplus, one year then to Comptroller", "url": "https://www.nysenate.gov/legislation/laws/GBS/50", "confirmed": true },
+        { "what": "NPA 15-60% of resale value", "url": "https://nationalpawnbrokers.org/2022/11/03/npa-mentioned-in-the-news-how-do-pawn-shop-loans-work/", "confirmed": true }
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "These pages were read through a summarising fetch tool. The figures (4% a month, 25 cents, 15 months, 4 months, 30 days, 10 days, one year) were quoted word for word in its output. When asked directly, the tool said §46 makes no distinction by loan size. New York City also licenses pawnbrokers through the Department of Consumer and Worker Protection, and that local layer was not read."
+    },
+    {
+      "place": "Los Angeles (California)",
+      "law": "California Financial Code, Division 8 (Pawnbrokers), sections 21200, 21200.5 and 21201 (as amended by Stats. 2015, Ch. 245, SB 285, effective 1 January 2016)",
+      "maxRate": { "monthlyPercent": 3, "minimumMonthlyChargeUSD": 3, "basis": "FIN §21200(a): 3% a month on the unpaid principal balance, plus a charge of up to $3 a month when 3% would come to less. §21200(b): a full month's interest may be charged for any part of the month in which the pledge is redeemed." },
+      "fees": {
+        "basis": "FIN §21200.5 schedule of charges: a one-off charge on a loan for not more than three months, which must be posted where the public can see it. An extension is charged monthly under §21200.",
+        "schedule": [
+          { "loanFromUSD": 0, "loanToUSD": 19.99, "maxChargeUSD": 3 },
+          { "loanFromUSD": 20, "loanToUSD": 49.99, "maxChargeUSD": 6 },
+          { "loanFromUSD": 50, "loanToUSD": 74.99, "maxChargeUSD": 9 },
+          { "loanFromUSD": 75, "loanToUSD": 99.99, "maxChargeUSD": 12 },
+          { "loanFromUSD": 100, "loanToUSD": 174.99, "maxChargeUSD": 15 },
+          { "loanFromUSD": 175, "loanToUSD": 2499.99, "maxChargePercent": 9 }
+        ]
+      },
+      "termDays": { "minimumLoanPeriodMonths": 4, "basis": "FIN §21201(a): the loan contract must give a loan period of at least four months. §21201(b): the contract must carry a boxed notice giving the redemption date, which must be no less than four months from the start of the loan." },
+      "grace": "FIN §21201(d): if the pledge is not redeemed and the loan is not extended by written agreement, the pawnbroker must notify the pledgor within one month after the loan period ends. The pledgor then has 10 days from the date of mailing or electronic transmission to redeem. A pawnbroker that misses the one-month notice may not charge interest from the day after that month ends.",
+      "renewal": "FIN §21201(d) and §21200.5(g): the loan period can be extended only by mutual written agreement. The extension's monthly charge is computed under §21200.",
+      "forfeit": "FIN §21201: if the pledge is not redeemed within the 10-day notice period, \"the pawnbroker shall become vested with all right, title, and interest of the pledgor\". The section contains no surplus to the pledgor; title passes outright.",
+      "loanShare": { "percentOfResaleValueMin": 15, "percentOfResaleValueMax": 60, "source": "National Pawnbrokers Association (US trade body), not a statute", "url": "https://nationalpawnbrokers.org/2022/11/03/npa-mentioned-in-the-news-how-do-pawn-shop-loans-work/", "confirmed": true },
+      "quote": "\"(1) Three percent per month on the unpaid principal balance of any loan. (2) A charge not exceeding three dollars ($3) a month on any loan when the monthly charge permitted by paragraph (1) would otherwise be less.\" (FIN §21200(a)); \"The loan contract shall provide a loan period that is a minimum of four months\" (FIN §21201(a))",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=21200.&lawCode=FIN",
+      "sources": [
+        { "what": "3% a month, $3 minimum, a part month counts as a full month", "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=21200.&lawCode=FIN", "confirmed": true },
+        { "what": "schedule of charges by loan size", "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=21200.5.&lawCode=FIN", "confirmed": true },
+        { "what": "4-month minimum, one-month notice, 10-day redemption, title vests", "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=21201.&lawCode=FIN", "confirmed": true }
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The raw statute text was downloaded and read directly. The §21200.5 schedule stops at $2,499.99, and how the law treats a loan of $2,500 or more was not established. Los Angeles has its own municipal licensing and hold rules, which were not read."
+    },
+    {
+      "place": "New Haven (Connecticut)",
+      "law": "Connecticut General Statutes, Chapter 409 (Pawnbrokers and Secondhand Dealers), sections 21-44 and 21-45",
+      "maxRate": {
+        "basis": "CGS §21-44: tiered monthly interest on money lent on personal property, charged \"per month or fraction thereof\".",
+        "tiers": [
+          { "loanFromUSD": 0, "loanToUSD": 15, "monthlyPercent": 5 },
+          { "loanOverUSD": 15, "loanToUSD": 50, "monthlyPercent": 3 },
+          { "loanOverUSD": 50, "monthlyPercent": 2 }
+        ]
+      },
+      "fees": "None found in §21-44. The case notes under §21-44 say it governs interest, not the rates on repurchase (buy-back) agreements, which are limited by §37-4 (313 Conn. 535). That note says the earlier holding in 201 Conn. 89 was overruled by P.A. 97-164. No storage or ticket fee schedule was found in Chapter 409.",
+      "termDays": { "minimumHoldBeforeSale": 60, "basis": "CGS §21-45: the pawnbroker may not sell or dispose of the pledge less than sixty days after it was left, except back to the pledgor." },
+      "grace": "None in statute. Since P.A. 11-100, ownership passes at the end of the 60 days \"without further notice\". That act also removed the old newspaper-advertisement requirement.",
+      "renewal": "Not addressed in §21-44 or §21-45. Any extension is a matter of the contract's terms.",
+      "forfeit": "CGS §21-45: after 60 days, if the pledgor has not redeemed under the terms of the transaction, the right of redemption is extinguished and the pawnbroker acquires the pledgor's entire interest without further notice. The statute gives no surplus to the pledgor.",
+      "loanShare": { "percentOfResaleValueMin": 15, "percentOfResaleValueMax": 60, "source": "National Pawnbrokers Association (US trade body), not a statute", "url": "https://nationalpawnbrokers.org/2022/11/03/npa-mentioned-in-the-news-how-do-pawn-shop-loans-work/", "confirmed": true },
+      "quote": "\"For the use of money amounting to fifteen dollars or less, five per cent per month or fraction thereof; for the use of money exceeding fifteen dollars in amount and not exceeding fifty dollars in amount, three per cent per month or fraction thereof; for the use of money exceeding fifty dollars in amount, two per cent per month or fraction thereof.\" (CGS §21-44)",
+      "url": "https://www.cga.ct.gov/current/pub/chap_409.htm",
+      "sources": [
+        { "what": "§21-44 rates; §21-45 60 days and title passing", "url": "https://www.cga.ct.gov/current/pub/chap_409.htm", "confirmed": true }
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The page was downloaded with curl (WebFetch failed a certificate check) and the statute text read directly. Connecticut's 2% a month on loans over $50 is far below the other US states'. Many Connecticut shops are reported to use buy-back (repurchase) contracts instead, which §37-4 governs. §37-4 was not read."
+    },
+    {
+      "place": "Toronto (Ontario)",
+      "law": "Criminal Code (Canada) s.347 criminal interest rate; Criminal Interest Rate Regulations SOR/2024-114 (pawn-loan exemption); Ontario Pawnbrokers Act, R.S.O. 1990, c. P.6",
+      "maxRate": {
+        "criminalRateAPRPercent": 35,
+        "pawnExemption": { "loanUnderCAD": 1000, "maxAPRPercent": 48, "conditions": "The lender carries on a pawnbroking business, the credit is advanced against pawned tangible personal property other than a vehicle, and the only recourse on default is seizure of the pawned property." },
+        "inForce": "2025-01-01",
+        "basis": "Criminal Code s.347: the criminal rate is an annual percentage rate above 35% on the credit advanced. SOR/2024-114 exempts pawn loans under $1,000 whose APR does not exceed 48%. Pawn loans of $1,000 or more stay under the 35% APR limit."
+      },
+      "fees": "The Ontario Pawnbrokers Act sets no rate. Section 7 requires a notice displayed in the shop showing the \"rates of interest authorized by law to be taken by pawnbrokers\" and the \"maximum charges authorized by this Act\". Section 10 requires the pawn ticket to show the interest rate, the charge for the ticket and any storage charge. Under the federal limits, the APR must take in all charges.",
+      "termDays": { "statutoryHoldBeforeTitleDays": 365, "basis": "Pawnbrokers Act ss.20-23: a pledge is redeemable for one year. Under s.23 the year starts the day after pawning and ends at close of business on the 365th day after. Shops' own contract terms are often shorter (30, 60 or 90 days, per a secondary source), but the statutory route to ownership runs through the one-year period." },
+      "grace": "Act s.21: for loans over $15 up to $30, after a year the pawnbroker may mail a notice. The pledge is the pawnbroker's property unless redeemed within 15 days of mailing. Act s.22: for loans over $30, after a year the pawnbroker may mail a first notice, wait 15 days, then publish a final notice in a local general-circulation newspaper. The pledge is redeemable until 15 days after publication. Act s.20: a loan of $15 or less is redeemable within the year and is then the pawnbroker's absolute property without notice.",
+      "renewal": "Not addressed in the Act's text as read. Extension is by the shop's own terms.",
+      "forfeit": "Act ss.20-22: an unredeemed pledge \"becomes the pawnbroker's absolute property\". No auction or surplus to the pawner was found in the Ontario Act. Act s.8(h): the pawnbroker may not melt forfeited gold, silver or platinum unless the municipal council authorises it.",
+      "loanShare": null,
+      "quote": "\"criminal rate means an annual percentage rate of interest calculated in accordance with generally accepted actuarial practices and principles that exceeds 35 per cent on the credit advanced\" (Criminal Code s.347); \"the amount of the credit advanced is less than $1,000 and the annual percentage rate of interest ... does not exceed 48% on the credit advanced\" (SOR/2024-114)",
+      "url": "https://laws-lois.justice.gc.ca/eng/acts/c-46/section-347.html",
+      "sources": [
+        { "what": "35% APR criminal rate", "url": "https://laws-lois.justice.gc.ca/eng/acts/c-46/section-347.html", "confirmed": true },
+        { "what": "pawn-loan exemption: under $1,000, APR up to 48%, in force 1 January 2025", "url": "https://gazette.gc.ca/rp-pr/p2/2024/2024-06-19/html/sor-dors114-eng.html", "confirmed": true },
+        { "what": "Ontario Pawnbrokers Act ss.7, 10, 20-23 (official Word copy, last saved 6 February 2025)", "url": "https://www.ontario.ca/laws/docs/90p06_e.doc", "confirmed": true },
+        { "what": "typical shop terms of 30, 60 or 90 days", "url": "https://www.nerdwallet.com/ca/p/article/loans/what-is-a-pawn-loan", "confirmed": false }
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The e-Laws HTML page renders in JavaScript, so the Act was read from the official Word download on ontario.ca. The 30-, 60- and 90-day shop terms come from secondary sources and are not confirmed. Toronto's Municipal Code licensing for pawnbrokers, and its hold periods, were not read. No named Toronto pawnbroker's own rate page was read."
+    },
+    {
+      "place": "Vancouver (British Columbia)",
+      "law": "Criminal Code (Canada) s.347 and SOR/2024-114. The provincial Pawnbrokers Act, RSBC 1996 c.350, was repealed. City of Vancouver Secondhand Dealers and Pawnbrokers By-law No. 2807.",
+      "maxRate": {
+        "criminalRateAPRPercent": 35,
+        "pawnExemption": { "loanUnderCAD": 1000, "maxAPRPercent": 48 },
+        "inForce": "2025-01-01",
+        "basis": "Same federal limits as Ontario. British Columbia has no provincial pawn-rate statute: the Pawnbrokers Act was repealed by the Deregulation Statutes Amendment Act, 2002, SBC 2002 c.12 s.30, effective 11 April 2002."
+      },
+      "fees": "No provincial schedule since 2002. The repealed Act's Schedule 1 (a 5-cent ticket, 2 cents a month per dollar on small pledges, 1.25 cents a month per dollar over $20) is history, not current law.",
+      "termDays": null,
+      "grace": null,
+      "renewal": null,
+      "forfeit": "No current provincial rule found. Under the repealed Act, a pledge was redeemable for 12 months plus 7 days' grace (s.12). Pledges over $5 had to be sold at public auction (s.15), and the surplus was payable on demand within 3 years of the sale (s.19). Recorded for history only.",
+      "loanShare": null,
+      "quote": "\"[Repealed by the Deregulation Statutes Amendment Act, 2002, SBC2002, c. 12, s. 30, effective April 11, 2002 (Royal Assent).]\" (BC Laws)",
+      "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/96350rep_01",
+      "sources": [
+        { "what": "repeal of the BC Pawnbrokers Act", "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/96350rep_01", "confirmed": true },
+        { "what": "text of the repealed Act (consolidation current to 14 May 2001)", "url": "https://www.bclaws.gov.bc.ca/civix/document/id/consol5/consol5/96350_01", "confirmed": true },
+        { "what": "federal 35% APR and pawn exemption", "url": "https://gazette.gc.ca/rp-pr/p2/2024/2024-06-19/html/sor-dors114-eng.html", "confirmed": true },
+        { "what": "Vancouver By-law 2807 holds goods 15 to 30 days (search summary of a 1996 council report)", "url": "https://council.vancouver.ca/960314/pe2.htm", "confirmed": false }
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "confirmed:true covers the federal rate and the fact of repeal. The Vancouver by-law PDF returned 403 and was not read. The 15-30 day police hold figure comes from a search summary of a 1996 council report, so it is unconfirmed and may be out of date. In Vancouver the loan term, grace and forfeit are therefore set by each shop's contract within the federal rate limits."
+    },
+    {
+      "place": "London (England)",
+      "law": "Consumer Credit Act 1974, sections 114-122 (pawns), as amended by the Consumer Credit (EU Directive) Regulations 2010; the FCA regulates and there is no statutory rate cap on pawnbroking",
+      "maxRate": {
+        "statutoryCap": null,
+        "basis": "No statutory interest cap for pawnbroking was found. The FCA's high-cost short-term credit price cap covers payday-type loans, and whether it excludes pawnbroking was not checked on the FCA's own page. The rates below are a named pawnbroker's own.",
+        "pawnbrokerExample": {
+          "name": "H&T Pawnbrokers",
+          "monthlyRateTiers": [
+            { "loanFromGBP": 10, "loanToGBP": 1500, "monthlyPercent": 10.49, "dailyPercent": 0.34 },
+            { "loanFromGBP": 1501, "loanToGBP": 3500, "monthlyPercent": 9.49, "dailyPercent": 0.31 },
+            { "loanFromGBP": 3501, "loanToGBP": 5000, "monthlyPercent": 9.00, "dailyPercent": 0.30 },
+            { "loanFromGBP": 5001, "loanToGBP": 7500, "monthlyPercent": 8.00, "dailyPercent": 0.26 },
+            { "loanFromGBP": 7501, "loanToGBP": 10000, "monthlyPercent": 7.00, "dailyPercent": 0.23 },
+            { "loanFromGBP": 10001, "loanToGBP": 15000, "monthlyPercent": 6.00, "dailyPercent": 0.20 },
+            { "loanFromGBP": 15001, "loanToGBP": 50000, "monthlyPercent": 5.00, "dailyPercent": 0.16 },
+            { "loanFromGBP": 50000, "monthlyPercent": 4.00, "dailyPercent": 0.13 }
+          ],
+          "representativeExample": { "creditGBP": 200, "termMonths": 6, "totalPayableGBP": 325.88, "chargeForCreditGBP": 125.88, "interestRatePaFixedPercent": 125.9, "maxAPRPercent": 165.5 },
+          "dailyInterestMethod": "monthly rate x 12 / 365.25",
+          "minimumCharge": "28 days' interest if the loan is redeemed, renewed or paid down on days 0-28",
+          "maxEverydayLoanGBP": 50000,
+          "maxHighEndLoanGBP": 1000000
+        },
+        "secondExample": { "name": "Ramsdens", "representativeAPRPercent": 154.08, "monthlyRateOn200GBP": 9.90, "lowestMonthlyPercent": 1.99, "termMonths": 6, "confirmed": false, "note": "From a search-engine summary of ramsdenspawnbrokers.co.uk. The site returned a Cloudflare challenge and 403, so these figures were not read on Ramsdens' own page." }
+      },
+      "fees": "H&T: interest only (the representative example's charge for credit is all interest), with a 28-day minimum charge. CCA s.116: no special charge may be made for redemption after the redemption period, and storage charges may not rise after it ends.",
+      "termDays": { "statutoryRedemptionMonths": 6, "pawnbrokerContractMonths": 6, "basis": "CCA s.116: a pawn is redeemable at any time within six months after it was taken, or a longer agreed period. After that it stays redeemable until it is realised, unless property has passed under s.120. H&T: \"The term for a pledge loan is 6 months\"." },
+      "grace": "H&T: one month's grace before an item goes to auction on every contract, with interest still charged. H&T contacts the customer at least three times before the contract expires. CCA s.120: where a time order may be sought, property passing is delayed by five days.",
+      "renewal": "H&T: renewal, partial payments and paydowns are offered. Each paydown \"starts the contract for a further six months\". Partial payments do not change the contract terms or stop an auction, and are refunded if the item is auctioned.",
+      "forfeit": "CCA s.120: if the pawn is not redeemed, property passes to the pawnee only where the redemption period is six months and the credit is not more than £75. Otherwise the pawnee must sell under s.121 after giving the prescribed notice, with the asking price. Any surplus over the redemption amount goes to the pawnor. A shortfall stays a debt, but the pawnee must prove the sale got a reasonable price. H&T: once auctioned, the customer owes nothing more, and any surplus is written to them.",
+      "loanShare": "H&T: the loan is based on the item's value and is less than its full value (an LTV percentage is set). No percentage was published. H&T's guide says the loan \"won't be as high as the value of the item\".",
+      "quote": "\"Total amount of credit: £200 for 6 months. Total amount payable in one instalment: £325.88. Total charge for credit: £125.88(Interest Only). Interest rate 125.9% pa(fixed). Maximum APR 165.5 %APR. Maximum payment term up to 6 months.\" (H&T); \"A pawn is redeemable at any time within six months after it was taken.\" (CCA s.116)",
+      "url": "https://handt.co.uk/pages/pawnbroking-guide",
+      "sources": [
+        { "what": "H&T rate tiers, representative example, 6-month term, 28-day minimum, surplus", "url": "https://handt.co.uk/pages/pawnbroking-guide", "confirmed": true },
+        { "what": "H&T one-month grace, renewal, paydown, surplus letter", "url": "https://handt.co.uk/pages/pawnbroking-faqs", "confirmed": true },
+        { "what": "CCA s.116 redemption period", "url": "https://www.legislation.gov.uk/ukpga/1974/39/section/116", "confirmed": true },
+        { "what": "CCA s.120 property passes at £75 or less with a 6-month period", "url": "https://www.legislation.gov.uk/ukpga/1974/39/section/120", "confirmed": true },
+        { "what": "CCA s.121 notice, surplus, shortfall", "url": "https://www.legislation.gov.uk/ukpga/1974/39/section/121", "confirmed": true },
+        { "what": "Ramsdens 154.08% APR, 9.90% a month on £200, from 1.99% a month", "url": "https://www.ramsdenspawnbrokers.co.uk/faqs", "confirmed": false }
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The H&T pages were downloaded and read directly. H&T's FAQ still carries an older daily-interest table (9.99% on £0-500, down to 3.50% on £50,001-100,000). The pawnbroking guide's table above (10.49% top rate) matches the current representative example: 10.49% x 6 on £200 = £125.88. The FAQ table is older and contradicts it."
+    },
+    {
+      "place": "Dublin (Ireland)",
+      "law": "Pawnbrokers Act 1964 (No. 31 of 1964), as enacted; licensing by the Competition and Consumer Protection Commission (CCPC)",
+      "maxRate": {
+        "asEnacted": "Second Schedule notice: interest of one halfpenny for every two shillings lent, per calendar month. That is 0.5d in 24d, about 2.08% a month. Under one month counts as a month. After the first month, a part month of seven days or less is not charged.",
+        "asEnactedApproxMonthlyPercent": 2.08,
+        "pawnbrokerExample": { "name": "Carthy Pawnbrokers, 84 Marlborough St, Dublin 1", "monthlyPercent": 3, "contractMonths": 4 },
+        "basis": "Act s.20: interest may not exceed the rate in Part I of the Fifth Schedule. The CCPC says rates vary between pawnbrokers and must be displayed on the premises. The Fifth Schedule itself was not isolated; the rate above is from the Second Schedule notice, which restates it."
+      },
+      "fees": "As enacted (Second Schedule): 2 pence per pawn ticket. A valuation fee of 2 pence for each five shillings lent, on loans of £10 or under. Sixpence to inspect a sale entry, and sixpence for a declaration form. The CCPC lists typical charges as storage, pawn ticket, valuation and inspection fees.",
+      "termDays": { "jewelleryRedemptionDays": 372, "otherGoodsRedemptionDays": "6 months + 7 days, extended by a further 6 months + 7 days if interest is paid", "basis": "Act s.21(2)-(3): a pledge wholly or partly of gold, silver, other precious metal or any precious or semi-precious stone is redeemable for one year, plus a further 7 days in which it may not be sold. Recorded as 372 days for 365 + 7; the statute counts one year. Carthy's own contract is four months." },
+      "grace": "Act s.21(3): 7 days added to the redemption period. Act s.21(4): a jewellery or precious-metal pledge stays redeemable after that until it is disposed of under the Act. The schedule notice says such pledges \"may ... be redeemed at any time before the day of sale\".",
+      "renewal": "Act s.21(1): for goods other than precious metal or stones, paying the interest within the period extends redemption by a further period. No equivalent was found for jewellery.",
+      "forfeit": "Act s.29(2): a pledge of gold, silver, other precious metal or precious or semi-precious stone, whatever the loan, may be disposed of only by public auction under the Act. Act s.30: auctions are run by a Minister-nominated auctioneer on the auctioneer's own premises. Act s.31: the pawnbroker may bid. Act s.33 and Schedule note 7: within 12 calendar months after the sale, the pawner may inspect the sale account and receive any surplus. A deficit on one pledge may in some cases be set off against a surplus on another. The CCPC says the same: \"you can claim the difference between the sale price and the total loan amount (including interest, charges, and auctioneer costs)\". Carthy says unredeemed articles are sold at auction or in its jewellery shop.",
+      "loanShare": null,
+      "quote": "\"On any loan made under this Act in respect of every two shillings lent, for every calendar month during which the pledge remains in pawn _______ one halfpenny.\" (1964 Act, Second Schedule); \"Interest is charged at a rate of 3% per month\" (Carthy Pawnbrokers)",
+      "url": "https://www.irishstatutebook.ie/eli/1964/act/31/enacted/en/print.html",
+      "sources": [
+        { "what": "1964 Act ss.3, 20, 21, 29-33 and Second Schedule, as enacted", "url": "https://www.irishstatutebook.ie/eli/1964/act/31/enacted/en/print.html", "confirmed": true },
+        { "what": "CCPC: rates vary and must be displayed; typical fees; auction; surplus", "url": "https://www.ccpc.ie/consumers/money/loans/pawning/", "confirmed": true },
+        { "what": "Carthy Pawnbrokers 3% a month, 4-month contract", "url": "https://www.pawnbroker.ie/services.html", "confirmed": true }
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The Act was read as enacted, through curl. Section 3 as enacted limits the Act to loans of £50 or less. That limit and the shilling and pence charges have almost certainly been amended (likely by the Consumer Credit Act 1995, which moved licensing to the regulator now called the CCPC), but no revised consolidation was found. The Law Reform Commission revised-acts URL returned 404. The statutory rate and the £50 scope must not be treated as current until checked. Carthy's 4-month contract against the Act's one-year jewellery period may depend on a special contract under s.15, which was not checked. Brereton's (108 Capel St) publishes no rates online, so the Carthy figure stands in for it."
+    },
+    {
+      "place": "Mexico City (Mexico)",
+      "law": "Nacional Monte de Piedad, I.A.P.: its own published rates and contracts, registered with PROFECO (Empeño Clásico No. 4500-2024, Pagos Libres No. 4502-2024). The contracts are governed by the Ley Federal de Protección al Consumidor, NOM-179-SCFI-2016 and the Ley de Instituciones de Asistencia Privada para el Distrito Federal. No statutory rate cap was found.",
+      "maxRate": {
+        "statutoryCap": null,
+        "goldJewelry": {
+          "empenoClasicoOfertaBase": { "monthlyInterestPercentFrom": 3.96, "monthlyInterestPercentTo": 6.89, "annualInterestPercentFrom": 47.52, "annualInterestPercentTo": 82.68, "monthlyTotalCostPercentFrom": 3.70, "monthlyTotalCostPercentTo": 6.14, "catPromedioPercentFrom": 54.72, "catPromedioPercentTo": 104.46, "contractMonths": 5, "refrendos": 3 },
+          "empenoClasicoOfertaPersonalizada": { "monthlyInterestPercentFrom": 4.22, "monthlyInterestPercentTo": 6.06, "annualInterestPercentFrom": 50.64, "annualInterestPercentTo": 72.72, "catPromedioPercentFrom": 58.81, "catPromedioPercentTo": 88.55, "contractMonths": 5, "refrendos": 3 },
+          "pagosLibresOfertaPersonalizadaEmpenoSimple": { "monthlyInterestPercent": 6.89, "annualInterestPercent": 82.68, "catPromedioPercent": 119.84, "contractMonths": 2, "refrendos": 9 },
+          "pagosLibresJoyasOroYRelojes": { "monthlyInterestPercent": 6.09, "annualInterestPercent": 73.08, "catPromedioPercent": 90.08, "contractMonths": 5, "refrendos": 3 }
+        },
+        "watches": {
+          "empenoClasicoOfertaBase": { "monthlyInterestPercentFrom": 3.84, "monthlyInterestPercentTo": 6.09, "annualInterestPercentFrom": 46.08, "annualInterestPercentTo": 73.08, "catPromedioPercentFrom": 52.86, "catPromedioPercentTo": 90.08, "contractMonths": 5, "refrendos": "3, when stated on the contract face" },
+          "empenoClasicoOfertaPersonalizada": { "monthlyInterestPercentFrom": 4.10, "monthlyInterestPercentTo": 6.23, "annualInterestPercentFrom": 49.20, "annualInterestPercentTo": 74.76, "catPromedioPercentFrom": 56.92, "catPromedioPercentTo": 92.55, "contractMonths": 5, "refrendos": "3, when stated on the contract face" }
+        },
+        "interestMethod": "Fixed annual rate / 360 x unpaid balance x days actually elapsed (contract clause Segunda C.1). Pawn operations are VAT-exempt. The CAT is an average, for information, without VAT, calculated 20 January 2025.",
+        "basis": "Monte de Piedad's own branch rate sheet, version V65 / AGO25 / V1, advertised as valid to 31 December 2025."
+      },
+      "fees": {
+        "desempenoExtemporaneo": "5% of the outstanding loan balance, once (late redemption)",
+        "custodia": "2% of the appraisal value per calendar month in custody, charged once 30 days have passed after redemption is paid if the item is not collected",
+        "exhibicion": "5% of the outstanding loan balance per calendar month on display for sale (charged once 30 days have passed after the sale start date)",
+        "reposicionContratoMXN": "$5.00 on loans of $500 or less; $25 on loans over $500"
+      },
+      "termDays": { "contractMonths": 5, "basis": "Empeño Clásico, gold jewellery and watches: 5-month contract (Plazo del Contrato 5 meses) with 3 refrendos. Search summaries describe this as up to 20 months, which matches 5 months + 3 x 5 months but is not stated in that form on the sheet." },
+      "grace": "No fixed grace period. After the payment deadline (fecha límite), an item can still be recovered by 'desempeño extemporáneo' at the branch until it is sold, with the 5% late fee and the display fee. The contract face gives a separate 'Fecha de inicio de comercialización' (sale start date). In the sample contract it is the day after the deadline (24/oct/24 then 25/oct/24).",
+      "renewal": "Refrendo: extend the contract by paying the interest accrued by the deadline on the contract face. Gold jewellery Empeño Clásico allows 3 refrendos, Pagos Libres Empeño Simple allows 9. Reempeño: re-appraise a jewellery pledge in the month it falls due, at the current gold price, for a new contract and loan no lower than the original.",
+      "forfeit": "Clause Quinta and Sexta: unredeemed, unrenewed items are put on sale from the sale start date at a price Monte de Piedad sets. Surplus (demasía) = sale price - loan - accrued interest - late charges, and it is paid to the customer. The customer has 365 calendar days from the sale to claim it, after which it goes to Monte de Piedad as 'aprovechamiento institucional'.",
+      "loanShare": { "goldJewelryPercentOfAppraisal": { "min": 70, "average": 89, "max": 100 }, "watchesPercentOfAppraisal": { "min": 30, "average": 64, "max": 97 }, "basis": "Monte de Piedad rate sheet: \"Porcentaje del préstamo conforme al avalúo de la prenda\"" },
+      "quote": "\"Porcentaje del préstamo conforme al avalúo de la prenda: mínimo 70%, promedio 89% y máximo 100% en joyas de oro / mínimo 30%, promedio 64% y máximo 97% en relojes\"; \"Puedes reclamar tu demasía dentro de los 365 días naturales posteriores a la venta de tu prenda, entregando tu Contrato.\"",
+      "url": "https://www.montepiedad.com.mx/storage/tasas-y-costos.pdf?v=2025.3",
+      "sources": [
+        { "what": "rate sheet V65 / AGO25 / V1: rates, CAT, term, refrendos, fees, loan percent of appraisal, surplus, contract clauses", "url": "https://www.montepiedad.com.mx/storage/tasas-y-costos.pdf?v=2025.3", "confirmed": true }
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The PDF was downloaded and read in full. It states it is valid to 31 December 2025 and was the version served on 2026-10-02, so a 2026 sheet may exist. The sample contract in the sheet shows 89.00% of appraisal lent on gold and a 4.0% monthly total cost (CMT)."
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "California: how a loan of $2,500 or more is treated (the §21200.5 schedule stops at $2,499.99).",
+      "Connecticut: the §37-4 limits on buy-back (repurchase) agreements, which the §21-44 case notes say govern those contracts, were not read.",
+      "New York City: the DCWP local licensing rules for pawnbrokers, including any city hold period, were not read.",
+      "Toronto: no named Toronto pawnbroker's own rate page was read, and the Toronto Municipal Code licensing chapter for pawnbrokers was not read.",
+      "Vancouver: By-law No. 2807 (bylaws.vancouver.ca/2807c.pdf) returned 403. The current police hold period and any sale-notice rule are unconfirmed, and no named Vancouver pawnbroker's own terms were read.",
+      "England: Ramsdens' own pages returned a Cloudflare challenge or 403, so its 154.08% APR, 9.90% a month and 1.99% a month figures are unconfirmed. The prescribed notice period before sale under CCA s.121 (in the Consumer Credit (Realisation of Pawn) Regulations) was not read. No loan-to-value percentage is published by H&T.",
+      "England: whether the FCA's high-cost short-term credit price cap (CONC 5A) applies to pawnbroking was not read on the FCA Handbook.",
+      "Ireland: no revised (amended) consolidation of the Pawnbrokers Act 1964 was found. The current statutory interest and fee figures, the current loan-amount scope of s.3, and the Fifth Schedule's own text are unconfirmed. Brereton's of Dublin publishes no rates online.",
+      "Loan share as a published percentage: found only for the US NPA (15-60% of resale value) and Monte de Piedad (percent of appraisal). Nothing equivalent was found for Canada, England or Ireland."
+    ],
+    "worthChecking": [
+      "Irish Pawnbrokers Act 1964 as amended by the Consumer Credit Act 1995 (and any later orders). Get the current interest cap, charges and loan ceiling from the Law Reform Commission revised act or the CCPC before using the 1964 halfpenny-per-two-shillings rate.",
+      "Monte de Piedad: look for a 2026 version of tasas-y-costos.pdf. The read version says it is valid to 31 December 2025.",
+      "H&T: the FAQ's older daily-interest table (9.99% top rate) contradicts the guide's 10.49% table. The guide's table matches the representative example.",
+      "Ontario: the Act gives the pawnbroker absolute property after a year plus notices, with no surplus to the pawner. Check whether any Toronto by-law or consumer law adds a surplus or auction duty.",
+      "Canada: SOR/2024-114 sets the pawn exemption at under $1,000 and 48% APR. Check Department of Finance guidance on how storage and ticket fees count toward the APR.",
+      "California: check §21201(e)-(f) and §21206 onward for any rule on how forfeited goods are sold, and whether the 10-day mailing period is counted in calendar days.",
+      "New York: check whether NYC DCWP or 6 RCNY sets a pawn rate or term stricter than GBL §46."
+    ]
+  }
+}

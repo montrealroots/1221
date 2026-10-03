@@ -17,6 +17,8 @@ import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneR
 import { ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
 import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
+import { batteryOptions, batteryRefusal, batteryYears, stopped } from '@/engine/systems/watches';
+import { owedOn, pawnTermsIn, pawnsOf, pledgeQuote, pledgeRefusal } from '@/engine/systems/pawn';
 import { lockedAway, safeCatalog, safesAtHome, scheduleRefusal, scheduledPremium, valuablesOf } from '@/engine/systems/valuables';
 import { contactsOf } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
@@ -203,25 +205,30 @@ function Valuables() {
   const lock = useFeature('valuables.lock_up');
   const out = useFeature('valuables.take_out');
   const sched = useFeature('valuables.schedule');
+  const pledge = useFeature('pawn.pledge');
+  const redeem = useFeature('pawn.redeem');
+  const battery = useFeature('watch.battery');
+  const broker = pawnTermsIn(person.currentLocationId);
+  const pledges = pawnsOf(person);
   const cur = saveCurrency(sim.universe);
   const pieces = valuablesOf(person);
   const shop = safeCatalog(sim, person);
   const safes = safesAtHome(person);
-  if (pieces.length === 0 && safes.length === 0) return null;
+  if (pieces.length === 0 && safes.length === 0 && pledges.length === 0) return null;
   return (
     <Panel title="Jewelry And Watches" subtitle={safes.length ? safes.map((x) => x.label).join(', ') : 'No Safe At Home'}>
       <div className="col gap-2">
         {pieces.length > 0 && (
           <div className="table-scroll">
             <table>
-              <thead><tr><th scope="col">Piece</th><th scope="col">Where</th><th scope="col" className="num">Paid</th><th scope="col"><span className="sr-only">Safe</span></th><th scope="col"><span className="sr-only">Insurance</span></th></tr></thead>
+              <thead><tr><th scope="col">Piece</th><th scope="col">Where</th><th scope="col" className="num">Paid</th><th scope="col"><span className="sr-only">Safe</span></th><th scope="col"><span className="sr-only">Insurance</span></th><th scope="col"><span className="sr-only">Battery</span></th>{broker && <th scope="col"><span className="sr-only">Pawn</span></th>}</tr></thead>
               <tbody>
-                {pieces.map((i) => {
+                {pieces.filter((i) => i.at.kind !== 'service').map((i) => {
                   const inSafe = lockedAway(person, i);
                   const noSched = i.scheduled ? undefined : scheduleRefusal(sim, person, i);
                   return (
                     <tr key={i.id}>
-                      <td>{i.label}</td>
+                      <td>{i.label}{stopped(i, sim.now) && <span className="xs dim"> · Stopped</span>}</td>
                       <td className="small">{whereWords(person, i.at)}</td>
                       <td className="num mono">{i.paid ? formatMoney(i.paid, cur) : '—'}</td>
                       <td>{inSafe
@@ -230,6 +237,8 @@ function Valuables() {
                       <td>{i.scheduled
                         ? <button type="button" className="btn btn-sm btn-ghost" disabled={!sched.open} title={`${formatMoney(scheduledPremium(i), cur)} a month`} onClick={() => { if (run('valuables.schedule', { itemId: i.id, on: false }).ok) toast(`${i.label}, no longer scheduled.`, 'positive'); }}>Unschedule It</button>
                         : <button type="button" className="btn btn-sm btn-ghost" disabled={!sched.open || Boolean(noSched)} title={noSched ?? `${formatMoney(scheduledPremium(i), cur)} a month, paid in full without a deductible`} onClick={() => { if (run('valuables.schedule', { itemId: i.id, on: true }).ok) toast(`${i.label}, scheduled.`, 'positive'); }}>Schedule It</button>}</td>
+                      <td>{batteryYears(i) !== undefined && (() => { const opt = batteryOptions(sim, person, i)[0]; const no = opt ? batteryRefusal(sim, person, i.id, opt.service.id) : 'No battery change is published where you are.'; return <button type="button" className="btn btn-sm btn-ghost" disabled={!battery.open || Boolean(no)} title={no ?? `${opt!.service.name}, back in a week`} onClick={() => { if (run('watch.battery', { itemId: i.id, serviceId: opt!.service.id }).ok) toast(`${i.label}, away for its battery.`, 'positive'); }}>{opt ? `Change The Battery, ${formatMoney(opt.price, cur)}` : 'Change The Battery'}</button>; })()}</td>
+                      {broker && (() => { const no = pledgeRefusal(sim, person, [i.id]); return <td><button type="button" className="btn btn-sm btn-ghost" disabled={!pledge.open || Boolean(no)} title={no ?? `A loan of ${formatMoney(pledgeQuote(sim, person, [i.id]).loan, cur)} from ${broker.lender}`} onClick={() => { if (run('pawn.pledge', { itemIds: [i.id] }).ok) toast(`${i.label}, pledged.`, 'positive'); }}>Pawn It</button></td>; })()}
                     </tr>
                   );
                 })}
@@ -254,6 +263,14 @@ function Valuables() {
               </tbody>
             </table>
           </div>
+        )}
+        {pledges.length > 0 && (
+          <div className="col gap-1 small">{pledges.map((p) => (
+            <div key={p.id} className="row-between">
+              <span>{p.itemIds.map((id) => itemsOf(person).find((x) => x.id === id)?.label ?? 'A Piece').join(', ')}<span className="xs dim">{` · ${pawnTermsIn(p.cityId)?.lender ?? 'A Pawnbroker'}, until ${formatDate(p.until, sim.zone)}`}</span></span>
+              <button type="button" className="btn btn-sm btn-ghost" disabled={!redeem.open || person.currentLocationId !== p.cityId} title={person.currentLocationId !== p.cityId ? 'A pledge is redeemed where it was made.' : redeem.reason} onClick={() => { if (run('pawn.redeem', { pawnId: p.id }).ok) toast('Redeemed.', 'positive'); }}>{`Redeem It, ${formatMoney(owedOn(sim, p), cur)}`}</button>
+            </div>
+          ))}</div>
         )}
         <div className="xs dim">A burglary takes the jewelry and watches at home that aren’t locked in a safe or worn that day. The policy on what’s inside pays for them only up to its limit on jewelry; a piece scheduled on it is paid in full, without a deductible.</div>
       </div>

@@ -305,6 +305,12 @@ export interface Person {
   datingApp?: import('../systems/dating').DatingApp;
   /** When their toiletries began to be counted, and when they last had their hair done (`systems/hygiene.ts`, from 2026-10-01). */
   suppliesSince?: number;
+  /** The toiletry of each kind they use first and buy again, by its id (`hygiene.use_first`, from 2026-10-02). */
+  usesFirst?: Record<string, string>;
+  /** Jewelry and watches pledged at a pawnbroker (`systems/pawn.ts`, from 2026-10-02). */
+  pawns?: import('../systems/pawn').Pawn[];
+  /** Garments in a parcel taken from the door, to buy again (`systems/orders.ts`, from 2026-10-02). */
+  garmentsToReplace?: { kind: string; slot: import('../content/garmentcare').Slot; care: import('./../systems/wardrobe').Garment['care']; label: string }[];
   /** When their laundry and dishwasher detergent began to be counted (`systems/hygiene.ts`, from 2026-10-02). */
   cleaningSince?: number;
   /** Breakdown cover with a motoring club (`systems/roadside.ts`, from 2026-10-02). */

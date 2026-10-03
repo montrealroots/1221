@@ -584,6 +584,7 @@ function PayDeposits({ j }: { j: Journey }) {
   const car = rentalsOf(sim.player).find((r) => r.journeyId === j.id && r.status === 'held');
   return (
     <>
+      {j.hotel?.idDue ? <Gated feature="travel.show_id" className="btn btn-sm btn-ghost" title="The desk gives the room only on a photo ID in force" onClick={() => { if (run('travel.show_id', { journeyId: j.id }).ok) toast('Your ID shown at the desk.', 'positive'); }}>Show Your ID</Gated> : null}
       {j.hotel?.depositDue ? <Gated feature="travel.pay_deposit" className="btn btn-sm btn-ghost" onClick={() => { if (run('travel.pay_deposit', { journeyId: j.id }).ok) toast('The room is yours.', 'positive'); }}>{`Pay The Deposit, ${formatMoney(j.hotel.depositDue, cur, { cents: false })}`}</Gated> : null}
       {car?.depositDue ? <Gated feature="travel.pay_rental_deposit" className="btn btn-sm btn-ghost" onClick={() => { if (run('travel.pay_rental_deposit', { rentalId: car.id }).ok) toast('The car is yours until it’s due back.', 'positive'); }}>{`Pay The Car’s Deposit, ${formatMoney(car.depositDue, cur, { cents: false })}`}</Gated> : null}
     </>

@@ -42,7 +42,7 @@ import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
 import { onTheRoad } from './roadside';
 import { byTransit, type GroundWay } from './airportground';
-import { atTheCheckpoint, boardingIdRefusal } from './identity';
+import { atTheCheckpoint, boardingIdRefusal, deskAccepts } from './identity';
 import { caravansOf, towFor, towedLegs } from './caravans';
 import { claimDelay } from './compensation';
 import { stolenNow } from './theft';
@@ -92,7 +92,7 @@ export interface Journey {
   /** A round trip's two journeys share a trip, booked, paid and canceled together. */
   tripId?: string;
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
-  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string }; /** Its deposit held now, and returned at check-out. */ deposit?: Money; returned?: Money; /** A deposit the bank couldn't cover at arrival: the room held, not given, until the end of that day (from 2026-10-02). */ depositDue?: Money; heldUntil?: Instant; /** The stay given up, the deposit never paid. */ forfeited?: boolean; /** A late check-out bought, and its hour (`systems/latecheckout.ts`, from 2026-10-02). */ lateUntil?: Instant };
+  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string }; /** Its deposit held now, and returned at check-out. */ deposit?: Money; returned?: Money; /** A deposit the bank couldn't cover at arrival: the room held, not given, until the end of that day (from 2026-10-02). */ depositDue?: Money; heldUntil?: Instant; /** The stay given up, the deposit never paid. */ forfeited?: boolean; /** Photo ID asked at the desk and none shown: no room until one is (from 2026-10-02). */ idDue?: boolean; /** A late check-out bought, and its hour (`systems/latecheckout.ts`, from 2026-10-02). */ lateUntil?: Instant };
   /** Somebody you know along, from 2026-10-02 (`systems/companions.ts`). */
   companionId?: string;
   /** Everybody along, from later on 2026-10-02, and what they've paid back of the room between them. */
@@ -689,6 +689,16 @@ export function registerJourneys(sim: Simulation): void {
     if (rebooked || late > 15) tell(rebooked ? 'A Flight Canceled' : 'A Flight Late', rebooked ? `The airline put you on the next one: you’ll arrive about ${Math.round(late / 60)} hours late.` : `You’ll arrive about ${late} minutes late.`);
   });
 
+  sim.onCommand<{ journeyId: string }, { room: boolean }>('travel.show_id', (p, { sim: s }) => {
+    const person = s.player;
+    const no = showIdRefusal(s, person, String(p?.journeyId));
+    if (no) throw new CommandError(no);
+    const j = journeysOf(person).find((x) => x.id === p.journeyId)!;
+    delete j.hotel!.idDue;
+    giveTheRoom(s, person, j);
+    return { room: !person.stay?.out };
+  });
+
   sim.onCommand<{ journeyId: string }, { paid: Money }>('travel.pay_deposit', (p, { sim: s }) => {
     const person = s.player;
     const no = depositRefusal(s, person, String(p?.journeyId));
@@ -770,21 +780,13 @@ export function registerJourneys(sim: Simulation): void {
     } else if (j.hotel) {
       // A named hotel's own gym and pool, where it's named (`stayPlace`, from 2026-10-02).
       person.stay = { kind: 'hotel', cityId: j.toCity, ...(j.hotel.named ? { hotelId: j.hotel.named.hotelId } : {}) };
-      // Its room at its own check-in hour, arriving before it (`roomReadyAt`, from 2026-10-02).
-      const ready = j.hotel.named ? roomReadyAt(j.hotel.named.hotelId, s.now) : s.now;
-      if (ready > s.now) {
+      // Photo ID asked at the desk, where the hotel's own page says so: without one it takes, no room until one is shown (from 2026-10-02).
+      const takes = j.hotel.named ? hotelById(j.hotel.named.hotelId)?.photoId : null;
+      if (takes && !deskAccepts(person, s.now, takes)) {
+        j.hotel.idDue = true;
         person.stay.out = true;
-        person.stay.readyAt = ready;
-        s.schedule({ at: ready, kind: ROOM_READY_KIND, label: 'Hotel Check-In', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id } });
-      }
-      // A named hotel's deposit, held at arrival and returned at check-out (`depositFor`, from 2026-10-01).
-      const deposit = j.hotel.named ? depositFor(s, j.hotel.named.hotelId, j.hotel.nights) : 0;
-      if (deposit > 0 && payFromBank(s, person, deposit, `${hotelById(j.hotel.named!.hotelId)!.name}, the deposit held`, 'travel')) j.hotel.deposit = deposit;
-      else if (deposit > 0) {
-        // The bank can't cover the deposit: the room is held, not given, until the day ends (from 2026-10-02; until
-        // then the stay was granted whether the deposit was paid or not).
-        holdForDeposit(s, person, j, deposit);
-      }
+        if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'The Desk Asks For Photo ID', body: `${hotelById(j.hotel.named!.hotelId)!.name} gives a room only on ${takes === 'any' ? 'a government photo ID' : 'a passport or the INE'}, and you have none in force. Show one on Travel when you have it.`, importance: 85, route: '/workspace/travel' });
+      } else giveTheRoom(s, person, j);
       s.schedule({ at: j.hotel.checkOutAt, kind: CHECKOUT_KIND, label: 'Hotel Check-Out', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id, cityId: j.toCity } });
     }
     if (person.id === s.universe.playerId) s.notify({ category: 'personal', title: `In ${CITIES.require(j.toCity).name}`, body: `${j.lateMinutes ? `${j.lateMinutes} minutes late. ` : ''}You’re here.`, importance: 55 });
@@ -815,6 +817,36 @@ export function trainRefund(sim: Simulation, j: Journey, route: import('../conte
 export const DEPOSIT_DUE_KIND = 'travel.deposit_due';
 
 /** The room held for a deposit the bank couldn't cover: no key until it's paid, and given up when the day ends. */
+/** A named hotel's room at its own check-in hour, and its deposit held: at arrival, or once photo ID is shown. */
+function giveTheRoom(s: Simulation, person: Person, j: Journey): void {
+  const stay = person.stay!;
+  // Its room at its own check-in hour, arriving before it (`roomReadyAt`, from 2026-10-02).
+  const ready = j.hotel!.named ? roomReadyAt(j.hotel!.named.hotelId, s.now) : s.now;
+  if (ready > s.now) {
+    stay.out = true;
+    stay.readyAt = ready;
+    s.schedule({ at: ready, kind: ROOM_READY_KIND, label: 'Hotel Check-In', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id } });
+  } else delete stay.out;
+  // A named hotel's deposit, held at arrival and returned at check-out (`depositFor`, from 2026-10-01).
+  const deposit = j.hotel!.named ? depositFor(s, j.hotel!.named.hotelId, j.hotel!.nights) : 0;
+  if (deposit > 0 && payFromBank(s, person, deposit, `${hotelById(j.hotel!.named!.hotelId)!.name}, the deposit held`, 'travel')) j.hotel!.deposit = deposit;
+  else if (deposit > 0) {
+    // The bank can't cover the deposit: the room is held, not given, until the day ends (from 2026-10-02; until
+    // then the stay was granted whether the deposit was paid or not).
+    holdForDeposit(s, person, j, deposit);
+  }
+}
+
+/** Why photo ID can't be shown for a stay now, or nothing. */
+export function showIdRefusal(sim: Simulation, person: Person, journeyId: string): string | undefined {
+  const j = journeysOf(person).find((x) => x.id === journeyId);
+  if (!j?.hotel?.idDue) return 'No desk is waiting on your ID.';
+  if (person.currentLocationId !== j.toCity || person.stay?.kind !== 'hotel') return 'You’re not at the hotel.';
+  const takes = hotelById(j.hotel.named!.hotelId)!.photoId!;
+  if (!deskAccepts(person, sim.now, takes)) return takes === 'any' ? 'You have no government photo ID in force.' : 'You have no passport or INE in force.';
+  return undefined;
+}
+
 function holdForDeposit(sim: Simulation, person: Person, j: Journey, deposit: Money): void {
   const zone = CITIES.require(j.toCity).timeZone;
   j.hotel!.depositDue = deposit;

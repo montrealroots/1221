@@ -18,6 +18,15 @@ const usd = (sim: Simulation, dollars: number): Money => { const c = Math.round(
 const usIssued = (d: PersonDocument) => d.issuer.startsWith('us-');
 const inMoney = (sim: Simulation, units: number, currency: string): Money => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
 
+/**
+ * A photo ID a hotel's desk takes (from 2026-10-02): any passport, driving
+ * license or ID card in force; or, where the desk names only those, a
+ * passport or Mexico's INE.
+ */
+export function deskAccepts(person: Person, at: Instant, takes: 'any' | 'passport-ine'): PersonDocument | undefined {
+  return documentsOf(person).find((d) => inForce(d, at) && (d.kind === 'passport' || (takes === 'any' ? d.kind === 'license' || d.kind === 'idcard' : d.kind === 'idcard' && d.issuer.startsWith('mx'))));
+}
+
 /** What the TSA takes at its checkpoint: a passport in force, from anywhere, or an American REAL ID license or ID card. */
 export function tsaAccepts(person: Person, at: Instant): PersonDocument | undefined {
   return documentsOf(person).find((d) => inForce(d, at) && (d.kind === 'passport' || ((d.kind === 'license' || d.kind === 'idcard') && usIssued(d) && d.realId === true)));

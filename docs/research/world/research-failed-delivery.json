@@ -1,0 +1,428 @@
+{
+  "meta": {
+    "topic": "Failed home delivery of online orders: safe place, signature, attempts, notice, redelivery, hold period, collection point, return to sender, fees and delivery hours, by carrier",
+    "markets": ["US", "CA", "GB", "IE", "MX"],
+    "readDate": "2026-10-02",
+    "confirmationRule": "confirmed:true means the carrier-level figures marked as read were read in the text of the carrier's own page or document on 2026-10-02 (WebFetch or a direct download). Where a carrier's site refused automated reading (HTTP 403/503 or connection refused), figures come from search-engine excerpts of that carrier's own pages and the record is confirmed:false. Within a confirmed record, any field taken from a search excerpt rather than the fetched text is listed in note under 'From search excerpt only'."
+  },
+  "carriers": [
+    {
+      "id": "usps",
+      "carrier": "United States Postal Service (USPS)",
+      "market": "US",
+      "safePlace": "Not found on a readable USPS page.",
+      "signatureRequiredWhen": "Extra services that require a signature include Certified Mail, Insured Mail, Registered Mail, Return Receipt for Merchandise, Signature Confirmation and Adult Signature Required (listed as services held 15 days after a failed attempt).",
+      "attempts": "On a failed attempt the carrier leaves PS Form 3849 (Redelivery Notice). 'Carriers will leave two notices (regardless of whether or not a customer schedules a redelivery): first and final.' Second/final notice: '5 days after receipt of first notice' for most services; '3 days after receipt of first notice' for Priority Mail Express. If a redelivery is scheduled after the final notice and fails, 'another notice will not be left by the carrier.'",
+      "redelivery": "Redelivery can be scheduled online with the tracking number or the barcode on the back of PS Form 3849; 'Scheduling a Redelivery is free.'",
+      "holdDays": {
+        "mostAccountableAndTrackedServices": "15 days total (calendar days)",
+        "priorityMailExpress": "5 days after first attempt",
+        "codAndInternationalParcels": "30 days (unless fewer days are designated by mailer)",
+        "perishableParcels": "Destroyed after 10 days",
+        "countingRule": "Return dates use calendar days, not Postal business days; if the date falls on a non-business day the item is returned on the following Postal business day."
+      },
+      "collectionPoint": "The local Post Office; 'All items are available for pickup at the local Post Office until close of business on the applicable return date.'",
+      "afterHold": "Returned to sender.",
+      "fees": "Redelivery: free. No holding fee found.",
+      "deliveryHours": "'All deliveries should be made by 5:00 p.m. local time Monday through Saturday', with later deliveries possible in unusual circumstances (traffic, staffing, weather, route changes). USPS newsroom releases describe carriers delivering as early as 6:00 a.m. and as late as 8:00 p.m. in peak (holiday) season.",
+      "url": [
+        "https://faq.usps.com/articles/FAQ/What-are-the-Second-and-Final-Notice-and-Return-Dates-for-Redelivery",
+        "https://faq.usps.com/s/article/Redelivery-The-Basics",
+        "https://faq.usps.com/articles/Knowledge/Delayed-Mail-and-Packages",
+        "https://about.usps.com/newsroom/local-releases/il/2022/1128-post-office-delivers-before-crack-of-dawn.htm"
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read directly: notice timing, two-notice rule, all hold periods, calendar-day rule, by-5pm delivery statement. From search excerpt only: 'Scheduling a Redelivery is free' and the list of signature services (Redelivery-The-Basics page returned truncated content to the fetcher), and the 6am-8pm holiday-season hours (newsroom release). Safe-place rules for unsigned parcels not found."
+    },
+    {
+      "id": "ups",
+      "carrier": "UPS",
+      "market": "US",
+      "safePlace": "Search excerpt of ups.com: if the shipment doesn't require a signature, the driver will try to find a safe place out of plain sight or harmful weather, such as a front porch, side door, back porch or garage area.",
+      "signatureRequiredWhen": "Shipper-selected Signature Required or Adult Signature Required. Search excerpt of ups.com: Adult Signature Required releases only to someone at least 21 and applies to regulated goods such as alcohol, tobacco, firearms, regulated pharmaceuticals and high-value items; a package that requires a signature is not left unattended unless an approved release was submitted beforehand, and an adult-signature package cannot be released this way. Tariff s.28: under Shipper Release, UPS makes one attempt and no signature is obtained.",
+      "attempts": "Tariff s.26: 'If UPS is unable to deliver a Shipment, a notice will be left at the Consignee's address stating that Delivery has been attempted. Thereafter, a second and, if necessary, a third attempt to deliver the Shipment may be made without additional charge. Shipments not delivered after three attempts will be considered undeliverable and may be returned to the Shipper.' For residential deliveries UPS may, after the first attempt, deliver the shipment to a UPS Access Point location to be held for pickup.",
+      "redelivery": "The second and third attempts are included. Tariff s.26: 'Requests for subsequent Delivery attempts are subject to additional Charges which will be assessed to the Consignee.' Tariff s.31 (Delivery Change Requests): after notice of an attempt the receiver may ask UPS to hold for future delivery, reroute, direct to an Access Point, redeliver to the original address a package taken to an Access Point, or return to shipper; a UPS InfoNotice tag is required to reroute.",
+      "holdDays": {
+        "accessPoint": "'UPS Access Point locations will hold Packages for up to seven (7) calendar days' (subject to modification by the shipper)",
+        "customerCenterHoldForPickup": "'Shipments not picked up within seven (7) calendar days from the date of arrival will be considered undeliverable.'"
+      },
+      "collectionPoint": "UPS Access Point location (retail partner or locker), or a UPS Customer Center when held for pickup. Government-issued ID may be required for release.",
+      "afterHold": "Considered undeliverable and may be returned to the shipper (Tariff s.17, s.37).",
+      "fees": "Second and third attempts: no additional charge. Delivery Change Requests (reroute, redeliver, to Access Point, hold for future delivery): 'An additional charge set forth in the UPS Rates' per package, charged to the consignee, plus new-shipment charges if moved beyond UPS Zone 2. The dollar amount was not found.",
+      "deliveryHours": "Search excerpt of ups.com: UPS Ground to residences generally Monday-Friday between 9 a.m. and 9 p.m. (sometimes later); later in the holiday season.",
+      "url": [
+        "https://www.ups.com/assets/resources/webcontent/en_US/terms-service-us.pdf",
+        "https://www.ups.com/us/en/support/tracking-support/where-is-my-package/how-to-use-infonotice",
+        "https://www.ups.com/us/en/support/shipping-support/shipping-services/signature-requirements"
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read directly: the 2024 UPS Tariff/Terms and Conditions of Service - United States (PDF on ups.com), sections 17, 26, 27, 28, 31. This is the 2024 edition; a 2026 edition exists at assets.ups.com but returned no readable content. ups.com HTML pages returned 'Access Denied'. From search excerpt only: safe-place wording, 9am-9pm hours, 21+ adult signature, and the InfoNotice page's 'held for 7 calendar days then returned to sender as undeliverable'."
+    },
+    {
+      "id": "fedex",
+      "carrier": "FedEx (FedEx Ground / Home Delivery / Express)",
+      "market": "US",
+      "safePlace": "A package can be left at a residence if it needs no signature and the driver finds a secure spot; 'If unable to find a safe place to leave your shipment', the driver leaves a door tag.",
+      "signatureRequiredWhen": "Shipper options: Indirect Signature Required ('Someone at or near the delivery address can sign, like a neighbor or building manager'), Direct Signature Required ('Someone there must sign'), Adult Signature Required ('someone 21 or older with a valid government-issued photo ID'). Mandatory regardless of shipper choice for 'alcohol, pharmaceuticals, hazardous materials, and firearms.'",
+      "attempts": "Door tag left with a number linked to the tracking number. Signature services page: delivery attempted 'up to three times'; the carrier will 'reattempt delivery or hold the package at a nearby FedEx location.' Search excerpt: for an indirect-signature package the recipient may sign the back of the door tag to authorize release on the next business day.",
+      "redelivery": "Automatic reattempt. Through FedEx Delivery Manager the recipient may redirect to a nearby FedEx location or participating retail location (e.g. Walgreens, Dollar General).",
+      "holdDays": {
+        "missedDeliveryHeld": "'Packages not picked up within 7 days will be returned to the nearest FedEx facility or shipper'; 'We'll hold your package for up to 7 days before returning it to the shipper.'",
+        "holdAtLocationStandard": "'for up to 10 days'",
+        "holdAtLocationExpedited": "'up to 5 days'",
+        "adultSignatureHeld": "5 business days, then may be returned to shipper (search excerpt only)"
+      },
+      "collectionPoint": "FedEx location (FedEx Office / Ship Center) or participating retail location (Walgreens, Dollar General).",
+      "afterHold": "Returned to the nearest FedEx facility or to the shipper.",
+      "fees": "No redirect or reattempt fee stated on the missed-delivery page. 'Fees may apply for indirect, direct, and adult signature requirements' (paid by shipper); 'No signature required has no additional fee.'",
+      "deliveryHours": "'Typical FedEx delivery hours are 8 a.m. to 8 p.m., Monday-Friday and on Saturday and Sunday for residential deliveries' (except expedited). FedEx Evening Home Delivery can be scheduled 5 p.m.-8 p.m. (search excerpt).",
+      "url": [
+        "https://www.fedex.com/en-us/customer-support/faqs/receiving/tracking-questions/missed-delivery.html",
+        "https://www.fedex.com/en-us/delivery-options/signature-services.html",
+        "https://www.fedex.com/en-us/tracking/guide-for-tracking-managing-deliveries.html"
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "FedEx's own pages give two hold figures: 7 days on the missed-delivery and tracking-guide pages, and 10 days standard / 5 days expedited for held-at-location on the signature-services page. Both are recorded. From search excerpt only: the door-tag signing option, the 5-business-day adult-signature hold, and the Evening Home Delivery window."
+    },
+    {
+      "id": "amazon-logistics",
+      "carrier": "Amazon Logistics (Amazon's own delivery network)",
+      "market": "US",
+      "safePlace": "Not confirmed. Search excerpts indicate Amazon deliveries generally need no signature and customers can set delivery preferences (access codes, preferred days) in Your Addresses.",
+      "signatureRequiredWhen": "Not found on a readable Amazon page.",
+      "attempts": "Search excerpt of Amazon's 'Undeliverable Amazon Packages' page: a package becomes undeliverable when 'the carrier makes three unsuccessful attempts to access your delivery address' (among other causes).",
+      "redelivery": "Search excerpt: an undeliverable package is returned to Amazon and refunded; 'we can't reship it. You can place a new order.'",
+      "holdDays": {
+        "amazonHubLocker": "3 calendar days (search excerpt)",
+        "amazonHubCounter": "7 calendar days (search excerpt)"
+      },
+      "collectionPoint": "Amazon Hub Locker or Amazon Hub Counter (when chosen as the delivery address).",
+      "afterHold": "Locker/Counter: Amazon automatically returns the package and refunds (search excerpt). Undeliverable home delivery: returned to Amazon and refunded.",
+      "fees": "None found.",
+      "deliveryHours": "Search excerpt: delivery partners deliver seven days a week; Estimated Delivery Windows are two- to four-hour windows. A fixed daily hour range was not found.",
+      "url": [
+        "https://www.amazon.com/gp/help/customer/display.html?nodeId=GCC7G9HKYQBZT5FX",
+        "https://www.amazon.com/gp/help/customer/display.html?nodeId=GZTXM2L3YLZFSQ6W",
+        "https://www.amazon.com/gp/help/customer/display.html?nodeId=GEW3XT9JEMBLTKRV",
+        "https://www.amazon.com/gp/help/customer/display.html?nodeId=GK8CZJ8DR2J2WS5H"
+      ],
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "amazon.com returned HTTP 503 to WebFetch and 403 to direct download; every figure here is from search-engine excerpts of amazon.com help pages and must be re-read before being treated as confirmed."
+    },
+    {
+      "id": "canada-post",
+      "carrier": "Canada Post",
+      "market": "CA",
+      "safePlace": "'It's at our discretion to consider leaving the item in a safe-drop location, if the item doesn't need a signature or Collect on Delivery.' Recipients can set a delivery preference per package before it is out for delivery; if the preferred location isn't accessible or secure, 'the agent will leave a Delivery Notice Card and deliver your package to a nearby post office.'",
+      "signatureRequiredWhen": "Shipper-bought Signature option (no charge on Priority and Xpresspost Certified); Proof of Age option: 'We'll only hand the item over to a person with an acceptable ID proving the required age (18, 19, or 21)'; Collect on Delivery. 'You can't select a delivery preference for a package that requires a signature' or proof of age.",
+      "attempts": "One attempt at the door: 'We'll make a delivery attempt at the addressee's door. If no one is available, we'll leave a Delivery Notice Card at the door.' For apartment buildings with intercoms, trying the intercom counts as an attempt. 'We'll send a Final Notice Card to the addressee if they haven't picked up the item after 5 calendar days.'",
+      "redelivery": "No home redelivery service found; the Delivery Notice Card directs the addressee to a nearby post office.",
+      "holdDays": "'We'll hold the item at the post office for 15 calendar days, after which time we'll return it to the sender.'",
+      "collectionPoint": "The nearby post office named on the Delivery Notice Card. Signature items: 'Only the addressee, someone living at the same address (co-habitant), or the addressee's authorized representative can pick up an item with Signature at the post office.'",
+      "afterHold": "Returned to the sender.",
+      "fees": "None stated for the hold or for collection.",
+      "deliveryHours": "Residences: 'Monday to Friday from 9 am until as late as 8 pm'; businesses: 'Monday to Friday from 9 am until 5 pm'; no deliveries on statutory holidays; some residential addresses in select areas of Toronto, Ottawa and Montreal also receive weekend parcel delivery.",
+      "url": [
+        "https://www.canadapost-postescanada.ca/cpc/en/support/articles/parcel-services-shipping-in-canada/delivery-options.page",
+        "https://www.canadapost-postescanada.ca/cpc/en/support/articles/parcel-services-shipping-in-canada/signature-and-identity-services.page",
+        "https://www.canadapost-postescanada.ca/cpc/en/support/kb/receiving/setting-preferences/choose-a-delivery-preference-canada-post.page",
+        "https://www.canadapost-postescanada.ca/cpc/en/support/kb/receiving/delivery-faq/what-are-the-mail-and-parcel-delivery-hours.page"
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "All figures read directly on canadapost-postescanada.ca. Search excerpt adds that proof-of-age agents ask for photo ID if the recipient appears under 30."
+    },
+    {
+      "id": "purolator",
+      "carrier": "Purolator",
+      "market": "CA",
+      "safePlace": "'For addresses identified by Purolator as residential, the driver has the authority to automatically leave the shipment without a signature if the location is reasonably determined to be safe and secure.' Receivers or senders can authorize Signature Not Required (SNR) by single-use or multiple-use form.",
+      "signatureRequiredWhen": "'Shipments requiring government-issued identification with proof of age (e.g., narcotics, firearms)' and 'Shipments where sender/shipper has not authorized SNR delivery' cannot be left without a signature.",
+      "attempts": "'For a residential delivery, a notice of delivery will be left advising where the shipment is being held for pickup.' Number of attempts before holding not stated.",
+      "redelivery": "Redelivery and Hold for Pick Up can be requested self-serve through Purolator's virtual assistant (available 24 hours a day, 7 days a week).",
+      "holdDays": "'Your shipment will be held at our shipping location for a maximum of 5 business days. Some exceptions may apply.'",
+      "collectionPoint": "Purolator shipping location (Shipping Centre) named on the notice.",
+      "afterHold": "Search excerpt (Purolator 'Hold for Pickup and Doorknocker' document): unclaimed after the hold, it may be returned to sender.",
+      "fees": "Not found.",
+      "deliveryHours": "Not found.",
+      "url": [
+        "https://www.purolator.com/en/resources-support/faqs/receiving"
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read directly by downloading the FAQ page (WebFetch got 403). Return-to-sender after the hold is from a search excerpt only."
+    },
+    {
+      "id": "royal-mail",
+      "carrier": "Royal Mail",
+      "market": "GB",
+      "safePlace": "Safeplace can be set (e.g. via the Royal Mail app) for non-signature barcoded parcels, including Tracked 24 and Tracked 48; any secure, weatherproof, easily accessible area of the property. Preferred neighbour: within 2 doors either side or opposite.",
+      "signatureRequiredWhen": "Signature services (e.g. Royal Mail Signed For, Special Delivery Guaranteed): Safeplace and preferred-neighbour options are not available for signature-on-delivery items.",
+      "attempts": "If an item can't be delivered, a 'Something for You' card is left explaining how to arrange redelivery or collect.",
+      "redelivery": "Free redelivery to the home, free redelivery to an alternative local address, or free redelivery to a Post Office branch for collection; 48 working hours' notice is required; the redelivery date must be within 18 calendar days of the item becoming available for collection.",
+      "holdDays": "18 calendar days.",
+      "collectionPoint": "Royal Mail Customer Service Point (delivery office), Royal Mail shop, or a local Post Office branch if redirected there.",
+      "afterHold": "Returned to sender.",
+      "fees": "Redelivery free. No holding fee found.",
+      "deliveryHours": "Usually Monday-Saturday 7am-4.30pm for letters and small parcels; parcel deliveries can be as late as 6pm, up to 7.30pm in some areas; some scheduled parcel deliveries in the evening and on Sundays. A 2-hour estimated window is notified on the day.",
+      "url": [
+        "https://www.royalmail.com/receiving-mail/redelivery",
+        "https://help.royalmail.com/personal/s/article/What-happens-if-Royal-Mail-can-t-deliver",
+        "https://www.royalmail.com/receiving/change-your-delivery-options",
+        "https://www.royalmail.com/receiving/delivery-times",
+        "https://help.royalmail.com/personal/s/article/What-time-what-days-do-you-deliver"
+      ],
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "royalmail.com returned HTTP 403 to every automated read and help.royalmail.com is a script-rendered page with no readable text; every figure here is from search-engine excerpts of Royal Mail's own pages. The 18-calendar-day figure and free redelivery appear consistently across excerpts but were not read directly."
+    },
+    {
+      "id": "parcelforce",
+      "carrier": "Parcelforce Worldwide (Royal Mail Group)",
+      "market": "GB",
+      "safePlace": "Search excerpt: after an initial attempt, automatic redelivery happens next working day 'if the item hasn't been left in an appropriate safeplace or with a neighbour'.",
+      "signatureRequiredWhen": "Not found.",
+      "attempts": "Two: 'Parcelforce will always attempt redelivery of a parcel twice, with the second attempt being the following working day (unless otherwise stated on the card)'. A 'We called to deliver / collect your parcel' card is left.",
+      "redelivery": "Free redelivery to the home, an alternative local address, a Post Office or a Parcel Locker; 48 working hours' notice.",
+      "holdDays": {
+        "depot": "18 calendar days",
+        "parcelLocker": "3 calendar days, then back to a Parcelforce depot for a further 18 calendar days"
+      },
+      "collectionPoint": "Local Parcelforce depot (address on the card); can be collected immediately.",
+      "afterHold": "Returned to sender.",
+      "fees": "Redelivery free.",
+      "deliveryHours": "Not found.",
+      "url": [
+        "https://www.parcelforce.com/redelivery",
+        "https://www.parcelforce.com/help-and-advice/tracking/what-does-the-tracking-description-mean/delivery-held",
+        "https://www.parcelforce.com/receiving/parcel-delivery"
+      ],
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "parcelforce.com returned HTTP 403 to WebFetch and to direct download (including the Conditions of Carriage PDF); figures are from search-engine excerpts of Parcelforce's own pages."
+    },
+    {
+      "id": "evri",
+      "carrier": "Evri",
+      "market": "GB",
+      "safePlace": "Recipients can divert to a safe place: porch, back door, shed, outbuilding, parcel box, letterbox, garage, greenhouse or carport; or a neighbour. 'If our Courier delivers your parcel to either a safe place or neighbour, we'll take photo proof of delivery.'",
+      "signatureRequiredWhen": "When the sender requested a household signature: 'you'll be unable to divert your parcel to a safe place, but a neighbour can accept it.'",
+      "attempts": "'our Couriers will make up to three attempts to deliver your parcel in person' on consecutive working days at no extra cost (when no safe place is available or a signature is required).",
+      "redelivery": "Attempts 2 and 3 are automatic; the recipient can divert via the tracking page (16-character parcel code and postcode) to a ParcelShop, Locker, neighbour or safe place.",
+      "holdDays": {
+        "parcelShop": "'If the parcel hasn't been collected within 10 days, it will be returned.'",
+        "locker": "'When your parcel arrives, you can collect it at any time over the next 3 days.'"
+      },
+      "collectionPoint": "Evri ParcelShop or Evri Locker. ParcelShop ID: 'A debit or credit card, passport, UK driving licence or utility bill will be accepted.'",
+      "afterHold": "Returned to sender (ParcelShop); after failed attempts, returned to the sender address (search excerpt).",
+      "fees": "No charge for the three attempts. No hold fee found.",
+      "deliveryHours": "Not found.",
+      "url": [
+        "https://www.evri.com/guides/divert-your-parcel",
+        "https://www.evri.com/our-services/parcelshop-delivery",
+        "https://www.evri.com/parcelshops/lockers"
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read directly. What happens to an uncollected locker parcel after the 3 days is not stated on the lockers page. Return-to-sender after the third failed home attempt is from a search excerpt."
+    },
+    {
+      "id": "dpd-uk",
+      "carrier": "DPD UK",
+      "market": "GB",
+      "safePlace": "Safe place at the address can be chosen unless the shipper required a signature. Conditions of carriage: transit ends when, on instructions, 'the Consignment is left in a safe place'.",
+      "signatureRequiredWhen": "When the shipper has required a signature (safe place then unavailable).",
+      "attempts": "A 'sorry we missed you' card is left; the recipient can change the delivery date, choose a safe place, a neighbour or a Pickup shop. Search excerpt: up to three delivery attempts before return to sender.",
+      "redelivery": "Rearranged online by the card's reference number: another day, neighbour, safe place or Pickup shop.",
+      "holdDays": "Return policy: where DPD can't deliver and the consignment is stored at its premises, 'it reserves the right to return the consignment after a minimum of 5 calendar days'. A specific Pickup-shop hold period was not found.",
+      "collectionPoint": "DPD Pickup shop or locker (ready by midday the next day; photo ID plus ID showing the address, such as a utility bill), or a DPD depot.",
+      "afterHold": "Returned to the sender.",
+      "fees": "None found.",
+      "deliveryHours": "Not found as a published range. Conditions of carriage allow delivery to a neighbour, concierge or Pickup location 'within the Company's delivery hours' without defining them.",
+      "neighbourDefinition": "'Neighbour' means a person who lives or works in a property within 50 metres walking distance of the Delivery Address (Standard Terms and Conditions of Carriage, condition 1(ee)). DPD may deliver to a neighbour, concierge or Pickup Location unless the customer or consignee has given written notice otherwise and DPD has acknowledged it in writing (condition 7(f)).",
+      "url": [
+        "https://www.dpd.co.uk/content/how-can-we-help/help.jsp",
+        "https://www.dpd.co.uk/pdf/dpd-stcc.pdf",
+        "https://www.dpd.co.uk/return-disposal-of-goods-policy.jsp"
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read directly: help page, the Standard Terms and Conditions of Carriage PDF and the return/disposal policy. The help page gives about 2,500 Pickup shops while search excerpts of other DPD pages give 6,000 and 11,000 shops and lockers; the network count was not settled. 'Up to three attempts' is from a search excerpt only."
+    },
+    {
+      "id": "an-post",
+      "carrier": "An Post",
+      "market": "IE",
+      "safePlace": "Safe Spot: the customer designates 'a safe, dry place out of view or a neighbour'; delivery photos are viewable in the An Post account for 7 calendar days.",
+      "signatureRequiredWhen": "Registered post (held 3 working days when missed). Other signature rules not found.",
+      "attempts": "Delivery is attempted 'at least once'; when no one can accept, a 'sorry we missed you' notice (Docket In Box / DIB) is left.",
+      "redelivery": "'Arrange redelivery of the item online'; redeliveries take approximately 3 to 5 working days.",
+      "holdDays": {
+        "standardAndExpressPost": "5 working days",
+        "registeredPost": "3 working days",
+        "fromAbroad": "16 working days"
+      },
+      "collectionPoint": "Local Delivery Service Unit, with the notice and personal identification (e.g. driver's licence).",
+      "afterHold": "'try to return the item to the person who sent it, if there's a legible address on the outside.'",
+      "fees": "None stated.",
+      "deliveryHours": "Not found.",
+      "url": [
+        "https://www.anpost.com/Help-Support/Delivery",
+        "https://www.anpost.com/Post-Parcels/Manage-Your-Post/Redelivery/Notice-Details"
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read directly on anpost.com."
+    },
+    {
+      "id": "dpd-ireland",
+      "carrier": "DPD Ireland",
+      "market": "IE",
+      "safePlace": "Search excerpt: if the sender allows, the recipient can arrange for the parcel to be left somewhere safe.",
+      "signatureRequiredWhen": "Not found.",
+      "attempts": "A card is left (the manage page asks for 'Card Number and Reference Code'). Number of attempts not found.",
+      "redelivery": "Reschedule or redirect via the DPD website or app (Parcel Wizard): change the date, collect from the depot, change address or leave safe if the sender allows (search excerpt).",
+      "holdDays": "Not found.",
+      "collectionPoint": "DPD depot (38 depots, at least one per county; available for collection 'from tomorrow morning' if the parcel is already on the van) or a DPD Pickup Point (over 320).",
+      "afterHold": "Not found.",
+      "fees": "Not found.",
+      "deliveryHours": "Not found.",
+      "url": [
+        "https://manage.dpd.ie/",
+        "https://www.dpd.ie/receive-my-parcel/",
+        "https://www.dpd.ie/manage-my-deliveries/"
+      ],
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "The readable DPD Ireland pages carry no figures; shipping.dpd.ie help centre returned 403. Depot count, pickup-point count and next-morning depot collection are from search excerpts."
+    },
+    {
+      "id": "correos-de-mexico",
+      "carrier": "Correos de México (Servicio Postal Mexicano, SEPOMEX)",
+      "market": "MX",
+      "safePlace": "Not found.",
+      "signatureRequiredWhen": "Registered items require identification at delivery (search excerpt). Reglamento art. 33 refers to a recipient signing a proof-of-delivery document.",
+      "attempts": "Reglamento art. 16: 'se girarán hasta dos avisos a los destinatarios' (up to two notices). Search excerpts of SEPOMEX procedure manuals: notice form SPM-9 for ordinary correspondence; for packages, notice SPM-77, with a second and final notice if not collected within five days.",
+      "redelivery": "Not found; the item waits at the post office.",
+      "holdDays": "Reglamento art. 25: undelivered correspondence and items 'permanecerán en la oficina de correos a disposición del destinatario o remitente durante 10 días, contados a partir del día en que se gire el primer aviso'; extension 'hasta por 20 días más' on request. Art. 33: if the recipient is not home and does not come to collect within 10 days of the written notice, the item is returned to sender at the sender's cost.",
+      "collectionPoint": "The post office (oficina de correos) named on the notice; official ID required; SEPOMEX issues a Cartilla de Identidad Postal for those without ID (search excerpt).",
+      "afterHold": "Returned to sender at sender's cost (art. 33), or sent to the dead-letter (rezago) office.",
+      "fees": "Storage (almacenaje), art. 34-36: keeping an item up to 20 days counted from the eleventh day is a paid service, charged at the destination office from the eleventh day after the first notice; paid by the sender if they asked for the extension, otherwise by the recipient on collection if the sender didn't pay. Amount not found.",
+      "deliveryHours": "Not found.",
+      "url": [
+        "http://www.ordenjuridico.gob.mx/Federal/Combo/R-365.pdf",
+        "https://www.correosdemexico.gob.mx/DatosAbiertos/Normateca/SUS/LOG/LO4.pdf",
+        "https://www.correosdemexico.gob.mx/DatosAbiertos/Normateca/SUS/LOG/LO2.pdf"
+      ],
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "Hold, extension, return and storage rules were read directly in the Reglamento para la Operación del Organismo Servicio Postal Mexicano (federal regulation, ordenjuridico.gob.mx, 2007 PDF), not on Correos de México's own site, which refused connection; marked false for that reason only. SPM-9/SPM-77 notice forms and the 5-day second notice are from search excerpts of SEPOMEX manuals."
+    },
+    {
+      "id": "estafeta",
+      "carrier": "Estafeta",
+      "market": "MX",
+      "safePlace": "Not found; someone must be present at the address to receive.",
+      "signatureRequiredWhen": "Not found.",
+      "attempts": "Two attempts: 'We will make a second delivery attempt the next business day according to the frequency of your zip code.' After two failed attempts the recipient can file a report to collect at an Estafeta branch of their choice.",
+      "redelivery": "The second attempt is automatic; after it, a report via online tracking ('Reporte de servicio') sends the parcel to a branch (Ocurre).",
+      "holdDays": "Search excerpts: after a failed second visit the shipment is deposited at the nearest point of sale with a notice and stays up to 10 natural days before return; the recipient can collect from a chosen branch within the following 5 business days; an Ocurre QR code is valid 5 natural days.",
+      "collectionPoint": "Estafeta point of sale / branch (Ocurre).",
+      "afterHold": "Returned to sender (search excerpt).",
+      "fees": "No redelivery fee found; FAQ mentions a fuel charge on shipments and refers cost questions to 800-3782338.",
+      "deliveryHours": "'For Ground service, delivery will be made during open hours from 9:00 to 18:00 hrs.' Delivers Monday-Friday, with Saturday service in some locations depending on service contracted.",
+      "url": [
+        "https://www.estafeta.com/en/preguntas-frecuentes",
+        "https://www.estafeta.com/en/frecuencia-de-entregas",
+        "https://www.estafeta.com/Atencion-al-Cliente/Preguntas-frecuentes.html"
+      ],
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read directly: two attempts, branch pickup after two failures, 9:00-18:00 Ground delivery hours, Mon-Fri days. From search excerpt only: the 10-natural-day point-of-sale hold, 5-business-day branch window and 5-day QR validity (the two hold figures may describe different flows)."
+    },
+    {
+      "id": "dhl-express-mx",
+      "carrier": "DHL Express México",
+      "market": "MX",
+      "safePlace": "Search excerpt: through On Demand Delivery the recipient can choose to leave it in a safe place, or with a neighbour, doorman or security guard, and can authorize delivery without signature.",
+      "signatureRequiredWhen": "Express deliveries are signed for unless the recipient authorizes signature release (search excerpt).",
+      "attempts": "Not found.",
+      "redelivery": "Search excerpt: On Demand Delivery is free and lets the recipient pick a new delivery date up to 7 calendar days from the original date, or redirect to a DHL Store / Service Point.",
+      "holdDays": "Search excerpt: collect within 5 business days of arrival at the DHL Store.",
+      "collectionPoint": "DHL Express Store / Service Point.",
+      "afterHold": "Not found.",
+      "fees": "Search excerpt: managing delivery through On Demand Delivery is free.",
+      "deliveryHours": "Not found.",
+      "url": [
+        "https://delivery.dhl.com/on-demand-delivery.xhtml?ctrycode=MX",
+        "https://www.dhl.com/mx-es/home/express.html"
+      ],
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "DHL pages returned HTTP 403 or timed out; all figures are from search-engine excerpts of DHL's own pages."
+    }
+  ],
+  "failureRates": [
+    {
+      "id": "loqate-via-hbr",
+      "market": "global (e-commerce)",
+      "figure": "Up to 20% of e-commerce packages aren't delivered on the first attempt.",
+      "source": "Harvard Business Review, 'Research: Why So Many Packages Don't Get Delivered' (November 2023), citing a Loqate report",
+      "url": "https://hbr.org/2023/11/research-why-so-many-packages-dont-get-delivered",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "Read directly on hbr.org, but it is neither a carrier nor a regulator figure, and it is an upper bound ('up to') from a vendor (Loqate) report."
+    },
+    {
+      "id": "ofcom-2023-24",
+      "market": "GB",
+      "figure": "67% of parcel recipients had a delivery issue in the past six months; most common issues: delays 27%, left in an inappropriate location 23%, driver not knocking loudly enough 20%, not enough time to answer the door 19%. Share experiencing delays or failure to deliver: 35% (2024) vs 42% (2023). Satisfaction with parcel firms 78%.",
+      "source": "Ofcom, Post monitoring report 2023-24 (published 28 October 2024) and 'Measuring user experience of parcel delivery to residential addresses'",
+      "url": "https://www.ofcom.org.uk/siteassets/resources/documents/postal-services/monitoring-reports/2023-2024/post-monitoring-report-2023-24.pdf?v=384016",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "Regulator survey of consumer experience, not a first-attempt failure rate. ofcom.org.uk returned 403; figures from search-engine excerpts."
+    },
+    {
+      "id": "ofcom-2025",
+      "market": "GB",
+      "figure": "Most common issues in 2025: delivery delays 28%, left in inappropriate location 26%, driver not knocking loudly enough 20%, not given enough time to answer the door 19%. The survey asks about a 'you were not in' card left while the respondent was home, but that percentage was not found.",
+      "source": "Ofcom, Experience of Parcel Delivery Survey 2025 / Measuring user experience of parcel delivery to residential addresses 2025",
+      "url": "https://www.ofcom.org.uk/siteassets/resources/documents/postal-services/monitoring-reports/2024-25/measuring-user-experience-of-parcel-delivery-to-residential-addresses-2025.pdf?v=406643",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "ofcom.org.uk returned 403; from search-engine excerpts."
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "A carrier- or regulator-published national first-attempt failure rate for any of the five markets (Ofcom publishes experience-of-issues shares, not a first-attempt failure share; a USPS OIG audit gives only a local sample).",
+      "USPS: safe-place rules for parcels without a signature service.",
+      "UPS: the dollar amount of the Delivery Change / redelivery charge to the consignee.",
+      "FedEx: any fee for redirect or reattempt (none stated).",
+      "Amazon Logistics: published daily delivery hours, signature rules, and any readable Amazon page (all blocked).",
+      "Canada Post: any home redelivery service or fee.",
+      "Purolator: delivery hours, number of attempts before holding, fees.",
+      "Parcelforce, Evri, DPD UK, An Post, DPD Ireland, Correos de México, DHL Express México: published delivery-hour windows.",
+      "DPD UK: a specific Pickup-shop hold period (only the 'minimum of 5 calendar days' stored-at-premises return right).",
+      "DPD Ireland: attempts, hold period, return rule, fees.",
+      "Correos de México: the storage (almacenaje) fee amount and any home redelivery.",
+      "DHL Express México: number of delivery attempts and what happens after the 5-business-day store hold.",
+      "Evri: what happens to an uncollected locker parcel after 3 days."
+    ],
+    "worthChecking": [
+      "Royal Mail (18 calendar days, free redelivery, 48 working hours' notice), Parcelforce (two attempts, 18 days, locker 3 + 18 days) and Amazon (three attempts, Locker 3 days / Counter 7 days) should be re-read from a normal browser; their sites blocked automated reading.",
+      "FedEx publishes two hold periods (7 days on missed-delivery pages vs 10 days standard / 5 days expedited for hold-at-location); the game should decide which flow each applies to.",
+      "The UPS tariff read is the 2024 US edition; a 2026 edition exists at assets.ups.com (terms-carriage-us-en.pdf) and should be checked for changes.",
+      "Estafeta's 10-natural-day point-of-sale hold vs 5-business-day branch window (search excerpts) may describe different flows.",
+      "A blog (smartroutes.io) states first-attempt success of 97.2% US, 93.7% UK and 88.07% Ireland with no traceable source; do not use without the primary source.",
+      "A Deloitte figure of 10-15% first-attempt failure in Spain (also said to be similar for US, Germany, UK) is cited second-hand in industry blogs; the primary Deloitte report was not found.",
+      "USPS OIG audit sample: 122 of 212 tracked packages (57.5%) delivered on first attempt at one audited location; local, not national (https://www.uspsoig.gov/reports/audit-reports/package-delivery-scanning-nationwide and related).",
+      "Correos de México's own site (correosdemexico.gob.mx) refused connection; the SEPOMEX procedure manuals LO2/LO4 should be read for notice forms and the 5-day second notice."
+    ]
+  }
+}
