@@ -493,6 +493,39 @@ function payBills(sim: Simulation, person: Person, bills: Money, memo = 'Bills')
  */
 export const canPayFor = (sim: Simulation, person: Person, category: string): Money => canPay(sim, person, category !== 'food' || purchaseMayOverdraw(sim, person));
 
+/**
+ * How a purchase is paid at the till, chosen there (from 2026-10-03): the
+ * debit card, as `spend` pays; the everyday credit card, within its limit;
+ * or cash from the wallet, in a store.
+ */
+export type PayWith = 'debit' | 'credit' | 'cash';
+
+/** Why it can't be paid that way, or nothing. */
+export function payWithRefusal(sim: Simulation, person: Person, amount: Money, way: PayWith, inStore: boolean): string | undefined {
+  if (way === 'credit') {
+    const card = everydayCard(sim, person);
+    if (!card) return 'There’s no credit card to pay with.';
+    if (cardRoom(person, card) < amount) return 'It’s past what the credit card has left.';
+  }
+  if (way === 'cash') {
+    if (!inStore) return 'Cash is paid in a store.';
+    const wallet = accountsOf(sim, person).find((a) => a.kind === 'cash');
+    if ((wallet?.balance ?? 0) < amount) return 'There isn’t that much cash in your wallet.';
+  }
+  return undefined;
+}
+
+/** Pays it the way chosen; false where it can't. */
+export function payWith(sim: Simulation, person: Person, amount: Money, memo: string, category: string, way: PayWith, inStore: boolean): boolean {
+  if (way === 'debit') return spend(sim, person, amount, memo, category);
+  if (amount <= 0) return true;
+  if (payWithRefusal(sim, person, amount, way, inStore)) return false;
+  const from = way === 'credit' ? everydayCard(sim, person)! : accountsOf(sim, person).find((a) => a.kind === 'cash')!;
+  const txn = sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount }, { accountId: from.id, amount: -amount }] });
+  if (way === 'credit') hold(sim, txn, from);
+  return true;
+}
+
 export function spend(sim: Simulation, person: Person, amount: Money, memo: string, category: string, owe = false): boolean {
   if (amount <= 0) return true;
   const card = cardOf(sim, person);

@@ -38,7 +38,7 @@ import { DRY_CLEANERS, DRY_CLEANER_BASE, DRY_CLEAN_DAYS, cleanClassOf } from '..
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
 import { atTown } from './homes';
-import { expenseFor, spend } from './household';
+import { expenseFor, payWith, payWithRefusal, spend, type PayWith } from './household';
 import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place } from './items';
 import { cancelOrder, ordersOf, placeOrder } from './orders';
 import { CLICK_COLLECT, type CollectTerms } from '../content/clickcollect';
@@ -250,7 +250,7 @@ export function checkoutRefusal(person: Person, lines: readonly BuyOptions[]): s
  * or on one order with one delivery. Each line is its own purchase, for its
  * returns; each of a pack its own garment.
  */
-export function checkoutClothes(sim: Simulation, person: Person, lines: readonly BuyOptions[]): ClothesPurchase[] {
+export function checkoutClothes(sim: Simulation, person: Person, lines: readonly BuyOptions[], way: PayWith = 'debit'): ClothesPurchase[] {
   const no = checkoutRefusal(person, lines);
   if (no) throw new CommandError(no);
   const r = retailerById(productById(lines[0]!.productId)!.retailer)!;
@@ -258,7 +258,10 @@ export function checkoutClothes(sim: Simulation, person: Person, lines: readonly
   const q = checkoutQuote(sim, person, lines)!;
   const memo = lines.length === 1 ? `${r.name}: ${productById(lines[0]!.productId)!.name}` : `${r.name}: ${lines.length} items`;
   const before = sim.universe.transactions.length;
-  if (!spend(sim, person, q.total, memo, 'clothing')) throw new CommandError(`It comes to ${formatMoney(q.total, saveCurrency(sim.universe))}, more than you can pay.`);
+  // Paid the way chosen at the till (from 2026-10-03): the debit card, the credit card, or cash in a store.
+  const wayNo = payWithRefusal(sim, person, q.total, way, how === 'store');
+  if (wayNo) throw new CommandError(wayNo);
+  if (!payWith(sim, person, q.total, memo, 'clothing', way, how === 'store')) throw new CommandError(`It comes to ${formatMoney(q.total, saveCurrency(sim.universe))}, more than you can pay.`);
   // What paid, the card, the bank or the cash, each account's share: a return goes back there (from 2026-10-02).
   const paidFrom = paidFromSince(sim, before);
   const made = lines.map((o, i) => {
@@ -302,7 +305,9 @@ function paidFromSince(sim: Simulation, since: number): { accountId: string; sha
 export const againOptions = (b: ClothesPurchase): BuyOptions => ({ productId: b.productId, how: b.how, ...(b.size ? { size: b.size } : {}), ...(b.color ? { color: b.color } : {}), quantity: 1 });
 
 /** Buys one product: a checkout of one line. */
-export const buyClothes = (sim: Simulation, person: Person, o: BuyOptions): ClothesPurchase => checkoutClothes(sim, person, [o])[0]!;
+export const buyClothes = (sim: Simulation, person: Person, o: BuyOptions, way: PayWith = 'debit'): ClothesPurchase => checkoutClothes(sim, person, [o], way)[0]!;
+/** A till's way of paying from a payload: the debit card where none is said. */
+export const toPayWith = (v: unknown): PayWith => (v === 'credit' || v === 'cash' ? v : 'debit');
 
 /** A line in the basket, with its own id to take it out by. */
 export interface BasketLine extends BuyOptions { id: string }
@@ -702,9 +707,9 @@ export function registerClothing(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     if (person?.id === s.universe.playerId) s.notify({ category: 'home', title: 'Dry Cleaning Ready', body: `Your dry cleaning is ready to collect in ${CITIES.get(String(item.payload.cityId))?.name ?? 'town'}.`, importance: 25, route: '/workspace/clothes' });
   });
-  sim.onCommand<BuyOptions, { purchaseId: string }>('clothes.buy', (p, { sim: s }) => {
+  sim.onCommand<BuyOptions & { payWith?: PayWith }, { purchaseId: string }>('clothes.buy', (p, { sim: s }) => {
     if (!p || typeof p.productId !== 'string') throw new CommandError('What to buy?');
-    return { purchaseId: buyClothes(s, s.player, { productId: p.productId, how: toBuyWay(p.how), size: p.size, color: p.color, quantity: p.quantity }).id };
+    return { purchaseId: buyClothes(s, s.player, { productId: p.productId, how: toBuyWay(p.how), size: p.size, color: p.color, quantity: p.quantity }, toPayWith(p.payWith)).id };
   });
   // An order collected in store: its garments home, or on them away from it (from 2026-10-02).
   sim.onCommand<{ orderId: string }, { collected: number }>('clothes.collect_order', (p, { sim: s }) => {
@@ -748,11 +753,11 @@ export function registerClothing(sim: Simulation): void {
     s.player.basket = basket.filter((l) => l.id !== p.lineId);
     return { left: s.player.basket.length };
   });
-  sim.onCommand<{ retailerId: string; how: BuyWay }, { purchaseIds: string[]; paid: Money }>('clothes.checkout', (p, { sim: s }) => {
+  sim.onCommand<{ retailerId: string; how: BuyWay; payWith?: PayWith }, { purchaseIds: string[]; paid: Money }>('clothes.checkout', (p, { sim: s }) => {
     const person = s.player;
     const lines = basketOf(person).filter((l) => productById(l.productId)?.retailer === p?.retailerId && l.how === p?.how);
     const q = checkoutQuote(s, person, lines);
-    const made = checkoutClothes(s, person, lines);
+    const made = checkoutClothes(s, person, lines, toPayWith(p?.payWith));
     const done = new Set(lines.map((l) => l.id));
     person.basket = basketOf(person).filter((l) => !done.has(l.id));
     return { purchaseIds: made.map((m) => m.id), paid: q!.total };

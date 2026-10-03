@@ -28,6 +28,7 @@ import { LookRegion, Open, at } from '@/ui/looks';
 import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { cloOf } from '@/engine/content/clo';
+import type { PayWith } from '@/engine/systems/household';
 import { buyRefusal, otherSellers, collectRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
@@ -295,6 +296,7 @@ function Choose({ productId, onPick }: { productId: string; onPick: (id: string)
   const [size, setSize] = useState(mine ?? p.sizes[0] ?? '');
   const [color, setColor] = useState(p.colors[0] ?? '');
   const [quantity, setQuantity] = useState(1);
+  const [way, setWay] = useState<PayWith>('debit');
   const buy = useFeature('clothes.buy');
   const add = useFeature('clothes.basket_add');
   const options = { productId, size: size || undefined, color: color || undefined, quantity };
@@ -308,7 +310,7 @@ function Choose({ productId, onPick }: { productId: string; onPick: (id: string)
   const storeQuote = purchaseQuote(sim, person, inStore);
   const onlineQuote = purchaseQuote(sim, person, online);
   const go = (how: 'store' | 'online') => {
-    if (run('clothes.buy', how === 'store' ? inStore : online).ok) toast(how === 'store' ? `${p.name}, bought.` : `${p.name}, ordered from ${r.name}.`, 'positive');
+    if (run('clothes.buy', { ...(how === 'store' ? inStore : online), payWith: how === 'online' && way === 'cash' ? 'debit' : way }).ok) toast(how === 'store' ? `${p.name}, bought.` : `${p.name}, ordered from ${r.name}.`, 'positive');
   };
   return (
     <div className="col gap-2">
@@ -338,6 +340,14 @@ function Choose({ productId, onPick }: { productId: string; onPick: (id: string)
         <div className="field">
           <label htmlFor="buy-quantity">How Many</label>
           <select id="buy-quantity" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}>{Array.from({ length: 10 }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}</select>
+        </div>
+        <div className="field">
+          <label htmlFor="buy-pay">Pay With</label>
+          <select id="buy-pay" value={way} onChange={(e) => setWay(e.target.value as PayWith)}>
+            <option value="cash">Cash, In Store</option>
+            <option value="credit">The Credit Card</option>
+            <option value="debit">The Debit Card</option>
+          </select>
         </div>
       </div>
       <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
@@ -391,6 +401,7 @@ function Basket() {
   const lines = useWorld((s) => [...(s.player.basket ?? [])]);
   const out = useFeature('clothes.checkout');
   const drop = useFeature('clothes.basket_remove');
+  const [way, setWay] = useState<PayWith>('debit');
   const money = (c: number) => formatMoney(c, saveCurrency(sim.universe));
   if (lines.length === 0) return null;
   const groups = new Map<string, BasketLine[]>();
@@ -398,6 +409,14 @@ function Basket() {
   return (
     <Panel title="Basket" subtitle="Each retailer’s checks out on its own: one payment, and online one delivery for the order">
       <div className="col gap-3">
+        <div className="field" style={{ maxWidth: '16rem' }}>
+          <label htmlFor="basket-pay">Pay With</label>
+          <select id="basket-pay" value={way} onChange={(e) => setWay(e.target.value as PayWith)}>
+            <option value="cash">Cash, In Store</option>
+            <option value="credit">The Credit Card</option>
+            <option value="debit">The Debit Card</option>
+          </select>
+        </div>
         {[...groups.entries()].map(([key, group]) => {
           const [retailerId, how] = key.split('|') as [string, 'store' | 'online' | 'collect'];
           const r = retailerById(retailerId);
@@ -423,7 +442,7 @@ function Basket() {
                 </table>
               </div>
               {q && <div className="xs dim">{how === 'collect' ? `${q.delivery > 0 ? `Collection ${money(q.delivery)}` : 'Collected free'}, ready ${formatDate(q.arrivesAt!, sim.zone)}. ` : ''}{how === 'online' ? (q.delivery > 0 ? `Delivery ${money(q.delivery)}` : 'Delivered free') + `, arriving ${formatDate(q.arrivesAt!, sim.zone)}. ` : ''}{no ?? ''}</div>}
-              <div><button type="button" className="btn btn-sm btn-primary" disabled={!out.open || Boolean(no)} title={no ?? out.reason} onClick={() => { const a = run<{ paid: number }>('clothes.checkout', { retailerId, how }); if (a.ok) toast(`Checked out at ${r?.name}, ${money(a.value!.paid)}.`, 'positive'); }}>{q ? `Check Out, ${money(q.total)}` : 'Check Out'}</button></div>
+              <div><button type="button" className="btn btn-sm btn-primary" disabled={!out.open || Boolean(no)} title={no ?? out.reason} onClick={() => { const a = run<{ paid: number }>('clothes.checkout', { retailerId, how, payWith: how === 'store' || way !== 'cash' ? way : 'debit' }); if (a.ok) toast(`Checked out at ${r?.name}, ${money(a.value!.paid)}.`, 'positive'); }}>{q ? `Check Out, ${money(q.total)}` : 'Check Out'}</button></div>
             </div>
           );
         })}
