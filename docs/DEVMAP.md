@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-310 commands; 304 named by a test, 6 not.
+311 commands; 305 named by a test, 6 not.
 
 ## aircraft
 
@@ -193,12 +193,13 @@ Each command the player can run: the engine file that handles it, the screens th
 | `documents.license_step` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `licensing.test.ts` `motorcycles.test.ts` | Passports And Licenses |
 | `documents.naturalize` | `src/engine/systems/citizenship.ts` | `Documents.tsx` | `naturalize.test.ts` | Passports And Licenses |
 | `documents.petition_o1` | `src/engine/systems/permission.ts` | `Documents.tsx` | `permission.test.ts` | — |
+| `documents.police_report` | `src/engine/systems/documents.ts` | `Documents.tsx` | `policereport.test.ts` | Between Jobs |
 | `documents.real_id` | `src/engine/systems/identity.ts` | `Documents.tsx` | `identity.test.ts` | Passports And Licenses |
 | `documents.renew_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `identity.test.ts` `licensing.test.ts` `motorcycles.test.ts` | Passports And Licenses |
 | `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `residence.test.ts` | Passports And Licenses |
 | `documents.replace_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `away.test.ts` `idreplace.test.ts` | Passports And Licenses |
-| `documents.replace_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `away.test.ts` `replacements.test.ts` | Passports And Licenses |
-| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `away.test.ts` `border.test.ts` `documents.test.ts` `idreplace.test.ts` `journey.test.ts` `replacements.test.ts` | Passports And Licenses |
+| `documents.replace_license` | `src/engine/systems/licensing.ts` | `Documents.tsx` | `away.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
+| `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `away.test.ts` `border.test.ts` `documents.test.ts` `idreplace.test.ts` `journey.test.ts` `policereport.test.ts` `replacements.test.ts` | Passports And Licenses |
 | `documents.residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
 | `documents.settle` | `src/engine/systems/residence.ts` | `Documents.tsx` | `naturalize.test.ts` `residence.test.ts` | Passports And Licenses |
 

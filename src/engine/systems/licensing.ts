@@ -322,8 +322,13 @@ export function replaceRefusal(person: Person, documentId: string): string | und
   const rule = LICENSE_REPLACEMENT[doc.issuer];
   if (!rule) return `SLATE doesn’t have what ${LICENSES[doc.issuer]?.authority ?? 'its authority'} charges to replace it.`;
   if (licensingOf(livesIn(person))?.split('-')[0] !== doc.issuer.split('-')[0]) return `${LICENSES[doc.issuer]?.authority ?? 'Its authority'} replaces a license for someone living in the country.`;
+  // A police report first where the authority asks for one (`ONLINE_REPORTS`, from 2026-10-03).
+  if (doc.policeReport === undefined && (doc.issuer === 'ca-on' || (doc.issuer === 'ca-bc' && doc.stolen))) return `${LICENSES[doc.issuer]?.authority ?? 'Its authority'} asks for a police report first.`;
   return undefined;
 }
+
+/** A replacement's fee: New York's nothing for a stolen license with the police's MV-78B. */
+export const replacementFeeFree = (doc: { issuer: string; stolen?: true; policeReport?: number }): boolean => doc.issuer === 'us-ny' && Boolean(doc.stolen) && doc.policeReport !== undefined;
 
 /** An IDP's issuer and fee for the license they hold, and why not where it can't be had. */
 export function idpRefusal(person: Person, at: Instant): string | undefined {
@@ -452,8 +457,8 @@ export function registerLicensing(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const lost = documentsOf(person).find((d) => d.id === p.documentId)!;
     const rule = LICENSE_REPLACEMENT[lost.issuer]!;
-    const fee = inSave(s, rule.fee, rule.currency);
-    if (!payFromBank(s, person, fee, `${LICENSES[lost.issuer]?.name ?? 'A license'}, replaced`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    const fee = replacementFeeFree(lost) ? 0 : inSave(s, rule.fee, rule.currency);
+    if (fee > 0 && !payFromBank(s, person, fee, `${LICENSES[lost.issuer]?.name ?? 'A license'}, replaced`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
     lost.status = 'cancelled';
     const id = s.nextId('document');
     const readyAt = s.now + rule.days * MS_DAY;
