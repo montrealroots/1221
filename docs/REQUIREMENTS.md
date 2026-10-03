@@ -238,7 +238,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 53.3, 10–11 | Preparation, professional contacts, dressing for the room | Partial | coaching | Prep time; casting contacts; a dress check |
 | 53.5 | Fittings | Done, 2026-10-02 | paid only when `present`, missed otherwise; tests/fittings.test.ts | — |
 | 53.12 | Products never confer ability | Complete | `bookingChance` | Self-tape kit documented as recording quality |
-| 54.1–5 | Staff, lessons, sports, memberships, community | Partial or not implemented | cleaner, gardener, trainer, gym; acting and improv classes (`career.class`), flight training (`pilot.train`) | Sports and hobby lessons, clubs, leagues, community |
+| 54.1–5 | Staff, lessons, sports, memberships, community | Partial or not implemented | cleaner, gardener, trainer, gym; acting and improv classes (`career.class`), flight training (`pilot.train`) ; from 2026-10-03 clubs: parkrun in five towns, four free running clubs and four leagues at their own fees, each meeting weekly, gone to in town and free, at the Compendium’s METs, someone from it met (`systems/clubs.ts`) | Sports and hobby lessons; leagues in Dublin (no time read), New Haven (stale) and Mexico City; volunteering (platforms read, no hours or effect kept) |
 | 54.7, 10 | Electricity, internet and phone | Complete | electricity.ts, telecom.ts; tests | Supplier choice; internet outages |
 | 54.8–9, 11–12 | Gas, water, waste, outages | Partial | atlas estimate; utility accounts opened on moving in with published set-up charges (`settleIn`); each town's waste charge (`wasteFeeOf`); power cuts (`powerDay`) | Gas and water tariffs; water and gas outages |
 | 54.13 | No unrelated jobs | Complete | — | — |

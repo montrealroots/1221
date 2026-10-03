@@ -66,6 +66,7 @@ function nextRung(c: Contact): { name: string; hours: number } | undefined {
 function metWords(c: Contact): string {
   if (c.met.how === 'school') return 'at school';
   if (c.met.how === 'online') return `on ${c.met.what ?? 'an app'}`;
+  if (c.met.how === 'club') return `at ${c.met.what ?? 'a club'}`;
   return c.met.what ? `at work, on ${c.met.what}` : 'at work';
 }
 

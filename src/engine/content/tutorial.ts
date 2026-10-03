@@ -399,9 +399,10 @@ export const CHAPTERS: readonly Chapter[] = [
       'Living together, you can Try For A Child if one of you can carry: each month a chance by the carrier’s age, as a large study measured it, and the child born 280 days later, at what a birth costs where you live. A self-employed parent’s leave is paid where the state pays it. Each month a child costs its share of the published cost of raising one, split as the bills are, and brings the state’s child benefit; America’s is a credit on the return. At eighteen they’re grown.',
       'Join A Dating App to meet people who aren’t from the business: Tinder or Hinge, free or on their paid plans at their own prices where you live. Each month brings matches in your town, single and keen, more on a paid plan; ask them out as you would anybody.',
       'Press anybody’s name, your children’s or your parents’ and they open: how you met, the hours you’ve had together, where they live and when you last saw them.',
+      'Clubs in the town you’re in: a parkrun, free every Saturday morning; a running club; a league, at its season’s fee. Join, and each week you go if you’re in town, awake and free: the run or the game, and someone from it you meet at the first and see each week after. Leave whenever you like; a league ends with its season.',
     ],
-    names: ['People', 'Ask Them Over', 'Ask Them', 'Come Over To Play', 'Ask Them Out', 'Move In Together', 'Break Up', 'Marry', 'Ask For A Divorce', 'Try For A Child', 'Adopt', 'A Surrogacy', 'Pay For It', 'Care For Them', 'Leave It To The State', 'Join A Dating App'],
-    opens: ['ui.people', 'social.host', 'social.invite', 'social.ask_out', 'social.move_in', 'social.break_up', 'social.split', 'social.marry', 'social.divorce', 'social.try_for_child', 'social.adopt', 'family.care', 'dating.app', 'look.contact', 'look.child', 'look.parent'],
+    names: ['People', 'Join', 'Leave', 'Ask Them Over', 'Ask Them', 'Come Over To Play', 'Ask Them Out', 'Move In Together', 'Break Up', 'Marry', 'Ask For A Divorce', 'Try For A Child', 'Adopt', 'A Surrogacy', 'Pay For It', 'Care For Them', 'Leave It To The State', 'Join A Dating App'],
+    opens: ['ui.people', 'club.join', 'club.leave', 'social.host', 'social.invite', 'social.ask_out', 'social.move_in', 'social.break_up', 'social.split', 'social.marry', 'social.divorce', 'social.try_for_child', 'social.adopt', 'family.care', 'dating.app', 'look.contact', 'look.child', 'look.parent'],
   },
   {
     id: 'assistant',

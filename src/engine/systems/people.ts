@@ -78,7 +78,7 @@ export interface Contact {
   /** Where they live. */
   cityId: string;
   born: Instant;
-  met: { at: Instant; how: 'school' | 'work' | 'online'; what?: string };
+  met: { at: Instant; how: 'school' | 'work' | 'online' | 'club'; what?: string };
   /** Hours spent together, Hall's measure. */
   hours: number;
   rival?: boolean;
@@ -126,7 +126,7 @@ export function newContact(sim: Simulation, person: Person, cityId: string, key:
   return {
     id: sim.nextId('contact'), name: `${pick(given)} ${pick(names.family)}`, cityId,
     born: person.birthInstant + Math.round((rng.next() * 10 - 5) * years),
-    met, hours: 0, ...(carries ? { carries } : {}), spends: pick(['casual', 'mid', 'upscale'] as const), single: rng.next() < PARTNERS.single, interested: rng.next() < SOCIAL.interested, memory: [{ at: sim.now, what: met.how === 'school' ? 'At school together' : met.how === 'online' ? `Matched on ${met.what ?? 'an app'}` : `Worked together${met.what ? ` on ${met.what}` : ''}` }],
+    met, hours: 0, ...(carries ? { carries } : {}), spends: pick(['casual', 'mid', 'upscale'] as const), single: rng.next() < PARTNERS.single, interested: rng.next() < SOCIAL.interested, memory: [{ at: sim.now, what: met.how === 'school' ? 'At school together' : met.how === 'club' ? `At ${met.what ?? 'a club'}` : met.how === 'online' ? `Matched on ${met.what ?? 'an app'}` : `Worked together${met.what ? ` on ${met.what}` : ''}` }],
   };
 }
 
