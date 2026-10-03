@@ -32,7 +32,7 @@ import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { expenseFor, inTheBank } from './household';
 import { AIR, fareUsd, groundLeg } from '../content/air';
-import { owe, payFromBank } from './household';
+import { owe, payFromBank, spend } from './household';
 import { present } from './career';
 import { crossingRefusal, isoOfCity , mayDrive } from './documents';
 import { itinerary, tripAirportFor, type Airport } from './airports';
@@ -41,7 +41,7 @@ import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
 import { onTheRoad } from './roadside';
-import { byTransit, type GroundWay } from './airportground';
+import { byCar, byCarRefusal, byTransit, parkingFee, type GroundWay } from './airportground';
 import { atTheCheckpoint, boardingIdRefusal, deskAccepts } from './identity';
 import { caravansOf, towFor, towedLegs } from './caravans';
 import { claimDelay } from './compensation';
@@ -91,6 +91,8 @@ export interface Journey {
   why?: string;
   /** A round trip's two journeys share a trip, booked, paid and canceled together. */
   tripId?: string;
+  /** One's own car left at the departure airport for the round trip, paid for on the way home (`systems/airportground.ts`, from 2026-10-02). */
+  parked?: { vehicleId: string; iata: string };
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
   hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string }; /** Its deposit held now, and returned at check-out. */ deposit?: Money; returned?: Money; /** A deposit the bank couldn't cover at arrival: the room held, not given, until the end of that day (from 2026-10-02). */ depositDue?: Money; heldUntil?: Instant; /** The stay given up, the deposit never paid. */ forfeited?: boolean; /** Photo ID asked at the desk and none shown: no room until one is (from 2026-10-02). */ idDue?: boolean; /** A late check-out bought, and its hour (`systems/latecheckout.ts`, from 2026-10-02). */ lateUntil?: Instant };
   /** Somebody you know along, from 2026-10-02 (`systems/companions.ts`). */
@@ -468,7 +470,7 @@ export function registerJourneys(sim: Simulation): void {
     return { price: q.price, hotelBack };
   });
 
-  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean; hotelId?: string; room?: string; ground?: GroundWay }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean; hotelId?: string; room?: string; ground?: GroundWay; carId?: string }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
     const day = Number(p?.day);
@@ -485,6 +487,15 @@ export function registerJourneys(sim: Simulation): void {
     if (typeof back === 'string') throw new CommandError(back);
     // To the airport and back by transit, where it was read (`systems/airportground.ts`, from 2026-10-02).
     if (!by && p?.ground === 'transit') { out = byTransit(s, out); if (back) back = byTransit(s, back); }
+    // Or in one's own car, left at the airport and paid for on the way home (from 2026-10-02).
+    let parked: { vehicleId: string; iata: string } | undefined;
+    if (!by && p?.ground === 'car') {
+      const no = byCarRefusal(s, person, fromCity, out, back, String(p?.carId ?? ''));
+      if (no) throw new CommandError(no);
+      parked = { vehicleId: String(p!.carId), iata: out[0]!.to };
+      out = byCar(out, 'out');
+      back = byCar(back!, 'back');
+    }
     // A caravan behind one's own car (`systems/caravans.ts`, from 2026-09-30).
     let towing: string | undefined;
     if (p?.tow) {
@@ -547,6 +558,7 @@ export function registerJourneys(sim: Simulation): void {
       return j;
     };
     const first = add(out, fromCity, toCity, outCost, hotel ? { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAfter(toCity, arriveOut, nights, checkOutHourOf(named?.hotelId)), ...(cls !== 'hotel' ? { cls } : {}), ...(plan !== 'flexible' ? { plan } : {}), ...(park ? { parking: park } : {}), ...(named ? { named } : {}) } : undefined);
+    if (parked) first.parked = parked;
     const second = back ? add(back, toCity, fromCity, total(back)) : undefined;
     return { journeyId: first.id, ...(second ? { returnId: second.id } : {}), leaveAt: first.leaveAt, arriveAt: first.arriveAt, total: cost };
   });
@@ -749,6 +761,12 @@ export function registerJourneys(sim: Simulation): void {
     const j = person ? journeysOf(person).find((x) => x.id === item.payload.journeyId) : undefined;
     if (!person || !j || j.status !== 'underway') return;
     j.status = 'arrived';
+    // Home from a round trip whose car was left at the airport: its parking, paid at the barrier for the time it stood (from 2026-10-02).
+    const outbound = j.tripId ? journeysOf(person).find((x) => x.tripId === j.tripId && x.id !== j.id && x.parked) : undefined;
+    if (outbound?.parked && j.legs[j.legs.length - 1]?.mode === 'ground') {
+      const fee = parkingFee(s, outbound.parked.iata, outbound.legs[0]!.arriveAt, j.legs[j.legs.length - 1]!.departAt);
+      if (fee > 0) spend(s, person, fee, `Airport parking, ${outbound.parked.iata}`, 'travel', true);
+    }
     // The body keeps the clock it left with (`systems/jetlag.ts`).
     arrive(person, CITIES.require(j.fromCity).timeZone, CITIES.require(j.toCity).timeZone, s.now);
     // Driven: the car is there now, and the road brought what it brought (`systems/driving.ts`).

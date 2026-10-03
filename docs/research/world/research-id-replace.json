@@ -1,0 +1,250 @@
+{
+  "meta": {
+    "topic": "Replacing a lost or stolen government ID card (not a driving licence), and when a police report is needed for a lost or stolen document",
+    "dateRead": "2026-10-02",
+    "method": "Each figure read on the issuer's own page (WebFetch, or curl with a browser user agent where WebFetch was refused). confirmed:true only when read there. Search-engine summaries and third-party pages are recorded with confirmed:false.",
+    "daysToArriveConvention": "daysToArrive is a [min, max] range in calendar days converted from the issuer's wording; the issuer's own wording is kept in the note. null where the issuer does not say."
+  },
+  "idCards": [
+    {
+      "place": "New York State, US",
+      "card": "Non-Driver ID (NYS DMV)",
+      "replaceFee": 8.00,
+      "currency": "USD",
+      "interim": "Online replacement: 'Download and print a temporary license in PDF format to use until your new license arrives.' No interim stated for office or mail replacement.",
+      "daysToArrive": [0, 21],
+      "url": "https://dmv.ny.gov/non-driver-id/replace-a-non-driver-id",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Fee 'Under age 62: $8.00'; 'Age 62 or older: $6.50'; reduced fees for SSI or public assistance recipients. Can be replaced at an office, online, or by mail (to the Utica Processing Center). The replacement page gives no mailing time. The arrival figure comes from the DMV mailing-status page (https://dmv.ny.gov/driver-license/check-license-permit-or-non-driver-id-mailing-status): 'Allow 3 weeks to receive the document.' (A search summary also quoted another DMV page saying 'Allow 2 weeks'.) The ID page says nothing about a fee waiver for theft."
+    },
+    {
+      "place": "Connecticut, US",
+      "card": "Non-driver ID (CT DMV) duplicate",
+      "replaceFee": 30,
+      "currency": "USD",
+      "interim": "In person: 'You will get a temporary non-driver ID at your appointment. Your permanent ID card will arrive through the mail.' None stated for online or mail requests.",
+      "daysToArrive": [0, 30],
+      "url": "https://portal.ct.gov/dmv/licenses-permits-ids/request-duplicate-non-driver-id",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Fee '$30' confirmed for the ID card itself. Online: 'Your ID will arrive through the mail within 30 days.' By mail (Form B-350): 'you will receive it within 20 days.' Online cannot be used if the name has changed. A search summary of the same site said DMV express offices (AAA, Nutmeg State Financial Credit Union) may add a convenience fee of up to $8 per transaction; that was not read on the page."
+    },
+    {
+      "place": "California, US",
+      "card": "Identification card (CA DMV), regular",
+      "replaceFee": 40,
+      "currency": "USD",
+      "interim": "None stated on the replacement page.",
+      "daysToArrive": [21, 28],
+      "url": "https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/replace-your-driver-license-or-identification-dl-id-card",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Fee from the CA DMV Licensing Fees page (https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/licensing-fees/): regular ID 'Replacement (lost or stolen)' $40; Senior Citizen ID (62+) no fee; Reduced-Fee ID $11. The online replacement application does not cover ID cards; the applicant fills in an application, visits a DMV office, pays, has the photo validated and a thumbprint scanned. 'You should receive your new card in the mail within three to four weeks'; check status online if not received after 60 days. (A search summary claimed $30 and 2 to 4 weeks; the DMV's own pages say $40 and three to four weeks.)"
+    },
+    {
+      "place": "Ontario, Canada",
+      "card": "Ontario Photo Card (ServiceOntario)",
+      "replaceFee": 10,
+      "currency": "CAD",
+      "interim": "None stated.",
+      "daysToArrive": [28, 42],
+      "url": "https://www.ontario.ca/page/ontario-photo-card",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "'To replace a lost, stolen or damaged Ontario Photo Card, you must complete the Ontario Photo Card application form available at a ServiceOntario centre and provide proof of legal name and date of birth.' Fee $10. Cards arrive by mail 'within 4 to 6 weeks'. In person only."
+    },
+    {
+      "place": "British Columbia, Canada",
+      "card": "BCID (BC Identification Card, ICBC)",
+      "replaceFee": 15,
+      "currency": "CAD",
+      "interim": "Not stated for a BCID. ICBC's notice says an interim paper licence valid 90 days is issued for a driver's licence; it does not say the same for a BCID.",
+      "daysToArrive": null,
+      "url": "https://www.icbc.com/driver-licensing/visit-dl-office/Fees",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "ICBC fees table: 'Original BCID (valid for five years) $35'; 'Replacement or renewal $15'; 'Seniors (65+) $15'; 'Surrender a driver's licence for a BCID $20'. Replacement is in person at any ICBC driver licensing office by appointment, with accepted ID (https://www.icbc.com/driver-licensing/getting-licensed/Replace). The card is mailed; ICBC's pages read gave no mailing time for a BCID. A search summary said 'two to four weeks' for BCID/BC Services Card, which was not found on the ICBC page itself."
+    },
+    {
+      "place": "Mexico",
+      "card": "Credencial para Votar (INE), reposición por robo o extravío",
+      "replaceFee": 0,
+      "currency": "MXN",
+      "interim": "None. The applicant collects the card at the module on the date given.",
+      "daysToArrive": [0, 31],
+      "url": "https://www.gob.mx/public/tramites/detalleTramite.xhtml?homoclave=INE-2023-1790-002-D",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Official trámite sheet INE-2023-1790-002-D: purpose 'Volver a expedir la credencial para votar en caso de robo o extravío sin que se modifiquen datos'; requirements: acta de nacimiento (original), comprobante de domicilio no older than 3 months, identificación oficial vigente; 'Plazo de entrega: 1 Meses'; validity 10 years; in person by appointment; no cost listed on the sheet. INE's own page (https://ine.mx/credencial/tramite-credencial-tipo/) states the service is free ('Gratuito') and that only photo and fingerprints may be updated (no data changes). INE FAQ (https://ine.mx/preguntas-frecuentes-credencial-para-votar/): report the loss to INETEL on 800 433 2000, book an appointment, and 'acude al Módulo de tu preferencia para solicitar una reposición antes de 30 días' of the report. A search summary said the card is ready in 20 to 40 business days; not read on an INE page."
+    },
+    {
+      "place": "Ireland",
+      "card": "Passport Card (DFA Passport Service)",
+      "replaceFee": 35,
+      "currency": "EUR",
+      "interim": "None. The card can only be applied for online; the Passport Book remains the document.",
+      "daysToArrive": [14, 14],
+      "url": "https://www.ireland.ie/en/dfa/passports/passport-fees/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Passport Online adult fees: Passport Card €35; standard passport plus card bundle €100; under-18 bundle €45. +€15 postal fee if resident outside Ireland. Turnaround (https://www.ireland.ie/en/dfa/passports/turnaround-times/): 'Passport Card Only Application — 10 Working Days' (≈14 calendar days), postage not included. A replacement for a lost or stolen card is made as a new online application, reporting the card lost or stolen in it (https://www.ireland.ie/en/dfa/passports/lost-stolen-damaged/); the Passport Service 'may restrict the validity' of the next document and 'It may take longer to process'. Card valid 5 years at most, never beyond the book's expiry; the book needs 3 months' validity remaining (https://www.ireland.ie/en/dfa/passports/passport-card/). WebFetch was refused (403); read with curl."
+    }
+  ],
+  "policeReports": [
+    {
+      "place": "United States",
+      "document": "US passport (book or card), lost or stolen",
+      "required": false,
+      "when": "Never required to report; a police report is optional.",
+      "how": "Form DS-64 'Statement Regarding a Lost or Stolen U.S. Passport', online through the State Department's lost/stolen reporting tool or printed, signed and mailed with a copy of photo ID. Reporting invalidates the passport immediately. When replacing in person, DS-64 goes with a DS-11 application.",
+      "fee": 0,
+      "url": "https://travel.state.gov/en/passports/renew-replace/report-passport-lost-stolen.html",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "travel.state.gov refused every fetch (403 / Cloudflare block). Taken from search summaries of that page: DS-64 is free; police reports are 'not mandatory'; if one was filed, provide a copy with the new application. Re-read on the official page before relying on it."
+    },
+    {
+      "place": "New York State, US",
+      "document": "Driver licence or learner permit, stolen",
+      "required": false,
+      "when": "Only for a free replacement: a licence or permit 'stolen or lost due to a crime'.",
+      "how": "Form MV-78B, 'available only from police agencies', presented to DMV. Without it the replacement costs $17.50.",
+      "fee": 0,
+      "url": "https://dmv.ny.gov/driver-license/replace-a-license-or-permit",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "'To get a free replacement for a driver license or learner permit that was stolen or lost due to a crime, you must get form MV-78B from a police agency.' Standard fee '$17.50'. A search summary said the waiver works only in person, not online; not read on the page."
+    },
+    {
+      "place": "New York State, US",
+      "document": "Non-Driver ID, stolen",
+      "required": false,
+      "when": "No police report requirement or waiver is stated for the non-driver ID.",
+      "how": "Replace at an office, online or by mail at the normal fee ($8.00 under 62, $6.50 at 62+).",
+      "fee": null,
+      "url": "https://dmv.ny.gov/non-driver-id/replace-a-non-driver-id",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The DMV page has no mention of MV-78B, crime or a waiver for the ID card. A legal-aid guide (VOLS, https://volsprobono.org/wp-content/uploads/2024/01/Guide-for-New-Yorkers-Replacing-Lost-or-Stolen-Identification-Documents_1.25.24-2.pdf, via search summary) says the fee 'will not be waived for a replacement of a non-driver photo ID card, even if the card was lost or stolen due to a crime' — not read on a DMV page."
+    },
+    {
+      "place": "Connecticut, US",
+      "document": "Non-driver ID, lost or stolen",
+      "required": false,
+      "when": "Not mentioned on the duplicate ID page.",
+      "how": "Duplicate online, by mail (Form B-350) or in person; $30.",
+      "fee": null,
+      "url": "https://portal.ct.gov/dmv/licenses-permits-ids/request-duplicate-non-driver-id",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The page states no police report requirement and no theft fee waiver."
+    },
+    {
+      "place": "California, US",
+      "document": "Driver licence or ID card, lost or stolen",
+      "required": false,
+      "when": "Not mentioned on the replacement page; no theft waiver appears in the fee table.",
+      "how": "Application, then a DMV office visit with fee, photo validation and thumbprint.",
+      "fee": null,
+      "url": "https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/replace-your-driver-license-or-identification-dl-id-card",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The DMV page does not mention a police report. A search summary stated that a police report 'isn't required' to replace a stolen ID card but is worth filing against identity theft; that wording was not found on a DMV page."
+    },
+    {
+      "place": "British Columbia, Canada",
+      "document": "Driver's licence or BCID, stolen",
+      "required": false,
+      "when": "ICBC advises a police report if stolen; it is not a condition of replacement.",
+      "how": "'If your licence has been stolen, contact your local police to file a report.' Replacement is at an ICBC office with accepted ID and the replacement fee.",
+      "fee": null,
+      "url": "https://www.icbc.com/driver-licensing/getting-licensed/Replace",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read from the page's embedded content (WebFetch saw only 'Loading...')."
+    },
+    {
+      "place": "United Kingdom",
+      "document": "UK passport, lost or stolen",
+      "required": false,
+      "when": "The GOV.UK cancellation page does not mention the police.",
+      "how": "Cancel online at https://www.loststolenpassport.service.gov.uk/lost-stolen/ ('You'll need a phone number to use this service'), as soon as possible; can be done for someone else. Abroad and travelling urgently: apply for an emergency travel document (fee), which cancels the passport as part of the application.",
+      "fee": 0,
+      "url": "https://www.gov.uk/report-a-lost-or-stolen-passport",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "No fee is stated for cancelling. The replacement passport fee was not researched here."
+    },
+    {
+      "place": "Ireland",
+      "document": "Irish passport or passport card, lost or stolen",
+      "required": "conditional",
+      "when": "Online replacement: no Garda involvement stated; the loss is reported inside the new online application. Reporting a loss WITHOUT applying for a new passport: a Garda certificate of loss is required. The DFA recommends telling the Gardaí in any case 'to protect yourself from identity fraud'.",
+      "how": "Online: 'You can report your passport as lost/stolen when you apply for your new passport.' Passport Assist (01 613 1795) generates an application form with a 'Statement of loss, theft or damage to a passport'; average 6 weeks. Report-only: Garda certificate of loss plus a signed letter, posted to Customer Care, Passport Office Dublin, Knockmaun House, 42-47 Lower Mount St, Dublin 2. Lost/stolen online applications count as complex renewals (15 working days) and adults need extra identity verification (Public Services Card, other photo ID, or an interview).",
+      "fee": null,
+      "url": "https://www.ireland.ie/en/dfa/passports/lost-stolen-damaged/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Details are reported to Interpol; the lost passport is no longer valid even if found; two or more losses may restrict the next passport to between 1 and 10 years. The older paper-form rule (Section 6 witnessed and stamped by a Garda) came only from a search summary and was not found on the current DFA page. WebFetch was refused (403); read with curl."
+    },
+    {
+      "place": "Canada",
+      "document": "Canadian passport, lost or stolen",
+      "required": false,
+      "when": "The IRCC page does not require a police report; it requires reporting to Passport Program.",
+      "how": "Call 1-800-567-6868 as soon as possible (outside Canada and the US: nearest Government of Canada office). Replacement application must include form PPTC 203 'Declaration concerning a lost, stolen, inaccessible, damaged or found Canadian travel document'.",
+      "fee": 45,
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/lost-stolen-inaccessible-damaged-found.html",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Fee is the 'extra $45 fee for replacing a lost or stolen passport' (CAD), on top of the regular passport fee. 'We may review or investigate how your passport was lost, stolen or damaged before issuing you a replacement. This may cause delays.' No processing time given."
+    },
+    {
+      "place": "Mexico",
+      "document": "Mexican passport, lost or stolen",
+      "required": true,
+      "when": "Before applying for the new passport, for both theft and loss.",
+      "how": "'Acude a las oficinas del Ministerio Público de tu localidad y levanta un acta por robo o extravío' (abroad: local authorities), then book an SRE appointment, pay the fee for the chosen validity at a bank, and attend with the requirements. The replacement is handled like a first-time application.",
+      "fee": null,
+      "url": "https://www.gob.mx/sre/articulos/te-decimos-que-hacer-en-caso-de-robo-o-extravio-de-tu-pasaporte",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "This SRE article is older (it gives the appointment line as 01800 8010 773). SRE consular pages (embassy in Spain, via search summary, blocked to fetch) distinguish: theft needs a police denuncia; loss can be a 'carta de extravío ... bajo protesta de decir verdad' signed at the SRE office. That split was not read on an SRE page that loaded."
+    },
+    {
+      "place": "Mexico City, Mexico",
+      "document": "Any document (constancia de extravío / acta especial), FGJCDMX",
+      "required": false,
+      "when": "Used as the official record of a lost document, e.g. for the passport acta above, or for insurance.",
+      "how": "Online through the Fiscalía General de Justicia de la Ciudad de México: Denuncia Digital (https://denunciadigital.cdmx.gob.mx/) or MP Virtual (https://mpvirtual.fgjcdmx.gob.mx/CiberDenuncia/), identifying with CURP or Llave CDMX; result is a 'Constancia General de Extravío' or an investigation file.",
+      "fee": 0,
+      "url": "https://www.cdmx.gob.mx/public/InformacionTramite.xhtml?idTramite=515",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "Every CDMX/FGJCDMX server refused the connection (ECONNREFUSED / timeout) on 2026-10-02. From search summaries only: free, about four minutes to file, maximum response one business day. The brief's 'SSC' is wrong: it is a Fiscalía (FGJCDMX) service, not the Secretaría de Seguridad Ciudadana."
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "New York non-driver ID: the replacement page gives no mailing time; 3 weeks comes from the separate DMV mailing-status page.",
+      "New York non-driver ID: no DMV page read states whether MV-78B waives the ID card fee (only a legal-aid guide says it does not).",
+      "California ID card: no interim document stated on the replacement page.",
+      "Ontario Photo Card: no interim document stated.",
+      "BCID: mailing time and whether an interim paper document is issued were not on any ICBC page read.",
+      "INE: exact working-day production time and the pickup deadline after the card is ready were not on an INE page that loaded; the gob.mx sheet says 'Plazo de entrega: 1 Meses'.",
+      "US passport (DS-64): travel.state.gov blocked all fetches, so the police-report rule is unconfirmed.",
+      "UK passport: replacement fee and processing time after loss were not researched (outside this brief).",
+      "Mexico passport: SRE fee by validity was not read; the theft-vs-loss split (police denuncia vs sworn statement) was not read on a page that loaded.",
+      "CDMX constancia de extravío: cost and response time unconfirmed because FGJCDMX/CDMX servers refused connections."
+    ],
+    "worthChecking": [
+      "Retry travel.state.gov from another network or browser to confirm DS-64 is free and a police report is optional.",
+      "Retry denunciadigital.cdmx.gob.mx and the CDMX trámite sheet idTramite=515 for the constancia's cost and response time.",
+      "ICBC: confirm whether a BCID replacement gets an interim document and how long the card takes by mail (ICBC driver licensing line 1-800-950-1498).",
+      "NY DMV publishes both 'Allow 2 weeks' and 'Allow 3 weeks' for mailed documents on different pages; 3 weeks was read on the mailing-status page.",
+      "Ireland: the DFA paper (Post Passport) route for a lost passport may still need a Garda-stamped Section 6; only the online route was read.",
+      "CT DMV express offices' convenience fee (up to $8) was seen only in a search summary of portal.ct.gov."
+    ]
+  }
+}
