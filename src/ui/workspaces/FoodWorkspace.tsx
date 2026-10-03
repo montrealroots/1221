@@ -7,6 +7,7 @@
  */
 import { useState } from 'react';
 import { GEAR_LABEL } from '@/engine/content/kitchengear';
+import { TABLE_POLICIES, lateFee, reservationsOf, reserveRefusal } from '@/engine/systems/reservations';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
 import { CatalogControls, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
@@ -15,13 +16,13 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import { arrange } from '@/engine/systems/catalog';
-import { diningQuote, diningRefusal, menuCatalog, restaurantById, type DineHow } from '@/engine/systems/dining';
+import { diningQuote, diningRefusal, menuCatalog, restaurantById, restaurantsIn, type DineHow } from '@/engine/systems/dining';
 import { bacAt, drinkRefusal, pintPrice } from '@/engine/systems/alcohol';
 import { gearOffers, gearRefusal, kitchenHas, cookRefusal, cookingClash, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice } from '@/engine/systems/kitchen';
 import { MEAL_KEYS } from '@/engine/systems/pantry';
 import { RECIPES } from '@/engine/content/groceries';
 import { SPOT_LABEL } from '@/engine/systems/items';
-import { formatDate } from '@/engine/core/time';
+import { MS_DAY, formatDate, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { LookRegion, Open, at } from '@/ui/looks';
 
@@ -54,6 +55,7 @@ export function FoodWorkspace() {
         <Groceries />
         {basket && <Meal basket={basket} onChange={setBasket} />}
         <Bar />
+        <BookATable />
         {entries.length === 0 ? (
           <Panel title={`Restaurants In ${town}`}><p className="small muted" style={{ margin: 0 }}>SLATE doesn’t keep this town’s restaurants yet: the business’s towns so far.</p></Panel>
         ) : (
@@ -87,6 +89,51 @@ export function FoodWorkspace() {
         </Fine>
       </div>
     </>
+  );
+}
+
+/** A table booked ahead at a restaurant whose terms are kept, and the bookings held (`systems/reservations.ts`). */
+function BookATable() {
+  const { sim, run, toast } = useGame();
+  const here = useWorld((s) => s.player.currentLocationId);
+  const booked = useWorld((s) => [...reservationsOf(s.player)]);
+  const places = restaurantsIn(here).filter((r) => TABLE_POLICIES[r.id] && !TABLE_POLICIES[r.id]!.walkInOnly);
+  const [rid, setRid] = useState('');
+  const r = places.find((x) => x.id === rid) ?? places[0];
+  const dishes = r ? r.menu.filter((m) => m.price !== null) : [];
+  const [item, setItem] = useState('');
+  const dish = dishes.find((m) => m.item === item) ?? dishes[0];
+  const [party, setParty] = useState(2);
+  const [day, setDay] = useState(7);
+  const [hour, setHour] = useState(19);
+  const zone = CITIES.require(here).timeZone;
+  const today = zonedParts(sim.now, zone);
+  const when = instantFromZoned({ year: today.year, month: today.month, day: today.day, hour, minute: 0 }, zone) + day * MS_DAY;
+  const no = r && dish ? reserveRefusal(sim, r.id, when, party, dish.item) : 'No restaurant here keeps its booking terms in SLATE.';
+  const cur = saveCurrency(sim.universe);
+  if (!places.length && !booked.length) return null;
+  return (
+    <Panel title="Book A Table" subtitle="By each restaurant's own terms: how far ahead, the party, and what a late cancellation or a no-show costs">
+      <div className="col gap-3">
+        {r && (
+          <div className="field-row">
+            <div className="field"><label htmlFor="table-at">Restaurant</label><select id="table-at" value={r.id} onChange={(e) => setRid(e.target.value)}>{places.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}</select></div>
+            <div className="field"><label htmlFor="table-dish">Each Orders</label><select id="table-dish" value={dish?.item ?? ''} onChange={(e) => setItem(e.target.value)}>{dishes.map((m) => <option key={m.item} value={m.item}>{m.item}</option>)}</select></div>
+            <div className="field"><label htmlFor="table-party">For</label><select id="table-party" value={party} onChange={(e) => setParty(Number(e.target.value))}>{Array.from({ length: 8 }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}</select></div>
+            <div className="field"><label htmlFor="table-day">Day</label><select id="table-day" value={day} onChange={(e) => setDay(Number(e.target.value))}>{Array.from({ length: 92 }, (_, i) => i + 1).map((d) => <option key={d} value={d}>{formatDate(sim.now + d * MS_DAY, zone)}</option>)}</select></div>
+            <div className="field"><label htmlFor="table-hour">At</label><select id="table-hour" value={hour} onChange={(e) => setHour(Number(e.target.value))}>{Array.from({ length: 12 }, (_, i) => i + 11).map((h) => <option key={h} value={h}>{`${String(h).padStart(2, '0')}:00`}</option>)}</select></div>
+            <Gated feature="food.reserve" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ prepaid: number }>('food.reserve', { restaurantId: r.id, at: when, party, item: dish!.item }); if (a.ok) toast(a.value!.prepaid ? `Booked, ${formatMoney(a.value!.prepaid, cur)} paid ahead.` : 'Booked.', 'positive'); }}>Book The Table</Gated>
+          </div>
+        )}
+        {no && r && <div className="xs dim">{no}</div>}
+        {booked.map((b) => { const place = restaurantById(b.restaurantId)!; const fee = lateFee(sim, b.restaurantId, b.at, b.party); return (
+          <div key={b.id} className="row gap-2 small" style={{ alignItems: 'center' }}>
+            <span>{`${place.name}, for ${b.party}, ${formatDate(b.at, sim.zone)}${fee ? `; a no-show costs ${formatMoney(fee, cur)}` : ''}`}</span>
+            <Gated feature="food.cancel_table" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ fee: number }>('food.cancel_table', { reservationId: b.id }); if (a.ok) toast(a.value!.fee ? `Canceled, with ${formatMoney(a.value!.fee, cur)} charged.` : 'Canceled.', 'neutral'); }}>Cancel It</Gated>
+          </div>
+        ); })}
+      </div>
+    </Panel>
   );
 }
 

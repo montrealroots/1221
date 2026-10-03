@@ -309,6 +309,8 @@ export interface Person {
   usesFirst?: Record<string, string>;
   /** Jewelry and watches pledged at a pawnbroker (`systems/pawn.ts`, from 2026-10-02). */
   pawns?: import('../systems/pawn').Pawn[];
+  /** Tables booked ahead (`systems/reservations.ts`, from 2026-10-03). */
+  reservations?: import('../systems/reservations').Reservation[];
   /** The post held at home, and a house sitter staying (`systems/away.ts`, from 2026-10-03). */
   mailHold?: import('../systems/away').MailHold;
   sitter?: import('../systems/away').SitterStay;
