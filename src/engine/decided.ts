@@ -61,7 +61,7 @@ import { modelById } from './systems/vehicles';
 import { LICENSE_PATHS } from './content/licensepaths';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions, keepsPart } from './systems/career';
 import { classMonth } from './systems/rivals';
-import { illnessWeek } from './systems/health';
+import { DENIALS, illnessWeek } from './systems/health';
 import { listingsIn, rateShift, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
 import { bodyOf } from './systems/body';
 import { onsetMonth } from './systems/health';
@@ -512,6 +512,30 @@ defineDecider<{ sim: Simulation; day: number; minute: number }, string>({
     const midnight = startOfDay(sim.now + day * MS_DAY, zone);
     return bathroomWait(sim, sim.player, midnight + (6.5 * 60 + minute) * 60_000, 10) > 0 ? 'waits' : 'free';
   },
+});
+
+defineDecider<{ sim: Simulation; claim: number }, string>({
+  id: 'health.denial',
+  decides: 'A marketplace plan’s claim denied, at KFF’s 20% of in-network claims (DENIALS.rate).',
+  drawnIn: 'src/engine/systems/health.ts',
+  reads: {
+    claim: (o, t) => ({ ...o, claim: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), claim: seed }),
+  decide: ({ sim, claim }) => (sim.rng('health.denial', sim.player.id, `m${claim}`).next() < DENIALS.rate ? 'denied' : 'paid'),
+});
+
+defineDecider<{ sim: Simulation; bill: number }, string>({
+  id: 'health.appeal',
+  decides: 'An appeal of a denied claim upheld by the insurer, at KFF’s 56% of appeals (DENIALS.upheld), or overturned.',
+  drawnIn: 'src/engine/systems/health.ts',
+  reads: {
+    bill: (o, t) => ({ ...o, bill: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), bill: seed }),
+  decide: ({ sim, bill }) => (sim.rng('health.appeal', sim.player.id, `m${bill}`).next() < DENIALS.upheld ? 'upheld' : 'overturned'),
 });
 
 defineDecider<{ sim: Simulation; visit: number }, string>({

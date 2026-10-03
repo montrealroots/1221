@@ -31,7 +31,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
 import { CANADA_NEXT_DAY, CANADA_OTHERWISE_DAYS, CONSULT_HOUR, CONSULT_MINUTES, ENGLAND_BANDS, IMSS_DAYS, US_DAYS, US_METRO_AVERAGE_DAYS } from '../content/appointments';
-import { careFor, healthOf, renewPrescriptions } from './health';
+import { careFor, healthOf, renewPrescriptions, reviewed } from './health';
 import { clinicFor } from './clinics';
 import { citizenOf } from './documents';
 import { present } from './career';
@@ -133,6 +133,7 @@ export function registerAppointments(sim: Simulation): void {
     careFor(s, person, { care: 'visit', what: a.what }, item.at);
     // A visit kept renews the prescriptions (`RX`, from 2026-10-03).
     renewPrescriptions(person, item.at);
+    reviewed(person, a.what, item.at);
     // And it may end in a referral (from 2026-10-02).
     if (person.id === s.universe.playerId) mayRefer(s, person, a);
   });
