@@ -49,7 +49,7 @@ import { registerRoofBox, roofFuelFactor } from './roofbox';
 import { NO_HISTORY_GB } from '../content/carcare';
 import { registerStandIn } from './standin';
 import { registerCarAudio } from './caraudio';
-import { registerUsedCars, usedFault } from './usedcars';
+import { TRANSFER, registerUsedCars, usedFault, usedListings, type UsedListing } from './usedcars';
 import { faultCost, inShopNow, mayBreak, registerRepairs, upkeepPerKm } from './repairs';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -103,6 +103,9 @@ export interface OwnedVehicle {
   fault?: import('./repairs').Fault;
   /** A stereo fitted (`systems/caraudio.ts`, from 2026-10-02). */
   stereo?: boolean;
+  /** The odometer when bought used, km, from its listing; and a private sale's transfer due (`systems/usedcars.ts`, from 2026-10-03). */
+  odometerAtPurchase?: number;
+  transferBy?: Instant;
   /** A roof rack fitted, and the liters of a roof box on it (`systems/roofbox.ts`, from 2026-10-03). */
   roofRack?: true;
   roofBoxL?: number;
@@ -229,7 +232,7 @@ const lbOf = (m: CarModel) => (m.kerbKg ? m.kerbKg * 2.20462 : NY.assumedLb);
 export interface Quote { currency: string; price: Money; lines: { label: string; amount: Money }[]; total: Money; basis: string }
 
 /** What buying a car costs where one lives, in the jurisdiction's money, cents: its price and every tax and fee. */
-export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?: number; financed?: boolean; person?: Person; tradeIn?: { value: Money; payoff: Money; label: string }; options?: readonly string[] } = {}): Quote | string {
+export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?: number; financed?: boolean; person?: Person; tradeIn?: { value: Money; payoff: Money; label: string }; options?: readonly string[]; privateSeller?: boolean } = {}): Quote | string {
   const j = jurisdictionOf(cityId);
   if (!j) return 'SLATE doesn’t have that place’s car taxes and fees yet: it keeps New York, Connecticut, California, Great Britain, Ireland, Ontario, British Columbia and Mexico City.';
   if (model.market !== MARKET[j]) return 'That car is sold in another market.';
@@ -249,7 +252,8 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
   // A trade-in's value comes off the price New York and Connecticut tax, a dealer's sale; California taxes the whole (CDTFA).
   const taxedPrice = Math.max(0, sold - (opts.tradeIn?.value ?? 0));
   // A bicycle shop and an ATV dealer title nothing: the documentation fee is a road vehicle's.
-  const doc = forOutings(model) ? undefined : DEALER_DOC_FEE[j];
+  // A private seller charges no documentation fee (from 2026-10-03).
+  const doc = forOutings(model) || opts.privateSeller ? undefined : DEALER_DOC_FEE[j];
   if (doc) lines.push({ label: doc.label, amount: c(used ? doc.used : doc.new) });
   if (forOutings(model)) lines.push(...outingLines(model, j, cityId, at, sold, taxedPrice));
   else if (onTwoWheels(model)) lines.push(...bikeLines(model, j, cityId, at, sold, taxedPrice));
@@ -594,7 +598,15 @@ export function buyRefusal(sim: Simulation, person: Person, modelId: string, opt
   if (opts.financed && opts.coverage === 'liability') return 'A lender asks for full cover on a car it finances.';
   if (opts.financed && loanRate(j, person.credit?.score ?? 0, (opts.age ?? 0) > 0) === undefined) return 'SLATE doesn’t have a published car loan rate there yet: buy it outright.';
   if ((opts.age ?? 0) < 0 || (opts.age ?? 0) > 15) return 'A used car of up to fifteen years.';
+  // A used car is one on offer this month (`usedListings`, from 2026-10-03; until then any age at all).
+  if ((opts.age ?? 0) > 0 && !listingFor(sim, person, modelId, opts.age!)) return `No ${model.make} ${model.model} of ${opts.age} years is on offer this month: ${usedListings(sim, person, modelId, homeOf(person), j).map((l) => l.age).join(', ')} years old are.`;
   return undefined;
+}
+
+/** This month's listing of a model at an age, where one is on offer. */
+export function listingFor(sim: Simulation, person: Person, modelId: string, age: number): UsedListing | undefined {
+  const j = jurisdictionOf(homeOf(person));
+  return j ? usedListings(sim, person, modelId, homeOf(person), j).find((l) => l.age === age) : undefined;
 }
 
 export function registerVehicles(sim: Simulation): void {
@@ -615,7 +627,8 @@ export function registerVehicles(sim: Simulation): void {
     if (old?.repossessed) throw new CommandError('The lender has that car.');
     if (old?.lease) throw new CommandError('A leased car is the lessor’s: it’s returned or bought out at the lease’s end, not traded.');
     const trade = old ? tradeInFor(s, cityId, old) : undefined;
-    const q = quote(model, cityId, s.now, { age, financed, person, options, ...(trade ? { tradeIn: trade } : {}) }) as Quote;
+    const listing = age > 0 ? listingFor(s, person, model.id, age) : undefined;
+    const q = quote(model, cityId, s.now, { age, financed, person, options, ...(trade ? { tradeIn: trade } : {}), ...(listing?.seller === 'private' ? { privateSeller: true } : {}) }) as Quote;
     const total = inSave(s, q.total, q.currency);
     const cur = saveCurrency(s.universe);
     // Financed, the price is lent and the taxes and fees paid down, as a dealer arranges it.
@@ -625,6 +638,12 @@ export function registerVehicles(sim: Simulation): void {
     if (!payFromBank(s, person, down, `${model.make} ${model.model}${age ? `, ${age} years old` : ', new'}${financed ? ', the taxes and fees' : ''}`, 'vehicle')) throw new CommandError(`${formatMoney(down, cur)} is more than the bank can cover.`);
     const id = s.nextId('vehicle');
     const v: OwnedVehicle = { id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: renewal({ id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: 0 }, s.now).next };
+    // The listing's odometer, and a private sale's transfer to do (`systems/usedcars.ts`).
+    if (listing) {
+      v.odometerAtPurchase = listing.odometerKm;
+      const rule = TRANSFER[j];
+      if (listing.seller === 'private' && rule) v.transferBy = s.now + rule.days * MS_DAY;
+    }
     // Built to order: its options kept, and the car the buyer's once it comes.
     if (options.length) v.options = options;
     if (optionsQuote(model, options).factory) v.deliveredAt = s.now + orderWeeksOf(model)!.weeks * 7 * MS_DAY;

@@ -19,6 +19,33 @@
  * City. It reports the fault the car has, or none, and the car bought that
  * month is the car inspected. What a buyer does with the report is theirs:
  * buy it anyway, or look at another.
+ *
+ * **The listings** (from 2026-10-03; `research-used-cars-parking.json`). Each
+ * month a model has three used cars on offer near you, each of its own age
+ * (one to ten years), odometer and seller. Until then any age could be bought,
+ * at the market's average miles. The odometer is the market's own:
+ * - England: the DfT's spread of cars over annual-mileage bands (NTS0904,
+ *   2025), one band drawn for the car's years.
+ * - America: NHTSA's miles by a car's age (its schedule from the 2001 NHTS,
+ *   the only age curve published), year by year.
+ * - Ireland, Canada and Mexico: the averages SLATE drives by (`KM_A_YEAR`).
+ * The odometer carries into the car bought, so it decides when the next
+ * service is due and whether the warranty's distance has run out. A dealer
+ * or a private seller is drawn evenly, nobody publishing the share; a private
+ * seller charges no dealer's documentation fee, and the buyer does the
+ * transfer. The price is the age's, since no market publishes one by mileage.
+ *
+ * **A test drive** at the dealer, before buying: Nissan Mexico's 15 minutes,
+ * Tesla's 30 in America and elsewhere, SLATE's reading where none is read.
+ * It needs a license that lets you drive there. It shows a fault that shows,
+ * a lit warning light or a car that won't go, and not what the repair costs,
+ * which only the inspection finds.
+ *
+ * **The transfer** after a private sale, by each place's own rule: done
+ * before it's driven in Britain (it's taxed only then) and Ireland; within 10
+ * days in California (a $15 penalty after) and British Columbia, 6 in
+ * Ontario, 15 working days in Mexico City; and after those days a Canadian
+ * car isn't driven until it's done.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -28,6 +55,8 @@ import { zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { modelById } from './vehicles';
+import { KM_A_YEAR } from '../content/vehiclefees';
+import { mayDrive } from './documents';
 import type { Jurisdiction } from '../content/vehiclefees';
 import { CITIES } from '../content/geography';
 import { payFromBank } from './household';
@@ -62,6 +91,41 @@ export function usedFault(sim: Simulation, person: Person, modelId: string, age:
   return { at, severe, usd: repairUsd(r, severe) };
 }
 
+const NTS0904: readonly [number, number, number][] = [[0, 499, 2], [500, 999, 1], [1_000, 1_999, 5], [2_000, 2_999, 7], [3_000, 3_999, 8], [4_000, 4_999, 8], [5_000, 6_999, 24], [7_000, 8_999, 16], [9_000, 11_999, 16], [12_000, 14_999, 6], [15_000, 17_999, 3], [18_000, 20_999, 2], [21_000, 29_999, 1], [30_000, 39_999, 1]];
+const NHTSA_MILES: readonly number[] = [14_231, 13_961, 13_669, 13_357, 13_028, 12_683, 12_325, 11_956, 11_578, 11_193];
+const MILE_KM = 1.609344;
+export const TEST_DRIVE_MINUTES: Readonly<Partial<Record<Jurisdiction, number>>> = { 'MX-CMX': 15 };
+const TEST_DRIVE_DEFAULT = 30;
+/** The transfer after a private sale: days allowed, whether it's done before driving, whether it's driven past the days, and a late penalty. */
+export const TRANSFER: Readonly<Partial<Record<Jurisdiction, { days: number; beforeDriving?: boolean; blocksAfter?: boolean; lateUsd?: number }>>> = {
+  GB: { days: 0, beforeDriving: true }, IE: { days: 0, beforeDriving: true },
+  'US-CA': { days: 10, lateUsd: 15 }, 'CA-BC': { days: 10, blocksAfter: true }, 'CA-ON': { days: 6, blocksAfter: true }, 'MX-CMX': { days: 21 },
+};
+
+export interface UsedListing { modelId: string; age: number; odometerKm: number; seller: 'dealer' | 'private' }
+
+/** This month's three used cars on offer of a model where they live (decider `vehicle.listing`). */
+export function usedListings(sim: Simulation, person: Person, modelId: string, cityId: string, j: Jurisdiction, at: Instant = sim.now): UsedListing[] {
+  const rng = sim.rng('vehicle.listing', person.id, `${modelId}-${monthOf(cityId, at)}`);
+  const ages = new Set<number>();
+  while (ages.size < 3) ages.add(1 + Math.floor(rng.next() * 10));
+  return [...ages].sort((a, b) => a - b).map((age) => {
+    let km: number;
+    if (j === 'GB') { let t = rng.next() * 100; const band = NTS0904.find(([, , pct]) => (t -= pct) < 0) ?? NTS0904[6]!; km = (band[0] + rng.next() * (band[1] - band[0])) * age * MILE_KM; }
+    else if (j.startsWith('US-')) km = NHTSA_MILES.slice(0, age).reduce((n, x) => n + x, 0) * MILE_KM;
+    else km = KM_A_YEAR[j] * age;
+    return { modelId, age, odometerKm: Math.round(km), seller: rng.next() < 0.5 ? 'dealer' as const : 'private' as const };
+  });
+}
+
+export interface Driven { modelId: string; age: number; month: string; showed: boolean; severe?: boolean }
+export const testDriveMinutes = (j: Jurisdiction): number => TEST_DRIVE_MINUTES[j] ?? TEST_DRIVE_DEFAULT;
+/** This month's test drive of a used car, where one was taken. */
+export function drivenOn(sim: Simulation, person: Person, modelId: string, age: number, cityId: string): Driven | undefined {
+  const r = person.testDriven;
+  return r && r.modelId === modelId && r.age === age && r.month === monthOf(cityId, sim.now) ? r : undefined;
+}
+
 export function inspectionPrice(sim: Simulation, j: Jurisdiction): Money {
   const t = PRE_PURCHASE[j];
   const c = Math.round(t.price * 100);
@@ -76,6 +140,35 @@ export function reportOn(sim: Simulation, person: Person, modelId: string, age: 
 }
 
 export function registerUsedCars(sim: Simulation, jurisdictionOf: (cityId: string) => Jurisdiction | undefined, homeOf: (person: Person) => string): void {
+  sim.onCommand<{ modelId: string; age: number }, Driven>('vehicle.test_drive', (p, { sim: s }) => {
+    const person = s.player;
+    const modelId = String(p?.modelId);
+    const age = Math.round(Number(p?.age ?? 0));
+    const cityId = homeOf(person);
+    const j = jurisdictionOf(cityId);
+    if (!j || !modelById(modelId)) throw new CommandError('No such car here.');
+    if (person.currentLocationId !== cityId) throw new CommandError('It’s driven at the dealer where you live.');
+    if (age > 0 && !usedListings(s, person, modelId, cityId, j).some((l) => l.age === age)) throw new CommandError('No car of that age is on offer this month.');
+    const may = mayDrive(person, cityId, s.now);
+    if (!may.ok) throw new CommandError(may.why ?? 'You can’t drive here.');
+    s.advanceTo(s.now + testDriveMinutes(j) * 60_000);
+    const f = usedFault(s, person, modelId, age, cityId, s.now);
+    const driven: Driven = { modelId, age, month: monthOf(cityId, s.now), showed: Boolean(f), ...(f ? { severe: f.severe } : {}) };
+    person.testDriven = driven;
+    return driven;
+  });
+  sim.onCommand<{ vehicleId: string }, { penalty: Money }>('vehicle.transfer', (p, { sim: s }) => {
+    const person = s.player;
+    const v = (person.vehicles ?? []).find((x) => x.id === p?.vehicleId && x.soldAt === undefined);
+    if (!v || v.transferBy === undefined) throw new CommandError('It’s in your name.');
+    const rule = TRANSFER[v.jurisdiction];
+    const late = s.now > v.transferBy && rule?.lateUsd ? Math.round(rule.lateUsd * 100) : 0;
+    const cur = saveCurrency(s.universe);
+    const penalty = late ? (cur === 'USD' ? late : exchange(late, 'USD', cur) ?? late) : 0;
+    if (penalty > 0 && !payFromBank(s, person, penalty, 'A late transfer’s penalty', 'vehicle')) throw new CommandError(`${formatMoney(penalty, cur)} is more than the bank can cover.`);
+    delete v.transferBy;
+    return { penalty };
+  });
   sim.onCommand<{ modelId: string; age: number }, Inspected>('vehicle.inspect_used', (p, { sim: s }) => {
     const person = s.player;
     const age = Math.max(0, Math.round(Number(p?.age ?? 0)));

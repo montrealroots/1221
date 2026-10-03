@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-305 commands; 299 named by a test, 6 not.
+307 commands; 301 named by a test, 6 not.
 
 ## aircraft
 
@@ -491,7 +491,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `vehicle.buy` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` `carcare.test.ts` `caroptions.test.ts` `carsale.test.ts` `connected-day.test.ts` `driving.test.ts` `evs.test.ts` `ferries.test.ts` `fueltank.test.ts` `hotels.test.ts` `inspections.test.ts` `interiors.test.ts` `landlease.test.ts` `leasing.test.ts` `mods.test.ts` `motorcycles.test.ts` `motorhomes.test.ts` `networth-holdings.test.ts` `outings.test.ts` `repairs.test.ts` `repossession.test.ts` `roadside.test.ts` `roofbox.test.ts` `standin.test.ts` `staytypes.test.ts` `theft.test.ts` `tint-road.test.ts` `tint.test.ts` `tires-drive.test.ts` `tires.test.ts` `tradein.test.ts` `trips.test.ts` `underway.test.ts` `usedcars.test.ts` `vehicles.test.ts` `wraps.test.ts` | A Car Of Your Own |
+| `vehicle.buy` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` `carcare.test.ts` `caroptions.test.ts` `carsale.test.ts` `connected-day.test.ts` `driving.test.ts` `evs.test.ts` `ferries.test.ts` `fueltank.test.ts` `hotels.test.ts` `inspections.test.ts` `interiors.test.ts` `landlease.test.ts` `leasing.test.ts` `mods.test.ts` `motorcycles.test.ts` `motorhomes.test.ts` `networth-holdings.test.ts` `outings.test.ts` `repairs.test.ts` `repossession.test.ts` `roadside.test.ts` `roofbox.test.ts` `standin.test.ts` `staytypes.test.ts` `theft.test.ts` `tint-road.test.ts` `tint.test.ts` `tires-drive.test.ts` `tires.test.ts` `tradein.test.ts` `trips.test.ts` `underway.test.ts` `usedcars.test.ts` `usedlistings.test.ts` `vehicles.test.ts` `wraps.test.ts` | A Car Of Your Own |
 | `vehicle.coverage` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `carcare.test.ts` `wraps.test.ts` | A Car Of Your Own |
 | `vehicle.hitch` | `src/engine/systems/caravans.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` | Rent And A Roof |
 | `vehicle.inspect_used` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `usedcars.test.ts` | A Car Of Your Own |
@@ -511,7 +511,9 @@ Each command the player can run: the engine file that handles it, the screens th
 | `vehicle.service` | `src/engine/systems/carcare.ts` | `VehiclesWorkspace.tsx` | `carcare.test.ts` | A Car Of Your Own |
 | `vehicle.stand_in` | `src/engine/systems/standin.ts` | `VehiclesWorkspace.tsx` | `standin.test.ts` | A Car Of Your Own |
 | `vehicle.stereo` | `src/engine/systems/caraudio.ts` | `VehiclesWorkspace.tsx` | `usedcars.test.ts` | A Car Of Your Own |
+| `vehicle.test_drive` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `usedlistings.test.ts` | A Car Of Your Own |
 | `vehicle.tint` | `src/engine/systems/tint.ts` | `VehiclesWorkspace.tsx` | `mods.test.ts` `tint.test.ts` | A Car Of Your Own |
+| `vehicle.transfer` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `usedlistings.test.ts` | A Car Of Your Own |
 | `vehicle.unlist` | `src/engine/systems/carsale.ts` | `VehiclesWorkspace.tsx` | `carsale.test.ts` | A Car Of Your Own |
 | `vehicle.winter_tires` | `src/engine/systems/tires.ts` | `VehiclesWorkspace.tsx` | `tires.test.ts` | A Car Of Your Own |
 | `vehicle.wrap` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `wraps.test.ts` | A Car Of Your Own |

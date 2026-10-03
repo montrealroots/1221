@@ -76,7 +76,7 @@ import { powerDay } from './systems/utilities';
 import { careerOf } from './systems/career';
 import { counterOffer } from './systems/career';
 import { bidsFor, lateDays, overrunOf } from './systems/worksrisk';
-import { usedFault } from './systems/usedcars';
+import { usedFault, usedListings } from './systems/usedcars';
 import { takenFromDoor } from './systems/orders';
 import { bathroomWait } from './systems/rooms';
 import { AGENCIES, ROLES, SERIES } from './content/career';
@@ -624,6 +624,19 @@ defineDecider<{ sim: Simulation; age: number; month: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), age: 1 + (seed % 14), month: seed % 12 }),
   decide: ({ sim, age, month }) => { const f = usedFault(sim, sim.player, 'us-toyota-camry', age, 'us-ny-newyork', Date.UTC(2027, month, 15)); return f ? (f.severe ? 'severe' : 'fault') : 'sound'; },
+});
+
+defineDecider<{ sim: Simulation; model: number; month: number }, string>({
+  id: 'vehicle.listing',
+  decides: 'This month’s three used cars on offer of a model: each one’s age, its odometer from the market’s own mileage (the DfT’s bands in England), and a dealer or a private seller, evenly.',
+  drawnIn: 'src/engine/systems/usedcars.ts',
+  reads: {
+    model: (o, t) => ({ ...o, model: Math.round(t * 2) }),
+    month: (o, t) => ({ ...o, month: Math.round(t * 11) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), model: seed % 3, month: seed % 12 }),
+  decide: ({ sim, model, month }) => usedListings(sim, sim.player, ['gb-ford-puma', 'gb-kia-sportage', 'gb-nissan-qashqai'][model]!, 'uk-eng-london', 'GB', Date.UTC(2027, month, 15)).map((l) => `${l.age}:${Math.round(l.odometerKm / 20_000)}:${l.seller}`).join(' '),
 });
 
 defineDecider<{ sim: Simulation; job: number; days: number }, string>({

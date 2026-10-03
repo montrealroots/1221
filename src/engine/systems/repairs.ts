@@ -36,6 +36,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, formatTime, zonedParts, type Instant } from '../core/time';
+import { TRANSFER } from './usedcars';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
@@ -81,6 +82,12 @@ export const inShopNow = (v: OwnedVehicle, at: Instant): boolean => Boolean(v.in
 export function laidUp(v: OwnedVehicle, at: Instant): string | undefined {
   if (v.inShop && v.inShop.until > at) return `It’s at ${v.inShop.name ?? shopById(v.inShop.shopId)?.name ?? 'the garage'} until ${formatDate(v.inShop.until, CITIES.require(shopById(v.inShop.shopId)?.cityId ?? v.at ?? v.cityId).timeZone)}.`;
   if (v.fault?.severe) return 'It’s broken down, and needs a repair before it goes anywhere.';
+  // A private sale's transfer not done where the law keeps it off the road until it is (`TRANSFER` in `systems/usedcars.ts`, from 2026-10-03).
+  if (v.transferBy !== undefined) {
+    const rule = TRANSFER[v.jurisdiction];
+    if (rule?.beforeDriving) return 'It’s driven once it’s transferred to you and taxed.';
+    if (rule?.blocksAfter && at > v.transferBy) return 'Its transfer to you is overdue: it’s driven again once that’s done.';
+  }
   return undefined;
 }
 

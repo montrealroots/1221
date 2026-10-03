@@ -5,6 +5,7 @@
  * screens arrange these, cheapest first unless the player sorts otherwise.
  */
 
+import { CAR_DETAILS } from '../content/carspecs';
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Instant } from '../core/time';
@@ -37,8 +38,9 @@ export function vehicleCatalog(sim: Simulation, person: Person, cityId: string, 
     return {
       id: m.id, label: `${m.make} ${m.model}`, value: m, basis: 'Total, Taxed And Registered',
       ...(typeof q === 'string' ? { price: null, priceKind: 'unknown' as const } : known(inSaveMoney(sim, q.total, q.currency), age > 0 ? 'estimate' : 'advertised')),
-      facets: { make: m.make, fuel: m.fuel },
-      words: `${m.trim} ${m.fuel}`,
+      // Its body and drivetrain where its maker's page states them (`content/carspecs.ts`, from 2026-10-03).
+      facets: { make: m.make, fuel: m.fuel, ...(CAR_DETAILS[m.id]?.body ? { body: CAR_DETAILS[m.id]!.body! } : {}), ...(CAR_DETAILS[m.id]?.drivetrain ? { drivetrain: CAR_DETAILS[m.id]!.drivetrain! } : {}) },
+      words: `${m.trim} ${m.fuel} ${Object.values(CAR_DETAILS[m.id] ?? {}).join(' ')}`,
     };
   });
 }

@@ -4,6 +4,7 @@
  * (`systems/vehicles.ts`, from 2026-09-29).
  */
 
+import { CAR_DETAILS } from '@/engine/content/carspecs';
 import { tradeInFor } from '@/engine/systems/vehicles';
 import { dealerOffer, listRefusal, listingQuote, privateValue, saleRefusal } from '@/engine/systems/carsale';
 import { boxOn, rackRefusal, roofCatalog } from '@/engine/systems/roofbox';
@@ -44,7 +45,7 @@ import { FITS, MATERIAL_LABEL, PART_LABEL, UPHOLSTERERS, interiorQuote, type Mat
 import { FILL, capacityOf, fillQuote, fillRefusal, levelOf, rangeKm } from '@/engine/systems/fueltank';
 import { homeShareOf } from '@/engine/systems/charging';
 import { stereoQuote } from '@/engine/systems/caraudio';
-import { PRE_PURCHASE, inspectionPrice, reportOn } from '@/engine/systems/usedcars';
+import { PRE_PURCHASE, drivenOn, inspectionPrice, reportOn, testDriveMinutes, usedListings } from '@/engine/systems/usedcars';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
 
@@ -153,6 +154,7 @@ export function VehiclesWorkspace() {
                             <CoverControl v={v} />
                             <ModifyControl v={v} />
                             {!v.hitch && towRating(v) > 0 && <Gated feature="vehicle.hitch" className="btn btn-sm btn-ghost" disabled={Boolean(hitchRefusal(sim, person, v))} title={hitchRefusal(sim, person, v) ?? `Rated to tow ${Math.round(towRating(v))} kg`} onClick={() => { const a = run<{ paid: number }>('vehicle.hitch', { vehicleId: v.id }); if (a.ok) toast(`A towbar fitted, for ${money(a.value!.paid)}.`, 'positive'); }}>Fit A Towbar</Gated>}
+                            {v.transferBy !== undefined && <Gated feature="vehicle.transfer" className="btn btn-sm btn-ghost" title={laidUp(v, sim.now) ?? `Due by ${formatDate(v.transferBy, sim.zone)}`} onClick={() => { const a = run<{ penalty: number }>('vehicle.transfer', { vehicleId: v.id }); if (a.ok) toast(a.value!.penalty ? `Transferred, with a late penalty of ${money(a.value!.penalty)}.` : 'Transferred to you.', 'positive'); }}>Transfer It To You</Gated>}
                             <SaleControl v={v} />
                             </div>
                           )}
@@ -171,7 +173,7 @@ export function VehiclesWorkspace() {
 
         <Panel title="Buy One" subtitle={j ? `Where you live: ${PLACE_NAME[j]}` : 'Where you live, SLATE sells no cars yet'}>
           <div className="col gap-3">
-            <CatalogControls id="car-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setPick(''); }} facets={{ make: 'Make', fuel: 'Fuel' }} lead={(
+            <CatalogControls id="car-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setPick(''); }} facets={{ make: 'Make', fuel: 'Fuel', body: 'Body', drivetrain: 'Drivetrain' }} lead={(
                 <div className="field">
                   <label htmlFor="car-kind">Kind</label>
                   <select id="car-kind" value={kind} onChange={(e) => { setKind(e.target.value as VehicleKind); setPick(''); setMonths(0); }}>
@@ -197,7 +199,9 @@ export function VehiclesWorkspace() {
               <div className="field">
                 <label htmlFor="car-age">New Or Used</label>
                 <select id="car-age" value={age} onChange={(e) => setAge(Number(e.target.value))}>
-                  {[0, 1, 2, 3, 5, 7, 10].map((y) => <option key={y} value={y}>{y === 0 ? 'New' : `${y} ${y === 1 ? 'Year' : 'Years'} Old`}</option>)}
+                  <option value={0}>New</option>
+                  {/* This month's used cars on offer: each its own age, odometer and seller (`usedListings`). */}
+                  {(model && j ? usedListings(sim, person, model.id, homeOf(person), j) : []).map((l) => <option key={l.age} value={l.age}>{`${l.age} ${l.age === 1 ? 'Year' : 'Years'} Old, ${l.odometerKm.toLocaleString('en-US')} Km, ${l.seller === 'private' ? 'Privately' : 'At A Dealer'}`}</option>)}
                 </select>
               </div>
               <div className="field">
@@ -269,7 +273,7 @@ export function VehiclesWorkspace() {
                 <table>
                   <thead><tr><th scope="col">Line</th><th scope="col" className="num">Amount</th></tr></thead>
                   <tbody>
-                    <tr><td>{model.make} {model.model}{kind === 'bicycle' ? '' : `, ${FUEL_WORD[model.fuel]}`}{age ? `, ${Math.round(kept(age) * 100)}% Of New` : ''}</td><td className="num mono">{inHome(q.price, q.currency)}</td></tr>
+                    <tr><td>{model.make} {model.model}{kind === 'bicycle' ? '' : `, ${FUEL_WORD[model.fuel]}`}{age ? `, ${Math.round(kept(age) * 100)}% Of New` : ''}{CAR_DETAILS[model.id] ? <span className="xs dim">{` · ${[CAR_DETAILS[model.id]!.year, CAR_DETAILS[model.id]!.body, CAR_DETAILS[model.id]!.transmission, CAR_DETAILS[model.id]!.drivetrain].filter(Boolean).join(' · ')}`}</span> : null}</td><td className="num mono">{inHome(q.price, q.currency)}</td></tr>
                     {q.lines.map((l) => <tr key={l.label}><td>{l.label}</td><td className="num mono">{inHome(l.amount, q.currency)}</td></tr>)}
                     <tr><th scope="row">In All</th><td className="num mono">{inHome(q.total, q.currency)}</td></tr>
                   </tbody>
@@ -297,7 +301,7 @@ export function VehiclesWorkspace() {
                 if (a.ok) toast(`Bought, for ${money(a.value!.paid)} now${a.value!.monthly ? ` and ${money(a.value!.monthly)} a month` : ''}.`, 'positive');
               }}>Buy It</Gated>
               )}
-              {!leaseMonths && model && age > 0 && <InspectControl modelId={model.id} age={age} />}
+              {!leaseMonths && model && age > 0 && <><TestDriveControl modelId={model.id} age={age} /><InspectControl modelId={model.id} age={age} /></>}
             </div>
             <Fine>{lq && typeof lq !== 'string' ? `${lq.basis} ` : ''}{typeof q !== 'string' ? q.basis : q} Depreciation: {DEPRECIATION_SOURCE}. Loans: {LOAN_RATES.source}. Parking on the street at home is the resident’s permit where one’s kept, London’s by Westminster’s bands and Dublin’s, and nothing with a garage at a home you own.</Fine>
           </div>
@@ -557,6 +561,17 @@ function StereoControl({ v }: { v: OwnedVehicle }) {
 }
 
 /** A used car looked over before it's bought (`vehicle.inspect_used`), and what was found. */
+/** A test drive at the dealer before buying: its minutes, and what it shows (`vehicle.test_drive`). */
+function TestDriveControl({ modelId, age }: { modelId: string; age: number }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const j = jurisdictionOf(homeOf(person));
+  if (!j || age <= 0) return null;
+  const driven = drivenOn(sim, person, modelId, age, homeOf(person));
+  if (driven) return <span className="small">{driven.showed ? (driven.severe ? 'On the test drive it wouldn’t go.' : 'On the test drive a warning light came on.') : 'The test drive showed nothing wrong.'}</span>;
+  return <Gated feature="vehicle.test_drive" className="btn btn-sm btn-ghost" title={`${testDriveMinutes(j)} minutes at the dealer, with a license that lets you drive here`} onClick={() => { const a = run<{ showed: boolean }>('vehicle.test_drive', { modelId, age }); if (a.ok) toast(a.value!.showed ? 'Something showed on the drive.' : 'It drove fine.', a.value!.showed ? 'neutral' : 'positive'); }}>Test Drive It</Gated>;
+}
+
 function InspectControl({ modelId, age }: { modelId: string; age: number }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
