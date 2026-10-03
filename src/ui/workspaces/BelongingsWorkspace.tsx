@@ -458,13 +458,17 @@ function Suitcase() {
   const used = usedL(person, bag.id);
   const inIt = packedIn(person, bag);
   const no = luggageRefusal(sim, person);
+  // Away at a stay, it's unpacked into the room (from 2026-10-03).
+  const away = Boolean(person.stay) && person.currentLocationId !== person.home?.cityId;
+  const unpackNo = away ? undefined : no;
+  const inRoom = itemsOf(person).filter((i) => i.at.kind === 'stay').length;
   return (
     <Panel title="Suitcase" subtitle={`${bag.label}: ${Math.round(used)} of ${bag.holdsL} liters packed, ${inIt.length} ${inIt.length === 1 ? 'thing' : 'things'}`}>
       <div className="col gap-2">
-        <p className="small muted" style={{ margin: 0 }}>Move what you want into it on Each Thing, or have a week’s clothes and the bathroom’s things packed for you. Leaving home takes it as you packed it; an empty one is packed for you as you go.</p>
+        <p className="small muted" style={{ margin: 0 }}>Move what you want into it on Each Thing, or have a week’s clothes and the bathroom’s things packed for you. Leaving home takes it as you packed it; an empty one is packed for you as you go. Away, it can be unpacked into the room; leaving packs it back while it holds, and what doesn’t fit stays behind.{inRoom > 0 ? ` ${inRoom} unpacked in the room.` : ''}</p>
         <div className="row gap-1">
           <button type="button" className="btn btn-sm" disabled={!pack.open || Boolean(no)} title={no ?? pack.reason} onClick={() => { const a = run<{ packed: number }>('luggage.pack', {}); if (a.ok) toast(`${a.value!.packed} packed.`, 'positive'); }}>Pack For Me</button>
-          <button type="button" className="btn btn-sm btn-ghost" disabled={!empty.open || Boolean(no) || inIt.length === 0} title={no ?? empty.reason} onClick={() => { const a = run<{ unpacked: number }>('luggage.unpack', {}); if (a.ok) toast(`${a.value!.unpacked} put away.`, 'positive'); }}>Unpack</button>
+          <button type="button" className="btn btn-sm btn-ghost" disabled={!empty.open || Boolean(unpackNo) || inIt.length === 0} title={unpackNo ?? empty.reason} onClick={() => { const a = run<{ unpacked: number }>('luggage.unpack', {}); if (a.ok) toast(`${a.value!.unpacked} put away.`, 'positive'); }}>{away ? 'Unpack Into The Room' : 'Unpack'}</button>
         </div>
       </div>
     </Panel>

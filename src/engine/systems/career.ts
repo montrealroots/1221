@@ -63,7 +63,8 @@ import type { ScheduledItem } from '../core/scheduler';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { MS_DAY, MS_HOUR, formatDate, formatDateTime, instantFromZoned, normalDate, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, MS_HOUR, formatDate, formatDateTime, formatTime, instantFromZoned, normalDate, zonedParts, type Instant } from '../core/time';
+import { occupiedAt } from './life';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { computeAnnualTax, salesTaxRate } from '../content/tax';
@@ -2420,13 +2421,19 @@ export function registerCareer(sim: Simulation): void {
     return { rate: quote.rate };
   });
 
+  /** A coaching session, the hour its price is for (`WORK_COSTS.coach`). */
+  const COACH_MINUTES = 60;
   sim.onCommand<{ auditionId: string }, { coached: true }>('career.coach', (p, { sim: s }) => {
     const person = s.player;
     const audition = careerOf(person).auditions.find((a) => a.id === p.auditionId);
     if (!audition || audition.status !== 'ahead') throw new CommandError('That audition isn’t ahead.');
     if (audition.coached) throw new CommandError('You’ve worked on it already.');
+    // The hour is spent with the coach, from 2026-10-03: not while something else holds you (`occupiedAt`).
+    const busy = occupiedAt(s, s.now);
+    if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
     const cur = saveCurrency(s.universe);
     if (!payForWork(s, person, usd(WORK_COSTS.coach, cur), `A coach, for ${roleById(audition.roleId).label}`)) throw new CommandError(`An hour is ${formatMoney(usd(WORK_COSTS.coach, cur), cur)}, which the bank can’t cover.`);
+    s.advanceTo(s.now + COACH_MINUTES * 60_000);
     audition.coached = true;
     return { coached: true };
   });

@@ -39,7 +39,9 @@ export type Place =
   | { kind: 'vehicle'; vehicleId: string }
   | { kind: 'inside'; itemId: string }
   | { kind: 'order'; orderId: string }
-  | { kind: 'service'; serviceId: string; readyAt: Instant };
+  | { kind: 'service'; serviceId: string; readyAt: Instant }
+  /** Unpacked where they're staying away, in its town (from 2026-10-03, `systems/luggage.ts`). */
+  | { kind: 'stay'; cityId: string };
 
 /** The spots a home keeps things in. Rooms come with Stage 12 of the backlog. */
 export type Spot = 'floor' | 'wardrobe' | 'drawers' | 'fridge' | 'freezer' | 'pantry' | 'bathroom' | 'storage' | 'hamper';
@@ -138,6 +140,7 @@ export function reachable(sim: Simulation, person: Person, place: Place): boolea
       const holder = itemById(person, place.itemId);
       return Boolean(holder && reachable(sim, person, holder.at));
     }
+    case 'stay': return Boolean(person.stay) && person.currentLocationId === place.cityId;
     case 'order':
     case 'service': return false;
   }
@@ -205,6 +208,7 @@ export function whereWords(person: Person, place: Place): string {
     case 'inside': return `in the ${itemById(person, place.itemId)?.label ?? 'bag'}`;
     case 'order': return 'on its way';
     case 'service': return 'with a service';
+    case 'stay': return 'unpacked where you’re staying';
   }
 }
 
