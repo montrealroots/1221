@@ -17,6 +17,9 @@ describe('a referral', () => {
     expect(referralDays(life('uk-eng-london', 'ref-ldn').player)).toBe(84);
     expect(referralDays(life('ca-on-toronto', 'ref-to').player)).toBe(Math.round(REFERRAL_DAYS.ca['ca-08']));
     expect(referralDays(life('ca-bc-vancouver', 'ref-van').player)).toBe(Math.round(REFERRAL_DAYS.ca['ca-02']));
+    // Mexico's IMSS: 61 days from referral to the first specialist (ENCAL 2025), at England's share.
+    expect(referralDays(life('mx-cmx-mexicocity', 'ref-mx').player)).toBe(61);
+    expect(REFERRAL_SHARE.mx).toBe(REFERRAL_SHARE.uk);
     expect(referralDays(life('ie-lei-dublin', 'ref-dub').player)).toBeUndefined();
   });
 

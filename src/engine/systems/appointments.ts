@@ -21,8 +21,11 @@
  * family doctor to specialist median, 10.7 weeks in Ontario, 19.7 in British
  * Columbia, 15.3 elsewhere. It's a visit like the first, billed as the
  * place's cover bills one, and refers no further. Ireland publishes only how
- * many wait, and Mexico neither, so no referral is drawn there. What the
- * specialist finds isn't kept: SLATE's conditions don't name one.
+ * many wait, so no referral is drawn there. Mexico's was left out until
+ * 2026-10-03, when the IMSS's own ENCAL 2025 report was read: 61 days from
+ * referral to the first specialist, at England's share referred, another
+ * system where the family doctor refers (`research-health-travel-gaps.json`).
+ * What the specialist finds isn't kept: SLATE's conditions don't name one.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -39,9 +42,9 @@ import { present } from './career';
 export const APPOINTMENT_KIND = 'health.appointment';
 
 /** The share of visits that end in a referral, by country. */
-export const REFERRAL_SHARE: Readonly<Record<string, number>> = { us: 0.091, uk: 0.081, ca: 0.081 };
+export const REFERRAL_SHARE: Readonly<Record<string, number>> = { us: 0.091, uk: 0.081, ca: 0.081, mx: 0.081 };
 /** Days from referral to the specialist: America's average; England's median weeks; Canada's by province (Ontario ca-08, British Columbia ca-02), its median otherwise. */
-export const REFERRAL_DAYS = { us: 31, uk: 12 * 7, ca: { 'ca-08': 10.7 * 7, 'ca-02': 19.7 * 7, other: 15.3 * 7 } } as const;
+export const REFERRAL_DAYS = { us: 31, uk: 12 * 7, mx: 61, ca: { 'ca-08': 10.7 * 7, 'ca-02': 19.7 * 7, other: 15.3 * 7 } } as const;
 /** What a specialist's appointment is booked as, and known by. */
 export const SPECIALIST = 'A specialist, referred';
 
@@ -51,6 +54,7 @@ export function referralDays(person: Person): number | undefined {
   const country = CITIES.get(city)?.countryId;
   if (country === 'us') return REFERRAL_DAYS.us;
   if (country === 'uk') return REFERRAL_DAYS.uk;
+  if (country === 'mx') return REFERRAL_DAYS.mx;
   if (country === 'ca') { const p = CITIES.get(city)?.parentId ?? ''; return Math.round(p === 'ca-08' ? REFERRAL_DAYS.ca['ca-08'] : p === 'ca-02' ? REFERRAL_DAYS.ca['ca-02'] : REFERRAL_DAYS.ca.other); }
   return undefined;
 }
