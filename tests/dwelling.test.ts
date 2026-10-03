@@ -15,7 +15,7 @@ import { addCountryCities } from '@/engine/content/geography';
 import type { Fixtures } from '@/engine/content/homes';
 import { depositFor } from '@/engine/systems/household';
 import { listingsIn } from '@/engine/systems/homes';
-import { CLEANER_VISIT, LAUNDRY, TIDY, cleanerCost, cleanerGetsIn, drawRental, heatLoss, livingOf, placeOf } from '@/engine/systems/dwelling';
+import { CLEANER_VISIT, LAUNDRY, PARTNER_HOUSEWORK_HOURS, TIDY, cleanerCost, cleaningMinutes, cleanerGetsIn, drawRental, heatLoss, livingOf, placeOf } from '@/engine/systems/dwelling';
 import { cleanOutfits, garmentsOf, washableDirty, wearTheDay } from '@/engine/systems/wardrobe';
 import { applyLookingAfter, lookAfterRefusal } from '@/engine/systems/life';
 
@@ -245,5 +245,31 @@ describe('the cleaner’s key', () => {
     expect(cleanerGetsIn(away, away.player, dayStart)).toBe(true);
     away.player.currentLocationId = 'us-ca-losangeles';
     expect(cleanerGetsIn(away, away.player, dayStart)).toBe(false);
+  });
+});
+
+describe('a partner at home', () => {
+  it('does ATUS’s 0.56 hours of housework a day, a cleaning of the place when it adds up to one', () => {
+    const sim = save('partner-chores');
+    const place = placeOf(sim, sim.player)!;
+    const days = Math.ceil(cleaningMinutes(place) / (PARTNER_HOUSEWORK_HOURS * 60));
+    const tidyAfter = (withPartner: boolean) => {
+      const s = save(withPartner ? 'partner-chores-yes' : 'partner-chores-no');
+      if (withPartner) {
+        const partner = newContact(s, s.player, s.player.home!.cityId, 'chores-partner', { at: s.now, how: 'school' });
+        partner.livesWith = s.now;
+        contactsOf(s.player).push(partner);
+      }
+      livingOf(s.player).tidy = 50;
+      livingOf(s.player).partnerMinutes = cleaningMinutes(placeOf(s, s.player)!) - 1;
+      s.advanceBy(MS_DAY);
+      return livingOf(s.player);
+    };
+    expect(days).toBeGreaterThan(0);
+    const yes = tidyAfter(true);
+    expect(yes.tidy).toBeGreaterThan(90);
+    const no = tidyAfter(false);
+    expect(no.tidy).toBeLessThan(90);
+    expect(no.partnerMinutes).toBeUndefined();
   });
 });

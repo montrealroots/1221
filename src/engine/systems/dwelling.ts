@@ -33,6 +33,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { livesWithPartner } from './marriage';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
@@ -253,6 +254,15 @@ export const LAUNDRY = {
 /** How fast a home gets untidy a day, a dishwasher's saving, where it starts to weigh, and what it weighs. SLATE's estimates. */
 export const TIDY = { perDay: 6, dishwasher: 0.75, messy: 40, morale: 1, stress: 1, tidiedUp: 70 };
 /**
+ * A partner's share of the housework (the master plan's §52.7–9, from
+ * 2026-10-03; `research-life-gaps.json`): the American Time Use Survey's
+ * 2025 average for a person 15 and over, 0.56 hours a day, both sexes
+ * together, put into the home they share; when it adds up to a cleaning of
+ * the place (`cleaningMinutes`), the place is cleaned. Until then a partner
+ * living there did none of it.
+ */
+export const PARTNER_HOUSEWORK_HOURS = 0.56;
+/**
  * Washing up by hand, from 2026-10-03: a day's dishes are 38 minutes, the
  * 230 hours a year Energy Star says its dishwasher saves over washing by hand,
  * and a sinkful, at the American Cleaning Institute's teaspoon of dish soap
@@ -336,6 +346,8 @@ export interface Living {
   baths?: number;
   /** A cleaner every week, and the day of the week they come, 0 for Sunday. */
   cleaner?: { day: number; /** Given a key, from 2026-10-02: they let themselves in. */ key?: boolean };
+  /** A partner's housework minutes put in toward the next cleaning (from 2026-10-03). */
+  partnerMinutes?: number;
   /** The cleaner's visits, the latest first, the last twelve kept (from 2026-10-03): when, what it cost, or that they couldn't get in. */
   cleanerLog?: CleanerVisit[];
 }
@@ -481,6 +493,11 @@ export function livingDay(sim: Simulation, person: Person): void {
   if (machine) delete l.dishes; else l.dishes = Math.min(WASH_UP.full, (l.dishes ?? 0) + 1);
   if (free) washUp(sim, person);
   if (free && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
+  // A partner living there does their share of the housework, a cleaning when it adds up to one.
+  if (livesWithPartner(person)) {
+    l.partnerMinutes = (l.partnerMinutes ?? 0) + PARTNER_HOUSEWORK_HOURS * 60;
+    if (l.partnerMinutes >= cleaningMinutes(place)) { l.tidy = 100; l.partnerMinutes -= cleaningMinutes(place); }
+  } else delete l.partnerMinutes;
   const day = zonedParts(sim.now, CITIES.require(person.home!.cityId).timeZone);
   const weekday = new Date(Date.UTC(day.year, day.month - 1, day.day)).getUTCDay();
   if (l.cleaner && weekday === l.cleaner.day) {
