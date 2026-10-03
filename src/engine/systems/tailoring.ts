@@ -127,6 +127,19 @@ export function shoeRow(person: Person, p: Sized, size?: string): ShoeRow | unde
   return chart.rows.find((row) => row[key] !== null && String(row[key]).trim().toUpperCase() === size.trim().toUpperCase());
 }
 
+/** A retailer's own chart for a garment, in a department (yours where given, else women's then men's), for the product page (from 2026-10-02). */
+export function chartFor(person: Person, p: Sized): import('../content/sizecharts').SizeChart | undefined {
+  const r = CLOTHING_RETAILERS.find((x) => x.id === p.retailer);
+  const group = p.slot === 'bottom' ? 'bottoms' : p.slot === 'top' || p.slot === 'outer' || p.slot === 'dress' || p.slot === 'active' ? 'tops' : undefined;
+  if (!r || !group) return undefined;
+  const departments = person.measures ? [person.measures.department] : (['women', 'men'] as const);
+  for (const d of departments) {
+    const chart = SIZE_CHARTS.find((c) => c.market === r.market && c.department === d && c.group === group && (c.retailer === r.name || c.retailer.startsWith(`${r.name} (`)));
+    if (chart) return chart;
+  }
+  return undefined;
+}
+
 /** Your size by a retailer's own chart, where you've given your measurements and it keeps one; nothing otherwise. */
 export function chartSize(person: Person, p: Sized, sizes: readonly string[]): string | undefined {
   const m = person.measures;

@@ -1,0 +1,460 @@
+{
+  "meta": {
+    "topic": "Selling a used car: time to sell, listing fees, private vs trade-in gap, transfer paperwork",
+    "markets": ["US", "CA", "GB", "IE", "MX"],
+    "dateRead": "2026-10-02",
+    "method": "WebSearch to locate, WebFetch (or curl with a browser user agent where WebFetch was refused) to read the publisher's own page. confirmed:true only where the figure or step was read on the publisher's own page. Search-engine summaries and third-party pages are recorded with confirmed:false and a note.",
+    "caveat": "Most published days-to-sell figures measure dealer stock, not private listings. Each entry says which."
+  },
+  "daysToSell": [
+    {
+      "market": "GB",
+      "source": "Autotrader (plc press release)",
+      "url": "https://plc.autotrader.co.uk/news-views/press-releases/familiar-favourite-practical-used-cars-set-the-pace-in-septembers-fastest-selling-rankings/",
+      "period": "September 2026 to date (release 21 Sep 2026)",
+      "measure": "Average days for retailer (dealer) stock to leave the forecourt",
+      "basis": "dealer",
+      "averageDays": 29,
+      "breakdown": [
+        { "segment": "MG HS, SUV, petrol hybrid (fastest)", "days": 16 },
+        { "segment": "Toyota Yaris, hatchback, petrol hybrid, 5-10 years", "days": 19 },
+        { "segment": "Kia Sportage, SUV, petrol hybrid", "days": 19 },
+        { "segment": "Used EVs aged 3-5 years", "days": 25 },
+        { "segment": "Petrol, mild hybrid and electric (fuel types, tied fastest)", "days": 28 },
+        { "segment": "Land Rover Range Rover Evoque, SUV, diesel, 10-15 years", "days": 40 },
+        { "segment": "Land Rover Range Rover Sport, SUV, diesel, 5-10 years", "days": 41 },
+        { "segment": "BMW 3 Series, saloon, diesel, 10-15 years (slowest)", "days": 53 }
+      ],
+      "confirmed": true,
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "GB",
+      "source": "Autotrader (via trade press and search summaries)",
+      "url": "https://cardealermagazine.co.uk/used-cars-selling-in-just-29-days-as-smaller-models-lead-autumn-demand/327590",
+      "period": "2026 monthly",
+      "measure": "Average days to sell, dealer forecourt",
+      "basis": "dealer",
+      "monthly": [
+        { "month": "2026-01", "days": 41 },
+        { "month": "2026-02", "days": 27 },
+        { "month": "2026-05", "days": 29 },
+        { "month": "2026-08", "days": 30 },
+        { "month": "2026-09", "days": 29 }
+      ],
+      "confirmed": false,
+      "note": "Only September (29) was read on Autotrader's own page. January, February, May and August figures came from search summaries of Autotrader releases and trade press; not read on plc.autotrader.co.uk.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "US",
+      "source": "Cox Automotive",
+      "url": "https://www.coxautoinc.com/insights/used-vehicle-inventory-august-2026/",
+      "period": "August 2026",
+      "measure": "Days' supply = dealer used inventory divided by estimated daily retail sales pace (franchised and independent dealers)",
+      "basis": "dealer days' supply (not time-to-sell for an individual car, not private)",
+      "averageDays": 44,
+      "breakdown": [
+        { "segment": "Listing price under $15,000", "days": 29 }
+      ],
+      "context": { "inventoryUnits": 2130000, "averageListingPriceUSD": 27239, "julyRevisedDays": 46 },
+      "confirmed": true,
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "US",
+      "source": "Cox Automotive",
+      "url": "https://www.coxautoinc.com/insights/used-vehicle-inventory-february-2026/",
+      "period": "February 2026",
+      "measure": "Dealer days' supply",
+      "basis": "dealer",
+      "averageDays": 42,
+      "breakdown": [
+        { "segment": "Listing price under $15,000", "days": 31 }
+      ],
+      "context": { "averageListingPriceUSD": 25287 },
+      "confirmed": true,
+      "note": "The page says the under-$15,000 figure is '9 days below the overall industry average', which does not match 42 - 31 = 11; recorded as published.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "US",
+      "source": "Cox Automotive (search summary of monthly releases)",
+      "url": "https://www.coxautoinc.com/insights/used-vehicle-inventory-march-2026/",
+      "period": "2026 monthly",
+      "measure": "Dealer days' supply",
+      "basis": "dealer",
+      "monthly": [
+        { "month": "2026-01", "days": 48 },
+        { "month": "2026-03", "days": 37, "note": "record low per Cox headline" },
+        { "month": "2026-04", "days": 43 },
+        { "month": "2026-05", "days": 45 },
+        { "month": "2026-06", "days": 47 },
+        { "month": "2026-07", "days": 46 }
+      ],
+      "confirmed": false,
+      "note": "From a search summary of the Cox monthly pages; only February and August were read on the page. July's 46 is confirmed as the revised figure on the August page.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "US",
+      "source": "iSeeCars",
+      "url": "https://www.iseecars.com/fastest-selling-cars-study",
+      "period": "February 2026",
+      "measure": "Average days a 1-5-year-old used car took to sell, from over 960,000 used-car sales in iSeeCars listings",
+      "basis": "dealer listings (page does not say private sellers are included)",
+      "averageDays": 53,
+      "comparison": { "february2025Days": 37.7, "changePct": 40.6 },
+      "confirmed": true,
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "US",
+      "source": "iSeeCars (search summary)",
+      "url": "https://www.iseecars.com/used-car-market-study",
+      "period": "Q1 2026",
+      "measure": "Average days to sell by drivetrain",
+      "basis": "dealer listings",
+      "breakdown": [
+        { "segment": "Gasoline", "days": 54.1 },
+        { "segment": "Hybrid", "days": 54.4 },
+        { "segment": "Non-Tesla EV", "days": 60.1 },
+        { "segment": "Tesla EV", "days": 32.4 }
+      ],
+      "confirmed": false,
+      "note": "Search summary only; page not read.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "CA",
+      "source": "AutoTrader.ca",
+      "url": "https://www.autotrader.ca/sell-my-car/marketplace/",
+      "period": "undated (page current 2026-10-02)",
+      "measure": "Average private sale duration",
+      "basis": "private",
+      "averageDays": 30,
+      "quote": "The average private sale takes approximately 30 days (varies by vehicle popularity, pricing and local buyer interest)",
+      "confirmed": true,
+      "note": "This is the only private-listing time-to-sell figure found on a publisher's own page in any market. Read via WebFetch summary; wording paraphrased by the fetch tool.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "MX",
+      "source": "Kavak (instant buyer, not private sale)",
+      "url": "https://www.kavak.com/mx/vender-mi-auto",
+      "period": "undated",
+      "measure": "Time to sell to Kavak",
+      "basis": "instant buyer",
+      "facts": [
+        "More than half of purchases are completed on the inspection day",
+        "Offer valid 7 days",
+        "Payment by bank transfer after signing the contract, taking 30 to 60 minutes"
+      ],
+      "confirmed": true,
+      "dateRead": "2026-10-02"
+    }
+  ],
+  "listingFees": [
+    {
+      "market": "US",
+      "platform": "Craigslist",
+      "url": "https://www.craigslist.org/about/help/posting_fees",
+      "fee": { "amount": 5, "currency": "USD", "per": "cars/trucks, RVs and motorcycles by-owner post" },
+      "scope": "US, plus Vancouver BC",
+      "duration": null,
+      "confirmed": true,
+      "note": "Duration (30 days) and repost-at-same-price came from search summaries, not the fees page.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "CA",
+      "platform": "Craigslist Vancouver",
+      "url": "https://www.craigslist.org/about/help/posting_fees",
+      "fee": { "amount": 5, "currency": "USD (as listed on the page)", "per": "vehicle by-owner post" },
+      "confirmed": true,
+      "note": "Page groups Vancouver BC with the US $5 fee; currency of the Vancouver charge not separately stated.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "US/CA/GB/IE/MX",
+      "platform": "Facebook Marketplace",
+      "url": null,
+      "fee": { "amount": 0, "per": "private vehicle listing" },
+      "confirmed": false,
+      "note": "Free per multiple third-party sources; no Meta help page was read stating vehicle listings are free.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "CA",
+      "platform": "AutoTrader.ca",
+      "url": "https://www.autotrader.ca/sell-my-car/marketplace/",
+      "fee": { "amount": 0, "currency": "CAD", "per": "private listing" },
+      "upgrades": "Optional paid 'super' or 'turbo' ads; prices not shown on the page",
+      "confirmed": true,
+      "note": "Third-party (cardog.app) says upgrades cost $49.95-$99.95 and the free listing runs 60 days; unconfirmed.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "CA",
+      "platform": "Kijiji",
+      "url": "https://help.kijiji.ca/volume-sellers/cars-vehicles-listing-fee",
+      "fee": { "amount": 0, "per": "owner ad within the free limit" },
+      "freeLimit": "2 ads at a time in Cars & Trucks and Classic Cars (search summary); Kijiji Autos says one free car ad at a time (search summary)",
+      "beyondLimit": "flat listing fee, 31-day period; amount not found",
+      "confirmed": false,
+      "note": "Kijiji help pages now redirect to community.kijiji.ca and returned 404; kijijiautos.ca did not resolve. Figures from search snippets of Kijiji's own pages.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "GB",
+      "platform": "Autotrader UK",
+      "url": "https://help.autotrader.co.uk/hc/en-gb/articles/9084202545437-How-much-is-it-to-advertise-with-Autotrader",
+      "structure": "Price depends on private vs trade, the vehicle's price band, and GB vs Northern Ireland. An 'until sold' package is available only for cars sold privately. The 'Ultimate' package lets the advert be rebooked free every 10 weeks (cars only).",
+      "confirmed": true,
+      "tiersUnconfirmed": [
+        { "band": "under £1,000", "Standard": 9.95, "Premium": 19.95 },
+        { "band": "£1,001-£10,000", "Basic": 36.95, "Standard": 46.95, "Premium": 58.95, "Ultimate": 74.95 },
+        { "band": "over £10,000", "Basic": 39.95, "Standard": 49.95, "Premium": 64.95 }
+      ],
+      "tierNote": "Tier prices (GBP) and durations (Basic 2 weeks, Standard 3 weeks, Premium 6 weeks) are from third-party guides via search; Autotrader's own price page (autotrader.co.uk/sell-my-car/advertising-prices) loads prices by script and could not be read. confirmed:false for the numbers.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "IE",
+      "platform": "DoneDeal",
+      "url": "https://hello.donedeal.ie/hc/en-us/articles/201381192-How-much-will-my-ad-cost-",
+      "tiers": [
+        { "name": "Basic", "amount": 0, "currency": "EUR", "durationDays": 72, "photos": 10 },
+        { "name": "Standard", "amount": 5.99, "currency": "EUR", "durationDays": 72, "photos": 15, "bumps": 4 },
+        { "name": "Premium", "amount": 12.99, "currency": "EUR", "durationDays": 72, "photos": 20, "bumps": 8, "spotlightDays": 5 }
+      ],
+      "confirmed": false,
+      "note": "From a search snippet of DoneDeal's help page, which returned 403 to both fetch methods. The page says cost varies by section; these may not be the Cars section prices. Boards.ie users reported about €28 for a car ad in Oct 2023, so the Cars section is likely priced differently.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "MX",
+      "platform": "Mercado Libre (Autos)",
+      "url": "https://www.mercadolibre.com.mx/l/vende-tu-auto",
+      "fee": { "amount": 0, "currency": "MXN", "commissionPct": 0, "per": "private car listing" },
+      "confirmed": false,
+      "note": "The page title is 'Vende tu auto gratis' and the search snippet says 0% commission; page returned 403 so the terms (duration, paid highlights) were not read.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "MX",
+      "platform": "Seminuevos.com",
+      "url": "https://www.seminuevos.com/landing",
+      "structure": "One-time-payment publication plans, chosen at listing; no commission on the sale",
+      "confirmed": false,
+      "note": "Plan names and MXN prices are not in the page source (loaded at checkout). No-commission claim from search summary.",
+      "dateRead": "2026-10-02"
+    }
+  ],
+  "privateVsTradeIn": [
+    {
+      "market": "GB",
+      "source": "Autotrader UK, citing the Money Advice Service",
+      "url": "https://www.autotrader.co.uk/content/advice/where-should-you-sell-your-car",
+      "finding": "Selling privately is often 10-15% more than selling to a dealer",
+      "privatePremiumPct": { "low": 10, "high": 15 },
+      "confirmed": true,
+      "note": "Autotrader's own page, but the figure is attributed to the Money Advice Service (now MoneyHelper); the original MAS page was not read.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "US",
+      "source": "Kelley Blue Book",
+      "url": "https://www.kbb.com/faq/values/",
+      "finding": "Private Party Value exceeds Trade-In Value because the dealer pays reconditioning, safety inspection and other costs of doing business. KBB Instant Cash Offer is a real offer valid 7 days, redeemable at participating dealers.",
+      "privatePremiumPct": null,
+      "instantOfferValidityDays": 7,
+      "confirmed": true,
+      "note": "KBB publishes no fixed percentage gap; the gap is per vehicle in its valuation tool.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "US",
+      "source": "Edmunds",
+      "url": "https://www.edmunds.com/appraisal/",
+      "finding": "Private-party value is always higher than trade-in; trade-in is always the lowest of the values. No fixed gap published.",
+      "confirmed": false,
+      "note": "Search summary of Edmunds pages; edmunds.com returned 403. Forum anecdotes ($1,500-$2,000 over trade) are not a published figure and are not used.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "MX",
+      "source": "Kavak",
+      "url": "https://www.kavak.com/mx/vender-mi-auto",
+      "finding": "Instant offer valid 7 days; paid by bank transfer 30-60 minutes after signing. No comparison with private sale price published.",
+      "confirmed": true,
+      "dateRead": "2026-10-02"
+    }
+  ],
+  "transfer": [
+    {
+      "market": "US",
+      "jurisdiction": "California",
+      "authority": "California DMV",
+      "url": "https://www.dmv.ca.gov/portal/vehicle-registration/titles/title-transfers-and-changes/notice-of-transfer-and-release-of-liability-nrl/",
+      "sellerSteps": [
+        "Notify DMV within 5 calendar days of selling or transferring title and delivering possession (CVC §5900)",
+        "File the Notice of Transfer and Release of Liability online, or mail form REG 138",
+        "Provide: plate number, last 5 of VIN, new owner's name and address, odometer reading, make/year/description, sale date, seller's name and address"
+      ],
+      "deadlineDays": 5,
+      "deadlineType": "calendar days, seller",
+      "fee": null,
+      "confirmed": true,
+      "note": "Page does not state a fee (search summaries say online filing is free) and does not address plates or smog in this section.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "US",
+      "jurisdiction": "New York",
+      "authority": "New York State DMV",
+      "url": "https://dmv.ny.gov/titles/buy-sell-or-transfer-vehicle-ownership",
+      "sellerSteps": [
+        "Complete and sign the transfer-of-ownership section of the title certificate",
+        "Sign a Vehicle Bill of Sale (MV-912), even for a gift; it must show year and make, VIN, date of sale, purchase price, names and signatures of buyer and seller",
+        "For a gift, mark price $0 and complete Section 6 of DTF-802",
+        "Remove plates and the registration sticker before the sale; turn plates in at a DMV office unless transferring them to another vehicle"
+      ],
+      "confirmed": true,
+      "note": "Plate step is from DMV search snippets of the same page set; the fetched page summary did not include it, so treat the plate step as confirmed:false.",
+      "buyer": "New owner registers and titles at a DMV office",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "US",
+      "jurisdiction": "Connecticut",
+      "authority": "Connecticut DMV",
+      "url": "https://portal.ct.gov/dmv/vehicle-services/sell-vehicle",
+      "sellerSteps": [
+        "Complete and sign the reverse of the certificate of title and give it to the new owner with a bill of sale (Form H-31)",
+        "Keep copies of the completed title and bill of sale",
+        "Remove plates and cancel the registration with DMV (online cancellation: print the receipt)",
+        "Keep liability insurance until the registration is cancelled",
+        "Vehicle stays subject to town property tax until the registration is cancelled; send the assessor the cancelled-plate receipt and bill of sale for a prorated bill"
+      ],
+      "confirmed": true,
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "CA",
+      "jurisdiction": "Ontario",
+      "authority": "Government of Ontario / ServiceOntario",
+      "url": "https://www.ontario.ca/page/buy-or-sell-used-vehicle-ontario",
+      "sellerSteps": [
+        "Give the buyer a Used Vehicle Information Package (UVIP), required under the Highway Traffic Act",
+        "Complete and sign the vehicle portion of the ownership permit and the Application for Transfer on its back",
+        "Give a signed bill of sale (names, buyer address, date, price, VIN, vehicle details); handwritten original accepted",
+        "Provide a Safety Standards Certificate if required",
+        "Keep the licence plates (plates travel with the driver)"
+      ],
+      "buyerDeadlineDays": 6,
+      "fees": [
+        { "item": "UVIP", "amount": 20, "currency": "CAD", "url": "https://www.ontario.ca/page/used-vehicle-information-package", "delivery": "online orders mailed within 5 business days plus up to 10 days delivery; same day in person at ServiceOntario" }
+      ],
+      "confirmed": true,
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "CA",
+      "jurisdiction": "British Columbia",
+      "authority": "ICBC",
+      "url": "https://icbc.com/vehicle-registration/sell-vehicle/Selling-a-used-vehicle",
+      "sellerSteps": [
+        "Remove licence plates",
+        "Tear off the bottom signed vehicle registration portion of the APV250 and give it to the buyer",
+        "Complete and sign all four pages of the Transfer/Tax Form (APV9T)",
+        "Take both to an Autoplan broker, ideally together with the buyer, so the seller's name and insurance are removed from the record",
+        "Cancel insurance or transfer it to a new vehicle"
+      ],
+      "buyerDeadlineDays": 10,
+      "confirmed": true,
+      "note": "Seller may display the plates on a substitute vehicle of the same class for up to 10 days (from ICBC search snippet, confirmed:false).",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "GB",
+      "jurisdiction": "England, Scotland, Wales (DVLA)",
+      "authority": "DVLA / GOV.UK",
+      "url": "https://www.gov.uk/sold-bought-vehicle",
+      "sellerSteps": [
+        "Tell DVLA online to change the registered keeper (service hours Mon-Fri 7am-9pm, Sat-Sun 7am-8pm); DVLA sends a log book to the new keeper",
+        "Cannot use online if the V5C was already posted or there is no log book",
+        "Without a log book, write to DVLA, Swansea SA99 1BA with seller name/address, registration, make and model, exact date of sale, and new keeper's name and address",
+        "Vehicle tax is cancelled on notification; refund for any full remaining months",
+        "Buyer must tax the vehicle (or SORN) before driving; tax does not transfer"
+      ],
+      "fee": null,
+      "confirmed": true,
+      "note": "Online service needs the 11-digit V5C reference (search summary). No statutory deadline or fee stated on the page.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "IE",
+      "jurisdiction": "Ireland",
+      "authority": "Department of Transport (NVDF), via Citizens Information and motortax.ie",
+      "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/buying-or-selling-a-vehicle/change-of-ownership/",
+      "sellerSteps": [
+        "Change of ownership must legally be registered; it is free of charge",
+        "Online (motortax.ie): seller enters the registration and VRC number; a one-time transfer PIN is emailed to the owner's NVDF email address",
+        "Seller shares the PIN with the buyer; it expires after 30 minutes",
+        "Buyer enters the PIN, logs in with verified MyGovID, accepts a declaration; a new VRC is posted to the buyer; date of sale is the date processed online",
+        "By post: seller and buyer both sign the change-of-ownership section on the back of the VRC; send to the Department of Transport (Vehicle Registration Unit, Shannon); about 2-5 days to process once received",
+        "Selling to a dealer: give the dealer the VRC; both complete Form RF105; approved dealers can notify online, otherwise seller posts RF105",
+        "Buyer can only tax the vehicle once the change is processed"
+      ],
+      "fee": { "amount": 0, "currency": "EUR" },
+      "confirmed": true,
+      "note": "Until the change is notified the seller stays the legal registered owner and is liable for fines (motortax/council pages, via search). Citizens Information is a State information body, not the Department itself.",
+      "dateRead": "2026-10-02"
+    },
+    {
+      "market": "MX",
+      "jurisdiction": "Ciudad de México",
+      "authority": "SEMOVI (Secretaría de Movilidad)",
+      "url": "https://www.cdmx.gob.mx/public/InformacionTramite.xhtml?idTramite=1935",
+      "steps": [
+        "Buyer (new owner) applies for cambio de propietario within 15 working days",
+        "Appointment through SEMOVI online system with a Llave CDMX account",
+        "Pay the línea de captura (concepto 36-7)",
+        "Requirements: valid official photo ID, CDMX proof of address, proof of tenencia/refrendo payments for the current and prior applicable years, tarjeta de circulación, document proving ownership (factura)"
+      ],
+      "fee": { "amount": 417, "currency": "MXN", "concept": "36-7" },
+      "deadline": "15 días hábiles",
+      "confirmed": false,
+      "note": "Both CDMX official pages (cdmx.gob.mx and semovi.cdmx.gob.mx) refused connection; all figures from search summaries of those pages and third-party guides (reported range $417-$433 MXN for 2026).",
+      "dateRead": "2026-10-02"
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "Any publisher-measured time-to-sell for PRIVATE listings in the US, UK, Ireland or Mexico. Autotrader UK, Cox and iSeeCars all measure dealer stock. Only AutoTrader.ca states an average private sale (about 30 days).",
+      "Autotrader UK's own private advert prices: the price page renders by script; tier prices recorded are third-party.",
+      "DoneDeal Cars-section ad price on DoneDeal's own page (403).",
+      "Kijiji paid listing fee amount beyond the free owner limit (help pages moved, 404).",
+      "Carzone private ad price (no source found).",
+      "Seminuevos.com plan names and MXN prices; Mercado Libre vehicle listing terms on its own page (403).",
+      "Days-to-sell for Canada (Kijiji), Ireland (DoneDeal/Carzone) or Mexico (Seminuevos/Mercado Libre) private listings.",
+      "A published percentage gap between private and trade-in/instant offer for the US, Canada, Ireland or Mexico. KBB and Edmunds publish values per vehicle only.",
+      "Carvana and CarMax offer terms (both returned 403). webuyanycar fee/gap not researched.",
+      "Facebook Marketplace: no Meta help page read confirming free vehicle listings.",
+      "Mexico: tenencia/adeudo rules for the seller on the official CDMX page (unreachable).",
+      "California: whether NRL filing has a fee and plate disposition (California plates normally stay with the vehicle) — not stated on the NRL page."
+    ],
+    "worthChecking": [
+      "Autotrader UK advertising-prices page in a real browser for the current GBP tier table and the 'until sold' package price.",
+      "DoneDeal Place Ad screen for the Cars section price (likely higher than the general €0/€5.99/€12.99 bundles).",
+      "MoneyHelper (successor to the Money Advice Service) for the original '10-15% more privately' claim.",
+      "Cox Automotive monthly pages for Jan, Mar-Jul 2026 to confirm days' supply figures.",
+      "semovi.cdmx.gob.mx and data.finanzas.cdmx.gob.mx (línea de captura 36-7) for the 2026 cambio de propietario fee, and whether a seller files an aviso de baja.",
+      "NY DMV plate surrender page and form for turning in plates (and FS-6T receipt) to confirm the plate step.",
+      "ICBC FAQ on the 10-day substitute-vehicle plate rule.",
+      "Kavak and Carvana/CarMax/webuyanycar published offer policies (validity, fees, payout timing) for the instant-offer option.",
+      "Northern Ireland: Autotrader prices differ by GB/NI; DVLA covers NI vehicles too but check."
+    ]
+  }
+}
