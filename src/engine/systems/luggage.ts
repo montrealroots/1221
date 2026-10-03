@@ -83,6 +83,24 @@ export function starterLuggage(sim: Simulation, person: Person): boolean {
   return true;
 }
 
+/**
+ * A bag bigger than a cabin takes (from 2026-10-03): a medium or a large
+ * suitcase, or one whose outside measure is past the 45 liters of the
+ * 22 × 14 × 9 inches America's airlines take in a cabin. It flies checked.
+ */
+export function checkedSize(bag: Item): boolean {
+  const piece = luggageById(bag.kind.slice('luggage:'.length));
+  if (piece) return piece.type === 'medium' || piece.type === 'large' || (piece.outsideL ?? 0) > CARRY_ON.holdsL;
+  return (bag.volumeL ?? 0) > CARRY_ON.holdsL;
+}
+
+/** Why a flight can't be booked with no bag checked, or nothing: the suitcase going is bigger than a cabin takes. */
+export function cabinBagRefusal(person: Person, bags: number): string | undefined {
+  const bag = suitcaseOf(person);
+  if (bags > 0 || !bag || !checkedSize(bag)) return undefined;
+  return `Your ${bag.label} is bigger than a cabin takes: it goes as a checked bag.`;
+}
+
 /** What's in the suitcase now. */
 export const packedIn = (person: Person, bag: Item): Item[] => itemsOf(person).filter((i) => i.at.kind === 'inside' && i.at.itemId === bag.id);
 

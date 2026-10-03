@@ -150,7 +150,7 @@ defineLook<Trip>('journey', {
       body: (
         <>
           <p className="small">
-            It goes by {spokenList(legs.filter((w, i) => legs.indexOf(w) === i))}, and it’s {STATUS_WORDS[j.status]}{j.rebooked ? ', put on a later flight when the first was canceled' : ''}.
+            It goes by {spokenList(legs.filter((w, i) => legs.indexOf(w) === i))}, and it’s {STATUS_WORDS[j.status]}{j.rebooked ? ', put on a later flight when the first was canceled' : ''}{j.missedConnections ? `, and put on the next flight when a late one missed ${j.missedConnections === 1 ? 'the connection' : `${j.missedConnections} connections`}` : ''}.
             {stay ? ` At the far end, ${stay}.` : ''} {cover}
           </p>
           <div className="col gap-1 small">

@@ -37,6 +37,14 @@ export const AIR = {
   taxiMinutes: 30,
   /** A connection's time between flights: SLATE's estimate. */
   connectionMinutes: 90,
+  /**
+   * The least time a connection takes (from 2026-10-03,
+   * `research-travel-2.json`): Air Canada's published minimums at Toronto
+   * Pearson, 50 minutes domestic to domestic and an hour otherwise, and at
+   * Vancouver, 40 and an hour. No other airport or airline's was read, so an
+   * hour, Air Canada's international figure, is SLATE's reading elsewhere.
+   */
+  minimumConnection: { YYZ: { domestic: 50, other: 60 }, YVR: { domestic: 40, other: 60 }, default: 60 } as Readonly<Record<string, { domestic: number; other: number } | number>>,
   /** A job's trip shorter than this isn't flown: New Haven to New York is a train. SLATE's estimate, until rail is kept. */
   shortestCareerFlightKm: 400,
   arriveBeforeDomesticMinutes: 120,
@@ -70,6 +78,12 @@ export const AIR = {
    */
   roundTripShare: 535 / (2 * 307),
 } as const;
+
+/** The least minutes a connection at an airport takes, domestic to domestic or otherwise. */
+export function minimumConnection(iata: string, domestic: boolean): number {
+  const at = AIR.minimumConnection[iata];
+  return typeof at === 'object' ? (domestic ? at.domestic : at.other) : (AIR.minimumConnection.default as number);
+}
 
 /** A one-way economy fare between two airports, and whose figure it is. */
 export function fareUsd(a: Airport, b: Airport): { usd: number; basis: string } {

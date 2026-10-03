@@ -31,11 +31,11 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES, distanceKm } from '../content/geography';
 import { expenseFor, inTheBank } from './household';
-import { AIR, fareUsd, groundLeg } from '../content/air';
+import { AIR, fareUsd, groundLeg, minimumConnection } from '../content/air';
 import { owe, payFromBank, spend } from './household';
 import { present } from './career';
 import { crossingRefusal, isoOfCity , mayDrive } from './documents';
-import { itinerary, tripAirportFor, type Airport } from './airports';
+import { airportByCode, itinerary, tripAirportFor, type Airport } from './airports';
 import { nightRateFor, ownPlaceIn, stayPrice, streetRefusal } from './stays';
 import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
@@ -50,7 +50,7 @@ import { stolenNow } from './theft';
 import { laidUp } from './repairs';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
-import { moveTo } from './luggage';
+import { cabinBagRefusal, moveTo } from './luggage';
 import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking, freeCancelUntil, roomReadyAt } from './hotels';
 import { claimCancellation } from './travelinsurance';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
@@ -88,6 +88,8 @@ export interface Journey {
   /** Minutes late on arrival, and whether a flight was canceled and rebooked. */
   lateMinutes?: number;
   rebooked?: boolean;
+  /** Connections missed for a late flight, and rebooked onto the next (from 2026-10-03). */
+  missedConnections?: number;
   /** Why it was missed, where it was. */
   why?: string;
   /** A round trip's two journeys share a trip, booked, paid and canceled together. */
@@ -294,20 +296,60 @@ export function refundRefusal(sim: Simulation, person: Person, journeyId: string
   return undefined;
 }
 
+/**
+ * A journey's flights, each late, canceled or on time: the minutes late at
+ * the far end, whether one was canceled and rebooked, and how many
+ * connections were missed (from 2026-10-03). A connection leaves on time
+ * whatever the flight before it did, so a late flight's minutes no longer
+ * add up across a connection, as they did until 2026-10-03: they're lost in
+ * the time between, unless they leave less than the airport's minimum
+ * connection (`minimumConnection`), when the connection is missed and the
+ * airline puts its passenger on the next flight, as it must on one ticket
+ * (the CAA's reading of 261's case law; America's carriers by contract),
+ * five hours on, SLATE's estimate of the next.
+ */
+export function flightsLate(legs: readonly JourneyLeg[], fates: readonly (number | null)[]): { late: number; rebooked: boolean; missed: number } {
+  let delay = 0;
+  let rebooked = false;
+  let missed = 0;
+  let prev: JourneyLeg | undefined;
+  let n = 0;
+  for (const leg of legs) {
+    if (leg.mode !== 'flight') continue;
+    if (prev) {
+      const country = (iata: string) => airportByCode(iata)?.country;
+      const domestic = country(prev.from) === country(leg.from) && country(leg.from) === country(leg.to);
+      const slack = (leg.departAt - prev.arriveAt) / 60_000 - minimumConnection(leg.from, domestic);
+      if (delay > slack) { missed += 1; delay = AIR.rebookHours * 60; } else delay = 0;
+    }
+    const fate: number | null = n < fates.length ? (fates[n] as number | null) : 0;
+    if (fate === null) { rebooked = true; delay += AIR.rebookHours * 60; } else delay += fate;
+    prev = leg;
+    n += 1;
+  }
+  return { late: delay, rebooked, missed };
+}
+
 /** Each flight's fate at the published rates: the minutes late in all, and whether one was canceled and rebooked. */
 function fly(sim: Simulation, person: Person, j: Journey): void {
   let late = 0;
   let rebooked = false;
+  const fates: (number | null)[] = [];
   for (const [n, leg] of j.legs.entries()) {
     const route = leg.mode === 'train' || leg.mode === 'bus' || leg.mode === 'ferry' ? railRouteById(leg.routeId) : undefined;
     if (route) { const fate = trainFateOf(sim, person, route, `${j.id}-${n}`); late += fate.late; if (fate.canceled) rebooked = true; continue; }
-    if (leg.mode !== 'flight') continue;
-    const fate = flightFate(sim, person, `${j.id}-${n}`);
-    if (fate === null) { rebooked = true; late += AIR.rebookHours * 60; } else late += fate;
+    if (leg.mode === 'flight') fates.push(flightFate(sim, person, `${j.id}-${n}`));
   }
+  const air = flightsLate(j.legs, fates);
+  late += air.late;
+  rebooked ||= air.rebooked;
   j.status = 'underway';
   j.lateMinutes = late;
   j.rebooked = rebooked;
+  if (air.missed > 0) {
+    j.missedConnections = air.missed;
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'personal', title: 'A Connection Missed', body: `A late flight missed the connection: you're on the next one, ${Math.round(late / 6) / 10} hours late into ${CITIES.require(j.toCity).name}.`, importance: 40, route: '/workspace/travel' });
+  }
   // Three hours or more late, the law the flight falls under may owe for it (`systems/compensation.ts`).
   const flown = j.legs.filter((l) => l.mode === 'flight');
   if (flown.length) claimDelay(sim, person, j, late, flown.reduce((a, l) => a + l.fare, 0));
@@ -480,6 +522,9 @@ export function registerJourneys(sim: Simulation): void {
     const bags = Math.max(0, Math.min(2, Number(p?.bags ?? 0)));
     const round = p?.returnDay !== undefined && p?.returnDay !== null;
     const by = p?.by && p.by !== 'air' ? String(p.by) : undefined;
+    // A suitcase bigger than a cabin takes is checked (from 2026-10-03).
+    const cabinNo = !by ? cabinBagRefusal(person, bags) : undefined;
+    if (cabinNo) throw new CommandError(cabinNo);
     // A cabin is the airlines': a train is booked as it comes.
     const cabin: Cabin = !by && p?.cabin === 'premium' ? 'premium' : 'economy';
     let out = planBy(s, by, fromCity, toCity, day, Number(p?.slot ?? 0), bags, cabin);
@@ -609,6 +654,29 @@ export function registerJourneys(sim: Simulation): void {
     back.total += q.travel;
     cancelKind(LEAVE_KIND, 'journeyId', back.id);
     s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(back.toCity).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((back.arriveAt - leaveAt) / 60_000), locationId: back.fromCity, payload: { personId: person.id, journeyId: back.id } });
+    return { total: q.total, leaveAt };
+  });
+
+  sim.onCommand<{ journeyId: string; day: Instant; slot?: number }, { total: Money; leaveAt: Instant }>('travel.change', (p, { sim: s }) => {
+    const person = s.player;
+    const q = changeQuote(s, person, String(p?.journeyId), Number(p?.day), Number(p?.slot ?? 0));
+    if (typeof q === 'string') throw new CommandError(q);
+    const j = journeysOf(person).find((x) => x.id === p.journeyId)!;
+    const where = CITIES.require(j.toCity).name;
+    if (q.total > 0 && !payFromBank(s, person, q.total, `The flight to ${where}, changed`, 'travel')) throw new CommandError(`${formatMoney(q.total, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (q.total < 0) s.post({ memo: `The flight to ${where}, changed: the difference back`, category: 'travel', postings: refundPostings(s, person, -q.total) });
+    const leaveAt = q.legs[0]!.departAt;
+    const arriveAt = q.legs[q.legs.length - 1]!.arriveAt;
+    if (j.hotel) j.hotel = { ...j.hotel, nights: q.nights, price: j.hotel.price + q.stay, checkOutAt: checkOutAfter(j.toCity, arriveAt, q.nights, checkOutHourOf(j.hotel.named?.hotelId)) };
+    if (j.let) { const lq = letQuote(s, j.toCity, q.nights) as { price: Money; fee: Money; basis: string }; j.let = { nights: q.nights, price: lq.price, fee: lq.fee, basis: lq.basis, checkOutAt: checkOutAfter(j.toCity, arriveAt, q.nights) }; }
+    const car = rentalsOf(person).find((r) => r.journeyId === j.id && (r.status === 'booked' || r.status === 'held'));
+    if (car) { car.pickupAt = arriveAt; car.days = rentalDays(arriveAt, car.returnAt); car.paid += q.rental; }
+    j.legs = q.legs;
+    j.leaveAt = leaveAt;
+    j.arriveAt = arriveAt;
+    j.total += q.travel + q.stay;
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === LEAVE_KIND && one.payload.journeyId === j.id) s.timeline.cancel(one.id, s.now);
+    s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${where}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: j.fromCity, payload: { personId: person.id, journeyId: j.id } });
     return { total: q.total, leaveAt };
   });
 
@@ -998,6 +1066,72 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
   let rental = 0;
   if (car) {
     const q = rentalQuote(sim, person, car.cityId, car.pickupAt, legs[0]!.departAt, true, car.waived === true, car.cls ?? 'small');
+    if (typeof q === 'string') return q;
+    rental = q.total - car.paid;
+  }
+  return { legs, travel, stay, rental, total: travel + stay + rental, nights };
+}
+
+/**
+ * Changing a flight out (the master plan's §47d–f, from 2026-10-03): a booked
+ * journey by air moved to another day or departure before it leaves, at its
+ * carrier's change fee (`changeFee`) and the fare's difference where the new
+ * one is dearer; a cheaper fare's credit stays with the airline, which SLATE
+ * doesn't keep, as with staying longer. The stay at the far end moves with
+ * it, its nights running from the new arrival to the way home where there is
+ * one, repriced at its own hotel, kind and plan, the difference paid or
+ * refunded; a prepaid room is non-refundable and isn't moved. A car rented at
+ * the airport is picked up at the new arrival, repriced. Anyone along is on a
+ * ticket of their own, so a journey with companions isn't moved, nor one whose
+ * insurance covers other dates.
+ */
+export interface Change { legs: JourneyLeg[]; travel: Money; stay: Money; rental: Money; total: Money; nights: number }
+
+export function changeQuote(sim: Simulation, person: Person, journeyId: string, day: Instant, slot: number): Change | string {
+  const j = journeysOf(person).find((x) => x.id === journeyId);
+  if (!j || j.status !== 'booked') return 'That isn’t a journey you have booked.';
+  if (j.by) return 'Only a flight is changed: anything else is canceled and booked again.';
+  if (j.bookingId) return 'A job’s journey is the production’s to change.';
+  const back = partnerOf(person, j);
+  if (back && back.leaveAt < j.leaveAt) return 'The way home is moved by staying longer.';
+  if ((j.companionIds?.length ?? 0) > 0 || j.companionId) return 'Everyone along has a ticket of their own on it.';
+  if (j.hotel?.plan === 'prepaid') return 'A prepaid room is non-refundable, so its nights can’t move.';
+  const fee = changeFee(sim, j.fromCity, j.toCity, j.leaveAt);
+  if (fee === undefined) return 'SLATE keeps no airline’s change fee for this flight, so it isn’t moved.';
+  const planned = planBy(sim, undefined, j.fromCity, j.toCity, day, slot, j.bags, j.cabin ?? 'economy');
+  if (typeof planned === 'string') return planned;
+  const legs = back ? asRoundTrip(planned) : planned;
+  const leave = legs[0]!.departAt;
+  const arrive = legs[legs.length - 1]!.arriveAt;
+  if (leave <= sim.now) return 'That departure has gone.';
+  if (leave === j.leaveAt) return 'It’s the flight you have.';
+  if (back && arrive >= back.leaveAt) return 'It would land after the way home leaves.';
+  if (j.insured && (leave < j.insured.from || arrive > j.insured.to)) return 'The trip’s insurance covers the dates it was bought for.';
+  const clash = clashWith(sim, person, leave, arrive, j.id);
+  if (clash) return `It runs into ${clash}.`;
+  if (journeysOf(person).some((x) => x.id !== j.id && x.id !== back?.id && (x.status === 'booked' || x.status === 'underway') && x.leaveAt < arrive && x.arriveAt > leave)) return 'It runs into another journey you’ve booked.';
+  const travel = fee + Math.max(0, total(legs) - total(j.legs));
+  let nights = j.hotel?.nights ?? j.let?.nights ?? 0;
+  let stay = 0;
+  if (j.hotel || j.let) {
+    if (back) nights = nightsBetween(j.toCity, arrive, back.leaveAt);
+    if (nights < 1) return 'It would leave no night there.';
+    if (j.let) {
+      const q = letQuote(sim, j.toCity, nights);
+      if (typeof q === 'string') return q;
+      stay = q.price - j.let.price;
+    } else {
+      const h = j.hotel!;
+      const per = h.parking ? Math.round(h.parking / h.nights) : 0;
+      const q = h.named ? namedStayQuote(sim, h.named.hotelId, h.named.room, h.plan ?? 'flexible', arrive, nights) : stayPrice(sim, j.toCity, nights, 1, h.cls ?? 'hotel', h.plan ?? 'flexible', residentOf(person, j.toCity), arrive);
+      if (!q) return 'The stay can’t move to those nights.';
+      stay = q.price + per * nights - h.price;
+    }
+  }
+  const car = rentalsOf(person).find((r) => r.journeyId === j.id && (r.status === 'booked' || r.status === 'held'));
+  let rental = 0;
+  if (car) {
+    const q = rentalQuote(sim, person, car.cityId, arrive, car.returnAt, true, car.waived === true, car.cls ?? 'small');
     if (typeof q === 'string') return q;
     rental = q.total - car.paid;
   }
