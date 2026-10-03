@@ -180,7 +180,9 @@ for (const file of FILES) {
 // SLATE's retailers (Spanx's own site, Converse's, a marketplace's third party) is left out, as is a product read
 // only at a sale price, its regular price unread.
 const GAPS = 'docs/research/world/research-clothing-gaps.json';
-const SUBTYPE_WORN = { swimwear: ['active', 'swimsuit'], shapewear: ['underwear', 'underwear'], slips: ['underwear', 'slip'], hosiery: ['socks', 'socks'] };
+const SUBTYPE_WORN = { swimwear: ['active', 'swimsuit'], shapewear: ['underwear', 'underwear'], slips: ['base', 'slip'], hosiery: ['socks', 'socks'] };
+// Thermals: long underwear, worn under the rest, as a base layer; socks and a pajama set are what they are.
+const thermalWorn = (name) => (/socks|calcet/i.test(name) ? ['socks', 'socks'] : /pijama/i.test(name) ? ['sleep', 'pajamas'] : /leggings|tights|pantal|bottoms?/i.test(name) ? ['base', 'thermal-bottom'] : ['base', 'thermal-top']);
 // Spanish garment words a Mexican listing names its garment by.
 const SPANISH = [[/\b(pijamas?)\b/i, 'sleep', 'pajamas'], [/\b(pantal[oó]n(es)?|mallas?)\b/i, 'bottom', 'trousers'], [/\b(camisetas?|playeras?)\b/i, 'top', 't-shirt'], [/\b(su[eé]ter|chamarra)\b/i, 'top', 'sweater']];
 function sellerOf(name, market) {
@@ -212,7 +214,7 @@ if (existsSync(GAPS)) {
   for (const s of g.subtypes ?? []) {
     for (const p of s.products ?? []) {
       const retailer = sellerOf(p.retailer ?? s.retailer, s.market);
-      addGap(p, s.market, retailer, { category: s.subtype, subcategory: p.kind ?? s.subtype, subtype: s.subtype, worn: SUBTYPE_WORN[s.subtype], confirmed: s.confirmed });
+      addGap(p, s.market, retailer, { category: s.subtype, subcategory: p.kind ?? s.subtype, subtype: s.subtype, worn: s.subtype === 'thermals' ? thermalWorn(p.name) : SUBTYPE_WORN[s.subtype], confirmed: s.confirmed });
     }
   }
   // The same product: a seller already in the catalog is tied by its listing's id; one that isn't is added.

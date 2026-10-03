@@ -89,7 +89,7 @@ export function chosenMissing(sim: Simulation, person: Person, at: Instant = sim
  * every pair of jeans at once: all four wanted washing in the same days, and
  * clean outfits fell from three to none overnight.
  */
-const freshest = (a: Item & { garment: Garment }, b: Item & { garment: Garment }) => b.garment.wears - a.garment.wears || a.garment.washes - b.garment.washes || a.id.localeCompare(b.id);
+const freshest = (a: Item & { garment: Garment }, b: Item & { garment: Garment }): number => b.garment.wears - a.garment.wears || a.garment.washes - b.garment.washes || a.id.localeCompare(b.id);
 
 /** The day's outfit, or nothing where no whole outfit is to hand and clean. */
 export function outfitFor(sim: Simulation, person: Person, at: Instant = sim.now): (Item & { garment: Garment })[] | undefined {
@@ -108,7 +108,10 @@ export function outfitFor(sim: Simulation, person: Person, at: Instant = sim.now
   const outer = pick('outer');
   // And the jewelry, watches, belts and bags chosen with it, as many as they like (from 2026-10-02).
   const extras = chosen.filter((g) => g.garment.slot === 'accessory');
-  return [suit, dress, top, bottom, under, socks, shoes, ...(chosen.some((g) => g.garment.slot === 'outer') && outer ? [outer] : []), ...extras].filter((g): g is Item & { garment: Garment } => Boolean(g));
+  // Layers chosen with it (from 2026-10-03): a base layer under, and a sweater over the top.
+  const base = chosen.filter((g) => g.garment.slot === 'base');
+  const over = top ? chosen.find((g) => g.garment.slot === 'top' && g.id !== top.id) : undefined;
+  return [...base, suit, dress, top, over, bottom, under, socks, shoes, ...(chosen.some((g) => g.garment.slot === 'outer') && outer ? [outer] : []), ...extras].filter((g): g is Item & { garment: Garment } => Boolean(g));
 }
 
 /**

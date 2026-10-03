@@ -12,7 +12,7 @@ import type { Item } from './items';
 export interface ItemFacets { kind: string; color?: string; size?: string; condition: string; state?: string }
 
 const SLOT_KIND: Readonly<Record<Slot, string>> = {
-  top: 'Tops', bottom: 'Bottoms', dress: 'Dresses', suit: 'Suits', outer: 'Coats And Jackets', underwear: 'Underwear', socks: 'Socks',
+  top: 'Tops', bottom: 'Bottoms', dress: 'Dresses', suit: 'Suits', outer: 'Coats And Jackets', underwear: 'Underwear', base: 'Base Layers', socks: 'Socks',
   shoes: 'Shoes', sleep: 'Sleepwear', active: 'Activewear', accessory: 'Accessories', towel: 'Towels',
 };
 

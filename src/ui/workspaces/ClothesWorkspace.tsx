@@ -27,6 +27,7 @@ import { resaleOf, sellRefusal } from '@/engine/systems/resale';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
 import { groupLabelOf } from '@/ui/shell/destinations';
+import { cloOf } from '@/engine/content/clo';
 import { buyRefusal, otherSellers, collectRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
@@ -137,6 +138,9 @@ function WhatToWear() {
   const [picked, setPicked] = useState<Partial<Record<Slot, string>>>({});
   const extras = ready.filter((g) => g.garment.slot === 'accessory');
   const [jewels, setJewels] = useState<string[]>(() => (person.dressed ?? []).filter((id) => extras.some((g) => g.id === id)));
+  // Layers: a base layer under, a sweater over the top (from 2026-10-03).
+  const layerable = ready.filter((g) => g.garment.slot === 'base' || g.garment.kind === 'sweater');
+  const [layers, setLayers] = useState<string[]>(() => (person.dressed ?? []).filter((id) => ready.some((g) => g.id === id && g.garment.slot === 'base')));
   const [name, setName] = useState('');
   const dress = useFeature('clothes.dress');
   const save = useFeature('clothes.save_outfit');
@@ -145,7 +149,8 @@ function WhatToWear() {
   const slots = (Object.keys(SLOT_LABEL) as Slot[]).filter((slot) => ready.some((g) => g.garment.slot === slot));
   // The choice for each part: what they picked, else what the day would put on.
   const choice = (slot: Slot) => picked[slot] ?? ready.find((g) => g.garment.slot === slot && today.includes(g.id))?.id ?? '';
-  const ids = [...slots.map(choice).filter(Boolean), ...jewels.filter((id) => extras.some((g) => g.id === id))];
+  const ids = [...slots.map(choice).filter(Boolean), ...layers.filter((id) => layerable.some((g) => g.id === id) && !slots.map(choice).includes(id)), ...jewels.filter((id) => extras.some((g) => g.id === id))];
+  const warmth = Math.round(ids.reduce((a, id) => { const g = ready.find((x) => x.id === id); return a + (g ? cloOf(g.garment.kind, g.garment.slot, g.label) : 0); }, 0) * 100) / 100;
   return (
     <Panel title="What To Wear" subtitle="Your choice is worn while it’s clean and to hand; whatever it leaves out, what’s already on the go, then the least washed">
       <LookRegion className="col gap-3">
@@ -168,6 +173,20 @@ function WhatToWear() {
             </div>
           </div>
         )}
+        {layerable.length > 0 && (
+          <fieldset className="col gap-1" style={{ border: 0, padding: 0, margin: 0 }}>
+            <legend className="small muted" style={{ padding: 0 }}>Layers, Under And Over</legend>
+            <div className="row gap-3" style={{ flexWrap: 'wrap' }}>
+              {layerable.map((g) => (
+                <label key={g.id} className="row gap-1 small">
+                  <input type="checkbox" checked={layers.includes(g.id)} onChange={(e) => setLayers(e.target.checked ? [...layers, g.id] : layers.filter((id) => id !== g.id))} />
+                  {named(g)}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        )}
+        <p className="small muted" style={{ margin: 0 }}>{`Warmth: ${warmth} clo, ASHRAE’s measured garments summed. Below 10 °C, it decides how long you can be out.`}</p>
         {extras.length > 0 && (
           <fieldset className="col gap-1" style={{ border: 0, padding: 0, margin: 0 }}>
             <legend className="small muted" style={{ padding: 0 }}>Jewelry, Watches And Accessories</legend>

@@ -19,10 +19,10 @@ const give = (sim: Simulation, kind: string, slot: 'active' | 'top') => addItem(
 describe('the kinds the trade names apart', () => {
   it('are on sale where they were read, and filtered by', () => {
     for (const market of ['US', 'GB', 'CA', 'MX'] as const) expect(CLOTHING_PRODUCTS.some((p) => p.market === market && p.subtype === 'swimwear' && p.kind === 'swimsuit' && p.slot === 'active')).toBe(true);
-    expect(CLOTHING_PRODUCTS.filter((p) => p.subtype === 'slips').every((p) => p.slot === 'underwear' && p.kind === 'slip')).toBe(true);
+    expect(CLOTHING_PRODUCTS.filter((p) => p.subtype === 'slips').every((p) => p.slot === 'base' && p.kind === 'slip')).toBe(true);
     expect(CLOTHING_PRODUCTS.filter((p) => p.subtype === 'hosiery').every((p) => p.slot === 'socks')).toBe(true);
     // A Mexican listing named in Spanish is the garment it names.
-    expect(CLOTHING_PRODUCTS.find((p) => p.name === 'Pantalón térmico para hombre')!.slot).toBe('bottom');
+    expect(CLOTHING_PRODUCTS.find((p) => p.name === 'Pantalón térmico para hombre')!.slot).toBe('base');
     expect(CLOTHING_PRODUCTS.find((p) => p.name.startsWith('Conjunto pijama'))!.slot).toBe('sleep');
     const sim = life('uk-eng-london', 'kinds-gb');
     const entries = clothingCatalog(sim, 'uk-eng-london');

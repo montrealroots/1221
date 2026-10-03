@@ -45,7 +45,7 @@ import { payFromBank } from './household';
 
 export const CARRY_ON = { label: 'Carry-On Suitcase', holdsL: 45 } as const;
 /** A week's clothes, by part. SLATE's estimate. */
-export const PACK: Readonly<Partial<Record<Slot, number>>> = { top: 7, bottom: 3, underwear: 7, socks: 7, shoes: 1, outer: 1, dress: 2, suit: 1, active: 2 };
+export const PACK: Readonly<Partial<Record<Slot, number>>> = { base: 2, top: 7, bottom: 3, underwear: 7, socks: 7, shoes: 1, outer: 1, dress: 2, suit: 1, active: 2 };
 
 const isLuggage = (i: Item) => i.kind.startsWith('luggage:');
 /** The bag that goes away: the one chosen, or the first owned. */

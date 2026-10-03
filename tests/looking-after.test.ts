@@ -145,7 +145,9 @@ describe('looking after yourself', () => {
       }
       const a = trained.player.wellbeing;
       const b = idle.player.wellbeing;
-      expect(a.fitness - b.fitness).toBeGreaterThan(30);
+      // From 2026-10-03 the cold no longer keeps a run indoors where it's dressed for (`coldRefusal`): this life, in
+      // Iceland, runs most days, and a run's injuries cost it workouts. Until then the gap here was over 30.
+      expect(a.fitness - b.fitness).toBeGreaterThan(15);
       // Condition follows what the fitness supports (`mendsTo`): the trained
       // body at its higher mark, the idle one sliding 2% a day toward its lower.
       // Until 2026-09-27 the idle one slid toward 74 and the gap here was five.

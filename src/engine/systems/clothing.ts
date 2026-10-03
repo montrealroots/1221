@@ -487,15 +487,29 @@ export function collectCleaning(sim: Simulation, person: Person): number {
 /** Why these garments can't be an outfit, or nothing: theirs, to hand, and one to a slot. */
 export function outfitRefusal(sim: Simulation, person: Person, itemIds: readonly string[]): string | undefined {
   const seen = new Set<Slot>();
+  const baseKinds = new Set<string>();
+  const tops: string[] = [];
   for (const id of itemIds) {
     const item = itemById(person, id);
     if (!item?.garment) return 'That isn’t one of your clothes.';
     if (!reachable(sim, person, item.at)) return `${item.label} isn’t to hand.`;
     const slot = item.garment.slot;
     if (slot === 'accessory') continue;
+    // Layers (from 2026-10-03): base layers of different kinds, and a sweater over a top.
+    if (slot === 'base') {
+      if (baseKinds.has(item.garment.kind)) return 'One base layer of a kind.';
+      baseKinds.add(item.garment.kind);
+      continue;
+    }
+    if (slot === 'top') {
+      tops.push(item.garment.kind);
+      if (tops.length > 2 || (tops.length === 2 && tops.filter((k) => k === 'sweater').length !== 1)) return 'A sweater goes over a top; two of the rest don’t layer.';
+      continue;
+    }
     if (seen.has(slot)) return 'One garment to a part of an outfit.';
     seen.add(slot);
   }
+  if (tops.length > 0) seen.add('top');
   if (seen.has('suit') && (seen.has('dress') || seen.has('top') || seen.has('bottom'))) return 'A suit is worn on its own, with what goes under it.';
   if (seen.has('dress') && (seen.has('top') || seen.has('bottom'))) return 'A dress is worn on its own.';
   return undefined;

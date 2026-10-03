@@ -9,8 +9,11 @@
  * that drives a day is blended from the days around it.
  *
  * A thunderstorm called off an outdoor shift here until 2026-09-26, and an
- * exterior shoot day before that. Both systems went; the sky decides nothing
- * now but what it shows.
+ * exterior shoot day before that. Both systems went, and for a while the sky
+ * decided nothing but what it showed. Since then it has: rain, heat and a
+ * cold pool stop time spent outside (`systems/dwelling.ts`), and from
+ * 2026-10-03 the cold is weighed against what's worn, by ISO 11079
+ * (`systems/coldstress.ts`).
  */
 
 import type { Simulation } from '../core/simulation';
