@@ -35,8 +35,8 @@ import { payFromBank } from './household';
 import { contactsOf } from './people';
 import { homeKeyOf } from './items';
 
-export interface MailHold { service: string; home: string; from: Instant; until: Instant; releaseAt: Instant; parcels: boolean; paid: Money }
-export interface SitterStay { home: string; from: Instant; until: Instant; paid: Money }
+export interface MailHold { service: string; home: string; from: Instant; until: Instant; releaseAt: Instant; parcels: boolean }
+export interface SitterStay { home: string; from: Instant; until: Instant }
 
 /** Scheduled deliveries a hold has put back carry this in their payload. */
 export const HELD = 'heldByPost';
@@ -121,7 +121,7 @@ export const sitterFee = (sim: Simulation, person: Person, nights: number): Mone
 };
 
 export function registerAway(sim: Simulation): void {
-  sim.onCommand<{ days: number }, MailHold>('home.hold_mail', (p, { sim: s }) => {
+  sim.onCommand<{ days: number }, MailHold & { paid: Money }>('home.hold_mail', (p, { sim: s }) => {
     const person = s.player;
     const days = Number(p?.days);
     const no = holdRefusal(s, person, days);
@@ -129,8 +129,8 @@ export function registerAway(sim: Simulation): void {
     const rule = holdRuleFor(person)!;
     const q = holdQuote(s, person, days)!;
     if (q.fee > 0 && !payFromBank(s, person, q.fee, rule.service, 'household')) throw new CommandError(`${formatMoney(q.fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    person.mailHold = { service: rule.service, home: homeKeyOf(person.home)!, from: q.from, until: q.until, releaseAt: q.releaseAt, parcels: rule.parcels, paid: q.fee };
-    return person.mailHold;
+    person.mailHold = { service: rule.service, home: homeKeyOf(person.home)!, from: q.from, until: q.until, releaseAt: q.releaseAt, parcels: rule.parcels };
+    return { ...person.mailHold, paid: q.fee };
   });
   sim.onCommand<Record<string, never>, { releaseAt: Instant }>('home.end_hold', (_p, { sim: s }) => {
     const person = s.player;
@@ -148,15 +148,15 @@ export function registerAway(sim: Simulation): void {
     }
     return { releaseAt: h.releaseAt };
   });
-  sim.onCommand<{ nights: number }, SitterStay>('home.sitter', (p, { sim: s }) => {
+  sim.onCommand<{ nights: number }, SitterStay & { paid: Money }>('home.sitter', (p, { sim: s }) => {
     const person = s.player;
     const nights = Number(p?.nights);
     const no = sitterRefusal(person, nights, s.now);
     if (no) throw new CommandError(no);
     const fee = sitterFee(s, person, nights);
     if (!payFromBank(s, person, fee, 'A house sitter', 'household')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    person.sitter = { home: homeKeyOf(person.home)!, from: s.now, until: s.now + nights * MS_DAY, paid: fee };
-    return person.sitter;
+    person.sitter = { home: homeKeyOf(person.home)!, from: s.now, until: s.now + nights * MS_DAY };
+    return { ...person.sitter, paid: fee };
   });
   sim.onCommand<Record<string, never>, { ended: true }>('home.end_sitter', (_p, { sim: s }) => {
     const person = s.player;

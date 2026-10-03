@@ -38,7 +38,7 @@ import { modelById, sellRefusal, sellVehicle, valueOf, vehiclesOf, type OwnedVeh
 import { payFromBank } from './household';
 import { stolenNow } from './theft';
 
-export interface Listing { platform: string; at: Instant; sellsAt: Instant; fee: Money }
+export interface Listing { platform: string; sellsAt: Instant }
 
 export const PRIVATE_SALE_KIND = 'vehicle.private_sale';
 /** Days a private listing takes to sell: AutoTrader.ca's average. */
@@ -111,16 +111,16 @@ export function registerCarSale(sim: Simulation): void {
     const v = vehiclesOf(person).find((x) => x.id === p.vehicleId)!;
     return { value: sellVehicle(s, person, v, dealerOffer(s, v), `Sold the ${nameOf(v)} to a dealer`) };
   });
-  sim.onCommand<{ vehicleId: string }, Listing>('vehicle.list', (p, { sim: s }) => {
+  sim.onCommand<{ vehicleId: string }, Listing & { fee: Money }>('vehicle.list', (p, { sim: s }) => {
     const person = s.player;
     const no = listRefusal(s, person, String(p?.vehicleId));
     if (no) throw new CommandError(no);
     const v = vehiclesOf(person).find((x) => x.id === p.vehicleId)!;
     const q = listingQuote(s, v)!;
     if (q.fee > 0 && !payFromBank(s, person, q.fee, `${q.platform}, the ${nameOf(v)} listed`, 'vehicle')) throw new CommandError(`${formatMoney(q.fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    v.listed = { platform: q.platform, at: s.now, sellsAt: s.now + PRIVATE_DAYS * MS_DAY, fee: q.fee };
+    v.listed = { platform: q.platform, sellsAt: s.now + PRIVATE_DAYS * MS_DAY };
     s.schedule({ at: v.listed.sellsAt, kind: PRIVATE_SALE_KIND, label: `A Buyer For The ${nameOf(v)}`, category: 'vehicle', priority: 40, payload: { personId: person.id, vehicleId: v.id } });
-    return v.listed;
+    return { ...v.listed, fee: q.fee };
   });
   sim.onCommand<{ vehicleId: string }, { ended: true }>('vehicle.unlist', (p, { sim: s }) => {
     const v = vehiclesOf(s.player).find((x) => x.id === p?.vehicleId && x.soldAt === undefined);

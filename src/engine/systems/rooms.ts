@@ -51,9 +51,9 @@ export const BUILT_IN: ReadonlySet<Spot> = new Set(['wardrobe', 'drawers', 'stor
 /** A flatmate's morning shower: when it may start, from 6:30 for two hours, and REU2016's 7.8 minutes. */
 export const MORNING = { fromMinute: 6 * 60 + 30, spanMinutes: 120, showerMinutes: 7.8 } as const;
 
-export interface Rooms { bedrooms: number; floorM2: number; closetL: number; flatmates: number }
+export interface Rooms { floorM2: number; closetL: number; flatmates: number }
 
-/** The home they live in as rooms: bedrooms, their floor, built-in storage and who shares the bathroom. */
+/** The home they live in as rooms: the floor, built-in storage by its bedrooms, and who shares the bathroom. */
 export function roomsOf(sim: Simulation, person: Person): Rooms | undefined {
   const home = person.home;
   const place = homePlace(sim, person);
@@ -61,10 +61,10 @@ export function roomsOf(sim: Simulation, person: Person): Rooms | undefined {
   const owned = livingIn(person);
   const bedrooms = place.type === 'studio' ? 0 : owned?.facts.beds ?? home.unit?.beds ?? 1;
   if (home.kind === 'shared') {
-    return { bedrooms: 1, floorM2: NDSS.doubleM2, closetL: NDSS.storageM2[0]! * NDSS.ceilingM * 1_000, flatmates: Math.max(0, (home.unit?.beds ?? 2) - 1) };
+    return { floorM2: NDSS.doubleM2, closetL: NDSS.storageM2[0]! * NDSS.ceilingM * 1_000, flatmates: Math.max(0, (home.unit?.beds ?? 2) - 1) };
   }
   const storage = NDSS.storageM2[Math.min(NDSS.storageM2.length - 1, Math.max(1, bedrooms))]!;
-  return { bedrooms, floorM2: place.size * SQFT_M2, closetL: storage * NDSS.ceilingM * 1_000, flatmates: 0 };
+  return { floorM2: place.size * SQFT_M2, closetL: storage * NDSS.ceilingM * 1_000, flatmates: 0 };
 }
 
 /** A piece's footprint, m². */

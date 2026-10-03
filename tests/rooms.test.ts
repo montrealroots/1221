@@ -29,7 +29,7 @@ describe('the rooms', () => {
   it('are a let room’s 11.5 m² in a flat-share, or the home’s own size; built-in storage by bedrooms', () => {
     const sim = life('us-ny-newyork', 'rooms-of');
     flatShare(sim);
-    expect(roomsOf(sim, sim.player)).toEqual({ bedrooms: 1, floorM2: 11.5, closetL: 1.0 * 2.3 * 1_000, flatmates: 2 });
+    expect(roomsOf(sim, sim.player)).toEqual({ floorM2: 11.5, closetL: 1.0 * 2.3 * 1_000, flatmates: 2 });
     ownFlat(sim, 650, 2);
     const r = roomsOf(sim, sim.player)!;
     expect(r.floorM2).toBeCloseTo(650 * 0.092903, 6);
