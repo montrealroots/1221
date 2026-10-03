@@ -23,10 +23,18 @@
  * - **Dublin**: Carthy Pawnbrokers' 3% a month; jewelry redeemable a year
  *   and seven days under the Pawnbrokers Act 1964, then sold at auction and
  *   the surplus the borrower's.
+ * - **Mexico City**, from 2026-10-03 (`research-watches-pawn-parking.json`):
+ *   Nacional Monte de Piedad's own rates sheet (August 2025, the one its
+ *   home page links): its average loan, 89% of its appraisal on gold
+ *   jewelry and 64% on a watch, the appraisal taken as the piece's
+ *   second-hand worth, SLATE's reading; the middle of its standard 3.96% to
+ *   6.89% a month; five months, then sold, the surplus the borrower's.
+ * - **Vancouver**, from 2026-10-03: CCE Pawn on Granville Street, three
+ *   months, its 5% a month above C$1,000 and 10% below held to the Criminal
+ *   Code's ceilings since 2025 (48% a year under C$1,000, 35% above), the
+ *   page predating them; then the pawnbroker's, no surplus read.
  * Rates are the law's ceilings in America, which SLATE reads as what a
- * pawnbroker charges. Mexico's Monte de Piedad lends a share of its own
- * appraisal, which no source gives for SLATE's pieces, and British Columbia
- * has no rules since 2002, so neither pawns here.
+ * pawnbroker charges.
  *
  * **The loan** is 37.5% of what the piece would sell for second-hand where
  * you are (`systems/resale.ts`): the middle of the National Pawnbrokers
@@ -50,6 +58,8 @@ export interface PawnTerms {
   holdDays: number;
   /** Whether a sale's surplus is paid to the borrower, above a loan of so many units. */
   surplusAbove?: number;
+  /** The lender's own share of the worth it lends, a watch's and jewelry's, where it publishes one (from 2026-10-03). */
+  share?: { watch: number; jewelry: number };
 }
 
 /** The NPA's 15% to 60% of resale value, its middle. */
@@ -67,4 +77,6 @@ export const PAWN_TERMS: readonly PawnTerms[] = [
   { cityId: 'ca-on-toronto', lender: 'A Toronto Pawnbroker', currency: 'CAD', monthly: (l) => (l < 1000 ? 48 : 35) / 12, holdDays: 365 },
   { cityId: 'uk-eng-london', lender: 'H&T Pawnbrokers', currency: 'GBP', monthly: (l) => H_AND_T.find(([upTo]) => l <= upTo)![1], daily: { minDays: 28 }, holdDays: 183 + 30, surplusAbove: 75 },
   { cityId: 'ie-lei-dublin', lender: 'Carthy Pawnbrokers', currency: 'EUR', monthly: () => 3, holdDays: 372, surplusAbove: 0 },
+  { cityId: 'mx-cmx-mexicocity', lender: 'Nacional Monte de Piedad', currency: 'MXN', monthly: () => (3.96 + 6.89) / 2, holdDays: Math.round(5 * 365.25 / 12), surplusAbove: 0, share: { watch: 0.64, jewelry: 0.89 } },
+  { cityId: 'ca-bc-vancouver', lender: 'CCE Pawn', currency: 'CAD', monthly: (l) => Math.min(l < 1000 ? 10 : 5, (l < 1000 ? 48 : 35) / 12), holdDays: Math.round(3 * 365.25 / 12) },
 ];

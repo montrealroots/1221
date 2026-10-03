@@ -314,6 +314,8 @@ export interface Person {
   /** What's marked favorite, by list (`systems/catalog.ts`, from 2026-10-03). */
   favorites?: Record<string, string[]>;
   /** The water or gas cut off at home, from when to when (`systems/utilities.ts`, from 2026-10-03). */
+  /** Pieces of jewelry commissioned and not yet ready (`systems/commissions.ts`, from 2026-10-03). */
+  commissions?: import('../systems/commissions').Commission[];
   supplyCuts?: { water?: import('../systems/utilities').SupplyCut; gas?: import('../systems/utilities').SupplyCut };
   /** How often they shave at home, chosen (`systems/hygiene.ts`, from 2026-10-03); not at all where unset. */
   shaves?: import('../systems/hygiene').ShaveEvery;

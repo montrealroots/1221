@@ -30,7 +30,8 @@ import { coveredInside } from './dwelling';
 
 const VALUABLE = new Set(CLOTHING_PRODUCTS.filter((p) => p.category === 'jewelry' || p.category === 'watches').map((p) => p.id));
 
-export const isValuable = (item: Item): boolean => VALUABLE.has(item.kind);
+/** A catalog's jewelry or watch, or a piece made to order (`systems/commissions.ts`, from 2026-10-03). */
+export const isValuable = (item: Item): boolean => VALUABLE.has(item.kind) || item.kind.startsWith('bespoke:');
 export const isSafe = (item: Item): boolean => item.kind.startsWith('safe:');
 export const valuablesOf = (person: Person): Item[] => itemsOf(person).filter(isValuable);
 export const safeById = (id: string): Safe | undefined => SAFES.find((s) => s.id === id);

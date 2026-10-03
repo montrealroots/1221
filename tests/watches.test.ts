@@ -11,7 +11,7 @@ import { CLOTHING_PRODUCTS } from '@/engine/content/clothingcatalog';
 import { BATTERY_YEARS } from '@/engine/content/watchbatteries';
 import { addItem, homeKeyOf, type Item } from '@/engine/systems/items';
 import { unwearable, type Garment } from '@/engine/systems/wardrobe';
-import { batteryOptions, batteryRefusal, batteryRunsOut, stopped } from '@/engine/systems/watches';
+import { batteryOptions, batteryRefusal, batteryRunsOut, makerServiceOf, servicePrice, stopped } from '@/engine/systems/watches';
 import { inSaveMoney } from '@/engine/systems/banking';
 
 const TIMEX = 'us-timex-weekender-37mm-fabric-strap-watch';
@@ -65,5 +65,33 @@ describe('a watch’s battery', () => {
     const t = watch(to, LONGINES);
     expect(batteryOptions(to, to.player, t)[0]!.price).toBe(inSaveMoney(to, Math.round(50 * 1.13 * 100), 'CAD'));
     expect(batteryRefusal(to, to.player, 'none', 'longines-canada')).toBe('Only a quartz watch whose maker gives its battery’s life is changed here.');
+  });
+});
+
+describe('a mechanical watch’s service, and the PRX’s battery', () => {
+  const GENTLEMAN = 'gb-selfridges-tissot-gentleman-38mm-stainless-steel-automatic-watch';
+  const PRX = 'mx-liverpool-mx-reloj-prx-para-hombre-t1374101104100';
+  const named = (sim: Simulation, kind: string) => { const w = watch(sim, kind); w.label = CLOTHING_PRODUCTS.find((p) => p.id === kind)!.name; return w; };
+
+  it('stops past Tissot’s four and a half years until serviced at its price, away three weeks', () => {
+    const sim = life('uk-eng-london', 'watch-service');
+    const w = named(sim, GENTLEMAN);
+    expect(stopped(w, sim.now + 4.4 * YEAR)).toBe(false);
+    expect(stopped(w, sim.now + 4.6 * YEAR)).toBe(true);
+    expect(servicePrice(sim, sim.player, w)).toBe(inSaveMoney(sim, 175_00, 'GBP'));
+    const r = sim.must<{ paid: number; back: number }>({ kind: 'watch.service', payload: { itemId: w.id } });
+    expect(r.back - sim.now).toBe(21 * MS_DAY);
+    expect(stopped(w, r.back + 4.4 * YEAR)).toBe(false);
+    // A quartz watch has no service here, and a Seiko automatic isn't counted.
+    const quartz = named(sim, LONGINES);
+    expect(sim.execute({ kind: 'watch.service', payload: { itemId: quartz.id } }).error).toMatch(/^Only a mechanical watch/);
+    expect(makerServiceOf(named(sim, 'gb-john-lewis-seiko-srpd59k1-mens-5-sports-automatic-day-date-bracelet-strap-watch-silvero'))).toBeUndefined();
+  });
+
+  it('runs a PRX on its movement maker’s battery life, changed at Tissot’s own price', () => {
+    const sim = life('mx-cmx-mexicocity', 'watch-prx');
+    const w = named(sim, PRX);
+    expect(batteryRunsOut(w)! - w.acquiredAt).toBeCloseTo(6.75 * YEAR, -3);
+    expect(batteryOptions(sim, sim.player, w)[0]!.price).toBe(inSaveMoney(sim, 1_300_00, 'MXN'));
   });
 });

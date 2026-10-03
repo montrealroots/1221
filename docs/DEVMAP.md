@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-323 commands; 317 named by a test, 6 not.
+326 commands; 320 named by a test, 6 not.
 
 ## aircraft
 
@@ -349,6 +349,13 @@ Each command the player can run: the engine file that handles it, the screens th
 | `items.give` | `src/engine/systems/gifts.ts` | `BelongingsWorkspace.tsx` | `gifts.test.ts` | Rent And A Roof |
 | `items.move` | `src/engine/systems/items.ts` | `BelongingsWorkspace.tsx` | `items.test.ts` `luggage.test.ts` | Rent And A Roof |
 
+## jewelry
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `jewelry.commission` | `src/engine/systems/commissions.ts` | `BelongingsWorkspace.tsx` | `commissions.test.ts` | Rent And A Roof |
+| `jewelry.engrave` | `src/engine/systems/commissions.ts` | `BelongingsWorkspace.tsx` | `commissions.test.ts` | Rent And A Roof |
+
 ## land
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
@@ -559,6 +566,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `watch.battery` | `src/engine/systems/watches.ts` | `BelongingsWorkspace.tsx` | `watches.test.ts` | Rent And A Roof |
+| `watch.service` | `src/engine/systems/watches.ts` | `BelongingsWorkspace.tsx` | `watches.test.ts` | Rent And A Roof |
 
 ## world
 

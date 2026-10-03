@@ -72,7 +72,9 @@ export const owedOn = (sim: Simulation, p: Pawn, at: Instant = sim.now): Money =
 export function pledgeQuote(sim: Simulation, person: Person, itemIds: readonly string[]): { loan: Money; loanUnits: number; worth: Money } {
   const t = pawnTermsIn(person.currentLocationId)!;
   const worth = itemIds.reduce((a, id) => a + secondHandWorth(person.currentLocationId, itemById(person, id)!), 0);
-  const loanUnits = Math.round(toUnits(sim, Math.round(worth * PAWN_SHARE), t.currency) * 100) / 100;
+  // The lender's own share where it publishes one, a watch's or jewelry's; else the NPA's middle.
+  const lent = itemIds.reduce((a, id) => { const item = itemById(person, id)!; const share = t.share ? (/watch|reloj/i.test(item.label) ? t.share.watch : t.share.jewelry) : PAWN_SHARE; return a + Math.round(secondHandWorth(person.currentLocationId, item) * share); }, 0);
+  const loanUnits = Math.round(toUnits(sim, lent, t.currency) * 100) / 100;
   return { loan: toSave(sim, loanUnits, t.currency), loanUnits, worth };
 }
 

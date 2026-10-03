@@ -14,13 +14,15 @@ import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
 import { bagsOf, buyLuggageRefusal, luggageCatalog, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
+import { CITIES } from '@/engine/content/geography';
+import { ENGRAVERS, JEWELERS, METAL_LABEL, PIECE_LABEL, commissionMoney, commissionRefusal, commissionsOf, jewelersFor, type Metal, type PieceKind } from '@/engine/systems/commissions';
 import { cheapestPlanFor, finished, placeIn, programmeRefusal, programmesHere } from '@/engine/systems/programmes';
 import { consolesHere, consolesOwned, gamesHere, gamesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, claimQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { orderStage, ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
 import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
-import { batteryOptions, batteryRefusal, batteryYears, stopped } from '@/engine/systems/watches';
+import { batteryOptions, batteryRefusal, batteryYears, makerServiceOf, serviceDue, servicePrice, stopped } from '@/engine/systems/watches';
 import { owedOn, pawnTermsIn, pawnsOf, pledgeQuote, pledgeRefusal } from '@/engine/systems/pawn';
 import { lockedAway, safeCatalog, safesAtHome, scheduleRefusal, scheduledPremium, valuablesOf } from '@/engine/systems/valuables';
 import { contactsOf } from '@/engine/systems/people';
@@ -105,6 +107,7 @@ export function BelongingsWorkspace() {
         <WatchingAndPlaying />
         <Reading />
         <Valuables />
+        <Commissions />
         {items.length > 0 && (
           <Panel title="Each Thing">
             <div className="field-row" style={{ marginBottom: '0.75rem' }}>
@@ -231,6 +234,7 @@ function Valuables() {
   const pledge = useFeature('pawn.pledge');
   const redeem = useFeature('pawn.redeem');
   const battery = useFeature('watch.battery');
+  const service = useFeature('watch.service');
   const broker = pawnTermsIn(person.currentLocationId);
   const pledges = pawnsOf(person);
   const cur = saveCurrency(sim.universe);
@@ -260,7 +264,7 @@ function Valuables() {
                       <td>{i.scheduled
                         ? <button type="button" className="btn btn-sm btn-ghost" disabled={!sched.open} title={`${formatMoney(scheduledPremium(i), cur)} a month`} onClick={() => { if (run('valuables.schedule', { itemId: i.id, on: false }).ok) toast(`${i.label}, no longer scheduled.`, 'positive'); }}>Unschedule It</button>
                         : <button type="button" className="btn btn-sm btn-ghost" disabled={!sched.open || Boolean(noSched)} title={noSched ?? `${formatMoney(scheduledPremium(i), cur)} a month, paid in full without a deductible`} onClick={() => { if (run('valuables.schedule', { itemId: i.id, on: true }).ok) toast(`${i.label}, scheduled.`, 'positive'); }}>Schedule It</button>}</td>
-                      <td>{batteryYears(i) !== undefined && (() => { const opt = batteryOptions(sim, person, i)[0]; const no = opt ? batteryRefusal(sim, person, i.id, opt.service.id) : 'No battery change is published where you are.'; return <button type="button" className="btn btn-sm btn-ghost" disabled={!battery.open || Boolean(no)} title={no ?? `${opt!.service.name}, back in a week`} onClick={() => { if (run('watch.battery', { itemId: i.id, serviceId: opt!.service.id }).ok) toast(`${i.label}, away for its battery.`, 'positive'); }}>{opt ? `Change The Battery, ${formatMoney(opt.price, cur)}` : 'Change The Battery'}</button>; })()}</td>
+                      <td>{makerServiceOf(i) && (() => { const price = servicePrice(sim, person, i); const due = serviceDue(i)!; return <button type="button" className="btn btn-sm btn-ghost" disabled={!service.open || price === undefined} title={price === undefined ? 'Its maker prices no service where you are.' : service.reason ?? `Due ${formatDate(due, sim.zone)}; away three weeks`} onClick={() => { if (run('watch.service', { itemId: i.id }).ok) toast(`${i.label}, off to be serviced.`, 'positive'); }}>{price === undefined ? 'Have It Serviced' : `Have It Serviced, ${formatMoney(price, cur, { cents: false })}`}</button>; })()}{batteryYears(i) !== undefined && (() => { const opt = batteryOptions(sim, person, i)[0]; const no = opt ? batteryRefusal(sim, person, i.id, opt.service.id) : 'No battery change is published where you are.'; return <button type="button" className="btn btn-sm btn-ghost" disabled={!battery.open || Boolean(no)} title={no ?? `${opt!.service.name}, back in a week`} onClick={() => { if (run('watch.battery', { itemId: i.id, serviceId: opt!.service.id }).ok) toast(`${i.label}, away for its battery.`, 'positive'); }}>{opt ? `Change The Battery, ${formatMoney(opt.price, cur)}` : 'Change The Battery'}</button>; })()}</td>
                       {broker && (() => { const no = pledgeRefusal(sim, person, [i.id]); return <td><button type="button" className="btn btn-sm btn-ghost" disabled={!pledge.open || Boolean(no)} title={no ?? `A loan of ${formatMoney(pledgeQuote(sim, person, [i.id]).loan, cur)} from ${broker.lender}`} onClick={() => { if (run('pawn.pledge', { itemIds: [i.id] }).ok) toast(`${i.label}, pledged.`, 'positive'); }}>Pawn It</button></td>; })()}
                     </tr>
                   );
@@ -302,6 +306,72 @@ function Valuables() {
 }
 
 /** Bags: the ones owned, which goes away, and the ones on sale where you live, cheapest first (`systems/luggage.ts`). */
+/** A piece made to order by a named jeweler where you live, and words engraved on one (`systems/commissions.ts`). */
+function Commissions() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const order = useFeature('jewelry.commission');
+  const engrave = useFeature('jewelry.engrave');
+  const jewelers = jewelersFor(person);
+  const [jewelerId, setJewelerId] = useState('');
+  const [kind, setKind] = useState<PieceKind>('ring');
+  const [metal, setMetal] = useState<Metal>('gold');
+  const [price, setPrice] = useState('');
+  const [pieceId, setPieceId] = useState('');
+  const [words, setWords] = useState('');
+  const pieces = valuablesOf(person).filter((i) => i.at.kind !== 'service');
+  const engraver = ENGRAVERS.find((e) => e.country === CITIES.get(person.currentLocationId)?.countryId);
+  const pending = commissionsOf(person);
+  if (jewelers.length === 0 && !engraver && pending.length === 0) return null;
+  const j = jewelers.find((x) => x.id === jewelerId) ?? jewelers[0];
+  const least = j?.from(kind, metal);
+  const units = Number(price) || least || 0;
+  const no = j ? commissionRefusal(person, j.id, kind, metal, units) : undefined;
+  const piece = pieces.find((i) => i.id === pieceId) ?? pieces[0];
+  const cur = saveCurrency(sim.universe);
+  return (
+    <Panel title="Made To Order" subtitle="A named jeweler’s commission at the price you set, from its own least, and words engraved at a jeweler’s posted price">
+      <div className="col gap-2">
+        {pending.map((c) => <div key={c.id} className="small">{`${METAL_LABEL[c.metal]} ${PIECE_LABEL[c.kind]}, ${JEWELERS.find((x) => x.id === c.jewelerId)?.name}: ready ${formatDate(c.readyAt, sim.zone)}, ${formatMoney(commissionMoney(sim, c), cur, { cents: false })}`}</div>)}
+        {j && (
+          <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+            <div className="field" style={{ margin: 0 }}>
+              <label htmlFor="commission-jeweler">Jeweler</label>
+              <select id="commission-jeweler" value={j.id} onChange={(e) => setJewelerId(e.target.value)}>{jewelers.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}</select>
+            </div>
+            <div className="field" style={{ margin: 0 }}>
+              <label htmlFor="commission-kind">Piece</label>
+              <select id="commission-kind" value={kind} onChange={(e) => setKind(e.target.value as PieceKind)}>{(Object.keys(PIECE_LABEL) as PieceKind[]).map((k) => <option key={k} value={k}>{PIECE_LABEL[k]}</option>)}</select>
+            </div>
+            <div className="field" style={{ margin: 0 }}>
+              <label htmlFor="commission-metal">Metal</label>
+              <select id="commission-metal" value={metal} onChange={(e) => setMetal(e.target.value as Metal)}>{(Object.keys(METAL_LABEL) as Metal[]).map((m) => <option key={m} value={m}>{METAL_LABEL[m]}</option>)}</select>
+            </div>
+            <div className="field" style={{ margin: 0 }}>
+              <label htmlFor="commission-price">{`Your Price, ${j.currency}`}</label>
+              <input id="commission-price" inputMode="numeric" value={price} placeholder={least !== undefined ? String(least) : ''} onChange={(e) => setPrice(e.target.value)} style={{ width: '8rem' }} />
+            </div>
+            <button type="button" className="btn btn-sm btn-ghost" disabled={!order.open || Boolean(no)} title={no ?? order.reason} onClick={() => { const r = run<{ readyAt: number }>('jewelry.commission', { jewelerId: j.id, kind, metal, price: units }); if (r.ok) toast(`Commissioned from ${j.name}, ready ${formatDate(r.value!.readyAt, sim.zone)}.`, 'positive'); }}>Commission It</button>
+          </div>
+        )}
+        {engraver && piece && (
+          <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+            <div className="field" style={{ margin: 0 }}>
+              <label htmlFor="engrave-piece">Piece To Engrave</label>
+              <select id="engrave-piece" value={piece.id} onChange={(e) => setPieceId(e.target.value)}>{pieces.map((i) => <option key={i.id} value={i.id}>{i.label}{i.engraved ? ` (“${i.engraved}”)` : ''}</option>)}</select>
+            </div>
+            <div className="field" style={{ margin: 0 }}>
+              <label htmlFor="engrave-words">Words</label>
+              <input id="engrave-words" value={words} onChange={(e) => setWords(e.target.value)} style={{ width: '12rem' }} />
+            </div>
+            <button type="button" className="btn btn-sm btn-ghost" disabled={!engrave.open || !words.trim()} title={engrave.reason ?? `${engraver.name}’s posted price`} onClick={() => { if (run('jewelry.engrave', { itemId: piece.id, words }).ok) { toast('Engraved.', 'positive'); setWords(''); } }}>Engrave It</button>
+          </div>
+        )}
+      </div>
+    </Panel>
+  );
+}
+
 function Luggage() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
