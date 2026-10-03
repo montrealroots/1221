@@ -37,7 +37,8 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { MS_DAY, formatDate, instantFromZoned, normalDate, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, addYears, formatDate, instantFromZoned, normalDate, zonedParts, type Instant } from '../core/time';
+import { afterBusinessDays } from '../content/bankdays';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { UNION_HEALTH, rateOn } from '../content/career';
@@ -66,7 +67,11 @@ import { markRecord } from './credit';
 
 export const HEALTH_MONTH_KIND = 'health.month';
 /** A chronic condition: treated or not, its care unpaid this month, type 1 where diabetes, and its medicine's supply (from 2026-10-02). */
-export interface Chronic { treated: boolean; lapsed?: boolean; typeOne?: boolean; supplyUntil?: Instant }
+export interface Chronic {
+  treated: boolean; lapsed?: boolean; typeOne?: boolean; supplyUntil?: Instant;
+  /** When its prescription was written or last renewed, and a repeat ordered from the GP and when it's ready (`RX`, from 2026-10-03). */
+  prescribedAt?: Instant; orderedReadyAt?: Instant;
+}
 export const HEALTH_WEEK_KIND = 'health.week';
 export const BILL_KIND = 'health.bill';
 
@@ -530,10 +535,22 @@ export const keptUp = (state: Chronic | undefined, at: Instant): boolean => Bool
  * America, the extended supply plans offer, at three fills' share, SLATE's
  * reading; 100 in Ontario, the Drug Benefit's most. Refilled with a week left
  * where they live; away past it, the condition goes untreated until home.
+ *
+ * **The prescription** (from 2026-10-03; `research-alterations-refills.json`).
+ * In England a repeat is ordered from the GP, up to 5 working days before it's
+ * needed (nhs.uk), so it's ordered with two weeks left and collected once
+ * ready, when they're home. In British Columbia a prescription is good for two
+ * years from when it was written (the College of Pharmacists); past that it
+ * isn't filled until a doctor's visit renews it, booked as any other visit.
+ * America's states read set no expiry on a medicine that isn't controlled,
+ * and Ontario's are good unless the prescriber says otherwise, so none there.
  */
+export const RX = { orderLeadWorkingDays: 5, orderWithDays: 14, validYears: { 'ca-bc': 2 } as Readonly<Record<string, number>>, renewal: 'A prescription to renew' } as const;
 export const FILL = { england: 28, us: 30, other: 30, holiday: { england: 56, us: 90, 'ca-on': 100 } as Readonly<Record<string, number>>, refillDays: 7 } as const;
 
-const fillKey = (person: Person): string => { const c = CITIES.get(homeOf(person)); return c?.parentId === 'uk-eng' ? 'england' : c?.countryId === 'us' ? 'us' : c?.parentId === 'ca-on' ? 'ca-on' : 'other'; };
+/** The province or nation a home is in, from its town's id ('ca-on-toronto' is 'ca-on'). Until 2026-10-03 Ontario was looked for as a parent region 'ca-on', which the atlas calls 'ca-08', so its 100-day supply before a trip never applied. */
+const regionOf = (person: Person): string => homeOf(person).split('-').slice(0, 2).join('-');
+const fillKey = (person: Person): string => { const r = regionOf(person); return r === 'uk-eng' ? 'england' : r.startsWith('us-') ? 'us' : r === 'ca-on' ? 'ca-on' : 'other'; };
 export const fillDaysOf = (person: Person): number => { const k = fillKey(person); return k === 'england' ? FILL.england : k === 'us' ? FILL.us : FILL.other; };
 export const longestFillOf = (person: Person): number => FILL.holiday[fillKey(person)] ?? fillDaysOf(person);
 
@@ -544,6 +561,18 @@ export function medicineShareOf(person: Person, condition: Condition, state: Chr
   return rxShareOf(person, false, at, cur);
 }
 
+
+/** When a condition's prescription runs out where they live, or never. */
+export function rxValidUntil(person: Person, state: Chronic): Instant | undefined {
+  const years = RX.validYears[regionOf(person)];
+  return years === undefined || state.prescribedAt === undefined ? undefined : addYears(state.prescribedAt, years, CITIES.require(homeOf(person)).timeZone);
+}
+
+/** A doctor's visit kept renews every prescription. */
+export function renewPrescriptions(person: Person, at: Instant): void {
+  for (const state of Object.values(healthOf(person).chronic ?? {}) as Chronic[]) if (state.treated) state.prescribedAt = at;
+}
+
 /** Fills each treated condition's medicine that's within a week of running out, or for so many days before a trip; what was paid. */
 export function fillMedicine(sim: Simulation, person: Person, at: Instant, days?: number): Money {
   const cur = saveCurrency(sim.universe);
@@ -552,7 +581,19 @@ export function fillMedicine(sim: Simulation, person: Person, at: Instant, days?
   for (const [condition, state] of Object.entries(healthOf(person).chronic ?? {}) as [Condition, Chronic][]) {
     if (!state.treated) continue;
     const left = state.supplyUntil === undefined ? 0 : (state.supplyUntil - at) / MS_DAY;
-    if (days === undefined && left > FILL.refillDays) continue;
+    // A prescription past its good-until isn't filled; the doctor's visit to renew it is booked.
+    state.prescribedAt ??= at;
+    const validUntil = rxValidUntil(person, state);
+    if (validUntil !== undefined && at >= validUntil) { renewalDue(sim, person, condition); continue; }
+    if (days === undefined && state.supplyUntil !== undefined && fillKey(person) === 'england') {
+      // A repeat ordered from the GP with two weeks left, collected once it's ready; the first is filled at once.
+      if (state.orderedReadyAt === undefined) {
+        if (left <= RX.orderWithDays) state.orderedReadyAt = afterBusinessDays(at, RX.orderLeadWorkingDays, 'uk', CITIES.require(homeOf(person)).timeZone);
+        continue;
+      }
+      if (at < state.orderedReadyAt) continue;
+      delete state.orderedReadyAt;
+    } else if (days === undefined && left > FILL.refillDays) continue;
     const want = days ?? usual;
     // England charges an item once, whatever it supplies; elsewhere a fill's share for each usual fill it covers.
     const cost = medicineShareOf(person, condition, state, at, cur) * (fillKey(person) === 'england' ? 1 : Math.ceil(want / usual));
@@ -561,6 +602,14 @@ export function fillMedicine(sim: Simulation, person: Person, at: Instant, days?
     paid += cost;
   }
   return paid;
+}
+
+/** A prescription run out: the doctor's visit to renew it booked, once, and said. */
+function renewalDue(sim: Simulation, person: Person, condition: Condition): void {
+  const h = healthOf(person);
+  if (appointmentsOf(person).length || h.owedVisit) return;
+  if (!book(sim, person, RX.renewal)) h.owedVisit = RX.renewal;
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Prescription Ran Out', body: `The prescription for your ${CONDITION_LABEL[condition].toLowerCase()} medicine is past its date. It’s filled again once a doctor renews it.`, importance: 60, route: '/workspace/papers' });
 }
 
 /** Their medical debt, if any: what bills they couldn't pay. */
