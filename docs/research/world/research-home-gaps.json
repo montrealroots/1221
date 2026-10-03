@@ -1,0 +1,476 @@
+{
+  "title": "Home routines: shaving, makeup, hair, cleaning consumables, hobbies, rented bathrooms",
+  "researchedOn": "2026-10-03",
+  "markets": ["US (New York, Los Angeles, New Haven CT)", "UK (London)", "Ireland (Dublin)", "Canada (Toronto, Vancouver)", "Mexico (Mexico City)"],
+  "conventions": {
+    "confirmed": "true only when the figure was read on the publisher's own page, PDF, data file or API (or a verbatim copy cited); false when it came only from a search summary or a third-party page.",
+    "noOwnEstimates": "No figure here is computed by the researcher. Where a share or per-item figure would need division of two published numbers, both published numbers are given and the division is left to the consumer.",
+    "chartReads": "Where a value was read from a chart's data labels in a PDF (INEGI ENUT 2024), that is said in the note."
+  },
+  "sources": {
+    "EPA_EFH17": {
+      "title": "Exposure Factors Handbook: 2011 Edition, Chapter 17 - Consumer Products",
+      "publisher": "U.S. Environmental Protection Agency",
+      "date": "September 2011 (file posted 2025-01)",
+      "url": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf"
+    },
+    "SCCS_NoG12": {
+      "title": "The SCCS Notes of Guidance for the Testing of Cosmetic Ingredients and their Safety Evaluation, 12th Revision (SCCS/1647/22, Corrigendum 2)",
+      "publisher": "European Commission, Scientific Committee on Consumer Safety",
+      "date": "adopted 2023-05-15; corrigendum 2 2023-12-21",
+      "url": "https://health.ec.europa.eu/system/files/2023-12/sccs_o_273_final.pdf",
+      "note": "Table 3A (p.28), Table 3B (p.29), Table 4 (p.29-30). Values for the items used here are identical to the 11th revision (SCCS/1628/21)."
+    },
+    "RIVM_Cosmetics_2006": {
+      "title": "Cosmetics Fact Sheet: To assess the risks for the consumer. Updated version for ConsExpo 4 (RIVM report 320104001/2006), Bremmer, Prud'homme de Lodder, van Engelen",
+      "publisher": "RIVM (National Institute for Public Health and the Environment, Netherlands)",
+      "date": "2006",
+      "url": "https://www.rivm.nl/bibliotheek/rapporten/320104001.pdf"
+    }
+  },
+  "shaving": [
+    {
+      "item": "Razor cartridge life, Gillette 5-blade (Fusion5, ProGlide)",
+      "value": 20, "unit": "shaves (recommended replacement point)",
+      "quote": "5-Blade Razors (such as our Fusion5 and ProGlide ranges) are recommended to be replaced after about 20 shaves",
+      "source": "How Often Should You Change Razor Blades", "publisher": "Gillette (Procter & Gamble), US site",
+      "url": "https://gillette.com/en-us/shaving-tips/how-to-shave/how-often-should-you-change-your-razor",
+      "date": "2026-03-25", "confirmed": true
+    },
+    {
+      "item": "Razor cartridge life, Gillette 3-blade (Mach3)",
+      "value": 15, "unit": "shaves",
+      "quote": "3-Blade Razors (such as our Mach3 range) recommended replacing the blades after around 15 shaves",
+      "source": "How Often Should You Change Razor Blades", "publisher": "Gillette, US site",
+      "url": "https://gillette.com/en-us/shaving-tips/how-to-shave/how-often-should-you-change-your-razor",
+      "date": "2026-03-25", "confirmed": true
+    },
+    {
+      "item": "Gillette general guidance by shaving frequency",
+      "value": "most people every 5-10 shaves; daily shavers about once a week; occasional shavers every 10-12 shaves; weekly shavers 15-20 shaves",
+      "unit": "shaves / interval",
+      "source": "How Often Should You Change Razor Blades", "publisher": "Gillette, US site",
+      "url": "https://gillette.com/en-us/shaving-tips/how-to-shave/how-often-should-you-change-your-razor",
+      "date": "2026-03-25", "confirmed": true
+    },
+    {
+      "item": "Gillette UK: 5-blade 20 shaves, 3-blade around 15 shaves; handle can last up to 5 years",
+      "value": {"fiveBladeShaves": 20, "threeBladeShaves": 15, "handleYears": 5},
+      "unit": "shaves; years",
+      "source": "How Often Should You Change Your Razor Blades", "publisher": "Gillette UK",
+      "url": "https://www.gillette.co.uk/blog/shaving-science/how-often-should-you-change-your-razor/",
+      "date": null, "confirmed": true
+    },
+    {
+      "item": "Schick Hydro cartridge life",
+      "value": 18, "unit": "shaves (up to)",
+      "quote": "Compatible Schick Hydro cartridges provide up to 18 shaves per cartridge.",
+      "source": "Help & FAQ", "publisher": "Schick (Edgewell)",
+      "url": "https://www.schick.com/pages/help-faq", "date": null, "confirmed": true
+    },
+    {
+      "item": "Dollar Shave Club cartridge replacement",
+      "value": "a fresh blade each week", "unit": "interval",
+      "quote": "Everyone's shaving needs are different, but we recommend switching to a fresh blade each week.",
+      "source": "How many shaves will I get from one cartridge?", "publisher": "Dollar Shave Club",
+      "url": "https://ask.dollarshaveclub.com/en-US/how-many-shaves-will-i-get-from-one-cartridge-193210",
+      "date": null, "confirmed": true
+    },
+    {
+      "item": "Harry's blade replacement",
+      "value": "6-8", "unit": "shaves",
+      "quote": "replace their blades once every 6-8 shaves or simply once they become dull",
+      "source": "How often should I change my blades?", "publisher": "Harry's",
+      "url": "https://harrys.gorgias.help/en-US/how-often-should-i-change-my-blades-1052238",
+      "date": null, "confirmed": true
+    },
+    {
+      "item": "Harry's Plus blade life",
+      "value": 21, "unit": "shaves (up to, at three shaves a week)",
+      "source": "search summary of Harry's product copy", "publisher": "Harry's",
+      "url": "https://www.harrys.com/en/products/harrys-plus-blade-refills",
+      "date": null, "confirmed": false,
+      "note": "The product page as fetched did not show the claim; it showed Harry's Plus refills at $3.75/ea (4), $3.13/ea (8), $2.81/ea (16)."
+    },
+    {
+      "item": "Harry's Plus blade refill prices, US",
+      "value": {"pack4PerBladeUSD": 3.75, "pack8PerBladeUSD": 3.13, "pack16PerBladeUSD": 2.81},
+      "unit": "USD per blade",
+      "source": "Harry's Plus Blade Refills", "publisher": "Harry's",
+      "url": "https://www.harrys.com/en/products/harrys-plus-blade-refills", "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "item": "Shaving cream amount per application (RIVM default)",
+      "value": 2, "unit": "g per application",
+      "context": "Default shaving cream: frequency 365 x/year (1 x/day), male body weight 74 kg, exposed area 305 cm2, exposure time 5 min (marked 'Estimate' by RIVM)",
+      "source": "RIVM Cosmetics Fact Sheet 2006, section 3.9.1", "publisher": "RIVM",
+      "url": "https://www.rivm.nl/bibliotheek/rapporten/320104001.pdf", "date": "2006", "confirmed": true
+    },
+    {
+      "item": "Shave cream amount per application (US CTFA 1983 survey of women)",
+      "value": 1.73, "unit": "g per application",
+      "context": "Same row: Market Research Bureau average frequency 0.082 per day, upper 90th percentile 0.36 per day. CTFA (1983) surveyed cosmetic use by women.",
+      "source": "EPA EFH 2011 Chapter 17, Table 17-3", "publisher": "US EPA",
+      "url": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf", "date": "2011", "confirmed": true
+    },
+    {
+      "item": "Shaving cream application frequency (SCCS default)",
+      "value": "1/day", "unit": "applications",
+      "source": "SCCS Notes of Guidance 12th rev., Table 4 (Men's cosmetics)", "publisher": "European Commission SCCS",
+      "url": "https://health.ec.europa.eu/system/files/2023-12/sccs_o_273_final.pdf", "date": "2023", "confirmed": true,
+      "note": "A safety-assessment default, not a measured population mean."
+    },
+    {
+      "item": "Men's face-shaving frequency and minutes per shave (Great Britain)",
+      "value": {"shavesPerWeek": 4, "minutesPerShave": 5},
+      "unit": "average shaves per week; average minutes per shave",
+      "context": "Online survey of 1,504 males aged 15-78, September 2013, commissioned by The Bluebeards Revenge (a shaving brand)",
+      "source": "A long shave: Men spend 45 days of their lives shaving", "publisher": "The Bluebeards Revenge via Cision",
+      "url": "https://news.cision.com/the-bluebeard-s-revenge/r/a-long-shave--men-spend-45-days-of-their-lives-shaving,c9487068",
+      "date": "2013-10-24", "confirmed": true,
+      "note": "Brand-commissioned survey, not a government statistic."
+    },
+    {
+      "item": "UK women's leg-shaving frequency",
+      "value": "twice a month on average (armpits three times weekly; 7% never shave legs)", "unit": "per month",
+      "context": "BABTAC survey of 2,061 women aged 18+",
+      "source": "Average UK woman shaves her legs just twice a month", "publisher": "Cosmetics Business (reporting BABTAC)",
+      "url": "https://cosmeticsbusiness.com/average-uk-woman-shaves-her-legs-just-twice-a-month-110870",
+      "date": "2015-08-04", "confirmed": true,
+      "note": "Read on the trade-press report, not on BABTAC's own release."
+    },
+    {
+      "item": "Canadian women's leg-hair removal frequency",
+      "value": {"summerTimesPerMonth": 11.2, "winterTimesPerMonth": 6.5, "atLeastWeeklySummerPct": 56, "atLeastWeeklyWinterPct": 28, "shavingSharePct": 83, "waxingSharePct": 14, "depilatorySharePct": 9},
+      "unit": "times per month among women who remove leg hair; percent",
+      "context": "1,129 adult Canadian women, 2004-03-16 to 2004-03-25, commissioned by Veet, MoE +/-3.1 pts",
+      "source": "Canadian Women On Hair Removal", "publisher": "Ipsos Canada",
+      "url": "https://www.ipsos.com/en-ca/canadian-women-hair-removal", "date": "2004", "confirmed": true
+    }
+  ],
+  "makeup": [
+    {
+      "item": "Liquid foundation daily amount (Europe)",
+      "value": 0.51, "unit": "g/day", "relative": "7.90 mg/kg bw/day",
+      "source": "SCCS NoG 12th rev., Table 3A (from Hall et al. 2007, 2011)", "publisher": "European Commission SCCS",
+      "url": "https://health.ec.europa.eu/system/files/2023-12/sccs_o_273_final.pdf", "date": "2023", "confirmed": true
+    },
+    {
+      "item": "Lipstick / lip salve daily amount (Europe)",
+      "value": 0.057, "unit": "g/day", "relative": "0.90 mg/kg bw/day",
+      "source": "SCCS NoG 12th rev., Table 3A", "publisher": "European Commission SCCS",
+      "url": "https://health.ec.europa.eu/system/files/2023-12/sccs_o_273_final.pdf", "date": "2023", "confirmed": true
+    },
+    {
+      "item": "Mascara daily amount (Europe)",
+      "value": 0.025, "unit": "g/day", "relative": "0.42 mg/kg bw/day",
+      "source": "SCCS NoG 12th rev., Table 3B (SCCNFP/0321/00, Colipa)", "publisher": "European Commission SCCS",
+      "url": "https://health.ec.europa.eu/system/files/2023-12/sccs_o_273_final.pdf", "date": "2023", "confirmed": true
+    },
+    {
+      "item": "Eye shadow daily amount (Europe)",
+      "value": 0.02, "unit": "g/day", "relative": "0.33 mg/kg bw/day",
+      "source": "SCCS NoG 12th rev., Table 3B", "publisher": "European Commission SCCS",
+      "url": "https://health.ec.europa.eu/system/files/2023-12/sccs_o_273_final.pdf", "date": "2023", "confirmed": true
+    },
+    {
+      "item": "Eyeliner daily amount (Europe)",
+      "value": 0.005, "unit": "g/day",
+      "source": "SCCS NoG 12th rev., Table 3B", "publisher": "European Commission SCCS",
+      "url": "https://health.ec.europa.eu/system/files/2023-12/sccs_o_273_final.pdf", "date": "2023", "confirmed": true
+    },
+    {
+      "item": "Application frequency defaults (SCCS Table 4)",
+      "value": {"liquidFoundation": "1/day", "makeUpRemover": "1/day", "eyeShadow": "2/day", "mascara": "2/day", "eyeliner": "2/day", "lipstick": "2/day"},
+      "unit": "applications per day",
+      "source": "SCCS NoG 12th rev., Table 4", "publisher": "European Commission SCCS",
+      "url": "https://health.ec.europa.eu/system/files/2023-12/sccs_o_273_final.pdf", "date": "2023", "confirmed": true
+    },
+    {
+      "item": "Lipstick applications per day (US women 19-65, Loretz 2005)",
+      "value": {"mean": 2.35, "median": 2, "sd": 1.80, "n": 311},
+      "unit": "applications/day",
+      "source": "EPA EFH Chapter 17, Table 17-38 (Loretz et al. 2005)", "publisher": "US EPA",
+      "url": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf", "date": "2011", "confirmed": true
+    },
+    {
+      "item": "Lipstick amount (US women, Loretz 2005, two-week diary study)",
+      "value": {"meanTotalOverStudyG": 0.272, "meanPerUseDayG": 0.024, "meanPerApplicationG": 0.010, "medianPerUseDayG": 0.016},
+      "unit": "g",
+      "source": "EPA EFH Chapter 17, Table 17-39 (Loretz et al. 2005)", "publisher": "US EPA",
+      "url": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf", "date": "2011", "confirmed": true
+    },
+    {
+      "item": "Lipstick exposure, European female consumers (Hall et al. 2007)",
+      "value": {"meanMgPerDay": 24.61, "medianMgPerDay": 17.11, "p95MgPerDay": 72.51},
+      "unit": "mg/day",
+      "source": "EPA EFH Chapter 17, Table 17-47 (Hall et al. 2007)", "publisher": "US EPA",
+      "url": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf", "date": "2011", "confirmed": true
+    },
+    {
+      "item": "Liquid foundation (US women 19-65, Loretz 2006)",
+      "value": {"applicationsPerUseDayMean": 1.24, "gPerApplicationMean": 0.54, "gPerUseDayMean": 0.67, "n": 326},
+      "unit": "applications/use day; g",
+      "source": "EPA EFH Chapter 17, Tables 17-40, 17-41, 17-42 (Loretz et al. 2006)", "publisher": "US EPA",
+      "url": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf", "date": "2011", "confirmed": true,
+      "note": "Means read from pdftotext layout of the tables; the N row is 321 for amount tables."
+    },
+    {
+      "item": "Eye shadow (US women 18-69, Loretz 2008)",
+      "value": {"applicationsPerUseDayMean": 1.2, "gPerApplicationMean": 0.03, "gPerUseDayMean": 0.04, "gPerApplicationMedian": 0.009, "n": 299},
+      "unit": "applications/use day; g",
+      "source": "EPA EFH Chapter 17, Tables 17-51, 17-52, 17-53 (Loretz et al. 2008)", "publisher": "US EPA",
+      "url": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf", "date": "2011", "confirmed": true
+    },
+    {
+      "item": "RIVM defaults: facial make-up, eye shadow, mascara, lipstick",
+      "value": {
+        "facialMakeUp": {"frequency": "365 x/year (1x/day, estimate)", "amountG": 0.8},
+        "eyeShadow": {"frequency": "730 x/year (1-3 x/day)", "amountG": 0.01},
+        "mascara": {"frequency": "365 x/year (1 x/day)", "amountG": 0.025},
+        "lipstick": {"frequency": "1460 x/year (2-6 x/day; default 4 x/day)", "amountIngestedG": 0.01}
+      },
+      "unit": "per application",
+      "source": "RIVM Cosmetics Fact Sheet 2006, sections 3.4.x", "publisher": "RIVM",
+      "url": "https://www.rivm.nl/bibliotheek/rapporten/320104001.pdf", "date": "2006", "confirmed": true
+    },
+    {
+      "item": "Mascara useful life",
+      "value": "2-4", "unit": "months after purchase",
+      "quote": "Manufacturers usually recommend discarding mascara two to four months after purchase.",
+      "source": "Shelf Life and Expiration Dating of Cosmetics", "publisher": "US Food and Drug Administration",
+      "url": "https://www.fda.gov/cosmetics/cosmetics-labeling/shelf-life-and-expiration-dating-cosmetics",
+      "date": "content current as of 2022-02-25", "confirmed": true
+    }
+  ],
+  "hair": [
+    {
+      "item": "Hair styling products daily amount (Europe)",
+      "value": 4.00, "unit": "g/day", "relative": "57.4 mg/kg bw/day; retention factor 0.10",
+      "source": "SCCS NoG 12th rev., Table 3A", "publisher": "European Commission SCCS",
+      "url": "https://health.ec.europa.eu/system/files/2023-12/sccs_o_273_final.pdf", "date": "2023", "confirmed": true
+    },
+    {
+      "item": "Hair styling products application frequency (SCCS)",
+      "value": "1.14/day", "unit": "applications",
+      "source": "SCCS NoG 12th rev., Table 4", "publisher": "European Commission SCCS",
+      "url": "https://health.ec.europa.eu/system/files/2023-12/sccs_o_273_final.pdf", "date": "2023", "confirmed": true
+    },
+    {
+      "item": "Hairspray (US women, Loretz 2006)",
+      "value": {
+        "aerosol": {"applicationsPerUseDayMean": 1.49, "gPerApplicationMean": 2.58, "gPerUseDayMean": 3.57, "n": 165},
+        "pump": {"applicationsPerUseDayMean": 1.51, "gPerApplicationMean": 3.64, "gPerUseDayMean": 5.18, "n": 162}
+      },
+      "unit": "applications/use day; g",
+      "source": "EPA EFH Chapter 17, Tables 17-40, 17-41, 17-42 (Loretz et al. 2006)", "publisher": "US EPA",
+      "url": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf", "date": "2011", "confirmed": true
+    },
+    {
+      "item": "Hairspray use (Netherlands, Weegels & van Veen 2001)",
+      "value": {"frequencyPerDayMean": 0.76, "sd": 0.68, "amountPerContactRangeG": "1.0-11.6 (per-subject range)", "releaseSecondsMean": 11},
+      "unit": "uses/day; g; seconds",
+      "source": "EPA EFH Chapter 17, Table 17-37 (Weegels and van Veen 2001)", "publisher": "US EPA",
+      "url": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf", "date": "2011", "confirmed": true
+    },
+    {
+      "item": "Hair gel and mousse (RIVM, from Weegels data)",
+      "value": {
+        "gel": {"frequencyMeanPerDay": 0.59, "sd": 0.57, "amountMeanG": 1.9, "amountSdG": 1.5, "defaultFrequency": "358 x/year", "defaultAmountG": 2.9},
+        "mousse": {"frequencyMeanPerDay": 0.41, "sd": 0.50, "amountMeanG": 2.0, "amountSdG": 1.0, "defaultFrequency": "274 x/year", "defaultAmountG": 2.7}
+      },
+      "unit": "per day; g per use",
+      "source": "RIVM Cosmetics Fact Sheet 2006, sections 3.1.4-3.1.5", "publisher": "RIVM",
+      "url": "https://www.rivm.nl/bibliotheek/rapporten/320104001.pdf", "date": "2006", "confirmed": true
+    },
+    {
+      "item": "Hair dye frequency and amount (SCCS defaults)",
+      "value": {"semiPermanent": "1/week, 35 ml per application, 20 min", "oxidativePermanent": "1/month, 100 ml per application, 30 min"},
+      "unit": "frequency; ml",
+      "source": "SCCS NoG 12th rev., Tables 3B and 4", "publisher": "European Commission SCCS",
+      "url": "https://health.ec.europa.eu/system/files/2023-12/sccs_o_273_final.pdf", "date": "2023", "confirmed": true,
+      "note": "Safety defaults, not how often people actually dye at home."
+    },
+    {
+      "item": "Hair dye frequency and amount (RIVM default)",
+      "value": {"frequency": "10 x/year (8-12 x per year)", "amountG": 100, "exposureMin": 40},
+      "unit": "per year; g",
+      "source": "RIVM Cosmetics Fact Sheet 2006", "publisher": "RIVM",
+      "url": "https://www.rivm.nl/bibliotheek/rapporten/320104001.pdf", "date": "2006", "confirmed": true
+    }
+  ],
+  "cleaning": [
+    {
+      "item": "Household products use (Netherlands diary study, Weegels & van Veen 2001)",
+      "value": {
+        "dishwashingLiquid": {"usesPerDayMean": 0.63, "contactMinutesMean": 11, "gramsPerContactMean": 5},
+        "allPurposeCleaner": {"usesPerDayMean": 0.35, "contactMinutesMean": 20, "gramsPerContactMean": 27},
+        "toiletCleaner": {"usesPerDayMean": 0.28, "gramsPerContactRange": "9-153 (per-subject)"}
+      },
+      "unit": "uses/day; minutes; g",
+      "source": "EPA EFH Chapter 17, Table 17-37", "publisher": "US EPA",
+      "url": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf", "date": "2011", "confirmed": true
+    },
+    {
+      "item": "Frequency of household cleaning tasks, US (Westat 1987c), means",
+      "value": {
+        "cleanBathroomSinksAndTubs": "3/week",
+        "cleanKitchenSinks": "7/week",
+        "wipeOffKitchenCounters": "2/day",
+        "thoroughlyCleanCounters": "8/month",
+        "cleanBathroomFloors": "6/month",
+        "cleanKitchenFloors": "6/month",
+        "cleanTiledWalls": "4/month",
+        "cleanOutsideWindows": "5/year",
+        "cleanInsideWindows": "10/year",
+        "cleanMirrorsAndGlass": "7/month",
+        "cleanOutsideFridgeAndAppliances": "10/month",
+        "cleanInsideCabinets": "9/year",
+        "cleanOutsideCabinets": "3/month",
+        "cleanSpotsOnWallsOrDoors": "6/month"
+      },
+      "unit": "events per period (mean)",
+      "source": "EPA EFH Chapter 17, Table 17-10", "publisher": "US EPA",
+      "url": "https://www.epa.gov/system/files/documents/2025-01/efh-chapter17_508.pdf", "date": "2011", "confirmed": true,
+      "note": "Read from the Mean column of a multi-column layout; percentile columns were not used."
+    },
+    {
+      "item": "Sponge replacement, Scotch-Brite",
+      "value": "at least every 3 weeks", "unit": "interval",
+      "source": "Replace your sponge at least every 3 weeks (page title)", "publisher": "3M Scotch-Brite",
+      "url": "https://www.scotch-brite.com/3M/en_US/scotch-brite/uses-tips/when-to-replace-your-sponge/",
+      "date": null, "confirmed": false,
+      "note": "Page timed out; only the page title in search results was seen."
+    },
+    {
+      "item": "Sponge disinfection (USDA ARS)",
+      "value": "microwave 1 min at full power or dishwasher wash+dry; aerobic counts <0.4 log and 1.6 log CFU/sponge vs 7.5 for untreated",
+      "unit": "method; log CFU/sponge",
+      "source": "Sharma, Eastridge, Mudd, 'Effective household disinfection methods of kitchen sponges', Food Control", "publisher": "USDA Agricultural Research Service",
+      "url": "https://www.ars.usda.gov/ARSUserFiles/37027/2008SharmaEtAl_InPress_%20FoodControl.pdf", "date": "2008", "confirmed": true,
+      "note": "Gives a cleaning method, not a replacement interval."
+    }
+  ],
+  "hobbies": [
+    {
+      "item": "US time in leisure activities, 2025 annual averages (ATUS Table 11A), hours per day, all persons 15+",
+      "value": {
+        "total": {"leisureAndSports": 5.16, "watchingTV": 2.61, "readingForPersonalInterest": 0.27, "playingGamesAndComputerUseForLeisure": 0.62, "relaxingAndThinking": 0.35, "sportsExercise": 0.34, "socializing": 0.58, "otherLeisure": 0.38},
+        "men": {"leisureAndSports": 5.58, "watchingTV": 2.81, "readingForPersonalInterest": 0.23, "playingGamesAndComputerUseForLeisure": 0.80, "relaxingAndThinking": 0.39},
+        "women": {"leisureAndSports": 4.76, "watchingTV": 2.42, "readingForPersonalInterest": 0.31, "playingGamesAndComputerUseForLeisure": 0.46, "relaxingAndThinking": 0.30}
+      },
+      "unit": "hours per day (population average)",
+      "source": "American Time Use Survey 2025, Table 11A", "publisher": "US Bureau of Labor Statistics",
+      "url": "https://www.bls.gov/news.release/atus.t11A.htm", "date": "released 2026-06-25", "confirmed": true,
+      "note": "ATUS combines games and leisure computer use in one row; no separate 'arts and crafts' row in Table 11A."
+    },
+    {
+      "item": "Canada time use 2022, Canada / Ontario / British Columbia, all persons 15+",
+      "value": {
+        "Canada": {"artsHobbiesLeisureOrWriting": {"population": 0.3, "participants": 2.8, "participationPct": 12.5}, "readingOrListeningToMusicOrRadio": {"population": 0.3, "participants": 1.9, "participationPct": 16.6}, "useOfTechnology": {"population": 0.5, "participants": 2.6, "participationPct": 17.9}, "watchingTVOrVideos": {"population": 1.7, "participants": 3.2, "participationPct": 54.2}},
+        "Ontario": {"artsHobbiesLeisureOrWriting": {"population": 0.3, "participants": 2.7}, "readingOrListeningToMusicOrRadio": {"population": 0.3, "participants": 2.0}, "useOfTechnology": {"population": 0.5, "participants": 2.6}},
+        "BritishColumbia": {"artsHobbiesLeisureOrWriting": {"population": 0.5, "participants": 3.1}, "readingOrListeningToMusicOrRadio": {"population": 0.4, "participants": 1.9}, "useOfTechnology": {"population": 0.5, "participants": 2.5}}
+      },
+      "unit": "hours per day (daily average time); percent",
+      "definitions": "Arts and hobbies include playing games, drawing, painting, crafting, writing, playing an instrument, collecting and attendance at events; Reading or listening includes books, periodicals, newspapers, music, radio, podcasts; Use of technology includes general computer use, internet, art/music/video production.",
+      "source": "Table 45-10-0104-01 Daily average time spent on various activities, by age group and gender, 2022 (Time Use Survey)", "publisher": "Statistics Canada",
+      "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=4510010401", "date": "released 2024-06-05", "confirmed": true,
+      "note": "Read from Statistics Canada's full-table CSV download (45100104-eng.zip)."
+    },
+    {
+      "item": "UK time use (ONS Online Time Use Survey)",
+      "value": {"sep-oct2023": {"entertainmentSocialisingFreeTime": "3 h 39 min/day", "watchingTV": "2 h 17 min/day"}},
+      "unconfirmedMarch2024FromSearchSummaryOnly": {"entertainmentSocialisingFreeTime": "3 h 42 min/day", "watchingTV": "2 h 20 min/day"},
+      "unit": "per day, adults",
+      "source": "Time use in the UK", "publisher": "Office for National Statistics",
+      "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/bulletins/timeuseintheuk/23septemberto1october2023",
+      "date": "2023-11-09 (Sep-Oct 2023 bulletin)", "confirmed": true,
+      "note": "The Sep-Oct 2023 figures were read on the ONS bulletin; the March 2024 figures came from a search summary only (confirmed:false for those). No reading/gaming/hobby split found."
+    },
+    {
+      "item": "Mexico time use 2024 (ENUT 2024), weekly hours by sex",
+      "value": {
+        "women": {"massMedia": 15.1, "familySocial": 7.8, "sportsExercise": 4.7, "gamesAndHobbies": 4.1, "attendingSportsOrEntertainmentEvents": 3.2, "attendingCulturalEvents": 3.0, "readingBookMagazineNewspaper": 3.5},
+        "men": {"massMedia": 15.7, "familySocial": 7.0, "sportsExercise": 5.4, "gamesAndHobbies": 6.1, "attendingSportsOrEntertainmentEvents": 3.3, "attendingCulturalEvents": 2.9, "readingBookMagazineNewspaper": 3.4},
+        "participationPct_gamesAndHobbies": "37.1 (one sex; chart label ambiguous)"
+      },
+      "unit": "average hours per week (INEGI 'promedio del tiempo semanal de la poblacion')",
+      "source": "Encuesta Nacional sobre Uso del Tiempo (ENUT) 2024, Principales resultados", "publisher": "INEGI",
+      "url": "https://www.inegi.org.mx/contenidos/programas/enut/2024/doc/enut_2024_presentacion_resultados.pdf", "date": "2025", "confirmed": true,
+      "note": "Read from chart data labels via text extraction; series order taken from the chart legend. Verify against the ENUT 2024 tabulados before relying on single values. Mexico City had 17.4 h/week of mass-media use (third highest state)."
+    },
+    {
+      "item": "New video game list price: Donkey Kong Bananza (Nintendo Switch 2, first-party standard release, digital eShop regular price)",
+      "value": {"US": "USD 69.99", "UK": "GBP 58.99", "Ireland": "EUR 69.99", "Canada": "CAD 99.99", "Mexico": "MXN 1,449.00"},
+      "unit": "regular price",
+      "source": "Nintendo eShop price service (api.ec.nintendo.com/v1/price, NSUID 70010000096809 Americas / 70010000096810 Europe)", "publisher": "Nintendo",
+      "url": "https://api.ec.nintendo.com/v1/price?country=US&lang=en&ids=70010000096809",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Same values seen on nintendo.com/us and /en-ca, /es-mx store pages. A third-party tracker (eshop-prices.com) listed Canada at CAD 104.99; Nintendo's own price is CAD 99.99. The UK My Nintendo Store physical price of GBP 66.99 came from a search summary only (unconfirmed)."
+    },
+    {
+      "item": "Nintendo Switch 2 launch game prices, US",
+      "value": {"marioKartWorld": "USD 79.99", "donkeyKongBananza": "USD 69.99"},
+      "unit": "MSRP, physical and digital",
+      "source": "Nintendo Maintains Nintendo Switch 2 Pricing, Retail Pre-Orders to Begin April 24 in U.S.", "publisher": "Nintendo of America",
+      "url": "https://www.nintendo.com/us/whatsnew/nintendo-maintains-nintendo-switch-2-pricing-retail-pre-orders-to-begin-april-24-in-u-s/",
+      "date": "2025-04-18", "confirmed": true
+    },
+    {
+      "item": "Adult silent reading rate (English)",
+      "value": {"nonFictionWpm": 238, "fictionWpm": 260, "nonFictionRangeWpm": "175-300", "fictionRangeWpm": "200-320", "oralWpm": 183},
+      "unit": "words per minute",
+      "context": "Meta-analysis of 190 studies, 18,573 participants",
+      "source": "Brysbaert, M. 'How many words do we read per minute? A review and meta-analysis of reading rate', Journal of Memory and Language 109, 104047", "publisher": "Elsevier",
+      "url": "https://gwern.net/doc/psychology/linguistics/2019-brysbaert.pdf", "date": "2019", "confirmed": true,
+      "note": "Read in a verbatim copy of the published PDF."
+    },
+    {
+      "item": "Novel length corpus figures",
+      "value": {"englishNovels": 694, "englishWords": 66900000, "dutchNovels": 451, "dutchWords": 49600000},
+      "unit": "count; words",
+      "source": "Psycholinguistic dataset on language use in 1145 novels published in English and Dutch, Data in Brief (doi 10.1016/j.dib.2020.106655)", "publisher": "Elsevier (PMC7772540)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7772540/", "date": "2020-12-16", "confirmed": true,
+      "note": "Total words over count of novels; the paper's own per-novel average was not seen, so none is given here. The English novels were published mainly 1800-2018."
+    }
+  ],
+  "rentedBathrooms": [
+    {
+      "item": "US renter-occupied units by bathrooms, 2023 (thousands of units)",
+      "value": {
+        "UnitedStates": {"totalRenterUnits": 46378, "atLeast1Complete": 46311, "one": 26511, "oneAndHalf": 4280, "two": 11821, "twoAndHalf": 2464, "three": 1025, "moreThanThree": 210, "noCompleteBathroom": 67},
+        "NewYorkNewarkJerseyCityMSA": {"totalRenterUnits": 3840.7, "atLeast1Complete": 3823.2, "one": 3091.1, "oneAndHalf": 288.8, "two": 315.2, "twoAndHalf": 61.8, "three": 56.9, "moreThanThree": null, "noCompleteBathroom": null},
+        "LosAngelesLongBeachAnaheimMSA": {"totalRenterUnits": 2479.7, "atLeast1Complete": 2473.2, "one": 1494.2, "oneAndHalf": 200.7, "two": 548.5, "twoAndHalf": 138.5, "three": 76.8, "moreThanThree": null, "noCompleteBathroom": null}
+      },
+      "unit": "thousands of occupied housing units (renter); 'one' = 1 complete bathroom, 'oneAndHalf' = 1 complete + 1 half, etc.; null = suppressed",
+      "moe": {"US_one": 506, "US_two": 373, "NY_one": 153.5, "NY_two": 60.6, "LA_one": 86.4, "LA_two": 64.3},
+      "source": "American Housing Survey 2023, Table 'Rooms, Size, and Amenities' (rsa), Bathrooms stub, Renter column", "publisher": "US Census Bureau / HUD",
+      "url": "https://api.census.gov/data/2023/ahs/rsa?get=NAME,ROW_IND,ROW_IND_LABEL,HOUS_UNITS_EST,HOUS_UNITS_MOE&ROW_CATEGORY=06&COL_TENURE=02&for=us:*",
+      "date": "2023 survey, released 2024-09-25", "confirmed": true,
+      "note": "This is the Census Data API behind the AHS Table Creator. New Haven CT is not an AHS 2023 metro area."
+    },
+    {
+      "item": "England: dwellings with a second bath or shower, 2008",
+      "value": {"allDwellingsPct": 21, "ownerOccupiedPct": 28, "socialSectorPct": "less than 2", "enSuiteShareOfSecondBathsPct": 68},
+      "unit": "percent of dwellings",
+      "source": "English Housing Survey Housing stock report 2008, para 2.26 and Figure 2.12", "publisher": "Department for Communities and Local Government",
+      "url": "https://assets.publishing.service.gov.uk/media/5a74e1eced915d3c7d528af9/1750754.pdf", "date": "2008", "confirmed": true,
+      "note": "The private-rented share appears only as a bar in Figure 2.12 (underlying data in SST 2.1), so no number is given for it here."
+    }
+  ],
+  "notFound": [
+    "Government or peer-reviewed survey of how often men shave their faces per week, by sex, for the US, Ireland, Canada or Mexico (only a UK brand-commissioned survey found).",
+    "Women's leg-shaving frequency for the US, Ireland or Mexico.",
+    "Manufacturer-stated grams of shaving cream or gel per shave (Gillette, Schick, DSC, Harry's say 'thin layer' or 'generously', no mass).",
+    "Schick disposable razor life in shaves on Schick's own page (only a search summary: about a month at three shaves a week).",
+    "Survey of how often people dye their hair at home (only SCCS/RIVM safety defaults: 1/month permanent, 1/week semi-permanent, 8-12/year).",
+    "Published useful life of foundation, lipstick or eye shadow (only mascara: FDA 2-4 months).",
+    "Consumption rates for all-purpose spray cleaner bottles, bleach bottles, paper towels or bin bags per household per week (no A.I.S.E., ONS, Statistics Canada or EPA figure found). A.I.S.E.'s 2024 consumer survey summary covers laundry habits.",
+    "Garcia-Hidalgo et al. 2017 'Exposure factors for cleaning, automotive care, and surface protection products' (Food Chem Toxicol, PubMed 27890563) probably has per-use amounts and frequencies for spray cleaners. The page could not be read.",
+    "CDC or USDA official sponge replacement interval (USDA ARS gives a disinfection method only).",
+    "ONS UK time use split for reading, gaming and hobbies; no Irish CSO time-use figures were checked.",
+    "PlayStation Store or Xbox Store list prices by market (store pages render by script; not read).",
+    "Average book length in pages, from an authoritative source (only corpus word totals).",
+    "AHS bathrooms for New Haven CT (not an AHS metro); Canadian, Irish and Mexican bathroom counts for rented dwellings; the English Housing Survey private-rented second-bathroom share as a number."
+  ]
+}

@@ -115,6 +115,8 @@ export interface OwnedVehicle {
   /** Listed for a private sale (`systems/carsale.ts`, from 2026-10-03). */
   listed?: import('./carsale').Listing;
   inShop?: import('./repairs').InShop;
+  /** A repair booked ahead at a shop that takes appointments, and when (`appointmentAt`, from 2026-10-03). */
+  booked?: { shopId: string; at: Instant };
   /** Kilometers driven on errands since the month's driving (`systems/trips.ts`), taken out of it. */
   errandKm?: number;
   /** Its interior as commissioned, and one ordered and not yet fitted (`systems/interiors.ts`, from 2026-10-02). */

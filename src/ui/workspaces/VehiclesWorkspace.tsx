@@ -23,7 +23,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { dateKey, formatDate } from '@/engine/core/time';
+import { dateKey, formatDate , formatDateTime } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { homeOf } from '@/engine/systems/earnings';
@@ -608,7 +608,7 @@ function RepairControl({ v }: { v: OwnedVehicle }) {
           {shops.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
         </select>
       )}
-      <Gated feature="vehicle.repair" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? chosen?.address} onClick={() => { const a = run<{ paid: number }>('vehicle.repair', { vehicleId: v.id, shopId: chosen!.id }); if (a.ok) toast(`In at ${chosen!.name}, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>{chosen && shops.length === 1 ? `Book The Repair At ${chosen.name}` : 'Book The Repair'}</Gated>
+      <Gated feature="vehicle.repair" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? chosen?.address} onClick={() => { const a = run<{ paid: number; bookedFor?: number }>('vehicle.repair', { vehicleId: v.id, shopId: chosen!.id }); if (a.ok) toast(a.value!.bookedFor !== undefined ? `Booked in at ${chosen!.name}, ${formatDateTime(a.value!.bookedFor, sim.zone)}: it’s paid when it goes in.` : `In at ${chosen!.name}, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>{chosen && shops.length === 1 ? `Book The Repair At ${chosen.name}` : 'Book The Repair'}</Gated>
     </>
   );
 }

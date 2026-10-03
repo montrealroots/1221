@@ -6,6 +6,7 @@
  * hours and time.
  */
 import { describe, expect, it } from 'vitest';
+import { shutAt } from '@/engine/systems/errands';
 import { quickSave } from '@/engine';
 import { MS_DAY, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
@@ -13,7 +14,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { UPKEEP_USD_PER_KM } from '@/engine/content/vehiclefees';
 import { modelById, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
-import { expectedRepairsUsd, laidUp, mayBreak, readyAt, reliabilityOf, repairRefusal, shopById, shopsFor, upkeepPerKm } from '@/engine/systems/repairs';
+import { expectedRepairsUsd, laidUp, mayBreak, readyAt, reliabilityOf, repairRefusal, shopById, shopsFor, upkeepPerKm , appointmentAt, appointmentDays } from '@/engine/systems/repairs';
 import { inspectIfDue, inspectionFails } from '@/engine/systems/inspections';
 import { planDrive } from '@/engine/systems/journey';
 import { documentsOf } from '@/engine/systems/documents';
@@ -94,13 +95,50 @@ describe('the shop', () => {
     v.fault = { at: sim.now, severe: false, usd: 554.01 };
     expect(repairRefusal(sim.player, v, m, 'toyota-of-manhattan', at(12, 10))).toBe('Toyota of Manhattan works only on a Toyota.');
     const camry = { ...v, modelId: 'us-toyota-camry' };
-    // 2026-01-11 was a Sunday, when it's shut; Monday at ten it's open.
-    expect(repairRefusal(sim.player, camry, modelById('us-toyota-camry')!, 'toyota-of-manhattan', at(11, 10))).toBe('Toyota of Manhattan is closed today.');
-    expect(repairRefusal(sim.player, camry, modelById('us-toyota-camry')!, 'toyota-of-manhattan', at(12, 10))).toBeUndefined();
-    expect(repairRefusal(sim.player, camry, modelById('us-toyota-camry')!, 'toyota-of-manhattan', at(12, 6))).toBe('Toyota of Manhattan opens at 07:00.');
+    // A dealer books ahead, asked at any hour (from 2026-10-03): 2026-01-11 was a Sunday, when it's shut.
+    expect(repairRefusal(sim.player, camry, modelById('us-toyota-camry')!, 'toyota-of-manhattan', at(11, 10))).toBeUndefined();
+    // A garage that takes the car the day it's brought, only while it's open.
+    const pep = shopById('pep-boys-4th-ave')!;
+    for (const t of [at(11, 10), at(12, 6), at(12, 10)]) expect(repairRefusal(sim.player, v, m, pep.id, t)).toBe(shutAt(pep.week!, pep.name, pep.cityId, t));
+    expect(repairRefusal(sim.player, v, m, pep.id, at(12, 6))).toBeDefined();
     expect(repairRefusal(sim.player, v, m, 'a1-toyota', sim.now)).toBe('The car is in New York.');
     sim.player.currentLocationId = 'us-ct-newhaven';
     expect(repairRefusal(sim.player, v, m, 'midas-w53', sim.now)).toBe('You’re not in New York.');
+  });
+
+  it('at an American dealer, is booked 5.2 days on at its first opening, J.D. Power’s wait, and taken in then', () => {
+    const sim = life('us-ny-newyork', 'rp-appt');
+    const v = buy(sim, 'us-toyota-camry');
+    sim.advanceTo(at(12, 10));
+    v.fault = { at: sim.now, severe: false, usd: 554.01 };
+    const shop = shopById('toyota-of-manhattan')!;
+    expect(appointmentDays(shop)).toBe(5.2);
+    expect(appointmentDays(shopById('kwik-fit-holloway')!)).toBe(1);
+    expect(appointmentDays(shopById('midas-w53')!)).toBe(0);
+    const r = sim.must<{ readyAt: number; paid: number; bookedFor?: number }>({ kind: 'vehicle.repair', payload: { vehicleId: v.id, shopId: shop.id } });
+    expect(r.paid).toBe(0);
+    expect(r.bookedFor).toBe(appointmentAt(shop, at(12, 10)));
+    expect(r.bookedFor! - at(12, 10)).toBeGreaterThanOrEqual(5.2 * MS_DAY);
+    expect(shutAt(shop.week!, shop.name, shop.cityId, r.bookedFor!)).toBeUndefined();
+    expect(v.fault).toBeDefined();
+    expect(repairRefusal(sim.player, v, modelById(v.modelId)!, 'midas-w53', sim.now)).toBe('It’s booked in at Toyota of Manhattan.');
+    sim.advanceTo(r.bookedFor! + 60_000);
+    expect(v.fault).toBeUndefined();
+    expect(v.inShop?.shopId).toBe(shop.id);
+    expect(v.booked).toBeUndefined();
+  });
+
+  it('missed, the appointment says so, and the fault waits', () => {
+    const sim = life('us-ny-newyork', 'rp-missed');
+    const v = buy(sim, 'us-toyota-camry');
+    sim.advanceTo(at(12, 10));
+    v.fault = { at: sim.now, severe: false, usd: 554.01 };
+    const r = sim.must<{ bookedFor?: number }>({ kind: 'vehicle.repair', payload: { vehicleId: v.id, shopId: 'toyota-of-manhattan' } });
+    sim.player.currentLocationId = 'us-ct-newhaven';
+    sim.advanceTo(r.bookedFor! + 60_000);
+    expect(v.fault).toBeDefined();
+    expect(v.inShop).toBeUndefined();
+    expect(sim.universe.notifications.some((n) => n.title === 'A Repair Appointment Missed')).toBe(true);
   });
 
   it('has it back by closing, or three days after a severe fault, and it goes nowhere meanwhile', () => {

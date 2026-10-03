@@ -35,7 +35,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, formatDate, formatTime, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, formatDate, formatTime, startOfDay, zonedParts, type Instant } from '../core/time';
 import { TRANSFER } from './usedcars';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
@@ -132,8 +132,45 @@ export function repairRefusal(person: Person, v: OwnedVehicle, m: CarModel, shop
   if (shop.cityId !== carAt) return `The car is in ${CITIES.require(carAt).name}.`;
   if (person.currentLocationId !== carAt) return `You’re not in ${CITIES.require(carAt).name}.`;
   if (shop.make && shop.make !== m.make) return `${shop.name} works only on a ${shop.make}.`;
+  if (v.booked) return `It’s booked in at ${shopById(v.booked.shopId)?.name ?? 'a garage'}.`;
+  // A shop that books ahead is asked at any hour; one that doesn't, while it's open.
+  if (appointmentDays(shop) > 0) return undefined;
   return shop.week ? shutAt(shop.week, shop.name, shop.cityId, at) : undefined;
 }
+
+/**
+ * The wait for a repair's appointment (the master plan's §40d, from
+ * 2026-10-03; `research-used-cars-parking.json`): an American dealer's 5.2
+ * days from asking to the appointment, J.D. Power's 2024 Customer Service
+ * Index for mass-market brands (read secondhand, its own pages refusing);
+ * Kwik Fit's next day, on its own page. No other garage's wait was published,
+ * and they take a car in the day it's brought, as before.
+ */
+export const APPOINTMENT_DAYS = { usDealer: 5.2, kwikFit: 1 } as const;
+export function appointmentDays(shop: CarShop): number {
+  if (shop.kind === 'dealer' && shop.cityId.startsWith('us-')) return APPOINTMENT_DAYS.usDealer;
+  if (/^kwik fit\b/i.test(shop.name)) return APPOINTMENT_DAYS.kwikFit;
+  return 0;
+}
+
+/** When a repair asked for now is taken in: now, or the shop's first opening past its wait. */
+export function appointmentAt(shop: CarShop, at: Instant): Instant {
+  const days = appointmentDays(shop);
+  if (days === 0) return at;
+  const zone = CITIES.require(shop.cityId).timeZone;
+  const from = at + days * MS_DAY;
+  for (let d = 0; d < 14; d += 1) {
+    const day = startOfDay(from + d * MS_DAY, zone);
+    const hours = shop.week ? hoursOn(shop.week, zonedParts(day + 12 * 3_600_000, zone).weekday) : { open: 8, close: 18 };
+    if (hours.open === hours.close) continue;
+    const opens = day + hours.open * 3_600_000;
+    if (opens >= from) return opens;
+    if (day + hours.close * 3_600_000 > from) return from;
+  }
+  return from;
+}
+
+export const REPAIR_DUE_KIND = 'vehicle.repair_due';
 
 /** When a repair begun now is done: a severe one in three days; an ordinary one at the shop's closing, or in eight hours. */
 export function readyAt(shop: CarShop, severe: boolean, at: Instant): Instant {
@@ -146,14 +183,8 @@ export function readyAt(shop: CarShop, severe: boolean, at: Instant): Instant {
 }
 
 export function registerRepairs(sim: Simulation, find: (person: Person, id: string) => OwnedVehicle | undefined, model: (v: OwnedVehicle) => CarModel): void {
-  sim.onCommand<{ vehicleId: string; shopId: string }, { readyAt: Instant; paid: Money }>('vehicle.repair', (p, { sim: s }) => {
-    const person = s.player;
-    const v = find(person, String(p?.vehicleId));
-    if (!v) throw new CommandError('That isn’t a car you own.');
-    const m = model(v);
-    const no = repairRefusal(person, v, m, String(p?.shopId), s.now);
-    if (no) throw new CommandError(no);
-    const shop = shopById(String(p.shopId))!;
+  // Taken in: paid, towed where it won't go, and in the shop until it's done.
+  const takeIn = (s: Simulation, person: Person, v: OwnedVehicle, m: CarModel, shop: CarShop): { readyAt: Instant; paid: Money } => {
     const cur = saveCurrency(s.universe);
     // Under the maker's warranty at its dealer, or a collision's over the deductible on full cover (`repairShare`, from 2026-10-01).
     const share = repairShare(s, v, m, shop.make, faultCost(v, cur), s.now);
@@ -166,5 +197,36 @@ export function registerRepairs(sim: Simulation, find: (person: Person, id: stri
     delete v.fault;
     if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'The Car Is In The Shop', body: `${shop.name} has the ${m.make} ${m.model} until ${formatTime(until, CITIES.require(shop.cityId).timeZone)}, ${formatDate(until, CITIES.require(shop.cityId).timeZone)}: ${formatMoney(bill, cur, { cents: false })}.`, importance: 30, route: '/workspace/vehicles' });
     return { readyAt: until, paid: bill + towed };
+  };
+  sim.onCommand<{ vehicleId: string; shopId: string }, { readyAt: Instant; paid: Money; bookedFor?: Instant }>('vehicle.repair', (p, { sim: s }) => {
+    const person = s.player;
+    const v = find(person, String(p?.vehicleId));
+    if (!v) throw new CommandError('That isn’t a car you own.');
+    const m = model(v);
+    const no = repairRefusal(person, v, m, String(p?.shopId), s.now);
+    if (no) throw new CommandError(no);
+    const shop = shopById(String(p.shopId))!;
+    // A shop that books ahead takes it at its appointment (from 2026-10-03).
+    const slot = appointmentAt(shop, s.now);
+    if (slot > s.now) {
+      v.booked = { shopId: shop.id, at: slot };
+      s.schedule({ at: slot, kind: REPAIR_DUE_KIND, label: `The ${m.make} ${m.model} Into ${shop.name}`, category: 'personal', priority: 30, payload: { personId: person.id, vehicleId: v.id, shopId: shop.id } });
+      return { readyAt: slot, paid: 0, bookedFor: slot };
+    }
+    return takeIn(s, person, v, m, shop);
+  });
+  sim.onSchedule(REPAIR_DUE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const v = person ? find(person, String(item.payload.vehicleId)) : undefined;
+    const shop = shopById(String(item.payload.shopId));
+    if (!person || !v || !shop || v.booked?.shopId !== shop.id) return;
+    delete v.booked;
+    if (!v.fault) return;
+    const carAt = v.at ?? v.cityId;
+    if (carAt !== shop.cityId || person.currentLocationId !== carAt) {
+      if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'A Repair Appointment Missed', body: `${shop.name} had the car booked in, and neither you nor it was in ${CITIES.require(shop.cityId).name}: book again.`, importance: 35, route: '/workspace/vehicles' });
+      return;
+    }
+    takeIn(s, person, v, model(v), shop);
   });
 }
