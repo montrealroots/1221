@@ -13,7 +13,7 @@
  * 2026, the live one refusing to be read); Bradley's Lot 4, $7 a day or $42
  * a week, and Tweed-New Haven's Lot C, $25 a day before tax; Heathrow's Long
  * Stay, £46.80 the first day and £37.40 each after, and Gatwick's, £38 and
- * £32; Dublin's Holiday Blue, €20 a day; Toronto Pearson's Value Park
+ * £32; Stansted's Mid Stay, £48 a day, its Long Stay taking bookings only; Dublin's Holiday Blue, €20 a day; Toronto Pearson's Value Park
  * Garage, C$32 a day or C$160 a week before HST (Pearson's pages as a search
  * index kept them); Vancouver's Value Long Term, C$29.50 a day or C$159.75 a
  * week with its parking tax; Mexico City's, MX$391 a day at most. A part of
@@ -32,6 +32,7 @@ export const AIRPORT_PARKING: readonly AirportParking[] = [
   { iata: 'HVN', lot: 'Lot C', currency: 'USD', first: 25, firstHours: 24, then: 25, thenHours: 24, confirmed: true },
   { iata: 'LHR', lot: 'Long Stay', currency: 'GBP', first: 46.8, firstHours: 24, then: 37.4, thenHours: 24, confirmed: true },
   { iata: 'LGW', lot: 'Long Stay', currency: 'GBP', first: 38, firstHours: 24, then: 32, thenHours: 24, confirmed: true },
+  { iata: 'STN', lot: 'Mid Stay', currency: 'GBP', first: 48, firstHours: 24, then: 48, thenHours: 24, confirmed: true },
   { iata: 'DUB', lot: 'Holiday Blue', currency: 'EUR', first: 20, firstHours: 24, then: 20, thenHours: 24, confirmed: true },
   { iata: 'YYZ', lot: 'Value Park Garage', currency: 'CAD', first: 32, firstHours: 24, then: 32, thenHours: 24, weekly: 160, confirmed: false },
   { iata: 'YVR', lot: 'Value Long Term', currency: 'CAD', first: 29.5, firstHours: 24, then: 29.5, thenHours: 24, weekly: 159.75, confirmed: true },

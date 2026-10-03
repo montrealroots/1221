@@ -694,6 +694,29 @@
           "note": "The Port Authority Schedule of Charges (effective 15 June 2023, revised 1 January 2024): first 24 hours or part $35.00 drive-up, each 12 hours or part after $17.50, prebook daily maximum $25.00. Read through a search engine copy of the PDF; the PDF refuses scripted reads, and the copy at scheduleofcharges-ewr.pdf is the 2021 revision ($10 each 12 hours)."
         }
       ]
+    },
+    {
+      "airport": "London Stansted",
+      "iata": "STN",
+      "cityIds": [
+        "uk-eng-london"
+      ],
+      "carParks": [
+        {
+          "name": "Mid Stay (Turn Up & Park)",
+          "perHour": null,
+          "perDay": 48,
+          "dailyMax": null,
+          "perWeek": null,
+          "toTerminal": null,
+          "currency": "GBP",
+          "taxIncluded": null,
+          "url": "https://www.stanstedairport.com/parking/turn-up-and-park/",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Turn Up & Park: Short Stay £70 and Mid Stay £48 for 24 hours, each 24 hours after at the same rate. Long Stay is pre-book only."
+        }
+      ]
     }
   ],
   "notes": {
