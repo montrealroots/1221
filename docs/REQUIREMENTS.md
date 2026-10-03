@@ -172,7 +172,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 40e | Purchases carried or in the car until moved, within its cargo | Done, 2026-10-02 | `stow` and the trip's unload in trips.ts: groceries, toiletries and clothes bought out ride in the car or are carried, then are put away; chilled food out past USDA's two hours is thrown out; refused past the model's cargo liters or a pickup's bed | — |
 | 40g | Out of fuel | Done, 2026-10-03 | an errand's leg burns from the tank (`burn`) and is refused short of the next stop, a fuel stop filling it; a journey by road buys along the way | Running dry on the road: how often drivers don't stop for fuel (only the AA Ireland's 10.5% of call-outs and AAA's 2014 count, no rate a drive): DATA-GAPS |
 | 40h | Breakdowns, delays | Done, 2026-10-02 | severe fault refuses; `systems/roadside.ts`: a driven journey's fault on the road, a severe one towed onward; a tow to the garage; the clubs' cover by tier, dues, tow km and calls | How long the truck takes (unpublished); battery, tyre and lockout call-outs |
-| 40i | Where it's parked | Partial | town only | Spot level |
+| 40i | Where it's parked | Done | town only; from 2026-10-03 in England and Wales, in the garage or on the street, which sets the Crime Survey’s thefts of and from the car against the National Travel Survey’s share kept there, a car broken into losing its stereo (`systems/theft.ts`); tests/parking.test.ts | — (America’s: no overnight-parking share published, `docs/DATA-GAPS.md`) |
 
 ## Part 7. Property, building and space
 

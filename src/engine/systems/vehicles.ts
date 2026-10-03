@@ -47,7 +47,7 @@ import { BC, BIKE_FEES, BIKE_INSURANCE, RV_FEES, RV_INSURANCE, CA_STATE, CMX, CT
 import { homeOf } from './earnings';
 import { owe, payFromBank, spend } from './household';
 import { mayDrive, type VehicleClass } from './documents';
-import { gone, mayBeStolen, stolenNow } from './theft';
+import { gone, hasGarage, mayBeBrokenInto, mayBeStolen, stolenNow } from './theft';
 import { tireFactor, tireInsuranceFactor, tiresMonth } from './tires';
 import { byRoad as roadBetween, drive } from './driving';
 import { registerWraps } from './wraps';
@@ -107,6 +107,8 @@ export interface OwnedVehicle {
   winterTires?: import('./tires').WinterTires;
   /** Stolen, and when it comes back where it was found (`systems/theft.ts`, from 2026-09-30). */
   stolen?: { at: Instant; recoverAt?: Instant };
+  /** Where it's kept overnight, from 2026-10-03, where its owner says (`systems/theft.ts`). */
+  keptIn?: 'garage' | 'street';
   /** An unscheduled repair it needs, and a garage that has it (`systems/repairs.ts`, from 2026-10-01). */
   fault?: import('./repairs').Fault;
   /** A stereo fitted (`systems/caraudio.ts`, from 2026-10-02), and speakers and an amplifier (from 2026-10-03). */
@@ -702,6 +704,15 @@ export function registerVehicles(sim: Simulation): void {
   registerStandIn(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerCarCare(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
   registerInteriors(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)));
+  // Where it's kept overnight, which in England and Wales sets its theft and break-in odds (`systems/theft.ts`, from 2026-10-03).
+  sim.onCommand<{ vehicleId: string; where: 'garage' | 'street' }, { keptIn: 'garage' | 'street' }>('vehicle.keep_in', (p, { sim: s }) => {
+    const v = vehiclesOf(s.player).find((x) => x.id === String(p?.vehicleId) && x.soldAt === undefined);
+    if (!v) throw new CommandError('That isn’t a car you have.');
+    if (p?.where !== 'garage' && p?.where !== 'street') throw new CommandError('In the garage or on the street.');
+    if (p.where === 'garage' && !hasGarage(s.player)) throw new CommandError('Your home has no garage.');
+    v.keptIn = p.where;
+    return { keptIn: p.where };
+  });
   registerWraps(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!, (v) => liabilityOffered(v.jurisdiction, modelById(v.modelId)!));
   registerRepairs(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
   sim.onSchedule(REPO_SALE_KIND, (item, s) => {
@@ -726,6 +737,7 @@ export function registerVehicles(sim: Simulation): void {
     // Stolen this month, at the place's rate, or back where it was found (`systems/theft.ts`).
     if (v.stolen?.recoverAt !== undefined && v.stolen.recoverAt <= s.now) delete v.stolen;
     mayBeStolen(s, person, v, m, valueOf(v, s.now), m.currency);
+    mayBeBrokenInto(s, person, v, m, valueOf(v, s.now), m.currency);
     if (v.soldAt !== undefined) return;
     const missing = stolenNow(v, s.now);
     // Insurance, the month's share of the year.

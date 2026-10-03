@@ -36,6 +36,7 @@ import { MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
 import { faultCost, inShopNow, laidUp, repairRefusal, shopsFor } from '@/engine/systems/repairs';
 import { duesOf, joinRefusal, tierById, tiersFor } from '@/engine/systems/roadside';
 import type { RoadsideTier } from '@/engine/content/roadside';
+import { englandRate, hasGarage, keptIn } from '@/engine/systems/theft';
 import { FINISHES, PART_LABEL as WRAP_PART_LABEL, WRAP_COLORS, WRAP_PARTS, coverRefusal, removalCost, unwrapRefusal, wrapCost, wrapRefusal, wrapShopsIn, type Finish, type WrapPart } from '@/engine/systems/wraps';
 import { inWarranty, serviceCost, serviceDue, serviceRefusal, serviceWhat, servicingKept, warrantyOf } from '@/engine/systems/carcare';
 import { CAR_SHOPS } from '@/engine/content/carshops';
@@ -153,6 +154,7 @@ export function VehiclesWorkspace() {
                             <ServiceControl v={v} />
                             <WrapControl v={v} />
                             <CoverControl v={v} />
+                            <KeptControl v={v} />
                             <ModifyControl v={v} />
                             {!v.hitch && towRating(v) > 0 && <Gated feature="vehicle.hitch" className="btn btn-sm btn-ghost" disabled={Boolean(hitchRefusal(sim, person, v))} title={hitchRefusal(sim, person, v) ?? `Rated to tow ${Math.round(towRating(v))} kg`} onClick={() => { const a = run<{ paid: number }>('vehicle.hitch', { vehicleId: v.id }); if (a.ok) toast(`A towbar fitted, for ${money(a.value!.paid)}.`, 'positive'); }}>Fit A Towbar</Gated>}
                             {v.transferBy !== undefined && <Gated feature="vehicle.transfer" className="btn btn-sm btn-ghost" title={laidUp(v, sim.now) ?? `Due by ${formatDate(v.transferBy, sim.zone)}`} onClick={() => { const a = run<{ penalty: number }>('vehicle.transfer', { vehicleId: v.id }); if (a.ok) toast(a.value!.penalty ? `Transferred, with a late penalty of ${money(a.value!.penalty)}.` : 'Transferred to you.', 'positive'); }}>Transfer It To You</Gated>}
@@ -651,6 +653,26 @@ function WrapControl({ v }: { v: OwnedVehicle }) {
       <Gated feature="vehicle.wrap" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ paid: number }>('vehicle.wrap', { vehicleId: v.id, shopId: shop.id, color, finish, part: chosen }); if (a.ok) toast(`At ${shop.name} to be wrapped, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>Wrap It</Gated>
       </>}
     </>
+  );
+}
+
+/** Where a car is kept overnight, in England and Wales, where the Crime Survey sets its odds by it (`systems/theft.ts`). */
+function KeptControl({ v }: { v: OwnedVehicle }) {
+  const { run } = useGame();
+  const person = useWorld((s) => s.player);
+  const keep = useFeature('vehicle.keep_in');
+  if (!/^uk-(eng|wls)-/.test(v.at ?? v.cityId)) return null;
+  const where = keptIn(person, v);
+  const odds = (w: 'garage' | 'street') => `${(englandRate('of', w) / 100).toFixed(2)} stolen and ${(englandRate('from', w) / 100).toFixed(1)} broken into a 1,000 a year`;
+  return (
+    <div className="field" style={{ margin: 0 }}>
+      <label htmlFor={`kept-${v.id}`}>Kept Overnight</label>
+      <select id={`kept-${v.id}`} value={where} disabled={!keep.open} title={keep.reason ?? odds(where)} onChange={(e) => run('vehicle.keep_in', { vehicleId: v.id, where: e.target.value })} style={{ width: 'auto' }}>
+        <option value="street">On The Street</option>
+        {hasGarage(person) && <option value="garage">In Your Garage</option>}
+      </select>
+      <span className="xs dim">{odds(where)}</span>
+    </div>
   );
 }
 

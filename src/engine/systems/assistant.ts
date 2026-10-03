@@ -43,6 +43,7 @@ export const ASSISTANT_COMMANDS: Readonly<Record<string, { does: string; payload
   'vehicle.buy': { does: 'Buy a vehicle where you live', payload: '{ modelId: string, age?: years, financed?: boolean, months?: number, coverage?: "full" | "liability" }' },
   'vehicle.refuel': { does: 'Fill a vehicle at a station in its town, or charge an electric one, publicly or at home', payload: '{ vehicleId: string, home?: boolean }' },
   'vehicle.wrap': { does: 'Wrap a car you own, or its roof, hood or accent panels, at a wrap shop', payload: '{ vehicleId: string, shopId: string, color: string, finish: string, part?: "full" | "roof" | "hood" | "accents" }' },
+  'vehicle.keep_in': { does: 'Say where a car is kept overnight, in your garage or on the street', payload: '{ vehicleId: string, where: "garage" | "street" }' },
   'vehicle.unwrap': { does: 'Have a wrap taken off at a shop that posts its price', payload: '{ vehicleId: string, shopId: string }' },
   'vehicle.stereo': { does: 'Fit a stereo to a car you own', payload: '{ vehicleId: string }' },
   'home.renovate': { does: 'Start a project on a home you own', payload: '{ homeId: string, projectId: string }' },

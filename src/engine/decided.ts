@@ -40,7 +40,7 @@ import { startingDocuments } from './systems/documents';
 import { passesTest } from './systems/licensing';
 import { flightFate } from './systems/journey';
 import { airlineAtFault } from './systems/compensation';
-import { mayBeStolen } from './systems/theft';
+import { mayBeBrokenInto, mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
 import { onTheRoad } from './systems/roadside';
 import { machinesDay } from './systems/appliancefaults';
@@ -1371,3 +1371,18 @@ for (const what of ['water', 'gas'] as const) {
     },
   });
 }
+
+defineDecider<{ sim: Simulation; car: number }, string>({
+  id: 'vehicle.break_in',
+  decides: 'A car with a stereo in England or Wales broken into in a month or not, at the Crime Survey’s thefts from vehicles where it’s kept (THEFT.englandWales); swept at even odds, the real ones being small.',
+  drawnIn: 'src/engine/systems/theft.ts',
+  reads: {
+    car: (o, t) => ({ ...o, car: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), car: seed }),
+  decide: ({ sim, car }) => {
+    const v = { id: `car-${car}`, modelId: 'gb-ford-puma', jurisdiction: 'GB', cityId: 'uk-eng-london', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0, stereo: true } as unknown as OwnedVehicle;
+    return mayBeBrokenInto(sim, sim.player, v, modelById(v.modelId)!, 0, 'GBP', 0.5) ? 'broken into' : 'left alone';
+  },
+});

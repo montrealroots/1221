@@ -19,9 +19,26 @@
  *   thefts a year per 1,000 households owning one (year to March 2026), taken
  *   as an owner's; found again at Toronto Police's 1% (2014 to 2025, the only
  *   share published), else gone. No other place's rate is published.
- * Connecticut's, British Columbia's, London's, Ireland's and Mexico City's
- * counts come without a count of vehicles to set them against, and none is
- * drawn there.
+ * Connecticut's, British Columbia's, Ireland's and Mexico City's counts come
+ * without a count of vehicles to set them against, and none is drawn there.
+ *
+ * **England and Wales, by where it's kept**, from 2026-10-03
+ * (`research-watches-pawn-parking.json`): the Crime Survey's thefts of
+ * vehicles, 3.42 a year per 1,000 vehicle-owning households, and thefts
+ * from them, 19.05 (year to March 2026), taken as a car's; the share of the
+ * year before's incidents at home off the street (50.9% of thefts of, 41%
+ * of thefts from) and on the street at home (16.1%, 39.1%), over the share
+ * of cars kept there overnight (the National Travel Survey's NTS0908,
+ * England 2024: 72.4% off the street, a garage or a drive, and 24.6% on
+ * it), and the incidents away from home at their own share for every car.
+ * Kept off the street, a car is stolen at 3.54 a 1,000 and broken into at
+ * 14.6; on the street, 3.37 and 34.1. A garage and a drive are taken
+ * together, the survey's garage alone resting on some fourteen incidents.
+ * A car is kept in its owner's garage where their home has one, on the
+ * street otherwise, or where they say. Broken into, it loses what's fitted
+ * worth taking, its stereo and the speakers and amplifier with it, paid
+ * under full cover to the stereo's cap; one with nothing fitted isn't drawn,
+ * nothing of the owner's being in it to take.
  *
  * Recovered at the published share (Ontario's 51%, Équité 2025), or Canada's
  * 59% for an American car, the US publishing none: SLATE's estimate. A car
@@ -50,15 +67,43 @@ export const THEFT = {
   california: 136_988 / 36_190_654 * 1e5,
   ontario: 19_319 / 8_800_000 * 1e5,
   bicycleEngland: 17.6 / 1_000 * 1e5,
+  /** England and Wales, a year per 1,000, and the shares that place them: theft of a vehicle and from one. */
+  englandWales: {
+    of: { perYear: 3.42, offStreet: 0.509, street: 0.161 },
+    from: { perYear: 19.05, offStreet: 0.033 + 0.377, street: 0.391 },
+    kept: { offStreet: 0.088 + 0.636, street: 0.246 },
+  },
   recovered: { ontario: 0.51, canada: 0.59, bicycle: 0.01 },
   recoverDays: 30,
 } as const;
 
+export type KeptIn = 'garage' | 'street';
+/** Where a car is kept overnight: where its owner says, or their garage where their home has one, else the street. */
+export function keptIn(person: Person | undefined, v: Pick<OwnedVehicle, 'keptIn'>): KeptIn {
+  if (v.keptIn) return v.keptIn;
+  return person && hasGarage(person) ? 'garage' : 'street';
+}
+/** Whether the home they own and live in has a garage. */
+export const hasGarage = (person: Person): boolean => {
+  const h = person.home;
+  return Boolean(h && h.kind === 'owned' && (person.homes ?? []).some((o) => o.id === h.homeId && o.facts.features.includes('garage')));
+};
+const englandOrWales = (city: string) => /^uk-(eng|wls)-/.test(city);
+/** A year's thefts of or from a car per 100,000 in England and Wales where it's kept: the place's own share and the share away from home. */
+export function englandRate(which: 'of' | 'from', where: KeptIn): number {
+  const e = THEFT.englandWales;
+  const r = e[which];
+  const away = 1 - r.offStreet - r.street;
+  const here = where === 'garage' ? r.offStreet / e.kept.offStreet : r.street / e.kept.street;
+  return (r.perYear / 1_000) * (away + here) * 1e5;
+}
+
 /** Thefts a year per 100,000 where a vehicle is kept, or nothing where none is published with a count of vehicles. */
-export function theftRate(v: Pick<OwnedVehicle, 'jurisdiction' | 'cityId' | 'at'>, m?: CarModel): number | undefined {
+export function theftRate(v: Pick<OwnedVehicle, 'jurisdiction' | 'cityId' | 'at' | 'keptIn'>, m?: CarModel, person?: Person): number | undefined {
   const city = v.at ?? v.cityId;
   if (m && pedaled(m)) return v.jurisdiction === 'GB' ? THEFT.bicycleEngland : undefined;
   switch (v.jurisdiction) {
+    case 'GB': return englandOrWales(city) ? englandRate('of', keptIn(person, v)) : undefined;
     case 'US-NY': return NYC.has(city) ? THEFT.nyc : THEFT.nyRest;
     case 'US-CA': return city === 'us-ca-losangeles' ? THEFT.losAngeles : THEFT.california;
     case 'CA-ON': return THEFT.ontario;
@@ -69,6 +114,25 @@ export function theftRate(v: Pick<OwnedVehicle, 'jurisdiction' | 'cityId' | 'at'
 /** Whether a kind's thefts are counted: not an ATV's, whose aren't published. A bicycle's and an e-bike's are, in Britain. */
 const counted = (m: CarModel) => (m.kind ?? 'car') !== 'atv';
 const pedaled = (m: CarModel) => m.kind === 'bicycle' || m.kind === 'ebike';
+
+/**
+ * A month's chance of a car in England or Wales broken into where it's kept,
+ * drawn (decider `vehicle.break_in`), for what's fitted worth taking: its
+ * stereo and the parts with it gone, paid to the stereo's cap under full
+ * cover. Whether it was broken into.
+ */
+export function mayBeBrokenInto(sim: Simulation, person: Person, v: OwnedVehicle, m: CarModel, value: Money, currency: string, odds?: number): boolean {
+  if (v.stolen || v.soldAt !== undefined || !englandOrWales(v.at ?? v.cityId) || pedaled(m) || !(v.stereo || v.audio?.length)) return false;
+  const rate = englandRate('from', keptIn(person, v));
+  if (sim.rng('vehicle.break_in', v.id, sim.now).next() >= (odds ?? 1 - Math.exp(-rate / 1e5 / 12))) return false;
+  const cur = saveCurrency(sim.universe);
+  const paid = stereoCover(sim, v, currency === cur ? value : exchange(value, currency, cur) ?? value);
+  delete v.stereo;
+  delete v.audio;
+  if (paid > 0) sim.post({ memo: `The ${m.make} ${m.model}’s stereo, stolen, paid by the insurer`, category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: paid }, { accountId: sim.nominalAccount('income', 'Insurance Paid').id, amount: -paid }] });
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Your Car Was Broken Into', body: `The ${m.make} ${m.model}’s stereo was taken${keptIn(person, v) === 'street' ? ' where it was parked on the street' : ''}.${paid > 0 ? ` Your full cover paid ${formatMoney(paid, cur)}.` : ' Liability cover pays nothing for it.'}`, importance: 60, route: '/workspace/vehicles' });
+  return true;
+}
 
 /** A stolen vehicle off the books: nothing more is owed on it. */
 export function gone(sim: Simulation, v: OwnedVehicle): void {
@@ -86,7 +150,7 @@ export const stolenNow = (v: OwnedVehicle, at: number) => Boolean(v.stolen && (v
  */
 export function mayBeStolen(sim: Simulation, person: Person, v: OwnedVehicle, m: CarModel, value: Money, currency: string, odds: { stolen?: number; recovered?: number } = {}): boolean {
   if (v.stolen || v.soldAt !== undefined || v.repossessed || !counted(m)) return false;
-  const rate = theftRate(v, m);
+  const rate = theftRate(v, m, person);
   if (rate === undefined) return false;
   const rng = sim.rng('vehicle.theft', v.id, sim.now);
   if (rng.next() >= (odds.stolen ?? 1 - Math.exp(-rate / 1e5 / 12))) return false;
