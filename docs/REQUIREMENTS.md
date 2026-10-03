@@ -195,7 +195,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 43m | Football field, solo and with friends | Partial, 2026-10-02 | three pitch sizes on the lot, turf at the published middle and a drainage base; Come Over To Play for any court or the pitch, at the game's METs, stopped by weather or dark; tests/courts.test.ts | Solo drills (no published MET for them); lights for a pitch; natural grass |
 | 44a–b | Space, ownership | Complete | `projectRefusal`, `mostFloor` | — |
 | 44c–d | Permission, structure, access | Partial / not implemented | permits | Refusal outcome; structural checks |
-| 44e–f | Explain and offer alternatives | Partial | projects hidden by type | Show them refused, with alternatives |
+| 44e–f | Explain and offer alternatives | Partial | from 2026-10-02 every project shown, one this kind of home doesn’t take refused with the kinds that do (`projectsFor`) | Alternatives beyond the kinds of home (a gym for a pool, say) |
 | 45a, c, i | Bed sizes by market, compatibility, use | Complete | content/beds.ts; tests/beds | More markets |
 | 45b, d–h, j–k | Materials, bedding, room fit, delivery, assembly, placement, cleaning, repair, resale | Partial or not implemented | — | The furniture lifecycle |
 

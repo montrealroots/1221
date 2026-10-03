@@ -26,7 +26,7 @@ import { lateDays, overrunOf } from '@/engine/systems/worksrisk';
 import { billsOf } from '@/engine/systems/household';
 import {
   HOME, askingPrice, assessedValue, borrowRefusal, closingCost, councilBand, councilTaxYear, daysListed, equityRoom, homeValue, listingsIn,
-  lifeOf, livingIn, loanBalance, marketRent, projectBid, projectBids, projectCost, minimumDown, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
+  lifeOf, livingIn, loanBalance, marketRent, projectBid, projectBids, projectCost, projectsFor, minimumDown, sellerFloor, offerFor, offerRefusal, owedOn, projectAdds, projectRefusal, rentersCouncilTax, saleNet, upkeepDay,
   type Listing, type OwnedHome, renewTenancy } from '@/engine/systems/homes';
 
 function save(seed: string, city = 'us-ct-newhaven'): Simulation {
@@ -378,6 +378,13 @@ describe('renovating', () => {
     expect(projectRefusal(sim, sim.player, owned, rebuild)).toBeUndefined();
     owned.facts.baths = owned.facts.beds + 1;
     expect(projectRefusal(sim, sim.player, owned, PROJECTS.find((p) => p.id === 'bath-add')!)).toMatch(/baths enough/);
+    // A project this kind of home doesn't take is shown refused, with the kinds that do (from 2026-10-02).
+    owned.facts.type = 'condo';
+    const offTypes = PROJECTS.filter((p) => !p.on.includes(owned.facts.type));
+    expect(offTypes.length).toBeGreaterThan(0);
+    const shown = projectsFor(sim, sim.player, owned);
+    expect(shown.length).toBe(PROJECTS.length);
+    expect(shown.find((x) => x.project.id === offTypes[0]!.id)!.refusal).toMatch(/^It’s done to a .*, not a condo\.$/);
   });
 });
 
