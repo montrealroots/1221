@@ -35,7 +35,7 @@ describe('the heat index', () => {
       if (!w || w.wetNow || w.temperatureC > FINE.highC || heatIndexC(w.temperatureC, w.humidity) <= FINE.highC) continue;
       sim.advanceTo(at);
       sim.player.currentLocationId = 'us-tx-houston';
-      expect(fineWeatherRefusal(sim, sim.player, 'sit out')).toMatch(/too hot/);
+      expect(fineWeatherRefusal(sim, sim.player, 'sit out', 1, 45)).toMatch(/too hot/);
       expect(trainingAt(sim, sim.player).where).not.toBe('run');
       found = true;
     }

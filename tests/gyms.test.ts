@@ -14,6 +14,7 @@ import { exchange } from '@/engine/content/currency';
 import { gymById } from '@/engine/content/gyms';
 import { gymHere, joinRefusal, joiningCost, leavingCost, taxed } from '@/engine/systems/gyms';
 import { TRAINING, swimRefusal, trainingAt } from '@/engine/systems/dwelling';
+import { addItem } from '@/engine/systems/items';
 
 const NY = 'America/New_York';
 const YEAR = 365.2425 * MS_DAY;
@@ -114,6 +115,9 @@ describe('a member’s gym', () => {
     sim.advanceTo(at(12, 10));
     expect(sim.execute({ kind: 'gym.join', payload: { gymId: 'mcburney-ymca', tier: 'Adult' } }).ok).toBe(true);
     expect(trainingAt(sim, sim.player)).toEqual({ where: 'gym', builds: TRAINING.gym });
+    // A swim is in a swimsuit of one's own (from 2026-10-03).
+    expect(swimRefusal(sim, sim.player)).toBe('You have no clean swimsuit to hand: one is bought with the clothes.');
+    addItem(sim, sim.player, { kind: 'test:swimsuit', label: 'Swimsuit', quantity: 1, condition: 1, at: { kind: 'person' }, acquiredAt: sim.now, garment: { kind: 'swimsuit', slot: 'active', care: 'wash', wears: 0, washes: 0 } });
     expect(swimRefusal(sim, sim.player)).toBeUndefined();
     // Shut, or in another town, it's as if there were none: whatever the home or the weather gives.
     const withoutIt = () => { const m = sim.player.gym; delete sim.player.gym; const r = trainingAt(sim, sim.player); sim.player.gym = m; return r; };

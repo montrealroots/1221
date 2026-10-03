@@ -1,0 +1,3923 @@
+{
+  "meta": {
+    "topic": "SLATE research: life gaps (restaurant reservations, television, hobby lessons and leagues, volunteering, acting prep, audition dress, child's day, household chores, police reports for lost documents, boating exam pass marks) in New York, Los Angeles, New Haven CT, London, Dublin, Toronto, Vancouver and Mexico City",
+    "date": "2026-10-03",
+    "method": "WebSearch to find each publisher; WebFetch, or curl with a browser user agent where WebFetch was refused, to read the publisher's own page. Public registration systems (ActiveNet estimate-price records for YMCA LA, City of Toronto and Vancouver Park Board; Resy's venue API behind resy.com) were read directly and count as the publisher's page. 'confirmed: true' means the figure was read on the publisher's own page (or a state body's page where noted) on 2026-10-03; 'confirmed: false' means it came from a search-engine summary or a third party, and the note says which. Nothing is invented or estimated; derived figures (such as session counts from date spans) are labelled in the note. Existing files were checked first: school hours, 2026-27 term dates and centre childcare prices are already in research-referrals-childday.json, and parkrun, running clubs and volunteering platforms are in research-clubs.json, so childDay here adds after-school programmes and fills gaps only. The hobby leagues are under hobbyLeagues.",
+    "currencies": "USD for US towns, GBP for London, EUR for Dublin, CAD for Toronto and Vancouver, MXN for Mexico City, unless an entry says otherwise.",
+    "related": [
+      "research-referrals-childday.json",
+      "research-clubs.json",
+      "research-relationships.json",
+      "research-restaurants.json",
+      "research-passports.json",
+      "research-boats.json"
+    ]
+  },
+  "reservations": [
+    {
+      "market": "OpenTable (all markets)",
+      "item": "Diner account suspended after repeated no-shows",
+      "figures": {
+        "noShowsToSuspend": 4,
+        "periodMonths": 12
+      },
+      "unit": "no-shows per 12 months",
+      "currency": null,
+      "url": "https://www.restaurantdive.com/news/opentable-launches-initiative-to-combat-diner-no-shows/602034/",
+      "date": "2026-10-03",
+      "published": "2021-06-22",
+      "confirmed": false,
+      "note": "Read on Restaurant Dive (third party): 'suspends diners who failed to show up for a reservation four times within 12 months'. OpenTable's own Terms (opentable.com/c/legal/terms-and-conditions) timed out on WebFetch and curl. A search summary of those Terms gave the same 4-in-12 rule plus 'cancel at least 30 minutes in advance'."
+    },
+    {
+      "market": "OpenTable (all markets)",
+      "item": "Minimum cancellation notice before OpenTable records a no-show",
+      "figures": {
+        "cancelAtLeastMinutesBefore": 30
+      },
+      "unit": "minutes",
+      "currency": null,
+      "url": "https://www.opentable.com/c/legal/terms-and-conditions/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "Search-engine summary of the OpenTable Terms of Use only. The page itself timed out. A restaurant's own card-hold policy can be stricter (see the restaurant entries)."
+    },
+    {
+      "market": "OpenTable (restaurant setting)",
+      "item": "Range a restaurant can set for how far ahead it takes bookings",
+      "figures": {
+        "minDays": 1,
+        "maxDays": 365
+      },
+      "unit": "days",
+      "currency": null,
+      "url": "https://support.opentable.com/s/article/apglossary?language=en_US",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "Search summary only. The support pages render with JavaScript, and WebFetch got only a loading shell."
+    },
+    {
+      "market": "OpenTable (restaurant setting)",
+      "item": "Credit-card hold: card details taken, nothing charged at booking, and the restaurant may charge a fee for a no-show or late cancellation",
+      "figures": {},
+      "unit": null,
+      "currency": null,
+      "url": "https://support.opentable.com/s/article/Manage-your-own-Cancellations-and-No-shows?language=en_US",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "Search summary only. The page is JavaScript-rendered and could not be read."
+    },
+    {
+      "market": "Resy (all markets)",
+      "item": "Cancellation and no-show fees are set by each restaurant and charged by hand, not automatically",
+      "figures": {
+        "feeDisbursementBusinessDays": 14
+      },
+      "unit": "business days",
+      "currency": null,
+      "url": "https://helpdesk.resy.com/how-do-i-charge-a-cancellation-or-no-show-fee-HJQXfP7Lu",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "Search summary of the Resy helpdesk. The page is JavaScript-rendered and could not be read. The fee amounts in the restaurant entries below were read directly."
+    },
+    {
+      "market": "Tock (all markets)",
+      "item": "Prepaid or deposit reservations cannot be cancelled through Tock and are final; free reservations can always be cancelled; each business sets its own policy",
+      "figures": {},
+      "unit": null,
+      "currency": null,
+      "url": "https://www.exploretock.com/help",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "Search summary only. Tock pages return 403 (Cloudflare)."
+    },
+    {
+      "market": "TheFork (Europe/LatAm)",
+      "item": "User deactivated after repeated no-shows",
+      "figures": {
+        "noShowsToDeactivate": 4,
+        "periodMonths": 12
+      },
+      "unit": "no-shows per 12 months",
+      "currency": null,
+      "url": "https://www.theforkmanager.com/en/blog/thefork-no-show-policy-update",
+      "date": "2026-10-03",
+      "published": "2024-09-30",
+      "confirmed": true,
+      "note": "Read on TheFork Manager's own blog: 'Users who register 4 no-shows in a 12-month period will be deactivated from the platform.'"
+    },
+    {
+      "town": "New York",
+      "item": "Carbone: booking window and deposit",
+      "figures": {
+        "daysAhead": 30,
+        "releaseTime": "10:00 AM ET",
+        "depositPerPersonLunch": 25,
+        "depositPerPersonDinner": 50,
+        "plusTax": true,
+        "depositAppliedToBill": true,
+        "refundIfCancelledBy": "12:00 PM on the day (dinner); at least 12 hours before (lunch)"
+      },
+      "unit": "per person",
+      "currency": "USD",
+      "url": "https://resy.com/cities/new-york-ny/venues/carbone",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Read from the venue's own Resy 'Need to Know' text, fetched from the Resy venue API that feeds resy.com (api.resy.com/3/venue?url_slug=carbone). If you cancel late, 'a portion of these fees will be donated to the Robin Hood Foundation'."
+    },
+    {
+      "town": "New York",
+      "item": "Le Bernardin: card required, cancellation fee",
+      "figures": {
+        "cancelNoticeHours": 48,
+        "feePerPerson": 150
+      },
+      "unit": "per person",
+      "currency": "USD",
+      "url": "https://resy.com/cities/new-york-ny/venues/le-bernardin",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "From the Resy Need to Know text: 'Credit card is required to make a reservation and cancellation policy is 48 hours prior to your reservation date to avoid $150 per person fee.'"
+    },
+    {
+      "town": "New York",
+      "item": "4 Charles Prime Rib: booking window, reservation fee, party-reduction fee",
+      "figures": {
+        "daysAhead": 21,
+        "releaseTime": "9 AM",
+        "reservationFeePerPerson": 5,
+        "reservationFeeAppliedToBill": false,
+        "guestReductionFeePerPerson": 50
+      },
+      "unit": "per person",
+      "currency": "USD",
+      "url": "https://resy.com/cities/new-york-ny/venues/4-charles-prime-rib",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Resy Need to Know text. Reselling a reservation is prohibited."
+    },
+    {
+      "town": "New York",
+      "item": "Via Carota: limited reservations, mostly walk-in",
+      "figures": {
+        "daysAhead": 30,
+        "releaseTime": "10 am"
+      },
+      "unit": "days",
+      "currency": null,
+      "url": "https://resy.com/cities/new-york-ny/venues/via-carota",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Resy Need to Know text."
+    },
+    {
+      "town": "New York",
+      "item": "Gramercy Tavern: booking window",
+      "figures": {
+        "daysAhead": 28,
+        "releaseTime": "noon",
+        "platform": "OpenTable or phone 212-477-0777"
+      },
+      "unit": "days",
+      "currency": null,
+      "url": "https://www.gramercytavern.com/reservations/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The restaurant's own page. It states no cancellation fee."
+    },
+    {
+      "town": "Los Angeles",
+      "item": "Felix Trattoria: booking window and late-cancellation fee",
+      "figures": {
+        "daysAhead": 7,
+        "releaseTime": "10am PT",
+        "cancelNoticeHours": 24,
+        "feePerPerson": 40,
+        "gracePeriodMinutes": 15,
+        "maxPartyOnline": 6
+      },
+      "unit": "per person",
+      "currency": "USD",
+      "url": "https://resy.com/cities/los-angeles-ca/venues/felix-trattoria",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Resy Need to Know text. Reducing the party by 50% or more forfeits the reservation."
+    },
+    {
+      "town": "Los Angeles",
+      "item": "Mother Wolf: booking window and table times",
+      "figures": {
+        "daysAhead": 14,
+        "releaseTime": "9am PT",
+        "maxParty": 8,
+        "tableTime1to2": "1h45",
+        "tableTime3to5": "2h",
+        "tableTime6plus": "2h30",
+        "wellnessFeePercent": 5
+      },
+      "unit": "days",
+      "currency": "USD",
+      "url": "https://resy.com/cities/los-angeles-ca/venues/mother-wolf",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Resy Need to Know text. It states no cancellation fee."
+    },
+    {
+      "town": "Los Angeles",
+      "item": "Jon & Vinny's Fairfax: table held after reservation time",
+      "figures": {
+        "holdMinutes": 15
+      },
+      "unit": "minutes",
+      "currency": null,
+      "url": "https://resy.com/cities/los-angeles-ca/venues/jon-and-vinnys",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Resy Need to Know text. Walk-ins and a cancellation list are also offered."
+    },
+    {
+      "town": "Los Angeles",
+      "item": "n/naka: Tock prepaid, release schedule",
+      "figures": {
+        "release": "every Sunday 10:00 am for the corresponding week one month ahead",
+        "partySizes": "2-4",
+        "depositsRefundable": false,
+        "sameDayCancelOrNoShowCharge": "full dinner price per person",
+        "menuPricePerPerson": 395,
+        "confirmAtLeastHoursAhead": 24
+      },
+      "unit": "per person",
+      "currency": "USD",
+      "url": "https://n-naka.com/more-information/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The restaurant's own page. The $395 excludes tax and gratuity."
+    },
+    {
+      "town": "Los Angeles",
+      "item": "Bestia: books through OpenTable",
+      "figures": {},
+      "unit": null,
+      "currency": null,
+      "url": "https://bestiala.com/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The site links to OpenTable but states no window or fee."
+    },
+    {
+      "town": "New Haven",
+      "item": "Frank Pepe Pizzeria Napoletana (Wooster St): no reservations",
+      "figures": {
+        "reservations": false,
+        "seating": "walk-in, first-come first-served"
+      },
+      "unit": null,
+      "currency": null,
+      "url": "https://pepespizzeria.com/locations/connecticut/frank-pepes-new-haven",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "FAQ on the restaurant's own page: 'No — the New Haven location is walk-in only'."
+    },
+    {
+      "town": "New Haven",
+      "item": "ZINC: books through OpenTable",
+      "figures": {},
+      "unit": null,
+      "currency": null,
+      "url": "https://www.opentable.com/r/zinc-new-haven",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From search results only. OpenTable pages time out, so no policy text was read."
+    },
+    {
+      "town": "London",
+      "item": "The Clove Club: booking window and cancellation fee",
+      "figures": {
+        "daysAhead": "up to three months, rolling",
+        "partySizeOnline": "1-6",
+        "cancelNoticeHours": 72,
+        "feePerPersonLunch": 125,
+        "feePerPersonDinner": 155,
+        "platform": "OpenTable"
+      },
+      "unit": "per person",
+      "currency": "GBP",
+      "url": "https://www.thecloveclub.com/reservations",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The restaurant's own reservations and FAQ pages. The fee also applies to party-size cuts and rescheduling inside 72h."
+    },
+    {
+      "town": "London",
+      "item": "Dishoom: booking rules",
+      "figures": {
+        "bookAnySizeBefore": "6pm",
+        "after6pmMinParty": 6
+      },
+      "unit": null,
+      "currency": null,
+      "url": "https://www.dishoom.com/reservations/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Own page: 'we keep most of our tables for walk-ins'. It states no deposit or fee. A search summary gave 'up to four months' ahead and '5:45pm', but neither was on the page read."
+    },
+    {
+      "town": "London",
+      "item": "The Ivy Collection (brasseries, not the original Ivy on West Street): booking window",
+      "figures": {
+        "daysAhead": "3 months",
+        "prepaymentEarliest": "2 weeks before",
+        "prepaymentLatest": "1 hour before"
+      },
+      "unit": null,
+      "currency": null,
+      "url": "https://ivycollection.com/faqs/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Own FAQ. The prepayment rule is for events. It states no no-show fee."
+    },
+    {
+      "town": "Dublin",
+      "item": "Variety Jones: booking window and late-cancellation charge",
+      "figures": {
+        "bookingBlocks": "three-month blocks, rolling",
+        "party1to4CancelNoticeHours": 48,
+        "party1to4FeePerPerson": 110,
+        "reductionOnArrivalFeePerPerson": 50,
+        "party5to6Deposit": 220,
+        "party5to6DepositNonRefundableNotice": "less than one week",
+        "platform": "SevenRooms"
+      },
+      "unit": "per person",
+      "currency": "EUR",
+      "url": "https://www.varietyjones.ie/info",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Dublin",
+      "item": "Chapter One: diary opens in blocks",
+      "figures": {
+        "diaryOpens": "blocks of 2 months",
+        "platform": "ResDiary"
+      },
+      "unit": null,
+      "currency": null,
+      "url": "https://chapteronerestaurant.com/reserve-a-table/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "It states no deposit or fee."
+    },
+    {
+      "town": "Toronto",
+      "item": "Alo: release day and cancellation charge",
+      "figures": {
+        "release": "first Tuesday of each month, 10 AM",
+        "cancelNoticeHours": 72,
+        "lateCancelCharge": "price of the tasting menu per guest",
+        "privateDiningCancelNoticeDays": 5,
+        "platform": "OpenTable (DINR for same-day)"
+      },
+      "unit": "per guest",
+      "currency": "CAD",
+      "url": "https://alorestaurant.com/reservations/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "item": "Canoe: booking window, card hold, no-show fee",
+      "figures": {
+        "daysAhead": "3 months",
+        "cancelNoticeHours": 24,
+        "noShowFeePerPersonLunch": 20,
+        "noShowFeePerPersonDinner": 35,
+        "cardRequired": true
+      },
+      "unit": "per person",
+      "currency": "CAD",
+      "url": "https://www.canoerestaurant.com/faqs/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Special-occasion dates have higher fees."
+    },
+    {
+      "town": "Toronto",
+      "item": "Nuna: card and late-cancellation fee for parties of 5 or more",
+      "figures": {
+        "cardRequiredFromParty": 5,
+        "cancelNoticeHours": 24,
+        "feePerPerson": 25
+      },
+      "unit": "per person",
+      "currency": "CAD",
+      "url": "https://resy.com/cities/toronto-on/venues/nuna-toronto",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Resy Need to Know text (venue API)."
+    },
+    {
+      "town": "Vancouver",
+      "item": "St. Lawrence: booking window and cancellation charge",
+      "figures": {
+        "daysAhead": "three months",
+        "cancelNoticeHours": 48,
+        "feePerGuest": 60,
+        "partyOver6CancelNoticeDays": 4,
+        "platform": "OpenTable"
+      },
+      "unit": "per guest",
+      "currency": "CAD",
+      "url": "https://www.stlawrencerestaurant.com/reserve",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Vancouver",
+      "item": "The American (bar): card hold for large parties and events",
+      "figures": {
+        "cardHeldForParty": "10+ or feature events",
+        "chargePerAbsentGuest": 10,
+        "lateArrivalMinutes": 30,
+        "tableLimitHours": 3.5
+      },
+      "unit": "per absent guest",
+      "currency": "CAD",
+      "url": "https://resy.com/cities/vancouver-bc/venues/the-american",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Resy Need to Know text. The cancellation wording is ambiguous ('if you cancel by noon the day prior'). The charge applies if more than half the party does not arrive within 30 min."
+    },
+    {
+      "town": "Mexico City",
+      "item": "Pujol: late-cancellation and no-show charge",
+      "figures": {
+        "cancelNoticeHours": 24,
+        "chargePerPerson2022": 2565
+      },
+      "unit": "per person",
+      "currency": "MXN",
+      "url": "https://www.sdpnoticias.com/negocios/cuanto-cuesta-cancelar-una-reservacion-en-pujol-y-niddo-sale-caro-decirle-que-no-al-mole-madre/",
+      "date": "2026-10-03",
+      "published": "2022-09-08",
+      "confirmed": false,
+      "note": "Third party (SDP Noticias, 2022). Pujol's own FAQ (pujol.com.mx/eng/preguntas_frecuentes/cuales-son-sus-politicas-de-cancelacion/) returned 403/429. A search summary of that FAQ said 24h notice and 'USD 100 per person' or 'the cost of the menu per person'. The figures conflict, so the current amount is unverified."
+    },
+    {
+      "town": "Mexico City",
+      "item": "Quintonil: prepaid deposit on Tock",
+      "figures": {
+        "depositPerPerson": 3000,
+        "refundable": false,
+        "changesNoticeHours": 72
+      },
+      "unit": "per person",
+      "currency": "MXN",
+      "url": "https://www.exploretock.com/quintonil",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "Search summary only. Tock returns 403. Quintonil's own site confirms only that bookings are made through its Tock reservations section, not by email."
+    },
+    {
+      "town": "Mexico City",
+      "item": "Contramar: books through OpenTable; phone line 10:00-20:00 daily; parties over 7 by email",
+      "figures": {
+        "largePartyThreshold": 7
+      },
+      "unit": null,
+      "currency": null,
+      "url": "https://contramar.com.mx/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The site states no window or fee. The '30 days ahead' claim seen elsewhere comes from Tripadvisor forums only."
+    }
+  ],
+  "television": [
+    {
+      "market": "United Kingdom",
+      "item": "Ofcom COSTA advertising limits on public service channels (ITV, STV, Channel 4, S4C, Channel 5)",
+      "figures": {
+        "psbDailyAvgMinPerHour": 7,
+        "psbPeak1800to2300AvgMinPerHour": 8,
+        "anyChannelMaxPerClockHour": 12,
+        "psbMaxBreakLength": "3 min 50 s, of which ads max 3 min 30 s"
+      },
+      "unit": "minutes of advertising per hour",
+      "currency": null,
+      "url": "https://wiggin.co.uk/insight/ofcom-publishes-a-statement-on-tv-ads-on-psb-channels/",
+      "date": "2026-10-03",
+      "published": "2023-09-28",
+      "confirmed": false,
+      "note": "Ofcom's own COSTA PDF returns 403 (Cloudflare). The 7 and 8 min PSB averages were read on Wiggin LLP (law firm); Ofcom decided on 2023-09-28 not to relax them. The 12-min clock-hour cap and the break-length figures come from a search summary of the COSTA PDF (last updated 28 April 2022). No 2025-26 change was found. Non-PSB daily average: Marketing Week (2011) reported 9 min/hour."
+    },
+    {
+      "market": "United States",
+      "item": "Ad-supported broadcast content per slot",
+      "figures": {
+        "halfHourContentMin": 21,
+        "hourContentMin": 44
+      },
+      "unit": "minutes of programme",
+      "currency": null,
+      "url": "https://variety.com/2022/tv/features/inventing-anna-gilded-age-tv-length-streaming-1235188062/",
+      "date": "2026-10-03",
+      "published": "2022-02-24",
+      "confirmed": true,
+      "note": "Variety (Michael Schneider): 'a half-hour (actually, 21 minutes with commercials) or an hourlong (e.g., 44 minutes plus ads) time slot'. Cable comedies were held to a '21-minute limit'. Streaming hour-long episodes run 'a full hour… 15 minutes more than your average drama on an ad-supported broadcast or cable channel'. Gilded Age episodes ran 46-56 min; Book of Boba Fett 39-61 min. Trade press, not a regulator: these are industry conventions, not rules."
+    },
+    {
+      "market": "United States",
+      "item": "Traditional runtime barriers",
+      "figures": {
+        "dramaMin": 42,
+        "comedyMin": 22
+      },
+      "unit": "minutes of programme",
+      "currency": null,
+      "url": "https://www.hollywoodreporter.com/tv/tv-news/tvs-age-entitlement-why-episodes-are-damn-long-1010621/",
+      "date": "2026-10-03",
+      "published": "2017-06-08",
+      "confirmed": true,
+      "note": "THR (Bryn Sandberg): 'once-sacrosanct runtime barriers, 42 minutes for dramas and 22 for comedies'. Netflix's Unbreakable Kimmy Schmidt ran 23-36 min (one episode 21 min); Westworld averaged 61 min."
+    },
+    {
+      "market": "United States",
+      "item": "Nielsen The Gauge, July 2026 (06/29-07/26/2026): share of TV usage",
+      "figures": {
+        "streamingPct": 49,
+        "broadcastPct": 19.5,
+        "cablePct": 18.7,
+        "otherPct": 12.8,
+        "youtubePct": 14.2
+      },
+      "unit": "percent of total TV time",
+      "currency": null,
+      "url": "https://www.nielsen.com/news-center/2026/tv-usage-kicks-usual-summer-slowdown-fueled-by-world-cup-and-streaming-in-nielsens-july-gauge-reports/",
+      "date": "2026-10-03",
+      "published": "2026-09-10",
+      "confirmed": true
+    },
+    {
+      "market": "United States",
+      "item": "BLS American Time Use Survey 2025: time watching TV",
+      "figures": {
+        "hoursPerDay": 2.6
+      },
+      "unit": "hours per day, persons 15+",
+      "currency": null,
+      "url": "https://www.bls.gov/news.release/atus.nr0.htm",
+      "date": "2026-10-03",
+      "published": "2026-06-25",
+      "confirmed": true,
+      "note": "'Watching TV was the leisure and sports activity that occupied the most time (2.6 hours per day)'."
+    },
+    {
+      "market": "United Kingdom",
+      "item": "Ofcom Media Nations 2026 (2025 data): broadcaster viewing per person per day",
+      "figures": {
+        "linearMinutesPerDay": 111,
+        "linearChangeMin": -14,
+        "allBroadcasterContentMinutesPerDay": 139,
+        "youtubeOnTVSetMinPerDay2025": 19
+      },
+      "unit": "minutes per person per day",
+      "currency": null,
+      "url": "https://www.ofcom.org.uk/siteassets/resources/documents/research-and-data/multi-sector/media-nations/2026/media-nations-2026-uk-report.pdf?v=423157",
+      "date": "2026-10-03",
+      "published": "2026-07-29",
+      "confirmed": false,
+      "note": "Ofcom returns 403. Linear 1h51 and all broadcaster content 2h19 come from a search summary. YouTube 19 min/day was read on TVBEurope and kaeltripton (third party). The 2025 edition (for 2024) gave broadcast TV on TV sets as 2h24/day for ages 4+, so the year-on-year comparison is unverified. Population base is likely 4+ (BARB)."
+    },
+    {
+      "market": "Ireland",
+      "item": "TAM Ireland / Nielsen Media Ireland: average daily TV viewing, 2025",
+      "figures": {
+        "minutesPerDay": 140
+      },
+      "unit": "minutes per day, adults 15+ in TV homes",
+      "currency": null,
+      "url": "https://www.tamireland.ie/top-50-tv-programmes-2025/",
+      "date": "2026-10-03",
+      "published": "2026-01",
+      "confirmed": true
+    },
+    {
+      "market": "Ireland",
+      "item": "TAM Ireland Q1 2026: average daily TV viewing",
+      "figures": {
+        "minutesPerDay": 145,
+        "livePct": 84,
+        "timeShiftedPct": 16
+      },
+      "unit": "minutes per day, adults 15+",
+      "currency": null,
+      "url": "https://www.tamireland.ie/tv-advertising-revenue-in-ireland-up-3-year-on-year-in-q1-2026/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "market": "Canada",
+      "item": "Numeris, Winter/Spring 2026 (Jan 5 - May 31, 2026): TV viewing",
+      "figures": {
+        "hoursPerWeek": 14,
+        "weeklyReachPct": 78,
+        "quebecFrancoHoursPerWeek": 21
+      },
+      "unit": "hours per week, persons 2+",
+      "currency": null,
+      "url": "https://www.numeris.ca/resources/numeris-insights/tv-viewing-trends-in-canada",
+      "date": "2026-10-03",
+      "published": "2026-06-18",
+      "confirmed": true,
+      "note": "A search summary attributed the same 14 h figure to Fall 2025 (thinktv)."
+    },
+    {
+      "market": "Mexico",
+      "item": "IFT ENCCA 2024: daily viewing among those who watch",
+      "figures": {
+        "openTVHoursPerDay": 2.3,
+        "openTVReachPct": 74,
+        "internetVideoHoursPerDay": 3,
+        "internetVideoReachPct": 55,
+        "sample": 8750
+      },
+      "unit": "hours per day, average among consumers",
+      "currency": null,
+      "url": "https://www.ift.org.mx/comunicacion-y-medios/comunicados-ift/es/en-mexico-74-de-las-personas-consumen-contenidos-audiovisuales-en-tv-abierta-y-55-por-internet",
+      "date": "2026-10-03",
+      "published": "2024-12-09",
+      "confirmed": true,
+      "note": "Comunicado 120/2024. The 2023 edition gave 2.5 h of open TV. No 2025 edition was found; the IFT has since been replaced by a new regulator."
+    }
+  ],
+  "hobbiesLessons": [
+    {
+      "town": "New York",
+      "provider": "YMCA of Greater New York – Cross Island YMCA",
+      "activity": "Adult swimming lessons (Stage 1 – Adult, age 17+)",
+      "format": "8-week group session, 1 day/week",
+      "price": {
+        "member": 223,
+        "programMember_nonMember": 335
+      },
+      "sessions": 8,
+      "minutesPerSession": 45,
+      "dayTime": "Fall II Nov 2–Dec 27 2026; Mon 7:00–7:45pm, Tue 7:00–7:45pm, Thu 9:00–9:45am or Thu 7:00–7:45pm (class size 7)",
+      "unit": "per 8-week session",
+      "currency": "USD",
+      "url": "https://register.ymcanyc.org/programs/J2",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Winter 2027 session rises to $239 member / $358 program member. Sessions count derived from 8-week date span."
+    },
+    {
+      "town": "Los Angeles",
+      "provider": "YMCA of Metropolitan Los Angeles – Ketchum-Downtown YMCA (401 S Hope St)",
+      "activity": "Adult swimming lessons (Swim Lessons: Adult 18+)",
+      "format": "Monthly group session",
+      "price": {
+        "member": 110,
+        "nonMember": 220
+      },
+      "sessions": null,
+      "minutesPerSession": 30,
+      "dayTime": "Oct 1–30 2026",
+      "unit": "per October session",
+      "currency": "USD",
+      "url": "https://anc.apm.activecommunities.com/ymcala/rest/activity/detail/estimateprice/336776",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Read from YMCA LA's ActiveNet registration system (activity 336776). 30-minute class length is from the ymcala.org adult-lessons page via search snippet, not read directly."
+    },
+    {
+      "town": "Los Angeles",
+      "provider": "YMCA of Metropolitan Los Angeles – Hollywood YMCA (1553 N Schrader Blvd)",
+      "activity": "Adult/Teen swimming lessons (12+)",
+      "format": "Monthly group session",
+      "price": {
+        "member": 75,
+        "nonMember": 150
+      },
+      "sessions": null,
+      "minutesPerSession": 30,
+      "dayTime": "Oct 2–23 2026 (Fridays)",
+      "unit": "per October session",
+      "currency": "USD",
+      "url": "https://anc.apm.activecommunities.com/ymcala/rest/activity/detail/estimateprice/336836",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "ActiveNet activity 336836. Lesson length and weekday were inferred from the date span and the YMCA LA program page, not shown in the fee record."
+    },
+    {
+      "town": "New Haven CT",
+      "provider": "Central Connecticut Coast YMCA – New Haven YMCA Youth Center",
+      "activity": "Swimming lessons (pre-school to adults)",
+      "format": "7-week group program",
+      "price": {
+        "member": 105,
+        "programParticipant": 210
+      },
+      "sessions": 7,
+      "minutesPerSession": 30,
+      "dayTime": "Fridays, 4:30–7:00pm block",
+      "unit": "per 7-week program",
+      "currency": "USD",
+      "url": "https://cccymca.org/locations/newhaven/swim/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The page says 'Lessons begin on May…', so the session listed may be a past one. Re-check before use."
+    },
+    {
+      "town": "London",
+      "provider": "Better (GLL) – Pancras Square Leisure, Camden",
+      "activity": "Adult swimming lessons (16+)",
+      "format": "Timetabled single lesson (pay per lesson)",
+      "price": {
+        "column1_Member": 3.5,
+        "column2_NonMember": 12,
+        "column3_PayAndPlayConcession": 9.4
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "As timetabled",
+      "unit": "per lesson",
+      "currency": "GBP",
+      "url": "https://www.better.org.uk/leisure-centre/london/camden/pancras-square/prices",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Table headers read 'Member / Non Member / Pay&Play Concession' with values £3.50 / £12.00 / £9.40. The mapping of values to headers is as printed and should be checked."
+    },
+    {
+      "town": "Dublin",
+      "provider": "Trinity Sport (Trinity College Dublin)",
+      "activity": "Adult swimming classes (beginner and intermediate)",
+      "format": "6-week group course",
+      "price": {
+        "member": 75,
+        "nonMember": 90
+      },
+      "sessions": 6,
+      "minutesPerSession": 30,
+      "dayTime": "From Tue 15 Sep 2026 or Thu 17 Sep 2026, 17:40–18:10 or 18:20–18:50",
+      "unit": "per 6-week course",
+      "currency": "EUR",
+      "url": "https://www.tcd.ie/sport/classes-and-courses/swimming-courses/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "provider": "City of Toronto Parks & Recreation – St. Lawrence Community Rec Centre",
+      "activity": "Adult Swim 1 (17+)",
+      "format": "9-week registered course",
+      "price": 140.19,
+      "sessions": 9,
+      "minutesPerSession": 60,
+      "dayTime": "Tue 2:00–3:00pm, Sep 29–Nov 24 2026",
+      "unit": "per course (fee code 'Swim-Intro-Adult 1-3 (9hr)')",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/toronto/rest/activity/detail/estimateprice/173327",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "City's ActiveNet registration system. Seniors 60+ get 50% off."
+    },
+    {
+      "town": "Toronto",
+      "provider": "City of Toronto Parks & Recreation – Agincourt Community Rec Centre",
+      "activity": "Adult Swim 1 (17+)",
+      "format": "9-week registered course",
+      "price": 70.1,
+      "sessions": 9,
+      "minutesPerSession": 30,
+      "dayTime": "Thu 6:15–6:45pm, Oct 1–Nov 26 2026",
+      "unit": "per course",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/toronto/rest/activity/detail/estimateprice/171633",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Session count derived from the weekly date span."
+    },
+    {
+      "town": "Vancouver",
+      "provider": "Vancouver Park Board – Kensington Pool",
+      "activity": "Adult and Teen Swimmer 1",
+      "format": "Registered weekly course (Fall Set 2)",
+      "price": {
+        "adult19to64": 115.92,
+        "teenOrSenior": 81.12,
+        "plusStandardCharge": 4.3
+      },
+      "sessions": 10,
+      "minutesPerSession": 40,
+      "dayTime": "Thu 11:00–11:40am, Oct 8–Dec 10 2026",
+      "unit": "per course",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/vancouver/rest/activity/detail/estimateprice/637049",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The adult fee is marked 'Taxable', so GST is extra. Session count derived from Thursdays in the date span."
+    },
+    {
+      "town": "Vancouver",
+      "provider": "Vancouver Park Board – Killarney Pool",
+      "activity": "Adult and Teen Swimmer 1",
+      "format": "Registered weekly course (Fall Set 1)",
+      "price": {
+        "adult19to64": 188.37,
+        "plusStandardCharge": 4.3
+      },
+      "sessions": null,
+      "minutesPerSession": 40,
+      "dayTime": "Thu 6:00–6:40pm, Sep 10–Dec 10 2026",
+      "unit": "per course",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/vancouver/rest/activity/detail/estimateprice/638577",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Mexico City",
+      "provider": "Sports Inc. (Maple 81, Santa María Insurgentes, Cuauhtémoc)",
+      "activity": "Adult swimming classes (14+)",
+      "format": "Monthly plan: 8 classes/month (2 per week)",
+      "price": 1090,
+      "sessions": 8,
+      "minutesPerSession": null,
+      "dayTime": "Adult hours Mon–Fri 06:00–10:00 and 18:00–21:00; Sat–Sun 06:00–08:00",
+      "unit": "per month ('desde', early-payment price)",
+      "currency": "MXN",
+      "url": "https://www.sportsinc.mx/clases-de-natacion/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The 'Plus' plan, with 8 classes plus gym, is from $1,390/month."
+    },
+    {
+      "town": "Mexico City",
+      "provider": "Alcaldía Venustiano Carranza – Centro Deportivo Plutarco Elías Calles / José María Pino Suárez",
+      "activity": "Swimming classes (children to adults)",
+      "format": "Monthly, 1 class per week",
+      "price": 262,
+      "sessions": 4,
+      "minutesPerSession": null,
+      "dayTime": null,
+      "unit": "per month",
+      "currency": "MXN",
+      "url": "https://www.chilango.com/noticias/conoce-en-donde-puedes-tomar-clases-de-natacion-por-menos-de-300/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a Chilango news article, not the alcaldía's own page, and the article's date is unknown. Ramón López Velarde charges $257/month."
+    },
+    {
+      "town": "New York",
+      "provider": "NYC Parks",
+      "activity": "Tennis court permit (no lessons)",
+      "format": "Season permit / single play",
+      "price": {
+        "adultSeasonPermit18to61": 100,
+        "seniorSeason62plus": 20,
+        "singlePlay1hr": 15,
+        "courtReservationPerHour": 15
+      },
+      "sessions": null,
+      "minutesPerSession": 60,
+      "dayTime": "2026 season",
+      "unit": "per season / per play",
+      "currency": "USD",
+      "url": "https://www.nycgovparks.org/permits/tennis-permits",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "IDNYC holders get 10% off the season permit. This is court access, not a lesson."
+    },
+    {
+      "town": "Los Angeles",
+      "provider": "City of LA Recreation & Parks – Pay Tennis",
+      "activity": "Tennis court hire (no lessons)",
+      "format": "Hourly court fee",
+      "price": {
+        "weekdayBefore4pm": 10,
+        "weekdayAfter4pm_weekends_holidays": 14,
+        "permitPerCourtHour": 20
+      },
+      "sessions": null,
+      "minutesPerSession": 60,
+      "dayTime": "Fees effective July 1 2026",
+      "unit": "per hour",
+      "currency": "USD",
+      "url": "https://recreation.parks.lacity.gov/sports/tennis/pay",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "New Haven CT",
+      "provider": "Bulldog Tennis Club at Yale's Cullman-Heyman Tennis Center (279 Derby Ave, West Haven)",
+      "activity": "Adult tennis clinic (beginner/intermediate/advanced)",
+      "format": "Monthly group clinic, 1:8 coach ratio",
+      "price": 200,
+      "sessions": 4,
+      "minutesPerSession": 90,
+      "dayTime": "Wed 6:00–7:30pm, Fall 2026 (from Aug 26)",
+      "unit": "per 4-week month",
+      "currency": "USD",
+      "url": "https://bulldogtennisclub.com/adult-clinic",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The page says the clinic is FULL for Fall 2026. The venue sits on the New Haven/West Haven line."
+    },
+    {
+      "town": "London",
+      "provider": "Better (GLL) – Islington Tennis Centre",
+      "activity": "Adult tennis course",
+      "format": "Weekly course by monthly direct debit (50 weeks a year)",
+      "price": 79.9,
+      "sessions": 4,
+      "minutesPerSession": 60,
+      "dayTime": "e.g. Level 1 Beginners: Mon 8–9am or Mon/Tue 7–8pm (indoor)",
+      "unit": "per month (member price)",
+      "currency": "GBP",
+      "url": "https://www.better.org.uk/leisure-centre/london/islington/islingtontc/tennis",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Casual coaching on Thu 12–1:30pm is £16.50 standard, £13.50 member, £7.50 concession. Sessions per month are approximate."
+    },
+    {
+      "town": "Dublin",
+      "provider": "Trinity Sport – Botany Bay courts",
+      "activity": "Adult tennis course",
+      "format": "6-week group course",
+      "price": {
+        "member": 80,
+        "nonMember": 100
+      },
+      "sessions": 6,
+      "minutesPerSession": 60,
+      "dayTime": "From Thu 15 Oct 2026: New Beginners 17:15–18:15 (other levels 75 min); Sat 17 Oct slots 09:00–14:00",
+      "unit": "per 6-week course",
+      "currency": "EUR",
+      "url": "https://www.tcd.ie/sport/classes-and-courses/tennis-courses/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "provider": "City of Toronto Parks & Recreation – Amesbury Community Centre",
+      "activity": "Clinic: Tennis – Hitting Spin Shots (19+)",
+      "format": "2-session clinic",
+      "price": 47.57,
+      "sessions": 2,
+      "minutesPerSession": 60,
+      "dayTime": "Sun 10:00–11:00am, Oct 18 and Oct 25 2026",
+      "unit": "per clinic",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/toronto/rest/activity/detail/estimateprice/193318",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "No regular adult group tennis course appeared in the City's fall listings, only short clinics."
+    },
+    {
+      "town": "Vancouver",
+      "provider": "West Point Grey Community Centre (Jericho Hill) via Vancouver Park Board registration",
+      "activity": "1.0–1.5 NTRP Adult Beginner Tennis Lessons",
+      "format": "Weekly group course",
+      "price": 266,
+      "sessions": 7,
+      "minutesPerSession": 60,
+      "dayTime": "Tue 7:15–8:15pm, Oct 27–Dec 8 2026",
+      "unit": "per course",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/vancouver/rest/activity/detail/estimateprice/624751",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Session count derived from Tuesdays in the date span."
+    },
+    {
+      "town": "Mexico City",
+      "provider": "Grand Tenis México",
+      "activity": "Adult group tennis classes",
+      "format": "Monthly group class",
+      "price": 1200,
+      "sessions": null,
+      "minutesPerSession": 120,
+      "dayTime": "Saturdays 10:00–12:00",
+      "unit": "per month",
+      "currency": "MXN",
+      "url": "https://www.tenismexico.com.mx/academia.html",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The price was read on the provider's page, but the page does not state the venue's address, so the Mexico City location is unverified."
+    },
+    {
+      "town": "Los Angeles",
+      "provider": "Guitar Center Hollywood (7425 Sunset Blvd)",
+      "activity": "Guitar/music lessons",
+      "format": "Private lessons, block of 4",
+      "price": {
+        "4x30min": 136,
+        "4x60min": 260
+      },
+      "sessions": 4,
+      "minutesPerSession": "30 or 60",
+      "dayTime": "By teacher availability",
+      "unit": "per 4-lesson block",
+      "currency": "USD",
+      "url": "https://stores.guitarcenter.com/ca/hollywood/110/lessons",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Dublin",
+      "provider": "Waltons New School of Music",
+      "activity": "Introducing Guitar for Adults",
+      "format": "10-week group course (max 8)",
+      "price": 230,
+      "sessions": 10,
+      "minutesPerSession": 60,
+      "dayTime": "Class 1: Mon 7–8pm, 28 Sep–7 Dec 2026; Class 2: Tue 6:30–7:30pm, 29 Sep–8 Dec 2026 (mid-term break week off)",
+      "unit": "per 10-week term",
+      "currency": "EUR",
+      "url": "https://www.newschool.ie/tuition/group-courses-for-beginners/introducing-guitar-for-adults/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "provider": "Long & McQuade – Danforth lesson centre (teacher Dan Pitt)",
+      "activity": "Guitar lessons",
+      "format": "Private lesson",
+      "price": 37,
+      "sessions": 1,
+      "minutesPerSession": 30,
+      "dayTime": "Teacher teaches Wed, Thu, Sat",
+      "unit": "per half hour",
+      "currency": "CAD",
+      "url": "https://www.long-mcquade.com/lessons/Ontario/Toronto/Danforth/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Rates on the page range from $37 to $40 per half hour depending on teacher."
+    },
+    {
+      "town": "Toronto",
+      "provider": "City of Toronto Parks & Recreation – Northwood Community Centre",
+      "activity": "Music: Guitar (19+)",
+      "format": "Registered weekly group course",
+      "price": 102.62,
+      "sessions": 9,
+      "minutesPerSession": 60,
+      "dayTime": "Sat 11:00am–12:00pm, Oct 3–Nov 28 2026",
+      "unit": "per course",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/toronto/rest/activity/detail/estimateprice/174165",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Same fee at Ethennonnhawahstihnen' CRC, Mon 7:45–8:45pm, Sep 28–Nov 30. Session count derived from the date span."
+    },
+    {
+      "town": "Vancouver",
+      "provider": "Long & McQuade – Vancouver lesson centre (teacher Christopher Giles)",
+      "activity": "Guitar lessons",
+      "format": "Private lesson",
+      "price": 34,
+      "sessions": 1,
+      "minutesPerSession": 30,
+      "dayTime": "Teacher teaches Tue, Wed, Thu",
+      "unit": "per half hour",
+      "currency": "CAD",
+      "url": "https://www.long-mcquade.com/lessons/British-Columbia/Vancouver/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Vancouver",
+      "provider": "Trout Lake Community Centre via Vancouver Park Board registration",
+      "activity": "Adult Group Guitar Beginners (19+)",
+      "format": "Weekly group course",
+      "price": 160.95,
+      "sessions": null,
+      "minutesPerSession": 30,
+      "dayTime": "Thu 8:05–8:35pm, Sep 17–Dec 10 2026",
+      "unit": "per course",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/vancouver/rest/activity/detail/estimateprice/624626",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "New York",
+      "provider": "Third Street Music School Settlement",
+      "activity": "Adult group piano or guitar class",
+      "format": "32-week group class",
+      "price": 650,
+      "sessions": 32,
+      "minutesPerSession": null,
+      "dayTime": null,
+      "unit": "per 32 weeks",
+      "currency": "USD",
+      "url": "https://musicanddance.thirdstreet.nyc/tuition-schedule-2025-2026",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a search snippet of the 2025-26 tuition schedule. The page did not render the figure when read. A $75 registration fee applies."
+    },
+    {
+      "town": "London",
+      "provider": "City Lit (Keeley Street)",
+      "activity": "Folk and pop guitar 1A",
+      "format": "11-week evening course",
+      "price": {
+        "full": 229,
+        "concession": 160
+      },
+      "sessions": 11,
+      "minutesPerSession": 90,
+      "dayTime": "Thu 19:45–21:15, 17 Sep–26 Nov 2026",
+      "unit": "per course",
+      "currency": "GBP",
+      "url": "https://www.citylit.ac.uk/courses/folk-and-pop-guitar-1a",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a search snippet. Course data loads by script and was not readable. Classical guitar 1A is the same fee, Tue 19:45–21:15 from 15 Sep 2026."
+    },
+    {
+      "town": "Mexico City",
+      "provider": "Ikalli Escuela de Música",
+      "activity": "Guitar course",
+      "format": "Monthly, 2-hour weekly class, max 4 students",
+      "price": 1950,
+      "sessions": 4,
+      "minutesPerSession": 120,
+      "dayTime": null,
+      "unit": "per month",
+      "currency": "MXN",
+      "url": "https://www.superprof.mx/blog/aprende-guitarra-en-cdmx/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a Superprof blog via search, not the school's own page."
+    },
+    {
+      "town": "New York",
+      "provider": "Art Students League of New York",
+      "activity": "Studio art classes (painting/drawing)",
+      "format": "Ongoing monthly class",
+      "price": {
+        "annualRegistrationFee": 100
+      },
+      "sessions": null,
+      "minutesPerSession": null,
+      "dayTime": null,
+      "unit": "per year (registration)",
+      "currency": "USD",
+      "url": "https://www.artstudentsleague.org/resources/how-to-get-started",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Only the $100 annual fee was read on the League's page. Monthly tuition (evening painting about $262.65–$442.90/month per search snippet) is unconfirmed. The class catalogue is script-rendered."
+    },
+    {
+      "town": "Los Angeles",
+      "provider": "Barnsdall Arts Center (City of LA Dept. of Cultural Affairs)",
+      "activity": "Adult painting (e.g. W1 Black and White Acrylic Portraiture; F1 The Oil Painting Parlour)",
+      "format": "8-week course",
+      "price": {
+        "regular": 96,
+        "senior": 72,
+        "labFee": "30 (W1) / 35 (F1)"
+      },
+      "sessions": 8,
+      "minutesPerSession": 180,
+      "dayTime": "Fall 2026 (Sep 8–Oct 31): Wed 10am–1pm (W1); Fri 10am–1pm (F1)",
+      "unit": "per 8-week course plus lab fee",
+      "currency": "USD",
+      "url": "https://barnsdallarts.lacity.gov/bac/fall2026/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Both courses are marked SOLD OUT. Registration is in person, cash or check."
+    },
+    {
+      "town": "New Haven CT",
+      "provider": "Creative Arts Workshop (80 Audubon St)",
+      "activity": "Working from a Live Model (draw or paint)",
+      "format": "Single drop-in session",
+      "price": 40,
+      "sessions": 1,
+      "minutesPerSession": 180,
+      "dayTime": "Tuesdays 6–9pm, Fall 2026 (e.g. 10/6, 10/20, 11/3, 11/17, 12/1, 12/15)",
+      "unit": "per session",
+      "currency": "USD",
+      "url": "https://creativeartsworkshop.org/courses/no-term/working-from-a-live-model-8/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "London",
+      "provider": "City Lit (Keeley Street)",
+      "activity": "Painting for beginners",
+      "format": "3-week evening course",
+      "price": {
+        "full": 179,
+        "senior": 143,
+        "concession": 116
+      },
+      "sessions": 3,
+      "minutesPerSession": 180,
+      "dayTime": "18:00–21:00, Sep 2026 runs (07–21 Sep, 15–29 Sep)",
+      "unit": "per course",
+      "currency": "GBP",
+      "url": "https://www.citylit.ac.uk/courses/painting-for-beginners",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a search snippet. Not readable directly."
+    },
+    {
+      "town": "Dublin",
+      "provider": "NCAD Centre for Continuing Education in Art & Design",
+      "activity": "DP102 Painting: Landscape and Cityscape (Introductory)",
+      "format": "22-week evening course",
+      "price": 400,
+      "sessions": 22,
+      "minutesPerSession": 150,
+      "dayTime": "Wednesdays (6:30–9pm per search snippet); term from 21 Sep",
+      "unit": "per course",
+      "currency": "EUR",
+      "url": "https://www.ncad.ie/continuing-education/cead-non-credit-course-description/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Fee, weeks and day were read on the page, but the 6:30–9pm time is from a search snippet. Also listed: Figure (DP105) €420, 22 weeks, Thu; Painting Processes (DP107) €375, 16 weeks, Mon. The page shows 'Join the Waitlist'."
+    },
+    {
+      "town": "Toronto",
+      "provider": "City of Toronto – Cedar Ridge Creative Centre",
+      "activity": "Advanced Portraiture Painting (18+)",
+      "format": "Registered weekly course",
+      "price": 169.53,
+      "sessions": null,
+      "minutesPerSession": 180,
+      "dayTime": "Mon 1:30–4:30pm, Sep 28–Nov 30 2026",
+      "unit": "per course (estimate price)",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/toronto/rest/activity/detail/estimateprice/191710",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "provider": "Art Gallery of Ontario",
+      "activity": "Contemporary Painting course",
+      "format": "5-week course",
+      "price": {
+        "member": 275,
+        "public": 315
+      },
+      "sessions": 5,
+      "minutesPerSession": null,
+      "dayTime": "Fridays, Mar 24–Apr 28 (year not stated)",
+      "unit": "per course",
+      "currency": "CAD",
+      "url": "https://ago.ca/learn/courses/contemporary-painting",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "The page sits behind Cloudflare and gave 403. The figure is from a search snippet and may be a past term."
+    },
+    {
+      "town": "Vancouver",
+      "provider": "Trout Lake Community Centre via Vancouver Park Board registration",
+      "activity": "ABC Acrylic Basics Covered (19+)",
+      "format": "Weekly course",
+      "price": 131.43,
+      "sessions": null,
+      "minutesPerSession": 120,
+      "dayTime": "Mon 7:00–9:00pm, Sep 14–Oct 19 2026",
+      "unit": "per course",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/vancouver/rest/activity/detail/estimateprice/624668",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Mexico City",
+      "provider": "Centro Cultural Pedregal",
+      "activity": "Pintura para adultos",
+      "format": "Monthly class package",
+      "price": {
+        "4classes": 1700,
+        "8classes": 3000
+      },
+      "sessions": "4 or 8",
+      "minutesPerSession": null,
+      "dayTime": null,
+      "unit": "per month",
+      "currency": "MXN",
+      "url": "https://centroculturalpedregal.mx/actividades/pintura-para-adultos/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a search snippet. The page returned no readable text."
+    },
+    {
+      "town": "New York",
+      "provider": "Broadway Dance Center",
+      "activity": "Adult open dance classes",
+      "format": "Drop-in single class / class packs",
+      "price": {
+        "single": 29,
+        "3pack": 79.5,
+        "5pack": 120,
+        "10pack": 230
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Per schedule",
+      "unit": "per class (single)",
+      "currency": "USD",
+      "url": "https://broadwaydancecenter.com/about/class-rates-policies",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Rates effective October 1, 2025. Single class expires 1 month after purchase."
+    },
+    {
+      "town": "Los Angeles",
+      "provider": "Millennium Dance Complex (Studio City)",
+      "activity": "Adult drop-in dance classes",
+      "format": "Drop-in single class / class books",
+      "price": {
+        "single": 23,
+        "proUnionSingle": 22,
+        "bookOf5": 110,
+        "bookOf10": 210
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Per schedule",
+      "unit": "per class (single)",
+      "currency": "USD",
+      "url": "https://www.millenniumdancecomplex.com/general-8-1",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "provider": "City Dance Corps (950 Dupont St)",
+      "activity": "Weekly open dance classes",
+      "format": "Class pack / membership",
+      "price": {
+        "10classPack": 275,
+        "monthToMonthStarter4classesPer4weeks": 117,
+        "topUpPerClassOnStarter": 29.25
+      },
+      "sessions": null,
+      "minutesPerSession": null,
+      "dayTime": "Per schedule",
+      "unit": "pack / per 4 weeks",
+      "currency": "CAD",
+      "url": "https://www.citydancecorps.com/prices",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Prices are plus HST. A single drop-in ($28 + HST per search snippet) was not visible on the page."
+    },
+    {
+      "town": "Vancouver",
+      "provider": "Kensington Community Centre via Vancouver Park Board registration",
+      "activity": "Adult Hip Hop Fundamentals (19+)",
+      "format": "Weekly course",
+      "price": 90,
+      "sessions": 6,
+      "minutesPerSession": 60,
+      "dayTime": "Tue 5:45–6:45pm, Nov 10–Dec 15 2026",
+      "unit": "per course",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/vancouver/rest/activity/detail/estimateprice/625331",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Vancouver",
+      "provider": "Tantra Fitness (Kitsilano and Mount Pleasant)",
+      "activity": "Pole/aerial/dance-fitness classes, including aerial yoga",
+      "format": "Drop-in",
+      "price": {
+        "allLocationsDropIn": 40,
+        "4classPunch": 150
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Per schedule",
+      "unit": "per class",
+      "currency": "CAD",
+      "url": "https://tantrafitness.com/pricing/drop-in/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Prices are plus GST."
+    },
+    {
+      "town": "Mexico City",
+      "provider": "AsereQ'Bola Academia de Baile (Narvarte, Condesa, Polanco, Roma, Del Valle)",
+      "activity": "Cuban salsa / bachata classes",
+      "format": "8-hour class package",
+      "price": 499,
+      "sessions": null,
+      "minutesPerSession": null,
+      "dayTime": "Schedule loads dynamically",
+      "unit": "per 8 hours",
+      "currency": "MXN",
+      "url": "https://www.clasessalsa.com/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "This is a pre-sale promotional price ('50% de descuento, preventa'), not the regular price."
+    },
+    {
+      "town": "New Haven CT",
+      "provider": "Elm City Dance Collective",
+      "activity": "Adult drop-in dance (contemporary/lyrical/jazz, 18+, prior experience)",
+      "format": "Drop-in",
+      "price": 20,
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": null,
+      "unit": "per class",
+      "currency": "USD",
+      "url": "https://www.elmcitydance.org/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a search snippet. The site returned no readable content."
+    },
+    {
+      "town": "London",
+      "provider": "Pineapple Dance Studios (Covent Garden)",
+      "activity": "Adult drop-in dance classes",
+      "format": "Drop-in",
+      "price": {
+        "typicalRange": "11–13"
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Per timetable",
+      "unit": "per class",
+      "currency": "GBP",
+      "url": "https://www.pineapple.uk.com/pages/dance-classes-for-adults-at-pineapple-dance-studios",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "Prices load by script and were not visible. The figures are from search snippets: Beginner Jazz Funk £13, Jazz £11, £2 membership included, and a 6-week Intro to Jazz course £89."
+    },
+    {
+      "town": "Dublin",
+      "provider": "Dublin Salsa Academy (Harbourmaster, IFSC)",
+      "activity": "Salsa/bachata beginner course",
+      "format": "4-week course",
+      "price": 55,
+      "sessions": 4,
+      "minutesPerSession": 60,
+      "dayTime": "Evenings Mon–Wed; new beginner classes starting 5, 6 and 7 Oct",
+      "unit": "per 4-week course",
+      "currency": "EUR",
+      "url": "https://www.dublinsalsacademy.com/courses",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "The page confirms 4- and 8-week plans and €5 social entry Mon–Wed. The €55 figure is from a search snippet, because the pricing page is script-rendered."
+    },
+    {
+      "town": "New York",
+      "provider": "Institute of Culinary Education – Recreational (225 Liberty St)",
+      "activity": "Recreational cooking class",
+      "format": "Single class",
+      "price": {
+        "ClassicHolidayDinner": 175,
+        "EssentialsOfJapaneseCooking": 150
+      },
+      "sessions": 1,
+      "minutesPerSession": {
+        "ClassicHolidayDinner": 360,
+        "EssentialsOfJapaneseCooking": 180
+      },
+      "dayTime": "Sat Nov 21, 2:00–8:00pm; Sun Jan 3, 4:00–7:00pm",
+      "unit": "per person",
+      "currency": "USD",
+      "url": "https://recreational.ice.edu/cooking-classes",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The page prints no year. The weekdays match Nov 2026 and Jan 2027, and also 2020/21, so it may be a stale cached list."
+    },
+    {
+      "town": "Los Angeles",
+      "provider": "Hipcooks East LA",
+      "activity": "Hands-on cooking class",
+      "format": "Single class",
+      "price": {
+        "PastaInCasa": 113,
+        "CiaoItaliaRisottos": 110,
+        "LetsGoToThailand": 92,
+        "LetsGoToIndia": 90
+      },
+      "sessions": 1,
+      "minutesPerSession": "120–180",
+      "dayTime": "Sun Oct 4 11am–2pm; Sat Oct 10 5–8pm; Sat Oct 24 6–8pm; Sun Oct 25 11am–1pm",
+      "unit": "per person",
+      "currency": "USD",
+      "url": "https://www.hipcooks.com/EastLA/classes/list",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Los Angeles",
+      "provider": "Sur La Table",
+      "activity": "In-store cooking class",
+      "format": "Single class",
+      "price": {
+        "startingFrom": 49
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": null,
+      "unit": "per person",
+      "currency": "USD",
+      "url": "https://www.surlatable.com/cooking-class-faq.html",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "This is the chain-wide FAQ ('start at $49; vary by location'), not an LA-specific listing."
+    },
+    {
+      "town": "New Haven CT",
+      "provider": "Olives and Oil (New Haven)",
+      "activity": "Pizza / pasta / mozzarella making class",
+      "format": "Single class",
+      "price": {
+        "pizzaOrPasta": 80,
+        "mozzarella": 70,
+        "decemberClasses": 70
+      },
+      "sessions": 1,
+      "minutesPerSession": 120,
+      "dayTime": "Every other Saturday 3–5pm (mozzarella: last Saturday of the month 3–5pm)",
+      "unit": "per person",
+      "currency": "USD",
+      "url": "https://www.olivesandoil.com/classes",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "London",
+      "provider": "Divertimenti Cookery School (Knightsbridge)",
+      "activity": "Hands-on cookery class",
+      "format": "Single class",
+      "price": {
+        "SeasonalDinnerPartyAutumn": 160,
+        "AutumnFermentationWorkshop": 145
+      },
+      "sessions": 1,
+      "minutesPerSession": {
+        "SeasonalDinnerPartyAutumn": 210,
+        "AutumnFermentationWorkshop": 180
+      },
+      "dayTime": "Tue 6 Oct 2026 18:00–21:30; Wed 7 Oct 2026 18:30–21:30",
+      "unit": "per person",
+      "currency": "GBP",
+      "url": "https://www.divertimenti.co.uk/collections/hands-on-cookery-classes",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Dublin",
+      "provider": "Dublin Cookery School",
+      "activity": "Evening cookery course (demo and hands-on)",
+      "format": "Single evening class",
+      "price": {
+        "SpanishTapasAndPaella_7Oct": 105,
+        "JapaneseRamen_6Oct": 115,
+        "OnePotOnePan_20Oct": 105,
+        "SteaksSaucesSides_28Oct": 115
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Evenings, Oct–Dec 2026",
+      "unit": "per person",
+      "currency": "EUR",
+      "url": "https://www.dublincookeryschool.ie/courses/evening",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "provider": "City of Toronto – Rouge Valley Community Rec Centre",
+      "activity": "Cooking (19+)",
+      "format": "Registered weekly course",
+      "price": 135.15,
+      "sessions": 9,
+      "minutesPerSession": 120,
+      "dayTime": "Sat 2:45–4:45pm, Oct 3–Nov 28 2026",
+      "unit": "per course",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/toronto/rest/activity/detail/estimateprice/171640",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Session count derived from the date span."
+    },
+    {
+      "town": "Vancouver",
+      "provider": "Strathcona Community Centre via Vancouver Park Board registration",
+      "activity": "Afghani Cooking (19+)",
+      "format": "Single class",
+      "price": 20,
+      "sessions": 1,
+      "minutesPerSession": 120,
+      "dayTime": "Wed Oct 21 2026, 6:00–8:00pm",
+      "unit": "per person",
+      "currency": "CAD",
+      "url": "https://anc.ca.apm.activecommunities.com/vancouver/rest/activity/detail/estimateprice/626277",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "This is a subsidised community-centre class. The Dirty Apron's prices load by script, see worthChecking."
+    },
+    {
+      "town": "Mexico City",
+      "provider": "Tamales Madre (Liverpool 44-A, Juárez)",
+      "activity": "Tamal-making class",
+      "format": "Single class, max 6 people, Mon–Sat",
+      "price": 1500,
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Mon–Sat",
+      "unit": "per person",
+      "currency": "MXN",
+      "url": "https://mbmarcobeteta.com/talleres-de-cocina-cdmx/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a food writer's article, not the provider's page."
+    },
+    {
+      "town": "New York",
+      "provider": "New York Yoga",
+      "activity": "Yoga",
+      "format": "Drop-in",
+      "price": {
+        "single": 39,
+        "10classPack": 350,
+        "monthlyUnlimited": 299
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Per schedule",
+      "unit": "per class",
+      "currency": "USD",
+      "url": "https://www.newyorkyoga.com/index.php?content=pricing",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Los Angeles",
+      "provider": "CorePower Yoga – Hollywood",
+      "activity": "Yoga",
+      "format": "Membership (drop-in unconfirmed)",
+      "price": {
+        "allAccessMonthly": 199,
+        "introFirstMonth": 99
+      },
+      "sessions": null,
+      "minutesPerSession": null,
+      "dayTime": null,
+      "unit": "per month",
+      "currency": "USD",
+      "url": "https://www.corepoweryoga.com/yoga-studios/ca/los-angeles/hollywood",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Single drop-in of $34 is from a search snippet only and was not visible on the page."
+    },
+    {
+      "town": "New Haven CT",
+      "provider": "Breathing Room (216 Crown St)",
+      "activity": "Yoga",
+      "format": "Drop-in",
+      "price": {
+        "single": 26,
+        "5classCard": 100,
+        "monthlyUnlimited": 145
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Per schedule",
+      "unit": "per class",
+      "currency": "USD",
+      "url": "https://www.breathingroomct.com/pricing",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "London",
+      "provider": "Fierce Grace (London studios)",
+      "activity": "Hot yoga",
+      "format": "Drop-in",
+      "price": {
+        "single": 17,
+        "10classCard": 135,
+        "monthlyMembership": 108
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Per schedule",
+      "unit": "per class",
+      "currency": "GBP",
+      "url": "https://www.fiercegrace.com/memberships",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Triyoga (£25 drop-in per search) could not be read because it is script-rendered."
+    },
+    {
+      "town": "Dublin",
+      "provider": "yogahub (Phibsboro, Point Square, Camden, Castleknock, Blackrock and others)",
+      "activity": "Yoga / mat-based classes",
+      "format": "Drop-in single class pass",
+      "price": {
+        "single": 22,
+        "5classPass": 89,
+        "10classPass": 169
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Per schedule",
+      "unit": "per class",
+      "currency": "EUR",
+      "url": "https://yogahub.ie/pricing/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "provider": "Kula Yoga",
+      "activity": "Yoga",
+      "format": "Drop-in (in person)",
+      "price": 30,
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Per schedule",
+      "unit": "per class",
+      "currency": "CAD",
+      "url": "https://kulayoga.com/pricing/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Student rate $15. Octopus Garden closed in July 2023."
+    },
+    {
+      "town": "Mexico City",
+      "provider": "Blanco Yoga (Condesa)",
+      "activity": "Yoga",
+      "format": "Drop-in (clase suelta)",
+      "price": {
+        "single": 350,
+        "4classesMonth": 1330,
+        "unlimitedMonth": 3650
+      },
+      "sessions": 1,
+      "minutesPerSession": null,
+      "dayTime": "Per schedule",
+      "unit": "per class",
+      "currency": "MXN",
+      "url": "https://www.blancoyoga.com/condesa/",
+      "date": "2026-10-03",
+      "confirmed": true
+    }
+  ],
+  "hobbyLeagues": [
+    {
+      "town": "Dublin",
+      "provider": "FirmBalls – Spawell Powerleague, Dublin",
+      "activity": "5-a-side football league (8 teams)",
+      "format": "Weekly league",
+      "price": 60,
+      "weeks": null,
+      "gameNight": "Wednesday",
+      "time": "6:30pm and 7:30pm kick-offs; 54-minute games",
+      "unit": "per team per game",
+      "currency": "EUR",
+      "url": "https://www.firmballs.com/table/dublin-spawell-powerleague-centre/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The page does not state the season length."
+    },
+    {
+      "town": "Dublin",
+      "provider": "Trinity Sport (TCD) – Social Tag Rugby",
+      "activity": "Tag rugby, social",
+      "format": "8-week programme",
+      "price": 20,
+      "weeks": 8,
+      "gameNight": "Wednesday",
+      "time": "5:00–6:00pm, College Park, from 30 Sep 2026",
+      "unit": "per person",
+      "currency": "EUR",
+      "url": "https://www.tcd.ie/sport/social-sport--activities/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "These programmes appear aimed at TCD students. The same page lists a 5-a-side league at €140 per team of 7 (€20/person) for 8 weeks from 28 Sep 2026, but its time is 'weekdays 9–5pm', not a fixed night."
+    },
+    {
+      "town": "New Haven CT",
+      "provider": "New Haven Pickleball League (run with New Haven Parks & Recreation), Wilbur Cross High School courts",
+      "activity": "Pickleball team league",
+      "format": "Seasonal league (Fall 2026)",
+      "price": 30,
+      "weeks": "Sep 8 to early Nov 2026",
+      "gameNight": "Tue (beginner), Wed (advanced), Thu (intermediate)",
+      "time": "1-hour slots at 5:30, 6:30, 7:30 or 8:30pm",
+      "unit": "per player per session",
+      "currency": "USD",
+      "url": "https://nhvpickleball.com/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Mexico City",
+      "provider": "Pumas7 – Liga Futbol 7",
+      "activity": "Fútbol 7 amateur league (categoría libre)",
+      "format": "Tournament every 3 months, 12 jornadas",
+      "price": 1100,
+      "weeks": 12,
+      "gameNight": "Saturday league or Sunday league (choose one)",
+      "time": "Mornings between 9am and 1pm",
+      "unit": "per player, one-off fee (covers referee, pitch and registration); minimum 10 players per team plus $1,000 MXN refundable bond",
+      "currency": "MXN",
+      "url": "https://pumas7.com/informaci%C3%B3n%2Finscripciones",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Tournaments start Mar, Jun, Sep and Dec 2026."
+    },
+    {
+      "town": "London",
+      "provider": "GO Mammoth – Netball Vauxhall",
+      "activity": "Netball league, ladies recreational",
+      "format": "Weekly league",
+      "price": {
+        "individualPerWeek": 10.6,
+        "teamPerWeekPer10PersonSquad": 6.9
+      },
+      "weeks": "8–9",
+      "gameNight": "Tuesday",
+      "time": "Games between 6:00 and 8:00pm, from 29/09/2026; 40-minute fixtures",
+      "unit": "per player per week",
+      "currency": "GBP",
+      "url": "https://www.gomammoth.co.uk/netball/vauxhall/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The Wednesday league from 30/09/2026 is £9.40 individual / £6.30 team per week."
+    },
+    {
+      "town": "Los Angeles",
+      "provider": "Volo Sports",
+      "activity": "Kickball, Traditional (10v10 coed) – Oakwood Rec Center, Venice",
+      "format": "Weekly league",
+      "price": null,
+      "weeks": null,
+      "gameNight": "Tuesday",
+      "time": "7–10pm, starts 10/27/2026 (registration closes 10/16)",
+      "unit": null,
+      "currency": "USD",
+      "url": "https://www.volosports.com/los-angeles/kickball",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "Night, time and start were read on the page. The price is script-rendered and missing. A search snippet says LA leagues are about $95–$165 per player."
+    },
+    {
+      "town": "Vancouver",
+      "provider": "Urban Rec (Vancouver's Sport and Social Club)",
+      "activity": "Various (softball, flag football, volleyball)",
+      "format": "Seasonal league",
+      "price": {
+        "MaxFunFallBallSoftball": 105,
+        "SundayVancouverWestFlagFootball": 160,
+        "RichmondOvalCoed6sThursdayVolleyball": 145
+      },
+      "weeks": null,
+      "gameNight": "varies",
+      "time": null,
+      "unit": "per individual, tax included",
+      "currency": "CAD",
+      "url": "https://vancouver.urbanrec.ca/leagues",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a search snippet. League listings are script-rendered, and the league pages that could be read were from 2015 and 2022."
+    }
+  ],
+  "volunteering": [
+    {
+      "market": "US",
+      "item": "Formal volunteering, Sep 2022 to Sep 2023 (CPS Civic Engagement and Volunteering supplement)",
+      "volunteers": 75700000,
+      "rateOfAge16Plus": 0.283,
+      "totalHours": 4990000000,
+      "avgHoursPerVolunteerPerYear": 70,
+      "avgHoursPerVolunteer2017": 96.5,
+      "economicValueUSD": 167200000000,
+      "informalHelpingRate": 0.542,
+      "informalHelpers": 137500000,
+      "unit": "people / hours per year",
+      "currency": "USD",
+      "url": "https://www.census.gov/library/stories/2024/11/civic-engagement-and-volunteerism.html",
+      "date": "2026-10-03",
+      "period": "2022-09 to 2023-09",
+      "confirmed": true,
+      "note": "Census Bureau page (co-publisher with AmeriCorps). The americorps.gov page returned 403. 4.99bn / 75.7m works out to about 66; the publisher's own average is 70."
+    },
+    {
+      "market": "US",
+      "item": "Average hours by mode, 2023",
+      "inPersonOnlyShareOfFormalVolunteers": 0.82,
+      "avgHoursInPerson": 64,
+      "virtualOrHybridVolunteers": 13400000,
+      "avgHoursVirtualOrHybrid": 95,
+      "unit": "hours per year",
+      "currency": null,
+      "url": "https://www.globenewswire.com/news-release/2024/11/19/2983816/0/en/More-than-75-7-Million-People-Volunteered-in-America-AmeriCorps-Reports.html",
+      "date": "2026-10-03",
+      "period": "2022-09 to 2023-09",
+      "confirmed": false,
+      "note": "From AmeriCorps' press release as it appears in search results. The page itself was not read."
+    },
+    {
+      "market": "US",
+      "item": "Independent Sector value of a volunteer hour",
+      "value2025": 36.14,
+      "increaseOn2024": 0.039,
+      "announced": "2026-04-21",
+      "unit": "per hour",
+      "currency": "USD",
+      "url": "https://independentsector.org/research/value-of-volunteer-time/",
+      "date": "2026-10-03",
+      "period": "2025",
+      "confirmed": true
+    },
+    {
+      "market": "US",
+      "item": "Independent Sector value of a volunteer hour, prior year",
+      "value2024": 34.79,
+      "stateRange2025": {
+        "PuertoRico": 17.99,
+        "Mississippi": 28.39,
+        "DC": 54.77
+      },
+      "unit": "per hour",
+      "currency": "USD",
+      "url": "https://independentsector.org/blog/new-value-of-volunteer-time-2025-released/",
+      "date": "2026-10-03",
+      "period": "2024",
+      "confirmed": false,
+      "note": "The $34.79 comes from the title of the Independent Sector blog post in search results. The state range comes from secondary search snippets. Neither page was read."
+    },
+    {
+      "market": "UK (England)",
+      "item": "Community Life Survey 2024/25: volunteering rates",
+      "formalAtLeastMonthly": 0.17,
+      "formalAtLeastOnceLast12Months": 0.28,
+      "informalAtLeastMonthly": 0.24,
+      "informalAtLeastOnceLast12Months": 0.44,
+      "prior2023_24": {
+        "formalMonthly": 0.16,
+        "formalYearly": 0.278,
+        "informalMonthly": 0.24,
+        "informalYearly": 0.44
+      },
+      "unit": "share of adults",
+      "currency": null,
+      "url": "https://www.gov.uk/government/statistics/community-life-survey-202425-annual-publication/community-life-survey-202425-volunteering-and-charitable-giving",
+      "date": "2026-10-03",
+      "period": "2024/25 (released Dec 2025)",
+      "confirmed": true,
+      "note": "No hours figures in the CLS release. Covers England only."
+    },
+    {
+      "market": "UK (GB)",
+      "item": "NCVO Time Well Spent 2023 survey",
+      "sample": 7006,
+      "fieldwork": "2022-11-23 to 2022-12-06",
+      "shareOfLast12mVolunteersDoingSomeRemotely": 0.31,
+      "satisfiedShare": 0.92,
+      "likelyToContinue": 0.77,
+      "barrierMoreTimeThanCanCommit": 0.21,
+      "unit": "share",
+      "currency": null,
+      "url": "https://www.ncvo.org.uk/news-and-insights/news-index/key-findings-from-time-well-spent-2023/",
+      "date": "2026-10-03",
+      "period": "2022",
+      "confirmed": true
+    },
+    {
+      "market": "Canada",
+      "item": "GSS Giving, Volunteering and Participating 2023",
+      "formalVolunteeringRate": 0.32,
+      "formalVolunteers": "close to 11 million",
+      "formalHoursTotal": "approx 1.2 billion (down 28% from 2018)",
+      "overallVolunteerRate2023": 0.73,
+      "overallVolunteerRate2018": 0.79,
+      "informalRate2023": 0.66,
+      "informalRate2018": 0.74,
+      "informalHours2023": "nearly 3 billion",
+      "totalHours2023": 4100000000,
+      "totalHours2018": 5000000000,
+      "avgHoursPerVolunteerAllTypes2023": 173,
+      "avgHoursPerVolunteerAllTypes2018": 206,
+      "top10PctShareOfHours2023": 0.61,
+      "unit": "hours per year",
+      "currency": null,
+      "url": "https://www.statcan.gc.ca/o1/en/app/8239-volunteering-and-charitable-giving-canada-2018-2023",
+      "date": "2026-10-03",
+      "period": "2023",
+      "confirmed": true,
+      "note": "StatCan states no average hours per formal volunteer for 2023. 1.2bn / 11m gives about 109, which is derived and not published. The 41% formal rate for 2018 was in a fetch summary but not in the text extracted."
+    },
+    {
+      "market": "Canada",
+      "item": "GSS GVP 2018: formal volunteering hours by generation and organisation",
+      "avgHoursAllVolunteers": 206,
+      "formalRateAndHoursByGeneration": {
+        "iGen1996plus": [
+          0.52,
+          82
+        ],
+        "Millennials": [
+          0.4,
+          115
+        ],
+        "GenX": [
+          0.44,
+          120
+        ],
+        "Boomers": [
+          0.39,
+          153
+        ],
+        "Matures": [
+          0.32,
+          222
+        ]
+      },
+      "avgFormalHoursByOrgType": {
+        "hospitals": 111,
+        "religious": 110,
+        "sportsRecreation": 105,
+        "artsCulture": 104
+      },
+      "informalHelpingOthersAvgHours": 137,
+      "communityImprovementAvgHours": 45,
+      "topVolunteerThresholdHours": 132,
+      "unit": "hours per year",
+      "currency": null,
+      "url": "https://www150.statcan.gc.ca/n1/daily-quotidien/210423/dq210423a-eng.htm",
+      "date": "2026-10-03",
+      "period": "2018",
+      "confirmed": true,
+      "note": "Generation table from https://www150.statcan.gc.ca/n1/pub/11-627-m/11-627-m2021035-eng.htm."
+    },
+    {
+      "market": "Canada",
+      "item": "Time Use 2022: unpaid help to other households, community, organization-based volunteering",
+      "dailyAvgHoursPopulation": {
+        "total": 0.2,
+        "men": 0.1,
+        "women": 0.2
+      },
+      "unit": "hours per day",
+      "currency": null,
+      "url": "https://www150.statcan.gc.ca/n1/tbl/csv/45100104-eng.zip",
+      "date": "2026-10-03",
+      "period": "2022",
+      "confirmed": true,
+      "note": "StatCan table 45-10-0104, Canada, age 15+."
+    },
+    {
+      "market": "Ireland",
+      "item": "Census 2022 volunteering",
+      "volunteers": "more than 700,000",
+      "shareOfPopulation": 0.14,
+      "sportingOrgVolunteers": "almost 290,000 (6%)",
+      "highestCounty": "Leitrim 18%",
+      "lowest": "Dublin City and South Dublin 11%",
+      "rural": 0.15,
+      "urban": 0.13,
+      "irishCitizens": 0.15,
+      "nonIrishCitizens": 0.11,
+      "shareOfVolunteersAged45to64": 0.38,
+      "unit": "share of population",
+      "currency": null,
+      "url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsv/censusofpopulation2022spotlightseriesvolunteeringinireland/keyfindings/",
+      "date": "2026-10-03",
+      "period": "April 2022",
+      "confirmed": true,
+      "note": "No hours figure. 'Regularly' is not defined."
+    },
+    {
+      "market": "Mexico",
+      "item": "ENUT 2024: volunteer, community work and support to other households",
+      "avgWeeklyHours": {
+        "national": 6.9,
+        "women": 8,
+        "men": 5.5
+      },
+      "unit": "hours per week",
+      "currency": null,
+      "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/enut/enut2024_CP.pdf",
+      "date": "2026-10-03",
+      "period": "2024",
+      "confirmed": true,
+      "note": "Comunicado 121/25 (28 Aug 2025), Gráfica 3, population 12+. The figure combines volunteering with help to other households, so it is not formal volunteering alone. It is an average weekly time and most likely among participants."
+    },
+    {
+      "town": "New York",
+      "item": "New York Cares rules",
+      "orientation": "short on-demand digital orientation, required before signing up for projects",
+      "familyFriendlyAges": "5-13 with parent or guardian, max 2 children per adult",
+      "teenFriendlyAges": "14-17, solo or with parent",
+      "noShowRule": "failure to de-register 3+ times in 6 months may deactivate the account",
+      "opportunities": "1000+",
+      "unit": null,
+      "currency": null,
+      "url": "https://www.newyorkcares.org/volunteers",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Age rules from /youth-friendly and no-show rule from /policies. No project length is published on these pages."
+    },
+    {
+      "town": "Los Angeles",
+      "item": "L.A. Works rules",
+      "minimumAge": "opportunities always suitable for 18+; many also open to minors (minor waiver required)",
+      "cost": "free",
+      "cancellation": "Remove Me via the volunteer account",
+      "unit": null,
+      "currency": null,
+      "url": "https://www.laworks.com/faq",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Ireland (national)",
+      "item": "Volunteer Ireland Garda vetting",
+      "rule": "any role with access to children or vulnerable persons must be vetted; eVetting for over 16, ages 16-18 need parental consent",
+      "unit": null,
+      "currency": null,
+      "url": "https://www.volunteer.ie/garda-vetting/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Roscommon (Ireland)",
+      "item": "Volunteer Centre FAQ (I-VOL network)",
+      "minimumCommitment": "none: an hour a day, a month or a year",
+      "under18": "tell the coordinator, as some agencies set age limits",
+      "vetting": "only if the role involves regular access to children or vulnerable adults",
+      "unit": null,
+      "currency": null,
+      "url": "https://volunteerroscommon.ie/frequently-asked-questions/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Vancouver",
+      "item": "Greater Vancouver Food Bank volunteers",
+      "minimumAge": 15,
+      "orientation": "required, plus a criminal record check through GVFB; no drop-ins",
+      "referenceLetterAfterHours": 80,
+      "unit": "years / hours",
+      "currency": null,
+      "url": "https://foodbank.bc.ca/volunteer/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Used in place of Vantage Point (GoVolunteer.ca), which publishes no age or shift rules of its own."
+    },
+    {
+      "town": "Morelia (Mexico)",
+      "item": "Cruz Roja Mexicana, Morelia delegation",
+      "minimumAge": "over 8",
+      "courses": "free (Voluntariado en Emergencias, Con Mayor Cuidado, Comunidad Vida Saludable)",
+      "minimumHours": "none stated",
+      "unit": null,
+      "currency": "MXN",
+      "url": "https://www.cruzrojamorelia.org/institucion/voluntariado",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Monterrey (Mexico)",
+      "item": "Cruz Roja Mexicana, Nuevo León delegation",
+      "minimumAge": "ser mayor de edad (18)",
+      "unit": null,
+      "currency": null,
+      "url": "https://cruzrojanuevoleon.org/como-ayudar",
+      "date": "2026-10-03",
+      "confirmed": true
+    }
+  ],
+  "actingPrep": [
+    {
+      "market": "US (SAG-AFTRA TV/Theatrical, 2023 agreement)",
+      "item": "Self-tape turnaround and sides limits",
+      "turnaroundHours": 48,
+      "turnaroundHoursMinors": 72,
+      "weekendsHolidaysExcluded": true,
+      "maxPagesFirstTape": 8,
+      "maxPagesCallbackTapes": 12,
+      "memorizationRequired": false,
+      "unit": "hours / pages",
+      "currency": null,
+      "url": "https://www.sagaftra.org/sites/default/files/sa_documents/Contract%20Bulletin%20-%20Self%20Tapes.pdf",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "The SAG-AFTRA PDF returned 403. The figures come from search extracts of that bulletin (June 2024) and match Casting Networks/Backstage coverage. Not read on the publisher's page."
+    },
+    {
+      "market": "UK (Casting Directors' Guild / Equity / PMA / CPMA Code of Best Practice)",
+      "item": "Self-tape turnaround and page limits",
+      "minTurnaroundDays": 4,
+      "maxPagesIn4Days": 6,
+      "minTurnaroundDaysUpTo3Pages": 3,
+      "maxPagesFirstSelfTape": 6,
+      "maxRolesPerTape": 2,
+      "maxScenesPerRole": 2,
+      "maxVersionsPerScene": 2,
+      "fridayRequestDue": "following Tuesday (Wednesday if the Monday is a bank holiday); no requests sent on a bank-holiday Friday; Thursday before a bank-holiday Friday is due the following Wednesday",
+      "readerRequired": false,
+      "actorPaysForReader": false,
+      "unit": "days / pages",
+      "currency": null,
+      "url": "https://spotlight-cmsmedia.s3-eu-west-1.amazonaws.com/media/2805/self-tape-code-of-practice.pdf",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "market": "Canada (ACTRA IPA)",
+      "item": "Self-tape sides notice and page limit",
+      "sidesNoticeHours": "24-48",
+      "maxPagesOrScenesFirstTape": "8 pages or 2 scenes, at producer's election",
+      "unit": "hours / pages",
+      "currency": null,
+      "url": "https://www.actratorontoperformers.com/new-audition-rules-what-performers-need-to-know/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a search extract only. The ACTRA Toronto page closed the socket on fetch."
+    },
+    {
+      "market": "US (Casting Networks guidance to casting)",
+      "item": "Recommended self-tape window",
+      "recommendedHours": "48-72",
+      "minimumHours": 24,
+      "unit": "hours",
+      "currency": null,
+      "url": "https://www.castingnetworks.com/news/what-to-ask-for-in-a-self-tape/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a search extract. Not fetched."
+    },
+    {
+      "market": "California",
+      "item": "Krekorian Talent Scam Prevention Act (AB 1319, Stats. 2009 ch. 286)",
+      "effective": "2010-01-01",
+      "provisions": "Lab. Code §1701(b) defines 'audition' (in person or electronic, live or recorded, before anyone with input into selection, including a casting director). §1702.1(a) bars advance-fee services from '(1) Procuring or attempting to procure an employment opportunity... (2) Procuring or attempting to procure an audition for an artist.' §1703 requires a talent-service bond.",
+      "bondAmount": 50000,
+      "unit": "USD bond",
+      "currency": "USD",
+      "url": "https://www.dir.ca.gov/dlse/2009legislation-afrts.html",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "market": "California",
+      "item": "DLSE opinion on casting director workshop fees (Lab. Code §450/§451)",
+      "workshopFeeRangePerSession": [
+        25,
+        50
+      ],
+      "cdHonorarium": [
+        100,
+        150
+      ],
+      "ruling": "A fee paid to audition before a CD, with little or no instruction, violates Lab. Code §450(b) and is a misdemeanor under §451",
+      "unit": "USD (2001-2002 figures)",
+      "currency": "USD",
+      "url": "https://www.dir.ca.gov/dlse/opinions/2002-01-22.pdf",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "New York",
+      "market": "New York City",
+      "item": "Actors Connection casting director classes (current listings)",
+      "prices": {
+        "Zoom intensive, M'Saada Nia CD": 79,
+        "Zoom feature film/TV intensive, Sig De Miguel CD": 89,
+        "In-person theatre intensive, Cindi Rush CD": 99,
+        "Zoom advanced TV intensive, Amanda Richards (Sony Pictures TV)": 129,
+        "Zoom advanced film/TV intensive, Christine Kromer CD": 129,
+        "Zoom 2-week class, Blaine Johnston": 179,
+        "Zoom 2-week class, Briana Dunlay CSA": 189,
+        "In-person 4-week on-camera class, Blaine Johnston": 229
+      },
+      "unit": "USD per class",
+      "currency": "USD",
+      "url": "https://www.actorsconnection.com/classes/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "New York",
+      "market": "New York City",
+      "item": "Actors Connection agent seminars",
+      "prices": {
+        "Zoom agent seminar": 49,
+        "Zoom agent seminar (CESD VP)": 79,
+        "In-person agent seminar": 59,
+        "Private agent-readiness consultation": 225,
+        "Actor support appointment": 40,
+        "Musical theatre agent night (3 agencies)": 189
+      },
+      "unit": "USD per session",
+      "currency": "USD",
+      "url": "https://www.actorsconnection.com/seminars/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "London",
+      "market": "London",
+      "item": "Actors' Guild of Great Britain casting workshops",
+      "prices": {
+        "3-hour in-person casting workshop (e.g. Kristina Erdely CSA, at Spotlight, 16 Garrick St)": 42,
+        "3-hour online casting workshop (e.g. Shakyra Dowling)": 39,
+        "1-hour one-to-one": 38,
+        "agent Q&A (45 min)": 0
+      },
+      "unit": "GBP per session",
+      "currency": "GBP",
+      "url": "https://www.actorsguild.co.uk/workshops/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "market": "UK",
+      "item": "Spotlight Performer membership",
+      "annual": 210,
+      "annualExVat": 175,
+      "monthlyDirectDebit": 19.2,
+      "monthlyExVat": 16,
+      "annualUSD": 235,
+      "monthlyUSD": 23.5,
+      "annualEUR": 196.5,
+      "monthlyEUR": 18.37,
+      "youngPerformerAnnualGBP": 136.5,
+      "unit": "per year / per month",
+      "currency": "GBP",
+      "url": "https://www.spotlight.com/memberships/performers/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The Young Performer price comes from a search extract of spotlight.com/memberships/young-performers/ and was not fetched."
+    },
+    {
+      "market": "US",
+      "item": "Actors Access PLUS",
+      "annual": 68,
+      "monthly": 9.99,
+      "sagAftraAnnual": 54.4,
+      "unit": "per year / per month",
+      "currency": "USD",
+      "url": "https://actorsaccess.freshdesk.com/support/solutions/articles/17000122056-actors-all-about-actors-access-plus",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "market": "Multi (US/CA/UK/EU/MX/AU/NZ/CO)",
+      "item": "Casting Networks Premium",
+      "annual": {
+        "US": 299.9,
+        "CA_USD": 299.9,
+        "UK_GBP": 99.9,
+        "EU_EUR": 109.99,
+        "MX_MXN": 1379.9,
+        "AU_AUD": 209.9,
+        "NZ_NZD": 209.9,
+        "CO_COP": 252999.9
+      },
+      "monthly": {
+        "US": 29.99,
+        "CA_USD": 29.99,
+        "UK_GBP": 9.99,
+        "EU_EUR": 10.99,
+        "MX_MXN": 137.99,
+        "AU_AUD": 20.99,
+        "NZ_NZD": 20.99,
+        "CO_COP": 25299.99
+      },
+      "freeTier": true,
+      "unit": "per year / per month",
+      "currency": "various (per key)",
+      "url": "https://support.castingnetworks.com/en/articles/11229313",
+      "date": "2026-10-03",
+      "confirmed": true
+    }
+  ],
+  "dressCode": [
+    {
+      "market": "US",
+      "item": "On-camera audition clothing (Backstage Experts)",
+      "statements": [
+        "\"If it's on camera, try to wear solid colors (no sparkles or logos).\"",
+        "\"Try to stay away from bright white and tiny stripes (which have a psychedelic effect when you move).\"",
+        "\"For drama, wear darker colors or earth tones.\" For comedy, brighter colours.",
+        "\"I'm not saying get into costume, but if you are going out for a corporate lawyer... don't come to the audition in a T-shirt and jeans.\"",
+        "\"Dress in something that gives the look of your character without looking like you're trying to wear a costume.\""
+      ],
+      "unit": null,
+      "currency": null,
+      "url": "https://www.backstage.com/magazine/article/backstage-experts-answer-actors-wear-auditions-8391/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "market": "Canada",
+      "item": "Self-tape production demands (ACTRA IPA)",
+      "statements": [
+        "No elaborate camera work, costumes, hair or make-up required of the performer"
+      ],
+      "unit": null,
+      "currency": null,
+      "url": "https://www.actratorontoperformers.com/new-audition-rules-what-performers-need-to-know/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a search extract only."
+    },
+    {
+      "market": "General",
+      "item": "Colours to avoid (secondary sources)",
+      "statements": [
+        "Avoid all black, all white or all red (bleed on camera)",
+        "Plain colours, no patterns, graphics or words"
+      ],
+      "unit": null,
+      "currency": null,
+      "url": "https://www.starnow.com/magazine/article/what-to-wear-to-an-acting-audition-78701/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From search extracts (StarNow and Bubblegum Casting). Not fetched."
+    }
+  ],
+  "childDay": [
+    {
+      "town": "New York",
+      "item": "COMPASS (DYCD Comprehensive After School System)",
+      "price": 0,
+      "detail": "Free for all families, grades K-12; elementary programs 3 hours/day, 5 days/week, 13 school holidays, 7 summer weeks; enrol via local provider or discoverDYCD.nyc",
+      "unit": "per child",
+      "currency": "USD",
+      "url": "https://www.nyc.gov/site/dycd/services/after-school/COMPASS_start-up2026.page",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "'Free for all families' was read on the page. The hours come from the search summary."
+    },
+    {
+      "town": "New York",
+      "item": "YMCA of Greater New York Y Afterschool (e.g. Greenpoint Y SACC, 3-6 PM)",
+      "price": null,
+      "detail": "Y says programs are offered at low or no cost (DOE/DYCD/Council/21st CCLC funded); no fee published",
+      "unit": null,
+      "currency": "USD",
+      "url": "https://ymcanyc.org/locations/greenpoint-ymca/programs-classes/kids-family/y-afterschool",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "The page shows hours (3-6 PM) and no price."
+    },
+    {
+      "town": "Los Angeles",
+      "item": "LA's BEST Expanded Learning Program (LAUSD)",
+      "price": 0,
+      "detail": "'LA's BEST has always been free for families'; all activities and materials included; school days from dismissal until 6:00 PM (hours per search summary); ~201 LAUSD elementary schools",
+      "unit": "per child",
+      "currency": "USD",
+      "url": "https://lasbest.org/programs/afterschool/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "New Haven",
+      "item": "Boys & Girls Clubs of Greater New Haven school-year membership (Sept-June, billed monthly)",
+      "prices": {
+        "single": 150,
+        "sibling2": 250,
+        "sibling3": 300,
+        "middleSchool_gr6_8": 30
+      },
+      "hours": "school dismissal to 6:00 PM; school-closure drop-in approx 8am-5pm; Care 4 Kids not accepted in school year",
+      "unit": "per month",
+      "currency": "USD",
+      "url": "https://bgcgnh.org/become-a-member/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "New Haven",
+      "item": "New Haven Afterschool Initiative (city + NHPS + BGCGNH etc.)",
+      "price": 25,
+      "detail": "free for low-income families, otherwise $25/week; Pre-K to grade 8; dismissal to 5:30 pm; 2,000 places (100 per school); registration opened Aug 17 2026",
+      "unit": "per week",
+      "currency": "USD",
+      "url": "https://www.wshu.org/connecticut-news/2026-08-14/ct-new-haven-free-affordable-afterschool-care",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From WSHU news; the city's page returned Access Denied. New Haven Independent (2026-09-29) reported funding for it is uncertain."
+    },
+    {
+      "town": "London",
+      "item": "Fleet Primary School (Camden) breakfast club and 3 Acres After School Club",
+      "prices": {
+        "breakfastBefore0830": 1,
+        "breakfastAfter0830": 0,
+        "afterSchool_subsidised_perChild": 5.5,
+        "afterSchool_subsidised_perFamily": 10,
+        "afterSchool_nonSubsidised_perChild": 7.5,
+        "afterSchool_nonSubsidised_perFamily": 15,
+        "afterSchool_dropIn_perChild": 4.5
+      },
+      "hours": "breakfast 8.00-8.45; after school club 3.30-6.00pm (3 Acres collects and escorts); holiday playscheme 8am-6pm",
+      "unit": "per day",
+      "currency": "GBP",
+      "url": "https://www.fleet.camden.sch.uk/virtual-office/breakfast-and-after-school-club",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "London",
+      "item": "England free breakfast clubs programme (DfE)",
+      "detail": "Free club open to all Reception-Y6 pupils, at least 30 minutes immediately before each school day. Schools may charge for time beyond the 30 minutes but at a lower fee, and must not add any charge that deters access. Phase 1 national rollout Apr 2026-Mar 2027 adds 2,000 schools to the 750 early adopters (£80m). Funding per school is either £1 per pupil per day plus £25/day fixed, or £3.23 per pupil per day plus £18.95/day fixed (two rates on the page; which schools get which was not checked), plus a £1,000 start-up grant.",
+      "price": 0,
+      "unit": "per child, first 30 minutes",
+      "currency": "GBP",
+      "url": "https://www.gov.uk/government/publications/free-breakfast-clubs-guidance-for-schools-and-trusts/free-breakfast-clubs-guidance-for-schools-and-trusts-for-phase-1-of-the-national-rollout-from-april-2026",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Dublin",
+      "item": "Little Learners Stay and Play after-school, Drumcondra D9",
+      "prices": {
+        "weekly_withSchoolCollection_hotMeal": 205,
+        "weekly_withSchoolDropOff": 235,
+        "campDay": 55
+      },
+      "detail": "38 school weeks; pro rata for 2-4 days",
+      "unit": "per week",
+      "currency": "EUR",
+      "url": "http://www.littlelearners.ie/after-school-introduction.html",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The page does not say which year these fees apply to, so they may be stale."
+    },
+    {
+      "town": "Dublin",
+      "item": "National Childcare Scheme universal subsidy and 2025-26 fee caps",
+      "subsidy": "€2.14/hour, up to 45 hrs/week (€96.30/wk max), children 24 weeks to under 15 at Tusla-registered DCDE-contracted providers",
+      "feeCaps2025_26": {
+        "under10h": 59,
+        "10to19h59": 118,
+        "20to29h59": 177,
+        "30to39h59": 236,
+        "40to49h59": 295
+      },
+      "unit": "per week",
+      "currency": "EUR",
+      "url": "https://www.citizensinformation.ie/en/education/pre-school-education-and-childcare/universal-childcare-subsidy/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Read on Citizens Information, a state body, not on ncs.gov.ie."
+    },
+    {
+      "town": "Toronto",
+      "item": "TDSB Extended Day Program (before/after school, run by TDSB)",
+      "prices": {
+        "instructionalDay": 41,
+        "nonInstructionalDay": 64
+      },
+      "detail": "2026-27; paid by pre-authorized debit on the 1st and 15th",
+      "unit": "per day",
+      "currency": "CAD",
+      "url": "https://www.tdsb.on.ca/EarlyYears/Extended-Day-Program/Fees-and-Payments",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Whether CWELCC reduces this for under-6 kindergarten children was not stated on the page."
+    },
+    {
+      "town": "Toronto",
+      "item": "City of Toronto After-School Recreation Care (ARC), ages 6-12",
+      "price": 3.46,
+      "detail": "school dismissal to 6 p.m. (5:30 at some sites); registration is for five days/week for the school year",
+      "unit": "per day",
+      "currency": "CAD",
+      "url": "https://www.toronto.ca/explore-enjoy/parks-recreation/program-activities/camps-after-school/after-school-recreation-care/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Vancouver",
+      "item": "Mount Pleasant Community Centre Association Out of School Care (Simon Fraser Elementary)",
+      "prices": {
+        "AMcare": 140,
+        "PMcare": 140,
+        "AM_PM_K_to_G7": 200
+      },
+      "detail": "2026-2027 fees after $10/day fee reduction; AM 7:30-9am; PM 3-6pm; Affordable Child Care Benefit and MPCCA bursary accepted",
+      "unit": "per month",
+      "currency": "CAD",
+      "url": "https://mountpleasantcc.ca/out-of-school-care/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Vancouver",
+      "item": "BC Affordable Child Care Benefit, maximum monthly rates",
+      "rates": {
+        "G4_groupOrSchoolAgeCareOnSchoolGrounds_schoolAge": 415,
+        "L2_licensed_careSurroundingSchoolDay_schoolAge": 210,
+        "H4_1stSchoolAge_ifSiblingUnderSchoolAgeInH1H2": 147
+      },
+      "detail": "'school age' = age 5 by Dec 31 of the school year; the surrounding-school-day rate can be raised to the full school-age rate for days not in session",
+      "unit": "per month",
+      "currency": "CAD",
+      "url": "https://www2.gov.bc.ca/gov/content/family-social-supports/caring-for-young-children/childcarebc-programs/child-care-benefit/information-for-families/rates-payments",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Dublin",
+      "item": "Post-primary minimum instruction (Circular M29/95)",
+      "figures": {
+        "hoursPerWeek": 28,
+        "hoursPerDay": 6,
+        "halfDayHours": 3,
+        "teachingDaysPerYear": 167
+      },
+      "unit": "hours / days",
+      "currency": null,
+      "url": "https://circulars.gov.ie/pdf/circular/education/1995/M29.pdf",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "The PDF returned 403 to fetch, and the curl download had no extractable text. Figures come from the search summary. Fills the post-primary gap left in research-referrals-childday.json."
+    }
+  ],
+  "householdChores": [
+    {
+      "market": "US",
+      "item": "ATUS 2025 household activities by sex (Table 1)",
+      "householdActivities": {
+        "avgHrsPerDay": {
+          "total": 1.99,
+          "men": 1.58,
+          "women": 2.38
+        },
+        "pctEngaged": {
+          "total": 80.9,
+          "men": 74.9,
+          "women": 86.7
+        },
+        "hrsIfEngaged": {
+          "total": 2.46,
+          "men": 2.11,
+          "women": 2.75
+        }
+      },
+      "housework": {
+        "avgHrsPerDay": {
+          "total": 0.56,
+          "men": 0.3,
+          "women": 0.81
+        },
+        "pctEngaged": {
+          "total": 36.1,
+          "men": 23.8,
+          "women": 47.9
+        },
+        "hrsIfEngaged": {
+          "total": 1.55,
+          "men": 1.25,
+          "women": 1.69
+        }
+      },
+      "foodPrepCleanup": {
+        "avgHrsPerDay": {
+          "total": 0.71,
+          "men": 0.51,
+          "women": 0.91
+        },
+        "pctEngaged": {
+          "total": 65.2,
+          "men": 57.9,
+          "women": 72.2
+        },
+        "hrsIfEngaged": {
+          "total": 1.09,
+          "men": 0.88,
+          "women": 1.26
+        }
+      },
+      "lawnGarden": {
+        "avgHrsPerDay": {
+          "total": 0.19,
+          "men": 0.26,
+          "women": 0.13
+        },
+        "pctEngaged": {
+          "total": 10,
+          "men": 11.2,
+          "women": 8.9
+        },
+        "hrsIfEngaged": {
+          "total": 1.9,
+          "men": 2.29,
+          "women": 1.43
+        }
+      },
+      "householdManagement": {
+        "avgHrsPerDay": {
+          "total": 0.17,
+          "men": 0.12,
+          "women": 0.22
+        },
+        "pctEngaged": {
+          "total": 18.6,
+          "men": 14.4,
+          "women": 22.6
+        },
+        "hrsIfEngaged": {
+          "total": 0.92,
+          "men": 0.82,
+          "women": 0.99
+        }
+      },
+      "weekendVsWeekday": {
+        "housework": [
+          40,
+          35
+        ],
+        "foodPrep": [
+          63,
+          66
+        ]
+      },
+      "unit": "hours per day / percent",
+      "currency": null,
+      "url": "https://www.bls.gov/news.release/atus.t01.htm",
+      "date": "2026-10-03",
+      "period": "2025 (released 2026-06-25)",
+      "confirmed": true,
+      "note": "Weekend and weekday shares are from https://www.bls.gov/news.release/atus.nr0.htm. Population age 15+."
+    },
+    {
+      "market": "US",
+      "item": "ATUS 2024 household activities by sex",
+      "pctEngaged": {
+        "women": 86.6,
+        "men": 73.9
+      },
+      "hrsIfEngaged": {
+        "women": 2.71,
+        "men": 2.26
+      },
+      "housework": {
+        "pct": {
+          "women": 48.5,
+          "men": 24.9
+        },
+        "hrsIfEngaged": {
+          "women": 1.8,
+          "men": 1.43
+        }
+      },
+      "foodPrep": {
+        "pct": {
+          "women": 71.6,
+          "men": 54.2
+        },
+        "hrsIfEngaged": {
+          "women": 1.2,
+          "men": 0.86
+        }
+      },
+      "lawnGarden": {
+        "pct": {
+          "women": 7.8,
+          "men": 12.1
+        },
+        "hrsIfEngaged": {
+          "women": 1.67,
+          "men": 2.25
+        }
+      },
+      "marriedVsOtherHouseholdHrs": {
+        "married": 2.33,
+        "other": 1.69
+      },
+      "unit": "hours per day / percent",
+      "currency": null,
+      "url": "https://www.bls.gov/news.release/archives/atus_06262025.htm",
+      "date": "2026-10-03",
+      "period": "2024",
+      "confirmed": true,
+      "note": "The married and other split came through a fetch summary. Check its exact population basis in Table 3 before using it."
+    },
+    {
+      "market": "UK",
+      "item": "ONS Online Time Use Survey: unpaid work (housework, care, volunteering combined)",
+      "womenPerDay": "3h37m",
+      "menPerDay": "2h43m",
+      "gap": "54 min (1h12m in Sep-Oct 2020)",
+      "diaryDays": 3659,
+      "unit": "per day",
+      "currency": null,
+      "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/bulletins/timeuseintheuk/23septemberto1october2023",
+      "date": "2026-10-03",
+      "period": "2023-09-23 to 2023-10-01",
+      "confirmed": true,
+      "note": "Experimental statistics. The bulletin gives no breakdown by activity."
+    },
+    {
+      "market": "UK",
+      "item": "ONS 'Women shoulder the responsibility of unpaid work'",
+      "womenHrsPerWeek": 26,
+      "menHrsPerWeek": 16,
+      "womenMoreShare": 0.6,
+      "onlyCategoryMenDoMore": "transport (driving self/others, commuting)",
+      "age56PlusCookingHrsPerWeek": 7.46,
+      "age56PlusLaundryHrsPerWeek": 2.07,
+      "studentHrsPerWeek": 12,
+      "motherOnMaternityLeaveHrsPerWeek": 60,
+      "valueIfPaidPerWeek": {
+        "women": 259.63,
+        "men": 166.63
+      },
+      "unit": "hours per week",
+      "currency": "GBP",
+      "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/articles/womenshouldertheresponsibilityofunpaidwork/2016-11-10",
+      "date": "2026-10-03",
+      "period": "2015 UK time use data, published 2016-11-10",
+      "confirmed": true,
+      "note": "The 60 hours for mothers on maternity leave came from a truncated text line. Verify it."
+    },
+    {
+      "market": "Canada",
+      "item": "Time Use Survey 2022 (table 45-10-0104), Canada, 15+",
+      "unpaidWork": {
+        "avgHrsPerDay": {
+          "total": 3.2,
+          "men": 2.6,
+          "women": 3.7
+        }
+      },
+      "unpaidHouseholdWork": {
+        "avgHrsPerDay": {
+          "total": 2.1,
+          "men": 1.8,
+          "women": 2.4
+        },
+        "participationRate": {
+          "total": 71.4,
+          "men": 64.7,
+          "women": 77.9
+        },
+        "hrsIfParticipating": {
+          "total": 3,
+          "men": 2.8,
+          "women": 3.1
+        }
+      },
+      "childcareUnder18HrsPerDay": {
+        "total": 0.5,
+        "men": 0.4,
+        "women": 0.7
+      },
+      "adultCareHrsPerDay": {
+        "total": 0.1,
+        "men": 0.1,
+        "women": 0.1
+      },
+      "shoppingHrsPerDay": {
+        "total": 0.4,
+        "men": 0.3,
+        "women": 0.5
+      },
+      "unit": "hours per day / percent",
+      "currency": null,
+      "url": "https://www150.statcan.gc.ca/n1/tbl/csv/45100104-eng.zip",
+      "date": "2026-10-03",
+      "period": "2022",
+      "confirmed": true,
+      "note": "Read from StatCan's own CSV. Gender categories are 'Men+' and 'Women+'."
+    },
+    {
+      "market": "Canada",
+      "item": "Time Use 2022: adjusted predicted daily minutes of unpaid housework on paid-work days, by telework status",
+      "teleworkers": {
+        "women": 102.9,
+        "men": 62.5
+      },
+      "nonTeleworkers": {
+        "women": 87.3,
+        "men": 48.5
+      },
+      "teleworkEffect": "about 16 more minutes (+21%)",
+      "unit": "minutes per day",
+      "currency": null,
+      "url": "https://www150.statcan.gc.ca/n1/pub/89-652-x/89-652-x2024003-eng.htm",
+      "date": "2026-10-03",
+      "period": "2022",
+      "confirmed": true
+    },
+    {
+      "market": "Canada",
+      "item": "GSS Family 2017: who usually does each task (couples)",
+      "mostlyWoman": {
+        "laundry": 0.61,
+        "mealPrep": 0.56
+      },
+      "mostlyMan": {
+        "outdoorWorkRepairs": 0.78
+      },
+      "sharedEqually": {
+        "dishes": 0.5,
+        "groceryShopping": 0.49,
+        "organizingSocialLife": 0.49
+      },
+      "byEarnerType": {
+        "mealPrepSharedEqually": "26% male sole earner to 38% both working",
+        "laundryMostlyWoman": "64% male sole earner to 55% both working",
+        "financesMostlyMan": "48% male sole earner to 31% both working"
+      },
+      "unit": "share of people in couples",
+      "currency": null,
+      "url": "https://www150.statcan.gc.ca/n1/pub/11-627-m/11-627-m2020016-eng.htm",
+      "date": "2026-10-03",
+      "period": "2017",
+      "confirmed": true
+    },
+    {
+      "market": "Mexico",
+      "item": "ENUT 2024: unpaid work by sex",
+      "domesticWorkOwnHome": {
+        "national": 20.5,
+        "women": 28.2,
+        "men": 11.5,
+        "gap": 16.7
+      },
+      "careOfHouseholdMembers": {
+        "national": 11.4,
+        "women": 13.6,
+        "men": 8.7,
+        "participationWomen": 0.709,
+        "participationMen": 0.642
+      },
+      "totalUnpaidDomesticCareVoluntary": {
+        "women": 39.7,
+        "men": 18.2,
+        "gap": 21.5
+      },
+      "totalWorkTime": {
+        "national": 59.6,
+        "women": 61.1,
+        "men": 58
+      },
+      "gapIndigenousLanguageSpeakers": 23.2,
+      "gapLocalitiesUnder10k": 21,
+      "unit": "hours per week",
+      "currency": null,
+      "url": "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/enut/enut2024_CP.pdf",
+      "date": "2026-10-03",
+      "period": "2024 (released 2025-08-28)",
+      "confirmed": true,
+      "note": "Population 12+. The 39.5 total quoted in press coverage differs from INEGI's 39.7. Use 39.7."
+    },
+    {
+      "market": "Ireland",
+      "item": "ESRI 'Gender Inequalities in Time Use'",
+      "avgCaringHrsPerWeek": 16,
+      "avgHouseworkHrsPerWeek": 14.5,
+      "womenVsMen": "women do double the caring and more than twice the housework",
+      "dailyCareProviders": {
+        "women": 0.45,
+        "men": 0.29
+      },
+      "unit": "hours per week",
+      "currency": null,
+      "url": "https://www.esri.ie/news/new-study-shows-significant-weight-of-care-and-unpaid-work-responsibilities",
+      "date": "2026-10-03",
+      "period": "published 2019-07-09 (data 2016 EQLS)",
+      "confirmed": true,
+      "note": "No split by sex in hours on this page. The full report is https://www.esri.ie/system/files/publications/BKMNEXT113.pdf."
+    },
+    {
+      "market": "US",
+      "item": "Gallup: who does each task (heterosexual married or cohabiting couples)",
+      "woman_man_equal": {
+        "laundry": [
+          58,
+          8,
+          26
+        ],
+        "cleaning": [
+          51,
+          7,
+          31
+        ],
+        "mealPrep": [
+          51,
+          13,
+          30
+        ],
+        "dishes": [
+          40,
+          14,
+          33
+        ],
+        "groceryShopping": [
+          50,
+          14,
+          36
+        ],
+        "yardWork": [
+          6,
+          59,
+          25
+        ],
+        "carMaintenance": [
+          3,
+          69,
+          15
+        ],
+        "payingBills": [
+          37,
+          34,
+          27
+        ],
+        "savingsInvestments": [
+          18,
+          31,
+          50
+        ],
+        "dailyChildcare": [
+          51,
+          6,
+          37
+        ],
+        "planningFamilyActivities": [
+          37,
+          10,
+          52
+        ]
+      },
+      "sample": 3062,
+      "unit": "percent",
+      "currency": null,
+      "url": "https://news.gallup.com/poll/283979/women-handle-main-household-tasks.aspx",
+      "date": "2026-10-03",
+      "period": "June-August 2019",
+      "confirmed": true
+    },
+    {
+      "market": "US",
+      "item": "Pew: perceived division of chores (married or cohabiting)",
+      "women": {
+        "doMore": 0.59,
+        "partnerDoesMore": 0.06
+      },
+      "men": {
+        "sharedEqually": 0.46,
+        "doMore": 0.2,
+        "partnerDoesMore": 0.34
+      },
+      "unit": "share",
+      "currency": null,
+      "url": "https://www.pewresearch.org/short-reads/2021/01/25/for-american-couples-gender-gaps-in-sharing-household-responsibilities-persist-amid-pandemic/",
+      "date": "2026-10-03",
+      "period": "October 13-19, 2020",
+      "confirmed": false,
+      "note": "The page was read and confirms 59%, 46% and 20%. The 6% and 34% come only from search snippets."
+    }
+  ],
+  "policeReport": [
+    {
+      "town": "New York",
+      "item": "NYPD Online Reporting Service (nypdonline.org)",
+      "incidents": [
+        "Lost property (left by accident in a public place)",
+        "Petit larceny, value $1,000 or less",
+        "Criminal mischief, damage not over $250",
+        "Graffiti (photo upload)"
+      ],
+      "eligibility": [
+        "nobody hurt",
+        "not in progress",
+        "suspect unknown",
+        "occurred in the five boroughs"
+      ],
+      "channel": "online, 24/7",
+      "fee": 0,
+      "timeToNumber": "email confirmation on filing; reviewed at precinct; follow-up email carries the official complaint report number (no stated time)",
+      "unit": "USD threshold",
+      "currency": "USD",
+      "url": "https://nypdonline.org/link/1018",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "nypdonline.org is a JS app that returned no text. Figures come from search summaries of NYPD 114th Pct post (x.com/NYPD114Pct) and news coverage. The NYPD's own page could not be read."
+    },
+    {
+      "town": "New York",
+      "item": "Copy of a police report (Verification of Crime/Lost Property)",
+      "steps": [
+        "file in person at any precinct, PSA or transit district, or online",
+        "request a verification report online, by mail to Criminal Records Section, 1 Police Plaza, or on the form at any precinct"
+      ],
+      "fee": 0,
+      "unit": "per report",
+      "currency": "USD",
+      "url": "https://portal.311.nyc.gov/article/?kanumber=KA-02322",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "New York",
+      "item": "NY DMV replacement driver licence",
+      "fee": 17.5,
+      "freeIf": "licence/permit stolen or lost due to a crime AND you get form MV-78B from a police agency (MV-78B available only from police, not DMV)",
+      "channels": [
+        "online (only if you already hold Enhanced/REAL ID or keep same Standard type; card payment)",
+        "mail with MV-44 + ID + $17.50",
+        "DMV office with MV-44"
+      ],
+      "delivery": "not stated; mailed to address on record",
+      "unit": "per replacement",
+      "currency": "USD",
+      "url": "https://dmv.ny.gov/driver-license/replace-a-license-or-permit",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "New York",
+      "item": "US passport lost/stolen: DS-64",
+      "steps": [
+        "report via State Dept Online Form Filler (fastest; passport cancelled within 1 business day, confirmation email) or complete DS-64, print, sign, mail",
+        "apply for replacement in person with DS-11 + DS-64"
+      ],
+      "policeReportRequired": false,
+      "fee": 0,
+      "unit": "per report",
+      "currency": "USD",
+      "url": "https://travel.state.gov/en/passports/renew-replace/report-passport-lost-stolen.html",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "travel.state.gov blocked both fetch and curl with Cloudflare. Details come from search summaries only. The DS-11 replacement fee was not read."
+    },
+    {
+      "town": "Los Angeles",
+      "item": "LAPD Community Online Reporting Service (CORS)",
+      "incidents": [
+        "Lost Property (unintentionally left by owner)",
+        "Theft (from publicly accessible location)",
+        "Theft from Vehicle (locked or unlocked)",
+        "Identity Theft (report at filer's home address)",
+        "Illegal dumping (separate form)"
+      ],
+      "eligibility": [
+        "not an emergency",
+        "occurred in City of Los Angeles",
+        "filer 18+",
+        "no one injured",
+        "no known suspects",
+        "not on state highway",
+        "no firearms involved",
+        "internet access and email"
+      ],
+      "valueLimit": "none stated",
+      "timeToNumber": "temporary report number immediately with printable copy; reviewed on average once every 24 hours (longer weekends/holidays); on approval LAPD report number issued and final report emailed",
+      "fee": 0,
+      "altChannel": "1-877-ASK-LAPD (1-877-275-5273) non-emergency, or a community police station; text link via 424-359-4636",
+      "unit": "report",
+      "currency": "USD",
+      "url": "https://www.lapdonline.org/file-a-police-report/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Los Angeles",
+      "item": "California DMV replacement driver licence (lost or stolen)",
+      "fees": {
+        "ClassC_or_M1M2_or_noncommercial_A_B": 37,
+        "commercial_A_B_C": 44,
+        "regularID": 40,
+        "seniorID_62plus": 0,
+        "reducedFeeID": 11
+      },
+      "steps": [
+        "complete the replacement DL application online (DL) or online application then visit a DMV office (CDL/ID)",
+        "in office: pay fee, photo validated, thumbprint scanned"
+      ],
+      "delivery": "new card by mail within three to four weeks; check status if not received after 60 days",
+      "unit": "per replacement",
+      "currency": "USD",
+      "url": "https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/licensing-fees/",
+      "url2": "https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/replace-your-driver-license-or-identification-dl-id-card/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "New Haven",
+      "item": "New Haven Police online reporting (Police to Citizen portal)",
+      "channel": "online at newhavenct.policetocitizen.com; non-emergency (203) 946-6316; Property and Evidence 203-946-6245",
+      "eligibleIncidents": "not read",
+      "fee": null,
+      "unit": null,
+      "currency": "USD",
+      "url": "https://newhavenct.policetocitizen.com/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "The portal is a JS app. newhavenct.gov returned Access Denied. The portal's existence and the phone numbers come from search summaries."
+    },
+    {
+      "town": "New Haven",
+      "item": "Connecticut DMV duplicate driver's licence",
+      "fee": 30,
+      "channels": [
+        "online (about 5-7 minutes; credit/debit card)",
+        "in person by appointment (DMV express offices at AAA / Nutmeg State FCU may add up to $8 convenience fee)",
+        "mail: check/money order payable to DMV"
+      ],
+      "delivery": "online or in person: within 30 days; mail: within 20 days",
+      "policeReport": "not mentioned",
+      "unit": "per duplicate",
+      "currency": "USD",
+      "url": "https://portal.ct.gov/dmv/licenses-permits-ids/request-duplicate-driver-license",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "London",
+      "item": "UK passport lost/stolen: cancel online (HM Passport Office)",
+      "steps": [
+        "cancel as soon as possible via the GOV.UK 'Cancel a lost or stolen passport' service (needs a phone number; photo/photocopy of passport helps)",
+        "can report for someone else",
+        "if abroad and travelling urgently, apply for an emergency travel document (fee), which cancels the passport as part of the application",
+        "help: HM Passport Office advice line"
+      ],
+      "fee": "not stated on page",
+      "unit": null,
+      "currency": "GBP",
+      "url": "https://www.gov.uk/report-a-lost-or-stolen-passport",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The page does not say it is free or that a police report is needed."
+    },
+    {
+      "town": "London",
+      "item": "DVLA replacement driving licence (lost/stolen)",
+      "fee": 20,
+      "steps": [
+        "apply online (sign in, may need ID check); also by phone (photocard, details unchanged) or post on form D1 from Post Office",
+        "contact the police if the licence was stolen",
+        "must be GB resident and not disqualified"
+      ],
+      "delivery": "online: within a week; post: 3 weeks",
+      "unit": "per licence",
+      "currency": "GBP",
+      "url": "https://www.gov.uk/apply-online-to-replace-a-driving-licence",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "London",
+      "item": "Metropolitan Police and lost property",
+      "policy": "Met does not investigate lost property and officers do not record it. Lost passports and licences go to HMPO/DVLA, not police. Items over £500 or of high sentimental value: name and address noted on a contact form only, no investigation. Public directed to online lost/found property form.",
+      "unit": "GBP threshold",
+      "currency": "GBP",
+      "url": "https://www.met.police.uk/SysSiteAssets/foi-media/metropolitan-police/disclosure_2023/november_2023/dealing-lost-found-property-internal-lost-property-guidance.pdf",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "met.police.uk blocked fetch and curl with a Cloudflare challenge. This is a search summary of the Met's own 2023 FOI-disclosed internal guidance."
+    },
+    {
+      "town": "Dublin",
+      "item": "Irish passport lost/stolen (DFA Passport Service)",
+      "steps": [
+        "in Ireland: notify Passport Office immediately and report loss/theft to Garda Síochána (Citizens Information)",
+        "report it as lost/stolen within the Passport Online replacement application, or via Passport Assist 01 613 1795 (form + Statement of loss, theft or damage; average 6 weeks)",
+        "to cancel without replacing: get a Garda certificate of loss, post with signed letter to Customer Care, Passport Office, Knockmaun House, 42-47 Lower Mount St, Dublin 2",
+        "details sent to Interpol; validity of next passport may be restricted (1-10 years if 2+ lost in 10 years)"
+      ],
+      "replacementFees": {
+        "PassportOnline": 75,
+        "PassportOnlinePostageOutsideIreland": 15,
+        "PostPassportAnPost": 80,
+        "AnPostHandling_single": 9.5,
+        "AnPostHandling_family_upTo4": 16,
+        "InPerson": "95 plus appointment fee"
+      },
+      "unit": "per adult 10-year passport",
+      "currency": "EUR",
+      "url": "https://www.ireland.ie/en/dfa/passports/lost-stolen-damaged/",
+      "url2": "https://www.citizensinformation.ie/en/travel-and-recreation/passports/replacing-a-lost-or-stolen-irish-passport/",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Fees were read on Citizens Information, a state body, not on the DFA page itself."
+    },
+    {
+      "town": "Dublin",
+      "item": "Garda online Declaration of Theft of Property",
+      "limit": "theft of property valued €1,000 or less in Ireland",
+      "exclusions": [
+        "incident happening now",
+        "offender at/near scene",
+        "evidence left at scene"
+      ],
+      "lostProperty": "not covered online; report at local Garda station",
+      "fee": 0,
+      "unit": "EUR value limit",
+      "currency": "EUR",
+      "url": "https://www.garda.ie/en/victim-services/reporting-a-crime-faqs/can-i-report-crime-online-.html",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "The fee of 0 is assumed because the page names no charge. The fee for a Garda certificate of loss was not found."
+    },
+    {
+      "town": "Toronto",
+      "item": "Toronto Police Citizens Online Police Reporting System (CORE)",
+      "incidents": [
+        "Lost Property",
+        "Theft Under $5,000",
+        "Damage to Property under $5,000",
+        "Theft from Vehicle under $5,000",
+        "Damage to Vehicle under $5,000"
+      ],
+      "eligibility": [
+        "no known suspects",
+        "value of theft, loss or damage less than $5,000.00 CAD",
+        "does NOT involve firearm, licence plates, passport or prescription drugs",
+        "valid email"
+      ],
+      "timeToNumber": "temporary police report case number on submission; status notified by email",
+      "fee": 0,
+      "unit": "CAD threshold",
+      "currency": "CAD",
+      "url": "https://core.torontopolice.on.ca/dors/start-report.html",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Toronto",
+      "item": "ServiceOntario replacement driver's licence",
+      "fee": 35.75,
+      "steps": [
+        "contact local police and file a report if lost or stolen",
+        "replace in person at a ServiceOntario centre; temporary licence issued on the spot"
+      ],
+      "delivery": "permanent card in 4-6 weeks",
+      "payment": "Visa/Mastercard, cheque/money order (no Amex/debit for mail/online route)",
+      "unit": "per replacement",
+      "currency": "CAD",
+      "url": "https://www.ontario.ca/page/replace-drivers-licence",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "ontario.ca says replacement in Ontario is in person; online replacement is only for people outside Ontario (1-2 weeks temporary, 4-6 weeks permanent)."
+    },
+    {
+      "town": "Vancouver",
+      "item": "VPD online crime reporting",
+      "eligible": [
+        "lost or stolen property under $25,000",
+        "vandalism to property/vehicle under $25,000 repairs",
+        "car break-in"
+      ],
+      "conditions": [
+        "happened in Vancouver",
+        "no suspect",
+        "no element of violence",
+        "valid email"
+      ],
+      "timeToNumber": "case/incident number generated on submission (usable for ICBC/insurance)",
+      "otherChannels": "non-emergency 604-717-3321; counters at 2120 Cambie St (8am-5pm daily) and 3585 Graveley St (8am-5pm Mon-Fri)",
+      "lostIdNotes": "Canadian passport: report to Passport Program 1-800-567-6868 or Service Canada; foreign passport: VPD online or 604-717-3321",
+      "fee": 0,
+      "unit": "CAD threshold",
+      "currency": "CAD",
+      "url": "https://vpd.ca/report-a-crime/",
+      "url2": "https://vpd.ca/report-a-crime/report-fraud-or-lost-stolen-identification/",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Vancouver",
+      "item": "ICBC replacement licence (lost or stolen) or upgraded licence",
+      "fee": 17,
+      "steps": [
+        "if stolen, file a police report",
+        "replace at any ICBC driver licensing office"
+      ],
+      "delivery": "not stated",
+      "unit": "per replacement",
+      "currency": "CAD",
+      "url": "https://icbc.com/driver-licensing/visit-dl-office/Fees",
+      "url2": "https://icbc.com/driver-licensing/getting-licensed/Replace",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "town": "Mexico City",
+      "item": "Constancia de extravío de documentos / Denuncia Digital (FGJCDMX)",
+      "steps": [
+        "go to denunciadigital.cdmx.gob.mx, accept privacy notice",
+        "choose '¿Perdiste o extraviaste algo?'",
+        "log in with Llave CDMX or e.firma",
+        "fill form (ID, email, narrative)",
+        "print generated constancia"
+      ],
+      "covers": "INE credential, health cards, passport, professional licence, deeds, driver's licence, court/admin documents, original invoices",
+      "fee": 0,
+      "theft": "robo requires a denuncia, filed via Denuncia Digital for some crimes or at an Agencia del Ministerio Público; free",
+      "unit": null,
+      "currency": "MXN",
+      "url": "https://www.cdmx.gob.mx/public/InformacionTramite.xhtml?idTramite=515",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "cdmx.gob.mx, denunciadigital.cdmx.gob.mx and fgjcdmx.gob.mx all refused or timed out from here. All details, including the zero fee, come from search summaries."
+    },
+    {
+      "town": "Mexico City",
+      "item": "INE Credencial para Votar replacement (robo o extravío)",
+      "steps": [
+        "report to INETEL 800 433 2000 (folio, valid 30 natural days)",
+        "book an appointment online or by phone",
+        "attend a Módulo de Atención Ciudadana within 30 days with birth certificate, proof of address (≤3 months) and official photo ID",
+        "collect at the same module on the set date"
+      ],
+      "delivery": "1 month (gob.mx)",
+      "fee": 0,
+      "denunciaRequired": "not mentioned",
+      "unit": "per credential",
+      "currency": "MXN",
+      "url": "https://www.gob.mx/public/tramites/detalleTramite.xhtml?homoclave=INE-2023-1790-002-D",
+      "url2": "https://ine.mx/preguntas-frecuentes-credencial-para-votar/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "The steps, the 30-day window and the one-month delivery were read on ine.mx and gob.mx. Neither page states the cost, so 'free' comes from search summaries only."
+    }
+  ],
+  "boatingExams": [
+    {
+      "market": "Canada (Transport Canada, online PCOC test standard TP 15080)",
+      "item": "PCOC test",
+      "passMarkPercent": 75,
+      "passRatePublished": false,
+      "openBook": true,
+      "proctored": false,
+      "retake": "one retake after 24 h and within 30 days; after 2 fails, redo the whole study guide; max 1 test per 24 h",
+      "unit": "percent (threshold)",
+      "currency": null,
+      "url": "https://tc.canada.ca/en/marine-transportation/marine-safety/standard-pleasure-craft-operator-card-testing-over-internet-tp-15080-e-2010",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "market": "Canada",
+      "item": "PCOC test length",
+      "questions": 50,
+      "passMarkPercent": 75,
+      "minCorrect": 38,
+      "timeLimitMinutes": 75,
+      "classroomExam": "closed book",
+      "unit": "questions / minutes",
+      "currency": null,
+      "url": "https://www.canboat.ca/pcoc-boating-license/additional-information/pcoc-exam/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "CanBoat is an accredited course provider, not Transport Canada. It confirms 50 questions and 75%. The 75-minute limit comes from search extracts of other providers. TP 15080 states no overall time limit."
+    },
+    {
+      "market": "California (Division of Boating and Waterways)",
+      "item": "California Course for Safe Boating exam (path to the Boater Card)",
+      "questions": 60,
+      "passMarkPercent": 80,
+      "courseFee": 0,
+      "boaterCardFee": 10,
+      "serviceFee": 1,
+      "passRatePublished": false,
+      "unit": "percent (threshold)",
+      "currency": "USD",
+      "url": "https://dbw.parks.ca.gov/?page_id=30826",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "market": "Connecticut (DEEP)",
+      "item": "Safe Boating Certificate equivalency exam",
+      "passMarkPercent": 80,
+      "failAtOrBelowPercent": 78,
+      "onFail": "must take an 8-hour NASBLA/state-approved course",
+      "examFee": 75,
+      "pwcCertificateFee": 50,
+      "unit": "percent (threshold)",
+      "currency": "USD",
+      "url": "https://portal.ct.gov/-/media/deep/boating/equivalency-exam-information.pdf",
+      "date": "2026-10-03",
+      "confirmed": true
+    },
+    {
+      "market": "New York (Brianna's Law)",
+      "item": "Boating Safety Certificate final exam",
+      "passMarkPercent": 80,
+      "unitQuizPassPercent": 70,
+      "minimumAge": 10,
+      "classroomHours": 8,
+      "unit": "percent (threshold)",
+      "currency": null,
+      "url": "https://www.boat-ed.com/newyork/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "Boat-ed is an approved provider, not NY State Parks. parks.ny.gov was blocked by a Cloudflare challenge."
+    },
+    {
+      "market": "UK (RYA)",
+      "item": "Yachtmaster Offshore exam pass rate",
+      "passRatePercent": "about 85 (handbook), about 80 (examiner remark)",
+      "unit": "percent",
+      "currency": null,
+      "url": "https://forums.ybw.com/threads/rya-ym-pass-rate.453399/",
+      "date": "2026-10-03",
+      "confirmed": false,
+      "note": "From a search extract that cites James Stevens' RYA Yachtmaster Handbook and a forum. The RYA does not appear to publish official pass rates."
+    }
+  ],
+  "notes": {
+    "notFound": [
+      {
+        "section": "reservations/television",
+        "item": "SevenRooms platform-level booking or no-show rules (policies are set per venue; none found)"
+      },
+      {
+        "section": "reservations/television",
+        "item": "OpenTable and Resy platform pages could not be read directly (JavaScript or bot-blocked); figures are from search summaries"
+      },
+      {
+        "section": "reservations/television",
+        "item": "Resy cancellation-fee amounts for venues outside the US and Canada; Resy has no listings for London, Dublin or the named Mexico City venues (Mexico City venues on Resy carry empty policy text)"
+      },
+      {
+        "section": "reservations/television",
+        "item": "Gramercy Tavern, ZINC, Bestia, Contramar, Chapter One, Dishoom: no deposit or cancellation-fee amount published on the pages read"
+      },
+      {
+        "section": "reservations/television",
+        "item": "St. JOHN London and Library Street Dublin: no published booking window or fee"
+      },
+      {
+        "section": "reservations/television",
+        "item": "Published on Main (Vancouver): no policy found"
+      },
+      {
+        "section": "reservations/television",
+        "item": "Pujol and Quintonil current figures on their own pages (blocked)"
+      },
+      {
+        "section": "reservations/television",
+        "item": "BBC and ITV episode running times from an authoritative source (BBC domain blocked to the search tool); no Ofcom or BARB figure for programme length"
+      },
+      {
+        "section": "reservations/television",
+        "item": "Nielsen US average daily TV minutes per person (Total Audience Report); BLS ATUS used instead"
+      },
+      {
+        "section": "reservations/television",
+        "item": "Ofcom COSTA PDF text (Cloudflare 403)"
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "New Haven CT guitar/piano lessons: Neighborhood Music School publishes only a $50 per-family registration fee; class tuition is not on readable pages."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "New Haven CT recurring weekly cooking course: only single classes found (Olives and Oil)."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Los Angeles adult group tennis lessons from LA Rec & Parks: a search snippet says $120–$140 for 7 weeks, but the registration system blocked reads."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Los Angeles group guitar class price: LA School of Music has a Wednesday adult group class in Elysian Park but no price on the page."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Vancouver yoga drop-in at a named studio, confirmed: YYoga pricing is script-rendered (snippets give $20–$30), Semperviva closed in 2020, and hotyogavancouver.com is in Vancouver WA."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Mexico City guitar, painting and dance at alcaldía/UNAM venues: Casa del Lago UNAM prices appear only inside its registration system."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Toronto Sport & Social Club (JAM Sports) fall 2026 fees: not readable."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "NYC ZogSports/Volo fall 2026 league prices: the only readable ZogSports page was Summer 2022 ($85–105 individual, Wed 6–8pm, McCarren Park)."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Dublin 'Sport Social' branded league and Dublin Ultimate: the Irish Flying Disc page lists a stale Wed 7–8pm St Anne's Park league at €20 (dates match 2023)."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Dublin GAA social / Gaelic4Mothers&Others weekly time and fee: not found."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Ballymaloe Cookery School course prices: not read (Dublin Cookery School used for Dublin)."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Dublin City Council adult swimming lessons: the DCC price list shows only children's lesson rates."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Swim Ireland/Dublin City adult learn-to-swim (€40 for 8 weeks per snippet): the event listing is no longer on sale."
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "UK ONS minutes per day by activity (housework, cooking, laundry) by sex for 2022-2024 waves. Bulletins give only total unpaid work. The breakdown is likely in ONS xlsx datasets that were not opened."
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "New York Cares typical project length in hours (none published on the pages read). Orientation length is described only as 'short'."
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "NYC Service minimum age to register. The 13+ figure appeared only in a search snippet and was not found on nycservice.org/youth-action-month."
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "Do-it (UK) minimum age or commitment policy"
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "Team London minimum age or commitment (london.gov.uk returned 403). Snippets suggest 18+ for Ambassadors and per-role commitments such as 1 hr/week for 3 months."
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "Volunteer Toronto FAQ (blocked by Cloudflare)"
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "Vantage Point / GoVolunteer.ca platform-wide age or shift rules"
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "Banco de Alimentos CDMX / Cáritas CDMX / BAMX shift length, age and requirements"
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "Cruz Roja Mexicana CDMX (national) volunteer requirements. Only the Morelia and Nuevo León delegations were read. A course length of 4-8 hours appeared only in a snippet."
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "Ireland CSO volunteering hours and Wellbeing of the Nation volunteering figure"
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "Ireland CSO time use by sex (no national CSO time use survey found)"
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "US ATUS 2025 married or partnered breakdown by sex (atus.t08 is a different table)"
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "Mexico INEGI Cuenta Satélite del Trabajo No Remunerado volunteering value"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "Published pass RATES (as opposed to pass marks) for any US state boater exam, the California Boater Card or the Transport Canada PCOC"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "RYA Day Skipper pass mark or pass rate; any official RYA statistics"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "Ireland: no statutory leisure boat licence exam pass mark found; the Irish Sailing National Powerboat/ICC theory pass mark is not published in the sources found"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "Mexico: no published pass mark for the recreational-craft competency exam (Capitania de Puerto / SEMAR / SCT)"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "A 2024 California law on casting workshops: none found. AB 2005 (2024) concerns CSU housing, and AB 2989 (talent agency licensing) did not pass. The governing law remains AB 1319 (2009) plus Lab. Code §450"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "Casting Society (CSA) self-tape best-practice document with numeric limits"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "One on One NYC and The Actors' Green Room workshop prices (no price on the pages fetched)"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "Actors Centre London workshop prices"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "Backstage subscription prices (403)"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "Vancouver casting director workshop prices (VADA returned 503; Lyric/Actorsbox not reached)"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "Mexico casting workshops (CEA Televisa or others) prices"
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "item": "Spotlight's own audition dress-code page"
+      },
+      {
+        "section": "policeReport/childDay",
+        "item": "New York: YMCA of Greater NY after-school fee (no price published; described as low or no cost)"
+      },
+      {
+        "section": "policeReport/childDay",
+        "item": "Los Angeles: YMCA of Metropolitan LA after-school fee (one hit, metroymcas.org, is a different YMCA and was discarded)"
+      },
+      {
+        "section": "policeReport/childDay",
+        "item": "New Haven: NHPS-run before/after care fee (a SACC $4.75/day hit is New Haven, Michigan and was discarded)"
+      },
+      {
+        "section": "policeReport/childDay",
+        "item": "New Haven: NHPD online reporting eligible incidents and value limits (portal and city site unreadable)"
+      },
+      {
+        "section": "policeReport/childDay",
+        "item": "Dublin: Garda certificate of loss fee and turnaround"
+      },
+      {
+        "section": "policeReport/childDay",
+        "item": "Vancouver: YMCA BC out-of-school care price (page says only 'Fees apply')"
+      },
+      {
+        "section": "policeReport/childDay",
+        "item": "Vancouver: VSB 2026-27 instructional day count (calendar PDF had no extractable text; search summaries say first day Tue 8 Sep 2026, winter break 21 Dec-1 Jan, spring break 15-29 Mar 2027, 6 Pro-D days, all unconfirmed)"
+      },
+      {
+        "section": "policeReport/childDay",
+        "item": "Mexico City: SEP Escuelas de Tiempo Completo current status on an official page (news only: PETC cancelled in DOF 1 Mar 2022, replaced by La Escuela es Nuestra; CDMX said it would continue with its own resources)"
+      },
+      {
+        "section": "policeReport/childDay",
+        "item": "Mexico City: private estancia after-school price at a named provider"
+      },
+      {
+        "section": "policeReport/childDay",
+        "item": "New York: US passport replacement fee (DS-11) (travel.state.gov blocked)"
+      },
+      {
+        "section": "policeReport/childDay",
+        "item": "London: Met Police lost-property online form details (met.police.uk behind a Cloudflare challenge)"
+      }
+    ],
+    "worthChecking": [
+      {
+        "section": "reservations/television",
+        "item": "Pujol: the 2022 figure of MXN 2,565 conflicts with the search summary's 'USD 100' or 'menu price per person'. Read the FAQ in a browser."
+      },
+      {
+        "section": "reservations/television",
+        "item": "Ofcom Media Nations 2026: confirm 1h51 linear and 2h19 broadcaster content per day (2025) and the age base, against the 2025 edition's 2h24 for 2024. Possible methodology change."
+      },
+      {
+        "section": "reservations/television",
+        "item": "OpenTable Terms: confirm the 30-minute cancellation rule and the 4-in-12-month suspension still stand (Terms page not readable)."
+      },
+      {
+        "section": "reservations/television",
+        "item": "Ofcom COSTA: confirm the 12-min clock-hour cap and the PSB break length of 3m50s / 3m30s ads, and whether any 2025-26 change followed the Media Act 2024 review."
+      },
+      {
+        "section": "reservations/television",
+        "item": "The American (Vancouver): Resy cancellation text is ambiguous ('if you cancel by noon the day prior')."
+      },
+      {
+        "section": "reservations/television",
+        "item": "Dishoom: a search summary claimed tables bookable 'up to four months' ahead and a 5:45pm cutoff; the page read said 'before 6pm' and gave no window."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "YMCA New Haven Youth Center swim page says lessons 'begin on May', so the 7-week $105/$210 programme may be a past session."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Shoreline Social (New Haven kickball, $60/$65 per person, Thu, 50 Loomis Place): the page dates match 2021, not 2026."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Spark Social Sports (CT) runs 2026 kickball and volleyball leagues, but no New Haven venue or price could be read."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "ICE recreational class list prints no year. Confirm it is the 2026-27 list."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Grand Tenis México: confirm it is in Mexico City before using the $1,200/month adult group price."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Dirty Apron (Vancouver) class prices load by script. Older reviews cite $150–$170 for 2.5–4-hour classes."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Better Pancras Square adult swim lesson table: confirm which of £3.50 / £12.00 / £9.40 belongs to member, non-member and concession."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "City Lit guitar and painting fees, Pineapple drop-in prices, Art Students League monthly tuition, AGO course fees, Triyoga drop-in and CorePower LA drop-in ($34) are known only from search snippets, because their pages render by script or are behind Cloudflare."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Venustiano Carranza alcaldía deportivo swim fees ($257–$262/month) come from a Chilango article of unknown date. The alcaldía site vcarranzacdmx.com.mx was not read."
+      },
+      {
+        "section": "hobbiesLessons",
+        "item": "Bective Tennis Club (Dublin) Tennis Xpress €66/€105 page is stale, from 2023."
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "Canada 2018 formal volunteering: 41% rate and 131 average hours per formal volunteer (1.7bn hours)",
+        "source": "search snippet citing StatCan",
+        "url": "https://www150.statcan.gc.ca/n1/pub/75-006-x/2021001/article/00002-eng.htm",
+        "confirmed": false
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "UK ONS March 2024 unpaid work: women 3h32m and men 2h35m per day (gap 57 min)",
+        "source": "search snippet (the bulletin URL guessed as /march2024 returned 404)",
+        "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/adhocs/2097timeuseintheukbyweekdayandweekenddaymarch2024",
+        "confirmed": false
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "NCVO Time Well Spent 2023: median 8 hours volunteered in the past four weeks; 67% of recent volunteers give at least monthly to their main organisation",
+        "source": "search snippet",
+        "url": "https://www.ncvo.org.uk/news-and-insights/news-index/time-well-spent-2023/volunteer-participation/",
+        "confirmed": false
+      },
+      {
+        "section": "volunteering/householdChores",
+        "item": "Mexico ENUT 2024: the 6.9/8.0/5.5 hours a week for volunteer/community work may be averages among participants rather than the whole population",
+        "url": "https://www.inegi.org.mx/contenidos/programas/enut/2024/doc/enut_2024_presentacion_resultados.pdf",
+        "confirmed": false
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "market": "Toronto",
+        "item": "Armstrong Acting Studios agent panel workshop",
+        "price": 95.99,
+        "plusTax": "HST",
+        "unit": "CAD per session",
+        "currency": "CAD",
+        "url": "https://www.armstrongactingstudios.com/workshops",
+        "date": "2026-10-03",
+        "confirmed": false,
+        "note": "From a search extract only. This is an agent panel, not a casting director workshop."
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "market": "Toronto",
+        "item": "Key West Video audition-technique workshops",
+        "price": 250,
+        "unit": "CAD per workshop",
+        "currency": "CAD",
+        "url": "https://www.keywestvideo.com/actor-acting-workshops-toronto/",
+        "date": "2026-10-03",
+        "confirmed": false,
+        "note": "From a search extract only."
+      },
+      {
+        "section": "actingPrep/dressCode/boatingExams",
+        "market": "US",
+        "item": "Showfax folded into Actors Access",
+        "note": "A search extract says showfax.com has redirected to actorsaccess.com since July 2026. Not verified.",
+        "unit": null,
+        "currency": null,
+        "url": "https://projectcasting.com/blog/casting-calls-acting-auditions/best-casting-websites-for-actors-in-2026-backstage-vs-the-alternatives",
+        "date": "2026-10-03",
+        "confirmed": false
+      },
+      {
+        "section": "policeReport/childDay",
+        "town": "New Haven",
+        "item": "New Haven Afterschool Initiative funding",
+        "note": "New Haven Independent, 2026-09-29: 'Funding Uncertain For City's New After-School Initiative'. The $25/week programme may change.",
+        "url": "https://www.newhavenindependent.org/2026/09/29/funding-uncertain-for-citys-new-after-school-initiative/",
+        "confirmed": false
+      },
+      {
+        "section": "policeReport/childDay",
+        "town": "Ireland",
+        "item": "Circular 2026/10 'School days and hours of operation'",
+        "note": "A 2026 primary circular (INTO copy) and Circular 0005/2020 may have updated the hours. Check whether M29/95's 28 hours / 167 days still stands for post-primary.",
+        "url": "https://www.into.ie/app/uploads/2026/02/Circular-2026-10-School-Operational-Days-and-Hours.pdf",
+        "confirmed": false
+      }
+    ]
+  }
+}

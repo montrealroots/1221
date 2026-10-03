@@ -5,6 +5,7 @@
  * screens arrange these, cheapest first unless the player sorts otherwise.
  */
 
+import { CAR_DETAILS } from '../content/carspecs';
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Instant } from '../core/time';
@@ -24,7 +25,7 @@ import { askingPrice, listingsIn, projectsFor, type Listing as HomeListing, type
 import { listingsFor, type Listing as LandListing } from './land';
 import { pieceCost } from './furniture';
 import { applianceCost } from './appliances';
-import { MODS, MOD_LABEL, MOD_PRICE, type Mod } from './mods';
+import { MODS, MOD_LABEL, MOD_OFFERS, type Mod } from './mods';
 import { stayClassesIn, stayPrice } from './stays';
 import { rentalClassesIn, rentalQuote } from './rentals';
 
@@ -37,8 +38,9 @@ export function vehicleCatalog(sim: Simulation, person: Person, cityId: string, 
     return {
       id: m.id, label: `${m.make} ${m.model}`, value: m, basis: 'Total, Taxed And Registered',
       ...(typeof q === 'string' ? { price: null, priceKind: 'unknown' as const } : known(inSaveMoney(sim, q.total, q.currency), age > 0 ? 'estimate' : 'advertised')),
-      facets: { make: m.make, fuel: m.fuel },
-      words: `${m.trim} ${m.fuel}`,
+      // Its body and drivetrain where its maker's page states them (`content/carspecs.ts`, from 2026-10-03).
+      facets: { make: m.make, fuel: m.fuel, ...(CAR_DETAILS[m.id]?.body ? { body: CAR_DETAILS[m.id]!.body! } : {}), ...(CAR_DETAILS[m.id]?.drivetrain ? { drivetrain: CAR_DETAILS[m.id]!.drivetrain! } : {}) },
+      words: `${m.trim} ${m.fuel} ${Object.values(CAR_DETAILS[m.id] ?? {}).join(' ')}`,
     };
   });
 }
@@ -74,9 +76,9 @@ export function projectCatalog(sim: Simulation, person: Person, owned: OwnedHome
   return projectsFor(sim, person, owned).map((p) => ({ id: p.project.id, label: p.project.label, value: p.project, basis: 'The Work, Before A Permit', price: p.cost, priceKind: 'estimate' as const }));
 }
 
-/** The modifications a car can have, fitted. */
-export function modCatalog(sim: Simulation): CatalogEntry<Mod>[] {
-  return MODS.map((mod) => ({ id: mod, label: MOD_LABEL[mod], value: mod, basis: 'Fitted', price: inSaveMoney(sim, Math.round(MOD_PRICE[mod] * 100), 'GBP'), priceKind: 'advertised' as const }));
+/** The modifications sold in a market, fitted, at their prices there. */
+export function modCatalog(sim: Simulation, market: 'GB' | 'US' = 'GB'): CatalogEntry<Mod>[] {
+  return MODS.filter((mod) => MOD_OFFERS[mod][market]).map((mod) => { const o = MOD_OFFERS[mod][market]!; return { id: mod, label: MOD_LABEL[mod], value: mod, basis: 'Fitted', price: inSaveMoney(sim, Math.round(o.price * 100), o.currency), priceKind: 'advertised' as const }; });
 }
 
 /** The kinds of stay a town has, each for the whole stay, taxes in. */

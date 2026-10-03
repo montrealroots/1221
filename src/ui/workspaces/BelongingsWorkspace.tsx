@@ -7,15 +7,16 @@
 import { Fragment, useState } from 'react';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { assembleRefusal } from '@/engine/systems/furnishings';
+import { bulkyFee, bulkyRefusal } from '@/engine/systems/bulky';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
-import { useFeature } from '@/ui/guide/Guide';
+import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
 import { bagsOf, buyLuggageRefusal, luggageCatalog, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
 import { consolesHere, consolesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
-import { ordersOf } from '@/engine/systems/orders';
+import { orderStage, ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
 import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
 import { batteryOptions, batteryRefusal, batteryYears, stopped } from '@/engine/systems/watches';
@@ -44,6 +45,17 @@ function placesNow(sim: Parameters<typeof reachable>[0], person: Parameters<type
 
 /** Words for a place, as a heading. */
 const titled = (words: string) => words.replace(/(^|[\s,]+)(\w)/g, (_m, sep: string, c: string) => sep + c.toUpperCase());
+
+/** Furniture at home collected by the council, at its own terms (`items.discard`). */
+function Collected({ item }: { item: Item }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  if (!item.bulky || item.at.kind !== 'home') return null;
+  if (item.collectAt !== undefined) return <span className="xs dim">{`Collected ${formatDate(item.collectAt, sim.zone)}`}</span>;
+  const no = bulkyRefusal(person, [item.id]);
+  const fee = no ? 0 : bulkyFee(sim, person, 1);
+  return <Gated feature="items.discard" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (fee ? `The council's collection, ${formatMoney(fee, saveCurrency(sim.universe))}` : 'The council collects it free')} onClick={() => { const a = run<{ collectAt: number }>('items.discard', { itemIds: [item.id] }); if (a.ok) toast(`Booked for collection ${formatDate(a.value!.collectAt, sim.zone)}.`, 'positive'); }}>Have It Collected</Gated>;
+}
 
 export function BelongingsWorkspace() {
   const { sim, run, toast } = useGame();
@@ -79,6 +91,12 @@ export function BelongingsWorkspace() {
             <Stat label="To Hand" value={String(toHandCount)} note="Where you are now" />
             <Stat label="On Their Way" value={String(coming.length)} note={coming.length ? `The next arrives ${formatDate(Math.min(...coming.map((o) => o.arrivesAt)), sim.zone)}` : 'No orders outstanding'} />
           </div>
+          {coming.length > 0 && (
+            <div className="col gap-1 small" style={{ marginTop: '0.5rem' }}>
+              {/* Each order's stage as the carrier's tracking says it (`orderStage`). */}
+              {coming.map((o) => <div key={o.id}>{`${o.from}: ${orderStage(person, o, sim.now)}, due ${formatDate(o.arrivesAt, sim.zone)}`}</div>)}
+            </div>
+          )}
         </Panel>
         <Suitcase />
         <Luggage />
@@ -137,9 +155,10 @@ export function BelongingsWorkspace() {
                                   </select>
                                   <button type="button" className="btn btn-sm btn-ghost" disabled={!move.open || !to} title={move.reason} onClick={() => { if (to && run('items.move', { itemId: item.id, to }).ok) toast(`The ${item.label}, moved.`, 'positive'); }}>Move It</button>
                                   <GiveTo itemId={item.id} label={item.label} />
+                                  <Collected item={item} />
                                   {item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? 'An hour'} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}
                                 </div>
-                              ) : item.flatPacked && here ? <div className="row gap-1" style={{ justifyContent: 'flex-end' }}>{item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? 'An hour'} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}</div> : <div className="xs dim" style={{ textAlign: 'right' }}>{here ? 'Stays Where It Is' : 'Not To Hand'}</div>}
+                              ) : (item.flatPacked || item.bulky) && here ? <div className="row gap-1" style={{ justifyContent: 'flex-end' }}><Collected item={item} />{item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? 'An hour'} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}</div> : <div className="xs dim" style={{ textAlign: 'right' }}>{here ? 'Stays Where It Is' : 'Not To Hand'}</div>}
                             </td>
                           </tr>
                         );

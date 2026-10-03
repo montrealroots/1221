@@ -1,0 +1,298 @@
+{
+  "meta": {
+    "topic": "Kitchen gaps: cheapest blender, slow cooker and stick blender by market; MET values for kitchen activities; an authoritative ingredient substitution table; time spent cooking",
+    "date": "2026-10-03",
+    "method": "Retail prices were read on the retailer's own pages: Target product and search pages through WebFetch; Walmart Mexico's search page and Liverpool's search and product pages through curl, reading the embedded page data; DID Electrical's Shopify collection JSON (did.ie/collections/<c>/products.json); Best Buy Canada's own JSON search and product API (bestbuy.ca/api/v2/json). Walmart.com, Walmart.ca, Canadian Tire, Argos (UK and IE), Harvey Norman IE, Currys and Tesco refused scripted requests (403 or bot check), so Argos UK figures come from search-engine snippets of argos.co.uk pages and are marked confirmed false. 'Cheapest' means cheapest found in the listings read, which for search pages is the first pages of results, not a full catalogue crawl. MET values were read on pacompendium.com's own heading pages. Substitutions were transcribed from the NDSU Extension PDF FN198. Time-use figures were read in the BLS ATUS Table A-1 2025 PDF, the ONS bulletin, and the StatCan table 45-10-0104 CSV. Nothing was estimated.",
+    "taxConvention": "taxIncluded is the market's shelf-price convention, not a line read on each product page: US and Canadian shelf prices exclude sales tax/GST/HST; UK, Irish and Mexican consumer prices are shown tax-inclusive (VAT, IVA). Treat these as background, not as figures confirmed on the page."
+  },
+  "smallAppliances": [
+    {
+      "market": "US", "retailer": "Target", "kind": "countertop blender",
+      "product": "Hamilton Beach Smoothie Blender 56oz 10 Speed Black 50190J",
+      "price": 26.99, "regularPrice": null, "currency": "USD", "taxIncluded": false,
+      "wattage": 650, "wattageNote": "\"650 watts of peak blending power\"",
+      "capacity": 56, "capacityUnit": "US fl oz (jar)", "seller": "Target",
+      "url": "https://www.target.com/p/hamilton-beach-smoothie-blender-56oz-10-speed-black-50190j/-/A-89243759",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Cheapest full-size electric blender in Target's 'countertop blender' search sorted by price low. Cheaper single-serve: Hamilton Beach 14oz Single-Serve Blender at $19.99 (https://www.target.com/p/hamilton-beach-14oz-single-serve-blender/-/A-14840272), seen in a search listing only, not on its product page."
+    },
+    {
+      "market": "US", "retailer": "Target", "kind": "slow cooker (6 qt)",
+      "product": "Kitchen Collection By Hamilton Beach 6qt Slow Cooker 33607KC",
+      "price": 21.99, "regularPrice": null, "currency": "USD", "taxIncluded": false,
+      "wattage": 265, "capacity": 6, "capacityUnit": "US quart", "seller": "Target",
+      "url": "https://www.target.com/p/hamilton-beach-kitchencollection-slow-cooker/-/A-94608567",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Settings Keep Warm, Low, High; removable stoneware. Next found: Hamilton Beach 6qt Slow Cooker with Folding Handles 33664 at $34.99 (regular $49.95), 265 W, https://www.target.com/p/hamilton-beach-6qt-slow-cooker-with-folding-handles-matte-black-33664/-/A-95033455 (read on product page)."
+    },
+    {
+      "market": "US", "retailer": "Target", "kind": "immersion (stick) blender",
+      "product": "Americana by Elite Hand Blender with Detachable Wand Black",
+      "price": 19.99, "regularPrice": null, "currency": "USD", "taxIncluded": false,
+      "wattage": 150, "capacity": null, "capacityUnit": null, "seller": "Target",
+      "url": "https://www.target.com/p/americana-by-elite-hand-blender-with-detachable-wand-black/-/A-94986664",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "1 speed. Cheaper than the cheapest full-size countertop blender ($26.99)."
+    },
+    {
+      "market": "UK", "retailer": "Argos", "kind": "countertop (jug) blender",
+      "product": "Cookworks TB507CF 1.5L Jug Blender - Black",
+      "price": 25.00, "regularPrice": null, "currency": "GBP", "taxIncluded": true,
+      "wattage": null, "capacity": 1.5, "capacityUnit": "litre (from the product name)",
+      "url": "https://www.argos.co.uk/product/3631658",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "Price from a search-engine snippet of the Argos page; argos.co.uk returned 403 to WebFetch and curl. Same snippets: Cookworks UM1050S2N1-X Nutri Blender (personal) £14.00, reduced from £18.00 (https://www.argos.co.uk/product/3631696). Wattage not read."
+    },
+    {
+      "market": "UK", "retailer": "Argos", "kind": "slow cooker (6.5 L)",
+      "product": "Cookworks 6.5L Slow Cooker - Black",
+      "price": 33.00, "regularPrice": null, "currency": "GBP", "taxIncluded": true,
+      "wattage": null, "capacity": 6.5, "capacityUnit": "litre (from the product name)",
+      "url": "https://www.argos.co.uk/product/6992679",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "Search-engine snippet; Argos page not readable (403). Same snippets: Crockpot 6.5L Slow Cooker £43.00 (https://www.argos.co.uk/product/9107090); Cookworks 3.5L £17.00, was £22.00 (https://www.argos.co.uk/product/7242524)."
+    },
+    {
+      "market": "UK", "retailer": "Argos", "kind": "immersion (stick) blender",
+      "product": "Russell Hobbs Go Create 27550 Electric Hand Blender - White",
+      "price": 18.00, "regularPrice": null, "currency": "GBP", "taxIncluded": true,
+      "wattage": null, "capacity": null, "capacityUnit": null,
+      "url": "https://www.argos.co.uk/product/5790322",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "Search-engine snippet; Argos page not readable (403)."
+    },
+    {
+      "market": "IE", "retailer": "DID Electrical", "kind": "countertop (jug) blender",
+      "product": "Braun PowerBlend 1 600W Jug Blender - Black | JB1051BK",
+      "price": 69.99, "regularPrice": null, "currency": "EUR", "taxIncluded": true,
+      "wattage": 600, "capacity": null, "capacityUnit": null,
+      "url": "https://www.did.ie/products/braun-powerblend-1-600w-jug-blender-black-jb1051bk",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Argos.ie and Harvey Norman IE refused scripted requests (403), so DID Electrical, an Irish electrical chain, stands in. Cheapest jug blender in DID's 'blenders' collection (26 items). Cheaper blending options there: Ninja 700W Slim Blender & Smoothie Maker QB3001UKS €64.99 (700 W, 2 x 470 ml cups, a cup blender rather than a jug); NutriBullet 200W Magic Blender MBL11 €49.99. Jug capacity not stated on the page."
+    },
+    {
+      "market": "IE", "retailer": "DID Electrical", "kind": "slow cooker (6.5 L)",
+      "product": "Morphy Richards 6.5L Ceramic Slow Cooker - Brushed Stainless Steel | 461013",
+      "price": 39.99, "regularPrice": null, "currency": "EUR", "taxIncluded": true,
+      "wattage": null, "capacity": 6.5, "capacityUnit": "litre",
+      "url": "https://www.did.ie/products/morphy-richards-65l-ceramic-slow-cooker-brushed-stainless-steel-461013",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Cheapest slow cooker in DID's 'slow-cookers' collection; page says 'Capacity 6.5 Litres', serves 10 starters or 6 main portions. Wattage not stated. Russell Hobbs 7L Slow Cooker 27720 €69.99 was out of stock."
+    },
+    {
+      "market": "IE", "retailer": "DID Electrical", "kind": "immersion (stick) blender",
+      "product": "Kenwood 600W Triblade Hand Blender - White & Green | HDP100WG",
+      "price": 29.99, "regularPrice": null, "currency": "EUR", "taxIncluded": true,
+      "wattage": 600, "capacity": null, "capacityUnit": null,
+      "url": "https://www.did.ie/products/kenwood-600w-triblade-hand-blender-white-green-hdp100wg",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Cheapest item in DID's blenders collection."
+    },
+    {
+      "market": "CA", "retailer": "Best Buy Canada", "kind": "countertop blender",
+      "product": "Black & Decker 6-Cups 700-Watt Countertop Blender - Black/Silver (BL1220SGC)",
+      "price": 39.99, "regularPrice": 39.99, "currency": "CAD", "taxIncluded": false,
+      "wattage": 700, "capacity": 6, "capacityUnit": "cups (glass jar)", "seller": "Best Buy",
+      "url": "https://www.bestbuy.ca/en-ca/product/18472242",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Walmart.ca and Canadian Tire refused scripted requests (bot check and 403), so Best Buy Canada stands in, read from its own JSON API. Cheapest blender sold by Best Buy itself; cheaper marketplace personal blenders exist from $26.99."
+    },
+    {
+      "market": "CA", "retailer": "Best Buy Canada", "kind": "slow cooker (6 qt)",
+      "product": "Hamilton Beach Slow Cooker - 6Qt (model 33463)",
+      "price": 59.99, "regularPrice": 76.99, "currency": "CAD", "taxIncluded": false,
+      "wattage": null, "capacity": 6, "capacityUnit": "US quart (from the title)", "seller": "Best Buy",
+      "url": "https://www.bestbuy.ca/en-ca/product/10373400",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Sale price. The title says 6Qt but the description says '7 litre capacity'; they disagree, so check before using a litre figure. Cheapest 5-7 qt slow cooker sold by Best Buy itself; marketplace 4-qt units started at $48.97."
+    },
+    {
+      "market": "CA", "retailer": "Best Buy Canada", "kind": "immersion (stick) blender",
+      "product": "Hauz Hand Blender 100W White (AHB4452)",
+      "price": 19.97, "regularPrice": 34.97, "currency": "CAD", "taxIncluded": false,
+      "wattage": 100, "capacity": null, "capacityUnit": null, "seller": "Simple Boutique (marketplace)",
+      "url": "https://www.bestbuy.ca/en-ca/product/hauz-hand-blender-100w-white/11645511",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Sold by a marketplace seller on bestbuy.ca, not Best Buy itself."
+    },
+    {
+      "market": "MX", "retailer": "Walmart México", "kind": "countertop blender",
+      "product": "Licuadora Oster con Vaso de Plástico 2 Velocidades Azul",
+      "price": 611.00, "regularPrice": null, "currency": "MXN", "taxIncluded": true,
+      "wattage": null, "capacity": null, "capacityUnit": null, "seller": "Walmart",
+      "url": "https://www.walmart.com.mx/ip/Licuadora-Oster-con-Vaso-de-Plastico-2-Velocidades-Azul/00005389117503",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Read in the embedded data of walmart.com.mx's own search page (q=licuadora, sort=price_low); the product page then hit a bot check, so wattage and capacity were not read. Cheapest blender sold by Walmart itself. Cheaper marketplace listing: Licuadora Taurus Valencia 7 Velocidades 1.5 Litros Blanca, $419.00, seller ElecTronix."
+    },
+    {
+      "market": "MX", "retailer": "Walmart México", "kind": "immersion (stick) blender",
+      "product": "Batidora de inmersión Oster con Función Turbo Blanca",
+      "price": 539.00, "regularPrice": null, "currency": "MXN", "taxIncluded": true,
+      "wattage": null, "capacity": null, "capacityUnit": null, "seller": "Walmart",
+      "url": "https://www.walmart.com.mx/ip/Batidora-de-inmersion-Oster-con-Funcion-Turbo-Blanca/00003426447888",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Same search page as the blender. Cheaper than Walmart's cheapest own-sold countertop blender (611)."
+    },
+    {
+      "market": "MX", "retailer": "Liverpool", "kind": "countertop blender",
+      "product": "LICUADORA BSED-B2-B BOSSTECH 2, NEGRO",
+      "price": 429.00, "regularPrice": 800.00, "currency": "MXN", "taxIncluded": true,
+      "wattage": null, "capacity": 2, "capacityUnit": "litre", "seller": "Grand Cheff Electrodomésticos (marketplace)",
+      "url": "https://www.liverpool.com.mx/tienda/pdp/x/1109368055",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Read on the Liverpool product page; 'Hecho en México', 2 L jar. Cheapest blender in the first three pages of Liverpool's 'licuadora' search (168 items; a Play-Doh toy at $259 excluded). Oster Licuadora 1 velocidad, $626.00, 1.25 L, 'Potencia' listed as 450 W and 500 W (https://www.liverpool.com.mx/tienda/pdp/x/1117347768), also marketplace."
+    },
+    {
+      "market": "MX", "retailer": "Liverpool", "kind": "slow cooker (5 qt / 4.7 L)",
+      "product": "CHEFMAN Olla de cocción lenta (negro)",
+      "price": 689.00, "regularPrice": 1149.00, "currency": "MXN", "taxIncluded": true,
+      "wattage": null, "capacity": 4.7, "capacityUnit": "litre (5 US quarts per the description)", "seller": "Chefman (marketplace)",
+      "url": "https://www.liverpool.com.mx/tienda/pdp/x/1192633440",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Cheapest electric slow cooker in the first three pages of Liverpool's 'olla de cocción lenta' search; nothing in the 5-6 L range was cheaper. Smaller cheaper ones: Signa 3.3 L $759; Elite Gourmet 1.9 L $799 (both dearer anyway). No Walmart México slow-cooker figure: the search page hit a bot check."
+    },
+    {
+      "market": "MX", "retailer": "Liverpool", "kind": "immersion (stick) blender",
+      "product": "RCA Batidora de inmersión 2 velocidades Rc-1204",
+      "price": 439.00, "regularPrice": 729.00, "currency": "MXN", "taxIncluded": true,
+      "wattage": 500, "capacity": null, "capacityUnit": null, "seller": "MT DE MEXICO (marketplace)",
+      "url": "https://www.liverpool.com.mx/tienda/pdp/x/1138475626",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Page lists 'Tamaño: 1 L' as a variant label and 'Capacidad de bowl: Sin bowl'."
+    }
+  ],
+  "mets": [
+    {"code": "05049", "met": 3.5, "description": "Cooking or food preparation, moderate effort", "unit": "MET", "currency": null, "url": "https://pacompendium.com/home-activities", "date": "2026-10-03", "confirmed": true},
+    {"code": "05050", "met": 2.0, "description": "Cooking or food preparation – standing or sitting or in general (not broken into stand/walk components), manual appliances, light effort", "unit": "MET", "currency": null, "url": "https://pacompendium.com/home-activities", "date": "2026-10-03", "confirmed": true},
+    {"code": "05051", "met": 2.3, "description": "Cooking or food preparation, walking", "unit": "MET", "currency": null, "url": "https://pacompendium.com/home-activities", "date": "2026-10-03", "confirmed": true},
+    {"code": "05035", "met": 3.3, "description": "Kitchen activity, general, (e.g., cooking, washing dishes, cleaning up) moderate effort", "unit": "MET", "currency": null, "url": "https://pacompendium.com/home-activities", "date": "2026-10-03", "confirmed": true},
+    {"code": "05041", "met": 2.0, "description": "Wash dishes, standing or in general (not broken into stand/walk components)", "unit": "MET", "currency": null, "url": "https://pacompendium.com/home-activities", "date": "2026-10-03", "confirmed": true},
+    {"code": "05042", "met": 2.0, "description": "Wash dishes, clearing dishes from table, walking, light effort", "unit": "MET", "currency": null, "url": "https://pacompendium.com/home-activities", "date": "2026-10-03", "confirmed": true},
+    {"code": "05052", "met": 2.3, "description": "Serving food, setting/cleaning table, implied walking or standing", "unit": "MET", "currency": null, "url": "https://pacompendium.com/home-activities", "date": "2026-10-03", "confirmed": true},
+    {"code": "05055", "met": 2.5, "description": "Putting away groceries (e.g. carrying groceries, carrying packages)", "unit": "MET", "currency": null, "url": "https://pacompendium.com/home-activities", "date": "2026-10-03", "confirmed": true},
+    {"code": "05057", "met": 3.0, "description": "Cooking Indian bread or other food on an outside stove", "unit": "MET", "currency": null, "url": "https://pacompendium.com/home-activities", "date": "2026-10-03", "confirmed": true},
+    {"code": "13030", "met": 1.5, "description": "Eating, sitting", "unit": "MET", "currency": null, "url": "https://pacompendium.com/self-care", "date": "2026-10-03", "confirmed": true},
+    {"code": "13035", "met": 2.0, "description": "Talking and eating or eating only, standing", "unit": "MET", "currency": null, "url": "https://pacompendium.com/self-care", "date": "2026-10-03", "confirmed": true}
+  ],
+  "substitutionsSource": {
+    "title": "Ingredient Substitutions (FN198, reviewed Jan. 2023)",
+    "publisher": "NDSU Extension, North Dakota State University",
+    "author": "Julie Garden-Robinson, Ph.D., R.D., L.R.D.; original authors Nancy Brockel Kaufman and Pat Beck",
+    "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf",
+    "licence": "Creative Commons, non-commercial, attribution, share-alike (stated on page 12)",
+    "caveat": "The publication says substitution may alter taste, colour, moisture or texture, and recommends it for unexpected situations only.",
+    "units": "US customary (1 cup = 16 tablespoons = 48 teaspoons per the PDF's own 'Measuring Up' page)"
+  },
+  "substitutions": [
+    {"ingredient": "Butter", "amount": "1 cup", "substitute": "margarine", "substituteAmount": "1 cup", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Butter", "amount": "1 cup", "substitute": "oil plus 1/2 teaspoon salt", "substituteAmount": "7/8 cup oil + 1/2 tsp salt", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Also listed: 7/8 cup oil alone; 7/8 cup lard + 1/2 tsp salt; 7/8 to 1 cup hydrogenated fat + 1/2 tsp salt."},
+    {"ingredient": "Butter", "amount": "1 cup", "substitute": "lard plus salt", "substituteAmount": "7/8 cup lard + 1/2 tsp salt", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Milk, whole", "amount": "1 cup", "substitute": "evaporated milk plus water", "substituteAmount": "1/2 cup evaporated milk + 1/2 cup water", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Milk, whole", "amount": "1 cup", "substitute": "reconstituted nonfat dry milk plus butter or margarine", "substituteAmount": "1 cup reconstituted nonfat dry milk + 2 1/2 tsp butter or margarine", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Milk, whole", "amount": "1 cup", "substitute": "buttermilk plus baking soda (baking)", "substituteAmount": "1 cup buttermilk + 1/2 tsp baking soda; decrease baking powder by 2 tsp", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Milk, whole", "amount": "1 cup", "substitute": "water plus butter (baking)", "substituteAmount": "1 cup water + 1 1/2 tsp butter", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Also: 1 cup fruit juice or potato water (in baking); 4 tbsp whole dry milk + 1 cup water; 1/4 cup nonfat dry milk + 7/8 cup water + 2 tsp butter or margarine."},
+    {"ingredient": "Egg", "amount": "1 whole (3 tablespoons)", "substitute": "egg whites", "substituteAmount": "2 egg whites", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Egg", "amount": "1 whole (3 tablespoons)", "substitute": "egg white plus oil", "substituteAmount": "1 egg white + 2 tsp oil", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Egg", "amount": "1 whole (3 tablespoons)", "substitute": "dry whole egg powder plus water", "substituteAmount": "2 1/2 tbsp sifted dry whole egg powder + 2 1/2 tbsp lukewarm water", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Egg", "amount": "1 whole (3 tablespoons)", "substitute": "egg substitute", "substituteAmount": "1/4 cup", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Also: 2 yolks + 1 tbsp water (in cookies); 2 yolks (in custards, cream fillings)."},
+    {"ingredient": "Egg (cookies and cakes only)", "amount": "1 egg", "substitute": "water plus baking powder", "substituteAmount": "2 tbsp water + 1/2 tsp baking powder", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Listed under 'Egg substitute'. For recipes calling for 2 or 3 eggs, per egg: 2 tbsp flour, 1/2 tbsp shortening, 1/2 tsp baking powder, 2 tbsp of the recipe's liquid."},
+    {"ingredient": "Buttermilk", "amount": "1 cup", "substitute": "plain yogurt", "substituteAmount": "1 cup", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Buttermilk or sour milk", "amount": "1 cup", "substitute": "sweet milk plus lemon juice or vinegar", "substituteAmount": "1 cup minus 1 tbsp milk + 1 tbsp lemon juice or vinegar; stand 5 to 10 minutes", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Buttermilk or sour milk", "amount": "1 cup", "substitute": "sweet milk plus cream of tartar", "substituteAmount": "1 cup milk + 1 3/4 tsp cream of tartar", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Sour cream, cultured", "amount": "1 cup", "substitute": "plain yogurt", "substituteAmount": "1 cup (in cooking add 1 tbsp cornstarch per cup to prevent separating)", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Sour cream, cultured", "amount": "1 cup", "substitute": "sour milk or buttermilk plus butter or margarine", "substituteAmount": "7/8 cup + 1/3 cup butter or margarine", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Sour cream, cultured", "amount": "1 cup", "substitute": "buttermilk plus oil", "substituteAmount": "3/4 cup buttermilk + 1/4 cup oil", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Sour cream, cultured", "amount": "1 cup", "substitute": "cottage cheese plus lemon juice, pureed", "substituteAmount": "1 cup cottage cheese + 2 or 3 tsp lemon juice", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Also: 3/4 cup milk + 3/4 tsp lemon juice + 1/3 cup butter; 1 cup evaporated milk at 70°F + 1 tbsp vinegar, left to clabber. The 'Cream, sour' row adds 3 tbsp butter + 7/8 cup sour milk, or 7/8 cup buttermilk + 3 tbsp butter."},
+    {"ingredient": "Cream, heavy (36 to 40% fat)", "amount": "1 cup", "substitute": "milk plus butter or margarine (cooking and baking)", "substituteAmount": "3/4 cup milk + 1/3 cup butter or margarine", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Cream, heavy (36 to 40% fat)", "amount": "1 cup", "substitute": "buttermilk plus oil", "substituteAmount": "2/3 cup buttermilk + 1/3 cup oil", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Also: evaporated skim milk, or equal parts part-skim ricotta and nonfat yogurt beaten smooth (cannot be heated)."},
+    {"ingredient": "Cream, half-and-half", "amount": "1 cup", "substitute": "whole milk plus butter or margarine", "substituteAmount": "7/8 cup whole milk + 1/2 tbsp butter or margarine", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Also: 1 cup evaporated milk; 3 tbsp oil + milk to 1 cup."},
+    {"ingredient": "Yogurt, plain", "amount": "1 cup", "substitute": "buttermilk", "substituteAmount": "1 cup", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Also: 1 cup cottage cheese blended smooth; 1 cup sour cream. The PDF's layout puts '1 packaged (1/4 ounce) active dry yeast' as the first bullet beside Yogurt; it belongs to the Yeast row above and is omitted here."},
+    {"ingredient": "Onion", "amount": "1 small", "substitute": "onion powder", "substituteAmount": "1 tsp", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Also: 1/4 cup chopped fresh onion; 1 1/3 tsp onion salt; 1 to 2 tbsp minced (dried) onion."},
+    {"ingredient": "Garlic", "amount": "1 clove, small", "substitute": "garlic powder or instant minced garlic", "substituteAmount": "1/8 tsp garlic powder or 1/4 tsp instant minced garlic", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Lemon juice", "amount": "1 tsp", "substitute": "vinegar", "substituteAmount": "1/2 tsp", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Row 'Lemon'. Also: 1 medium lemon = 2 to 3 tbsp lemon juice + 1 to 2 tsp rind."},
+    {"ingredient": "Broth, beef or chicken", "amount": "1 cup", "substitute": "bouillon cube in boiling water", "substituteAmount": "1 bouillon cube dissolved in 1 cup boiling water", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Broth, beef or chicken", "amount": "1 cup", "substitute": "powdered broth base in boiling water", "substituteAmount": "1 tsp powdered broth base in 1 cup boiling water", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Flour, all-purpose (for thickening)", "amount": "1 tbsp", "substitute": "cornstarch, potato starch, rice starch or arrowroot", "substituteAmount": "1/2 tbsp", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Also: 2 to 3 tsp quick-cooking tapioca; 1 1/2 tbsp whole wheat flour; 2 tbsp browned flour."},
+    {"ingredient": "Cornstarch (for thickening)", "amount": "1 tbsp", "substitute": "all-purpose flour", "substituteAmount": "2 tbsp", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Flour, cake", "amount": "1 cup sifted", "substitute": "sifted all-purpose flour", "substituteAmount": "1 cup minus 2 tbsp", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Flour, self-rising", "amount": "1 cup", "substitute": "all-purpose flour plus baking powder and salt", "substituteAmount": "1 cup minus 2 tsp all-purpose flour + 1 1/2 tsp baking powder + 1/2 tsp salt", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Flour, all-purpose (baking)", "amount": "1 cup sifted", "substitute": "whole wheat flour for part", "substituteAmount": "replace 1/4 to 1/2 of the white flour", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Specialty-flour swaps (rye 1 1/4 cups, rice flour 3/4 cup, oat flour 1 1/2 cups, etc.) need 2 1/2 tsp baking powder per cup; reduce yeast-bread volume."},
+    {"ingredient": "Sugar, white", "amount": "1 cup", "substitute": "brown sugar, firmly packed", "substituteAmount": "1 cup", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Sugar, white", "amount": "1 cup", "substitute": "honey", "substituteAmount": "1 cup; decrease recipe liquid by 1/4 cup; in baking add 1/2 tsp baking soda per cup and lower oven 25 degrees", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Sugar, white", "amount": "1 cup", "substitute": "maple syrup", "substituteAmount": "3/4 cup; reduce recipe liquid by 3 tbsp", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "Also: 2 cups corn syrup (reduce liquid 1/4 cup; never more than half the sugar); 1 3/4 cups confectioners' sugar (not for baking)."},
+    {"ingredient": "Sugar, brown", "amount": "1 cup, firmly packed", "substitute": "granulated sugar plus molasses", "substituteAmount": "1 cup granulated sugar + 1/4 cup molasses", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Baking powder", "amount": "1 tsp", "substitute": "baking soda plus cream of tartar", "substituteAmount": "1/4 tsp baking soda + 5/8 tsp cream of tartar", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true, "note": "The PDF also lists 1/3 tsp baking soda + 1/2 tsp cream of tartar."},
+    {"ingredient": "Baking powder", "amount": "1 tsp", "substitute": "baking soda plus sour milk, buttermilk or yogurt", "substituteAmount": "1/4 tsp baking soda + 1/2 cup sour milk, buttermilk or yogurt; decrease recipe liquid by 1/2 cup", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Baking powder", "amount": "1 tsp", "substitute": "baking soda plus vinegar or lemon juice in milk", "substituteAmount": "1/4 tsp baking soda + 1/2 tbsp vinegar or lemon juice with sweet milk to 1/2 cup; decrease recipe liquid by 1/2 cup", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Rice, regular", "amount": "1 cup uncooked (3 cups cooked)", "substitute": "converted, brown or wild rice", "substituteAmount": "1 cup uncooked", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Rice, cooked", "amount": "1 cup cooked", "substitute": "cooked bulgur wheat or pearl barley", "substituteAmount": "1 cup cooked", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Macaroni (pasta)", "amount": "2 cups uncooked (4 cups cooked)", "substitute": "spaghetti in 2-inch pieces", "substituteAmount": "2 cups uncooked", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Macaroni (pasta)", "amount": "2 cups uncooked (4 cups cooked)", "substitute": "noodles", "substituteAmount": "4 cups uncooked", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Tomatoes, fresh", "amount": "2 cups, chopped", "substitute": "canned tomatoes", "substituteAmount": "16-ounce can", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Tomatoes, chopped (canned)", "amount": "16-ounce can", "substitute": "fresh tomatoes", "substituteAmount": "3 fresh medium tomatoes, or a 16-ounce can of stewed tomatoes", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Tomato sauce", "amount": "15-ounce can", "substitute": "tomato paste plus water", "substituteAmount": "6-ounce can tomato paste + 1 cup water", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Tomato juice", "amount": "1 cup", "substitute": "tomato sauce plus water", "substituteAmount": "1/2 cup tomato sauce + 1/2 cup water", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Catsup", "amount": "1 cup", "substitute": "tomato sauce, sugar and vinegar (for cooking)", "substituteAmount": "1 cup tomato sauce + 1/2 cup sugar + 2 tbsp vinegar", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Herbs, fresh", "amount": "1 tbsp, finely cut", "substitute": "dried herbs", "substituteAmount": "1 tsp dried, or 1/2 tsp ground", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Mayonnaise (salads and dressings)", "amount": "1 cup", "substitute": "yogurt or sour cream", "substituteAmount": "1 cup", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Wine", "amount": "1 cup", "substitute": "water, lemon juice and sugar", "substituteAmount": "13 tbsp water + 3 tbsp lemon juice + 1 tbsp sugar", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true},
+    {"ingredient": "Honey", "amount": "1 cup", "substitute": "sugar plus liquid", "substituteAmount": "1 1/4 cups sugar + 1/4 cup of the recipe's liquid", "url": "https://www.ndsu.edu/agriculture/sites/default/files/2023-01/fn198.pdf", "date": "2023-01", "confirmed": true}
+  ],
+  "cookingTime": [
+    {
+      "country": "US", "measure": "food and drink preparation (ATUS), all persons 15+, average per day",
+      "figure": 33.6, "unit": "minutes per day (0.56 h)", "currency": null,
+      "byGender": {"menHours": 0.42, "womenHours": 0.69},
+      "url": "https://www.bls.gov/tus/tables/a1-2025.pdf", "date": "2025 annual averages (read 2026-10-03)", "confirmed": true,
+      "note": "Table A-1, 2025. Preparation only; research-water-washing.json already has clean-up (0.15 h) and the combined category (0.71 h), so this splits the two. The minutes figure is 0.56 h x 60."
+    },
+    {
+      "country": "US", "measure": "food and drink preparation, people who did it that day",
+      "figure": 54.6, "unit": "minutes per day (0.91 h)", "currency": null,
+      "byGender": {"menHours": 0.77, "womenHours": 1.02},
+      "participationPercent": {"total": 61.8, "men": 55.2, "women": 68.1},
+      "url": "https://www.bls.gov/tus/tables/a1-2025.pdf", "date": "2025 annual averages (read 2026-10-03)", "confirmed": true,
+      "note": "This is per day, not per meal; ATUS publishes no per-meal figure."
+    },
+    {
+      "country": "US", "measure": "eating and drinking (primary activity), all persons",
+      "figure": 66.6, "unit": "minutes per day (1.11 h)", "currency": null,
+      "byGender": {"menHours": 1.14, "womenHours": 1.08},
+      "url": "https://www.bls.gov/tus/tables/a1-2025.pdf", "date": "2025 annual averages (read 2026-10-03)", "confirmed": true,
+      "note": "96.8% engaged; 1.15 h among those who ate. Excludes travel related to eating (0.10 h)."
+    },
+    {
+      "country": "UK", "measure": "making food and drinks, all adults, average per day",
+      "figure": 46, "unit": "minutes per day", "currency": null,
+      "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/bulletins/timeuseintheuk/23septemberto1october2023",
+      "date": "23 September to 1 October 2023", "confirmed": true,
+      "note": "ONS Time use in the UK bulletin: adults spent, apart from sleep and work, 'eating (1 hour and 7 minutes) ... making food and drinks (46 minutes)'. No sex split in the bulletin text."
+    },
+    {
+      "country": "CA", "measure": "eating or drinking, all persons 15+, population average",
+      "figure": 1.4, "unit": "hours per day", "currency": null,
+      "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=4510010401",
+      "date": "2022 (Time Use Survey, July 2022 to July 2023)", "confirmed": true,
+      "note": "Table 45-10-0104-01, read from the full CSV download (https://www150.statcan.gc.ca/n1/tbl/csv/45100104-eng.zip). Participants 1.6 h; participation 89.7%. The table has no meal-preparation row: cooking is folded into 'Unpaid household work (household or family)'."
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "Walmart.com (US): bot check on every page; Target used instead.",
+      "Walmart.ca and Canadian Tire: bot check / 403; Best Buy Canada used instead.",
+      "Argos UK: 403 to WebFetch and curl; figures come from search snippets only (confirmed false); wattages not read.",
+      "Argos.ie and Harvey Norman IE: 403; DID Electrical used instead.",
+      "Walmart México slow cooker: the search page hit a bot check on the second request; the product pages too. Walmart MX blender and stick-blender wattage and capacity not read.",
+      "Wattage for the DID Morphy Richards 6.5L slow cooker, the Best Buy Hamilton Beach 6Qt, the Liverpool Chefman, and both Argos items: not stated on the pages read.",
+      "Statistics Canada meal-preparation minutes: table 45-10-0104 has no meal-preparation row (only 'Unpaid household work').",
+      "Average time to cook a single meal: no official source publishes a per-meal figure; ATUS and ONS publish minutes per day."
+    ],
+    "worthChecking": [
+      "Best Buy Canada's Hamilton Beach model 33463 is titled 6Qt but its description says '7 litre capacity'.",
+      "Retail 'cheapest' covers the first pages of each retailer's search, sorted by price where the site allowed it (Target, Walmart MX); Liverpool and DID were sorted locally from the pages fetched. A full category crawl could find a cheaper item.",
+      "Several Liverpool and Best Buy items are sold by marketplace sellers, not the retailer itself; each entry names the seller.",
+      "NDSU FN198 is US customary and US-product-specific (e.g. Sugar Twin, Equal); UK/IE/MX markets may need metric conversion or local equivalents.",
+      "Only NDSU FN198 was transcribed. Canada's Food Guide and the other named extension tables (Penn State, Clemson, Utah State, Iowa State) were not read; Utah State's list (https://extension.usu.edu/archive/list-of-ingredient-substitutions-for-cooking-and-baking) and a University of Arkansas PDF came up in search and could cross-check it."
+    ]
+  }
+}

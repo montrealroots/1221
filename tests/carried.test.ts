@@ -479,7 +479,8 @@ describe('the pharmacy, the dentist and the optician', () => {
   it('leave dental and vision to what each plan covers, and the uninsured the price', () => {
     const sim = pro('teeth');
     const when = at(2027, 3, 1);
-    expect(teethAndEyesShareOf(sim.player, 'cleaning', when)).toBe(grown(DENTAL_VISION.price.cleaning, 'dental', when));
+    // From 2026-10-03 a New Yorker's cleaning is 209 NYC Dental's own $144, not the national average (`NAMED_TEETH_EYES`).
+    expect(teethAndEyesShareOf(sim.player, 'cleaning', when)).toBe(144_00);
     const h = healthOf(sim.player);
     h.sag = { from: at(2027, 1, 1, 0), until: at(2028, 1, 1, 0) };
     expect(teethAndEyesShareOf(sim.player, 'cleaning', when)).toBe(0);

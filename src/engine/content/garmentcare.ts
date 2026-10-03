@@ -24,7 +24,8 @@
  */
 
 /** Where a garment goes on the body, which decides what an outfit needs. */
-export type Slot = 'top' | 'bottom' | 'dress' | 'suit' | 'outer' | 'underwear' | 'socks' | 'shoes' | 'sleep' | 'active' | 'accessory' | 'towel';
+/** Where a garment goes on; a base layer (thermals, a slip) under the rest, from 2026-10-03. */
+export type Slot = 'top' | 'bottom' | 'dress' | 'suit' | 'outer' | 'underwear' | 'base' | 'socks' | 'shoes' | 'sleep' | 'active' | 'accessory' | 'towel';
 
 /** How it's cleaned: in a machine, by hand, or only by a dry cleaner (the FTC's Care Labeling Rule). */
 export type Care = 'wash' | 'hand' | 'dry-clean';
@@ -46,6 +47,11 @@ export const CARE_BY_KIND: Readonly<Record<string, CareRule>> = {
   coat: { wearsBetween: 45, lifetimeWashes: 23.5, source: 'ACI and Which?: once or twice a season' },
   pajamas: { wearsBetween: 3.5, lifetimeWashes: 17.3, source: 'ACI: after 3 or 4 wears' },
   active: { wearsBetween: 1, lifetimeWashes: 17.3, source: 'ACI: leggings after every wear; Which?: workout gear 1 wear' },
+  // From 2026-10-03: a swimsuit as the rest of what's worn to exercise, and a slip as underwear.
+  swimsuit: { wearsBetween: 1, lifetimeWashes: 17.3, source: 'As activewear: Which?: workout gear 1 wear' },
+  slip: { wearsBetween: 1, lifetimeWashes: 17.3, source: 'As underwear: ACI: after each wearing' },
+  'thermal-top': { wearsBetween: 1, lifetimeWashes: 17.3, source: 'As underwear: ACI: after each wearing' },
+  'thermal-bottom': { wearsBetween: 1, lifetimeWashes: 17.3, source: 'As underwear: ACI: after each wearing' },
   shoes: { wearsBetween: Infinity, lifetimeWashes: null, source: 'Not washed' },
   accessory: { wearsBetween: Infinity, lifetimeWashes: null, source: 'Not washed' },
   // From 2026-10-02: a bath towel is used after a shower and washed with the clothes. How many washes one lasts isn't published.
@@ -59,7 +65,7 @@ export const CARE_BY_KIND: Readonly<Record<string, CareRule>> = {
  * to about 30 of a carry-on's 45 liters.
  */
 export const GARMENT_L: Readonly<Record<Slot, number>> = {
-  top: 1, bottom: 1.5, dress: 1.5, suit: 4, outer: 5, underwear: 0.2, socks: 0.15, shoes: 4, sleep: 1, active: 0.8, accessory: 0.2, towel: 2,
+  top: 1, bottom: 1.5, dress: 1.5, suit: 4, outer: 5, underwear: 0.2, base: 0.8, socks: 0.15, shoes: 4, sleep: 1, active: 0.8, accessory: 0.2, towel: 2,
 };
 
 /** The care rule for a kind of garment, or a T-shirt's where none is named. */

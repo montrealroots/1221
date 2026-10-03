@@ -171,10 +171,69 @@ for (const file of FILES) {
       id, retailer: retailer.id, market, brand: p.brand ?? retailer.name, name: p.name, category: p.category, subcategory: p.subcategory ?? null,
       slot, kind, ...careOf(p, kind), pack: packOf(p.name), price: p.price, currency: p.currency, taxIncluded: market === 'GB' || market === 'IE' || market === 'MX',
       sizes: Array.isArray(p.sizes) ? p.sizes.map(String) : [], colors: Array.isArray(p.colors) ? p.colors.map(String) : [],
-      material: p.material ?? null, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true,
+      material: p.material ?? null, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true, subtype: null, sameAs: null,
     });
   }
 }
+// From 2026-10-03 (`research-clothing-gaps.json`): the kinds of garment the catalog lacked, each with its
+// `subtype`, and the same product at several of a market's sellers, tied by `sameAs`. A seller that isn't one of
+// SLATE's retailers (Spanx's own site, Converse's, a marketplace's third party) is left out, as is a product read
+// only at a sale price, its regular price unread.
+const GAPS = 'docs/research/world/research-clothing-gaps.json';
+const SUBTYPE_WORN = { swimwear: ['active', 'swimsuit'], shapewear: ['underwear', 'underwear'], slips: ['base', 'slip'], hosiery: ['socks', 'socks'] };
+// Thermals: long underwear, worn under the rest, as a base layer; socks and a pajama set are what they are.
+const thermalWorn = (name) => (/socks|calcet/i.test(name) ? ['socks', 'socks'] : /pijama/i.test(name) ? ['sleep', 'pajamas'] : /leggings|tights|pantal|bottoms?/i.test(name) ? ['base', 'thermal-bottom'] : ['base', 'thermal-top']);
+// Spanish garment words a Mexican listing names its garment by.
+const SPANISH = [[/\b(pijamas?)\b/i, 'sleep', 'pajamas'], [/\b(pantal[oó]n(es)?|mallas?)\b/i, 'bottom', 'trousers'], [/\b(camisetas?|playeras?)\b/i, 'top', 't-shirt'], [/\b(su[eé]ter|chamarra)\b/i, 'top', 'sweater']];
+function sellerOf(name, market) {
+  let words = String(name ?? '');
+  if (/marketplace/i.test(words)) return undefined;
+  const selling = words.match(/^(.+?) selling /i);
+  if (selling) words = selling[1];
+  const clean = words.replace(/\s*\((?:US|UK|Ireland|Canada|México|Mexico|sold by [^)]*|[a-z.]+\.com)\)\s*$/i, '').trim();
+  return retailers.find((r) => r.market === market && (slug(r.name) === slug(clean) || slug(r.name).startsWith(`${slug(clean)}-`) || slug(r.name).startsWith(slug(clean)) && slug(clean).length >= 4));
+}
+function addGap(p, market, retailer, extra) {
+  const price = p.price ?? p.regularPrice ?? p.listPrice;
+  if (typeof price !== 'number' || !(price > 0) || !retailer) return;
+  let id = `${retailer.id}-${slug(p.name)}`.slice(0, 90);
+  for (let n = 2; seen.has(id); n += 1) id = `${retailer.id}-${slug(p.name)}`.slice(0, 86) + `-${n}`;
+  seen.add(id);
+  const spanish = SPANISH.find(([re]) => re.test(p.name));
+  const [slot, kind] = extra.worn ?? (headOf(String(p.name).toLowerCase(), market) ? wornAs(p, market) : spanish ? [spanish[1], spanish[2]] : wornAs({ ...p, category: extra.category }, market));
+  const sizes = Array.isArray(p.sizes) ? p.sizes.map(String) : [];
+  products.push({
+    id, retailer: retailer.id, market, brand: p.brand ?? retailer.name, name: p.name, category: extra.category, subcategory: extra.subcategory ?? null,
+    slot, kind, ...careOf(p, kind), pack: p.pack ?? packOf(p.name), price, currency: { US: 'USD', GB: 'GBP', IE: 'EUR', CA: 'CAD', MX: 'MXN' }[market],
+    taxIncluded: market === 'GB' || market === 'IE' || market === 'MX', sizes, colors: [], material: null, url: p.url ?? null, date: '2026-10-03',
+    confirmed: extra.confirmed !== false, subtype: extra.subtype ?? null, sameAs: extra.sameAs ?? null,
+  });
+}
+if (existsSync(GAPS)) {
+  const g = JSON.parse(readFileSync(GAPS, 'utf8'));
+  for (const s of g.subtypes ?? []) {
+    for (const p of s.products ?? []) {
+      const retailer = sellerOf(p.retailer ?? s.retailer, s.market);
+      addGap(p, s.market, retailer, { category: s.subtype, subcategory: p.kind ?? s.subtype, subtype: s.subtype, worn: s.subtype === 'thermals' ? thermalWorn(p.name) : SUBTYPE_WORN[s.subtype], confirmed: s.confirmed });
+    }
+  }
+  // The same product: a seller already in the catalog is tied by its listing's id; one that isn't is added.
+  const HELD = { 'nike air force 1': ['us-nike-nike-air-force-1-07-mens-shoes'], "levi's 501": ['us-levis-501-original-fit-mens-jeans'], 'adidas samba og': ['us-adidas-samba-og-shoes', 'ie-brown-thomas-samba-og-trainers'] };
+  for (const group of g.multiSeller ?? []) {
+    const key = slug(String(group.product).replace(/\s*\(.*\)\s*$/, ''));
+    const heldKey = Object.keys(HELD).find((k) => String(group.product).toLowerCase().startsWith(k));
+    const held = (HELD[heldKey] ?? []).map((id) => products.find((x) => x.id === id)).filter(Boolean);
+    for (const x of held) x.sameAs = key;
+    const footwear = /air force|chuck|samba/i.test(group.product);
+    for (const seller of group.sellers ?? []) {
+      const retailer = sellerOf(seller.retailer, seller.market);
+      if (!retailer || held.some((x) => x.retailer === retailer.id)) continue;
+      if (/spanx/i.test(group.product)) continue;
+      addGap({ name: String(group.product).replace(/\s*\(.*\)\s*$/, ''), brand: String(group.product).split(' ')[0], price: seller.price, url: seller.url }, seller.market, retailer, { category: footwear ? 'footwear' : 'everyday', subcategory: footwear ? 'shoes' : 'jeans', worn: footwear ? ['shoes', 'shoes'] : ['bottom', 'jeans'], confirmed: seller.confirmed, sameAs: key });
+    }
+  }
+}
+
 // A retailer with nothing on sale is left out: Hudson's Bay closed its stores on 2025-06-01, and some blocked every read.
 for (let i = retailers.length - 1; i >= 0; i -= 1) if (!products.some((p) => p.retailer === retailers[i].id)) retailers.splice(i, 1);
 for (const r of retailers) delete r.key;
@@ -233,6 +292,10 @@ export interface ClothingProduct {
   price: number; currency: string; taxIncluded: boolean;
   sizes: readonly string[]; colors: readonly string[]; material: string | null;
   url: string | null; date: string | null; confirmed: boolean;
+  /** A kind the trade names apart (swimwear, thermals, shapewear, hosiery, slips, cultural), from 2026-10-03. */
+  subtype: string | null;
+  /** The same product as other sellers' listings with this key, from 2026-10-03. */
+  sameAs: string | null;
 }
 
 export const CLOTHING_RETAILERS: readonly ClothingRetailer[] = ${JSON.stringify(retailers, null, 0)};

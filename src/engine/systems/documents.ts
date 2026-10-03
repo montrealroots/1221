@@ -39,6 +39,9 @@ export type DocumentKind = 'passport' | 'authorization' | 'visa' | 'license' | '
 
 export interface PersonDocument {
   id: string;
+  /** Lost to a theft, as reported, and a police report filed for it (`documents.police_report`, from 2026-10-03). */
+  stolen?: true;
+  policeReport?: Instant;
   kind: DocumentKind;
   /** Who issued it: a country (ISO 3166 alpha-2) for a passport, an authorization or a visa; a licensing jurisdiction's id (\`content/licenses.ts\`) for a license. */
   issuer: string;
@@ -379,14 +382,58 @@ export function registerDocuments(sim: Simulation): void {
     return { readyAt, fee };
   });
 
-  sim.onCommand<{ documentId: string }, { lost: boolean }>('documents.report_lost', (p, { sim: s }) => {
+  sim.onCommand<{ documentId: string; stolen?: boolean }, { lost: boolean }>('documents.report_lost', (p, { sim: s }) => {
     const doc = documentsOf(s.player).find((d) => d.id === p.documentId);
     if (!doc || doc.status !== 'valid') throw new CommandError('That isn’t a document you hold.');
     doc.status = 'lost';
+    if (p.stolen) doc.stolen = true;
     // A passport reported lost is canceled, and what was issued on it goes with it.
     if (doc.kind === 'passport') for (const d of documentsOf(s.player)) if (d.passportId === doc.id && d.status === 'valid') d.status = 'cancelled';
     return { lost: true };
   });
+  sim.onCommand<{ documentId: string }, { filed: Instant }>('documents.police_report', (p, { sim: s }) => {
+    const person = s.player;
+    const doc = documentsOf(person).find((d) => d.id === p?.documentId);
+    const no = policeReportRefusal(person, doc);
+    if (no) throw new CommandError(no);
+    doc!.policeReport = s.now;
+    return { filed: s.now };
+  });
+}
+
+/**
+ * The police report as its own step (from 2026-10-03; `research-life-gaps.json`,
+ * each force's own page): filed online where the force takes a lost or stolen
+ * thing that way, free and at once. New York's NYPD takes lost property and a
+ * theft to $1,000; Los Angeles's CORS lost property and theft; Toronto's CORE
+ * lost property under $5,000, but not a passport; Vancouver's VPD lost or
+ * stolen property under $25,000; Ireland's Garda a theft to €1,000 online,
+ * lost property only at a station; Mexico City's Denuncia Digital a lost
+ * document's constancia (read secondhand). London's Met records no lost
+ * document, sending it to DVLA or the Passport Office. New Haven's portal's
+ * terms weren't read. What a report then does is the issuer's: New York
+ * replaces a stolen license free with the police's MV-78B; ServiceOntario
+ * asks for a report before replacing one; ICBC asks for one when it was stolen.
+ */
+export const ONLINE_REPORTS: Readonly<Record<string, { lost: boolean; stolen: boolean; noPassport?: boolean }>> = {
+  'us-ny-newyork': { lost: true, stolen: true },
+  'us-ca-losangeles': { lost: true, stolen: true },
+  'ca-on-toronto': { lost: true, stolen: true, noPassport: true },
+  'ca-bc-vancouver': { lost: true, stolen: true },
+  'ie-lei-dublin': { lost: false, stolen: true },
+  'mx-cmx-mexicocity': { lost: true, stolen: false },
+};
+
+export function policeReportRefusal(person: Person, doc: PersonDocument | undefined): string | undefined {
+  if (!doc || doc.status !== 'lost') return 'Report it lost first.';
+  if (doc.policeReport !== undefined) return 'A report is filed.';
+  const here = person.currentLocationId;
+  if (here === 'uk-eng-london') return 'The Met records no lost document: DVLA and the Passport Office take it.';
+  const rule = ONLINE_REPORTS[here];
+  if (!rule) return 'SLATE doesn’t know how the police here take a report.';
+  if (doc.stolen ? !rule.stolen : !rule.lost) return doc.stolen ? 'A theft is reported at a station here.' : 'Lost property is reported at a station here.';
+  if (rule.noPassport && doc.kind === 'passport') return 'A passport isn’t reported online here.';
+  return undefined;
 }
 
 export const DECIDED_KIND = 'documents.decided';

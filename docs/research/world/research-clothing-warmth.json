@@ -1,0 +1,459 @@
+{
+  "_meta": {
+    "compiledOn": "2026-10-03",
+    "note": "Clothing insulation, ensemble summation, required-insulation-in-cold methods, comfort (PMV/PPD) and wind-chill/frostbite figures. Every figure carries its source. confirmed=true means the value was read in the publisher's own document or a verbatim reproduction of it (text extracted from the PDF and read directly); confirmed=false means it came only from a search summary. No value here is an estimate made for this file. Units: 1 clo = 0.155 m2.K/W and 1 met = 58.2 W/m2 (ISO 7730:2005, Clause 4.1 NOTE, confirmed).",
+    "sources": {
+      "ashrae55_2010_addH": {
+        "title": "ANSI/ASHRAE Addendum h to ANSI/ASHRAE Standard 55-2010, Thermal Environmental Conditions for Human Occupancy (Table 5.2.2.2A ensembles, Table 5.2.2.2B garments, Table 5.2.2.2C chairs, Informative Appendix B)",
+        "publisher": "ASHRAE (American Society of Heating, Refrigerating and Air-Conditioning Engineers)",
+        "url": "https://www.ashrae.org/file%20library/technical%20resources/standards%20and%20guidelines/standards%20addenda/55_2010_h_final.pdf",
+        "date": "Approved by ASHRAE Standards Committee 2013-01-26, Board 2013-01-29, ANSI 2013-01-30",
+        "tableFootnote": "Data are from Chapter 9 in the 2009 ASHRAE Handbook - Fundamentals. 'Thin' refers to garments made of lightweight, thin fabrics often worn in the summer; 'thick' refers to garments made of heavyweight, thick fabrics often worn in the winter. Dresses and skirts are knee-length. Suit vests are lined vests. Tables are for a standing person who is not moving."
+      },
+      "ashrae55_2017_addD": {
+        "title": "ANSI/ASHRAE Addendum d to ANSI/ASHRAE Standard 55-2017",
+        "publisher": "ASHRAE",
+        "url": "https://www.ashrae.org/file%20library/technical%20resources/standards%20and%20guidelines/standards%20addenda/55_2017_d_20200731.pdf",
+        "date": "file dated 2020-07-31"
+      },
+      "ashrae55_2020_addH": {
+        "title": "ANSI/ASHRAE Addendum h to ANSI/ASHRAE Standard 55-2020",
+        "publisher": "ASHRAE",
+        "url": "https://www.ashrae.org/file%20library/technical%20resources/standards%20and%20guidelines/standards%20addenda/55_2020_h_20221230.pdf",
+        "date": "file dated 2022-12-30"
+      },
+      "bk_bo0281": {
+        "title": "Measurement of Thermal Comfort in Vehicles (Bruel & Kjaer application note BO 0281), B.W. Olesen; Table 1 'Clo-values for individual garments, Iclu'",
+        "publisher": "Bruel & Kjaer, Naerum, Denmark",
+        "url": "https://www.bksv.com/media/doc/BO0281.pdf",
+        "date": "not printed on the scanned note; its newest reference is dated 1987, and it cites ISO 7730 [1984]",
+        "caveat": "Scanned document; text was read from its embedded OCR layer, which carries a clean second copy of Table 1. The note does not name the table's own source in the readable text; it applies ISO 7730 [1984] throughout. Its garment set matches the ISO 7730 garment table (coat, down jacket, parka, fibre-pelt overalls, gloves), but the ISO 7730:2005 Annex C table itself was not read (paywalled)."
+      },
+      "iso7730_2005_preview": {
+        "title": "ISO 7730:2005(E) Ergonomics of the thermal environment - Analytical determination and interpretation of thermal comfort using calculation of the PMV and PPD indices and local thermal comfort criteria (third edition, 2005-11-15) - official preview pages 1-9",
+        "publisher": "ISO (preview hosted by iTeh Standards)",
+        "url": "https://cdn.standards.iteh.ai/samples/39155/9632a0563ca742209edb45856ff69296/ISO-7730-2005.pdf",
+        "date": "2005-11-15"
+      },
+      "iso11079_2007_preview": {
+        "title": "ISO 11079:2007(E) Ergonomics of the thermal environment - Determination and interpretation of cold stress when using required clothing insulation (IREQ) and local cooling effects (first edition, 2007-12-15) - official preview pages 1-7",
+        "publisher": "ISO (preview hosted by iTeh Standards)",
+        "url": "https://cdn.standards.iteh.ai/samples/38900/92fb892385a24045a2decbbf2ba0d6c7/ISO-11079-2007.pdf",
+        "date": "2007-12-15"
+      },
+      "kuklane_toma_2021": {
+        "title": "Validation of ISO 9920 clothing item insulation summation method based on an ambulance personnel clothing system. Kuklane K, Toma R. Industrial Health 2021, 59, 27-33",
+        "publisher": "National Institute of Occupational Safety and Health, Japan (J-STAGE)",
+        "url": "https://www.jniosh.johas.go.jp/en/indu_hel/doc/IH_59_1_27.pdf",
+        "date": "published online 2020-11-14"
+      },
+      "dambrosio_2025": {
+        "title": "On the Effects of Clothing Area Factor and Vapour Resistance on the Evaluation of Cold Environments via IREQ Model. d'Ambrosio Alfano FR, Kuklane K, Palella BI, Riccio G. Int J Environ Res Public Health 2025;22(8):1188. doi:10.3390/ijerph22081188",
+        "publisher": "MDPI (full text on PubMed Central)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12385740/",
+        "date": "2025"
+      },
+      "nws_windchill_page": {
+        "title": "Wind Chill Chart (NWS safety page)",
+        "publisher": "National Weather Service, NOAA, US Department of Commerce",
+        "url": "https://www.weather.gov/safety/cold-wind-chill-chart",
+        "date": "no date on page"
+      },
+      "nws_windchill_chart_pdf": {
+        "title": "NWS Wind Chill Chart with Frostbite Times (30, 10, 5 minutes), 'Effective 11/01/01'",
+        "publisher": "National Weather Service",
+        "url": "https://www.weather.gov/media/safety/windchillchart3.pdf",
+        "date": "effective 2001-11-01"
+      },
+      "ofcm_2003": {
+        "title": "Report on Wind Chill Temperature and Extreme Heat Indices: Evaluation and Improvement Projects, FCM-R19-2003",
+        "publisher": "Office of the Federal Coordinator for Meteorological Services and Supporting Research (OFCM), US Department of Commerce/NOAA",
+        "url": "https://unidata.github.io/MetPy/dev/_static/FCM-R19-2003-WindchillReport.pdf",
+        "altUrl": "https://weather.missouri.edu/gcc/OFCMWindchillReport.pdf",
+        "date": "January 2003",
+        "caveat": "Read from a verbatim copy of the report hosted by Unidata MetPy (UCAR). Tables 3.2a/3.2b were read from extracted PDF text in which some row digits ran together; cells were split by the table's column count, and the split was checked against Equation 3.2b (e.g. -50 C at 80 km/h gives 1.2 min, table 1)."
+      }
+    }
+  },
+
+  "garmentInsulation_ASHRAE": {
+    "source": "ashrae55_2010_addH",
+    "table": "Table 5.2.2.2B Garment Insulation (formerly Table B2)",
+    "unit": "clo (Iclu)",
+    "confirmed": true,
+    "items": [
+      { "category": "Underwear", "description": "Bra", "clo": 0.01 },
+      { "category": "Underwear", "description": "Panties", "clo": 0.03 },
+      { "category": "Underwear", "description": "Men's briefs", "clo": 0.04 },
+      { "category": "Underwear", "description": "T-shirt", "clo": 0.08 },
+      { "category": "Underwear", "description": "Half-slip", "clo": 0.14 },
+      { "category": "Underwear", "description": "Long underwear bottoms", "clo": 0.15 },
+      { "category": "Underwear", "description": "Full slip", "clo": 0.16 },
+      { "category": "Underwear", "description": "Long underwear top", "clo": 0.20 },
+      { "category": "Footwear", "description": "Ankle-length athletic socks", "clo": 0.02 },
+      { "category": "Footwear", "description": "Panty hose/stockings", "clo": 0.02 },
+      { "category": "Footwear", "description": "Sandals/thongs", "clo": 0.02 },
+      { "category": "Footwear", "description": "Shoes", "clo": 0.02 },
+      { "category": "Footwear", "description": "Slippers (quilted, pile lined)", "clo": 0.03 },
+      { "category": "Footwear", "description": "Calf-length socks", "clo": 0.03 },
+      { "category": "Footwear", "description": "Knee socks (thick)", "clo": 0.06 },
+      { "category": "Footwear", "description": "Boots", "clo": 0.10 },
+      { "category": "Shirts and Blouses", "description": "Sleeveless/scoop-neck blouse", "clo": 0.12 },
+      { "category": "Shirts and Blouses", "description": "Short-sleeve knit sport shirt", "clo": 0.17 },
+      { "category": "Shirts and Blouses", "description": "Short-sleeve dress shirt", "clo": 0.19 },
+      { "category": "Shirts and Blouses", "description": "Long-sleeve dress shirt", "clo": 0.25 },
+      { "category": "Shirts and Blouses", "description": "Long-sleeve flannel shirt", "clo": 0.34 },
+      { "category": "Shirts and Blouses", "description": "Long-sleeve sweatshirt", "clo": 0.34 },
+      { "category": "Trousers and Coveralls", "description": "Short shorts", "clo": 0.06 },
+      { "category": "Trousers and Coveralls", "description": "Walking shorts", "clo": 0.08 },
+      { "category": "Trousers and Coveralls", "description": "Straight trousers (thin)", "clo": 0.15 },
+      { "category": "Trousers and Coveralls", "description": "Straight trousers (thick)", "clo": 0.24 },
+      { "category": "Trousers and Coveralls", "description": "Sweatpants", "clo": 0.28 },
+      { "category": "Trousers and Coveralls", "description": "Overalls", "clo": 0.30 },
+      { "category": "Trousers and Coveralls", "description": "Coveralls", "clo": 0.49 },
+      { "category": "Dress and Skirts (knee-length)", "description": "Skirt (thin)", "clo": 0.14 },
+      { "category": "Dress and Skirts (knee-length)", "description": "Skirt (thick)", "clo": 0.23 },
+      { "category": "Dress and Skirts (knee-length)", "description": "Sleeveless, scoop neck (thin)", "clo": 0.23 },
+      { "category": "Dress and Skirts (knee-length)", "description": "Sleeveless, scoop neck (thick), i.e., jumper", "clo": 0.27 },
+      { "category": "Dress and Skirts (knee-length)", "description": "Short-sleeve shirtdress (thin)", "clo": 0.29 },
+      { "category": "Dress and Skirts (knee-length)", "description": "Long-sleeve shirtdress (thin)", "clo": 0.33 },
+      { "category": "Dress and Skirts (knee-length)", "description": "Long-sleeve shirtdress (thick)", "clo": 0.47 },
+      { "category": "Sweaters", "description": "Sleeveless vest (thin)", "clo": 0.13 },
+      { "category": "Sweaters", "description": "Sleeveless vest (thick)", "clo": 0.22 },
+      { "category": "Sweaters", "description": "Long-sleeve (thin)", "clo": 0.25 },
+      { "category": "Sweaters", "description": "Long-sleeve (thick)", "clo": 0.36 },
+      { "category": "Suit Jackets and Vests (lined vests)", "description": "Sleeveless vest (thin)", "clo": 0.10 },
+      { "category": "Suit Jackets and Vests (lined vests)", "description": "Sleeveless vest (thick)", "clo": 0.17 },
+      { "category": "Suit Jackets and Vests (lined vests)", "description": "Single-breasted (thin)", "clo": 0.36 },
+      { "category": "Suit Jackets and Vests (lined vests)", "description": "Single-breasted (thick)", "clo": 0.44 },
+      { "category": "Suit Jackets and Vests (lined vests)", "description": "Double-breasted (thin)", "clo": 0.42 },
+      { "category": "Suit Jackets and Vests (lined vests)", "description": "Double-breasted (thick)", "clo": 0.48 },
+      { "category": "Sleepwear and Robes", "description": "Sleeveless short gown (thin)", "clo": 0.18 },
+      { "category": "Sleepwear and Robes", "description": "Sleeveless long gown (thin)", "clo": 0.20 },
+      { "category": "Sleepwear and Robes", "description": "Short-sleeve hospital gown", "clo": 0.31 },
+      { "category": "Sleepwear and Robes", "description": "Short-sleeve short robe (thin)", "clo": 0.34 },
+      { "category": "Sleepwear and Robes", "description": "Short-sleeve pajamas (thin)", "clo": 0.42 },
+      { "category": "Sleepwear and Robes", "description": "Long-sleeve long gown (thick)", "clo": 0.46 },
+      { "category": "Sleepwear and Robes", "description": "Long-sleeve short wrap robe (thick)", "clo": 0.48 },
+      { "category": "Sleepwear and Robes", "description": "Long-sleeve pajamas (thick)", "clo": 0.57 },
+      { "category": "Sleepwear and Robes", "description": "Long-sleeve long wrap robe (thick)", "clo": 0.69 }
+    ]
+  },
+
+  "garmentInsulation_ISO7730Era_BK": {
+    "source": "bk_bo0281",
+    "table": "Table 1. Clo-values for individual garments, Iclu",
+    "unit": "clo (Iclu)",
+    "confirmed": true,
+    "note": "Second, older garment set. Use this for outerwear and gloves, which the ASHRAE table does not list. Descriptions are the table's own wording (spelling 'Parca' as printed).",
+    "items": [
+      { "category": "Underwear", "description": "Briefs", "clo": 0.03 },
+      { "category": "Underwear", "description": "Underpants with long legs", "clo": 0.10 },
+      { "category": "Underwear", "description": "Singlet", "clo": 0.04 },
+      { "category": "Underwear", "description": "T-Shirt", "clo": 0.09 },
+      { "category": "Underwear", "description": "Shirt with long sleeves", "clo": 0.12 },
+      { "category": "Underwear", "description": "Panties + Bra", "clo": 0.03 },
+      { "category": "Shirts - Blouses", "description": "Short sleeves", "clo": 0.15 },
+      { "category": "Shirts - Blouses", "description": "Lightweight, long sleeves", "clo": 0.20 },
+      { "category": "Shirts - Blouses", "description": "Normal, long sleeves", "clo": 0.25 },
+      { "category": "Shirts - Blouses", "description": "Flannel shirt, long sleeves", "clo": 0.30 },
+      { "category": "Shirts - Blouses", "description": "Light weight blouse, long sleeves", "clo": 0.15 },
+      { "category": "Trousers", "description": "Shorts", "clo": 0.06 },
+      { "category": "Trousers", "description": "Light weight", "clo": 0.20 },
+      { "category": "Trousers", "description": "Normal", "clo": 0.25 },
+      { "category": "Trousers", "description": "Flannel", "clo": 0.28 },
+      { "category": "Dresses - Skirts", "description": "Light skirt (summer)", "clo": 0.15 },
+      { "category": "Dresses - Skirts", "description": "Heavy skirt (winter)", "clo": 0.25 },
+      { "category": "Dresses - Skirts", "description": "Light dress, short sleeves", "clo": 0.20 },
+      { "category": "Dresses - Skirts", "description": "Winter dress, long sleeves", "clo": 0.40 },
+      { "category": "Dresses - Skirts", "description": "Boiler suit", "clo": 0.55 },
+      { "category": "Sweaters", "description": "Sleeveless vest", "clo": 0.12 },
+      { "category": "Sweaters", "description": "Thin sweater", "clo": 0.20 },
+      { "category": "Sweaters", "description": "Sweater", "clo": 0.28 },
+      { "category": "Sweaters", "description": "Thick sweater", "clo": 0.35 },
+      { "category": "Jackets", "description": "Light summer jacket", "clo": 0.25 },
+      { "category": "Jackets", "description": "Jacket", "clo": 0.35 },
+      { "category": "Jackets", "description": "Smock", "clo": 0.30 },
+      { "category": "High insulative, Fiber-pelt", "description": "Boiler suit", "clo": 0.90 },
+      { "category": "High insulative, Fiber-pelt", "description": "Trousers", "clo": 0.35 },
+      { "category": "High insulative, Fiber-pelt", "description": "Jacket", "clo": 0.40 },
+      { "category": "High insulative, Fiber-pelt", "description": "Vest", "clo": 0.20 },
+      { "category": "Outdoor clothing", "description": "Coat", "clo": 0.60 },
+      { "category": "Outdoor clothing", "description": "Down jacket", "clo": 0.55 },
+      { "category": "Outdoor clothing", "description": "Parca", "clo": 0.70 },
+      { "category": "Outdoor clothing", "description": "Fiber-pelt overalls", "clo": 0.55 },
+      { "category": "Sundries", "description": "Socks", "clo": 0.02 },
+      { "category": "Sundries", "description": "Thick ankle socks", "clo": 0.05 },
+      { "category": "Sundries", "description": "Thick long socks", "clo": 0.10 },
+      { "category": "Sundries", "description": "Nylon stockings", "clo": 0.03 },
+      { "category": "Sundries", "description": "Shoes (thin soled)", "clo": 0.02 },
+      { "category": "Sundries", "description": "Shoes (thick soled)", "clo": 0.04 },
+      { "category": "Sundries", "description": "Boots", "clo": 0.10 },
+      { "category": "Sundries", "description": "Gloves", "clo": 0.05 }
+    ],
+    "sameNoteFigures": [
+      { "what": "added insulation of a vehicle seat", "value": 0.2, "unit": "clo", "wording": "the addition will assumingly be around 0,2 clo ... Add then 0,2 clo for the seat", "confirmed": true },
+      { "what": "clothing range in a car by season", "value": "0.3 to 1.5", "unit": "clo", "wording": "0,3 clo represents a tropical clothing including short trousers and a short-sleeved shirt, 1,5 clo represents a normal business suit with a coat", "confirmed": true }
+    ]
+  },
+
+  "garmentInsulation_measuredProducts": {
+    "source": "kuklane_toma_2021",
+    "table": "Table 2. Individual clothing items' insulation (thermal manikin Tore, ISO 15831, Lund University; air velocity 0.22 +/- 0.08 m/s)",
+    "unit": "clo (Iclu)",
+    "confirmed": true,
+    "note": "Real measured values for specific named products (Taiga AB ambulance clothing system; Arbesko shoes; Hestra gloves). These are the only published per-item hat, glove and mitten values found. They are those products, not generic garment classes.",
+    "items": [
+      { "description": "Hopedale sock (76% wool, 64 g)", "clo": 0.03 },
+      { "description": "Swede sneakers (Arbesko AB, leather/textile)", "clo": 0.05 },
+      { "description": "Bylot sock (wool blend, 109 g)", "clo": 0.06 },
+      { "description": "Kodiak sock (wool blend, 273 g)", "clo": 0.11 },
+      { "description": "Woodman winter shoes (Arbesko AB, Thinsulate, nylon fur)", "clo": 0.12 },
+      { "description": "Hestra fleece gloves (100% polyester)", "clo": 0.02 },
+      { "description": "Grizzly mitten 2.0 (Polyfill insulated)", "clo": 0.06 },
+      { "description": "Hillside cap 3.0 (polyester/elastane, 35 g)", "clo": 0.01 },
+      { "description": "Biwak cap (lined, 92 g)", "clo": 0.03 },
+      { "description": "Hawk boxer shorts", "clo": 0.08 },
+      { "description": "Eagle PW trousers (base-layer, polyester/merino)", "clo": 0.15 },
+      { "description": "Hawk shirt (T-shirt)", "clo": 0.21 },
+      { "description": "Eagle PW sweater (base-layer, polyester/merino)", "clo": 0.29 },
+      { "description": "Power trouser", "clo": 0.26 },
+      { "description": "Sitka trouser lining", "clo": 0.38 },
+      { "description": "Pike Polo shirt", "clo": 0.26 },
+      { "description": "Wilmore AMB sweater shirt", "clo": 0.34 },
+      { "description": "Power sweater 2.0", "clo": 0.35 },
+      { "description": "Ruby AMB softshell", "clo": 0.38 },
+      { "description": "Denver lining", "clo": 0.46 },
+      { "description": "Thule base jacket 2.0 (fiberpile)", "clo": 0.56 },
+      { "description": "Riverside shorts", "clo": 0.15 },
+      { "description": "Trader trousers 2.0", "clo": 0.28 },
+      { "description": "Alarm trousers", "clo": 0.34 },
+      { "description": "Emergency WP trousers (waterproof)", "clo": 0.41 },
+      { "description": "Alarm jacket", "clo": 0.47 },
+      { "description": "Emergency WP reflex jacket (waterproof)", "clo": 0.52 }
+    ],
+    "airLayer": { "Ia": 0.094, "unit": "m2.K/W", "confirmed": true }
+  },
+
+  "ensembleInsulation_ASHRAE": {
+    "source": "ashrae55_2010_addH",
+    "table": "Table 5.2.2.2A Clothing Insulation Values for Typical Ensembles",
+    "unit": "clo (Icl)",
+    "confirmed": true,
+    "footnote": "All clothing ensembles, except where otherwise indicated in parentheses, include shoes, socks, and briefs or panties. All skirt/dress clothing ensembles include panty hose and no additional socks.",
+    "items": [
+      { "n": 1, "description": "Trousers, short-sleeve shirt", "clo": 0.57 },
+      { "n": 2, "description": "Trousers, long-sleeve shirt", "clo": 0.61 },
+      { "n": 3, "description": "#2 plus suit jacket", "clo": 0.96 },
+      { "n": 4, "description": "#2 plus suit jacket, vest, T-shirt", "clo": 1.14 },
+      { "n": 5, "description": "#2 plus long-sleeve sweater, T-shirt", "clo": 1.01 },
+      { "n": 6, "description": "#5 plus suit jacket, long underwear bottoms", "clo": 1.30 },
+      { "n": 7, "description": "Knee-length skirt, short-sleeve shirt (sandals)", "clo": 0.54 },
+      { "n": 8, "description": "Knee-length skirt, long-sleeve shirt, full slip", "clo": 0.67 },
+      { "n": 9, "description": "Knee-length skirt, long-sleeve shirt, half slip, long-sleeve sweater", "clo": 1.10 },
+      { "n": 10, "description": "Knee-length skirt, long-sleeve shirt, half slip, suit jacket", "clo": 1.04 },
+      { "n": 11, "description": "Ankle-length skirt, long-sleeve shirt, suit jacket", "clo": 1.10 },
+      { "n": 12, "description": "Walking shorts, short-sleeve shirt", "clo": 0.36 },
+      { "n": 13, "description": "Long-sleeve coveralls, T-shirt", "clo": 0.72 },
+      { "n": 14, "description": "Overalls, long-sleeve shirt, T-shirt", "clo": 0.89 },
+      { "n": 15, "description": "Insulated coveralls, long-sleeve thermal underwear tops and bottoms", "clo": 1.37 },
+      { "n": 16, "description": "Sweat pants, long-sleeve sweatshirt", "clo": 0.74 },
+      { "n": 17, "description": "Long-sleeve pajama tops, long pajama trousers, short 3/4 length robe (slippers, no socks)", "clo": 0.96 }
+    ]
+  },
+
+  "summationRules": {
+    "ashraeSimpleSum": {
+      "formula": "Icl = sum(Iclu)",
+      "wording": "The insulation of the ensemble is estimated as the sum of the individual values listed in Table 5.2.2.2B.",
+      "workedExample": "overalls + flannel shirt + T-shirt + briefs + boots + calf-length socks: Icl = 0.30 + 0.34 + 0.08 + 0.04 + 0.10 + 0.03 = 0.89 clo",
+      "addSubtractExample": "long underwear bottoms added to Ensemble 5: Icl = 1.01 + 0.15 = 1.16 clo",
+      "source": "ashrae55_2010_addH", "confirmed": true
+    },
+    "iso9920Regression": {
+      "formula": "Icl = 0.161 + 0.835 * sum(Iclu)  (clo)",
+      "origin": "Summation equation given in ISO 9920:2009; database originates from McCullough EA, Jones BW, Huck J (1985), ASHRAE Trans 91, 29-47",
+      "validation": "On 14 measured ensembles (0.53 to 3.19 clo measured) the regression equation differed from measurement by -0.17 to +0.18 clo (mean 0.02 clo, RMSD 0.12 clo); the simple sum differed by -0.61 to +0.11 clo (RMSD 0.27 clo). Authors: the simple sum 'works reasonably well' up to about 2 clo.",
+      "source": "kuklane_toma_2021", "confirmed": true
+    },
+    "bkSimpleSum": {
+      "formula": "Icl ~ sum(Iclu)",
+      "source": "bk_bo0281", "confirmed": true
+    },
+    "seatedAdjustment": {
+      "table": "Table 5.2.2.2C Typical Added Insulation when Sitting on a Chair (valid for ensembles with standing insulation 0.5 clo < Icl < 1.2 clo)",
+      "items": [
+        { "description": "Net chair (thin, widely spaced cords)", "clo": 0.00 },
+        { "description": "Metal chair", "clo": 0.00 },
+        { "description": "Wooden side arm chair", "clo": 0.00 },
+        { "description": "Wooden stool", "clo": 0.01 },
+        { "description": "Standard office chair", "clo": 0.10 },
+        { "description": "Executive chair", "clo": 0.15 }
+      ],
+      "source": "ashrae55_2010_addH", "confirmed": true
+    },
+    "activityAdjustment": {
+      "formula": "Icl,active = Icl x (0.6 + 0.4 / M), for 1.2 met < M < 2.0 met (M in met); no adjustment at or below 1.2 met",
+      "source": "ashrae55_2010_addH", "confirmed": true
+    },
+    "limitsOfASHRAE55": {
+      "wording": "This standard does not apply to occupants whose clothing insulation exceeds 1.5 clo ... highly impermeable to moisture transport (e.g., chemical protective clothing or rain gear) ... sleeping, reclining in contact with bedding",
+      "value": 1.5, "unit": "clo",
+      "source": "ashrae55_2010_addH", "confirmed": true
+    }
+  },
+
+  "requiredInsulationVsTemperature": {
+    "indoorComfortZone_ASHRAE55": {
+      "wording": "Two zones are shown - one for 0.5 clo of clothing insulation and one for 1.0 clo of insulation. These insulation levels are typical of clothing worn when the outdoor environment is warm and cool, respectively. Comfort zones for intermediate values of clothing insulation are determined by linear interpolation between the limits for 0.5 and 1.0 clo.",
+      "summerClo": 0.5, "winterClo": 1.0,
+      "activity": "graphic comfort zone applies to a lightly clothed person engaged in near-sedentary physical activity (metabolic rates between 1.0 and 1.3 met)",
+      "source": "ashrae55_2017_addD", "confirmed": true
+    },
+    "comfortZoneOperativeTemperatures_ASHRAE55": {
+      "value": "1.0 clo: 20 to 23.5 C; 0.5 clo: 22.5 to 26 C",
+      "interpolation": "tmax,Icl = [(Icl - 0.5 clo) tmax,1.0clo + (1.0 clo - Icl) tmax,0.5clo] / 0.5 clo (and likewise tmin)",
+      "source": "web search summary of ASHRAE 55 (ICC sample pages https://shop.iccsafe.org/media/wysiwyg/material/8950P219-sample.pdf and https://www.lorisweb.com/CMGT235/DIS06/ASHRAE-55-2010.pdf); the PDF text could not be extracted here",
+      "confirmed": false
+    },
+    "operativeTemperaturePerClo_ASHRAE55": {
+      "wording": "For near-sedentary activities where the metabolic rate is approximately 1.2 met, the effect of changing clothing insulation on the optimum operative temperature is approximately 6 C (11 F) per clo.",
+      "value": 6, "unit": "degC per clo (11 degF per clo)", "met": 1.2,
+      "example": "adding a thin long-sleeve sweater (+0.25 clo) lowers the optimum operative temperature by about 6 C/clo x 0.25 clo = 1.5 C (2.8 F)",
+      "source": "ashrae55_2010_addH", "confirmed": true
+    },
+    "comfortTemperatureShiftPerTenthClo_ASHRAE55_2020": {
+      "wording": "The outer comfort zone boundaries shift toward the left or right, depending on clo and met level. An increase of 0.1 clo or 0.1 met corresponds approximately to a 0.8 C (1.4 F) or 0.5 C (0.9 F) reduction in operative temperature to; a decrease of 0.1 clo or 0.1 met corresponds approximately to a 0.8 C (1.4 F) or 0.5 C (0.9 F) increase in operative temperature.",
+      "perTenthClo": { "value": 0.8, "unit": "degC (1.4 degF) per 0.1 clo" },
+      "perTenthMet": { "value": 0.5, "unit": "degC (0.9 degF) per 0.1 met" },
+      "source": "ashrae55_2020_addH", "confirmed": true
+    },
+    "coldIREQ_ISO11079": {
+      "definition": "IREQ: required clothing insulation for the preservation of body heat balance at defined levels of physiological strain (ISO 11079:2007, 3.1.3). IREQ is the resultant clothing insulation required in the actual environmental conditions to maintain the body in a state of thermal equilibrium at acceptable levels of body and skin temperatures (5.2).",
+      "heatBalance": "M - W = Eres + Cres + E + K + R + C + S  (ISO 11079 Eq. 1)",
+      "equations": {
+        "IREQ": "IREQ = (tsk - tcl) / (R + C)   (Eq. 8), solved for tcl: tcl = tsk - IREQ * (M - W - Eres - Cres - E)  (Eq. 9)",
+        "R": "R = fcl * hr * (tcl - tr)  (Eq. 5)",
+        "C": "C = fcl * hc * (tcl - ta)  (Eq. 6)",
+        "E": "E = (psk - pa) / Re,T  (Eq. 4); in the published code E = w * (psk,s - pa) / Re,T with Re,T = (0.06/im) * (Ia,r/fcl + IREQ)",
+        "Cres": "Cres = 0.0014 * M * (tex - ta)",
+        "Eres": "Eres = 0.0173 * M * (pex - pa)",
+        "tex": "tex = 29 + 0.2 * ta",
+        "fcl": "fcl = 1.0 + 1.97 * Icl (Icl in m2.K/W)",
+        "Iar": "Ia,r = 0.092 * exp(-0.15*va - 0.22*vw) - 0.0045   (valid 0.4 <= va <= 18 m/s, 0 <= vw <= 1.2 m/s)",
+        "hr": "hr = 5.67e-8 * 0.97 * (Ar/ADu = 0.77) * ((tcl+273)^4 - (tr+273)^4) / (tcl - tr)",
+        "hc": "hc = 1/Ia,r - hr",
+        "walkingSpeed": "vw = 0.0052 * (M - 58.2) (text; code uses M - 58), capped at 0.7 m/s in the published code",
+        "saturationPressure": "p(t) = 0.1333 * exp(18.6686 - 4030.183/(t + 235)) kPa for t >= 0; for ta < 0 code uses pa = RH/100 * 0.6105 * exp(21.875*ta/(265.5 + ta))",
+        "resultantClothing": "Icl,r = IT,r - Ia,r/fcl; IT,r = IT * (0.54*exp(0.075*ln(ap) - 0.15*va - 0.22*vw) - 0.06*ln(ap) + 0.5); IT = Icl + Ia/fcl; Ia = 0.085 m2.K/W; ap = air permeability of outer fabric, L/(s.m2)"
+      },
+      "criteria": [
+        { "level": "IREQneutral (low strain)", "tsk": "35.7 - 0.0285*M", "w": "0.001*M", "Qlim_kJ_per_m2": 144 },
+        { "level": "IREQmin (high strain)", "tsk": "33.34 - 0.0354*M", "w": "0.06", "Qlim_kJ_per_m2": 144 }
+      ],
+      "interpretation": "Icl,r < IREQmin: clothing insufficient, limit duration of exposure. IREQmin <= Icl,r <= IREQneutral: clothing sufficient to prevent cooling, 'slightly cool to neutral' sensation. Icl,r > IREQneutral: clothing sufficient, possible risk of overheating at high activity (ISO 11079 Figure 1). If worn insulation is less than required, a duration-limited exposure Dlim = -Qlim / S is calculated.",
+      "activityInput": "M in W/m2, evaluated per ISO 8996 (1 met = 58.2 W/m2)",
+      "publishedCode": "Full MATLAB functions IREQ_neu and IREQ_min (iterative solution) are printed in Appendix B of d'Ambrosio Alfano et al. 2025.",
+      "sources": ["iso11079_2007_preview (definitions, Eqs 1-9, Figure 1)", "dambrosio_2025 (Table 1 criteria, Eqs 7-12, Appendix A-B equations and code)"],
+      "confirmed": true,
+      "note": "No published table of IREQ by temperature and activity was read; values for any temperature/activity are computed from the method above."
+    }
+  },
+
+  "comfortAndUnderdressing_PMV_PPD": {
+    "source": "iso7730_2005_preview",
+    "confirmed": true,
+    "sensationScale": { "+3": "Hot", "+2": "Warm", "+1": "Slightly warm", "0": "Neutral", "-1": "Slightly cool", "-2": "Cool", "-3": "Cold" },
+    "PMV": "PMV = [0.303*exp(-0.036*M) + 0.028] * { (M - W) - 3.05e-3*[5733 - 6.99*(M - W) - pa] - 0.42*[(M - W) - 58.15] - 1.7e-5*M*(5867 - pa) - 0.0014*M*(34 - ta) - 3.96e-8*fcl*[(tcl + 273)^4 - (tr + 273)^4] - fcl*hc*(tcl - ta) }   (Eq. 1)",
+    "tcl": "tcl = 35.7 - 0.028*(M - W) - Icl*{ 3.96e-8*fcl*[(tcl + 273)^4 - (tr + 273)^4] + fcl*hc*(tcl - ta) }   (Eq. 2)",
+    "hc": "hc = 2.38*|tcl - ta|^0.25 if 2.38*|tcl - ta|^0.25 > 12.1*sqrt(var); else 12.1*sqrt(var)   (Eq. 3)",
+    "fcl": "fcl = 1.00 + 1.290*Icl for Icl <= 0.078 m2.K/W; 1.05 + 0.645*Icl for Icl > 0.078 m2.K/W   (Eq. 4)",
+    "units": "M, W in W/m2; Icl in m2.K/W; ta, tr, tcl in C; var in m/s; pa in Pa; hc in W/(m2.K)",
+    "PPD": "PPD = 100 - 95*exp(-0.03353*PMV^4 - 0.2179*PMV^2)   (Eq. 5)",
+    "validRange": "PMV between -2 and +2; M 46-232 W/m2 (0.8-4 met); Icl 0-0.310 m2.K/W (0-2 clo); ta 10-30 C; tr 10-40 C; var 0-1 m/s; pa 0-2700 Pa",
+    "voteDistribution_Table2": [
+      { "PMV": 2, "PPD": 75, "vote0": 5, "voteMinus1to1": 25, "voteMinus2to2": 70 },
+      { "PMV": 1, "PPD": 25, "vote0": 30, "voteMinus1to1": 75, "voteMinus2to2": 95 },
+      { "PMV": 0.5, "PPD": 10, "vote0": 55, "voteMinus1to1": 90, "voteMinus2to2": 98 },
+      { "PMV": 0, "PPD": 5, "vote0": 60, "voteMinus1to1": 95, "voteMinus2to2": 100 },
+      { "PMV": -0.5, "PPD": 10, "vote0": 55, "voteMinus1to1": 90, "voteMinus2to2": 98 },
+      { "PMV": -1, "PPD": 25, "vote0": 30, "voteMinus1to1": 75, "voteMinus2to2": 95 },
+      { "PMV": -2, "PPD": 75, "vote0": 5, "voteMinus1to1": 25, "voteMinus2to2": 70 }
+    ],
+    "voteDistributionBasis": "Based on experiments involving 1 300 subjects; percentages of persons predicted to vote",
+    "comfortBand_ASHRAE55": { "value": "-0.5 < PMV < +0.5 (PPD 10%, 90% satisfied)", "source": "ashrae55_2020_addH", "confirmed": true }
+  },
+
+  "windChill_NWS": {
+    "formulaF": {
+      "value": "Wind Chill (F) = 35.74 + 0.6215T - 35.75(V^0.16) + 0.4275T(V^0.16), T = air temperature (F), V = wind speed (mph)",
+      "validity": "Wind chill temperature is only defined for temperatures at or below 50 F and wind speeds above 3 mph.",
+      "effective": "2001-11-01",
+      "source": "nws_windchill_page", "confirmed": true
+    },
+    "formulaC": {
+      "value": "WCT (C) = 13.12 + 0.6215T - 11.37V^0.16 + 0.3965TV^0.16, T in C, V in km/h at 10 m",
+      "source": "ofcm_2003", "confirmed": true
+    },
+    "basis": "Wind at 33 ft (10 m) corrected to face height; calm assumed 3 mph at the face; if wind is measured at face level multiply by 1.5. Frostbite zones mark wind chills that may produce frostbite on exposed skin in 30 min or less in the most susceptible (95th percentile) of the population, worst case (clear night). 95% of the population experiences frostbite at skin temperature -7.8 C (18 F); about 1-2% at -1 C (30.2 F); 5% at -4.8 C (23.4 F).",
+    "basisSource": "ofcm_2003", "basisConfirmed": true,
+    "frostbiteTimeEquation": {
+      "F": "Ft = ((-24.5 x ((0.667 x (V10 x 8/5)) + 4.8)) + 2111) x (-4.8 - ((Tair - 32) x 5/9))^-1.668",
+      "C": "Ft = ((-24.5 x ((0.667 x V10) + 4.8)) + 2111) x (-4.8 - Tair)^-1.668",
+      "units": "Ft minutes; Tair F (or C); V10 wind at 33 ft / 10 m in mph (or km/h)",
+      "validity": "only valid when frostbite time <= 30 min and wind > 16 mph (25 km/h) and <= 50 mph (80.5 km/h)",
+      "note": "Frostbite will not actually occur when air temperature is above freezing; it takes more than two hours from freezing down to 10 F even with winds up to 50 mph.",
+      "source": "ofcm_2003", "confirmed": true
+    },
+    "frostbiteTimesF_Table3_2a": {
+      "title": "Time to occurrence of frostbite (5% risk of frostbite) in minutes or hours (h), English units",
+      "airTempF": [10, 5, 0, -5, -10, -15, -20, -25, -30, -35, -40, -45, -50],
+      "rowsByWindMph": {
+        "5":  [">2h", ">2h", ">2h", ">2h", 31, 22, 17, 14, 12, 11, 9, 8, 7],
+        "10": [">2h", ">2h", ">2h", 28, 19, 15, 12, 10, 9, 7, 7, 6, 5],
+        "15": [">2h", ">2h", 33, 20, 15, 12, 9, 8, 7, 6, 5, 4, 4],
+        "20": [">2h", ">2h", 23, 16, 12, 9, 8, 8, 6, 5, 4, 4, 3],
+        "25": [">2h", 42, 19, 13, 10, 8, 7, 6, 5, 4, 4, 3, 3],
+        "30": [">2h", 28, 16, 12, 9, 7, 6, 5, 4, 4, 3, 3, 2],
+        "35": [">2h", 23, 14, 10, 8, 6, 5, 4, 4, 3, 3, 2, 2],
+        "40": [">2h", 20, 13, 9, 7, 6, 5, 4, 3, 3, 2, 2, 2],
+        "45": [">2h", 18, 12, 8, 7, 5, 4, 4, 3, 3, 2, 2, 2],
+        "50": [">2h", 16, 11, 8, 6, 5, 4, 3, 3, 2, 2, 2, 2]
+      },
+      "unit": "minutes unless '>2h'",
+      "source": "ofcm_2003", "confirmed": true
+    },
+    "frostbiteTimesC_Table3_2b": {
+      "title": "Time to occurrence of frostbite (5% risk of frostbite, most susceptible segment of the population) in minutes, metric units; used by the Meteorological Service of Canada",
+      "airTempC": [-15, -20, -25, -30, -35, -40, -45, -50],
+      "rowsByWindKmh": {
+        "10": ["x", "x", 22, 15, 11, 8, 7, 6],
+        "20": ["x", "x", 14, 10, 7, 6, 5, 4],
+        "30": ["x", 18, 11, 8, 6, 4, 4, 3],
+        "40": [42, 14, 9, 6, 5, 4, 3, 2],
+        "50": [27, 12, 8, 5, 4, 3, 2, 2],
+        "60": [22, 10, 7, 5, 3, 3, 2, 2],
+        "70": [18, 9, 6, 4, 3, 2, 2, 2],
+        "80": [16, 8, 5, 4, 3, 2, 2, 1]
+      },
+      "legend": "x = Frostbite unlikely",
+      "source": "ofcm_2003", "confirmed": true
+    },
+    "nwsChartZones": {
+      "value": "NWS chart shades three frostbite-time zones: 30 minutes, 10 minutes, 5 minutes. The zones are colour bands only; their cell boundaries were not readable as text, so they are not transcribed here (the OFCM Table 3.2a above gives the underlying times).",
+      "example": "At a wind chill of -19 F exposed skin can freeze in 30 minutes (NWS safety page)",
+      "source": "nws_windchill_chart_pdf / nws_windchill_page", "confirmed": true
+    }
+  },
+
+  "notFound": [
+    "ISO 9920:2007/2009 Annex A garment tables (paywalled; not read). ISO 7730:2005 Annex C Table C.2 itself (preview stops at page 9); the B&K note's Table 1 is the reproduction used instead.",
+    "Generic per-garment clo values for hats/beanies, scarves, and a rain jacket from ASHRAE or ISO tables. Only specific measured products (two caps, fleece gloves, mittens, waterproof jackets) from Kuklane & Toma 2021, and generic 'Gloves 0.05' from the B&K table, were found.",
+    "A dedicated 'pantyhose/tights' value beyond ASHRAE 'Panty hose/stockings 0.02' and B&K 'Nylon stockings 0.03'; no thick-tights value found.",
+    "A published table of IREQ (required clo) versus outdoor temperature and activity, and the Burton & Edholm or Siple required-clo curves. Only the IREQ method and code were found.",
+    "ISO 11079:2007 Annex A/B/D text itself (preview stops at page 7); the criteria and coefficients come from d'Ambrosio Alfano et al. 2025, whose authors include ISO 11079's Kuklane, and who cite ISO 11079.",
+    "ASHRAE 55 comfort-zone operative temperature limits (20-23.5 C at 1.0 clo, 22.5-26 C at 0.5 clo) were not read in the standard's text; they are recorded with confirmed=false.",
+    "ASHRAE Handbook - Fundamentals Chapter 9 garment table read directly (paywalled); the ASHRAE 55 addendum reproduces it and says its data come from that chapter.",
+    "The NWS 30/10/5-minute zone boundaries on the published chart as text."
+  ]
+}

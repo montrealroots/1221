@@ -13,7 +13,7 @@ import { documentsOf } from '@/engine/systems/documents';
 import { modelById, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
 import { mayCollide } from '@/engine/systems/carcare';
 import { mayBeStolen } from '@/engine/systems/theft';
-import { FAULTY_USED, inspectionPrice, usedFault } from '@/engine/systems/usedcars';
+import { FAULTY_USED, inspectionPrice, usedFault, usedListings } from '@/engine/systems/usedcars';
 import { stereoCover, stereoQuote } from '@/engine/systems/caraudio';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -33,16 +33,17 @@ describe('a used car', () => {
 
   it('inspected first, at Lemon Squad’s $219.99, reports the fault the car bought that month has', () => {
     let found: Simulation | undefined;
-    for (let i = 0; i < 30 && !found; i += 1) { const s = life('us-ny-newyork', `uc-insp-${i}`); if (usedFault(s, s.player, 'us-toyota-camry', 4, 'us-ny-newyork', s.now)) found = s; }
+    let age = 0;
+    for (let i = 0; i < 40 && !found; i += 1) { const s = life('us-ny-newyork', `uc-insp-${i}`); const l = usedListings(s, s.player, 'us-toyota-camry', 'us-ny-newyork', 'US-NY').find((x) => usedFault(s, s.player, 'us-toyota-camry', x.age, 'us-ny-newyork', s.now)); if (l) { found = s; age = l.age; } }
     const sim = found!;
     license(sim, 'us-ny');
     const before = bank(sim);
-    const r = sim.execute<{ fault: boolean; usd?: number }>({ kind: 'vehicle.inspect_used', payload: { modelId: 'us-toyota-camry', age: 4 } });
+    const r = sim.execute<{ fault: boolean; usd?: number }>({ kind: 'vehicle.inspect_used', payload: { modelId: 'us-toyota-camry', age } });
     expect(r.ok, r.error).toBe(true);
     expect(before - bank(sim)).toBe(inspectionPrice(sim, 'US-NY'));
     expect(inspectionPrice(sim, 'US-NY')).toBe(219_99);
     expect(r.value!.fault).toBe(true);
-    const b = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry', age: 4 } });
+    const b = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry', age } });
     expect(b.ok, b.error).toBe(true);
     const v = vehiclesOf(sim.player).find((x) => x.id === b.value!.vehicleId)!;
     expect(v.fault?.usd).toBe(r.value!.usd);

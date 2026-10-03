@@ -10,6 +10,7 @@ import { HOTEL_AMENITIES } from '@/engine/content/hotelamenities';
 import { FREE_CANCEL_HOURS, amenitiesOf, amenityLine, freeCancelUntil, hotelById, hotelHas } from '@/engine/systems/hotels';
 import { hotelRefund, type Journey } from '@/engine/systems/journey';
 import { stayPlace, swimRefusal } from '@/engine/systems/dwelling';
+import { addItem } from '@/engine/systems/items';
 
 const NY = 'America/New_York';
 const LONDON = 'Europe/London';
@@ -78,6 +79,7 @@ describe('a hotel’s gym and pool', () => {
     const city = hotelById(indoor.id)!.cityId;
     p.currentLocationId = city;
     p.stay = { kind: 'hotel', cityId: city, hotelId: indoor.id };
+    addItem(sim, p, { kind: 'test:swimsuit', label: 'Swimsuit', quantity: 1, condition: 1, at: { kind: 'person' }, acquiredAt: sim.now, garment: { kind: 'swimsuit', slot: 'active', care: 'wash', wears: 0, washes: 0 } });
     expect(swimRefusal(sim, p)).toBeUndefined();
     p.stay = { kind: 'hotel', cityId: city, hotelId: 'travelodge-london-kings-cross-royal-scot' };
     expect(swimRefusal(sim, p)).toBe('You have no pool.');

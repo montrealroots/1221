@@ -24,6 +24,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { odometerOf } from './tires';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
@@ -48,7 +49,7 @@ export type CareMarket = 'us' | 'uk' | 'ie' | 'ca' | 'mx';
 export const careMarket = (j: Jurisdiction): CareMarket => (j.startsWith('US') ? 'us' : j === 'GB' ? 'uk' : j === 'IE' ? 'ie' : j.startsWith('CA') ? 'ca' : 'mx');
 
 /** Kilometers on the clock: its years before you, at the place's average, and since. */
-export const odometer = (v: OwnedVehicle): number => v.ageAtPurchase * KM_A_YEAR[v.jurisdiction] + (v.km ?? 0);
+export const odometer = (v: OwnedVehicle): number => odometerOf(v);
 const ageAt = (v: OwnedVehicle, at: Instant) => v.ageAtPurchase + (at - v.boughtAt) / YEAR_MS;
 
 export function intervalOf(v: OwnedVehicle, m: CarModel): Interval | undefined {

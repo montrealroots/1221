@@ -45,10 +45,11 @@ import { byRoad as roadBetween, drive } from './driving';
 import { registerWraps } from './wraps';
 import { mayCollide, registerCarCare, serviceMonth, servicingKept } from './carcare';
 import { registerCarSale } from './carsale';
+import { registerRoofBox, roofFuelFactor } from './roofbox';
 import { NO_HISTORY_GB } from '../content/carcare';
 import { registerStandIn } from './standin';
 import { registerCarAudio } from './caraudio';
-import { registerUsedCars, usedFault } from './usedcars';
+import { TRANSFER, registerUsedCars, usedFault, usedListings, type UsedListing } from './usedcars';
 import { faultCost, inShopNow, mayBreak, registerRepairs, upkeepPerKm } from './repairs';
 
 const YEAR_MS = 365.2425 * MS_DAY;
@@ -100,8 +101,17 @@ export interface OwnedVehicle {
   stolen?: { at: Instant; recoverAt?: Instant };
   /** An unscheduled repair it needs, and a garage that has it (`systems/repairs.ts`, from 2026-10-01). */
   fault?: import('./repairs').Fault;
-  /** A stereo fitted (`systems/caraudio.ts`, from 2026-10-02). */
+  /** A stereo fitted (`systems/caraudio.ts`, from 2026-10-02), and speakers and an amplifier (from 2026-10-03). */
   stereo?: boolean;
+  audio?: import('./caraudio').AudioPart[];
+  /** The odometer when bought used, km, from its listing; and a private sale's transfer due (`systems/usedcars.ts`, from 2026-10-03). */
+  odometerAtPurchase?: number;
+  transferBy?: Instant;
+  /** The odometer when its everyday tires were last fitted (`systems/tires.ts`, from 2026-10-03). */
+  tiresAtKm?: number;
+  /** A roof rack fitted, and the liters of a roof box on it (`systems/roofbox.ts`, from 2026-10-03). */
+  roofRack?: true;
+  roofBoxL?: number;
   /** Listed for a private sale (`systems/carsale.ts`, from 2026-10-03). */
   listed?: import('./carsale').Listing;
   inShop?: import('./repairs').InShop;
@@ -125,18 +135,18 @@ export interface OwnedVehicle {
 }
 
 /** What driving a car a distance costs in the save's money: fuel at the place's pump by its official economy, and upkeep; an electric car's kWh at the share charged at home (`systems/charging.ts`), none on a journey. */
-export function runningCost(sim: Simulation, v: OwnedVehicle, km: number, homeShare = 0): Money {
+export function runningCost(sim: Simulation, v: OwnedVehicle, km: number, homeShare = 0, road: 'town' | 'highway' = 'town'): Money {
   const m = modelById(v.modelId)!;
   if (m.fuel === 'ev' && m.kwhPer100km) {
     const kwh = (km * m.kwhPer100km) / 100;
-    return inSave(sim, Math.round(kwh * kwhPrice(v.jurisdiction, homeShare) * tintFuelFactor(v)), CHARGING[v.jurisdiction].currency) + inSave(sim, Math.round(km * upkeepPerKm(m, v.jurisdiction)), 'USD');
+    return inSave(sim, Math.round(kwh * kwhPrice(v.jurisdiction, homeShare) * tintFuelFactor(v) * roofFuelFactor(v, road)), CHARGING[v.jurisdiction].currency) + inSave(sim, Math.round(km * upkeepPerKm(m, v.jurisdiction)), 'USD');
   }
   const fuel = FUEL[v.jurisdiction];
   const litre = m.fuel === 'diesel' ? fuel.diesel : fuel.petrol;
   // A motorcycle or scooter its maker doesn't rate burns the mean of those that are; an unrated car, AAA's cost a mile.
   const per100 = m.per100km ?? (onTwoWheels(m) ? BIKE_UNRATED_PER100 : null);
   // Tint keeps the cabin cooler, and the air conditioning burns a little less (`systems/tint.ts`).
-  const fuelCost = Math.round((per100 !== null ? inSave(sim, Math.round((km * per100 * litre) / 100), fuel.currency) : inSave(sim, Math.round(km * UNRATED_FUEL_USD_PER_KM), 'USD')) * tintFuelFactor(v));
+  const fuelCost = Math.round((per100 !== null ? inSave(sim, Math.round((km * per100 * litre) / 100), fuel.currency) : inSave(sim, Math.round(km * UNRATED_FUEL_USD_PER_KM), 'USD')) * tintFuelFactor(v) * roofFuelFactor(v, road));
   // Upkeep less the repairs drawn as faults (`systems/repairs.ts`); until 2026-10-01 all of AAA's.
   return fuelCost + inSave(sim, Math.round(km * upkeepPerKm(m, v.jurisdiction)), 'USD');
 }
@@ -225,7 +235,7 @@ const lbOf = (m: CarModel) => (m.kerbKg ? m.kerbKg * 2.20462 : NY.assumedLb);
 export interface Quote { currency: string; price: Money; lines: { label: string; amount: Money }[]; total: Money; basis: string }
 
 /** What buying a car costs where one lives, in the jurisdiction's money, cents: its price and every tax and fee. */
-export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?: number; financed?: boolean; person?: Person; tradeIn?: { value: Money; payoff: Money; label: string }; options?: readonly string[] } = {}): Quote | string {
+export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?: number; financed?: boolean; person?: Person; tradeIn?: { value: Money; payoff: Money; label: string }; options?: readonly string[]; privateSeller?: boolean } = {}): Quote | string {
   const j = jurisdictionOf(cityId);
   if (!j) return 'SLATE doesn’t have that place’s car taxes and fees yet: it keeps New York, Connecticut, California, Great Britain, Ireland, Ontario, British Columbia and Mexico City.';
   if (model.market !== MARKET[j]) return 'That car is sold in another market.';
@@ -245,7 +255,8 @@ export function quote(model: CarModel, cityId: string, at: Instant, opts: { age?
   // A trade-in's value comes off the price New York and Connecticut tax, a dealer's sale; California taxes the whole (CDTFA).
   const taxedPrice = Math.max(0, sold - (opts.tradeIn?.value ?? 0));
   // A bicycle shop and an ATV dealer title nothing: the documentation fee is a road vehicle's.
-  const doc = forOutings(model) ? undefined : DEALER_DOC_FEE[j];
+  // A private seller charges no documentation fee (from 2026-10-03).
+  const doc = forOutings(model) || opts.privateSeller ? undefined : DEALER_DOC_FEE[j];
   if (doc) lines.push({ label: doc.label, amount: c(used ? doc.used : doc.new) });
   if (forOutings(model)) lines.push(...outingLines(model, j, cityId, at, sold, taxedPrice));
   else if (onTwoWheels(model)) lines.push(...bikeLines(model, j, cityId, at, sold, taxedPrice));
@@ -590,7 +601,15 @@ export function buyRefusal(sim: Simulation, person: Person, modelId: string, opt
   if (opts.financed && opts.coverage === 'liability') return 'A lender asks for full cover on a car it finances.';
   if (opts.financed && loanRate(j, person.credit?.score ?? 0, (opts.age ?? 0) > 0) === undefined) return 'SLATE doesn’t have a published car loan rate there yet: buy it outright.';
   if ((opts.age ?? 0) < 0 || (opts.age ?? 0) > 15) return 'A used car of up to fifteen years.';
+  // A used car is one on offer this month (`usedListings`, from 2026-10-03; until then any age at all).
+  if ((opts.age ?? 0) > 0 && !listingFor(sim, person, modelId, opts.age!)) return `No ${model.make} ${model.model} of ${opts.age} years is on offer this month: ${usedListings(sim, person, modelId, homeOf(person), j).map((l) => l.age).join(', ')} years old are.`;
   return undefined;
+}
+
+/** This month's listing of a model at an age, where one is on offer. */
+export function listingFor(sim: Simulation, person: Person, modelId: string, age: number): UsedListing | undefined {
+  const j = jurisdictionOf(homeOf(person));
+  return j ? usedListings(sim, person, modelId, homeOf(person), j).find((l) => l.age === age) : undefined;
 }
 
 export function registerVehicles(sim: Simulation): void {
@@ -611,7 +630,8 @@ export function registerVehicles(sim: Simulation): void {
     if (old?.repossessed) throw new CommandError('The lender has that car.');
     if (old?.lease) throw new CommandError('A leased car is the lessor’s: it’s returned or bought out at the lease’s end, not traded.');
     const trade = old ? tradeInFor(s, cityId, old) : undefined;
-    const q = quote(model, cityId, s.now, { age, financed, person, options, ...(trade ? { tradeIn: trade } : {}) }) as Quote;
+    const listing = age > 0 ? listingFor(s, person, model.id, age) : undefined;
+    const q = quote(model, cityId, s.now, { age, financed, person, options, ...(trade ? { tradeIn: trade } : {}), ...(listing?.seller === 'private' ? { privateSeller: true } : {}) }) as Quote;
     const total = inSave(s, q.total, q.currency);
     const cur = saveCurrency(s.universe);
     // Financed, the price is lent and the taxes and fees paid down, as a dealer arranges it.
@@ -621,6 +641,12 @@ export function registerVehicles(sim: Simulation): void {
     if (!payFromBank(s, person, down, `${model.make} ${model.model}${age ? `, ${age} years old` : ', new'}${financed ? ', the taxes and fees' : ''}`, 'vehicle')) throw new CommandError(`${formatMoney(down, cur)} is more than the bank can cover.`);
     const id = s.nextId('vehicle');
     const v: OwnedVehicle = { id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: renewal({ id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: 0 }, s.now).next };
+    // The listing's odometer, and a private sale's transfer to do (`systems/usedcars.ts`).
+    if (listing) {
+      v.odometerAtPurchase = listing.odometerKm;
+      const rule = TRANSFER[j];
+      if (listing.seller === 'private' && rule) v.transferBy = s.now + rule.days * MS_DAY;
+    }
     // Built to order: its options kept, and the car the buyer's once it comes.
     if (options.length) v.options = options;
     if (optionsQuote(model, options).factory) v.deliveredAt = s.now + orderWeeksOf(model)!.weeks * 7 * MS_DAY;
@@ -651,6 +677,7 @@ export function registerVehicles(sim: Simulation): void {
   registerRedeem(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerTint(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
   registerMods(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
+  registerRoofBox(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerCarAudio(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !x.lease));
   registerUsedCars(sim, jurisdictionOf, homeOf);
   registerStandIn(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));

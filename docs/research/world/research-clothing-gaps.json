@@ -1,0 +1,779 @@
+{
+  "meta": {
+    "topic": "Clothing gaps: fit departments (petite, tall, plus, maternity, adaptive), clothing subtypes (swim, shapewear, hosiery, slips, thermals, cultural), fit charts (rings, jeans waist x inseam, hips), garment and shoe repair, one product at several sellers, parcel tracking stages, resale fees",
+    "markets": ["US", "GB", "IE", "CA", "MX"],
+    "date": "2026-10-03",
+    "method": "Read on 2026-10-03 from each publisher's own pages or the JSON those pages load: Uniqlo commerce API (/api/commerce/v5, x-fr-clientid uq.<market>.web-spa) for US/UK/CA; Spanx Shopify products.json (www.spanx.com); Gap Inc. search API (api.gap.com/commerce/search/v2/product_listings) for Old Navy, Gap and Banana Republic US/CA; Marks & Spencer category pages' __NEXT_DATA__; Arnotts and Brown Thomas search pages' data-gtm product data; Liverpool search pages' embedded records; nike.com __NEXT_DATA__ per country; carrier help pages (USPS, Canada Post, FedEx UK); repair shops' own price pages; Nordstrom's shoe-repair PDF; H.Samuel's ring chart; Levi's help-centre size guide; Target corporate and Target size-chart fragment. Where a publisher's page refused automated reads (403 or bot wall: Tommy Hilfiger, Aritzia, Levi's.com, Converse, Primark corporate, Royal Mail, UPS, An Post, The RealReal, Macy's, Nordstrom.com, Next, John Lewis, Simons, El Palacio de Hierro), figures come from a search engine's summary and are confirmed:false with a note. Nothing is estimated.",
+    "priceConventions": {
+      "spanx": "price = the price the Shopify variant carried on 2026-10-03; compareAtPrice = the struck-through regular price where Spanx showed one (null means price is the regular price). USD before sales tax.",
+      "gapInc": "regularPrice = the colour's regularPrice; currentPrice = its effectivePrice; priceType R = regular, P = promotion, M = markdown. US before sales tax; CA before GST/HST.",
+      "liverpool": "listPrice = Liverpool's list price; promoPrice = the price after the promotion running on 2026-10-03 (equal to listPrice when none). MXN with IVA included. Product URLs follow https://www.liverpool.com.mx/tienda/pdp/<slug>/<productId>; the slug is not checked (one URL with an arbitrary slug resolved to the right product).",
+      "arnottsBrownThomas": "price = the price in the tile's data-gtm; where isSale is true it is the sale price, not the regular one. EUR with VAT.",
+      "marksAndSpencer": "price = the first variant's price in the category page data; GBP with VAT. It can be a markdown (the 7.19 bikini top looks like one) and the category data carries no regular/sale flag.",
+      "uniqlo": "price = prices.base.value from Uniqlo's commerce API (regular price; promo was null for every item listed)."
+    }
+  },
+
+  "departments": [
+    {
+      "retailer": "Old Navy", "market": "US",
+      "lines": {
+        "regular": "00 XXS to 20 XXL, plus 2X, 3X, 4X (sizes 22-30 map to 2X-4X)",
+        "petite": "0 XS to 20 XXL",
+        "tall": "0 XS to 20 XXL",
+        "maternity": "regular XXS-XXL plus 2X-4X; maternity jeans waist 24-34 (sizes 0-14); petite and tall maternity 0 XS-20 XXL",
+        "plusExtended": "women's sizes run to 30 / 4X in the same listing (BODEQUALITY integration)",
+        "menTall": "men's jeans: tall lengths 36 and 38 for waists 32-44",
+        "menBig": "men's jeans waist 28-54 (xs-xxxxl)",
+        "adaptive": "none found: a search for 'adaptive' returns ordinary kidswear"
+      },
+      "unit": "size labels", "currency": null,
+      "url": "https://api.gap.com/commerce/search/v2/product_listings?brand=on&market=us&locale=en_US&keyword=women",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Read from the size variants (skuSizes) of the products Old Navy's own search returned for 'women', 'maternity', 'mens straight jeans'."
+    },
+    {
+      "retailer": "Old Navy", "market": "US",
+      "lines": { "plusExtended": "Every women's style in sizes 0-30 and XS-4X at one price regardless of size; stores carry 0-28 together, online 00-30 (launched 20 Aug 2021 as BODEQUALITY)" },
+      "unit": "size labels", "currency": null,
+      "url": "https://www.businesswire.com/news/home/20210818005389/en",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "Gap Inc. press release on Business Wire refused automated reads (403); figures from the search engine's summary of it and of WWD/Retail Dive coverage."
+    },
+    {
+      "retailer": "Old Navy Canada", "market": "CA",
+      "lines": {
+        "regular": "00 XXS/XS to 20 XXL, 22 2X, 24-26 3X, 28-30 4X",
+        "petite": "0 XS to 20 XXL",
+        "tall": "0 XS to 20 XXL",
+        "maternity": "XXS-XXL, 2X, 4X; maternity jeans waist 24-34; maternity bras 32B-40C"
+      },
+      "unit": "size labels", "currency": null,
+      "url": "https://api.gap.com/commerce/search/v2/product_listings?brand=on&market=ca&locale=en_CA&keyword=maternity",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "retailer": "Gap", "market": "US",
+      "lines": {
+        "regular": "000/23 XXS to 20/35 XXL (numeric/denim waist), XXS-XXXL; inseam short/regular/long",
+        "petite": "00/24 XXS to 20/35 XXL",
+        "tall": "0/25 XS to 20/35 XXL, XXXL; men's waist 32-42",
+        "maternity": "regular 00-20 and XXS-XXL; petite 0-14; tall 4-20; maternity bras 30A-40C",
+        "men": "jeans waist 28-38, lengths 30/32/34 ('90s Loose Jeans)"
+      },
+      "unit": "size labels", "currency": null,
+      "url": "https://api.gap.com/commerce/search/v2/product_listings?brand=gap&market=us&locale=en_US&keyword=women",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "retailer": "Banana Republic", "market": "US",
+      "lines": {
+        "regular": "00 XXS to 20 XXL; inseam regular/long",
+        "petite": "00 XXS to 14 L",
+        "tall": "2 XS to 18 XL, XXL",
+        "long": "4 S to 12 L"
+      },
+      "unit": "size labels", "currency": null,
+      "url": "https://api.gap.com/commerce/search/v2/product_listings?brand=br&market=us&locale=en_US&keyword=women",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "No maternity or plus line seen in the variants."
+    },
+    {
+      "retailer": "Marks & Spencer", "market": "GB",
+      "lines": {
+        "petite": "Petite = a woman 160 cm (5ft 3in) tall with a 74 cm inside leg. The petite category's size filter on 2026-10-03 ran 6 to 34 (counts thin above 24: 26 had 41 items, 28 had 14) plus XXS-2XL and 27-34 Petite jeans waists; trouser leg lengths Extra Short (69 cm) and Short (73 cm)",
+        "plusExtended": "Plus-size category filter: UK 14 to 28 (most items 14-24), S-3XL, bras to 44 FF",
+        "maternity": "UK 6 to 28, XXS-3XL, maternity/nursing bras 32B to 44GG",
+        "adaptiveKids": "Easy Dressing: newborn to 17-18 years (most lines 2-3 to 15-16 years)",
+        "menBigTall": "category 'Big & Tall – sizes up to 4XL'"
+      },
+      "unit": "UK size labels", "currency": null,
+      "url": "https://www.marksandspencer.com/l/women/petite",
+      "urls": ["https://www.marksandspencer.com/us/sizeguides/?cid=sizeguidewomens-petite", "https://www.marksandspencer.com/c/women/plus-sizes", "https://www.marksandspencer.com/l/women/maternity", "https://www.marksandspencer.com/l/kids/easy-dressing", "https://www.marksandspencer.com/us/l/men/big-and-tall-%E2%80%93-sizes-up-to-4xl/"],
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Ranges are the size facets of each category page (what was actually listed that day), plus the petite size guide's definition."
+    },
+    {
+      "retailer": "Marks & Spencer", "market": "GB",
+      "lines": { "adaptiveKids": "Easy Dressing launched 28 June 2022: poppers in place of zips and buttons, flat-lock seams, Velcro shirts, feeding-tube access, wheelchair-friendly coats, babygrows that fit over hip-dysplasia casts; priced the same as the main kidswear range" },
+      "unit": null, "currency": null,
+      "url": "https://corporate.marksandspencer.com/media/press-releases/easy-dressing-ms-launches-high-streets-first-kidswear-range-children",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "retailer": "Primark / Penneys", "market": "GB, IE",
+      "lines": {
+        "adaptive": "Jan 2024: first adaptive range, 4 lingerie pieces, 2XS-2XL, £8-£10 (seam-free bra £10, lace bralette £10, brief £8, period brief £10). Jan 2025: 49-piece men's and women's range with Victoria Jenkins in 31 UK stores and Click & Collect at 113: women's trench £40 (seated style £30), poplin shirt £18, V-neck jumper £24, men's oxford shirt £16, straight-leg jeans £14. Later: women's tankini £14 top / £10 bottoms, men's cargo swim shorts £12."
+      },
+      "unit": "GBP prices", "currency": "GBP",
+      "url": "https://corporate.primark.com/en-gb/a/news/corporate-news/adaptive-fashion-hits-the-high-street-as-primark-launches-first-men-and-womens-range-with-victoria-jenkins",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "Primark's corporate site served a bot challenge; figures from the search engine's summary of Primark's own news pages. Penneys (IE) has matching releases at corporate.primark.com/en-ie; euro prices not read."
+    },
+    {
+      "retailer": "Next", "market": "GB",
+      "lines": { "petite": "for 5ft 3in and under, sizes 6-20", "tall": "for 5ft 10in and over, sizes 6-20", "maternity": "own and third-party (Seraphine, JoJo Maman Bébé, Mamalicious)" },
+      "unit": "UK sizes", "currency": null,
+      "url": "https://www.next.co.uk/women/alternative-sizes",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "next.co.uk returned 403; from search summary."
+    },
+    {
+      "retailer": "H&M", "market": "US",
+      "lines": { "range": "women's XS-4XL; US 2-32, EU 32-62, UK 6-36", "petite": "'P' sizes (e.g. 34P) with shorter sleeve, torso and inseam", "plus": "H&M+", "maternity": "MAMA, sized by current chest and seat measurement" },
+      "unit": "size labels", "currency": null,
+      "url": "https://www2.hm.com/en_us/customer-service/sizeguide/sizing-faq.html",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "Page timed out on fetch; from search summary of H&M's own sizing FAQ."
+    },
+    {
+      "retailer": "Target (Cat & Jack Adaptive)", "market": "US",
+      "lines": { "adaptiveKids": "Toddler 2T-5T and Big Kids XS-XXL; $4.50-$39.99, most under $19.99; side and back snap and zip closures, hidden abdominal-access openings, zip-off sleeves on outerwear, footless sleepwear, diaper-friendly leggings and bodysuits" },
+      "unit": "size labels; USD", "currency": "USD",
+      "url": "https://corporate.target.com/news-features/article/2018/09/cat-and-jack-adaptive-apparel",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Article first published 18 Oct 2017, updated 5 Sep 2018. Target's July 2026 fact sheet (corporate.target.com/press/fact-sheet/2026/07/inclusive-design-and-guest-experience) still describes adaptive apparel with accessible closures, sensory-friendly materials and abdominal access but gives no sizes."
+    },
+    {
+      "retailer": "Target (Cat & Jack Adaptive)", "market": "US",
+      "sizeChart": [
+        {"size": "XS (4)", "heightIn": "43-45", "weightLb": "37-43", "chestIn": 23, "waistIn": 20.75, "hipIn": 24.25},
+        {"size": "5", "heightIn": "45-47", "weightLb": "43-50", "chestIn": 24, "waistIn": 21.5, "hipIn": 25.25},
+        {"size": "6", "heightIn": "47-49.5", "weightLb": "50-58", "chestIn": 25, "waistIn": 22.25, "hipIn": 26.25},
+        {"size": "7", "heightIn": "49.5-52.5", "weightLb": "58-66", "chestIn": 26, "waistIn": 22.75, "hipIn": 27.25},
+        {"size": "8", "heightIn": "52.5-54", "weightLb": "66-74", "chestIn": 27.5, "waistIn": 24, "hipIn": 28.5},
+        {"size": "10", "heightIn": "54-56", "weightLb": "74-85", "chestIn": 29, "waistIn": 25.25, "hipIn": 30},
+        {"size": "12", "heightIn": "56-59.5", "weightLb": "85-97", "chestIn": 30.5, "waistIn": 26.5, "hipIn": 31.25},
+        {"size": "14", "heightIn": "59.5-62", "weightLb": "97-109", "chestIn": 32.5, "waistIn": 28.5, "hipIn": 33.25},
+        {"size": "XXL (16)", "heightIn": "62-64", "weightLb": "109-122", "chestIn": 33.75, "waistIn": 29.5, "hipIn": 34.75},
+        {"size": "18", "heightIn": "64-66", "weightLb": "122-134", "chestIn": 35, "waistIn": 30.5, "hipIn": 36.25}
+      ],
+      "alsoListed": "Slim (5-14 Slim) and Husky (8-18 Husky) rows with the same heights; e.g. 10 Husky chest 31.25 / waist 28.5 / hip 31.5, 10 Slim chest 26.75 / waist 23 / hip 28.25",
+      "unit": "inches, pounds", "currency": null,
+      "url": "https://digitalcontent.target.com/itemcontent/sizecharts/htmlfragments/kids/cat-and-jack/kids-adaptive-clothing.html",
+      "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "retailer": "Target (Universal Thread adaptive denim)", "market": "US",
+      "lines": { "adaptive": "women's adaptive jeans 00-18 in Short (32.5in), Regular (34in), Tall (37in) inseams, and Women's Plus 14W-26W; flat seams, wider legs, pocketless back, higher back rise" },
+      "unit": "size labels", "currency": null,
+      "url": "https://jennysmithrollson.com/the-adaptive-jeans-by-universal-thread-from-target/",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "From a search summary of a blogger's and The Mighty's coverage; not on a Target page read today."
+    },
+    {
+      "retailer": "Tommy Hilfiger Adaptive (sold by Macy's, Nordstrom, Amazon)", "market": "US",
+      "lines": { "adaptive": "men's and women's adaptive lines incl. Seated Fit chinos (elastic waist, adjustable closure) and adaptive leggings; size guide covers XXS-XL with chest, waist, hip and arm measurements" },
+      "unit": "size labels", "currency": null,
+      "url": "https://usa.tommy.com/en/size-guide-adaptive.html",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "usa.tommy.com returned 403 to both fetch and curl; from search summary. Measurements not read."
+    },
+    {
+      "retailer": "Zappos Adaptive", "market": "US",
+      "lines": { "adaptive": "Single and Different Size Shoes programme: one shoe at half the pair price, or a pair in two sizes; launch brands Nike, BILLY Footwear, Converse, Stride Rite, PLAE, New Balance; later Merrell, Brooks, Dansko, Vans, Friendly Shoes, UGG; toddler to adult, medium to extra-extra-wide; single shoes $17.50-$85 at launch (14 Jul 2020)" },
+      "unit": "USD", "currency": "USD",
+      "url": "https://www.globenewswire.com/news-release/2020/07/14/2061939/0/en/Zappos-Adaptive-Launches-First-Ever-Digital-Single-and-Different-Size-Shoes-Test-Program.html",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "From search summary of the Zappos press release on GlobeNewswire; Zappos is not a SLATE retailer."
+    },
+    {
+      "retailer": "Nordstrom", "market": "US",
+      "lines": { "plusExtended": "Open Edit (Nordstrom Made) launched with XXS-3X; extended sizing in 30 stores from 100 brands across denim, dresses, swim, activewear, lingerie", "adaptive": "an Adaptive Shoes category (nordstrom.com/browse/adaptive-shoes)" },
+      "unit": "size labels", "currency": null,
+      "url": "https://press.nordstrom.com/news-releases/news-release-details/introducing-our-newest-brand-open-edit/",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "press.nordstrom.com timed out; from search summary."
+    },
+    {
+      "retailer": "Aritzia", "market": "CA",
+      "lines": { "range": "2XS-XXL and 00-16", "lengths": "Short (below 160 cm), Regular (160-170 cm), Tall (173-180 cm), Taller (above 180 cm)" },
+      "unit": "size labels; cm", "currency": null,
+      "url": "https://www.aritzia.com/us/en/size-guide",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "aritzia.com returned 403; from search summary of its size guide. No maternity or plus line."
+    },
+    {
+      "retailer": "Levi's", "market": "US",
+      "lines": { "plusExtended": "women's plus 14-26", "petite": "petite category with shorter inseams (levi.com/US/en_US/petit-inseams/c/levi_clothing_women_petite)" },
+      "unit": "size labels", "currency": null,
+      "url": "https://www.levi.com/US/en_US/clothing/women/plus-size/jeans/c/levi_clothing_women_plus_sizes_jeans",
+      "date": "2026-10-03", "confirmed": false,
+      "note": "levi.com refuses automated reads; from search summary."
+    },
+    {
+      "retailer": "Liverpool", "market": "MX",
+      "lines": { "maternity": "a 'maternidad' range (ONE TO NINE, Expecting Essentials, Loving Moments): pantalón maternidad regular MXN 529, legging maternidad MXN 499-599, vestido maternidad MXN 479, short MXN 249, playera MXN 399, jumpsuit MXN 529", "plus": "'talla extra' lines such as LIEB PLUS (blusa camisera MXN 790)", "adaptive": "none found: 'ropa adaptativa' returns ordinary items" },
+      "unit": "MXN list prices", "currency": "MXN",
+      "url": "https://www.liverpool.com.mx/tienda?s=maternidad",
+      "date": "2026-10-03", "confirmed": true,
+      "note": "Size ranges were not in the search data."
+    }
+  ],
+
+  "subtypes": [
+    {"subtype": "thermals", "market": "US", "retailer": "Uniqlo", "currency": "USD", "unit": "per item, before sales tax", "url": "https://www.uniqlo.com/us/en/search?q=heattech", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"id": "E469742-000", "name": "HEATTECH T-Shirt (women)", "price": 19.9, "sizes": "XXS-XXL", "url": "https://www.uniqlo.com/us/en/products/E469742-000/00"},
+       {"id": "E461003-000", "name": "HEATTECH T-Shirt (men)", "price": 19.9, "sizes": "XS-3XL", "url": "https://www.uniqlo.com/us/en/products/E461003-000/00"},
+       {"id": "E469836-000", "name": "HEATTECH Leggings (women)", "price": 19.9, "sizes": "XXS-XXL", "url": "https://www.uniqlo.com/us/en/products/E469836-000/00"},
+       {"id": "E461013-000", "name": "HEATTECH Tights (men)", "price": 19.9, "sizes": "XS-3XL", "url": "https://www.uniqlo.com/us/en/products/E461013-000/00"},
+       {"id": "E481441-000", "name": "HEATTECH Extra Warm Cashmere Blend T-Shirt (men)", "price": 29.9, "sizes": "XS-3XL", "url": "https://www.uniqlo.com/us/en/products/E481441-000/00"},
+       {"id": "E478965-000", "name": "HEATTECH Ultra Warm T-Shirt (women)", "price": 34.9, "sizes": "XXS-XXL", "url": "https://www.uniqlo.com/us/en/products/E478965-000/00"},
+       {"id": "E479538-000", "name": "HEATTECH Ultra Warm Tights (men)", "price": 34.9, "sizes": "S-3XL", "url": "https://www.uniqlo.com/us/en/products/E479538-000/00"},
+       {"id": "E486955-000", "name": "HEATTECH Socks (men)", "price": 7.9, "sizes": "US 8-11", "url": "https://www.uniqlo.com/us/en/products/E486955-000/00"}
+     ]},
+    {"subtype": "thermals", "market": "GB", "retailer": "Uniqlo UK", "currency": "GBP", "unit": "per item, VAT included", "url": "https://www.uniqlo.com/uk/en/search?q=heattech", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"id": "E469742-000", "name": "HEATTECH Crew Neck T-Shirt (Long Sleeve) (women)", "price": 14.9, "sizes": "XXS-XXL", "url": "https://www.uniqlo.com/uk/en/products/E469742-000/00"},
+       {"id": "E461003-000", "name": "HEATTECH Crew Neck T-Shirt (Long Sleeve) (men)", "price": 14.9, "sizes": "XS-3XL", "url": "https://www.uniqlo.com/uk/en/products/E461003-000/00"},
+       {"id": "E469836-000", "name": "HEATTECH Leggings (women)", "price": 14.9, "sizes": "XXS-XXL", "url": "https://www.uniqlo.com/uk/en/products/E469836-000/00"},
+       {"id": "E461013-000", "name": "HEATTECH Leggings (men)", "price": 14.9, "sizes": "XS-3XL", "url": "https://www.uniqlo.com/uk/en/products/E461013-000/00"},
+       {"id": "E469765-000", "name": "HEATTECH Extra Warm Cashmere Blend Crew Neck T-Shirt (Long Sleeve) (women)", "price": 22.9, "sizes": "XXS-XXL", "url": "https://www.uniqlo.com/uk/en/products/E469765-000/00"},
+       {"id": "E479525-000", "name": "HEATTECH Ultra Warm Crew Neck T-Shirt (Long Sleeve) (men)", "price": 24.9, "sizes": "XS-3XL", "url": "https://www.uniqlo.com/uk/en/products/E479525-000/00"}
+     ]},
+    {"subtype": "thermals", "market": "GB", "retailer": "Marks & Spencer", "currency": "GBP", "unit": "per item or pack, VAT included", "url": "https://www.marksandspencer.com/l/lingerie/thermals", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"name": "2 Pack Heatgen™ Light Thermal Long Sleeve Tops", "price": 25, "pack": 2, "url": "https://www.marksandspencer.com/2-pack-heatgen-light-thermal-long-sleeve-tops/p/clp61231345"},
+       {"name": "Heatgen™ Thermal Shaping Leggings", "price": 18, "url": "https://www.marksandspencer.com/heatgen-thermal-shaping-leggings/p/clp60698717"},
+       {"name": "Heatgen™ Thermal Light Control Shaping Vest", "price": 15, "url": "https://www.marksandspencer.com/heatgen-thermal-light-control-shaping-vest/p/clp60698491"},
+       {"name": "Heatgen™ Thermal Long Sleeve Shaping Body", "price": 25, "url": "https://www.marksandspencer.com/heatgen-thermal-long-sleeve-turtle-neck-body/p/clp60698558"},
+       {"name": "2 Pack Thermal Pointelle Built Up Shoulder Vest", "price": 15, "pack": 2, "url": "https://www.marksandspencer.com/2-pack-thermal-pointelle-built-up-shoulder-vest/p/clp61230533"}
+     ]},
+    {"subtype": "thermals", "market": "CA", "retailer": "UNIQLO Canada", "currency": "CAD", "unit": "per item, before GST/HST", "url": "https://www.uniqlo.com/ca/en/search?q=heattech", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"id": "E491699-000", "name": "HEATTECH Crew Neck T-Shirt Long Sleeve (women)", "price": 19.9, "sizes": "XXS-XXL", "url": "https://www.uniqlo.com/ca/en/products/E491699-000/00"},
+       {"id": "E486841-000", "name": "HEATTECH Crew Neck T-Shirt Long Sleeve (men)", "price": 19.9, "sizes": "XS-XXL", "url": "https://www.uniqlo.com/ca/en/products/E486841-000/00"},
+       {"id": "E485815-000", "name": "HEATTECH Leggings (women)", "price": 19.9, "sizes": "XXS-XXL", "url": "https://www.uniqlo.com/ca/en/products/E485815-000/00"},
+       {"id": "E486928-000", "name": "HEATTECH Tights (men)", "price": 19.9, "sizes": "XS-XXL", "url": "https://www.uniqlo.com/ca/en/products/E486928-000/00"},
+       {"id": "E469765-000", "name": "HEATTECH Cashmere Blend T-Shirt | Extra Warm (women)", "price": 34.9, "sizes": "XXS-XXL", "url": "https://www.uniqlo.com/ca/en/products/E469765-000/00"},
+       {"id": "E479525-000", "name": "HEATTECH Ultra Warm T-Shirt (men)", "price": 39.9, "sizes": "XS-XXL", "url": "https://www.uniqlo.com/ca/en/products/E479525-000/00"}
+     ]},
+    {"subtype": "thermals", "market": "MX", "retailer": "Liverpool", "currency": "MXN", "unit": "list price, IVA included", "url": "https://www.liverpool.com.mx/tienda?s=ropa%20termica", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"id": "1204502681", "brand": "BODY CONTROL", "name": "Camiseta térmica para hombre", "listPrice": 499, "promoPrice": 499, "url": "https://www.liverpool.com.mx/tienda/pdp/camiseta-termica-para-hombre/1204502681"},
+       {"id": "1201574028", "brand": "MAX GEAR", "name": "Conjunto térmico para hombre", "listPrice": 989, "promoPrice": 989, "url": "https://www.liverpool.com.mx/tienda/pdp/conjunto-termico-para-hombre/1201574028"},
+       {"id": "1201742028", "brand": "MAX GEAR", "name": "Pantalón térmico para hombre", "listPrice": 549, "promoPrice": 549, "url": "https://www.liverpool.com.mx/tienda/pdp/pantalon-termico-para-hombre/1201742028"},
+       {"id": "1204586612", "brand": "COLUMBIA", "name": "Playera térmica para outdoor Baselayers de hombre", "listPrice": 1295, "promoPrice": 1295, "url": "https://www.liverpool.com.mx/tienda/pdp/playera-termica-baselayers-hombre/1204586612"},
+       {"id": "1202693802", "brand": "SKINY", "name": "Conjunto pijama Thermal Program para mujer", "listPrice": 599, "promoPrice": 599, "url": "https://www.liverpool.com.mx/tienda/pdp/conjunto-pijama-thermal-program-mujer/1202693802"}
+     ]},
+
+    {"subtype": "shapewear", "market": "US", "retailer": "Spanx (spanx.com)", "currency": "USD", "unit": "per item, before sales tax", "url": "https://www.spanx.com/products.json", "date": "2026-10-03", "confirmed": true,
+     "note": "Spanx is not a SLATE retailer; Nordstrom and Macy's (which are) carry it but refused automated reads. Sizes XS-3X unless noted.",
+     "products": [
+       {"name": "SPANXshape® Invisible High-Waisted Mid-Thigh Short", "price": 72, "compareAtPrice": null, "url": "https://www.spanx.com/products/spanxshape-invisible-high-waisted-mid-thigh-short-very-black"},
+       {"name": "SPANXsculpt® OnCore High-Waisted Mid-Thigh Short", "price": 78, "compareAtPrice": null, "url": "https://www.spanx.com/products/spanxsculpt-oncore-high-waisted-mid-thigh-short-chestnut-brown"},
+       {"name": "SPANXsupersculpt® Transform High-Waisted Mid-Thigh Short", "price": 78, "compareAtPrice": null, "url": "https://www.spanx.com/products/spanxsupersculpt-transform-high-waisted-mid-thigh-short"},
+       {"name": "SPANXshape® Invisible Open-Bust Mid-Thigh Bodysuit", "price": 88, "compareAtPrice": null, "url": "https://www.spanx.com/products/spanxshape-invisible-open-bust-mid-thigh-bodysuit-champagne-beige"},
+       {"name": "SPANXsupersmooth® Essential Mid-Thigh Short", "price": 29, "compareAtPrice": 46, "url": "https://www.spanx.com/products/spanxsupersmooth-essential-mid-thigh-short-smoke"},
+       {"name": "SPANXshape® Invisible Brief", "price": 48, "compareAtPrice": null, "url": "https://www.spanx.com/products/spanxshape-invisible-brief-cafe-au-lait"}
+     ]},
+    {"subtype": "shapewear", "market": "GB", "retailer": "Marks & Spencer", "currency": "GBP", "unit": "per item or pack, VAT included", "url": "https://www.marksandspencer.com/l/lingerie/shapewear", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"name": "Body Sculpt Firm Control Seamless Thigh Slimmer", "brand": "Body by M&S", "price": 18, "url": "https://www.marksandspencer.com/body-sculpt-firm-control-seamless-thigh-slimmer/p/clp60912813"},
+       {"name": "Body Sculpt Seamless Waist Cincher", "brand": "Body by M&S", "price": 15, "url": "https://www.marksandspencer.com/body-sculpt-seamless-waist-cincher/p/clp60782553"},
+       {"name": "2 Pack Body Invisibles™ No VPL Shaping Briefs", "brand": "Body by M&S", "price": 14, "pack": 2, "url": "https://www.marksandspencer.com/2-pack-body-invisibles-no-vpl-shaping-briefs/p/clp60782537"},
+       {"name": "2 Pack Body Invisibles™ No VPL Shaping Shorts", "brand": "Body by M&S", "price": 14, "pack": 2, "url": "https://www.marksandspencer.com/2-pack-body-invisibles-no-vpl-shaping-shorts/p/clp60782565"},
+       {"name": "2 Pack Body Invisibles™ Anti-Chafe Shorts", "brand": "Body by M&S", "price": 20, "pack": 2, "url": "https://www.marksandspencer.com/2-pack-body-invisibles-anti-chafe-shorts/p/clp61219457"}
+     ]},
+    {"subtype": "shapewear", "market": "IE", "retailer": "Arnotts / Brown Thomas", "currency": "EUR", "unit": "per item, VAT included", "url": "https://www.brownthomas.com/search?q=spanx", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"retailer": "Arnotts", "name": "SPANXshape™ Invisible Mid-Thigh Shorts", "price": 68, "url": "https://www.arnotts.ie/spanx/spanxshape-invisible-mid-thigh-shorts/2000202558.html"},
+       {"retailer": "Brown Thomas", "name": "SPANXshape™ Invisible High-Waisted Mid-Thigh Shorts", "price": 78, "url": "https://www.brownthomas.com/spanxshape-invisible-high-waisted-mid-thigh-shorts/2000202582.html"},
+       {"retailer": "Brown Thomas", "name": "Supersculpt™ Transform High-Waisted Mid-Thigh Shorts", "price": 88, "url": "https://www.brownthomas.com/supersculpt-transform-high-waisted-mid-thigh-shorts/2001210285.html"},
+       {"retailer": "Arnotts", "name": "Three-Pack SPANXsmooth™ Fit-To-You Briefs", "price": 60, "pack": 3, "url": "https://www.arnotts.ie/spanx/three-pack-spanxsmooth-fit-to-you-briefs/190904510.html"}
+     ]},
+    {"subtype": "shapewear", "market": "MX", "retailer": "Liverpool", "currency": "MXN", "unit": "list price, IVA included", "url": "https://www.liverpool.com.mx/tienda?s=fajas", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"id": "1045820699", "brand": "BERLEI", "name": "Faja control de abdomen con compresión baja para mujer", "listPrice": 269, "promoPrice": 269, "url": "https://www.liverpool.com.mx/tienda/pdp/faja-control-abdomen-compresion-baja/1045820699"},
+       {"id": "1137615197", "brand": "BERLEI", "name": "Faja control de abdomen con compresión media para mujer", "listPrice": 299, "promoPrice": 299, "url": "https://www.liverpool.com.mx/tienda/pdp/faja-control-abdomen-compresion-media/1137615197"},
+       {"id": "1061490079", "brand": "OSCAR HACKMAN", "name": "Faja cinturilla con compresión alta para mujer", "listPrice": 399, "promoPrice": 399, "url": "https://www.liverpool.com.mx/tienda/pdp/faja-cinturilla-compresion-alta/1061490079"},
+       {"id": "1018124969", "brand": "NEW LOOK", "name": "Panty faja con compresión media para mujer", "listPrice": 489, "promoPrice": 366.75, "url": "https://www.liverpool.com.mx/tienda/pdp/panty-faja-compresion-media/1018124969"},
+       {"id": "1043066318", "brand": "LIZ", "name": "Faja tipo short con compresión alta para mujer", "listPrice": 759, "promoPrice": 569.25, "url": "https://www.liverpool.com.mx/tienda/pdp/faja-tipo-short-compresion-alta/1043066318"},
+       {"id": "1053642723", "brand": "BERLEI", "name": "Faja body con compresión alta para mujer", "listPrice": 899, "promoPrice": 674.25, "url": "https://www.liverpool.com.mx/tienda/pdp/faja/1053642723"}
+     ]},
+
+    {"subtype": "hosiery", "market": "US", "retailer": "Old Navy", "currency": "USD", "unit": "per pair, before sales tax", "url": "https://api.gap.com/commerce/search/v2/product_listings?brand=on&market=us&locale=en_US&keyword=tights", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"id": "907898", "name": "Opaque Tights for Women", "regularPrice": 10.99, "currentPrice": 10.99, "url": "https://oldnavy.gap.com/browse/product.do?pid=907898"},
+       {"id": "907903", "name": "Textured Tights for Women", "regularPrice": 12.99, "currentPrice": 12.99, "url": "https://oldnavy.gap.com/browse/product.do?pid=907903"},
+       {"id": "907885", "name": "Solid Tights for Girls", "regularPrice": 9.99, "currentPrice": 9.99, "url": "https://oldnavy.gap.com/browse/product.do?pid=907885"}
+     ]},
+    {"subtype": "hosiery", "market": "US", "retailer": "Spanx (spanx.com)", "currency": "USD", "unit": "per pair, before sales tax", "url": "https://www.spanx.com/products.json", "date": "2026-10-03", "confirmed": true,
+     "note": "Spanx hosiery sizes are lettered A-E (some A-G).",
+     "products": [
+       {"name": "SPANXshape® Tights", "price": 38, "sizes": "A-E", "url": "https://www.spanx.com/products/spanxshape-tights-very-black"},
+       {"name": "SPANXshape® Original Spanx® Footless Sheers", "price": 38, "sizes": "A-G", "url": "https://www.spanx.com/products/spanxshape-original-spanx-footless-sheers-nude"},
+       {"name": "SPANXshape® Plush Tights", "price": 45, "sizes": "A-E", "url": "https://www.spanx.com/products/spanxshape-plush-tights-very-black"}
+     ]},
+    {"subtype": "hosiery", "market": "US", "retailer": "Uniqlo", "currency": "USD", "unit": "per pair, before sales tax", "url": "https://www.uniqlo.com/us/en/search?q=heattech", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"id": "E487126-000", "name": "HEATTECH Leg Shaper Tights", "price": 19.9, "sizes": "S-XL", "url": "https://www.uniqlo.com/us/en/products/E487126-000/00"},
+       {"id": "E487124-000", "name": "HEATTECH Knitted Tights", "price": 19.9, "sizes": "S-XL", "url": "https://www.uniqlo.com/us/en/products/E487124-000/00"},
+       {"id": "E487128-000", "name": "HEATTECH Extra Warm Pile Lined Tights", "price": 19.9, "sizes": "S-XL", "url": "https://www.uniqlo.com/us/en/products/E487128-000/00"}
+     ]},
+    {"subtype": "hosiery", "market": "GB", "retailer": "Marks & Spencer", "currency": "GBP", "unit": "per pack, VAT included", "url": "https://www.marksandspencer.com/l/lingerie/tights", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"name": "3pk 30 Denier Body Sensor™ Tights", "brand": "M&S", "price": 9, "pack": 3, "url": "https://www.marksandspencer.com/3-pair-pack-30-denier-body-sensor-tights/p/clp22247973"},
+       {"name": "3pk 60 Denier Body Sensor™ Tights", "brand": "M&S", "price": 9, "pack": 3, "url": "https://www.marksandspencer.com/3-pair-pack-60-denier-body-sensor-tights/p/clp22247985"},
+       {"name": "3pk 10 Denier Ladder Resist Matt Tights", "brand": "Autograph", "price": 10, "pack": 3, "url": "https://www.marksandspencer.com/3pk-10-denier-ladder-resist-matt-tights/p/clp60500254"},
+       {"name": "2pk 40 Denier Opaque Tights", "brand": "Autograph", "price": 12, "pack": 2, "url": "https://www.marksandspencer.com/2pk-40-denier-opaque-tights/p/clp60637200"},
+       {"name": "2pk 7 Denier Body Shaping Sheer Tights", "brand": "Autograph", "price": 12, "pack": 2, "url": "https://www.marksandspencer.com/2pk-7-denier-body-shaping-sheer-tights/p/clp60638159"}
+     ]},
+    {"subtype": "hosiery", "market": "GB", "retailer": "Uniqlo UK", "currency": "GBP", "unit": "per pair, VAT included", "url": "https://www.uniqlo.com/uk/en/search?q=heattech", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"id": "E487126-000", "name": "HEATTECH Leg Shaper Tights (60 Denier)", "price": 14.9, "sizes": "M-XL", "url": "https://www.uniqlo.com/uk/en/products/E487126-000/00"},
+       {"id": "E487124-000", "name": "HEATTECH Knit Tights", "price": 14.9, "sizes": "M-XL", "url": "https://www.uniqlo.com/uk/en/products/E487124-000/00"}
+     ]},
+    {"subtype": "hosiery", "market": "IE", "retailer": "Arnotts / Brown Thomas", "currency": "EUR", "unit": "per pair or pack, VAT included", "url": "https://www.arnotts.ie/search?q=tights", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"retailer": "Arnotts", "brand": "FALKE", "name": "Seidenglatt Tights Black", "price": 18, "url": "https://www.arnotts.ie/falke/seidenglatt-tights-black/2000078401.html"},
+       {"retailer": "Arnotts", "brand": "FALKE", "name": "Lunelle Tights 8 Denier", "price": 20, "url": "https://www.arnotts.ie/falke/lunelle-tights-8-denier/2001339974.html"},
+       {"retailer": "Arnotts", "brand": "FALKE", "name": "Pure Matt Tights 100 Denier", "price": 32, "url": "https://www.arnotts.ie/falke/pure-matt-tights-100-denier/193180166.html"},
+       {"retailer": "Arnotts", "brand": "WOLFORD", "name": "Satin Touch Tights Coca", "price": 25, "url": "https://www.arnotts.ie/wolford/satin-touch-tights-coca/2000228396.html"},
+       {"retailer": "Brown Thomas", "brand": "WOLFORD", "name": "Three-Pack Satin Touch Tights Black", "price": 50, "pack": 3, "url": "https://www.brownthomas.com/three-pack-satin-touch-tights-black/2000227541.html"},
+       {"retailer": "Brown Thomas", "brand": "WOLFORD", "name": "Satin De Luxe Tights Black", "price": 55, "url": "https://www.brownthomas.com/satin-de-luxe-tights-black/2000228444.html"}
+     ]},
+    {"subtype": "hosiery", "market": "CA", "retailer": "Old Navy Canada / UNIQLO Canada", "currency": "CAD", "unit": "per pair, before GST/HST", "url": "https://api.gap.com/commerce/search/v2/product_listings?brand=on&market=ca&locale=en_CA&keyword=tights", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"retailer": "Old Navy Canada", "id": "907898", "name": "Opaque Tights for Women", "regularPrice": 14.99, "currentPrice": 14.99, "url": "https://oldnavy.gapcanada.ca/browse/product.do?pid=907898"},
+       {"retailer": "UNIQLO Canada", "id": "E487126-000", "name": "HEATTECH Leg Shaper Tights", "price": 24.9, "url": "https://www.uniqlo.com/ca/en/products/E487126-000/00"},
+       {"retailer": "UNIQLO Canada", "id": "E487128-000", "name": "HEATTECH Extra Warm Pile Lined Tights", "price": 24.9, "url": "https://www.uniqlo.com/ca/en/products/E487128-000/00"},
+       {"retailer": "UNIQLO Canada", "id": "E491088-000", "name": "HEATTECH Knitted Ribbed Tights", "price": 24.9, "url": "https://www.uniqlo.com/ca/en/products/E491088-000/00"}
+     ]},
+    {"subtype": "hosiery", "market": "MX", "retailer": "Liverpool", "currency": "MXN", "unit": "list price, IVA included", "url": "https://www.liverpool.com.mx/tienda?s=medias%20mujer", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"id": "1057713668", "brand": "MYST", "name": "Pantimedia", "listPrice": 99, "promoPrice": 69.3, "url": "https://www.liverpool.com.mx/tienda/pdp/pantimedia/1057713668"},
+       {"id": "1132802720", "brand": "OMSA", "name": "Pantimedia", "listPrice": 129, "promoPrice": 129, "url": "https://www.liverpool.com.mx/tienda/pdp/pantimedia/1132802720"},
+       {"id": "1201676629", "brand": "MYST", "name": "Medias", "listPrice": 249, "promoPrice": 249, "url": "https://www.liverpool.com.mx/tienda/pdp/medias/1201676629"},
+       {"id": "1139043018", "brand": "FILODORO", "name": "Medias", "listPrice": 339, "promoPrice": 339, "url": "https://www.liverpool.com.mx/tienda/pdp/medias/1139043018"},
+       {"id": "76248455", "brand": "OROBLU", "name": "Medias con compresión media", "listPrice": 449, "promoPrice": 449, "url": "https://www.liverpool.com.mx/tienda/pdp/medias-compresion-media/76248455"}
+     ]},
+
+    {"subtype": "slips", "market": "US", "retailer": "Spanx (spanx.com)", "currency": "USD", "unit": "per item, before sales tax", "url": "https://www.spanx.com/products.json", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"name": "SPANXsupersmooth® Essential V-Neck Slip", "price": 39, "compareAtPrice": 62, "sizes": "XS-3X", "url": "https://www.spanx.com/products/spanxsupersmooth-essential-v-neck-slip"},
+       {"name": "SPANXshape® Suit Your Fancy Half Slip", "price": 68, "compareAtPrice": null, "sizes": "XS-3X", "url": "https://www.spanx.com/products/spanxshape-suit-your-fancy-half-slip-chai"},
+       {"name": "SPANXshape® Invisible Cami Slip", "price": 88, "compareAtPrice": null, "sizes": "XS-3X", "url": "https://www.spanx.com/products/spanxshape-invisible-cami-slip-cafe-au-lait"}
+     ]},
+    {"subtype": "slips", "market": "GB", "retailer": "Marks & Spencer", "currency": "GBP", "unit": "per item, VAT included", "url": "https://www.marksandspencer.com/l/lingerie/slips", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"name": "Body Invisibles™ Cool Comfort™ Waist Slip", "brand": "Body by M&S", "price": 16, "sizes": "UK 8 upward, lengths e.g. 16in", "url": "https://www.marksandspencer.com/body-invisibles-flexifit-waist-slip/p/clp60916591"},
+       {"name": "Body Invisibles™ Cool Comfort™ Full Slip", "brand": "Body by M&S", "price": 20, "url": "https://www.marksandspencer.com/body-invisibles-flexifit-full-slip/p/clp60916614"},
+       {"name": "Body Invisibles™ Cool Comfort™ Culottes", "brand": "Body by M&S", "price": 18, "url": "https://www.marksandspencer.com/body-invisibles-flexifit-culottes/p/clp60782546"},
+       {"name": "Firm Control Secret Slimming™ Full Slip", "brand": "M&S", "price": 29.5, "url": "https://www.marksandspencer.com/secret-slimming-medium-control-full-slip/p/clp60100013"}
+     ]},
+    {"subtype": "slips", "market": "MX", "retailer": "Liverpool", "currency": "MXN", "unit": "list price, IVA included", "url": "https://www.liverpool.com.mx/tienda?s=fondo%20mujer", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"id": "25156781", "brand": "PARISINAS", "name": "Fondo con elástico para mujer", "listPrice": 159, "promoPrice": 159, "url": "https://www.liverpool.com.mx/tienda/pdp/fondo-con-elastico/25156781"},
+       {"id": "82370105", "brand": "PARISINAS", "name": "Fondo con elástico para mujer", "listPrice": 249, "promoPrice": 249, "url": "https://www.liverpool.com.mx/tienda/pdp/fondo-con-elastico/82370105"},
+       {"id": "25156773", "brand": "PARISINAS", "name": "Fondo para mujer", "listPrice": 349, "promoPrice": 349, "url": "https://www.liverpool.com.mx/tienda/pdp/fondo/25156773"},
+       {"id": "76134565", "brand": "PARISINAS", "name": "Fondo para mujer", "listPrice": 369, "promoPrice": 369, "url": "https://www.liverpool.com.mx/tienda/pdp/fondo/76134565"}
+     ]},
+
+    {"subtype": "swimwear", "market": "US", "retailer": "Old Navy / Gap / Spanx", "currency": "USD", "unit": "per item, before sales tax", "url": "https://api.gap.com/commerce/search/v2/product_listings?brand=on&market=us&locale=en_US&keyword=swimsuit%20women", "date": "2026-10-03", "confirmed": true,
+     "note": "Out of season on 2026-10-03: Gap Inc. swim was marked down (priceType M); regularPrice is the pre-markdown price.",
+     "products": [
+       {"retailer": "Old Navy", "id": "861796", "name": "Ribbed V-Neck Halter One-Piece Swimsuit", "regularPrice": 34.99, "currentPrice": 22.0, "url": "https://oldnavy.gap.com/browse/product.do?pid=861796"},
+       {"retailer": "Old Navy", "id": "833354", "name": "High-Waisted Ribbed Bikini Swim Bottoms", "regularPrice": 24.99, "currentPrice": 18.0, "url": "https://oldnavy.gap.com/browse/product.do?pid=833354"},
+       {"retailer": "Old Navy", "id": "833358", "name": "Matte Side-Tie Swim Dress", "regularPrice": 59.99, "currentPrice": 40.0, "url": "https://oldnavy.gap.com/browse/product.do?pid=833358"},
+       {"retailer": "Old Navy", "id": "890938", "name": "Maternity Structured One-Piece Swimsuit", "regularPrice": 44.99, "currentPrice": 10.97, "url": "https://oldnavy.gap.com/browse/product.do?pid=890938"},
+       {"retailer": "Gap", "id": "883147", "name": "Cutout Wrap One-Piece Swimsuit", "regularPrice": 79.95, "currentPrice": 24.97, "url": "https://www.gap.com/browse/product.do?pid=883147"},
+       {"retailer": "Spanx", "name": "SPANXsculpt® Swim Square Neck One Piece", "price": 119, "compareAtPrice": 200, "url": "https://www.spanx.com/products/spanxsculpt-swim-square-neck-one-piece-caraway"}
+     ]},
+    {"subtype": "swimwear", "market": "GB", "retailer": "Marks & Spencer", "currency": "GBP", "unit": "per item, VAT included", "url": "https://www.marksandspencer.com/l/women/swimwear", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"name": "Firm Control Ribbed Square Neck Swimsuit", "brand": "M&S", "price": 36, "url": "https://www.marksandspencer.com/firm-control-ribbed-square-neck-swimsuit/p/clp61247762"},
+       {"name": "Printed Firm Control Scoop Neck Swimsuit", "brand": "M&S", "price": 36, "url": "https://www.marksandspencer.com/printed-firm-control-scoop-neck-swimsuit/p/clp61234606"},
+       {"name": "Active Zip Through Swimsuit", "brand": "Goodmove", "price": 36, "url": "https://www.marksandspencer.com/active-zip-through-plunge-swimsuit/p/clp60375735"},
+       {"name": "Tummy Control Shiny Cross Over Swimsuit", "brand": "South Beach", "price": 42, "url": "https://www.marksandspencer.com/tummy-control-shiny-cross-over-swimsuit/p/clp23083188"},
+       {"name": "Regular Fit Santa Barbara Ruched Tummy Control Swimsuit", "brand": "Pour Moi", "price": 45, "url": "https://www.marksandspencer.com/santa-barbara-ruched-tummy-control-swimsuit/p/clp23058008"}
+     ]},
+    {"subtype": "swimwear", "market": "IE", "retailer": "Arnotts", "currency": "EUR", "unit": "per item, VAT included", "url": "https://www.arnotts.ie/search?q=swimsuit", "date": "2026-10-03", "confirmed": true,
+     "note": "All on sale on 2026-10-03; prices are sale prices, not regular.",
+     "products": [
+       {"brand": "SEAFOLLY", "name": "Sorrento Flame One-Piece Swimsuit", "salePrice": 90, "url": "https://www.arnotts.ie/seafolly/sorrento-flame-one-piece-swimsuit/187707232.html"},
+       {"brand": "LAUREN", "name": "Striped Bandeau One-Piece Swimsuit", "salePrice": 104.5, "url": "https://www.arnotts.ie/lauren/striped-bandeau-one-piece-swimsuit/2001274430.html"},
+       {"brand": "JETS", "name": "Eternal Halter Swimsuit", "salePrice": 106, "url": "https://www.arnotts.ie/jets/eternal-halter-swimsuit/189291883.html"},
+       {"brand": "RODD & GUNN", "name": "Broadford Printed Swim Shorts", "salePrice": 39.5, "url": "https://www.arnotts.ie/rodd-gunn/broadford-printed-swim-shorts/2001276272.html"}
+     ]},
+    {"subtype": "swimwear", "market": "CA", "retailer": "Old Navy Canada", "currency": "CAD", "unit": "per item, before GST/HST", "url": "https://api.gap.com/commerce/search/v2/product_listings?brand=on&market=ca&locale=en_CA&keyword=swimsuit%20women", "date": "2026-10-03", "confirmed": true,
+     "note": "Marked down (priceType M).",
+     "products": [
+       {"id": "833355", "name": "Textured One-Piece Cut-Out Swimsuit", "regularPrice": 49.99, "currentPrice": 14.97, "url": "https://oldnavy.gapcanada.ca/browse/product.do?pid=833355"},
+       {"id": "861830", "name": "Pique V-Neck Halter Swimsuit", "regularPrice": 39.99, "currentPrice": 9.97, "url": "https://oldnavy.gapcanada.ca/browse/product.do?pid=861830"},
+       {"id": "861827", "name": "Ribbed Bra Bikini Swim Top", "regularPrice": 34.99, "currentPrice": 10.99, "url": "https://oldnavy.gapcanada.ca/browse/product.do?pid=861827"},
+       {"id": "861795", "name": "Mid-Rise Ruffle Trim Swim Bottoms", "regularPrice": 29.99, "currentPrice": 11.99, "url": "https://oldnavy.gapcanada.ca/browse/product.do?pid=861795"}
+     ]},
+    {"subtype": "swimwear", "market": "MX", "retailer": "Liverpool", "currency": "MXN", "unit": "list price, IVA included", "url": "https://www.liverpool.com.mx/tienda?s=traje%20de%20ba%C3%B1o%20mujer", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"id": "1180770371", "brand": "THAT'S IT", "name": "Traje de baño para mujer", "listPrice": 499, "promoPrice": 499, "url": "https://www.liverpool.com.mx/tienda/pdp/traje-de-bano-para-mujer/1180770371"},
+       {"id": "1188214800", "brand": "NIKE", "name": "Traje de baño completo para mujer", "listPrice": 729, "promoPrice": 729, "url": "https://www.liverpool.com.mx/tienda/pdp/traje-de-bano-completo/1188214800"},
+       {"id": "1154470532", "brand": "SPEEDO", "name": "Traje de baño completo deportivo para mujer", "listPrice": 1099, "promoPrice": 769.3, "url": "https://www.liverpool.com.mx/tienda/pdp/traje-de-bano-deportivo/1154470532"},
+       {"id": "1152801892", "brand": "SPEEDO", "name": "Traje de baño completo deportivo para mujer", "listPrice": 1299, "promoPrice": null, "url": "https://www.liverpool.com.mx/tienda/pdp/traje-de-bano-deportivo/1152801892"},
+       {"id": "999687886465", "brand": "MARINITY", "name": "Traje de baño completo estampado floral para mujer", "listPrice": 2888, "promoPrice": 1899, "url": "https://www.liverpool.com.mx/tienda/pdp/traje-de-bano-floral/999687886465"}
+     ]},
+
+    {"subtype": "cultural", "market": "MX", "retailer": "Liverpool", "currency": "MXN", "unit": "list price, IVA included", "url": "https://www.liverpool.com.mx/tienda?s=guayabera", "date": "2026-10-03", "confirmed": true,
+     "note": "Marketplace sellers (seller other than 'liverpool') are third parties selling through Liverpool.",
+     "products": [
+       {"id": "1190964807", "kind": "guayabera", "brand": "COSTAVANA", "name": "Guayabera manga corta para hombre", "listPrice": 529, "promoPrice": 529, "url": "https://www.liverpool.com.mx/tienda/pdp/guayabera-manga-corta/1190964807"},
+       {"id": "1097269023", "kind": "guayabera", "brand": "R STREET", "name": "Guayabera manga larga para hombre", "listPrice": 899, "promoPrice": 629.3, "url": "https://www.liverpool.com.mx/tienda/pdp/guayabera-manga-larga/1097269023"},
+       {"id": "1193938823", "kind": "guayabera", "brand": "ÁBITO", "name": "Guayabera manga larga para hombre", "listPrice": 2299, "promoPrice": 2299, "url": "https://www.liverpool.com.mx/tienda/pdp/guayabera-manga-larga/1193938823"},
+       {"id": "1105233902", "kind": "guayabera", "brand": "CUBAVERA", "name": "Guayabera manga corta para hombre", "listPrice": 2899, "promoPrice": 2174.25, "url": "https://www.liverpool.com.mx/tienda/pdp/guayabera-manga-corta/1105233902"},
+       {"id": "99994255579", "kind": "huipil", "brand": "TEYA ARTESANAL", "seller": "TEYA ARTESANAL", "name": "Huipil manga corta para mujer", "listPrice": 1999, "promoPrice": 1999, "url": "https://www.liverpool.com.mx/tienda/pdp/huipil-manga-corta/99994255579"},
+       {"id": "1088202933", "kind": "huipil", "brand": "P COVALIN", "name": "Huipil Pineda Covalin para mujer", "listPrice": 10509, "promoPrice": 10509, "url": "https://www.liverpool.com.mx/tienda/pdp/huipil-pineda-covalin/1088202933"},
+       {"id": "1158662040", "kind": "chal (shawl; search for 'rebozo')", "brand": "TEYA ARTESANAL", "seller": "TEYA ARTESANAL", "name": "Chal estampado gráfico", "listPrice": 1699, "promoPrice": 1699, "url": "https://www.liverpool.com.mx/tienda/pdp/chal-estampado/1158662040"}
+     ]},
+    {"subtype": "cultural", "market": "IE", "retailer": "Arnotts", "currency": "EUR", "unit": "per item, VAT included", "url": "https://www.arnotts.ie/search?q=aran%20sweater", "date": "2026-10-03", "confirmed": true,
+     "products": [
+       {"kind": "Aran knit", "brand": "IRELANDSEYE", "name": "Knitwear Fearnóg Aran Crew Neck Sweater Evergreen", "price": 99.95, "url": "https://www.arnotts.ie/irelandseye/knitwear-fearnog-aran-crew-neck-sweater-evergreen/174923462.html"},
+       {"kind": "Aran knit", "brand": "IRELANDSEYE", "name": "Knitwear Ash Aran Zipped Hooded Jacket Natural", "price": 124.95, "url": "https://www.arnotts.ie/irelandseye/knitwear-ash-aran-zipped-hooded-jacket-natural/2000754247.html"},
+       {"kind": "Aran knit", "brand": "URBAN ARAN", "name": "Frill Turtleneck Sweater", "price": 249, "url": "https://www.arnotts.ie/urban-aran/frill-turtleneck-sweater/2001357006.html"},
+       {"kind": "Aran knit", "brand": "URBAN ARAN", "name": "Coral Barrel Sleeve Cardigan", "price": 395, "url": "https://www.arnotts.ie/urban-aran/coral-barrel-sleeve-cardigan/194575338.html"}
+     ]}
+  ],
+
+  "fit": [
+    {
+      "topic": "ring sizes, UK letters", "publisher": "H.Samuel", "market": "GB",
+      "unit": "UK letter; US/Canada size; EU size; inside diameter mm; inside circumference mm", "currency": null,
+      "rows": [
+        {"uk": "H", "us": 3.75, "eu": 46.5, "diameterMm": 14.65, "circumferenceMm": 46.02},
+        {"uk": "I", "us": 4.25, "eu": 47.75, "diameterMm": 15.04, "circumferenceMm": 47.25},
+        {"uk": "J", "us": 4.625, "eu": 49, "diameterMm": 15.40, "circumferenceMm": 48.38},
+        {"uk": "K", "us": 5.125, "eu": 50, "diameterMm": 15.80, "circumferenceMm": 49.64},
+        {"uk": "L", "us": 5.5, "eu": 51.75, "diameterMm": 16.10, "circumferenceMm": 50.58},
+        {"uk": "M", "us": 6, "eu": 52.75, "diameterMm": 16.51, "circumferenceMm": 51.87},
+        {"uk": "N", "us": 6.5, "eu": 54, "diameterMm": 16.92, "circumferenceMm": 53.16},
+        {"uk": "O", "us": 7, "eu": 55.25, "diameterMm": 17.35, "circumferenceMm": 54.51},
+        {"uk": "P", "us": 7.5, "eu": 56.5, "diameterMm": 17.75, "circumferenceMm": 55.76},
+        {"uk": "Q", "us": 8, "eu": 57.75, "diameterMm": 18.19, "circumferenceMm": 57.15},
+        {"uk": "R", "us": 8.625, "eu": 59, "diameterMm": 18.61, "circumferenceMm": 58.47},
+        {"uk": "S", "us": 9.125, "eu": 60.25, "diameterMm": 19.10, "circumferenceMm": 60.00},
+        {"uk": "T", "us": 9.625, "eu": 61.5, "diameterMm": 19.51, "circumferenceMm": 61.29},
+        {"uk": "U", "us": 10.25, "eu": 62.75, "diameterMm": 20.02, "circumferenceMm": 62.89},
+        {"uk": "V", "us": 10.625, "eu": 63, "diameterMm": 20.32, "circumferenceMm": 63.84},
+        {"uk": "W", "us": 11.125, "eu": 65, "diameterMm": 20.76, "circumferenceMm": 65.22},
+        {"uk": "X", "us": 11.625, "eu": 66.25, "diameterMm": 21.18, "circumferenceMm": 66.54},
+        {"uk": "Y", "us": 12, "eu": 67.5, "diameterMm": 21.49, "circumferenceMm": 67.51},
+        {"uk": "Z", "us": 12.5, "eu": 68.75, "diameterMm": 21.89, "circumferenceMm": 68.77}
+      ],
+      "url": "https://www.hsamuel.co.uk/services/ring-size-chart-guide", "date": "2026-10-03", "confirmed": true,
+      "note": "Fractions printed as ¾, ⅝ etc. on the page, given here as decimals. US/EU ring charts already exist in research-size-charts.json (Pandora US, Maison Birks). EU 63 for V is as printed (the sequence suggests 64)."
+    },
+    {
+      "topic": "ring sizes, average", "publisher": "Beaverbrooks", "market": "GB",
+      "figures": {"averageWomen": "O", "averageMen": "T"}, "unit": "UK letter size", "currency": null,
+      "url": "https://www.beaverbrooks.co.uk/info/ring-size-guide", "date": "2026-10-03", "confirmed": false,
+      "note": "Page failed to load (header overflow); from search summary."
+    },
+    {
+      "topic": "Blue Nile ring size chart", "publisher": "Blue Nile", "market": "US",
+      "figures": null, "unit": null, "currency": null,
+      "url": "https://www.bluenile.com/education/rings/find-your-ring-size", "date": "2026-10-03", "confirmed": false,
+      "note": "Page loads but its chart renders client-side; no numbers in the served HTML. Not recorded."
+    },
+    {
+      "topic": "jeans waist x inseam", "publisher": "Levi's (help centre size guide)", "market": "US",
+      "figures": {
+        "men": {"waistSizes": "28-38", "waistIn": "28-29 (size 28) to 38-39 (size 38)", "hipIn": "34-35 (size 28) to 44-45 (size 38)", "inseams": [30, 32, 34], "rule": "all three inseams listed for every waist"},
+        "women": {"waistSizes": "24-34", "waistIn": "24-25 (size 24) to 34-35 (size 34)", "hipIn": "34-35 (size 24) to 44-45 (size 34)", "inseams": [28, 30, 32], "rule": "all three inseams listed for every waist"}
+      },
+      "unit": "inches", "currency": null,
+      "url": "https://help.levi.com/hc/en-us/articles/360025097092-Levi-s-Product-Size-Guide", "date": "2026-10-03", "confirmed": true,
+      "note": "This is Levi's general chart; per-product waist x inseam stock on levi.com was not readable (403). Plus, petite and big & tall are not on this chart."
+    },
+    {
+      "topic": "jeans waist x inseam, as stocked", "publisher": "Old Navy / Gap", "market": "US",
+      "figures": {
+        "Old Navy Straight Built-In Flex Jeans (men, 848946, $49.99)": "regular: waist 28-54 with lengths 28, 30, 32, 34; tall: waist 32-44 with lengths 36, 38",
+        "Gap '90s Loose Jeans (men, 455517, $79.95)": "waist 28-38 with lengths 30, 32, 34",
+        "Old Navy High-Waisted Wow Wide-Leg Jeans (women, 732609, $36.99)": "sizes 00-30 with inseam short, regular, long; tall 4-18"
+      },
+      "unit": "inches / size labels", "currency": "USD",
+      "url": "https://api.gap.com/commerce/search/v2/product_listings?brand=on&market=us&locale=en_US&keyword=mens%20straight%20jeans", "date": "2026-10-03", "confirmed": true,
+      "note": "Read from each product's sku sizes; the API lists waist and length as separate dimensions, not which combinations are in stock."
+    },
+    {
+      "topic": "jeans waist, UK", "publisher": "Uniqlo UK", "market": "GB",
+      "figures": {"Slim Straight Jeans (E482856-000, £39.90)": "waist 28-36 inch and 38, 40", "Selvedge Slim Straight Jeans (E482858-000, £39.90)": "waist 28-36 inch and 38, 40"},
+      "unit": "inches", "currency": "GBP",
+      "url": "https://www.uniqlo.com/uk/en/products/E482856-000/00", "date": "2026-10-03", "confirmed": true
+    },
+    {
+      "topic": "hip measurements in size charts", "publisher": "various", "market": "all",
+      "figures": "Already covered: research-size-charts.json carries hip rows for every retailer chart it holds (1,071 hip fields). Added here: Levi's hips (above) and Target Cat & Jack Adaptive hips (departments).",
+      "unit": "inches / cm", "currency": null, "url": null, "date": "2026-10-03", "confirmed": true
+    }
+  ],
+
+  "repair": [
+    {"shop": "The Seam (UK repair marketplace)", "market": "GB", "currency": "GBP", "unit": "per job, before The Seam's 20% service fee",
+     "items": [
+       {"item": "Zip replacement, clothing", "price": 17.5},
+       {"item": "Zip replacement, boots", "price": 55},
+       {"item": "Zip replacement, handbag", "price": 75},
+       {"item": "Reattach button", "price": 3},
+       {"item": "Repair seam", "price": 12},
+       {"item": "Repair tear", "price": 20},
+       {"item": "Outerwear tear repair", "price": 45},
+       {"item": "Darning, visible, per hole", "price": 15},
+       {"item": "Darning, invisible, per hole", "price": 22},
+       {"item": "Debobbling", "price": 15},
+       {"item": "Shoes: half re-sole", "price": 50},
+       {"item": "Shoes: full re-sole", "price": 100},
+       {"item": "Sneaker deep clean", "price": 37}
+     ],
+     "url": "https://www.theseam.uk/pricing", "date": "2026-10-03", "confirmed": true,
+     "note": "The Seam's pricing guide; independent makers on the platform quote the job. 'All prices are subject to The Seam's 20% service fee.' (A search summary gave visible darning as £12; the page read today says £15.)"},
+    {"shop": "Clothes Doctor (by post)", "market": "GB", "currency": "GBP", "unit": "from-price per job",
+     "items": [
+       {"item": "Zip replacement", "priceFrom": 17},
+       {"item": "Replace button or popper", "priceFrom": 6.5},
+       {"item": "Hole in knitwear (darned)", "priceFrom": 11.5},
+       {"item": "Hole or tear in woven fabric", "priceFrom": 15},
+       {"item": "Hole in pocket", "priceFrom": 15},
+       {"item": "Hole in seam", "priceFrom": 9.5},
+       {"item": "Hole in suit fabric", "priceFrom": 38},
+       {"item": "Leather repairs", "priceFrom": 8.5},
+       {"item": "Anti-moth treatment", "priceFrom": 12}
+     ],
+     "url": "https://clothes-doctor.com/pages/services-list", "date": "2026-10-03", "confirmed": true,
+     "note": "A search summary gave 'Hole in Pocket from £6.50'; the page read today says £15.00. Postage not stated on this page."},
+    {"shop": "Levi's Tailor Shop (UK stores)", "market": "GB", "currency": "GBP", "unit": "per job",
+     "items": [
+       {"item": "Raw hem", "price": 10}, {"item": "Standard hem", "price": 16}, {"item": "Cuffed hem", "price": 20}, {"item": "Original hem", "price": 60},
+       {"item": "Tapers", "price": 40}, {"item": "Shirt hem", "price": 20}, {"item": "Cropped Trucker", "price": 80},
+       {"item": "Patches (sundry, x1 / x3 / x5)", "price": "5 / 10 / 15"},
+       {"item": "Shank button (x1 / x3 / x5)", "price": "5 / 10 / 15"},
+       {"item": "Studs (x1 / x3 / x5)", "price": "3 / 6 / 9"},
+       {"item": "Back pocket replacement", "price": 40}, {"item": "Pant leg panel", "price": 70},
+       {"item": "Repairs: patch, darning, crotch repair, belt loop, arcuate, sashiko", "price": "price on request"}
+     ],
+     "memberDiscount": "Members get 50% off Tailor Shop services all year",
+     "url": "https://www.levi.com/GB/en_GB/details/tailorshop-services", "date": "2026-10-03", "confirmed": true,
+     "note": "The US Tailor Shop page lists services but no prices (already noted in research-alterations-refills.json). A search summary gave different UK figures (standard hem £20, original hem £50, cropped trucker £40); the page read today is used."},
+    {"shop": "Mid City Tailors, 150 W 36th St, New York NY 10018", "market": "US", "currency": "USD", "unit": "per job",
+     "items": [
+       {"item": "Replace zipper, jeans", "price": 35},
+       {"item": "Replace zipper, non-denim trousers", "priceFrom": 35},
+       {"item": "Replace zipper, dress/skirt", "priceFrom": 45},
+       {"item": "Repair/replace button (jeans)", "price": 15},
+       {"item": "General denim repair", "price": 10, "per": "inch"},
+       {"item": "Patches", "price": "priced individually"}
+     ],
+     "url": "https://midcitytailoring.com/alteration-services.html", "date": "2026-10-03", "confirmed": true},
+    {"shop": "Williamsburg Garment Company, 67 West St Suite 310, Brooklyn NY 11222", "market": "US", "currency": "USD", "unit": "per job",
+     "items": [
+       {"item": "Hole repair / crotch blowout (by total hole width)", "priceFrom": 24},
+       {"item": "Button repair/replace, first button", "price": 7},
+       {"item": "Each additional button", "price": 2.5},
+       {"item": "Repair hole under button or loop", "price": 5, "note": "add-on"},
+       {"item": "Fix detached belt loop", "price": 10},
+       {"item": "Replace belt loop", "price": 20, "per": "loop"},
+       {"item": "Chain-stitch hem, any brand", "price": 20, "per": "pair"},
+       {"item": "Basic pant hem", "price": 23, "per": "pair"}
+     ],
+     "url": "https://williamsburggarment.com/denim-repair-jeans-alterations-prices/", "date": "2026-10-03", "confirmed": true},
+    {"shop": "Shopboy, 62 Walker St, New York NY 10013", "market": "US", "currency": "USD", "unit": "per job",
+     "items": [{"item": "Add/change zipper (dress)", "priceMin": 55, "priceMax": 75}],
+     "url": "https://www.shopboyny.com/alterations", "date": "2026-10-03", "confirmed": true,
+     "note": "Buttons, patches and darning not priced on the page."},
+    {"shop": "I Hate Ironing (NYC)", "market": "US", "currency": "USD", "unit": "per job",
+     "items": [{"item": "Button repair", "price": 6.65}, {"item": "New zip 0-10in", "price": 28}, {"item": "New zip 10-30in", "price": 55}, {"item": "New zip 30in+", "price": 85.3}, {"item": "Patch repair", "price": 32.5}],
+     "url": "https://www.ihateironing.com/us/services/alterations/", "date": "2026-10-03", "confirmed": false,
+     "note": "From search summary; page not read."},
+    {"shop": "Nordstrom Shoe Repair", "market": "US", "currency": "USD", "unit": "per job; 'prices are an estimate and may vary depending on size, condition and complexity'",
+     "items": [
+       {"item": "Heel taps replacement", "priceMin": 7, "priceMax": 10},
+       {"item": "New leather heel", "price": 30},
+       {"item": "New rubber heel", "price": 25},
+       {"item": "New full sole with heel", "price": 100},
+       {"item": "New leather half sole", "price": 70},
+       {"item": "New rubber half sole", "price": 45},
+       {"item": "New rubber protective sole", "price": 35},
+       {"item": "Zipper (shoe/boot)", "price": 35},
+       {"item": "Strap", "price": 25},
+       {"item": "Toe taps", "priceMin": 7, "priceMax": 10},
+       {"item": "Insole replacement", "price": 25},
+       {"item": "New shank", "price": 25},
+       {"item": "New back lining", "price": 30},
+       {"item": "New lifts", "price": 15},
+       {"item": "Sneaker cleaning", "price": 20},
+       {"item": "New suede cleaning", "price": 20},
+       {"item": "Cleaning/protection", "price": 5},
+       {"item": "Shoeshine", "priceMin": 5, "priceMax": 7.5},
+       {"item": "Shoe dyeing", "price": 35},
+       {"item": "Handbag dyeing", "price": 50},
+       {"item": "Handbag reconditioning", "price": 25},
+       {"item": "Deodorization, hole punching, belt resizing, installing heel grips/laces", "price": 0}
+     ],
+     "url": "https://n.nordstrommedia.com/id/b800edd1-8e12-4980-a057-e1233a06c9aa.pdf", "date": "2026-10-03", "confirmed": true,
+     "note": "Nordstrom's own PDF; it carries no date or store name."},
+    {"shop": "Shoe repair shops, Mexico City (Como Nuevos, Hakky, Al Minuto, Zapatería Piña, El Zapatitos)", "market": "MX", "currency": "MXN", "unit": "per job",
+     "items": [
+       {"shop": "Como Nuevos", "item": "New sole", "price": 180}, {"shop": "Como Nuevos", "item": "Heels", "price": 120},
+       {"shop": "Hakky", "item": "Men's heel tips (tapas)", "price": 85}, {"shop": "Hakky", "item": "Repair high heels (taconazos)", "price": 145},
+       {"shop": "Al Minuto", "item": "Heel repair", "price": 90},
+       {"shop": "Zapatería Piña", "item": "Sole change", "price": 250},
+       {"shop": "El Zapatitos (Roma)", "item": "Heel tips", "priceMin": 40, "priceMax": 80}, {"shop": "El Zapatitos (Roma)", "item": "Full sole", "priceMin": 200, "priceMax": 250}
+     ],
+     "url": "https://www.chilango.com/general/zapatero-a-tus-zapatos/", "date": "2026-10-03", "confirmed": false,
+     "note": "From a search summary of Chilango and local.mx articles; article dates not read, so the prices may be old."}
+  ],
+
+  "multiSeller": [
+    {"product": "Nike Air Force 1 '07 (men's, white, CW2288-111)", "currency": "per market",
+     "sellers": [
+       {"retailer": "Nike (US)", "market": "US", "price": 115, "currency": "USD", "url": "https://www.nike.com/t/air-force-1-07-mens-shoes-DZejrQoC/CW2288-111", "confirmed": true},
+       {"retailer": "Nike (UK)", "market": "GB", "price": 109.99, "currency": "GBP", "url": "https://www.nike.com/gb/t/air-force-1-07-mens-shoes-n8juM1H2/CW2288-111", "confirmed": true},
+       {"retailer": "Nike (Ireland)", "market": "IE", "price": 119.99, "currency": "EUR", "url": "https://www.nike.com/ie/t/air-force-1-07-mens-shoes-n8juM1H2/CW2288-111", "confirmed": true},
+       {"retailer": "Arnotts", "market": "IE", "price": 120, "currency": "EUR", "url": "https://www.arnotts.ie/nike/air-force-1-07-trainers/2001278792.html", "confirmed": true, "note": "Listed as 'Air Force 1 07 Trainers'; style code not read, and another 'Air Force 1 07 Trainers' tile was €130."},
+       {"retailer": "Brown Thomas", "market": "IE", "price": 120, "currency": "EUR", "url": "https://www.brownthomas.com/air-force-1-07/2000008913.html", "confirmed": true, "note": "Listed as 'Air Force 1 07'; style code not read."},
+       {"retailer": "Nike (Canada)", "market": "CA", "price": 150, "currency": "CAD", "url": "https://www.nike.com/ca/t/air-force-1-07-mens-shoes-RXbsJIu2/CW2288-111", "confirmed": true},
+       {"retailer": "Nike (México)", "market": "MX", "price": 2599, "currency": "MXN", "url": "https://www.nike.com/mx/t/tenis-para-hombre-nike-air-force-1-07-rWtqPn/CW2288-111", "confirmed": true},
+       {"retailer": "Liverpool", "market": "MX", "price": 2599, "promoPrice": 2209.15, "currency": "MXN", "url": "https://www.liverpool.com.mx/tienda/pdp/tenis-air-force-1/1191172271", "confirmed": true, "note": "Liverpool tile 'Tenis Air Force 1 para hombre' (id 1191172271); style code not read. Liverpool's women's 'Tenis Air Force 1 07' was list 2599, promo 2079.20."}
+     ],
+     "date": "2026-10-03", "note": "Same price at Nike and the Irish department stores; Liverpool undercut Nike México only through a promotion."},
+    {"product": "Levi's 501 Original (men's)", "currency": "per market",
+     "sellers": [
+       {"retailer": "Levi's (US)", "market": "US", "price": 79.5, "currency": "USD", "url": "https://www.levi.com/US/en_US/clothing/men/jeans/straight/501-original-fit-mens-jeans/p/005013610", "confirmed": false, "note": "From the existing SLATE catalog (read 2026-10-01 via search snippet)."},
+       {"retailer": "Macy's", "market": "US", "price": 79.5, "salePrice": 47.7, "currency": "USD", "url": "https://www.macys.com/shop/product/levis-mens-501-original-fit-button-fly-stretch-jeans?ID=1376664", "confirmed": false, "note": "501 Original Fit Button Fly Stretch, clearance 40% off; search summary."},
+       {"retailer": "Macy's", "market": "US", "price": 84.95, "currency": "USD", "url": "https://www.macys.com/shop/product/levis-mens-501-original-shrink-to-fit-non-stretch-jeans?ID=3022963", "confirmed": false, "note": "501 Original Shrink-to-Fit; search summary."},
+       {"retailer": "Brown Thomas", "market": "IE", "price": 110, "currency": "EUR", "url": "https://www.brownthomas.com/501-original-straight-leg-jeans/2001342429.html", "confirmed": true, "note": "'501® Original Straight Leg Jeans'."},
+       {"retailer": "Arnotts", "market": "IE", "price": 120, "currency": "EUR", "url": "https://www.arnotts.ie/levis/90s-501-straight-leg-jeans/2001251448.html", "confirmed": true, "note": "'90s 501® Straight Leg Jeans' (a different 501 cut)."},
+       {"retailer": "Liverpool", "market": "MX", "price": 1299, "promoPrice": 909.3, "currency": "MXN", "url": "https://www.liverpool.com.mx/tienda/pdp/jeans-straight-501/25064691", "confirmed": true, "note": "'Jeans straight 501 lavado obscuro para hombre'; women's 501 MXN 1,599-1,799."}
+     ],
+     "date": "2026-10-03"},
+    {"product": "Converse Chuck 70", "currency": "per market",
+     "sellers": [
+       {"retailer": "Nike (US) selling Converse", "market": "US", "price": 95, "currency": "USD", "url": "https://www.nike.com/t/converse-chuck-70-high-top-unisex-shoe-D7TWU3j3", "confirmed": true, "note": "Chuck 70 High Top, style 162056C-102."},
+       {"retailer": "Converse (US)", "market": "US", "price": 95, "currency": "USD", "url": "https://www.converse.com/shop/p/chuck-70-canvas-unisex-high-top-shoe/162056MP.html", "confirmed": false, "note": "converse.com returned 403; search summary."},
+       {"retailer": "Liverpool (sold by Liverpool)", "market": "MX", "price": 1999, "currency": "MXN", "url": "https://www.liverpool.com.mx/tienda/pdp/tenis-chuck-70-ox/1133917075", "confirmed": true, "note": "'Tenis Chuck 70 Ox para mujer'."},
+       {"retailer": "Liverpool marketplace, seller GRAMZ LIVE", "market": "MX", "price": 2450, "promoPrice": 2254, "currency": "MXN", "url": "https://www.liverpool.com.mx/tienda/pdp/tenis-chuck-70/99994263468", "confirmed": true, "note": "'Tenis Chuck 70 para hombre'; GRAMZ LIVE also listed 'Chuck 70 Hi' at 2699 (promo 2483.08)."},
+       {"retailer": "Liverpool marketplace, seller Yellow Store", "market": "MX", "price": 3299, "promoPrice": 3002, "currency": "MXN", "url": "https://www.liverpool.com.mx/tienda/pdp/tenis-chuck-70-cdg/99994170381", "confirmed": true, "note": "'Chuck 70 Cdg' (Comme des Garçons collaboration), a different model."}
+     ],
+     "date": "2026-10-03"},
+    {"product": "adidas Samba OG", "currency": "EUR / MXN",
+     "sellers": [
+       {"retailer": "Arnotts", "market": "IE", "price": 120, "currency": "EUR", "url": "https://www.arnotts.ie/adidas/samba-og-trainers/2001393322.html", "confirmed": true},
+       {"retailer": "Brown Thomas", "market": "IE", "price": 120, "currency": "EUR", "url": "https://www.brownthomas.com/samba-og-trainers/2001393322.html", "confirmed": true, "note": "Same product id as Arnotts (both are Selfridges Group stores on one platform)."},
+       {"retailer": "Liverpool (sold by Liverpool)", "market": "MX", "price": 2499, "currency": "MXN", "url": "https://www.liverpool.com.mx/tienda/pdp/tenis-samba-og/1190170746", "confirmed": true, "note": "'Tenis Samba Og para mujer'."},
+       {"retailer": "Liverpool marketplace, seller adidas", "market": "MX", "price": 2799, "currency": "MXN", "url": "https://www.liverpool.com.mx/tienda/pdp/tenis-samba-og-w/999674186017", "confirmed": true, "note": "'Tenis Samba Og W para mujer'; adidas.mx's own Samba OG is MXN 2,199-2,499 in the existing catalog (confirmed:false)."}
+     ],
+     "date": "2026-10-03"},
+    {"product": "Spanx shapewear across markets", "currency": "USD / EUR",
+     "sellers": [
+       {"retailer": "Spanx (US)", "market": "US", "product": "SPANXshape Invisible High-Waisted Mid-Thigh Short", "price": 72, "currency": "USD", "url": "https://www.spanx.com/products/spanxshape-invisible-high-waisted-mid-thigh-short-very-black", "confirmed": true},
+       {"retailer": "Brown Thomas", "market": "IE", "product": "SPANXshape™ Invisible High-Waisted Mid-Thigh Shorts", "price": 78, "currency": "EUR", "url": "https://www.brownthomas.com/spanxshape-invisible-high-waisted-mid-thigh-shorts/2000202582.html", "confirmed": true},
+       {"retailer": "Spanx (US)", "market": "US", "product": "SPANXsupersculpt Transform High-Waisted Mid-Thigh Short", "price": 78, "currency": "USD", "url": "https://www.spanx.com/products/spanxsupersculpt-transform-high-waisted-mid-thigh-short", "confirmed": true},
+       {"retailer": "Brown Thomas", "market": "IE", "product": "Supersculpt™ Transform High-Waisted Mid-Thigh Shorts", "price": 88, "currency": "EUR", "url": "https://www.brownthomas.com/supersculpt-transform-high-waisted-mid-thigh-shorts/2001210285.html", "confirmed": true}
+     ],
+     "date": "2026-10-03"}
+  ],
+
+  "tracking": [
+    {"carrier": "USPS", "market": "US",
+     "stages": [
+       {"group": "Acceptance / Pre-shipment", "statuses": ["Shipping Label Created, USPS Awaiting Item", "Pre-Shipment Info Sent to USPS, USPS Awaiting Item", "Picked Up by / Arrived at / Departed Shipping Partner Facility, USPS Awaiting Item", "On its Way to USPS", "USPS In Possession of Item", "Shipment Received, Package Acceptance Pending"], "meaning": "A label exists with a tracking number but USPS does not yet have the package (or a shipping partner is bringing it); a delivery date appears once USPS receives it."},
+       {"group": "Moving through network", "statuses": ["In Transit", "Arrived at USPS Facility", "Departed USPS Facility", "Forwarded", "Processed"], "meaning": "Being processed or transported to the delivering Post Office; scans can repeat at one facility or over several days."},
+       {"group": "Preparing for delivery", "statuses": ["Arrived at Post Office"]},
+       {"group": "Out for delivery", "statuses": ["Out for Delivery", "Available for Pickup", "Held at Post Office, At Customer Request", "Awaiting Delivery Scan", "Delivery Status Not Updated"], "meaning": "Out for Delivery: prepared at the local Post Office and will be delivered by a carrier today; if not delivered one full postal business day after this scan, the customer may file a service request."},
+       {"group": "Delivered / delivery attempted", "statuses": ["Delivered", "No Access to Delivery Location", "Insufficient Address", "No Such Number", "Reminder to Schedule Redelivery", "Redelivery Scheduled", "Notice Left (No Authorized Recipient Available)", "Notice Left (No Secure Location Available)"], "meaning": "Delivered has a recorded date, time and location. No Access: automatic reattempt next business day. Notice Left for a signature item: no automatic second attempt; schedule redelivery, collect with photo ID, or return to sender. Insufficient Address / No Such Number: returned to sender."}
+     ],
+     "url": "https://faq.usps.com/articles/FAQ/Where-is-my-package", "date": "2026-10-03", "confirmed": true},
+    {"carrier": "USPS service timings", "market": "US",
+     "figures": [
+       {"service": "Priority Mail Express", "days": "1-3", "note": "money-back guarantee; delivers 7 days a week"},
+       {"service": "Priority Mail", "days": "2-3", "note": "expected, not guaranteed"},
+       {"service": "USPS Ground Advantage", "days": "2-5"},
+       {"service": "First-Class Mail (letters, flats)", "days": "1-5"}
+     ],
+     "unit": "days", "url": "https://www.usps.com/ship/mail-shipping-services.htm", "date": "2026-10-03", "confirmed": true},
+    {"carrier": "FedEx", "market": "GB (definitions are FedEx-wide)",
+     "stages": [
+       {"status": "Label created", "meaning": "The shipper printed the label and is preparing to hand the package to FedEx."},
+       {"status": "We have your package", "meaning": "Arrived at a FedEx-approved facility or picked up by a FedEx courier."},
+       {"status": "On the way", "meaning": "Moving toward its destination, in a vehicle or at a FedEx facility."},
+       {"status": "At our facility", "meaning": "Safe at a FedEx-approved location; status updates when it moves again."},
+       {"status": "Out for delivery", "meaning": "Scanned and placed on a vehicle for delivery that day."},
+       {"status": "Delivery updated", "meaning": "Delivery date or address changed, by shipper/recipient request or exceptional events."},
+       {"status": "Running late", "meaning": "Delayed; likely to miss the original estimate."},
+       {"status": "Returning to FedEx facility", "meaning": "Turned away at delivery (e.g. damaged, recipient unable to pay a delivery fee); FedEx contacts the shipper."}
+     ],
+     "url": "https://images.fedex.com/en-gb/customer-support/faq/receiving/tracking-questions/fedex-tracking-status-meaning.html", "date": "2026-10-03", "confirmed": true},
+    {"carrier": "Canada Post", "market": "CA",
+     "stages": [
+       {"status": "In transit", "meaning": "Canada Post has received the package and it is en route."},
+       {"status": "Out for delivery", "meaning": "On its way to its final destination."},
+       {"status": "Notice left", "meaning": "Could not be delivered (won't fit, community mailbox full, no one to receive and no safe drop approved, 'Card for pickup' chosen, too large for PO box); sent to a post office for pickup with Delivery Notice Card and government photo ID."},
+       {"status": "Delivery Attempt Made / Rescheduled for delivery next business day", "meaning": "Attempt failed; normally retried the next business day."},
+       {"status": "Verifying recipient's address; Possible delay", "meaning": "Addressing error being verified; if unverifiable, returned to sender and the return cannot be stopped."},
+       {"status": "Check delivery progress", "meaning": "Delivery interrupted; an arrow at the end of the bar means returned to sender."},
+       {"status": "Item held by customs", "meaning": "Under customs review, standard for international packages."}
+     ],
+     "url": "https://www.canadapost-postescanada.ca/cpc/en/support/kb/tracking/tracking-statuses.page", "date": "2026-10-03", "confirmed": true},
+    {"carrier": "Royal Mail", "market": "GB",
+     "stages": [
+       {"status": "We've got it", "meaning": "Royal Mail has the shipment information or has taken the item in."},
+       {"status": "It's on its way", "meaning": "Moving through the network; can sit on this status for a day or two."},
+       {"status": "Out for delivery", "meaning": "With the postman for delivery today."},
+       {"status": "Delivered", "meaning": "Delivered."}
+     ],
+     "timings": [{"service": "Royal Mail Tracked 24", "aim": "next working day"}, {"service": "Royal Mail Tracked 48", "aim": "2-3 working days (two days for over 94% of postcodes)"}],
+     "url": "https://www.royalmail.com/sending/uk/tracked-24", "date": "2026-10-03", "confirmed": false,
+     "note": "royalmail.com and help.royalmail.com returned 403. Status wording from a third-party summary (pango.ai), timings from a search summary of Royal Mail's pages."},
+    {"carrier": "UPS", "market": "US",
+     "stages": [
+       {"status": "Label Created", "meaning": "Shipper created a label and sent details to UPS; UPS does not have the package yet."},
+       {"status": "On the Way", "meaning": "Picked up and moving through the UPS network between facilities."},
+       {"status": "Out for Delivery", "meaning": "Assigned to a driver for delivery that day; residential deliveries typically 9 a.m.-7 p.m."}
+     ],
+     "url": "https://www.ups.com/us/en/support/tracking-support/tracking-status-definitions.page", "date": "2026-10-03", "confirmed": false,
+     "note": "ups.com returned Access Denied; from third-party summaries (lateshipment.com)."},
+    {"carrier": "An Post", "market": "IE",
+     "stages": [
+       {"status": "item details received", "meaning": "An Post has the sender's information but may not yet have the item; a tracking update follows when the item arrives."},
+       {"status": "Out for delivery", "meaning": "Sorted and on its way to the address."}
+     ],
+     "url": "https://www.anpost.com/Help-Support/Track-and-Trace", "date": "2026-10-03", "confirmed": false,
+     "note": "anpost.com served a Radware bot challenge; from search summary."}
+  ],
+
+  "resale": [
+    {"topic": "StockX, GOAT (incl. UK, Canada, Ireland, Mexico seller fees), Vestiaire Collective, The RealReal rules", "figures": "Already in the repository; not duplicated.", "url": null, "date": "2026-10-03", "confirmed": true,
+     "note": "research-sneakers.json 'marketplaces': StockX Verified Marketplace seller levels 9%-7% plus 3% payment processing, minimum seller fee and shipping by market (US/CA/GB/IE/MX); StockX Listings Marketplace and No Fee Resale; GOAT commission by seller rating (9.5%-25%, Canada 12.4%-27.9%), seller fee by market (US/CA/GB/IE/MX), 2.9% cash-out; The RealReal consignment rules. research-clothing-services2.json: Vestiaire Collective seller fees. research-gaps-cars-clothes.json and research-jewelry-watches.json: The RealReal (band chart unreadable)."},
+    {"topic": "The RealReal commission chart (bands by net sales)", "figures": null, "url": "https://www.therealreal.com/commission-chart", "date": "2026-10-03", "confirmed": false,
+     "note": "Retried today: therealreal.com 403 ('Access to this page has been denied'), Wayback Machine 429. Still not read."}
+  ],
+
+  "notes": {
+    "notFound": [
+      "Blue Nile ring size chart: renders client-side, no figures in the served page.",
+      "Tommy Hilfiger Adaptive size measurements: usa.tommy.com 403.",
+      "ASOS Maternity / ASOS Curve / ASOS Petite / ASOS Tall size ranges: not attempted beyond search; ASOS is not a SLATE retailer.",
+      "Primark/Penneys adaptive range in euro (Penneys) and in-store availability today: corporate site bot-walled.",
+      "Shapewear and slips sold in Canada by a SLATE retailer (Simons 403; Joe Fresh search renders client-side; Hudson's Bay no longer trading).",
+      "Slips in Ireland: Arnotts search for 'slip' returns the Slip silk brand; no undergarment slips found.",
+      "Cultural clothing for US, UK and Canada at a SLATE retailer (e.g. kilts, saris, hanboks): not searched to a result.",
+      "Levi's 501 waist x inseam availability on levi.com (403) and Levi's US Tailor Shop prices (page has none).",
+      "Converse own-site prices in UK, Canada, Mexico (converse.com 403).",
+      "Nordstrom clothing alterations zipper price: not on the Nordstrom alterations list already in research-alterations-refills.json; third-party guesses ($25-$60) not recorded as fact.",
+      "Named Mexico City clothing-repair shop with a published price list for zips, buttons, patches or darning (Sastrería Macazaga lists none; Il Taglio Esclusivo site failed TLS). The Cronoshare national guide already in research-clothing-services2.json remains the only figure.",
+      "Correos de México / Estafeta / DHL Mexico tracking stage definitions.",
+      "UPS, Royal Mail and An Post stage definitions on their own pages (all refused automated reads).",
+      "The RealReal commission band chart."
+    ],
+    "worthChecking": [
+      "H.Samuel lists EU 63 for UK V; the sequence (62.75 for U, 65 for W) suggests 64. Check before using V.",
+      "Gap Inc. search data lists waist and length as separate dimensions; it does not say which waist x length combinations exist. A product page per item would settle it.",
+      "Arnotts tiles marked is_sale carry the sale price only; the regular price is on the product page.",
+      "Liverpool marketplace sellers (GRAMZ LIVE, Yellow Store, adidas, TEYA ARTESANAL, Jovak) are third parties; the same product can appear from Liverpool itself and from sellers at different prices — that is the multi-seller mechanic in real life.",
+      "Swimwear figures were read out of season (October); Gap Inc. prices were markdowns and Arnotts' were sale prices.",
+      "The Seam and Clothes Doctor pages read today differ from search-engine summaries of them (darning £15 vs £12; pocket hole £15 vs £6.50); the page figures are recorded. Levi's UK Tailor Shop page also differs from its summary (standard hem £16 vs £20; original hem £60 vs £50).",
+      "Old Navy's 'BODEQUALITY' press release and Target's Universal Thread adaptive jeans sizes are from summaries; a direct read of Gap Inc.'s and Target's pages would confirm them.",
+      "Uniqlo US maternity leggings (E450602, E432868, E450747) returned a price of 1.9 from the API, which looks like a placeholder for discontinued items; not recorded."
+    ]
+  }
+}

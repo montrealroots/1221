@@ -27,7 +27,9 @@ import { resaleOf, sellRefusal } from '@/engine/systems/resale';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
 import { groupLabelOf } from '@/ui/shell/destinations';
-import { buyRefusal, collectRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
+import { cloOf } from '@/engine/content/clo';
+import type { PayWith } from '@/engine/systems/household';
+import { buyRefusal, otherSellers, collectRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
 const SLOT_LABEL: Readonly<Partial<Record<Slot, string>>> = {
@@ -137,6 +139,9 @@ function WhatToWear() {
   const [picked, setPicked] = useState<Partial<Record<Slot, string>>>({});
   const extras = ready.filter((g) => g.garment.slot === 'accessory');
   const [jewels, setJewels] = useState<string[]>(() => (person.dressed ?? []).filter((id) => extras.some((g) => g.id === id)));
+  // Layers: a base layer under, a sweater over the top (from 2026-10-03).
+  const layerable = ready.filter((g) => g.garment.slot === 'base' || g.garment.kind === 'sweater');
+  const [layers, setLayers] = useState<string[]>(() => (person.dressed ?? []).filter((id) => ready.some((g) => g.id === id && g.garment.slot === 'base')));
   const [name, setName] = useState('');
   const dress = useFeature('clothes.dress');
   const save = useFeature('clothes.save_outfit');
@@ -145,7 +150,8 @@ function WhatToWear() {
   const slots = (Object.keys(SLOT_LABEL) as Slot[]).filter((slot) => ready.some((g) => g.garment.slot === slot));
   // The choice for each part: what they picked, else what the day would put on.
   const choice = (slot: Slot) => picked[slot] ?? ready.find((g) => g.garment.slot === slot && today.includes(g.id))?.id ?? '';
-  const ids = [...slots.map(choice).filter(Boolean), ...jewels.filter((id) => extras.some((g) => g.id === id))];
+  const ids = [...slots.map(choice).filter(Boolean), ...layers.filter((id) => layerable.some((g) => g.id === id) && !slots.map(choice).includes(id)), ...jewels.filter((id) => extras.some((g) => g.id === id))];
+  const warmth = Math.round(ids.reduce((a, id) => { const g = ready.find((x) => x.id === id); return a + (g ? cloOf(g.garment.kind, g.garment.slot, g.label) : 0); }, 0) * 100) / 100;
   return (
     <Panel title="What To Wear" subtitle="Your choice is worn while it’s clean and to hand; whatever it leaves out, what’s already on the go, then the least washed">
       <LookRegion className="col gap-3">
@@ -168,6 +174,20 @@ function WhatToWear() {
             </div>
           </div>
         )}
+        {layerable.length > 0 && (
+          <fieldset className="col gap-1" style={{ border: 0, padding: 0, margin: 0 }}>
+            <legend className="small muted" style={{ padding: 0 }}>Layers, Under And Over</legend>
+            <div className="row gap-3" style={{ flexWrap: 'wrap' }}>
+              {layerable.map((g) => (
+                <label key={g.id} className="row gap-1 small">
+                  <input type="checkbox" checked={layers.includes(g.id)} onChange={(e) => setLayers(e.target.checked ? [...layers, g.id] : layers.filter((id) => id !== g.id))} />
+                  {named(g)}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        )}
+        <p className="small muted" style={{ margin: 0 }}>{`Warmth: ${warmth} clo, ASHRAE’s measured garments summed. Below 10 °C, it decides how long you can be out.`}</p>
         {extras.length > 0 && (
           <fieldset className="col gap-1" style={{ border: 0, padding: 0, margin: 0 }}>
             <legend className="small muted" style={{ padding: 0 }}>Jewelry, Watches And Accessories</legend>
@@ -234,7 +254,7 @@ function Shop() {
   return (
     <Panel title={`Shops In ${town}`} subtitle={`${entries.length} products from ${new Set(entries.map((e) => (e.value as ClothingProduct).retailer)).size} retailers`}>
       <div className="col gap-3">
-        <CatalogControls id="clothes-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ department: 'Department', type: 'Type', kind: 'Kind', retailer: 'Retailer', where: 'Where' }} />
+        <CatalogControls id="clothes-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ department: 'Department', type: 'Type', kind: 'Kind', special: 'Special Kinds', retailer: 'Retailer', where: 'Where' }} />
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Product</th><th scope="col">Retailer</th><th scope="col">Where</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
@@ -255,7 +275,7 @@ function Shop() {
           </table>
         </div>
         {shown.length > count && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCount(count + PAGE)}>{shown.length - count <= PAGE ? `Show The Last ${shown.length - count}` : `Show ${PAGE} More Of ${shown.length - count}`}</button>}
-        {chosen && <Choose key={chosen} productId={chosen} />}
+        {chosen && <Choose key={chosen} productId={chosen} onPick={setChosen} />}
         {chosen === undefined && <div className="xs dim">{`${Math.min(count, shown.length)} of ${shown.length} shown.`}</div>}
       </div>
     </Panel>
@@ -263,7 +283,7 @@ function Shop() {
 }
 
 /** A product chosen: its size, color and how many, and buying it in a store here or online. */
-function Choose({ productId }: { productId: string }) {
+function Choose({ productId, onPick }: { productId: string; onPick: (id: string) => void }) {
   const { sim, run, toast } = useGame();
   const cur = saveCurrency(sim.universe);
   const money = (c: number) => formatMoney(c, cur);
@@ -276,6 +296,7 @@ function Choose({ productId }: { productId: string }) {
   const [size, setSize] = useState(mine ?? p.sizes[0] ?? '');
   const [color, setColor] = useState(p.colors[0] ?? '');
   const [quantity, setQuantity] = useState(1);
+  const [way, setWay] = useState<PayWith>('debit');
   const buy = useFeature('clothes.buy');
   const add = useFeature('clothes.basket_add');
   const options = { productId, size: size || undefined, color: color || undefined, quantity };
@@ -289,11 +310,20 @@ function Choose({ productId }: { productId: string }) {
   const storeQuote = purchaseQuote(sim, person, inStore);
   const onlineQuote = purchaseQuote(sim, person, online);
   const go = (how: 'store' | 'online') => {
-    if (run('clothes.buy', how === 'store' ? inStore : online).ok) toast(how === 'store' ? `${p.name}, bought.` : `${p.name}, ordered from ${r.name}.`, 'positive');
+    if (run('clothes.buy', { ...(how === 'store' ? inStore : online), payWith: how === 'online' && way === 'cash' ? 'debit' : way }).ok) toast(how === 'store' ? `${p.name}, bought.` : `${p.name}, ordered from ${r.name}.`, 'positive');
   };
   return (
     <div className="col gap-2">
       <div className="small"><strong>{p.name}</strong> · {p.brand}{p.material ? ` · ${p.material}` : ''}{p.careLabel ? ` · ${p.careLabel}` : ''}</div>
+      {(() => {
+        const others = otherSellers(sim, person.currentLocationId, p);
+        return others.length > 0 ? (
+          <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+            <span className="xs muted">Also Sold By</span>
+            {others.map((o) => <button key={o.product.id} type="button" className="btn btn-sm btn-ghost" onClick={() => onPick(o.product.id)}>{`${retailerById(o.product.retailer)?.name}, ${money(o.price)}`}</button>)}
+          </div>
+        ) : null;
+      })()}
       <div className="field-row field-row-tight">
         {p.sizes.length > 0 && (
           <div className="field">
@@ -310,6 +340,14 @@ function Choose({ productId }: { productId: string }) {
         <div className="field">
           <label htmlFor="buy-quantity">How Many</label>
           <select id="buy-quantity" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}>{Array.from({ length: 10 }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}</select>
+        </div>
+        <div className="field">
+          <label htmlFor="buy-pay">Pay With</label>
+          <select id="buy-pay" value={way} onChange={(e) => setWay(e.target.value as PayWith)}>
+            <option value="cash">Cash, In Store</option>
+            <option value="credit">The Credit Card</option>
+            <option value="debit">The Debit Card</option>
+          </select>
         </div>
       </div>
       <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
@@ -363,6 +401,7 @@ function Basket() {
   const lines = useWorld((s) => [...(s.player.basket ?? [])]);
   const out = useFeature('clothes.checkout');
   const drop = useFeature('clothes.basket_remove');
+  const [way, setWay] = useState<PayWith>('debit');
   const money = (c: number) => formatMoney(c, saveCurrency(sim.universe));
   if (lines.length === 0) return null;
   const groups = new Map<string, BasketLine[]>();
@@ -370,6 +409,14 @@ function Basket() {
   return (
     <Panel title="Basket" subtitle="Each retailer’s checks out on its own: one payment, and online one delivery for the order">
       <div className="col gap-3">
+        <div className="field" style={{ maxWidth: '16rem' }}>
+          <label htmlFor="basket-pay">Pay With</label>
+          <select id="basket-pay" value={way} onChange={(e) => setWay(e.target.value as PayWith)}>
+            <option value="cash">Cash, In Store</option>
+            <option value="credit">The Credit Card</option>
+            <option value="debit">The Debit Card</option>
+          </select>
+        </div>
         {[...groups.entries()].map(([key, group]) => {
           const [retailerId, how] = key.split('|') as [string, 'store' | 'online' | 'collect'];
           const r = retailerById(retailerId);
@@ -395,7 +442,7 @@ function Basket() {
                 </table>
               </div>
               {q && <div className="xs dim">{how === 'collect' ? `${q.delivery > 0 ? `Collection ${money(q.delivery)}` : 'Collected free'}, ready ${formatDate(q.arrivesAt!, sim.zone)}. ` : ''}{how === 'online' ? (q.delivery > 0 ? `Delivery ${money(q.delivery)}` : 'Delivered free') + `, arriving ${formatDate(q.arrivesAt!, sim.zone)}. ` : ''}{no ?? ''}</div>}
-              <div><button type="button" className="btn btn-sm btn-primary" disabled={!out.open || Boolean(no)} title={no ?? out.reason} onClick={() => { const a = run<{ paid: number }>('clothes.checkout', { retailerId, how }); if (a.ok) toast(`Checked out at ${r?.name}, ${money(a.value!.paid)}.`, 'positive'); }}>{q ? `Check Out, ${money(q.total)}` : 'Check Out'}</button></div>
+              <div><button type="button" className="btn btn-sm btn-primary" disabled={!out.open || Boolean(no)} title={no ?? out.reason} onClick={() => { const a = run<{ paid: number }>('clothes.checkout', { retailerId, how, payWith: how === 'store' || way !== 'cash' ? way : 'debit' }); if (a.ok) toast(`Checked out at ${r?.name}, ${money(a.value!.paid)}.`, 'positive'); }}>{q ? `Check Out, ${money(q.total)}` : 'Check Out'}</button></div>
             </div>
           );
         })}
@@ -498,7 +545,7 @@ function Bought() {
                   <td className="small">{r?.name}</td>
                   <td className="num mono">{money(b.goods)}</td>
                   <td className="small">{(b.paidFrom ?? []).map((x) => sim.universe.accounts[x.accountId]?.name ?? 'An Account').join(', ') || '—'}</td>
-                  <td className="small">{formatDate(b.at, sim.zone)}{b.canceledAt !== undefined ? ', canceled' : b.returnedAt !== undefined ? ', returned' : purchaseItems(person, b.id).some((i) => i.at.kind === 'order') ? ', on its way' : purchaseItems(person, b.id).some((i) => i.at.kind === 'service' && i.at.serviceId.startsWith('collect:')) ? ', ready to collect' : ''}</td>
+                  <td className="small"><Open subject={at('receipt', b.id)}>{formatDate(b.at, sim.zone)}</Open>{b.canceledAt !== undefined ? ', canceled' : b.returnedAt !== undefined ? ', returned' : purchaseItems(person, b.id).some((i) => i.at.kind === 'order') ? ', on its way' : purchaseItems(person, b.id).some((i) => i.at.kind === 'service' && i.at.serviceId.startsWith('collect:')) ? ', ready to collect' : ''}</td>
                   <td>
                     {(() => { const no = buyRefusal(person, againOptions(b)); return <button type="button" className="btn btn-sm btn-ghost" disabled={!again.open || Boolean(no)} title={no ?? again.reason} onClick={() => { if (run('clothes.basket_add', { ...againOptions(b) }).ok) toast('In the basket again.', 'positive'); }}>Buy Again</button>; })()}
                     {b.returnedAt === undefined && b.canceledAt === undefined && (
@@ -625,8 +672,9 @@ function YourMeasurements() {
   const [waist, setWaist] = useState(m?.waistCm ? String(m.waistCm) : '');
   const [hip, setHip] = useState(m?.hipCm ? String(m.hipCm) : '');
   const [foot, setFoot] = useState(m?.footCm ? String(m.footCm) : '');
+  const [finger, setFinger] = useState(m?.fingerMm ? String(m.fingerMm) : '');
   const num = (v: string) => (v.trim() === '' ? undefined : Number(v));
-  const save = () => { if (run('clothes.measures', { department, chestCm: num(chest), waistCm: num(waist), hipCm: num(hip), footCm: num(foot) }).ok) toast('Your sizes now come from each retailer’s chart where it has one.', 'positive'); };
+  const save = () => { if (run('clothes.measures', { department, chestCm: num(chest), waistCm: num(waist), hipCm: num(hip), footCm: num(foot), fingerMm: num(finger) }).ok) toast('Your sizes now come from each retailer’s chart where it has one.', 'positive'); };
   return (
     <Panel title="Your Measurements" subtitle={m ? `Sized By The ${m.department === 'women' ? 'Women’s' : 'Men’s'} Charts` : 'By Body Mass Index Until Given'}>
       <div className="col gap-2">
@@ -642,10 +690,11 @@ function YourMeasurements() {
           <div className="field"><label htmlFor="measure-waist">Waist, Centimeters</label><input id="measure-waist" inputMode="decimal" value={waist} onChange={(e) => setWaist(e.target.value)} /></div>
           <div className="field"><label htmlFor="measure-hip">Hips, Centimeters</label><input id="measure-hip" inputMode="decimal" value={hip} onChange={(e) => setHip(e.target.value)} /></div>
           <div className="field"><label htmlFor="measure-foot">Foot, Centimeters</label><input id="measure-foot" inputMode="decimal" value={foot} onChange={(e) => setFoot(e.target.value)} /></div>
+          <div className="field"><label htmlFor="measure-finger">Ring Finger Around, Millimeters</label><input id="measure-finger" inputMode="decimal" value={finger} onChange={(e) => setFinger(e.target.value)} /></div>
           <Gated feature="clothes.measures" className="btn btn-sm" onClick={save}>Keep These</Gated>
           {m && <Gated feature="clothes.measures" className="btn btn-sm btn-ghost" onClick={() => { if (run('clothes.measures', { clear: true }).ok) toast('Sized by body mass index again.', 'positive'); }}>Forget Them</Gated>}
         </div>
-        <div className="xs dim">A top is sized by chest or bust, a bottom by waist and a shoe by foot length, and a shoe shorter than your foot won’t go on, against the retailer’s own chart for its market, where SLATE keeps one (H&M, Uniqlo, Zara, Gap, Old Navy, Levi’s, Marks & Spencer, Next and more). Elsewhere, and until you give them, your size is read from your body mass index.</div>
+        <div className="xs dim">A top is sized by chest or bust, a bottom by waist and hips, a dress by bust and hips, a ring by the finger around on H.Samuel’s chart, and a shoe by foot length, and a shoe shorter than your foot won’t go on, against the retailer’s own chart for its market, where SLATE keeps one (H&M, Uniqlo, Zara, Gap, Old Navy, Levi’s, Marks & Spencer, Next and more). Elsewhere, and until you give them, your size is read from your body mass index.</div>
       </div>
     </Panel>
   );

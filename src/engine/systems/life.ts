@@ -37,7 +37,8 @@ import { SINK_FULL, cook, kitchenMeal, sinkFull } from './kitchen';
 import { bathroomWait } from './rooms';
 import { watchRefusal } from './homelife';
 import { takePortion } from './pantry';
-import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty } from './wardrobe';
+import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty, wearForSwim } from './wardrobe';
+import { SITTING_MET } from './coldstress';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
@@ -469,7 +470,8 @@ export function registerLife(sim: Simulation): void {
       if (action === 'boat' && !spend(s, person, cost, 'Gas for the boat, at the marina', 'vehicle')) throw new CommandError('The payment didn’t go through.');
       if (action === 'charter' && !spend(s, person, cost, `A boat chartered with its captain, ${charterAt(person.currentLocationId)?.operator ?? ''}`, 'personal')) throw new CommandError('The payment didn’t go through.');
       // A workout or a swim is an outfit worn.
-      if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court') wearOutfit(s, person, true);
+      if (action === 'swim') wearForSwim(s, person);
+      else if (action === 'exercise' || action === 'ride' || action === 'court') wearOutfit(s, person, true);
       // The lawn cut (`systems/lawns.ts`, from 2026-10-02).
       if (action === 'mow') { const home = livingIn(person); if (home) mow(home, s.now); }
       if (action === 'washup') washUp(s, person);
@@ -643,9 +645,9 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'trail') { const no = trailRefusal(sim, person); if (no) return no; }
   if (action === 'swim') { const no = swimRefusal(sim, person); if (no) return no; }
   if (action === 'court') { const no = courtRefusal(sim, person); if (no) return no; }
-  if (action === 'outside') { const no = outsideRefusal(sim, person); if (no) return no; }
-  if (action === 'boat') { const no = outingRefusal(sim, person) ?? fineWeatherRefusal(sim, person, 'go out on the water'); if (no) return no; }
-  if (action === 'charter') { const no = charterRefusal(sim, person) ?? fineWeatherRefusal(sim, person, 'go out on the water'); if (no) return no; }
+  if (action === 'outside') { const no = outsideRefusal(sim, person, LOOKING_AFTER.outside.minutes); if (no) return no; }
+  if (action === 'boat') { const no = outingRefusal(sim, person) ?? fineWeatherRefusal(sim, person, 'go out on the water', SITTING_MET, LOOKING_AFTER.boat.minutes); if (no) return no; }
+  if (action === 'charter') { const no = charterRefusal(sim, person) ?? fineWeatherRefusal(sim, person, 'go out on the water', SITTING_MET, LOOKING_AFTER.charter.minutes); if (no) return no; }
   if (action === 'laundry' && washableDirty(sim, person).length === 0) return 'Your clothes are all clean.';
   if (action === 'laundry' && !person.home) return 'You have nowhere to keep clothes.';
   if (action === 'laundry' && !detergentFor(sim, person, Math.ceil(washableDirty(sim, person).length / GARMENTS_PER_LOAD))) return 'There isn’t enough laundry detergent at home for it.';

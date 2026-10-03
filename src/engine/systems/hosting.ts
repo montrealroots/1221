@@ -13,7 +13,10 @@
  * (`DINING_MINUTES`), drinks as long as a visit.
  *
  * **The evening.** A dinner is cooked for everyone at a home-cooked meal's
- * price where you live (`mealOf`), paid then, and you've eaten. Each guest
+ * price where you live (`mealOf`), paid then, and you've eaten; or from
+ * 2026-10-03 from a recipe chosen, out of what's in the kitchen, where the
+ * stock makes it for everyone then (`takeIngredients`), and the money only
+ * where it doesn't. Each guest
  * is poured a glass of wine or a beer from what's in the kitchen, as far as
  * it goes, and you have one too; a host with nothing to pour is remembered
  * for it. A home in a mess, untidier than it starts to weigh on you
@@ -39,6 +42,7 @@ import { applyLookingAfter } from './life';
 import { personalityOf } from './personality';
 import { foodOf, fresh } from './pantry';
 import { drinkGrams, marketOf as drinkingMarketOf } from './alcohol';
+import { cookRefusal, recipeById, servingsRange, takeIngredients } from './kitchen';
 
 export const HOST_KIND = 'social.host';
 const yearsOld = (person: Person, at: Instant) => (at - person.birthInstant) / (365.2425 * MS_DAY);
@@ -74,13 +78,16 @@ function pours(person: Person, at: Instant): { item: ReturnType<typeof foodOf>[n
 }
 
 export function registerHosting(sim: Simulation): void {
-  sim.onCommand<{ contactIds: string[]; at: number; what: Gathering }, { coming: string[]; declined: { contactId: string; reason: string }[] }>('social.host', (p, { sim: s }) => {
+  sim.onCommand<{ contactIds: string[]; at: number; what: Gathering; recipeId?: string }, { coming: string[]; declined: { contactId: string; reason: string }[] }>('social.host', (p, { sim: s }) => {
     const person = s.player;
     const what: Gathering = p?.what === 'drinks' ? 'drinks' : 'dinner';
     const ids = Array.isArray(p?.contactIds) ? p.contactIds.map(String) : [];
     const at = Number(p?.at);
     const no = hostRefusal(s, person, ids, at, what);
     if (no) throw new CommandError(no);
+    const recipe = what === 'dinner' && p.recipeId ? recipeById(String(p.recipeId)) : undefined;
+    if (p?.recipeId && !recipe) throw new CommandError('No such recipe.');
+    if (recipe && ids.length + 1 > servingsRange(recipe).most) throw new CommandError(`${recipe.name} cooks for ${servingsRange(recipe).most} at the most.`);
     const coming: string[] = [];
     const declined: { contactId: string; reason: string }[] = [];
     for (const id of ids) {
@@ -92,7 +99,7 @@ export function registerHosting(sim: Simulation): void {
     }
     if (coming.length === 0) return { coming, declined };
     const names = coming.map((id) => contactsOf(person).find((c) => c.id === id)!.name.split(' ')[0]);
-    s.schedule({ at, kind: HOST_KIND, label: `${what === 'dinner' ? 'Dinner' : 'Drinks'} At Yours With ${names.join(', ')}`, category: 'relationship', priority: 40, requiresPlayer: true, durationMinutes: gatheringMinutes(what), locationId: person.home!.cityId, payload: { personId: person.id, what, contactIds: coming } });
+    s.schedule({ at, kind: HOST_KIND, label: `${what === 'dinner' ? 'Dinner' : 'Drinks'} At Yours With ${names.join(', ')}`, category: 'relationship', priority: 40, requiresPlayer: true, durationMinutes: gatheringMinutes(what), locationId: person.home!.cityId, payload: { personId: person.id, what, contactIds: coming, ...(recipe ? { recipeId: recipe.id } : {}) } });
     return { coming, declined };
   });
 
@@ -109,8 +116,13 @@ export function registerHosting(sim: Simulation): void {
       return;
     }
     // Dinner for everyone, at home's price.
+    let cooked: string | undefined;
     if (what === 'dinner') {
-      spend(s, person, mealOf(s, person) * (guests.length + 1), `${word} at home for ${guests.length + 1}`, 'food', true);
+      // The recipe chosen, where the kitchen has it for everyone; else the meal's money.
+      const recipeId = item.payload.recipeId ? String(item.payload.recipeId) : undefined;
+      const everyone = guests.length + 1;
+      if (recipeId && !cookRefusal(s, person, recipeId, everyone)) { takeIngredients(s, person, recipeId, everyone); cooked = recipeById(recipeId)!.name; }
+      else spend(s, person, mealOf(s, person) * everyone, `${word} at home for ${everyone}`, 'food', true);
       applyLookingAfter(person, 'eat', item.at);
     }
     // A drink each from the kitchen, as far as it goes; one for the host, of age.
@@ -129,7 +141,7 @@ export function registerHosting(sim: Simulation): void {
     for (const c of guests) {
       c.hours += hours;
       c.lastSeen = item.at;
-      c.memory.unshift({ at: item.at, what: `${word} at yours${messy ? ', the place a mess' : ''}${poured < guests.length ? ', not much to drink' : ''}` });
+      c.memory.unshift({ at: item.at, what: `${word} at yours${cooked ? `, ${cooked}` : ''}${messy ? ', the place a mess' : ''}${poured < guests.length ? ', not much to drink' : ''}` });
     }
     const w = person.wellbeing;
     const lift = (messy ? MESS_LIFT : 1) * personalityOf(person, 'company') * personalityOf(person, 'moraleSwing');

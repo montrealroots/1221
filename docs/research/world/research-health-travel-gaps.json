@@ -1,0 +1,1136 @@
+{
+  "meta": {
+    "topic": "Health and travel gaps: named providers' self-pay prices, claim denials and appeals, chronic follow-up intervals, accessible taxis, primary-care waits (Ireland, Mexico), airline bags, connections and change fees, rideshare, hotel extras, child travel",
+    "date": "2026-10-03",
+    "method": "Publisher pages fetched directly (curl or WebFetch) and the quoted text read; where the publisher blocked the fetch (403/JS-only), the figure comes from a WebSearch summary and is marked confirmed:false with a note. Nothing estimated. Existing files were checked first to avoid repeats: research-health-visits.json, research-travel-2.json, research-travel4.json, research-travel-insurance-referrals.json, research-access-availability.json, research-hotel-amenities.json. Where a topic is already covered there, this file points to it instead of repeating it.",
+    "towns": [
+      "New York",
+      "Los Angeles",
+      "New Haven CT",
+      "London",
+      "Dublin",
+      "Toronto",
+      "Vancouver",
+      "Mexico City"
+    ]
+  },
+  "providers": [
+    {
+      "date": "2026-10-03",
+      "town": "New York",
+      "name": "209 NYC Dental",
+      "address": "209 East 56th Street, 1st Floor, New York, NY 10022",
+      "type": "dentist",
+      "figures": {
+        "dentalCleaningStandalone": 144,
+        "newPatientPackageExamFullXraysCleaning": 325
+      },
+      "unit": "per visit",
+      "currency": "USD",
+      "url": "https://www.209nycdental.com/services/diagnostic-preventive/dental-teeth-cleaning-checkup/",
+      "confirmed": true,
+      "note": "'Dental Cleaning: $144 Includes: Professional Teeth Cleaning (Prophylaxis)'; 'Complete Package Special: $325' = comprehensive exam, full-mouth X-rays (panoramic, 4 bitewings, 2 periapicals) and cleaning, for new and existing patients."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "New York",
+      "name": "Warby Parker (eye exams, US stores including New York City)",
+      "type": "optometrist",
+      "figures": {
+        "glassesExam": 95,
+        "glassesAndContactsExam": {
+          "min": 150,
+          "max": 170
+        }
+      },
+      "unit": "per exam",
+      "currency": "USD",
+      "url": "https://www.warbyparker.com/appointments/eye-exams",
+      "confirmed": true,
+      "note": "Booking page: 'Glasses exam $95*' (20-30 min); 'Glasses and contacts exam $150-$170*'; '*Exam prices vary depending on location. Payment is due at the time of the exam.' A Grand Central figure of 'from $85' appeared only in a search summary and was not confirmed. National page, so it also applies to Warby Parker stores in Los Angeles; no New Haven store was confirmed."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "New York",
+      "name": "Manhattan Mental Health Counseling (MMHC)",
+      "type": "therapist",
+      "figures": {
+        "firstSessionSelfPay": 200,
+        "ongoingSessionSelfPay": 175
+      },
+      "unit": "per session",
+      "currency": "USD",
+      "url": "https://manhattanmentalhealthcounseling.com/",
+      "confirmed": true,
+      "note": "'$200 / $175 First session / ongoing self-pay session' (facts reviewed August 2026)."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Los Angeles",
+      "name": "Affinity Therapy Services (Ross Grossman, LMFT)",
+      "address": "5455 Wilshire Boulevard, Suite 2107, Los Angeles, CA 90036",
+      "type": "therapist",
+      "figures": {
+        "individual50min": 150,
+        "individual90min": 250,
+        "couplesFamily50min": 200,
+        "group50min": 50
+      },
+      "unit": "per session",
+      "currency": "USD",
+      "url": "https://www.affinitytherapyservices.com/rates-insurance",
+      "confirmed": true
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Los Angeles",
+      "name": "Inner Balance Therapy Group",
+      "type": "therapist",
+      "figures": {
+        "individual50min": 220,
+        "extended70min": 300
+      },
+      "unit": "per session",
+      "currency": "USD",
+      "url": "https://www.innerbalancetherapygroup.com/investment",
+      "confirmed": true,
+      "note": "Based in Los Angeles; telehealth statewide."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Los Angeles",
+      "name": "Holistic Smile Care (Los Angeles / West Hollywood)",
+      "type": "dentist",
+      "figures": {
+        "standardCleaningRange": {
+          "min": 50,
+          "max": 300
+        },
+        "standardCleaningAverage": 150,
+        "cleaningWithXraysAndConsultAverage": 300
+      },
+      "unit": "per visit",
+      "currency": "USD",
+      "url": "https://holisticsmilecare.com/cost-dental-cleaning-los-angeles/",
+      "confirmed": true,
+      "note": "These are the practice's statement of Los Angeles market ranges, not its own price list. No LA dentist's own fixed self-pay cleaning price was confirmed."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "New Haven CT",
+      "name": "New Haven Dental Group",
+      "type": "dentist",
+      "figures": {
+        "newPatientCheckupCleaningXrays": 99
+      },
+      "unit": "first visit",
+      "currency": "USD",
+      "url": "https://www.newhavendental.com/99-new-patient-offer.html",
+      "confirmed": true,
+      "note": "'your first checkup, cleaning, and set of X-rays will only cost $99'. Offices in New Haven, Woodbridge, Hamden, Branford. Introductory offer only; the regular fee was not published."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "London",
+      "name": "South Kensington Medical & Dental",
+      "address": "20 Old Brompton Road, London SW7 3DL",
+      "type": "dental hygienist",
+      "figures": {
+        "hygieneScaleAndPolish30min": 89,
+        "newPatientOffer": 49,
+        "memberPrice": 44.5
+      },
+      "unit": "per appointment",
+      "currency": "GBP",
+      "url": "https://www.southkenmd.co.uk/dental/general-dentistry/dental-hygienist",
+      "confirmed": true
+    },
+    {
+      "date": "2026-10-03",
+      "town": "London",
+      "name": "Harley Therapy",
+      "type": "therapist/psychotherapist",
+      "figures": {
+        "individualFrom": 230,
+        "couplesFrom": 250,
+        "psychiatricInitialAssessmentFrom": 695
+      },
+      "unit": "per 50-minute session (assessment per appointment)",
+      "currency": "GBP",
+      "url": "https://www.harleytherapy.co.uk/fees.htm",
+      "confirmed": true,
+      "note": "'Individual counselling from £230'; sessions 50 minutes, weekly; payment taken in advance. Harley Street is a premium market. The £695 psychiatric assessment came from the search summary of the same page; the read excerpt confirmed the counselling fees."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "London",
+      "name": "Specsavers (UK private sight test)",
+      "type": "optician",
+      "figures": {
+        "standardPrivateSightTest": 25
+      },
+      "unit": "per test",
+      "currency": "GBP",
+      "url": "https://www.specsavers.co.uk/eye-test",
+      "confirmed": false,
+      "note": "specsavers.co.uk returned 403. £25 standard (and a £10 promotion in England, Wales and NI) from search summaries of third-party guides. NHS sight tests are free to eligible groups."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Dublin",
+      "name": "Truly Dental (Dame Street Dental Hospital and other Dublin clinics)",
+      "type": "dentist",
+      "figures": {
+        "examination": 50,
+        "examinationWithPRSI": 0,
+        "scaleAndPolishHygienist": 100,
+        "scaleAndPolishDentist": 120,
+        "scaleAndPolishWithPRSI": 15,
+        "smallXrayEach": 20
+      },
+      "unit": "per item",
+      "currency": "EUR",
+      "url": "https://trulydental.ie/price-list",
+      "confirmed": true,
+      "note": "'Examination €50; Examination with PRSI Free; Scale and Polish with Hygienist €100; Scale and Polish (Dentist) €120; Scale and Polish with PRSI €15'. PRSI = Treatment Benefit Scheme for insured workers."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Dublin",
+      "name": "Hazelton Clinic",
+      "type": "counsellor/psychotherapist",
+      "figures": {
+        "individual60min": 90,
+        "couple60min": 120,
+        "family60min": 200,
+        "traineeCounsellor60min": 30
+      },
+      "unit": "per session",
+      "currency": "EUR",
+      "url": "https://hazelton.ie/rates/",
+      "confirmed": true,
+      "note": "The clinic's exact Dublin address was not extracted from the page."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Dublin",
+      "name": "Specsavers Ireland",
+      "type": "optician",
+      "figures": {
+        "standardEyeTest": 30,
+        "octAddOnMax": 25,
+        "drivingLicenceTestMax": 60
+      },
+      "unit": "per test",
+      "currency": "EUR",
+      "url": "https://www.specsavers.ie/help-and-faqs/how-much-is-an-eye-test",
+      "confirmed": false,
+      "note": "specsavers.ie returned 403; figures from a search summary of that page. PRSI Treatment Benefit and Medical Card cover free tests for eligible people."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Toronto",
+      "name": "CBT Associates",
+      "type": "psychologist/therapist",
+      "figures": {
+        "registeredPsychologist": {
+          "min": 265,
+          "max": 275
+        },
+        "psychotherapistSocialWorkerResident": {
+          "min": 150,
+          "max": 200
+        }
+      },
+      "unit": "per session",
+      "currency": "CAD",
+      "url": "https://www.cbtassociates.com/about-us/rates-fees/",
+      "confirmed": true
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Toronto",
+      "name": "Spadina Optometry",
+      "type": "optometrist",
+      "figures": {
+        "adult20to64": 198,
+        "under20Supplement": 98,
+        "seniors65Supplement": 118
+      },
+      "unit": "per comprehensive exam",
+      "currency": "CAD",
+      "url": "https://spadinaoptometry.ca/faq/fees-and-pricing/",
+      "confirmed": true,
+      "note": "Adults 20-64 'Not covered unless qualifying medical condition'. Under-20s: OHIP covers the base exam annually plus a $98 supplement; 65+: OHIP every 18 months plus $118."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Toronto",
+      "name": "Lockwood Clinic (downtown Toronto)",
+      "type": "dentist",
+      "figures": {
+        "basicCleaningAndPolish": {
+          "min": 150,
+          "max": 200
+        },
+        "deepCleaningPerSession": {
+          "min": 250,
+          "max": 500
+        },
+        "xrays": {
+          "min": 40,
+          "max": 100
+        }
+      },
+      "unit": "per visit",
+      "currency": "CAD",
+      "url": "https://lockwoodclinic.com/dental-cleaning-cost-in-downtown-toronto/",
+      "confirmed": true,
+      "note": "These are the clinic's ranges for downtown Toronto, not a fixed fee schedule."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Vancouver",
+      "name": "Aarm Dental Group (bills to the 2026 BCDA suggested fee guide)",
+      "type": "dentist",
+      "figures": {
+        "completeNewPatientExam": 544.7,
+        "standardNewPatientExam": 355.8,
+        "recallExamWith3UnitsScaling": 297.4,
+        "emergencyExam": 124.3
+      },
+      "unit": "per visit",
+      "currency": "CAD",
+      "url": "https://www.aarm-dental.com/our-pricing",
+      "confirmed": true,
+      "note": "Complete new patient = exam, panoramic, 4 bitewings, 3 units scaling, polish, fluoride. Recall = recall exam, 3 units scaling, polish, fluoride (every 6 months)."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Vancouver",
+      "name": "North Shore CBT Centre",
+      "address": "202-1500 Marine Dr, North Vancouver, BC V7P 1T7",
+      "type": "psychologist/counsellor",
+      "figures": {
+        "psychologistIndividual50min": 235,
+        "psychologistCouples75min": 325,
+        "registeredClinicalCounsellor50min": {
+          "min": 160,
+          "max": 170
+        }
+      },
+      "unit": "per session",
+      "currency": "CAD",
+      "url": "https://www.northshorecbt.com/fees",
+      "confirmed": true,
+      "note": "North Vancouver, not the City of Vancouver. Vancouver CBT Centre's own site publishes no fees."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Vancouver",
+      "name": "BC Doctors of Optometry (MSP contribution)",
+      "type": "optometry public-cover rule",
+      "figures": {
+        "mspContributionFullExam": 47.08,
+        "mspContributionFollowUp": 32.96
+      },
+      "unit": "per exam",
+      "currency": "CAD",
+      "url": "https://bc.doctorsofoptometry.ca/patients/msp/",
+      "confirmed": true,
+      "note": "MSP contributes for ages 0-18, 65+, and 19-64 only when medically required; clinics balance-bill the rest. No named Vancouver optometrist's own fee was confirmed."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Mexico City",
+      "name": "hi sonrisa (Tepic 139-706, Roma Sur)",
+      "type": "dentist",
+      "figures": {
+        "routineCleaning": 1199,
+        "deepCleaning": 3699,
+        "periodontalSRPPerQuadrant": 2099
+      },
+      "unit": "per visit",
+      "currency": "MXN",
+      "url": "https://hisonrisa.com/dental-services/dental-cleaning-mexico-city",
+      "confirmed": true,
+      "note": "'from 1,199 MXN' includes exam, gum screening, ultrasonic scaling and polish."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Mexico City",
+      "name": "R&A Psicólogos",
+      "type": "psychologist",
+      "figures": {
+        "individualSession": 800,
+        "couplesSession": 1000,
+        "psychiatryFirstConsult": 1500
+      },
+      "unit": "per session",
+      "currency": "MXN",
+      "url": "https://www.ryapsicologos.net/precios/",
+      "confirmed": true,
+      "note": "Tax included; in person or online. The page states a CDMX range of 500-1,500 MXN per session."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Mexico City",
+      "name": "Wandel Ethos",
+      "type": "psychologist",
+      "figures": {
+        "individualSession": 600,
+        "individual4SessionPack": 2200,
+        "couplesFamilySession": 650
+      },
+      "unit": "per session",
+      "currency": "MXN",
+      "url": "https://www.wandelethos.com.mx/costos-y-promociones/",
+      "confirmed": true
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Mexico City",
+      "name": "Ópticas Devlyn",
+      "type": "optician",
+      "figures": {
+        "eyeExam": 0
+      },
+      "unit": "per exam",
+      "currency": "MXN",
+      "url": "https://www.devlyn.com.mx/examen-de-la-vista",
+      "confirmed": true,
+      "note": "'Agenda examen de la vista GRATIS': a free exam, tied to the optical store. Frame-plus-lens sets from $999 MXN on the same page."
+    }
+  ],
+  "insuranceClaims": [
+    {
+      "date": "2026-10-03",
+      "topic": "ACA Marketplace (HealthCare.gov) claim denials, 2023 plan year",
+      "figures": {
+        "inNetworkDenialRate": 0.2,
+        "outOfNetworkDenialRate": 0.36,
+        "inNetworkRangeAcrossInsurers": {
+          "min": 0.01,
+          "max": 0.54
+        },
+        "deniedInNetworkClaims": 86000000,
+        "shareOfDenialsAppealed": "<1%",
+        "shareOfAppealsUpheldByInsurer": 0.56,
+        "externalAppealsFiled": 5000,
+        "reasons": {
+          "other": 0.34,
+          "administrative": 0.21,
+          "excludedService": 0.14,
+          "noPriorAuthOrReferral": 0.09,
+          "medicalNecessity": 0.06
+        }
+      },
+      "unit": "share of claims",
+      "currency": null,
+      "url": "https://www.kff.org/private-insurance/claims-denials-and-appeals-in-aca-marketplace-plans-in-2023/",
+      "confirmed": true,
+      "note": "KFF, published 2025-01-27, updated 2026-03-24 with corrected CMS data. Insurer-level rates (BCBS Alabama 35%, UnitedHealth 33%, HCSC 29%, Molina 26%, Elevance 23%) came from a search summary and were not re-read."
+    },
+    {
+      "date": "2026-10-03",
+      "topic": "US internal appeal rules (ACA plans)",
+      "figures": {
+        "insurerMustExplainDenial": {
+          "priorAuthorizationDays": 15,
+          "servicesReceivedDays": 30,
+          "urgentHours": 72
+        },
+        "fileInternalAppealWithinDays": 180,
+        "internalAppealDecision": {
+          "serviceNotYetReceivedDays": 30,
+          "serviceAlreadyReceivedDays": 60
+        }
+      },
+      "unit": "days/hours",
+      "currency": null,
+      "url": "https://www.healthcare.gov/appeal-insurance-company-decision/internal-appeals/",
+      "confirmed": true,
+      "note": "Urgent cases may request external review at the same time as the internal appeal."
+    },
+    {
+      "date": "2026-10-03",
+      "topic": "US external review",
+      "figures": {
+        "fileWithinMonths": 4,
+        "standardDecisionMaxDays": 45,
+        "expeditedDecisionMaxHours": 72
+      },
+      "unit": "months/days/hours",
+      "currency": null,
+      "url": "https://www.healthcare.gov/appeal-insurance-company-decision/external-review/",
+      "confirmed": true,
+      "note": "The insurer is required by law to accept the external reviewer's decision."
+    },
+    {
+      "date": "2026-10-03",
+      "topic": "Travel medical insurance prices from named insurers",
+      "figures": null,
+      "unit": null,
+      "currency": null,
+      "url": "docs/research/world/research-travel-insurance-referrals.json",
+      "confirmed": false,
+      "note": "Already covered by research-travel-insurance-referrals.json (Allianz, Travel Guard, World Nomads, AXA, Generali; UK, Ireland, Canada, Mexico sample premiums). Named-insurer premiums need quote tools (World Nomads, Allianz); no fixed published price was found this pass."
+    }
+  ],
+  "followUps": [
+    {
+      "date": "2026-10-03",
+      "condition": "Hypertension",
+      "body": "NICE NG136",
+      "figures": {
+        "reviewInterval": "annual review of care"
+      },
+      "unit": "interval",
+      "currency": null,
+      "url": "https://www.nice.org.uk/guidance/ng136/chapter/Recommendations",
+      "confirmed": true,
+      "note": "'Provide an annual review of care for adults with hypertension to monitor blood pressure, provide people with support, and discuss their lifestyle, symptoms and medication. [2004]'. Also: measure BP at least annually in adults with type 2 diabetes without diagnosed hypertension."
+    },
+    {
+      "date": "2026-10-03",
+      "condition": "Hypertension",
+      "body": "2025 AHA/ACC High Blood Pressure Guideline",
+      "figures": {
+        "onNewOrIntensifiedTherapy": "monthly follow-up until BP control achieved",
+        "lowRiskElevatedOrStage1": "repeat evaluation after 3-6 months of lifestyle therapy"
+      },
+      "unit": "interval",
+      "currency": null,
+      "url": "https://www.ahajournals.org/doi/pdf/10.1161/CIR.0000000000001356",
+      "confirmed": false,
+      "note": "From search summaries of the guideline. The ACC 'New in Clinical Guidance' page (read) confirms only the '3 to 6 months of lifestyle modification' before medication for BP 130-139/80-89 at PREVENT risk <7.5%; the monthly-follow-up wording was not read on the publisher's page."
+    },
+    {
+      "date": "2026-10-03",
+      "condition": "Type 2 diabetes",
+      "body": "NICE NG28 rec 1.5.1",
+      "figures": {
+        "hba1cUntilStable": "every 3 to 6 months",
+        "hba1cOnceStable": "every 6 months"
+      },
+      "unit": "interval",
+      "currency": null,
+      "url": "https://www.nice.org.uk/guidance/ng28/chapter/Blood-glucose-management",
+      "confirmed": true,
+      "note": "'Measure HbA1c levels in adults with type 2 diabetes every: 3 to 6 months (tailored to individual needs) until HbA1c is stable on unchanging therapy; 6 months once the HbA1c level and blood glucose lowering therapy are stable. [2015]'"
+    },
+    {
+      "date": "2026-10-03",
+      "condition": "Diabetes",
+      "body": "ADA Standards of Care 2025, section 6",
+      "figures": {
+        "meetingGoals": "at least twice a year",
+        "notMeetingGoalsOrChangedTherapy": "every 3 months"
+      },
+      "unit": "interval",
+      "currency": null,
+      "url": "https://diabetesjournals.org/care/article/48/Supplement_1/S128/157561/6-Glycemic-Goals-and-Hypoglycemia-Standards-of",
+      "confirmed": false,
+      "note": "diabetesjournals.org returned 403. Wording from a search summary: 'Assess glycemic status at least two times a year, and more frequently (e.g., every 3 months) for individuals not meeting glycemic goals or with recent treatment changes...'"
+    },
+    {
+      "date": "2026-10-03",
+      "condition": "Asthma",
+      "body": "BTS/NICE/SIGN NG245 (2024)",
+      "figures": {
+        "routineReview": "at least annually and after any exacerbation",
+        "afterStartingOrAdjustingMedicine": "8 to 12 weeks",
+        "afterStoppingICS": "review after a further 3 months"
+      },
+      "unit": "interval",
+      "currency": null,
+      "url": "https://www.nice.org.uk/guidance/ng245/chapter/Recommendations",
+      "confirmed": true,
+      "note": "'In primary care, people with asthma should be reviewed at least annually and after any exacerbation...'; 'After starting or adjusting medicines for asthma, review the response to treatment in 8 to 12 weeks'."
+    },
+    {
+      "date": "2026-10-03",
+      "condition": "Depression",
+      "body": "NICE NG222",
+      "figures": {
+        "firstReviewAfterStartingAntidepressant": "usually within 2 weeks",
+        "age18to25OrSuicideRisk": "1 week after starting or increasing dose",
+        "reviewTreatmentWorking": "between 2 and 4 weeks after starting treatment"
+      },
+      "unit": "interval",
+      "currency": null,
+      "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations",
+      "confirmed": true,
+      "note": "Lithium (if used): serum levels 1 week after starting and after each dose change, then weekly until stable."
+    }
+  ],
+  "accessibleTransport": [
+    {
+      "date": "2026-10-03",
+      "town": "New York",
+      "service": "Accessible yellow/green taxi via TLC-licensed E-hail apps (replaced Accessible Dispatch)",
+      "figures": {
+        "fare": "standard meter on street hail; app companies may quote an upfront price",
+        "phone": "646-599-9999",
+        "accessibleDispatchLastDay": "2026-02-28"
+      },
+      "unit": null,
+      "currency": "USD",
+      "url": "https://www.nyc.gov/site/tlc/passengers/find-an-accessible-ride.page",
+      "confirmed": true,
+      "note": "TLC (https://www.nyc.gov/site/tlc/about/accessible-dispatch.page, read): 'Accessible Dispatch is now Accessible Taxi E-hail. MTM Accessible Dispatch's last day of service is February 28, 2026.' E-hail apps named: Arro, Curb, Myle. 'street hail trips use the meter'. Taxi meter rates are in research-travel-2.json; fleet share in research-access-availability.json. The old 'no extra cost' wording appeared only in search summaries."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "London / Los Angeles / Toronto / Vancouver",
+      "service": "see existing file",
+      "figures": null,
+      "unit": null,
+      "currency": null,
+      "url": "docs/research/world/research-access-availability.json",
+      "confirmed": true,
+      "note": "Already covered there: all London black cabs wheelchair accessible (TfL 2025 action plan); LA Access Services $2.75 under 20 mi / $3.50 at 20+ mi; Toronto about 10 active on-demand WAV taxis (City 2024 review); Metro Vancouver 370 of 1,952 taxis accessible (PTB 2017). Not repeated here."
+    }
+  ],
+  "waits": [
+    {
+      "date": "2026-10-03",
+      "town": "Mexico City",
+      "system": "IMSS first level (Unidades de Medicina Familiar), ENCAL 2025",
+      "figures": {
+        "daysFromAppointmentRequestToCare": 29,
+        "shareWaiting2WeeksOrMore": 0.76,
+        "satisfactionDropThresholdMinutes": "35-40",
+        "satisfiedWithWaitInUnit": 0.87,
+        "each10ExtraMinutesCutsHighSatisfaction": 0.045
+      },
+      "unit": "days / share / minutes",
+      "currency": null,
+      "url": "https://www.imss.gob.mx/sites/all/statics/pdf/estadisticas/ENCAL/2025/reporte_ejecutivo_1nivel.pdf",
+      "confirmed": true,
+      "note": "National survey (262 UMFs, Oct-Nov 2025), not CDMX-specific. '29 días promedio entre solicitud de cita y atención'; '76% de usuarios espera 2 semanas o más'. 31% also used care outside IMSS in the past year (60% private doctor, 25% pharmacy-adjacent consultorios)."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Mexico City",
+      "system": "IMSS second level, ENCAL 2025",
+      "figures": {
+        "referralToFirstSpecialistDays": 61,
+        "scheduledToSeenSpecialtyDays": 53,
+        "electiveSurgeryMeanWorkingDays": 57,
+        "electiveSurgeryMedianWorkingDays": 22,
+        "emergencyWaitToTriageMeanMin": 82,
+        "emergencyWaitToTriageMedianMin": 30
+      },
+      "unit": "days / minutes",
+      "currency": null,
+      "url": "https://www.imss.gob.mx/sites/all/statics/pdf/estadisticas/ENCAL/2025/reporte_ejecutivo_2nivel.pdf",
+      "confirmed": true,
+      "note": "Read directly from the PDF. This confirms the 61-day figure that research-health-visits.json held as search-summary only. The page layout also prints '76 min' beside triage; the text paragraph says 82 min mean, 30 min median."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Dublin",
+      "system": "Ireland GP access",
+      "figures": {
+        "ruralWaited2DaysOrMore": 0.54,
+        "leinsterOutsideDublin": 0.67,
+        "munster": 0.53,
+        "over65Nationwide": 0.45,
+        "noWaitAtAll": 0.26
+      },
+      "unit": "share of respondents",
+      "currency": null,
+      "url": "https://www.irishexaminer.com/news/arid-41912527.html",
+      "confirmed": true,
+      "note": "Irish Examiner / Ipsos B&A 'Rural Ireland Thinks' survey, published 2026-09-18. Rural respondents only; Dublin itself is excluded. The HSE publishes no GP waiting-time statistic."
+    }
+  ],
+  "airlineBags": [
+    {
+      "date": "2026-10-03",
+      "carrier": "Delta",
+      "figures": {
+        "domesticFirstBag": 45,
+        "domesticSecondBag": 55,
+        "weightLimit": "50 lb (23 kg)",
+        "sizeLimit": "62 in (157 cm) linear",
+        "thirdBag": 200,
+        "overweight51to70lb": 100,
+        "overweight71to99lb": 200,
+        "overweightTransatlantic51to70": {
+          "USD": 100,
+          "CAD": 120,
+          "EUR": 85
+        },
+        "transatlanticMax": "70 lb; 100 lb+ never accepted",
+        "extraBagsToEurope": {
+          "USD": 285,
+          "CAD": 330,
+          "EUR": 240
+        }
+      },
+      "unit": "per bag, each way",
+      "currency": "USD unless stated",
+      "url": "https://www.delta.com/us/en/baggage/checked-baggage/excess-overweight-baggage",
+      "confirmed": true,
+      "note": "First/second bag fees from https://www.delta.com/us/en/baggage/overview (read). This confirms the Delta fee research-travel-2.json held as secondary."
+    },
+    {
+      "date": "2026-10-03",
+      "carrier": "Air Canada",
+      "figures": {
+        "overweightBand": "23-32 kg (50-70 lb)",
+        "overweightOrOversizeWithinCanada": {
+          "min": 100,
+          "max": 120
+        },
+        "overweightCanadaUS": {
+          "min": 100,
+          "max": 120
+        },
+        "additionalBag": {
+          "min": 100,
+          "max": 120
+        },
+        "secondBag": 120
+      },
+      "unit": "per bag, each way",
+      "currency": "CAD (range = before/after max 20% tax)",
+      "url": "https://www.aircanada.com/us/en/aco/home/legal/products-and-services.html",
+      "confirmed": true,
+      "note": "The page says fees are accurate as of 2024-10-28; the 2026 first-bag fees are in research-travel-2.json. Overweight and oversize together is a single fee."
+    },
+    {
+      "date": "2026-10-03",
+      "carrier": "Ryanair",
+      "figures": {
+        "checkInBag20kg": {
+          "min": 20.99,
+          "max": 59.99
+        },
+        "excessPerKgOnline": 9,
+        "excessPerKgAirport": "11-13",
+        "weightOptions": "10 kg, 20 kg or 23 kg",
+        "maxItem": "32 kg"
+      },
+      "unit": "per bag / per kg",
+      "currency": "EUR or GBP",
+      "url": "https://help.ryanair.com/hc/en-us/articles/12888320768785-What-happens-if-my-bags-weigh-more-than-my-allowance-at-the-check-in-desk",
+      "confirmed": false,
+      "note": "The Ryanair page (read) confirms the 10/20/23 kg allowances, per-kilo excess charged at the airport and the 32 kg cap; the money figures come from search summaries of Ryanair's fees page (JS-rendered, not readable)."
+    },
+    {
+      "date": "2026-10-03",
+      "carrier": "JetBlue",
+      "figures": {
+        "firstBagPrepaid": {
+          "offPeak": 39,
+          "peak": 49
+        },
+        "weightLimit": "50 lb",
+        "overweight51to99lb": 150
+      },
+      "unit": "per bag",
+      "currency": "USD",
+      "url": "https://www.jetblue.com/at-the-airport/baggage-information",
+      "confirmed": false,
+      "note": "jetblue.com pages render by JavaScript; figures from secondary search summaries. 2026 increases not confirmed."
+    },
+    {
+      "date": "2026-10-03",
+      "carrier": "WestJet",
+      "figures": {
+        "firstBagPrepaidEcono": {
+          "min": 45,
+          "max": 53
+        },
+        "weightLimit": "23 kg",
+        "overweight23to32kg": {
+          "min": 150,
+          "max": 177
+        }
+      },
+      "unit": "per bag",
+      "currency": "CAD",
+      "url": "https://www.westjet.com/en-ca/baggage",
+      "confirmed": false,
+      "note": "westjet.com returned 404 for the checked-bag URL; figures from secondary aggregators."
+    },
+    {
+      "date": "2026-10-03",
+      "carrier": "American, United, British Airways, Aer Lingus, Aeroméxico",
+      "figures": null,
+      "unit": null,
+      "currency": null,
+      "url": "docs/research/world/research-travel-2.json",
+      "confirmed": false,
+      "note": "Bag fees already in research-travel-2.json (baggage.checkedBagFees). aa.com and united.com blocked fetches (403/timeout), so their overweight fees were not confirmed this pass."
+    }
+  ],
+  "connectionsChanges": [
+    {
+      "date": "2026-10-03",
+      "rule": "US DOT automatic refund rule (14 CFR part 260)",
+      "figures": {
+        "significantChange": {
+          "domesticHours": 3,
+          "internationalHours": 6,
+          "alsoCounts": [
+            "different origin or destination airport",
+            "more connections",
+            "downgrade to lower class",
+            "for a disabled passenger: different connecting airports or aircraft lacking needed accessibility features"
+          ]
+        },
+        "promptRefund": {
+          "creditCardBusinessDays": 7,
+          "otherPaymentCalendarDays": 20
+        },
+        "significantlyDelayedBag": {
+          "domesticHours": 12,
+          "internationalUpTo12hFlightHours": 15,
+          "internationalOver12hFlightHours": 30
+        }
+      },
+      "unit": "hours/days",
+      "currency": null,
+      "url": "https://www.ecfr.gov/current/title-14/chapter-II/subchapter-A/part-260",
+      "confirmed": true,
+      "note": "Read from the eCFR text (89 FR 32832, Apr 26 2024, amended 89 FR 65536, Aug 12 2024)."
+    },
+    {
+      "date": "2026-10-03",
+      "rule": "Delta change/cancel fees, travel originating in the US and Canada",
+      "figures": {
+        "mainClassicComfortClassicExtraRefundable": 0,
+        "mainBasicComfortBasicToNorthAmerica": 99,
+        "mainBasicComfortBasicToEuropeUKAsia": 199,
+        "firstBasic": 300,
+        "premiumSelectBasic": 400,
+        "basicBusiness": 500
+      },
+      "unit": "per ticket",
+      "currency": "USD",
+      "url": "https://www.delta.com/us/en/baggage/overview",
+      "confirmed": true,
+      "note": "Basic tickets bought before 2025-11-06 could not be changed. From the UK: Main Classic £150, Main Basic £200. From Europe: Main Classic €150, Main Basic €300. From Mexico: Classic $200; Main Basic to US/Canada not permitted."
+    },
+    {
+      "date": "2026-10-03",
+      "rule": "Air Canada change fees, travel within Canada",
+      "figures": {
+        "economyStandard": {
+          "min": 100,
+          "max": 120
+        },
+        "economyFlexComfortLatitude": 0,
+        "economyBasic": "no changes permitted",
+        "premiumEconomyStandard": {
+          "min": 100,
+          "max": 120
+        }
+      },
+      "unit": "per change",
+      "currency": "CAD",
+      "url": "https://www.aircanada.com/us/en/aco/home/legal/products-and-services.html",
+      "confirmed": true,
+      "note": "The fare difference applies if moving to a higher fare."
+    },
+    {
+      "date": "2026-10-03",
+      "rule": "EU261/UK261 compensation, missed connections, minimum connection times",
+      "figures": null,
+      "unit": null,
+      "currency": null,
+      "url": "docs/research/world/research-travel-2.json",
+      "confirmed": true,
+      "note": "Already covered (compensation.uk261, compensation.eu261, connections.missedConnection, connections.minimumConnectionTimes); not repeated."
+    }
+  ],
+  "rideshare": [
+    {
+      "date": "2026-10-03",
+      "town": "London",
+      "operator": "Uber",
+      "figures": {
+        "avgUberXToPaddington": 20,
+        "toStPancras": 21,
+        "toWaterloo": 20,
+        "toHarrods": 18
+      },
+      "unit": "average trip price",
+      "currency": "GBP",
+      "url": "https://www.uber.com/global/en/r/cities/london-eng-gb/",
+      "confirmed": true,
+      "note": "Uber publishes average UberX prices to destinations, not a base/per-mile/per-minute rate card: '*Sample rider prices are average UberX prices only...' Origin not stated."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Mexico City",
+      "operator": "Uber",
+      "figures": {
+        "avgUberXToPalacioDeBellasArtes": 138,
+        "toParqueDelta": 100,
+        "toPaseoAcoxpa": 99,
+        "toWalmart": 81
+      },
+      "unit": "average trip price",
+      "currency": "MXN",
+      "url": "https://www.uber.com/global/en/r/cities/mexico-city-df-mx/",
+      "confirmed": true,
+      "note": "Same caveat: averages, origin not stated."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Toronto",
+      "operator": "Uber",
+      "figures": {
+        "avgUberXToEatonCentre": 15,
+        "toScarboroughTownCentre": 14,
+        "toSherwayGardens": 17
+      },
+      "unit": "average trip price",
+      "currency": "CAD",
+      "url": "https://www.uber.com/global/en/r/cities/toronto-on-ca/",
+      "confirmed": true
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Vancouver",
+      "operator": "Uber",
+      "figures": {
+        "avgUberXToWaterfrontStation": 13,
+        "toCommercialBroadway": 12,
+        "toKingEdward": 10
+      },
+      "unit": "average trip price",
+      "currency": "CAD",
+      "url": "https://www.uber.com/global/en/r/cities/vancouver-bc-ca/",
+      "confirmed": true,
+      "note": "The regulated minimum (PTB) is in research-travel-2.json."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "New York / Los Angeles / New Haven / Dublin",
+      "operator": "Uber, Lyft",
+      "figures": null,
+      "unit": null,
+      "currency": null,
+      "url": "https://www.uber.com/us/en/marketplace/pricing/",
+      "confirmed": false,
+      "note": "No per-city rate card is published. Uber city pages for LA, New Haven and Dublin list no sample prices; the NYC page 404'd; lyft.com/pricing/<city> pages returned 404. NYC congestion surcharges are in research-travel-2.json."
+    }
+  ],
+  "hotelExtras": [
+    {
+      "date": "2026-10-03",
+      "town": "Vancouver",
+      "hotel": "Fairmont Hotel Vancouver",
+      "figures": {
+        "petFeePerNight": 50,
+        "petFeeMaxPerStay": 100,
+        "petRemovalFee": 75
+      },
+      "unit": "per night / per stay",
+      "currency": "CAD (plus taxes)",
+      "url": "https://www.fairmont-hotel-vancouver.com/explore/pet-friendly/",
+      "confirmed": true,
+      "note": "Service dogs exempt. A $75 removal fee applies if a dog has to be removed for excessive noise."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "London / Dublin",
+      "hotel": "Premier Inn (all UK and Ireland hotels)",
+      "figures": {
+        "pets": "not allowed except assistance dogs",
+        "standardCheckIn": "15:00",
+        "checkOut": "12:00",
+        "earlyCheckIn": "from 11:00, paid optional extra at selected sites (price not on this page)",
+        "lateCheckOutPenalty": "up to one night's additional accommodation charge"
+      },
+      "unit": null,
+      "currency": "GBP/EUR",
+      "url": "https://www.premierinn.com/gb/en/terms/booking-terms-and-conditions.html",
+      "confirmed": true,
+      "note": "£10 early check-in from 10am and £20 late check-out to 4pm at some airport hotels came from a third-party search summary and were not confirmed."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Dublin",
+      "hotel": "Leonardo Hotel Dublin Christchurch (formerly Jurys Inn Dublin Christchurch)",
+      "figures": {
+        "pets": "not allowed - guide dogs only"
+      },
+      "unit": null,
+      "currency": "EUR",
+      "url": "https://www.leonardo-hotels.com/dublin/leonardo-hotel-dublin-christchurch",
+      "confirmed": true,
+      "note": "Early check-in fee and incidental deposit amount not published on the page."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Toronto",
+      "hotel": "Hyatt Regency Toronto",
+      "figures": {
+        "dogFeeFirst6Nights": 100,
+        "additionalFor7PlusNights": 100,
+        "maxDogWeightLb": 50,
+        "twoDogsCombinedMaxLb": 75
+      },
+      "unit": "per stay",
+      "currency": "CAD (plus taxes)",
+      "url": "https://www.hyatt.com/hyatt-regency/en-US/torrt-hyatt-regency-toronto/policies",
+      "confirmed": false,
+      "note": "hyatt.com returned 403; from a search summary of the hotel's policies page."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Mexico City",
+      "hotel": "Hyatt Regency Mexico City",
+      "figures": {
+        "petFeePerPetPerNight": 35,
+        "maxPets": 2,
+        "maxWeightLbPerPet": 44
+      },
+      "unit": "per pet per night",
+      "currency": "USD",
+      "url": "https://www.hotwire.com/Mexico-City-Hotels-Hyatt-Regency-Mexico-City.h23360.Hotel-Information",
+      "confirmed": false,
+      "note": "From a search summary of an OTA listing; not read on hyatt.com."
+    },
+    {
+      "date": "2026-10-03",
+      "town": "Los Angeles",
+      "hotel": "Courtyard / Residence Inn Los Angeles L.A. LIVE (Marriott); JW Marriott L.A. LIVE",
+      "figures": {
+        "courtyardPetFeePerStay": 150,
+        "residenceInnPetFeePerStay": 150,
+        "maxPetWeightLb": 40,
+        "jwMarriott": "no pets (service animals only)"
+      },
+      "unit": "per stay",
+      "currency": "USD",
+      "url": "https://www.marriott.com/en-us/hotels/laxld-courtyard-los-angeles-la-live/overview/",
+      "confirmed": false,
+      "note": "marriott.com returned 403; from search summaries. Incidental holds and early check-in are already in research-travel4.json (Marriott Marquis NYC $99 early check-in; 1 Hotel, Nobu, Fairmont Royal York holds)."
+    }
+  ],
+  "childTravel": [
+    {
+      "date": "2026-10-03",
+      "carrier": "Delta",
+      "figures": {
+        "lapInfantUSCanada": 0,
+        "lapInfantInternational": "10% of the adult fare",
+        "unaccompaniedMinorFee": 150,
+        "umnrAges": "5-14 required; 15-17 on request",
+        "childrenPerFee": "up to 4"
+      },
+      "unit": "per direction",
+      "currency": "USD",
+      "url": "https://www.delta.com/us/en/baggage/overview",
+      "confirmed": true
+    },
+    {
+      "date": "2026-10-03",
+      "carrier": "JetBlue",
+      "figures": {
+        "lapInfantUSDomestic": "no ticket needed",
+        "lapInfantInternational": "ticket required ($0 infant fare filed; taxes may apply)",
+        "unaccompaniedMinorFee": 150,
+        "umnrAges": "5 to under 14",
+        "umnrLimits": "nonstop JetBlue-operated flights only; max 3 per flight"
+      },
+      "unit": "per person, each way",
+      "currency": "USD",
+      "url": "https://www.jetblue.com/travel-agents/ticketing-policies",
+      "confirmed": true
+    },
+    {
+      "date": "2026-10-03",
+      "carrier": "Air Canada",
+      "figures": {
+        "unaccompaniedMinorFee": {
+          "min": 100,
+          "max": 120
+        }
+      },
+      "unit": "per one way, per child, per flight",
+      "currency": "CAD",
+      "url": "https://www.aircanada.com/us/en/aco/home/legal/products-and-services.html",
+      "confirmed": true,
+      "note": "The range is before/after tax. Earphones are complimentary for unaccompanied minors."
+    },
+    {
+      "date": "2026-10-03",
+      "carrier": "Aer Lingus",
+      "figures": {
+        "lapInfantEurope": 25,
+        "lapInfantNorthAmerica": "10% of the adult fare"
+      },
+      "unit": "per one-way flight",
+      "currency": "EUR or GBP",
+      "url": "https://www.aerlingus.com/localized/en/modals/infant-help.html",
+      "confirmed": true
+    },
+    {
+      "date": "2026-10-03",
+      "carrier": "Ryanair",
+      "figures": {
+        "lapInfantFee": 25
+      },
+      "unit": "per one-way flight",
+      "currency": "EUR or GBP",
+      "url": "https://babytraveluk.co.uk/flying-with-a-baby-ryanair",
+      "confirmed": false,
+      "note": "From search summaries; Ryanair's fees table renders by JavaScript."
+    },
+    {
+      "date": "2026-10-03",
+      "carrier": "American Airlines",
+      "figures": {
+        "unaccompaniedMinorFee": 150,
+        "umnrAges": "5-14 required; 15-17 optional"
+      },
+      "unit": "each way plus local taxes",
+      "currency": "USD",
+      "url": "https://www.aa.com/i18n/travel-info/special-assistance/unaccompanied-minors.jsp",
+      "confirmed": false,
+      "note": "aa.com returned 403; from search summaries."
+    },
+    {
+      "date": "2026-10-03",
+      "carrier": "British Airways",
+      "figures": {
+        "lapInfant": "10% of the adult fare (plus taxes) on revenue fares"
+      },
+      "unit": "per ticket",
+      "currency": "GBP",
+      "url": "https://www.britishairways.com/",
+      "confirmed": false,
+      "note": "Search summaries only. BA's unaccompanied-minor (Skyflyer Solo) fee is contradictory across sources and was not confirmed."
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "A fixed own-price self-pay dental cleaning from a named Los Angeles dentist (only market ranges found).",
+      "A named optometrist's own eye-exam fee in Vancouver (only the MSP contribution rule found), and an optometrist in New Haven.",
+      "A named therapist's published fee in New Haven CT.",
+      "HSE GP waiting-time statistics for Ireland or Dublin (none published).",
+      "Lyft per-city rate cards (lyft.com/pricing/<city> returned 404); Uber base/per-mile/per-minute/booking-fee rate cards for any of the eight towns (Uber publishes only average trip prices).",
+      "Toronto and Vancouver wheelchair-accessible taxi fares as a separate figure (no WAV-specific tariff found).",
+      "Fixed published travel-medical premiums from World Nomads or Allianz (quote tools only).",
+      "United and American overweight-bag fees and change fees on their own sites (blocked)."
+    ],
+    "worthChecking": [
+      "2025 AHA/ACC guideline: confirm 'monthly follow-up until control' on the AHA PDF.",
+      "ADA Standards of Care 2026 (vol 49 suppl 1) wording on glycemic-status frequency; 2025 was read only via a search summary.",
+      "Ryanair fees table (bag prices, per-kg excess, infant fee) via a browser; the page is JS-rendered.",
+      "JetBlue and WestJet 2026 bag fees on their own sites; both changed fees in 2026 per secondary sources.",
+      "Hyatt Regency Toronto and Courtyard L.A. LIVE pet fees on hyatt.com / marriott.com (blocked).",
+      "Specsavers UK (£25) and Ireland (€30) eye-test prices on their own sites (403).",
+      "NYC Accessible Taxi E-hail: whether app upfront prices for WAV trips match the meter."
+    ]
+  }
+}

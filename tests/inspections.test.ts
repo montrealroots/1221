@@ -5,6 +5,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
+import { usedListings } from '@/engine/systems/usedcars';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
@@ -62,8 +63,11 @@ describe('when a car is inspected', () => {
 
   it('smog-checks a nine-year-old petrol car in Los Angeles within its two years, and never an electric one', () => {
     const drive = (modelId: string, seed: string) => {
-      const sim = quickSave({ startLocationId: 'us-ca-losangeles', homeRegionId: 'us-ca-losangeles', livesWhereBorn: true, wealth: 'wealthy' }, seed);
-      const r = sim.execute({ kind: 'vehicle.buy', payload: { modelId, age: 10 } });
+      // A car of nine years or more on offer that month (`usedListings`, from 2026-10-03).
+      let sim = quickSave({ startLocationId: 'us-ca-losangeles', homeRegionId: 'us-ca-losangeles', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+      let age = usedListings(sim, sim.player, modelId, 'us-ca-losangeles', 'US-CA').find((l) => l.age >= 9)?.age;
+      for (let i = 0; !age && i < 40; i += 1) { sim = quickSave({ startLocationId: 'us-ca-losangeles', homeRegionId: 'us-ca-losangeles', livesWhereBorn: true, wealth: 'wealthy' }, `${seed}-${i}`); age = usedListings(sim, sim.player, modelId, 'us-ca-losangeles', 'US-CA').find((l) => l.age >= 9)?.age; }
+      const r = sim.execute({ kind: 'vehicle.buy', payload: { modelId, age } });
       expect(r.ok, r.error).toBe(true);
       sim.advanceBy(800 * MS_DAY);
       return sim.universe.transactions.some((t) => /Smog Check/.test(t.memo));
@@ -91,7 +95,8 @@ describe('what it costs', () => {
   it('pays a used car’s MOT on the car’s month once it falls due', () => {
     const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'wealthy' }, 'inspect-gb');
     sim.universe.accounts[sim.player.primaryAccountId!]!.balance += inSave(sim, 30_000_00, 'GBP');
-    const r = sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'gb-ford-puma', age: 5 } });
+    const age = usedListings(sim, sim.player, 'gb-ford-puma', 'uk-eng-london', 'GB').find((l) => l.age >= 3)!.age;
+    const r = sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'gb-ford-puma', age } });
     expect(r.ok, r.error).toBe(true);
     sim.advanceBy(11 * 30 * MS_DAY);
     expect(sim.universe.transactions.some((t) => t.memo === 'The car’s MOT')).toBe(false);

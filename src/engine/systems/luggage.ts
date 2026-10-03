@@ -45,7 +45,7 @@ import { payFromBank } from './household';
 
 export const CARRY_ON = { label: 'Carry-On Suitcase', holdsL: 45 } as const;
 /** A week's clothes, by part. SLATE's estimate. */
-export const PACK: Readonly<Partial<Record<Slot, number>>> = { top: 7, bottom: 3, underwear: 7, socks: 7, shoes: 1, outer: 1, dress: 2, suit: 1, active: 2 };
+export const PACK: Readonly<Partial<Record<Slot, number>>> = { base: 2, top: 7, bottom: 3, underwear: 7, socks: 7, shoes: 1, outer: 1, dress: 2, suit: 1, active: 2 };
 
 const isLuggage = (i: Item) => i.kind.startsWith('luggage:');
 /** The bag that goes away: the one chosen, or the first owned. */
@@ -81,6 +81,24 @@ export function starterLuggage(sim: Simulation, person: Person): boolean {
   if (suitcaseOf(person) || !home || person.clothesSince === undefined) return false;
   addItem(sim, person, { kind: 'luggage:carry-on', label: CARRY_ON.label, quantity: 1, condition: 1, at: { kind: 'home', home, spot: 'storage' }, acquiredAt: sim.now, holdsL: CARRY_ON.holdsL, volumeL: CARRY_ON.holdsL });
   return true;
+}
+
+/**
+ * A bag bigger than a cabin takes (from 2026-10-03): a medium or a large
+ * suitcase, or one whose outside measure is past the 45 liters of the
+ * 22 × 14 × 9 inches America's airlines take in a cabin. It flies checked.
+ */
+export function checkedSize(bag: Item): boolean {
+  const piece = luggageById(bag.kind.slice('luggage:'.length));
+  if (piece) return piece.type === 'medium' || piece.type === 'large' || (piece.outsideL ?? 0) > CARRY_ON.holdsL;
+  return (bag.volumeL ?? 0) > CARRY_ON.holdsL;
+}
+
+/** Why a flight can't be booked with no bag checked, or nothing: the suitcase going is bigger than a cabin takes. */
+export function cabinBagRefusal(person: Person, bags: number): string | undefined {
+  const bag = suitcaseOf(person);
+  if (bags > 0 || !bag || !checkedSize(bag)) return undefined;
+  return `Your ${bag.label} is bigger than a cabin takes: it goes as a checked bag.`;
 }
 
 /** What's in the suitcase now. */

@@ -69,6 +69,8 @@ export const HEALTH_MONTH_KIND = 'health.month';
 /** A chronic condition: treated or not, its care unpaid this month, type 1 where diabetes, and its medicine's supply (from 2026-10-02). */
 export interface Chronic {
   treated: boolean; lapsed?: boolean; typeOne?: boolean; supplyUntil?: Instant;
+  /** Its last review, and when it was diagnosed in play (`REVIEW_MONTHS`, from 2026-10-03). */
+  reviewedAt?: Instant; since?: Instant;
   /** When its prescription was written or last renewed, and a repeat ordered from the GP and when it's ready (`RX`, from 2026-10-03). */
   prescribedAt?: Instant; orderedReadyAt?: Instant;
 }
@@ -86,7 +88,33 @@ export interface MedicalBill {
   hospital?: boolean;
   cityId?: string;
   aid?: 'free' | 'discount' | 'refused' | 'screened';
+  /** A marketplace plan's claim denied, the share it would have left, and an appeal's day and outcome (`DENIALS`, from 2026-10-03). */
+  denied?: { share: Money; appealedAt?: Instant; outcome?: 'upheld' | 'overturned' };
 }
+
+/**
+ * Denials (from 2026-10-03; `research-health-travel-gaps.json`). An ACA
+ * marketplace insurer denied 20% of in-network claims in 2023 (KFF), and a
+ * denied claim is billed as if uninsured. It's appealed internally within
+ * 180 days (HealthCare.gov), decided within 60 for care already had, and
+ * insurers upheld 56% of the appeals filed (KFF). Fewer than 1% of denials
+ * are appealed; here that's the player's choice. Other covers' denial rates
+ * aren't published, and they aren't denied.
+ */
+export const DENIALS = { rate: 0.2, appealDays: 180, decideDays: 60, upheld: 0.56 } as const;
+export const APPEAL_KIND = 'health.appeal_decided';
+
+/**
+ * Reviews of a chronic condition (from 2026-10-03; NICE's guidance, read for
+ * `research-health-travel-gaps.json`): high blood pressure once a year,
+ * asthma at least once a year, type 2 diabetes every six months once
+ * stable. Depression's review two weeks after an antidepressant begins is
+ * kept for a diagnosis made in play. Arthritis's interval wasn't read. Each
+ * is a doctor's visit, booked when due and kept or missed as any other.
+ */
+export const REVIEW_MONTHS: Readonly<Partial<Record<Condition, number>>> = { hypertension: 12, asthma: 12, diabetes: 6 };
+export const DEPRESSION_REVIEW_DAYS = 14;
+export const reviewWhat = (c: Condition): string => `A review of your ${CONDITION_LABEL[c].toLowerCase()}`;
 
 export interface HealthRecord {
   /** Their own doctor, a practice in the town they live in (`systems/clinics.ts`, from 2026-10-01). */
@@ -382,7 +410,7 @@ export function onsetMonth(sim: Simulation, person: Person, at: Instant): Condit
     if (h.chronic?.[condition]) continue;
     const chance = onsetYearly(condition, age, bmi) / 12;
     if (rng.next() >= chance) continue;
-    (h.chronic ??= {})[condition] = { treated: true };
+    (h.chronic ??= {})[condition] = { treated: true, since: at };
     if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: `Diagnosed: ${CONDITION_LABEL[condition]}`, body: `A doctor found it this month. Its care begins now, at what your plan leaves; Let It Go on Papers stops it.`, importance: 75, route: '/workspace/papers' });
     return condition;
   }
@@ -571,6 +599,11 @@ export function rxValidUntil(person: Person, state: Chronic): Instant | undefine
 /** A doctor's visit kept renews every prescription. */
 export function renewPrescriptions(person: Person, at: Instant): void {
   for (const state of Object.values(healthOf(person).chronic ?? {}) as Chronic[]) if (state.treated) state.prescribedAt = at;
+}
+
+/** A visit kept for a condition's review records it. */
+export function reviewed(person: Person, what: string, at: Instant): void {
+  for (const [condition, state] of Object.entries(healthOf(person).chronic ?? {}) as [Condition, Chronic][]) if (what.startsWith(reviewWhat(condition))) state.reviewedAt = at;
 }
 
 /** Fills each treated condition's medicine that's within a week of running out, or for so many days before a trip; what was paid. */
@@ -904,8 +937,31 @@ export function dentalPlanFor(person: Person, at: Instant): DentalPlan | undefin
 }
 
 /** The dentist and the optician: what the plan pays of each, where it has them, or a stand-alone dental plan; otherwise the price. */
+/**
+ * A named dentist's or optician's own self-pay price where they live (from
+ * 2026-10-03; `research-health-travel-gaps.json`, each read on its own page):
+ * a cleaning at 209 NYC Dental ($144), Holistic Smile Care in Los Angeles
+ * (its $150 average), South Kensington Medical & Dental (£89), Truly Dental in
+ * Dublin (€100 with a hygienist), Lockwood Clinic in Toronto (the middle of
+ * its C$150 to C$200), Aarm Dental in Vancouver (C$297.40, a recall exam with
+ * scaling, by BC's fee guide) and hi sonrisa in Mexico City (MX$1,199); an eye
+ * exam at Warby Parker in New York ($95), Spadina Optometry in Toronto
+ * (C$198) and Ópticas Devlyn in Mexico City (free). Until then each was
+ * America's average, converted, wherever they lived.
+ */
+export const NAMED_TEETH_EYES: Readonly<Record<string, Partial<Record<'cleaning' | 'exam', { name: string; price: number; currency: string }>>>> = {
+  'us-ny-newyork': { cleaning: { name: '209 NYC Dental', price: 144, currency: 'USD' }, exam: { name: 'Warby Parker', price: 95, currency: 'USD' } },
+  'us-ca-losangeles': { cleaning: { name: 'Holistic Smile Care', price: 150, currency: 'USD' } },
+  'uk-eng-london': { cleaning: { name: 'South Kensington Medical & Dental', price: 89, currency: 'GBP' } },
+  'ie-lei-dublin': { cleaning: { name: 'Truly Dental', price: 100, currency: 'EUR' } },
+  'ca-on-toronto': { cleaning: { name: 'Lockwood Clinic', price: 175, currency: 'CAD' }, exam: { name: 'Spadina Optometry', price: 198, currency: 'CAD' } },
+  'ca-bc-vancouver': { cleaning: { name: 'Aarm Dental Group', price: 297.4, currency: 'CAD' } },
+  'mx-cmx-mexicocity': { cleaning: { name: 'hi sonrisa', price: 1_199, currency: 'MXN' }, exam: { name: 'Ópticas Devlyn', price: 0, currency: 'MXN' } },
+};
+
 export function teethAndEyesShareOf(person: Person, care: 'cleaning' | 'filling' | 'exam' | 'glasses', at: Instant, into = 'USD'): Money {
-  const price = usd(grown(DENTAL_VISION.price[care], care === 'cleaning' || care === 'filling' ? 'dental' : 'vision', at), into);
+  const named = care === 'cleaning' || care === 'exam' ? NAMED_TEETH_EYES[homeOf(person)]?.[care] : undefined;
+  const price = named ? (named.currency === into ? Math.round(named.price * 100) : exchange(Math.round(named.price * 100), named.currency, into) ?? Math.round(named.price * 100)) : usd(grown(DENTAL_VISION.price[care], care === 'cleaning' || care === 'filling' ? 'dental' : 'vision', at), into);
   // Restricted scope pays none of it; state-funded Medi-Cal no teeth but an emergency's from July 2026.
   const prog = person.health?.program;
   const noTeeth = (care === 'cleaning' || care === 'filling') && coverOn(person, at) === 'medicaid' && prog?.scope === 'state' && at >= MEDI_CAL_UIS.dentalEnds;
@@ -1025,9 +1081,13 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   if (amount <= 0) return undefined;
   h.seq = (h.seq ?? 0) + 1;
   const hospital = event.care === 'emergency' || event.care === 'stay';
+  // A marketplace insurer's denial: billed as if uninsured (`DENIALS`).
+  const denied = coverOn(person, at) === 'marketplace' && sim.rng('health.denial', person.id, `m${h.seq}`).next() < DENIALS.rate;
+  const full = denied ? Math.max(amount, uninsuredPrice(sim, event.care as 'visit' | 'urgent' | 'emergency' | 'stay', at)) : amount;
   // An uninsured Connecticut patient's was screened for the charity at billing (`shareOf`).
   const screened = hospital && !planOf(person, at) && CITIES.get(homeOf(person))?.parentId === 'us-ct';
-  const bill: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY, ...(hospital ? { hospital: true, cityId: homeOf(person) } : {}), ...(screened ? { aid: 'screened' as const } : {}) };
+  const bill: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount: full, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY, ...(hospital ? { hospital: true, cityId: homeOf(person) } : {}), ...(screened ? { aid: 'screened' as const } : {}), ...(denied ? { denied: { share: amount } } : {}) };
+  if (denied && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Claim Denied', body: `Your plan denied the claim for ${event.what.toLowerCase()}: ${formatMoney(full, cur)} is yours to pay unless an appeal overturns it.`, importance: 60, route: '/workspace/papers' });
   h.bills.push(bill);
   h.bills = h.bills.slice(-40);
   sim.schedule({ at: bill.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${event.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: bill.id } });
@@ -1076,6 +1136,17 @@ export function extraSupplyRefusal(person: Person, days: number): string | undef
  * away in another country, travel insurance's or the place's price for a
  * visitor (`careAway`). The bill for care had is this same figure.
  */
+/** What care costs uninsured, in the save's money: SLATE's American price at the uninsured markup. */
+export const uninsuredPrice = (sim: Simulation, c: 'visit' | 'urgent' | 'emergency' | 'stay', at: Instant): Money => Math.round(usd(grown(CARE.price[c], c as 'visit', at), saveCurrency(sim.universe)) * CARE.uninsuredMarkup);
+
+/** Why a bill's denial can't be appealed now, or nothing. */
+export function appealRefusal(bill: MedicalBill | undefined, at: Instant): string | undefined {
+  if (!bill?.denied) return 'That claim wasn’t denied.';
+  if (bill.denied.appealedAt !== undefined) return 'It’s been appealed.';
+  if (at > bill.at + DENIALS.appealDays * MS_DAY) return `An appeal is filed within ${DENIALS.appealDays} days of the denial.`;
+  return undefined;
+}
+
 export function careQuote(sim: Simulation, person: Person, care: Care, at: Instant = sim.now): Money {
   const cur = saveCurrency(sim.universe);
   const amount = shareOf(person, care, at, cur);
@@ -1107,6 +1178,16 @@ export function registerHealth(sim: Simulation): void {
     }
     // A self-employed Canadian's EI sickness benefit, for a week too sick to work (`systems/eiself.ts`).
     eiWeek(s, person, item.at, laidUp(person, item.at + 3 * MS_DAY) || (person.health?.inHospitalUntil ?? 0) > item.at - 4 * MS_DAY);
+    // A chronic condition's review, booked when it's due (`REVIEW_MONTHS`, from 2026-10-03).
+    if (person.id === s.universe.playerId && !appointmentsOf(person).length && !healthOf(person).owedVisit) {
+      for (const [condition, state] of Object.entries(healthOf(person).chronic ?? {}) as [Condition, Chronic][]) {
+        if (!state.treated) continue;
+        const months = REVIEW_MONTHS[condition];
+        const due = months ? (state.reviewedAt ?? state.since ?? item.at) + months * 30.44 * MS_DAY : condition === 'depression' && state.since && !state.reviewedAt ? state.since + DEPRESSION_REVIEW_DAYS * MS_DAY : undefined;
+        state.reviewedAt ??= state.since ?? item.at;
+        if (due !== undefined && item.at >= due) { if (!book(s, person, reviewWhat(condition))) healthOf(person).owedVisit = reviewWhat(condition); break; }
+      }
+    }
     // The medicine filled where they live, with a week left; away, it may run out (`fillMedicine`, from 2026-10-02).
     if (person.currentLocationId === homeOf(person)) fillMedicine(s, person, item.at);
     // Depression left alone weighs on morale.
@@ -1131,6 +1212,31 @@ export function registerHealth(sim: Simulation): void {
     s.post({ memo: `Medical bill unpaid: ${bill.what}`, category: 'health', postings: [{ accountId: debt.id, amount: -bill.amount }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: bill.amount }] });
     h.debtSince ??= s.now;
     if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'A Medical Bill Went Unpaid', body: `${formatMoney(bill.amount, saveCurrency(s.universe))} for ${bill.what.toLowerCase()} is a medical debt now.`, importance: 75, route: '/workspace/papers' });
+  });
+
+  sim.onCommand<{ billId: string }, { decidedAt: Instant }>('health.appeal', (p, { sim: s }) => {
+    const person = s.player;
+    const bill = healthOf(person).bills.find((b) => b.id === p?.billId);
+    const no = appealRefusal(bill, s.now);
+    if (no) throw new CommandError(no);
+    bill!.denied!.appealedAt = s.now;
+    const decidedAt = s.now + DENIALS.decideDays * MS_DAY;
+    s.schedule({ at: decidedAt, kind: APPEAL_KIND, label: 'An Appeal Decided', category: 'personal', priority: 25, payload: { personId: person.id, billId: bill!.id } });
+    return { decidedAt };
+  });
+  sim.onSchedule(APPEAL_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const bill = person ? healthOf(person).bills.find((b) => b.id === item.payload.billId) : undefined;
+    if (!person || !bill?.denied) return;
+    const upheld = s.rng('health.appeal', person.id, bill.id).next() < DENIALS.upheld;
+    bill.denied.outcome = upheld ? 'upheld' : 'overturned';
+    if (!upheld) {
+      // Overturned: only the plan's share is owed, and what was paid over it comes back.
+      const over = bill.amount - bill.denied.share;
+      if (bill.paid && over > 0 && person.primaryAccountId) s.post({ memo: `Appeal won: ${bill.what}`, category: 'health', postings: [{ accountId: person.primaryAccountId, amount: over }, { accountId: s.nominalAccount('expense', 'Medical Care').id, amount: -over }] });
+      bill.amount = bill.denied.share;
+    }
+    if (person.id === s.universe.playerId) s.notify({ category: 'health', title: upheld ? 'Appeal Upheld' : 'Appeal Won', body: upheld ? `The plan kept its denial for ${bill.what.toLowerCase()}.` : `The plan reversed its denial for ${bill.what.toLowerCase()}: you owe its share, ${formatMoney(bill.denied.share, saveCurrency(s.universe))}.`, importance: 55, route: '/workspace/papers' });
   });
 
   // England's prescription prepayment certificate: three months or twelve, every prescription free while it runs.

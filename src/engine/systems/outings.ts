@@ -25,8 +25,9 @@ export function bikeHere(person: Person): OwnedVehicle | undefined {
 }
 
 export function rideRefusal(sim: Simulation, person: Person): string | undefined {
-  if (!bikeHere(person)) return 'You have no bicycle or e-bike here.';
-  return fineWeatherRefusal(sim, person, 'ride');
+  const bike = bikeHere(person);
+  if (!bike) return 'You have no bicycle or e-bike here.';
+  return fineWeatherRefusal(sim, person, 'ride', kindOf(modelById(bike.modelId)!) === 'ebike' ? CYCLING.met.ebike : CYCLING.met.bicycle, 60);
 }
 
 /** The chance an hour's ride injures: DfT's cyclist casualties a mile at the Compendium's leisure pace, an e-bike's at the Oslo study's share. */
@@ -61,5 +62,5 @@ export function trailFor(person: Person): OwnedVehicle | undefined {
 export function trailRefusal(sim: Simulation, person: Person): string | undefined {
   if (!kindHere(person, ['atv'], () => true)) return 'You have no ATV.';
   if (!trailFor(person)) return 'An ATV is ridden on land you own: acreage in this state or province, and your ATV kept here.';
-  return fineWeatherRefusal(sim, person, 'ride');
+  return fineWeatherRefusal(sim, person, 'ride', ATV_OUTING.met, ATV_OUTING.hours * 60);
 }

@@ -70,6 +70,8 @@ export interface Item {
   bulky?: boolean;
   /** Flat-packed until it's put together (`items.assemble`, from 2026-10-03). */
   flatPacked?: true;
+  /** Booked for the council's bulky collection, then (`items.discard`, from 2026-10-03). */
+  collectAt?: Instant;
   /** A garment's kind, care and wear (`systems/wardrobe.ts`). */
   garment?: import('./wardrobe').Garment;
   /** A phone: which, its color, its line, its battery and what's paid on it (`systems/phones.ts`, from 2026-10-02). */

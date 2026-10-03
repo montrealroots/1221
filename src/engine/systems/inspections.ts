@@ -57,6 +57,8 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { TIRE_SET, odometerOf, tiresWorn } from './tires';
+import { HALOGENS_BACK_GBP } from './mods';
 import type { Person } from '../domain/model';
 import { MS_DAY, type Instant } from '../core/time';
 import { formatMoney, saveCurrency } from '../core/money';
@@ -70,7 +72,7 @@ import { READS_THE_LIGHT } from './repairs';
 const YEAR_MS = 365.2425 * MS_DAY;
 
 /** What an inspection reads of a car. */
-type Inspected = { id: string; boughtAt: Instant; ageAtPurchase: number; jurisdiction: Jurisdiction; cityId: string; fault?: { usd: number } };
+type Inspected = { id: string; boughtAt: Instant; ageAtPurchase: number; jurisdiction: Jurisdiction; cityId: string; fault?: { usd: number }; km?: number; odometerAtPurchase?: number; tiresAtKm?: number; mods?: readonly string[] };
 
 export interface InspectionRule {
   label: string;
@@ -130,6 +132,8 @@ export function inspectIfDue(sim: Simulation, person: Person, v: Inspected & { i
     if (!payFromBank(sim, person, bill, `The car’s repair after its ${rule.label}, and the retest`, 'vehicle')) owe(sim, person, bill, `The car’s repair after its ${rule.label}`, 'vehicle');
     // The fault the light showed is the one mended (`systems/repairs.ts`).
     if (failed.light) delete v.fault;
+    if (failed.tires) v.tiresAtKm = odometerOf(v);
+    if (failed.led) v.mods = (v.mods ?? []).filter((m) => m !== 'led');
     if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: `The Car Failed Its ${rule.label}`, body: `Repaired and passed on the retest: ${formatMoney(bill, cur, { cents: false })}.`, importance: 55, route: '/workspace/vehicles' });
   }
   v.inspected = due;
@@ -137,8 +141,13 @@ export function inspectIfDue(sim: Simulation, person: Person, v: Inspected & { i
 }
 
 /** Whether the test due fails (decider `vehicle.inspection`), and what putting it right costs, in the repair's and the rule's money. */
-export function inspectionFails(sim: Simulation, v: Inspected, due: Instant): { repair: number; repairCurrency: string; retest: number; light?: boolean } | undefined {
+export function inspectionFails(sim: Simulation, v: Inspected, due: Instant): { repair: number; repairCurrency: string; retest: number; light?: boolean; tires?: boolean; led?: boolean } | undefined {
   const fails = INSPECTION_RULES[v.jurisdiction]?.fails;
+  // Tires past their life, at the legal limit, fail it, and a set is fitted (`tiresWorn`, from 2026-10-03).
+  const set = TIRE_SET[v.jurisdiction];
+  if (fails && set && tiresWorn(v)) return { repair: set.price, repairCurrency: set.currency, retest: fails.retest, tires: true };
+  // LEDs in a halogen headlamp fail the MOT, and the halogens go back (`systems/mods.ts`, from 2026-10-03).
+  if (fails && v.jurisdiction === 'GB' && v.mods?.includes('led')) return { repair: HALOGENS_BACK_GBP, repairCurrency: 'GBP', retest: fails.retest, led: true };
   // A lit check engine light fails a test that reads the car's computer, whatever the draw (`systems/repairs.ts`, from 2026-10-01).
   if (fails && v.fault && READS_THE_LIGHT.has(v.jurisdiction)) return { repair: v.fault.usd, repairCurrency: 'USD', retest: fails.retest, light: true };
   const age = (due - (v.boughtAt - v.ageAtPurchase * YEAR_MS)) / YEAR_MS;

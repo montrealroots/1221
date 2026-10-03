@@ -46,7 +46,9 @@ import { drawFromBank, spend } from './household';
 import { heatIndexC, weatherAt, weatherOn } from './weather';
 import { alarmMonth, renterAlarmFactor } from './alarm';
 import { securityFactor } from './homesecurity';
-import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
+import { SITTING_MET, coldRefusal } from './coldstress';
+import { BODY } from '../content/body';
+import { GARMENTS_PER_LOAD, cleanOutfits, swimsuitFor, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
 import { detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
 import { amenitiesOf } from './hotels';
@@ -492,9 +494,10 @@ export function heatLoss(sim: Simulation, person: Person, at: Instant): number {
  * Weather to be out in: dry, and neither freezing nor sweltering. A swim needs a warm day. Sweltering is
  * read on the heat index from 2026-10-01 (`heatIndexC`), at the National Weather Service's "extreme caution"
  * from 90°F, where heat stroke is possible with physical activity; until then it was the day's high alone, at
- * SLATE's 32 °C, and the humidity changed nothing.
+ * SLATE's 32 °C, and the humidity changed nothing. Cold was SLATE's 10 °C to sit out and freezing for a run or a court,
+ * whatever was worn, until 2026-10-03; now it's what's worn against the hour's air (`coldRefusal`).
  */
-export const FINE = { lowC: 10, highC: (90 - 32) * 5 / 9, swimC: 24, runLowC: 0 };
+export const FINE = { highC: (90 - 32) * 5 / 9, swimC: 24 };
 
 /** The weather this hour where they are, as the Weather panel shows it: the sky now, and the temperature now. */
 export function weatherNow(sim: Simulation, person: Person): { condition: string; highC: number; humidity: number } | undefined {
@@ -506,24 +509,29 @@ const FALLING: Readonly<Record<string, string>> = { Rain: 'raining', Thunderstor
 const wet = (condition: string) => condition in FALLING;
 
 /** Why they can't sit out now, or nothing where they can. */
-export function outsideRefusal(sim: Simulation, person: Person): string | undefined {
+export function outsideRefusal(sim: Simulation, person: Person, minutes: number): string | undefined {
   const place = placeOf(sim, person);
   if (!atHome(person) || !place || place.fixtures.outdoor === 'none') return 'Your place has nowhere outside.';
-  return fineWeatherRefusal(sim, person, 'sit out');
+  return fineWeatherRefusal(sim, person, 'sit out', SITTING_MET, minutes);
 }
 
-/** Why it's no weather to be out in, or nothing when it's fine: sitting out's rule, and a boat's. */
-export function fineWeatherRefusal(sim: Simulation, person: Person, doing: string): string | undefined {
+/** Why it's no weather to be out in, or nothing when it's fine: sitting out's rule, and a boat's; the cold by what's worn, at the effort and for the minutes. */
+export function fineWeatherRefusal(sim: Simulation, person: Person, doing: string, met: number, minutes: number): string | undefined {
   const w = weatherNow(sim, person);
   if (!w) return undefined;
   if (wet(w.condition)) return `It’s ${FALLING[w.condition] ?? 'wet'} out.`;
-  if (w.highC < FINE.lowC) return `It’s too cold to ${doing}.`;
+  const cold = coldRefusal(sim, person, met, minutes, doing);
+  if (cold) return cold;
   if (heatIndexC(w.highC, w.humidity) > FINE.highC) return `It’s too hot to ${doing}.`;
   return undefined;
 }
 
-/** Why a swim can't be had now, or nothing where it can. */
+/** Why a swim can't be had now, or nothing where it can: a pool open to you, and a swimsuit of yours to hand (from 2026-10-03). */
 export function swimRefusal(sim: Simulation, person: Person): string | undefined {
+  return poolRefusal(sim, person) ?? (swimsuitFor(sim, person) ? undefined : 'You have no clean swimsuit to hand: one is bought with the clothes.');
+}
+
+function poolRefusal(sim: Simulation, person: Person): string | undefined {
   // A member's gym with a pool, indoors, open now (`systems/gyms.ts`, from 2026-10-01).
   if (gymHere(sim, person)?.pool) return undefined;
   // A named hotel's own pool, while staying there; an outdoor one by the weather (from 2026-10-02).
@@ -573,7 +581,9 @@ export function courtAt(person: Person): { court: 'tennis' | 'basketball' | 'pic
 export function courtRefusal(sim: Simulation, person: Person, court: { court: string; lit: boolean } | undefined = courtAt(person)): string | undefined {
   if (!court) return homeCourts(person).some((c) => c.court === 'football') ? 'A football pitch needs players: invite friends to play.' : 'You have no court.';
   const w = weatherNow(sim, person);
-  if (w && (wet(w.condition) || heatIndexC(w.highC, w.humidity) > FINE.highC || w.highC < FINE.runLowC)) return 'It isn’t a day for the court.';
+  if (w && (wet(w.condition) || heatIndexC(w.highC, w.humidity) > FINE.highC)) return 'It isn’t a day for the court.';
+  const cold = coldRefusal(sim, person, COURT_MET[court.court as Court], 60, 'play');
+  if (cold) return cold;
   if (!court.lit) {
     const city = CITIES.require(person.currentLocationId);
     const sun = sunTimes(sim.now, city.latitude, city.longitude, city.timeZone);
@@ -595,7 +605,7 @@ export function trainingAt(sim: Simulation, person: Person): { where: 'gym' | 'r
   if (gymHere(sim, person)) return { where: 'gym', builds: TRAINING.gym };
   if ((placeOf(sim, person)?.fixtures.gym ?? 'none') !== 'none') return { where: 'gym', builds: TRAINING.gym };
   const w = weatherNow(sim, person);
-  if (w && !wet(w.condition) && heatIndexC(w.highC, w.humidity) <= FINE.highC && w.highC >= FINE.runLowC) return { where: 'run', builds: TRAINING.run };
+  if (w && !wet(w.condition) && heatIndexC(w.highC, w.humidity) <= FINE.highC && !coldRefusal(sim, person, BODY.met.run, 60, 'run')) return { where: 'run', builds: TRAINING.run };
   return { where: 'home', builds: TRAINING.home };
 }
 

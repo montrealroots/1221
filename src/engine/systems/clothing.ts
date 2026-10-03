@@ -38,7 +38,7 @@ import { DRY_CLEANERS, DRY_CLEANER_BASE, DRY_CLEAN_DAYS, cleanClassOf } from '..
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
 import { atTown } from './homes';
-import { expenseFor, spend } from './household';
+import { expenseFor, payWith, payWithRefusal, spend, type PayWith } from './household';
 import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place } from './items';
 import { cancelOrder, ordersOf, placeOrder } from './orders';
 import { CLICK_COLLECT, type CollectTerms } from '../content/clickcollect';
@@ -108,10 +108,24 @@ export function productPrice(sim: Simulation, cityId: string, p: ClothingProduct
 }
 
 /** A kind of garment as a list names it. */
+/** The kinds the trade names apart (from 2026-10-03). */
+export const SUBTYPE_LABEL: Readonly<Record<string, string>> = { swimwear: 'Swimwear', thermals: 'Thermals', shapewear: 'Shapewear', hosiery: 'Hosiery', slips: 'Slips', cultural: 'Cultural Clothing' };
+
+/**
+ * The same product's listings at the market's other sellers, cheapest first
+ * (the master plan's §22b, from 2026-10-03): each its own retailer's price,
+ * delivery and returns.
+ */
+export function otherSellers(sim: Simulation, cityId: string, p: ClothingProduct): { product: ClothingProduct; price: Money }[] {
+  if (!p.sameAs) return [];
+  return CLOTHING_PRODUCTS.filter((x) => x.sameAs === p.sameAs && x.market === p.market && x.id !== p.id)
+    .map((product) => ({ product, price: productPrice(sim, cityId, product) })).sort((a, b) => a.price - b.price);
+}
+
 export const KIND_LABEL: Readonly<Record<string, string>> = {
   't-shirt': 'T-Shirts', shirt: 'Shirts And Tops', sweater: 'Sweaters', jeans: 'Jeans', trousers: 'Trousers And Shorts', skirt: 'Skirts',
   dress: 'Dresses', suit: 'Suits And Tailoring', coat: 'Coats And Jackets', active: 'Activewear', underwear: 'Underwear', bra: 'Bras',
-  socks: 'Socks And Tights', pajamas: 'Sleepwear', shoes: 'Shoes', accessory: 'Accessories',
+  socks: 'Socks And Tights', pajamas: 'Sleepwear', shoes: 'Shoes', accessory: 'Accessories', swimsuit: 'Swimwear', slip: 'Slips',
 };
 
 /**
@@ -126,7 +140,7 @@ export function clothingCatalog(sim: Simulation, cityId: string): CatalogEntry<C
     return {
       id: p.id, label: p.name, value: p, basis: 'Price, Tax In', price: productPrice(sim, cityId, p), priceKind: 'advertised' as const,
       // The department and the retailer's own type of garment, as its site files it (from 2026-10-02).
-      facets: { retailer: r.name, kind: KIND_LABEL[p.kind] ?? 'Other', department: p.category, type: p.subcategory ?? p.category, where: r.storesIn.includes(cityId) ? 'In Store' : r.delivers ? 'Online' : 'Elsewhere' },
+      facets: { retailer: r.name, kind: KIND_LABEL[p.kind] ?? 'Other', department: p.category, type: p.subcategory ?? p.category, special: p.subtype ? SUBTYPE_LABEL[p.subtype] ?? p.subtype : 'None', where: r.storesIn.includes(cityId) ? 'In Store' : r.delivers ? 'Online' : 'Elsewhere' },
       words: `${p.brand} ${p.category} ${p.subcategory ?? ''} ${p.material ?? ''} ${p.colors.join(' ')}`,
     };
   });
@@ -183,9 +197,13 @@ export function buyRefusal(person: Person, o: BuyOptions): string | undefined {
   return undefined;
 }
 
+/** A maternity line, by its name as its retailer writes it. */
+export const isMaternity = (p: Pick<ClothingProduct, 'name'>): boolean => /\bmaternity\b|\bmaternidad\b/i.test(p.name);
+
 /** A garment's wear and care, from a product. A wipe-clean garment is never in the wash, so its care doesn't come up. */
+
 function garmentOf(p: ClothingProduct): Garment {
-  return { kind: p.kind, slot: p.slot, care: p.care === 'wipe' ? 'hand' : p.care, wears: 0, washes: 0 };
+  return { kind: p.kind, slot: p.slot, care: p.care === 'wipe' ? 'hand' : p.care, wears: 0, washes: 0, ...(isMaternity(p) ? { maternity: true as const } : {}) };
 }
 
 /**
@@ -236,7 +254,7 @@ export function checkoutRefusal(person: Person, lines: readonly BuyOptions[]): s
  * or on one order with one delivery. Each line is its own purchase, for its
  * returns; each of a pack its own garment.
  */
-export function checkoutClothes(sim: Simulation, person: Person, lines: readonly BuyOptions[]): ClothesPurchase[] {
+export function checkoutClothes(sim: Simulation, person: Person, lines: readonly BuyOptions[], way: PayWith = 'debit'): ClothesPurchase[] {
   const no = checkoutRefusal(person, lines);
   if (no) throw new CommandError(no);
   const r = retailerById(productById(lines[0]!.productId)!.retailer)!;
@@ -244,7 +262,10 @@ export function checkoutClothes(sim: Simulation, person: Person, lines: readonly
   const q = checkoutQuote(sim, person, lines)!;
   const memo = lines.length === 1 ? `${r.name}: ${productById(lines[0]!.productId)!.name}` : `${r.name}: ${lines.length} items`;
   const before = sim.universe.transactions.length;
-  if (!spend(sim, person, q.total, memo, 'clothing')) throw new CommandError(`It comes to ${formatMoney(q.total, saveCurrency(sim.universe))}, more than you can pay.`);
+  // Paid the way chosen at the till (from 2026-10-03): the debit card, the credit card, or cash in a store.
+  const wayNo = payWithRefusal(sim, person, q.total, way, how === 'store');
+  if (wayNo) throw new CommandError(wayNo);
+  if (!payWith(sim, person, q.total, memo, 'clothing', way, how === 'store')) throw new CommandError(`It comes to ${formatMoney(q.total, saveCurrency(sim.universe))}, more than you can pay.`);
   // What paid, the card, the bank or the cash, each account's share: a return goes back there (from 2026-10-02).
   const paidFrom = paidFromSince(sim, before);
   const made = lines.map((o, i) => {
@@ -288,7 +309,9 @@ function paidFromSince(sim: Simulation, since: number): { accountId: string; sha
 export const againOptions = (b: ClothesPurchase): BuyOptions => ({ productId: b.productId, how: b.how, ...(b.size ? { size: b.size } : {}), ...(b.color ? { color: b.color } : {}), quantity: 1 });
 
 /** Buys one product: a checkout of one line. */
-export const buyClothes = (sim: Simulation, person: Person, o: BuyOptions): ClothesPurchase => checkoutClothes(sim, person, [o])[0]!;
+export const buyClothes = (sim: Simulation, person: Person, o: BuyOptions, way: PayWith = 'debit'): ClothesPurchase => checkoutClothes(sim, person, [o], way)[0]!;
+/** A till's way of paying from a payload: the debit card where none is said. */
+export const toPayWith = (v: unknown): PayWith => (v === 'credit' || v === 'cash' ? v : 'debit');
 
 /** A line in the basket, with its own id to take it out by. */
 export interface BasketLine extends BuyOptions { id: string }
@@ -301,7 +324,8 @@ export const basketOf = (person: Person): BasketLine[] => (person.basket ??= [])
 export const purchaseItems = (person: Person, purchaseId: string): Item[] => itemsOf(person).filter((i) => i.spec?.purchase === purchaseId);
 
 /** When a purchase's return window opened: the day it was bought in a store, or delivered. */
-function receivedAt(person: Person, purchase: ClothesPurchase): Instant | undefined {
+/** When it was had: bought in a store, or delivered; what a return window counts from. */
+export function receivedAt(person: Person, purchase: ClothesPurchase): Instant | undefined {
   if (purchase.how === 'store') return purchase.at;
   return ordersOf(person).find((o) => o.id === purchase.orderId)?.deliveredAt;
 }
@@ -473,15 +497,29 @@ export function collectCleaning(sim: Simulation, person: Person): number {
 /** Why these garments can't be an outfit, or nothing: theirs, to hand, and one to a slot. */
 export function outfitRefusal(sim: Simulation, person: Person, itemIds: readonly string[]): string | undefined {
   const seen = new Set<Slot>();
+  const baseKinds = new Set<string>();
+  const tops: string[] = [];
   for (const id of itemIds) {
     const item = itemById(person, id);
     if (!item?.garment) return 'That isn’t one of your clothes.';
     if (!reachable(sim, person, item.at)) return `${item.label} isn’t to hand.`;
     const slot = item.garment.slot;
     if (slot === 'accessory') continue;
+    // Layers (from 2026-10-03): base layers of different kinds, and a sweater over a top.
+    if (slot === 'base') {
+      if (baseKinds.has(item.garment.kind)) return 'One base layer of a kind.';
+      baseKinds.add(item.garment.kind);
+      continue;
+    }
+    if (slot === 'top') {
+      tops.push(item.garment.kind);
+      if (tops.length > 2 || (tops.length === 2 && tops.filter((k) => k === 'sweater').length !== 1)) return 'A sweater goes over a top; two of the rest don’t layer.';
+      continue;
+    }
     if (seen.has(slot)) return 'One garment to a part of an outfit.';
     seen.add(slot);
   }
+  if (tops.length > 0) seen.add('top');
   if (seen.has('suit') && (seen.has('dress') || seen.has('top') || seen.has('bottom'))) return 'A suit is worn on its own, with what goes under it.';
   if (seen.has('dress') && (seen.has('top') || seen.has('bottom'))) return 'A dress is worn on its own.';
   return undefined;
@@ -662,7 +700,7 @@ export function registerClothing(sim: Simulation): void {
   sim.onCommand<Partial<Measures> & { clear?: boolean }, { kept: boolean }>('clothes.measures', (p, { sim: s }) => {
     const person = s.player;
     if (p?.clear) { delete person.measures; return { kept: false }; }
-    const m: Partial<Measures> = { department: p?.department, ...(p?.chestCm !== undefined ? { chestCm: Number(p.chestCm) } : {}), ...(p?.waistCm !== undefined ? { waistCm: Number(p.waistCm) } : {}), ...(p?.hipCm !== undefined ? { hipCm: Number(p.hipCm) } : {}), ...(p?.footCm !== undefined ? { footCm: Number(p.footCm) } : {}) };
+    const m: Partial<Measures> = { department: p?.department, ...(p?.chestCm !== undefined ? { chestCm: Number(p.chestCm) } : {}), ...(p?.waistCm !== undefined ? { waistCm: Number(p.waistCm) } : {}), ...(p?.hipCm !== undefined ? { hipCm: Number(p.hipCm) } : {}), ...(p?.footCm !== undefined ? { footCm: Number(p.footCm) } : {}), ...(p?.fingerMm !== undefined ? { fingerMm: Number(p.fingerMm) } : {}) };
     const no = measuresRefusal(m);
     if (no) throw new CommandError(no);
     person.measures = m as Measures;
@@ -673,9 +711,9 @@ export function registerClothing(sim: Simulation): void {
     const person = s.universe.people[String(item.payload.personId)];
     if (person?.id === s.universe.playerId) s.notify({ category: 'home', title: 'Dry Cleaning Ready', body: `Your dry cleaning is ready to collect in ${CITIES.get(String(item.payload.cityId))?.name ?? 'town'}.`, importance: 25, route: '/workspace/clothes' });
   });
-  sim.onCommand<BuyOptions, { purchaseId: string }>('clothes.buy', (p, { sim: s }) => {
+  sim.onCommand<BuyOptions & { payWith?: PayWith }, { purchaseId: string }>('clothes.buy', (p, { sim: s }) => {
     if (!p || typeof p.productId !== 'string') throw new CommandError('What to buy?');
-    return { purchaseId: buyClothes(s, s.player, { productId: p.productId, how: toBuyWay(p.how), size: p.size, color: p.color, quantity: p.quantity }).id };
+    return { purchaseId: buyClothes(s, s.player, { productId: p.productId, how: toBuyWay(p.how), size: p.size, color: p.color, quantity: p.quantity }, toPayWith(p.payWith)).id };
   });
   // An order collected in store: its garments home, or on them away from it (from 2026-10-02).
   sim.onCommand<{ orderId: string }, { collected: number }>('clothes.collect_order', (p, { sim: s }) => {
@@ -719,11 +757,11 @@ export function registerClothing(sim: Simulation): void {
     s.player.basket = basket.filter((l) => l.id !== p.lineId);
     return { left: s.player.basket.length };
   });
-  sim.onCommand<{ retailerId: string; how: BuyWay }, { purchaseIds: string[]; paid: Money }>('clothes.checkout', (p, { sim: s }) => {
+  sim.onCommand<{ retailerId: string; how: BuyWay; payWith?: PayWith }, { purchaseIds: string[]; paid: Money }>('clothes.checkout', (p, { sim: s }) => {
     const person = s.player;
     const lines = basketOf(person).filter((l) => productById(l.productId)?.retailer === p?.retailerId && l.how === p?.how);
     const q = checkoutQuote(s, person, lines);
-    const made = checkoutClothes(s, person, lines);
+    const made = checkoutClothes(s, person, lines, toPayWith(p?.payWith));
     const done = new Set(lines.map((l) => l.id));
     person.basket = basketOf(person).filter((l) => !done.has(l.id));
     return { purchaseIds: made.map((m) => m.id), paid: q!.total };

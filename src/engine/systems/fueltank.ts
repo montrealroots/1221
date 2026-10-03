@@ -40,6 +40,7 @@ import { TANKS } from '../content/tanks';
 import { spend } from './household';
 import { modelById, vehiclesOf, type OwnedVehicle } from './vehicles';
 import { tintFuelFactor } from './tint';
+import { roofFuelFactor } from './roofbox';
 import { livingIn } from './homes';
 import type { CarModel } from '../content/vehiclecatalog';
 
@@ -80,7 +81,8 @@ function medianOf(match: (m: CarModel) => boolean, field: 'tankL' | 'batteryKwh'
 
 /** What a distance burns, in the tank's unit, by the model's official economy; a little less with tint keeping the cabin cool (`systems/tint.ts`). */
 export function burnOf(m: CarModel, km: number, v?: OwnedVehicle): number | undefined {
-  const tint = v ? tintFuelFactor(v) : 1;
+  // And a roof box's drag where one's on (`systems/roofbox.ts`).
+  const tint = v ? tintFuelFactor(v) * roofFuelFactor(v) : 1;
   if (m.fuel === 'ev') return m.kwhPer100km ? ((km * m.kwhPer100km) / 100) * tint : undefined;
   return m.per100km ? ((km * m.per100km) / 100) * tint : undefined;
 }

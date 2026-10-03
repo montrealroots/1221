@@ -155,7 +155,9 @@ export function stow(person: Person, item: Item, at: Instant): void {
   if (inCar) {
     const v = (person.vehicles ?? []).find((x) => x.id === trip.vehicleId);
     const spec = v ? specOf(v.modelId) : undefined;
-    const holds = spec?.cargoL ?? spec?.bedL;
+    // And a roof box's liters where one's on (`systems/roofbox.ts`, from 2026-10-03).
+    const own = spec?.cargoL ?? spec?.bedL;
+    const holds = own === null || own === undefined ? own : own + (v?.roofBoxL ?? 0);
     if (holds !== null && holds !== undefined) {
       const used = itemsOf(person).filter((i) => i.at.kind === 'vehicle' && i.at.vehicleId === trip.vehicleId).reduce((a, i) => a + volumeOf(i) * i.quantity, 0);
       if (used + volumeOf(item) * item.quantity > holds + 1e-9) throw new CommandError(`It won’t fit in the car: ${Math.max(0, Math.floor(holds - used))} liters of its ${holds} are left.`);

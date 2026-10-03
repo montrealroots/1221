@@ -42,6 +42,8 @@ export interface Garment {
   fitKg?: number;
   /** Let out by a tailor, its seams' spare cloth used (`systems/tailoring.ts`, from 2026-10-02). */
   letOut?: true;
+  /** Cut for a pregnancy, from 2026-10-03: a pregnancy's gain doesn't make it tight. */
+  maternity?: true;
   /** A shoe's foot length on its brand's chart, where it was bought by one (`shoeRow` in `systems/tailoring.ts`, from later on 2026-10-02). */
   footCm?: number;
 }
@@ -89,7 +91,7 @@ export function chosenMissing(sim: Simulation, person: Person, at: Instant = sim
  * every pair of jeans at once: all four wanted washing in the same days, and
  * clean outfits fell from three to none overnight.
  */
-const freshest = (a: Item & { garment: Garment }, b: Item & { garment: Garment }) => b.garment.wears - a.garment.wears || a.garment.washes - b.garment.washes || a.id.localeCompare(b.id);
+const freshest = (a: Item & { garment: Garment }, b: Item & { garment: Garment }): number => b.garment.wears - a.garment.wears || a.garment.washes - b.garment.washes || a.id.localeCompare(b.id);
 
 /** The day's outfit, or nothing where no whole outfit is to hand and clean. */
 export function outfitFor(sim: Simulation, person: Person, at: Instant = sim.now): (Item & { garment: Garment })[] | undefined {
@@ -108,7 +110,10 @@ export function outfitFor(sim: Simulation, person: Person, at: Instant = sim.now
   const outer = pick('outer');
   // And the jewelry, watches, belts and bags chosen with it, as many as they like (from 2026-10-02).
   const extras = chosen.filter((g) => g.garment.slot === 'accessory');
-  return [suit, dress, top, bottom, under, socks, shoes, ...(chosen.some((g) => g.garment.slot === 'outer') && outer ? [outer] : []), ...extras].filter((g): g is Item & { garment: Garment } => Boolean(g));
+  // Layers chosen with it (from 2026-10-03): a base layer under, and a sweater over the top.
+  const base = chosen.filter((g) => g.garment.slot === 'base');
+  const over = top ? chosen.find((g) => g.garment.slot === 'top' && g.id !== top.id) : undefined;
+  return [...base, suit, dress, top, over, bottom, under, socks, shoes, ...(chosen.some((g) => g.garment.slot === 'outer') && outer ? [outer] : []), ...extras].filter((g): g is Item & { garment: Garment } => Boolean(g));
 }
 
 /**
@@ -199,12 +204,27 @@ export function wearForSleep(sim: Simulation, person: Person, at: Instant = sim.
 
 /** A workout's clothes: activewear where there's some clean, else a top, with underwear and socks. */
 export function wearForExercise(sim: Simulation, person: Person, at: Instant = sim.now): boolean {
-  const ready = garmentsOf(person).filter((g) => wearable(sim, person, g, at)).sort(freshest);
+  const ready = garmentsOf(person).filter((g) => wearable(sim, person, g, at) && !isSwimsuit(g)).sort(freshest);
   const body = ready.find((g) => g.garment.slot === 'active') ?? ready.find((g) => g.garment.slot === 'top');
   const under = ready.find((g) => g.garment.slot === 'underwear');
   const socks = ready.find((g) => g.garment.slot === 'socks');
   if (!body || !under || !socks) return false;
   for (const g of [body, under, socks]) wearOnce(g);
+  return true;
+}
+
+/**
+ * A swim is in a swimsuit (from 2026-10-03): one of your own, clean and to
+ * hand, worn for it and washed after as activewear is. Until then a swim
+ * wore the gym's clothes.
+ */
+export const isSwimsuit = (g: Item & { garment: Garment }): boolean => g.garment.kind === 'swimsuit';
+export const swimsuitFor = (sim: Simulation, person: Person, at: Instant = sim.now): (Item & { garment: Garment }) | undefined =>
+  garmentsOf(person).filter((g) => isSwimsuit(g) && wearable(sim, person, g, at)).sort(freshest)[0];
+export function wearForSwim(sim: Simulation, person: Person, at: Instant = sim.now): boolean {
+  const suit = swimsuitFor(sim, person, at);
+  if (!suit) return false;
+  wearOnce(suit);
   return true;
 }
 

@@ -27,11 +27,21 @@
  * left, and one left is taken at the same average, which understates a
  * doorstep's, no source giving the split. With the post held where its hold
  * takes parcels, an order waits for the hold's end.
+ *
+ * **Tracked** (from 2026-10-03; `research-clothing-gaps.json`): an order's
+ * stage, in the carriers' own words: its label created when placed (USPS's
+ * and FedEx's first status); in transit from the next business day, SLATE's
+ * reading of when a retailer hands it over; out for delivery from the
+ * morning of the day it comes, at eight, SLATE's reading of a round that USPS
+ * finishes by five; then delivered. Out for delivery, it's said, so you can
+ * be home, or have someone there, to take it in. Every carrier read leaves a
+ * parcel without a signature unless the shipper asks for one, and none of
+ * SLATE's retailers says it does, so none is carried back for want of one.
  */
 
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
-import type { Instant } from '../core/time';
+import { startOfDay, type Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { addItem, homeKeyOf, itemsOf, type Item, type Place } from './items';
 import { expenseFor } from './household';
@@ -54,6 +64,8 @@ export interface Order {
   endedAt?: Instant;
   /** Taken from the door when it was delivered (from 2026-10-02). */
   stolen?: true;
+  /** When it was placed, for its tracking (from 2026-10-03). */
+  placedAt?: Instant;
 }
 
 /** The share of parcels delivered to a home that are stolen, by country. */
@@ -67,15 +79,36 @@ export function takenFromDoor(sim: Simulation, person: Person, orderId: string, 
 
 export const ordersOf = (person: Person): Order[] => (person.orders ??= []);
 
+export type OrderStage = 'Label Created' | 'In Transit' | 'Out For Delivery' | 'Delivered' | 'Returned' | 'Canceled';
+export const OUT_FOR_DELIVERY_HOUR = 8;
+export const OUT_FOR_DELIVERY_KIND = 'items.out_for_delivery';
+/** When an order goes out for delivery: eight on the morning it comes, or when it comes if that's sooner. */
+export function outForDeliveryAt(person: Person, o: Order): Instant {
+  const zone = CITIES.get(person.home?.cityId ?? person.currentLocationId)?.timeZone ?? 'UTC';
+  return Math.min(o.arrivesAt, startOfDay(o.arrivesAt, zone) + OUT_FOR_DELIVERY_HOUR * 3_600_000);
+}
+/** An order's stage at a moment, as a carrier's tracking says it. */
+export function orderStage(person: Person, o: Order, at: Instant): OrderStage {
+  if (o.status === 'delivered') return 'Delivered';
+  if (o.status === 'returned') return 'Returned';
+  if (o.status === 'canceled') return 'Canceled';
+  if (at >= outForDeliveryAt(person, o)) return 'Out For Delivery';
+  const zone = CITIES.get(person.home?.cityId ?? person.currentLocationId)?.timeZone ?? 'UTC';
+  return at >= startOfDay(o.placedAt ?? o.arrivesAt, zone) + 86_400_000 ? 'In Transit' : 'Label Created';
+}
+
 /**
  * An order placed: its items made on it and its delivery booked. The caller
  * has taken the payment.
  */
 export function placeOrder(sim: Simulation, person: Person, order: { from: string; arrivesAt: Instant; to: Place; paid: Money }, lines: readonly Omit<Item, 'id' | 'at' | 'acquiredAt'>[]): Order {
-  const made: Order = { id: sim.nextId('order'), from: order.from, arrivesAt: order.arrivesAt, to: order.to, paid: order.paid, status: 'placed' };
+  const made: Order = { id: sim.nextId('order'), from: order.from, arrivesAt: order.arrivesAt, to: order.to, paid: order.paid, status: 'placed', placedAt: sim.now };
   ordersOf(person).push(made);
   for (const line of lines) addItem(sim, person, { ...line, at: { kind: 'order', orderId: made.id }, acquiredAt: sim.now });
   sim.schedule({ at: order.arrivesAt, kind: ORDER_KIND, label: `A Delivery From ${order.from}`, category: 'home', priority: 30, payload: { personId: person.id, orderId: made.id } });
+  // Out for delivery that morning, said, where a home's the destination.
+  const out = outForDeliveryAt(person, made);
+  if (order.to.kind === 'home' && out > sim.now && out < order.arrivesAt) sim.schedule({ at: out, kind: OUT_FOR_DELIVERY_KIND, label: `Out For Delivery: ${order.from}`, category: 'home', priority: 29, payload: { personId: person.id, orderId: made.id } });
   return made;
 }
 
@@ -136,6 +169,13 @@ export function cancelOrder(sim: Simulation, person: Person, orderId: string, me
 const BELONGINGS_ROUTE = '/workspace/belongings';
 
 export function registerOrders(sim: Simulation): void {
+  sim.onSchedule(OUT_FOR_DELIVERY_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const o = person ? ordersOf(person).find((x) => x.id === item.payload.orderId) : undefined;
+    // Held by the post, it isn't out today.
+    if (!person || !o || o.status !== 'placed' || person.id !== s.universe.playerId || heldUntil(person, o.arrivesAt, true) !== undefined) return;
+    s.notify({ category: 'home', title: 'Out For Delivery', body: `Your order from ${o.from} is out for delivery today${someoneHome(s, person, o.arrivesAt, o.arrivesAt) ? '' : ', and nobody will be home to take it in'}.`, importance: 35, route: BELONGINGS_ROUTE });
+  });
   sim.onSchedule(ORDER_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     if (person) deliver(s, person, String(item.payload.orderId));

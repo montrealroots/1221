@@ -61,7 +61,7 @@ import { modelById } from './systems/vehicles';
 import { LICENSE_PATHS } from './content/licensepaths';
 import { FILM_ROAD, afterlife, books, hoursOf, locationFor, renewed, managerOffersFor, offersFor, weekOfAuditions, keepsPart } from './systems/career';
 import { classMonth } from './systems/rivals';
-import { illnessWeek } from './systems/health';
+import { DENIALS, illnessWeek } from './systems/health';
 import { listingsIn, rateShift, sellerAnswer, upkeepDay, type OwnedHome } from './systems/homes';
 import { bodyOf } from './systems/body';
 import { onsetMonth } from './systems/health';
@@ -76,7 +76,7 @@ import { powerDay } from './systems/utilities';
 import { careerOf } from './systems/career';
 import { counterOffer } from './systems/career';
 import { bidsFor, lateDays, overrunOf } from './systems/worksrisk';
-import { usedFault } from './systems/usedcars';
+import { usedFault, usedListings } from './systems/usedcars';
 import { takenFromDoor } from './systems/orders';
 import { bathroomWait } from './systems/rooms';
 import { AGENCIES, ROLES, SERIES } from './content/career';
@@ -514,6 +514,30 @@ defineDecider<{ sim: Simulation; day: number; minute: number }, string>({
   },
 });
 
+defineDecider<{ sim: Simulation; claim: number }, string>({
+  id: 'health.denial',
+  decides: 'A marketplace plan’s claim denied, at KFF’s 20% of in-network claims (DENIALS.rate).',
+  drawnIn: 'src/engine/systems/health.ts',
+  reads: {
+    claim: (o, t) => ({ ...o, claim: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), claim: seed }),
+  decide: ({ sim, claim }) => (sim.rng('health.denial', sim.player.id, `m${claim}`).next() < DENIALS.rate ? 'denied' : 'paid'),
+});
+
+defineDecider<{ sim: Simulation; bill: number }, string>({
+  id: 'health.appeal',
+  decides: 'An appeal of a denied claim upheld by the insurer, at KFF’s 56% of appeals (DENIALS.upheld), or overturned.',
+  drawnIn: 'src/engine/systems/health.ts',
+  reads: {
+    bill: (o, t) => ({ ...o, bill: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), bill: seed }),
+  decide: ({ sim, bill }) => (sim.rng('health.appeal', sim.player.id, `m${bill}`).next() < DENIALS.upheld ? 'upheld' : 'overturned'),
+});
+
 defineDecider<{ sim: Simulation; visit: number }, string>({
   id: 'health.referral',
   decides: 'A doctor’s visit kept ending in a referral to a specialist or not, at the place’s share of visits referred (REFERRAL_SHARE); swept at even odds.',
@@ -624,6 +648,19 @@ defineDecider<{ sim: Simulation; age: number; month: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), age: 1 + (seed % 14), month: seed % 12 }),
   decide: ({ sim, age, month }) => { const f = usedFault(sim, sim.player, 'us-toyota-camry', age, 'us-ny-newyork', Date.UTC(2027, month, 15)); return f ? (f.severe ? 'severe' : 'fault') : 'sound'; },
+});
+
+defineDecider<{ sim: Simulation; model: number; month: number }, string>({
+  id: 'vehicle.listing',
+  decides: 'This month’s three used cars on offer of a model: each one’s age, its odometer from the market’s own mileage (the DfT’s bands in England), and a dealer or a private seller, evenly.',
+  drawnIn: 'src/engine/systems/usedcars.ts',
+  reads: {
+    model: (o, t) => ({ ...o, model: Math.round(t * 2) }),
+    month: (o, t) => ({ ...o, month: Math.round(t * 11) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), model: seed % 3, month: seed % 12 }),
+  decide: ({ sim, model, month }) => usedListings(sim, sim.player, ['gb-ford-puma', 'gb-kia-sportage', 'gb-nissan-qashqai'][model]!, 'uk-eng-london', 'GB', Date.UTC(2027, month, 15)).map((l) => `${l.age}:${Math.round(l.odometerKm / 20_000)}:${l.seller}`).join(' '),
 });
 
 defineDecider<{ sim: Simulation; job: number; days: number }, string>({

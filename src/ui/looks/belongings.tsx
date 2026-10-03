@@ -172,7 +172,7 @@ defineLook<Worn>('garment', {
           </div>
         </>
       ),
-      ways: waysOf(sim, person, g),
+      ways: [...(g.spec?.purchase ? waysThatOpen(sim, [{ to: at('receipt', String(g.spec.purchase)), label: 'Its Receipt', detail: 'What it cost, what paid, and until when it goes back' }]) : []), ...waysOf(sim, person, g)],
       provenance: `How often it’s washed and how long it lasts: ${rule.source}.`,
     };
   },

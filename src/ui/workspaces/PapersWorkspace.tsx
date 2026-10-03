@@ -19,7 +19,7 @@ import { CITIES } from '@/engine/content/geography';
 import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { UNION_HEALTH } from '@/engine/content/career';
 import { deadline, owedOn, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
-import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
+import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
 import { PERMITS, permitRefusal, usesWheelchair } from '@/engine/systems/access';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
@@ -260,7 +260,7 @@ function HealthPane() {
             <div className="table-scroll">
               <table>
                 <thead><tr><th scope="col">Care</th><th scope="col">When</th><th scope="col" className="num">Your Share</th><th scope="col">Due</th><th scope="col">Assistance</th></tr></thead>
-                <tbody>{bills.map((b) => <tr key={b.id}><td>{titleCaseLabel(b.what)}</td><td>{formatDate(b.at, sim.zone)}</td><td className="num mono">{formatMoney(b.amount, cur)}</td><td>{b.paid ? 'Settled' : formatDate(b.dueAt, sim.zone)}</td><td>{b.aid ? AID_WORD[b.aid] : aidRefusal(b, sim.now) ? '' : <Gated feature="health.apply_aid" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ aid: string }>('health.apply_aid', { billId: b.id }); if (r.ok) toast(r.value!.aid === 'refused' ? 'Your income is over the policy’s 550%.' : 'The hospital took the charity off it.', r.value!.aid === 'refused' ? 'neutral' : 'positive'); }}>Apply For Assistance</Gated>}</td></tr>)}</tbody>
+                <tbody>{bills.map((b) => <tr key={b.id}><td>{titleCaseLabel(b.what)}</td><td>{formatDate(b.at, sim.zone)}</td><td className="num mono">{formatMoney(b.amount, cur)}</td><td>{b.paid ? 'Settled' : formatDate(b.dueAt, sim.zone)}</td><td>{b.denied && (b.denied.outcome ? <span className="xs dim">{b.denied.outcome === 'upheld' ? 'Denial Upheld' : 'Denial Overturned'}</span> : appealRefusal(b, sim.now) ? <span className="xs dim">{b.denied.appealedAt ? 'Appealed' : 'Denied'}</span> : <Gated feature="health.appeal" className="btn btn-sm btn-ghost" title="It’s decided in 60 days, and insurers uphold 56% of appeals." onClick={() => { if (run('health.appeal', { billId: b.id }).ok) toast('Appealed: decided in 60 days.', 'positive'); }}>Appeal It</Gated>)}{b.aid ? AID_WORD[b.aid] : aidRefusal(b, sim.now) ? '' : <Gated feature="health.apply_aid" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ aid: string }>('health.apply_aid', { billId: b.id }); if (r.ok) toast(r.value!.aid === 'refused' ? 'Your income is over the policy’s 550%.' : 'The hospital took the charity off it.', r.value!.aid === 'refused' ? 'neutral' : 'positive'); }}>Apply For Assistance</Gated>}</td></tr>)}</tbody>
               </table>
             </div>
           )}

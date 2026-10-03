@@ -37,6 +37,8 @@ export const CLUB_MEET_KIND = 'club.meet';
 export const clubById = (id: string): Club | undefined => CLUBS.find((c) => c.id === id);
 export const membershipsOf = (person: Person): Membership[] => (person.clubs ??= []);
 export const clubsIn = (cityId: string): Club[] => CLUBS.filter((c) => c.cityId === cityId);
+/** A run, worn in running shoes and at a run's injury rate: parkrun and a running club, not a league or a lesson. */
+export const runsIn = (club: Club): boolean => club.kind === 'parkrun' || club.kind === 'running';
 
 /** A club's next meeting after a moment, in its town's local time, its summer start in its summer months. */
 export function nextMeeting(club: Club, after: Instant): Instant {
@@ -79,9 +81,10 @@ function meet(sim: Simulation, person: Person, club: Club, m: Membership, at: In
   if (!present(person, at, club.cityId) || (busy && busy.kind !== CLUB_MEET_KIND)) return false;
   if (club.fee?.per === 'week' && !spend(sim, person, inSaveMoney(sim, Math.round(club.fee.amount * 100), club.fee.currency), `${club.name}, the week`, 'personal')) return false;
   const hours = club.minutes / 60;
-  exerts(person, club.met, hours);
-  applyLookingAfter(person, 'exercise', at);
-  if (club.kind !== 'league') {
+  // A session's effort at its METs; under three, an hour unwinding rather than a workout (from 2026-10-03).
+  if (club.met !== undefined) exerts(person, club.met, hours);
+  applyLookingAfter(person, club.met !== undefined && club.met >= 3 ? 'exercise' : 'unwind', at);
+  if (runsIn(club)) {
     runInShoes(sim, person);
     mayHurt(sim, person, 'run', chanceOver(INJURY.perThousandHours.run, hours), at);
   }

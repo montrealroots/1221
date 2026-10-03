@@ -6,6 +6,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
+import { usedListings } from '@/engine/systems/usedcars';
 import type { Simulation } from '@/engine/core/simulation';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
@@ -36,7 +37,7 @@ describe('trading one in', () => {
   it('sells the old car to the dealer at its value, 4% under in Britain, and pays for the new one with it', () => {
     const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'wealthy' }, 'trade-gb');
     sim.universe.accounts[sim.player.primaryAccountId!]!.balance += inSave(sim, 60_000_00, 'GBP');
-    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'gb-ford-puma', age: 3 } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'gb-ford-puma', age: usedListings(sim, sim.player, 'gb-ford-puma', 'uk-eng-london', 'GB')[0]!.age } }).ok).toBe(true);
     const old = vehiclesOf(sim.player)[0]!;
     expect(tradeInValue(sim, old)).toBe(inSave(sim, Math.round(valueOf(old, sim.now) * 0.96), 'GBP'));
     const credit = tradeInValue(sim, old);
