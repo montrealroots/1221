@@ -17,7 +17,7 @@ import { modelById, monthKm, vehiclesOf } from '@/engine/systems/vehicles';
 import { burnOf, capacityOf, levelOf } from '@/engine/systems/fueltank';
 import { specOf } from '@/engine/systems/caroptions';
 import { addItem } from '@/engine/systems/items';
-import { COLD_CHAIN_HOURS, driverCost, driverIn, leg, meterCost, runErrands, tripRefusal } from '@/engine/systems/trips';
+import { COLD_CHAIN_HOURS, driverCost, driverIn, leg, meterCost, meterRefusal, runErrands, tripRefusal } from '@/engine/systems/trips';
 import { metAtWork } from '@/engine/systems/people';
 import { atWork, atWorkReason } from '@/engine/systems/availability';
 import { salonsIn } from '@/engine/systems/hygiene';
@@ -45,10 +45,24 @@ describe('a leg', () => {
     expect(leg('us-ct-newhaven', 'car', 'shopping').minutes).toBeCloseTo(5.8 * MI * 58 / 60, 9);
   });
 
-  it('parks at the town’s meter for the minutes a stop took, and Vancouver’s, unpublished, isn’t charged', () => {
+  it('parks at the town’s meter for the minutes a stop took, each hour at its own price, none on a free day', () => {
     const sim = life('us-ny-newyork', 'tr-meter');
-    expect(meterCost(sim, 'us-ny-newyork', 45)).toBe(usd(sim, Math.round(5 * 45 / 60 * 100)));
-    expect(meterCost(sim, 'ca-bc-vancouver', 45)).toBe(0);
+    // A Monday and a Sunday in New York.
+    const monday = instantFromZoned({ year: 2026, month: 10, day: 5, hour: 11 }, 'America/New_York');
+    const sunday = instantFromZoned({ year: 2026, month: 10, day: 4, hour: 11 }, 'America/New_York');
+    expect(meterCost(sim, 'us-ny-newyork', 45, undefined, monday)).toBe(usd(sim, Math.round(5 * 45 / 60 * 100)));
+    // The second hour at NYC DOT's $8.25.
+    expect(meterCost(sim, 'us-ny-newyork', 90, undefined, monday)).toBe(usd(sim, Math.round((5 + 8.25 * 0.5) * 100)));
+    expect(meterCost(sim, 'us-ny-newyork', 45, undefined, sunday)).toBe(0);
+    // Vancouver's daytime median, from its own open data.
+    const cur = saveCurrency(sim.universe);
+    const cad = Math.round(2 * 45 / 60 * 100);
+    expect(meterCost(sim, 'ca-bc-vancouver', 45, undefined, monday)).toBe(cur === 'CAD' ? cad : exchange(cad, 'CAD', cur));
+    // A meter's longest stay.
+    expect(meterRefusal('us-ny-newyork', 120)).toBeUndefined();
+    expect(meterRefusal('us-ny-newyork', 121)).toBe('The meters here take 2 hours at most: a garage takes it longer.');
+    expect(meterRefusal('us-ct-newhaven', 61)).toBe('The meters here take 1 hour at most: a garage takes it longer.');
+    expect(meterRefusal('us-ca-losangeles', 600)).toBeUndefined();
   });
 });
 

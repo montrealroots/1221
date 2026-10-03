@@ -43,7 +43,7 @@ import { classFor, forOutings, kindOf, modelById, runningCost, vehiclesOf, type 
 import { drive } from './driving';
 import { standInFor } from './standin';
 import { DRIVERS, type DriverService } from '../content/drivers';
-import { formatDate, type Instant } from '../core/time';
+import { formatDate, type Instant , zonedParts } from '../core/time';
 import { tireFactor } from './tires';
 import { homeKeyOf, itemById, itemsOf, volumeOf, type Item, type Spot } from './items';
 import { specOf } from './caroptions';
@@ -62,14 +62,25 @@ export function leg(cityId: string, by: 'car' | 'foot', kind: LegKind): { km: nu
 }
 
 /** What parking a stop costs in the save's money, or nothing where no rate is published. */
-export function meterCost(sim: Simulation, cityId: string, minutes: number, person?: Person): Money {
+export function meterCost(sim: Simulation, cityId: string, minutes: number, person?: Person, at: Instant = sim.now): Money {
   const m = METER[cityId];
   if (!m || minutes <= 0) return 0;
   // Free with a disability permit where the town lets holders park free (`systems/access.ts`, from 2026-10-02).
   if (person && meterFree(person, cityId)) return 0;
-  const cents = Math.round((m.perHour * minutes / 60) * 100);
+  // Free on the days the town doesn't charge (from 2026-10-03).
+  if (m.freeOn?.includes(zonedParts(at, CITIES.require(cityId).timeZone).weekday)) return 0;
+  // Each hour at its own price where the town raises it hour by hour, as New York does.
+  let units = 0;
+  for (let h = 0; h * 60 < minutes; h += 1) units += (m.hourly?.[h] ?? m.hourly?.[m.hourly.length - 1] ?? m.perHour) * (Math.min(60, minutes - h * 60) / 60);
+  const cents = Math.round(units * 100);
   const cur = saveCurrency(sim.universe);
   return cur === m.currency ? cents : exchange(cents, m.currency, cur) ?? cents;
+}
+
+/** Why the car can't stay at the meter that long, or nothing: the town's longest stay (from 2026-10-03). */
+export function meterRefusal(cityId: string, minutes: number): string | undefined {
+  const max = METER[cityId]?.maxHours;
+  return max !== undefined && minutes > max * 60 ? `The meters here take ${max} ${max === 1 ? 'hour' : 'hours'} at most: a garage takes it longer.` : undefined;
 }
 
 /** The garages in a town an errand's car can be left at instead of the meter (`content/garages.ts`, from 2026-10-02). */
@@ -257,7 +268,7 @@ export function registerTrips(sim: Simulation): void {
   });
 
   // The meter, for the minutes a stop took, with the car parked at it.
-  sim.onCommand<{ minutes: number; garageId?: string }, { paid: Money }>('errand.park', (p, { sim: s }) => {
+  sim.onCommand<{ minutes: number; garageId?: string }, { paid: Money; overstayed?: number }>('errand.park', (p, { sim: s }) => {
     const person = s.player;
     if (!person.trip || person.trip.by !== 'car') throw new CommandError('You aren’t out in the car.');
     const minutes = Math.max(0, Number(p?.minutes) || 0);
@@ -270,9 +281,14 @@ export function registerTrips(sim: Simulation): void {
       if (paid > 0 && !spend(s, person, paid, `Parking, ${garage.name}`, 'vehicle')) throw new CommandError('The garage didn’t take the payment.');
       return { paid };
     }
-    const paid = meterCost(s, person.currentLocationId, minutes, person);
+    // A meter takes no more than its longest stay (from 2026-10-03): a stop past it is paid to the limit and overstayed, and a
+    // ticket for it isn't charged, how often meters are checked being unpublished.
+    const max = METER[person.currentLocationId]?.maxHours;
+    const metered = max !== undefined ? Math.min(minutes, max * 60) : minutes;
+    const paid = meterCost(s, person.currentLocationId, metered, person);
     if (paid > 0 && !spend(s, person, paid, `Parking, ${METER[person.currentLocationId]!.zone}`, 'vehicle')) throw new CommandError('The meter didn’t take the payment.');
-    return { paid };
+    if (metered < minutes && person.id === s.universe.playerId) s.notify({ category: 'personal', title: 'Over The Meter’s Limit', body: `${meterRefusal(person.currentLocationId, minutes)} The car stood ${Math.round(minutes - metered)} minutes past it.`, importance: 25, route: '/workspace/routines' });
+    return { paid, ...(metered < minutes ? { overstayed: minutes - metered } : {}) };
   });
 
   // A stop for fuel, at one of the town's stations: the trip's fuel paid there.
