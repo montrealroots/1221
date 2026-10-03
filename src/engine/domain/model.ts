@@ -313,6 +313,8 @@ export interface Person {
   watching?: Record<string, import('../systems/programmes').Watching>;
   /** What's marked favorite, by list (`systems/catalog.ts`, from 2026-10-03). */
   favorites?: Record<string, string[]>;
+  /** The water or gas cut off at home, from when to when (`systems/utilities.ts`, from 2026-10-03). */
+  supplyCuts?: { water?: import('../systems/utilities').SupplyCut; gas?: import('../systems/utilities').SupplyCut };
   /** How often they shave at home, chosen (`systems/hygiene.ts`, from 2026-10-03); not at all where unset. */
   shaves?: import('../systems/hygiene').ShaveEvery;
   lastShave?: number;

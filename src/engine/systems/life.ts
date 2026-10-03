@@ -46,6 +46,7 @@ import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty, wearForSwim }
 import { SITTING_MET } from './coldstress';
 import { countWash } from './water';
 import { bookInHand, readFor } from './reading';
+import { cutNow } from './utilities';
 import { SHAVE, shave, shaveReady, sprayUsed } from './hygiene';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
@@ -681,6 +682,16 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if ((action === 'eat' || action === 'order' || action === 'laundry') && canPayFor(sim, person, action === 'laundry' ? 'laundry' : 'food') < costFor(sim, action) && !(action === 'eat' && kitchenMeal(sim, person))) return 'You can’t afford it.';
   if (action === 'eat' && cooks(sim, person) && !kitchenMeal(sim, person) && sinkFull(person)) return SINK_FULL;
   if ((action === 'wash' || action === 'bathe') && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
+  // The water or the gas cut off at home (`systems/utilities.ts`, from 2026-10-03).
+  if (atHome(person) && (action === 'wash' || action === 'bathe' || action === 'washup' || (action === 'laundry' && laundryWay(sim, person) !== 'none'))) {
+    const off = cutNow(person, 'water', sim.now);
+    if (off) return `${off.by}’s water is off at home until ${formatTime(off.until, sim.zone)}.`;
+  }
+  // A gas cut leaves no hot water for a bath: a home cut off has gas, and its boiler heats the bath; an electric shower still runs.
+  if (atHome(person) && action === 'bathe') {
+    const off = cutNow(person, 'gas', sim.now);
+    if (off) return `There’s no hot water for a bath: ${off.by}’s gas is off until ${formatTime(off.until, sim.zone)}.`;
+  }
   if ((action === 'wash' || action === 'bathe') && !atHome(person) && roomGone(person)) return person.stay?.readyAt !== undefined ? `The room isn’t ready until ${formatTime(person.stay.readyAt, sim.zone)}.` : 'You’ve checked out, and the room is gone until you leave.';
   if (action === 'bathe' && !place?.fixtures.bathtub) return atHome(person) ? 'There’s no bath where you live, only a shower.' : 'There’s no bath where you’re staying, only a shower.';
   if ((action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';

@@ -64,7 +64,8 @@ describe('gas', () => {
     expect(gasAdjustment(sim, sim.player, billed)).toBeLessThan(0);
     const mx = life('mx-cmx-mexicocity', 'gas-mx');
     month(mx, 0, 31);
-    expect(gasAdjustment(mx, mx.player, 5)).toBe(0);
+    // Mexico City's LP gas, from later on 2026-10-03: a month away buys none of it.
+    expect(gasAdjustment(mx, mx.player, 5)).toBe(inSave(mx, -GAS_TARIFFS['mx-cmx-mexicocity']!.typical * KIND_SHARE[mx.player.home!.kind]! * 20.1, 'MXN'));
   });
 });
 

@@ -25,13 +25,19 @@
  *   whatever is used.
  * - London: Thames Water's £2.7346 a cubic meter of water and £1.4721 of
  *   wastewater, and £66.87 and £128.13 a year standing.
- * Mexico City's SACMEX blocks are read, but no use a person is published
- * (the figures quoted conflict), so it isn't billed.
+ * - Mexico City, from 2026-10-03 (`research-utilities-mx-outages.json`):
+ *   SACMEX's domestic metered tariff in the Código Fiscal's article 172 as
+ *   reformed for 2026, billed every two months by blocks of liters, at the
+ *   Alta class, which most of Polanco's, the Condesa's and Roma Norte's
+ *   blocks are in (SACMEX's 2019 data); a month is half of a two months'
+ *   bill on twice its liters, SLATE's arithmetic. Until then it wasn't
+ *   billed.
  *
  * **What's used**: each person living there a day at home, the published
  * average: America's 221.8 liters indoors (REU2016), Ontario's 187
- * (Statistics Canada), and a metered home's 122 in England and Wales
- * (Discover Water). A day away uses none.
+ * (Statistics Canada), a metered home's 122 in England and Wales
+ * (Discover Water), and Mexico City's 366 (INFO CDMX's 2021 figure; SACMEX
+ * gives 380 consumed against 150 supplied). A day away uses none.
  *
  * **Showers and baths, metered** (from 2026-10-03, `research-water-washing.json`):
  * the average's own showers come out and the player's go in, so showering
@@ -64,7 +70,19 @@ export const WATER_TARIFFS: Readonly<Record<string, WaterTariff>> = {
   'ca-on-toronto': { currency: 'CAD', perPersonLiters: 187, renters: false, bill: (l) => 4.8629 * (l / 1_000) },
   'ca-bc-vancouver': { currency: 'CAD', perPersonLiters: 0, renters: false, bill: (_l, _m, _d, flat) => (flat ? 587 + 837 : 867 + 1_238) / 12 },
   'uk-eng-london': { currency: 'GBP', perPersonLiters: 122, renters: true, bill: (l, _m, d) => (l / 1_000) * (2.7346 + 1.4721) + ((66.87 + 128.13) * d) / 365 },
+  'mx-cmx-mexicocity': { currency: 'MXN', perPersonLiters: 366, renters: false, bill: (l) => sacmexBimester(l * 2) / 2 },
 };
+
+/** SACMEX's Alta class, the Código Fiscal's article 172 for 2026: each block's lower edge in liters, its minimum and each thousand liters above the edge, pesos. */
+export const SACMEX_ALTA: readonly (readonly [number, number, number])[] = [
+  [0, 265.25, 0], [15_000, 265.25, 29.86], [20_000, 414.49, 33.38], [30_000, 748.22, 39.62], [40_000, 1_144.31, 42.32],
+  [50_000, 1_567.37, 45.34], [70_000, 2_474.15, 58.96], [90_000, 3_652.98, 78.62], [120_000, 6_011.31, 123.79],
+];
+/** Two months' water at the Alta class: the block's minimum and its rate on the liters above its edge. */
+export function sacmexBimester(liters: number): number {
+  const [edge, least, per] = [...SACMEX_ALTA].reverse().find(([from]) => liters > from) ?? SACMEX_ALTA[0]!;
+  return least + ((liters - edge) / 1_000) * per;
+}
 
 const inSave = (sim: Simulation, units: number, currency: string): Money => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
 

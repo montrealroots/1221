@@ -73,7 +73,7 @@ import { inspectionFails } from './systems/inspections';
 import { letDamaged } from './systems/journey';
 import { impairedDrive } from './systems/alcohol';
 import { announceNominations, entriesOf } from './systems/awards';
-import { powerDay } from './systems/utilities';
+import { powerDay, supplyCut } from './systems/utilities';
 import { careerOf } from './systems/career';
 import { counterOffer } from './systems/career';
 import { bidsFor, lateDays, overrunOf } from './systems/worksrisk';
@@ -1352,3 +1352,22 @@ defineDecider<{ sim: Simulation; month: number; item: number; market: number }, 
     return JSON.stringify(tally);
   },
 });
+
+for (const what of ['water', 'gas'] as const) {
+  defineDecider<{ sim: Simulation; day: number }, string>({
+    id: `utilities.${what}`,
+    decides: `A day the ${what} is cut off at home or not, at the share of its homes the utility cuts off a year (${what === 'water' ? 'WATER_RISK' : 'GAS_RISK'}), when in the day and for how long; swept in London at even odds, a real cut being rare.`,
+    drawnIn: 'src/engine/systems/utilities.ts',
+    reads: {
+      day: (o, t) => ({ ...o, day: Math.round(t * 4000) }),
+      world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+    },
+    sample: (seed) => ({ sim: atYale(seed), day: seed }),
+    decide: ({ sim, day }) => {
+      sim.player.home = { ...sim.player.home!, cityId: 'uk-eng-london' };
+      const hours: number[] = [];
+      for (let d = 0; d < 20; d += 1) { const c = supplyCut(sim, sim.player, what, sim.now + (day * 20 + d) * 86_400_000, 0.5); if (c) hours.push(Math.round((c.until - c.from) / 3_600_000)); }
+      return hours.join(',') || 'none';
+    },
+  });
+}
