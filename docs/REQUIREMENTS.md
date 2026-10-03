@@ -179,7 +179,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
 | 41a, h, i, k | Many properties; buy, finance, let, manage, sell | Complete | homes.ts, land.ts; tests | — |
-| 41b | Ownership rights and tenure | Partial | freehold only | Tenure, co-owners, easements |
+| 41b | Ownership rights and tenure | Done | freehold only; from 2026-10-03 England’s homes held leasehold or freehold at MHCLG’s shares, a leaseholder paying the English Housing Survey’s ground rent (none on a lease from 2022) and service charge in place of the estimated charge (`TENURE`); tests/tenure.test.ts | — (a lease’s years left, co-owners and easements: `docs/DATA-GAPS.md`) |
 | 41c | Usable space | Done, 2026-10-03 | beds, baths, size; the floor that can be furnished, half the home's or a let room's 11.5 m², each piece its own footprint, a piece that won't fit not bought or brought out of storage; shown on Home (`systems/rooms.ts`) | Half is SLATE's estimate; room by room layout |
 | 41d–e | Terrain, access, utilities | Not implemented / partial | services on bare land | Parcel attributes read by the build |
 | 41f | Restrictions | Partial | zoning | HOA, conservation, setbacks |

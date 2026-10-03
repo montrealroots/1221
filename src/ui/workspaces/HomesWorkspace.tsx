@@ -236,7 +236,8 @@ function ForSalePane() {
                     <tr><th scope="row">{councilNation(town) ? `Council Tax, Band ${councilLetter(town, councilBand(sim, offer.price, town))}${living ? '' : ', Until It’s Let'}` : 'Property Tax'}</th><td className="num mono">{money(offer.month.tax)}</td></tr>
                     <tr><th scope="row">Insurance</th><td className="num mono">{money(offer.month.insurance)}</td></tr>
                     {offer.month.pmi > 0 && <tr><th scope="row">Mortgage Insurance</th><td className="num mono">{money(offer.month.pmi)}</td></tr>}
-                    {offer.month.hoa > 0 && <tr><th scope="row">{shared}</th><td className="num mono">{money(offer.month.hoa)}</td></tr>}
+                    {offer.month.hoa > 0 && <tr><th scope="row">{listing!.tenure === 'leasehold' ? 'Ground Rent And Service Charge' : shared}</th><td className="num mono">{money(offer.month.hoa)}</td></tr>}
+                    {listing!.tenure && <tr><th scope="row">Tenure</th><td className="num">{listing!.tenure === 'leasehold' ? 'Leasehold' : 'Freehold'}</td></tr>}
                     <tr><th scope="row">A Month</th><td className="num mono">{money(offer.month.total)}</td></tr>
                   </tbody>
                 </table>

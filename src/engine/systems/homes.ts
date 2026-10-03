@@ -240,6 +240,10 @@ export interface HomeFacts {
   hoaUsd: number;
   /** What's inside it (`content/homes.ts`); a home bought before 2026-09-28's later build has none recorded, and `fixturesOf` draws them. */
   fixtures?: Fixtures;
+  /** In England, from 2026-10-03: held leasehold or freehold, and a leaseholder's ground rent and service charge a year, pounds (`TENURE`). */
+  tenure?: 'leasehold' | 'freehold';
+  groundRentGbp?: number;
+  serviceChargeGbp?: number;
 }
 
 export interface Listing extends HomeFacts {
@@ -398,7 +402,9 @@ function drawListings(sim: Simulation, cityId: string, typical: Money, slots: { 
     const fixtures = drawFixtures(rng, { countryId: country, latitude: city.latitude, longitude: city.longitude, dense }, type, q, features.includes('yard'));
     // What it has inside moves its price about the spread's (`premiumOf`).
     const priced = Math.round(value * premiumOf(fixtures));
-    out.push({ id: `${cityId}~${i}~${generation}`, cityId, rank: 0, value: priced, listedAt, type, address, beds, baths, size, ...(lot !== undefined ? { lot } : {}), built, features, parts, hoaUsd, fixtures });
+    // Held leasehold or freehold in England, drawn last so the rest of the listing is as it was (`TENURE`).
+    const tenure = inEngland(cityId) ? tenureOf(rng, flat, built) : {};
+    out.push({ id: `${cityId}~${i}~${generation}`, cityId, rank: 0, value: priced, listedAt, type, address, beds, baths, size, ...(lot !== undefined ? { lot } : {}), built, features, parts, hoaUsd, fixtures, ...tenure });
   }
   return out.sort((x, y) => x.value - y.value).map((one, n) => ({ ...one, rank: n + 1 }));
 }
@@ -687,6 +693,24 @@ export interface OwnerMonth {
 }
 
 /**
+ * Tenure in England, from 2026-10-03 (`research-home-garden-furniture.json`):
+ * MHCLG's 92.5% of owner-occupied flats and 7.7% of houses held leasehold
+ * (2024-25). A leaseholder pays the English Housing Survey's ground rent,
+ * 77% of them, the median £160 a year on a flat and £20 on a house, and none
+ * on a lease granted from 30 June 2022 (the Leasehold Reform (Ground Rent)
+ * Act 2022), taken as a home built from 2023; and its service charge, a
+ * London flat's mean £2,338 a year (2023-24) and a house's median £300, in
+ * place of SLATE's estimated charge on a flat. Freehold, neither. Until then
+ * every English home was taken as freehold.
+ */
+export const TENURE = { leaseholdShare: { flat: 0.925, house: 0.077 }, groundRentPays: 0.77, groundRent: { flat: 160, house: 20 }, serviceCharge: { flat: 2_338, house: 300 }, peppercornFrom: 2023 } as const;
+function tenureOf(rng: { next(): number }, flat: boolean, built: number): Pick<HomeFacts, 'tenure' | 'groundRentGbp' | 'serviceChargeGbp'> {
+  if (rng.next() >= (flat ? TENURE.leaseholdShare.flat : TENURE.leaseholdShare.house)) return { tenure: 'freehold' };
+  const pays = built < TENURE.peppercornFrom && rng.next() < TENURE.groundRentPays;
+  return { tenure: 'leasehold', groundRentGbp: pays ? (flat ? TENURE.groundRent.flat : TENURE.groundRent.house) : 0, serviceChargeGbp: flat ? TENURE.serviceCharge.flat : TENURE.serviceCharge.house };
+}
+
+/**
  * What a home costs a month, averaged: what the screens show and the lender
  * weighs. England's tax here is council tax, which whoever lives in the home
  * pays; a tenant's is theirs.
@@ -697,7 +721,9 @@ export function monthOf(sim: Simulation, facts: HomeFacts, cityId: string, value
   const flat = isFlat(facts.type);
   const insurance = Math.round(value * (flat ? HOME.insuranceFlat : HOME.insurance) * loading / 12);
   const pmi = loans.mortgage?.pmi ? Math.round(loans.mortgage.balance * HOME.pmi / 12) : 0;
-  const hoa = atTown(sim, cityId, facts.hoaUsd);
+  // A leaseholder's ground rent and service charge in place of the estimated charge (`TENURE`, from 2026-10-03).
+  const lease = facts.tenure === 'leasehold' ? ((facts.groundRentGbp ?? 0) + (facts.serviceChargeGbp ?? 0)) / 12 : undefined;
+  const hoa = lease !== undefined ? (saveCurrency(sim.universe) === 'GBP' ? Math.round(lease * 100) : exchange(Math.round(lease * 100), 'GBP', saveCurrency(sim.universe)) ?? Math.round(lease * 100)) : atTown(sim, cityId, facts.hoaUsd);
   const pay = loans.mortgage?.payment ?? 0;
   const equity = loans.equity ?? 0;
   return { mortgage: pay, equity, tax, insurance, pmi, hoa, total: pay + equity + tax + insurance + pmi + hoa };
@@ -1402,7 +1428,7 @@ function accept(sim: Simulation, person: Person, listing: Listing, price: Money,
   sim.post({ memo: `Earnest money on ${listing.address}`, category: 'home', postings: [...drawFromBank(sim, person, earnest, false, true).postings, { accountId: escrow.id, amount: earnest }] });
   const facts: HomeFacts = structuredClone({
     type: listing.type, address: listing.address, beds: listing.beds, baths: listing.baths, size: listing.size,
-    ...(listing.lot !== undefined ? { lot: listing.lot } : {}), built: listing.built, features: listing.features, parts: listing.parts, hoaUsd: listing.hoaUsd,
+    ...(listing.lot !== undefined ? { lot: listing.lot } : {}), built: listing.built, features: listing.features, parts: listing.parts, hoaUsd: listing.hoaUsd, ...(listing.tenure ? { tenure: listing.tenure, groundRentGbp: listing.groundRentGbp, serviceChargeGbp: listing.serviceChargeGbp } : {}),
     ...(listing.fixtures ? { fixtures: listing.fixtures } : {}),
   });
   const buying: Purchase = {
