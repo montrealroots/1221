@@ -27,10 +27,10 @@ import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { homeOf } from '@/engine/systems/earnings';
-import { buyRefusal, glazed, registers, insuranceBasis, insuranceCurrency, jurisdictionOf, kept, liabilityOffered, loanRate, modelById, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
+import { buyRefusal, glazed, kindOf, registers, insuranceBasis, insuranceCurrency, jurisdictionOf, kept, liabilityOffered, loanRate, modelById, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
 import { DEPRECIATION_SOURCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehiclefees';
 import type { VehicleKind } from '@/engine/content/vehiclecatalog';
-import { tiresRefusal } from '@/engine/systems/tires';
+import { TIRE_LIFE_KM, odometerOf, tireSetCost, tiresFittedAt, tiresRefusal, tiresWorn } from '@/engine/systems/tires';
 import { tintRefusal } from '@/engine/systems/tint';
 import { MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
 import { faultCost, inShopNow, laidUp, repairRefusal, shopsFor } from '@/engine/systems/repairs';
@@ -148,6 +148,7 @@ export function VehiclesWorkspace() {
                             <FuelControl v={v} />
                             <StereoControl v={v} />
                             <RoofControl v={v} />
+                            {tireSetCost(sim, v) !== undefined && kindOf(modelById(v.modelId)!) === 'car' && <Gated feature="vehicle.replace_tires" className="btn btn-sm btn-ghost" title={tiresWorn(v) ? 'Worn to the legal limit: a test that checks them fails them' : `${Math.round((TIRE_LIFE_KM - (odometerOf(v) - tiresFittedAt(v))) / 1000).toLocaleString('en-US')} thousand km of tread left`} onClick={() => { const a = run<{ paid: number }>('vehicle.replace_tires', { vehicleId: v.id }); if (a.ok) toast(`Four tires fitted, for ${money(a.value!.paid)}.`, 'positive'); }}>{`${tiresWorn(v) ? 'Replace The Worn Tires' : 'Fit New Tires'}, ${money(tireSetCost(sim, v)!)}`}</Gated>}
                             <RepairControl v={v} />
                             <ServiceControl v={v} />
                             <WrapControl v={v} />
@@ -493,7 +494,7 @@ function BoatPanel() {
 /** Britain's modifications, one at a time, the cheapest fitted first (`modCatalog`); until 2026-10-01 the least of them first. */
 function ModifyControl({ v }: { v: OwnedVehicle }) {
   const { run, toast, sim } = useGame();
-  const open = arrange(modCatalog(sim)).map((e) => e.value).filter((m) => !modRefusal(v, m, glazed(v)));
+  const open = arrange(modCatalog(sim, v.jurisdiction.startsWith('US-') ? 'US' : 'GB')).map((e) => e.value).filter((m) => !modRefusal(v, m, glazed(v)));
   const [mod, setMod] = useState<Mod | ''>('');
   if (!open.length) return null;
   const chosen = mod && open.includes(mod) ? mod : open[0]!;
@@ -502,7 +503,7 @@ function ModifyControl({ v }: { v: OwnedVehicle }) {
       <select aria-label="Modification" value={chosen} onChange={(e) => setMod(e.target.value as Mod)} style={{ width: 'auto' }}>
         {open.map((m) => <option key={m} value={m}>{MOD_LABEL[m]}</option>)}
       </select>
-      <Gated feature="vehicle.modify" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.modify', { vehicleId: v.id, mod: chosen }); if (a.ok) toast(`${MOD_LABEL[chosen]} fitted, for ${formatMoney(a.value!.paid, saveCurrency(sim.universe))}, and declared to the insurer.`, 'positive'); }}>Fit It</Gated>
+      <Gated feature="vehicle.modify" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.modify', { vehicleId: v.id, mod: chosen }); if (a.ok) toast(`${MOD_LABEL[chosen]} fitted, for ${formatMoney(a.value!.paid, saveCurrency(sim.universe))}${v.jurisdiction === 'GB' ? ', and declared to the insurer' : ''}.`, 'positive'); }}>Fit It</Gated>
     </>
   );
 }

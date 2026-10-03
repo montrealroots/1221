@@ -25,7 +25,7 @@ import { askingPrice, listingsIn, projectsFor, type Listing as HomeListing, type
 import { listingsFor, type Listing as LandListing } from './land';
 import { pieceCost } from './furniture';
 import { applianceCost } from './appliances';
-import { MODS, MOD_LABEL, MOD_PRICE, type Mod } from './mods';
+import { MODS, MOD_LABEL, MOD_OFFERS, type Mod } from './mods';
 import { stayClassesIn, stayPrice } from './stays';
 import { rentalClassesIn, rentalQuote } from './rentals';
 
@@ -76,9 +76,9 @@ export function projectCatalog(sim: Simulation, person: Person, owned: OwnedHome
   return projectsFor(sim, person, owned).map((p) => ({ id: p.project.id, label: p.project.label, value: p.project, basis: 'The Work, Before A Permit', price: p.cost, priceKind: 'estimate' as const }));
 }
 
-/** The modifications a car can have, fitted. */
-export function modCatalog(sim: Simulation): CatalogEntry<Mod>[] {
-  return MODS.map((mod) => ({ id: mod, label: MOD_LABEL[mod], value: mod, basis: 'Fitted', price: inSaveMoney(sim, Math.round(MOD_PRICE[mod] * 100), 'GBP'), priceKind: 'advertised' as const }));
+/** The modifications sold in a market, fitted, at their prices there. */
+export function modCatalog(sim: Simulation, market: 'GB' | 'US' = 'GB'): CatalogEntry<Mod>[] {
+  return MODS.filter((mod) => MOD_OFFERS[mod][market]).map((mod) => { const o = MOD_OFFERS[mod][market]!; return { id: mod, label: MOD_LABEL[mod], value: mod, basis: 'Fitted', price: inSaveMoney(sim, Math.round(o.price * 100), o.currency), priceKind: 'advertised' as const }; });
 }
 
 /** The kinds of stay a town has, each for the whole stay, taxes in. */

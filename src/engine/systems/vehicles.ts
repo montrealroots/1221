@@ -106,6 +106,8 @@ export interface OwnedVehicle {
   /** The odometer when bought used, km, from its listing; and a private sale's transfer due (`systems/usedcars.ts`, from 2026-10-03). */
   odometerAtPurchase?: number;
   transferBy?: Instant;
+  /** The odometer when its everyday tires were last fitted (`systems/tires.ts`, from 2026-10-03). */
+  tiresAtKm?: number;
   /** A roof rack fitted, and the liters of a roof box on it (`systems/roofbox.ts`, from 2026-10-03). */
   roofRack?: true;
   roofBoxL?: number;

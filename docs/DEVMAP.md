@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-307 commands; 301 named by a test, 6 not.
+308 commands; 302 named by a test, 6 not.
 
 ## aircraft
 
@@ -491,7 +491,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `vehicle.buy` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` `carcare.test.ts` `caroptions.test.ts` `carsale.test.ts` `connected-day.test.ts` `driving.test.ts` `evs.test.ts` `ferries.test.ts` `fueltank.test.ts` `hotels.test.ts` `inspections.test.ts` `interiors.test.ts` `landlease.test.ts` `leasing.test.ts` `mods.test.ts` `motorcycles.test.ts` `motorhomes.test.ts` `networth-holdings.test.ts` `outings.test.ts` `repairs.test.ts` `repossession.test.ts` `roadside.test.ts` `roofbox.test.ts` `standin.test.ts` `staytypes.test.ts` `theft.test.ts` `tint-road.test.ts` `tint.test.ts` `tires-drive.test.ts` `tires.test.ts` `tradein.test.ts` `trips.test.ts` `underway.test.ts` `usedcars.test.ts` `usedlistings.test.ts` `vehicles.test.ts` `wraps.test.ts` | A Car Of Your Own |
+| `vehicle.buy` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` `carcare.test.ts` `caroptions.test.ts` `carsale.test.ts` `connected-day.test.ts` `driving.test.ts` `evs.test.ts` `ferries.test.ts` `fueltank.test.ts` `hotels.test.ts` `inspections.test.ts` `interiors.test.ts` `landlease.test.ts` `leasing.test.ts` `mods.test.ts` `motorcycles.test.ts` `motorhomes.test.ts` `networth-holdings.test.ts` `outings.test.ts` `repairs.test.ts` `repossession.test.ts` `roadside.test.ts` `roofbox.test.ts` `standin.test.ts` `staytypes.test.ts` `theft.test.ts` `tint-road.test.ts` `tint.test.ts` `tires-drive.test.ts` `tires.test.ts` `tirewear.test.ts` `tradein.test.ts` `trips.test.ts` `underway.test.ts` `usedcars.test.ts` `usedlistings.test.ts` `vehicles.test.ts` `wraps.test.ts` | A Car Of Your Own |
 | `vehicle.coverage` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `carcare.test.ts` `wraps.test.ts` | A Car Of Your Own |
 | `vehicle.hitch` | `src/engine/systems/caravans.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` | Rent And A Roof |
 | `vehicle.inspect_used` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `usedcars.test.ts` | A Car Of Your Own |
@@ -500,10 +500,11 @@ Each command the player can run: the engine file that handles it, the screens th
 | `vehicle.lease_buyout` | `src/engine/systems/leasing.ts` | `VehiclesWorkspace.tsx` | `leasing.test.ts` | A Car Of Your Own |
 | `vehicle.lease_return` | `src/engine/systems/leasing.ts` | `VehiclesWorkspace.tsx` | `leasesabroad.test.ts` `leasing.test.ts` | A Car Of Your Own |
 | `vehicle.list` | `src/engine/systems/carsale.ts` | `VehiclesWorkspace.tsx` | `carsale.test.ts` | A Car Of Your Own |
-| `vehicle.modify` | `src/engine/systems/mods.ts` | `VehiclesWorkspace.tsx` | `mods.test.ts` | A Car Of Your Own |
+| `vehicle.modify` | `src/engine/systems/mods.ts` | `VehiclesWorkspace.tsx` | `mods.test.ts` `tirewear.test.ts` | A Car Of Your Own |
 | `vehicle.redeem` | `src/engine/systems/repossession.ts` | `VehiclesWorkspace.tsx` | `repossession.test.ts` | A Car Of Your Own |
 | `vehicle.refuel` | `src/engine/systems/fueltank.ts` | `VehiclesWorkspace.tsx` | `fueltank.test.ts` | A Car Of Your Own |
 | `vehicle.repair` | `src/engine/systems/repairs.ts` | `VehiclesWorkspace.tsx` | `repairs.test.ts` `roadside.test.ts` `standin.test.ts` | A Car Of Your Own |
+| `vehicle.replace_tires` | `src/engine/systems/tires.ts` | `VehiclesWorkspace.tsx` | `tirewear.test.ts` | A Car Of Your Own |
 | `vehicle.roof_box` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `roofbox.test.ts` | A Car Of Your Own |
 | `vehicle.roof_box_fit` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `roofbox.test.ts` | A Car Of Your Own |
 | `vehicle.roof_rack` | `src/engine/systems/roofbox.ts` | `VehiclesWorkspace.tsx` | `roofbox.test.ts` | A Car Of Your Own |

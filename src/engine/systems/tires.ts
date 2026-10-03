@@ -19,6 +19,20 @@
  *   warranty, the one winter tire that carries one.
  * British Columbia's rule for signed highways takes an M+S all-season too,
  * which SLATE's cars have, so it asks nothing of them.
+ *
+ * **The everyday tires wear out** (from 2026-10-03): after 60,000 miles, the
+ * treadwear warranty Michelin gives its CrossClimate 2, read on its page in a
+ * search's summary, taken for every car's all-seasons. Past it they're at the
+ * legal limit, and a test that checks them (the MOT, New York's,
+ * Connecticut's, California's where it's due) fails them and a set is fitted
+ * at the market's price. A used car's were last changed at the odometer's
+ * last multiple of that life, SLATE's reading. A set fitted sooner is the
+ * owner's choice. A set of four, fitted, at a named retailer's own page
+ * (`research-vehicles-deeper.json`): BJ's, $899.96 after its discounts and
+ * $80 to fit, in America; Blackcircles' cheapest fully fitted 215/55 R17,
+ * £58.99 a tire, in Britain; Discount Tires' €145 a tire fitted in Ireland
+ * (secondhand); The Wheel Shop's C$282.03 a tire in Canada, its fitting not
+ * read; Costco México's MX$2,599 a tire.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -30,6 +44,30 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { payFromBank, owe } from './household';
 import { forOutings, kindOf, modelById, onTwoWheels, vehiclesOf, type OwnedVehicle } from './vehicles';
+import { KM_A_YEAR, type Jurisdiction } from '../content/vehiclefees';
+
+export const TIRE_LIFE_KM = Math.round(60_000 * 1.609344);
+const USD_SET = { price: 899.96 + 80, currency: 'USD' };
+export const TIRE_SET: Readonly<Partial<Record<Jurisdiction, { price: number; currency: string }>>> = {
+  'US-NY': USD_SET, 'US-CT': USD_SET, 'US-CA': USD_SET,
+  GB: { price: 58.99 * 4, currency: 'GBP' }, IE: { price: 145 * 4, currency: 'EUR' },
+  'CA-ON': { price: 282.03 * 4, currency: 'CAD' }, 'CA-BC': { price: 282.03 * 4, currency: 'CAD' },
+  'MX-CMX': { price: 2_599 * 4, currency: 'MXN' },
+};
+type Odo = { ageAtPurchase: number; jurisdiction: Jurisdiction; km?: number; odometerAtPurchase?: number; tiresAtKm?: number };
+/** The car's odometer, km (as `odometer` in `systems/carcare.ts`). */
+export const odometerOf = (v: Odo): number => (v.odometerAtPurchase ?? v.ageAtPurchase * KM_A_YEAR[v.jurisdiction]) + (v.km ?? 0);
+/** The odometer when its everyday tires were last fitted. */
+export const tiresFittedAt = (v: Odo): number => v.tiresAtKm ?? (() => { const at = v.odometerAtPurchase ?? v.ageAtPurchase * KM_A_YEAR[v.jurisdiction]; return at - (at % TIRE_LIFE_KM); })();
+export const tiresWorn = (v: Odo): boolean => odometerOf(v) - tiresFittedAt(v) >= TIRE_LIFE_KM;
+/** A set of four fitted, in the save's money, where a price is read. */
+export function tireSetCost(sim: Simulation, v: OwnedVehicle): Money | undefined {
+  const t = TIRE_SET[v.jurisdiction];
+  if (!t) return undefined;
+  const c = Math.round(t.price * 100);
+  const cur = saveCurrency(sim.universe);
+  return cur === t.currency ? c : exchange(c, t.currency, cur) ?? c;
+}
 
 export const WINTER_TIRES = {
   setUsd: 4 * 300,
@@ -82,6 +120,16 @@ export function tiresMonth(sim: Simulation, person: Person, v: OwnedVehicle, km:
 }
 
 export function registerTires(sim: Simulation): void {
+  sim.onCommand<{ vehicleId: string }, { paid: Money }>('vehicle.replace_tires', (p, { sim: s }) => {
+    const person = s.player;
+    const v = vehiclesOf(person).find((x) => x.id === p?.vehicleId && x.soldAt === undefined);
+    if (!v) throw new CommandError('That isn’t a car you own.');
+    const cost = tireSetCost(s, v);
+    if (cost === undefined || kindOf(modelById(v.modelId)!) !== 'car') throw new CommandError('No set’s price is kept for it.');
+    if (!payFromBank(s, person, cost, 'Four tires, fitted', 'vehicle')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
+    v.tiresAtKm = odometerOf(v);
+    return { paid: cost };
+  });
   sim.onCommand<{ vehicleId: string }, { paid: Money }>('vehicle.winter_tires', (p, { sim: s }) => {
     const person = s.player;
     const v = vehiclesOf(person).find((x) => x.id === p?.vehicleId);

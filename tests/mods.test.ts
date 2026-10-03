@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { documentsOf } from '@/engine/systems/documents';
-import { MOD_LOADING, MOD_PRICE, modLoading, modRefusal } from '@/engine/systems/mods';
+import { MOD_LOADING, MOD_OFFERS, modLoading, modRefusal } from '@/engine/systems/mods';
 import { vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
 
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -42,14 +42,14 @@ describe('modifications, declared', () => {
     expect(sim.execute<{ paid: number }>({ kind: 'vehicle.modify', payload: { vehicleId: v.id, mod: 'remap' } }).value!.paid).toBe(inSave(sim, 449_00, 'GBP'));
     expect(sim.execute({ kind: 'vehicle.modify', payload: { vehicleId: v.id, mod: 'wheels' } }).ok).toBe(true);
     expect(modLoading(v)).toBeCloseTo(1.121 * 1.0452 * 1.1593 * 1.0079, 12);
-    expect(MOD_PRICE.exhaust).toBeCloseTo((1_038.46 + 1_426.34) / 2, 6);
+    expect(MOD_OFFERS.exhaust.GB!.price).toBeCloseTo((1_038.46 + 1_426.34) / 2, 6);
   });
 
-  it('change nothing outside Britain, where no loading is published, and no respray is sold there', () => {
+  it('change nothing outside Britain, where no loading is published, and no remap is sold in America', () => {
     const { sim, v } = withCar('us-ct-newhaven', 'mods-ct', 'us-honda-cr-v');
     expect(sim.execute({ kind: 'vehicle.tint', payload: { vehicleId: v.id, kind: 'full' } }).ok).toBe(true);
     expect(modLoading(v)).toBe(1);
-    expect(modRefusal(v, 'remap', true)).toMatch(/in Britain/);
+    expect(modRefusal(v, 'remap', true)).toBe('No price for it is read where it’s registered.');
     // A leased car is the lender's.
     const gb = withCar('uk-eng-london', 'mods-lease', 'gb-ford-puma');
     const l = gb.sim.execute<{ vehicleId: string }>({ kind: 'vehicle.lease', payload: { modelId: 'gb-nissan-qashqai', months: 37 } });
