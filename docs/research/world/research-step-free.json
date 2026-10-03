@@ -1,0 +1,245 @@
+{
+  "meta": {
+    "topic": "Step-free (wheelchair) public-transit routes between city and airport, and paratransit / accessible-taxi alternatives",
+    "date": "2026-10-02",
+    "method": "Operator and transit-authority pages read with WebFetch or curl on 2026-10-02. Where a page blocked automated reading (HTTP 403 or refused connection), it is said in the note and the record is confirmed: false unless the same fact was read on another page from the same operator or authority. For London Underground, TfL's own Journey Planner API (api.tfl.gov.uk) was queried with accessibilityPreference=StepFreeToPlatform and StepFreeToVehicle; a journey returned means TfL's planner routes it step-free, and 'No journey found' means it does not.",
+    "stepFreeMeaning": "true = every leg of the named route has published step-free access from street to platform or stop at both ends and accessible vehicles. Where boarding needs a ramp from staff (UK mainline, some Underground platforms), that is said in detail. null = could not be established from the operator's own page.",
+    "cityEndCaveat": "Every route is step-free only from an accessible station at the city end. Each record names the accessible city-end stations that were read; a character starting elsewhere needs an accessible station first."
+  },
+  "routes": [
+    {
+      "cityId": "us-ny-newyork",
+      "iata": "JFK",
+      "via": "Subway A to Howard Beach-JFK Airport, or E/J/Z to Sutphin Blvd-Archer Av-JFK Airport (Jamaica), then AirTrain JFK",
+      "stepFree": true,
+      "detail": "MTA accessible stations list: Howard Beach-JFK Airport is accessible ('Elevators at NE and SW corners of Coleman Sq and 159th Ave'); Sutphin Blvd-Archer Av/JFK Airport is accessible ('Elevators off SW corner of Sutphin Blvd and Archer Ave near elevated LIRR tracks'); Jamaica Center-Parsons/Archer is accessible. Port Authority: 'All AirTrain trains and stations are ADA-compliant', 'stations feature elevators and escalators, and each train has wheelchair spaces'. AirTrain one-way fare between JFK and Jamaica or Howard Beach: $8.75.",
+      "url": "https://www.mta.info/accessibility/stations ; https://www.jfkairport.com/transportation/airtrain",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The Manhattan or other origin station must itself be on the MTA accessible list. Platform-train gap and elevator outages not assessed."
+    },
+    {
+      "cityId": "us-ny-newyork",
+      "iata": "LGA",
+      "via": "Subway to Jackson Heights-Roosevelt Av/74 St-Broadway (or 61 St-Woodside), then Q70 LaGuardia Link bus",
+      "stepFree": true,
+      "detail": "MTA: 'All MTA buses are accessible for riders who use a wheelchair.' 'Q70-LaGuardia Link service to and from LaGuardia Airport is fare-free.' MTA accessible stations list: Jackson Heights-Roosevelt Av/74 St-Broadway accessible ('Elevators inside station house on NW corner of Roosevelt Ave and Broadway'); 61 St-Woodside accessible ('Elevator on NE corner of 61 St and Roosevelt Ave'); Astoria Blvd (N,W) accessible.",
+      "url": "https://www.mta.info/guides/riding-the-bus ; https://www.mta.info/accessibility/stations",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The origin subway station must be accessible. The Q70's terminal stops at LGA (Terminals B and C) were not separately checked for accessibility."
+    },
+    {
+      "cityId": "us-ny-newyork",
+      "iata": "EWR",
+      "via": "PATH to Newark Penn Station, then NJ TRANSIT bus 62 (Go Bus 28 also serves)",
+      "stepFree": true,
+      "detail": "Port Authority PATH: 'PATH's elevator-accessible stations are Newark, Harrison, Journal Square, Grove Street, Exchange Place, Newport, Hoboken, 33 Street, and World Trade Center.' NJ TRANSIT: 'bus fleet is 100% accessible with bus lifts or ramps.' Newark Airport page: NJ Transit Go Bus routes 28, 37, 62, 67 and 107, frequent service from Newark Penn Station (Raymond Boulevard Bus Lanes).",
+      "url": "https://www.panynj.gov/path/en/accessibility.html ; https://www.njtransit.com/accessibility/bus-accessibility ; https://www.newarkairport.com/transportation/public-transport",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "PATH page is script-rendered; the station list was read from its own content model via curl. In Manhattan only 33 Street and World Trade Center PATH stations are on the elevator list (Christopher St, 9 St, 14 St and 23 St are not). Accessibility of the Newark Penn Station bus lanes themselves was not read."
+    },
+    {
+      "cityId": "us-ca-losangeles",
+      "iata": "LAX",
+      "via": "Metro C or K Line to LAX/Metro Transit Center, then free LAX shuttle to terminals",
+      "stepFree": true,
+      "detail": "LA Metro: 'All Metro buses and rail lines are wheelchair accessible.' 'Every rail station has a ramp, walkway or elevator to the platform. If an elevator is out of service, you may take a bus to the next station at no cost.' LA Metro LAX/Metro Transit Center page: 'Connect from LAX/Metro Transit Center (Bus Bays 1 and 2) to all LAX terminals via a free, frequent shuttle.'",
+      "url": "https://www.metro.net/riding/riders-disabilities/ ; https://www.metro.net/lax-metro-transit-center/",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "Rail legs confirmed on metro.net. The shuttle leg is run by the airport (LAWA): flylax.com's ADA page, which per search-index text says the shuttle buses 'are equipped with wheelchair lift or ramp and have two wheelchair tie-down positions', returned HTTP 403 to direct reading, so the shuttle leg is unconfirmed."
+    },
+    {
+      "cityId": "ca-on-toronto",
+      "iata": "YYZ",
+      "via": "UP Express from Union Station to Pearson",
+      "stepFree": true,
+      "detail": "UP Express: 'UP Express trains all board at platform level to ensure ease of boarding.' 'Trains are wheelchair accessible and feature accessible washrooms and locations to store mobility aids.' Stations 'include accessible features like ramps and elevators for wheelchair access'.",
+      "url": "https://www.upexpress.com/CustomerSupport/Accessibility",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "The page states station features generally and does not name Union and Pearson individually; both are UP Express's terminal stations."
+    },
+    {
+      "cityId": "ca-on-toronto",
+      "iata": "YYZ",
+      "via": "TTC 900 Airport Express bus (and 52A/300A/334A/352/952 routes) to Pearson Terminals 1 and 3",
+      "stepFree": null,
+      "detail": "TTC: 900 Airport Express is 'all-day accessible express bus service'; 52A, 300A, 334A, 352 and 952 are marked accessible; cost is a single fare. Serves Terminal 1 (Ground Level) and Terminal 3 (Arrivals Level).",
+      "url": "https://www.ttc.ca/riding-the-ttc/Service-to-the-airport/Toronto-Pearson-International-Airport",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Buses confirmed accessible; the subway station at the city end (e.g. Kipling for the 900) was not checked, so the whole trip is left null."
+    },
+    {
+      "cityId": "ca-bc-vancouver",
+      "iata": "YVR",
+      "via": "SkyTrain Canada Line to YVR-Airport",
+      "stepFree": true,
+      "detail": "TransLink: 'All of our stations are equipped with elevators for people using wheelchairs or other mobility devices.' Canada Line help: call 604.247.5703. A YVR AddFare of $6.50 applies at all times when starting at YVR-Airport, Sea Island Centre or Templeton (fares effective July 1, 2026).",
+      "url": "https://www.translink.ca/rider-guide/transit-accessibility/how-to-use-accessible-transit ; https://www.translink.ca/transit-fares/pricing-and-fare-zones",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Elevator outages are announced on TransLink Alerts; not modelled here."
+    },
+    {
+      "cityId": "uk-eng-london",
+      "iata": "LHR",
+      "via": "London Underground Piccadilly line to Heathrow Terminals 2 & 3, Terminal 4 or Terminal 5",
+      "stepFree": true,
+      "detail": "TfL Journey Planner API, StepFreeToPlatform: journeys found from King's Cross St Pancras, Green Park, Earl's Court and Hammersmith to Heathrow Terminals 2 & 3, and from King's Cross to Terminals 4 and 5; no journey found from Piccadilly Circus. StepFreeToVehicle (no step or gap to the train): King's Cross to Terminals 2 & 3 found; King's Cross to Terminal 4 and to Terminal 5 not found. TfL Step-free Tube Guide (April 2026, TfL 0625.03.26): boarding ramps and mini ramps are available from staff without booking and take a maximum of 300kg.",
+      "url": "https://api.tfl.gov.uk/Journey/JourneyResults/940GZZLUKSX/to/940GZZLUHRC?mode=tube&accessibilityPreference=StepFreeToVehicle ; https://content.tfl.gov.uk/step-free-tube-guide-map.pdf",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Step-free street to platform at all three Heathrow stations from the four central stations tested; only Terminals 2 & 3 is step-free to the train from King's Cross, so T4 and T5 need a staff ramp. tfl.gov.uk station pages returned HTTP 403; the facts come from TfL's own API and its published PDF. Central Piccadilly stations other than the four tested were not checked (Piccadilly Circus fails)."
+    },
+    {
+      "cityId": "uk-eng-london",
+      "iata": "LGW",
+      "via": "Gatwick Express from London Victoria",
+      "stepFree": true,
+      "detail": "Network Rail, London Victoria: 'Step-free category A, Compliant step-free access to all platform(s)'. National Rail, Gatwick Airport (managed by Gatwick Express): 'Step-free category A: there is step-free access to all platforms'; there are lifts. Gatwick Express: 'We have ramps to help you on and off the train at all of our step-free stations and on most of our trains.' 'Wheelchair spaces are available within standard class accommodation only.'",
+      "url": "https://www.networkrail.co.uk/rail-travel/our-stations/london-victoria/ ; https://www.nationalrail.co.uk/stations/gatwick-airport/ ; https://www.gatwickexpress.com/accessibility/mobility-scooters-and-wheelchairs",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Boarding is by staff ramp, not level. TfL's planner returned no StepFreeToVehicle journey Victoria to Gatwick for the same reason. Gatwick Express page read via curl (WebFetch got 403)."
+    },
+    {
+      "cityId": "uk-eng-london",
+      "iata": "STN",
+      "via": "Stansted Express from London Liverpool Street",
+      "stepFree": true,
+      "detail": "Stansted Express: 'Stansted Airport, Stratford, Tottenham Hales and London Liverpool Street stations have step-free access to the platform.' 'All our trains are accessible for wheelchair users and passengers with reduced mobility.' Staff use a train-to-platform ramp; maximum combined weight 300kg. Network Rail, Liverpool Street: 'Step-free category A: Compliant step-free access to all platform(s)'; no step-free access to the Central, westbound Metropolitan, Hammersmith & City or Circle lines. National Rail, Stansted Airport: step-free category A, lifts available.",
+      "url": "https://www.stanstedexpress.com/help/assisted-travel ; https://www.networkrail.co.uk/rail-travel/our-stations/london-liverpool-street/ ; https://www.nationalrail.co.uk/stations/stansted-airport/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Boarding is by staff ramp. Stansted Express page read via curl (WebFetch got 403)."
+    },
+    {
+      "cityId": "ie-lei-dublin",
+      "iata": "DUB",
+      "via": "Dublin Bus routes 16 and 41 to Dublin Airport",
+      "stepFree": true,
+      "detail": "Transport for Ireland (NTA, which contracts Dublin Bus): on Dublin Bus 'wheelchairs can be accommodated up to a size of 70cm wide and 120cm long and does not require booking in advance.' 'The majority of TFI bus services are low floor. These are accessible for wheelchairs and have a designated wheelchair space.' 'All buses will stop if there is a wheelchair user at the bus stop.' Boarding is by ramp.",
+      "url": "https://www.transportforireland.ie/support/booking-a-wheelchair-space/ ; https://www.transportforireland.ie/accessibility/bus-accessibility/",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "dublinbus.ie pages (accessibility, passengers using wheelchairs, Dublin Airport hub) all returned HTTP 403, so the operator's own statement that the whole fleet and routes 16/41 are accessible was not read; TFI says 'majority', not all. Accessibility of individual city-centre stops not checked."
+    },
+    {
+      "cityId": "mx-cmx-mexicocity",
+      "iata": "MEX",
+      "via": "Metro Line 5 to Terminal Aérea (Terminal 1)",
+      "stepFree": null,
+      "detail": "STC Metro station page for Terminal Aérea (archived 2025-11-17): fare $5 pesos; free entry for older adults, people with disabilities, children under 5, INJUVE youth and uniformed police; exits on Boulevard Puerto Aéreo; connects to Metrobús Line 4 Terminal 1. It lists no accessibility services. STC 'Accesibilidad en estaciones' elevator table (archived 2025-08-05) lists Line 5 elevators only at La Raza, Autobuses del Norte and Politécnico, plus Pantitlán central platform; no elevator is listed at Terminal Aérea.",
+      "url": "https://www.metro.cdmx.gob.mx/tramites-y-servicios/accesibilidad-en-estaciones ; https://www.metro.cdmx.gob.mx/la-red/linea-5/terminal-aerea",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "metro.cdmx.gob.mx refused connections on 2026-10-02; read from Wayback Machine copies (web.archive.org/web/20250805080801 and /20251117020520). Third-party sites claim elevators and ramps at Terminal Aérea, but the operator's own list does not show one, so step-free status is not established."
+    }
+  ],
+  "alternatives": [
+    {
+      "cityId": "us-ny-newyork",
+      "service": "Access-A-Ride (MTA ADA paratransit)",
+      "fare": 3.0,
+      "currency": "USD",
+      "eligibility": "Eligible customers with disabilities that prevent them from using the public buses and subways; apply or recertify through MTA.",
+      "url": "https://www.mta.info/accessibility/access-a-ride/policies-and-forms/fare-policy ; https://www.mta.info/fares-tolls ; https://www.mta.info/accessibility/paratransit",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "'Access-A-Ride fare is the same as the full fare on fixed-route bus and subway', paid in exact change; full fare is $3 per mta.info/fares-tolls (changes took effect January 4, 2026). Authorized Personal Care Attendant rides free. Service area is within the five boroughs and a three-quarter-mile corridor into Nassau and Westchester; JFK and LGA are in Queens, but no page read names the airports."
+    },
+    {
+      "cityId": "us-ny-newyork",
+      "service": "Access Link (NJ TRANSIT ADA paratransit), for the Newark side",
+      "fare": null,
+      "currency": "USD",
+      "eligibility": "People with disabilities unable to use the local fixed-route bus or light rail due to physical or functional limitations; interview and medical verification.",
+      "url": "https://www.njtransit.com/accessibility/access-link-ada-paratransit",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "'Access Link is not free. The fare is based on the local fixed-route bus fare, the number of zones you travel through, and any applicable transfer fees.' No dollar amount on the page. PCAs ride free."
+    },
+    {
+      "cityId": "us-ca-losangeles",
+      "service": "Access (Access Services, LA County ADA paratransit)",
+      "fare": 2.75,
+      "currency": "USD",
+      "eligibility": "ADA paratransit eligible individuals; eligibility based on ability to use accessible buses and trains in LA County.",
+      "url": "https://accessla.org/sites/default/files/Publications/Riders%20Guide_ENG.pdf",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Rider's Guide: one-way $2.75 for trips up to 19.9 miles, $3.50 for 20 or more miles, $2.00 within Santa Clarita or Antelope Valley; exact fare at boarding. PCA rides free; guests pay the same fare. The guide carries no edition date in the extracted text. Whether a given trip to LAX falls under or over 20 miles depends on origin."
+    },
+    {
+      "cityId": "us-ca-losangeles",
+      "service": "LAX-it shuttle (airport courtesy shuttle to the taxi/rideshare lot)",
+      "fare": 0,
+      "currency": "USD",
+      "eligibility": "All passengers",
+      "url": "https://www.flylax.com/lax-americans-with-disability-act/ada-detail-page",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "Search-index text of the LAWA page describes LAX-it as free and ADA-accessible (large buses low floor with ramps, small buses with lifts); the page returned HTTP 403 to direct reading."
+    },
+    {
+      "cityId": "ca-on-toronto",
+      "service": "Wheel-Trans (TTC paratransit)",
+      "fare": 3.30,
+      "currency": "CAD",
+      "eligibility": "Persons with temporary and/or permanent disabilities, per Wheel-Trans eligibility categories.",
+      "url": "https://www.ttc.ca/wheel-trans/general-information ; https://www.ttc.ca/Fares-and-passes",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "'Wheel-Trans offers service to Lester B. Pearson airport for the cost of your TTC fare. You are responsible for carrying your luggage.' Pick-up/drop-off: Terminal 1 Arrivals Level 1 Doorway E and Departures Level 3 Post 9; Terminal 3 Departures Level Sign 29. TTC adult single fare: $3.30 PRESTO, $3.35 cash."
+    },
+    {
+      "cityId": "ca-bc-vancouver",
+      "service": "HandyDART (TransLink door-to-door paratransit)",
+      "fare": 2.85,
+      "currency": "CAD",
+      "eligibility": "A physical, sensory or cognitive disability and cannot use conventional public transit for all trips without assistance.",
+      "url": "https://www.translink.ca/rider-guide/transit-accessibility/handydart ; https://www.translink.ca/transit-fares/pricing-and-fare-zones",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "'HandyDART costs the same as bus, SeaBus, and SkyTrain' and 'offers door-to-door service to and from the Vancouver International Airport (YVR).' Adult 1-zone fare effective July 1, 2026: $2.85 Compass stored value, $3.50 cash/contactless. Whether the $6.50 YVR AddFare applies to HandyDART trips was not stated on the pages read."
+    },
+    {
+      "cityId": "uk-eng-london",
+      "service": "Licensed London taxi (black cab)",
+      "fare": null,
+      "currency": "GBP",
+      "eligibility": "Anyone; every licensed taxi is wheelchair accessible.",
+      "url": "https://content.tfl.gov.uk/taxi-private-hire-action-plan-2025.pdf",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "TfL: 'taxis must be wheelchair accessible and have ... a wheelchair ramp. Taxi fares are regulated by us and calculated using a taximeter.' 'All taxis are wheelchair accessible.' Only 0.4 per cent of licensed private hire vehicles are designated wheelchair accessible. Fare is metered; TfL tariff pages returned HTTP 403, so no tariff or Heathrow surcharge is recorded."
+    },
+    {
+      "cityId": "ie-lei-dublin",
+      "service": "Wheelchair accessible taxi (WAV)",
+      "fare": 4.40,
+      "currency": "EUR",
+      "eligibility": "Anyone; WAV taxis listed on the NTA WAV Register.",
+      "url": "https://www.transportforireland.ie/fares/taxi-fares/ ; https://www.transportforireland.ie/accessibility/taxi-accessibility/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Fare is the metered national maximum (effective 1 December 2024): standard rate initial charge €4.40, Tariff A €1.32/km or €0.47/min up to 15 km, Tariff B €1.72/km or €0.61/min thereafter; premium rate €5.40 initial, €1.81 and €2.20 per km; €3 pre-booking fee. TFI points to the WAV Register to find one. The page read does not state separately that WAVs charge the same meter; that is the national maximum fare for all taxis."
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "Mexico City: no official paratransit or accessible-taxi service with a published fare for the airport was found; metro.cdmx.gob.mx was unreachable.",
+      "Mexico City: whether Terminal Aérea has an elevator or ramp per the operator (STC); its elevator list does not include it.",
+      "Dublin: dublinbus.ie's own accessibility statements (HTTP 403).",
+      "Los Angeles: direct read of flylax.com for the Metro Connector shuttle's wheelchair lifts (HTTP 403).",
+      "London: TfL taxi tariff and Heathrow taxi surcharge (tfl.gov.uk HTTP 403).",
+      "New York: NYC TLC accessible taxi dispatch fare was not researched.",
+      "Toronto: accessibility of the subway station at the city end of the TTC 900 bus (Kipling) was not checked.",
+      "Vancouver: whether the YVR AddFare applies to HandyDART."
+    ]
+  }
+}

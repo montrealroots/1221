@@ -15,6 +15,13 @@
  * Stansted Express's 48), and otherwise a taxi's, SLATE's estimate. A town
  * with no transit read goes by taxi, as before.
  *
+ * **Step-free** (from later on 2026-10-02; `research-step-free.json`): each
+ * route's operator says whether a wheelchair user can make it without a step,
+ * and every one SLATE offers can, from an accessible station at the town's
+ * end, but Mexico City's: the Metro's own list of its elevators names none at
+ * Terminal Aérea (read from its 2025 pages, the live site refusing). A
+ * wheelchair user goes there by taxi.
+ *
  * **By car** (from 2026-10-02), on a round trip: driven to the airport in
  * one's own car, left in its cheapest long-stay car park whose tariff was
  * read (`content/airportparking.ts`), and paid for on the way home, as at
@@ -81,6 +88,20 @@ export const TRANSIT: Readonly<Record<string, { via: string; fare: number; curre
 };
 
 const transitFor = (cityId: string, iata: string) => TRANSIT[`${cityId}|${iata}`];
+
+/** The routes a wheelchair user can't make step-free, by the operator's own pages. */
+export const NOT_STEP_FREE: ReadonlySet<string> = new Set(['mx-cmx-mexicocity|MEX']);
+
+/** Why a wheelchair user can't take a flight's transit at either end, or nothing. */
+export function stepFreeRefusal(legs: readonly JourneyLeg[]): string | undefined {
+  for (let i = 0; i < legs.length; i += 1) {
+    const l = legs[i]!;
+    // Only a ground leg runs between a town and an airport, so no other is in the set.
+    const [city, iata] = i === 0 ? [l.from, l.to] : [l.to, l.from];
+    if (NOT_STEP_FREE.has(`${city}|${iata}`)) return `${transitFor(city, iata)?.via ?? 'That way'} isn’t step-free; go by taxi.`;
+  }
+  return undefined;
+}
 
 /** Whether a flight between two towns could go to and from its airports by transit at either end. */
 export function transitOffered(legs: readonly JourneyLeg[]): boolean {

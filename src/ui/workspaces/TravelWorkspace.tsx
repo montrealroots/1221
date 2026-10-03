@@ -34,7 +34,8 @@ import { hoursOut } from '@/engine/systems/jetlag';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
 import { breakfastPrice, breakfastRefusal } from '@/engine/systems/hotelbreakfast';
-import { byCar, byCarRefusal, byTransit, parkingAt, parkingFee, transitOffered, type GroundWay } from '@/engine/systems/airportground';
+import { byCar, byCarRefusal, byTransit, parkingAt, parkingFee, stepFreeRefusal, transitOffered, type GroundWay } from '@/engine/systems/airportground';
+import { usesWheelchair } from '@/engine/systems/access';
 import { HOTEL_WANT_LABEL, amenitiesOf, amenityLine, freeCancelUntil, hotelById, hotelHas, hotelsIn, namedStayQuote, type HotelWant } from '@/engine/systems/hotels';
 import { insuranceQuote } from '@/engine/systems/travelinsurance';
 import { lateQuote } from '@/engine/systems/latecheckout';
@@ -105,7 +106,8 @@ export function TravelWorkspace() {
   const towing = tow && car && caravanHere && typeof caravanHere !== 'string' ? caravanHere : undefined;
   const flown = toCity ? planBy(sim, mode, fromCity, toCity, day, pick, bags, seat) : 'Choose where.';
   // To the airport and back by transit where it was read (`systems/airportground.ts`).
-  const transit = !mode && typeof flown !== 'string' && transitOffered(flown);
+  // Not offered a wheelchair user where the way isn't step-free (`stepFreeRefusal`).
+  const transit = !mode && typeof flown !== 'string' && transitOffered(flown) && !(usesWheelchair(person) && stepFreeRefusal(flown));
   // Or one's own car, left at the airport on a round trip (from 2026-10-02): the car in town that drives there.
   const flownBackRaw = toCity && round && !mode ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags, seat, toCity) : undefined;
   const ownCar = !mode && typeof flown !== 'string' && flownBackRaw && typeof flownBackRaw !== 'string' ? vehiclesOf(person).find((v) => !byCarRefusal(sim, person, fromCity, flown, flownBackRaw, v.id)) : undefined;
