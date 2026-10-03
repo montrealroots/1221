@@ -63,6 +63,9 @@ export interface Item {
   paid?: Money;
   /** Its chosen options (a size, a color, a fabric), where it has any. */
   spec?: Readonly<Record<string, string>>;
+  /** A book's words read so far, and whether it's been read through (`systems/reading.ts`, from 2026-10-03). */
+  readWords?: number;
+  readThrough?: true;
   /** How much room it takes, and how much it holds where it's a container, liters. */
   volumeL?: number;
   holdsL?: number;

@@ -40,6 +40,7 @@ import { takePortion } from './pantry';
 import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty, wearForSwim } from './wardrobe';
 import { SITTING_MET } from './coldstress';
 import { countWash } from './water';
+import { readFor } from './reading';
 import { SHAVE, shave, shaveReady } from './hygiene';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
@@ -472,6 +473,8 @@ export function registerLife(sim: Simulation): void {
       if (action === 'boat' && !spend(s, person, cost, 'Gas for the boat, at the marina', 'vehicle')) throw new CommandError('The payment didn’t go through.');
       if (action === 'charter' && !spend(s, person, cost, `A boat chartered with its captain, ${charterAt(person.currentLocationId)?.operator ?? ''}`, 'personal')) throw new CommandError('The payment didn’t go through.');
       // A workout or a swim is an outfit worn.
+      // A reader unwinding at home with a book of their own reads it (`readFor`, from 2026-10-03).
+      const reads = action === 'unwind' && atHome(person) && lovedIn(person, 'unwind').includes('reading');
       if (action === 'swim') wearForSwim(s, person);
       else if (action === 'exercise' || action === 'ride' || action === 'court') wearOutfit(s, person, true);
       // The lawn cut (`systems/lawns.ts`, from 2026-10-02).
@@ -487,6 +490,8 @@ export function registerLife(sim: Simulation): void {
       // A bike's ride builds as a run does, the same hour's work outdoors (`content/rides.ts`).
       const bike = action === 'ride' ? bikeHere(person) : undefined;
       applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : action === 'ride' || action === 'court' ? TRAINING.run : 1, action === 'unwind' && atHome(person) ? unwindComfort(person) : 1);
+      // Read after the hour's enjoyment is counted, so a book finished in it still gave it.
+      if (reads) readFor(s, person, LOOKING_AFTER.unwind.minutes);
       // A shower or a bath uses its soap and shampoo, and without them doesn't leave them as clean (`systems/hygiene.ts`).
       if (action === 'wash' || action === 'bathe') person.wellbeing.hygiene = Math.min(person.wellbeing.hygiene ?? 100, showerUses(s, person));
       // Metered at home, against the average (`systems/water.ts`, from 2026-10-03).

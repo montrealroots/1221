@@ -14,7 +14,7 @@ import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
 import { bagsOf, buyLuggageRefusal, luggageCatalog, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
-import { consolesHere, consolesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
+import { consolesHere, consolesOwned, gamesHere, gamesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { orderStage, ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
@@ -496,6 +496,7 @@ function WatchingAndPlaying() {
   const unsubscribe = useFeature('home.unsubscribe');
   const licence = useFeature('home.tv_licence');
   const buyConsole = useFeature('home.console');
+  const buyGame = useFeature('home.buy_game');
   const unwind = useFeature('life.look_after');
   const plans = plansHere(person).sort((a, b) => planPrice(sim, person, a) - planPrice(sim, person, b));
   const mine = subscriptionsOf(person);
@@ -546,6 +547,11 @@ function WatchingAndPlaying() {
               </select>
             </div>
             <button type="button" className="btn btn-sm btn-ghost" disabled={!buyConsole.open} title={buyConsole.reason} onClick={() => { const a = run<{ paid: number }>('home.console', { consoleId: pick.id }); if (a.ok) toast(`Bought, for ${money(a.value!.paid)}.`, 'positive'); }}>Buy The Console</button>
+          </div>
+        )}
+        {consolesOwned(person).length > 0 && gamesHere(person).length > 0 && (
+          <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+            {gamesHere(person).filter((g) => !gamesOwned(person).some((i) => i.kind === `game:${g.id}`)).map((g) => <button key={g.id} type="button" className="btn btn-sm btn-ghost" disabled={!buyGame.open} title={buyGame.reason ?? `${g.maker}’s own price`} onClick={() => { const r = run<{ paid: number }>('home.buy_game', { gameId: g.id }); if (r.ok) toast(`${g.title}, bought for ${money(r.value!.paid)}.`, 'positive'); }}>{`Buy ${g.title}`}</button>)}
           </div>
         )}
         <div className="row gap-1" style={{ flexWrap: 'wrap' }}>

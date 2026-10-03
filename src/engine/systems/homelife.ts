@@ -73,10 +73,44 @@ export const licensed = (person: Person, at: Instant): boolean => (person.tvLice
 export const consolesHere = (person: Person): Console[] => CONSOLES.filter((c) => c.market === marketOf(person));
 export const consolesOwned = (person: Person) => itemsOf(person).filter((i) => i.kind.startsWith('console:'));
 
+/**
+ * Games to play (the master plan's §34b, from 2026-10-03): a console plays
+ * only with software, a game of its maker's owned, a subscription to its
+ * maker's service with a catalog (PlayStation Plus, Xbox Game Pass, Nintendo
+ * Switch Online), or the game a bundle comes with. Games are sold at
+ * Nintendo's own prices (its eShop price service, `research-home-gaps.json`):
+ * Donkey Kong Bananza in each market, Mario Kart World in America. Sony's and
+ * Microsoft's own store prices weren't read, so their consoles play through
+ * their services. Until 2026-10-03 a console played with nothing on it.
+ */
+export interface Game { id: string; market: string; maker: string; title: string; price: number; currency: string; taxIncluded: boolean }
+export const GAMES: readonly Game[] = [
+  { id: 'us-dk-bananza', market: 'us', maker: 'Nintendo', title: 'Donkey Kong Bananza', price: 69.99, currency: 'USD', taxIncluded: false },
+  { id: 'us-mario-kart-world', market: 'us', maker: 'Nintendo', title: 'Mario Kart World', price: 79.99, currency: 'USD', taxIncluded: false },
+  { id: 'uk-dk-bananza', market: 'uk', maker: 'Nintendo', title: 'Donkey Kong Bananza', price: 58.99, currency: 'GBP', taxIncluded: true },
+  { id: 'ie-dk-bananza', market: 'ie', maker: 'Nintendo', title: 'Donkey Kong Bananza', price: 69.99, currency: 'EUR', taxIncluded: true },
+  { id: 'ca-dk-bananza', market: 'ca', maker: 'Nintendo', title: 'Donkey Kong Bananza', price: 99.99, currency: 'CAD', taxIncluded: false },
+  { id: 'mx-dk-bananza', market: 'mx', maker: 'Nintendo', title: 'Donkey Kong Bananza', price: 1449, currency: 'MXN', taxIncluded: true },
+];
+const SERVICE_MAKER: Readonly<Record<string, string>> = { 'PlayStation Plus': 'Sony', 'Xbox Game Pass': 'Microsoft', 'Nintendo Switch Online': 'Nintendo' };
+const consoleOf = (kind: string): Console | undefined => CONSOLES.find((c) => `console:${c.id}` === kind);
+export const gamesOwned = (person: Person) => itemsOf(person).filter((i) => i.kind.startsWith('game:'));
+export const gamesHere = (person: Person): Game[] => GAMES.filter((g) => g.market === marketOf(person));
+
+/** Whether a console of theirs has something to play: its maker's game, its maker's service, or its bundle's game. */
+export function playable(person: Person): boolean {
+  const makers = new Set(subscriptionsOf(person).map((s) => GAME_SERVICES.find((g) => g.id === s.id)?.service).filter((x): x is string => Boolean(x)).map((svc) => SERVICE_MAKER[svc]));
+  const games = new Set(gamesOwned(person).map((i) => GAMES.find((g) => `game:${g.id}` === i.kind)?.maker));
+  return consolesOwned(person).some((i) => {
+    const c = consoleOf(i.kind);
+    return Boolean(c) && (games.has(c!.maker) || makers.has(c!.maker) || /bundle/i.test(c!.edition ?? ''));
+  });
+}
+
 /** Why unwinding this way at home can't be done now, or nothing. `how`: 'live' TV, a plan's id, or 'games'. */
 export function watchRefusal(sim: Simulation, person: Person, how: string): string | undefined {
   const m = marketOf(person);
-  if (how === 'games') return consolesOwned(person).length ? undefined : 'You have no console.';
+  if (how === 'games') return consolesOwned(person).length === 0 ? 'You have no console.' : playable(person) ? undefined : 'It needs a game of its own to play, or its maker’s subscription.';
   // Ireland's license is for the TV set itself; Britain's for live TV and iPlayer.
   if ((how === 'live' && m === 'uk') || (m === 'ie' && how !== 'games')) return licensed(person, sim.now) ? undefined : `You need a TV license for that${m === 'ie' ? ': any TV at home needs one in Ireland' : ''}.`;
   if (how === 'live') return undefined;
@@ -128,6 +162,19 @@ export function registerHomeLife(sim: Simulation): void {
     const paid = inSaveMoney(s, Math.round(c.price * (1 + (c.taxIncluded ? 0 : salesTaxRate(cityId, s.now, 'general'))) * 100), c.currency);
     if (!spend(s, person, paid, `${c.maker}: ${c.model}`, 'personal')) throw new CommandError(`It comes to ${formatMoney(paid, saveCurrency(s.universe))}, more than you can pay.`);
     addItem(s, person, { kind: `console:${c.id}`, label: `${c.model}${c.edition ? `, ${c.edition}` : ''}`, quantity: 1, condition: 1, at: { kind: 'home', home, spot: 'floor' }, acquiredAt: s.now, paid });
+    return { paid };
+  });
+
+  sim.onCommand<{ gameId: string }, { paid: Money }>('home.buy_game', (p, { sim: s }) => {
+    const person = s.player;
+    const g = gamesHere(person).find((x) => x.id === p?.gameId);
+    if (!g) throw new CommandError('That isn’t sold where you live.');
+    if (!consolesOwned(person).some((i) => consoleOf(i.kind)?.maker === g.maker)) throw new CommandError(`It plays on a ${g.maker} console, and you have none.`);
+    const home = homeKeyOf(person.home);
+    if (!home || person.home!.kind === 'sofa') throw new CommandError('A game is kept in a home of your own.');
+    const paid = inSaveMoney(s, Math.round(g.price * (1 + (g.taxIncluded ? 0 : salesTaxRate(person.home!.cityId, s.now, 'general'))) * 100), g.currency);
+    if (!spend(s, person, paid, `${g.maker}: ${g.title}`, 'personal')) throw new CommandError(`It comes to ${formatMoney(paid, saveCurrency(s.universe))}, more than you can pay.`);
+    addItem(s, person, { kind: `game:${g.id}`, label: g.title, quantity: 1, condition: 1, at: { kind: 'home', home, spot: 'floor' }, acquiredAt: s.now, paid });
     return { paid };
   });
 

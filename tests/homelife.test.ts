@@ -12,7 +12,7 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { salesTaxRate } from '@/engine/content/tax';
 import { SERVICES } from '@/engine/content/homelife';
-import { consolesHere, licensed, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
+import { consolesHere, licensed, planPrice, plansHere, subscriptionsOf, watchRefusal , gamesOwned } from '@/engine/systems/homelife';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const into = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -75,7 +75,37 @@ describe('a console', () => {
     const r = sim.execute<{ paid: number }>({ kind: 'home.console', payload: { consoleId: c.id } });
     expect(r.ok, r.error).toBe(true);
     expect(r.value!.paid).toBe(into(sim, Math.round(c.price * (1 + salesTaxRate('us-ny-newyork', sim.now, 'general')) * 100), 'USD'));
-    expect(watchRefusal(sim, sim.player, 'games')).toBeUndefined();
+    // A console plays only with software (from 2026-10-03): its maker's game, service or bundle.
+    expect(watchRefusal(sim, sim.player, 'games')).toBe('It needs a game of its own to play, or its maker’s subscription.');
     expect(subscriptionsOf(sim.player)).toEqual([]);
+  });
+
+  it('plays a game of its maker’s, at Nintendo’s own price, or through its maker’s service', () => {
+    const sim = life('us-ny-newyork', 'console-games');
+    const sw = consolesHere(sim.player).find((c) => c.maker === 'Nintendo' && c.edition === 'System')!;
+    const ps = consolesHere(sim.player).find((c) => c.maker === 'Sony')!;
+    sim.must({ kind: 'home.console', payload: { consoleId: ps.id } });
+    // A Nintendo game doesn't play on a PlayStation.
+    expect(sim.execute({ kind: 'home.buy_game', payload: { gameId: 'us-dk-bananza' } }).error).toBe('It plays on a Nintendo console, and you have none.');
+    // PlayStation Plus has a catalog.
+    sim.must({ kind: 'home.subscribe', payload: { id: 'us-playstation-plus-essential' } });
+    expect(watchRefusal(sim, sim.player, 'games')).toBeUndefined();
+    sim.must({ kind: 'home.unsubscribe', payload: { id: 'us-playstation-plus-essential' } });
+    expect(watchRefusal(sim, sim.player, 'games')).toBeDefined();
+    // Xbox's service is no use to a PlayStation.
+    sim.must({ kind: 'home.subscribe', payload: { id: 'us-xbox-game-pass-essential' } });
+    expect(watchRefusal(sim, sim.player, 'games')).toBeDefined();
+    sim.must({ kind: 'home.console', payload: { consoleId: sw.id } });
+    const paid = sim.must<{ paid: number }>({ kind: 'home.buy_game', payload: { gameId: 'us-dk-bananza' } }).paid;
+    expect(paid).toBe(into(sim, Math.round(69.99 * (1 + salesTaxRate('us-ny-newyork', sim.now, 'general')) * 100), 'USD'));
+    expect(gamesOwned(sim.player).map((i) => i.label)).toEqual(['Donkey Kong Bananza']);
+    expect(watchRefusal(sim, sim.player, 'games')).toBeUndefined();
+  });
+
+  it('a bundle comes with its game', () => {
+    const sim = life('us-ny-newyork', 'console-bundle');
+    const bundle = consolesHere(sim.player).find((c) => /Bundle/.test(c.edition ?? ''))!;
+    sim.must({ kind: 'home.console', payload: { consoleId: bundle.id } });
+    expect(watchRefusal(sim, sim.player, 'games')).toBeUndefined();
   });
 });
