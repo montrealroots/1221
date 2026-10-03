@@ -6,7 +6,7 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
-import { clubById, membershipsOf, nextMeeting } from '@/engine/systems/clubs';
+import { clubById, membershipsOf, nextMeeting, runsIn } from '@/engine/systems/clubs';
 import { contactsOf } from '@/engine/systems/people';
 import { inSaveMoney } from '@/engine/systems/banking';
 
@@ -67,12 +67,15 @@ describe('a lesson', () => {
     const p = sim.player;
     const r = sim.must<{ paid: number }>({ kind: 'club.join', payload: { clubId: 'waltons-guitar' } });
     expect(r.paid).toBe(inSaveMoney(sim, 230_00, 'EUR'));
+    // Across one session: two METs isn't a workout, so no fitness is built.
+    const first = nextMeeting(clubById('waltons-guitar')!, sim.now);
+    sim.advanceTo(first - 60_000);
     const fitness = p.wellbeing.fitness;
+    sim.advanceTo(first + 61 * 60_000);
+    expect(p.wellbeing.fitness - fitness).toBeLessThan(0.1);
     sim.advanceBy(15 * MS_DAY);
     const m = membershipsOf(p)[0]!;
     expect(m.went).toBeGreaterThanOrEqual(1);
-    // Two METs isn't a workout.
-    expect(p.wellbeing.fitness).toBeLessThanOrEqual(fitness);
     sim.advanceBy(70 * MS_DAY);
     expect(membershipsOf(p)).toEqual([]);
   });
@@ -80,5 +83,8 @@ describe('a lesson', () => {
   it('a swimming course is exercise, at the Compendium’s 6.0 METs', () => {
     expect(clubById('trinity-sport-swim')!.met).toBe(6.0);
     expect(clubById('barnsdall-painting')!.met).toBeUndefined();
+    expect(runsIn(clubById('trinity-sport-swim')!)).toBe(false);
+    expect(runsIn(clubById('parkrun-bushy')!)).toBe(true);
+    expect(runsIn(clubById('volo-ny-kickball')!)).toBe(false);
   });
 });
