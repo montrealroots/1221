@@ -504,11 +504,17 @@ function Bathroom() {
   const [view, setView] = useCatalogView(`toiletries-${here}`);
   const shown = arrange(entries, view).slice(0, PAGE);
   const buy = useFeature('hygiene.buy');
+  const useFirst = useFeature('hygiene.use_first');
   return (
     <Panel title="Your Bathroom" subtitle="Each shower uses its soap and shampoo, each day its toothpaste and deodorant; what runs out is bought again on a free day">
       <LookRegion className="col gap-3">
         {kept.length === 0 ? <p className="small muted" style={{ margin: 0 }}>SLATE doesn’t count toiletries where you live.</p> : (
-          <div className="small">{kept.map((i, n) => <span key={i.id}>{n > 0 ? ' · ' : ''}<Open subject={at('item', i.id)}>{i.label}</Open>{`: ${supplyLeft(i.supply.left, i.supply.unit)}`}</span>)}</div>
+          <div className="col gap-1 small">{kept.map((i) => (
+            <div key={i.id} className="row-between">
+              <span><Open subject={at('item', i.id)}>{i.label}</Open>{`: ${supplyLeft(i.supply.left, i.supply.unit)}`}{person.usesFirst?.[i.supply.kind] === i.kind && <span className="xs dim"> · Used First, Bought Again</span>}</span>
+              {person.usesFirst?.[i.supply.kind] !== i.kind && <button type="button" className="btn btn-sm btn-ghost" disabled={!useFirst.open} title={useFirst.reason ?? 'Used before the others of its kind, and bought again when it runs out'} onClick={() => { if (run('hygiene.use_first', { productId: i.kind }).ok) toast(`${i.label}, used first.`, 'positive'); }}>Use This First</button>}
+            </div>
+          ))}</div>
         )}
         {entries.length > 0 && (
           <>

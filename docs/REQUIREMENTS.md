@@ -100,7 +100,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 31a | Reach an accessible bathroom | Partial | `lookAfterRefusal` | Rooms; a shared or busy bathroom |
 | 31b | Shower or bath | Complete | `wash`/`bathe`; tests/looking-after | — |
 | 31c | Supplies and towel | Done, 2026-10-02 | `showerUses` by grams; bath towels as items (`starterTowels`, `useTowel`) | Buying towels |
-| 31d | Products, duration, routine | Partial, 2026-10-02 | `take()` picks the first; conditioner used after the shampoo where bought, Loretz's 13.13 g a use | Choose product; the shower's minutes (REU2016's 7.8, read in `research-water-washing.json`, against the 20 the action takes with drying and dressing) |
+| 31d | Products, duration, routine | Partial, 2026-10-02 | the product chosen first used before the others of its kind, then an open bottle before a new one, and the chosen one bought again where it's sold (`hygiene.use_first`, `inUseOrder`); conditioner used after the shampoo where bought, Loretz's 13.13 g a use | the shower's minutes (REU2016's 7.8, read in `research-water-washing.json`, against the 20 the action takes with drying and dressing) |
 | 31e | Perform; time; hygiene | Complete | life.ts | — |
 | 31f | Water and energy | Not implemented | `powerDay` spoils food only | Hot water by heater and outage; water and energy billed |
 | 31g | Dry off, change, used towel to laundry | Done, 2026-10-02 | a home shower uses a towel, three uses to the wash (Cleveland Clinic), washed with the clothes; `clothes.change` after | — |

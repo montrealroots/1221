@@ -100,9 +100,21 @@ export const suppliesOf = (person: Person): Supplied[] => itemsOf(person).filter
 const toHand = (sim: Simulation, person: Person, kind: string): Supplied[] => suppliesOf(person).filter((i) => i.supply.kind === kind && i.supply.left > 0 && reachable(sim, person, i.at));
 
 /** Uses an amount of the first kind there's enough of; true where there was some. */
+/**
+ * The toiletries of a kind in the order they're used: the one they choose first
+ * (`hygiene.use_first`), then an open one finished before a new one, then
+ * the first bought. From 2026-10-02, until when the first bought was always
+ * used first.
+ */
+export function inUseOrder(sim: Simulation, person: Person, kind: string): ReturnType<typeof toHand> {
+  const first = person.usesFirst?.[kind];
+  const open = (i: Supplied) => i.supply.left < (toiletryById(i.kind)?.sizeQty ?? i.supply.left);
+  return toHand(sim, person, kind).sort((a, b) => Number(b.kind === first) - Number(a.kind === first) || Number(open(b)) - Number(open(a)));
+}
+
 function take(sim: Simulation, person: Person, kinds: readonly string[], amount: number): boolean {
   for (const kind of kinds) {
-    const have = toHand(sim, person, kind);
+    const have = inUseOrder(sim, person, kind);
     if (have.length === 0) continue;
     let need = kind === 'soap' ? USE.soapG : amount;
     for (const i of have) {
@@ -133,7 +145,7 @@ export function showerUses(sim: Simulation, person: Person): number {
 /** A day's teeth and deodorant: the freshness lost for what's missing. A toothbrush wears a day's share of its three months. */
 export function dailyCare(sim: Simulation, person: Person): number {
   if (!keepsSupplies(person)) return 0;
-  const brush = toHand(sim, person, 'toothbrush').find((b) => b.condition > 0);
+  const brush = inUseOrder(sim, person, 'toothbrush').find((b) => b.condition > 0);
   if (brush) brush.condition = Math.max(0, brush.condition - 1 / USE.toothbrushDays);
   const teeth = Boolean(brush) && take(sim, person, ['toothpaste'], USE.toothpasteG * USE.brushings);
   const fresh = take(sim, person, ['deodorant'], USE.deodorantG);
@@ -244,7 +256,9 @@ export function restock(sim: Simulation, person: Person, dishwasher = false): nu
     const low = CLEANING_LOW[kind as (typeof CLEANING_KEPT)[number]];
     const left = have.reduce((n, i) => n + i.supply.left, 0);
     if (low !== undefined ? left >= low : have.length > 0 || (kind === 'body-wash' && toHand(sim, person, 'soap').length > 0)) continue;
-    const pick = cheapestToiletry(sim, person.currentLocationId, kind);
+    // The one they use, where it's sold in reach; the cheapest otherwise.
+    const chosen = person.usesFirst?.[kind] ? toiletryById(person.usesFirst[kind]!) : undefined;
+    const pick = chosen && !toiletryRefusal(person, chosen.id, 1) ? chosen : cheapestToiletry(sim, person.currentLocationId, kind);
     // Bought on the day's trip out, while the store is open: not on a day it's shut, by its hours or the law (from 2026-10-02).
     if (!pick || toiletryRefusal(person, pick.id, 1) || shutAllDay(person.currentLocationId, sim.now)) continue;
     try { buyToiletries(sim, person, pick.id, 1, true); bought += 1; } catch (e) { if (!(e instanceof CommandError)) throw e; }
@@ -281,4 +295,10 @@ export const daysSince = (sim: Simulation, at: Instant | undefined): number | un
 
 export function registerHygiene(sim: Simulation): void {
   sim.onCommand<{ productId: string; quantity?: number }, { paid: Money }>('hygiene.buy', (p, { sim: s }) => ({ paid: buyToiletries(s, s.player, String(p?.productId), Number(p?.quantity ?? 1)) }));
+  sim.onCommand<{ productId: string }, { kind: string }>('hygiene.use_first', (p, { sim: s }) => {
+    const t = toiletryById(String(p?.productId));
+    if (!t) throw new CommandError('There’s no such product.');
+    (s.player.usesFirst ??= {})[t.kind] = t.id;
+    return { kind: t.kind };
+  });
 }
