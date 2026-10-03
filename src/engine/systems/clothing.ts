@@ -315,7 +315,8 @@ export const basketOf = (person: Person): BasketLine[] => (person.basket ??= [])
 export const purchaseItems = (person: Person, purchaseId: string): Item[] => itemsOf(person).filter((i) => i.spec?.purchase === purchaseId);
 
 /** When a purchase's return window opened: the day it was bought in a store, or delivered. */
-function receivedAt(person: Person, purchase: ClothesPurchase): Instant | undefined {
+/** When it was had: bought in a store, or delivered; what a return window counts from. */
+export function receivedAt(person: Person, purchase: ClothesPurchase): Instant | undefined {
   if (purchase.how === 'store') return purchase.at;
   return ordersOf(person).find((o) => o.id === purchase.orderId)?.deliveredAt;
 }

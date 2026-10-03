@@ -132,6 +132,8 @@ function plantALife(sim: Simulation, player: Person): void {
   const car: OwnedVehicle = { id: sim.nextId('vehicle'), modelId: model.id, boughtAt: now, ageAtPurchase: 0, listPrice: model.price, jurisdiction: 'US-NY', cityId: 'us-ny-newyork', coverage: 'full', registrationDue: 0 };
   car.registrationDue = renewal(car, now).next;
   vehiclesOf(player).push(car);
+  // A shirt bought in a store in New York, with its receipt.
+  (player.clothesBought ??= []).push({ id: 'buy-1', productId: 'us-everlane-the-premium-weight-crew', retailerId: 'us-everlane', how: 'store', at: now - 3 * MS_DAY, goods: 48_00, count: 1, size: 'M' });
   // A flight booked to New York next week, planned as booking plans one.
   const legs = planJourney(sim, player.currentLocationId, 'us-ny-newyork', now + 7 * MS_DAY, 0, 1);
   if (typeof legs === 'string') throw new Error(`No journey plans to New York: ${legs}`);

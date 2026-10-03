@@ -29,3 +29,4 @@ import './routines';
 import './homes';
 import './land';
 import './belongings';
+import './receipt';

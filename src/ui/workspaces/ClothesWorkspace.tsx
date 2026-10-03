@@ -526,7 +526,7 @@ function Bought() {
                   <td className="small">{r?.name}</td>
                   <td className="num mono">{money(b.goods)}</td>
                   <td className="small">{(b.paidFrom ?? []).map((x) => sim.universe.accounts[x.accountId]?.name ?? 'An Account').join(', ') || '—'}</td>
-                  <td className="small">{formatDate(b.at, sim.zone)}{b.canceledAt !== undefined ? ', canceled' : b.returnedAt !== undefined ? ', returned' : purchaseItems(person, b.id).some((i) => i.at.kind === 'order') ? ', on its way' : purchaseItems(person, b.id).some((i) => i.at.kind === 'service' && i.at.serviceId.startsWith('collect:')) ? ', ready to collect' : ''}</td>
+                  <td className="small"><Open subject={at('receipt', b.id)}>{formatDate(b.at, sim.zone)}</Open>{b.canceledAt !== undefined ? ', canceled' : b.returnedAt !== undefined ? ', returned' : purchaseItems(person, b.id).some((i) => i.at.kind === 'order') ? ', on its way' : purchaseItems(person, b.id).some((i) => i.at.kind === 'service' && i.at.serviceId.startsWith('collect:')) ? ', ready to collect' : ''}</td>
                   <td>
                     {(() => { const no = buyRefusal(person, againOptions(b)); return <button type="button" className="btn btn-sm btn-ghost" disabled={!again.open || Boolean(no)} title={no ?? again.reason} onClick={() => { if (run('clothes.basket_add', { ...againOptions(b) }).ok) toast('In the basket again.', 'positive'); }}>Buy Again</button>; })()}
                     {b.returnedAt === undefined && b.canceledAt === undefined && (
