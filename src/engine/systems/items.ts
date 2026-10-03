@@ -68,6 +68,8 @@ export interface Item {
   holdsL?: number;
   /** Moved by movers or a delivery, never by hand: furniture. It goes between spots at a home, and with a move. */
   bulky?: boolean;
+  /** Flat-packed until it's put together (`items.assemble`, from 2026-10-03). */
+  flatPacked?: true;
   /** A garment's kind, care and wear (`systems/wardrobe.ts`). */
   garment?: import('./wardrobe').Garment;
   /** A phone: which, its color, its line, its battery and what's paid on it (`systems/phones.ts`, from 2026-10-02). */
@@ -168,6 +170,7 @@ export function moveRefusal(sim: Simulation, person: Person, item: Item, to: Pla
     if (to.itemId === item.id) return 'A thing can’t go inside itself.';
     const holder = itemById(person, to.itemId);
     if (!holder?.holdsL) return 'That doesn’t hold things.';
+    if (holder.flatPacked) return `The ${holder.label} is still flat-packed: put it together first.`;
     // Nor inside something it holds.
     for (let at: Place | undefined = holder.at; at?.kind === 'inside'; at = itemById(person, at.itemId)?.at) if (at.itemId === item.id) return 'It holds that already.';
     const room = holder.holdsL - usedL(person, holder.id);

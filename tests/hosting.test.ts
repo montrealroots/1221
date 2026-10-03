@@ -44,11 +44,12 @@ describe('IKEA’s pieces', () => {
     expect(before).toEqual({ seats: FURNISHED.seats, table: FURNISHED.table });
     const chair = FURNITURE_CATALOG.find((p) => p.country === 'us' && p.kind === 'diningChair')!;
     const table = FURNITURE_CATALOG.find((p) => p.country === 'us' && p.kind === 'diningTable' && p.seats)!;
-    sim.must({ kind: 'home.buy_piece', payload: { pieceId: chair.id, quantity: 4 } });
-    sim.must({ kind: 'home.buy_piece', payload: { pieceId: table.id } });
+    // Put together by IKEA's service, from 2026-10-03; flat-packed they'd seat and hold nothing (tests/assembly.test.ts).
+    sim.must({ kind: 'home.buy_piece', payload: { pieceId: chair.id, quantity: 4, assembly: true } });
+    sim.must({ kind: 'home.buy_piece', payload: { pieceId: table.id, assembly: true } });
     expect(seatsAtHome(sim.player)).toEqual({ seats: FURNISHED.seats + 4, table: FURNISHED.table + table.seats! });
     const wardrobe = FURNITURE_CATALOG.find((p) => p.country === 'us' && p.kind === 'wardrobe' && p.holdsL)!;
-    sim.must({ kind: 'home.buy_piece', payload: { pieceId: wardrobe.id } });
+    sim.must({ kind: 'home.buy_piece', payload: { pieceId: wardrobe.id, assembly: true } });
     const w = (sim.player.items ?? []).find((i) => i.kind === `ikea:${wardrobe.id}`)!;
     expect(w.holdsL).toBe(wardrobe.holdsL);
     const shirt = (sim.player.items ?? []).find((i) => i.garment && i.at.kind === 'home')!;

@@ -197,7 +197,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 44c–d | Permission, structure, access | Partial / not implemented | permits | Refusal outcome; structural checks |
 | 44e–f | Explain and offer alternatives | Partial | from 2026-10-02 every project shown, one this kind of home doesn’t take refused with the kinds that do (`projectsFor`) | Alternatives beyond the kinds of home (a gym for a pool, say) |
 | 45a, c, i | Bed sizes by market, compatibility, use | Complete | content/beds.ts; tests/beds | More markets |
-| 45b, d–h, j–k | Materials, bedding, room fit, delivery, assembly, placement, cleaning, repair, resale | Partial | room fit from 2026-10-03: each piece's IKEA footprint, a bed its mattress's, against the floor that can be furnished (`fitRefusal`) | Assembly, cleaning, repair, resale; a move to a smaller home keeps what doesn't fit |
+| 45b, d–h, j–k | Materials, bedding, room fit, delivery, assembly, placement, cleaning, repair, resale | Partial | room fit from 2026-10-03: each piece's IKEA footprint, a bed its mattress's, against the floor that can be furnished (`fitRefusal`); assembly: an IKEA piece flat-packed until put together, by IKEA's service at its published price (from $52, C$45, £33 a piece, €40 a call-out, 2.5% or 9% in Mexico) or by you in an hour (`items.assemble`) | Cleaning, repair, resale; a piece's own assembly time; a move to a smaller home keeps what doesn't fit |
 
 ## Part 8. Travel, hotels, documents
 

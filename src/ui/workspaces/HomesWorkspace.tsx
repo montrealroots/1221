@@ -23,7 +23,7 @@ import { PIECE_LABEL, type Piece } from '@/engine/content/furniture';
 import { bedAtHome, bedQuote, bedsIn, furnishRefusal, mattressCost, mattressRefusal, mattressWorn, owns, pieceCost } from '@/engine/systems/furniture';
 import { BED_MARKET, bedSize } from '@/engine/content/beds';
 import { RENTED_TRUCK } from '@/engine/content/furniture';
-import { pieceRefusal, piecesCatalog, seatsAtHome } from '@/engine/systems/furnishings';
+import { assemblyFee, pieceRefusal, piecesCatalog, seatsAtHome } from '@/engine/systems/furnishings';
 import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -601,6 +601,7 @@ function FromIkea() {
   const [kind, setKind] = useState('');
   const shown = all.filter((e) => e.facets!.kind === (kind || kinds[0]));
   const [count, setCount] = useState(1);
+  const [built, setBuilt] = useState(false);
   if (all.length === 0) return null;
   const room = seatsAtHome(person);
   return (
@@ -619,6 +620,13 @@ function FromIkea() {
             {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}
           </select>
         </div>
+        <div className="field" style={{ margin: 0 }}>
+          <label htmlFor="ikea-built">Put Together</label>
+          <select id="ikea-built" value={built ? 'ikea' : 'you'} onChange={(e) => setBuilt(e.target.value === 'ikea')}>
+            <option value="you">By You, An Hour A Piece</option>
+            <option value="ikea">By IKEA, At Its Price</option>
+          </select>
+        </div>
       </div>
       <div className="table-scroll">
         <table>
@@ -632,15 +640,15 @@ function FromIkea() {
                   <td>{e.label}</td>
                   <td className="small">{p.cm.every((x) => x !== null) ? `${p.cm.map((x) => Math.round(x!)).join(' × ')} cm` : '—'}</td>
                   <td className="small">{p.kind === 'diningTable' ? (p.seats ? `Seats ${p.seats} At A Table` : '—') : p.seats ? `Seats ${p.seats}` : p.holdsL ? `Holds ${Math.round(p.holdsL)} Liters` : '—'}</td>
-                  <td className="num mono">{formatMoney((e.price ?? 0) * count, cur, { cents: false })}</td>
-                  <td><Gated feature="home.buy_piece" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_piece', { pieceId: p.id, quantity: count }).ok) toast(`${p.name}, delivered.`, 'positive'); }}>Buy From IKEA</Gated></td>
+                  <td className="num mono">{formatMoney((e.price ?? 0) * count + (built ? assemblyFee(sim, p, count) ?? 0 : 0), cur, { cents: false })}</td>
+                  <td><Gated feature="home.buy_piece" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_piece', { pieceId: p.id, quantity: count, assembly: built }).ok) toast(built ? `${p.name}, delivered and put together.` : `${p.name}, delivered flat-packed: put it together from Belongings.`, 'positive'); }}>Buy From IKEA</Gated></td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
-      <div className="xs dim">{`Seats for ${room.seats} and a table for ${room.table} at home now. Friends come over only to what there are seats for, and a dinner sits everyone at a table. A wardrobe, a frame, a chest or a bookcase holds its outside measure in liters, worked out from IKEA’s, and is filled from Belongings. IKEA’s regular price, with the town’s sales tax where it’s added, delivered at its large-item rate.`}</div>
+      <div className="xs dim">{`Seats for ${room.seats} and a table for ${room.table} at home now. Friends come over only to what there are seats for, and a dinner sits everyone at a table. A wardrobe, a frame, a chest or a bookcase holds its outside measure in liters, worked out from IKEA’s, and is filled from Belongings. It comes flat-packed and does nothing until it’s put together, by you or by IKEA’s service: from $52, C$45 or £33 a piece, Ireland’s €40 call-out, Mexico’s 2.5% of a sofa’s price and 9% of the rest. IKEA’s regular price, with the town’s sales tax where it’s added, delivered at its large-item rate.`}</div>
     </div>
   );
 }
