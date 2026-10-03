@@ -471,6 +471,16 @@ function payBills(sim: Simulation, person: Person, bills: Money, memo = 'Bills')
  * landlord where `owe` allows it. Returns whether all of it was paid or owed.
  * With nothing owed allowed and not enough to pay, nothing is spent at all.
  */
+/**
+ * What they can pay for a purchase of a kind: a debit card purchase of food
+ * goes into an overdraft only where the bank may pay it there. From
+ * 2026-10-02. Until then the check before a meal counted an overdraft a meal
+ * can't use, so a London life still with its American bank, a few pounds, a
+ * full card and room in the overdraft passed it and was then told the payment
+ * didn't go through, 7,915 times in one replay.
+ */
+export const canPayFor = (sim: Simulation, person: Person, category: string): Money => canPay(sim, person, category !== 'food' || purchaseMayOverdraw(sim, person));
+
 export function spend(sim: Simulation, person: Person, amount: Money, memo: string, category: string, owe = false): boolean {
   if (amount <= 0) return true;
   const card = cardOf(sim, person);

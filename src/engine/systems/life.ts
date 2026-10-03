@@ -32,7 +32,7 @@ import { chanceOver, mayHurt, trainingRefusal } from './injury';
 import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
-import { buyTheDaysFood, canPay, fedOn, mealOf, spend } from './household';
+import { buyTheDaysFood, canPayFor, fedOn, mealOf, spend } from './household';
 import { cook, kitchenMeal } from './kitchen';
 import { watchRefusal } from './homelife';
 import { takePortion } from './pantry';
@@ -626,7 +626,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   const busy = action === 'eat' ? undefined : occupiedAt(sim, sim.now);
   if (busy) return `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, sim.zone)}.`;
   if ((action === 'eat' || action === 'order') && w.nourishment >= FULL) return 'You aren’t hungry.';
-  if ((action === 'eat' || action === 'order' || action === 'laundry') && canPay(sim, person) < costFor(sim, action) && !(action === 'eat' && kitchenMeal(sim, person))) return 'You can’t afford it.';
+  if ((action === 'eat' || action === 'order' || action === 'laundry') && canPayFor(sim, person, action === 'laundry' ? 'laundry' : 'food') < costFor(sim, action) && !(action === 'eat' && kitchenMeal(sim, person))) return 'You can’t afford it.';
   if ((action === 'wash' || action === 'bathe') && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
   if ((action === 'wash' || action === 'bathe') && !atHome(person) && roomGone(person)) return person.stay?.readyAt !== undefined ? `The room isn’t ready until ${formatTime(person.stay.readyAt, sim.zone)}.` : 'You’ve checked out, and the room is gone until you leave.';
   if (action === 'bathe' && !place?.fixtures.bathtub) return atHome(person) ? 'There’s no bath where you live, only a shower.' : 'There’s no bath where you’re staying, only a shower.';

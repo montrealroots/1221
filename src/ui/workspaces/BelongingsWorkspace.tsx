@@ -16,6 +16,8 @@ import { consolesHere, consolesOwned, licenceHere, licensed, planById, planPrice
 import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
+import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
+import { lockedAway, safeCatalog, safesAtHome, scheduleRefusal, scheduledPremium, valuablesOf } from '@/engine/systems/valuables';
 import { contactsOf } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
@@ -78,6 +80,8 @@ export function BelongingsWorkspace() {
         <Luggage />
         <Phones />
         <WatchingAndPlaying />
+        <Reading />
+        <Valuables />
         {items.length > 0 && (
           <Panel title="Each Thing">
             <div className="field-row" style={{ marginBottom: '0.75rem' }}>
@@ -147,6 +151,113 @@ export function BelongingsWorkspace() {
         <Fine>A thing at home is to hand only at home; one in a car, only where the car is; one in a bag, wherever the bag is. An order’s things are yours from when you pay, and to hand when they’re delivered. A move brings your belongings with it.</Fine>
       </div>
     </>
+  );
+}
+
+/** Something to read: the town's library card, a book or an e-reader (`systems/reading.ts`). */
+function Reading() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const card = useFeature('reading.library_card');
+  const buy = useFeature('reading.buy');
+  const cur = saveCurrency(sim.universe);
+  const lib = libraryIn(person.home?.cityId ?? '');
+  const shop = readingCatalog(sim, person);
+  const noCard = cardRefusal(person);
+  if (!lib && shop.length === 0) return null;
+  return (
+    <Panel title="Reading" subtitle={hasSomethingToRead(person) ? 'Something To Read At Home' : 'Nothing To Read At Home Yet'}>
+      <div className="col gap-2">
+        {lib && <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          <span className="small">{lib.name}{person.libraryCard === person.home?.cityId ? ': your card' : ', free to a resident'}</span>
+          {person.libraryCard !== person.home?.cityId && <button type="button" className="btn btn-sm btn-ghost" disabled={!card.open || Boolean(noCard)} title={noCard ?? card.reason} onClick={() => { if (run('reading.library_card', {}).ok) toast('A library card of your own.', 'positive'); }}>Get A Library Card</button>}
+        </div>}
+        {shop.length > 0 && (
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Read</th><th scope="col">Sold By</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Buy</span></th></tr></thead>
+              <tbody>
+                {shop.map(({ buy: b, price }) => (
+                  <tr key={b.id}>
+                    <td>{b.label}</td>
+                    <td className="small">{b.seller}</td>
+                    <td className="num mono">{formatMoney(price, cur)}</td>
+                    <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open} title={buy.reason} onClick={() => { if (run('reading.buy', { id: b.id }).ok) toast(`${b.label}, bought.`, 'positive'); }}>Buy It To Read</button></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        <div className="xs dim">A reader enjoys an hour unwinding at home only with something to read there: the town’s library card, a book or an e-reader, as a film lover needs a TV.</div>
+      </div>
+    </Panel>
+  );
+}
+
+/** Jewelry and watches: a safe to lock them in, and scheduling on the home's insurance (`systems/valuables.ts`). */
+function Valuables() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const buy = useFeature('valuables.buy_safe');
+  const lock = useFeature('valuables.lock_up');
+  const out = useFeature('valuables.take_out');
+  const sched = useFeature('valuables.schedule');
+  const cur = saveCurrency(sim.universe);
+  const pieces = valuablesOf(person);
+  const shop = safeCatalog(sim, person);
+  const safes = safesAtHome(person);
+  if (pieces.length === 0 && safes.length === 0) return null;
+  return (
+    <Panel title="Jewelry And Watches" subtitle={safes.length ? safes.map((x) => x.label).join(', ') : 'No Safe At Home'}>
+      <div className="col gap-2">
+        {pieces.length > 0 && (
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Piece</th><th scope="col">Where</th><th scope="col" className="num">Paid</th><th scope="col"><span className="sr-only">Safe</span></th><th scope="col"><span className="sr-only">Insurance</span></th></tr></thead>
+              <tbody>
+                {pieces.map((i) => {
+                  const inSafe = lockedAway(person, i);
+                  const noSched = i.scheduled ? undefined : scheduleRefusal(sim, person, i);
+                  return (
+                    <tr key={i.id}>
+                      <td>{i.label}</td>
+                      <td className="small">{whereWords(person, i.at)}</td>
+                      <td className="num mono">{i.paid ? formatMoney(i.paid, cur) : '—'}</td>
+                      <td>{inSafe
+                        ? <button type="button" className="btn btn-sm btn-ghost" disabled={!out.open} title={out.reason} onClick={() => { if (run('valuables.take_out', { itemId: i.id }).ok) toast(`${i.label}, out of the safe.`, 'positive'); }}>Out Of The Safe</button>
+                        : <button type="button" className="btn btn-sm btn-ghost" disabled={!lock.open || safes.length === 0} title={safes.length === 0 ? 'There’s no safe where you live.' : lock.reason} onClick={() => { if (run('valuables.lock_up', { itemId: i.id }).ok) toast(`${i.label}, locked away.`, 'positive'); }}>Into The Safe</button>}</td>
+                      <td>{i.scheduled
+                        ? <button type="button" className="btn btn-sm btn-ghost" disabled={!sched.open} title={`${formatMoney(scheduledPremium(i), cur)} a month`} onClick={() => { if (run('valuables.schedule', { itemId: i.id, on: false }).ok) toast(`${i.label}, no longer scheduled.`, 'positive'); }}>Unschedule It</button>
+                        : <button type="button" className="btn btn-sm btn-ghost" disabled={!sched.open || Boolean(noSched)} title={noSched ?? `${formatMoney(scheduledPremium(i), cur)} a month, paid in full without a deductible`} onClick={() => { if (run('valuables.schedule', { itemId: i.id, on: true }).ok) toast(`${i.label}, scheduled.`, 'positive'); }}>Schedule It</button>}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {shop.length > 0 && (
+          <div className="table-scroll">
+            <table>
+              <thead><tr><th scope="col">Safe</th><th scope="col">Sold By</th><th scope="col" className="num">Holds</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Buy</span></th></tr></thead>
+              <tbody>
+                {shop.map(({ safe, price }) => (
+                  <tr key={safe.id}>
+                    <td>{safe.label}</td>
+                    <td className="small">{safe.seller}{safe.confirmed ? '' : ' (read secondhand)'}</td>
+                    <td className="num mono">{safe.holdsL} L</td>
+                    <td className="num mono">{formatMoney(price, cur)}</td>
+                    <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open} title={buy.reason} onClick={() => { if (run('valuables.buy_safe', { id: safe.id }).ok) toast(`${safe.label}, bolted down at home.`, 'positive'); }}>Buy The Safe</button></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        <div className="xs dim">A burglary takes the jewelry and watches at home that aren’t locked in a safe or worn that day. The policy on what’s inside pays for them only up to its limit on jewelry; a piece scheduled on it is paid in full, without a deductible.</div>
+      </div>
+    </Panel>
   );
 }
 

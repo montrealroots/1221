@@ -49,12 +49,15 @@ import { securityFactor } from './homesecurity';
 import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
 import { detergentFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
+import { contactsOf } from './people';
 import { amenitiesOf } from './hotels';
 import { machinesDay } from './appliancefaults';
 import { starterLuggage } from './luggage';
 import { sunTimes } from '../core/sun';
 import { gymHere } from './gyms';
 import { personalityOf } from './personality';
+import { burgleValuables, scheduledMonth } from './valuables';
+import { homeKeyOf } from './items';
 
 // ---------------------------------------------------------------------------
 // The place somebody lives
@@ -244,6 +247,27 @@ export function busyDay(sim: Simulation, person: Person): boolean {
  * and a house (HomeGuide, 2026). SLATE's estimates within those.
  */
 export const CLEANING = { baseMinutes: 60, sqftPerMinute: 40, most: 240, cleanerUsdHour: 45, cleanerSpeed: 0.8, leastHours: 2 };
+/**
+ * When a weekly cleaner comes, from 2026-10-02: ten in the morning, SLATE's
+ * reading of a cleaner's visit, for as long as the clean takes them. Without a
+ * key they can't get in unless a person's home then: you, in town and not
+ * held anywhere else by a commitment, or a partner who lives with you. A visit
+ * missed isn't cleaned and isn't charged, no cleaner's lockout fee being
+ * published.
+ */
+export const CLEANER_VISIT = { hour: 10 } as const;
+
+/** Whether the cleaner can get in on a day's visit: a key, or a person home through it. */
+export function cleanerGetsIn(sim: Simulation, person: Person, dayStart: Instant): boolean {
+  const l = livingOf(person);
+  if (l.cleaner?.key) return true;
+  if (contactsOf(person).some((c) => c.livesWith !== undefined)) return true;
+  const place = placeOf(sim, person);
+  if (!place || !atHome(person)) return false;
+  const from = dayStart + CLEANER_VISIT.hour * MS_HOUR;
+  const to = from + cleaningMinutes(place) * CLEANING.cleanerSpeed * 60_000;
+  return !sim.universe.scheduled.some((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < to && x.at + x.durationMinutes * 60_000 > from && (x.payload.personId === undefined || x.payload.personId === person.id));
+}
 /** Out of clean clothes: the morning's freshness, and the mood. */
 export const WORN_CLOTHES = { hygiene: 55, morale: 1 };
 
@@ -268,7 +292,7 @@ export interface Living {
   billDays?: number;
   homeDays?: number;
   /** A cleaner every week, and the day of the week they come, 0 for Sunday. */
-  cleaner?: { day: number };
+  cleaner?: { day: number; /** Given a key, from 2026-10-02: they let themselves in. */ key?: boolean };
 }
 
 export function livingOf(person: Person): Living {
@@ -405,8 +429,10 @@ export function livingDay(sim: Simulation, person: Person): void {
   const day = zonedParts(sim.now, CITIES.require(person.home!.cityId).timeZone);
   const weekday = new Date(Date.UTC(day.year, day.month - 1, day.day)).getUTCDay();
   if (l.cleaner && weekday === l.cleaner.day) {
-    const cost = cleanerCost(sim, person);
-    if (drawFromBank(sim, person, cost).short === 0 && spend(sim, person, cost, 'The cleaner', 'cleaning')) l.tidy = 100;
+    if (cleanerGetsIn(sim, person, sim.now)) {
+      const cost = cleanerCost(sim, person);
+      if (drawFromBank(sim, person, cost).short === 0 && spend(sim, person, cost, 'The cleaner', 'cleaning')) l.tidy = 100;
+    } else if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'The Cleaner Couldn’t Get In', body: 'Nobody was home when they came, and they have no key; you weren’t charged.', importance: 30, route: '/home' });
   }
   if (l.tidy < TIDY.messy) {
     w.morale = clamp(w.morale - TIDY.morale * personalityOf(person, 'moraleSwing'), 0, 100);
@@ -600,8 +626,19 @@ export function registerDwelling(sim: Simulation): void {
     const l = livingOf(person);
     if (!p.on) { delete l.cleaner; return { cost: 0 }; }
     const day = Number.isInteger(p.day) && p.day! >= 0 && p.day! <= 6 ? p.day! : 5;
-    l.cleaner = { day };
+    l.cleaner = { day, ...(l.cleaner?.key ? { key: true } : {}) };
     return { cost: cleanerCost(s, person) };
+  });
+}
+
+// A key for the cleaner, or none (from 2026-10-02).
+export function registerCleanerKey(sim: Simulation): void {
+  sim.onCommand<{ give: boolean }, { key: boolean }>('home.cleaner_key', (p, { sim: s }) => {
+    const l = livingOf(s.player);
+    if (!l.cleaner) throw new CommandError('You have no cleaner.');
+    if (p?.give) l.cleaner.key = true;
+    else delete l.cleaner.key;
+    return { key: Boolean(l.cleaner.key) };
   });
 }
 
@@ -664,6 +701,8 @@ export function belongingsDay(sim: Simulation, person: Person, firstOfMonth: boo
   const cur = saveCurrency(sim.universe);
   // An alarm's monitoring, the month's (`systems/alarm.ts`).
   if (firstOfMonth) alarmMonth(sim, person);
+  // Scheduled jewelry and watches, on the policy that covers what's inside (`systems/valuables.ts`).
+  if (firstOfMonth) scheduledMonth(sim, person, coveredInside(sim, person) !== undefined);
   if (firstOfMonth && person.living?.rentersInsurance && home.kind !== 'owned') {
     if (!spend(sim, person, rentersPremium(sim, person), 'Renters insurance', 'insurance')) {
       delete person.living.rentersInsurance;
@@ -682,7 +721,9 @@ export function belongingsDay(sim: Simulation, person: Person, firstOfMonth: boo
   w.morale = clamp(w.morale - BELONGINGS.morale * personalityOf(person, 'moraleSwing'), 0, 100);
   w.stress = clamp(w.stress + BELONGINGS.stress * personalityOf(person, 'stressGain'), 0, 100);
   const deductible = coveredInside(sim, person);
-  const pays = deductible === undefined ? 0 : Math.max(0, loss - deductible);
+  // The jewelry and watches not locked away go too, as the pieces themselves (`systems/valuables.ts`).
+  const pieces = burgled ? burgleValuables(sim, person, homeKeyOf(home)!, deductible !== undefined) : { taken: [], toClaim: 0, inFull: 0 };
+  const pays = deductible === undefined ? 0 : Math.max(0, loss + pieces.toClaim - deductible) + pieces.inFull;
   if (pays > 0) {
     sim.post({ memo: burgled ? 'Insurance claim: a burglary' : 'Insurance claim: a fire', category: 'insurance', postings: [{ accountId: person.primaryAccountId!, amount: pays }, { accountId: sim.nominalAccount('income', 'Insurance Claims').id, amount: -pays }] });
     const owned = livingIn(person);
@@ -694,7 +735,7 @@ export function belongingsDay(sim: Simulation, person: Person, firstOfMonth: boo
   if (person.id === sim.universe.playerId) {
     sim.notify({
       category: 'home', title: burgled ? 'Your Home Was Burgled' : 'A Fire In The Building',
-      body: `${formatMoney(loss, cur, { cents: false })} of your things ${burgled ? 'were taken' : 'were lost'}. ${pays > 0 ? `The insurance paid ${formatMoney(pays, cur, { cents: false })}, over its deductible.` : deductible !== undefined ? 'It’s under the deductible.' : 'Nothing insured them.'} ${replaced ? 'You’ve replaced what you need.' : 'You can’t afford to replace it all.'}`,
+      body: `${formatMoney(loss, cur, { cents: false })} of your things ${burgled ? 'were taken' : 'were lost'}${pieces.taken.length ? `, and ${pieces.taken.map((i) => i.label).join(', ')}` : ''}. ${pays > 0 ? `The insurance paid ${formatMoney(pays, cur, { cents: false })}, over its deductible.` : deductible !== undefined ? 'It’s under the deductible.' : 'Nothing insured them.'} ${replaced ? 'You’ve replaced what you need.' : 'You can’t afford to replace it all.'}`,
       importance: 80, route: '/home',
     });
   }

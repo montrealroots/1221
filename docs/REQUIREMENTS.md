@@ -85,12 +85,12 @@ Correctness first, then the connected day the plan asks to be shown working
 | 27a | Receive, store | Complete | delivery, `items.move`; tests/items | — |
 | 27b | Wear, layer, remove | Partial | one garment per slot; `dressRefusal` validates `dress` and `wear_outfit`; jewelry, watches and accessories chosen and worn with the outfit; sleepwear worn at night at home (2026-10-02) | Layers, undress |
 | 27c | Wash, dry, clean | Complete | `doLaundry`, dry cleaning; tests | Wash a chosen garment; air-dry or tumble |
-| 27d | Alter, repair | Partial | take in only | Hem, let out; damage and repair |
+| 27d | Alter, repair | Partial, 2026-10-02 | taken in, a size at most for a bottom, suit or coat; let out once, a bottom three quarters of a size and a suit or coat two fifths, by Proper Cloth's own figures (1.5 and 0.8 inches around of a 2-inch step), at the tailor's waist price (`ALTER_STEPS`, `alteredKg`) | Hem (no garment keeps a length); a shirt's or dress's limits (unpublished); damage and repair |
 | 27e | Pack, unpack | Done, 2026-10-02 | luggage.ts; by hand on Belongings, Pack For Me, Unpack (§46) | — |
 | 27f | Gift, return, resell, replace | Done, 2026-10-02 | return, resell, replace; give (`items.give`) | — |
 | 27g | Outfits from owned, reachable items; worn outfit persists | Done, 2026-10-02 | `outfitRefusal`, `reachable`; `Person.wornNow`, set as the day dresses them or they change; read by the sale refusal and Clothes | — |
 | 28 | Phones and electronics as devices, activation, plans, finance, trade-in | Partial, 2026-10-02 | `systems/phones.ts`: 273 phones on the makers' stores in five markets; outright or a maker's 0% plan (prepaid lines kept out where the plan says); trade-in at the published most; activation at the carrier's SIM charge; battery wear by Apple's 1,000-cycle figure and replacement; cover billed monthly; tests/phones.test.ts | Screens breaking (no published rate); theft and loss claims; carrier device plans; credit approval; other electronics |
-| 29 | Jewelry and watches as pieces, commissions, servicing, insurance, resale | Partial (catalog only) | about 121 pieces as garments | A `jewel` record, worn, a safe, servicing, insurance rider, fair resale, commissions |
+| 29 | Jewelry and watches as pieces, commissions, servicing, insurance, resale | Partial, 2026-10-02 | about 121 pieces as garments, worn with the outfit; a burglary takes those at home not locked in a safe or worn; safes at named sellers' prices, holding their liters (`valuables.buy_safe`, `valuables.lock_up`, `valuables.take_out`); a standard policy pays up to its published jewelry limit (Lemonade, TD, Aviva, GNP); a piece scheduled is paid in full for a premium each month (`valuables.schedule`, the rate SLATE's arithmetic on Lemonade's averages) | Servicing and batteries, fair resale and pawn, commissions |
 | 30 | Orders: states, destination, failed delivery, cancellation, return, refund once | Partial | `Order`, `deliver` once; `returned` set and `clothes.cancel` where the law gives it, GB and IE (2026-10-02) | Shipped and out-for-delivery, failed delivery, partial returns, refund to the payment |
 
 ## Part 5. Daily life
@@ -124,7 +124,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 33j | Restaurants, takeout, delivery, drinks | Complete | `food.dine`, `food.drink`; tests | — |
 | 33k | Reservations | Not implemented | — | Book a table ahead |
 | 34a | Television | Partial, 2026-10-02 | `systems/homelife.ts`: 146 service tiers in five markets billed monthly; Britain's and Ireland's TV licences as their law asks; unwinding names live TV or a service; tests/homelife.test.ts | A programme; stop and resume |
-| 34b | Reading, music, gaming, hobbies | Partial, 2026-10-02 | music services billed; consoles bought; unwinding in a game needs one | Reading; hobbies; games owned |
+| 34b | Reading, music, gaming, hobbies | Partial, 2026-10-02 | music services billed; consoles bought; unwinding in a game needs one; a reader unwinds with pleasure only with something to read at home: the town’s library card, free to a resident (8 libraries, each one’s own page), or a paperback or an e-reader at a named seller’s price, cheapest first (`reading.library_card`, `reading.buy`) | Hobbies; games owned; books read through |
 | 34c–f | Exercise, relaxation, sleep, time | Complete | life.ts; tests | — |
 | 35a | Cleaning | Partial | `tidy` scalar; the chains' cleaning products on sale (`content/cleaning.ts`), a dishwasher's tablets used, 184 cycles a year | Rooms; how fast sprays and sponges go (unpublished) |
 | 35b | Laundry | Complete | `doLaundry`, a load's detergent each, refused without; tests/wardrobe, tests/cleaning | Towels and bedding |
@@ -133,8 +133,8 @@ Correctness first, then the connected day the plan asks to be shown working
 | 35e | Replacing supplies | Partial | automatic restock | Household consumables |
 | 35f | Appliance repair | Done, 2026-10-02 | `systems/appliancefaults.ts`: washer, dishwasher and fridge faults at Consumer Reports' and Which?'s rates (decider `home.appliance_fault`); the laundromat, washing by hand, a spoiled fridge; the landlord's mended free next morning, one's own booked at each market's price | Dryer and air conditioning faults (no rate with a period published) |
 | 35g | Hosting | Done, 2026-10-02 | `social.host` (`systems/hosting.ts`): several friends, dinner or drinks; seats and a table from the furniture; dinner paid at home's meal price; drinks poured from the kitchen's beer and wine; a mess noticed | — |
-| 35h | Cleaners and gardeners | Partial | weekly cleaner; gardener | Access, visit windows, work recorded |
-| 10 | Shortcuts follow the same rules | Partial | routines run through commands; tests/routines; from 2026-10-02 Buy Again puts a past purchase back in the basket the same way, size and color, by the same refusals (`againOptions`) | Background top-ups bypass time and hours; favorites, scheduled routines |
+| 35h | Cleaners and gardeners | Partial | weekly cleaner; gardener; from 2026-10-02 the cleaner comes at ten, SLATE's reading, getting in with a key or with somebody home, a visit missed not cleaned or charged (`cleanerGetsIn`) | Work recorded |
+| 10 | Shortcuts follow the same rules | Partial | routines run through commands; tests/routines; from 2026-10-02 Buy Again puts a past purchase back in the basket the same way, size and color, by the same refusals (`againOptions`); from 2026-10-02 a free day's top-up of toiletries and detergents waits for a day its store opens, by its hours and by law: England's large shops shut on Christmas Day and Easter Day, Ontario's retail on its seven holidays (`shutByLaw`, read by every chain's store) | A top-up takes no time from the free day; favorites, scheduled routines |
 
 ## Part 6. Vehicles and movement
 

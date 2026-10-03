@@ -37,7 +37,7 @@ import { CLEANING } from '../content/cleaning';
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
 import { spend } from './household';
-import { closedNow } from './errands';
+import { closedNow, shutAllDay } from './errands';
 import { addItem, homeKeyOf, itemsOf, reachable, type Item } from './items';
 import { stow } from './trips';
 
@@ -245,7 +245,8 @@ export function restock(sim: Simulation, person: Person, dishwasher = false): nu
     const left = have.reduce((n, i) => n + i.supply.left, 0);
     if (low !== undefined ? left >= low : have.length > 0 || (kind === 'body-wash' && toHand(sim, person, 'soap').length > 0)) continue;
     const pick = cheapestToiletry(sim, person.currentLocationId, kind);
-    if (!pick || toiletryRefusal(person, pick.id, 1)) continue;
+    // Bought on the day's trip out, while the store is open: not on a day it's shut, by its hours or the law (from 2026-10-02).
+    if (!pick || toiletryRefusal(person, pick.id, 1) || shutAllDay(person.currentLocationId, sim.now)) continue;
     try { buyToiletries(sim, person, pick.id, 1, true); bought += 1; } catch (e) { if (!(e instanceof CommandError)) throw e; }
   }
   return bought;

@@ -13,7 +13,19 @@
  * **Taking in.** A garment too big can be taken in by a tailor in the town
  * you're in, at its published price, and is ready after its stated days
  * (a week where none is stated, SLATE's estimate), to collect with the dry
- * cleaning. A garment grown out of can't be let out that far.
+ * cleaning.
+ *
+ * **Letting out, and how far either way** (from 2026-10-02, until when a
+ * garment grown out of was never let out). Proper Cloth's own reference
+ * gives what a seam's spare cloth allows: a trouser waist let out 1.5 inches
+ * around and taken in 2; a jacket's chest and middle let out 0.8 and taken
+ * in 2. SLATE reads a size step as 2 inches around, as trouser waists and
+ * jacket chests are numbered, so a bottom lets out three quarters of a size
+ * and a suit or a coat two fifths, once, its spare cloth then used; each is
+ * taken in a size at most. Proper Cloth gives no shirt's or dress's figure,
+ * so those are only taken in, as far as before. Letting out costs what the
+ * tailor charges to take in the waist, as Nordstrom, Stitch It and Paul
+ * Henry Tailoring each price a waist the same either way.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -186,12 +198,30 @@ export function fitOf(person: Person, g: Garment): 'fits' | 'big' | 'small' {
 /** The weight a garment is made for now. */
 export const fitKgOf = (person: Person): number | undefined => person.body?.weightKg;
 
+/** How far a garment lets out and takes in, in size steps, by its slot (Proper Cloth's figures). */
+export const ALTER_STEPS: Readonly<Partial<Record<Slot, { out: number; in: number }>>> = { bottom: { out: 0.75, in: 1 }, suit: { out: 0.4, in: 1 }, outer: { out: 0.4, in: 1 } };
+
+/** The weight a garment is altered to for this body: as far as it goes toward it. */
+export function alteredKg(person: Person, g: Garment): number | undefined {
+  const kg = person.body?.weightKg;
+  if (kg === undefined || g.fitKg === undefined) return kg;
+  const steps = ALTER_STEPS[g.slot];
+  if (!steps) return kg;
+  return Math.min(Math.max(kg, g.fitKg * (1 - steps.in * SIZE_STEP)), g.fitKg * (1 + steps.out * SIZE_STEP));
+}
+
 export function alterRefusal(person: Person, itemId: string, tailorId: string): string | undefined {
   const item = itemById(person, itemId) as (Item & { garment?: Garment }) | undefined;
   if (!item?.garment) return 'That isn’t a garment of yours.';
-  const fit = fitOf(person, item.garment);
+  const g = item.garment;
+  const fit = fitOf(person, g);
   if (fit === 'fits') return 'It fits.';
-  if (fit === 'small') return 'It can’t be let out that far.';
+  if (fit === 'small') {
+    if (!ALTER_STEPS[g.slot]) return 'A tailor can’t let it out.';
+    if (g.letOut) return 'It’s been let out as far as its seams go.';
+  }
+  // Altered as far as it goes, it must fit.
+  if (fitOf(person, { ...g, fitKg: alteredKg(person, g) }) !== 'fits') return fit === 'small' ? 'It can’t be let out that far.' : 'It can’t be taken in that far.';
   const t = tailorById(tailorId);
   if (!t) return 'There’s no such tailor.';
   if (t.cityId !== person.currentLocationId) return 'The tailor is in another town.';
@@ -209,10 +239,12 @@ export function registerTailoring(sim: Simulation): void {
     const t = tailorById(String(p.tailorId))!;
     const item = itemById(person, String(p.itemId)) as Item & { garment: Garment };
     const paid = alterCost(s, t);
-    if (!spend(s, person, paid, `${t.name}, taken in`, 'clothing')) throw new CommandError('The payment didn’t go through.');
+    const out = fitOf(person, item.garment) === 'small';
+    if (!spend(s, person, paid, `${t.name}, ${out ? 'let out' : 'taken in'}`, 'clothing')) throw new CommandError('The payment didn’t go through.');
     const readyAt = s.now + (t.turnaroundDays ?? FIT.weekDays) * MS_DAY;
     item.at = { kind: 'service', serviceId: `tailor:${t.cityId}:${t.id}`, readyAt };
-    item.garment.fitKg = fitKgOf(person);
+    item.garment.fitKg = alteredKg(person, item.garment);
+    if (out) item.garment.letOut = true;
     return { readyAt, paid };
   });
 }

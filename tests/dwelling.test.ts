@@ -8,13 +8,14 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
+import { contactsOf, newContact } from '@/engine/systems/people';
 import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { addCountryCities } from '@/engine/content/geography';
 import type { Fixtures } from '@/engine/content/homes';
 import { depositFor } from '@/engine/systems/household';
 import { listingsIn } from '@/engine/systems/homes';
-import { LAUNDRY, TIDY, cleanerCost, drawRental, heatLoss, livingOf, placeOf } from '@/engine/systems/dwelling';
+import { CLEANER_VISIT, LAUNDRY, TIDY, cleanerCost, cleanerGetsIn, drawRental, heatLoss, livingOf, placeOf } from '@/engine/systems/dwelling';
 import { cleanOutfits, garmentsOf, washableDirty, wearTheDay } from '@/engine/systems/wardrobe';
 import { applyLookingAfter, lookAfterRefusal } from '@/engine/systems/life';
 
@@ -191,5 +192,36 @@ describe('a deposit', () => {
     const ctRent = depositFor(ct, { ...ct.player, credit: { ...ct.player.credit!, score: 800 } }, 'own');
     ct.player.credit!.score = 550;
     expect(depositFor(ct, ct.player, 'own')).toBe(ctRent * 2);
+  });
+});
+
+describe('the cleaner’s key', () => {
+  it('lets them in when nobody’s home; without it, a visit held up by a commitment is missed and not charged', () => {
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'cleaner-key');
+    const p = sim.player;
+    sim.must({ kind: 'home.cleaner', payload: { on: true, day: 5 } });
+    const dayStart = sim.now - (sim.now % 86_400_000);
+    // Home and free: they get in.
+    expect(cleanerGetsIn(sim, p, dayStart)).toBe(true);
+    // Held elsewhere through the visit, no key: they don't.
+    sim.onSchedule('test.busy', () => undefined);
+    sim.schedule({ at: dayStart + CLEANER_VISIT.hour * 3_600_000 - 3_600_000, kind: 'test.busy', label: 'Busy', category: 'career', priority: 10, requiresPlayer: true, durationMinutes: 600, payload: { personId: p.id } });
+    expect(cleanerGetsIn(sim, p, dayStart)).toBe(false);
+    sim.must({ kind: 'home.cleaner_key', payload: { give: true } });
+    expect(cleanerGetsIn(sim, p, dayStart)).toBe(true);
+    sim.must({ kind: 'home.cleaner_key', payload: { give: false } });
+    expect(livingOf(p).cleaner!.key).toBeUndefined();
+    // A partner who lives with you lets them in.
+    const partner = newContact(sim, p, 'us-ny-newyork', 'cleaner-partner', { at: sim.now, how: 'school' });
+    partner.livesWith = sim.now;
+    contactsOf(p).push(partner);
+    expect(cleanerGetsIn(sim, p, dayStart)).toBe(true);
+    p.contacts = contactsOf(p).filter((c) => c.id !== partner.id);
+    // Away from town with nothing on, no key: they don't.
+    const away = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'cleaner-away');
+    away.must({ kind: 'home.cleaner', payload: { on: true, day: 5 } });
+    expect(cleanerGetsIn(away, away.player, dayStart)).toBe(true);
+    away.player.currentLocationId = 'us-ca-losangeles';
+    expect(cleanerGetsIn(away, away.player, dayStart)).toBe(false);
   });
 });

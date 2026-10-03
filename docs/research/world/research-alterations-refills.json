@@ -1,0 +1,637 @@
+{
+  "meta": {
+    "topic": "Clothing alterations and repairs, shoe repair, and prescription supply and refill rules",
+    "markets": ["US (New York City, Los Angeles, New Haven CT)", "Canada (Toronto, Vancouver)", "United Kingdom (London)", "Ireland (Dublin)", "Mexico (Mexico City)"],
+    "readDate": "2026-10-02"
+  },
+  "alterations": [
+    {
+      "id": "us-nordstrom-standard-alterations",
+      "market": "US (all Nordstrom stores, incl. NYC and LA)",
+      "provider": "Nordstrom",
+      "currency": "USD",
+      "columns": "regularPrice = Nordstrom regular-price merchandise; saleOrOutside = sale, Rack and non-Nordstrom merchandise",
+      "items": [
+        { "item": "Pants/jeans hem, open bottom", "regularPrice": 0, "saleOrOutside": 24, "label": "Complimentary / $24" },
+        { "item": "Pants/jeans hem, pre-hemmed", "regularPrice": 0, "saleOrOutside": 24 },
+        { "item": "Pants/jeans hem, original hem", "regularPrice": 24, "saleOrOutside": 30 },
+        { "item": "Jeans hem, raw bottom", "regularPrice": 15, "saleOrOutside": 26 },
+        { "item": "Skirt/dress hem (plain/vented, under 72 in)", "regularPrice": 0, "saleOrOutside": 42 },
+        { "item": "Waist in/out, pants or skirt (split waistband)", "regularPrice": 0, "saleOrOutside": 30 },
+        { "item": "Taper leg", "regularPrice": 28, "saleOrOutside": 38 },
+        { "item": "Thigh in/out", "regularPrice": 0, "saleOrOutside": 24 },
+        { "item": "Shorten sleeves, suit coat/sport coat/blazer/raincoat (plain sleeve)", "regularPrice": 0, "saleOrOutside": 40 },
+        { "item": "Shorten sleeves, shirt/blouse/dress (plain sleeve)", "regularPrice": 22, "saleOrOutside": 28 },
+        { "item": "Shirt/blouse/dress sleeves, move or reset placket", "regularPrice": 30, "saleOrOutside": 40 },
+        { "item": "Jacket sides (plain, non-vented)", "regularPrice": 0, "saleOrOutside": 40 },
+        { "item": "Center seam in/out (plain, non-vented)", "regularPrice": 0, "saleOrOutside": 30 },
+        { "item": "Shirt/blouse sides and sleeves", "regularPrice": 32, "saleOrOutside": 40 },
+        { "item": "Move coat buttons (front)", "regularPrice": 0, "saleOrOutside": 8, "unit": "each (outside price)" },
+        { "item": "Functional buttonhole (machine)", "regularPrice": 10, "saleOrOutside": 15, "unit": "each" }
+      ],
+      "turnaround": {
+        "expressGeneralSameOrNextDay": 25,
+        "expressGeneral2to4Days": 15,
+        "expressBasicPantsHemSameOrNextDay": 10,
+        "expressBasicPantsHem2to4Days": 10,
+        "rule": "Express fees are in addition to regular alteration charges; express excludes bridal gowns."
+      },
+      "conditions": [
+        "All fees paid before services are performed.",
+        "Garments must be new or freshly cleaned.",
+        "Waiver must be signed for all non-Nordstrom alterations.",
+        "Nordy Club alteration benefits not eligible on Rack or non-Nordstrom merchandise."
+      ],
+      "url": "https://n.nordstrommedia.com/id/67df794c-af2b-4fff-9b57-fc0d3e07b36c.pdf",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Nordstrom's own published 'Standard Alterations' PDF (nordstrommedia.com). PDF metadata date 2022-10-04, so prices may have moved since. No zip replacement or tear/patch repair line on this sheet. Express fees also confirmed on https://www.nordstrom.com/browse/services/alterations/express-alterations (read 2026-10-02): 'We can hem pants that same day or the next day for an additional $10. Other items can be altered same day or next day for $25; or in 2–4 days for $15.'"
+    },
+    {
+      "id": "us-mens-wearhouse",
+      "market": "US (national chain)",
+      "provider": "Men's Wearhouse",
+      "currency": "USD",
+      "items": [
+        { "item": "Pants hem (bought at Men's Wearhouse)", "price": 20 },
+        { "item": "Waist/seat adjustment (bought at MW)", "price": 25 },
+        { "item": "Trouser taper (bought at MW)", "price": 32 },
+        { "item": "Jacket sleeves (bought at MW)", "price": 35 },
+        { "item": "Jacket sleeves (outside garment)", "price": 45 }
+      ],
+      "rules": ["Garments bought elsewhere cost about $10 more per alteration.", "Re-alteration of an already-altered seam is free; lifetime pressing on tailored garments bought there."],
+      "url": "https://www.menswearhouse.com/blog/guidelines/mens-wearhouse-alteration-services-pricing/",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "Figures from a web-search summary of Men's Wearhouse's own blog page; two direct fetches of the page timed out, so not read on the page itself."
+    },
+    {
+      "id": "us-uniqlo-hemming",
+      "market": "US",
+      "provider": "UNIQLO USA",
+      "currency": "USD",
+      "items": [
+        { "item": "Machine (lock) stitch hem, pants $20 or more", "price": 0 },
+        { "item": "Machine stitch hem, pants under $20", "price": 5 },
+        { "item": "Blind stitch hem, pants $20 or more", "price": 5 },
+        { "item": "Blind stitch hem, pants under $20", "price": 10 }
+      ],
+      "rules": ["Proof of purchase needed for items brought back.", "Altered items cannot be returned or exchanged."],
+      "url": "https://faq-us.uniqlo.com/articles/en_US/FAQ/In-store-alterations-policy",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "UNIQLO US FAQ returned 403 to direct fetch; figures from search summary. They match the Canadian page read directly (below)."
+    },
+    {
+      "id": "ca-uniqlo-hemming",
+      "market": "Canada (Toronto, Vancouver)",
+      "provider": "UNIQLO Canada",
+      "currency": "CAD",
+      "items": [
+        { "item": "Lock stitch hem, item $20 or more", "price": 0 },
+        { "item": "Lock stitch hem, item under $20", "price": 5.0 },
+        { "item": "Blind stitch hem, item $20 or more", "price": 5.0 },
+        { "item": "Blind stitch hem, item under $20", "price": 10.0 }
+      ],
+      "turnaround": { "inStore": "usually less than 24 hours (varies by location)", "onlineOrders": "an additional 1-4 working days beyond standard delivery, excluding weekends and public holidays" },
+      "rules": ["Prices before tax.", "Selected bottoms only.", "Altered products cannot be returned or exchanged.", "Result may deviate by ±1 cm.", "Items must be clean or freshly washed unless brand new."],
+      "url": "https://faq-ca.uniqlo.com/pkb_Home?id=kA5Rm0000001Vrf&l=en_US&fs=RelatedArticle",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read on UNIQLO Canada's own FAQ 'Alteration Guide'."
+    },
+    {
+      "id": "ca-stitchit",
+      "market": "Canada (national chain; stores in Toronto and Vancouver)",
+      "provider": "Stitch It",
+      "currency": "CAD",
+      "items": [
+        { "item": "Pant hems", "priceFrom": 14.89 },
+        { "item": "Buttons and zippers", "priceFrom": 3.12 },
+        { "item": "Repairs/patches", "priceFrom": 8.23 },
+        { "item": "Take in or let out", "priceFrom": 23.84 }
+      ],
+      "turnaround": "'Quick Turnaround' and 'Rush service available'; no stated days.",
+      "url": "https://stitchit.com/top-10-alterations-under-20/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Stitch It's own page; all are 'starting from' prices. Zipper 'from $3.12' is grouped with buttons, so it is the floor for the group, not a zip replacement price."
+    },
+    {
+      "id": "ca-toronto-revamped",
+      "market": "Canada (Toronto, Parkdale)",
+      "provider": "Revamped",
+      "currency": "CAD",
+      "items": [
+        { "item": "Pants hem", "priceMin": 15.0, "priceMax": 20.0 },
+        { "item": "Take in waistband", "price": 25.0 },
+        { "item": "Replace pants zipper", "priceMin": 18.0, "priceMax": 25.0, "plus": true },
+        { "item": "Shorten shirt sleeves", "price": 14.0 },
+        { "item": "Replace jacket zipper (by length)", "priceMin": 30.0, "priceMax": 50.0 },
+        { "item": "Patch, each (by shape)", "priceMin": 5.0, "priceMax": 25.0 },
+        { "item": "Denim repair/mending", "priceMin": 20.0, "priceMax": 60.0, "plus": true }
+      ],
+      "turnaround": "No stated days; early pick-up available from $5.",
+      "rules": ["Taxes additional."],
+      "url": "https://revamped-clothing.com/pages/rates-alterations-customizations-and-repairs",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Independent shop's own rate page."
+    },
+    {
+      "id": "ca-vancouver-mahos",
+      "market": "Canada (Vancouver)",
+      "provider": "Maho's Sewing Studio",
+      "currency": "CAD",
+      "items": [
+        { "item": "Pants shorten", "price": 13 },
+        { "item": "Dress pants shorten", "price": 15 },
+        { "item": "Jeans original hem", "price": 20 },
+        { "item": "Zipper change", "price": 55 }
+      ],
+      "rules": ["Plus tax."],
+      "url": "https://mahosewingstudio.com/pages/price-list",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "From search summary; the direct fetch returned no page content (JavaScript-rendered)."
+    },
+    {
+      "id": "ca-vancouver-joyce",
+      "market": "Canada (Vancouver)",
+      "provider": "Joyce Station Tailor & Dry Cleaner",
+      "currency": "CAD",
+      "items": [
+        { "item": "Pants shortening", "priceFrom": 15.0 },
+        { "item": "Zipper replacement", "priceFrom": 25.0 }
+      ],
+      "url": "https://www.thejoycetailor.com/vancouver-alteration/",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "From search summary; not fetched."
+    },
+    {
+      "id": "uk-london-ishine",
+      "market": "UK (London: Streatham SW16 and East Dulwich SE22)",
+      "provider": "iShine Dry Cleaners",
+      "currency": "GBP",
+      "items": [
+        { "item": "Trouser shortening", "price": 15 },
+        { "item": "Trouser waist in/out or tapering", "price": 15 },
+        { "item": "Trouser zip replacement", "price": 15 },
+        { "item": "Trouser zip, invisible", "price": 20 },
+        { "item": "Trouser pocket repair", "price": 15 },
+        { "item": "Shorten suit jacket sleeves", "price": 30 },
+        { "item": "Taper suit jacket arms", "price": 30 }
+      ],
+      "turnaround": "usually within 48 hours, with expedited options",
+      "url": "https://ishinedrycleaners.com/clothing-alterations/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Independent London cleaner's own page. Includes free ironing."
+    },
+    {
+      "id": "uk-timpson-alterations",
+      "market": "UK (national chain)",
+      "provider": "Timpson",
+      "currency": "GBP",
+      "items": [],
+      "url": "https://www.timpson.co.uk/services/clothing-alterations",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "timpson.co.uk returned HTTP 403 to every fetch, including with a browser user agent. No alteration prices obtained."
+    },
+    {
+      "id": "ie-dublin-zipyard-jervis",
+      "market": "Ireland (Dublin 1, Jervis St)",
+      "provider": "The ZipYard (franchise chain)",
+      "currency": "as shown on page: GBP symbol (£); likely EUR in fact, see note",
+      "items": [
+        { "item": "Trousers re-hem", "priceFrom": 7.5 },
+        { "item": "Trousers shorten", "priceFrom": 12 },
+        { "item": "Trousers taper", "priceFrom": 15 },
+        { "item": "Trousers alter waist", "priceFrom": 16.05 },
+        { "item": "Dress/blouse take in sides", "priceFrom": 10.7 },
+        { "item": "Dress/blouse shorten sleeves", "priceFrom": 12.85 },
+        { "item": "Suit jacket sleeves shorten", "priceFrom": 16.05 },
+        { "item": "Coat sleeves shorten", "priceFrom": 19.3 },
+        { "item": "Repair ripped seam", "priceFrom": 8.05 },
+        { "item": "Sew on button", "priceFrom": 4.3 },
+        { "item": "Buttonhole", "priceFrom": 6.45 },
+        { "item": "Zip, trousers", "priceFrom": 15 },
+        { "item": "Zip, skirts and dresses", "priceFrom": 16.05 },
+        { "item": "Zip, heavy coat", "priceFrom": 36.4 },
+        { "item": "Zip, leather jacket", "priceFrom": 48.15 }
+      ],
+      "turnaround": "'1-hour express service' for minor work; Mon-Sat 9:00-18:00",
+      "url": "https://thezipyard.ie/dublin1",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read on the ZipYard Ireland store page. The page shows '£' although the store is in Dublin; the odd pence values (16.05, 12.85) look like a currency-converted template. Treat the currency as unverified."
+    },
+    {
+      "id": "ie-dublin-paulhenry",
+      "market": "Ireland (Dublin)",
+      "provider": "Paul Henry Tailoring",
+      "currency": "EUR",
+      "items": [
+        { "item": "Ladies trousers/jeans re-hem", "price": 10 },
+        { "item": "Ladies shorten length", "priceOptions": [15, 20] },
+        { "item": "Ladies taper legs", "priceOptions": [20, 40] },
+        { "item": "Ladies alter waist", "priceOptions": [25, 40] },
+        { "item": "Ladies replace zip", "priceOptions": [20, 25] },
+        { "item": "Ladies repair rips", "price": 10 },
+        { "item": "Ladies repair seat", "price": 20 },
+        { "item": "Gents re-hem ends", "price": 10 },
+        { "item": "Gents shorten ends", "price": 20 },
+        { "item": "Gents alter waist", "priceOptions": [30, 60] },
+        { "item": "Gents taper legs", "priceOptions": [20, 40] },
+        { "item": "Gents replace zip", "priceOptions": [20, 25] }
+      ],
+      "turnaround": "not stated; appointments required",
+      "url": "https://paulhenrytailoring.ie/alterations-dublin",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Page says 'PRICES ARE ONLY INDICATIVE & CAN VARY DEPENDING ON THE COMPLEXITY OF THE WORK'."
+    },
+    {
+      "id": "ie-dublin-fitz",
+      "market": "Ireland (Dublin)",
+      "provider": "Fitz Alterations",
+      "currency": "EUR",
+      "items": [
+        { "item": "Trousers re-hem", "priceFrom": 8.0 },
+        { "item": "Trousers shorten", "priceFrom": 15.0 },
+        { "item": "Trousers replace zip", "priceFrom": 18.0 }
+      ],
+      "url": "https://fitz.ie/pricing/",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "From search summary; site refused the connection when fetched."
+    },
+    {
+      "id": "ie-dublin-drycleanersd1",
+      "market": "Ireland (Dublin 1, Gardiner St)",
+      "provider": "Dry Cleaners D1",
+      "currency": "EUR",
+      "items": [
+        { "item": "Trousers hem", "price": 12 },
+        { "item": "Take in or let out waist", "price": 15 },
+        { "item": "Zip change", "price": 15 },
+        { "item": "Zip fix", "price": 12 }
+      ],
+      "url": "https://drycleanersd1.com/index.php/alterations-repairs/",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "From search summary; not fetched."
+    }
+  ],
+  "shoeRepair": [
+    {
+      "id": "uk-london-cobblersnest",
+      "market": "UK (London SE1, 76 Redcross Way)",
+      "provider": "Cobblers Nest",
+      "currency": "GBP",
+      "items": [
+        { "item": "Ladies heels", "priceFrom": 8.5 },
+        { "item": "Ladies stick-on soles, thin", "priceFrom": 22.5 },
+        { "item": "Ladies stick-on soles, thick", "priceFrom": 25.5 },
+        { "item": "Ladies rubber soles", "priceFrom": 60.0 },
+        { "item": "Ladies half sole leather", "priceFrom": 45.0 },
+        { "item": "Ladies full sole leather", "priceFrom": 65.0 },
+        { "item": "Gents heels", "priceFrom": 15.0 },
+        { "item": "Gents stick-on soles, thin", "priceFrom": 22.5 },
+        { "item": "Gents stick-on soles, thick", "priceFrom": 27.5 },
+        { "item": "Gents full sole rubber incl. heels", "priceFrom": 70.0 },
+        { "item": "Gents half sole leather", "priceFrom": 55.0 },
+        { "item": "Gents full sole leather", "priceFrom": 85.0 }
+      ],
+      "turnaround": "not stated",
+      "url": "https://www.cobblersnest.com/prices-list",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Independent London cobbler's own price list."
+    },
+    {
+      "id": "uk-london-hellocobbler",
+      "market": "UK (London, online/collection)",
+      "provider": "Hello Cobbler",
+      "currency": "GBP",
+      "items": [
+        { "item": "Ladies leather sole and leather half heel", "price": 44.95 },
+        { "item": "Ladies leather half sole", "price": 35.95 },
+        { "item": "Men's leather half sole and leather heel", "price": 63.95 },
+        { "item": "Men's leather half sole", "price": 41.95 }
+      ],
+      "url": "https://hellocobbler.co.uk/",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "From search summary; not fetched."
+    },
+    {
+      "id": "uk-timpson-shoe",
+      "market": "UK (national chain)",
+      "provider": "Timpson",
+      "currency": "GBP",
+      "items": [
+        { "item": "Resole, normal wearing soles", "price": 35 },
+        { "item": "Resole, hard wearing soles", "price": 45 },
+        { "item": "Ladies heels", "priceFrom": 7.95 }
+      ],
+      "url": "https://www.timpson.co.uk/services/shoe-repairs",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "timpson.co.uk returned 403. Figures come only from forum posts (pistonheads, askandyaboutclothes, MoneySavingExpert) of uncertain date; a former employee said branch managers set their own prices. Do not use as a current Timpson price."
+    },
+    {
+      "id": "ca-gta-shoemedic",
+      "market": "Canada (Oakville, serving Toronto/GTA; mail-in Canada-wide)",
+      "provider": "ShoeMedic",
+      "currency": "CAD",
+      "items": [
+        { "item": "Heel tip/lift replacement", "priceFrom": 25 },
+        { "item": "Half sole / protective half sole", "priceFrom": 60 },
+        { "item": "Full protective sole cover/overlay", "priceFrom": 80 },
+        { "item": "Complete sole replacement (full resole)", "priceMin": 150, "priceMax": 220 }
+      ],
+      "turnaround": "about 1-2 weeks for most services, confirmed after inspection",
+      "rules": ["Prices before HST; starting points or typical ranges."],
+      "url": "https://shoemedic.com/blogs/blog/shoe-repair-cost-toronto",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "ShoeMedic's own 2026 pricing article dated 2026-04-21."
+    },
+    {
+      "id": "us-la-willies",
+      "market": "US (Los Angeles)",
+      "provider": "Willie's Shoe Service",
+      "currency": "USD",
+      "items": [
+        { "item": "Shoe and boot resole", "priceMin": 180, "priceMax": 360 },
+        { "item": "Heel replacement, high heels", "priceFrom": 24 },
+        { "item": "Heel replacement, other", "priceFrom": 68 }
+      ],
+      "url": "https://williesshoeservice.square.site/",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "From search summary; the fetched site page showed no content."
+    },
+    {
+      "id": "us-nj-cobblertailor",
+      "market": "US (Freehold NJ; NYC-area reference only, not NYC itself)",
+      "provider": "Cobbler + Tailor Shoe Repair",
+      "currency": "USD",
+      "items": [
+        { "item": "Men's rubber heels only", "price": 20 },
+        { "item": "Women's rubber heels, medium/large", "price": 18 },
+        { "item": "Women's leather half soles", "price": 55 },
+        { "item": "Women's rubber half soles + heels", "price": 65 },
+        { "item": "Men's leather full soles + heels", "price": 100 },
+        { "item": "Men's rubber full soles + heels", "price": 105 }
+      ],
+      "url": "https://cobblertailorshoerepair.com/price-list/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Shop's own price list; located in Freehold, New Jersey, not one of the target cities."
+    },
+    {
+      "id": "ie-dublin-cleggs",
+      "market": "Ireland (Dublin, Rathmines)",
+      "provider": "Clegg's Shoe Repair",
+      "currency": "EUR",
+      "items": [
+        { "item": "Women's stiletto heel tips", "price": 15.0, "unit": "pair" },
+        { "item": "Women's regular heels (flat/block)", "priceMin": 20.0, "priceMax": 25.0 },
+        { "item": "Women's leather soles", "priceMin": 40.0, "priceMax": 60.0, "unit": "pair" },
+        { "item": "Men's rubber heels", "priceMin": 24.0, "priceMax": 35.0, "unit": "pair" },
+        { "item": "Men's rubber soles", "priceMin": 40.0, "priceMax": 45.0, "unit": "pair" },
+        { "item": "Men's leather soles", "priceFrom": 60.0, "unit": "pair" }
+      ],
+      "url": "https://cleggsshoerepair.ie/shoe-and-leather-repair-and-key-cutting-pricing/",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "Search summary quoted these, but the direct fetch of the same URL found no prices on the page. Unverified; treat with caution."
+    }
+  ],
+  "prescriptions": [
+    {
+      "id": "us-medicare-partd-refill-too-soon",
+      "market": "US",
+      "rule": "Typical early-refill ('refill too soon') edits: non-controlled refill allowed after 75% of days' supply used (day 23 of a 30-day fill, day 68 of a 90-day fill); controlled substances after 80% (day 24 / day 72).",
+      "thresholdNonControlled": 0.75,
+      "thresholdControlled": 0.8,
+      "url": "https://prc.hmsa.com/s/article/Refill-Too-Soon-Edit",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "From search summary of plan documents (HMSA, NC State Health Plan). Thresholds are set by each insurer/PBM, not by law; CMS Part D Benefits Manual ch. 6 treats early-refill edits as a utilization tool. Not read on a CMS page."
+    },
+    {
+      "id": "us-ca-90-day-supply",
+      "market": "US (California)",
+      "rule": "Cal. Bus. & Prof. Code §4064.5: a pharmacist may dispense not more than a 90-day supply of a non-controlled dangerous drug where the prescription specifies a smaller initial quantity followed by refills, if the patient has completed an initial 30-day supply, total quantity does not exceed what was authorized, and the prescriber has not indicated otherwise; the prescriber must be notified.",
+      "maxDaysSupply": 90,
+      "initialSupplyCompletedDays": 30,
+      "url": "https://codes.findlaw.com/ca/business-and-professions-code/bpc-sect-4064-5/",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "Read on FindLaw (a third-party mirror of the statute), not on leginfo.legislature.ca.gov."
+    },
+    {
+      "id": "us-ca-refill-authorization",
+      "market": "US (California)",
+      "rule": "Cal. Bus. & Prof. Code §4063: no dangerous drug prescription may be refilled except on the prescriber's authorization; controlled substances may not be designated 'refill as needed'. Health & Safety Code §11166: no controlled-substance prescription filled more than six months after the date written.",
+      "controlledValidityMonths": 6,
+      "url": "https://codes.findlaw.com/ca/business-and-professions-code/bpc-sect-4063.html",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "From search summary of FindLaw/Justia statute text. No California statutory expiry for non-controlled prescriptions was found."
+    },
+    {
+      "id": "us-ny-refills",
+      "market": "US (New York)",
+      "rule": "NYSED Office of the Professions pharmacy FAQ: effective 2025-10-07 non-controlled prescriptions must be transferred in full including all refills; effective 2026-04-14 controlled-substance prescriptions may be transferred between pharmacies subject to PHL Article 33 and 10 NYCRR Part 80. Refill instructions may be a number of times, a time period such as one year, or 'prn'.",
+      "url": "https://www.op.nysed.gov/professions/pharmacist/frequently-asked-questions/prescription-refills",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Transfer rules read on the NYSED page. The 'one year / prn' refill-instruction wording came from the search summary of the same site. Neither the FAQ nor 8 NYCRR Part 63 states a statutory expiry for non-controlled prescriptions."
+    },
+    {
+      "id": "us-ct-controlled-refills",
+      "market": "US (Connecticut)",
+      "rule": "Schedule III and IV controlled substances may not be filled or refilled more than six months after the date written, nor refilled more than five times, unless renewed by the practitioner. Non-controlled prescriptions must state number of refills (or PRN / ad lib) under Conn. Gen. Stat. §20-614.",
+      "controlledValidityMonths": 6,
+      "controlledMaxRefills": 5,
+      "url": "https://codes.findlaw.com/ct/title-20-professional-and-occupational-licensing-certification-title-protection-and-registration-examining-boards/ct-gen-st-sect-20-614/",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "From search summary; Justia returned 403 and cga.ct.gov failed a certificate check. No one-year non-controlled expiry was found in CT law."
+    },
+    {
+      "id": "uk-england-charge",
+      "market": "UK (England)",
+      "rule": "NHS prescription charge per item; charge is per medicine item, not per prescription form. Free in Scotland, Wales and Northern Ireland.",
+      "chargePerItem": 9.9,
+      "ppc3Month": 32.05,
+      "ppc12Month": 114.5,
+      "currency": "GBP",
+      "effective": "2026/27 (frozen for the second year running)",
+      "url": "https://www.nhs.uk/nhs-services/prescriptions/nhs-prescription-charges/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "£9.90 per item read on nhs.uk. PPC prices read on Community Pharmacy England (https://cpe.org.uk/our-news/nhs-prescription-charges-frozen-for-the-second-year-running/), which reports the DHSC announcement — the national pharmacy-contractor body, not DHSC itself."
+    },
+    {
+      "id": "uk-england-validity",
+      "market": "UK (England)",
+      "rule": "An FP10 prescription is valid for 6 months from its date. Schedule 2, 3 and 4 controlled drugs: 28 days. Repeatable prescriptions: first dispensing within 6 months (28 days for Schedule 4 CDs); after first dispensing the repeats run as the prescription states.",
+      "validityMonths": 6,
+      "controlledValidityDays": 28,
+      "url": "https://faq.nhsbsa.nhs.uk/knowledgebase/article/KA-01561/en-us",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "NHS Business Services Authority's own FAQ. nhs.uk charges page also says most prescriptions last 6 months and controlled drugs 28 days."
+    },
+    {
+      "id": "uk-england-repeat-ordering",
+      "market": "UK (England)",
+      "rule": "Repeat prescriptions are ordered from the GP surgery via the NHS App or NHS website, other online services/apps, or by contacting the surgery. Request up to 5 working days before you need the medicine.",
+      "orderLeadWorkingDays": 5,
+      "url": "https://www.nhs.uk/nhs-services/prescriptions/how-to-order-a-repeat-prescription/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read on nhs.uk. GP practice pages (e.g. Prentis Medical Centre) say to allow two full working days for processing; that is per-practice, not national. The typical 28-day supply was not found on an NHS page."
+    },
+    {
+      "id": "ca-on-validity",
+      "market": "Canada (Ontario)",
+      "rule": "All prescriptions for prescription drugs remain valid unless otherwise specified by the prescriber; pharmacists must use judgement when much time has passed. Controlled substance prescriptions expire two years from the date the pharmacy receives them (or the date written, per Health Canada). Benzodiazepines/targeted substances: refill only if less than one year since issue.",
+      "controlledValidityYears": 2,
+      "targetedSubstanceRefillWindowYears": 1,
+      "url": "https://ocpinfo.com/pharmacy-professionals/practice-topics/fact-sheets/prescription-expiry/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Ontario College of Pharmacists' own fact sheet. The benzodiazepine one-year line came from the search summary of this page; the fetch itself reported the two-year controlled-substance rule."
+    },
+    {
+      "id": "ca-on-odb-supply",
+      "market": "Canada (Ontario)",
+      "rule": "Ontario Drug Benefit pays for at most a 100-day supply per dispensing (since 2018-08-01); generally a maximum of 2 dispensing fees per 28 days for a listed drug.",
+      "maxDaysSupply": 100,
+      "url": "https://www.ontario.ca/page/conditions-payment-dispensing-fee-under-ontario-drug-benefit-program",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "100-day maximum read on ontario.ca. The '2 fees per 28 days' rule came from the search summary of this page."
+    },
+    {
+      "id": "ca-on-odb-fee",
+      "market": "Canada (Ontario)",
+      "rule": "ODB co-payment: up to $6.11 per prescription for most recipients; $2 for low-income seniors in the Seniors Co-Payment Program.",
+      "copay": 6.11,
+      "copayLowIncomeSenior": 2.0,
+      "currency": "CAD",
+      "url": "https://www.ontario.ca/page/conditions-payment-dispensing-fee-under-ontario-drug-benefit-program",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "From search summary; not on the ontario.ca page fetched. The ministry's ODB dispensing fee to pharmacies, and private-pay dispensing fees, were not found on an official page."
+    },
+    {
+      "id": "ca-bc-validity",
+      "market": "Canada (British Columbia)",
+      "rule": "All prescriptions (new and existing) are valid for up to two years from the prescribing date, except benzodiazepines or other targeted substances, valid up to one year. Pharmacists may renew or adapt within the original expiry.",
+      "validityYears": 2,
+      "targetedSubstanceValidityYears": 1,
+      "effective": "2022-10-14",
+      "url": "https://www.bcpharmacists.org/news/changes-optimize-services-available-community-pharmacies-now-effect",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "College of Pharmacists of BC's own page. A search summary also stated refills (except oral contraceptives) are valid for at most one year from the prescribing date; that was not confirmed on the page read."
+    },
+    {
+      "id": "ca-bc-dispensing-fee",
+      "market": "Canada (British Columbia)",
+      "rule": "Maximum dispensing fee reimbursed by PharmaCare.",
+      "maxDispensingFee": 11.0,
+      "currency": "CAD",
+      "url": "https://www2.gov.bc.ca/gov/content/health/practitioner-professional-resources/pharmacare/pharmacare-publications/pharmacare-policy-manual-2012/pharmacyfees-subsidies-providerpayment/dispensing-fees",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read on gov.bc.ca (page last updated 2026-07-06). Search summary said the fee rose from $10 to $11 on 2026-01-02; that date was not read on the page. This is what PharmaCare reimburses, not what a cash-paying patient is charged."
+    },
+    {
+      "id": "ie-dps-cap",
+      "market": "Ireland",
+      "rule": "Drugs Payment Scheme: an individual or family pays no more than the monthly threshold for approved drugs, medicines and appliances.",
+      "monthlyCap": 80,
+      "currency": "EUR",
+      "url": "https://www2.hse.ie/services/schemes-allowances/drugs-payment-scheme/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "HSE page says 'Apply for a Drugs Payment Scheme card if you pay more than €80 a month'. Citizens Information and third-party summaries give €80 as the 2026 cap. Irish Times (2026-09-23) reports a proposed policy that would raise patient contributions — watch Budget 2027."
+    },
+    {
+      "id": "ie-gms-charge",
+      "market": "Ireland",
+      "rule": "Medical card (GMS) prescription charge per item, with a monthly maximum; HSE refunds overpayment annually; a family certificate can be registered.",
+      "chargePerItemUnder70": 1.5,
+      "monthlyCapUnder70": 15,
+      "chargePerItemOver70": 1.0,
+      "monthlyCapOver70": 10,
+      "currency": "EUR",
+      "url": "https://www2.hse.ie/services/schemes-allowances/medical-cards/about-the-medical-card/prescription-charges/",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read on HSE's own page."
+    },
+    {
+      "id": "mx-antibiotics",
+      "market": "Mexico",
+      "rule": "Acuerdo (DOF, signed 2010-05-17; in force 90 days after publication, 2010-08-25): antibiotics may be sold and dispensed 'única y exclusivamente contra la exhibición de la receta médica'. Each time it is filled the pharmacy stamps (sella) the prescription; when the prescribed quantity is exhausted the pharmacy retains it; retained prescriptions are kept 365 calendar days; the prescription may only be filled within the duration of the treatment. Topical, ophthalmic and nasal presentations were excluded from the COFEPRIS list.",
+      "retentionDays": 365,
+      "inForce": "2010-08-25",
+      "url": "https://sidof.segob.gob.mx/notas/docFuente/5144336",
+      "date": "2026-10-02",
+      "confirmed": true,
+      "note": "Read on the Diario Oficial de la Federación (SIDOF) text. The effective date and excluded presentations are from Expansión (https://expansion.mx/economia/2010/08/04/cofepris-enlista-antibioticos-por-receta)."
+    },
+    {
+      "id": "mx-lgs-226",
+      "market": "Mexico",
+      "rule": "Ley General de Salud Art. 226 classes: I special permit/prescription from Secretaría de Salud; II prescription retained by pharmacy, valid 30 days; III prescription may be filled up to three times, retained on the third; IV prescription refillable as many times as the doctor indicates; V no prescription, sold only in pharmacies; VI no prescription, may be sold outside pharmacies. Fractions V and VI are the over-the-counter classes.",
+      "fractionIIValidityDays": 30,
+      "fractionIIIMaxFills": 3,
+      "url": "https://leyes-mx.com/ley_general_de_salud/226.htm",
+      "date": "2026-10-02",
+      "confirmed": false,
+      "note": "Read on leyes-mx.com, a third-party copy of the law, not diputados.gob.mx. Which specific products are OTC (e.g. paracetamol, ibuprofen) was not listed."
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "Timpson (UK) alteration and shoe repair prices: timpson.co.uk returns HTTP 403 to all automated fetches; only old forum figures exist.",
+      "Timpson/Johnsons/Minit in Ireland: no published price list found; misterminit.eu returned 403.",
+      "Levi's Tailor Shop prices: the US page lists services (hems, tapers, waist, sashiko, darning, patchwork) but no prices.",
+      "UNIQLO UK and Ireland hemming prices/policy (not searched to a page).",
+      "Banana Republic and Zara alteration pricing.",
+      "Any New Haven, CT alteration or shoe repair price list.",
+      "Any NYC-based independent alteration price list (Nordstrom and Men's Wearhouse are the national benchmarks); Leather Spa NYC publishes no prices online.",
+      "Mexico City: no named chain or shop price list for alterations (Liverpool's services page 403'd and shows no prices); no CDMX shoe-repair price list.",
+      "A named US or Canadian cobbler chain with a published national price list.",
+      "A statutory expiry for non-controlled prescriptions in New York, California or Connecticut (the commonly cited 'one year' was not found in law; it may be pharmacy/insurer practice).",
+      "CMS's own page stating the 75%/80% refill-too-soon thresholds.",
+      "The typical NHS 28-day repeat supply on an NHS page.",
+      "Ontario private-pay dispensing fees and the ministry ODB dispensing fee table.",
+      "Ireland prescription validity period (commonly 6 months, repeats up to 6 months) on an official page.",
+      "Ireland and Mexico typical days' supply.",
+      "Official Mexican list of OTC products by name."
+    ],
+    "worthChecking": [
+      "Nordstrom PDF metadata is dated 2022-10-04; check whether a newer sheet exists.",
+      "ZipYard Dublin page shows '£'; confirm by phone or another ZipYard Ireland page whether prices are euro.",
+      "Men's Wearhouse blog page timed out twice; refetch to confirm $20 hem / $25 waist / $32 taper / $35-$45 sleeves.",
+      "Clegg's Dublin figures appeared in search but not on the fetched page.",
+      "Irish Times 2026-09-23 reports proposed higher patient drug contributions; check whether Budget 2027 moves the €80 DPS cap or GMS charges.",
+      "BC PharmaCare $11 fee start date (2026-01-02 per search) and CPBC one-year refill rule.",
+      "Read Ley General de Salud Art. 226 on diputados.gob.mx to confirm the third-party text.",
+      "NY Education Law §6810 on nysenate.gov for any refill time limit."
+    ]
+  }
+}

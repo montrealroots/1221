@@ -624,7 +624,7 @@ function Fit() {
   const t = tailors.find((x) => x.id === tailorId) ?? tailors[0];
   const money = (c: number) => formatMoney(c, saveCurrency(sim.universe), { cents: false });
   return (
-    <Panel title="Clothes That Don’t Fit" subtitle="More than a size off the weight they were bought for; not worn until they’re taken in or replaced">
+    <Panel title="Clothes That Don’t Fit" subtitle="More than a size off the weight they were bought for; not worn until they’re altered or replaced">
       <LookRegion className="col gap-2">
         {tailors.length > 1 && (
           <select aria-label="Tailor" value={t?.id ?? ''} onChange={(e) => setTailorId(e.target.value)} style={{ width: 'auto' }}>
@@ -636,7 +636,7 @@ function Fit() {
           return (
             <div key={g.id} className="row-between small">
               <span><Open subject={at('garment', g.id)}>{g.label}</Open><span className="xs dim">{fitOf(person, g.garment) === 'big' ? ' · Too Big' : ' · Grown Out Of'}</span></span>
-              <button type="button" className="btn btn-sm btn-ghost" disabled={!alter.open || Boolean(no)} title={no ?? alter.reason} onClick={() => { const a = run<{ readyAt: number }>('clothes.alter', { itemId: g.id, tailorId: t!.id }); if (a.ok) toast(`At ${t!.name}, ready ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{t ? `Take It In, ${money(alterCost(sim, t))}` : 'Take It In'}</button>
+              <button type="button" className="btn btn-sm btn-ghost" disabled={!alter.open || Boolean(no)} title={no ?? alter.reason} onClick={() => { const a = run<{ readyAt: number }>('clothes.alter', { itemId: g.id, tailorId: t!.id }); if (a.ok) toast(`At ${t!.name}, ready ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{`${fitOf(person, g.garment) === 'big' ? 'Take It In' : 'Let It Out'}${t ? `, ${money(alterCost(sim, t))}` : ''}`}</button>
             </div>
           );
         })}

@@ -316,6 +316,8 @@ export interface Person {
   measures?: import('../systems/tailoring').Measures;
   /** The bag that goes away with them, where more than one is owned (`systems/luggage.ts`, from 2026-10-02). */
   luggageId?: string;
+  /** The town whose library card they hold (`systems/reading.ts`, from 2026-10-02). */
+  libraryCard?: string;
   parkingPermit?: { cityId: string; at: number };
   applianceFaults?: Partial<Record<import('../systems/appliancefaults').Machine, import('../systems/appliancefaults').MachineFault>>;
   groomedAt?: number;
