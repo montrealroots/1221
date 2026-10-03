@@ -31,6 +31,7 @@ import { inSaveMoney } from './banking';
 import { payFromBank } from './household';
 import { addItem, homeKeyOf, itemsOf } from './items';
 import { bareHome, owns } from './furniture';
+import { fitRefusal } from './rooms';
 
 /** A furnished home's: a three-seat sofa and a table for four, its chairs among the seats. SLATE's reading. */
 export const FURNISHED = { seats: 3 + 4, table: 4 } as const;
@@ -65,12 +66,15 @@ export function piecesCatalog(sim: Simulation, person: Person): CatalogEntry<Cat
   })).sort((a, b) => a.price! - b.price!);
 }
 
-export function pieceRefusal(person: Person, pieceId: string, quantity: number): string | undefined {
+export function pieceRefusal(person: Person, pieceId: string, quantity: number, sim?: Simulation): string | undefined {
   const p = pieceById(pieceId);
   if (!p) return 'That isn’t on sale.';
   if (!person.home || person.home.kind === 'sofa') return 'You have no home of your own to put it in.';
   if (CITIES.get(person.home.cityId)?.countryId !== p.country) return 'IKEA sells that in another country.';
   if (!(Number.isInteger(quantity) && quantity >= 1 && quantity <= 12)) return 'From one to twelve.';
+  // It has to fit in the rooms (`systems/rooms.ts`, from 2026-10-03).
+  const [w, d] = p.cm;
+  if (sim && w && d) return fitRefusal(sim, person, ((w * d) / 10_000) * quantity);
   return undefined;
 }
 
@@ -96,7 +100,7 @@ export function registerFurnishings(sim: Simulation): void {
   sim.onCommand<{ pieceId: string; quantity?: number }, { paid: Money }>('home.buy_piece', (p, { sim: s }) => {
     const person = s.player;
     const quantity = Number(p?.quantity ?? 1);
-    const no = pieceRefusal(person, String(p?.pieceId), quantity);
+    const no = pieceRefusal(person, String(p?.pieceId), quantity, s);
     if (no) throw new CommandError(no);
     const piece = pieceById(String(p.pieceId))!;
     const paid = piecePrice(s, person.home!.cityId, piece) * quantity;

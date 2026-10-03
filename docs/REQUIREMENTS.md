@@ -97,7 +97,7 @@ Correctness first, then the connected day the plan asks to be shown working
 
 | § | Requirement | Status | Where | Gap |
 |---|---|---|---|---|
-| 31a | Reach an accessible bathroom | Partial | `lookAfterRefusal` | Rooms; a shared or busy bathroom |
+| 31a | Reach an accessible bathroom | Partial | `lookAfterRefusal`; from 2026-10-03 a flat-share's bathroom shared with a flatmate for each other bedroom, each showering at a drawn minute from 6:30 to 8:30 for REU2016's 7.8 minutes, a shower that meets one waiting for it (`bathroomWait`, `systems/rooms.ts`) | A rented flat's bathroom count (one is SLATE's reading); a partner's mornings; accessibility |
 | 31b | Shower or bath | Complete | `wash`/`bathe`; tests/looking-after | — |
 | 31c | Supplies and towel | Done, 2026-10-02 | `showerUses` by grams; bath towels as items (`starterTowels`, `useTowel`) | Buying towels |
 | 31d | Products, duration, routine | Partial, 2026-10-02 | the product chosen first used before the others of its kind, then an open bottle before a new one, and the chosen one bought again where it's sold (`hygiene.use_first`, `inUseOrder`); conditioner used after the shampoo where bought, Loretz's 13.13 g a use | the shower's minutes (REU2016's 7.8, read in `research-water-washing.json`, against the 20 the action takes with drying and dressing) |
@@ -128,7 +128,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 34c–f | Exercise, relaxation, sleep, time | Complete | life.ts; tests | — |
 | 35a | Cleaning | Partial | `tidy` scalar; the chains' cleaning products on sale (`content/cleaning.ts`), a dishwasher's tablets used, 184 cycles a year | Rooms; how fast sprays and sponges go (unpublished) |
 | 35b | Laundry | Complete | `doLaundry`, a load's detergent each, refused without; tests/wardrobe, tests/cleaning; towels a garment each shower wears toward its wash (`useTowel`) | Bedding |
-| 35c | Organizing | Partial | spots; a bag's, a safe's and IKEA storage's liters, refused when full (`moveRefusal`) | Rooms; a home spot's own capacity |
+| 35c | Organizing | Done, 2026-10-03 | spots; a bag's, a safe's and IKEA storage's liters, refused when full (`moveRefusal`); the home's built-in storage, the wardrobe, drawers and storage together, England's space standard's least by bedrooms to its 2.3 m ceiling, refused when full and clothes bought then going in the rooms (`systems/rooms.ts`) | Outside England the standard is SLATE's reading |
 | 35d | Waste | Partial, 2026-10-02 | `systems/waste.ts`: each research town's household charge in the bills (LA's schedule, Toronto, Vancouver, Dublin; London, Mexico City, New York and New Haven none) | Bin size and plan choice; collection days; bulky items |
 | 35e | Replacing supplies | Partial | automatic restock; laundry and dishwasher detergent used up and bought again with a week's use left | Cleaning sprays and sponges, sold but never used up (how fast they go is unpublished) |
 | 35f | Appliance repair | Done, 2026-10-02 | `systems/appliancefaults.ts`: washer, dishwasher and fridge faults at Consumer Reports' and Which?'s rates (decider `home.appliance_fault`); the laundromat, washing by hand, a spoiled fridge; the landlord's mended free next morning, one's own booked at each market's price | Dryer and air conditioning faults (no rate with a period published) |
@@ -180,14 +180,14 @@ Correctness first, then the connected day the plan asks to be shown working
 |---|---|---|---|---|
 | 41a, h, i, k | Many properties; buy, finance, let, manage, sell | Complete | homes.ts, land.ts; tests | — |
 | 41b | Ownership rights and tenure | Partial | freehold only | Tenure, co-owners, easements |
-| 41c | Usable space | Partial | beds, baths, size | Rooms |
+| 41c | Usable space | Done, 2026-10-03 | beds, baths, size; the floor that can be furnished, half the home's or a let room's 11.5 m², each piece its own footprint, a piece that won't fit not bought or brought out of storage; shown on Home (`systems/rooms.ts`) | Half is SLATE's estimate; room by room layout |
 | 41d–e | Terrain, access, utilities | Not implemented / partial | services on bare land | Parcel attributes read by the build |
 | 41f | Restrictions | Partial | zoning | HOA, conservation, setbacks |
 | 41g | Inspection | Partial | home inspection | Survey, title, environment |
 | 41j | Development | Partial | renovation; one house on land | Outbuildings; subdivision for sale |
 | 41l | Verified vs simulated | Partial | fine print says simulated | A `source` field |
 | 42 | Construction walkthrough | Partial | builds by stages (complete); home projects paid up front | Bid choice, stages and payments for projects, change orders, cancellation, acceptance |
-| 43a–b | Rooms, finishes | Not implemented / partial | parts with ages | Rooms; finish grade kept |
+| 43a–b | Rooms, finishes | Partial | parts with ages; from 2026-10-03 rooms as bedrooms, floor and built-in storage (`roomsOf`) | Each room's own size; finish grade kept |
 | 43c | Furniture | Partial | 5 pieces; from 2026-10-02 IKEA's seats, tables, wardrobes, frames, chests and bookcases (163 pieces, `systems/furnishings.ts`), seats and table places read by hosting, storage holding its outside measure | Desks, TV benches, coffee tables (no reader yet) |
 | 43d–h | Appliances, lighting, storage, security, utilities | Partial | fixtures; security | Fixture choice, lighting, capacity |
 | 43i | Special rooms | Partial, 2026-10-02 | home gym, theater, dance studio, library, soundproofed room, one to each spare bedroom; a walk-in closet and a sauna, at the cost guides' prices | What each room is used for beyond being kept |
@@ -197,7 +197,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 44c–d | Permission, structure, access | Partial / not implemented | permits | Refusal outcome; structural checks |
 | 44e–f | Explain and offer alternatives | Partial | from 2026-10-02 every project shown, one this kind of home doesn’t take refused with the kinds that do (`projectsFor`) | Alternatives beyond the kinds of home (a gym for a pool, say) |
 | 45a, c, i | Bed sizes by market, compatibility, use | Complete | content/beds.ts; tests/beds | More markets |
-| 45b, d–h, j–k | Materials, bedding, room fit, delivery, assembly, placement, cleaning, repair, resale | Partial or not implemented | — | The furniture lifecycle |
+| 45b, d–h, j–k | Materials, bedding, room fit, delivery, assembly, placement, cleaning, repair, resale | Partial | room fit from 2026-10-03: each piece's IKEA footprint, a bed its mattress's, against the floor that can be furnished (`fitRefusal`) | Assembly, cleaning, repair, resale; a move to a smaller home keeps what doesn't fit |
 
 ## Part 8. Travel, hotels, documents
 

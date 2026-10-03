@@ -626,7 +626,7 @@ function FromIkea() {
           <tbody>
             {shown.map((e) => {
               const p = e.value;
-              const no = pieceRefusal(person, p.id, count);
+              const no = pieceRefusal(person, p.id, count, sim);
               return (
                 <tr key={e.id}>
                   <td>{e.label}</td>

@@ -33,6 +33,7 @@ import { inTheBank, owe, payFromBank } from './household';
 import { jurisdictionOf, kindOf, modelById, runningCost, vehiclesOf, type OwnedVehicle } from './vehicles';
 import { mayDrive } from './documents';
 import { addItem, followTheMove, hasAtHome, homeKeyOf, itemsOf } from './items';
+import { KIVIK_M2, fitRefusal } from './rooms';
 import { byRoad, roadKm } from './driving';
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
@@ -69,6 +70,11 @@ export function pieceCost(sim: Simulation, cityId: string, piece: Piece): { amou
 
 export function furnishRefusal(sim: Simulation, person: Person, piece: Piece): string | undefined {
   if (owns(person, piece)) return 'You have one.';
+  // A bed or a sofa has to fit in the rooms (`systems/rooms.ts`, from 2026-10-03): a bed its country's usual double, a sofa the KIVIK.
+  const country = CITIES.get(person.home?.cityId ?? '')?.countryId ?? '';
+  const usual = BED_MARKET[country] ? bedSize(BED_MARKET[country]!, DEFAULT_BED_SIZE[country]!) : undefined;
+  const fit = piece === 'sofa' ? fitRefusal(sim, person, KIVIK_M2, 'sofa') : piece === 'bed' && usual ? fitRefusal(sim, person, (usual.widthCm * usual.lengthCm) / 10_000, 'bed') : undefined;
+  if (fit) return fit;
   const where = person.home?.cityId ?? person.currentLocationId;
   const cost = pieceCost(sim, where, piece);
   if (!cost) return 'SLATE keeps no price for it where you live yet.';
@@ -95,6 +101,9 @@ export function registerFurniture(sim: Simulation): void {
     // A bed of your choosing, its frame and its mattress the same size (`content/beds.ts`), or the country's usual double.
     const chosen = piece === 'bed' && p.frameId ? bedQuote(s, cityId, String(p.frameId), String(p.mattressId ?? '')) : undefined;
     if (typeof chosen === 'string') throw new CommandError(chosen);
+    const chosenSize = chosen ? bedSize(BED_MARKET[country]!, chosen.frame.size) : undefined;
+    const tight = chosenSize ? fitRefusal(s, person, (chosenSize.widthCm * chosenSize.lengthCm) / 10_000, 'bed') : undefined;
+    if (tight) throw new CommandError(tight);
     const cost = chosen ?? pieceCost(s, cityId, piece)!;
     const label = chosen ? `${chosen.frame.name} ${bedSize(BED_MARKET[country]!, chosen.frame.size)!.label} Bed` : PIECE_LABEL[piece].replace(/^An? /, '');
     if (!payFromBank(s, person, cost.amount, `${PIECE_LABEL[piece]}, bought and delivered`, 'home')) throw new CommandError('The bank couldn’t pay for it.');

@@ -31,7 +31,7 @@ import { accountNumber } from './systems/banknumber';
 import { fraudOn } from './systems/security';
 import { bankById } from './content/banks';
 import { declines } from './systems/lending';
-import { MS_DAY } from './core/time';
+import { MS_DAY, startOfDay } from './core/time';
 import { admittedClass, classmatesIn, goesOn, evenCraft, meanCraft, nightOf } from './systems/school';
 import { attributesOf } from './systems/attributes';
 import { newLifeConfig } from './world/bootstrap';
@@ -78,6 +78,7 @@ import { counterOffer } from './systems/career';
 import { bidsFor, lateDays, overrunOf } from './systems/worksrisk';
 import { usedFault } from './systems/usedcars';
 import { takenFromDoor } from './systems/orders';
+import { bathroomWait } from './systems/rooms';
 import { AGENCIES, ROLES, SERIES } from './content/career';
 
 // ---------------------------------------------------------------------------
@@ -491,6 +492,26 @@ defineDecider<{ sim: Simulation; parcel: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), parcel: seed }),
   decide: ({ sim, parcel }) => (takenFromDoor(sim, sim.player, `o${parcel}`, 0.5) ? 'taken' : 'left'),
+});
+
+defineDecider<{ sim: Simulation; day: number; minute: number }, string>({
+  id: 'rooms.shower',
+  decides: 'When each flatmate in a flat-share showers in the morning, a minute drawn from 6:30 to 8:30 (MORNING), and so whether a shower then waits for the bathroom; a flat of three.',
+  drawnIn: 'src/engine/systems/rooms.ts',
+  reads: {
+    day: (o, t) => ({ ...o, day: Math.round(t * 60) }),
+    minute: (o, t) => ({ ...o, minute: Math.round(t * 120) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), day: seed % 60, minute: seed % 120 }),
+  decide: ({ sim, day, minute }) => {
+    const home = sim.player.home!;
+    sim.player.home = { ...home, kind: 'shared', unit: { ...(home.unit ?? { type: 'condo', size: 900, fixtures: { bathtub: false, dishwasher: false, laundry: 'none', cooling: 'none', outdoor: 'none', gym: 'none' } }), beds: 3, shared: true } };
+    sim.player.currentLocationId = home.cityId;
+    const zone = CITIES.require(home.cityId).timeZone;
+    const midnight = startOfDay(sim.now + day * MS_DAY, zone);
+    return bathroomWait(sim, sim.player, midnight + (6.5 * 60 + minute) * 60_000, 10) > 0 ? 'waits' : 'free';
+  },
 });
 
 defineDecider<{ sim: Simulation; visit: number }, string>({

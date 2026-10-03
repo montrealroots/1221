@@ -45,6 +45,7 @@ import { resolveIncomeTaxLayers } from '@/engine/content/tax';
 import { homeOf } from '@/engine/systems/earnings';
 import { TIDY, cleanerCost, livingOf, placeOf, rentersPremium } from '@/engine/systems/dwelling';
 import { holdQuote, holdRefusal, holdRuleFor, sitterFee, sitterRefusal } from '@/engine/systems/away';
+import { FURNISHABLE, closetUsedL, furnishedM2, roomsOf } from '@/engine/systems/rooms';
 import { cleanOutfits, dryCleanDirty, garmentsOf, washableDirty } from '@/engine/systems/wardrobe';
 import { COOLING_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, typeLabel } from '@/engine/content/homes';
 import { alarmRefusal, alarmed } from '@/engine/systems/alarm';
@@ -962,6 +963,8 @@ function YourPlace({ cur }: { cur: string }) {
     drying: garmentsOf(s.player).filter((g) => (g.garment.dryUntil ?? 0) > s.now).length,
   }));
   const premium = useWorld((s) => rentersPremium(s, s.player));
+  // The rooms' floor and built-in storage (`systems/rooms.ts`).
+  const rooms = useWorld((s) => { const r = roomsOf(s, s.player); return r ? { room: r.floorM2 * FURNISHABLE, taken: furnishedM2(s.player), closet: r.closetL, used: closetUsedL(s.player), flatmates: r.flatmates } : undefined; });
   const hasAlarm = useWorld((s) => alarmed(s.player));
   const noAlarm = useWorld((s) => alarmRefusal(s.player));
   const home = useWorld((s) => s.player.home);
@@ -992,6 +995,8 @@ function YourPlace({ cur }: { cur: string }) {
       <div className="muted">{has.join(' · ')}</div>
       <div className="stats">
         <Stat label="Clean Outfits" value={`${clothes.outfits}`} note={clothes.drying > 0 ? `${clothes.drying} drying` : clothes.toWash > 0 ? `${clothes.toWash} to wash` : clothes.toDryClean > 0 ? `${clothes.toDryClean} for the dry cleaner` : 'All washed'} tone={clothes.outfits <= 2 ? 'warning' : undefined} />
+        {rooms && <Stat label="Floor Furnished" value={`${rooms.taken.toFixed(1)} m²`} note={`Of ${rooms.room.toFixed(1)} m² there's room to furnish`} tone={rooms.taken > rooms.room * 0.9 ? 'warning' : undefined} />}
+        {rooms && <Stat label="Built-In Storage" value={`${Math.round(rooms.used)} L`} note={`Of ${Math.round(rooms.closet)} L${rooms.flatmates ? `; a bathroom shared with ${rooms.flatmates}` : ''}`} tone={rooms.used > rooms.closet * 0.9 ? 'warning' : undefined} />}
         {place.keeps && <Stat label="Tidy" value={`${Math.round(living.tidy)}`} note={living.tidy < TIDY.messy ? 'A mess, and it weighs on you' : living.cleaner ? 'A cleaner comes weekly' : 'Out of a hundred'} tone={living.tidy < TIDY.messy ? 'warning' : undefined} />}
       </div>
       {place.keeps && (home.kind === 'own' || home.kind === 'shared') && (

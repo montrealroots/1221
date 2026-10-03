@@ -46,6 +46,7 @@ import { stow } from './trips';
 import { fitOf, fitKgFor, measuresRefusal, shoeRow, sizeFor, type Measures } from './tailoring';
 import { bodyOf } from './body';
 import { CHANGE_MINUTES, changeInto, dryCleanDirty, garmentsOf, unwearable, wearTheDay, type Garment, toBasket, toBasketRefusal } from './wardrobe';
+import { overflow } from './rooms';
 
 /** A purchase of clothes: what, from whom, how, and what the goods cost; and whether it went back. */
 export interface ClothesPurchase {
@@ -265,7 +266,8 @@ export function checkoutClothes(sim: Simulation, person: Person, lines: readonly
     // Carried home where home is in this town; on them otherwise, and in the car or arms on a trip (`stow`).
     const home = homeKeyOf(person.home);
     const at: Place = home && person.home!.cityId === person.currentLocationId ? { kind: 'home', home, spot: 'wardrobe' } : { kind: 'person' };
-    for (const m of made) for (let i = 0; i < m.count; i += 1) stow(person, addItem(sim, person, { ...m.line, garment: { ...m.line.garment }, at, acquiredAt: sim.now }), sim.now);
+    // The wardrobe full, they go in the rooms (`systems/rooms.ts`, from 2026-10-03).
+    for (const m of made) for (let i = 0; i < m.count; i += 1) stow(person, overflow(sim, person, addItem(sim, person, { ...m.line, garment: { ...m.line.garment }, at, acquiredAt: sim.now })), sim.now);
   }
   (person.clothesBought ??= []).push(...made.map((m) => m.purchase));
   return made.map((m) => m.purchase);
@@ -461,7 +463,7 @@ export function collectCleaning(sim: Simulation, person: Person): number {
   if (ready.length === 0) throw new CommandError('The dry cleaner here has none of yours ready.');
   const home = homeKeyOf(person.home);
   const to: Place = home && person.home!.cityId === person.currentLocationId ? { kind: 'home', home, spot: 'wardrobe' } : { kind: 'person' };
-  for (const i of ready) i.at = to;
+  for (const i of ready) { i.at = to; overflow(sim, person, i); }
   return ready.length;
 }
 

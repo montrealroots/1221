@@ -34,6 +34,7 @@ import { BODY } from '../content/body';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPayFor, fedOn, mealOf, spend } from './household';
 import { SINK_FULL, cook, kitchenMeal, sinkFull } from './kitchen';
+import { bathroomWait } from './rooms';
 import { watchRefusal } from './homelife';
 import { takePortion } from './pantry';
 import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty } from './wardrobe';
@@ -600,6 +601,8 @@ export function minutesFor(sim: Simulation, action: LookAfter): number {
   if (action === 'charter') return Math.round((charterAt(sim.player.currentLocationId)?.hours ?? 3) * 60);
   if (action === 'tidy') { const place = placeOf(sim, sim.player); return place ? cleaningMinutes(place) : LOOKING_AFTER.tidy.minutes; }
   if (action === 'washup') return Math.max(1, Math.round(WASH_UP.minutesADay * (livingOf(sim.player).dishes ?? 1)));
+  // In a flat-share, waiting for the bathroom first (`bathroomWait` in `systems/rooms.ts`, from 2026-10-03).
+  if (action === 'wash' || action === 'bathe') return LOOKING_AFTER[action].minutes + bathroomWait(sim, sim.player, sim.now, LOOKING_AFTER[action].minutes);
   return LOOKING_AFTER[action].minutes;
 }
 
