@@ -1,0 +1,672 @@
+{
+  "meta": {
+    "topic": "Official on-airport car parks: drive-up tariffs, weekly rates, pre-book notes and the way to the terminal",
+    "date": "2026-10-02",
+    "method": "Each figure was read from the airport operator's own page or its own published tariff document (the Port Authority's Schedule of Charges PDFs, LAWA's flylax.com, the Connecticut Airport Authority's sPARK content API, Tweed-New Haven's ParkHVN, heathrow.com, gatwickairport.com, dublinairport.com, aicm.com.mx, yvr.ca PDFs). Where the airport's site refused automated reads (LAX, Toronto Pearson, YVR's HTML pages), the route actually used is given in the note and `confirmed` says whether the figure came from the airport's own words.",
+    "fields": {
+      "perHour": "Drive-up charge for the first hour, in the car park's currency, when the tariff has one clean hourly figure; null when the tariff runs in other steps (then the steps are in `note`).",
+      "perDay": "The drive-up charge for one 24-hour day, which for most car parks is the same as the daily maximum.",
+      "dailyMax": "The most charged for one 24-hour period at drive-up rates.",
+      "perWeek": "A published weekly rate or weekly maximum; null when the car park has none.",
+      "taxIncluded": "true or false only when the page says so; null when it does not say."
+    },
+    "prebookGeneral": "Every airport here says booking online ahead is cheaper than drive-up, but none publishes a fixed pre-book price that stands for all dates: the online prices are dynamic by date and demand. Where a page did publish a 'from' figure, it is in that car park's note."
+  },
+  "airports": [
+    {
+      "airport": "John F. Kennedy International Airport",
+      "iata": "JFK",
+      "cityIds": ["us-ny-newyork"],
+      "carParks": [
+        {
+          "name": "Yellow Lot (Terminal 5 daily lot, Central Terminal Area)",
+          "perHour": 12.0,
+          "perDay": 89.0,
+          "dailyMax": 89.0,
+          "perWeek": null,
+          "toTerminal": "Next to its terminal's AirTrain station; the airport says each terminal station is next to its short-term lot.",
+          "currency": "USD",
+          "taxIncluded": null,
+          "url": "https://www.panynj.gov/content/dam/airports/pdfs/Schedule%20of%20Charges%20-%20JFK-May_26.pdf",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Port Authority Schedule of Charges, public vehicular parking, effective May 28, 2026: $6.00 per half hour; $12.00 each additional half hour or fraction over 3 hours' stay; $89.00 daily maximum. perHour is the first-3-hours rate ($6 x 2). The schedule does not state tax. Restricted-mobility drivers pay the lowest drive-up rate; jfkairport.com states a $35 24-hour maximum for them. Booking at least 3 hours ahead is advertised as cheaper; no fixed pre-book price is published."
+        },
+        {
+          "name": "Red Lot (Terminal 8 daily lot, Central Terminal Area)",
+          "perHour": 8.0,
+          "perDay": 74.0,
+          "dailyMax": 74.0,
+          "perWeek": null,
+          "toTerminal": "Next to its terminal's AirTrain station.",
+          "currency": "USD",
+          "taxIncluded": null,
+          "url": "https://www.panynj.gov/content/dam/airports/pdfs/Schedule%20of%20Charges%20-%20JFK-May_26.pdf",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Effective May 28, 2026: $4.00 per half hour; $8.00 each additional half hour over 3 hours; $74.00 daily maximum. The terminal assignment (T8) comes from jfkairport.com's lot names; the schedule itself says only 'Red'."
+        },
+        {
+          "name": "Blue Lot (Terminal 4 daily lot, Central Terminal Area)",
+          "perHour": 12.0,
+          "perDay": 94.0,
+          "dailyMax": 94.0,
+          "perWeek": null,
+          "toTerminal": "Next to its terminal's AirTrain station.",
+          "currency": "USD",
+          "taxIncluded": null,
+          "url": "https://www.panynj.gov/content/dam/airports/pdfs/Schedule%20of%20Charges%20-%20JFK-May_26.pdf",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Effective May 28, 2026: $6.00 per half hour; $12.00 each additional half hour over 3 hours; $94.00 daily maximum. In the September 16, 2025 schedule the maxima were Yellow $75, Red $70, Blue $80."
+        },
+        {
+          "name": "Long-Term Parking (Lot 9)",
+          "perHour": null,
+          "perDay": 55.0,
+          "dailyMax": 55.0,
+          "perWeek": null,
+          "toTerminal": "AirTrain from Lefferts Boulevard Station (jfkairport.com: 'Long-term parking is near Lefferts Boulevard Station').",
+          "currency": "USD",
+          "taxIncluded": null,
+          "url": "https://www.panynj.gov/content/dam/airports/pdfs/Schedule%20of%20Charges%20-%20JFK-May_26.pdf",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Effective May 28, 2026: up to the first 24 hours or part $55.00; each additional 12-hour period or part $27.50 (so $55 per further full day). No hourly step below 24 hours. Was $49.00 / $24.50 in the September 16, 2025 schedule. A seven-day stay at drive-up rates comes to $55 + 12 x $27.50 = $385, worked from the schedule, not a published weekly rate."
+        }
+      ]
+    },
+    {
+      "airport": "LaGuardia Airport",
+      "iata": "LGA",
+      "cityIds": ["us-ny-newyork"],
+      "carParks": [
+        {
+          "name": "Terminal A Parking",
+          "perHour": 10.0,
+          "perDay": 75.0,
+          "dailyMax": 75.0,
+          "perWeek": null,
+          "toTerminal": "Terminal lot at Terminal A.",
+          "currency": "USD",
+          "taxIncluded": null,
+          "url": "https://www.panynj.gov/content/dam/airports/pdfs/Schedule%20of%20Charges%20-%20LGA-May_26.pdf",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Schedule of Charges (May 2026 issue; parking section headed 'Effective July 8, 2024'): $5.00 per half hour or fraction; $10.00 per half hour over three hours' stay; $75.00 24-hour maximum. laguardiaairport.com: E-ZPass Plus accepted except at the Terminal A lot; restricted-mobility 24-hour maximum $35; booking at least 3 hours ahead is advertised as cheaper, no fixed pre-book price published."
+        },
+        {
+          "name": "Terminal B Parking",
+          "perHour": 10.0,
+          "perDay": 80.0,
+          "dailyMax": 80.0,
+          "perWeek": null,
+          "toTerminal": "Terminal garage at Terminal B.",
+          "currency": "USD",
+          "taxIncluded": null,
+          "url": "https://www.panynj.gov/content/dam/airports/pdfs/Schedule%20of%20Charges%20-%20LGA-May_26.pdf",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "$5.00 per half hour; $10.00 per half hour over three hours; $80.00 24-hour maximum."
+        },
+        {
+          "name": "Terminal C Parking",
+          "perHour": 12.0,
+          "perDay": 89.0,
+          "dailyMax": 89.0,
+          "perWeek": null,
+          "toTerminal": "Terminal garage at Terminal C.",
+          "currency": "USD",
+          "taxIncluded": null,
+          "url": "https://www.panynj.gov/content/dam/airports/pdfs/Schedule%20of%20Charges%20-%20LGA-May_26.pdf",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "$6.00 per half hour; $12.00 per half hour over three hours; $89.00 24-hour maximum. Premium parking exists by reservation only (no cash), price not published as a fixed figure."
+        }
+      ]
+    },
+    {
+      "airport": "Los Angeles International Airport",
+      "iata": "LAX",
+      "cityIds": ["us-ca-losangeles"],
+      "carParks": [
+        {
+          "name": "Central Terminal Area structures P1, P2A, P2B, P5, P6, P7 (General Parking)",
+          "perHour": 9.0,
+          "perDay": 60.0,
+          "dailyMax": 60.0,
+          "perWeek": null,
+          "toTerminal": "Across the road from the terminals in the horseshoe; walk.",
+          "currency": "USD",
+          "taxIncluded": true,
+          "url": "https://www.flylax.com/parking-at-lax",
+          "date": "2026-10-02",
+          "confirmed": false,
+          "note": "flylax.com refuses automated reads (HTTP 403) on 2026-10-02. Figures read from the Internet Archive's copy of LAX's own page captured 2026-01-26: 10 minutes free; $9 first hour or fraction; $7 each 30 minutes after; $60 maximum per 24 hours. 'Fees include 10% Los Angeles City Parking Occupancy Tax.' Premium Parking (P1, P3, P7 arrivals level): $11 first hour, $9 each 30 min, $70 max. Valet (P1, P3, P4, P7): $75 per 24 hours, 24-hour minimum. Reserved parking is advertised as 'up to 60% off drive up rates'; minimum reservation rate is 24 hours."
+        },
+        {
+          "name": "Central Terminal Area structures P3 and P4 (General Parking)",
+          "perHour": 11.0,
+          "perDay": 60.0,
+          "dailyMax": 60.0,
+          "perWeek": null,
+          "toTerminal": "Across the road from the terminals; walk.",
+          "currency": "USD",
+          "taxIncluded": true,
+          "url": "https://www.flylax.com/parking-at-lax",
+          "date": "2026-10-02",
+          "confirmed": false,
+          "note": "Same source as above (archived 2026-01-26): $11 first hour; $9 each 30 minutes after; $60 maximum per 24 hours."
+        },
+        {
+          "name": "LAX Economy Parking (Intermodal Transportation Facility West, 6100 W. 94th Street)",
+          "perHour": 8.0,
+          "perDay": 35.0,
+          "dailyMax": 35.0,
+          "perWeek": null,
+          "toTerminal": "Complimentary shuttle to and from the CTA 24 hours a day; pick-up on Level 1 of the garage and at the pink LAX Shuttle zones on the CTA Arrivals level.",
+          "currency": "USD",
+          "taxIncluded": true,
+          "url": "https://www.flylax.com/parking-at-lax",
+          "date": "2026-10-02",
+          "confirmed": false,
+          "note": "Archived copy of LAX's own page, 2026-01-26: $8 first hour or fraction; $7 each 30 minutes after; $35 maximum per 24 hours. Pre-book available, up to 60% off drive-up per the same page."
+        },
+        {
+          "name": "LAX Budget Parking (former Lot E, 5455 West 111th Street)",
+          "perHour": 5.0,
+          "perDay": 20.0,
+          "dailyMax": 20.0,
+          "perWeek": null,
+          "toTerminal": "Complimentary shuttle to and from the CTA 24 hours a day every 20 to 25 minutes; pink LAX Shuttle zones on the CTA Arrivals level.",
+          "currency": "USD",
+          "taxIncluded": true,
+          "url": "https://www.flylax.com/parking-at-lax",
+          "date": "2026-10-02",
+          "confirmed": false,
+          "note": "What was 'Economy Parking Lot E' is now signed LAX Budget Parking, 2,000+ uncovered stalls. Archived copy of LAX's own page, 2026-01-26: $5 every hour or fraction; $20 maximum per 24 hours. LAWA's 2023 board report (lawa.granicus.com, meta_id 62805) set the approved drive-up range at $17-$25 daily with online discounts down to 60% off."
+        }
+      ]
+    },
+    {
+      "airport": "Tweed-New Haven Airport",
+      "iata": "HVN",
+      "cityIds": ["us-ct-newhaven"],
+      "carParks": [
+        {
+          "name": "Lot A",
+          "perHour": 5.0,
+          "perDay": 39.0,
+          "dailyMax": 39.0,
+          "perWeek": null,
+          "toTerminal": "1 minute walk to front door.",
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://parkhvn.com/",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Drive-up $5/hour, $39/day; reserve from $35/day. '*Rates do not include applicable taxes or reservation fees.' Reservations often sell out before weekends and holidays."
+        },
+        {
+          "name": "Lot B",
+          "perHour": 4.0,
+          "perDay": 29.0,
+          "dailyMax": 29.0,
+          "perWeek": null,
+          "toTerminal": "3 minute walk to front door.",
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://parkhvn.com/",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Drive-up $4/hour, $29/day; reserve from $25/day."
+        },
+        {
+          "name": "Lot C",
+          "perHour": 3.0,
+          "perDay": 25.0,
+          "dailyMax": 25.0,
+          "perWeek": null,
+          "toTerminal": "8 minute walk to the terminal; free ADA shuttle.",
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://parkhvn.com/",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Drive-up $3/hour, $25/day; reserve from $20/day."
+        },
+        {
+          "name": "Park & Ride, Long Wharf Garage (585 Long Wharf Drive)",
+          "perHour": null,
+          "perDay": null,
+          "dailyMax": null,
+          "perWeek": null,
+          "toTerminal": "Off-site; free shuttle departing at :00 and :30.",
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://parkhvn.com/",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Reservations required, from $17/day; no drive-up rate. Not available for Tuesday and Wednesday entries. 6'7\" maximum vehicle height."
+        }
+      ]
+    },
+    {
+      "airport": "Bradley International Airport",
+      "iata": "BDL",
+      "cityIds": ["us-ct-newhaven"],
+      "carParks": [
+        {
+          "name": "Garage",
+          "perHour": 6.0,
+          "perDay": 30.0,
+          "dailyMax": 30.0,
+          "perWeek": 135.0,
+          "toTerminal": "Closest parking to all airlines in Terminal A; walk.",
+          "currency": "USD",
+          "taxIncluded": true,
+          "url": "https://www.parkbradleyairport.com/garage",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "parkbradleyairport.com is the Connecticut Airport Authority's official parking site (operated by SP Plus); the page renders client-side, so the figures were read from its content API (bdl.content.kmp.co.uk/api/headlessapi/getpage?url=/garage/&iataCode=bdl). 0-30 min $4; 30-60 min $6; 1-1.5 h $8; then +$2 per half hour to $18 at 3.5-4 h; daily rate (4-24 h) $30; weekly rate (5-7 days) $135. 'All Applicable Taxes Included.' No reservation needed."
+        },
+        {
+          "name": "Express Lot 1",
+          "perHour": 5.0,
+          "perDay": 12.0,
+          "dailyMax": 12.0,
+          "perWeek": 72.0,
+          "toTerminal": "Free shuttle to Terminal A on a continuous loop, 24/7; also a short walk to Terminal A and Terminal B (International Arrivals Building).",
+          "currency": "USD",
+          "taxIncluded": true,
+          "url": "https://www.parkbradleyairport.com/lot-1",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "0-1 h $5; 1-2 h $6; 2-3 h $7; 3-4 h $8; 4-5 h $9; daily (5-24 h) $12; weekly (6-7 days) $72. Taxes included."
+        },
+        {
+          "name": "Park & Walk Lot 2",
+          "perHour": 5.0,
+          "perDay": 10.0,
+          "dailyMax": 10.0,
+          "perWeek": 60.0,
+          "toTerminal": "Short walk to Terminal A and the International Arrivals Building; no shuttle.",
+          "currency": "USD",
+          "taxIncluded": true,
+          "url": "https://www.parkbradleyairport.com/lot-2",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "0-1 h $5; 1-2 h $6; 2-3 h $7; 3-4 h $8; daily (4-24 h) $10; weekly (6-7 days) $60."
+        },
+        {
+          "name": "Economy Lot 3",
+          "perHour": 5.0,
+          "perDay": 8.0,
+          "dailyMax": 8.0,
+          "perWeek": 48.0,
+          "toTerminal": "Free shuttle to Terminal A on a continuous loop, 24/7; trunk-to-trunk luggage help.",
+          "currency": "USD",
+          "taxIncluded": true,
+          "url": "https://www.parkbradleyairport.com/lot-3",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "0-1 h $5; 1-2 h $6; 2-3 h $7; daily (4-24 h) $8; weekly (6-7 days) $48."
+        },
+        {
+          "name": "Economy Lot 4",
+          "perHour": 5.0,
+          "perDay": 7.0,
+          "dailyMax": 7.0,
+          "perWeek": 42.0,
+          "toTerminal": "Free shuttle to Terminal A on a continuous loop, 24/7.",
+          "currency": "USD",
+          "taxIncluded": true,
+          "url": "https://www.parkbradleyairport.com/lot-4",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "0-1 h $5; 1-2 h $6; daily (2-24 h) $7; weekly (6-7 days) $42."
+        },
+        {
+          "name": "Lot 5B (overflow)",
+          "perHour": null,
+          "perDay": null,
+          "dailyMax": null,
+          "perWeek": 35.0,
+          "toTerminal": "Just north of the Cell Phone Lot on Light Lane, 'only minutes from the Terminal'; the page names no shuttle.",
+          "currency": "USD",
+          "taxIncluded": true,
+          "url": "https://www.parkbradleyairport.com/lot-5b",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Overflow lot open only when needed; pay cashier on entry, card only. The page's rate table shows only 'WEEKLY RATE (6 - 7 DAYS) $35.00'; no daily or hourly line is published."
+        }
+      ]
+    },
+    {
+      "airport": "London Heathrow Airport",
+      "iata": "LHR",
+      "cityIds": ["uk-eng-london"],
+      "carParks": [
+        {
+          "name": "Short Stay (Terminals 2, 3, 4 and 5)",
+          "perHour": null,
+          "perDay": 98.0,
+          "dailyMax": 98.0,
+          "perWeek": null,
+          "toTerminal": "2-minute walk; adjacent to each terminal by covered walkways.",
+          "currency": "GBP",
+          "taxIncluded": null,
+          "url": "https://www.heathrow.com/transport-and-directions/heathrow-parking/heathrow-short-stay-parking",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "On the day tariff, effective 6 January 2026: 0-29 min £8.00; 30-44 min £12.50; 45-59 min £15.50; 1-2 h £20.00; 2-3 h £24.00; 3-4 h £28.00; 4-5 h £35.00; 5-6 h £44.00; 6-9 h £63.00; 9-12 h £78.00; 12-24 h £98.00; each additional 24 h £98.00. Overheight / Fast Track (T2 ground floor, T5): 0-2 h £21.00, 2-5 h £36.80, then £81.90 and £107.80 bands. Online pre-book prices are lower and vary by date; none fixed is published. The page does not mention VAT."
+        },
+        {
+          "name": "Long Stay (Heathrow Park & Ride), Terminals 2/3, 4 and 5",
+          "perHour": null,
+          "perDay": 46.8,
+          "dailyMax": 46.8,
+          "perWeek": null,
+          "toTerminal": "Free shuttle bus every 10-15 minutes to the terminal forecourt; transfer time varies with terminal and traffic.",
+          "currency": "GBP",
+          "taxIncluded": null,
+          "url": "https://www.heathrow.com/transport-and-directions/heathrow-parking/heathrow-long-stay-parking",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "0-29 min free; 30 min-1 h 59 min £9.40; first day £46.80; additional 24-hour periods £37.40. A week at drive-up rates is £46.80 + 6 x £37.40 = £271.20, worked from the tariff, not a published weekly rate. 'Book in advance for our cheapest prices.'"
+        },
+        {
+          "name": "Business Parking (renamed Heathrow Priority Park & Ride from 29 September 2025), Terminals 2 & 3 and Terminal 5",
+          "perHour": null,
+          "perDay": 47.9,
+          "dailyMax": null,
+          "perWeek": null,
+          "toTerminal": "On-demand business-only shuttles, waits of at most 10 minutes; about 5 minutes from Terminal 5.",
+          "currency": "GBP",
+          "taxIncluded": null,
+          "url": "https://www.heathrow.com/transport-and-directions/heathrow-parking/heathrow-business-parking",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "The page's 'How much is Business Parking?' table gives one line: '1 Day (Monday-Sunday) £47.90'. It doesn't say whether that is the drive-up or the pre-book price, and gives no hourly bands; booking is through the online widget and cancellable up to 2 hours before."
+        }
+      ]
+    },
+    {
+      "airport": "London Gatwick Airport",
+      "iata": "LGW",
+      "cityIds": ["uk-eng-london"],
+      "carParks": [
+        {
+          "name": "Short Stay (North and South Terminal)",
+          "perHour": 14.0,
+          "perDay": 70.0,
+          "dailyMax": 70.0,
+          "perWeek": null,
+          "toTerminal": "About a four-minute covered walk.",
+          "currency": "GBP",
+          "taxIncluded": null,
+          "url": "https://www.gatwickairport.com/parking/roll-up-car-park-prices.html",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Roll-up prices, same at both terminals: up to 30 min £8.00; 31-60 min £14.00; 1-2 h £18.00; 2-3 h £21.50; 3-4 h £26.00; 4-5 h £31.50; 5-6 h £40.50; 6-12 h £60.00; 12-24 h £70.00; each subsequent day £70.00. 'It's cheaper to book Short Stay Parking in advance.'"
+        },
+        {
+          "name": "Premium Short Stay (North and South Terminal)",
+          "perHour": 19.0,
+          "perDay": 87.5,
+          "dailyMax": 87.5,
+          "perWeek": null,
+          "toTerminal": "Dedicated area in the Short Stay car parks, closest to the terminal with same-level access.",
+          "currency": "GBP",
+          "taxIncluded": null,
+          "url": "https://www.gatwickairport.com/parking/roll-up-car-park-prices.html",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Up to 30 min £12.00; 31-60 min £19.00; 1-2 h £22.00; 2-3 h £26.00; 3-4 h £33.00; 4-5 h £41.00; 5-6 h £56.00; 6-12 h £74.50; 12-24 h £87.50; each subsequent day £87.50."
+        },
+        {
+          "name": "Long Stay (North and South Terminal)",
+          "perHour": null,
+          "perDay": 38.0,
+          "dailyMax": 38.0,
+          "perWeek": null,
+          "toTerminal": "Free shuttle bus every 10 to 12 minutes all year; about 10 to 12 minutes to the terminal.",
+          "currency": "GBP",
+          "taxIncluded": null,
+          "url": "https://www.gatwickairport.com/parking/roll-up-car-park-prices.html",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "0-2 hours free; 2-24 hours £38.00; each subsequent day £32.00. A week at roll-up rates is £38 + 6 x £32 = £230, worked from the tariff. Mid Stay and Valet are pre-book only and have no roll-up price."
+        }
+      ]
+    },
+    {
+      "airport": "Dublin Airport",
+      "iata": "DUB",
+      "cityIds": ["ie-lei-dublin"],
+      "carParks": [
+        {
+          "name": "Short Term (Terminal 1 Block A, Terminal 1 multi-storey, Terminal 2 multi-storey)",
+          "perHour": 4.0,
+          "perDay": 50.0,
+          "dailyMax": 50.0,
+          "perWeek": null,
+          "toTerminal": "T1 Block A: about two minutes' walk to both terminals. T2 multi-storey: 2-4 minute sheltered walk to T2. T1 multi-storey (1,500 spaces): 5 minutes to T1, 6 to T2.",
+          "currency": "EUR",
+          "taxIncluded": null,
+          "url": "https://www.dublinairport.com/car-parks/car-park-booking-faqs",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "'Without pre-booking, the flat rates are': €4.00 for the first hour, €6.00 for each additional hour (or part thereof), €50.00 maximum daily rate. 'Pre-booking online is typically cheaper, and our online rates vary depending on dates, times, and how far out you're booking.' perHour is the first hour; later hours are €6.00. Terminal 2 Surface (270 spaces, 5-minute walk) is also listed among short-term options."
+        },
+        {
+          "name": "Express Red Long Term",
+          "perHour": null,
+          "perDay": 25.0,
+          "dailyMax": 25.0,
+          "perWeek": null,
+          "toTerminal": "Free shuttle about 5 minutes to T1 and T2, every 10 minutes, 24/7.",
+          "currency": "EUR",
+          "taxIncluded": null,
+          "url": "https://www.dublinairport.com/car-parks/car-park-booking-faqs",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Drive-up flat rate €25.00 per day. 8,000 spaces; the closest long-term car park."
+        },
+        {
+          "name": "Holiday Blue Long Term",
+          "perHour": null,
+          "perDay": 20.0,
+          "dailyMax": 20.0,
+          "perWeek": null,
+          "toTerminal": "Free shuttle around 15 minutes to T1 and T2, every 15 minutes.",
+          "currency": "EUR",
+          "taxIncluded": null,
+          "url": "https://www.dublinairport.com/car-parks/car-park-booking-faqs",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Drive-up flat rate €20.00 per day. The brief's 'Express Blue' is Holiday Blue on daa's site."
+        }
+      ]
+    },
+    {
+      "airport": "Toronto Pearson International Airport",
+      "iata": "YYZ",
+      "cityIds": ["ca-on-toronto"],
+      "carParks": [
+        {
+          "name": "Daily Park, Terminal 1",
+          "perHour": null,
+          "perDay": 42.0,
+          "dailyMax": 42.0,
+          "perWeek": 235.0,
+          "toTerminal": "Terminal garage at Terminal 1.",
+          "currency": "CAD",
+          "taxIncluded": false,
+          "url": "https://www.torontopearson.com/en/transportation-and-parking/parking/daily-park",
+          "date": "2026-10-02",
+          "confirmed": false,
+          "note": "torontopearson.com sits behind ShieldSquare bot protection and could not be read directly; the Internet Archive was offline. Figures are from the search engine's index of this exact Pearson page: entry 12:00 pm-7:59 pm $8 per 20 minutes; entry 8:00 pm-11:59 am $7 per 20 minutes; daily maximum $42; weekly maximum $235 (first 7 days only); the indexed page says rates exclude HST. Re-read before relying on it."
+        },
+        {
+          "name": "Daily Park, Terminal 3",
+          "perHour": null,
+          "perDay": 42.0,
+          "dailyMax": 42.0,
+          "perWeek": 235.0,
+          "toTerminal": "Terminal garage at Terminal 3.",
+          "currency": "CAD",
+          "taxIncluded": false,
+          "url": "https://www.torontopearson.com/en/transportation-and-parking/parking/daily-park",
+          "date": "2026-10-02",
+          "confirmed": false,
+          "note": "Same route as Terminal 1: entry 12:00 pm-7:59 pm $7 per 20 minutes; entry 8:00 pm-11:59 am $6 per 20 minutes; daily maximum $42; weekly maximum $235."
+        },
+        {
+          "name": "Value Park Garage",
+          "perHour": null,
+          "perDay": 32.0,
+          "dailyMax": 32.0,
+          "perWeek": 160.0,
+          "toTerminal": "Terminal Link train (free) to Terminals 1 and 3.",
+          "currency": "CAD",
+          "taxIncluded": null,
+          "url": "https://www.torontopearson.com/en/transportation-and-parking/parking/value-park-garage",
+          "date": "2026-10-02",
+          "confirmed": false,
+          "note": "From the search index of Pearson's own page: daily rate $32; weekly maximum $160 (first 7 days only), additional days $32. Not read directly (bot protection)."
+        },
+        {
+          "name": "Value Park Lot (6135 Viscount Road)",
+          "perHour": null,
+          "perDay": null,
+          "dailyMax": null,
+          "perWeek": null,
+          "toTerminal": "Terminal Link train, 9-15 minutes to Terminals 1 and 3, every 4 minutes.",
+          "currency": "CAD",
+          "taxIncluded": null,
+          "url": "https://www.torontopearson.com/en/transportation-and-parking/parking/value-park-lot",
+          "date": "2026-10-02",
+          "confirmed": false,
+          "note": "Reservations only since 1 July 2024 (Pearson story 'Value Park Lot: Reservations Only'), so there is no drive-up rate. The reservation price could not be read from Pearson; third-party sites give $24-$30 a day, which is not recorded here as a figure."
+        }
+      ]
+    },
+    {
+      "airport": "Vancouver International Airport",
+      "iata": "YVR",
+      "cityIds": ["ca-bc-vancouver"],
+      "carParks": [
+        {
+          "name": "Parkade (Domestic and International Terminals)",
+          "perHour": 29.5,
+          "perDay": 67.75,
+          "dailyMax": 67.75,
+          "perWeek": null,
+          "toTerminal": "1-5 minute walk; steps from the terminal.",
+          "currency": "CAD",
+          "taxIncluded": true,
+          "url": "https://www.yvr.ca/-/media/yvr/schedules-of-fees-and-charges-2025/updated-2025---august-1---schedule-fees-and-charges/updated-schedule-of-fees-and-charges---2025---updated-july.pdf",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "YVR Schedule of Fees and Charges, effective August 1, 2025 (the newest YVR has published that was found): first 30 minutes complimentary; each additional 30 minutes or portion $14.75; daily maximum (24-hr period) $67.75. 'Public Parking Fees stated above include applicable 29% Translink parking sales tax.' perHour is two half hours after the free first 30 minutes. YVR's 2025 parking flowchart PDF repeats these figures and says no weekly rate. yvr.ca HTML pages are behind Cloudflare and could not be read."
+        },
+        {
+          "name": "Value Long Term",
+          "perHour": 4.5,
+          "perDay": 29.5,
+          "dailyMax": 29.5,
+          "perWeek": 159.75,
+          "toTerminal": "Canada Line, 4 minutes (free on Sea Island), departing every 6-20 minutes.",
+          "currency": "CAD",
+          "taxIncluded": true,
+          "url": "https://www.yvr.ca/-/media/files/flowcharts-parking/new-flowcharts/2025_parkingflowchart_en.pdf",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Schedule of Fees and Charges (Aug 1, 2025): $4.50 per hour; $29.50 daily maximum; $159.75 weekly maximum. Flowchart: 'Online reservation rates apply', 'Book ahead and save'. This is YVR's 'economy' option; YVR doesn't use the name Economy."
+        },
+        {
+          "name": "JetSet YVR Parking",
+          "perHour": null,
+          "perDay": 30.75,
+          "dailyMax": null,
+          "perWeek": 146.75,
+          "toTerminal": "Free shuttle, 5-7 minutes, departs every 20 minutes.",
+          "currency": "CAD",
+          "taxIncluded": null,
+          "url": "https://www.yvr.ca/-/media/files/flowcharts-parking/new-flowcharts/2025_parkingflowchart_en.pdf",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Reservations-only self-park lot; flowchart gives daily $30.75 and weekly $146.75 with 'Online reservation rates apply'. No drive-up rate, since it takes no drive-ups."
+        }
+      ]
+    },
+    {
+      "airport": "Aeropuerto Internacional de la Ciudad de México (AICM)",
+      "iata": "MEX",
+      "cityIds": ["mx-cmx-mexicocity"],
+      "carParks": [
+        {
+          "name": "Estacionamiento nacional Terminal 1",
+          "perHour": 60.0,
+          "perDay": 391.0,
+          "dailyMax": 391.0,
+          "perWeek": null,
+          "toTerminal": "On Av. Capitán Carlos León opposite doors 1 and 2 of the terminal building, national arrivals; walk.",
+          "currency": "MXN",
+          "taxIncluded": true,
+          "url": "https://www.aicm.com.mx/pasajeros/servicios/prestadores-de-servicios/estacionamientos",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Tarifa (IVA incluido): 01-30 min $30.00; 31-45 min $45.00; 46-60 min $60.00 per full hour; stay of 7 to 24 hours $391.00 maximum (new cycle from the first minute of the next day after the entry time); valet $61.00 plus time; lost ticket $442.00 plus time. Paid tickets allow 15 minutes to leave. No online pre-book is published."
+        },
+        {
+          "name": "Estacionamiento internacional Terminal 1",
+          "perHour": 60.0,
+          "perDay": 391.0,
+          "dailyMax": 391.0,
+          "perWeek": null,
+          "toTerminal": "On Av. Capitán Carlos León opposite the international area of the terminal, beside the intercity bus station; walk.",
+          "currency": "MXN",
+          "taxIncluded": true,
+          "url": "https://www.aicm.com.mx/pasajeros/servicios/prestadores-de-servicios/estacionamientos",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Same tariff as the national car park, IVA included; no valet line listed."
+        },
+        {
+          "name": "Estacionamiento Terminal 2",
+          "perHour": 60.0,
+          "perDay": 391.0,
+          "dailyMax": 391.0,
+          "perWeek": null,
+          "toTerminal": "Inside the Terminal 2 premises; walk.",
+          "currency": "MXN",
+          "taxIncluded": true,
+          "url": "https://www.aicm.com.mx/pasajeros/servicios/prestadores-de-servicios/estacionamientos",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Same tariff, IVA included; lost ticket $442.00 plus time."
+        }
+      ]
+    }
+  ],
+  "notes": {
+    "notFound": [
+      "JFK and LGA: no fixed pre-book price; the Port Authority only says booking at least 3 hours ahead saves money (dynamic pricing at parking.jfkairport.com / LGA reservations).",
+      "JFK and LGA: no weekly rate and no statement of tax in the Schedule of Charges.",
+      "Toronto Pearson Value Park Lot: reservation-only price not readable from Pearson's site.",
+      "Heathrow Business Parking: no hourly drive-up bands published; one '1 Day £47.90' line only.",
+      "Bradley Lot 5B: only a weekly rate ($35) is published; no daily or hourly line.",
+      "Heathrow, Gatwick and Dublin pages do not state whether VAT is included (UK and Irish consumer prices are normally VAT-inclusive by law, but the pages don't say it, so taxIncluded is null)."
+    ],
+    "worthChecking": [
+      "LAX: rates are from LAX's own page as archived on 2026-01-26 because flylax.com returns 403 to automated reads. Re-read https://www.flylax.com/parking-at-lax in a browser to confirm nothing changed since January.",
+      "Toronto Pearson: every figure came from the search index of torontopearson.com pages (bot-protected), so all are confirmed:false. A browser read of /daily-park, /value-park-garage and /value-park-lot would settle them.",
+      "YVR: newest Schedule of Fees and Charges found is effective August 1, 2025; a 2026 issue may exist.",
+      "LGA: the May 2026 Schedule of Charges heads the parking section 'Effective July 8, 2024'; the amounts may be older than JFK's May 28, 2026 rise.",
+      "JFK: the Port Authority raised the daily-lot maxima and Lot 9 on May 28, 2026 (Yellow $75 to $89, Red $70 to $74, Blue $80 to $94, Lot 9 $49 to $55 first 24 h).",
+      "Tweed-New Haven: 'Rates do not include applicable taxes or reservation fees'; the tax rate itself isn't given on the page."
+    ]
+  }
+}

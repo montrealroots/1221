@@ -945,13 +945,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   if (event.flu) h.fluUntil = at + CARE.fluDays * MS_DAY;
   // A flu that isn't seen costs nothing.
   if (event.flu && event.care === 'visit') return undefined;
-  let amount = shareOf(person, event.care, at, cur);
-  // Had in another country: travel insurance's, or a visitor's price in America (`systems/travelinsurance.ts`, from 2026-10-01).
-  if (MEDICAL.includes(event.care)) {
-    const care = event.care as 'visit' | 'urgent' | 'emergency' | 'stay';
-    const usUninsured = Math.round(usd(grown(CARE.price[care], care as 'visit', at), cur) * CARE.uninsuredMarkup);
-    amount = careAway(sim, person, care, amount, usUninsured, CARE.stayDays, canadianShareOf(person, care, at) !== undefined, at);
-  }
+  const amount = careQuote(sim, person, event.care, at);
   const year = zonedParts(at, HOME).year;
   if (event.care === 'glasses') h.lastGlasses = year;
   if (planOf(person, at) && (MEDICAL.includes(event.care) || event.care.startsWith('rx'))) h.spent[year] = (h.spent[year] ?? 0) + amount;
@@ -1025,6 +1019,21 @@ export function extraSupplyRefusal(person: Person, days: number): string | undef
   const most = longestFillOf(person);
   if (!Number.isInteger(days) || days <= 0 || days > most) return `At most ${most} days at once here.`;
   return undefined;
+}
+
+/**
+ * What care would cost them where they are now, before it's had (from
+ * 2026-10-02): their share at home, by their plan or the public system; or,
+ * away in another country, travel insurance's or the place's price for a
+ * visitor (`careAway`). The bill for care had is this same figure.
+ */
+export function careQuote(sim: Simulation, person: Person, care: Care, at: Instant = sim.now): Money {
+  const cur = saveCurrency(sim.universe);
+  const amount = shareOf(person, care, at, cur);
+  if (!MEDICAL.includes(care)) return amount;
+  const c = care as 'visit' | 'urgent' | 'emergency' | 'stay';
+  const usUninsured = Math.round(usd(grown(CARE.price[c], c as 'visit', at), cur) * CARE.uninsuredMarkup);
+  return careAway(sim, person, c, amount, usUninsured, CARE.stayDays, canadianShareOf(person, c, at) !== undefined, at);
 }
 
 export function registerHealth(sim: Simulation): void {

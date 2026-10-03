@@ -19,7 +19,7 @@ import { CITIES } from '@/engine/content/geography';
 import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHRONIC, COBRA, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { UNION_HEALTH } from '@/engine/content/career';
 import { deadline, owedOn, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
-import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic } from '@/engine/systems/health';
+import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
 import { PERMITS, permitRefusal, usesWheelchair } from '@/engine/systems/access';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
@@ -540,6 +540,7 @@ function GettingAbout() {
 
 function YourDoctor() {
   const { sim, run, toast } = useGame();
+  const cur = saveCurrency(sim.universe);
   const person = useWorld((s) => s.player);
   const choose = useFeature('health.choose_clinic');
   const pharmacy = useFeature('health.choose_pharmacy');
@@ -574,6 +575,7 @@ function YourDoctor() {
           )}
         </div>
         <div className="small">{[doctor && `A doctor’s visit: ${doctor.name}`, urgent && `Urgent care: ${urgent.name}`, emergency && `An emergency: ${emergency.name}`].filter(Boolean).join(' · ')}</div>
+        <div className="small">{`What it would cost you here now: a doctor’s visit ${formatMoney(careQuote(sim, person, 'visit'), cur)}, urgent care ${formatMoney(careQuote(sim, person, 'urgent'), cur)}, an emergency ${formatMoney(careQuote(sim, person, 'emergency'), cur)}`}</div>
         {(person.health?.appointments ?? []).map((ap) => (
           <div key={ap.id} className="row gap-2" style={{ alignItems: 'baseline' }}>
             <span className="small">{`${ap.what}: an appointment ${formatDate(ap.at, sim.zone)}${ap.clinicId ? `, ${clinicById(ap.clinicId)?.name ?? ''}` : ''}`}</span>
