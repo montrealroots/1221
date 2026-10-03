@@ -46,6 +46,9 @@ export const CARE_BY_KIND: Readonly<Record<string, CareRule>> = {
   coat: { wearsBetween: 45, lifetimeWashes: 23.5, source: 'ACI and Which?: once or twice a season' },
   pajamas: { wearsBetween: 3.5, lifetimeWashes: 17.3, source: 'ACI: after 3 or 4 wears' },
   active: { wearsBetween: 1, lifetimeWashes: 17.3, source: 'ACI: leggings after every wear; Which?: workout gear 1 wear' },
+  // From 2026-10-03: a swimsuit as the rest of what's worn to exercise, and a slip as underwear.
+  swimsuit: { wearsBetween: 1, lifetimeWashes: 17.3, source: 'As activewear: Which?: workout gear 1 wear' },
+  slip: { wearsBetween: 1, lifetimeWashes: 17.3, source: 'As underwear: ACI: after each wearing' },
   shoes: { wearsBetween: Infinity, lifetimeWashes: null, source: 'Not washed' },
   accessory: { wearsBetween: Infinity, lifetimeWashes: null, source: 'Not washed' },
   // From 2026-10-02: a bath towel is used after a shower and washed with the clothes. How many washes one lasts isn't published.

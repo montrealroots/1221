@@ -108,10 +108,24 @@ export function productPrice(sim: Simulation, cityId: string, p: ClothingProduct
 }
 
 /** A kind of garment as a list names it. */
+/** The kinds the trade names apart (from 2026-10-03). */
+export const SUBTYPE_LABEL: Readonly<Record<string, string>> = { swimwear: 'Swimwear', thermals: 'Thermals', shapewear: 'Shapewear', hosiery: 'Hosiery', slips: 'Slips', cultural: 'Cultural Clothing' };
+
+/**
+ * The same product's listings at the market's other sellers, cheapest first
+ * (the master plan's §22b, from 2026-10-03): each its own retailer's price,
+ * delivery and returns.
+ */
+export function otherSellers(sim: Simulation, cityId: string, p: ClothingProduct): { product: ClothingProduct; price: Money }[] {
+  if (!p.sameAs) return [];
+  return CLOTHING_PRODUCTS.filter((x) => x.sameAs === p.sameAs && x.market === p.market && x.id !== p.id)
+    .map((product) => ({ product, price: productPrice(sim, cityId, product) })).sort((a, b) => a.price - b.price);
+}
+
 export const KIND_LABEL: Readonly<Record<string, string>> = {
   't-shirt': 'T-Shirts', shirt: 'Shirts And Tops', sweater: 'Sweaters', jeans: 'Jeans', trousers: 'Trousers And Shorts', skirt: 'Skirts',
   dress: 'Dresses', suit: 'Suits And Tailoring', coat: 'Coats And Jackets', active: 'Activewear', underwear: 'Underwear', bra: 'Bras',
-  socks: 'Socks And Tights', pajamas: 'Sleepwear', shoes: 'Shoes', accessory: 'Accessories',
+  socks: 'Socks And Tights', pajamas: 'Sleepwear', shoes: 'Shoes', accessory: 'Accessories', swimsuit: 'Swimwear', slip: 'Slips',
 };
 
 /**
@@ -126,7 +140,7 @@ export function clothingCatalog(sim: Simulation, cityId: string): CatalogEntry<C
     return {
       id: p.id, label: p.name, value: p, basis: 'Price, Tax In', price: productPrice(sim, cityId, p), priceKind: 'advertised' as const,
       // The department and the retailer's own type of garment, as its site files it (from 2026-10-02).
-      facets: { retailer: r.name, kind: KIND_LABEL[p.kind] ?? 'Other', department: p.category, type: p.subcategory ?? p.category, where: r.storesIn.includes(cityId) ? 'In Store' : r.delivers ? 'Online' : 'Elsewhere' },
+      facets: { retailer: r.name, kind: KIND_LABEL[p.kind] ?? 'Other', department: p.category, type: p.subcategory ?? p.category, special: p.subtype ? SUBTYPE_LABEL[p.subtype] ?? p.subtype : 'None', where: r.storesIn.includes(cityId) ? 'In Store' : r.delivers ? 'Online' : 'Elsewhere' },
       words: `${p.brand} ${p.category} ${p.subcategory ?? ''} ${p.material ?? ''} ${p.colors.join(' ')}`,
     };
   });

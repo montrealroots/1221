@@ -199,12 +199,27 @@ export function wearForSleep(sim: Simulation, person: Person, at: Instant = sim.
 
 /** A workout's clothes: activewear where there's some clean, else a top, with underwear and socks. */
 export function wearForExercise(sim: Simulation, person: Person, at: Instant = sim.now): boolean {
-  const ready = garmentsOf(person).filter((g) => wearable(sim, person, g, at)).sort(freshest);
+  const ready = garmentsOf(person).filter((g) => wearable(sim, person, g, at) && !isSwimsuit(g)).sort(freshest);
   const body = ready.find((g) => g.garment.slot === 'active') ?? ready.find((g) => g.garment.slot === 'top');
   const under = ready.find((g) => g.garment.slot === 'underwear');
   const socks = ready.find((g) => g.garment.slot === 'socks');
   if (!body || !under || !socks) return false;
   for (const g of [body, under, socks]) wearOnce(g);
+  return true;
+}
+
+/**
+ * A swim is in a swimsuit (from 2026-10-03): one of your own, clean and to
+ * hand, worn for it and washed after as activewear is. Until then a swim
+ * wore the gym's clothes.
+ */
+export const isSwimsuit = (g: Item & { garment: Garment }): boolean => g.garment.kind === 'swimsuit';
+export const swimsuitFor = (sim: Simulation, person: Person, at: Instant = sim.now): (Item & { garment: Garment }) | undefined =>
+  garmentsOf(person).filter((g) => isSwimsuit(g) && wearable(sim, person, g, at)).sort(freshest)[0];
+export function wearForSwim(sim: Simulation, person: Person, at: Instant = sim.now): boolean {
+  const suit = swimsuitFor(sim, person, at);
+  if (!suit) return false;
+  wearOnce(suit);
   return true;
 }
 

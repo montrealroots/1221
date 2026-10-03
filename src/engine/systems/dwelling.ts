@@ -46,7 +46,7 @@ import { drawFromBank, spend } from './household';
 import { heatIndexC, weatherAt, weatherOn } from './weather';
 import { alarmMonth, renterAlarmFactor } from './alarm';
 import { securityFactor } from './homesecurity';
-import { GARMENTS_PER_LOAD, cleanOutfits, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
+import { GARMENTS_PER_LOAD, cleanOutfits, swimsuitFor, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
 import { detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
 import { amenitiesOf } from './hotels';
@@ -522,8 +522,12 @@ export function fineWeatherRefusal(sim: Simulation, person: Person, doing: strin
   return undefined;
 }
 
-/** Why a swim can't be had now, or nothing where it can. */
+/** Why a swim can't be had now, or nothing where it can: a pool open to you, and a swimsuit of yours to hand (from 2026-10-03). */
 export function swimRefusal(sim: Simulation, person: Person): string | undefined {
+  return poolRefusal(sim, person) ?? (swimsuitFor(sim, person) ? undefined : 'You have no clean swimsuit to hand: one is bought with the clothes.');
+}
+
+function poolRefusal(sim: Simulation, person: Person): string | undefined {
   // A member's gym with a pool, indoors, open now (`systems/gyms.ts`, from 2026-10-01).
   if (gymHere(sim, person)?.pool) return undefined;
   // A named hotel's own pool, while staying there; an outdoor one by the weather (from 2026-10-02).

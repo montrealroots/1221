@@ -27,7 +27,7 @@ import { resaleOf, sellRefusal } from '@/engine/systems/resale';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
 import { groupLabelOf } from '@/ui/shell/destinations';
-import { buyRefusal, collectRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
+import { buyRefusal, otherSellers, collectRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
 const SLOT_LABEL: Readonly<Partial<Record<Slot, string>>> = {
@@ -234,7 +234,7 @@ function Shop() {
   return (
     <Panel title={`Shops In ${town}`} subtitle={`${entries.length} products from ${new Set(entries.map((e) => (e.value as ClothingProduct).retailer)).size} retailers`}>
       <div className="col gap-3">
-        <CatalogControls id="clothes-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ department: 'Department', type: 'Type', kind: 'Kind', retailer: 'Retailer', where: 'Where' }} />
+        <CatalogControls id="clothes-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ department: 'Department', type: 'Type', kind: 'Kind', special: 'Special Kinds', retailer: 'Retailer', where: 'Where' }} />
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Product</th><th scope="col">Retailer</th><th scope="col">Where</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
@@ -255,7 +255,7 @@ function Shop() {
           </table>
         </div>
         {shown.length > count && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCount(count + PAGE)}>{shown.length - count <= PAGE ? `Show The Last ${shown.length - count}` : `Show ${PAGE} More Of ${shown.length - count}`}</button>}
-        {chosen && <Choose key={chosen} productId={chosen} />}
+        {chosen && <Choose key={chosen} productId={chosen} onPick={setChosen} />}
         {chosen === undefined && <div className="xs dim">{`${Math.min(count, shown.length)} of ${shown.length} shown.`}</div>}
       </div>
     </Panel>
@@ -263,7 +263,7 @@ function Shop() {
 }
 
 /** A product chosen: its size, color and how many, and buying it in a store here or online. */
-function Choose({ productId }: { productId: string }) {
+function Choose({ productId, onPick }: { productId: string; onPick: (id: string) => void }) {
   const { sim, run, toast } = useGame();
   const cur = saveCurrency(sim.universe);
   const money = (c: number) => formatMoney(c, cur);
@@ -294,6 +294,15 @@ function Choose({ productId }: { productId: string }) {
   return (
     <div className="col gap-2">
       <div className="small"><strong>{p.name}</strong> · {p.brand}{p.material ? ` · ${p.material}` : ''}{p.careLabel ? ` · ${p.careLabel}` : ''}</div>
+      {(() => {
+        const others = otherSellers(sim, person.currentLocationId, p);
+        return others.length > 0 ? (
+          <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+            <span className="xs muted">Also Sold By</span>
+            {others.map((o) => <button key={o.product.id} type="button" className="btn btn-sm btn-ghost" onClick={() => onPick(o.product.id)}>{`${retailerById(o.product.retailer)?.name}, ${money(o.price)}`}</button>)}
+          </div>
+        ) : null;
+      })()}
       <div className="field-row field-row-tight">
         {p.sizes.length > 0 && (
           <div className="field">

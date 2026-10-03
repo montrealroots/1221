@@ -37,7 +37,7 @@ import { SINK_FULL, cook, kitchenMeal, sinkFull } from './kitchen';
 import { bathroomWait } from './rooms';
 import { watchRefusal } from './homelife';
 import { takePortion } from './pantry';
-import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty } from './wardrobe';
+import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty, wearForSwim } from './wardrobe';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
@@ -469,7 +469,8 @@ export function registerLife(sim: Simulation): void {
       if (action === 'boat' && !spend(s, person, cost, 'Gas for the boat, at the marina', 'vehicle')) throw new CommandError('The payment didn’t go through.');
       if (action === 'charter' && !spend(s, person, cost, `A boat chartered with its captain, ${charterAt(person.currentLocationId)?.operator ?? ''}`, 'personal')) throw new CommandError('The payment didn’t go through.');
       // A workout or a swim is an outfit worn.
-      if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court') wearOutfit(s, person, true);
+      if (action === 'swim') wearForSwim(s, person);
+      else if (action === 'exercise' || action === 'ride' || action === 'court') wearOutfit(s, person, true);
       // The lawn cut (`systems/lawns.ts`, from 2026-10-02).
       if (action === 'mow') { const home = livingIn(person); if (home) mow(home, s.now); }
       if (action === 'washup') washUp(s, person);
