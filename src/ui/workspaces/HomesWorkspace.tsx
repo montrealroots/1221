@@ -608,7 +608,7 @@ function FromIkea() {
   return (
     <div className="col gap-2">
       <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
-        <div className="strong small" style={{ marginRight: 'auto' }}>From IKEA</div>
+        <div className="strong small" style={{ marginRight: 'auto' }}>From IKEA{(sim.player.ikeaCredit ?? 0) > 0 ? ` · ${formatMoney(sim.player.ikeaCredit!, saveCurrency(sim.universe), { cents: false })} Credit, Spent First` : ''}</div>
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="ikea-kind">Kind</label>
           <select id="ikea-kind" value={kind || kinds[0]} onChange={(e) => setKind(e.target.value)}>
@@ -624,7 +624,7 @@ function FromIkea() {
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="ikea-built">Put Together</label>
           <select id="ikea-built" value={built ? 'ikea' : 'you'} onChange={(e) => setBuilt(e.target.value === 'ikea')}>
-            <option value="you">By You, An Hour A Piece</option>
+            <option value="you">By You, At Taskrabbit’s Hours</option>
             <option value="ikea">By IKEA, At Its Price</option>
           </select>
         </div>

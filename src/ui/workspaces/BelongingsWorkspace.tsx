@@ -6,7 +6,7 @@
  */
 import { Fragment, useState } from 'react';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { assembleRefusal } from '@/engine/systems/furnishings';
+import { assembleRefusal, assemblyMinutes, buybackRefusal, buybackShare } from '@/engine/systems/furnishings';
 import { bulkyFee, bulkyRefusal } from '@/engine/systems/bulky';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
@@ -66,6 +66,7 @@ export function BelongingsWorkspace() {
   const items = itemsOf(person);
   const move = useFeature('items.move');
   const assemble = useFeature('items.assemble');
+  const sellBack = useFeature('home.sell_back');
   const [target, setTarget] = useState<Record<string, string>>({});
   const [filter, setFilter] = useState<FacetFilter>({});
   const places = placesNow(sim, person, items);
@@ -160,9 +161,10 @@ export function BelongingsWorkspace() {
                                   <button type="button" className="btn btn-sm btn-ghost" disabled={!move.open || !to} title={move.reason} onClick={() => { if (to && run('items.move', { itemId: item.id, to }).ok) toast(`The ${item.label}, moved.`, 'positive'); }}>Move It</button>
                                   <GiveTo itemId={item.id} label={item.label} />
                                   <Collected item={item} />
-                                  {item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? 'An hour'} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}
+                                  {item.kind.startsWith('ikea:') && !buybackRefusal(person, item.id) && <button type="button" className="btn btn-sm btn-ghost" disabled={!sellBack.open} title={sellBack.reason ?? 'IKEA’s refund card, for the next piece'} onClick={() => { const r = run<{ credit: number }>('home.sell_back', { itemId: item.id }); if (r.ok) toast(`${formatMoney(r.value!.credit, saveCurrency(sim.universe))} of IKEA credit.`, 'positive'); }}>{`Sell It Back To IKEA, ${formatMoney(Math.round((item.paid ?? 0) * buybackShare(item.condition)), saveCurrency(sim.universe))}`}</button>}
+                                  {item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? `About ${Math.round(assemblyMinutes(item.label))} minutes`} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}
                                 </div>
-                              ) : (item.flatPacked || item.bulky) && here ? <div className="row gap-1" style={{ justifyContent: 'flex-end' }}><Collected item={item} />{item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? 'An hour'} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}</div> : <div className="xs dim" style={{ textAlign: 'right' }}>{here ? 'Stays Where It Is' : 'Not To Hand'}</div>}
+                              ) : (item.flatPacked || item.bulky) && here ? <div className="row gap-1" style={{ justifyContent: 'flex-end' }}><Collected item={item} />{item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? `About ${Math.round(assemblyMinutes(item.label))} minutes`} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}</div> : <div className="xs dim" style={{ textAlign: 'right' }}>{here ? 'Stays Where It Is' : 'Not To Hand'}</div>}
                             </td>
                           </tr>
                         );
