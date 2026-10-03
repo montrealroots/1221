@@ -95,8 +95,24 @@ describe('a pledge', () => {
     sim.player.wornNow = { itemIds: [], since: sim.now };
     expect(pledgeRefusal(sim, sim.player, [w.id, 'x'])).toBe('A pawnbroker here takes jewelry and watches.');
     expect(pledgeRefusal(sim, sim.player, [{ ...w }.id])).toBeUndefined();
+    const far = life('ie-m-cork', 'pawn-cork');
+    expect(pledgeRefusal(far, far.player, ['x'])).toBe('SLATE keeps no pawnbroker’s terms in this town.');
+  });
+
+  it('at Monte de Piedad lends its own share, a watch’s 64%, at its middle rate; in Vancouver held to the Criminal Code', () => {
     const mx = life('mx-cmx-mexicocity', 'pawn-mx');
-    expect(pledgeRefusal(mx, mx.player, ['x'])).toBe('SLATE keeps no pawnbroker’s terms in this town.');
+    const w = watch(mx, inSaveMoney(mx, 10_000_00, 'MXN'));
+    expect(pledgeQuote(mx, mx.player, [w.id]).loanUnits).toBeCloseTo(10_000 * 0.28 * 0.64, 2);
+    mx.must({ kind: 'pawn.pledge', payload: { itemIds: [w.id] } });
+    const pawn = pawnsOf(mx.player)[0]!;
+    expect(owedUnits(pawn, pawn.at + 20 * MS_DAY)).toBeCloseTo(1_792 * (1 + (3.96 + 6.89) / 200), 4);
+    expect(pawn.until - pawn.at).toBe(152 * MS_DAY);
+    const van = life('ca-bc-vancouver', 'pawn-van');
+    const v = watch(van, inSaveMoney(van, 1_000_00, 'CAD'));
+    van.must({ kind: 'pawn.pledge', payload: { itemIds: [v.id] } });
+    const vp = pawnsOf(van.player)[0]!;
+    // CCE's 10% a month on a small loan is over the 48% a year the law allows: 4%.
+    expect(owedUnits(vp, vp.at + 20 * MS_DAY) / vp.loanUnits).toBeCloseTo(1.04, 6);
   });
 
   it('charges Los Angeles’s $3 at least on a small loan, values by Kijiji’s half in Toronto, and is redeemed only where it was made', () => {

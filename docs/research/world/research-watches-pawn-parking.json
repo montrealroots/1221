@@ -1,0 +1,205 @@
+{
+  "title": "Watch servicing, quartz battery life, pawning (Mexico City, Vancouver), and car theft by parking location",
+  "researched": "2026-10-03",
+  "note": "confirmed=true means the figure was read on the publisher's own page, PDF or dataset during this research. confirmed=false means a search excerpt, third-party page or press report. Prices are the maker's suggested/recommended public prices unless stated; parts beyond the listed scope are extra.",
+
+  "watchService": {
+    "Rolex": [
+      { "item": "recommended service interval", "value": "approximately 10", "unit": "years (depending on model and real-life usage)", "source": "Caring for your Rolex - Frequently Asked Questions", "url": "https://www.rolex.com/en-us/watch-care-and-service/faq", "publisher": "Rolex SA", "date": "accessed 2026-10-03", "confirmed": false, "why": "page returned 403 to fetch; text from search excerpt of rolex.com" },
+      { "item": "complete overhaul duration", "value": "minimum 4 to 6", "unit": "weeks", "source": "Caring for your Rolex - Frequently Asked Questions", "url": "https://www.rolex.com/en-us/watch-care-and-service/faq", "publisher": "Rolex SA", "date": "accessed 2026-10-03", "confirmed": false, "why": "search excerpt of rolex.com" },
+      { "item": "complete service price", "value": null, "note": "Rolex does not publish a service price list; quoted per watch by an Official Rolex Service Centre." }
+    ],
+    "Omega": [
+      { "item": "recommended complete service interval", "value": "5 to 8", "unit": "years", "source": "Caring for your OMEGA (FAQ)", "url": "https://www.omegawatches.com/en-us/customer-service/faq/caring-for-your-omega", "publisher": "OMEGA SA", "date": "accessed 2026-10-03", "confirmed": true },
+      { "item": "water-resistance check", "value": 1, "unit": "per year", "source": "Caring for your OMEGA (FAQ)", "url": "https://www.omegawatches.com/en-us/customer-service/faq/caring-for-your-omega", "publisher": "OMEGA SA", "date": "accessed 2026-10-03", "confirmed": true },
+      { "item": "service warranty", "value": 24, "unit": "months", "source": "Watch Service Prices", "url": "https://www.omegawatches.com/en-us/customer-service/interventions-and-prices/watch-service-prices", "publisher": "OMEGA SA", "date": "accessed 2026-10-03", "confirmed": true },
+      { "item": "complete service price, mechanical non-chronograph, non-precious, UK", "value": 430, "unit": "GBP (from)", "source": "search excerpt (Burrells OMEGA Aftercare / omegawatches.com price table)", "url": "https://www.burrells.co.uk/omega-aftercare", "publisher": "Burrells (retailer)", "date": "accessed 2026-10-03", "confirmed": false, "why": "Omega's own price table renders by script and showed dashes when fetched" },
+      { "item": "complete service price, Seamaster Diver 300M, US", "value": "650-800", "unit": "USD", "source": "Omega Service Cost (2026)", "url": "https://www.watchscanning.com/guides/omega-service-cost/", "publisher": "WatchScanning (third party)", "date": "2026", "confirmed": false }
+    ],
+    "TAG Heuer": {
+      "scope": "Complete Service (M2) = dismantle, movement overhaul or replacement, oiling and regulation, wearing parts, ultrasonic case/bracelet clean, light buffing, gaskets, water-resistance test; 24-month warranty. Partial Maintenance (M1) = clean, gaskets, battery, water-resistance.",
+      "US": { "currency": "USD", "taxIncluded": false, "quartz": { "partial": 140, "complete": 295 }, "quartzChronoSolargraph": { "partial": 140, "complete": 370 }, "mechanical": { "partial": 200, "complete": 485 }, "mechanicalChronograph": { "partial": 200, "complete": 595 }, "inHouseOrCOSC": { "partial": 200, "complete": 760, "covers": "Heuer 01, Heuer 02, 1887, TH20, TH30, TH31, calibre 36, COSC" }, "hauteHorlogerie": { "partial": 580, "complete": 1630 }, "caseBraceletRefurbishing": 100, "neoVintageSupplement": 190, "source": "TAG Heuer Services - United States - Partial Maintenance and Complete Service", "url": "https://www.tagheuer.com/assets/downloads/2026/Services_Prices/THSERVICES_US_public_prices_EN_2026_03.pdf", "publisher": "TAG Heuer (LVMH)", "date": "2026-03", "confirmed": true },
+      "UK": { "currency": "GBP", "taxIncluded": true, "quartz": { "partial": 82, "complete": 270 }, "quartzChronoSolargraph": { "partial": 85, "complete": 355 }, "mechanical": { "partial": 120, "complete": 410 }, "mechanicalChronograph": { "partial": 120, "complete": 495 }, "inHouseOrCOSC": { "partial": 120, "complete": 600 }, "hauteHorlogerie": { "partial": 550, "complete": 1420 }, "caseBraceletRefurbishing": 140, "source": "TAG Heuer Services - UK price list", "url": "https://www.tagheuer.com/assets/downloads/2026/Services_Prices/THSERVICES_UK_public_prices_EN_2026_03.pdf", "publisher": "TAG Heuer (LVMH)", "date": "2026-03", "confirmed": true },
+      "Canada": { "currency": "CAD", "taxIncluded": false, "quartz": { "partial": 150, "complete": 330 }, "quartzChronoSolargraph": { "partial": 150, "complete": 410 }, "mechanical": { "partial": 210, "complete": 525 }, "mechanicalChronograph": { "partial": 210, "complete": 630 }, "inHouseOrCOSC": { "partial": 210, "complete": 790 }, "hauteHorlogerie": { "partial": 740, "complete": 2205 }, "caseBraceletRefurbishing": 130, "source": "TAG Heuer Services - Canada price list", "url": "https://www.tagheuer.com/assets/downloads/2026/Services_Prices/THSERVICES_CA_public_prices_EN_2026_03.pdf", "publisher": "TAG Heuer (LVMH)", "date": "2026-03", "confirmed": true },
+      "warning": "Search-engine summaries quoted USD 715 / 1,525 as TAG's mechanical complete service; those are the VINTAGE (pre-1985) group prices on page 2. Use the figures above."
+    },
+    "Tudor": [
+      { "item": "recommended service interval", "value": "approximately 10", "unit": "years (depending on model and usage)", "source": "search excerpt attributing to TUDOR", "url": "https://www.tudorwatch.com/en/tudor-care/faq", "publisher": "TUDOR", "date": "accessed 2026-10-03", "confirmed": false, "why": "tudorwatch.com returned 403; not read on the page" },
+      { "item": "service guarantee after complete service", "value": 2, "unit": "years", "source": "TUDOR servicing procedures", "url": "https://www.tudorwatch.com/en/tudor-care/tudor-servicing-procedures", "publisher": "TUDOR", "date": "accessed 2026-10-03", "confirmed": false, "why": "search excerpt" },
+      { "item": "complete service price", "value": null, "note": "TUDOR does not publish a price list; quoted by Rolex/TUDOR service centres." }
+    ],
+    "Longines": [
+      { "item": "recommended service interval", "value": "6 to 8", "unit": "years", "source": "Maintenance Intervals", "url": "https://www.longines.com/maintenance-intervals", "publisher": "Longines", "date": "accessed 2026-10-03", "confirmed": false, "why": "search excerpt; fetched page did not render the text" },
+      { "item": "full service, Canada", "currency": "CAD", "taxIncluded": false, "mechanical2or3Hands": 515, "chronographOrGreatComplications": 700, "quartz2or3HandsCalendar": 360, "quartzChronograph": 490, "batteryOnly": 50, "source": "LONGINES Services Cost", "url": "https://www.longines.com/en-ca/maintenance-prices", "publisher": "Longines", "date": "accessed 2026-10-03", "confirmed": true },
+      { "item": "full service, UK", "currency": "GBP", "mechanical2or3Hands": 350, "chronographOrGreatComplications": 460, "quartz2or3HandsCalendar": 230, "quartzChronograph": 330, "source": "LONGINES Services Cost", "url": "https://www.longines.com/en-gb/maintenance-prices", "publisher": "Longines", "date": "accessed 2026-10-03", "confirmed": true },
+      { "item": "full service, US, automatic non-chronograph", "value": 270, "unit": "USD", "source": "search excerpt (forum report of Swatch Group USA)", "url": "https://www.watchuseek.com/threads/maintenance-cost-for-automatic-longines.932702/", "publisher": "WatchUSeek (forum)", "date": "unknown, likely old", "confirmed": false }
+    ],
+    "Tissot": {
+      "interval": { "value": "4 to 5", "unit": "years", "source": "Tissot FAQ", "url": "https://www.tissotwatches.com/en-us/faq", "publisher": "Tissot SA", "date": "accessed 2026-10-03", "confirmed": true },
+      "warranty": "24 months on service; shipping not included; prices are recommended for agreed third-party centres",
+      "US": { "currency": "USD", "quartz": { "light": 35, "partial2or3Hands": 60, "partialChrono": 70, "complete2or3Hands": 130, "completeChrono": 200 }, "mechanical": { "light": 35, "partial2or3Hands": 60, "partialChrono": 70, "complete2or3Hands": 210, "completeChrono": 310 }, "url": "https://www.tissotwatches.com/en-us/service-prices", "confirmed": true },
+      "UK": { "currency": "GBP", "quartz": { "light": 30, "partial2or3Hands": 50, "partialChrono": 60, "complete2or3Hands": 110, "completeChrono": 170 }, "mechanical": { "light": 30, "partial2or3Hands": 50, "partialChrono": 60, "complete2or3Hands": 175, "completeChrono": 260 }, "url": "https://www.tissotwatches.com/en-gb/service-prices", "confirmed": true },
+      "Ireland": { "currency": "EUR", "quartz": { "light": 35, "partial2or3Hands": 55, "partialChrono": 65, "complete2or3Hands": 125, "completeChrono": 195 }, "mechanical": { "light": 35, "partial2or3Hands": 55, "partialChrono": 65, "complete2or3Hands": 200, "completeChrono": 295 }, "url": "https://www.tissotwatches.com/en-ie/service-prices", "confirmed": true },
+      "Canada": { "currency": "CAD", "quartz": { "light": 50, "partial2or3Hands": 75, "partialChrono": 90, "complete2or3Hands": 165, "completeChrono": 260 }, "mechanical": { "light": 50, "partial2or3Hands": 75, "partialChrono": 90, "complete2or3Hands": 270, "completeChrono": 400 }, "url": "https://www.tissotwatches.com/en-ca/service-prices", "confirmed": true },
+      "Mexico": { "currency": "MXN", "quartz": { "light": 800, "partial2or3Hands": 1300, "partialChrono": 1500, "complete2or3Hands": 2900, "completeChrono": 4500 }, "mechanical": { "light": 800, "partial2or3Hands": 1300, "partialChrono": 1500, "complete2or3Hands": 4800, "completeChrono": 7200 }, "url": "https://www.tissotwatches.com/es-mx/service-prices", "confirmed": true },
+      "publisher": "Tissot SA", "date": "accessed 2026-10-03",
+      "batteryNote": "Battery replacement is included in Tissot's partial service (the partial price is the maker's battery-change price for quartz)."
+    },
+    "Seiko (Prospex/Presage automatic, cal. 4R)": [
+      { "item": "recommended overhaul interval, cal. 4R35/4R36 etc.", "value": "approximately 2 to 3", "unit": "years", "source": "4R35/4R36/4R37/4R38/4R39/4R71/4R72 instructions (JSY4RCC2)", "url": "https://www.seikowatches.com/instructions/html/SEIKO_4R35_4R36_4R37_4R38_4R39_4R71_4R72_EN/assets/pdf/JSY4RCC2_EN.pdf", "publisher": "Seiko Watch Corporation", "date": "2024-03 (A2403)", "confirmed": true },
+      { "item": "general recommended service interval (FAQ)", "value": "about 3", "unit": "years", "source": "Why does Seiko recommend servicing your watch about every three years?", "url": "https://www.seikowatches.com/us-en/customerservice/faq/care-maintenance-1", "publisher": "Seiko Watch of America", "date": "accessed 2026-10-03", "confirmed": true },
+      { "item": "overhaul price, cal. 4R (US service centre)", "value": 154, "unit": "USD", "source": "Seiko Watch Service Intervals and Prices", "url": "https://calibercorner.com/seiko-watch-service/", "publisher": "Caliber Corner (third party)", "date": "unknown", "confirmed": false },
+      { "item": "overhaul price, cal. 6R (US service centre)", "value": 260, "unit": "USD", "source": "Seiko Watch Service Intervals and Prices", "url": "https://calibercorner.com/seiko-watch-service/", "publisher": "Caliber Corner (third party)", "date": "unknown", "confirmed": false }
+    ],
+    "Hamilton": [
+      { "item": "service interval", "value": null, "note": "Hamilton states a precise interval cannot be determined; recommends a yearly water-resistance check and partial service every 1 to 2 years.", "url": "https://www.hamiltonwatch.com/en-us/watch-intervention.html", "publisher": "Hamilton Watch", "date": "accessed 2026-10-03", "confirmed": true },
+      { "item": "US prices (excl. tax)", "currency": "USD", "completeAuto2or3Hands": 250, "completeAutoChrono": 370, "completeQuartz2or3Hands": 180, "completeQuartzChrono": 260, "partialAuto2or3Hands": 60, "partialAutoChrono": 70, "partialQuartz2or3Hands": 60, "partialQuartzChrono": 70, "url": "https://www.hamiltonwatch.com/en-us/watch-intervention.html", "publisher": "Hamilton Watch", "date": "accessed 2026-10-03", "confirmed": true },
+      { "item": "UK prices (incl. VAT)", "currency": "GBP", "completeAuto2or3Hands": 210, "completeAutoChrono": 310, "completeQuartz2or3Hands": 150, "completeQuartzChrono": 220, "partialAuto2or3Hands": 50, "partialAutoChrono": 60, "partialQuartz2or3Hands": 50, "partialQuartzChrono": 60, "url": "https://www.hamiltonwatch.com/en-gb/service-prices.html", "publisher": "Hamilton Watch", "date": "accessed 2026-10-03", "confirmed": true }
+    ],
+    "Cartier": [
+      { "item": "movement check interval", "value": 6, "unit": "years", "source": "Watch Servicing, Care & Information (FAQ)", "url": "https://www.cartier.com/en-us/faq/creations/watches/", "publisher": "Cartier", "date": "accessed 2026-10-03", "confirmed": true },
+      { "item": "water-resistance seal replacement interval", "value": 2, "unit": "years (about the same as a quartz battery)", "url": "https://www.cartier.com/en-us/faq/creations/watches/", "publisher": "Cartier", "confirmed": true },
+      { "item": "US service costs", "currency": "USD", "completeServiceFrom": 430, "completeServiceMinWeeks": 3, "batteryService": 60, "batteryServiceMinWeeks": 1, "polishing": 430, "polishingMinWeeks": 2, "restorationMinMonths": 3, "note": "minimum prices, subject to change", "source": "Cartier Repair Cost", "url": "https://www.cartier.com/en-us/services/service-costs/watches/", "publisher": "Cartier", "date": "accessed 2026-10-03", "confirmed": true }
+    ]
+  },
+
+  "quartzBattery": {
+    "Tissot PRX quartz (ETA F06.115)": [
+      { "item": "PRX 40mm quartz specification", "value": "Quartz three hands, 1.55 V battery, EOL end-of-life indicator; battery life not stated", "url": "https://www.tissotwatches.com/en-us/T1374101104100.html", "publisher": "Tissot SA", "date": "accessed 2026-10-03", "confirmed": true },
+      { "item": "theoretical battery lifetime, ETA F06.115", "value": "68 (40.0 mAh cell) / 94 (55.0 mAh cell)", "unit": "months", "source": "ETA F06.115 (Trendline)", "url": "https://www.eta.ch/en/our-products/quartz-movements/trendline/eta-trendline-f06115", "publisher": "ETA SA Manufacture Horlogère Suisse (movement maker, Swatch Group)", "date": "accessed 2026-10-03", "confirmed": true, "caveat": "That the PRX uses the F06.115 comes from third-party reviews (aBlogtoWatch, WatchBase), not Tissot's page; battery is cell 371 (SR920SW) per third parties." },
+      { "item": "battery replacement price", "value": "see Tissot partial-service prices (battery included): USD 60, GBP 50, EUR 55, CAD 75, MXN 1,300", "confirmed": true }
+    ],
+    "Michael Kors (quartz analog)": [
+      { "item": "battery life", "value": null, "note": "Not published by Michael Kors/Fossil Group. Warranty page excludes battery; Fossil Group services MK watches via its repair portal (no public battery price found)." , "url": "https://www.michaelkors.com/info/warranty-repair.html", "publisher": "Michael Kors", "confirmed": true },
+      { "item": "typical battery life (third party)", "value": "18 months to 2 years", "source": "Michael Kors Watch Battery Replacement", "url": "https://www.bablas.co.uk/blog/2017/02/michael-kors-watch-battery-replacement", "publisher": "Bablas (retailer)", "date": "2017", "confirmed": false }
+    ],
+    "Thomas Sabo": [
+      { "item": "battery life", "value": null, "note": "Not published." },
+      { "item": "battery change / repair price", "value": null, "note": "No fixed repair prices: non-binding quote on request. Battery change excluded from 2-year warranty. Repair takes about 4-6 weeks from acceptance.", "url": "https://www.thomassabo.com/US/en_US/06-faq-garantie-reparatur/06-faq-garantie-reparatur.html", "publisher": "THOMAS SABO GmbH & Co. KG", "date": "accessed 2026-10-03", "confirmed": true }
+    ],
+    "Philipp Plein": [
+      { "item": "battery life and battery price", "value": null, "note": "Not published. Warranty page (pleinsport.com) redirect-looped and could not be read; retailers report batteries excluded from warranty.", "confirmed": false }
+    ]
+  },
+
+  "pawnMexicoCity": {
+    "source": "Tasas y costos (V65 / AGO25 / V1), Nacional Monte de Piedad I.A.P.",
+    "url": "https://www.montepiedad.com.mx/storage/tasas-y-costos.pdf?v=2025.3",
+    "publisher": "Nacional Monte de Piedad, I.A.P.",
+    "date": "2025-08 (advertising valid to 2025-12-31; CAT calculated 2025-01-20; still the version linked from montepiedad.com.mx home page on 2026-10-03)",
+    "confirmed": true,
+    "loanToAppraisal": {
+      "goldJewellery": { "min": 70, "avg": 89, "max": 100, "unit": "% of avalúo" },
+      "watches": { "min": 30, "avg": 64, "max": 97, "unit": "% of avalúo" },
+      "miscGoodsMotorbikes": { "min": 50, "avg": 50, "max": 50, "unit": "% of avalúo" },
+      "phonesElectronics": { "min": 30, "avg": 50, "max": 60, "unit": "% of avalúo" },
+      "cars": { "min": 30, "avg": 49, "max": 75, "unit": "% of avalúo" }
+    },
+    "products": [
+      { "name": "Empeño Clásico / Oferta Base / Joyas de oro", "interestMonthly": "3.96-6.89%", "interestAnnual": "47.52-82.68%", "interestDaily": "0.13-0.23%", "totalCostMonthly": "3.70-6.14%", "CATpromedio": "54.72-104.46% (sin IVA)", "termMonths": 5, "refrendos": 3 },
+      { "name": "Empeño Clásico / Oferta Personalizada / Joyas de oro", "interestMonthly": "4.22-6.06%", "interestAnnual": "50.64-72.72%", "totalCostMonthly": "3.93-5.46%", "CATpromedio": "58.81-88.55%", "termMonths": 5, "refrendos": 3 },
+      { "name": "Pagos Libres / Empeño Simple / Joyas de oro", "interestMonthly": "6.89%", "interestAnnual": "82.68%", "CATpromedio": "119.84%", "termMonths": 2, "refrendos": 9 },
+      { "name": "Pagos Libres / Oferta Personalizada / Joyas de oro y relojes", "interestMonthly": "6.09%", "interestAnnual": "73.08%", "CATpromedio": "90.08%", "termMonths": 5, "refrendos": 3 },
+      { "name": "Empeño Clásico / Oferta Base / Relojes", "interestMonthly": "3.84-6.09%", "interestAnnual": "46.08-73.08%", "totalCostMonthly": "3.60-5.50%", "CATpromedio": "52.86-90.08%", "termMonths": 5, "refrendos": "3 (when stated on the contract)" },
+      { "name": "Empeño Clásico / Oferta Personalizada / Relojes", "interestMonthly": "4.10-6.23%", "interestAnnual": "49.20-74.76%", "CATpromedio": "56.92-92.55%", "termMonths": 5, "refrendos": 3 }
+    ],
+    "columnNote": "Values were read from a multi-column PDF via text extraction; the pairing of 'Costo total' vs 'Tasa de interés' rows is inferred from layout (interest annual = 12 x monthly checks out).",
+    "vat": "All pawn operations exempt from IVA.",
+    "refrendo": "Extends the contract term by paying the interest accrued by the due date shown on the contract; anyone holding the contract may pay it.",
+    "desempeno": "Redeem by paying principal plus accrued interest by the due date; only the holder.",
+    "fees": { "lateRedemption": "5% per month of outstanding loan balance, charged once", "custodyIfRedeemedButNotCollected": "2% of avalúo per calendar month after the first 30 days; uncollected items kept up to 365 days then forfeited", "exhibition": "5% per calendar month in exhibition, on outstanding balance", "replacementContract": "MXN 5 (loans <= 500) / MXN 25 (loans > 500)" },
+    "default": "Items neither redeemed nor renewed are put up for sale (comercialización). Surplus (demasía) = sale price - loan - accrued interest - late charges; claimable within 365 calendar days of the sale notice, with the contract.",
+    "contractsRegistered": "PROFECO, 2024-07-25: Empeño Clásico 4500-2024, Pagos Libres 4502-2024, Autoavanza 4507-2024"
+  },
+
+  "pawnVancouver": [
+    { "item": "Criminal rate of interest (Criminal Code s.347) from 2025-01-01", "value": 35, "unit": "% APR (previously 60% effective annual rate)", "source": "law-firm bulletins (McCarthy Tetrault, Cassels, BLG)", "url": "https://www.mccarthy.ca/en/insights/publications/amendments-criminal-rate-interest-provisions-come-force", "publisher": "McCarthy Tetrault", "date": "2025", "confirmed": false },
+    { "item": "Pawnbroking exemption, Criminal Interest Rate Regulations SOR/2024-114 s.2", "value": "exempt from the 35% cap if: pawnbroking business; credit against tangible personal property other than a vehicle; only recourse on default is seizure of the pawned item; credit advanced < CAD 1,000 AND APR <= 48%", "effective": "2025-01-01", "source": "Criminal Interest Rate Regulations (SOR/2024-114)", "url": "https://laws-lois.justice.gc.ca/eng/regulations/SOR-2024-114/page-1.html", "publisher": "Government of Canada, Justice Laws", "date": "registered 2024-06 (Canada Gazette II 2024-06-19)", "confirmed": true, "derived": "Pawn loans < CAD 1,000: max 48% APR. Pawn loans >= CAD 1,000: max 35% APR." },
+    { "item": "City of Vancouver Secondhand Dealers and Pawnbrokers By-law No. 2807: hold period", "value": "49 business days after purchase (handwritten register), or as advised by the Chief Constable, not exceeding 90 days", "url": "https://bylaws.vancouver.ca/2807c.pdf", "publisher": "City of Vancouver", "date": "consolidated (date not read)", "confirmed": false, "why": "bylaw PDF behind Cloudflare/403; from search excerpt. Also: pawned and purchased goods must be physically separated and tagged; register copy to VPD daily by 10:30 a.m. (excerpt)." },
+    { "item": "Named shop: CCE Pawn (Charlie's Currency Exchange), 827 Granville St, Vancouver", "termMonths": 3, "interestMonthly": "5% on loans above CAD 1,000; 10% on loans below CAD 1,000", "minimumCharge": "CAD 10", "graceDays": "7 days past expiry for one extra month's interest", "renewal": "at shop's discretion by paying accrued interest at 3 months", "default": "items usually sold back to the pawner, if available, at 150% of principal", "url": "https://pawnbuysell.ca/vancouver-pawn-loans/", "publisher": "CCE Pawn", "date": "accessed 2026-10-03", "confirmed": true, "caveat": "10%/month (~120% APR) on loans under CAD 1,000 exceeds the 48% APR exemption ceiling in force since 2025-01-01; the page may predate the change." },
+    { "item": "Named shop: Roath's Pawn Shop", "value": "flat 7.5%, due at 3 months (90 days)", "url": "https://www.roaths.com/", "publisher": "Roath's Pawn Shop", "confirmed": false, "why": "search excerpt only; not read on the page" },
+    { "item": "BC provincial pawnbroker interest/redemption statute", "value": null, "note": "No BC-specific pawnbroker interest cap or redemption-period statute found; licensing and holds are municipal (By-law 2807)." }
+  ],
+
+  "carTheftByParking": {
+    "englandWales": {
+      "ratesPerVehicleOwningHousehold": {
+        "source": "Crime in England and Wales: Appendix tables, year ending March 2026 — Table A2a (incident rates) and A3a (prevalence)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/crimeandjustice/datasets/crimeinenglandandwalesappendixtables/yearendingmarch2026/appendixtablesyemar2026.xlsx",
+        "publisher": "Office for National Statistics (CSEW)",
+        "date": "year ending March 2026 edition",
+        "confirmed": true,
+        "unit": "incidents per 1,000 vehicle-owning households",
+        "byYear": {
+          "Apr2022-Mar2023": { "vehicleRelatedTheft": 36.79, "theftFromVehicles": 25.34, "theftOfVehicles": 4.99, "attempts": 6.46 },
+          "Apr2023-Mar2024": { "vehicleRelatedTheft": 36.90, "theftFromVehicles": 23.52, "theftOfVehicles": 4.56, "attempts": 8.82 },
+          "Apr2024-Mar2025": { "vehicleRelatedTheft": 33.34, "theftFromVehicles": 21.81, "theftOfVehicles": 5.17, "attempts": 6.37 },
+          "Apr2025-Mar2026": { "vehicleRelatedTheft": 29.14, "theftFromVehicles": 19.05, "theftOfVehicles": 3.42, "attempts": 6.66, "criminalDamageToVehicle": 20.71 }
+        },
+        "prevalenceApr2025-Mar2026": { "unit": "% of vehicle-owning households victimised once or more", "vehicleRelatedTheft": 2.7, "theftFromVehicles": 1.8, "theftOfVehicles": 0.3, "attempts": 0.6 },
+        "perAllHouseholdsApr2025-Mar2026": { "unit": "per 1,000 households", "vehicleRelatedTheft": 22.79, "theftFromVehicles": 14.80, "theftOfVehicles": 2.74 },
+        "incidentsThousandsApr2025-Mar2026": { "vehicleRelatedTheft": 586, "theftFromVehicles": 381, "theftOfVehicles": 70, "attempts": 135 },
+        "unweightedBaseVehicleOwnersApr2025-Mar2026": 23931
+      },
+      "whereIncidentsOccurred": {
+        "source": "Nature of crime: vehicle-related theft, year ending March 2025 — Tables 2b (theft of vehicles) and 2c (theft from vehicles)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/crimeandjustice/datasets/natureofcrimevehiclerelatedtheft/yearendingmarch2025/nocvehiclethefttables202425.xlsx",
+        "publisher": "Office for National Statistics (CSEW)",
+        "date": "year ending March 2025 (latest edition)",
+        "confirmed": true,
+        "unit": "% of incidents, Apr 2024 to Mar 2025",
+        "definition": "Note 10: 'Semi-private' includes outside areas on the premises and garages or car parks around but not connected to the home. ('Private' is not defined in the notes; read as inside a garage/building connected to the home.)",
+        "theftOfVehicles": { "homePrivate": 13.55, "homeSemiPrivate": 37.26, "homeStreet": 16.08, "workCarPark": 8.95, "workStreet": 2.06, "otherCarPark": 8.66, "otherStreet": 6.99, "otherOther": 6.45, "unweightedIncidents": 103 },
+        "theftFromVehicles": { "homePrivate": 3.29, "homeSemiPrivate": 37.66, "homeStreet": 39.10, "workCarPark": 1.40, "workStreet": 0.20, "otherCarPark": 6.59, "otherStreet": 7.08, "otherOther": 4.69, "unweightedIncidents": 475 }
+      },
+      "whereParkedOvernight": {
+        "source": "NTS0908: Where vehicle parked overnight by rural-urban classification of residence: England",
+        "url": "https://assets.publishing.service.gov.uk/media/6a9ed429474b8101ece46446/nts0908.ods",
+        "publisher": "Department for Transport, National Travel Survey",
+        "date": "last updated 2025-08-27 (data year 2024; next update summer 2027)",
+        "confirmed": true,
+        "unit": "% of household vehicles, England, 2024 [break in series]",
+        "allAreas2024": { "garage": 8.82, "privatePropertyNotGaraged": 63.61, "street": 24.63, "other": 2.93, "unweightedVehicles": 11145 },
+        "urbanNearerMajorTown2024": { "garage": 8.19, "privatePropertyNotGaraged": 60.19, "street": 28.62, "other": 3.00 },
+        "smallerRuralNearer2024": { "garage": 14.41, "privatePropertyNotGaraged": 75.03, "street": 7.84, "other": 2.72 },
+        "allAreas2022": { "garage": 9.97, "privatePropertyNotGaraged": 62.44, "street": 24.54, "other": 3.05 },
+        "note": "Question not asked every year; excludes cases where location was not known (note 3). Tables also by rural-urban class back to 2002."
+      },
+      "derivedRiskByLocation": {
+        "method": "rate per 1,000 vehicle-owning households (YE Mar 2025) x share of incidents at that home location / share of vehicles parked there overnight (NTS 2024). Mapping assumed: CSEW home-private ~ NTS garage; home-semi-private ~ NTS private property not garaged; home-street ~ NTS street.",
+        "confirmed": false,
+        "derived": true,
+        "theftOfVehiclesPer1000": { "garage": 7.95, "driveway": 3.03, "street": 3.38 },
+        "theftFromVehiclesPer1000": { "garage": 8.14, "driveway": 12.91, "street": 34.60 },
+        "caveats": [
+          "The garage figure for theft OF vehicles rests on ~14 unweighted incidents and an uncertain mapping (CSEW 'semi-private' also includes unconnected garages); treat as unreliable.",
+          "CSEW is England and Wales; NTS0908 is England only.",
+          "NTS shares are per vehicle; CSEW rates are per vehicle-owning household (a household may own several vehicles).",
+          "About 33% of thefts of and 20% of thefts from vehicles happen away from home (work/other), not attributable to overnight parking."
+        ]
+      }
+    },
+    "unitedStates": [
+      { "item": "NCVS motor vehicle theft rate, 2024", "value": 6.3, "unit": "per 1,000 households (all households, includes attempts)", "count": 841120, "series": { "2020": 4.3, "2021": 4.3, "2022": 5.5, "2023": 6.1, "2024": 6.3 }, "source": "Criminal Victimization, 2024 (NCJ 310547)", "url": "https://bjs.ojp.gov/document/cv24.pdf", "publisher": "Bureau of Justice Statistics", "date": "2025-09", "confirmed": true },
+      { "item": "NCVS households experiencing motor vehicle theft, 2024", "value": 0.58, "unit": "% of households (772,410 households)", "source": "Criminal Victimization, 2024", "url": "https://bjs.ojp.gov/document/cv24.pdf", "publisher": "Bureau of Justice Statistics", "date": "2025-09", "confirmed": true, "note": "read from a multi-column PDF table via text extraction" },
+      { "item": "NCVS place of occurrence of motor vehicle theft (old)", "value": "1979-85: near home 43%, noncommercial parking lot 20%, street 19%, apartment parking lot 10%, at own home/building on property 4%, commercial lot 4%, friend's home 3%", "source": "BJS special report (via search excerpt)", "url": "https://bjs.ojp.gov/content/pub/pdf/c.pdf", "publisher": "Bureau of Justice Statistics", "date": "1988", "confirmed": false },
+      { "item": "NCVS 2003 place of occurrence", "value": "at residence 30%, street near residence 16.5%", "source": "Motor Vehicle Theft: Crime and Spatial Analysis (NIJ grant report, citing NCVS 2003)", "url": "https://www.ojp.gov/pdffiles1/nij/grants/215179.pdf", "publisher": "NIJ / OJP", "date": "2006", "confirmed": false }
+    ]
+  },
+
+  "notFound": [
+    "Rolex and TUDOR service prices (not published; quoted per watch). Rolex/TUDOR interval pages returned 403 so their intervals are unconfirmed.",
+    "Omega's own complete-service price table (renders by script; only a GBP 'from 430' via retailer and third-party USD ranges).",
+    "TAG Heuer price lists for Mexico and Ireland (only US, UK, CA PDFs exist at the 2026_03 path).",
+    "Longines US, Ireland and Mexico price pages (404); Longines interval page text not readable.",
+    "Seiko's own published service prices (none found on seikowatches.com); Seiko service duration.",
+    "Service duration for Omega, TAG Heuer, Longines, Tissot, Hamilton, Seiko (only Rolex 4-6 weeks unconfirmed, Cartier 3 weeks min, Thomas Sabo repair 4-6 weeks).",
+    "Independent watchmaker chain posted prices in New York, Los Angeles, New Haven, London, Dublin, Toronto, Vancouver, Mexico City (not researched for lack of time; makers' lists cover most needs).",
+    "Tissot's own stated battery life for the PRX quartz (only ETA movement spec, via third-party movement attribution).",
+    "Michael Kors, Thomas Sabo and Philipp Plein published battery life; MK/Fossil and Plein battery replacement prices.",
+    "Nacional Monte de Piedad price per gram of gold it lends on (not on its tasas-y-costos PDF; only third-party simulators). A 2026 edition of tasas-y-costos (the linked one says valid to 2025-12-31).",
+    "City of Vancouver By-law 2807 text read first-hand (Cloudflare 403); BC provincial pawn interest rules (none found).",
+    "A US parking-location share (e.g. American Housing Survey garage/carport) paired with a recent NCVS place-of-occurrence breakdown for motor vehicle theft; BJS Criminal Victimization, 2025 (cv25.pdf not available).",
+    "CSEW 'Home - Private' category definition (only 'semi-private' is defined in the notes)."
+  ]
+}

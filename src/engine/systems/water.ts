@@ -25,16 +25,31 @@
  *   whatever is used.
  * - London: Thames Water's £2.7346 a cubic meter of water and £1.4721 of
  *   wastewater, and £66.87 and £128.13 a year standing.
- * Mexico City's SACMEX blocks are read, but no use a person is published
- * (the figures quoted conflict), so it isn't billed.
+ * - Mexico City, from 2026-10-03 (`research-utilities-mx-outages.json`):
+ *   SACMEX's domestic metered tariff in the Código Fiscal's article 172 as
+ *   reformed for 2026, billed every two months by blocks of liters, at the
+ *   Alta class, which most of Polanco's, the Condesa's and Roma Norte's
+ *   blocks are in (SACMEX's 2019 data); a month is half of a two months'
+ *   bill on twice its liters, SLATE's arithmetic. Until then it wasn't
+ *   billed.
  *
  * **What's used**: each person living there a day at home, the published
  * average: America's 221.8 liters indoors (REU2016), Ontario's 187
- * (Statistics Canada), and a metered home's 122 in England and Wales
- * (Discover Water). A day away uses none.
+ * (Statistics Canada), a metered home's 122 in England and Wales
+ * (Discover Water), and Mexico City's 366 (INFO CDMX's 2021 figure; SACMEX
+ * gives 380 consumed against 150 supplied). A day away uses none.
+ *
+ * **Showers and baths, metered** (from 2026-10-03, `research-water-washing.json`):
+ * the average's own showers come out and the player's go in, so showering
+ * oftener than the average costs more and less often less. America's and
+ * Canada's shower is REU2016's 7.8 minutes at 7.9 liters a minute, 59.8
+ * liters, and its 11.1 gallons a person a day comes to 0.70 showers; Britain's
+ * is the Energy Saving Trust's 60 liters, 4.4 a week, and a bath 80 liters, 1.3
+ * a week. A bath elsewhere isn't metered: no volume for one was read there.
  */
 
 import type { Simulation } from '../core/simulation';
+import { CITIES } from '../content/geography';
 import type { Person } from '../domain/model';
 import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
@@ -55,7 +70,19 @@ export const WATER_TARIFFS: Readonly<Record<string, WaterTariff>> = {
   'ca-on-toronto': { currency: 'CAD', perPersonLiters: 187, renters: false, bill: (l) => 4.8629 * (l / 1_000) },
   'ca-bc-vancouver': { currency: 'CAD', perPersonLiters: 0, renters: false, bill: (_l, _m, _d, flat) => (flat ? 587 + 837 : 867 + 1_238) / 12 },
   'uk-eng-london': { currency: 'GBP', perPersonLiters: 122, renters: true, bill: (l, _m, d) => (l / 1_000) * (2.7346 + 1.4721) + ((66.87 + 128.13) * d) / 365 },
+  'mx-cmx-mexicocity': { currency: 'MXN', perPersonLiters: 366, renters: false, bill: (l) => sacmexBimester(l * 2) / 2 },
 };
+
+/** SACMEX's Alta class, the Código Fiscal's article 172 for 2026: each block's lower edge in liters, its minimum and each thousand liters above the edge, pesos. */
+export const SACMEX_ALTA: readonly (readonly [number, number, number])[] = [
+  [0, 265.25, 0], [15_000, 265.25, 29.86], [20_000, 414.49, 33.38], [30_000, 748.22, 39.62], [40_000, 1_144.31, 42.32],
+  [50_000, 1_567.37, 45.34], [70_000, 2_474.15, 58.96], [90_000, 3_652.98, 78.62], [120_000, 6_011.31, 123.79],
+];
+/** Two months' water at the Alta class: the block's minimum and its rate on the liters above its edge. */
+export function sacmexBimester(liters: number): number {
+  const [edge, least, per] = [...SACMEX_ALTA].reverse().find(([from]) => liters > from) ?? SACMEX_ALTA[0]!;
+  return least + ((liters - edge) / 1_000) * per;
+}
 
 const inSave = (sim: Simulation, units: number, currency: string): Money => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === currency ? c : exchange(c, currency, cur) ?? c; };
 
@@ -72,13 +99,32 @@ export function billedWater(sim: Simulation, person: Person): boolean {
   return home.kind === 'owned' && Boolean(place) && !isFlat(place!.type);
 }
 
-/** The month's liters used at home: each of the household a day there. */
+/** A shower's and a bath's liters, and how many of each a person takes a day, by country. */
+export const WASHING: Readonly<Record<string, { showerL: number; showersADay: number; bathL?: number; bathsADay?: number }>> = {
+  us: { showerL: 59.8, showersADay: (11.1 * 3.78541) / 59.8 },
+  ca: { showerL: 59.8, showersADay: (11.1 * 3.78541) / 59.8 },
+  gb: { showerL: 60, showersADay: 4.4 / 7, bathL: 80, bathsADay: 1.3 / 7 },
+};
+
+/** The month's liters used at home: each of the household a day there, the player's own showers and baths in place of the average's. */
 export function litersUsed(person: Person, cityId: string, month: number): number {
   const t = WATER_TARIFFS[cityId];
   if (!t) return 0;
   const l = person.living;
   const days = l?.billDays ? l.homeDays ?? 0 : DAYS[month - 1]!;
-  return t.perPersonLiters * householdOf(person) * days;
+  const average = t.perPersonLiters * householdOf(person) * days;
+  const w = WASHING[CITIES.get(cityId)?.countryId === 'uk' ? 'gb' : CITIES.get(cityId)?.countryId ?? ''];
+  if (!w || !l?.billDays || t.perPersonLiters === 0) return average;
+  const showers = ((l.showers ?? 0) - w.showersADay * days) * w.showerL;
+  const baths = w.bathL && w.bathsADay ? ((l.baths ?? 0) - w.bathsADay * days) * w.bathL : 0;
+  return average + showers + baths;
+}
+
+/** A shower or a bath at home, counted toward the month's water. */
+export function countWash(person: Person, bath: boolean): void {
+  if (!person.living) return;
+  if (bath) person.living.baths = (person.living.baths ?? 0) + 1;
+  else person.living.showers = (person.living.showers ?? 0) + 1;
 }
 
 /** The month's water and sewer, in the save's money; nothing where the town doesn't bill this home. */

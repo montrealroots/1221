@@ -28,6 +28,8 @@ function inTheShop(seed: string, shopId: string) {
   v.fault = { at: sim.now, severe: true, usd: 1_500 };
   const rep = sim.execute({ kind: 'vehicle.repair', payload: { vehicleId: v.id, shopId } });
   expect(rep.ok, rep.error).toBe(true);
+  // A dealer books ahead: the car goes in at its appointment (from 2026-10-03).
+  if (v.booked) sim.advanceTo(v.booked.at + 60_000);
   return { sim, v };
 }
 

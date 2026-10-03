@@ -18,6 +18,7 @@
  */
 
 import { drive, riderDeath } from './systems/driving';
+import { waterHeaterOf } from './systems/hotwater';
 import { landAnswer, listingsFor } from './systems/land';
 import { trainFate } from './systems/rail';
 import { RAIL_ROUTES } from './content/rail';
@@ -39,7 +40,7 @@ import { startingDocuments } from './systems/documents';
 import { passesTest } from './systems/licensing';
 import { flightFate } from './systems/journey';
 import { airlineAtFault } from './systems/compensation';
-import { mayBeStolen } from './systems/theft';
+import { mayBeBrokenInto, mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
 import { onTheRoad } from './systems/roadside';
 import { machinesDay } from './systems/appliancefaults';
@@ -72,10 +73,12 @@ import { inspectionFails } from './systems/inspections';
 import { letDamaged } from './systems/journey';
 import { impairedDrive } from './systems/alcohol';
 import { announceNominations, entriesOf } from './systems/awards';
-import { powerDay } from './systems/utilities';
+import { powerDay, supplyCut } from './systems/utilities';
 import { careerOf } from './systems/career';
 import { counterOffer } from './systems/career';
 import { bidsFor, lateDays, overrunOf } from './systems/worksrisk';
+import { PHONE_RISK } from './content/phoneclaims';
+import { mishap } from './systems/phones';
 import { usedFault, usedListings } from './systems/usedcars';
 import { takenFromDoor } from './systems/orders';
 import { bathroomWait } from './systems/rooms';
@@ -511,6 +514,23 @@ defineDecider<{ sim: Simulation; day: number; minute: number }, string>({
     const zone = CITIES.require(home.cityId).timeZone;
     const midnight = startOfDay(sim.now + day * MS_DAY, zone);
     return bathroomWait(sim, sim.player, midnight + (6.5 * 60 + minute) * 60_000, 10) > 0 ? 'waits' : 'free';
+  },
+});
+
+defineDecider<{ sim: Simulation; home: number; country: number }, string>({
+  id: 'homes.water_heater',
+  decides: 'The fuel that heats a home\'s water, at its country\'s published share: America\'s EIA RECS 2020, Canada\'s NRCan, Britain\'s electric showers (HEATER_SHARE).',
+  drawnIn: 'src/engine/systems/hotwater.ts',
+  reads: {
+    home: (o, t) => ({ ...o, home: Math.round(t * 40) }),
+    country: (o, t) => ({ ...o, country: Math.round(t * 2) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), home: seed % 40, country: seed % 3 }),
+  decide: ({ sim, home, country }) => {
+    const cityId = ['us-ny-newyork', 'ca-on-toronto', 'uk-eng-london'][country]!;
+    sim.player.home = { ...sim.player.home!, cityId, since: home * MS_DAY };
+    return waterHeaterOf(sim, sim.player) ?? 'none';
   },
 });
 
@@ -1311,4 +1331,58 @@ defineDecider<{ sim: Simulation; key: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), key: seed * 50_000 }),
   decide: ({ sim, key }) => String(Array.from({ length: 20_000 }, (_, n) => letDamaged(sim, sim.player, `stay${key + n}`)).filter(Boolean).length),
+});
+
+defineDecider<{ sim: Simulation; month: number; item: number; market: number }, string>({
+  id: 'phone.risk',
+  decides: 'Whether a phone in use is stolen or damaged in a month, and the screen or something else, at the yearly odds a survey publishes where it is: Allstate Protection Plans’ in America, the ONS crime survey’s in England and Wales (PHONE_RISK).',
+  drawnIn: 'src/engine/systems/phones.ts',
+  reads: {
+    month: (o, t) => ({ ...o, month: Math.round(t * 240) }),
+    item: (o, t) => ({ ...o, item: Math.round(t * 240) }),
+    market: (o, t) => ({ ...o, market: Math.round(t) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), month: seed % 240, item: seed % 240, market: seed % 2 }),
+  decide: ({ sim, month, item, market }) => {
+    const risk = PHONE_RISK[market]!;
+    // A month's odds are a few in a hundred, so what's decided is counted over a thousand months from there.
+    const tally: Record<string, number> = {};
+    for (let n = 0; n < 1_000; n += 1) { const r = mishap(sim, risk, `item-${item}`, sim.now + (month * 1_000 + n) * 30 * MS_DAY, false) ?? 'none'; tally[r] = (tally[r] ?? 0) + 1; }
+    return JSON.stringify(tally);
+  },
+});
+
+for (const what of ['water', 'gas'] as const) {
+  defineDecider<{ sim: Simulation; day: number }, string>({
+    id: `utilities.${what}`,
+    decides: `A day the ${what} is cut off at home or not, at the share of its homes the utility cuts off a year (${what === 'water' ? 'WATER_RISK' : 'GAS_RISK'}), when in the day and for how long; swept in London at even odds, a real cut being rare.`,
+    drawnIn: 'src/engine/systems/utilities.ts',
+    reads: {
+      day: (o, t) => ({ ...o, day: Math.round(t * 4000) }),
+      world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+    },
+    sample: (seed) => ({ sim: atYale(seed), day: seed }),
+    decide: ({ sim, day }) => {
+      sim.player.home = { ...sim.player.home!, cityId: 'uk-eng-london' };
+      const hours: number[] = [];
+      for (let d = 0; d < 20; d += 1) { const c = supplyCut(sim, sim.player, what, sim.now + (day * 20 + d) * 86_400_000, 0.5); if (c) hours.push(Math.round((c.until - c.from) / 3_600_000)); }
+      return hours.join(',') || 'none';
+    },
+  });
+}
+
+defineDecider<{ sim: Simulation; car: number }, string>({
+  id: 'vehicle.break_in',
+  decides: 'A car with a stereo in England or Wales broken into in a month or not, at the Crime Survey’s thefts from vehicles where it’s kept (THEFT.englandWales); swept at even odds, the real ones being small.',
+  drawnIn: 'src/engine/systems/theft.ts',
+  reads: {
+    car: (o, t) => ({ ...o, car: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), car: seed }),
+  decide: ({ sim, car }) => {
+    const v = { id: `car-${car}`, modelId: 'gb-ford-puma', jurisdiction: 'GB', cityId: 'uk-eng-london', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0, stereo: true } as unknown as OwnedVehicle;
+    return mayBeBrokenInto(sim, sim.player, v, modelById(v.modelId)!, 0, 'GBP', 0.5) ? 'broken into' : 'left alone';
+  },
 });

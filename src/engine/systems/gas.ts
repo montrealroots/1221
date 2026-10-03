@@ -27,8 +27,13 @@
  *   supply, cost adjustment and the facility carbon charge; HST at 13%.
  * - Vancouver, FortisBC Rate Schedule 1: 42.16 cents a day and $12.601 a
  *   gigajoule; GST at 5%.
- * Mexico City's homes cook and heat mostly on LP gas by the cylinder, and
- * its price wasn't read, so it stays as the atlas has it.
+ * - Mexico City, LP gas, from 2026-10-03 (`research-vehicles-utilities-gaps.json`,
+ *   `research-utilities-mx-outages.json`): the CNE's maximum price for the
+ *   city in the week to 3 October 2026, 20.10 pesos a kilo with IVA (read
+ *   from UnoTV's report of it); a household's 29.4 kilos a month, INEGI's
+ *   ENIGH 2024 mean spending on cylinder and tank gas in the city, 559.7
+ *   pesos a month, over August 2024's 19.01 a kilo, SLATE's arithmetic.
+ *   Until then it stayed as the atlas had it.
  *
  * **What the home used.** A typical household's gas a month: EIA's 2024
  * residential consumption over customers, New York's 74.9 therms,
@@ -53,7 +58,7 @@ const DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 /** PURA's purchased gas adjustment for Southern Connecticut Gas's heating customers, January to September 2026, a ccf. */
 const SCG_PGA = [0.6398, 0.6807, 0.691, 0.6436, 0.6021, 0.5506, 0.5506, 0.5509, 0.5831];
 
-interface GasTariff { currency: string; unit: 'therm' | 'ccf' | 'kWh' | 'm3' | 'GJ'; typical: number; bill: (used: number, month: number, days: number) => number }
+interface GasTariff { currency: string; unit: 'therm' | 'ccf' | 'kWh' | 'm3' | 'GJ' | 'kg'; typical: number; bill: (used: number, month: number, days: number) => number }
 
 const blocks = (used: number, steps: readonly [number, number][]): number => {
   let left = used;
@@ -77,6 +82,7 @@ export const GAS_TARIFFS: Readonly<Record<string, GasTariff>> = {
   'ie-lei-dublin': { currency: 'EUR', unit: 'kWh', typical: 11_000 / 12, bill: (k, _m, d) => (140.92 * d) / 365 + k * 0.1236 },
   'ca-on-toronto': { currency: 'CAD', unit: 'm3', typical: 2_400 / 12, bill: (v) => (27.69 + blocks(v, [[30, 0.142691], [85, 0.134308], [170, 0.127744], [Infinity, 0.12285]]) + v * 0.155026) * 1.13 },
   'ca-bc-vancouver': { currency: 'CAD', unit: 'GJ', typical: 90 / 12, bill: (g, _m, d) => (0.4216 * d + g * 12.601) * 1.05 },
+  'mx-cmx-mexicocity': { currency: 'MXN', unit: 'kg', typical: (1_679.2 / 3) / 19.01, bill: (kg) => kg * 20.1 },
 };
 
 const inSave = (sim: Simulation, units: number, currency: string): Money => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === currency ? c : exchange(c, currency, cur) ?? c; };

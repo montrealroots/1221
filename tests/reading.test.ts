@@ -6,7 +6,7 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { lovedIn } from '@/engine/systems/enjoyment';
-import { cardRefusal, hasSomethingToRead, readingCatalog } from '@/engine/systems/reading';
+import { NOVEL_WORDS, READ_WPM, cardRefusal, hasSomethingToRead, readFor, readingCatalog } from '@/engine/systems/reading';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 
@@ -38,5 +38,36 @@ describe('a reader', () => {
     expect(lovedIn(p, 'unwind')).toEqual(['reading']);
     // What's on sale is what's sold in the country they live in.
     expect(sim.execute({ kind: 'reading.buy', payload: { id: 'us-james' } }).error).toBe('It’s sold in another country.');
+  });
+
+  it('reads a book through, at Brysbaert’s 260 words a minute and the corpus’s novel, and then wants another', () => {
+    const sim = life('ie-lei-dublin', 'read-through');
+    const p = sim.player;
+    p.interests = ['reading'];
+    const book = readingCatalog(sim, p).find((x) => x.buy.kind === 'book')!;
+    sim.must({ kind: 'reading.buy', payload: { id: book.buy.id } });
+    expect(NOVEL_WORDS).toBe(96_398);
+    const hours = Math.ceil(NOVEL_WORDS / (60 * READ_WPM));
+    for (let h = 1; h < hours; h += 1) expect(readFor(sim, p, 60)).toBeUndefined();
+    expect(hasSomethingToRead(p)).toBe(true);
+    expect(readFor(sim, p, 60)).toBe(book.buy.label);
+    expect(hasSomethingToRead(p)).toBe(false);
+    expect(lovedIn(p, 'unwind')).toEqual([]);
+    expect(sim.universe.notifications.some((n) => n.title === 'A Book Read Through')).toBe(true);
+    // A library card doesn't run out.
+    sim.must({ kind: 'reading.library_card', payload: {} });
+    expect(hasSomethingToRead(p)).toBe(true);
+  });
+
+  it('an hour unwinding at home is an hour of the book', () => {
+    const sim = life('ie-lei-dublin', 'read-hour');
+    const p = sim.player;
+    p.interests = ['reading'];
+    sim.must({ kind: 'reading.buy', payload: { id: readingCatalog(sim, p).find((x) => x.buy.kind === 'book')!.buy.id } });
+    p.wellbeing.stress = 60;
+    const r = sim.execute({ kind: 'life.look_after', payload: { action: 'unwind' } });
+    expect(r.ok, r.error).toBe(true);
+    const owned = (p.items ?? []).find((i) => i.kind.startsWith('book:'))!;
+    expect(owned.readWords).toBe(60 * READ_WPM);
   });
 });

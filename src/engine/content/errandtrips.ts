@@ -59,14 +59,30 @@ export const MIN_PER_KM: Readonly<Record<string, number>> = {
 };
 
 /** A meter's hourly rate, in the town's money; none where none is published. */
-export const METER: Readonly<Record<string, { perHour: number; currency: string; zone: string }>> = {
-  'us-ny-newyork': { perHour: 5, currency: 'USD', zone: 'Manhattan south of 96th Street' },
+/**
+ * A town's street meter: its rate, and from 2026-10-03 (`research-used-cars-parking.json`)
+ * its longest stay and the days it's free.
+ * - New York's NYC DOT prices each hour of a session in turn, the first $5 and
+ *   the second $8.25 south of 96th Street, and posts no third: two hours, and
+ *   none charged on Sundays (its own page).
+ * - New Haven's is a one-hour meter.
+ * - Vancouver's every meter in the city's own open data: the daytime median
+ *   $2.00 an hour, and two hours on 2,839 of its 3,642 meters.
+ * - Toronto's Green P street meters three hours and Westminster's four, both
+ *   read secondhand; Mexico City's parquímetros nothing on Sundays, secondhand.
+ * Dublin's and Los Angeles's longest stay is as signed, block by block, and
+ * isn't kept.
+ */
+export interface Meter { perHour: number; currency: string; zone: string; /** Each successive hour's price, where it rises. */ hourly?: readonly number[]; maxHours?: number; /** Weekdays it's free, 0 for Sunday. */ freeOn?: readonly number[] }
+export const METER: Readonly<Record<string, Meter>> = {
+  'us-ny-newyork': { perHour: 5, currency: 'USD', zone: 'Manhattan south of 96th Street', hourly: [5, 8.25], maxHours: 2, freeOn: [0] },
   'us-ca-losangeles': { perHour: 1.5, currency: 'USD', zone: 'the city’s base rate' },
-  'us-ct-newhaven': { perHour: 1.5, currency: 'USD', zone: 'a one-hour meter' },
-  'uk-eng-london': { perHour: 4.7, currency: 'GBP', zone: 'Westminster, zone A' },
+  'us-ct-newhaven': { perHour: 1.5, currency: 'USD', zone: 'a one-hour meter', maxHours: 1 },
+  'uk-eng-london': { perHour: 4.7, currency: 'GBP', zone: 'Westminster, zone A', maxHours: 4 },
   'ie-lei-dublin': { perHour: 4, currency: 'EUR', zone: 'the yellow zone' },
-  'ca-on-toronto': { perHour: 5, currency: 'CAD', zone: 'downtown' },
-  'mx-cmx-mexicocity': { perHour: 13.6, currency: 'MXN', zone: 'a parquímetro zone' },
+  'ca-on-toronto': { perHour: 5, currency: 'CAD', zone: 'downtown', maxHours: 3 },
+  'ca-bc-vancouver': { perHour: 2, currency: 'CAD', zone: 'the city’s daytime median', maxHours: 2 },
+  'mx-cmx-mexicocity': { perHour: 13.6, currency: 'MXN', zone: 'a parquímetro zone', freeOn: [0] },
 };
 
 /** A station in the town fuel is bought at. */

@@ -19,6 +19,11 @@ import { boatOf, charterAt, charterCost, charterRefusal, outingCost, outingRefus
 import { bikeHere, rideOut, rideRefusal, trailOut, trailRefusal } from './outings';
 import { jetLagLoss } from './jetlag';
 import type { Simulation } from '../core/simulation';
+import { DROP_INS, DROP_IN_MINUTES, type DropIn } from '../content/dropins';
+import { CITIES } from '../content/geography';
+import type { Money } from '../core/money';
+import { inSaveMoney } from './banking';
+import { salesTaxRate } from '../content/tax';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
@@ -39,6 +44,10 @@ import { watchRefusal } from './homelife';
 import { takePortion } from './pantry';
 import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty, wearForSwim } from './wardrobe';
 import { SITTING_MET } from './coldstress';
+import { countWash } from './water';
+import { bookInHand, readFor } from './reading';
+import { cutNow } from './utilities';
+import { SHAVE, shave, shaveReady, sprayUsed } from './hygiene';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
@@ -426,6 +435,23 @@ export function registerLife(sim: Simulation): void {
     return { doneAt: s.now, paid: q.price + q.tip };
   });
 
+  // --- A yoga or dance class, taken one at a time (`content/dropins.ts`, from 2026-10-03) ---
+  sim.onCommand<{ classId: string }, { doneAt: number; paid: number }>('class.take', (p, { sim: s }) => {
+    const person = s.player;
+    const c = DROP_INS.find((x) => x.id === p?.classId);
+    if (!c) throw new CommandError('There’s no such class.');
+    if (person.currentLocationId !== c.cityId) throw new CommandError(`${c.studio} is in ${CITIES.require(c.cityId).name}.`);
+    const busy = occupiedAt(s, s.now);
+    if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
+    const paid = dropInPrice(s, c);
+    if (!spend(s, person, paid, `${c.studio}, ${c.label.toLowerCase()}`, 'personal')) throw new CommandError('The payment didn’t go through.');
+    s.advanceTo(s.now + DROP_IN_MINUTES * 60_000);
+    exerts(person, c.met, DROP_IN_MINUTES / 60);
+    // Under three METs it's an hour unwinding, not a workout, as a lesson is (`systems/clubs.ts`).
+    applyLookingAfter(person, c.met >= 3 ? 'exercise' : 'unwind', s.now);
+    return { doneAt: s.now, paid };
+  });
+
   // --- Looking after yourself ---------------------------------------------
 
   sim.onCommand<{ action: LookAfter; how?: string }, { doneAt: number; changed: Partial<Wellbeing> }>(
@@ -438,7 +464,8 @@ export function registerLife(sim: Simulation): void {
       // Unwinding in front of the TV or a game, at home, by what the place's law and what you pay for allow (`systems/homelife.ts`).
       if (action === 'unwind' && p.how) {
         if (!atHome(s.player)) throw new CommandError('That’s at home.');
-        const no = watchRefusal(s, s.player, String(p.how));
+        // With a book of their own, from 2026-10-03: picked up where it was left (`systems/reading.ts`).
+        const no = p.how === 'read' ? (bookInHand(s.player) ? undefined : 'There’s no book at home you haven’t read through.') : watchRefusal(s, s.player, String(p.how));
         if (no) throw new CommandError(no);
       }
 
@@ -470,10 +497,14 @@ export function registerLife(sim: Simulation): void {
       if (action === 'boat' && !spend(s, person, cost, 'Gas for the boat, at the marina', 'vehicle')) throw new CommandError('The payment didn’t go through.');
       if (action === 'charter' && !spend(s, person, cost, `A boat chartered with its captain, ${charterAt(person.currentLocationId)?.operator ?? ''}`, 'personal')) throw new CommandError('The payment didn’t go through.');
       // A workout or a swim is an outfit worn.
+      // A reader unwinding at home with a book of their own reads it (`readFor`, from 2026-10-03).
+      const reads = action === 'unwind' && atHome(person) && (p.how === 'read' || (!p.how && lovedIn(person, 'unwind').includes('reading')));
       if (action === 'swim') wearForSwim(s, person);
       else if (action === 'exercise' || action === 'ride' || action === 'court') wearOutfit(s, person, true);
       // The lawn cut (`systems/lawns.ts`, from 2026-10-02).
       if (action === 'mow') { const home = livingIn(person); if (home) mow(home, s.now); }
+      // The place's spray, where there's some (from 2026-10-03).
+      if (action === 'tidy') sprayUsed(s, person);
       if (action === 'washup') washUp(s, person);
       const before = { ...person.wellbeing };
       // Eaten out where there's no kitchen: a restaurant's meal too.
@@ -485,8 +516,14 @@ export function registerLife(sim: Simulation): void {
       // A bike's ride builds as a run does, the same hour's work outdoors (`content/rides.ts`).
       const bike = action === 'ride' ? bikeHere(person) : undefined;
       applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : action === 'ride' || action === 'court' ? TRAINING.run : 1, action === 'unwind' && atHome(person) ? unwindComfort(person) : 1);
+      // Read after the hour's enjoyment is counted, so a book finished in it still gave it.
+      if (reads) readFor(s, person, LOOKING_AFTER.unwind.minutes);
       // A shower or a bath uses its soap and shampoo, and without them doesn't leave them as clean (`systems/hygiene.ts`).
       if (action === 'wash' || action === 'bathe') person.wellbeing.hygiene = Math.min(person.wellbeing.hygiene ?? 100, showerUses(s, person));
+      // Metered at home, against the average (`systems/water.ts`, from 2026-10-03).
+      if ((action === 'wash' || action === 'bathe') && atHome(person)) countWash(person, action === 'bathe');
+      // A shave with it on its day, where the razor and cream are to hand (from 2026-10-03).
+      if (action === 'wash') shave(s, person);
       // Dried on one of their own towels at home, a use toward its wash; a hotel, a let or a gym gives its own (`useTowel`, from 2026-10-02).
       if ((action === 'wash' || action === 'bathe') && atHome(person) && !useTowel(s, person) && person.id === s.universe.playerId) s.notify({ category: 'home', title: 'No Clean Towel', body: 'Every towel to hand is in the wash or still drying: put a load on.', importance: 25, route: '/workspace/clothes' });
       // An hour of it, at its injury rate (`content/injury.ts`).
@@ -561,6 +598,11 @@ const BATH_RELIEF = 8;
 const MEAL = 50;
 const WORKOUT_FITNESS = 0.6;
 const WORKOUT_ENERGY = 10;
+/** A class's single price where it is, the town's tax added where the studio's price is before it, in the save's money. */
+export function dropInPrice(sim: Simulation, c: DropIn): Money {
+  return inSaveMoney(sim, Math.round(c.price * (1 + (c.taxIncluded ? 0 : salesTaxRate(c.cityId, sim.now, 'general'))) * 100), c.currency);
+}
+
 /** Too full to eat, too clean to shower, and too spent to train. */
 const FULL = 90;
 const CLEAN = 95;
@@ -604,7 +646,10 @@ export function minutesFor(sim: Simulation, action: LookAfter): number {
   if (action === 'tidy') { const place = placeOf(sim, sim.player); return place ? cleaningMinutes(place) : LOOKING_AFTER.tidy.minutes; }
   if (action === 'washup') return Math.max(1, Math.round(WASH_UP.minutesADay * (livingOf(sim.player).dishes ?? 1)));
   // In a flat-share, waiting for the bathroom first (`bathroomWait` in `systems/rooms.ts`, from 2026-10-03).
-  if (action === 'wash' || action === 'bathe') return LOOKING_AFTER[action].minutes + bathroomWait(sim, sim.player, sim.now, LOOKING_AFTER[action].minutes);
+  if (action === 'wash' || action === 'bathe') {
+    const own = LOOKING_AFTER[action].minutes + (action === 'wash' && shaveReady(sim, sim.player) ? SHAVE.minutes : 0);
+    return own + bathroomWait(sim, sim.player, sim.now, own);
+  }
   return LOOKING_AFTER[action].minutes;
 }
 
@@ -637,6 +682,16 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if ((action === 'eat' || action === 'order' || action === 'laundry') && canPayFor(sim, person, action === 'laundry' ? 'laundry' : 'food') < costFor(sim, action) && !(action === 'eat' && kitchenMeal(sim, person))) return 'You can’t afford it.';
   if (action === 'eat' && cooks(sim, person) && !kitchenMeal(sim, person) && sinkFull(person)) return SINK_FULL;
   if ((action === 'wash' || action === 'bathe') && (w.hygiene ?? 80) >= CLEAN) return 'You’re already clean.';
+  // The water or the gas cut off at home (`systems/utilities.ts`, from 2026-10-03).
+  if (atHome(person) && (action === 'wash' || action === 'bathe' || action === 'washup' || (action === 'laundry' && laundryWay(sim, person) !== 'none'))) {
+    const off = cutNow(person, 'water', sim.now);
+    if (off) return `${off.by}’s water is off at home until ${formatTime(off.until, sim.zone)}.`;
+  }
+  // A gas cut leaves no hot water for a bath: a home cut off has gas, and its boiler heats the bath; an electric shower still runs.
+  if (atHome(person) && action === 'bathe') {
+    const off = cutNow(person, 'gas', sim.now);
+    if (off) return `There’s no hot water for a bath: ${off.by}’s gas is off until ${formatTime(off.until, sim.zone)}.`;
+  }
   if ((action === 'wash' || action === 'bathe') && !atHome(person) && roomGone(person)) return person.stay?.readyAt !== undefined ? `The room isn’t ready until ${formatTime(person.stay.readyAt, sim.zone)}.` : 'You’ve checked out, and the room is gone until you leave.';
   if (action === 'bathe' && !place?.fixtures.bathtub) return atHome(person) ? 'There’s no bath where you live, only a shower.' : 'There’s no bath where you’re staying, only a shower.';
   if ((action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';

@@ -4,9 +4,11 @@
  * flat-share's bathroom.
  */
 import { describe, expect, it } from 'vitest';
+import { SECOND_BATH_SHARE, drawRental } from '@/engine/systems/dwelling';
+import { contactsOf, newContact } from '@/engine/systems/people';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_HOUR, startOfDay } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, startOfDay } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { FURNISHABLE, KIVIK_M2, NDSS, TABLE_SET_M2, bathroomWait, closetUsedL, fitRefusal, footprintOf, furnishedM2, overflow, roomsOf } from '@/engine/systems/rooms';
 import { addItem, homeKeyOf, itemsOf, moveRefusal } from '@/engine/systems/items';
@@ -29,7 +31,7 @@ describe('the rooms', () => {
   it('are a let room’s 11.5 m² in a flat-share, or the home’s own size; built-in storage by bedrooms', () => {
     const sim = life('us-ny-newyork', 'rooms-of');
     flatShare(sim);
-    expect(roomsOf(sim, sim.player)).toEqual({ floorM2: 11.5, closetL: 1.0 * 2.3 * 1_000, flatmates: 2 });
+    expect(roomsOf(sim, sim.player)).toEqual({ floorM2: 11.5, closetL: 1.0 * 2.3 * 1_000, flatmates: 2, bathrooms: 1 });
     ownFlat(sim, 650, 2);
     const r = roomsOf(sim, sim.player)!;
     expect(r.floorM2).toBeCloseTo(650 * 0.092903, 6);
@@ -130,6 +132,28 @@ describe('a flat-share’s bathroom', () => {
     for (let m = 0; m < 120; m += 5) expect(bathroomWait(sim, sim.player, day + 6.5 * MS_HOUR + m * 60_000, 20)).toBe(0);
   });
 
+  it('a partner living there shares a one-bathroom home’s mornings, and not where there’s a second', () => {
+    const sim = life('us-ny-newyork', 'rooms-partner');
+    ownFlat(sim);
+    const zone = CITIES.require(sim.player.home!.cityId).timeZone;
+    const day = startOfDay(sim.now, zone);
+    const morning = () => { let w = 0; for (let m = 0; m < 120; m += 5) w = Math.max(w, bathroomWait(sim, sim.player, day + 6.5 * MS_HOUR + m * 60_000, 20)); return w; };
+    expect(morning()).toBe(0);
+    const partner = newContact(sim, sim.player, sim.player.home!.cityId, 'rooms-partner-c', { at: sim.now, how: 'school' });
+    partner.livesWith = sim.now;
+    contactsOf(sim.player).push(partner);
+    expect(roomsOf(sim, sim.player)!.bathrooms).toBe(1);
+    expect(morning()).toBeGreaterThan(0);
+    // At most a shower of yours that would run into theirs, and theirs.
+    expect(morning()).toBeLessThanOrEqual(Math.ceil(20 + 7.8));
+    // A house of two bathrooms: the partner's shower is in the other.
+    const facts: HomeFacts = { type: 'house', address: 'Test House', beds: 3, baths: 2, size: 1_400, built: 2000, features: [], parts: {}, hoaUsd: 0 };
+    const owned = ownBuilt(sim, sim.player, { cityId: sim.player.home!.cityId, facts, price: 600_000_00, closing: 0 });
+    sim.player.home = { kind: 'owned', cityId: owned.cityId, homeId: owned.id, since: sim.now };
+    expect(roomsOf(sim, sim.player)!.bathrooms).toBe(2);
+    expect(morning()).toBe(0);
+  });
+
   it('a shower then takes the wait as well', () => {
     const sim = life('us-ny-newyork', 'rooms-shower');
     flatShare(sim);
@@ -140,5 +164,40 @@ describe('a flat-share’s bathroom', () => {
     const wait = bathroomWait(sim, sim.player, sim.now, 20);
     expect(wait).toBeGreaterThan(0);
     expect(minutesFor(sim, 'wash')).toBe(20 + wait);
+  });
+});
+
+describe('a rented home’s bathrooms', () => {
+  it('a second with a shower at the metro’s renters’ share, for two bedrooms or more', () => {
+    const sim = life('us-ny-newyork', 'rooms-baths');
+    let two = 0;
+    const n = 1500;
+    for (let k = 0; k < n; k += 1) if ((drawRental(sim, sim.player, 'us-ny-newyork', true, k).baths ?? 1) === 2) two += 1;
+    expect(two / n).toBeGreaterThan(SECOND_BATH_SHARE['us-ny-newyork']! - 0.03);
+    expect(two / n).toBeLessThan(SECOND_BATH_SHARE['us-ny-newyork']! + 0.03);
+    // A one-bedroom of one's own has one; London's renters' share wasn't read.
+    for (let k = 0; k < 50; k += 1) expect(drawRental(sim, sim.player, 'us-ca-losangeles', false, k).baths).toBeUndefined();
+    for (let k = 0; k < 50; k += 1) expect(drawRental(sim, sim.player, 'uk-eng-london', true, k).baths).toBeUndefined();
+    expect(SECOND_BATH_SHARE['us-ca-losangeles']).toBeCloseTo(0.309, 3);
+  });
+
+  it('two of them: a shower waits only while both are taken', () => {
+    const sim = life('us-ny-newyork', 'rooms-two-baths');
+    const zone = CITIES.require(sim.player.home!.cityId).timeZone;
+    const morning = (beds: number, baths: number) => {
+      sim.player.home = { ...sim.player.home!, kind: 'shared', unit: { ...unit, beds, baths } };
+      let w = 0;
+      for (let d = 0; d < 20; d += 1) {
+        const day = startOfDay(sim.now + d * MS_DAY, zone);
+        for (let m = 0; m < 120; m += 5) w += bathroomWait(sim, sim.player, day + 6.5 * MS_HOUR + m * 60_000, 20);
+      }
+      return w;
+    };
+    expect(roomsOf(sim, sim.player)!.bathrooms).toBe(1);
+    // One flatmate and two bathrooms: never a wait.
+    expect(morning(2, 2)).toBe(0);
+    expect(morning(2, 1)).toBeGreaterThan(0);
+    // Three flatmates: two bathrooms wait less than one.
+    expect(morning(4, 2)).toBeLessThan(morning(4, 1));
   });
 });

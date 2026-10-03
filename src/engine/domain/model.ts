@@ -307,6 +307,19 @@ export interface Person {
   suppliesSince?: number;
   /** The toiletry of each kind they use first and buy again, by its id (`hygiene.use_first`, from 2026-10-02). */
   usesFirst?: Record<string, string>;
+  /** A dog or a cat of their own (`systems/pets.ts`, from 2026-10-03). */
+  pets?: import('../systems/pets').Pet[];
+  /** Where each program was left, by its id (`systems/programmes.ts`, from 2026-10-03). */
+  watching?: Record<string, import('../systems/programmes').Watching>;
+  /** What's marked favorite, by list (`systems/catalog.ts`, from 2026-10-03). */
+  favorites?: Record<string, string[]>;
+  /** The water or gas cut off at home, from when to when (`systems/utilities.ts`, from 2026-10-03). */
+  /** Pieces of jewelry commissioned and not yet ready (`systems/commissions.ts`, from 2026-10-03). */
+  commissions?: import('../systems/commissions').Commission[];
+  supplyCuts?: { water?: import('../systems/utilities').SupplyCut; gas?: import('../systems/utilities').SupplyCut };
+  /** How often they shave at home, chosen (`systems/hygiene.ts`, from 2026-10-03); not at all where unset. */
+  shaves?: import('../systems/hygiene').ShaveEvery;
+  lastShave?: number;
   /** Jewelry and watches pledged at a pawnbroker (`systems/pawn.ts`, from 2026-10-02). */
   pawns?: import('../systems/pawn').Pawn[];
   /** This month's test drive of a used car (`systems/usedcars.ts`, from 2026-10-03). */

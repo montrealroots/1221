@@ -30,7 +30,7 @@ import { FUEL } from '../content/vehiclefees';
 import { BED_MARKET, BED_PARTS, DEFAULT_BED_SIZE, SLEEPS_TWO_CM, bedSize, type BedPart } from '../content/beds';
 import { MS_DAY } from '../core/time';
 import { inTheBank, owe, payFromBank } from './household';
-import { jurisdictionOf, kindOf, modelById, runningCost, vehiclesOf, type OwnedVehicle } from './vehicles';
+import { jurisdictionOf, isPickup, kindOf, modelById, runningCost, vehiclesOf, type OwnedVehicle } from './vehicles';
 import { mayDrive } from './documents';
 import { addItem, followTheMove, hasAtHome, homeKeyOf, itemsOf } from './items';
 import { KIVIK_M2, fitRefusal } from './rooms';
@@ -145,13 +145,14 @@ export function moversCost(sim: Simulation, person: Person, fromCity: string, to
 }
 
 /**
- * A cargo van of one's own where the move starts, a road to the new home and
+ * A cargo van of one's own where the move starts (or a pickup, from
+ * 2026-10-03, its bed taking the bed and sofa as well), a road to the new home and
  * a license to drive it there (from 2026-09-30): it carries the bed and sofa,
  * and the move costs its fuel and upkeep for the road, not the movers.
  */
 export function ownVanFor(sim: Simulation, person: Person, fromCity: string, toCity: string): OwnedVehicle | undefined {
   if (!byRoad(fromCity, toCity) || !mayDrive(person, fromCity, sim.now).ok) return undefined;
-  return vehiclesOf(person).find((v) => v.soldAt === undefined && !v.repossessed && (v.at ?? v.cityId) === fromCity && kindOf(modelById(v.modelId)!) === 'van');
+  return vehiclesOf(person).find((v) => v.soldAt === undefined && !v.repossessed && (v.at ?? v.cityId) === fromCity && (kindOf(modelById(v.modelId)!) === 'van' || isPickup(modelById(v.modelId)!)));
 }
 
 /**

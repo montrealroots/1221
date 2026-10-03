@@ -63,6 +63,9 @@ export interface Item {
   paid?: Money;
   /** Its chosen options (a size, a color, a fabric), where it has any. */
   spec?: Readonly<Record<string, string>>;
+  /** A book's words read so far, and whether it's been read through (`systems/reading.ts`, from 2026-10-03). */
+  readWords?: number;
+  readThrough?: true;
   /** How much room it takes, and how much it holds where it's a container, liters. */
   volumeL?: number;
   holdsL?: number;
@@ -82,6 +85,10 @@ export interface Item {
   supply?: import('./hygiene').Supply;
   /** A quartz watch's battery fitted then, where it's been changed since it was bought (`systems/watches.ts`, from 2026-10-02). */
   batteryAt?: Instant;
+  /** A mechanical watch's last service by its maker, from 2026-10-03 (`systems/watches.ts`). */
+  servicedAt?: Instant;
+  /** Words engraved on a piece, from 2026-10-03 (`systems/commissions.ts`). */
+  engraved?: string;
   /** Jewelry or a watch scheduled on the home's insurance, at what was paid (`systems/valuables.ts`, from 2026-10-02). */
   scheduled?: true;
   /** A bed's market and size (`content/beds.ts`, from 2026-10-01); an older bed is its country's usual double. */

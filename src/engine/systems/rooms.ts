@@ -28,6 +28,11 @@
  * minute drawn between 6:30 and 8:30, SLATE's estimate of a working morning,
  * for REU2016's average shower, 7.8 minutes; a shower that would meet one of
  * theirs waits for it.
+ *
+ * From 2026-10-03 a partner living with you showers the same way, sharing
+ * the bathroom where the home has one: an owned home's own count, a rented
+ * home's one, SLATE's reading. With two or more, a partner's shower is in
+ * the other and nobody waits. Until then only flatmates were in the morning.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -37,6 +42,7 @@ import { CITIES } from '../content/geography';
 import { BED_MARKET, DEFAULT_BED_SIZE, bedSize } from '../content/beds';
 import { homePlace } from './dwelling';
 import { livingIn } from './homes';
+import { livesWithPartner } from './marriage';
 import { homeKeyOf, itemsOf, volumeOf, type Item, type Spot } from './items';
 import { pieceById } from './furnishings';
 import { bareHome } from './furniture';
@@ -51,7 +57,7 @@ export const BUILT_IN: ReadonlySet<Spot> = new Set(['wardrobe', 'drawers', 'stor
 /** A flatmate's morning shower: when it may start, from 6:30 for two hours, and REU2016's 7.8 minutes. */
 export const MORNING = { fromMinute: 6 * 60 + 30, spanMinutes: 120, showerMinutes: 7.8 } as const;
 
-export interface Rooms { floorM2: number; closetL: number; flatmates: number }
+export interface Rooms { floorM2: number; closetL: number; flatmates: number; /** Its bathrooms: an owned home's count, else one (from 2026-10-03). */ bathrooms: number }
 
 /** The home they live in as rooms: the floor, built-in storage by its bedrooms, and who shares the bathroom. */
 export function roomsOf(sim: Simulation, person: Person): Rooms | undefined {
@@ -61,10 +67,10 @@ export function roomsOf(sim: Simulation, person: Person): Rooms | undefined {
   const owned = livingIn(person);
   const bedrooms = place.type === 'studio' ? 0 : owned?.facts.beds ?? home.unit?.beds ?? 1;
   if (home.kind === 'shared') {
-    return { floorM2: NDSS.doubleM2, closetL: NDSS.storageM2[0]! * NDSS.ceilingM * 1_000, flatmates: Math.max(0, (home.unit?.beds ?? 2) - 1) };
+    return { floorM2: NDSS.doubleM2, closetL: NDSS.storageM2[0]! * NDSS.ceilingM * 1_000, flatmates: Math.max(0, (home.unit?.beds ?? 2) - 1), bathrooms: home.unit?.baths ?? 1 };
   }
   const storage = NDSS.storageM2[Math.min(NDSS.storageM2.length - 1, Math.max(1, bedrooms))]!;
-  return { floorM2: place.size * SQFT_M2, closetL: storage * NDSS.ceilingM * 1_000, flatmates: 0 };
+  return { floorM2: place.size * SQFT_M2, closetL: storage * NDSS.ceilingM * 1_000, flatmates: 0, bathrooms: owned?.facts.baths ?? home.unit?.baths ?? 1 };
 }
 
 /** A piece's footprint, m². */
@@ -138,11 +144,21 @@ export function bathroomWait(sim: Simulation, person: Person, at: Instant, minut
   if (!rooms || person.home?.cityId !== person.currentLocationId) return 0;
   const zone = CITIES.require(person.home.cityId).timeZone;
   const day = startOfDay(at, zone);
-  const slots = Array.from({ length: rooms.flatmates }, (_, n) => {
+  // Who else showers in the morning: the flatmates, and a partner living there. With more than one bathroom, a shower waits
+  // only while every one is taken (from 2026-10-03).
+  const others = rooms.flatmates + (livesWithPartner(person) ? 1 : 0);
+  const slots = Array.from({ length: others }, (_, n) => {
     const from = day + (MORNING.fromMinute + sim.rng('rooms.shower', person.id, String(day), String(n)).next() * MORNING.spanMinutes) * MS_MINUTE;
     return [from, from + MORNING.showerMinutes * MS_MINUTE] as const;
   }).sort((a, b) => a[0] - b[0]);
-  let t = at;
-  for (const [from, to] of slots) if (from < t + minutes * MS_MINUTE && to > t) t = to;
-  return Math.ceil((t - at) / MS_MINUTE);
+  if (rooms.bathrooms < 2) {
+    let t = at;
+    for (const [from, to] of slots) if (from < t + minutes * MS_MINUTE && to > t) t = to;
+    return Math.ceil((t - at) / MS_MINUTE);
+  }
+  // Minute by minute, the first start at which fewer showers than bathrooms run through the shower.
+  const busy = (t: number) => { for (let m = 0; m < minutes; m += 1) { const u = t + m * MS_MINUTE; if (slots.filter(([from, to]) => from <= u && to > u).length >= rooms.bathrooms) return true; } return false; };
+  let wait = 0;
+  while (wait < 240 && busy(at + wait * MS_MINUTE)) wait += 1;
+  return wait;
 }

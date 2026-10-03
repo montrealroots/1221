@@ -23,7 +23,15 @@ import { MS_DAY, formatDate, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
-import { CAR_MODELS, type CarModel, type VehicleKind } from '../content/vehiclecatalog';
+import { CAR_MODELS as CATALOG, type CarModel, type VehicleKind } from '../content/vehiclecatalog';
+import { CA_WEIGHT_FEE, GB_PICKUP_TAX, PICKUP_BODIES, PICKUP_MODELS } from '../content/pickups';
+
+/** The catalog's cars with its pickups marked and weighed, and the pickups added (`content/pickups.ts`). */
+export const CAR_MODELS: readonly CarModel[] = [
+  ...CATALOG.map((m) => { const p = PICKUP_BODIES[m.id]; return p ? { ...m, body: 'pickup' as const, kerbKg: m.kerbKg ?? p.kerbKg ?? null } : m; }),
+  ...PICKUP_MODELS,
+];
+export const isPickup = (m: CarModel): boolean => m.body === 'pickup';
 import { BIKE_MODELS } from '../content/bikecatalog';
 import { RV_MODELS } from '../content/rvcatalog';
 import { RIDE_MODELS } from '../content/ridecatalog';
@@ -39,7 +47,7 @@ import { BC, BIKE_FEES, BIKE_INSURANCE, RV_FEES, RV_INSURANCE, CA_STATE, CMX, CT
 import { homeOf } from './earnings';
 import { owe, payFromBank, spend } from './household';
 import { mayDrive, type VehicleClass } from './documents';
-import { gone, mayBeStolen, stolenNow } from './theft';
+import { gone, hasGarage, mayBeBrokenInto, mayBeStolen, stolenNow } from './theft';
 import { tireFactor, tireInsuranceFactor, tiresMonth } from './tires';
 import { byRoad as roadBetween, drive } from './driving';
 import { registerWraps } from './wraps';
@@ -99,6 +107,8 @@ export interface OwnedVehicle {
   winterTires?: import('./tires').WinterTires;
   /** Stolen, and when it comes back where it was found (`systems/theft.ts`, from 2026-09-30). */
   stolen?: { at: Instant; recoverAt?: Instant };
+  /** Where it's kept overnight, from 2026-10-03, where its owner says (`systems/theft.ts`). */
+  keptIn?: 'garage' | 'street';
   /** An unscheduled repair it needs, and a garage that has it (`systems/repairs.ts`, from 2026-10-01). */
   fault?: import('./repairs').Fault;
   /** A stereo fitted (`systems/caraudio.ts`, from 2026-10-02), and speakers and an amplifier (from 2026-10-03). */
@@ -115,6 +125,8 @@ export interface OwnedVehicle {
   /** Listed for a private sale (`systems/carsale.ts`, from 2026-10-03). */
   listed?: import('./carsale').Listing;
   inShop?: import('./repairs').InShop;
+  /** A repair booked ahead at a shop that takes appointments, and when (`appointmentAt`, from 2026-10-03). */
+  booked?: { shopId: string; at: Instant };
   /** Kilometers driven on errands since the month's driving (`systems/trips.ts`), taken out of it. */
   errandKm?: number;
   /** Its interior as commissioned, and one ordered and not yet fitted (`systems/interiors.ts`, from 2026-10-02). */
@@ -387,7 +399,14 @@ export function caYear(model: CarModel, value: Money, age = 0): Money {
   const v = value / 100;
   // The smog abatement fee, to a car's eighth year, in place of the smog check; none on an electric car.
   const abatement = model.fuel === 'ev' ? 0 : CA_STATE.abatement.find(([upTo]) => age < upTo)?.[1] ?? 0;
-  return Math.round((CA_STATE.registration + CA_STATE.chp + bracket(CA_STATE.tif, v) + (model.fuel === 'ev' ? CA_STATE.zev : 0) + abatement) * 100 + value * CA_STATE.vlf);
+  return Math.round((CA_STATE.registration + CA_STATE.chp + bracket(CA_STATE.tif, v) + (model.fuel === 'ev' ? CA_STATE.zev : 0) + abatement + caWeightFee(model)) * 100 + value * CA_STATE.vlf);
+}
+
+/** California's weight fee on a pickup by its unladen weight, its curb weight taken (VC §9400); nothing where its maker publishes no weight, or it isn't one. */
+export function caWeightFee(model: CarModel): number {
+  if (!isPickup(model) || !model.kerbKg) return 0;
+  const lb = model.kerbKg * 2.20462;
+  return CA_WEIGHT_FEE.find(([upTo]) => lb <= upTo)?.[1] ?? CA_WEIGHT_FEE[CA_WEIGHT_FEE.length - 1]![1];
 }
 
 /**
@@ -509,7 +528,9 @@ export function renewal(v: OwnedVehicle, at: Instant): { amount: Money; next: In
     case 'US-NY': return { amount: c(bracket(NY_REGISTRATION_BY_WEIGHT, lbOf(m)) + (NYC.has(v.cityId) ? NY.nycUseTax + NY.mctd : 0)), next: year(2), memo: 'Registration renewed, two years' };
     case 'US-CT': return { amount: c(CT.registration + CT.admin + CT.cleanAir + CT.parks), next: year(3), memo: 'Registration renewed, three years' };
     case 'US-CA': return { amount: caYear(m, valueOf(v, at), age), next: year(1), memo: 'Registration renewed, the year' };
-    case 'GB': return { amount: c(GB.vedStandard + (age < 6 && m.price / 100 > (m.fuel === 'ev' ? GB.supplementOverEv : GB.supplementOver) ? GB.supplement : 0)), next: year(1), memo: 'Vehicle tax, the year' };
+    // A pickup is a commercial vehicle to Britain's vehicle tax (`content/pickups.ts`).
+    case 'GB': if (isPickup(m)) return { amount: c(GB_PICKUP_TAX), next: year(1), memo: 'Vehicle tax, the year, a pickup' };
+      return { amount: c(GB.vedStandard + (age < 6 && m.price / 100 > (m.fuel === 'ev' ? GB.supplementOverEv : GB.supplementOver) ? GB.supplement : 0)), next: year(1), memo: 'Vehicle tax, the year' };
     case 'IE': return { amount: c(bracket(IE_MOTOR_TAX, m.co2 ?? 150)), next: year(1), memo: 'Motor tax, the year' };
     case 'CA-ON': return { amount: 0, next: year(1), memo: 'Plate renewed, the year (free since 2022)' };
     case 'CA-BC': return { amount: c(bracket(BC.licence, m.kerbKg ?? BC.assumedKg)), next: year(1), memo: 'License renewed, the year' };
@@ -683,6 +704,15 @@ export function registerVehicles(sim: Simulation): void {
   registerStandIn(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerCarCare(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
   registerInteriors(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)));
+  // Where it's kept overnight, which in England and Wales sets its theft and break-in odds (`systems/theft.ts`, from 2026-10-03).
+  sim.onCommand<{ vehicleId: string; where: 'garage' | 'street' }, { keptIn: 'garage' | 'street' }>('vehicle.keep_in', (p, { sim: s }) => {
+    const v = vehiclesOf(s.player).find((x) => x.id === String(p?.vehicleId) && x.soldAt === undefined);
+    if (!v) throw new CommandError('That isn’t a car you have.');
+    if (p?.where !== 'garage' && p?.where !== 'street') throw new CommandError('In the garage or on the street.');
+    if (p.where === 'garage' && !hasGarage(s.player)) throw new CommandError('Your home has no garage.');
+    v.keptIn = p.where;
+    return { keptIn: p.where };
+  });
   registerWraps(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!, (v) => liabilityOffered(v.jurisdiction, modelById(v.modelId)!));
   registerRepairs(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !stolenNow(x, sim.now)), (v) => modelById(v.modelId)!);
   sim.onSchedule(REPO_SALE_KIND, (item, s) => {
@@ -707,6 +737,7 @@ export function registerVehicles(sim: Simulation): void {
     // Stolen this month, at the place's rate, or back where it was found (`systems/theft.ts`).
     if (v.stolen?.recoverAt !== undefined && v.stolen.recoverAt <= s.now) delete v.stolen;
     mayBeStolen(s, person, v, m, valueOf(v, s.now), m.currency);
+    mayBeBrokenInto(s, person, v, m, valueOf(v, s.now), m.currency);
     if (v.soldAt !== undefined) return;
     const missing = stolenNow(v, s.now);
     // Insurance, the month's share of the year.

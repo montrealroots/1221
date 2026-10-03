@@ -13,7 +13,7 @@ import { documentsOf } from '@/engine/systems/documents';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { modLoading } from '@/engine/systems/mods';
 import { laidUp } from '@/engine/systems/repairs';
-import { coverRefusal, wrapCost, wrapRefusal, wrapShopById } from '@/engine/systems/wraps';
+import { coverRefusal, removalCost, unwrapRefusal, wrapCost, wrapRefusal, wrapShopById, wrapShopsIn } from '@/engine/systems/wraps';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const inSave = (sim: Simulation, units: number, from: string) => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -52,6 +52,48 @@ describe('a wrap', () => {
     const ny = life('us-ny-newyork', 'wr-ny');
     const v = car(ny, 'us-toyota-camry', 'us-ny');
     expect(wrapRefusal(ny.player, v, 'london-tint-studio', 'Red', 'gloss', ny.now)).toBe('The car isn’t in the shop’s town.');
+  });
+});
+
+describe('part of a car wrapped, and a wrap taken off', () => {
+  it('is each shop’s posted price for the roof, the hood or accent panels, by the car’s size', () => {
+    const mx = life('mx-cmx-mexicocity', 'wr-part-mx');
+    const ld = wrapShopById('los-deslumbrantes')!;
+    expect(wrapCost(mx, ld, modelById('mx-nissan-versa')!, 'roof')).toBe(inSave(mx, 5_900, 'MXN'));
+    expect(wrapCost(mx, ld, modelById('mx-nissan-np300')!, 'hood')).toBe(inSave(mx, 9_500, 'MXN'));
+    expect(wrapCost(mx, ld, modelById('mx-nissan-versa')!, 'accents')).toBeUndefined();
+    const to = life('ca-on-toronto', 'wr-part-to');
+    const avg = wrapShopById('advanced-vehicle-guard')!;
+    expect(wrapCost(to, avg, modelById('ca-toyota-rav4')!, 'roof')).toBe(inSave(to, 450, 'CAD'));
+    expect(wrapCost(to, avg, modelById('ca-ford-f-series')!, 'accents')).toBe(inSave(to, 1_250, 'CAD'));
+    const v = car(to, 'ca-toyota-rav4', 'ca-on');
+    expect(wrapRefusal(to.player, v, avg.id, 'Black', 'matte', to.now)).toBe('Advanced Vehicle Guard posts no price for wrapping the whole car.');
+    const r = to.must<{ paid: number; readyAt: number }>({ kind: 'vehicle.wrap', payload: { vehicleId: v.id, shopId: avg.id, color: 'Black', finish: 'gloss', part: 'roof' } });
+    expect(r.readyAt - to.now).toBe(MS_DAY);
+    expect(v.wrap).toMatchObject({ part: 'roof', color: 'Black' });
+    // New York, Los Angeles and Dublin each have a shop now.
+    expect(wrapShopsIn('us-ny-newyork').length).toBe(1);
+    expect(wrapShopsIn('us-ca-losangeles').length).toBe(1);
+    expect(wrapShopsIn('ie-lei-dublin').length).toBe(1);
+  });
+
+  it('comes off only where a shop posts that price: Raccoon’s, for London', () => {
+    const sim = life('uk-eng-london', 'wr-off');
+    const v = car(sim, 'gb-vauxhall-corsa', 'uk');
+    const raccoon = wrapShopById('raccoon')!;
+    expect(unwrapRefusal(sim.player, v, raccoon.id, sim.now)).toBe('It isn’t wrapped.');
+    sim.must({ kind: 'vehicle.wrap', payload: { vehicleId: v.id, shopId: 'london-tint-studio', color: 'Red', finish: 'matte' } });
+    expect(unwrapRefusal(sim.player, v, raccoon.id, sim.now)).toBe('It’s in a shop already.');
+    sim.advanceBy(4 * MS_DAY);
+    expect(unwrapRefusal(sim.player, v, 'london-tint-studio', sim.now)).toBe('That shop posts no price for taking a wrap off.');
+    expect(removalCost(sim, raccoon, modelById(v.modelId)!)).toBe(inSave(sim, 500, 'GBP'));
+    expect(removalCost(sim, raccoon, modelById('gb-toyota-hilux')!)).toBe(inSave(sim, 700, 'GBP'));
+    const loaded = modLoading(v);
+    const r = sim.must<{ paid: number; readyAt: number }>({ kind: 'vehicle.unwrap', payload: { vehicleId: v.id, shopId: raccoon.id } });
+    expect(r.paid).toBe(inSave(sim, 500, 'GBP'));
+    expect(r.readyAt - sim.now).toBe(MS_DAY);
+    expect(v.wrap).toBeUndefined();
+    expect(modLoading(v)).toBeLessThan(loaded);
   });
 });
 

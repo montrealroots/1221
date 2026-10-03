@@ -23,7 +23,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { dateKey, formatDate } from '@/engine/core/time';
+import { dateKey, formatDate , formatDateTime } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { homeOf } from '@/engine/systems/earnings';
@@ -36,7 +36,8 @@ import { MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
 import { faultCost, inShopNow, laidUp, repairRefusal, shopsFor } from '@/engine/systems/repairs';
 import { duesOf, joinRefusal, tierById, tiersFor } from '@/engine/systems/roadside';
 import type { RoadsideTier } from '@/engine/content/roadside';
-import { FINISHES, WRAP_COLORS, coverRefusal, wrapCost, wrapRefusal, wrapShopsIn, type Finish } from '@/engine/systems/wraps';
+import { englandRate, hasGarage, keptIn } from '@/engine/systems/theft';
+import { FINISHES, PART_LABEL as WRAP_PART_LABEL, WRAP_COLORS, WRAP_PARTS, coverRefusal, removalCost, unwrapRefusal, wrapCost, wrapRefusal, wrapShopsIn, type Finish, type WrapPart } from '@/engine/systems/wraps';
 import { inWarranty, serviceCost, serviceDue, serviceRefusal, serviceWhat, servicingKept, warrantyOf } from '@/engine/systems/carcare';
 import { CAR_SHOPS } from '@/engine/content/carshops';
 import { standInFor, standInQuote } from '@/engine/systems/standin';
@@ -153,6 +154,7 @@ export function VehiclesWorkspace() {
                             <ServiceControl v={v} />
                             <WrapControl v={v} />
                             <CoverControl v={v} />
+                            <KeptControl v={v} />
                             <ModifyControl v={v} />
                             {!v.hitch && towRating(v) > 0 && <Gated feature="vehicle.hitch" className="btn btn-sm btn-ghost" disabled={Boolean(hitchRefusal(sim, person, v))} title={hitchRefusal(sim, person, v) ?? `Rated to tow ${Math.round(towRating(v))} kg`} onClick={() => { const a = run<{ paid: number }>('vehicle.hitch', { vehicleId: v.id }); if (a.ok) toast(`A towbar fitted, for ${money(a.value!.paid)}.`, 'positive'); }}>Fit A Towbar</Gated>}
                             {v.transferBy !== undefined && <Gated feature="vehicle.transfer" className="btn btn-sm btn-ghost" title={laidUp(v, sim.now) ?? `Due by ${formatDate(v.transferBy, sim.zone)}`} onClick={() => { const a = run<{ penalty: number }>('vehicle.transfer', { vehicleId: v.id }); if (a.ok) toast(a.value!.penalty ? `Transferred, with a late penalty of ${money(a.value!.penalty)}.` : 'Transferred to you.', 'positive'); }}>Transfer It To You</Gated>}
@@ -608,28 +610,39 @@ function RepairControl({ v }: { v: OwnedVehicle }) {
           {shops.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
         </select>
       )}
-      <Gated feature="vehicle.repair" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? chosen?.address} onClick={() => { const a = run<{ paid: number }>('vehicle.repair', { vehicleId: v.id, shopId: chosen!.id }); if (a.ok) toast(`In at ${chosen!.name}, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>{chosen && shops.length === 1 ? `Book The Repair At ${chosen.name}` : 'Book The Repair'}</Gated>
+      <Gated feature="vehicle.repair" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? chosen?.address} onClick={() => { const a = run<{ paid: number; bookedFor?: number }>('vehicle.repair', { vehicleId: v.id, shopId: chosen!.id }); if (a.ok) toast(a.value!.bookedFor !== undefined ? `Booked in at ${chosen!.name}, ${formatDateTime(a.value!.bookedFor, sim.zone)}: it’s paid when it goes in.` : `In at ${chosen!.name}, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>{chosen && shops.length === 1 ? `Book The Repair At ${chosen.name}` : 'Book The Repair'}</Gated>
     </>
   );
 }
 
-/** A wrap in the color and finish chosen, at a shop in the car's town that posts its price (`systems/wraps.ts`). */
+/** A wrap in the color and finish chosen, whole or a part, at a shop in the car's town that posts its price, and taken off where one posts that (`systems/wraps.ts`). */
 function WrapControl({ v }: { v: OwnedVehicle }) {
   const { run, toast, sim } = useGame();
   const m = modelById(v.modelId)!;
-  const shops = wrapShopsIn(v.at ?? v.cityId);
+  const here = wrapShopsIn(v.at ?? v.cityId);
+  const parts = WRAP_PARTS.filter((x) => here.some((s) => s.parts[x]));
+  const [part, setPart] = useState<WrapPart>('full');
   const [shopId, setShopId] = useState('');
   const [color, setColor] = useState<string>(WRAP_COLORS[0]);
   const [finish, setFinish] = useState<Finish>('gloss');
-  if (!shops.length) return null;
-  const shop = shops.find((x) => x.id === shopId) ?? shops[0]!;
-  const no = wrapRefusal(sim.player, v, shop.id, color, finish, sim.now);
   const cur = saveCurrency(sim.universe);
+  const removers = here.filter((s) => s.removal);
+  const off = v.wrap ? removers.map((s) => ({ s, cost: removalCost(sim, s, m)! })).sort((a, b) => a.cost - b.cost)[0] : undefined;
+  if (!parts.length && !off) return null;
+  const chosen = parts.includes(part) ? part : parts[parts.length - 1]!;
+  const shops = here.filter((s) => s.parts[chosen]).sort((a, b) => wrapCost(sim, a, m, chosen)! - wrapCost(sim, b, m, chosen)!);
+  const shop = shops.find((x) => x.id === shopId) ?? shops[0];
+  const no = shop ? wrapRefusal(sim.player, v, shop.id, color, finish, sim.now, chosen) : undefined;
   return (
     <>
-      {v.wrap && <span className="xs dim">{`Wrapped, ${v.wrap.finish === 'gloss' ? 'Gloss' : v.wrap.finish === 'satin' ? 'Satin' : 'Matte'} ${v.wrap.color}`}</span>}
+      {v.wrap && <span className="xs dim">{`Wrapped, ${v.wrap.finish === 'gloss' ? 'Gloss' : v.wrap.finish === 'satin' ? 'Satin' : 'Matte'} ${v.wrap.color}${v.wrap.part ? `, ${WRAP_PART_LABEL[v.wrap.part]}` : ''}`}</span>}
+      {off && <Gated feature="vehicle.unwrap" className="btn btn-sm btn-ghost" disabled={Boolean(unwrapRefusal(sim.player, v, off.s.id, sim.now))} title={unwrapRefusal(sim.player, v, off.s.id, sim.now)} onClick={() => { const a = run<{ paid: number }>('vehicle.unwrap', { vehicleId: v.id, shopId: off.s.id }); if (a.ok) toast(`At ${off.s.name} to have it taken off, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>{`Take The Wrap Off At ${off.s.name}, ${formatMoney(off.cost, cur, { cents: false })}`}</Gated>}
+      {shop && <>
+      <select aria-label="What To Wrap" value={chosen} onChange={(e) => setPart(e.target.value as WrapPart)} style={{ width: 'auto' }}>
+        {parts.map((x) => <option key={x} value={x}>{WRAP_PART_LABEL[x]}</option>)}
+      </select>
       <select aria-label="Wrap Shop" value={shop.id} onChange={(e) => setShopId(e.target.value)} style={{ width: 'auto' }}>
-        {shops.map((x) => <option key={x.id} value={x.id}>{`${x.name}, ${formatMoney(wrapCost(sim, x, m), cur, { cents: false })}`}</option>)}
+        {shops.map((x) => <option key={x.id} value={x.id}>{`${x.name}, ${formatMoney(wrapCost(sim, x, m, chosen)!, cur, { cents: false })}`}</option>)}
       </select>
       <select aria-label="Wrap Color" value={color} onChange={(e) => setColor(e.target.value)} style={{ width: 'auto' }}>
         {WRAP_COLORS.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -637,8 +650,29 @@ function WrapControl({ v }: { v: OwnedVehicle }) {
       <select aria-label="Wrap Finish" value={finish} onChange={(e) => setFinish(e.target.value as Finish)} style={{ width: 'auto' }}>
         {FINISHES.map((x) => <option key={x} value={x}>{x === 'gloss' ? 'Gloss' : x === 'satin' ? 'Satin' : 'Matte'}</option>)}
       </select>
-      <Gated feature="vehicle.wrap" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ paid: number }>('vehicle.wrap', { vehicleId: v.id, shopId: shop.id, color, finish }); if (a.ok) toast(`At ${shop.name} to be wrapped, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>Wrap It</Gated>
+      <Gated feature="vehicle.wrap" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const a = run<{ paid: number }>('vehicle.wrap', { vehicleId: v.id, shopId: shop.id, color, finish, part: chosen }); if (a.ok) toast(`At ${shop.name} to be wrapped, for ${formatMoney(a.value!.paid, cur, { cents: false })}.`, 'positive'); }}>Wrap It</Gated>
+      </>}
     </>
+  );
+}
+
+/** Where a car is kept overnight, in England and Wales, where the Crime Survey sets its odds by it (`systems/theft.ts`). */
+function KeptControl({ v }: { v: OwnedVehicle }) {
+  const { run } = useGame();
+  const person = useWorld((s) => s.player);
+  const keep = useFeature('vehicle.keep_in');
+  if (!/^uk-(eng|wls)-/.test(v.at ?? v.cityId)) return null;
+  const where = keptIn(person, v);
+  const odds = (w: 'garage' | 'street') => `${(englandRate('of', w) / 100).toFixed(2)} stolen and ${(englandRate('from', w) / 100).toFixed(1)} broken into a 1,000 a year`;
+  return (
+    <div className="field" style={{ margin: 0 }}>
+      <label htmlFor={`kept-${v.id}`}>Kept Overnight</label>
+      <select id={`kept-${v.id}`} value={where} disabled={!keep.open} title={keep.reason ?? odds(where)} onChange={(e) => run('vehicle.keep_in', { vehicleId: v.id, where: e.target.value })} style={{ width: 'auto' }}>
+        <option value="street">On The Street</option>
+        {hasGarage(person) && <option value="garage">In Your Garage</option>}
+      </select>
+      <span className="xs dim">{odds(where)}</span>
+    </div>
   );
 }
 

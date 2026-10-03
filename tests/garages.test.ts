@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { GARAGES } from '@/engine/content/garages';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { garageCost, garagesIn } from '@/engine/systems/trips';
+import { garageCost, garagesIn, meterCost } from '@/engine/systems/trips';
 
 const g = (id: string) => GARAGES.find((x) => x.id === id)!;
 
@@ -33,5 +33,16 @@ describe('a garage', () => {
     expect(r.ok, r.error).toBe(true);
     expect(r.value!.paid).toBe(inSaveMoney(sim, 1200, 'USD'));
     expect(sim.execute({ kind: 'errand.park', payload: { minutes: 50, garageId: 'nh-temple' } }).error).toBe('There’s no such garage in this town.');
+  });
+
+  it('at a meter, paid to the town’s longest stay and the rest overstayed', () => {
+    const sim = quickSave({ startLocationId: 'ca-bc-vancouver', homeRegionId: 'ca-bc-vancouver', livesWhereBorn: true, wealth: 'wealthy' }, 'meter-max');
+    sim.player.trip = { by: 'car', vehicleId: 'none', fuel: 0, km: 0 };
+    const over = sim.must<{ paid: number; overstayed?: number }>({ kind: 'errand.park', payload: { minutes: 150 } });
+    expect(over.overstayed).toBe(30);
+    expect(over.paid).toBe(meterCost(sim, 'ca-bc-vancouver', 120, sim.player));
+    expect(sim.universe.notifications.some((n) => n.title === 'Over The Meter’s Limit')).toBe(true);
+    const within = sim.must<{ paid: number; overstayed?: number }>({ kind: 'errand.park', payload: { minutes: 100 } });
+    expect(within.overstayed).toBeUndefined();
   });
 });

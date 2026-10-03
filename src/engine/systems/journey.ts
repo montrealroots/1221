@@ -51,6 +51,7 @@ import { laidUp } from './repairs';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
 import { cabinBagRefusal, moveTo } from './luggage';
+import { cabinFeeFor, hotelPetFee, petCareRefusal, petsOf } from './pets';
 import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking, freeCancelUntil, roomReadyAt } from './hotels';
 import { claimCancellation } from './travelinsurance';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
@@ -515,7 +516,7 @@ export function registerJourneys(sim: Simulation): void {
     return { price: q.price, hotelBack };
   });
 
-  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; rooms?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean; hotelId?: string; room?: string; ground?: GroundWay; carId?: string }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; rooms?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean; hotelId?: string; room?: string; ground?: GroundWay; carId?: string; withPets?: boolean }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
     const day = Number(p?.day);
@@ -606,7 +607,23 @@ export function registerJourneys(sim: Simulation): void {
     const ownPark = named && by?.startsWith('car:') ? hotelParking(s, named.hotelId, nights) : undefined;
     const park = ownPark ? ownPark.price : room && cls !== 'campground' && cls !== 'street' && HOTEL_PARKING[toCity] && by?.startsWith('car:') ? inSave(s, HOTEL_PARKING[toCity]!.perNight * nights, HOTEL_PARKING[toCity]!.currency) : 0;
     const hotel = room ? { price: room.price + park, basis: `${room.basis}${ownPark ? ` ${ownPark.basis}.` : park ? ` Parking: ${HOTEL_PARKING[toCity]!.basis}.` : ''}` } : undefined;
-    const outCost = total(out) + (hotel?.price ?? 0);
+    // Pets at home need someone; along, a hotel that takes them and an airline's cabin fee (`systems/pets.ts`, from 2026-10-03).
+    const withPets = Boolean(p?.withPets) && petsOf(person).length > 0;
+    const until = back ? back[back.length - 1]!.arriveAt : arriveOut + Math.max(1, nights) * MS_DAY;
+    const petNo = petCareRefusal(person, out[0]!.departAt, until, withPets);
+    if (petNo) throw new CommandError(petNo);
+    let petFees = 0;
+    if (withPets) {
+      const stayFee = room && cls === 'hotel' ? hotelPetFee(s, person, named?.hotelId, nights) : 0;
+      if (typeof stayFee === 'string') throw new CommandError(stayFee);
+      const flights = (legs: JourneyLeg[] | undefined) => (legs ?? []).filter((l) => l.mode === 'flight').length;
+      const outFee = by ? 0 : cabinFeeFor(s, person, fromCity, flights(out));
+      const backFee = by || !back ? 0 : cabinFeeFor(s, person, toCity, flights(back));
+      if (typeof outFee === 'string') throw new CommandError(outFee);
+      if (typeof backFee === 'string') throw new CommandError(backFee);
+      petFees = stayFee + outFee + backFee;
+    }
+    const outCost = total(out) + (hotel?.price ?? 0) + petFees;
     const cost = outCost + (back ? total(back) : 0);
     if (!payFromBank(s, person, cost, `A ${back ? 'round trip' : 'journey'} to ${CITIES.require(toCity).name}${hotel ? `, and ${nights} ${nights === 1 ? 'night' : 'nights'} ${cls === 'campground' ? 'at a campground' : cls === 'street' ? 'on the street' : 'in a hotel'}` : ''}`, 'travel')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
     const tripId = back ? s.nextId('journey') : undefined;

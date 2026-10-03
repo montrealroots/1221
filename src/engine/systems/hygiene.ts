@@ -16,9 +16,10 @@
  * **Without them** a shower still rinses but doesn't leave them as clean:
  * at most 85 without soap or body wash, 90 without shampoo; a morning
  * without toothpaste or deodorant starts five fresher points down for each.
- * Those sizes are SLATE's estimates. Toilet paper, razors and the rest are
- * on sale and kept, not used up: most chains don't say how many sheets are
- * on a roll, and nothing reads a shave.
+ * Those sizes are SLATE's estimates. Toilet paper and the rest are on sale
+ * and kept, not used up: most chains don't say how many sheets are on a roll.
+ * Razors and shaving cream were the same until 2026-10-03, when nothing read
+ * a shave; now someone who shaves at home uses them (`shave`, below).
  *
  * A life is given a set of each to start, the cheapest of each kind where
  * it lives, and on a day with time for the shops what's run out is bought
@@ -54,15 +55,19 @@ export const KEPT = ['body-wash', 'shampoo', 'toothpaste', 'toothbrush', 'deodor
 /**
  * The cleaning a home uses up, counted from 2026-10-02 (`content/cleaning.ts`): a wash's laundry detergent, a load each, and
  * a dishwasher's tablet a cycle, at the 184 cycles a year the Department of Energy's test procedure takes for a household's
- * use. Sprays, bleach, paper towels, bin bags and sponges are on sale and kept, not used up: nobody publishes how fast a
- * household gets through them. Dish soap was among them until 2026-10-03; from then a washing-up uses the teaspoon a
+ * use. Bleach, paper towels, bin bags and sponges are on sale and kept, not used up: nobody publishes how fast a household
+ * gets through them, nor how much a use takes. An all-purpose spray was among them until 2026-10-03; from then each cleaning
+ * of the place uses the 27 g a use the Dutch diary study weighed (Weegels and van Veen, via the EPA's Exposure Factors
+ * Handbook, chapter 17), a milliliter taken as a gram, and it's bought again below a use's worth (`research-home-gaps.json`).
+ * Dish soap was among them until 2026-10-03; from then a washing-up uses the teaspoon a
  * sinkful the American Cleaning Institute gives, 4.93 ml, a sinkful a day's dishes (`washUp` in `systems/dwelling.ts`).
  */
-export const CLEANING_KEPT = ['laundry-detergent', 'dishwasher-detergent', 'dish-soap'] as const;
+export const CLEANING_KEPT = ['laundry-detergent', 'dishwasher-detergent', 'dish-soap', 'all-purpose-cleaner'] as const;
+export const SPRAY_G = 27;
 export const DISH_SOAP_ML = 4.93;
 export const DISHWASHER_CYCLES_A_DAY = 184 / 365;
 /** A week's use of each, below which it's bought again: two loads of a person's one or two a week (`LAUNDRY`), and a week of dishwasher cycles. */
-export const CLEANING_LOW: Readonly<Record<(typeof CLEANING_KEPT)[number], number>> = { 'laundry-detergent': 2, 'dishwasher-detergent': 7 * DISHWASHER_CYCLES_A_DAY, 'dish-soap': 7 * DISH_SOAP_ML };
+export const CLEANING_LOW: Readonly<Record<(typeof CLEANING_KEPT)[number], number>> = { 'laundry-detergent': 2, 'dishwasher-detergent': 7 * DISHWASHER_CYCLES_A_DAY, 'dish-soap': 7 * DISH_SOAP_ML, 'all-purpose-cleaner': SPRAY_G };
 /** Everything the chains sell for the bathroom and for cleaning. */
 const TOILETRIES: readonly Toiletry[] = [...BATHROOM, ...CLEANING];
 
@@ -144,6 +149,48 @@ export function showerUses(sim: Simulation, person: Person): number {
   return Math.min(cleansed ? 100 : WITHOUT.cleanser, shampooed ? 100 : WITHOUT.shampoo);
 }
 
+/**
+ * Shaving at home (the master plan's §31h, from 2026-10-03;
+ * `research-home-gaps.json`), as often as chosen: a shave with the shower
+ * on its days, RIVM's 2 g of shaving cream and 5 minutes (its 2006 default),
+ * a milliliter of foam taken as a gram, and its share of a razor's life. A
+ * razor lasts what its maker says: Gillette's three-blade 15 shaves, its
+ * five-blade 20, Schick Hydro's 18, Harry's 6 to 8; one whose maker says
+ * nothing, Gillette's general 5 to 10. Without a razor and the cream to hand,
+ * there's no shave. Razors and cream are bought again as the rest are, for
+ * someone who shaves.
+ */
+export type ShaveEvery = 'daily' | 'alternate' | 'twice-weekly' | 'weekly';
+export const SHAVE_DAYS: Readonly<Record<ShaveEvery, number>> = { daily: 1, alternate: 2, 'twice-weekly': 3.5, weekly: 7 };
+export const SHAVE = { creamG: 2, minutes: 5 } as const;
+/** A razor's shaves, by its maker's own figure where it gives one. */
+export function razorShaves(label: string): number {
+  if (/fusion|proglide/i.test(label)) return 20;
+  if (/schick hydro/i.test(label)) return 18;
+  if (/harry/i.test(label)) return 7;
+  if (/gillette/i.test(label) && /\b(mach ?3|sensor ?3|blue ?3)\b/i.test(label)) return 15;
+  return 7.5;
+}
+/** Whether today is a shaving day: so many days since the last, by the chosen frequency. */
+export function shaveDue(person: Person, at: Instant): boolean {
+  if (!person.shaves) return false;
+  return person.lastShave === undefined || at - person.lastShave >= SHAVE_DAYS[person.shaves] * MS_DAY - 6 * 3_600_000;
+}
+/** Whether a shave would be had now: due, with a razor and the cream to hand. */
+export const shaveReady = (sim: Simulation, person: Person): boolean => keepsSupplies(person) && shaveDue(person, sim.now) && inUseOrder(sim, person, 'razor').length > 0 && inUseOrder(sim, person, 'shaving-cream').length > 0;
+
+/** A shave, where due and the razor and cream are to hand: true where one was had. */
+export function shave(sim: Simulation, person: Person): boolean {
+  if (!keepsSupplies(person) || !shaveDue(person, sim.now)) return false;
+  const razor = inUseOrder(sim, person, 'razor')[0];
+  if (!razor || inUseOrder(sim, person, 'shaving-cream').length === 0) return false;
+  take(sim, person, ['shaving-cream'], SHAVE.creamG);
+  razor.supply.left -= 1 / razorShaves(razor.label);
+  if (razor.supply.left <= 1e-9) person.items = itemsOf(person).filter((x) => x.id !== razor.id);
+  person.lastShave = sim.now;
+  return true;
+}
+
 /** A day's teeth and deodorant: the freshness lost for what's missing. A toothbrush wears a day's share of its three months. */
 export function dailyCare(sim: Simulation, person: Person): number {
   if (!keepsSupplies(person)) return 0;
@@ -160,6 +207,11 @@ export const keepsCleaning = (person: Person): boolean => person.cleaningSince !
 /** Whether there's the laundry detergent for so many loads to hand. */
 export function detergentFor(sim: Simulation, person: Person, loads: number): boolean {
   return !keepsCleaning(person) || toHand(sim, person, 'laundry-detergent').reduce((n, i) => n + i.supply.left, 0) + 1e-9 >= loads;
+}
+
+/** A cleaning of the place's spray, used where it's counted and there's some; true where it was. */
+export function sprayUsed(sim: Simulation, person: Person): boolean {
+  return keepsCleaning(person) && take(sim, person, ['all-purpose-cleaner'], SPRAY_G);
 }
 
 /** The laundry detergent for so many loads, used, where it's counted. */
@@ -240,6 +292,32 @@ export function shortfallBuy(sim: Simulation, person: Person, kind: string): { t
   return { toiletry: t, price: toiletryPrice(sim, person.currentLocationId, t) };
 }
 
+/**
+ * What each way of looking after yourself uses up, by kind, each group one
+ * of which does (from 2026-10-03): a shower's cleanser and shampoo, the
+ * tidying's spray, the washing-up's dish soap, the washing's detergent.
+ */
+export const USED_BY: Readonly<Partial<Record<string, readonly (readonly string[])[]>>> = {
+  wash: [['body-wash', 'soap'], ['shampoo']],
+  bathe: [['body-wash', 'soap'], ['shampoo']],
+  tidy: [['all-purpose-cleaner']],
+  washup: [['dish-soap']],
+  laundry: [['laundry-detergent']],
+};
+
+/** What's run out at home for something they'd do, each with the cheapest open here to buy it in place (`shortfallBuy`); nothing where a life doesn't count it. */
+export function shortfallsFor(sim: Simulation, person: Person, action: string, short = false): { label: string; toiletry: Toiletry; price: Money }[] {
+  const out: { label: string; toiletry: Toiletry; price: Money }[] = [];
+  for (const group of USED_BY[action] ?? []) {
+    const counted = CLEANING_KEPT.includes(group[0] as (typeof CLEANING_KEPT)[number]) ? keepsCleaning(person) : keepsSupplies(person);
+    // `short`: some to hand, but not enough for it (the washing's loads).
+    if (!counted || (!short && group.some((kind) => toHand(sim, person, kind).length > 0))) continue;
+    const buy = group.map((kind) => shortfallBuy(sim, person, kind)).find(Boolean);
+    if (buy) out.push({ label: KIND_LABEL[buy.toiletry.kind] ?? buy.toiletry.kind, ...buy });
+  }
+  return out;
+}
+
 /** The detergents a home begins with, once, beside its toiletries: laundry detergent, and the dishwasher's where it has one. */
 export function starterCleaning(sim: Simulation, person: Person, dishwasher: boolean): boolean {
   if (keepsCleaning(person) || !keepsSupplies(person) || !person.home) return false;
@@ -252,13 +330,25 @@ export function starterCleaning(sim: Simulation, person: Person, dishwasher: boo
 }
 
 /** What's run out bought again on a free day, the cheapest of each in a store here; a worn toothbrush thrown out. How many bought. */
+export function registerShaving(sim: Simulation): void {
+  sim.onCommand<{ every?: ShaveEvery | null }, { shaves?: ShaveEvery }>('hygiene.shave_every', (p, { sim: s }) => {
+    const every = p?.every;
+    if (every === null || every === undefined) { delete s.player.shaves; return {}; }
+    if (!(every in SHAVE_DAYS)) throw new CommandError('Choose how often.');
+    s.player.shaves = every;
+    return { shaves: every };
+  });
+}
+
 export function restock(sim: Simulation, person: Person, dishwasher = false): number {
   if (!keepsSupplies(person) || !person.home || person.home.cityId !== person.currentLocationId) return 0;
   const worn = suppliesOf(person).filter((i) => i.supply.kind === 'toothbrush' && i.condition <= 0);
   if (worn.length) person.items = itemsOf(person).filter((i) => !worn.some((w) => w.id === i.id));
   let bought = 0;
   const cleaning = keepsCleaning(person) ? CLEANING_KEPT.filter((k) => dishwasher || k !== 'dishwasher-detergent') : [];
-  for (const kind of [...KEPT, ...cleaning]) {
+  // Razors and cream for someone who shaves (from 2026-10-03).
+  const shaving = person.shaves ? (['razor', 'shaving-cream'] as const) : [];
+  for (const kind of [...KEPT, ...cleaning, ...shaving]) {
     const have = toHand(sim, person, kind).filter((i) => kind !== 'toothbrush' || i.condition > 0);
     // A detergent is bought again with a week's use left, as people buy it before it's out: until 2026-10-02 only once it
     // was, and a working life went weeks without washing between free days (the lives replayed at ce72adf3: 1,048 refused).
@@ -316,6 +406,7 @@ export const lastGroomed = (person: Person): Instant | undefined => person.groom
 export const daysSince = (sim: Simulation, at: Instant | undefined): number | undefined => (at === undefined ? undefined : Math.floor((sim.now - at) / MS_DAY));
 
 export function registerHygiene(sim: Simulation): void {
+  registerShaving(sim);
   sim.onCommand<{ productId: string; quantity?: number }, { paid: Money }>('hygiene.buy', (p, { sim: s }) => ({ paid: buyToiletries(s, s.player, String(p?.productId), Number(p?.quantity ?? 1)) }));
   sim.onCommand<{ productId: string }, { kind: string }>('hygiene.use_first', (p, { sim: s }) => {
     const t = toiletryById(String(p?.productId));

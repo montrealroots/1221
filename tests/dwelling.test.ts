@@ -15,7 +15,7 @@ import { addCountryCities } from '@/engine/content/geography';
 import type { Fixtures } from '@/engine/content/homes';
 import { depositFor } from '@/engine/systems/household';
 import { listingsIn } from '@/engine/systems/homes';
-import { CLEANER_VISIT, LAUNDRY, TIDY, cleanerCost, cleanerGetsIn, drawRental, heatLoss, livingOf, placeOf } from '@/engine/systems/dwelling';
+import { CLEANER_VISIT, LAUNDRY, PARTNER_HOUSEWORK_HOURS, TIDY, cleanerCost, cleaningMinutes, cleanerGetsIn, drawRental, heatLoss, livingOf, placeOf } from '@/engine/systems/dwelling';
 import { cleanOutfits, garmentsOf, washableDirty, wearTheDay } from '@/engine/systems/wardrobe';
 import { applyLookingAfter, lookAfterRefusal } from '@/engine/systems/life';
 
@@ -129,6 +129,27 @@ describe('the place', () => {
     expect(spotless).toBe(true);
     const paid = Object.values(sim.universe.transactions).some((t) => t.memo === 'The cleaner');
     expect(paid).toBe(true);
+    // And the visit is recorded, with what it cost (from 2026-10-03).
+    const log = livingOf(sim.player).cleanerLog ?? [];
+    expect(log.length).toBeGreaterThan(0);
+    expect(log[0]!.paid ?? (log[0]!.shutOut ? 'shut' : 'unpaid')).toBe(cost);
+  });
+
+  it('a visit nobody let them in for is recorded as that, and not charged', () => {
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'cleaner-out');
+    const p = sim.player;
+    sim.must({ kind: 'home.cleaner', payload: { on: true } });
+    // Held elsewhere through every visit, with no key.
+    sim.onSchedule('test.busy', () => undefined);
+    for (let d = 0; d < 9; d += 1) {
+      const dayStart = sim.now - (sim.now % 86_400_000) + d * MS_DAY;
+      sim.schedule({ at: dayStart + CLEANER_VISIT.hour * 3_600_000 - 3_600_000, kind: 'test.busy', label: 'Busy', category: 'career', priority: 10, requiresPlayer: true, durationMinutes: 600, payload: { personId: p.id } });
+    }
+    for (let d = 0; d < 8; d += 1) sim.advanceBy(MS_DAY);
+    const log = livingOf(sim.player).cleanerLog ?? [];
+    expect(log.length).toBeGreaterThan(0);
+    expect(log[0]!.shutOut).toBe(true);
+    expect(sim.universe.transactions.some((t) => t.memo === 'The cleaner')).toBe(false);
   });
 
   it('a mess weighs: stress climbs on working days in one, and not in a clean home', () => {
@@ -224,5 +245,31 @@ describe('the cleaner’s key', () => {
     expect(cleanerGetsIn(away, away.player, dayStart)).toBe(true);
     away.player.currentLocationId = 'us-ca-losangeles';
     expect(cleanerGetsIn(away, away.player, dayStart)).toBe(false);
+  });
+});
+
+describe('a partner at home', () => {
+  it('does ATUS’s 0.56 hours of housework a day, a cleaning of the place when it adds up to one', () => {
+    const sim = save('partner-chores');
+    const place = placeOf(sim, sim.player)!;
+    const days = Math.ceil(cleaningMinutes(place) / (PARTNER_HOUSEWORK_HOURS * 60));
+    const tidyAfter = (withPartner: boolean) => {
+      const s = save(withPartner ? 'partner-chores-yes' : 'partner-chores-no');
+      if (withPartner) {
+        const partner = newContact(s, s.player, s.player.home!.cityId, 'chores-partner', { at: s.now, how: 'school' });
+        partner.livesWith = s.now;
+        contactsOf(s.player).push(partner);
+      }
+      livingOf(s.player).tidy = 50;
+      livingOf(s.player).partnerMinutes = cleaningMinutes(placeOf(s, s.player)!) - 1;
+      s.advanceBy(MS_DAY);
+      return livingOf(s.player);
+    };
+    expect(days).toBeGreaterThan(0);
+    const yes = tidyAfter(true);
+    expect(yes.tidy).toBeGreaterThan(90);
+    const no = tidyAfter(false);
+    expect(no.tidy).toBeLessThan(90);
+    expect(no.partnerMinutes).toBeUndefined();
   });
 });

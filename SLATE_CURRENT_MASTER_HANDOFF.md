@@ -269,6 +269,17 @@ Done and gated so far:
   - **Lives replayed at `ec774f0e`** (`$TEMP/lives-ec774f0e`): New York died at 89 worth $4,560,325, London at 50 worth £47,157, 0 errors and 0 anomalies each, in step with `c322ef0f`.
   - Recorded as data gaps this stretch: rideshare fares, a checked bag's weight, a waist-and-length pair and a hem, a garment's occasion, a garment torn or a sole worn through, store hours and shipping tiers, sneaker resale abroad and designer resale, tall and adaptive lines.
   - Still open from the 85: a pet's fee (SLATE keeps no pets), unpacking at a stay, early check-in's price (none published), and the rows below `48` in REQUIREMENTS not yet reached: bathroom and home (31, 34, 35), shortcuts (10), vehicles (36, 37i, 38, 40), property and construction (41 to 45), boating (49), health (50, 51), family (52), career prep (53), community and utilities (54), development and navigation (57 to 59).
+  - **Later on 2026-10-03, the second stretch** (each pushed with the gate at exit 0; 2,943 tests at `47610718`):
+    - Pets (`688a8117`, `systems/pets.ts`): a dog or cat adopted at a named shelter's fee, licensed, kept monthly; a trip needs a partner, a sitter or the pet along at the hotel's and airline's fees.
+    - Programs and phones (`c04b60e4`): each market's most watched that week as real seasons and episode minutes (`content/programmes.ts`, `tools/build-programmes.mjs`), watched and resumed; a phone damaged or stolen at Allstate's and the ONS's odds, repaired or replaced under cover (`content/phoneclaims.ts`, decider `phone.risk`), a maker's plan approved on the record.
+    - Pickups as a body on the car catalog (`2bda6810`, `content/pickups.ts`): California's weight fee, Britain's £360 and VAT, a bed and sofa carried.
+    - Wraps by part, more towns' shops and Raccoon's removal (`1d0d03ec`).
+    - Left Partway on Home and shortfalls bought in place (`e9547ea3`); favorites in four catalogs (`50130223`).
+    - Mexico City's SACMEX water and LP gas, water and gas cut off in London and Dublin (`19ba897b`, deciders `utilities.water`, `utilities.gas`).
+    - Where a car is kept, England and Wales, and a stereo taken in a break-in (`5fc0f944`, decider `vehicle.break_in`). London cars can now be stolen: watch the London life on the next replay.
+    - A Tissot serviced, the PRX's battery, Monte de Piedad and CCE Pawn, commissions and engraving (`47610718`, `systems/commissions.ts`).
+    - New research this stretch: `research-tv-phones.json`, `research-vehicles-utilities-gaps.json`, `research-utilities-mx-outages.json`, `research-watches-pawn-parking.json`.
+    - Still open from the 85, in REQUIREMENTS order: 36c, 38d, 41b to 45, 46, 48j–n, 50.1–2, 51.1, 52.5–9, 53, 57.
   - A tooling note: bash heredocs here collapse `\b` into a backspace byte. Write edit scripts with the Write tool, and `grep -rlP '\x08' src tests tools` after a regex edit.
 - **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
 - **Stage 14** needs the owner's API key.

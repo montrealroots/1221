@@ -33,6 +33,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { livesWithPartner } from './marriage';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
@@ -68,6 +69,8 @@ import { someoneHome } from './away';
 export interface RentedUnit {
   type: HomeType;
   beds: number;
+  /** Bathrooms with a shower, from 2026-10-03 (`SECOND_BATH_SHARE`); one where unset. */
+  baths?: number;
   size: number;
   /** A room in a flat shared with others. */
   shared: boolean;
@@ -107,6 +110,21 @@ const HOTEL_FIXTURES: Fixtures = { bathtub: true, dishwasher: false, laundry: 'n
 const SOFA_FIXTURES: Fixtures = { bathtub: false, dishwasher: false, laundry: 'none', cooling: 'none', outdoor: 'none', gym: 'none' };
 
 /** Draws a rented flat, or a room in a shared one, in a town: the kind of place a renter there gets. */
+/**
+ * The share of renters' homes with two complete bathrooms or more (from
+ * 2026-10-03; the American Housing Survey 2023, the Census Bureau's own API,
+ * `research-home-gaps.json`): the New York metro's 11.4%, Los Angeles's
+ * 30.9%, and the country's 33.5% for New Haven, which isn't an AHS metro. A
+ * rental of two bedrooms or more has a second at it, SLATE's reading being
+ * that a one-bedroom has one; the survey doesn't split them by bedrooms.
+ * Elsewhere no renters' share was read, and a rental keeps one.
+ */
+export const SECOND_BATH_SHARE: Readonly<Record<string, number>> = {
+  'us-ny-newyork': (315.2 + 61.8 + 56.9) / 3823.2,
+  'us-ca-losangeles': (548.5 + 138.5 + 76.8) / 2473.2,
+  us: (11_821 + 2_464 + 1_025 + 210) / 46_311,
+};
+
 export function drawRental(sim: Simulation, person: Person, cityId: string, shared: boolean, key: number): RentedUnit {
   const city = CITIES.require(cityId);
   const rng = sim.rng('homes.rental', person.id, cityId, shared ? 'room' : 'flat', key);
@@ -119,7 +137,10 @@ export function drawRental(sim: Simulation, person: Person, cityId: string, shar
   const size = Math.round((shared ? 700 + 300 * beds : rng.int(620, 820)) / 10) * 10;
   // A renter's place sits low in the market: the first third, a shared house a little higher.
   const fixtures = drawFixtures(rng, { countryId: city.countryId, latitude: city.latitude, longitude: city.longitude, dense }, type, rng.float(0.1, 0.4), type === 'house' && rng.next() < 0.6);
-  return { type, beds, size, shared, fixtures };
+  // A second bathroom with a shower, for a home of two bedrooms or more, at the metro's renters' share (from 2026-10-03).
+  const second = SECOND_BATH_SHARE[cityId] ?? (city.countryId === 'us' ? SECOND_BATH_SHARE.us : undefined);
+  const baths = beds >= 2 && second !== undefined && rng.next() < second ? 2 : 1;
+  return { type, beds, size, shared, fixtures, ...(baths > 1 ? { baths } : {}) };
 }
 
 /** A home owned's fixtures: as listed, or drawn for one bought before they were kept. */
@@ -233,6 +254,15 @@ export const LAUNDRY = {
 /** How fast a home gets untidy a day, a dishwasher's saving, where it starts to weigh, and what it weighs. SLATE's estimates. */
 export const TIDY = { perDay: 6, dishwasher: 0.75, messy: 40, morale: 1, stress: 1, tidiedUp: 70 };
 /**
+ * A partner's share of the housework (the master plan's §52.7–9, from
+ * 2026-10-03; `research-life-gaps.json`): the American Time Use Survey's
+ * 2025 average for a person 15 and over, 0.56 hours a day, both sexes
+ * together, put into the home they share; when it adds up to a cleaning of
+ * the place (`cleaningMinutes`), the place is cleaned. Until then a partner
+ * living there did none of it.
+ */
+export const PARTNER_HOUSEWORK_HOURS = 0.56;
+/**
  * Washing up by hand, from 2026-10-03: a day's dishes are 38 minutes, the
  * 230 hours a year Energy Star says its dishwasher saves over washing by hand,
  * and a sinkful, at the American Cleaning Institute's teaspoon of dish soap
@@ -311,8 +341,15 @@ export interface Living {
   /** The month's days counted, and those at home, for the electricity used (`systems/electricity.ts`, from 2026-10-02). */
   billDays?: number;
   homeDays?: number;
+  /** Showers and baths taken at home this billing month (from 2026-10-03), metered against the average (`systems/water.ts`). */
+  showers?: number;
+  baths?: number;
   /** A cleaner every week, and the day of the week they come, 0 for Sunday. */
   cleaner?: { day: number; /** Given a key, from 2026-10-02: they let themselves in. */ key?: boolean };
+  /** A partner's housework minutes put in toward the next cleaning (from 2026-10-03). */
+  partnerMinutes?: number;
+  /** The cleaner's visits, the latest first, the last twelve kept (from 2026-10-03): when, what it cost, or that they couldn't get in. */
+  cleanerLog?: CleanerVisit[];
 }
 
 export function livingOf(person: Person): Living {
@@ -324,6 +361,10 @@ export function livingOf(person: Person): Living {
 export function wearOutfit(sim: Simulation, person: Person, exercise = false): boolean {
   return exercise ? wearForExercise(sim, person) : wearTheDay(sim, person);
 }
+
+/** A visit of the cleaner's: cleaned and paid, unpaid and so not cleaned, or shut out. */
+export interface CleanerVisit { at: Instant; paid?: Money; unpaid?: true; shutOut?: true }
+const logCleaner = (l: Living, v: CleanerVisit) => { l.cleanerLog = [v, ...(l.cleanerLog ?? [])].slice(0, 12); };
 
 /** How long cleaning the place takes them. */
 export const cleaningMinutes = (place: Place): number => Math.min(CLEANING.most, Math.round(CLEANING.baseMinutes + place.size / CLEANING.sqftPerMinute));
@@ -452,13 +493,23 @@ export function livingDay(sim: Simulation, person: Person): void {
   if (machine) delete l.dishes; else l.dishes = Math.min(WASH_UP.full, (l.dishes ?? 0) + 1);
   if (free) washUp(sim, person);
   if (free && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
+  // A partner living there does their share of the housework, a cleaning when it adds up to one.
+  if (livesWithPartner(person)) {
+    l.partnerMinutes = (l.partnerMinutes ?? 0) + PARTNER_HOUSEWORK_HOURS * 60;
+    if (l.partnerMinutes >= cleaningMinutes(place)) { l.tidy = 100; l.partnerMinutes -= cleaningMinutes(place); }
+  } else delete l.partnerMinutes;
   const day = zonedParts(sim.now, CITIES.require(person.home!.cityId).timeZone);
   const weekday = new Date(Date.UTC(day.year, day.month - 1, day.day)).getUTCDay();
   if (l.cleaner && weekday === l.cleaner.day) {
     if (cleanerGetsIn(sim, person, sim.now)) {
       const cost = cleanerCost(sim, person);
-      if (drawFromBank(sim, person, cost).short === 0 && spend(sim, person, cost, 'The cleaner', 'cleaning')) l.tidy = 100;
-    } else if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'The Cleaner Couldn’t Get In', body: 'Nobody was home when they came, and they have no key; you weren’t charged.', importance: 30, route: '/home' });
+      const paid = drawFromBank(sim, person, cost).short === 0 && spend(sim, person, cost, 'The cleaner', 'cleaning');
+      if (paid) l.tidy = 100;
+      logCleaner(l, { at: sim.now, ...(paid ? { paid: cost } : { unpaid: true }) });
+    } else {
+      logCleaner(l, { at: sim.now, shutOut: true });
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'The Cleaner Couldn’t Get In', body: 'Nobody was home when they came, and they have no key; you weren’t charged.', importance: 30, route: '/home' });
+    }
   }
   if (l.tidy < TIDY.messy) {
     w.morale = clamp(w.morale - TIDY.morale * personalityOf(person, 'moraleSwing'), 0, 100);

@@ -19,9 +19,22 @@
  * under its protection plan at that plan's battery fee once it's below 80%.
  * A protection plan is billed monthly at its published price.
  *
- * Not kept: screens breaking (no published rate of accidents), theft and loss
- * claims, a carrier's own device plans, and credit approval for a maker's
- * plan.
+ * Until 2026-10-03 a phone never broke or went missing, and a maker's plan
+ * was given without a look at the record. Now the phone in use is damaged
+ * or stolen at the odds a survey publishes where it lives: in America at
+ * Allstate Protection Plans' 31% a year damaged, two in three of those the
+ * screen, and 5% stolen (the survey doesn't state that period outright); in
+ * England and Wales stolen at the ONS crime survey's 0.54% a year. Elsewhere
+ * no rate is published, and none is drawn. A damaged phone is repaired at
+ * AppleCare+'s fee for the incident, or the cover's screen fee, or the
+ * maker's out-of-warranty price; a stolen one is replaced only under cover
+ * with theft and loss, at Apple's fee, two claims a year, and what's still
+ * owed on it is still paid. A maker's plan is credit, approved as a card is
+ * (`cardlife.ts`'s 620, SLATE's estimate), and the application is an
+ * inquiry on the record.
+ *
+ * Not kept: a carrier's own device plans, whose carriers (Verizon, AT&T,
+ * EE, Vodafone, Rogers, Bell) aren't the line SLATE keeps where you live.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -37,6 +50,8 @@ import { inSaveMoney } from './banking';
 import { owe, payFromBank, spend } from './household';
 import { homeKeyOf, itemById, itemsOf, reachable, type Item } from './items';
 import { placeOrder } from './orders';
+import { APPLECARE_FEES, OTHER_DAMAGE, PHONE_RISK, type PhoneRisk } from '../content/phoneclaims';
+import { APPROVE_FROM, INQUIRY } from './cardlife';
 
 export const PHONE_MONTH_KIND = 'phone.month';
 /** Apple's: 80% of the battery's capacity after 1,000 full cycles; a cycle a day, SLATE's reading. */
@@ -52,6 +67,12 @@ export interface Device {
   battery: number;
   finance?: { plan: string; monthly: Money; monthsLeft: number };
   protection?: { plan: string; monthly: Money; batteryFee: Money | null };
+  /** Damaged, from 2026-10-03: the screen, or anything else. */
+  broken?: 'screen' | 'other';
+  /** When it was stolen (from 2026-10-03). */
+  stolen?: Instant;
+  /** When theft and loss claims were made, for the cover's two a year. */
+  claims?: Instant[];
 }
 export type Owned = Item & { device: Device };
 
@@ -105,7 +126,8 @@ export function phoneRefusal(sim: Simulation, person: Person, o: PhoneBuy): stri
   if (p.colors.length > 0 && !p.colors.includes(o.color)) return 'Choose one of its colors.';
   if (o.tradeInItemId) {
     const old = phonesOf(person).find((x) => x.id === o.tradeInItemId);
-    if (!old || !reachable(sim, person, old.at)) return 'That isn’t a phone you have to hand.';
+    if (!old || old.device.stolen !== undefined || !reachable(sim, person, old.at)) return 'That isn’t a phone you have to hand.';
+    if (old.device.broken) return `${p.maker}’s trade-in value is for one in working order.`;
     if (old.device.finance) return 'It’s still being paid for.';
     if (tradeInValue(sim, old, p) === undefined) return `${p.maker} publishes no trade-in value for it.`;
   }
@@ -113,6 +135,7 @@ export function phoneRefusal(sim: Simulation, person: Person, o: PhoneBuy): stri
     const choice = plansFor(p).find((x) => x.plan.name === o.plan);
     if (!choice || !choice.months.includes(o.months ?? -1)) return 'That plan doesn’t run for that many months.';
     if (choice.plan.prepaidExcluded && lineOf(person)?.prepayMonths) return `${choice.plan.name} isn’t open to a prepaid line like ${lineOf(person)!.provider}’s.`;
+    if (!person.credit) return `${choice.plan.name} is credit, and you have no credit record.`;
   }
   return undefined;
 }
@@ -124,6 +147,12 @@ export function buyPhone(sim: Simulation, person: Person, o: PhoneBuy): string {
   const p = phoneById(o.phoneId)!;
   const q = phoneQuote(sim, person, o)!;
   const label = `${p.maker} ${p.model}, ${p.storageGB} GB`;
+  // A plan is credit: the application is an inquiry, and a record short of a card's is refused.
+  if (o.plan) {
+    const credit = person.credit!;
+    credit.score = Math.max(300, credit.score - INQUIRY);
+    if (credit.score < APPROVE_FROM) throw new CommandError(`${o.plan} declined it: your record isn’t strong enough.`);
+  }
   if (!o.plan && q.total > 0 && !spend(sim, person, q.total, `${p.maker}: ${p.model}`, 'personal')) throw new CommandError(`It comes to ${formatMoney(q.total, saveCurrency(sim.universe))}, more than you can pay.`);
   if (o.tradeInItemId) person.items = itemsOf(person).filter((i) => i.id !== o.tradeInItemId);
   const device: Device = { phoneId: p.id, color: o.color, battery: 1, ...(o.plan ? { finance: { plan: o.plan, monthly: q.monthly!, monthsLeft: o.months! } } : {}) };
@@ -154,6 +183,55 @@ export function batteryQuote(sim: Simulation, person: Person, owned: Owned): Mon
   return inSaveMoney(sim, Math.round(r.battery * (1 + tax) * 100), r.currency);
 }
 
+/** The odds a survey publishes where they live, for the phone in use; nothing where none is. */
+export function riskFor(person: Person): PhoneRisk | undefined {
+  const cityId = person.home?.cityId ?? person.currentLocationId;
+  const r = PHONE_RISK.find((x) => x.market === phoneMarketOf(person));
+  // The ONS's survey is England's and Wales's.
+  return r && r.market === 'uk' && !/^uk-(eng|wls)-/.test(cityId) ? undefined : r;
+}
+
+/** The chance something with a yearly rate happens in some days. */
+const inDays = (perYear: number, days: number) => 1 - Math.pow(1 - perYear, days / 365);
+
+/** What befalls a phone in use in a month from some instant, at the odds; nothing most months. A phone already broken can still be stolen. */
+export function mishap(sim: Simulation, risk: PhoneRisk, itemId: string, at: Instant, broken: boolean): 'stolen' | 'screen' | 'other' | undefined {
+  const rng = sim.rng('phone.risk', itemId, at);
+  if (risk.stolenYear !== null && rng.next() < inDays(risk.stolenYear, 30)) return 'stolen';
+  if (broken || risk.damagedYear === null || rng.next() >= inDays(risk.damagedYear, 30)) return undefined;
+  return rng.next() < (risk.screenShare ?? 1) ? 'screen' : 'other';
+}
+
+/** What putting it right costs now, or why it can't be. */
+export function claimQuote(sim: Simulation, person: Person, owned: Owned): Money | string {
+  const p = phoneById(owned.device.phoneId);
+  if (!p) return 'SLATE doesn’t know that phone.';
+  const d = owned.device;
+  const cover = d.protection ? PHONE_PROTECTION.find((x) => x.market === p.market && x.maker === p.maker && x.plan === d.protection!.plan) : undefined;
+  const fees = p.maker === 'Apple' && cover ? APPLECARE_FEES.find((x) => x.market === p.market) : undefined;
+  const tax = (included: boolean | null | undefined) => (included === false ? salesTaxRate(person.home?.cityId ?? person.currentLocationId, sim.now, 'general') : 0);
+  if (d.stolen !== undefined) {
+    if (!cover?.theftAndLoss) return 'Only cover with theft and loss replaces a stolen phone.';
+    const year = (d.claims ?? []).filter((at) => at > sim.now - 365 * MS_DAY);
+    if (year.length >= 2) return 'The cover replaces two a year, and both have been claimed.';
+    if (!fees || fees.theft === null) return `${p.maker} publishes no fee for it.`;
+    return inSaveMoney(sim, Math.round(fees.theft * 100), fees.currency);
+  }
+  if (!d.broken) return 'It isn’t damaged.';
+  if (fees) { const fee = d.broken === 'screen' ? fees.screen : fees.other; if (fee !== null) return inSaveMoney(sim, Math.round(fee * 100), fees.currency); }
+  if (cover && d.broken === 'screen' && cover.screenFee !== null) return inSaveMoney(sim, Math.round(cover.screenFee * 100), cover.currency);
+  if (d.broken === 'screen') {
+    const r = PHONE_REPAIR.find((x) => x.market === p.market && x.maker === p.maker && x.model === p.model);
+    if (r && r.screen !== null) return inSaveMoney(sim, Math.round(r.screen * (1 + tax(r.taxIncluded)) * 100), r.currency);
+  } else {
+    const r = OTHER_DAMAGE.find((x) => x.market === p.market && x.maker === p.maker && x.model === p.model);
+    // Taxed as the maker's screen price for it is.
+    const screen = PHONE_REPAIR.find((x) => x.market === p.market && x.maker === p.maker && x.model === p.model);
+    if (r) return inSaveMoney(sim, Math.round(r.other * (1 + tax(screen?.taxIncluded)) * 100), r.currency);
+  }
+  return `${p.maker} publishes no price for that repair.`;
+}
+
 /** The protection plans open to a phone, by its model. */
 export const protectionFor = (p: Phone): PhoneProtection[] => PHONE_PROTECTION.filter((x) => x.market === p.market && x.maker === p.maker && (x.models.length === 0 || x.models.includes(p.model)));
 
@@ -164,6 +242,7 @@ function scheduleMonth(sim: Simulation, person: Person, owned: Owned, from: Inst
 const ownedHere = (sim: Simulation, person: Person, id: string): Owned => {
   const o = phonesOf(person).find((x) => x.id === id);
   if (!o) throw new CommandError('That isn’t a phone you own.');
+  if (o.device.stolen !== undefined) throw new CommandError('It was stolen.');
   if (!reachable(sim, person, o.at)) throw new CommandError('It isn’t to hand.');
   return o;
 };
@@ -196,6 +275,24 @@ export function registerPhones(sim: Simulation): void {
     owned.device.battery = 1;
     return { paid: cost };
   });
+  sim.onCommand<{ itemId: string }, { paid: Money }>('phone.claim', (p, { sim: s }) => {
+    const person = s.player;
+    const owned = phonesOf(person).find((x) => x.id === String(p?.itemId));
+    if (!owned) throw new CommandError('That isn’t a phone you own.');
+    if (owned.device.stolen === undefined && !reachable(s, person, owned.at)) throw new CommandError('It isn’t to hand.');
+    const cost = claimQuote(s, person, owned);
+    if (typeof cost === 'string') throw new CommandError(cost);
+    const maker = phoneById(owned.device.phoneId)!.maker;
+    const stolen = owned.device.stolen !== undefined;
+    if (cost > 0 && !spend(s, person, cost, `${maker}: ${stolen ? 'a stolen phone replaced' : owned.device.broken === 'screen' ? 'a screen repaired' : 'a repair'}`, 'personal')) throw new CommandError(`It comes to ${formatMoney(cost, saveCurrency(s.universe))}, more than you can pay.`);
+    if (stolen) {
+      (owned.device.claims ??= []).push(s.now);
+      delete owned.device.stolen;
+      owned.device.battery = 1;
+    }
+    delete owned.device.broken;
+    return { paid: cost };
+  });
   sim.onCommand<{ itemId: string; plan?: string }, { monthly: Money }>('phone.protect', (p, { sim: s }) => {
     const person = s.player;
     const owned = ownedHere(s, person, String(p?.itemId));
@@ -223,6 +320,20 @@ export function registerPhones(sim: Simulation): void {
     // Cover the bank can't pay lapses, as a card declined does.
     if (d.protection && !spend(s, person, d.protection.monthly, `${d.protection.plan}, the ${owned.label}`, 'personal')) delete d.protection;
     d.battery = Math.max(0, d.battery - (30 * BATTERY.perDay * (1 - BATTERY.keptAt)) / BATTERY.cycles);
+    // The phone in use is damaged or stolen at the published odds where they live.
+    const risk = d.activated && d.stolen === undefined ? riskFor(person) : undefined;
+    const befell = risk ? mishap(s, risk, owned.id, item.at, d.broken !== undefined) : undefined;
+    if (befell) {
+      const tell = (title: string, body: string) => { if (person.id === s.universe.playerId) s.notify({ category: 'personal', title, body, importance: 55, route: '/workspace/belongings' }); };
+      if (befell === 'stolen') {
+        d.stolen = item.at;
+        delete d.activated;
+        tell('Your Phone Was Stolen', `The ${owned.label} is gone${d.finance ? ', and what’s owed on it is still due' : ''}.`);
+      } else {
+        d.broken = befell;
+        tell(befell === 'screen' ? 'You Cracked Your Phone’s Screen' : 'Your Phone Was Damaged', `The ${owned.label} needs a repair.`);
+      }
+    }
     if (d.finance || d.protection || d.activated) scheduleMonth(s, person, owned, item.at);
   });
 }

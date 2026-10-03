@@ -8,6 +8,15 @@
  * film lover needs a TV. A library card is had where you live, free to a
  * resident; a book or an e-reader is bought at its seller's price, with the
  * town's sales tax where it's added, and kept at home.
+ *
+ * From 2026-10-03 a book of one's own is read through (`research-home-gaps.json`):
+ * an hour unwinding at home with it reads Brysbaert's 260 words a minute of
+ * fiction (his 2019 meta-analysis), and a novel is the 96,398 words that 694
+ * English novels average (66.9 million words, a 2020 corpus in Data in
+ * Brief), no publisher giving its book's own count. Read through, it's read:
+ * it stops counting as something to read, and another is wanted, or the
+ * library. The library and an e-reader don't run out: a card lends book
+ * after book, and what an e-reader holds isn't kept.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -24,11 +33,32 @@ import { addItem, homeKeyOf, itemsOf } from './items';
 export const libraryIn = (cityId: string): Library | undefined => LIBRARIES.find((l) => l.cityId === cityId);
 export const readingBuyById = (id: string): ReadingBuy | undefined => READING_BUYS.find((x) => x.id === id);
 
-/** Something to read at the home they live in: the town's library card, a book or an e-reader there. */
+/** Brysbaert's fiction reading rate, words a minute, and the corpus's novel, words. */
+export const READ_WPM = 260;
+export const NOVEL_WORDS = Math.round(66_900_000 / 694);
+
+/** A book of one's own at home not yet read through. */
+const unread = (person: Partial<Pick<Person, 'items' | 'home'>>) => { const home = homeKeyOf(person.home as Person['home']); return (person.items ?? []).filter((i) => i.kind.startsWith('book:') && !i.readThrough && i.at.kind === 'home' && i.at.home === home); };
+
+/** The book they'd pick up: the one furthest into, else the first that came; nothing where none's at home unread. */
+export const bookInHand = (person: Partial<Pick<Person, 'items' | 'home'>>) => unread(person).sort((a, b) => (b.readWords ?? 0) - (a.readWords ?? 0) || a.acquiredAt - b.acquiredAt)[0];
+
+/** Something to read at the home they live in: the town's library card, an unread book or an e-reader there. */
 export function hasSomethingToRead(person: Pick<Person, 'home'> & Partial<Pick<Person, 'items' | 'libraryCard'>>): boolean {
   if (person.home && person.libraryCard === person.home.cityId) return true;
   const home = homeKeyOf(person.home);
-  return (person.items ?? []).some((i) => (i.kind.startsWith('book:') || i.kind.startsWith('ereader:')) && i.at.kind === 'home' && i.at.home === home);
+  return unread(person).length > 0 || (person.items ?? []).some((i) => i.kind.startsWith('ereader:') && i.at.kind === 'home' && i.at.home === home);
+}
+
+/** Some minutes read at home: the book they're reading, the one begun first; read through, it's done. The book finished, or nothing. */
+export function readFor(sim: Simulation, person: Person, minutes: number): string | undefined {
+  const book = bookInHand(person);
+  if (!book) return undefined;
+  book.readWords = (book.readWords ?? 0) + minutes * READ_WPM;
+  if (book.readWords < NOVEL_WORDS) return undefined;
+  book.readThrough = true;
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'personal', title: 'A Book Read Through', body: `${book.label}, finished.${hasSomethingToRead(person) ? '' : ' There’s nothing else at home to read: a library card or another book.'}`, importance: 20, route: '/workspace/belongings' });
+  return book.label;
 }
 
 /** What's on sale where they live, cheapest first. */

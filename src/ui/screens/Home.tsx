@@ -19,6 +19,7 @@ import { MS_DAY, WEEKDAY_NAMES, formatDateTime, zonedParts } from '@/engine/core
 import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { Children, useState, type ReactNode } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
+import { petsOf, sheltersIn } from '@/engine/systems/pets';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
@@ -56,7 +57,7 @@ import { levelOf } from '@/engine/systems/people';
 import { kitchenStock } from '@/engine/systems/kitchen';
 import { mealsReady } from '@/engine/systems/pantry';
 import { groupLabelOf } from '@/ui/shell/destinations';
-import { underWay } from '@/engine/systems/underway';
+import { leftPartway, underWay } from '@/engine/systems/underway';
 import { MACHINE_LABEL, faultsOf, repairBill, repairRefusal, type Machine } from '@/engine/systems/appliancefaults';
 import { rentersCouncilTax, sizeText } from '@/engine/systems/homes';
 
@@ -795,11 +796,13 @@ function BrokenMachines() {
 
 /** What you own besides clothes and food, and how much of it is at home. */
 function YourBelongings() {
-  const { sim } = useGame();
+  const { sim, run, toast } = useGame();
   const things = useWorld((s) => (s.player.items ?? []).filter((i) => !i.garment && !i.food));
   const atHome = things.filter((i) => i.at.kind === 'home').length;
   // Everything in progress, soonest first (`systems/underway.ts`, from 2026-10-02).
   const pending = useWorld((s) => underWay(s, s.player));
+  // What was stopped partway, each picked up where it was left (from 2026-10-03).
+  const partway = useWorld((s) => leftPartway(s.player));
   return (
     <div className="col gap-2">
       <Stat label="Things You Own" value={String(things.length)} note={`${atHome} at home`} />
@@ -808,6 +811,17 @@ function YourBelongings() {
           <div className="small muted">Under Way</div>
           {pending.slice(0, 6).map((u) => <div key={`${u.kind}-${u.label}-${u.until}`} className="small">{u.label}<span className="xs dim">{` · ${formatDate(u.until, sim.zone)}`}</span></div>)}
           {pending.length > 6 && <div className="xs dim">{`And ${pending.length - 6} more`}</div>}
+        </div>
+      )}
+      {partway.length > 0 && (
+        <div className="col gap-1">
+          <div className="small muted">Left Partway</div>
+          {partway.slice(0, 4).map((x) => (
+            <div key={`${x.kind}-${x.label}`} className="row gap-2" style={{ alignItems: 'baseline', flexWrap: 'wrap' }}>
+              <span className="small">{x.label}<span className="xs dim">{` · ${x.note}`}</span></span>
+              <Gated feature={x.resume.command} className="btn btn-sm btn-ghost" onClick={() => { if (run(x.resume.command, x.resume.payload).ok) toast(`${x.label}, picked up.`, 'positive'); }}>{x.resume.label}</Gated>
+            </div>
+          ))}
         </div>
       )}
       <BrokenMachines />
@@ -951,7 +965,7 @@ function YourCareer({ cur }: { cur: string }) {
 const SECURITY_LABEL: Readonly<Record<Device, string>> = { windows: 'Fit Window Locks', timers: 'Buy Lamp Timers', lights: 'Fit An Outside Motion Light' };
 
 function YourPlace({ cur }: { cur: string }) {
-  const { run, toast } = useGame();
+  const { sim, run, toast } = useGame();
   const place = useWorld((s) => placeOf(s, s.player));
   const living = useWorld((s) => ({ ...livingOf(s.player) }));
   const cleaner = useWorld((s) => cleanerCost(s, s.player));
@@ -1032,7 +1046,11 @@ function YourPlace({ cur }: { cur: string }) {
             : <Gated feature="home.cleaner" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.cleaner', { on: true }).ok) toast('A cleaner comes every Friday.', 'positive'); }}>Hire A Cleaner ({formatMoney(cleaner, cur, { cents: false })} A Week)</Gated>}
         </div>
       )}
+      {place.keeps && (living.cleanerLog?.length ?? 0) > 0 && (
+        <p className="xs dim" style={{ margin: 0 }}>{`The cleaner’s visits: ${living.cleanerLog!.slice(0, 4).map((v) => `${formatDate(v.at, sim.zone)}, ${v.paid !== undefined ? formatMoney(v.paid, cur, { cents: false }) : v.unpaid ? 'not paid, so not cleaned' : 'couldn’t get in'}`).join('; ')}.`}</p>
+      )}
       {home.kind !== 'sofa' && <WhileAway cur={cur} />}
+      {home.kind !== 'sofa' && <YourPets cur={cur} />}
     </div>
   );
 }
@@ -1042,6 +1060,31 @@ function YourPlace({ cur }: { cur: string }) {
  * days, and a house sitter for some nights, each somebody or something that
  * keeps a parcel from the door.
  */
+/** A dog or a cat of your own, adopted at a shelter where you live (`systems/pets.ts`). */
+function YourPets({ cur }: { cur: string }) {
+  const { sim, run, toast } = useGame();
+  const pets = useWorld((s) => [...petsOf(s.player)]);
+  const here = useWorld((s) => sheltersIn(s.player.home?.cityId ?? ''));
+  const [petName, setPetName] = useState('');
+  if (here.length === 0 && pets.length === 0) return null;
+  return (
+    <div className="col gap-1">
+      {pets.length > 0 && <span className="small">{`Your pets: ${pets.map((p) => `${p.name}, a ${p.species}`).join('; ')}. On a trip, someone stays or they come along.`}</span>}
+      {here.length > 0 && (
+        <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+          <div className="field" style={{ margin: 0 }}>
+            <label htmlFor="pet-name">A Name For It</label>
+            <input id="pet-name" value={petName} onChange={(e) => setPetName(e.target.value)} style={{ width: '10rem' }} />
+          </div>
+          {here.map((s) => (
+            <Gated key={s.id} feature="pets.adopt" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.adopt', { shelterId: s.id, name: petName }).ok) { toast(`Adopted from ${s.name}.`, 'positive'); setPetName(''); } }}>{`Adopt A ${s.species === 'dog' ? 'Dog' : 'Cat'}, ${s.name}${s.fee > 0 ? `, ${formatMoney(inSaveMoney(sim, Math.round(s.fee * 100), s.currency), cur, { cents: false })}${s.confirmed ? '' : ', Read Secondhand'}` : ''}`}</Gated>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function WhileAway({ cur }: { cur: string }) {
   const { sim, run, toast } = useGame();
   const [days, setDays] = useState(7);

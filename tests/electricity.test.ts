@@ -11,10 +11,18 @@ import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { billsOf } from '@/engine/systems/household';
 import { KIND_SHARE, TARIFFS, countHomeDay, electricityAdjustment } from '@/engine/systems/electricity';
+import { WASHING } from '@/engine/systems/water';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const inSave = (sim: Simulation, units: number, from: string) => { const c = Math.round(units * 100); const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
-const month = (sim: Simulation, home: number, of: number) => { sim.player.living ??= { tidy: 80 }; delete sim.player.living.billDays; delete sim.player.living.homeDays; for (let d = 0; d < of; d += 1) countHomeDay(sim.player, d < home); };
+/** A month of so many days home, showering as often as the country's average (an electric heater's showers are metered, `systems/hotwater.ts`). */
+const month = (sim: Simulation, home: number, of: number) => {
+  sim.player.living ??= { tidy: 80 };
+  delete sim.player.living.billDays; delete sim.player.living.homeDays;
+  for (let d = 0; d < of; d += 1) countHomeDay(sim.player, d < home);
+  const w = WASHING[sim.player.home?.cityId?.startsWith('uk-') ? 'gb' : sim.player.home?.cityId?.slice(0, 2) ?? ''];
+  sim.player.living.showers = (w?.showersADay ?? 0) * home;
+};
 
 describe('the tariff', () => {
   it('blocks bite where they’re set: LADWP’s summer tier 3, BC Hydro’s step, Toronto’s summer threshold', () => {
