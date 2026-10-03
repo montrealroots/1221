@@ -79,9 +79,10 @@ function meet(sim: Simulation, person: Person, club: Club, m: Membership, at: In
   if (!present(person, at, club.cityId) || (busy && busy.kind !== CLUB_MEET_KIND)) return false;
   if (club.fee?.per === 'week' && !spend(sim, person, inSaveMoney(sim, Math.round(club.fee.amount * 100), club.fee.currency), `${club.name}, the week`, 'personal')) return false;
   const hours = club.minutes / 60;
-  exerts(person, club.met, hours);
-  applyLookingAfter(person, 'exercise', at);
-  if (club.kind !== 'league') {
+  // A session's effort at its METs; under three, an hour unwinding rather than a workout (from 2026-10-03).
+  if (club.met !== undefined) exerts(person, club.met, hours);
+  applyLookingAfter(person, club.met !== undefined && club.met >= 3 ? 'exercise' : 'unwind', at);
+  if (club.kind === 'parkrun' || club.kind === 'running') {
     runInShoes(sim, person);
     mayHurt(sim, person, 'run', chanceOver(INJURY.perThousandHours.run, hours), at);
   }

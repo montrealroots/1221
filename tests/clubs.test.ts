@@ -60,3 +60,25 @@ describe('a club', () => {
     expect(weeks.length).toBeGreaterThanOrEqual(1);
   });
 });
+
+describe('a lesson', () => {
+  it('is a course of weekly sessions at the provider’s own price: Waltons’ guitar, €230 for ten, an hour unwinding each', () => {
+    const sim = life('ie-lei-dublin', 'lesson-guitar');
+    const p = sim.player;
+    const r = sim.must<{ paid: number }>({ kind: 'club.join', payload: { clubId: 'waltons-guitar' } });
+    expect(r.paid).toBe(inSaveMoney(sim, 230_00, 'EUR'));
+    const fitness = p.wellbeing.fitness;
+    sim.advanceBy(15 * MS_DAY);
+    const m = membershipsOf(p)[0]!;
+    expect(m.went).toBeGreaterThanOrEqual(1);
+    // Two METs isn't a workout.
+    expect(p.wellbeing.fitness).toBeLessThanOrEqual(fitness);
+    sim.advanceBy(70 * MS_DAY);
+    expect(membershipsOf(p)).toEqual([]);
+  });
+
+  it('a swimming course is exercise, at the Compendium’s 6.0 METs', () => {
+    expect(clubById('trinity-sport-swim')!.met).toBe(6.0);
+    expect(clubById('barnsdall-painting')!.met).toBeUndefined();
+  });
+});

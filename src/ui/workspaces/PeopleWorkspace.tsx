@@ -97,7 +97,7 @@ function Clubs() {
   const cur = saveCurrency(sim.universe);
   const pad = (n: number) => String(n).padStart(2, '0');
   return (
-    <Panel title="Clubs" subtitle="Parkrun, running clubs and leagues, each meeting weekly">
+    <Panel title="Clubs" subtitle="Parkrun, running clubs, leagues and lessons, each meeting weekly">
       <div className="table-scroll">
         <table>
           <thead><tr><th scope="col">Club</th><th scope="col">Where</th><th scope="col">When</th><th scope="col" className="num">Fee</th><th scope="col"><span className="sr-only">Join</span></th></tr></thead>
