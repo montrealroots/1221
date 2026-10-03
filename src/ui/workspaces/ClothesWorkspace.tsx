@@ -584,9 +584,20 @@ function Bathroom() {
   const shown = arrange(entries, view).slice(0, PAGE);
   const buy = useFeature('hygiene.buy');
   const useFirst = useFeature('hygiene.use_first');
+  const shaveEvery = useFeature('hygiene.shave_every');
   return (
     <Panel title="Your Bathroom" subtitle="Each shower uses its soap and shampoo, each day its toothpaste and deodorant; what runs out is bought again on a free day">
       <LookRegion className="col gap-3">
+        <div className="field" style={{ maxWidth: '18rem' }}>
+          <label htmlFor="shave-every">Shave At Home</label>
+          <select id="shave-every" disabled={!shaveEvery.open} title={shaveEvery.reason} value={person.shaves ?? ''} onChange={(e) => { if (run('hygiene.shave_every', { every: e.target.value || null }).ok) toast(e.target.value ? 'With the shower on its days: a razor’s share and 2 g of cream, five more minutes.' : 'No shaving at home.', 'positive'); }}>
+            <option value="">Not At Home</option>
+            <option value="weekly">Weekly</option>
+            <option value="twice-weekly">Twice A Week</option>
+            <option value="alternate">Every Other Day</option>
+            <option value="daily">Daily</option>
+          </select>
+        </div>
         {kept.length === 0 ? <p className="small muted" style={{ margin: 0 }}>SLATE doesn’t count toiletries where you live.</p> : (
           <div className="col gap-1 small">{kept.map((i) => (
             <div key={i.id} className="row-between">

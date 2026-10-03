@@ -16,9 +16,10 @@
  * **Without them** a shower still rinses but doesn't leave them as clean:
  * at most 85 without soap or body wash, 90 without shampoo; a morning
  * without toothpaste or deodorant starts five fresher points down for each.
- * Those sizes are SLATE's estimates. Toilet paper, razors and the rest are
- * on sale and kept, not used up: most chains don't say how many sheets are
- * on a roll, and nothing reads a shave.
+ * Those sizes are SLATE's estimates. Toilet paper and the rest are on sale
+ * and kept, not used up: most chains don't say how many sheets are on a roll.
+ * Razors and shaving cream were the same until 2026-10-03, when nothing read
+ * a shave; now someone who shaves at home uses them (`shave`, below).
  *
  * A life is given a set of each to start, the cheapest of each kind where
  * it lives, and on a day with time for the shops what's run out is bought
@@ -144,6 +145,48 @@ export function showerUses(sim: Simulation, person: Person): number {
   return Math.min(cleansed ? 100 : WITHOUT.cleanser, shampooed ? 100 : WITHOUT.shampoo);
 }
 
+/**
+ * Shaving at home (the master plan's §31h, from 2026-10-03;
+ * `research-home-gaps.json`), as often as chosen: a shave with the shower
+ * on its days, RIVM's 2 g of shaving cream and 5 minutes (its 2006 default),
+ * a milliliter of foam taken as a gram, and its share of a razor's life. A
+ * razor lasts what its maker says: Gillette's three-blade 15 shaves, its
+ * five-blade 20, Schick Hydro's 18, Harry's 6 to 8; one whose maker says
+ * nothing, Gillette's general 5 to 10. Without a razor and the cream to hand,
+ * there's no shave. Razors and cream are bought again as the rest are, for
+ * someone who shaves.
+ */
+export type ShaveEvery = 'daily' | 'alternate' | 'twice-weekly' | 'weekly';
+export const SHAVE_DAYS: Readonly<Record<ShaveEvery, number>> = { daily: 1, alternate: 2, 'twice-weekly': 3.5, weekly: 7 };
+export const SHAVE = { creamG: 2, minutes: 5 } as const;
+/** A razor's shaves, by its maker's own figure where it gives one. */
+export function razorShaves(label: string): number {
+  if (/fusion|proglide/i.test(label)) return 20;
+  if (/schick hydro/i.test(label)) return 18;
+  if (/harry/i.test(label)) return 7;
+  if (/gillette/i.test(label) && /\b(mach ?3|sensor ?3|blue ?3)\b/i.test(label)) return 15;
+  return 7.5;
+}
+/** Whether today is a shaving day: so many days since the last, by the chosen frequency. */
+export function shaveDue(person: Person, at: Instant): boolean {
+  if (!person.shaves) return false;
+  return person.lastShave === undefined || at - person.lastShave >= SHAVE_DAYS[person.shaves] * MS_DAY - 6 * 3_600_000;
+}
+/** Whether a shave would be had now: due, with a razor and the cream to hand. */
+export const shaveReady = (sim: Simulation, person: Person): boolean => keepsSupplies(person) && shaveDue(person, sim.now) && inUseOrder(sim, person, 'razor').length > 0 && inUseOrder(sim, person, 'shaving-cream').length > 0;
+
+/** A shave, where due and the razor and cream are to hand: true where one was had. */
+export function shave(sim: Simulation, person: Person): boolean {
+  if (!keepsSupplies(person) || !shaveDue(person, sim.now)) return false;
+  const razor = inUseOrder(sim, person, 'razor')[0];
+  if (!razor || inUseOrder(sim, person, 'shaving-cream').length === 0) return false;
+  take(sim, person, ['shaving-cream'], SHAVE.creamG);
+  razor.supply.left -= 1 / razorShaves(razor.label);
+  if (razor.supply.left <= 1e-9) person.items = itemsOf(person).filter((x) => x.id !== razor.id);
+  person.lastShave = sim.now;
+  return true;
+}
+
 /** A day's teeth and deodorant: the freshness lost for what's missing. A toothbrush wears a day's share of its three months. */
 export function dailyCare(sim: Simulation, person: Person): number {
   if (!keepsSupplies(person)) return 0;
@@ -252,13 +295,25 @@ export function starterCleaning(sim: Simulation, person: Person, dishwasher: boo
 }
 
 /** What's run out bought again on a free day, the cheapest of each in a store here; a worn toothbrush thrown out. How many bought. */
+export function registerShaving(sim: Simulation): void {
+  sim.onCommand<{ every?: ShaveEvery | null }, { shaves?: ShaveEvery }>('hygiene.shave_every', (p, { sim: s }) => {
+    const every = p?.every;
+    if (every === null || every === undefined) { delete s.player.shaves; return {}; }
+    if (!(every in SHAVE_DAYS)) throw new CommandError('Choose how often.');
+    s.player.shaves = every;
+    return { shaves: every };
+  });
+}
+
 export function restock(sim: Simulation, person: Person, dishwasher = false): number {
   if (!keepsSupplies(person) || !person.home || person.home.cityId !== person.currentLocationId) return 0;
   const worn = suppliesOf(person).filter((i) => i.supply.kind === 'toothbrush' && i.condition <= 0);
   if (worn.length) person.items = itemsOf(person).filter((i) => !worn.some((w) => w.id === i.id));
   let bought = 0;
   const cleaning = keepsCleaning(person) ? CLEANING_KEPT.filter((k) => dishwasher || k !== 'dishwasher-detergent') : [];
-  for (const kind of [...KEPT, ...cleaning]) {
+  // Razors and cream for someone who shaves (from 2026-10-03).
+  const shaving = person.shaves ? (['razor', 'shaving-cream'] as const) : [];
+  for (const kind of [...KEPT, ...cleaning, ...shaving]) {
     const have = toHand(sim, person, kind).filter((i) => kind !== 'toothbrush' || i.condition > 0);
     // A detergent is bought again with a week's use left, as people buy it before it's out: until 2026-10-02 only once it
     // was, and a working life went weeks without washing between free days (the lives replayed at ce72adf3: 1,048 refused).
@@ -316,6 +371,7 @@ export const lastGroomed = (person: Person): Instant | undefined => person.groom
 export const daysSince = (sim: Simulation, at: Instant | undefined): number | undefined => (at === undefined ? undefined : Math.floor((sim.now - at) / MS_DAY));
 
 export function registerHygiene(sim: Simulation): void {
+  registerShaving(sim);
   sim.onCommand<{ productId: string; quantity?: number }, { paid: Money }>('hygiene.buy', (p, { sim: s }) => ({ paid: buyToiletries(s, s.player, String(p?.productId), Number(p?.quantity ?? 1)) }));
   sim.onCommand<{ productId: string }, { kind: string }>('hygiene.use_first', (p, { sim: s }) => {
     const t = toiletryById(String(p?.productId));

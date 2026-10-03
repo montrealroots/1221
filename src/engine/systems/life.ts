@@ -40,6 +40,7 @@ import { takePortion } from './pantry';
 import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty, wearForSwim } from './wardrobe';
 import { SITTING_MET } from './coldstress';
 import { countWash } from './water';
+import { SHAVE, shave, shaveReady } from './hygiene';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
@@ -490,6 +491,8 @@ export function registerLife(sim: Simulation): void {
       if (action === 'wash' || action === 'bathe') person.wellbeing.hygiene = Math.min(person.wellbeing.hygiene ?? 100, showerUses(s, person));
       // Metered at home, against the average (`systems/water.ts`, from 2026-10-03).
       if ((action === 'wash' || action === 'bathe') && atHome(person)) countWash(person, action === 'bathe');
+      // A shave with it on its day, where the razor and cream are to hand (from 2026-10-03).
+      if (action === 'wash') shave(s, person);
       // Dried on one of their own towels at home, a use toward its wash; a hotel, a let or a gym gives its own (`useTowel`, from 2026-10-02).
       if ((action === 'wash' || action === 'bathe') && atHome(person) && !useTowel(s, person) && person.id === s.universe.playerId) s.notify({ category: 'home', title: 'No Clean Towel', body: 'Every towel to hand is in the wash or still drying: put a load on.', importance: 25, route: '/workspace/clothes' });
       // An hour of it, at its injury rate (`content/injury.ts`).
@@ -607,7 +610,10 @@ export function minutesFor(sim: Simulation, action: LookAfter): number {
   if (action === 'tidy') { const place = placeOf(sim, sim.player); return place ? cleaningMinutes(place) : LOOKING_AFTER.tidy.minutes; }
   if (action === 'washup') return Math.max(1, Math.round(WASH_UP.minutesADay * (livingOf(sim.player).dishes ?? 1)));
   // In a flat-share, waiting for the bathroom first (`bathroomWait` in `systems/rooms.ts`, from 2026-10-03).
-  if (action === 'wash' || action === 'bathe') return LOOKING_AFTER[action].minutes + bathroomWait(sim, sim.player, sim.now, LOOKING_AFTER[action].minutes);
+  if (action === 'wash' || action === 'bathe') {
+    const own = LOOKING_AFTER[action].minutes + (action === 'wash' && shaveReady(sim, sim.player) ? SHAVE.minutes : 0);
+    return own + bathroomWait(sim, sim.player, sim.now, own);
+  }
   return LOOKING_AFTER[action].minutes;
 }
 
