@@ -16,7 +16,7 @@ import { MEAL_PENALTY } from '@/engine/content/career';
 import { ABROAD, CARE, CHRONIC, DENTAL_VISION, PHARMACY, STATE_DEDUCTIONS } from '@/engine/content/safetynet';
 import { afterlife, beginCareer, careerOf, expectedGross, foreignWithholding, mealPenalty, paycheck, roleById, t1287Quote, unitRate, type Booking } from '@/engine/systems/career';
 import { earningsOf, recordInterest, recordWages, yearOf } from '@/engine/systems/earnings';
-import { grown, healthOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
+import { grown, healthOf, keepUp, fillMedicine, rxShareOf, shareOf, teethAndEyesShareOf, illnessWeek } from '@/engine/systems/health';
 import { canadaElected, connecticutTax, figuresFor, settleUkYears, ukAllowed, ukTaxOn } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 import { TURNS } from '@/engine/systems/enjoyment';
@@ -531,7 +531,8 @@ describe('conditions carried', () => {
     h.chronic = { depression: { treated: true }, hypertension: { treated: true } };
     h.sag = { from: at(2026, 1, 1, 0), until: at(2027, 1, 1, 0) };
     const when = at(2026, 3, 1, 1);
-    const cost = keepUp(sim, sim.player, when);
+    // The month’s care, and its fill of medicine (`fillMedicine`, from 2026-10-02).
+    const cost = keepUp(sim, sim.player, when) + fillMedicine(sim, sim.player, when);
     expect(cost).toBe(2 * 25_00 + 2 * Math.max(10_00, Math.round(0.1 * PHARMACY.price.generic)));
     // With next to nothing and no card, the month's care goes unpaid.
     const poor = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'nothing' }, 'keep-poor');

@@ -17,7 +17,7 @@ import { AGENCIES, ROLES, WORK_COSTS } from '@/engine/content/career';
 import { CARE, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, RECEIPTS, STATE_DEDUCTIONS, medicalGrowth } from '@/engine/content/safetynet';
 import { ESTIMATE, beginCareer, bookingChance, careerOf, staleHeadshots, submissionsAWeek, weekOfAuditions, withSalesTax, workCostsWeek } from '@/engine/systems/career';
 import { recordJobCost, recordWages, yearOf } from '@/engine/systems/earnings';
-import { drawChronic, grown, healthMonth, monitorShareOf, healthOf, illnessWeek, insulinShareOf, keepUp, rxShareOf, shareOf, teethAndEyesShareOf } from '@/engine/systems/health';
+import { drawChronic, grown, healthMonth, monitorShareOf, healthOf, illnessWeek, insulinShareOf, keepUp, fillMedicine, rxShareOf, shareOf, teethAndEyesShareOf } from '@/engine/systems/health';
 import { figuresFor } from '@/engine/systems/taxreturn';
 import type { Simulation } from '@/engine/core/simulation';
 
@@ -208,11 +208,13 @@ describe('diabetes and arthritis', () => {
   it('keep type 1 on insulin, a monitor and a visit a quarter, and arthritis on a generic', () => {
     const sim = pro('diabetes');
     const h = healthOf(sim.player);
+    // The month's care and the month's fill of medicine (`fillMedicine`, from 2026-10-02).
+    const month = (t: number) => keepUp(sim, sim.player, t) + fillMedicine(sim, sim.player, t);
     h.chronic = { diabetes: { treated: true, typeOne: true } };
     // January: insulin, the monitor on Abbott's program, and the quarter's visit, uninsured.
     const monthly = INSULIN.cashCap + INSULIN.monitor.program;
-    expect(keepUp(sim, sim.player, at(2026, 1, 1, 1))).toBe(monthly + shareOf(sim.player, 'visit', at(2026, 1, 1, 1)));
-    expect(keepUp(sim, sim.player, at(2026, 2, 1, 1))).toBe(monthly);
+    expect(month(at(2026, 1, 1, 1))).toBe(monthly + shareOf(sim.player, 'visit', at(2026, 1, 1, 1)));
+    expect(month(at(2026, 2, 1, 1))).toBe(monthly);
     // A plan's brand copay where it's less than the program; on Medicaid, its $1.
     h.sag = { from: at(2026, 1, 1, 0), until: at(2027, 1, 1, 0) };
     // SAG-AFTRA's first brand fill carries its $75 deductible, over the program; after it, 25% is under it.
@@ -223,9 +225,9 @@ describe('diabetes and arthritis', () => {
     expect(monitorShareOf(sim.player, at(2026, 3, 1))).toBe(1_00);
     delete h.program;
     h.chronic = { diabetes: { treated: true, typeOne: false } };
-    expect(keepUp(sim, sim.player, at(2026, 2, 1, 1))).toBe(rxShareOf(sim.player, false, at(2026, 2, 1, 1)));
+    expect(month(at(2026, 2, 1, 1))).toBe(rxShareOf(sim.player, false, at(2026, 2, 1, 1)));
     h.chronic = { arthritis: { treated: true } };
-    expect(keepUp(sim, sim.player, at(2026, 2, 1, 1)) % rxShareOf(sim.player, false, at(2026, 2, 1, 1))).toBeLessThanOrEqual(shareOf(sim.player, 'visit', at(2026, 2, 1, 1)));
+    expect(month(at(2026, 2, 1, 1)) % rxShareOf(sim.player, false, at(2026, 2, 1, 1))).toBeLessThanOrEqual(shareOf(sim.player, 'visit', at(2026, 2, 1, 1)));
   });
 
   it('left alone: type 1 quadruples the emergencies, diabetes wears the body down, and arthritis tires it', () => {
