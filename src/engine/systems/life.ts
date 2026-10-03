@@ -19,6 +19,11 @@ import { boatOf, charterAt, charterCost, charterRefusal, outingCost, outingRefus
 import { bikeHere, rideOut, rideRefusal, trailOut, trailRefusal } from './outings';
 import { jetLagLoss } from './jetlag';
 import type { Simulation } from '../core/simulation';
+import { DROP_INS, DROP_IN_MINUTES, type DropIn } from '../content/dropins';
+import { CITIES } from '../content/geography';
+import type { Money } from '../core/money';
+import { inSaveMoney } from './banking';
+import { salesTaxRate } from '../content/tax';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
@@ -429,6 +434,23 @@ export function registerLife(sim: Simulation): void {
     return { doneAt: s.now, paid: q.price + q.tip };
   });
 
+  // --- A yoga or dance class, taken one at a time (`content/dropins.ts`, from 2026-10-03) ---
+  sim.onCommand<{ classId: string }, { doneAt: number; paid: number }>('class.take', (p, { sim: s }) => {
+    const person = s.player;
+    const c = DROP_INS.find((x) => x.id === p?.classId);
+    if (!c) throw new CommandError('There’s no such class.');
+    if (person.currentLocationId !== c.cityId) throw new CommandError(`${c.studio} is in ${CITIES.require(c.cityId).name}.`);
+    const busy = occupiedAt(s, s.now);
+    if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
+    const paid = dropInPrice(s, c);
+    if (!spend(s, person, paid, `${c.studio}, ${c.label.toLowerCase()}`, 'personal')) throw new CommandError('The payment didn’t go through.');
+    s.advanceTo(s.now + DROP_IN_MINUTES * 60_000);
+    exerts(person, c.met, DROP_IN_MINUTES / 60);
+    // Under three METs it's an hour unwinding, not a workout, as a lesson is (`systems/clubs.ts`).
+    applyLookingAfter(person, c.met >= 3 ? 'exercise' : 'unwind', s.now);
+    return { doneAt: s.now, paid };
+  });
+
   // --- Looking after yourself ---------------------------------------------
 
   sim.onCommand<{ action: LookAfter; how?: string }, { doneAt: number; changed: Partial<Wellbeing> }>(
@@ -574,6 +596,11 @@ const BATH_RELIEF = 8;
 const MEAL = 50;
 const WORKOUT_FITNESS = 0.6;
 const WORKOUT_ENERGY = 10;
+/** A class's single price where it is, the town's tax added where the studio's price is before it, in the save's money. */
+export function dropInPrice(sim: Simulation, c: DropIn): Money {
+  return inSaveMoney(sim, Math.round(c.price * (1 + (c.taxIncluded ? 0 : salesTaxRate(c.cityId, sim.now, 'general'))) * 100), c.currency);
+}
+
 /** Too full to eat, too clean to shower, and too spent to train. */
 const FULL = 90;
 const CLEAN = 95;

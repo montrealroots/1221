@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-316 commands; 310 named by a test, 6 not.
+317 commands; 311 named by a test, 6 not.
 
 ## aircraft
 
@@ -141,6 +141,12 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `cash.deposit` | `src/engine/systems/cash.ts` | `BankCash.tsx` | `cash.test.ts` | Your Bank |
 | `cash.withdraw` | `src/engine/systems/cash.ts` | `BankCash.tsx` | `cardoffers.test.ts` `cash.test.ts` `security.test.ts` `several-cards.test.ts` | Your Bank |
+
+## class
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `class.take` | `src/engine/systems/life.ts` | `PeopleWorkspace.tsx` | `dropins.test.ts` | People |
 
 ## clothes
 

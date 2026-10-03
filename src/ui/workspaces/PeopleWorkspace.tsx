@@ -6,6 +6,8 @@
  */
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
+import { DROP_INS } from '@/engine/content/dropins';
+import { dropInPrice } from '@/engine/systems/life';
 import { Panel } from '@/ui/components/primitives';
 import { useFeature } from '@/ui/guide/Guide';
 import { formatDate, instantFromZoned, MS_DAY, zonedParts } from '@/engine/core/time';
@@ -74,6 +76,7 @@ export function PeopleWorkspace() {
         {picked && <Invite contact={picked} key={picked.id} homeCity={person.home?.cityId} />}
         {person.home && person.home.kind !== 'sofa' && contacts.some((c) => c.cityId === person.home!.cityId) && <HaveFriendsOver />}
         <Clubs />
+      <Classes />
         <Family />
         <Parents />
         <DatingPanel />
@@ -122,6 +125,28 @@ function Clubs() {
         </table>
       </div>
       <div className="xs dim">Each week you go if you’re in town, awake and free then: the session’s exercise, and time with someone from the club you meet at the first.</div>
+    </Panel>
+  );
+}
+
+/** Yoga and dance classes in the town you're in, taken one at a time at each studio's single price (`content/dropins.ts`). */
+function Classes() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const take = useFeature('class.take');
+  const here = DROP_INS.filter((c) => c.cityId === person.currentLocationId).map((c) => ({ c, price: dropInPrice(sim, c) })).sort((a, b) => a.price - b.price);
+  if (here.length === 0) return null;
+  const cur = saveCurrency(sim.universe);
+  return (
+    <Panel title="Classes" subtitle="Yoga and dance, one class at a time, an hour each">
+      <div className="col gap-1">
+        {here.map(({ c, price }) => (
+          <div key={c.id} className="row-between small">
+            <span>{`${c.studio}: ${c.label}`}</span>
+            <button type="button" className="btn btn-sm btn-ghost" disabled={!take.open} title={take.reason ?? `The Compendium’s ${c.met} METs`} onClick={() => { if (run('class.take', { classId: c.id }).ok) toast(`${c.label}, at ${c.studio}.`, 'positive'); }}>{`Take It, ${formatMoney(price, cur, { cents: false })}`}</button>
+          </div>
+        ))}
+      </div>
     </Panel>
   );
 }
