@@ -39,7 +39,7 @@ import { watchRefusal } from './homelife';
 import { takePortion } from './pantry';
 import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty } from './wardrobe';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
-import { GROOMING, dailyCare, detergentFor, dishSoapFor, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
+import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
 import { roomGone } from './latecheckout';
 import { runInShoes } from './resale';
@@ -420,8 +420,8 @@ export function registerLife(sim: Simulation): void {
     const q = groomingQuote(s, salon, String(p.service))!;
     if (!spend(s, person, q.price + q.tip, salon.name, 'personal')) throw new CommandError('The payment didn’t go through.');
     s.advanceTo(s.now + q.minutes * 60_000);
+    person.wellbeing.morale = clamp(person.wellbeing.morale + groomingLift(person, s.now) * personalityOf(person, 'moraleSwing'), 0, 100);
     person.groomedAt = s.now;
-    person.wellbeing.morale = clamp(person.wellbeing.morale + GROOMING.morale * personalityOf(person, 'moraleSwing'), 0, 100);
     return { doneAt: s.now, paid: q.price + q.tip };
   });
 

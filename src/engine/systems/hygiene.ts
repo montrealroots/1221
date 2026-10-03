@@ -278,7 +278,20 @@ export function restock(sim: Simulation, person: Person, dishwasher = false): nu
 /** A salon's tip, the custom's middle: Emily Post's 15 to 20% in America and Canada, Debrett's 10% in Britain, 5 to 10% in Ireland, AFAR's 10 to 20% in Mexico. */
 export const SALON_TIP: Readonly<Record<string, number>> = { US: 0.175, CA: 0.175, GB: 0.1, IE: 0.075, MX: 0.15 };
 /** Minutes for a service whose list gives none, and what a visit does for the mood. SLATE's estimates. */
-export const GROOMING = { minutes: 45, morale: 3 } as const;
+export const GROOMING = { minutes: 45, morale: 3, dueWeeks: 4 } as const;
+
+/**
+ * What a visit does for the mood, by how due it was (from 2026-10-03, until
+ * when the last visit was shown and read by nothing): the whole of it four
+ * weeks or more after the last, the soonest any stylist PureWow asked would
+ * cut short hair again (`research-hygiene.json`), and less the sooner, as a
+ * meal lifts the mood by as much as it was needed. A first visit, the whole.
+ */
+export function groomingLift(person: Person, at: Instant): number {
+  const last = lastGroomed(person);
+  const due = last === undefined ? 1 : Math.min(1, (at - last) / (GROOMING.dueWeeks * 7 * MS_DAY));
+  return GROOMING.morale * due;
+}
 
 /** A service at a salon: its price with the tip, in the save's money, and its minutes; nothing where the price isn't known. */
 export function groomingQuote(sim: Simulation, s: Salon, service: string): { price: Money; tip: Money; minutes: number } | undefined {

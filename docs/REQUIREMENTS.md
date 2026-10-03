@@ -104,7 +104,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 31e | Perform; time; hygiene | Complete | life.ts | — |
 | 31f | Water and energy | Partial | electricity billed at each town's own tariff on the kWh the home used (`systems/electricity.ts`); a power cut spoils the fridge and freezer (`powerDay`, `spoilWithoutPower`) | Hot water by heater and outage; water billed apart from the atlas's bills |
 | 31g | Dry off, change, used towel to laundry | Done, 2026-10-02 | a home shower uses a towel, three uses to the wash (Cleveland Clinic), washed with the clothes; `clothes.change` after | — |
-| 31h | Grooming at home | Partial | salon, teeth, deodorant | Shave, hair, makeup at home; preferences |
+| 31h | Grooming at home | Partial | salon, teeth, deodorant; from 2026-10-03 a visit lifts the mood by how due it was, the whole four weeks after the last, the soonest a stylist would cut again (`groomingLift`) | Shave, hair, makeup at home; preferences |
 | 32a | Browse wardrobe, drawers, luggage | Done | `reachable`, WhatToWear; Belongings grouped by where each thing is, Where Things Are | — |
 | 32b | Filter by occasion, type, size, color, condition | Partial, 2026-10-02 | Belongings filters by kind, clean or not, condition, color and size, and finds by name (`systems/itemfacets.ts`) | Occasion tags (no source tags garments by occasion) |
 | 32c | Pieces and layers | Partial | one per slot | Layering |

@@ -10,7 +10,7 @@ import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { TOILETRIES } from '@/engine/content/hygiene';
 import { homeKeyOf } from '@/engine/systems/items';
-import { USE, WITHOUT, dailyCare, groomingQuote, groomingRefusal, keepsSupplies, restock, salonById, showerUses, suppliesOf, toiletryCatalog, toiletryPrice } from '@/engine/systems/hygiene';
+import { GROOMING, USE, WITHOUT, dailyCare, groomingLift, groomingQuote, groomingRefusal, keepsSupplies, restock, salonById, showerUses, suppliesOf, toiletryCatalog, toiletryPrice } from '@/engine/systems/hygiene';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const bank = (sim: Simulation) => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
@@ -136,6 +136,24 @@ describe('a barber or a salon', () => {
     expect(sim.now - start).toBe(30 * 60_000);
     expect(sim.player.groomedAt).toBe(sim.now);
     expect(sim.player.wellbeing.morale).toBeGreaterThan(morale - 0.5);
+  });
+
+  it('lifts the mood by how due it was: the whole of it four weeks on, half at two, the whole the first time', () => {
+    const sim = life('uk-eng-london', 'groom-due');
+    const p = sim.player;
+    expect(groomingLift(p, sim.now)).toBe(GROOMING.morale);
+    p.groomedAt = sim.now - 14 * MS_DAY;
+    expect(groomingLift(p, sim.now)).toBeCloseTo(GROOMING.morale / 2, 9);
+    p.groomedAt = sim.now - 40 * MS_DAY;
+    expect(groomingLift(p, sim.now)).toBe(GROOMING.morale);
+    // Back to back, the second barely lifts it.
+    const pall = salonById('pall-mall-barbers-trafalgar-square-london')!;
+    p.wellbeing.morale = 50;
+    sim.must({ kind: 'hygiene.groom', payload: { salonId: pall.id, service: 'mens-cut' } });
+    const after = p.wellbeing.morale;
+    sim.must({ kind: 'hygiene.groom', payload: { salonId: pall.id, service: 'mens-cut' } });
+    expect(p.wellbeing.morale - after).toBeLessThan(0.1);
+    expect(after - 50).toBeGreaterThan(1);
   });
 
   it('isn’t had in another town, nor where the price isn’t known', () => {
