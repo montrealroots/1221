@@ -20,9 +20,9 @@ import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
 import { AIR } from '@/engine/content/air';
 import { caravansOf, towFor, towedLegs } from '@/engine/systems/caravans';
-import { asRoundTrip, bookRefusal, changeQuote, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS, inMotorhome, residentOf, refundRefusal } from '@/engine/systems/journey';
+import { MAX_ROOMS, asRoundTrip, bookRefusal, changeQuote, extendQuote, journeysOf, letQuote, nightsBetween, partnerOf, planBy, slotOf, whereBy, type Journey, type JourneyLeg, CHAUFFEURS, inMotorhome, residentOf, refundRefusal } from '@/engine/systems/journey';
 import { rentalAt, rentalQuote, rentalsOf } from '@/engine/systems/rentals';
-import { childFare, childRefusal, childrenAlong, companionRefusal, companionsOf } from '@/engine/systems/companions';
+import { childFare, childRefusal, childrenAlong, companionRefusal, companionsOf, sleepsOf } from '@/engine/systems/companions';
 import { childrenOf } from '@/engine/systems/children';
 import { contactsOf } from '@/engine/systems/people';
 import { arrange } from '@/engine/systems/catalog';
@@ -75,6 +75,8 @@ export function TravelWorkspace() {
   const [ground, setGround] = useState<GroundWay>('taxi');
   const [wants, setWants] = useState<HotelWant[]>([]);
   const [budget, setBudget] = useState('');
+  const [guests, setGuests] = useState(1);
+  const [roomCount, setRoomCount] = useState(1);
   const [daysThere, setDaysThere] = useState(4);
   const [tow, setTow] = useState(false);
   // A town chosen before arriving in it isn't a destination from it: until 2026-09-30 it stayed chosen, the list showing
@@ -133,11 +135,15 @@ export function TravelWorkspace() {
   const no = !toCity ? 'Choose where.' : (!mode ? cabinBagRefusal(person, bags) : undefined) ?? bookRefusal(sim, person, fromCity, toCity, outLegs, Math.max(1, stayNights), stayNights, cls === 'campground' || cls === 'street')
     ?? (typeof backLegs === 'string' ? backLegs : backPlan && outPlan && backPlan[0]!.departAt <= outPlan[outPlan.length - 1]!.arriveAt ? 'The way home leaves before the way out arrives.' : undefined);
   const arrival = outPlan ? outPlan[outPlan.length - 1]!.arriveAt : day;
+  // Several rooms of a hotel, each at the rate.
+  const roomsBooked = cls === 'hotel' ? roomCount : 1;
+  const scaled = <T extends { price: number }>(q: T | undefined): T | undefined => (q ? { ...q, price: q.price * roomsBooked } : undefined);
   // The named hotels' rooms in the town on this rate, cheapest first, priced for the nights.
-  const rooms = toCity && cls === 'hotel' && !own && stayNights > 0 ? hotelsIn(toCity).flatMap((h) => h.rooms.map((r) => ({ key: `${h.id}|${r.name}`, hotel: h, room: r, quote: namedStayQuote(sim, h.id, r.name, ratePlan, arrival, stayNights) })))
-    .filter((x) => x.quote && hotelHas(x.hotel.id, wants) && (!budget || x.quote.price <= centsFromTyped(budget))).sort((a, b) => a.quote!.price - b.quote!.price) : [];
+  const rooms = toCity && cls === 'hotel' && !own && stayNights > 0 ? hotelsIn(toCity).flatMap((h) => h.rooms.map((r) => ({ key: `${h.id}|${r.name}`, hotel: h, room: r, quote: scaled(namedStayQuote(sim, h.id, r.name, ratePlan, arrival, stayNights)) })))
+    // Rooms enough for the guests, at their beds (two where unread), each room booked.
+    .filter((x) => x.quote && (sleepsOf(x.room.bed) ?? 2) * roomsBooked >= guests && hotelHas(x.hotel.id, wants) && (!budget || x.quote.price <= centsFromTyped(budget))).sort((a, b) => a.quote!.price - b.quote!.price) : [];
   const picked = rooms.find((x) => x.key === hotelPick);
-  const hotel = picked ? picked.quote : toCity && !own && stayNights > 0 ? stayPrice(sim, toCity, stayNights, 1, cls, ratePlan, residentOf(person, toCity), arrival) : undefined;
+  const hotel = picked ? picked.quote : toCity && !own && stayNights > 0 ? scaled(stayPrice(sim, toCity, stayNights, 1, cls, ratePlan, residentOf(person, toCity), arrival)) : undefined;
   const plan = outPlan ? [...outPlan, ...(backPlan ?? [])] : undefined;
   const fares = plan ? plan.reduce((a, l) => a + l.fare, 0) : 0;
   const journeys = journeysOf(person).slice().sort((a, b) => b.leaveAt - a.leaveAt);
@@ -253,6 +259,12 @@ export function TravelWorkspace() {
                         <label key={w} className="small row gap-1" style={{ alignItems: 'center' }}><input type="checkbox" checked={wants.includes(w)} onChange={() => setWants((a) => (a.includes(w) ? a.filter((x) => x !== w) : [...a, w]))} />{HOTEL_WANT_LABEL[w]}</label>
                       ))}
                     </div>
+                    <label htmlFor="travel-guests" className="small">Guests</label>
+                    <input id="travel-guests" type="number" min={1} max={MAX_ROOMS * 4} value={guests} onChange={(e) => setGuests(Math.max(1, Math.min(MAX_ROOMS * 4, Number(e.target.value) || 1)))} style={{ width: '5rem' }} />
+                    <label htmlFor="travel-rooms" className="small">Rooms</label>
+                    <select id="travel-rooms" value={roomCount} onChange={(e) => setRoomCount(Number(e.target.value))} style={{ width: 'auto' }}>
+                      {Array.from({ length: MAX_ROOMS }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}
+                    </select>
                     <label htmlFor="travel-budget" className="small">At Most, The Stay</label>
                     <input id="travel-budget" inputMode="decimal" value={budget} onChange={(e) => setBudget(e.target.value)} style={{ width: '8rem' }} />
                   </div>
@@ -319,7 +331,7 @@ export function TravelWorkspace() {
             {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
             <div className="row gap-2">
               <Gated feature="travel.book" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan, ...(towing ? { tow: true } : {}), ...(picked ? { hotelId: picked.hotel.id, room: picked.room.name } : {}), ...(transit && ground === 'transit' ? { ground: 'transit' } : {}), ...(driving && ownCar ? { ground: 'car', carId: ownCar.id } : {}), ...(byPara ? { ground: 'paratransit' } : {}) });
+                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan, ...(roomsBooked > 1 ? { rooms: roomsBooked } : {}), ...(towing ? { tow: true } : {}), ...(picked ? { hotelId: picked.hotel.id, room: picked.room.name } : {}), ...(transit && ground === 'transit' ? { ground: 'transit' } : {}), ...(driving && ownCar ? { ground: 'car', carId: ownCar.id } : {}), ...(byPara ? { ground: 'paratransit' } : {}) });
                 if (a.ok) toast(`Booked, for ${money(a.value!.total)}: you leave ${formatDateTime(a.value!.leaveAt, sim.zone)}.`, 'positive');
               }}>Book It</Gated>
             </div>

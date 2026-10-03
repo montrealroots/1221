@@ -116,11 +116,11 @@ export function childRefusal(sim: Simulation, person: Person, journeyId: string,
   return undefined;
 }
 
-/** What the journey's room sleeps: a named room's beds; two otherwise, SLATE's reading of a hotel room. */
+/** What the journey's rooms sleep: a named room's beds; two otherwise, SLATE's reading of a hotel room; each room booked. */
 export function sleepsIn(j: Journey): number {
   const named = j.hotel?.named;
   const room = named ? hotelById(named.hotelId)?.rooms.find((r) => r.name === named.room) : undefined;
-  return sleepsOf(room?.bed) ?? 2;
+  return (sleepsOf(room?.bed) ?? 2) * (j.hotel?.rooms ?? 1);
 }
 
 /** Why they can't be asked along, or nothing; and why they'd say no, as a reason given. */

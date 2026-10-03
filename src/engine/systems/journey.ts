@@ -97,7 +97,7 @@ export interface Journey {
   /** One's own car left at the departure airport for the round trip, paid for on the way home (`systems/airportground.ts`, from 2026-10-02). */
   parked?: { vehicleId: string; iata: string };
   /** A hotel at the far end for some nights, prepaid, and when its first night begins and its last ends. */
-  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string }; /** Its deposit held now, and returned at check-out. */ deposit?: Money; returned?: Money; /** A deposit the bank couldn't cover at arrival: the room held, not given, until the end of that day (from 2026-10-02). */ depositDue?: Money; heldUntil?: Instant; /** The stay given up, the deposit never paid. */ forfeited?: boolean; /** Photo ID asked at the desk and none shown: no room until one is (from 2026-10-02). */ idDue?: boolean; /** A late check-out bought, and its hour (`systems/latecheckout.ts`, from 2026-10-02). */ lateUntil?: Instant };
+  hotel?: { nights: number; price: Money; basis: string; checkOutAt: Instant; /** Its kind and rate plan, from 2026-10-01; a hotel on a flexible rate before. */ cls?: StayClass; plan?: RatePlan; /** Parking with it, for a car brought, from 2026-10-01. */ parking?: Money; /** A named hotel and its room, where one was chosen (`systems/hotels.ts`). */ named?: { hotelId: string; room: string }; /** Its deposit held now, and returned at check-out. */ deposit?: Money; returned?: Money; /** A deposit the bank couldn't cover at arrival: the room held, not given, until the end of that day (from 2026-10-02). */ depositDue?: Money; heldUntil?: Instant; /** The stay given up, the deposit never paid. */ forfeited?: boolean; /** Photo ID asked at the desk and none shown: no room until one is (from 2026-10-02). */ idDue?: boolean; /** A late check-out bought, and its hour (`systems/latecheckout.ts`, from 2026-10-02). */ lateUntil?: Instant; /** More than one room of it, from 2026-10-03, each at the rate. */ rooms?: number };
   /** Children of yours along, from 2026-10-03 (`systems/companions.ts`). */
   childIds?: string[];
   /** Somebody you know along, from 2026-10-02 (`systems/companions.ts`). */
@@ -515,7 +515,7 @@ export function registerJourneys(sim: Simulation): void {
     return { price: q.price, hotelBack };
   });
 
-  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean; hotelId?: string; room?: string; ground?: GroundWay; carId?: string }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
+  sim.onCommand<{ toCity: string; day: Instant; slot?: number; bags?: number; nights?: number; rooms?: number; returnDay?: Instant; returnSlot?: number; by?: string; cabin?: Cabin; stay?: StayClass; plan?: RatePlan; tow?: boolean; hotelId?: string; room?: string; ground?: GroundWay; carId?: string }, { journeyId: string; returnId?: string; leaveAt: Instant; arriveAt: Instant; total: Money }>('travel.book', (p, { sim: s }) => {
     const person = s.player;
     const toCity = String(p?.toCity ?? '');
     const day = Number(p?.day);
@@ -593,7 +593,11 @@ export function registerJourneys(sim: Simulation): void {
       const noHotel = namedStayRefusal(person, named.hotelId, named.room, plan, arriveOut);
       if (noHotel) throw new CommandError(noHotel);
     }
-    const room = !ownPlaceIn(person, toCity) && nights > 0 ? (named ? namedStayQuote(s, named.hotelId, named.room, plan, arriveOut, nights) : stayPrice(s, toCity, nights, 1, cls, plan, residentOf(person, toCity), arriveOut)) : undefined;
+    // Several rooms of a hotel, each at the rate (from 2026-10-03).
+    const count = Math.max(1, Math.min(MAX_ROOMS, Math.floor(Number(p?.rooms ?? 1)) || 1));
+    if (count > 1 && cls !== 'hotel') throw new CommandError('Several rooms are a hotel’s.');
+    const one = !ownPlaceIn(person, toCity) && nights > 0 ? (named ? namedStayQuote(s, named.hotelId, named.room, plan, arriveOut, nights) : stayPrice(s, toCity, nights, 1, cls, plan, residentOf(person, toCity), arriveOut)) : undefined;
+    const room = one ? { ...one, price: one.price * count, basis: count > 1 ? `${count} rooms. ${one.basis}` : one.basis } : undefined;
     // A campground closed on one of the nights says when it's open.
     const closed = cls === 'campground' ? CAMPGROUNDS[jurisdictionOf(toCity) ?? '']?.closed : undefined;
     if (!ownPlaceIn(person, toCity) && nights > 0 && !room && closed) throw new CommandError(closed);
@@ -615,7 +619,7 @@ export function registerJourneys(sim: Simulation): void {
       s.schedule({ at: leaveAt, kind: LEAVE_KIND, label: `To ${CITIES.require(to).name}`, category: 'personal', priority: 28, requiresPlayer: true, durationMinutes: Math.round((arriveAt - leaveAt) / 60_000), locationId: from, payload: { personId: person.id, journeyId: id } });
       return j;
     };
-    const first = add(out, fromCity, toCity, outCost, hotel ? { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAfter(toCity, arriveOut, nights, checkOutHourOf(named?.hotelId)), ...(cls !== 'hotel' ? { cls } : {}), ...(plan !== 'flexible' ? { plan } : {}), ...(park ? { parking: park } : {}), ...(named ? { named } : {}) } : undefined);
+    const first = add(out, fromCity, toCity, outCost, hotel ? { nights, price: hotel.price, basis: hotel.basis, checkOutAt: checkOutAfter(toCity, arriveOut, nights, checkOutHourOf(named?.hotelId)), ...(cls !== 'hotel' ? { cls } : {}), ...(plan !== 'flexible' ? { plan } : {}), ...(park ? { parking: park } : {}), ...(named ? { named } : {}), ...(count > 1 ? { rooms: count } : {}) } : undefined);
     if (parked) first.parked = parked;
     const second = back ? add(back, toCity, fromCity, total(back)) : undefined;
     return { journeyId: first.id, ...(second ? { returnId: second.id } : {}), leaveAt: first.leaveAt, arriveAt: first.arriveAt, total: cost };
@@ -927,7 +931,7 @@ function giveTheRoom(s: Simulation, person: Person, j: Journey): void {
     s.schedule({ at: ready, kind: ROOM_READY_KIND, label: 'Hotel Check-In', category: 'personal', priority: 26, payload: { personId: person.id, journeyId: j.id } });
   } else delete stay.out;
   // A named hotel's deposit, held at arrival and returned at check-out (`depositFor`, from 2026-10-01).
-  const deposit = j.hotel!.named ? depositFor(s, j.hotel!.named.hotelId, j.hotel!.nights) : 0;
+  const deposit = j.hotel!.named ? depositFor(s, j.hotel!.named.hotelId, j.hotel!.nights) * (j.hotel!.rooms ?? 1) : 0;
   if (deposit > 0 && payFromBank(s, person, deposit, `${hotelById(j.hotel!.named!.hotelId)!.name}, the deposit held`, 'travel')) j.hotel!.deposit = deposit;
   else if (deposit > 0) {
     // The bank can't cover the deposit: the room is held, not given, until the day ends (from 2026-10-02; until
@@ -1031,6 +1035,20 @@ function refundPostings(sim: Simulation, person: Person, amount: Money) {
  * - The hotel's or the let's added nights at their price (a let within its
  *   town's cap), and the rental car's added days at its company's terms.
  */
+/** The most rooms a booking takes: SLATE's reading of what a hotel's own booking page offers at once. */
+export const MAX_ROOMS = 4;
+
+/**
+ * A booked stay's price for some nights from an arrival: its named hotel's
+ * own room on its plan, or the town's kind, for each room booked. Until
+ * 2026-10-03 staying longer priced a named hotel's nights at the town's
+ * average hotel.
+ */
+export function restay(sim: Simulation, person: Person, cityId: string, h: NonNullable<Journey['hotel']>, from: Instant, nights: number): Money | undefined {
+  const q = h.named ? namedStayQuote(sim, h.named.hotelId, h.named.room, h.plan ?? 'flexible', from, nights) : stayPrice(sim, cityId, nights, 1, h.cls ?? 'hotel', h.plan ?? 'flexible', residentOf(person, cityId), from);
+  return q ? q.price * (h.rooms ?? 1) : undefined;
+}
+
 export interface Extension { legs: JourneyLeg[]; travel: Money; stay: Money; rental: Money; total: Money; nights: number }
 
 export function extendQuote(sim: Simulation, person: Person, backId: string, day: Instant, slot: number): Extension | string {
@@ -1059,10 +1077,10 @@ export function extendQuote(sim: Simulation, person: Person, backId: string, day
   } else if (out.hotel) {
     // The longer stay at the same kind and plan; the parking with it for the nights added.
     const per = out.hotel.parking ? Math.round(out.hotel.parking / out.hotel.nights) : 0;
-    const longer = stayPrice(sim, back.fromCity, nights, 1, out.hotel.cls ?? 'hotel', out.hotel.plan ?? 'flexible', residentOf(person, back.fromCity), out.arriveAt);
+    const longer = restay(sim, person, back.fromCity, out.hotel, out.arriveAt, nights);
     // A street's nights run out (`STREET_NIGHTS`).
-    if (!longer) return streetRefusal(back.fromCity, nights) ?? 'The stay can’t run longer.';
-    stay = longer.price + per * nights - out.hotel.price;
+    if (longer === undefined) return streetRefusal(back.fromCity, nights) ?? 'The stay can’t run longer.';
+    stay = longer + per * nights - out.hotel.price;
   }
   const car = rentalsOf(person).find((r) => r.returnJourneyId === back.id && (r.status === 'booked' || r.status === 'held' || r.status === 'out'));
   let rental = 0;
@@ -1125,9 +1143,9 @@ export function changeQuote(sim: Simulation, person: Person, journeyId: string, 
     } else {
       const h = j.hotel!;
       const per = h.parking ? Math.round(h.parking / h.nights) : 0;
-      const q = h.named ? namedStayQuote(sim, h.named.hotelId, h.named.room, h.plan ?? 'flexible', arrive, nights) : stayPrice(sim, j.toCity, nights, 1, h.cls ?? 'hotel', h.plan ?? 'flexible', residentOf(person, j.toCity), arrive);
-      if (!q) return 'The stay can’t move to those nights.';
-      stay = q.price + per * nights - h.price;
+      const q = restay(sim, person, j.toCity, h, arrive, nights);
+      if (q === undefined) return 'The stay can’t move to those nights.';
+      stay = q + per * nights - h.price;
     }
   }
   const car = rentalsOf(person).find((r) => r.journeyId === j.id && (r.status === 'booked' || r.status === 'held'));
