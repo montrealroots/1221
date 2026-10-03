@@ -41,8 +41,8 @@ describe('looking after yourself', () => {
       const sim = quickSave();
       const w = sim.player.wellbeing;
       w.nourishment = 40; w.hygiene = 50; w.energy = 70;
-      // Clothes to wash and a place to clean.
-      sim.player.living = { tidy: 30 };
+      // Clothes to wash, a place to clean and dishes in the sink.
+      sim.player.living = { tidy: 30, dishes: 2 };
       for (let i = 0; i < 7; i += 1) wearTheDay(sim, sim.player);
       // A bath, a pool, a court, a terrace and fine weather are the home's and the day's to give (`systems/dwelling.ts`).
       // A boat is its owner's (`systems/boats.ts`, tested in `tests/boats.test.ts`).

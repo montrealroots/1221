@@ -26,7 +26,7 @@ import { levelOf, rangeKm } from './fueltank';
 
 /** What the assistant may propose, and the payload each takes, as the engine reads it. */
 export const ASSISTANT_COMMANDS: Readonly<Record<string, { does: string; payload: string }>> = {
-  'life.look_after': { does: 'Spend time looking after yourself: eat, wash, bathe, exercise, swim, unwind, laundry, tidy, mow and the rest', payload: '{ action: "eat" | "order" | "wash" | "bathe" | "exercise" | "swim" | "court" | "ride" | "outside" | "unwind" | "laundry" | "tidy" | "mow" }' },
+  'life.look_after': { does: 'Spend time looking after yourself: eat, wash, bathe, exercise, swim, unwind, laundry, tidy, wash up, mow and the rest', payload: '{ action: "eat" | "order" | "wash" | "bathe" | "exercise" | "swim" | "court" | "ride" | "outside" | "unwind" | "laundry" | "tidy" | "washup" | "mow" }' },
   'life.sleep': { does: 'Sleep for some hours, from now or a later time', payload: '{ hours: number, startAt?: epoch ms }' },
   'calendar.schedule': { does: 'Put a plan of your own on the calendar', payload: '{ title: string, at: epoch ms, durationMinutes?: number, locationId?: city id }' },
   'clothes.buy': { does: 'Buy a clothing product in a store or online', payload: '{ productId: string, how: "store" | "online", size?: string, color?: string, quantity?: number }' },

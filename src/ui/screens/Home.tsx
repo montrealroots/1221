@@ -1049,25 +1049,25 @@ function WhileAway({ cur }: { cur: string }) {
   const sitterCost = useWorld((s) => sitterFee(s, s.player, nights), [nights]);
   return (
     <div className="col gap-2">
-      <div className="row gap-2" style={{ alignItems: 'end', flexWrap: 'wrap' }}>
+      <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
         {hold
           ? <><span className="small">{`${hold.service} holds the post from ${formatDate(hold.from, sim.zone)} to ${formatDate(hold.until, sim.zone)}; it comes ${formatDate(hold.releaseAt, sim.zone)}${hold.parcels ? '' : ', parcels delivered meanwhile'}.`}</span>
             <Gated feature="home.end_hold" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.end_hold', {}).ok) toast('The post comes again.', 'positive'); }}>End The Hold</Gated></>
-          : rule && <><div className="field">
+          : rule && <><div className="field" style={{ margin: 0 }}>
               <label htmlFor="hold-days">Days To Hold The Post</label>
-              <input id="hold-days" type="number" min={rule.leastDays} max={rule.mostDays ?? 365} value={days} onChange={(e) => setDays(Math.max(1, Math.min(rule.mostDays ?? 365, Number(e.target.value) || 1)))} />
+              <input id="hold-days" type="number" style={{ width: '8rem' }} min={rule.leastDays} max={rule.mostDays ?? 365} value={days} onChange={(e) => setDays(Math.max(1, Math.min(rule.mostDays ?? 365, Number(e.target.value) || 1)))} />
             </div>
-            <Gated feature="home.hold_mail" className="btn btn-sm btn-ghost" disabled={Boolean(noHold)} title={noHold ?? (quote ? `From ${formatDate(quote.from, sim.zone)}${rule.parcels ? ', parcels too' : ', letters only'}${rule.confirmed ? '' : '; its prices read secondhand'}` : undefined)} onClick={() => { if (run('home.hold_mail', { days }).ok) toast('The post is held.', 'positive'); }}>{`Hold The Post (${quote && quote.fee > 0 ? formatMoney(quote.fee, cur) : 'Free'})`}</Gated></>}
+            <Gated feature="home.hold_mail" className="btn btn-sm" disabled={Boolean(noHold)} title={noHold ?? (quote ? `From ${formatDate(quote.from, sim.zone)}${rule.parcels ? ', parcels too' : ', letters only'}${rule.confirmed ? '' : '; its prices read secondhand'}` : undefined)} onClick={() => { if (run('home.hold_mail', { days }).ok) toast('The post is held.', 'positive'); }}>{`Hold The Post (${quote && quote.fee > 0 ? formatMoney(quote.fee, cur) : 'Free'})`}</Gated></>}
       </div>
-      <div className="row gap-2" style={{ alignItems: 'end', flexWrap: 'wrap' }}>
+      <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
         {sitter
           ? <><span className="small">{`A house sitter stays to ${formatDate(sitter.until, sim.zone)}.`}</span>
             <Gated feature="home.end_sitter" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.end_sitter', {}).ok) toast('The sitter’s gone.', 'positive'); }}>Send The Sitter Home</Gated></>
-          : <><div className="field">
+          : <><div className="field" style={{ margin: 0 }}>
               <label htmlFor="sitter-nights">Nights Of House Sitting</label>
-              <input id="sitter-nights" type="number" min={1} max={90} value={nights} onChange={(e) => setNights(Math.max(1, Math.min(90, Number(e.target.value) || 1)))} />
+              <input id="sitter-nights" type="number" style={{ width: '8rem' }} min={1} max={90} value={nights} onChange={(e) => setNights(Math.max(1, Math.min(90, Number(e.target.value) || 1)))} />
             </div>
-            <Gated feature="home.sitter" className="btn btn-sm btn-ghost" disabled={Boolean(noSitter)} title={noSitter ?? 'Somebody home to take parcels in and let the cleaner in'} onClick={() => { if (run('home.sitter', { nights }).ok) toast('A sitter’s staying.', 'positive'); }}>{`Book A House Sitter${sitterCost > 0 ? ` (${formatMoney(sitterCost, cur)})` : ''}`}</Gated></>}
+            <Gated feature="home.sitter" className="btn btn-sm" disabled={Boolean(noSitter)} title={noSitter ?? 'Somebody home to take parcels in and let the cleaner in'} onClick={() => { if (run('home.sitter', { nights }).ok) toast('A sitter’s staying.', 'positive'); }}>{`Book A House Sitter${sitterCost > 0 ? ` (${formatMoney(sitterCost, cur)})` : ''}`}</Gated></>}
       </div>
     </div>
   );

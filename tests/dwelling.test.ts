@@ -112,7 +112,8 @@ describe('the place', () => {
     const decay = (dishwasher: boolean) => {
       const sim = save(`tidy-${dishwasher}`);
       fitted(sim, { dishwasher });
-      sim.player.living = { clean: 14, dirty: 0, drying: [], tidy: 100 };
+      // Without one, yesterday's dishes still in the sink (from 2026-10-03, `WASH_UP`).
+      sim.player.living = { clean: 14, dirty: 0, drying: [], tidy: 100, ...(dishwasher ? {} : { dishes: 1 }) };
       sim.advanceBy(MS_DAY);
       return 100 - livingOf(sim.player).tidy;
     };

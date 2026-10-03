@@ -21,8 +21,8 @@ describe('toiletries', () => {
   it('a life starts with the cheapest of each kind where it lives, in the bathroom', () => {
     const sim = life('us-ny-newyork', 'hyg-start');
     expect(keepsSupplies(sim.player)).toBe(true);
-    // From 2026-10-02 the home's detergents too, kept in storage (tests/cleaning.test.ts).
-    const bathroom = suppliesOf(sim.player).filter((i) => !i.supply.kind.endsWith('-detergent'));
+    // From 2026-10-02 the home's detergents too, and from 2026-10-03 its dish soap, kept in storage (tests/cleaning.test.ts).
+    const bathroom = suppliesOf(sim.player).filter((i) => !i.supply.kind.endsWith('-detergent') && i.supply.kind !== 'dish-soap');
     expect(bathroom.map((i) => i.supply.kind).sort()).toEqual(['body-wash', 'deodorant', 'shampoo', 'toothbrush', 'toothpaste']);
     expect(bathroom.every((i) => i.at.kind === 'home' && i.at.spot === 'bathroom')).toBe(true);
     // Where SLATE keeps no chain's toiletries, none are counted.

@@ -120,7 +120,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 33f | Serve self or others | Partial | self only | Guests and household |
 | 33g | Eat | Done, 2026-10-02 | `food.eat_ready`; `look_after eat` reads `kitchenMeal`: what's ready, else a recipe the stock makes, before money; tests/kitchen.test.ts | — |
 | 33h | Leftovers, freshness | Complete | tests/kitchen | Freezing |
-| 33i | Wash up | Partial | a dishwasher's tablets used, 184 cycles a year (`dishwasherRuns`), cutting the day's mess; without one the dishes are done by hand in the tidy | Dirty dishes as things; a wash-up step |
+| 33i | Wash up | Done, 2026-10-03 | a dishwasher's tablets used, 184 cycles a year (`dishwasherRuns`), and the day's dishes go in it; without one running they go in the sink by the day, three days' at the most, and a day that finds yesterday's still there makes the mess the machine saves. Wash Up (`life.look_after`): 38 minutes a day's, Energy Star's 230 hours a year, and the American Cleaning Institute's teaspoon of dish soap a sinkful, which dish soap is now bought again for; a free day washes up with the tidying; a full sink refuses cooking | Dishes as single things (a household's crockery isn't published; three days' is SLATE's estimate) |
 | 33j | Restaurants, takeout, delivery, drinks | Complete | `food.dine`, `food.drink`; tests | — |
 | 33k | Reservations | Not implemented | — | Book a table ahead |
 | 34a | Television | Partial, 2026-10-02 | `systems/homelife.ts`: 146 service tiers in five markets billed monthly; Britain's and Ireland's TV licences as their law asks; unwinding names live TV or a service; tests/homelife.test.ts | A programme; stop and resume |

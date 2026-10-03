@@ -40,7 +40,11 @@ import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
 import { spend } from './household';
 import { addItem, homeKeyOf, itemById } from './items';
-import { placeOf } from './dwelling';
+import { WASH_UP, atHome, livingOf, placeOf } from './dwelling';
+
+/** The sink at home full of the dishes it holds, so nothing more is cooked there until they're washed up (from 2026-10-03). */
+export const sinkFull = (person: Person): boolean => atHome(person) && (livingOf(person).dishes ?? 0) >= WASH_UP.full;
+export const SINK_FULL = 'The sink’s full: wash up first.';
 import { applyLookingAfter, occupiedAt } from './life';
 import { drinkGrams, marketOf as drinkingMarketOf } from './alcohol';
 import { closedNow } from './errands';
@@ -154,6 +158,7 @@ export function cookRefusal(sim: Simulation, person: Person, recipeId: string, s
   const scale = n / r.servings;
   const place = placeOf(sim, person);
   if (!place?.cooks) return 'There’s no kitchen where you are.';
+  if (sinkFull(person)) return SINK_FULL;
   const missing = r.appliances.filter((a) => !KITCHEN.has.has(a));
   if (missing.length) return `It needs a ${missing.join(' and a ').replace('-', ' ')}, which SLATE’s homes don’t keep.`;
   const short = r.ingredients.filter((i): i is Extract<Ingredient, { food: string | null }> => !i.cupboard).filter((i) => {

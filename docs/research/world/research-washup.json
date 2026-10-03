@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "topic": "Washing up by hand: the time it takes and the dish soap it uses",
+    "date": "2026-10-03"
+  },
+  "time": [
+    {
+      "id": "energystar-dishwasher-time",
+      "source": "ENERGY STAR, Dishwashers",
+      "figure": "Using an ENERGY STAR certified dishwasher can save you over 230 hours of personal time over the course of a year.",
+      "otherFigures": ["A new ENERGY STAR certified dishwasher uses less than half as much energy as washing dishes by hand.", "It saves 8,400 gallons of water each year against hand washing.", "It can cut utility bills by about $220 a year against hand washing."],
+      "url": "https://www.energystar.gov/products/dishwashers",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Read on ENERGY STAR's own page. 230 hours over 365 days is 37.8 minutes a day, which SLATE takes as a day's dishes washed by hand."
+    }
+  ],
+  "soap": [
+    {
+      "id": "aci-teaspoon-a-sinkful",
+      "source": "American Cleaning Institute, Washing Dishes by Hand",
+      "figure": "About 1 teaspoon of liquid dish soap per sinkful of wash water is often sufficient.",
+      "url": "https://www.cleaninginstitute.org/cleaning-tips/dishes/washing-dishes-hand",
+      "date": "2026-10-03",
+      "confirmed": true,
+      "note": "Read on the ACI's own page. A US teaspoon is 4.93 ml. P&G Professional's Fairy gives 2 caps or 2 pumps for a 40 to 50 litre catering sink (pgpro.co.uk), with no millilitres, so it is not used."
+    }
+  ],
+  "notFound": ["How many days of dishes a household's crockery holds. SLATE takes three."]
+}

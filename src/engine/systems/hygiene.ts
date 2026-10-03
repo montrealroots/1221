@@ -54,13 +54,15 @@ export const KEPT = ['body-wash', 'shampoo', 'toothpaste', 'toothbrush', 'deodor
 /**
  * The cleaning a home uses up, counted from 2026-10-02 (`content/cleaning.ts`): a wash's laundry detergent, a load each, and
  * a dishwasher's tablet a cycle, at the 184 cycles a year the Department of Energy's test procedure takes for a household's
- * use. Dish soap, sprays, bleach, paper towels, bin bags and sponges are on sale and kept, not used up: nobody publishes how
- * fast a household gets through them.
+ * use. Sprays, bleach, paper towels, bin bags and sponges are on sale and kept, not used up: nobody publishes how fast a
+ * household gets through them. Dish soap was among them until 2026-10-03; from then a washing-up uses the teaspoon a
+ * sinkful the American Cleaning Institute gives, 4.93 ml, a sinkful a day's dishes (`washUp` in `systems/dwelling.ts`).
  */
-export const CLEANING_KEPT = ['laundry-detergent', 'dishwasher-detergent'] as const;
+export const CLEANING_KEPT = ['laundry-detergent', 'dishwasher-detergent', 'dish-soap'] as const;
+export const DISH_SOAP_ML = 4.93;
 export const DISHWASHER_CYCLES_A_DAY = 184 / 365;
 /** A week's use of each, below which it's bought again: two loads of a person's one or two a week (`LAUNDRY`), and a week of dishwasher cycles. */
-export const CLEANING_LOW: Readonly<Record<(typeof CLEANING_KEPT)[number], number>> = { 'laundry-detergent': 2, 'dishwasher-detergent': 7 * DISHWASHER_CYCLES_A_DAY };
+export const CLEANING_LOW: Readonly<Record<(typeof CLEANING_KEPT)[number], number>> = { 'laundry-detergent': 2, 'dishwasher-detergent': 7 * DISHWASHER_CYCLES_A_DAY, 'dish-soap': 7 * DISH_SOAP_ML };
 /** Everything the chains sell for the bathroom and for cleaning. */
 const TOILETRIES: readonly Toiletry[] = [...BATHROOM, ...CLEANING];
 
@@ -163,6 +165,13 @@ export function detergentFor(sim: Simulation, person: Person, loads: number): bo
 /** The laundry detergent for so many loads, used, where it's counted. */
 export function laundryDetergent(sim: Simulation, person: Person, loads: number): void {
   if (keepsCleaning(person) && loads > 0) take(sim, person, ['laundry-detergent'], loads);
+}
+
+/** Sinkfuls of washing-up's dish soap used; false where there's none at home. A life that doesn't count its cleaning always has it. */
+export function dishSoapFor(sim: Simulation, person: Person, sinkfuls: number, use = true): boolean {
+  if (!keepsCleaning(person)) return true;
+  if (!use) return toHand(sim, person, 'dish-soap').length > 0;
+  return take(sim, person, ['dish-soap'], sinkfuls * DISH_SOAP_ML);
 }
 
 /** A day's share of a dishwasher's cycles, its tablets used; false where there are none, and the dishes are done by hand. */
