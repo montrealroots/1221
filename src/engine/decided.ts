@@ -79,6 +79,7 @@ import { counterOffer } from './systems/career';
 import { bidsFor, lateDays, overrunOf } from './systems/worksrisk';
 import { PHONE_RISK } from './content/phoneclaims';
 import { mishap } from './systems/phones';
+import { therapyLifts } from './systems/therapy';
 import { usedFault, usedListings } from './systems/usedcars';
 import { takenFromDoor } from './systems/orders';
 import { bathroomWait } from './systems/rooms';
@@ -1385,4 +1386,17 @@ defineDecider<{ sim: Simulation; car: number }, string>({
     const v = { id: `car-${car}`, modelId: 'gb-ford-puma', jurisdiction: 'GB', cityId: 'uk-eng-london', coverage: 'liability', boughtAt: sim.now, ageAtPurchase: 0, listPrice: 0, registrationDue: 0, stereo: true } as unknown as OwnedVehicle;
     return mayBeBrokenInto(sim, sim.player, v, modelById(v.modelId)!, 0, 'GBP', 0.5) ? 'broken into' : 'left alone';
   },
+});
+
+defineDecider<{ sim: Simulation; at: number; nhs: number }, string>({
+  id: 'health.therapy',
+  decides: 'Whether a course of CBT lifts depression, at NHS Talking Therapies’ 48.5% recovery or a private course’s 36% remission (THERAPY.recovery); swept at even odds.',
+  drawnIn: 'src/engine/systems/therapy.ts',
+  reads: {
+    at: (o, t) => ({ ...o, at: Math.round(t * 400) }),
+    nhs: (o, t) => ({ ...o, nhs: Math.round(t) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), at: seed, nhs: seed % 2 }),
+  decide: ({ sim, at, nhs }) => String(Array.from({ length: 30 }, (_, n) => therapyLifts(sim, sim.player, nhs === 1, at * 30 + n)).filter(Boolean).length),
 });

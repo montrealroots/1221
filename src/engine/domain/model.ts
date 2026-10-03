@@ -314,6 +314,8 @@ export interface Person {
   /** What's marked favorite, by list (`systems/catalog.ts`, from 2026-10-03). */
   favorites?: Record<string, string[]>;
   /** The water or gas cut off at home, from when to when (`systems/utilities.ts`, from 2026-10-03). */
+  /** A course of therapy under way (`systems/therapy.ts`, from 2026-10-03). */
+  therapy?: import('../systems/therapy').Course;
   /** IKEA refund card credit, from pieces sold back (`systems/furnishings.ts`, from 2026-10-03), in the save's money. */
   ikeaCredit?: number;
   /** Pieces of jewelry commissioned and not yet ready (`systems/commissions.ts`, from 2026-10-03). */
