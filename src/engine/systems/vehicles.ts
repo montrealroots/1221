@@ -45,6 +45,7 @@ import { byRoad as roadBetween, drive } from './driving';
 import { registerWraps } from './wraps';
 import { mayCollide, registerCarCare, serviceMonth, servicingKept } from './carcare';
 import { registerCarSale } from './carsale';
+import { registerRoofBox, roofFuelFactor } from './roofbox';
 import { NO_HISTORY_GB } from '../content/carcare';
 import { registerStandIn } from './standin';
 import { registerCarAudio } from './caraudio';
@@ -102,6 +103,9 @@ export interface OwnedVehicle {
   fault?: import('./repairs').Fault;
   /** A stereo fitted (`systems/caraudio.ts`, from 2026-10-02). */
   stereo?: boolean;
+  /** A roof rack fitted, and the liters of a roof box on it (`systems/roofbox.ts`, from 2026-10-03). */
+  roofRack?: true;
+  roofBoxL?: number;
   /** Listed for a private sale (`systems/carsale.ts`, from 2026-10-03). */
   listed?: import('./carsale').Listing;
   inShop?: import('./repairs').InShop;
@@ -125,18 +129,18 @@ export interface OwnedVehicle {
 }
 
 /** What driving a car a distance costs in the save's money: fuel at the place's pump by its official economy, and upkeep; an electric car's kWh at the share charged at home (`systems/charging.ts`), none on a journey. */
-export function runningCost(sim: Simulation, v: OwnedVehicle, km: number, homeShare = 0): Money {
+export function runningCost(sim: Simulation, v: OwnedVehicle, km: number, homeShare = 0, road: 'town' | 'highway' = 'town'): Money {
   const m = modelById(v.modelId)!;
   if (m.fuel === 'ev' && m.kwhPer100km) {
     const kwh = (km * m.kwhPer100km) / 100;
-    return inSave(sim, Math.round(kwh * kwhPrice(v.jurisdiction, homeShare) * tintFuelFactor(v)), CHARGING[v.jurisdiction].currency) + inSave(sim, Math.round(km * upkeepPerKm(m, v.jurisdiction)), 'USD');
+    return inSave(sim, Math.round(kwh * kwhPrice(v.jurisdiction, homeShare) * tintFuelFactor(v) * roofFuelFactor(v, road)), CHARGING[v.jurisdiction].currency) + inSave(sim, Math.round(km * upkeepPerKm(m, v.jurisdiction)), 'USD');
   }
   const fuel = FUEL[v.jurisdiction];
   const litre = m.fuel === 'diesel' ? fuel.diesel : fuel.petrol;
   // A motorcycle or scooter its maker doesn't rate burns the mean of those that are; an unrated car, AAA's cost a mile.
   const per100 = m.per100km ?? (onTwoWheels(m) ? BIKE_UNRATED_PER100 : null);
   // Tint keeps the cabin cooler, and the air conditioning burns a little less (`systems/tint.ts`).
-  const fuelCost = Math.round((per100 !== null ? inSave(sim, Math.round((km * per100 * litre) / 100), fuel.currency) : inSave(sim, Math.round(km * UNRATED_FUEL_USD_PER_KM), 'USD')) * tintFuelFactor(v));
+  const fuelCost = Math.round((per100 !== null ? inSave(sim, Math.round((km * per100 * litre) / 100), fuel.currency) : inSave(sim, Math.round(km * UNRATED_FUEL_USD_PER_KM), 'USD')) * tintFuelFactor(v) * roofFuelFactor(v, road));
   // Upkeep less the repairs drawn as faults (`systems/repairs.ts`); until 2026-10-01 all of AAA's.
   return fuelCost + inSave(sim, Math.round(km * upkeepPerKm(m, v.jurisdiction)), 'USD');
 }
@@ -651,6 +655,7 @@ export function registerVehicles(sim: Simulation): void {
   registerRedeem(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerTint(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
   registerMods(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined), glazed);
+  registerRoofBox(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));
   registerCarAudio(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined && !x.repossessed && !x.lease));
   registerUsedCars(sim, jurisdictionOf, homeOf);
   registerStandIn(sim, (person, id) => vehiclesOf(person).find((x) => x.id === id && x.soldAt === undefined));

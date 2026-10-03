@@ -373,7 +373,7 @@ export function planDrive(sim: Simulation, person: Person, vehicleId: string, fr
   // Across to Vancouver Island, the car goes on BC Ferries (`CAR_FERRY`).
   const ferry = crossesByCarFerry(fromCity, toCity);
   const ferryCad = ferry ? Math.round((CAR_FERRY.vehicle + CAR_FERRY.driver) * (1 + CAR_FERRY.surcharge) * 100) : 0;
-  const fare = runningCost(sim, v, km) + (tolls > 0 ? (cur === 'USD' ? tolls : exchange(tolls, 'USD', cur) ?? tolls) : 0) + (ferryCad ? (cur === 'CAD' ? ferryCad : exchange(ferryCad, 'CAD', cur) ?? ferryCad) : 0);
+  const fare = runningCost(sim, v, km, 0, 'highway') + (tolls > 0 ? (cur === 'USD' ? tolls : exchange(tolls, 'USD', cur) ?? tolls) : 0) + (ferryCad ? (cur === 'CAD' ? ferryCad : exchange(ferryCad, 'CAD', cur) ?? ferryCad) : 0);
   const m = modelById(v.modelId)!;
   return [{ mode: 'drive', from: fromCity, to: toCity, departAt: depart, arriveAt: depart + (minutes + (ferry ? CAR_FERRY.minutes : 0)) * 60_000, fare, routeId: `car:${v.id}`, basis: `${Math.round(km)} km by road in the ${m.make} ${m.model}: its fuel and upkeep${tolls > 0 ? ', and the corridor’s tolls' : ', no tolls kept for this road'}. ${ROAD.source}.` }];
 }

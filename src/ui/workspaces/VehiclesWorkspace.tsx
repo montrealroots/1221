@@ -6,6 +6,7 @@
 
 import { tradeInFor } from '@/engine/systems/vehicles';
 import { dealerOffer, listRefusal, listingQuote, privateValue, saleRefusal } from '@/engine/systems/carsale';
+import { boxOn, rackRefusal, roofCatalog } from '@/engine/systems/roofbox';
 import { redemption } from '@/engine/systems/repossession';
 import { boatsOf, boatQuote, buyBoatRefusal, certified, certifyRefusal, onItsTrailer } from '@/engine/systems/boats';
 import { BOAT_LOAN, BOAT_RULES, T18, isBoatState } from '@/engine/content/boats';
@@ -145,6 +146,7 @@ export function VehiclesWorkspace() {
                             {(['rear', 'full'] as const).filter((k) => !tintRefusal(v, k, glazed(v))).map((k) => <Gated key={k} feature="vehicle.tint" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number; legal: boolean }>('vehicle.tint', { vehicleId: v.id, kind: k }); if (a.ok) toast(a.value!.legal ? `Tinted, within the law here, for ${money(a.value!.paid)}.` : `Tinted darker than the law here allows, for ${money(a.value!.paid)}.`, a.value!.legal ? 'positive' : 'neutral'); }}>{k === 'rear' ? 'Tint The Back' : 'Tint All Round'}</Gated>)}
                             <FuelControl v={v} />
                             <StereoControl v={v} />
+                            <RoofControl v={v} />
                             <RepairControl v={v} />
                             <ServiceControl v={v} />
                             <WrapControl v={v} />
@@ -630,6 +632,29 @@ function CoverControl({ v }: { v: OwnedVehicle }) {
 }
 
 /** Its servicing, by the maker's interval, and its warranty (`systems/carcare.ts`). */
+/** A roof rack, then a box on it, cheapest first; the box taken off and kept at home between trips (`systems/roofbox.ts`). */
+function RoofControl({ v }: { v: OwnedVehicle }) {
+  const { run, toast, sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const cat = useWorld((s) => roofCatalog(s, v), [v]);
+  const [boxId, setBoxId] = useState('');
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur, { cents: false });
+  const on = boxOn(person, v);
+  const atHome = (person.items ?? []).some((i) => i.kind.startsWith('roofbox:') && i.at.kind === 'home');
+  if (!v.roofRack) return cat.rack ? <Gated feature="vehicle.roof_rack" className="btn btn-sm btn-ghost" disabled={Boolean(rackRefusal(v))} title={rackRefusal(v) ?? cat.rack.name} onClick={() => { if (run('vehicle.roof_rack', { vehicleId: v.id }).ok) toast('A roof rack fitted.', 'positive'); }}>{`Fit A Roof Rack, ${money(cat.rack.price)}`}</Gated> : null;
+  if (on) return <Gated feature="vehicle.roof_box_fit" className="btn btn-sm btn-ghost" title={`${on.label}, ${on.holdsL} liters; it costs fuel while it's on`} onClick={() => { if (run('vehicle.roof_box_fit', { vehicleId: v.id, on: false }).ok) toast('The box is off, kept at home.', 'positive'); }}>Take The Box Off</Gated>;
+  if (atHome) return <Gated feature="vehicle.roof_box_fit" className="btn btn-sm btn-ghost" onClick={() => { if (run('vehicle.roof_box_fit', { vehicleId: v.id, on: true }).ok) toast('The box is on.', 'positive'); }}>Put The Box On</Gated>;
+  const box = cat.boxes.find((b) => b.id === boxId) ?? cat.boxes[0];
+  if (!box) return null;
+  return (
+    <>
+      {cat.boxes.length > 1 && <select aria-label="Roof Box" value={box.id} onChange={(e) => setBoxId(e.target.value)} style={{ width: 'auto' }}>{cat.boxes.map((b) => <option key={b.id} value={b.id}>{`${b.name}, ${b.liters} L, ${money(b.cost)}`}</option>)}</select>}
+      <Gated feature="vehicle.roof_box" className="btn btn-sm btn-ghost" title={`${box.liters} liters more; while it's on, 5% more fuel in town and 11.5% on the highway`} onClick={() => { if (run('vehicle.roof_box', { vehicleId: v.id, boxId: box.id }).ok) toast(`${box.name} on.`, 'positive'); }}>{`Buy A Roof Box, ${money(box.cost)}`}</Gated>
+    </>
+  );
+}
+
 /** Sold to a dealer now for its offer, or listed privately at the site's fee to sell for its value in about a month (`systems/carsale.ts`). */
 function SaleControl({ v }: { v: OwnedVehicle }) {
   const { run, toast, sim } = useGame();

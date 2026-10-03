@@ -1,0 +1,996 @@
+{
+  "meta": {
+    "topic": "Home and property gaps: household waste plans and bulky pickup, water heaters, cleaning consumables, property tenure and due diligence, outbuildings, lighting fixtures, gardens and pitches, home-improvement contract cancellation and change orders",
+    "date": "2026-10-03",
+    "towns": ["New York", "Los Angeles", "New Haven CT", "London", "Dublin", "Toronto", "Vancouver", "Mexico City"],
+    "method": "Each figure was read on the publisher's own page (curl text extraction, a page reader, or pdftotext on the publisher's PDF) where the entry says confirmed: true. confirmed: false means the figure came from a search-engine summary, a secondary site, or a garbled page, and the note says which. Nothing was estimated. Where a figure could not be found, it is listed in notes.notFound. Before writing, the existing files in docs/research/world/ were checked so topics already covered are cross-referenced rather than repeated (see notes.alreadyCovered).",
+    "fieldConvention": "figures holds the numbers as published; unit and currency describe them; url is the page read; date is the publisher's stated date or, where none was stated, the date read (2026-10-03), and dateKind says which."
+  },
+
+  "waste": [
+    {
+      "town": "Los Angeles",
+      "label": "LASAN curbside base service and bin sizes",
+      "figures": {
+        "baseService": "one 60-gallon black trash container, one 90-gallon blue recycling container, one 90-gallon green yard waste/organics container",
+        "binCapacitiesGallons": [30, 60, 90],
+        "howToReadCapacity": "second digit of the bin serial number: 3 = 30-gallon, 6 = 60-gallon, 9 = 90-gallon"
+      },
+      "unit": "gallons",
+      "currency": null,
+      "url": "https://sanitation.lacity.gov/services/extra-capacity-charges",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true
+    },
+    {
+      "town": "Los Angeles",
+      "label": "LASAN monthly Extra Capacity Charges per commodity, 2026-2029",
+      "figures": {
+        "refuse60galBlack": {"2026-01-01": 15.65, "2026-07-01": 16.65, "2027-07-01": 16.91, "2028-07-01": 17.70, "2029-07-01": 18.44},
+        "organics90gal": {"2026-01-01": 11.24, "2026-07-01": 11.96, "2027-07-01": 12.14, "2028-07-01": 12.71, "2029-07-01": 13.24},
+        "recycling90gal": {"2026-01-01": 16.28, "2026-07-01": 17.32, "2027-07-01": 17.59, "2028-07-01": 18.41, "2029-07-01": 19.18},
+        "manure60galBrown": {"2026-01-01": 23.81, "2026-07-01": 25.33}
+      },
+      "unit": "USD per month per extra increment",
+      "currency": "USD",
+      "url": "https://sanitation.lacity.gov/services/extra-capacity-charges",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "The page's table labels the organics row 'Blue Bin' and the recycling row 'Green Bin', the reverse of the base-service sentence on the same page (blue = recycling, green = yard waste/organics). Recorded as printed; the row names (organics/recycling) are taken as authoritative. Later manure-row years were cut off in the extract. A search summary also mentioned $2.00 extra-capacity tags sold in packs of 5; that was not found on the page read, so it is not recorded as confirmed."
+    },
+    {
+      "town": "Los Angeles",
+      "label": "LASAN bulky item pickup",
+      "figures": {
+        "cost": 0,
+        "limit": "unlimited curbside service at no additional charge",
+        "collectionDay": "regular trash day",
+        "noticeRequired": "at least one business day before the normal collection day",
+        "howToBook": ["online service request form", "MyLA311 app", "24-hour Customer Care Center 1-800-773-2489"],
+        "accepted": ["furniture", "mattresses and box springs", "toilets and sinks", "carpet (rolled and tied)", "large wood pieces or doors", "electronic waste (TVs, computers, monitors)"],
+        "prohibited": ["automotive parts or used oil", "construction materials (concrete, bricks, dirt)", "commercial appliances", "paints, solvents, chemicals", "medicines or needles", "fluorescent lights", "cardboard unless a Move In/Move Out service is scheduled"]
+      },
+      "unit": null,
+      "currency": "USD",
+      "url": "https://sanitation.lacity.gov/services/schedule-bulky-item-pickup",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "LASAN asks for an itemized list when booking so it can send the right-sized truck."
+    },
+    {
+      "town": "New York",
+      "label": "DSNY official NYC Bin requirement for 1-9 unit buildings",
+      "figures": {
+        "binSizeGallons": 45,
+        "fine": 50,
+        "finesStart": "September 8 (2026)",
+        "whereToBuy": "all Home Depot stores in the five boroughs",
+        "reimbursement": "one official 45-gallon NYC Bin per eligible household, through September 8"
+      },
+      "unit": "gallons; USD fine",
+      "currency": "USD",
+      "url": "https://www.nyc.gov/site/dsny/news/26-035/starting-sept-8-residential-properties-1-9-units-must-use-official-nyc-bins-face-50",
+      "date": "2026",
+      "dateKind": "publisher (news release 26-035)",
+      "confirmed": true,
+      "note": "The release did not state a bin price or how many bins a property needs. A search summary said 'less than $50 for the most common size' and named bins.nyc as the seller; not read on a DSNY page."
+    },
+    {
+      "town": "New York",
+      "label": "DSNY collection frequency and set-out",
+      "figures": {
+        "compost": "every week, on the same day as recycling",
+        "trashAndRecycling": "schedule depends on the address",
+        "setOutTrash": "after 6 PM in a bin of 55 gallons or less with a secure lid (1-9 units)",
+        "setOutRecycling": "after 6 PM in a labeled bin of 55 gallons or less, or after 8 PM if in bags",
+        "retrieveBins": "by 9 PM if pickup before 4 PM; by 9 AM next morning if pickup after 4 PM"
+      },
+      "unit": null,
+      "currency": null,
+      "url": "https://portal.311.nyc.gov/article/?kanumber=KA-01801",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "A search summary of DSNY pages said curbside refuse is collected 2 or 3 times a week depending on neighborhood, and recycling once a week; that was not read on the publisher's page (confirmed false)."
+    },
+    {
+      "town": "New York",
+      "label": "DSNY bulk items",
+      "figures": {
+        "cost": 0,
+        "appointment": "not needed, except items containing CFC/Freon (refrigerators, air conditioners, freezers), which need a CFC removal appointment",
+        "maxItemsPerCollectionDay": 6,
+        "setOutDay": "trash-only day, not recycling day (furniture and mattresses)",
+        "mattressRule": "mattresses and box springs MUST be sealed in plastic bags",
+        "mattressFineMax": 300,
+        "eligibility": "residential buildings only"
+      },
+      "unit": "items; USD",
+      "currency": "USD",
+      "url": "https://portal.311.nyc.gov/article/?kanumber=KA-01969",
+      "secondaryUrl": "https://www.nyc.gov/site/dsny/collection/get-rid-of/furniture-mattresses.page",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "The $300 maximum mattress fine is from the DSNY furniture/mattress page. A search summary gave a $50/$100/$200 escalating mattress fine schedule; not read on a publisher page."
+    },
+    {
+      "town": "New Haven CT",
+      "label": "City toters and bulk trash",
+      "figures": {
+        "trashToterGallons": 48,
+        "trashToterColour": "brown",
+        "recyclingToterGallons": 96,
+        "recyclingToterColour": "blue",
+        "frequency": "weekly",
+        "bulkFreeAppointmentsPerYearHomeowner": 1,
+        "bulkExtraAppointmentFee": 50,
+        "bulkTenantFeePerAppointment": 50,
+        "eligibility": "only properties the City services for trash and recycling; call 203-946-7700"
+      },
+      "unit": "gallons; USD per appointment",
+      "currency": "USD",
+      "url": "https://www.newhavenct.gov/government/departments-divisions/public-works-department/trash-recycling/bulk-trash",
+      "date": "2026-10-03",
+      "dateKind": "read attempt",
+      "confirmed": false,
+      "note": "newhavenct.gov returned 403 to both curl and the page reader; figures are from a search-engine summary of the city's Trash & Recycling and Bulk Trash pages."
+    },
+    {
+      "town": "London (Westminster)",
+      "label": "Westminster bulky waste collection",
+      "figures": {
+        "upToSixItems": 36,
+        "eachAdditionalItem": 6.40,
+        "concession": "free if receiving Housing Benefit or Council Tax Support, limited to one collection of up to six items every 90 days",
+        "targetCompletion": "within three working days"
+      },
+      "unit": "GBP per booking / per item",
+      "currency": "GBP",
+      "url": "https://www.westminster.gov.uk/recycling-and-rubbish/recycling-and-rubbish-collections/how-dispose-bulky-waste",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "Household rubbish frequency in Westminster is set street by street; a search summary of westminster.gov.uk said every residential property gets at least one mixed recycling collection per week (confirmed false)."
+    },
+    {
+      "town": "Dublin",
+      "label": "Greyhound Recycling household plans (pay-by-weight market)",
+      "figures": {
+        "monthlyPlans": {
+          "DCC_and_SDCC": {"Eco+ (1-3 persons, 32 kg/month black bin)": 28.50, "Family Value (3-5 persons, 42 kg)": 31.50, "Family First+ (5+ persons, 65 kg)": 34.50},
+          "DLR_and_Fingal": {"Standard (1-3 persons, 32 kg)": 29.50, "Family (3-5 persons, 42 kg)": 32.50, "Family Plus (5+ persons, 65 kg)": 35.50},
+          "Kildare": {"Standard (32 kg)": 30.50, "Family (42 kg)": 33.50}
+        },
+        "greenAndBrownBins": "free on monthly plans, no weight allowance",
+        "excessOverAllowancePerKg": 0.30,
+        "payPerLift": {"serviceChargePerYear": 79.95, "serviceChargePerYearOffer": 59.95, "serviceChargePerMonth": 8, "serviceChargePerMonthOffer": 6, "blackLift": 5.50, "blackPerKg": 0.25, "brownLift": 4.00, "brownPerKg": 0.10, "greenLift": 4.50, "greenPerKg": 0.20},
+        "payByWeightPlus": {"serviceChargePerWeek": 3.75, "blackPerKg": 0.50, "brownPerKg": 0.38, "greenPerKg": 0.25}
+      },
+      "unit": "EUR per month / per lift / per kg",
+      "currency": "EUR",
+      "url": "https://greyhound.ie/bin-collection-dublin/",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "The page also lists another plan table with a 95 kg Family Plus at €27.50 and 'General waste is charged at an additional 6 cent per kg'; which county that table applies to was not clear in the extract, so it is not recorded. Note Greyhound's lift prices put brown (organics) below green (recycling)."
+    },
+    {
+      "town": "Dublin",
+      "label": "Panda household charges, Fingal (north Dublin)",
+      "figures": {
+        "halfYearlyServiceCharge": {"previous": 70, "new": 75},
+        "generalWastePerLift": {"previous": 13.50, "new": 14.75},
+        "compostBin": "no increase",
+        "averageIncreasePct": 6
+      },
+      "unit": "EUR",
+      "currency": "EUR",
+      "url": "https://www.newstalk.com/news/panda-bin-charges-2231439",
+      "date": "2026-02-06",
+      "dateKind": "publisher",
+      "confirmed": false,
+      "note": "Newstalk news report, not Panda's own price list. panda.ie's household pages read on 2026-10-03 show no prices without an address lookup; they do state 'weekly collections' and 'no upfront costs ... or deposits'. A search summary also gave Panda monthly plans of €27.50/€32.00/€38.00 and €25/€28/€32.50 for 32/42/65 kg with 30c/kg excess; not read on panda.ie."
+    },
+    {
+      "town": "Toronto",
+      "label": "City of Toronto garbage bin sizes and annual rates (2026)",
+      "figures": {
+        "small": {"litres": 75, "regularBags": 1, "ratePerYear": 317.85, "lowIncomeRebate": 227.01},
+        "medium": {"litres": 120, "regularBags": 1.5, "ratePerYear": 385.86, "lowIncomeRebate": 163.76},
+        "large": {"litres": 240, "regularBags": 3, "ratePerYear": 524.06, "lowIncomeRebate": 72.41},
+        "extraLarge": {"litres": 360, "regularBags": 4.5, "ratePerYear": 607.86, "lowIncomeRebate": 0},
+        "bagOnlyPerYear": 203.50,
+        "bagOnlyLowIncomeRebate": 215.01,
+        "garbageTagEach": 6.81,
+        "oversizedAndMetalItemsAnnualFee": 23.23,
+        "lowIncomeThreshold": "household income of $62,000 or less"
+      },
+      "unit": "CAD per year",
+      "currency": "CAD",
+      "url": "https://www.toronto.ca/services-payments/recycling-organics-garbage/houses/garbage-bin-sizes-fees/",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "Bag-only needs special City approval; bins are otherwise mandatory. Garbage tags are sold online or at Toronto Canadian Tire stores. The oversized/metal fee is charged to every home whether or not the service is used. A dual-use bin (green lid) does garbage every two weeks and recycling on alternating weeks."
+    },
+    {
+      "town": "Toronto",
+      "label": "Toronto collection frequency and oversized items",
+      "figures": {
+        "greenBinOrganics": "every week",
+        "garbageAndRecycling": "alternating weeks",
+        "oversizedItems": "collected on garbage day, placed 0.5 m from the bins; no tags or appointment",
+        "setOut": "after 6 p.m. and before 9 p.m. ... on your scheduled collection day (night collection areas); bins 0.5 m apart",
+        "optOut": "may opt out temporarily for renovation, demolition or travel of six months or more"
+      },
+      "unit": null,
+      "currency": null,
+      "url": "https://www.toronto.ca/services-payments/recycling-organics-garbage/houses/collection-schedule/",
+      "secondaryUrl": "https://www.toronto.ca/services-payments/recycling-organics-garbage/houses/set-out-tips/",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true
+    },
+    {
+      "town": "Vancouver",
+      "label": "City of Vancouver garbage cart utility rates (2026) and frequency",
+      "figures": {
+        "cartRatesPerYear": {"75L": 117, "120L": 134, "180L": 157, "240L": 179, "360L": 224},
+        "greenBin": "weekly, except every other week in January and February",
+        "garbage": "every other week",
+        "largeItemPickup": "City of Vancouver has no curbside large item collection program; items go to the Zero Waste Centre or transfer stations"
+      },
+      "unit": "CAD per year",
+      "currency": "CAD",
+      "url": "https://vancouver.ca/home-property-development/flat-rates.aspx",
+      "date": "2026-10-03",
+      "dateKind": "read attempt",
+      "confirmed": false,
+      "note": "vancouver.ca and council.vancouver.ca returned 403 / a Cloudflare challenge to curl and the page reader. All figures here come from a search-engine summary of vancouver.ca pages; re-read before use."
+    },
+    {
+      "town": "Mexico City",
+      "label": "CDMX separated collection calendar from 1 January 2026",
+      "figures": {
+        "organics": "Tuesday, Thursday, Saturday",
+        "inorganicRecyclableAndNonRecyclable": "Monday, Wednesday, Friday, Sunday (in separate bags)",
+        "bulkyItems": "Sunday is a special day for 'triques' / bulky items (residuos voluminosos)",
+        "norm": "NADF-024-AMBT-2013, Basura Cero policy"
+      },
+      "unit": null,
+      "currency": "MXN",
+      "url": "https://www.telediario.mx/comunidad/calendario-basura-cdmx-2026-que-dias-se-debe-sacar",
+      "date": "2026-01-06",
+      "dateKind": "publisher",
+      "confirmed": false,
+      "note": "Telediario news article. The SEDEMA page (sedema.cdmx.gob.mx) refused connection on 2026-10-03. No fee per bin was found; collection is a city service, and no bin-size plan exists to choose."
+    }
+  ],
+
+  "waterHeaters": [
+    {
+      "label": "ENERGY STAR key product criteria, residential water heaters",
+      "figures": {
+        "heatPumpElectricStorage": {"UEF_integrated": ">= 3.30", "UEF_integrated_120V_15A": ">= 2.20", "UEF_splitSystem": ">= 2.20", "firstHourRatingGallonsPerHour": ">= 45", "warrantyYears": ">= 6 on sealed system"},
+        "gasStorage": {"UEF_20to55gal_mediumDraw": ">= 0.81", "UEF_20to55gal_highDraw": ">= 0.86", "UEF_over55gal": ">= 0.86", "firstHourRatingGallonsPerHour": ">= 51", "warrantyYears": ">= 6 including parts"},
+        "gasInstantaneousTankless": {"UEF": ">= 0.95", "maxGPM": ">= 2.8 over a 67 F rise", "warranty": ">= 6 years heat exchanger, >= 5 years parts"},
+        "solar": {"SUEF_electricBackup": ">= 3.00", "SUEF_gasBackup": ">= 1.80"},
+        "definitions": {
+          "firstHourRating": "estimate of the maximum volume of hot water in gallons a storage water heater can supply within an hour that begins with the heater fully heated; measured at 125 F outlet",
+          "GPM": "gallons per minute an instantaneous heater supplies while maintaining a nominal temperature rise; measured over a 67 F rise"
+        }
+      },
+      "unit": "UEF ratio; gallons per hour; gallons per minute",
+      "currency": null,
+      "url": "https://www.energystar.gov/products/water_heaters/residential_water_heaters_key_product_criteria",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "These are certification floors, not typical-product figures; a game heater's FHR/GPM should be at or above them only if it is meant to be ENERGY STAR."
+    },
+    {
+      "label": "Storage water heater sizing rule and service life (PNNL / DOE Building America)",
+      "figures": {
+        "rule": "Select a storage water heater whose first-hour rating is equal to or greater than the household's peak hour demand",
+        "averageLifeYears": 13
+      },
+      "unit": "years",
+      "currency": null,
+      "url": "https://basc.pnnl.gov/redcalc/tool/dhw-first-hour-rating",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "Method credited to AHRI. The DOE Energy Saver per-use worksheet (shower 10 gal, bath 10, shave 2, hands/face 1, food prep 1, dishwasher 6, automatic clothes washer 7) appeared only in a search summary; energy.gov/energysaver pages returned 404 or a generic page on 2026-10-03 (confirmed false)."
+    },
+    {
+      "label": "DOE tankless flow and savings",
+      "figures": {"flowRateGPM": "2-5 (7.6-15.2 L/min)", "savingsIfUnder41GalPerDay": "24%-34% more energy efficient than storage tank"},
+      "unit": "gallons per minute; percent",
+      "currency": null,
+      "url": "https://www.energy.gov/energysaver/tankless-or-demand-type-water-heaters",
+      "date": "2026-10-03",
+      "dateKind": "read attempt",
+      "confirmed": false,
+      "note": "Page returned 404 to the reader; figures from a search summary of the energy.gov page."
+    },
+    {
+      "label": "US tank capacity and tankless flow by household size (HomeGuide)",
+      "figures": {
+        "1-2 people": {"tankGallons": "23-30", "tanklessGPM": "4-8"},
+        "2-3 people": {"tankGallons": "36-40", "tanklessGPM": "6-9"},
+        "3-4 people": {"tankGallons": "40-60", "tanklessGPM": "7-10"},
+        "5+ people": {"tankGallons": "50-80", "tanklessGPM": "9-11+"},
+        "commonSizes": "40-gallon for 1-2 people with low use; 50-gallon for 3-4 people with moderate use"
+      },
+      "unit": "gallons; gallons per minute",
+      "currency": null,
+      "url": "https://homeguide.com/costs/water-heater-installation-cost",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "A cost-guide publisher's table, not a standard."
+    },
+    {
+      "label": "US water heater unit and installed prices (HomeGuide)",
+      "figures": {
+        "tankByGallons": {"30": {"unit": "300-900", "installed": "500-1,900"}, "40": {"unit": "400-2,000", "installed": "600-3,000"}, "50": {"unit": "500-2,100", "installed": "700-3,100"}, "65": {"unit": "700-2,400", "installed": "900-3,400"}, "75": {"unit": "900-2,600", "installed": "1,100-3,600"}, "80": {"unit": "1,000-3,000", "installed": "1,200-4,000"}},
+        "tankless": {"unit": "600-2,600", "installed": "1,400-5,600"},
+        "solar": {"unit": "1,000-6,000", "installed": "3,000-9,000"},
+        "annualOperatingCost": {"tanklessGas": "220-480", "tanklessElectric": "340-540", "tankGas": "250-420", "tankElectric": "530-600"},
+        "lifespanYears": {"tankless": "15-20", "tank": "8-12"},
+        "extras": {"expansionTank": "100-400", "powerVentPremiumOverDirectVent": "350-500"}
+      },
+      "unit": "USD",
+      "currency": "USD",
+      "url": "https://homeguide.com/costs/water-heater-installation-cost",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "HomeGuide's lifespans differ from PNNL's 13-year average; both are recorded as published."
+    },
+    {
+      "label": "B&Q water heaters (UK), cheapest listed on the search page",
+      "figures": [
+        {"name": "Flomasta Undersink Surface-mounted Manual Stored water heater 2kW, 10L", "price": 98, "seller": "B&Q"},
+        {"name": "Ariston Andris Lux 10L Undersink Unvented Electric Storage Water Heater 2kW Model 3100881", "price": 135.32},
+        {"name": "Santon Aquarius Vented 7 Litre 3kw Over Sink Water Heater 94010001", "price": 181.47},
+        {"name": "50 Litre QH V2 Electric Water Heater with Digital Control", "price": 330, "sponsored": true},
+        {"name": "80 Litre QH V2 Electric Water Heater with Digital Control", "price": 370, "sponsored": true},
+        {"name": "80 Litre QH Flat A-rated Electric Storage Water Heater WiFi Stainless steel tank", "price": 430, "sponsored": true},
+        {"name": "3000W Electric Tankless Instant Hot Water Heater Under Sink", "price": 49.99, "seller": "marketplace"}
+      ],
+      "unit": "GBP each, VAT included",
+      "currency": "GBP",
+      "url": "https://www.diy.com/search?term=water%20heater",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "UK homes mostly heat water by combi boiler or a cylinder; these are point-of-use and small storage heaters. Several listings are B&Q marketplace sellers, not B&Q stock."
+    }
+  ],
+
+  "cleaningUse": [
+    {
+      "label": "USDA ARS sponge sanitizing study",
+      "figures": {"microwaveOneMinuteKillPct": 99.99999, "dishwasherWithDryingKillPct": 99.9998, "bleachLemonWaterUntreatedKillPctRange": "37-87", "testLoad": "20 million microbes per sponge"},
+      "unit": "percent of bacteria killed",
+      "currency": null,
+      "url": "https://www.ars.usda.gov/is/pr/2007/070423.htm",
+      "date": "2007-04-23",
+      "dateKind": "publisher (archived)",
+      "confirmed": true,
+      "note": "This page does not give a replacement interval."
+    },
+    {
+      "label": "Scotch-Brite (3M) sponge replacement guidance",
+      "figures": {"replaceAtLeastEveryWeeks": 3, "dishwasherSanitizeCyclesUpTo": 20},
+      "unit": "weeks; cycles",
+      "currency": null,
+      "url": "https://www.scotch-brite.com/3M/en_US/scotch-brite/uses-tips/when-to-replace-your-sponge/",
+      "date": "2026-10-03",
+      "dateKind": "read attempt",
+      "confirmed": false,
+      "note": "Manufacturer page timed out to curl and the reader; figures from the search-result title ('Replace your sponge at least every 3 weeks') and a search summary."
+    },
+    {
+      "label": "USDA 'buy new sponges frequently' and weekly-replacement advice",
+      "figures": {"usda": "microwaving or boiling 'may reduce some of the bacterial load'; if you use sponges, buy new ones frequently", "commonExpertAdvice": "replace every 1-2 weeks; at least every 2-3 weeks"},
+      "unit": "weeks",
+      "currency": null,
+      "url": "https://www.npr.org/sections/thesalt/2017/09/11/548926054/can-you-really-not-clean-your-kitchen-sponge",
+      "date": "2017-09-11",
+      "dateKind": "publisher",
+      "confirmed": false,
+      "note": "From search summaries of news articles (NPR, Yahoo/AOL); the USDA wording was not read on a USDA page."
+    },
+    {
+      "label": "US paper towel consumption",
+      "figures": {"nationalPoundsPerYear": "about 13 billion", "perCapitaPoundsPerYear": "about 40 (other secondary sources 53-57)", "rollsPerPersonPerYear": "about 80"},
+      "unit": "pounds; rolls",
+      "currency": null,
+      "url": "https://earth911.com/home-garden/paper-towels-tissues-and-napkins-americas-13-billion-pound-waste-habit/",
+      "date": "2026-10-03",
+      "dateKind": "read attempt",
+      "confirmed": false,
+      "note": "Secondary, mutually inconsistent figures from a search summary; no primary source (EPA, industry body) was found. EPA's paper data page groups tissue paper and towels with other nondurables and gives no towel-specific figure."
+    },
+    {
+      "label": "Compendium of Physical Activities (2024 Adult) - cleaning METs",
+      "figures": {
+        "05010": {"MET": 3.3, "activity": "Cleaning, sweeping carpet or floors, general"},
+        "05020": {"MET": 3.5, "activity": "Cleaning, heavy or major (e.g., wash car, clean garage), moderate effort"},
+        "05021": {"MET": 3.5, "activity": "Cleaning, mopping, standing, moderate effort"},
+        "05022": {"MET": 3.3, "activity": "Cleaning windows, washing windows, general"},
+        "05023": {"MET": 2.5, "activity": "Mopping, standing, light effort"},
+        "05030": {"MET": 3.3, "activity": "Cleaning, house or cabin, general, moderate effort"},
+        "05032": {"MET": 2.5, "activity": "Dusting or polishing furniture, general"},
+        "05035": {"MET": 3.3, "activity": "Kitchen activity, general (cooking, washing dishes, cleaning up), moderate effort"},
+        "05041": {"MET": 2.0, "activity": "Wash dishes, standing or in general"}
+      },
+      "unit": "MET",
+      "currency": null,
+      "url": "https://pacompendium.com/home-activities",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true
+    }
+  ],
+
+  "property": [
+    {
+      "town": "London / England",
+      "label": "Leasehold dwellings, England 2024-25 (MHCLG official statistics)",
+      "figures": {
+        "leaseholdDwellings": 4900000,
+        "shareOfStockPct": 20,
+        "freeholdDwellings": 19740000,
+        "londonLeaseholdSharePct": 39,
+        "londonLeaseholdDwellings": 1440000,
+        "northWestSharePct": 30,
+        "otherRegionsPctRange": "9-17",
+        "byTenure": {"ownerOccupied": {"n": 2720000, "pct": 56}, "privateRented": {"n": 1910000, "pct": 39}, "socialRented": {"n": 269000, "pct": 5}},
+        "byType": {"flats": {"n": 3380000, "pct": 69}, "houses": {"n": 1520000, "pct": 31}},
+        "meanYearsRemainingOnLeases": 483,
+        "leasesOver900YearsPct": 32,
+        "leases80YearsOrFewerPct": 10,
+        "ownerOccupiedFlatsMeanYearsRemaining": 359,
+        "ownerOccupiedHousesMeanYearsRemaining": 616
+      },
+      "unit": "dwellings; percent; years",
+      "currency": null,
+      "url": "https://www.gov.uk/government/statistics/leasehold-dwellings-2024-to-2025/leasehold-dwellings-2024-to-2025",
+      "date": "2024-25 survey year",
+      "dateKind": "publisher",
+      "confirmed": true
+    },
+    {
+      "town": "New York",
+      "label": "Condo and co-op tenure, NYC Housing and Vacancy Survey 2023 (Table 2)",
+      "figures": {
+        "condominium": {"renterOccupied": 191100, "ownerOccupied": 126900, "ownerPct": 40},
+        "cooperative": {"renterOccupied": 140300, "ownerOccupied": 310500, "ownerPct": 69},
+        "notCondoOrCoop": {"singleFamilyOwner": 378400, "singleFamilyOwnerPct": 81, "twoUnitOwner": 216400, "threeToFiveUnitOwner": 60260, "sixPlusUnitOwner": 16470},
+        "citywide": {"renterOccupied": 2324000, "ownerOccupied": 1109000, "ownerPct": 32},
+        "unitsInCondoOrCoopBuildings": 861200
+      },
+      "unit": "occupied housing units",
+      "currency": null,
+      "url": "https://www.nyc.gov/assets/hpd/downloads/pdfs/about/2023-nychvs-selected-initial-findings.pdf",
+      "date": "2023 survey",
+      "dateKind": "publisher",
+      "confirmed": true,
+      "note": "Read with pdftotext; table columns are run together in the extract and were reassembled by row (each row sums to 100%). Derived from these counts: of 1,109,000 owner-occupied units, co-ops are about 28% and condos about 11%."
+    },
+    {
+      "town": "Toronto / Vancouver",
+      "label": "Share of occupied dwellings that are condominiums, 2021 Census",
+      "figures": {"VancouverCMA": 32.5, "TorontoCMA": 23.9, "BritishColumbia": 23.6, "Ontario": 15.0, "Canada": 15.0},
+      "unit": "percent of occupied dwellings",
+      "currency": null,
+      "url": "https://www150.statcan.gc.ca/n1/daily-quotidien/220921/g-b002-eng.htm",
+      "date": "2022-09-21 (modified 2022-11-21)",
+      "dateKind": "publisher",
+      "confirmed": true
+    },
+    {
+      "town": "US (Los Angeles, New York, New Haven)",
+      "label": "HOA / condo fee participation and median fees by state",
+      "figures": {
+        "US": {"householdsPayingCondoOrHOAFee2024": 21600000, "nationalMedianMonthly": 135, "medianWithMortgage": 120, "shareOfHouseholdsPct": 25},
+        "California": {"householdsPayingPct": 23.7, "medianMonthly": 278},
+        "NewYork": {"householdsPayingPct": 14.3, "medianMonthly": 739},
+        "Connecticut": {"householdsPayingPct": 15.5, "medianMonthly": 351},
+        "CAI": {"communities": 370000, "newHomesSoldInHOA2023Pct": 82.4, "homeownersInHOAPct": 53}
+      },
+      "unit": "USD per month; percent",
+      "currency": "USD",
+      "url": "https://ipropertymanagement.com/research/hoa-statistics",
+      "date": "2025-03-13",
+      "dateKind": "publisher (updated)",
+      "confirmed": false,
+      "note": "Secondary compilation; it cites the Census Bureau 2024 ACS 1-year estimates for the state fees and the Community Association Fact Book 2024 (Foundation for Community Association Research) for the CAI counts. The ACS table itself was not read. A search summary gave an AHS 2023 average monthly HOA/condo fee of $243 (up from $191 in 2021); not read on census.gov."
+    },
+    {
+      "town": "New York",
+      "label": "NYC zoning yards, R1 and R2 districts (Zoning Resolution Article II Chapter 3)",
+      "figures": {
+        "frontYardFeet": {"R1": 20, "R2": 15, "section": "ZR 23-321"},
+        "sideYards": {"number": 2, "minEachFeet": {"R1": 8, "R2": 5}, "section": "ZR 23-332 (detached buildings)"},
+        "rearYardFeet": {"standardLots": 20, "section": "ZR 23-342", "appliesTo": "detached/zero-lot-line buildings up to 75 ft high"}
+      },
+      "unit": "feet",
+      "currency": null,
+      "url": "https://zr.planning.nyc.gov/article-ii/chapter-3",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "Read through a page reader (curl got a Cloudflare challenge). The 20 ft rear yard reflects the 2024 City of Yes amendments; older summaries say 30 ft. Re-check the total side-yard width rule if needed: the reader returned only the per-yard minimums."
+    },
+    {
+      "town": "Los Angeles",
+      "label": "LA R1 one-family zone yards (LAMC 12.08 C)",
+      "figures": {
+        "frontYard": "not less than 20% of lot depth, need not exceed 20 ft; prevailing-setback rule: where developed lots with front yards varying by no more than 10 ft make up 40%+ of the frontage, the minimum is their average, capped at 40 ft",
+        "sideYardFeet": 5,
+        "rearYardFeet": 15
+      },
+      "unit": "feet",
+      "currency": null,
+      "url": "https://codelibrary.amlegal.com/codes/los_angeles/latest/lapz/0-0-0-2052",
+      "date": "2026-10-03",
+      "dateKind": "read attempt",
+      "confirmed": false,
+      "note": "American Legal returned 403 / a challenge; figures from a search summary of the code section. Baseline Mansionization/Hillside rules and side-yard increases for taller buildings were not read."
+    },
+    {
+      "town": "London (Westminster)",
+      "label": "Westminster conservation areas",
+      "figures": {
+        "count": 56,
+        "extraControls": ["planning permission for demolition and some alterations/extensions that would not need it elsewhere", "6 weeks' notice before pruning or felling any tree", "some areas have Article 4 Directions removing further permitted development rights"]
+      },
+      "unit": "areas; weeks",
+      "currency": null,
+      "url": "https://www.westminster.gov.uk/planning-building-control-and-environmental-regulations/design-and-heritage/conservation-areas",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "The page does not say what share of the borough is covered."
+    },
+    {
+      "town": "London / England",
+      "label": "Prescriptive easements (England and Wales)",
+      "figures": {"minimumUseYears": 20, "methods": ["common law", "lost modern grant", "Prescription Act 1832"], "useMustBe": "without force, without secrecy and without permission (nec vi, nec clam, nec precario)"},
+      "unit": "years",
+      "currency": null,
+      "url": "https://www.gov.uk/government/publications/easements-claimed-by-prescription/practice-guide-52-easements-claimed-by-prescription",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true
+    },
+    {
+      "town": "London / England",
+      "label": "RICS Home Survey prices by level and property value (HomeOwners Alliance, 2026)",
+      "figures": {
+        "byLevel": {"Level1": "300-900", "Level2": "400-1,000", "Level3": "630-1,500"},
+        "byValue": {
+          "Level1": {"100k-249k": "300-500", "250k-349k": "500-600", "350k-499k": "600-700", "500k-1m": "700-900"},
+          "Level2": {"100k-249k": "400-600", "250k-349k": "600-700", "350k-499k": "700-800", "500k-1m": "800-1,000"},
+          "Level3": {"100k-249k": "630-800", "250k-349k": "800-900", "350k-499k": "900-1,100", "500k-1m": "1,000-1,500"}
+        },
+        "level2WithValuationFrom": 500
+      },
+      "unit": "GBP per survey",
+      "currency": "GBP",
+      "url": "https://hoa.org.uk/advice/guides-for-homeowners/i-am-buying/how-much-does-a-house-survey-cost/",
+      "date": "2026",
+      "dateKind": "publisher",
+      "confirmed": true,
+      "note": "Consumer-body guide, not a tariff; RICS publishes no national price. London is not separately priced on this page."
+    },
+    {
+      "town": "Dublin",
+      "label": "Pre-purchase structural survey, published firm prices (GetHouseSurvey.ie)",
+      "figures": {"apartmentAnySize": 599, "houseUpTo175m2": 699, "house176to300m2": 799, "over300m2": "quote on request", "exVAT": {"apartment": 487, "houseUpTo175m2": 568, "house176to300m2": 650}},
+      "unit": "EUR per survey, VAT included unless stated",
+      "currency": "EUR",
+      "url": "https://www.gethousesurvey.ie/post/how-much-is-a-pre-purchase-structural-survey",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "One firm's prices. A search summary of other Irish guides gave €450-€950 typical in 2026 (confirmed false)."
+    },
+    {
+      "town": "Vancouver",
+      "label": "Home inspection, published firm prices (Vancouver Home Inspections)",
+      "figures": {
+        "condo": {"under1200sqft": 450, "1201-2000": 500, "2001-2500": 550, "2501-3000": 600, "3001-3500": 650},
+        "townhouse": {"under1500sqft": 575, "1501-2000": 625, "2001-2500": 675, "2501-3000": 725, "3001-3500": 775},
+        "house": {"under2000sqft": 675, "2001-3000": 775, "3001-4000": 875, "4001-5000": 1175, "5001-6000": 1275, "6001-7000": 1675, "7001-8000": 1975},
+        "surcharges": {"builtBefore1970": 175, "builtBefore1950": 275, "basementSuiteEach": 75}
+      },
+      "unit": "CAD per inspection",
+      "currency": "CAD",
+      "url": "https://vancouverhomeinspections.ca/home-inspection-rates-and-services/",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "One firm's price list; the page did not say whether GST is included."
+    },
+    {
+      "town": "Toronto",
+      "label": "Home inspection cost, Toronto (HomeStars guide)",
+      "figures": {"typicalRange": "402-862", "average": 575, "condo": "275-400", "townhouse": "350-500"},
+      "unit": "CAD per inspection",
+      "currency": "CAD",
+      "url": "https://www.homestars.com/green-energy-diagnostics/price-guides/home-inspection-cost-toronto",
+      "date": "2026",
+      "dateKind": "publisher (per search summary)",
+      "confirmed": false,
+      "note": "From a search summary; no Toronto inspector's own price list was read."
+    }
+  ],
+
+  "development": [
+    {
+      "town": "US",
+      "label": "Shed cost (HomeGuide)",
+      "figures": {"prefabPerSqft": "10-30", "customPerSqft": "25-150", "average10x10Total": "1,000-15,000", "10x10Materials": {"prefab": "800-2,300", "custom": "1,700-9,000"}},
+      "unit": "USD",
+      "currency": "USD",
+      "url": "https://homeguide.com/costs/cost-to-build-a-shed",
+      "date": "2026",
+      "dateKind": "publisher (title year)",
+      "confirmed": true
+    },
+    {
+      "town": "US",
+      "label": "Detached garage cost (HomeGuide)",
+      "figures": {"perSqft": "50-100", "twoCarTotal": "20,000-57,600", "bySize": {"20x20 (400 sqft, 2-car)": "20,000-40,000", "24x24 (576 sqft, 2-car)": "28,800-57,600", "36x24 (864 sqft, 3-car)": "43,200-86,400"}, "addAStallPerSqft": "60-120", "addAStallTotal": "9,600-24,000", "rvGarage": "50,000-160,000", "garageWithApartment": "80,000-300,000", "plumbingPerFixture": "450-1,800"},
+      "unit": "USD",
+      "currency": "USD",
+      "url": "https://homeguide.com/costs/detached-garage-cost",
+      "date": "2026",
+      "dateKind": "publisher (title year)",
+      "confirmed": true
+    },
+    {
+      "town": "US",
+      "label": "ADU cost (HomeGuide)",
+      "figures": {"perSqft": "100-300", "500sqft": "50,000-150,000", "1200sqft": "120,000-360,000", "prefabPerSqft": "80-160", "prefab600sqft": "50,000-100,000"},
+      "unit": "USD",
+      "currency": "USD",
+      "url": "https://homeguide.com/costs/adu-cost",
+      "date": "2026",
+      "dateKind": "publisher (title year)",
+      "confirmed": true
+    },
+    {
+      "town": "UK",
+      "label": "Outbuilding costs (Checkatrade, last updated May 2026)",
+      "figures": {
+        "concreteGarageNewFoundation": {"low": 4200, "high": 10000, "average": 7100},
+        "smallGardenOffice": {"low": 6000, "high": 9000, "average": 7500},
+        "prefabTimberSummerhouse": {"low": 2750, "high": 10250, "average": 6500},
+        "brickBuiltGarage": {"low": 17500, "high": 26500, "average": 22000},
+        "concreteBlockShedPerM2": 36
+      },
+      "unit": "GBP",
+      "currency": "GBP",
+      "url": "https://www.checkatrade.com/blog/cost-guides/outbuilding-cost/",
+      "date": "2026-05",
+      "dateKind": "publisher",
+      "confirmed": true
+    },
+    {
+      "town": "UK",
+      "label": "Garden room / garden office (Checkatrade)",
+      "figures": {"selfAssemblyMiniFrom": 2500, "premiumFinishedMini": 8000, "professionalAssemblyAdds": 1250, "larchInsulatedOfficeUnassembledAverage": 4250, "smallInsulatedOfficeAssembledAverage": 5500, "turnkeyPodAverage": 11750, "insulatedPoweredShed": "1,500-2,500", "largeLogCabinOrBrickCabin": "15,000-30,000"},
+      "unit": "GBP",
+      "currency": "GBP",
+      "url": "https://www.checkatrade.com/blog/cost-guides/garden-room-cost-guide/",
+      "date": "2026",
+      "dateKind": "publisher (title year)",
+      "confirmed": true
+    },
+    {
+      "town": "UK",
+      "label": "Garage conversion (Checkatrade)",
+      "figures": {"16m2IntegratedOrAttached": "10,000-20,000", "perM2": "625-1,250", "extensionPerM2ForComparison": "1,800-3,000", "durationWeeks": "2-4"},
+      "unit": "GBP",
+      "currency": "GBP",
+      "url": "https://www.checkatrade.com/blog/cost-guides/garage-conversion-cost/",
+      "date": "2026",
+      "dateKind": "publisher",
+      "confirmed": true
+    },
+    {
+      "town": "England",
+      "label": "Outbuildings under permitted development (Class E) - when no planning permission is needed",
+      "figures": {
+        "notForwardOfPrincipalElevation": true,
+        "singleStorey": true,
+        "maxEavesHeightM": 2.5,
+        "maxHeightDualPitchM": 4,
+        "maxHeightOtherRoofM": 3,
+        "maxHeightWithin2mOfBoundaryM": 2.5,
+        "maxRaisedPlatformM": 0.3,
+        "maxCurtilageCoveredPct": 50,
+        "designatedLandMoreThan20mFromHouseMaxM2": 10,
+        "listedBuildingCurtilage": "any outbuilding needs planning permission",
+        "flats": "permitted development does not apply"
+      },
+      "unit": "metres; percent; square metres",
+      "currency": null,
+      "url": "https://www.planningportal.co.uk/permission/common-projects/outbuildings/planning-permission",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "Designated land = national parks, the Broads, AONBs, conservation areas, World Heritage Sites. Where permission is needed, the householder fee (£548 from 1 April 2026) is already in research-construction.json."
+    }
+  ],
+
+  "fixtures": [
+    {
+      "label": "IKEA lamps across markets (same article family in each)",
+      "figures": {
+        "BARLAST table lamp (article 00504557, 31 cm)": {"US": 5.99, "CA": 5.99, "UK": 4, "IE": 5, "MX": 149},
+        "BARLAST floor lamp (article 10430368, 150 cm)": {"US": null, "CA": 9.99, "UK": 8, "IE": 9, "MX": 279},
+        "BARLAST LED ceiling/wall lamp (article 00525908, 25 cm)": {"US": 8.99, "CA": 7.99, "UK": 4, "IE": 5, "MX": 249},
+        "HEKTAR floor lamp (article 00215307)": {"US": 89.99, "CA": 89, "UK": 79, "IE": 69, "MX": 2499},
+        "HEKTAR floor lamp with 3 spotlights (article 20393600)": {"US": 109.99, "CA": 89, "UK": 89, "IE": 79, "MX": 2999},
+        "NYMANE table lamp (33 cm)": {"US": 49.99, "CA": 39.99, "UK": 29, "IE": 35, "MX": 999},
+        "NYMANE floor/reading lamp (article 80336758)": {"US": 69.99, "CA": 59.99, "IE": 49},
+        "NYMANE LED pendant lamp, wireless dimmable": {"US": 99.99, "UK": 70},
+        "ZEBRASAV pendant lamp (46 cm)": {"US": 9.99, "CA": 11.99, "UK": 4, "IE": 5, "MX": 199},
+        "KRUSNATE ceiling spotlight with 2 spots": {"US": 9.99, "CA": 7.99, "UK": 5, "IE": 5, "MX": 199},
+        "TAGARP floor uplighter (article 20404095)": {"US": 14.99, "CA": 15.99, "UK": 10, "IE": 15},
+        "LAMPAN table lamp": {"US": 9.99, "CA": 8.99, "MX": 249}
+      },
+      "unit": "price each in local currency (US/CA before sales tax; UK/IE/MX tax included)",
+      "currency": {"US": "USD", "CA": "CAD", "UK": "GBP", "IE": "EUR", "MX": "MXN"},
+      "url": "https://sik.search.blue.cdtapps.com/{us/en|ca/en|gb/en|ie/en|mx/es}/search-result-page?q=...",
+      "productPageExample": "https://www.ikea.com/gb/en/p/barlast-table-lamp-black-white-80504563/",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "Read from IKEA's own site-search service that backs ikea.com (returns name, type, measure, price, article number, product URL). null = not returned in that market's search on the day; the US BARLAST floor lamp did not appear. Variants differ by colour (e.g. HEKTAR dark grey vs brown-red, same price). Desks, TV benches and coffee tables with dimensions are already in research-furniture-catalog.json for all five markets and are not repeated."
+    },
+    {
+      "label": "US lighting fixture installation",
+      "figures": "see research-facilities.json rooms.lighting_fixtures_usd (recessed $125-$300 per light in an existing ceiling; chandelier replace $100-$200)",
+      "unit": "USD",
+      "currency": "USD",
+      "url": "https://homeguide.com/costs/lighting-fixture-installation-cost",
+      "date": "2026-10-01",
+      "dateKind": "read by earlier research",
+      "confirmed": false,
+      "note": "Cross-reference only; not re-read here."
+    }
+  ],
+
+  "gardensPitch": [
+    {
+      "town": "US",
+      "label": "Raised garden beds (HomeGuide)",
+      "figures": {"premadeKit5x12": "300-900", "customRaisedBed5x12": "1,200-4,000", "digFlowerBed5x12": "1,400-3,700", "plantFlowersOnly5x12": "900-2,700"},
+      "unit": "USD",
+      "currency": "USD",
+      "url": "https://homeguide.com/costs/flower-bed-installation-cost",
+      "date": "2026",
+      "dateKind": "publisher (title year)",
+      "confirmed": true,
+      "note": "A search summary added 'kits $5-$15 per square foot of materials'; not seen in the extract."
+    },
+    {
+      "town": "UK",
+      "label": "Raised beds at B&Q",
+      "figures": [
+        {"name": "Verve Large Pine & steel Rectangular Raised bed kit 0.96 m2 (L)120 x (W)80 x (H)20 cm", "price": 25, "seller": "B&Q"},
+        {"name": "Harbour Housewares Raised Garden Bed, anthracite square bottomless galvanised steel, 120 x 120 cm", "price": 26.99, "seller": "marketplace"},
+        {"name": "Metal Raised Galvanised Steel Planter Box 180 x 90 cm", "price": 60.99, "seller": "marketplace"},
+        {"name": "Wooden Raised Vegetable Bed (122 cm x 18 cm)", "price": 37.98, "seller": "marketplace"}
+      ],
+      "unit": "GBP each, VAT included",
+      "currency": "GBP",
+      "url": "https://www.diy.com/search?term=raised%20bed",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true
+    },
+    {
+      "town": "US",
+      "label": "Greenhouse cost (HomeGuide)",
+      "figures": {"perSqft": "5-30", "500sqftTotal": "2,500-15,000", "commercialPerSqft": "2-25", "kitchenGreenhouseWindowInstalled": "1,500-5,000", "sitePrepRegrade": "500-5,000", "installLabourPerHour": "50-100", "plumberPerHour": "45-150", "electricianPerHour": "50-130"},
+      "unit": "USD",
+      "currency": "USD",
+      "url": "https://homeguide.com/costs/greenhouse-cost",
+      "date": "2026",
+      "dateKind": "publisher (title year)",
+      "confirmed": true
+    },
+    {
+      "town": "UK",
+      "label": "Greenhouses at B&Q (cheapest listings)",
+      "figures": [
+        {"name": "Roll-up zip panel door grow house, no-tool assembly", "price": 19.99},
+        {"name": "Cold frame greenhouse with reinforced PE cover", "price": 41.99},
+        {"name": "Green house, 6 windows & galvanised steel frame", "price": 79.99},
+        {"name": "Polycarbonate greenhouse quick setup, black", "price": 239.99},
+        {"name": "Polycarbonate Greenhouse Large Walk-in, sliding door & twin wall panels 6x4 ft (Green)", "price": 319.99, "sponsored": true}
+      ],
+      "unit": "GBP each",
+      "currency": "GBP",
+      "url": "https://www.diy.com/search?term=greenhouse",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "Names are shortened from the listing text, which was partly cut off in the extract; these appear to be marketplace sellers."
+    },
+    {
+      "town": "US",
+      "label": "Outdoor kitchen cost (HomeGuide)",
+      "figures": {"installed": "7,000-35,000", "prebuiltModularInstalled": "7,000-16,000", "custom": "10,000-35,000", "modularKitNoInstall": "5,000-10,000+", "fireplace": "1,500-9,000", "permit": "200-600", "waterLinePerFt": "25-200", "drainPerFt": "10-25", "gasLinePerFt": "15-50+", "propaneTank20to100lb": "35-150"},
+      "unit": "USD",
+      "currency": "USD",
+      "url": "https://homeguide.com/costs/outdoor-kitchen-cost",
+      "date": "2026",
+      "dateKind": "publisher (title year)",
+      "confirmed": true,
+      "note": "No published figure was found for how often households actually use an outdoor kitchen."
+    },
+    {
+      "town": "England",
+      "label": "Sport England facility costs, Q4 2025 - floodlit football pitches (lighting included, not broken out)",
+      "figures": {
+        "U9U10Training61x43m": {"23mmSandFilled": 470000, "40to50mm3G": 515000, "60to65mm3G": 545000},
+        "Senior106x70m": {"23mmSandFilled": 1095000, "40mm3G": 1185000, "50mm3G": 1190000, "60mm3G": 1215000, "65mm3G": 1245000},
+        "areaM2": {"training": 2623, "senior": 7420}
+      },
+      "unit": "GBP capital cost, fenced, with sports lighting",
+      "currency": "GBP",
+      "url": "https://sportengland-production-files.s3.eu-west-2.amazonaws.com/s3fs-public/2026-02/Facility%20Cost%20Guidance%20Q4%202025.pdf",
+      "date": "Q4 2025 (published 2026-02)",
+      "dateKind": "publisher",
+      "confirmed": true,
+      "note": "Read with pdftotext; the column layout is run together, values matched to rows in listed order. Residential court lighting line items (tennis/basketball) are already in research-facilities.json."
+    },
+    {
+      "label": "Compendium of Physical Activities (2024 Adult) - sports and garden METs",
+      "figures": {
+        "15140": {"MET": 4.0, "activity": "Coaching, football, soccer, basketball, baseball, swimming, etc."},
+        "15142": {"MET": 8.0, "activity": "Coaching, actively playing sport with players"},
+        "15195": {"MET": 7.8, "activity": "Futsal"},
+        "15440": {"MET": 4.0, "activity": "Juggling"},
+        "15605": {"MET": 9.5, "activity": "Soccer, competitive"},
+        "15610": {"MET": 7.0, "activity": "Soccer, casual, general"},
+        "15615": {"MET": 3.5, "activity": "Walking football/soccer"},
+        "08045": {"MET": 3.5, "activity": "Digging, spading, filling garden, composting, light"},
+        "08050": {"MET": 5.0, "activity": "Digging, spading, filling garden, composting"},
+        "08052": {"MET": 7.3, "activity": "Digging, spading, filling garden, composting, vigorous effort"},
+        "08066": {"MET": 2.0, "activity": "Gardening, general"},
+        "08135": {"MET": 2.6, "activity": "Planting, potting, transplanting seedlings or plants, light effort"},
+        "08230": {"MET": 4.0, "activity": "Watering lawn or garden, standing or walking"},
+        "08239": {"MET": 3.8, "activity": "Weeding, cultivating garden, light"},
+        "08240": {"MET": 4.5, "activity": "Weeding, cultivating garden, moderate effort"}
+      },
+      "unit": "MET",
+      "currency": null,
+      "url": "https://pacompendium.com/sports",
+      "secondaryUrl": "https://pacompendium.com/lawn-garden",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "The Compendium has no soccer-drill code (basketball has 'drills, practice', 15072, 9.3); 'Juggling' (15440) is general juggling, not football keepy-uppy."
+    }
+  ],
+
+  "construction": [
+    {
+      "town": "US (all states)",
+      "label": "FTC Cooling-Off Rule (door-to-door and temporary-location sales)",
+      "figures": {
+        "cancelUntil": "midnight of the third business day after the sale",
+        "saturday": "counts as a business day; Sundays and federal holidays do not",
+        "minimumSaleAtHome": 25,
+        "minimumSaleAtTemporaryLocation": 130,
+        "sellerRefundDays": 10,
+        "goodsPickupOrAbandonDays": 20
+      },
+      "unit": "business days; USD; days",
+      "currency": "USD",
+      "url": "https://consumer.ftc.gov/articles/buyers-remorse-ftcs-cooling-rule-may-help",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "No reason needed to cancel. The written contract must be in the language of the sales presentation."
+    },
+    {
+      "town": "Los Angeles (California)",
+      "label": "California change orders (Bus. & Prof. Code 7159.6)",
+      "figures": {"mustContain": ["scope of work encompassed by the order", "amount added to or subtracted from the contract", "effect on progress payments or the completion date"], "authorization": "the buyer may not require a contractor to perform extra or change-order work without providing written authorization"},
+      "unit": null,
+      "currency": null,
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=7159.6.&lawCode=BPC",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "The down-payment cap (lesser of $1,000 or 10%) is already in research-construction-process.json from BPC 7159.5."
+    },
+    {
+      "town": "Los Angeles (California)",
+      "label": "California home-improvement right to cancel",
+      "figures": {"standard": "three business days", "homeowner65OrOlder": "five business days", "sevenDayNotice": "a 'Notice of Seven-Day Right to Cancel' box appears on CSLB's sample contract (applies to a category the extract garbled; a search summary tied a 7-business-day period for seniors to SB 784 (2025-26))"},
+      "unit": "business days",
+      "currency": null,
+      "url": "https://www.cslb.ca.gov/Resources/Newsletters/2025/CLC_Newsletter_SUMMER2025.pdf",
+      "date": "2025 (summer)",
+      "dateKind": "publisher",
+      "confirmed": false,
+      "note": "The CSLB sample contract's text is garbled in the PDF extract; the three- and five-day periods are legible there, and Civil Code 1689.6 was summarised the same way by search. SB 784's status and effective date were not confirmed (the leginfo page timed out)."
+    },
+    {
+      "town": "London",
+      "label": "UK Consumer Contracts Regulations 2013 - off-premises and distance cancellation",
+      "figures": {
+        "serviceContractCancellationDays": "14 days after the day the contract is entered into (reg. 30)",
+        "goodsCancellationDays": "14 days after the goods come into the consumer's possession (reg. 30)",
+        "ifCancellationInfoNotGiven": "period extends to 14 days after the information is given, up to 12 months after the normal period ends (reg. 31)",
+        "workStartingInsidePeriod": "the trader must not begin before the period ends unless the consumer expressly requests it, on a durable medium for off-premises contracts; if the consumer then cancels, they pay a proportionate amount for work supplied (reg. 36)"
+      },
+      "unit": "days",
+      "currency": null,
+      "url": "https://www.legislation.gov.uk/uksi/2013/3134/regulation/30",
+      "secondaryUrl": "https://www.legislation.gov.uk/uksi/2013/3134/regulation/36",
+      "date": "2026-10-03",
+      "dateKind": "read",
+      "confirmed": true,
+      "note": "Applies to builder contracts signed at the customer's home or at a distance, not to contracts signed at the trader's premises."
+    }
+  ],
+
+  "notes": {
+    "alreadyCovered": [
+      "Title insurance premiums, land survey prices (NYC, LA, New Haven, England, Ireland), Phase I ESA price, conveyancing and lawyer fees: research-land-construction.json and research-land-construction-2.json",
+      "Subdivision / lot-split fees (LA preliminary parcel map, NY, CT, England, Ireland, Ontario, BC Sunshine Coast): research-land-construction.json, research-land-construction-2.json, research-land.json",
+      "Zoning minimum lot sizes (NYC R2, LA R1, New Haven RS2) and England planning fees for new dwellings: research-land.json",
+      "England householder planning fee £548 from 1 April 2026: research-construction.json",
+      "Deposit caps and staged payments (California 10%/$1,000, NY escrow, CT three-day cancel, Ontario 10-day cooling-off, BC/Ontario holdback, UK/Ireland retention, Mexico anticipo): research-construction-process.json",
+      "IKEA desks, TV benches, coffee tables with dimensions in US/CA/MX/UK/IE: research-furniture-catalog.json",
+      "Residential court floodlighting line items: research-facilities.json",
+      "Water heater repair costs: research-appliance-faults.json",
+      "LA solid resources fee covering weekly trash, recycling and organics collection: research-household-supplies.json"
+    ],
+    "notFound": [
+      "Home Depot and Lowe's water heater shelf prices: both sites returned 403 to curl and the page reader.",
+      "Published hot-water outage / water heater failure rates (per year) from any official or industry source.",
+      "Consumption rates for cleaning sprays (bottles per household per month) from EPA, industry or surveys.",
+      "A primary-source paper towel consumption figure (only inconsistent secondary claims found).",
+      "Vancouver subdivision / lot split application fees and Vancouver garbage rates on vancouver.ca itself (Cloudflare 403).",
+      "New Haven bulk trash and toter details on newhavenct.gov itself (403).",
+      "Westminster household rubbish collection frequency as a single rule (it is set street by street).",
+      "Mexico City bulky-item rules on an official SEDEMA/SOBSE page and any household waste fee.",
+      "Mexico City and Ireland/Canada equivalents of HOA fee averages; Mexico property tenure shares (INEGI) and a Mexican home-survey / avaluo price.",
+      "Ireland and Canada tenure shares beyond the 2021 Canadian condo share (CSO tenure tables not read).",
+      "A Toronto home inspector's own published price list.",
+      "IKEA lighting in the US for the BARLAST floor lamp (not returned by the US search).",
+      "US retailer prices for raised beds and greenhouses (Home Depot/Lowe's blocked); only HomeGuide ranges.",
+      "Published household usage rates for outdoor kitchens.",
+      "A soccer-drill MET code in the Compendium (none exists).",
+      "Cost of sports-pitch floodlights broken out from the pitch (Sport England gives only pitch totals including lighting)."
+    ],
+    "worthChecking": [
+      "LASAN's extra-capacity table swaps 'Blue Bin' and 'Green Bin' against its own base-service sentence; check which colour the city now uses for organics before modelling bin colours.",
+      "NYC rear yard: the reader returned 20 ft (ZR 23-342) after City of Yes; many older sources say 30 ft. Confirm against the current ZR text and also the R2 total side-yard width.",
+      "California senior cancellation period: confirm whether SB 784 (2025-26) became law and extends seniors to seven business days.",
+      "Vancouver cart rates and frequency need a re-read on vancouver.ca when it is reachable.",
+      "Greyhound has a second plan table (95 kg Family Plus €27.50, +6c/kg) whose county was unclear.",
+      "The NYC official bin price ('under $50') and bins.nyc seller were not read on a DSNY page.",
+      "HOA fee figures rest on a secondary compilation of ACS 2024; reading the ACS table (condo/HOA fee) directly would make them primary."
+    ]
+  }
+}
