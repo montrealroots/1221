@@ -16,13 +16,15 @@
     {
       "airport": "John F. Kennedy International Airport",
       "iata": "JFK",
-      "cityIds": ["us-ny-newyork"],
+      "cityIds": [
+        "us-ny-newyork"
+      ],
       "carParks": [
         {
           "name": "Yellow Lot (Terminal 5 daily lot, Central Terminal Area)",
-          "perHour": 12.0,
-          "perDay": 89.0,
-          "dailyMax": 89.0,
+          "perHour": 12,
+          "perDay": 89,
+          "dailyMax": 89,
           "perWeek": null,
           "toTerminal": "Next to its terminal's AirTrain station; the airport says each terminal station is next to its short-term lot.",
           "currency": "USD",
@@ -34,9 +36,9 @@
         },
         {
           "name": "Red Lot (Terminal 8 daily lot, Central Terminal Area)",
-          "perHour": 8.0,
-          "perDay": 74.0,
-          "dailyMax": 74.0,
+          "perHour": 8,
+          "perDay": 74,
+          "dailyMax": 74,
           "perWeek": null,
           "toTerminal": "Next to its terminal's AirTrain station.",
           "currency": "USD",
@@ -48,9 +50,9 @@
         },
         {
           "name": "Blue Lot (Terminal 4 daily lot, Central Terminal Area)",
-          "perHour": 12.0,
-          "perDay": 94.0,
-          "dailyMax": 94.0,
+          "perHour": 12,
+          "perDay": 94,
+          "dailyMax": 94,
           "perWeek": null,
           "toTerminal": "Next to its terminal's AirTrain station.",
           "currency": "USD",
@@ -63,8 +65,8 @@
         {
           "name": "Long-Term Parking (Lot 9)",
           "perHour": null,
-          "perDay": 55.0,
-          "dailyMax": 55.0,
+          "perDay": 55,
+          "dailyMax": 55,
           "perWeek": null,
           "toTerminal": "AirTrain from Lefferts Boulevard Station (jfkairport.com: 'Long-term parking is near Lefferts Boulevard Station').",
           "currency": "USD",
@@ -79,13 +81,15 @@
     {
       "airport": "LaGuardia Airport",
       "iata": "LGA",
-      "cityIds": ["us-ny-newyork"],
+      "cityIds": [
+        "us-ny-newyork"
+      ],
       "carParks": [
         {
           "name": "Terminal A Parking",
-          "perHour": 10.0,
-          "perDay": 75.0,
-          "dailyMax": 75.0,
+          "perHour": 10,
+          "perDay": 75,
+          "dailyMax": 75,
           "perWeek": null,
           "toTerminal": "Terminal lot at Terminal A.",
           "currency": "USD",
@@ -97,9 +101,9 @@
         },
         {
           "name": "Terminal B Parking",
-          "perHour": 10.0,
-          "perDay": 80.0,
-          "dailyMax": 80.0,
+          "perHour": 10,
+          "perDay": 80,
+          "dailyMax": 80,
           "perWeek": null,
           "toTerminal": "Terminal garage at Terminal B.",
           "currency": "USD",
@@ -111,9 +115,9 @@
         },
         {
           "name": "Terminal C Parking",
-          "perHour": 12.0,
-          "perDay": 89.0,
-          "dailyMax": 89.0,
+          "perHour": 12,
+          "perDay": 89,
+          "dailyMax": 89,
           "perWeek": null,
           "toTerminal": "Terminal garage at Terminal C.",
           "currency": "USD",
@@ -128,13 +132,15 @@
     {
       "airport": "Los Angeles International Airport",
       "iata": "LAX",
-      "cityIds": ["us-ca-losangeles"],
+      "cityIds": [
+        "us-ca-losangeles"
+      ],
       "carParks": [
         {
           "name": "Central Terminal Area structures P1, P2A, P2B, P5, P6, P7 (General Parking)",
-          "perHour": 9.0,
-          "perDay": 60.0,
-          "dailyMax": 60.0,
+          "perHour": 9,
+          "perDay": 60,
+          "dailyMax": 60,
           "perWeek": null,
           "toTerminal": "Across the road from the terminals in the horseshoe; walk.",
           "currency": "USD",
@@ -146,9 +152,9 @@
         },
         {
           "name": "Central Terminal Area structures P3 and P4 (General Parking)",
-          "perHour": 11.0,
-          "perDay": 60.0,
-          "dailyMax": 60.0,
+          "perHour": 11,
+          "perDay": 60,
+          "dailyMax": 60,
           "perWeek": null,
           "toTerminal": "Across the road from the terminals; walk.",
           "currency": "USD",
@@ -160,9 +166,9 @@
         },
         {
           "name": "LAX Economy Parking (Intermodal Transportation Facility West, 6100 W. 94th Street)",
-          "perHour": 8.0,
-          "perDay": 35.0,
-          "dailyMax": 35.0,
+          "perHour": 8,
+          "perDay": 35,
+          "dailyMax": 35,
           "perWeek": null,
           "toTerminal": "Complimentary shuttle to and from the CTA 24 hours a day; pick-up on Level 1 of the garage and at the pink LAX Shuttle zones on the CTA Arrivals level.",
           "currency": "USD",
@@ -174,9 +180,9 @@
         },
         {
           "name": "LAX Budget Parking (former Lot E, 5455 West 111th Street)",
-          "perHour": 5.0,
-          "perDay": 20.0,
-          "dailyMax": 20.0,
+          "perHour": 5,
+          "perDay": 20,
+          "dailyMax": 20,
           "perWeek": null,
           "toTerminal": "Complimentary shuttle to and from the CTA 24 hours a day every 20 to 25 minutes; pink LAX Shuttle zones on the CTA Arrivals level.",
           "currency": "USD",
@@ -191,13 +197,15 @@
     {
       "airport": "Tweed-New Haven Airport",
       "iata": "HVN",
-      "cityIds": ["us-ct-newhaven"],
+      "cityIds": [
+        "us-ct-newhaven"
+      ],
       "carParks": [
         {
           "name": "Lot A",
-          "perHour": 5.0,
-          "perDay": 39.0,
-          "dailyMax": 39.0,
+          "perHour": 5,
+          "perDay": 39,
+          "dailyMax": 39,
           "perWeek": null,
           "toTerminal": "1 minute walk to front door.",
           "currency": "USD",
@@ -209,9 +217,9 @@
         },
         {
           "name": "Lot B",
-          "perHour": 4.0,
-          "perDay": 29.0,
-          "dailyMax": 29.0,
+          "perHour": 4,
+          "perDay": 29,
+          "dailyMax": 29,
           "perWeek": null,
           "toTerminal": "3 minute walk to front door.",
           "currency": "USD",
@@ -223,9 +231,9 @@
         },
         {
           "name": "Lot C",
-          "perHour": 3.0,
-          "perDay": 25.0,
-          "dailyMax": 25.0,
+          "perHour": 3,
+          "perDay": 25,
+          "dailyMax": 25,
           "perWeek": null,
           "toTerminal": "8 minute walk to the terminal; free ADA shuttle.",
           "currency": "USD",
@@ -254,14 +262,16 @@
     {
       "airport": "Bradley International Airport",
       "iata": "BDL",
-      "cityIds": ["us-ct-newhaven"],
+      "cityIds": [
+        "us-ct-newhaven"
+      ],
       "carParks": [
         {
           "name": "Garage",
-          "perHour": 6.0,
-          "perDay": 30.0,
-          "dailyMax": 30.0,
-          "perWeek": 135.0,
+          "perHour": 6,
+          "perDay": 30,
+          "dailyMax": 30,
+          "perWeek": 135,
           "toTerminal": "Closest parking to all airlines in Terminal A; walk.",
           "currency": "USD",
           "taxIncluded": true,
@@ -272,10 +282,10 @@
         },
         {
           "name": "Express Lot 1",
-          "perHour": 5.0,
-          "perDay": 12.0,
-          "dailyMax": 12.0,
-          "perWeek": 72.0,
+          "perHour": 5,
+          "perDay": 12,
+          "dailyMax": 12,
+          "perWeek": 72,
           "toTerminal": "Free shuttle to Terminal A on a continuous loop, 24/7; also a short walk to Terminal A and Terminal B (International Arrivals Building).",
           "currency": "USD",
           "taxIncluded": true,
@@ -286,10 +296,10 @@
         },
         {
           "name": "Park & Walk Lot 2",
-          "perHour": 5.0,
-          "perDay": 10.0,
-          "dailyMax": 10.0,
-          "perWeek": 60.0,
+          "perHour": 5,
+          "perDay": 10,
+          "dailyMax": 10,
+          "perWeek": 60,
           "toTerminal": "Short walk to Terminal A and the International Arrivals Building; no shuttle.",
           "currency": "USD",
           "taxIncluded": true,
@@ -300,10 +310,10 @@
         },
         {
           "name": "Economy Lot 3",
-          "perHour": 5.0,
-          "perDay": 8.0,
-          "dailyMax": 8.0,
-          "perWeek": 48.0,
+          "perHour": 5,
+          "perDay": 8,
+          "dailyMax": 8,
+          "perWeek": 48,
           "toTerminal": "Free shuttle to Terminal A on a continuous loop, 24/7; trunk-to-trunk luggage help.",
           "currency": "USD",
           "taxIncluded": true,
@@ -314,10 +324,10 @@
         },
         {
           "name": "Economy Lot 4",
-          "perHour": 5.0,
-          "perDay": 7.0,
-          "dailyMax": 7.0,
-          "perWeek": 42.0,
+          "perHour": 5,
+          "perDay": 7,
+          "dailyMax": 7,
+          "perWeek": 42,
           "toTerminal": "Free shuttle to Terminal A on a continuous loop, 24/7.",
           "currency": "USD",
           "taxIncluded": true,
@@ -331,7 +341,7 @@
           "perHour": null,
           "perDay": null,
           "dailyMax": null,
-          "perWeek": 35.0,
+          "perWeek": 35,
           "toTerminal": "Just north of the Cell Phone Lot on Light Lane, 'only minutes from the Terminal'; the page names no shuttle.",
           "currency": "USD",
           "taxIncluded": true,
@@ -345,13 +355,15 @@
     {
       "airport": "London Heathrow Airport",
       "iata": "LHR",
-      "cityIds": ["uk-eng-london"],
+      "cityIds": [
+        "uk-eng-london"
+      ],
       "carParks": [
         {
           "name": "Short Stay (Terminals 2, 3, 4 and 5)",
           "perHour": null,
-          "perDay": 98.0,
-          "dailyMax": 98.0,
+          "perDay": 98,
+          "dailyMax": 98,
           "perWeek": null,
           "toTerminal": "2-minute walk; adjacent to each terminal by covered walkways.",
           "currency": "GBP",
@@ -394,13 +406,15 @@
     {
       "airport": "London Gatwick Airport",
       "iata": "LGW",
-      "cityIds": ["uk-eng-london"],
+      "cityIds": [
+        "uk-eng-london"
+      ],
       "carParks": [
         {
           "name": "Short Stay (North and South Terminal)",
-          "perHour": 14.0,
-          "perDay": 70.0,
-          "dailyMax": 70.0,
+          "perHour": 14,
+          "perDay": 70,
+          "dailyMax": 70,
           "perWeek": null,
           "toTerminal": "About a four-minute covered walk.",
           "currency": "GBP",
@@ -412,7 +426,7 @@
         },
         {
           "name": "Premium Short Stay (North and South Terminal)",
-          "perHour": 19.0,
+          "perHour": 19,
           "perDay": 87.5,
           "dailyMax": 87.5,
           "perWeek": null,
@@ -427,8 +441,8 @@
         {
           "name": "Long Stay (North and South Terminal)",
           "perHour": null,
-          "perDay": 38.0,
-          "dailyMax": 38.0,
+          "perDay": 38,
+          "dailyMax": 38,
           "perWeek": null,
           "toTerminal": "Free shuttle bus every 10 to 12 minutes all year; about 10 to 12 minutes to the terminal.",
           "currency": "GBP",
@@ -443,13 +457,15 @@
     {
       "airport": "Dublin Airport",
       "iata": "DUB",
-      "cityIds": ["ie-lei-dublin"],
+      "cityIds": [
+        "ie-lei-dublin"
+      ],
       "carParks": [
         {
           "name": "Short Term (Terminal 1 Block A, Terminal 1 multi-storey, Terminal 2 multi-storey)",
-          "perHour": 4.0,
-          "perDay": 50.0,
-          "dailyMax": 50.0,
+          "perHour": 4,
+          "perDay": 50,
+          "dailyMax": 50,
           "perWeek": null,
           "toTerminal": "T1 Block A: about two minutes' walk to both terminals. T2 multi-storey: 2-4 minute sheltered walk to T2. T1 multi-storey (1,500 spaces): 5 minutes to T1, 6 to T2.",
           "currency": "EUR",
@@ -462,8 +478,8 @@
         {
           "name": "Express Red Long Term",
           "perHour": null,
-          "perDay": 25.0,
-          "dailyMax": 25.0,
+          "perDay": 25,
+          "dailyMax": 25,
           "perWeek": null,
           "toTerminal": "Free shuttle about 5 minutes to T1 and T2, every 10 minutes, 24/7.",
           "currency": "EUR",
@@ -476,8 +492,8 @@
         {
           "name": "Holiday Blue Long Term",
           "perHour": null,
-          "perDay": 20.0,
-          "dailyMax": 20.0,
+          "perDay": 20,
+          "dailyMax": 20,
           "perWeek": null,
           "toTerminal": "Free shuttle around 15 minutes to T1 and T2, every 15 minutes.",
           "currency": "EUR",
@@ -492,14 +508,16 @@
     {
       "airport": "Toronto Pearson International Airport",
       "iata": "YYZ",
-      "cityIds": ["ca-on-toronto"],
+      "cityIds": [
+        "ca-on-toronto"
+      ],
       "carParks": [
         {
           "name": "Daily Park, Terminal 1",
           "perHour": null,
-          "perDay": 42.0,
-          "dailyMax": 42.0,
-          "perWeek": 235.0,
+          "perDay": 42,
+          "dailyMax": 42,
+          "perWeek": 235,
           "toTerminal": "Terminal garage at Terminal 1.",
           "currency": "CAD",
           "taxIncluded": false,
@@ -511,9 +529,9 @@
         {
           "name": "Daily Park, Terminal 3",
           "perHour": null,
-          "perDay": 42.0,
-          "dailyMax": 42.0,
-          "perWeek": 235.0,
+          "perDay": 42,
+          "dailyMax": 42,
+          "perWeek": 235,
           "toTerminal": "Terminal garage at Terminal 3.",
           "currency": "CAD",
           "taxIncluded": false,
@@ -525,9 +543,9 @@
         {
           "name": "Value Park Garage",
           "perHour": null,
-          "perDay": 32.0,
-          "dailyMax": 32.0,
-          "perWeek": 160.0,
+          "perDay": 32,
+          "dailyMax": 32,
+          "perWeek": 160,
           "toTerminal": "Terminal Link train (free) to Terminals 1 and 3.",
           "currency": "CAD",
           "taxIncluded": null,
@@ -555,7 +573,9 @@
     {
       "airport": "Vancouver International Airport",
       "iata": "YVR",
-      "cityIds": ["ca-bc-vancouver"],
+      "cityIds": [
+        "ca-bc-vancouver"
+      ],
       "carParks": [
         {
           "name": "Parkade (Domestic and International Terminals)",
@@ -604,13 +624,15 @@
     {
       "airport": "Aeropuerto Internacional de la Ciudad de México (AICM)",
       "iata": "MEX",
-      "cityIds": ["mx-cmx-mexicocity"],
+      "cityIds": [
+        "mx-cmx-mexicocity"
+      ],
       "carParks": [
         {
           "name": "Estacionamiento nacional Terminal 1",
-          "perHour": 60.0,
-          "perDay": 391.0,
-          "dailyMax": 391.0,
+          "perHour": 60,
+          "perDay": 391,
+          "dailyMax": 391,
           "perWeek": null,
           "toTerminal": "On Av. Capitán Carlos León opposite doors 1 and 2 of the terminal building, national arrivals; walk.",
           "currency": "MXN",
@@ -622,9 +644,9 @@
         },
         {
           "name": "Estacionamiento internacional Terminal 1",
-          "perHour": 60.0,
-          "perDay": 391.0,
-          "dailyMax": 391.0,
+          "perHour": 60,
+          "perDay": 391,
+          "dailyMax": 391,
           "perWeek": null,
           "toTerminal": "On Av. Capitán Carlos León opposite the international area of the terminal, beside the intercity bus station; walk.",
           "currency": "MXN",
@@ -636,9 +658,9 @@
         },
         {
           "name": "Estacionamiento Terminal 2",
-          "perHour": 60.0,
-          "perDay": 391.0,
-          "dailyMax": 391.0,
+          "perHour": 60,
+          "perDay": 391,
+          "dailyMax": 391,
           "perWeek": null,
           "toTerminal": "Inside the Terminal 2 premises; walk.",
           "currency": "MXN",
@@ -647,6 +669,52 @@
           "date": "2026-10-02",
           "confirmed": true,
           "note": "Same tariff, IVA included; lost ticket $442.00 plus time."
+        }
+      ]
+    },
+    {
+      "airport": "Newark Liberty International",
+      "iata": "EWR",
+      "cityIds": [
+        "us-ny-newyork"
+      ],
+      "carParks": [
+        {
+          "name": "Economy Parking Lot P6",
+          "perHour": null,
+          "perDay": 35,
+          "dailyMax": null,
+          "perWeek": null,
+          "toTerminal": "AirTrain",
+          "currency": "USD",
+          "taxIncluded": null,
+          "url": "https://corpinfo.panynj.gov/content/dam/airports/pdfs/Schedule%20of%20Charges-EWR%20and%20TEB-Effective%20January%201,%202024.pdf",
+          "date": "2026-10-02",
+          "confirmed": false,
+          "note": "The Port Authority Schedule of Charges (effective 15 June 2023, revised 1 January 2024): first 24 hours or part $35.00 drive-up, each 12 hours or part after $17.50, prebook daily maximum $25.00. Read through a search engine copy of the PDF; the PDF refuses scripted reads, and the copy at scheduleofcharges-ewr.pdf is the 2021 revision ($10 each 12 hours)."
+        }
+      ]
+    },
+    {
+      "airport": "London Stansted",
+      "iata": "STN",
+      "cityIds": [
+        "uk-eng-london"
+      ],
+      "carParks": [
+        {
+          "name": "Mid Stay (Turn Up & Park)",
+          "perHour": null,
+          "perDay": 48,
+          "dailyMax": null,
+          "perWeek": null,
+          "toTerminal": null,
+          "currency": "GBP",
+          "taxIncluded": null,
+          "url": "https://www.stanstedairport.com/parking/turn-up-and-park/",
+          "date": "2026-10-02",
+          "confirmed": true,
+          "note": "Turn Up & Park: Short Stay £70 and Mid Stay £48 for 24 hours, each 24 hours after at the same rate. Long Stay is pre-book only."
         }
       ]
     }

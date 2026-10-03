@@ -36,13 +36,15 @@ function RoutineTime({ routine }: { routine: Routine }) {
   const [days, setDays] = useState<number[]>(routine.at?.days ?? [1, 2, 3, 4, 5]);
   const no = routineTimeRefusal({ hour, minute, days });
   return (
-    <div className="row gap-1" style={{ alignItems: 'center', flexWrap: 'wrap', marginTop: 4 }}>
-      {routine.at && <span className="xs dim">{`At ${pad(routine.at.hour)}:${pad(routine.at.minute)}, ${routine.at.days.map((d) => DAY_NAMES[d]).join(' ')}`}</span>}
+    <div className="col gap-1" style={{ marginTop: 6 }}>
+      <span className="xs dim">{routine.at ? `At ${pad(routine.at.hour)}:${pad(routine.at.minute)}, ${routine.at.days.map((d) => DAY_NAMES[d]).join(' ')}` : 'Not set for a time'}</span>
+      <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
       <select aria-label="Hour" value={hour} onChange={(e) => setHour(Number(e.target.value))} style={{ width: 'auto' }}>{Array.from({ length: 24 }, (_, h) => <option key={h} value={h}>{pad(h)}</option>)}</select>
       <select aria-label="Minute" value={minute} onChange={(e) => setMinute(Number(e.target.value))} style={{ width: 'auto' }}>{[0, 15, 30, 45].map((m) => <option key={m} value={m}>{pad(m)}</option>)}</select>
-      {DAY_NAMES.map((d, i) => <label key={d} className="xs"><input type="checkbox" checked={days.includes(i)} onChange={(e) => setDays(e.target.checked ? [...days, i] : days.filter((x) => x !== i))} /> {d}</label>)}
+      <div className="row gap-2" style={{ alignItems: 'center' }}>{DAY_NAMES.map((d, i) => <label key={d} className="xs row gap-1" style={{ alignItems: 'center' }}><input type="checkbox" checked={days.includes(i)} onChange={(e) => setDays(e.target.checked ? [...days, i] : days.filter((x) => x !== i))} /> {d}</label>)}</div>
       <button type="button" className="btn btn-sm btn-ghost" disabled={!set.open || Boolean(no)} title={no ?? set.reason} onClick={() => { if (run('routine.set_time', { routineId: routine.id, at: { hour, minute, days } }).ok) toast(`${routine.name}, set for ${pad(hour)}:${pad(minute)}.`, 'positive'); }}>Set The Time</button>
       {routine.at && <button type="button" className="btn btn-sm btn-ghost" disabled={!set.open} title={set.reason} onClick={() => { if (run('routine.set_time', { routineId: routine.id, at: null }).ok) toast(`${routine.name}, no longer set.`, 'positive'); }}>Clear The Time</button>}
+      </div>
     </div>
   );
 }
@@ -87,9 +89,9 @@ export function RoutinesWorkspace() {
                 <tbody>
                   {routines.map((r) => (
                     <tr key={r.id}>
-                      <td><Open subject={at('routine', r.id)}>{r.name}</Open></td>
-                      <td className="small">{r.steps.map((s) => stepLabel(person, s)).join(' · ')}<RoutineTime routine={r} /></td>
-                      <td>
+                      <td style={{ verticalAlign: 'top', whiteSpace: 'nowrap' }}><Open subject={at('routine', r.id)}>{r.name}</Open></td>
+                      <td className="small" style={{ verticalAlign: 'top' }}>{r.steps.map((s) => stepLabel(person, s)).join(' · ')}<RoutineTime routine={r} /></td>
+                      <td style={{ verticalAlign: 'top' }}>
                         <div className="row gap-1" style={{ justifyContent: 'flex-end' }}>
                           <button type="button" className="btn btn-sm" onClick={() => go(r.id, r.name)}>Run It</button>
                           <button type="button" className="btn btn-sm btn-ghost" disabled={!drop.open} title={drop.reason} onClick={() => run('routine.delete', { routineId: r.id })}>Delete</button>

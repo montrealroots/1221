@@ -41,7 +41,8 @@ import { arrive } from './jetlag';
 import { byRoad, drive, driveMinutes, roadKm, ROAD, tollsUsd } from './driving';
 import { classFor, forOutings, jurisdictionOf, kindOf, modelById, runningCost, sleepsIn, vehiclesOf } from './vehicles';
 import { onTheRoad } from './roadside';
-import { byCar, byCarRefusal, byTransit, parkingFee, type GroundWay } from './airportground';
+import { byCar, byCarRefusal, byParatransit, byTransit, parkingFee, stepFreeRefusal, type GroundWay } from './airportground';
+import { usesWheelchair } from './access';
 import { atTheCheckpoint, boardingIdRefusal, deskAccepts } from './identity';
 import { caravansOf, towFor, towedLegs } from './caravans';
 import { claimDelay } from './compensation';
@@ -486,7 +487,17 @@ export function registerJourneys(sim: Simulation): void {
     if (typeof out === 'string') throw new CommandError(out);
     if (typeof back === 'string') throw new CommandError(back);
     // To the airport and back by transit, where it was read (`systems/airportground.ts`, from 2026-10-02).
-    if (!by && p?.ground === 'transit') { out = byTransit(s, out); if (back) back = byTransit(s, back); }
+    if (!by && p?.ground === 'transit') {
+      // A wheelchair user only where the way is step-free (`stepFreeRefusal`, from later on 2026-10-02).
+      const steps = usesWheelchair(person) ? stepFreeRefusal(out) ?? (back ? stepFreeRefusal(back) : undefined) : undefined;
+      if (steps) throw new CommandError(steps);
+      out = byTransit(s, out); if (back) back = byTransit(s, back);
+    }
+    // Paratransit for a wheelchair user, where it goes to the airport (`byParatransit`, from 2026-10-02).
+    if (!by && p?.ground === 'paratransit') {
+      if (!usesWheelchair(person)) throw new CommandError('Paratransit is for a rider who uses a wheelchair.');
+      out = byParatransit(s, out); if (back) back = byParatransit(s, back);
+    }
     // Or in one's own car, left at the airport and paid for on the way home (from 2026-10-02).
     let parked: { vehicleId: string; iata: string } | undefined;
     if (!by && p?.ground === 'car') {

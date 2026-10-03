@@ -27,7 +27,7 @@ import { resaleOf, sellRefusal } from '@/engine/systems/resale';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
 import { groupLabelOf } from '@/ui/shell/destinations';
-import { buyRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
+import { buyRefusal, collectRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
 const SLOT_LABEL: Readonly<Partial<Record<Slot, string>>> = {
@@ -281,6 +281,9 @@ function Choose({ productId }: { productId: string }) {
   const options = { productId, size: size || undefined, color: color || undefined, quantity };
   const inStore = { ...options, how: 'store' as const };
   const online = { ...options, how: 'online' as const };
+  const collect = { ...options, how: 'collect' as const };
+  const collectNo = buyRefusal(person, collect);
+  const collectQuote = purchaseQuote(sim, person, collect);
   const storeNo = buyRefusal(person, inStore);
   const onlineNo = buyRefusal(person, online);
   const storeQuote = purchaseQuote(sim, person, inStore);
@@ -313,6 +316,7 @@ function Choose({ productId }: { productId: string }) {
         <button type="button" className="btn btn-sm" disabled={!buy.open || Boolean(storeNo)} title={storeNo ?? buy.reason} onClick={() => go('store')}>{`Buy In Store, ${money(storeQuote?.total ?? 0)}`}</button>
         <button type="button" className="btn btn-sm btn-ghost" disabled={!add.open || Boolean(storeNo)} title={storeNo ?? add.reason} onClick={() => { if (run('clothes.basket_add', inStore).ok) toast(`${p.name}, in the basket to buy in store.`, 'positive'); }}>Add To Basket, In Store</button>
         <button type="button" className="btn btn-sm btn-ghost" disabled={!add.open || Boolean(onlineNo)} title={onlineNo ?? add.reason} onClick={() => { if (run('clothes.basket_add', online).ok) toast(`${p.name}, in the basket to order online.`, 'positive'); }}>Add To Basket, Online</button>
+        {!collectNo && <button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open} title={collectQuote?.arrivesAt ? `Ready ${formatDate(collectQuote.arrivesAt, sim.zone)} at ${r.name} where you live` : buy.reason} onClick={() => { if (run('clothes.buy', collect).ok) toast(`${p.name}, ordered to collect at ${r.name}.`, 'positive'); }}>{`Collect In Store, ${money(collectQuote?.total ?? 0)}`}</button>}
         <button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(onlineNo)} title={onlineNo ?? buy.reason} onClick={() => go('online')}>
           {onlineQuote ? `Order Online, ${money(onlineQuote.total)}` : 'Order Online'}
         </button>
@@ -367,13 +371,13 @@ function Basket() {
     <Panel title="Basket" subtitle="Each retailer’s checks out on its own: one payment, and online one delivery for the order">
       <div className="col gap-3">
         {[...groups.entries()].map(([key, group]) => {
-          const [retailerId, how] = key.split('|') as [string, 'store' | 'online'];
+          const [retailerId, how] = key.split('|') as [string, 'store' | 'online' | 'collect'];
           const r = retailerById(retailerId);
           const q = checkoutQuote(sim, person, group);
           const no = checkoutRefusal(person, group);
           return (
             <div key={key} className="col gap-1">
-              <div className="strong small">{r?.name ?? 'A Retailer'}, {how === 'online' ? 'Online' : 'In Store'}</div>
+              <div className="strong small">{r?.name ?? 'A Retailer'}, {how === 'online' ? 'Online' : how === 'collect' ? 'To Collect In Store' : 'In Store'}</div>
               <div className="table-scroll">
                 <table>
                   <thead><tr><th scope="col">Item</th><th scope="col">Size</th><th scope="col" className="num">How Many</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
@@ -390,7 +394,7 @@ function Basket() {
                   </tbody>
                 </table>
               </div>
-              {q && <div className="xs dim">{how === 'online' ? (q.delivery > 0 ? `Delivery ${money(q.delivery)}` : 'Delivered free') + `, arriving ${formatDate(q.arrivesAt!, sim.zone)}. ` : ''}{no ?? ''}</div>}
+              {q && <div className="xs dim">{how === 'collect' ? `${q.delivery > 0 ? `Collection ${money(q.delivery)}` : 'Collected free'}, ready ${formatDate(q.arrivesAt!, sim.zone)}. ` : ''}{how === 'online' ? (q.delivery > 0 ? `Delivery ${money(q.delivery)}` : 'Delivered free') + `, arriving ${formatDate(q.arrivesAt!, sim.zone)}. ` : ''}{no ?? ''}</div>}
               <div><button type="button" className="btn btn-sm btn-primary" disabled={!out.open || Boolean(no)} title={no ?? out.reason} onClick={() => { const a = run<{ paid: number }>('clothes.checkout', { retailerId, how }); if (a.ok) toast(`Checked out at ${r?.name}, ${money(a.value!.paid)}.`, 'positive'); }}>{q ? `Check Out, ${money(q.total)}` : 'Check Out'}</button></div>
             </div>
           );
@@ -472,6 +476,7 @@ function Bought() {
   const bought = useWorld((s) => [...(s.player.clothesBought ?? [])].reverse());
   const back = useFeature('clothes.return');
   const cancel = useFeature('clothes.cancel');
+  const collectIt = useFeature('clothes.collect_order');
   const again = useFeature('clothes.basket_add');
   if (bought.length === 0) return null;
   return (
@@ -493,12 +498,13 @@ function Bought() {
                   <td className="small">{r?.name}</td>
                   <td className="num mono">{money(b.goods)}</td>
                   <td className="small">{(b.paidFrom ?? []).map((x) => sim.universe.accounts[x.accountId]?.name ?? 'An Account').join(', ') || '—'}</td>
-                  <td className="small">{formatDate(b.at, sim.zone)}{b.canceledAt !== undefined ? ', canceled' : b.returnedAt !== undefined ? ', returned' : purchaseItems(person, b.id).some((i) => i.at.kind === 'order') ? ', on its way' : ''}</td>
+                  <td className="small">{formatDate(b.at, sim.zone)}{b.canceledAt !== undefined ? ', canceled' : b.returnedAt !== undefined ? ', returned' : purchaseItems(person, b.id).some((i) => i.at.kind === 'order') ? ', on its way' : purchaseItems(person, b.id).some((i) => i.at.kind === 'service' && i.at.serviceId.startsWith('collect:')) ? ', ready to collect' : ''}</td>
                   <td>
                     {(() => { const no = buyRefusal(person, againOptions(b)); return <button type="button" className="btn btn-sm btn-ghost" disabled={!again.open || Boolean(no)} title={no ?? again.reason} onClick={() => { if (run('clothes.basket_add', { ...againOptions(b) }).ok) toast('In the basket again.', 'positive'); }}>Buy Again</button>; })()}
                     {b.returnedAt === undefined && b.canceledAt === undefined && (
                       <div className="row gap-1" style={{ justifyContent: 'flex-end' }}>
-                        {b.how === 'online' && purchaseItems(person, b.id).some((i) => i.at.kind === 'order') && <button type="button" className="btn btn-sm btn-ghost" disabled={!cancel.open || Boolean(cancelRefusal(person, b.id))} title={cancelRefusal(person, b.id) ?? cancel.reason} onClick={() => { if (run('clothes.cancel', { purchaseId: b.id }).ok) toast('Canceled, and refunded.', 'positive'); }}>Cancel The Order</button>}
+                        {b.how === 'collect' && b.orderId && purchaseItems(person, b.id).some((i) => i.at.kind === 'service') && (() => { const no = collectRefusal(person, b.orderId!); return <button type="button" className="btn btn-sm btn-ghost" disabled={!collectIt.open || Boolean(no)} title={no ?? collectIt.reason} onClick={() => { if (run('clothes.collect_order', { orderId: b.orderId }).ok) toast('Collected.', 'positive'); }}>Collect It</button>; })()}
+                        {b.how !== 'store' && purchaseItems(person, b.id).some((i) => i.at.kind === 'order') && <button type="button" className="btn btn-sm btn-ghost" disabled={!cancel.open || Boolean(cancelRefusal(person, b.id))} title={cancelRefusal(person, b.id) ?? cancel.reason} onClick={() => { if (run('clothes.cancel', { purchaseId: b.id }).ok) toast('Canceled, and refunded.', 'positive'); }}>Cancel The Order</button>}
                         <button type="button" className="btn btn-sm btn-ghost" disabled={!back.open || Boolean(storeNo)} title={storeNo ?? back.reason} onClick={() => { if (run('clothes.return', { purchaseId: b.id, how: 'store' }).ok) toast('Returned, and refunded.', 'positive'); }}>Return In Store</button>
                         <button type="button" className="btn btn-sm btn-ghost" disabled={!back.open || Boolean(mailNo)} title={mailNo ?? back.reason} onClick={() => { if (run('clothes.return', { purchaseId: b.id, how: 'mail' }).ok) toast('Sent back, and refunded.', 'positive'); }}>{fee !== undefined && fee > 0 ? `Return By Mail, ${money(fee)}` : 'Return By Mail'}</button>
                       </div>

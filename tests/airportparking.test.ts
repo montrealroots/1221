@@ -20,6 +20,8 @@ describe('a car park’s tariff', () => {
     // JFK's Lot 9: $55 the first day, $27.50 each 12 hours after.
     expect(parkingUnits(lot('JFK'), 72)).toBe(55 + 4 * 27.5);
     expect(parkingUnits(lot('JFK'), 25)).toBe(55 + 27.5);
+    // Newark's Economy Lot P6: $35, then $17.50 each 12 hours.
+    expect(parkingUnits(lot('EWR'), 72)).toBe(35 + 4 * 17.5);
     // Heathrow's Long Stay: £46.80, then £37.40 a day.
     expect(parkingUnits(lot('LHR'), 72)).toBeCloseTo(46.8 + 2 * 37.4, 6);
     // Bradley's Lot 4: $42 a week, $7 a day past it.

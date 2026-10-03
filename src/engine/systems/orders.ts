@@ -98,7 +98,8 @@ export function deliver(sim: Simulation, person: Person, orderId: string): boole
     return true;
   }
   for (const item of itemsOf(person)) if (item.at.kind === 'order' && item.at.orderId === orderId) item.at = to;
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'A Delivery', body: `Your order from ${order.from} has arrived.`, importance: 30, route: BELONGINGS_ROUTE });
+  const collect = to.kind === 'service' && to.serviceId.startsWith('collect:');
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: collect ? 'Ready To Collect' : 'A Delivery', body: collect ? `Your order from ${order.from} is ready to collect in store.` : `Your order from ${order.from} has arrived.`, importance: 30, route: collect ? '/workspace/clothes' : BELONGINGS_ROUTE });
   return true;
 }
 

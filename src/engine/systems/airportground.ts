@@ -15,6 +15,13 @@
  * Stansted Express's 48), and otherwise a taxi's, SLATE's estimate. A town
  * with no transit read goes by taxi, as before.
  *
+ * **Step-free** (from later on 2026-10-02; `research-step-free.json`): each
+ * route's operator says whether a wheelchair user can make it without a step,
+ * and every one SLATE offers can, from an accessible station at the town's
+ * end, but Mexico City's: the Metro's own list of its elevators names none at
+ * Terminal Aérea (read from its 2025 pages, the live site refusing). A
+ * wheelchair user goes there by taxi.
+ *
  * **By car** (from 2026-10-02), on a round trip: driven to the airport in
  * one's own car, left in its cheapest long-stay car park whose tariff was
  * read (`content/airportparking.ts`), and paid for on the way home, as at
@@ -31,7 +38,37 @@ import { mayDrive } from './documents';
 import { stolenNow } from './theft';
 import type { JourneyLeg } from './journey';
 
-export type GroundWay = 'taxi' | 'transit' | 'car';
+export type GroundWay = 'taxi' | 'transit' | 'car' | 'paratransit';
+
+/**
+ * Paratransit to the airport for a wheelchair user (from 2026-10-02;
+ * `research-step-free.json`), where the service's own page says it goes
+ * there, at its own fare a trip: Toronto's Wheel-Trans to Pearson at the TTC
+ * fare on PRESTO, C$3.30; Vancouver's HandyDART to YVR at C$2.85 on Compass;
+ * New York's Access-A-Ride at the $3 full fare, across the five boroughs,
+ * which take in JFK and LaGuardia though no page names them. Los Angeles's
+ * Access Services charges by the trip's miles, which SLATE doesn't hold, so
+ * it isn't offered. As long as a taxi takes, SLATE's estimate.
+ */
+export const PARATRANSIT: Readonly<Record<string, { via: string; fare: number; currency: string; airports: readonly string[] }>> = {
+  'ca-on-toronto': { via: 'Wheel-Trans', fare: 3.3, currency: 'CAD', airports: ['YYZ'] },
+  'ca-bc-vancouver': { via: 'HandyDART', fare: 2.85, currency: 'CAD', airports: ['YVR'] },
+  'us-ny-newyork': { via: 'Access-A-Ride', fare: 3, currency: 'USD', airports: ['JFK', 'LGA'] },
+};
+
+const paratransitFor = (cityId: string, iata: string) => { const p = PARATRANSIT[cityId]; return p && p.airports.includes(iata) ? p : undefined; };
+
+/** Whether a flight's ground legs at either end could go by paratransit. */
+export const paratransitOffered = (legs: readonly JourneyLeg[]): boolean => legs.some((l, i) => l.mode === 'ground' && (i === 0 ? paratransitFor(l.from, l.to) : paratransitFor(l.to, l.from)));
+
+/** A flight's ground legs by paratransit where it goes: its fare, as long as a taxi takes. */
+export function byParatransit(sim: Simulation, legs: JourneyLeg[]): JourneyLeg[] {
+  return legs.map((l, i) => {
+    const p = i === 0 ? paratransitFor(l.from, l.to) : paratransitFor(l.to, l.from);
+    if (!p) return l;
+    return { ...l, fare: inSaveMoney(sim, Math.round(p.fare * 100), p.currency), basis: `${p.via}, ${p.fare} ${p.currency} a trip, as long as a taxi takes, SLATE’s estimate` };
+  });
+}
 
 export const parkingAt = (iata: string): AirportParking | undefined => AIRPORT_PARKING.find((p) => p.iata === iata);
 
@@ -81,6 +118,20 @@ export const TRANSIT: Readonly<Record<string, { via: string; fare: number; curre
 };
 
 const transitFor = (cityId: string, iata: string) => TRANSIT[`${cityId}|${iata}`];
+
+/** The routes a wheelchair user can't make step-free, by the operator's own pages. */
+export const NOT_STEP_FREE: ReadonlySet<string> = new Set(['mx-cmx-mexicocity|MEX']);
+
+/** Why a wheelchair user can't take a flight's transit at either end, or nothing. */
+export function stepFreeRefusal(legs: readonly JourneyLeg[]): string | undefined {
+  for (let i = 0; i < legs.length; i += 1) {
+    const l = legs[i]!;
+    // Only a ground leg runs between a town and an airport, so no other is in the set.
+    const [city, iata] = i === 0 ? [l.from, l.to] : [l.to, l.from];
+    if (NOT_STEP_FREE.has(`${city}|${iata}`)) return `${transitFor(city, iata)?.via ?? 'That way'} isn’t step-free; go by taxi.`;
+  }
+  return undefined;
+}
 
 /** Whether a flight between two towns could go to and from its airports by transit at either end. */
 export function transitOffered(legs: readonly JourneyLeg[]): boolean {

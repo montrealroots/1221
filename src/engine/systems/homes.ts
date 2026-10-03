@@ -92,7 +92,7 @@ import { rentAt } from '../content/rents';
 import { propertyTaxRate, PROPERTY_TAX_RULES, resolveRule } from '../content/tax';
 import {
   BEDROOM_RENT, COUNCIL_TAX, COUNCIL_TAX_NATIONS, drawFixtures, type CouncilTaxNation, isFlat, type Fixtures, FEATURE_LABEL, HOME_TAX, LIFESPAN, METAL_ROOF_LIFESPAN, OVERBUILT_AT, OVERBUILT_RECOUP, PROJECTS,
-  SQM_PER_SQFT, addressOf, homeValueAt, streetsOf, usesFeet, type Feature, type HomeType, type Part, type Project,
+  SQM_PER_SQFT, addressOf, homeValueAt, streetsOf, typeLabel, usesFeet, type Feature, type HomeType, type Part, type Project,
 } from '../content/homes';
 import { worksPermit, type WorksPermit } from './permits';
 import { atTown as townPrice, drawFromBank, inTheBank, leaveOwnedHome, move, moveRefusal, owe, payFromBank, refundRentAhead, rehome, rentOf, scheduleRentFor, spend, type Housing } from './household';
@@ -982,10 +982,12 @@ export function projectAdds(sim: Simulation, owned: OwnedHome, project: Project)
 
 /** The projects a home can take now, and the ones it can't, with why. */
 export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): { project: Project; cost: Money; bids: Money[]; adds: Money; permit?: WorksPermit; refusal?: string }[] {
+  // Every project, those this kind of home doesn't take shown refused with the kinds that do (from 2026-10-02; until then they were left off unseen).
+  const country = CITIES.get(owned.cityId)?.countryId ?? 'us';
+  const kind = (t: HomeType) => typeLabel(t, country).toLowerCase();
   return PROJECTS
-    .filter((p) => p.on.includes(owned.facts.type))
     .map((project) => {
-      const refusal = projectRefusal(sim, person, owned, project);
+      const refusal = project.on.includes(owned.facts.type) ? projectRefusal(sim, person, owned, project) : `It’s done to a ${project.on.map(kind).join(' or a ')}, not a ${kind(owned.facts.type)}.`;
       const bids = projectBids(sim, owned, project);
       const cost = bids[0]!;
       const permit = worksPermit(sim, owned.cityId, project, cost);
