@@ -85,7 +85,7 @@ Correctness first, then the connected day the plan asks to be shown working
 | 27a | Receive, store | Complete | delivery, `items.move`; tests/items | — |
 | 27b | Wear, layer, remove | Partial | one garment per slot; `dressRefusal` validates `dress` and `wear_outfit`; jewelry, watches and accessories chosen and worn with the outfit; sleepwear worn at night at home (2026-10-02) | Layers, undress |
 | 27c | Wash, dry, clean | Complete | `doLaundry`, dry cleaning; tests | Wash a chosen garment; air-dry or tumble |
-| 27d | Alter, repair | Partial | take in only | Hem, let out; damage and repair |
+| 27d | Alter, repair | Partial, 2026-10-02 | taken in, a size at most for a bottom, suit or coat; let out once, a bottom three quarters of a size and a suit or coat two fifths, by Proper Cloth's own figures (1.5 and 0.8 inches around of a 2-inch step), at the tailor's waist price (`ALTER_STEPS`, `alteredKg`) | Hem (no garment keeps a length); a shirt's or dress's limits (unpublished); damage and repair |
 | 27e | Pack, unpack | Done, 2026-10-02 | luggage.ts; by hand on Belongings, Pack For Me, Unpack (§46) | — |
 | 27f | Gift, return, resell, replace | Done, 2026-10-02 | return, resell, replace; give (`items.give`) | — |
 | 27g | Outfits from owned, reachable items; worn outfit persists | Done, 2026-10-02 | `outfitRefusal`, `reachable`; `Person.wornNow`, set as the day dresses them or they change; read by the sale refusal and Clothes | — |

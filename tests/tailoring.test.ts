@@ -11,7 +11,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { garmentsOf, wearable, type Garment } from '@/engine/systems/wardrobe';
 import { replaceWornOut } from '@/engine/systems/clothing';
-import { alterCost, alterRefusal, fitOf, tailorById, tailorsIn } from '@/engine/systems/tailoring';
+import { SIZE_STEP, alterCost, alterRefusal, alteredKg, fitOf, tailorById, tailorsIn } from '@/engine/systems/tailoring';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const g = (slot: Garment['slot'], fitKg?: number): Garment => ({ kind: 'tshirt', slot, care: 'wash', wears: 0, washes: 0, ...(fitKg !== undefined ? { fitKg } : {}) });
@@ -54,14 +54,15 @@ describe('fit', () => {
 });
 
 describe('a tailor', () => {
-  it('takes in what’s too big, not what’s grown out of, in the town you’re in', () => {
+  it('takes in what’s too big, and lets out no top, in the town you’re in', () => {
     const sim = life('us-ny-newyork', 'tl-refuse');
     const kg = sim.player.body!.weightKg;
     const t = top(sim);
     const shop = tailorsIn('us-ny-newyork')[0]!;
     expect(alterRefusal(sim.player, t.id, shop.id)).toBe('It fits.');
     weigh(sim, kg * 1.2);
-    expect(alterRefusal(sim.player, t.id, shop.id)).toBe('It can’t be let out that far.');
+    // Proper Cloth gives no shirt's figure for letting out.
+    expect(alterRefusal(sim.player, t.id, shop.id)).toBe('A tailor can’t let it out.');
     weigh(sim, kg * 0.85);
     expect(alterRefusal(sim.player, t.id, shop.id)).toBeUndefined();
     expect(alterRefusal(sim.player, t.id, tailorsIn('uk-eng-london')[0]!.id)).toBe('The tailor is in another town.');
@@ -95,5 +96,42 @@ describe('a tailor', () => {
     expect(sim.execute({ kind: 'clothes.collect', payload: {} }).ok).toBe(true);
     expect(t.at.kind).toBe('home');
     expect(wearable(sim, sim.player, t) || t.garment.dirty || t.garment.dryUntil !== undefined).toBe(true);
+  });
+});
+
+describe('letting out', () => {
+  const bottomOf = (sim: Simulation) => garmentsOf(sim.player).find((x) => x.garment.slot === 'bottom')!;
+
+  it('lets a bottom out three quarters of a size, once, by Proper Cloth’s 1.5 inches of a 2-inch step', () => {
+    const sim = life('us-ny-newyork', 'lo-bottom');
+    const b = bottomOf(sim);
+    const made = b.garment.fitKg!;
+    const shop = tailorsIn('us-ny-newyork')[0]!;
+    // Grown a size and a little: past what its seams give.
+    weigh(sim, made * (1 + SIZE_STEP * 0.75 + 0.075 + 0.01));
+    expect(alterRefusal(sim.player, b.id, shop.id)).toBe('It can’t be let out that far.');
+    // Within it: let out to as far as it goes, and it fits.
+    weigh(sim, made * 1.15);
+    expect(alterRefusal(sim.player, b.id, shop.id)).toBeUndefined();
+    const r = sim.execute<{ paid: number }>({ kind: 'clothes.alter', payload: { itemId: b.id, tailorId: shop.id } });
+    expect(r.ok, r.error).toBe(true);
+    expect(r.value!.paid).toBe(alterCost(sim, shop));
+    expect(b.garment.fitKg).toBeCloseTo(Math.min(made * 1.15, made * (1 + 0.75 * SIZE_STEP)), 6);
+    expect(fitOf(sim.player, b.garment)).toBe('fits');
+    expect(b.garment.letOut).toBe(true);
+    expect(Object.values(sim.universe.transactions).some((t) => t.memo === `${shop.name}, let out`)).toBe(true);
+    // Its spare cloth used, it doesn't let out again.
+    b.at = { kind: 'home', home: 'x', spot: 'drawers' };
+    weigh(sim, made * 1.3);
+    expect(alterRefusal(sim.player, b.id, shop.id)).toBe('It’s been let out as far as its seams go.');
+  });
+
+  it('takes a bottom in a size at most, as far as it goes toward the body', () => {
+    const sim = life('us-ny-newyork', 'lo-in');
+    const b = bottomOf(sim);
+    const made = b.garment.fitKg!;
+    weigh(sim, made * 0.7);
+    expect(alterRefusal(sim.player, b.id, tailorsIn('us-ny-newyork')[0]!.id)).toBe('It can’t be taken in that far.');
+    expect(alteredKg(sim.player, b.garment)).toBeCloseTo(made * (1 - SIZE_STEP), 6);
   });
 });
