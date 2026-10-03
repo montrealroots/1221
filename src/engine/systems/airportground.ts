@@ -37,6 +37,7 @@ import { vehiclesOf } from './vehicles';
 import { mayDrive } from './documents';
 import { stolenNow } from './theft';
 import type { JourneyLeg } from './journey';
+import { airportsFor } from './airports';
 
 export type GroundWay = 'taxi' | 'transit' | 'car' | 'paratransit';
 
@@ -47,10 +48,13 @@ export type GroundWay = 'taxi' | 'transit' | 'car' | 'paratransit';
  * fare on PRESTO, C$3.30; Vancouver's HandyDART to YVR at C$2.85 on Compass;
  * New York's Access-A-Ride at the $3 full fare, across the five boroughs,
  * which take in JFK and LaGuardia though no page names them. Los Angeles's
- * Access Services charges by the trip's miles, which SLATE doesn't hold, so
- * it isn't offered. As long as a taxi takes, SLATE's estimate.
+ * Access Services charges by the trip's miles, which SLATE took as unheld until
+ * 2026-10-03; the town's distance to its airport is the trip's, and its
+ * fare $2.75 under 20 miles and $3.50 from 20 (its own FAQ), across Los
+ * Angeles County, which takes in LAX. As long as a taxi takes, SLATE's estimate.
  */
-export const PARATRANSIT: Readonly<Record<string, { via: string; fare: number; currency: string; airports: readonly string[] }>> = {
+export const PARATRANSIT: Readonly<Record<string, { via: string; fare: number; currency: string; airports: readonly string[]; /** A fare by the trip's miles: below these miles, and from them. */ byMiles?: { miles: number; from: number } }>> = {
+  'us-ca-losangeles': { via: 'Access Services', fare: 2.75, currency: 'USD', airports: ['LAX'], byMiles: { miles: 20, from: 3.5 } },
   'ca-on-toronto': { via: 'Wheel-Trans', fare: 3.3, currency: 'CAD', airports: ['YYZ'] },
   'ca-bc-vancouver': { via: 'HandyDART', fare: 2.85, currency: 'CAD', airports: ['YVR'] },
   'us-ny-newyork': { via: 'Access-A-Ride', fare: 3, currency: 'USD', airports: ['JFK', 'LGA'] },
@@ -61,12 +65,22 @@ const paratransitFor = (cityId: string, iata: string) => { const p = PARATRANSIT
 /** Whether a flight's ground legs at either end could go by paratransit. */
 export const paratransitOffered = (legs: readonly JourneyLeg[]): boolean => legs.some((l, i) => l.mode === 'ground' && (i === 0 ? paratransitFor(l.from, l.to) : paratransitFor(l.to, l.from)));
 
+/** A paratransit trip's fare between a town and an airport: its flat fare, or its fare by the miles between them. */
+export function paratransitFare(p: (typeof PARATRANSIT)[string], cityId: string, iata: string): number {
+  if (!p.byMiles) return p.fare;
+  const km = airportsFor(cityId).find((a) => a.airport.iata === iata)?.km ?? 0;
+  return km / 1.609344 < p.byMiles.miles ? p.fare : p.byMiles.from;
+}
+
 /** A flight's ground legs by paratransit where it goes: its fare, as long as a taxi takes. */
 export function byParatransit(sim: Simulation, legs: JourneyLeg[]): JourneyLeg[] {
   return legs.map((l, i) => {
     const p = i === 0 ? paratransitFor(l.from, l.to) : paratransitFor(l.to, l.from);
     if (!p) return l;
-    return { ...l, fare: inSaveMoney(sim, Math.round(p.fare * 100), p.currency), basis: `${p.via}, ${p.fare} ${p.currency} a trip, as long as a taxi takes, SLATE’s estimate` };
+    const cityId = i === 0 ? l.from : l.to;
+    const iata = i === 0 ? l.to : l.from;
+    const fare = paratransitFare(p, cityId, iata);
+    return { ...l, fare: inSaveMoney(sim, Math.round(fare * 100), p.currency), basis: `${p.via}, ${fare} ${p.currency} a trip, as long as a taxi takes, SLATE’s estimate` };
   });
 }
 
