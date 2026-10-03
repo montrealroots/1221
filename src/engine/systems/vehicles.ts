@@ -101,8 +101,9 @@ export interface OwnedVehicle {
   stolen?: { at: Instant; recoverAt?: Instant };
   /** An unscheduled repair it needs, and a garage that has it (`systems/repairs.ts`, from 2026-10-01). */
   fault?: import('./repairs').Fault;
-  /** A stereo fitted (`systems/caraudio.ts`, from 2026-10-02). */
+  /** A stereo fitted (`systems/caraudio.ts`, from 2026-10-02), and speakers and an amplifier (from 2026-10-03). */
   stereo?: boolean;
+  audio?: import('./caraudio').AudioPart[];
   /** The odometer when bought used, km, from its listing; and a private sale's transfer due (`systems/usedcars.ts`, from 2026-10-03). */
   odometerAtPurchase?: number;
   transferBy?: Instant;

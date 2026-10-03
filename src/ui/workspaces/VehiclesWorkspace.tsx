@@ -44,7 +44,7 @@ import { optionsFor, optionsQuote, orderWeeksOf, specOf } from '@/engine/systems
 import { FITS, MATERIAL_LABEL, PART_LABEL, UPHOLSTERERS, interiorQuote, type Material, type Part } from '@/engine/systems/interiors';
 import { FILL, capacityOf, fillQuote, fillRefusal, levelOf, rangeKm } from '@/engine/systems/fueltank';
 import { homeShareOf } from '@/engine/systems/charging';
-import { stereoQuote } from '@/engine/systems/caraudio';
+import { audioQuote, stereoQuote } from '@/engine/systems/caraudio';
 import { PRE_PURCHASE, drivenOn, inspectionPrice, reportOn, testDriveMinutes, usedListings } from '@/engine/systems/usedcars';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { buyoutPrice, earlyEnd, halfRule, leaseCurrency, leaseKindOf, leaseQuote, leaseRefusal, leaseTerms, milesOver } from '@/engine/systems/leasing';
@@ -557,8 +557,12 @@ function FuelControl({ v }: { v: OwnedVehicle }) {
 function StereoControl({ v }: { v: OwnedVehicle }) {
   const { sim, run, toast } = useGame();
   const q = stereoQuote(sim, v);
-  if (typeof q === 'string' || v.lease) return null;
-  return <Gated feature="vehicle.stereo" className="btn btn-sm btn-ghost" title={q.basis} onClick={() => { const a = run<{ paid: number }>('vehicle.stereo', { vehicleId: v.id }); if (a.ok) toast(`A stereo fitted, for ${formatMoney(a.value!.paid, saveCurrency(sim.universe))}.`, 'positive'); }}>{`Fit A Stereo, ${formatMoney(q.price, saveCurrency(sim.universe), { cents: false })}`}</Gated>;
+  if (v.lease) return null;
+  // Speakers and an amplifier where a retailer prices fitting them (`audioQuote`).
+  const parts = (['speakers', 'amp'] as const).map((part) => ({ part, q: audioQuote(sim, v, part) })).filter((x) => typeof x.q !== 'string') as { part: 'speakers' | 'amp'; q: { price: number; basis: string } }[];
+  const extras = parts.map(({ part, q: pq }) => <Gated key={part} feature="vehicle.audio" className="btn btn-sm btn-ghost" title={pq.basis} onClick={() => { const r = run<{ paid: number }>('vehicle.audio', { vehicleId: v.id, part }); if (r.ok) toast(`${part === 'amp' ? 'An amplifier' : 'Speakers'} fitted, for ${formatMoney(r.value!.paid, saveCurrency(sim.universe))}.`, 'positive'); }}>{`${part === 'amp' ? 'Fit An Amplifier' : 'Fit Speakers'}, ${formatMoney(pq.price, saveCurrency(sim.universe), { cents: false })}`}</Gated>);
+  if (typeof q === 'string') return extras.length ? <>{extras}</> : null;
+  return <>{extras}<Gated feature="vehicle.stereo" className="btn btn-sm btn-ghost" title={q.basis} onClick={() => { const a = run<{ paid: number }>('vehicle.stereo', { vehicleId: v.id }); if (a.ok) toast(`A stereo fitted, for ${formatMoney(a.value!.paid, saveCurrency(sim.universe))}.`, 'positive'); }}>{`Fit A Stereo, ${formatMoney(q.price, saveCurrency(sim.universe), { cents: false })}`}</Gated></>;
 }
 
 /** A used car looked over before it's bought (`vehicle.inspect_used`), and what was found. */
