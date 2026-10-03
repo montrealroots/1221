@@ -222,7 +222,7 @@ export class Simulation {
     if (!advance) return undefined;
     if (!advance.stopsForPlayer) return advance.target;
     const after = this.universe.now > advance.from ? this.universe.now - 1 : advance.from;
-    const stop = this.timeline.next(after, (item) => item.requiresPlayer === true);
+    const stop = this.timeline.next(after, (item) => item.requiresPlayer === true || item.stopsClock === true);
     return stop !== undefined && stop.at <= advance.target ? stop.at : advance.target;
   }
 
@@ -308,6 +308,7 @@ export class Simulation {
     refType?: string;
     refId?: Id;
     requiresPlayer?: boolean;
+    stopsClock?: boolean;
     locationId?: string;
     durationMinutes?: number;
   }): ScheduledItem {
@@ -330,6 +331,7 @@ export class Simulation {
       refType: spec.refType,
       refId: spec.refId,
       requiresPlayer: spec.requiresPlayer ?? false,
+      ...(spec.stopsClock ? { stopsClock: true } : {}),
       locationId: spec.locationId,
       durationMinutes: spec.durationMinutes,
       createdAt: this.now,
@@ -401,7 +403,7 @@ export class Simulation {
         const due = this.timeline.nextDue(target);
         if (!due) break;
 
-        if (opts.stopOnPlayerRequired && due.requiresPlayer && due.at > from) {
+        if (opts.stopOnPlayerRequired && (due.requiresPlayer || due.stopsClock) && due.at > from) {
           result.interruptedBy = due;
           this.universe.now = Math.max(this.universe.now, due.at);
           pass();

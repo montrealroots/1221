@@ -11,6 +11,16 @@
  * eating what's ready or cooking a recipe, and putting on an outfit. A
  * drink at home names a bottle, which next time is gone, so it isn't a
  * step. Up to twelve.
+ *
+ * **At a time** (from 2026-10-02): a routine can be set for an hour on the
+ * days of the week chosen, in the local time where you are. Its moment stops
+ * the clock as anything that wants you does (`stopsClock`), without being a
+ * commitment that keeps you from anything else, and the
+ * screen runs it then, as Run It would: each step a command of its own,
+ * with its own checks, undone if it fails. A routine isn't run inside the
+ * world's own turning of the clock, where a step that failed halfway
+ * couldn't be undone; a life played without a screen gets the moment and
+ * runs nothing.
  */
 
 import type { Simulation, CommandResult } from '../core/simulation';
@@ -18,9 +28,39 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { LOOKING_AFTER, type LookAfter } from './life';
 import { recipeById } from './kitchen';
+import { instantFromZoned, zonedParts, type Instant } from '../core/time';
 
 export interface RoutineStep { kind: string; payload: Record<string, unknown> }
-export interface Routine { id: string; name: string; steps: RoutineStep[] }
+export interface Routine { id: string; name: string; steps: RoutineStep[]; /** Set for an hour on days of the week, 0 Sunday (from 2026-10-02). */ at?: RoutineTime }
+export interface RoutineTime { hour: number; minute: number; days: number[] }
+
+export const ROUTINE_DUE_KIND = 'routine.due';
+
+/** The next moment a routine set for a time comes, after an instant, in the local time where you are. */
+export function nextRoutineAt(sim: Simulation, after: Instant, t: RoutineTime): Instant | undefined {
+  const zone = sim.zone;
+  const today = zonedParts(after, zone);
+  for (let d = 0; d <= 7; d += 1) {
+    const day = new Date(Date.UTC(today.year, today.month - 1, today.day + d));
+    if (!t.days.includes(day.getUTCDay())) continue;
+    const at = instantFromZoned({ year: day.getUTCFullYear(), month: day.getUTCMonth() + 1, day: day.getUTCDate(), hour: t.hour, minute: t.minute }, zone);
+    if (at > after) return at;
+  }
+  return undefined;
+}
+
+function scheduleNext(sim: Simulation, routine: Routine, after: Instant): void {
+  for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === ROUTINE_DUE_KIND && one.payload.routineId === routine.id) sim.timeline.cancel(one.id, sim.now);
+  const at = routine.at ? nextRoutineAt(sim, after, routine.at) : undefined;
+  if (at !== undefined) sim.schedule({ at, kind: ROUTINE_DUE_KIND, label: routine.name, category: 'personal', priority: 40, stopsClock: true, payload: { routineId: routine.id } });
+}
+
+/** Why a time can't be set, or nothing. */
+export function routineTimeRefusal(t: Partial<RoutineTime>): string | undefined {
+  if (!Number.isInteger(t.hour) || t.hour! < 0 || t.hour! > 23 || !Number.isInteger(t.minute) || t.minute! < 0 || t.minute! > 59) return 'Choose an hour and a minute.';
+  if (!Array.isArray(t.days) || t.days.length === 0 || t.days.some((d) => !Number.isInteger(d) || d < 0 || d > 6)) return 'Choose the days.';
+  return undefined;
+}
 
 /** The commands a step can be. */
 export const ROUTINE_COMMANDS = new Set(['life.look_after', 'food.eat_ready', 'food.cook', 'clothes.wear_outfit']);
@@ -77,7 +117,24 @@ export function registerRoutines(sim: Simulation): void {
     routinesOf(s.player).push(routine);
     return { routineId: routine.id };
   });
+  sim.onCommand<{ routineId: string; at?: RoutineTime | null }, { next?: Instant }>('routine.set_time', (p, { sim: s }) => {
+    const routine = routinesOf(s.player).find((r) => r.id === p?.routineId);
+    if (!routine) throw new CommandError('No such routine.');
+    if (!p.at) { delete routine.at; scheduleNext(s, routine, s.now); return {}; }
+    const no = routineTimeRefusal(p.at);
+    if (no) throw new CommandError(no);
+    routine.at = { hour: p.at.hour, minute: p.at.minute, days: [...new Set(p.at.days)].sort() };
+    scheduleNext(s, routine, s.now);
+    return { next: nextRoutineAt(s, s.now, routine.at) };
+  });
+  // Its moment past, the next one set; the screen runs it as the clock stops there.
+  sim.onSchedule(ROUTINE_DUE_KIND, (item, s) => {
+    const routine = routinesOf(s.player).find((r) => r.id === item.payload.routineId);
+    if (routine?.at) scheduleNext(s, routine, s.now);
+  });
   sim.onCommand<{ routineId: string }, { routines: number }>('routine.delete', (p, { sim: s }) => {
+    const gone = routinesOf(s.player).find((r) => r.id === p?.routineId);
+    if (gone) { delete gone.at; scheduleNext(s, gone, s.now); }
     s.player.routines = routinesOf(s.player).filter((r) => r.id !== p?.routineId);
     return { routines: s.player.routines.length };
   });
