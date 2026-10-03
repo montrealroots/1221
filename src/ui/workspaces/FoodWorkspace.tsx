@@ -6,16 +6,18 @@
  * delivered, with its tax, tip and fees said before it's paid.
  */
 import { useState } from 'react';
+import { GEAR_LABEL } from '@/engine/content/kitchengear';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
 import { CatalogControls, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
-import { useFeature } from '@/ui/guide/Guide';
+import { Gated, useFeature } from '@/ui/guide/Guide';
+import { titleCaseLabel } from '@/engine/core/text';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import { arrange } from '@/engine/systems/catalog';
 import { diningQuote, diningRefusal, menuCatalog, restaurantById, type DineHow } from '@/engine/systems/dining';
 import { bacAt, drinkRefusal, pintPrice } from '@/engine/systems/alcohol';
-import { cookRefusal, cookingClash, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice } from '@/engine/systems/kitchen';
+import { gearOffers, gearRefusal, kitchenHas, cookRefusal, cookingClash, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice } from '@/engine/systems/kitchen';
 import { MEAL_KEYS } from '@/engine/systems/pantry';
 import { RECIPES } from '@/engine/content/groceries';
 import { SPOT_LABEL } from '@/engine/systems/items';
@@ -175,8 +177,16 @@ function Kitchen() {
   const stock = useWorld((s) => [...kitchenStock(s, s.player)].sort((a, b) => (a.food.expiresAt ?? Infinity) - (b.food.expiresAt ?? Infinity)));
   const eat = useFeature('food.eat_ready');
   const drink = useFeature('food.drink_home');
+  // What the kitchen has, and the small appliances a recipe may ask for (`kitchenHas`, `gearOffers`).
+  const has = useWorld((s) => [...kitchenHas(s.player)]);
+  const gear = useWorld((s) => gearOffers(s, s.player).map((g) => ({ ...g, no: gearRefusal(s, s.player, g.gear) })));
+  const cur = saveCurrency(sim.universe);
   return (
     <Panel title="Your Kitchen" subtitle="The day’s meals come out of what’s ready first; groceries are bought for the rest">
+      <div className="row gap-2 small" style={{ alignItems: 'center', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
+        <span className="muted">{`It Has: ${has.map((x) => titleCaseLabel(x.replace('-', ' '))).join(', ')}`}</span>
+        {gear.filter((g) => !g.no || !/has one/.test(g.no)).map((g) => <Gated key={g.gear} feature="food.buy_gear" className="btn btn-sm btn-ghost" disabled={Boolean(g.no)} title={g.no ?? `${g.name} at ${g.retailer}`} onClick={() => { if (run('food.buy_gear', { gear: g.gear }).ok) toast(`${g.name}, in the kitchen.`, 'positive'); }}>{`Buy A ${GEAR_LABEL[g.gear]} (${formatMoney(g.cost, cur)})`}</Gated>)}
+      </div>
       {stock.length === 0 ? <p className="small muted" style={{ margin: 0 }}>The fridge, the freezer and the pantry are bare.</p> : (
         <div className="table-scroll">
           <table>

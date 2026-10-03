@@ -47,6 +47,8 @@ import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
 import { spend } from './household';
 import { addItem, homeKeyOf, itemById } from './items';
+import { COOKING_MET, GEAR_LABEL, KITCHEN_GEAR, SUBSTITUTES, type Gear, type GearOffer } from '../content/kitchengear';
+import { exerts } from './body';
 import { WASH_UP, atHome, livingOf, placeOf } from './dwelling';
 
 /** The sink at home full of the dishes it holds, so nothing more is cooked there until they're washed up (from 2026-10-03). */
@@ -167,13 +169,17 @@ export function cookRefusal(sim: Simulation, person: Person, recipeId: string, s
   const place = placeOf(sim, person);
   if (!place?.cooks) return 'There’s no kitchen where you are.';
   if (sinkFull(person)) return SINK_FULL;
-  const missing = r.appliances.filter((a) => !KITCHEN.has.has(a));
-  if (missing.length) return `It needs a ${missing.join(' and a ').replace('-', ' ')}, which SLATE’s homes don’t keep.`;
+  // A recipe that needs nothing ('none') was refused for wanting a 'none' until 2026-10-03.
+  const has = kitchenHas(person);
+  const missing = r.appliances.filter((a) => a !== 'none' && !has.has(a));
+  if (missing.length) return `It needs a ${missing.map((a) => GEAR_LABEL[a as Gear]?.toLowerCase() ?? a.replace('-', ' ')).join(' and a ')}${missing.every((a) => a in GEAR_LABEL) ? ': buy one for the kitchen' : ', which SLATE’s homes don’t keep'}.`;
   const short = r.ingredients.filter((i): i is Extract<Ingredient, { food: string | null }> => !i.cupboard).filter((i) => {
     if (!i.food) return true;
     const stock = stockOf(sim, person, i.food);
     const unit = stock[0]?.food.unit ?? 'g';
-    return stock.reduce((sum, s) => sum + s.food.left, 0) < amountIn(i, unit, scale) - 1e-9;
+    const need = amountIn(i, unit, scale) - stock.reduce((sum, s) => sum + s.food.left, 0);
+    // Short, a substitute in stock may stand in for the rest (`SUBSTITUTES`).
+    return need > 1e-9 && !substituteFor(sim, person, i.food, unit, need);
   });
   if (short.length) return `You’re short of ${short.map((i) => i.name).join(', ')}.`;
   return undefined;
@@ -191,17 +197,65 @@ export function cookingClash(sim: Simulation, recipeId: string): string | undefi
 /** A recipe's ingredients taken from stock for so many servings, the soonest to go off first. */
 export function takeIngredients(sim: Simulation, person: Person, recipeId: string, servings?: number): void {
   const r = recipeById(recipeId)!;
+  const scale = (servings ?? r.servings) / r.servings;
   for (const i of r.ingredients) {
     if (i.cupboard || !i.food) continue;
-    let need = amountIn(i, stockOf(sim, person, i.food)[0]!.food.unit, (servings ?? r.servings) / r.servings);
-    for (const s of stockOf(sim, person, i.food)) {
-      if (need <= 1e-9) break;
-      const used = Math.min(need, s.food.left);
-      s.food.left -= used;
-      need -= used;
-      if (s.food.left <= 1e-9) person.items = (person.items ?? []).filter((x) => x.id !== s.id);
-    }
+    const stock = stockOf(sim, person, i.food);
+    const unit = stock[0]?.food.unit ?? 'g';
+    let need = amountIn(i, unit, scale);
+    need = takeFrom(person, stock, need);
+    // What's still short comes from its substitute.
+    const sub = need > 1e-9 ? substituteFor(sim, person, i.food, unit, need) : undefined;
+    if (sub) takeFrom(person, stockOf(sim, person, sub.use), sub.amount);
   }
+}
+
+function takeFrom(person: Person, stock: readonly Stocked[], need: number): number {
+  for (const s of stock) {
+    if (need <= 1e-9) break;
+    const used = Math.min(need, s.food.left);
+    s.food.left -= used;
+    need -= used;
+    if (s.food.left <= 1e-9) person.items = (person.items ?? []).filter((x) => x.id !== s.id);
+  }
+  return need;
+}
+
+/** A substitute in stock that covers what an ingredient is short of, and how much of it: NDSU's table, in the substitute's unit. */
+export function substituteFor(sim: Simulation, person: Person, food: string, unit: FoodUnit, short: number): { use: string; amount: number } | undefined {
+  for (const sub of SUBSTITUTES.filter((x) => x.for === food)) {
+    const stock = stockOf(sim, person, sub.use);
+    if (stock.length === 0) continue;
+    const per = unit === 'ct' ? sub.perCount : sub.perGram;
+    if (per === undefined || stock[0]!.food.unit === 'ct') continue;
+    const amount = short * per;
+    if (stock.reduce((n, s) => n + s.food.left, 0) >= amount - 1e-9) return { use: sub.use, amount };
+  }
+  return undefined;
+}
+
+/** What the kitchen where they are has: a home's stove, oven, grill, freezer and microwave, and at home the small appliances bought for it. */
+export function kitchenHas(person: Person): Set<string> {
+  const has = new Set<string>(KITCHEN.has);
+  if (!atHome(person)) return has;
+  const home = homeKeyOf(person.home);
+  for (const it of person.items ?? []) if (it.kind.startsWith('gear:') && it.at.kind === 'home' && it.at.home === home) has.add(it.kind.slice(5));
+  return has;
+}
+
+/** The small appliances on sale where they live, cheapest first, taxed where it's added, in the save's money. */
+export function gearOffers(sim: Simulation, person: Person): (GearOffer & { cost: Money })[] {
+  const cityId = person.home?.cityId ?? person.currentLocationId;
+  const country = cityId.split('-')[0] ?? '';
+  return (KITCHEN_GEAR[country] ?? []).map((g) => ({ ...g, cost: inSaveMoney(sim, Math.round(g.price * (1 + (g.taxIncluded ? 0 : salesTaxRate(cityId, sim.now, 'appliances'))) * 100), g.currency) })).sort((a, b) => a.cost - b.cost);
+}
+
+export function gearRefusal(sim: Simulation, person: Person, gear: string): string | undefined {
+  if (!person.home || person.home.kind === 'sofa') return 'There’s no kitchen of yours to keep it in.';
+  if (!atHome(person)) return 'It’s bought where you live.';
+  if (!gearOffers(sim, person).some((g) => g.gear === gear)) return 'None is sold where you live.';
+  if (kitchenHas(person).has(gear)) return 'Your kitchen has one.';
+  return undefined;
 }
 
 /**
@@ -251,6 +305,8 @@ export function cook(sim: Simulation, person: Person, recipeId: string, servings
   takeIngredients(sim, person, recipeId, servings);
   const minutes = r.minutes ?? KITCHEN.minutes;
   sim.advanceTo(sim.now + minutes * 60_000);
+  // Cooking's effort, the Compendium's 2.0 METs (from 2026-10-03).
+  exerts(person, COOKING_MET, minutes / 60);
   applyLookingAfter(person, 'eat', sim.now);
   // A partner living with them, home, eats with them.
   const partner = atHome(person) ? contactsOf(person).find((c) => c.livesWith !== undefined) : undefined;
@@ -325,6 +381,15 @@ export function registerKitchen(sim: Simulation): void {
     let paid = 0;
     for (const b of need.buys) paid += buyGroceries(s, person, b.productId, b.quantity);
     return { paid, bought: need.buys.length };
+  });
+  sim.onCommand<{ gear: string }, { paid: Money }>('food.buy_gear', (p, { sim: s }) => {
+    const person = s.player;
+    const no = gearRefusal(s, person, String(p?.gear));
+    if (no) throw new CommandError(no);
+    const g = gearOffers(s, person).find((x) => x.gear === p.gear)!;
+    if (!spend(s, person, g.cost, `${g.retailer}, ${g.name}`, 'household')) throw new CommandError('The bank couldn’t pay for it.');
+    addItem(s, person, { kind: `gear:${g.gear}`, label: g.name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid: g.cost });
+    return { paid: g.cost };
   });
   sim.onCommand<{ recipeId: string; servings?: number }, { left: number }>('food.cook', (p, { sim: s }) => ({ left: cook(s, s.player, String(p?.recipeId), p?.servings === undefined ? undefined : Number(p.servings)) }));
   sim.onCommand<{ itemId?: string }, { ate: true }>('food.eat_ready', (p, { sim: s }) => {
