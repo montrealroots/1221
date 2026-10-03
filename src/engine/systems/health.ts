@@ -65,6 +65,8 @@ import { careAway } from './travelinsurance';
 import { markRecord } from './credit';
 
 export const HEALTH_MONTH_KIND = 'health.month';
+/** A chronic condition: treated or not, its care unpaid this month, type 1 where diabetes, and its medicine's supply (from 2026-10-02). */
+export interface Chronic { treated: boolean; lapsed?: boolean; typeOne?: boolean; supplyUntil?: Instant }
 export const HEALTH_WEEK_KIND = 'health.week';
 export const BILL_KIND = 'health.bill';
 
@@ -126,7 +128,7 @@ export interface HealthRecord {
   /** An English prescription prepayment certificate's end (`health.prepay`, from 2026-10-02). */
   prepaidUntil?: number;
   owedVisit?: string;
-  chronic?: Partial<Record<Condition, { treated: boolean; lapsed?: boolean; typeOne?: boolean }>>;
+  chronic?: Partial<Record<Condition, Chronic>>;
   /** A stand-alone dental plan: which, from and until, and this year's deductible and what it's paid. */
   dental?: { plan: DentalPlan; from: Instant; until?: Instant; deductible: Record<string, Money>; paid: Record<string, Money> };
   lenses?: boolean;
@@ -494,30 +496,71 @@ export function keepUp(sim: Simulation, person: Person, at: Instant): Money {
   const h = healthOf(person);
   const cur = saveCurrency(sim.universe);
   let total = 0;
-  for (const [condition, state] of Object.entries(h.chronic ?? {}) as [Condition, { treated: boolean; lapsed?: boolean; typeOne?: boolean }][]) {
+  for (const [condition, state] of Object.entries(h.chronic ?? {}) as [Condition, Chronic][]) {
     if (!state.treated) continue;
+    // The medicine is filled as a supply (`fillMedicine`, from 2026-10-02); the month's care beside it is paid here.
     let cost = 0;
-    if (condition === 'depression' && publicCareShareOf(person, 'visit', at, cur) === 0) {
-      // NHS Talking Therapies are free; the prescription is the NHS's charge.
-      cost += rxShareOf(person, false, at, cur);
-    } else if (condition === 'depression') {
+    if (condition === 'depression' && publicCareShareOf(person, 'visit', at, cur) !== 0) {
       const plan = planOf(person, at);
       const session = plan ? usd(plan.visit, cur) : usd(grown(CITIES.get(homeOf(person))?.parentId === 'us-ny' ? CHRONIC.therapy['us-ny'] : CHRONIC.therapy.other, 'therapy', at), cur);
-      cost += CHRONIC.therapyPerMonth * session + rxShareOf(person, false, at, cur);
+      cost += CHRONIC.therapyPerMonth * session;
     } else if (condition === 'asthma') {
-      cost += rxShareOf(person, true, at, cur);
       if (sim.rng('health.chronic', person.id, `asthma-${at}`).next() < 2 / 12) cost += shareOf(person, 'visit', at, cur);
     } else if (condition === 'diabetes') {
-      cost += state.typeOne ? insulinShareOf(person, at, cur) + monitorShareOf(person, at, cur) : rxShareOf(person, false, at, cur);
       if (zonedParts(at, HOME).month % 3 === 1) cost += shareOf(person, 'visit', at, cur);
     } else if (condition === 'arthritis') {
-      cost += rxShareOf(person, false, at, cur);
       if (sim.rng('health.chronic', person.id, `arthritis-${at}`).next() < 2 / 12) cost += shareOf(person, 'visit', at, cur);
-    } else cost += rxShareOf(person, false, at, cur);
+    }
     state.lapsed = cost > 0 && !payFromCurrent(sim, person, cost, `Care for ${CONDITION_LABEL[condition].toLowerCase()}`, 'health');
     if (!state.lapsed) total += cost;
   }
   return total;
+}
+
+/** A condition kept up: treated, its care paid and its medicine not run out (from 2026-10-02, until when a month's care paid was all). */
+export const keptUp = (state: Chronic | undefined, at: Instant): boolean => Boolean(state && state.treated && !state.lapsed && !(state.supplyUntil !== undefined && state.supplyUntil < at));
+
+/**
+ * A fill of a chronic condition's medicine (from 2026-10-02). What a fill
+ * supplies: 28 days in England, the Department of Health's routine repeat
+ * (NHS guidance); 30 in America, the retail fill a Medicare Part D month
+ * covers (CMS, at most 34); a month elsewhere, SLATE's reading where none was
+ * read. Longer before a trip, at the same pharmacy: 56 days in England, which
+ * NHS guidance supports for a stable patient, still one item's charge; 90 in
+ * America, the extended supply plans offer, at three fills' share, SLATE's
+ * reading; 100 in Ontario, the Drug Benefit's most. Refilled with a week left
+ * where they live; away past it, the condition goes untreated until home.
+ */
+export const FILL = { england: 28, us: 30, other: 30, holiday: { england: 56, us: 90, 'ca-on': 100 } as Readonly<Record<string, number>>, refillDays: 7 } as const;
+
+const fillKey = (person: Person): string => { const c = CITIES.get(homeOf(person)); return c?.parentId === 'uk-eng' ? 'england' : c?.countryId === 'us' ? 'us' : c?.parentId === 'ca-on' ? 'ca-on' : 'other'; };
+export const fillDaysOf = (person: Person): number => { const k = fillKey(person); return k === 'england' ? FILL.england : k === 'us' ? FILL.us : FILL.other; };
+export const longestFillOf = (person: Person): number => FILL.holiday[fillKey(person)] ?? fillDaysOf(person);
+
+/** A fill's medicine for a condition, at what the plan or the public system leaves: the generic, a brand inhaler, insulin and its monitor. */
+export function medicineShareOf(person: Person, condition: Condition, state: Chronic, at: Instant, cur: string): Money {
+  if (condition === 'asthma') return rxShareOf(person, true, at, cur);
+  if (condition === 'diabetes' && state.typeOne) return insulinShareOf(person, at, cur) + monitorShareOf(person, at, cur);
+  return rxShareOf(person, false, at, cur);
+}
+
+/** Fills each treated condition's medicine that's within a week of running out, or for so many days before a trip; what was paid. */
+export function fillMedicine(sim: Simulation, person: Person, at: Instant, days?: number): Money {
+  const cur = saveCurrency(sim.universe);
+  const usual = fillDaysOf(person);
+  let paid = 0;
+  for (const [condition, state] of Object.entries(healthOf(person).chronic ?? {}) as [Condition, Chronic][]) {
+    if (!state.treated) continue;
+    const left = state.supplyUntil === undefined ? 0 : (state.supplyUntil - at) / MS_DAY;
+    if (days === undefined && left > FILL.refillDays) continue;
+    const want = days ?? usual;
+    // England charges an item once, whatever it supplies; elsewhere a fill's share for each usual fill it covers.
+    const cost = medicineShareOf(person, condition, state, at, cur) * (fillKey(person) === 'england' ? 1 : Math.ceil(want / usual));
+    if (cost > 0 && !payFromCurrent(sim, person, cost, `Medicine for ${CONDITION_LABEL[condition].toLowerCase()}`, 'health')) continue;
+    state.supplyUntil = Math.max(at, state.supplyUntil ?? at) + want * MS_DAY;
+    paid += cost;
+  }
+  return paid;
 }
 
 /** Their medical debt, if any: what bills they couldn't pay. */
@@ -860,8 +903,8 @@ export function illnessWeek(sim: Simulation, person: Person, at: Instant): { car
   const diabetes = person.health?.chronic?.diabetes;
   // Type 1 diabetes without insulin brings the emergency room four times as often.
   // Where an emergency department sees less of what a family doctor could, fewer visits (`emergencyScale`, from 2026-10-02).
-  const emergencies = CARE.perYear.emergency * emergencyScale(homeOf(person)) * (asthma && (!asthma.treated || asthma.lapsed) ? CHRONIC.untreated.asthmaEmergencies : 1)
-    * (diabetes?.typeOne && (!diabetes.treated || diabetes.lapsed) ? CHRONIC.untreated.diabetesEmergencies : 1);
+  const emergencies = CARE.perYear.emergency * emergencyScale(homeOf(person)) * (asthma && !keptUp(asthma, at) ? CHRONIC.untreated.asthmaEmergencies : 1)
+    * (diabetes?.typeOne && !keptUp(diabetes, at) ? CHRONIC.untreated.diabetesEmergencies : 1);
   if (rng.next() < weekly(emergencies)) out.push({ care: 'emergency', what: 'The emergency room' });
   if (rng.next() < weekly(CARE.perYear.visit)) out.push({ care: 'visit', what: 'A doctor’s visit' });
   // The week's share of a year's flu where they are, by the town's cold or wet weeks (`systems/seasons.ts`).
@@ -902,13 +945,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   if (event.flu) h.fluUntil = at + CARE.fluDays * MS_DAY;
   // A flu that isn't seen costs nothing.
   if (event.flu && event.care === 'visit') return undefined;
-  let amount = shareOf(person, event.care, at, cur);
-  // Had in another country: travel insurance's, or a visitor's price in America (`systems/travelinsurance.ts`, from 2026-10-01).
-  if (MEDICAL.includes(event.care)) {
-    const care = event.care as 'visit' | 'urgent' | 'emergency' | 'stay';
-    const usUninsured = Math.round(usd(grown(CARE.price[care], care as 'visit', at), cur) * CARE.uninsuredMarkup);
-    amount = careAway(sim, person, care, amount, usUninsured, CARE.stayDays, canadianShareOf(person, care, at) !== undefined, at);
-  }
+  const amount = careQuote(sim, person, event.care, at);
   const year = zonedParts(at, HOME).year;
   if (event.care === 'glasses') h.lastGlasses = year;
   if (planOf(person, at) && (MEDICAL.includes(event.care) || event.care.startsWith('rx'))) h.spent[year] = (h.spent[year] ?? 0) + amount;
@@ -975,6 +1012,30 @@ export function billCare(sim: Simulation, person: Person, what: string, amount: 
   return bill;
 }
 
+/** Why a longer supply can't be filled now, or nothing. */
+export function extraSupplyRefusal(person: Person, days: number): string | undefined {
+  if (!Object.values(healthOf(person).chronic ?? {}).some((c) => c?.treated)) return 'You take no medicine for a condition.';
+  if (person.currentLocationId !== homeOf(person)) return 'It’s filled at the pharmacy where you live.';
+  const most = longestFillOf(person);
+  if (!Number.isInteger(days) || days <= 0 || days > most) return `At most ${most} days at once here.`;
+  return undefined;
+}
+
+/**
+ * What care would cost them where they are now, before it's had (from
+ * 2026-10-02): their share at home, by their plan or the public system; or,
+ * away in another country, travel insurance's or the place's price for a
+ * visitor (`careAway`). The bill for care had is this same figure.
+ */
+export function careQuote(sim: Simulation, person: Person, care: Care, at: Instant = sim.now): Money {
+  const cur = saveCurrency(sim.universe);
+  const amount = shareOf(person, care, at, cur);
+  if (!MEDICAL.includes(care)) return amount;
+  const c = care as 'visit' | 'urgent' | 'emergency' | 'stay';
+  const usUninsured = Math.round(usd(grown(CARE.price[c], c as 'visit', at), cur) * CARE.uninsuredMarkup);
+  return careAway(sim, person, c, amount, usUninsured, CARE.stayDays, canadianShareOf(person, c, at) !== undefined, at);
+}
+
 export function registerHealth(sim: Simulation): void {
   sim.onSchedule(HEALTH_MONTH_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
@@ -997,13 +1058,15 @@ export function registerHealth(sim: Simulation): void {
     }
     // A self-employed Canadian's EI sickness benefit, for a week too sick to work (`systems/eiself.ts`).
     eiWeek(s, person, item.at, laidUp(person, item.at + 3 * MS_DAY) || (person.health?.inHospitalUntil ?? 0) > item.at - 4 * MS_DAY);
+    // The medicine filled where they live, with a week left; away, it may run out (`fillMedicine`, from 2026-10-02).
+    if (person.currentLocationId === homeOf(person)) fillMedicine(s, person, item.at);
     // Depression left alone weighs on morale.
     const depression = healthOf(person).chronic?.depression;
-    if (depression && (!depression.treated || depression.lapsed)) person.wellbeing.morale = Math.max(0, person.wellbeing.morale - CHRONIC.untreated.moraleAWeek);
+    if (depression && !keptUp(depression, item.at)) person.wellbeing.morale = Math.max(0, person.wellbeing.morale - CHRONIC.untreated.moraleAWeek);
     // Diabetes left alone wears the body down; arthritis tires it.
     const { diabetes, arthritis } = healthOf(person).chronic ?? {};
-    if (diabetes && (!diabetes.treated || diabetes.lapsed)) person.wellbeing.condition = Math.max(0, person.wellbeing.condition - CHRONIC.untreated.diabetesConditionAWeek);
-    if (arthritis && (!arthritis.treated || arthritis.lapsed)) person.wellbeing.energy = Math.max(0, person.wellbeing.energy - CHRONIC.untreated.arthritisEnergyAWeek);
+    if (diabetes && !keptUp(diabetes, item.at)) person.wellbeing.condition = Math.max(0, person.wellbeing.condition - CHRONIC.untreated.diabetesConditionAWeek);
+    if (arthritis && !keptUp(arthritis, item.at)) person.wellbeing.energy = Math.max(0, person.wellbeing.energy - CHRONIC.untreated.arthritisEnergyAWeek);
     s.schedule({ at: nextMonday(item.at), kind: HEALTH_WEEK_KIND, label: 'Health', category: 'system', priority: 6, payload: { personId: person.id } });
   });
 
@@ -1022,6 +1085,13 @@ export function registerHealth(sim: Simulation): void {
   });
 
   // England's prescription prepayment certificate: three months or twelve, every prescription free while it runs.
+  // A longer supply before a trip, at the pharmacy where they live (`FILL`, from 2026-10-02).
+  sim.onCommand<{ days: number }, { paid: Money }>('health.extra_supply', (p, { sim: s }) => {
+    const person = s.player;
+    const no = extraSupplyRefusal(person, Number(p?.days));
+    if (no) throw new CommandError(no);
+    return { paid: fillMedicine(s, person, s.now, Number(p.days)) };
+  });
   sim.onCommand<{ months: 3 | 12 }, { paid: Money; until: Instant }>('health.prepay', (p, { sim: s }) => {
     const person = s.player;
     const no = prepayRefusal(s, person);

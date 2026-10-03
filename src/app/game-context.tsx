@@ -16,6 +16,7 @@ import type { Simulation, CommandResult } from '@/engine';
 import type { AdvanceResult } from '@/engine/core/simulation';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 import { refreshMeta } from '@/engine';
+import { ROUTINE_DUE_KIND, runRoutine } from '@/engine/systems/routines';
 import type { SaveAdapter } from '@/engine/persistence/adapter';
 
 export interface Toast {
@@ -186,9 +187,21 @@ export function GameProvider({
    */
   const halt = useCallback((result: AdvanceResult, wanted: number) => {
     if (!result.interruptedBy) return;
+    // A routine set for this moment is run now, step by step as Run It does, each step its own command and
+    // undone if it fails; then the clock goes on to where it was going (`systems/routines.ts`, from 2026-10-02).
+    let stop: AdvanceResult = result;
+    for (let n = 0; stop.interruptedBy?.kind === ROUTINE_DUE_KIND && n < 50; n += 1) {
+      const routineId = String(stop.interruptedBy.payload.routineId);
+      const name = (sim.player.routines ?? []).find((r) => r.id === routineId)?.name ?? 'A routine';
+      const ran = runRoutine(sim, routineId);
+      toast(ran.stopped ? `${name} stopped at ${ran.stopped.label}: ${ran.stopped.error}` : `${name}, done.`, ran.stopped ? 'negative' : 'positive');
+      const onTo = Math.max(wanted, sim.now);
+      stop = sim.advanceTo(onTo, { stopOnPlayerRequired: true });
+    }
+    if (!stop.interruptedBy) return;
     sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'paused' } });
-    setStandingAt({ item: result.interruptedBy, wanted, sentFrom: result.sentFrom });
-  }, [sim]);
+    setStandingAt({ item: stop.interruptedBy, wanted, sentFrom: stop.sentFrom });
+  }, [sim, toast]);
 
   const advance = useCallback((ms: number): AdvanceResult | undefined => {
     if (ms <= 0) return undefined;

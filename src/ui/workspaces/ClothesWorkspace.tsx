@@ -22,7 +22,7 @@ import { arrange } from '@/engine/systems/catalog';
 import type { Item } from '@/engine/systems/items';
 import { CHANGE_MINUTES, chosenMissing, cleanOutfits, wornNow, dryCleanDirty, garmentsOf, outfitFor, unwearable, wearable, washableDirty, type Garment, toBasketRefusal } from '@/engine/systems/wardrobe';
 import { groomingQuote, groomingRefusal, salonsIn, suppliesOf, toiletryCatalog, toiletryRefusal, lastGroomed, daysSince } from '@/engine/systems/hygiene';
-import { alterCost, alterRefusal, fitOf, tailorsIn } from '@/engine/systems/tailoring';
+import { alterCost, alterRefusal, fitOf, tailorsIn, chartFor } from '@/engine/systems/tailoring';
 import { resaleOf, sellRefusal } from '@/engine/systems/resale';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
@@ -317,6 +317,32 @@ function Choose({ productId }: { productId: string }) {
           {onlineQuote ? `Order Online, ${money(onlineQuote.total)}` : 'Order Online'}
         </button>
       </div>
+      {(() => {
+        const chart = chartFor(person, p);
+        if (!chart) return null;
+        const cm = (v: readonly [number, number] | null) => (v ? `${v[0]}–${v[1]}` : '—');
+        const chosen = size.trim().toUpperCase();
+        return (
+          <details className="small">
+            <summary>{`Size Chart, ${chart.retailer}, ${chart.department === 'women' ? 'Women' : 'Men'}`}</summary>
+            <div className="table-scroll">
+              <table>
+                <thead><tr><th scope="col">Size</th><th scope="col" className="num">{chart.group === 'tops' ? (chart.department === 'women' ? 'Bust, Centimeters' : 'Chest, Centimeters') : 'Waist, Centimeters'}</th><th scope="col" className="num">Waist, Centimeters</th><th scope="col" className="num">Hip, Centimeters</th></tr></thead>
+                <tbody>{chart.rows.map((row, i) => (
+                  <tr key={i} style={row.labels.some((l) => l.trim().toUpperCase() === chosen) ? { fontWeight: 600 } : undefined}>
+                    <td>{row.labels.join(' / ')}</td>
+                    <td className="num mono">{cm(chart.group === 'tops' ? row.bust ?? row.chest : row.waist)}</td>
+                    <td className="num mono">{cm(row.waist)}</td>
+                    <td className="num mono">{cm(row.hip)}</td>
+                  </tr>
+                ))}</tbody>
+              </table>
+            </div>
+            <div className="xs dim">{chart.source ? <>The retailer’s own chart{chart.confirmed ? '' : ', read secondhand'}: <a href={chart.source} target="_blank" rel="noreferrer">{chart.source}</a></> : 'The retailer’s own chart.'}</div>
+          </details>
+        );
+      })()}
+      {p.url && <div className="xs dim">{`Its price and details as ${r.name} listed them${p.date ? ` on ${p.date}` : ''}${p.confirmed ? '' : ', read secondhand'}: `}<a href={p.url} target="_blank" rel="noreferrer">{p.url}</a></div>}
       <div className="xs dim">
         {storeNo ? `${storeNo} ` : ''}
         {!onlineNo && onlineQuote ? `Online: ${onlineQuote.delivery > 0 ? `${money(onlineQuote.delivery)} to deliver${r.freeOver !== null ? `, free over ${formatMoney(Math.round(r.freeOver * 100), p.currency, { cents: false })}` : ''}` : 'delivered free'}${r.feeEstimated ? ' (its fee not published: an estimate)' : ''}, arriving ${formatDate(onlineQuote.arrivesAt!, sim.zone)}${r.daysEstimated ? ' (an estimate)' : ''}. ` : ''}

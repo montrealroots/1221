@@ -9,7 +9,7 @@ import { Panel, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { LOOKING_AFTER, type LookAfter } from '@/engine/systems/life';
 import { RECIPES } from '@/engine/content/groceries';
-import { MAX_STEPS, routineRefusal, runRoutine, stepLabel, type RoutineStep } from '@/engine/systems/routines';
+import { MAX_STEPS, routineRefusal, routineTimeRefusal, runRoutine, stepLabel, type Routine, type RoutineStep } from '@/engine/systems/routines';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { gymById } from '@/engine/content/gyms';
 import { gymsIn, joinRefusal, joiningCost, leavingCost, taxed } from '@/engine/systems/gyms';
@@ -23,6 +23,29 @@ import { sessionPrice, trainersIn } from '@/engine/systems/trainers';
 import { METER, STATIONS } from '@/engine/content/errandtrips';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { LookRegion, Open, at } from '@/ui/looks';
+
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const;
+const pad = (n: number) => String(n).padStart(2, '0');
+
+/** A routine's time: an hour on chosen days, set or cleared (`routine.set_time`). */
+function RoutineTime({ routine }: { routine: Routine }) {
+  const { run, toast } = useGame();
+  const set = useFeature('routine.set_time');
+  const [hour, setHour] = useState(routine.at?.hour ?? 7);
+  const [minute, setMinute] = useState(routine.at?.minute ?? 0);
+  const [days, setDays] = useState<number[]>(routine.at?.days ?? [1, 2, 3, 4, 5]);
+  const no = routineTimeRefusal({ hour, minute, days });
+  return (
+    <div className="row gap-1" style={{ alignItems: 'center', flexWrap: 'wrap', marginTop: 4 }}>
+      {routine.at && <span className="xs dim">{`At ${pad(routine.at.hour)}:${pad(routine.at.minute)}, ${routine.at.days.map((d) => DAY_NAMES[d]).join(' ')}`}</span>}
+      <select aria-label="Hour" value={hour} onChange={(e) => setHour(Number(e.target.value))} style={{ width: 'auto' }}>{Array.from({ length: 24 }, (_, h) => <option key={h} value={h}>{pad(h)}</option>)}</select>
+      <select aria-label="Minute" value={minute} onChange={(e) => setMinute(Number(e.target.value))} style={{ width: 'auto' }}>{[0, 15, 30, 45].map((m) => <option key={m} value={m}>{pad(m)}</option>)}</select>
+      {DAY_NAMES.map((d, i) => <label key={d} className="xs"><input type="checkbox" checked={days.includes(i)} onChange={(e) => setDays(e.target.checked ? [...days, i] : days.filter((x) => x !== i))} /> {d}</label>)}
+      <button type="button" className="btn btn-sm btn-ghost" disabled={!set.open || Boolean(no)} title={no ?? set.reason} onClick={() => { if (run('routine.set_time', { routineId: routine.id, at: { hour, minute, days } }).ok) toast(`${routine.name}, set for ${pad(hour)}:${pad(minute)}.`, 'positive'); }}>Set The Time</button>
+      {routine.at && <button type="button" className="btn btn-sm btn-ghost" disabled={!set.open} title={set.reason} onClick={() => { if (run('routine.set_time', { routineId: routine.id, at: null }).ok) toast(`${routine.name}, no longer set.`, 'positive'); }}>Clear The Time</button>}
+    </div>
+  );
+}
 
 export function RoutinesWorkspace() {
   const { sim, run, toast } = useGame();
@@ -65,7 +88,7 @@ export function RoutinesWorkspace() {
                   {routines.map((r) => (
                     <tr key={r.id}>
                       <td><Open subject={at('routine', r.id)}>{r.name}</Open></td>
-                      <td className="small">{r.steps.map((s) => stepLabel(person, s)).join(' · ')}</td>
+                      <td className="small">{r.steps.map((s) => stepLabel(person, s)).join(' · ')}<RoutineTime routine={r} /></td>
                       <td>
                         <div className="row gap-1" style={{ justifyContent: 'flex-end' }}>
                           <button type="button" className="btn btn-sm" onClick={() => go(r.id, r.name)}>Run It</button>
@@ -104,7 +127,7 @@ export function RoutinesWorkspace() {
         <ErrandsPanel />
         <GymPanel />
           <TrainerPanel />
-        <Fine>A routine runs each step as you would, with its own time and checks: a shower when you aren’t clean, a meal when you’re hungry and can pay, a recipe when the kitchen has what it takes. It stops at the first that can’t be done and says why; what was done before it stays done.</Fine>
+        <Fine>Set The Time runs a routine at that hour on the days chosen, where you are: the clock stops there and its steps are done as Run It does them. A routine runs each step as you would, with its own time and checks: a shower when you aren’t clean, a meal when you’re hungry and can pay, a recipe when the kitchen has what it takes. It stops at the first that can’t be done and says why; what was done before it stays done.</Fine>
       </div>
     </>
   );

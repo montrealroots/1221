@@ -14,13 +14,56 @@
  * minutes are the operator's where it gives them (the UP Express's 28, the
  * Stansted Express's 48), and otherwise a taxi's, SLATE's estimate. A town
  * with no transit read goes by taxi, as before.
+ *
+ * **By car** (from 2026-10-02), on a round trip: driven to the airport in
+ * one's own car, left in its cheapest long-stay car park whose tariff was
+ * read (`content/airportparking.ts`), and paid for on the way home, as at
+ * the barrier, for the time it stood there.
  */
 
 import type { Simulation } from '../core/simulation';
 import { inSaveMoney } from './banking';
+import { AIRPORT_PARKING, parkingUnits, type AirportParking } from '../content/airportparking';
+import type { Person } from '../domain/model';
+import type { Instant } from '../core/time';
+import { vehiclesOf } from './vehicles';
+import { mayDrive } from './documents';
+import { stolenNow } from './theft';
 import type { JourneyLeg } from './journey';
 
-export type GroundWay = 'taxi' | 'transit';
+export type GroundWay = 'taxi' | 'transit' | 'car';
+
+export const parkingAt = (iata: string): AirportParking | undefined => AIRPORT_PARKING.find((p) => p.iata === iata);
+
+/** What a car left at an airport costs from one moment to another, in the save's money. */
+export function parkingFee(sim: Simulation, iata: string, from: Instant, to: Instant): number {
+  const p = parkingAt(iata);
+  return p ? inSaveMoney(sim, Math.round(parkingUnits(p, (to - from) / 3_600_000) * 100), p.currency) : 0;
+}
+
+/** Why a round trip's ground legs can't go by one's own car, or nothing. */
+export function byCarRefusal(sim: Simulation, person: Person, fromCity: string, out: readonly JourneyLeg[], back: readonly JourneyLeg[] | undefined, vehicleId: string): string | undefined {
+  if (!back) return 'A car is left at the airport on a round trip, to drive home in.';
+  const v = vehiclesOf(person).find((x) => x.id === vehicleId && x.soldAt === undefined);
+  if (!v || v.repossessed || stolenNow(v, sim.now)) return 'That isn’t a car of yours to drive.';
+  if ((v.at ?? v.cityId) !== fromCity) return 'Your car isn’t where you set out from.';
+  if (!mayDrive(person, fromCity, sim.now).ok) return 'You may not drive here.';
+  const there = out[0]?.mode === 'ground' ? out[0].to : undefined;
+  const home = back[back.length - 1]?.mode === 'ground' ? back[back.length - 1]!.from : undefined;
+  if (!there || there !== home) return 'The flights home and out don’t use the same airport.';
+  if (!parkingAt(there)) return 'SLATE keeps no car park’s tariff at that airport.';
+  return undefined;
+}
+
+/** A round trip's ground legs at the home end by one's own car: no fare, the parking paid on the way home. */
+export function byCar(legs: JourneyLeg[], end: 'out' | 'back'): JourneyLeg[] {
+  return legs.map((l, i) => {
+    const at = end === 'out' ? i === 0 : i === legs.length - 1;
+    if (!at || l.mode !== 'ground') return l;
+    const p = parkingAt(end === 'out' ? l.to : l.from)!;
+    return { ...l, fare: 0, basis: `Your own car, ${end === 'out' ? 'to' : 'from'} ${p.lot}, its parking paid on the way home${p.confirmed ? '' : ' (its tariff read secondhand)'}` };
+  });
+}
 
 /** The cheapest transit read between a town and an airport, its fare a person and its minutes where the operator gives them. */
 export const TRANSIT: Readonly<Record<string, { via: string; fare: number; currency: string; minutes: number | null; confirmed: boolean }>> = {

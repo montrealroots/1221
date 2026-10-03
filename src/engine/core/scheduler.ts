@@ -36,6 +36,8 @@ export interface ScheduledItem {
   refId?: string;
   /** True when the player must act rather than the world resolving it alone. */
   requiresPlayer?: boolean;
+  /** Stops a clock run to stop for the player, without being a commitment that takes their time: a routine's moment (`systems/routines.ts`, from 2026-10-02). */
+  stopsClock?: boolean;
   /** Where the player needs to be. Travel checks use this. */
   locationId?: string;
   /** Minutes the commitment occupies, for conflict detection. */

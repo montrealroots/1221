@@ -34,7 +34,7 @@ import { hoursOut } from '@/engine/systems/jetlag';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { byRoad } from '@/engine/systems/driving';
 import { breakfastPrice, breakfastRefusal } from '@/engine/systems/hotelbreakfast';
-import { byTransit, transitOffered, type GroundWay } from '@/engine/systems/airportground';
+import { byCar, byCarRefusal, byTransit, parkingAt, parkingFee, transitOffered, type GroundWay } from '@/engine/systems/airportground';
 import { HOTEL_WANT_LABEL, amenitiesOf, amenityLine, freeCancelUntil, hotelById, hotelHas, hotelsIn, namedStayQuote, type HotelWant } from '@/engine/systems/hotels';
 import { insuranceQuote } from '@/engine/systems/travelinsurance';
 import { lateQuote } from '@/engine/systems/latecheckout';
@@ -106,10 +106,14 @@ export function TravelWorkspace() {
   const flown = toCity ? planBy(sim, mode, fromCity, toCity, day, pick, bags, seat) : 'Choose where.';
   // To the airport and back by transit where it was read (`systems/airportground.ts`).
   const transit = !mode && typeof flown !== 'string' && transitOffered(flown);
-  const planned = transit && ground === 'transit' && typeof flown !== 'string' ? byTransit(sim, flown) : flown;
+  // Or one's own car, left at the airport on a round trip (from 2026-10-02): the car in town that drives there.
+  const flownBackRaw = toCity && round && !mode ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags, seat, toCity) : undefined;
+  const ownCar = !mode && typeof flown !== 'string' && flownBackRaw && typeof flownBackRaw !== 'string' ? vehiclesOf(person).find((v) => !byCarRefusal(sim, person, fromCity, flown, flownBackRaw, v.id)) : undefined;
+  const driving = ground === 'car' && Boolean(ownCar);
+  const planned = typeof flown === 'string' ? flown : driving ? byCar(flown, 'out') : transit && ground === 'transit' ? byTransit(sim, flown) : flown;
   const outLegs = towing && typeof planned !== 'string' ? towedLegs(sim, car!, towing, planned) : planned;
   const flownBack = toCity && round ? planBy(sim, mode, toCity, fromCity, day + daysThere * MS_DAY, pick, bags, seat, toCity) : undefined;
-  const plannedBack = transit && ground === 'transit' && flownBack && typeof flownBack !== 'string' ? byTransit(sim, flownBack) : flownBack;
+  const plannedBack = !flownBack || typeof flownBack === 'string' ? flownBack : driving ? byCar(flownBack, 'back') : transit && ground === 'transit' ? byTransit(sim, flownBack) : flownBack;
   const backLegs = towing && plannedBack && typeof plannedBack !== 'string' ? towedLegs(sim, car!, towing, plannedBack) : plannedBack;
   // A round trip's discount is the airlines'; a train's return is two singles.
   const outPlan = typeof outLegs === 'string' ? undefined : round && !mode ? asRoundTrip(outLegs) : outLegs;
@@ -188,11 +192,12 @@ export function TravelWorkspace() {
                   <option value="premium">Business Or First</option>
                 </select>
               </div>
-              {transit && (
+              {(transit || ownCar) && (
                 <div className="field">
                   <label htmlFor="travel-ground">To The Airport</label>
-                  <select id="travel-ground" value={ground} onChange={(e) => setGround(e.target.value === 'transit' ? 'transit' : 'taxi')}>
-                    <option value="transit">By Transit</option>
+                  <select id="travel-ground" value={ground} onChange={(e) => setGround(e.target.value === 'transit' ? 'transit' : e.target.value === 'car' ? 'car' : 'taxi')}>
+                    {transit && <option value="transit">By Transit</option>}
+                    {ownCar && <option value="car">In Your Own Car, Parked There</option>}
                     <option value="taxi">By Taxi</option>
                   </select>
                 </div>
@@ -302,10 +307,11 @@ export function TravelWorkspace() {
               <Stat label="Stay" value={own ? 'Your Own Place' : hotel ? money(hotel.price) : '—'} note={own ? 'No hotel needed' : `${STAY_CLASS_LABEL[cls]}, ${stayNights} ${stayNights === 1 ? 'night' : 'nights'}, taxes in`} />
               <Stat label="In All" value={plan ? money(fares + (hotel?.price ?? 0)) : '—'} />
             </div>
+            {driving && outPlan && backPlan && typeof flown !== 'string' && <p className="small" style={{ margin: 0 }}>{`Parking at ${parkingAt(flown[0]!.to)?.lot ?? 'the airport'}: ${money(parkingFee(sim, flown[0]!.to, outPlan[0]!.arriveAt, backPlan[backPlan.length - 1]!.departAt))}, paid on the way home.`}</p>}
             {no ? <p className="small" style={{ margin: 0 }}>{no}</p> : null}
             <div className="row gap-2">
               <Gated feature="travel.book" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => {
-                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan, ...(towing ? { tow: true } : {}), ...(picked ? { hotelId: picked.hotel.id, room: picked.room.name } : {}), ...(transit && ground === 'transit' ? { ground: 'transit' } : {}) });
+                const a = run<{ journeyId: string; leaveAt: number; total: number }>('travel.book', { toCity, day, slot: pick, bags: mode ? 0 : bags, ...(mode ? { by: mode } : { cabin: seat }), ...(round ? { returnDay: day + daysThere * MS_DAY, returnSlot: pick } : { nights: own ? 0 : nights }), stay: cls, plan: ratePlan, ...(towing ? { tow: true } : {}), ...(picked ? { hotelId: picked.hotel.id, room: picked.room.name } : {}), ...(transit && ground === 'transit' ? { ground: 'transit' } : {}), ...(driving && ownCar ? { ground: 'car', carId: ownCar.id } : {}) });
                 if (a.ok) toast(`Booked, for ${money(a.value!.total)}: you leave ${formatDateTime(a.value!.leaveAt, sim.zone)}.`, 'positive');
               }}>Book It</Gated>
             </div>
