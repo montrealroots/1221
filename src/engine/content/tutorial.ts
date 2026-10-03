@@ -237,7 +237,7 @@ export const CHAPTERS: readonly Chapter[] = [
       'Eleven hotels say on their own pages that the desk asks a photo ID for every stay: without a passport, driving license or ID card in force (at Hotel Catedral a passport or the INE), the room isn’t given until you Show Your ID.',
       'On a round trip, go to the airport In Your Own Car, Parked There: the car waits in the airport’s long-stay car park, and its own tariff is paid on the way home for the days it stood.',
     ],
-    names: ['Travel', 'Take The Fare Back Instead', 'By Transit', 'In Your Own Car, Parked There', 'By Taxi', 'Have Breakfast', 'Book It', 'Cancel It', 'Insure The Trip', 'Ask A Friend Along', 'Rent A Car There', 'Stay In A Holiday Let', 'Stay Longer', 'Check Out Late', 'Pay The Deposit', 'Show Your ID', 'Pay The Car’s Deposit', 'Learn To Fly', 'Take It Up Again', 'Fly Yourself', 'Buy A Plane', 'Sell The Plane', 'Your Plane, A Hired Pilot'],
+    names: ['Travel', 'Take The Fare Back Instead', 'By Transit', 'By Paratransit', 'In Your Own Car, Parked There', 'By Taxi', 'Have Breakfast', 'Book It', 'Cancel It', 'Insure The Trip', 'Ask A Friend Along', 'Rent A Car There', 'Stay In A Holiday Let', 'Stay Longer', 'Check Out Late', 'Pay The Deposit', 'Show Your ID', 'Pay The Car’s Deposit', 'Learn To Fly', 'Take It Up Again', 'Fly Yourself', 'Buy A Plane', 'Sell The Plane', 'Your Plane, A Hired Pilot'],
     opens: ['ui.travel', 'travel.take_refund', 'hotel.breakfast', 'travel.book', 'travel.cancel', 'travel.insure', 'travel.companion', 'travel.rent_car', 'travel.stay_let', 'travel.extend', 'travel.late_checkout', 'travel.pay_deposit', 'travel.show_id', 'travel.pay_rental_deposit', 'pilot.train', 'aircraft.buy', 'aircraft.sell', 'look.journey', 'look.hotel'],
   },
   {

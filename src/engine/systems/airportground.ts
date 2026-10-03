@@ -38,7 +38,37 @@ import { mayDrive } from './documents';
 import { stolenNow } from './theft';
 import type { JourneyLeg } from './journey';
 
-export type GroundWay = 'taxi' | 'transit' | 'car';
+export type GroundWay = 'taxi' | 'transit' | 'car' | 'paratransit';
+
+/**
+ * Paratransit to the airport for a wheelchair user (from 2026-10-02;
+ * `research-step-free.json`), where the service's own page says it goes
+ * there, at its own fare a trip: Toronto's Wheel-Trans to Pearson at the TTC
+ * fare on PRESTO, C$3.30; Vancouver's HandyDART to YVR at C$2.85 on Compass;
+ * New York's Access-A-Ride at the $3 full fare, across the five boroughs,
+ * which take in JFK and LaGuardia though no page names them. Los Angeles's
+ * Access Services charges by the trip's miles, which SLATE doesn't hold, so
+ * it isn't offered. As long as a taxi takes, SLATE's estimate.
+ */
+export const PARATRANSIT: Readonly<Record<string, { via: string; fare: number; currency: string; airports: readonly string[] }>> = {
+  'ca-on-toronto': { via: 'Wheel-Trans', fare: 3.3, currency: 'CAD', airports: ['YYZ'] },
+  'ca-bc-vancouver': { via: 'HandyDART', fare: 2.85, currency: 'CAD', airports: ['YVR'] },
+  'us-ny-newyork': { via: 'Access-A-Ride', fare: 3, currency: 'USD', airports: ['JFK', 'LGA'] },
+};
+
+const paratransitFor = (cityId: string, iata: string) => { const p = PARATRANSIT[cityId]; return p && p.airports.includes(iata) ? p : undefined; };
+
+/** Whether a flight's ground legs at either end could go by paratransit. */
+export const paratransitOffered = (legs: readonly JourneyLeg[]): boolean => legs.some((l, i) => l.mode === 'ground' && (i === 0 ? paratransitFor(l.from, l.to) : paratransitFor(l.to, l.from)));
+
+/** A flight's ground legs by paratransit where it goes: its fare, as long as a taxi takes. */
+export function byParatransit(sim: Simulation, legs: JourneyLeg[]): JourneyLeg[] {
+  return legs.map((l, i) => {
+    const p = i === 0 ? paratransitFor(l.from, l.to) : paratransitFor(l.to, l.from);
+    if (!p) return l;
+    return { ...l, fare: inSaveMoney(sim, Math.round(p.fare * 100), p.currency), basis: `${p.via}, ${p.fare} ${p.currency} a trip, as long as a taxi takes, SLATE’s estimate` };
+  });
+}
 
 export const parkingAt = (iata: string): AirportParking | undefined => AIRPORT_PARKING.find((p) => p.iata === iata);
 
