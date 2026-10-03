@@ -255,6 +255,13 @@ export interface Listing extends HomeFacts {
   value: Money;
   /** When it came on the market. */
   listedAt: Instant;
+  /**
+   * Where it came from (from 2026-10-03, the master plan's §41l): every home
+   * for sale is the game's own, drawn from the town's published prices,
+   * not a real listing. Said on the listing, so nothing reads as real that
+   * isn't.
+   */
+  source?: 'simulated';
 }
 
 /** The inverse of the standard normal's distribution, near enough (Acklam's approximation). */
@@ -404,7 +411,7 @@ function drawListings(sim: Simulation, cityId: string, typical: Money, slots: { 
     const priced = Math.round(value * premiumOf(fixtures));
     // Held leasehold or freehold in England, drawn last so the rest of the listing is as it was (`TENURE`).
     const tenure = inEngland(cityId) ? tenureOf(rng, flat, built) : {};
-    out.push({ id: `${cityId}~${i}~${generation}`, cityId, rank: 0, value: priced, listedAt, type, address, beds, baths, size, ...(lot !== undefined ? { lot } : {}), built, features, parts, hoaUsd, fixtures, ...tenure });
+    out.push({ id: `${cityId}~${i}~${generation}`, source: 'simulated', cityId, rank: 0, value: priced, listedAt, type, address, beds, baths, size, ...(lot !== undefined ? { lot } : {}), built, features, parts, hoaUsd, fixtures, ...tenure });
   }
   return out.sort((x, y) => x.value - y.value).map((one, n) => ({ ...one, rank: n + 1 }));
 }
@@ -1047,6 +1054,12 @@ export function worksDeposit(cityId: string, bid: Money, sim: Simulation): Money
   const cap = exchange(1_000_00, 'USD', saveCurrency(sim.universe)) ?? 1_000_00;
   return Math.min(bid, Math.round(bid * 0.1), cap);
 }
+export const PLANNING_KIND = 'home.planning_refused';
+/** Whether a planning application is refused, at its share (decider `homes.planning`). */
+export function planningRefused(sim: Simulation, homeId: string, projectId: string, at: Instant, share: number): boolean {
+  return sim.rng('homes.planning', homeId, projectId, String(at)).next() < share;
+}
+
 export function coolingOffUntil(cityId: string, at: Instant): Instant | undefined {
   const city = CITIES.require(cityId);
   const zone = city.timeZone;
@@ -2003,6 +2016,19 @@ export function registerHomes(sim: Simulation): void {
     const owned = person ? homeById(person, String(item.payload.homeId)) : undefined;
     if (person && owned) saleCloses(s, person, owned);
   });
+  sim.onSchedule(PLANNING_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const owned = person ? homeById(person, String(item.payload.homeId)) : undefined;
+    const works = owned?.works.find((w) => w.projectId === item.payload.projectId);
+    if (!person || !owned || !works) return;
+    const refunded = works.paid ?? works.cost;
+    const label = PROJECTS.find((x) => x.id === works.projectId)?.label ?? 'Works';
+    s.post({ memo: `${label}, planning refused, the contract refunded`, category: 'home', postings: [{ accountId: person.primaryAccountId!, amount: refunded }, { accountId: s.nominalAccount('asset_value', 'Home Improvements').id, amount: -refunded }] });
+    owned.works = owned.works.filter((w) => w !== works);
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORKS_KIND && one.payload.homeId === owned.id && one.payload.projectId === works.projectId) s.timeline.cancel(one.id, s.now);
+    if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Planning Refused', body: `The council refused ${label.toLowerCase()} at ${owned.facts.address}. The contractor refunded ${formatMoney(refunded, saveCurrency(s.universe), { cents: false })}; the application’s fee isn’t returned.`, importance: 60, route: '/workspace/homes' });
+  });
+
   sim.onSchedule(WORKS_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const owned = person ? homeById(person, String(item.payload.homeId)) : undefined;
@@ -2089,6 +2115,10 @@ export function registerHomes(sim: Simulation): void {
     const fees = (permit?.lines ?? []).reduce((a, l) => a + l.amount, 0);
     if (fees > 0) s.post({ memo: `${permit!.lines.map((l) => l.label).join(', ')}, ${project.label}`, category: 'home', postings: [...drawFromBank(s, person, fees, false, true).postings, { accountId: s.nominalAccount('expense', 'Permits').id, amount: fees }] });
     const doneAt = s.now + ((permit?.waitDays ?? 0) + project.days) * MS_DAY;
+    // A planning application decided against it (`PLANNING_REFUSED`, decider `homes.planning`): the contract refunded on the day, the fee kept.
+    if (permit?.refused !== undefined && planningRefused(s, owned.id, project.id, s.now, permit.refused)) {
+      s.schedule({ at: s.now + permit.waitDays * MS_DAY, kind: PLANNING_KIND, label: `The Planning Decision, ${project.label}`, category: 'home', priority: 40, payload: { personId: person.id, homeId: owned.id, projectId: project.id } });
+    }
     const coolUntil = coolingOffUntil(owned.cityId, s.now);
     owned.works.push({ projectId: project.id, startedAt: s.now, doneAt, cost, ...(now < cost ? { paid: now } : {}), ...(coolUntil !== undefined ? { coolUntil } : {}) });
     s.schedule({ at: doneAt, kind: WORKS_KIND, label: project.label, category: 'home', priority: 40, payload: { personId: person.id, homeId: owned.id, projectId: project.id } });

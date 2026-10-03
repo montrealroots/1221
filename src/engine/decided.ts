@@ -80,6 +80,7 @@ import { bidsFor, lateDays, overrunOf } from './systems/worksrisk';
 import { PHONE_RISK } from './content/phoneclaims';
 import { mishap } from './systems/phones';
 import { therapyLifts } from './systems/therapy';
+import { planningRefused } from './systems/homes';
 import { usedFault, usedListings } from './systems/usedcars';
 import { takenFromDoor } from './systems/orders';
 import { bathroomWait } from './systems/rooms';
@@ -1336,7 +1337,7 @@ defineDecider<{ sim: Simulation; key: number }, string>({
 
 defineDecider<{ sim: Simulation; month: number; item: number; market: number }, string>({
   id: 'phone.risk',
-  decides: 'Whether a phone in use is stolen or damaged in a month, and the screen or something else, at the yearly odds a survey publishes where it is: Allstate Protection Plans’ in America, the ONS crime survey’s in England and Wales (PHONE_RISK).',
+  decides: 'A phone in use stolen or damaged in a month or neither, and the screen or something else, at the yearly odds a survey publishes where it is: Allstate Protection Plans’ in America, the ONS crime survey’s in England and Wales (PHONE_RISK).',
   drawnIn: 'src/engine/systems/phones.ts',
   reads: {
     month: (o, t) => ({ ...o, month: Math.round(t * 240) }),
@@ -1390,7 +1391,7 @@ defineDecider<{ sim: Simulation; car: number }, string>({
 
 defineDecider<{ sim: Simulation; at: number; nhs: number }, string>({
   id: 'health.therapy',
-  decides: 'Whether a course of CBT lifts depression, at NHS Talking Therapies’ 48.5% recovery or a private course’s 36% remission (THERAPY.recovery); swept at even odds.',
+  decides: 'A course of CBT lifting depression or not, at NHS Talking Therapies’ 48.5% recovery or a private course’s 36% remission (THERAPY.recovery); swept at even odds.',
   drawnIn: 'src/engine/systems/therapy.ts',
   reads: {
     at: (o, t) => ({ ...o, at: Math.round(t * 400) }),
@@ -1399,4 +1400,16 @@ defineDecider<{ sim: Simulation; at: number; nhs: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), at: seed, nhs: seed % 2 }),
   decide: ({ sim, at, nhs }) => String(Array.from({ length: 30 }, (_, n) => therapyLifts(sim, sim.player, nhs === 1, at * 30 + n)).filter(Boolean).length),
+});
+
+defineDecider<{ sim: Simulation; job: number }, string>({
+  id: 'homes.planning',
+  decides: 'A householder planning application in England refused or granted, at the one in ten MHCLG’s year to June 2026 gives (PLANNING_REFUSED); swept at even odds.',
+  drawnIn: 'src/engine/systems/homes.ts',
+  reads: {
+    job: (o, t) => ({ ...o, job: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), job: seed }),
+  decide: ({ sim, job }) => (planningRefused(sim, `home-${job}`, 'adu', sim.now, 0.5) ? 'refused' : 'granted'),
 });

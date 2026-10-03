@@ -10,6 +10,8 @@ import { MS_DAY, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { PROJECTS } from '@/engine/content/homes';
+import { planningRefused } from '@/engine/systems/homes';
+import { PLANNING_REFUSED } from '@/engine/systems/permits';
 import { coolingOffUntil, inspectionFee, ownBuilt, projectBids, worksDeposit, type HomeFacts } from '@/engine/systems/homes';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -72,5 +74,33 @@ describe('a home improvement contract', () => {
     expect(zonedParts(coolingOffUntil('us-ny-newyork', Date.UTC(2026, 9, 9, 16))!, 'America/New_York').day).toBe(15);
     // Monday 5 October 2026 in Mexico City: five weekdays on, the next Monday's end.
     expect(zonedParts(coolingOffUntil('mx-cmx-mexicocity', at)!, 'America/Mexico_City').day).toBe(13);
+  });
+});
+
+describe('a planning application', () => {
+  it('is refused one time in ten in England: the contract refunded, the fee kept', () => {
+    const odds = Array.from({ length: 4_000 }, (_, n) => planningRefused(life('uk-eng-london', 'plan-odds'), `h${n}`, 'adu', 0, PLANNING_REFUSED)).filter(Boolean).length / 4_000;
+    expect(odds).toBeGreaterThan(0.08);
+    expect(odds).toBeLessThan(0.12);
+    // Find a house whose application is refused, and follow it.
+    let done = false;
+    for (let n = 0; n < 80 && !done; n += 1) {
+      const sim = life('uk-eng-london', `plan-${n}`);
+      sim.universe.accounts[sim.player.primaryAccountId!]!.balance += 1_000_000_00;
+      const facts: HomeFacts = { type: 'house', address: 'Test House', beds: 3, baths: 2, size: 1_200, lot: 9_000, built: 2000, features: ['yard'], parts: {}, hoaUsd: 0 };
+      const owned = ownBuilt(sim, sim.player, { cityId: 'uk-eng-london', facts, price: 600_000_00, closing: 0 });
+      if (!planningRefused(sim, owned.id, 'suite-upscale', sim.now, PLANNING_REFUSED)) continue;
+      const before = bank(sim);
+      const r = sim.execute<{ paid: number }>({ kind: 'home.renovate', payload: { homeId: owned.id, projectId: 'suite-upscale' } });
+      if (!r.ok) continue;
+      // The fee is paid beside the contract, and stays paid.
+      expect(before - bank(sim)).toBeGreaterThan(r.value!.paid);
+      sim.advanceBy(60 * MS_DAY);
+      expect(owned.works).toHaveLength(0);
+      const refund = sim.universe.transactions.find((t) => t.memo === 'Add An Upscale Primary Suite, planning refused, the contract refunded')!;
+      expect(refund.postings.find((p) => p.accountId === sim.player.primaryAccountId)!.amount).toBe(r.value!.paid);
+      done = true;
+    }
+    expect(done).toBe(true);
   });
 });

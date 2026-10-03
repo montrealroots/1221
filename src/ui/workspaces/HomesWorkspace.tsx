@@ -199,7 +199,7 @@ function ForSalePane() {
       {listing && offer && (
         <>
           <div id="home-chosen" />
-          <Panel title={listing.address} look={at('listing', listing.id)} subtitle={`${money(asking)} · #${listing.rank} of ${homes.length} · ${daysListed(sim, listing)} days on the market`}>
+          <Panel title={listing.address} look={at('listing', listing.id)} subtitle={`${money(asking)} · #${listing.rank} of ${homes.length} · ${daysListed(sim, listing)} days on the market${listing.source === 'simulated' ? ' · A Simulated Listing' : ''}`}>
             <div className="col gap-3">
               <Facts facts={listing} countryId={city.countryId} />
               <div className="xs dim">How old each part is comes with the inspection’s report.</div>

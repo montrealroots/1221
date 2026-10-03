@@ -76,7 +76,8 @@ export interface Parcel {
 }
 
 /** Land for sale: a market's size at an asking price, in its money, cents. */
-export interface Listing { id: string; market: number; acres: number; asking: Money; listedAt: Instant }
+/** A parcel for sale; `source` says it's the game's own, drawn at the market's published value, not a real listing (from 2026-10-03). */
+export interface Listing { id: string; market: number; acres: number; asking: Money; listedAt: Instant; source?: 'simulated' }
 
 /** An offer accepted, on its way to the closing. */
 export interface LandDeal {
@@ -200,7 +201,7 @@ export function listingsFor(sim: Simulation, person: Person, cityId: string, at:
       const acres = m.sizes[Math.floor(r.next() * m.sizes.length)]!;
       const over = LAND_DEAL.askOver[0] + r.next() * (LAND_DEAL.askOver[1] - LAND_DEAL.askOver[0]);
       const listedAt = start - Math.floor(r.next() * DAYS_TO_SELL * 2) * MS_DAY;
-      out.push({ id, market: i, acres, asking: Math.round(landValue(m, acres, start) * (1 + over) / 100_00) * 100_00, listedAt });
+      out.push({ id, source: 'simulated', market: i, acres, asking: Math.round(landValue(m, acres, start) * (1 + over) / 100_00) * 100_00, listedAt });
     }
   }
   return out;
