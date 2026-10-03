@@ -169,10 +169,23 @@ export function hotelParking(sim: Simulation, hotelId: string, nights: number): 
   return { price: cur === h.parking.currency ? cents : exchange(cents, h.parking.currency, cur) ?? cents, basis: `Parking at ${where}, ${h.parking.perNight} ${h.parking.currency} a night` };
 }
 
+/**
+ * Holds read later, from 2026-10-03 (`research-casting-therapy-hotels-cars.json`):
+ * the Chelsea Hotel Toronto's C$150 a stay on a card, its own page; The Dean
+ * Dublin's €50 a night and €100 against damage, and the Fairmont Royal
+ * York's C$200 a night, each read secondhand.
+ */
+export const MORE_DEPOSITS: Readonly<Record<string, { amount: number; currency: string; per: 'stay' | 'night'; plus?: number }>> = {
+  'chelsea-hotel-toronto': { amount: 150, currency: 'CAD', per: 'stay' },
+  'the-dean-dublin': { amount: 50, currency: 'EUR', per: 'night', plus: 100 },
+  'fairmont-royal-york': { amount: 200, currency: 'CAD', per: 'night' },
+};
+
 export function depositFor(sim: Simulation, hotelId: string, nights: number): Money {
   const h = hotelById(hotelId);
-  if (!h?.deposit) return 0;
-  const cents = Math.round(h.deposit.amount * (h.deposit.per === 'night' ? Math.max(1, nights) : 1) * 100);
+  const d: { amount: number; currency: string; per: 'stay' | 'night'; plus?: number } | undefined = h?.deposit ?? MORE_DEPOSITS[hotelId];
+  if (!d) return 0;
+  const cents = Math.round((d.amount * (d.per === 'night' ? Math.max(1, nights) : 1) + (d.plus ?? 0)) * 100);
   const cur = saveCurrency(sim.universe);
-  return cur === h.deposit.currency ? cents : exchange(cents, h.deposit.currency, cur) ?? cents;
+  return cur === d.currency ? cents : exchange(cents, d.currency, cur) ?? cents;
 }
