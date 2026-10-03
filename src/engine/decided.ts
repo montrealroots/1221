@@ -77,6 +77,8 @@ import { powerDay } from './systems/utilities';
 import { careerOf } from './systems/career';
 import { counterOffer } from './systems/career';
 import { bidsFor, lateDays, overrunOf } from './systems/worksrisk';
+import { PHONE_RISK } from './content/phoneclaims';
+import { mishap } from './systems/phones';
 import { usedFault, usedListings } from './systems/usedcars';
 import { takenFromDoor } from './systems/orders';
 import { bathroomWait } from './systems/rooms';
@@ -1329,4 +1331,24 @@ defineDecider<{ sim: Simulation; key: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), key: seed * 50_000 }),
   decide: ({ sim, key }) => String(Array.from({ length: 20_000 }, (_, n) => letDamaged(sim, sim.player, `stay${key + n}`)).filter(Boolean).length),
+});
+
+defineDecider<{ sim: Simulation; month: number; item: number; market: number }, string>({
+  id: 'phone.risk',
+  decides: 'Whether a phone in use is stolen or damaged in a month, and the screen or something else, at the yearly odds a survey publishes where it is: Allstate Protection Plans’ in America, the ONS crime survey’s in England and Wales (PHONE_RISK).',
+  drawnIn: 'src/engine/systems/phones.ts',
+  reads: {
+    month: (o, t) => ({ ...o, month: Math.round(t * 240) }),
+    item: (o, t) => ({ ...o, item: Math.round(t * 240) }),
+    market: (o, t) => ({ ...o, market: Math.round(t) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), month: seed % 240, item: seed % 240, market: seed % 2 }),
+  decide: ({ sim, month, item, market }) => {
+    const risk = PHONE_RISK[market]!;
+    // A month's odds are a few in a hundred, so what's decided is counted over a thousand months from there.
+    const tally: Record<string, number> = {};
+    for (let n = 0; n < 1_000; n += 1) { const r = mishap(sim, risk, `item-${item}`, sim.now + (month * 1_000 + n) * 30 * MS_DAY, false) ?? 'none'; tally[r] = (tally[r] ?? 0) + 1; }
+    return JSON.stringify(tally);
+  },
 });

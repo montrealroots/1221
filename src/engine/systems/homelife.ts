@@ -21,7 +21,8 @@
  * home; playing at home needs one.
  *
  * Unwinding at home can be any of it: live TV, a service you pay for, or a
- * game. It does what unwinding does, no more; what's watched is recorded.
+ * game. It does what unwinding does, no more. Until 2026-10-03 nothing
+ * was watched; now a program is, episode by episode (`systems/programmes.ts`).
  */
 
 import type { Simulation } from '../core/simulation';
@@ -42,7 +43,7 @@ const YEAR_MS = 365 * MS_DAY;
 export interface Subscription { id: string; since: Instant }
 export interface Plan { id: string; label: string; monthly: number; currency: string; taxIncluded: boolean; game: boolean }
 
-const marketOf = (person: Person): string | undefined => CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId;
+export const marketOf = (person: Person): string | undefined => CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId;
 export const subscriptionsOf = (person: Person): Subscription[] => (person.subscriptions ??= []);
 
 /** Every service and game tier where you live. */

@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-318 commands; 312 named by a test, 6 not.
+320 commands; 314 named by a test, 6 not.
 
 ## aircraft
 
@@ -314,9 +314,9 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.security` | `src/engine/systems/homesecurity.ts` | `Home.tsx` | `homesecurity.test.ts` | Rent And A Roof |
 | `home.sell` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `homes.test.ts` `routines.test.ts` | Rent And A Roof |
 | `home.sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` | Rent And A Roof |
-| `home.subscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` | Rent And A Roof |
+| `home.subscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `programmes.test.ts` | Rent And A Roof |
 | `home.take_lodger` | `src/engine/systems/lodgers.ts` | `HomesWorkspace.tsx` | `lodgers.test.ts` | Rent And A Roof |
-| `home.tv_licence` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` | Rent And A Roof |
+| `home.tv_licence` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `programmes.test.ts` | Rent And A Roof |
 | `home.unsubscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` | Rent And A Roof |
 
 ## hotel
@@ -401,10 +401,11 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `phone.activate` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
+| `phone.activate` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
 | `phone.battery` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
-| `phone.buy` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
-| `phone.protect` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phones.test.ts` | Rent And A Roof |
+| `phone.buy` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
+| `phone.claim` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phoneclaims.test.ts` | Rent And A Roof |
+| `phone.protect` | `src/engine/systems/phones.ts` | `BelongingsWorkspace.tsx` | `phoneclaims.test.ts` `phones.test.ts` | Rent And A Roof |
 
 ## pilot
 
@@ -496,6 +497,12 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `tutorial.read` | `src/engine/world/tutorial.ts` | — | **none** | — |
+
+## tv
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `tv.watch` | `src/engine/systems/programmes.ts` | `BelongingsWorkspace.tsx` | `programmes.test.ts` | Rent And A Roof |
 
 ## valuables
 

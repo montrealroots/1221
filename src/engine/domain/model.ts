@@ -309,6 +309,8 @@ export interface Person {
   usesFirst?: Record<string, string>;
   /** A dog or a cat of their own (`systems/pets.ts`, from 2026-10-03). */
   pets?: import('../systems/pets').Pet[];
+  /** Where each program was left, by its id (`systems/programmes.ts`, from 2026-10-03). */
+  watching?: Record<string, import('../systems/programmes').Watching>;
   /** How often they shave at home, chosen (`systems/hygiene.ts`, from 2026-10-03); not at all where unset. */
   shaves?: import('../systems/hygiene').ShaveEvery;
   lastShave?: number;

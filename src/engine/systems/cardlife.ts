@@ -46,11 +46,11 @@ import { bankOf } from './banking';
 export const ARRIVES_KIND = 'card.arrives';
 
 /** The least record a bank approves a card at: SLATE's estimate. */
-const APPROVE_FROM = 620;
+export const APPROVE_FROM = 620;
 /** The limit a record opens with, in US dollars: SLATE's estimate. */
 const OPENING_LIMITS: readonly { from: number; usd: number }[] = [{ from: 740, usd: 5_000 }, { from: 670, usd: 2_500 }, { from: 0, usd: 1_000 }];
 /** What an application costs the record, a hard inquiry: SLATE's estimate, FICO's "fewer than five points" for most. */
-const INQUIRY = 5;
+export const INQUIRY = 5;
 /** How long a new card takes to arrive: SLATE's estimate. */
 const ARRIVES_IN = 7 * MS_DAY;
 /** A requested raise the bank grants at most, as a share of the limit: the six-monthly review's fifth. */

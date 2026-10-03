@@ -14,8 +14,9 @@ import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
 import { bagsOf, buyLuggageRefusal, luggageCatalog, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
+import { finished, placeIn, programmeRefusal, programmesHere } from '@/engine/systems/programmes';
 import { consolesHere, consolesOwned, gamesHere, gamesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
-import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
+import { activationCost, batteryQuote, claimQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { orderStage, ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
 import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
@@ -409,6 +410,7 @@ function Phones() {
   const activate = useFeature('phone.activate');
   const battery = useFeature('phone.battery');
   const protect = useFeature('phone.protect');
+  const claim = useFeature('phone.claim');
   const list = phonesOnSale(sim, person);
   const owned = phonesOf(person);
   const [phoneId, setPhoneId] = useState('');
@@ -431,12 +433,15 @@ function Phones() {
           const p = phoneById(o.device.phoneId);
           const cost = batteryQuote(sim, person, o);
           const covers = p ? protectionFor(p) : [];
+          const fix = o.device.broken || o.device.stolen !== undefined ? claimQuote(sim, person, o) : undefined;
           return (
             <div key={o.id} className="col gap-1">
-              <div className="small"><strong>{o.label}</strong>, {o.device.color}{o.device.activated ? `, on your ${line?.carrier ?? ''} line` : ''}{o.at.kind === 'order' ? ', on its way' : ''}</div>
+              <div className="small"><strong>{o.label}</strong>, {o.device.color}{o.device.activated ? `, on your ${line?.carrier ?? ''} line` : ''}{o.at.kind === 'order' ? ', on its way' : ''}{o.device.stolen !== undefined ? ', stolen' : o.device.broken === 'screen' ? ', its screen cracked' : o.device.broken ? ', damaged' : ''}</div>
+              {typeof fix === 'string' && <div className="xs dim">{fix}</div>}
               <div className="xs dim">{`Battery ${Math.round(o.device.battery * 100)}%`}{o.device.finance ? ` · ${o.device.finance.plan}: ${money(o.device.finance.monthly)} a month, ${o.device.finance.monthsLeft} left` : ''}{o.device.protection ? ` · ${o.device.protection.plan}, ${money(o.device.protection.monthly)} a month` : ''}</div>
               <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
-                {!o.device.activated && <button type="button" className="btn btn-sm btn-ghost" disabled={!activate.open || o.at.kind === 'order'} title={activate.reason} onClick={() => { const a = run<{ paid: number }>('phone.activate', { itemId: o.id }); if (a.ok) toast(`On your line, for ${money(a.value!.paid)}.`, 'positive'); }}>{line ? `Put It On Your Line, ${money(line.cost)}` : 'Put It On Your Line'}</button>}
+                {typeof fix === 'number' && <button type="button" className="btn btn-sm btn-ghost" disabled={!claim.open} title={claim.reason} onClick={() => { if (run('phone.claim', { itemId: o.id }).ok) toast(o.device.stolen !== undefined ? 'Replaced.' : 'Repaired.', 'positive'); }}>{`${o.device.stolen !== undefined ? 'Claim A Replacement' : 'Have It Repaired'}, ${money(fix)}`}</button>}
+                {!o.device.activated && o.device.stolen === undefined && <button type="button" className="btn btn-sm btn-ghost" disabled={!activate.open || o.at.kind === 'order'} title={activate.reason} onClick={() => { const a = run<{ paid: number }>('phone.activate', { itemId: o.id }); if (a.ok) toast(`On your line, for ${money(a.value!.paid)}.`, 'positive'); }}>{line ? `Put It On Your Line, ${money(line.cost)}` : 'Put It On Your Line'}</button>}
                 {o.device.battery < 0.999 && cost !== undefined && <button type="button" className="btn btn-sm btn-ghost" disabled={!battery.open} title={battery.reason} onClick={() => { if (run('phone.battery', { itemId: o.id }).ok) toast('A new battery.', 'positive'); }}>{`Replace The Battery, ${money(cost)}`}</button>}
                 {covers.filter((c) => o.device.protection?.plan !== c.plan).map((c) => <button key={c.plan} type="button" className="btn btn-sm btn-ghost" disabled={!protect.open} title={protect.reason} onClick={() => { if (run('phone.protect', { itemId: o.id, plan: c.plan }).ok) toast(`${c.plan}, from now.`, 'positive'); }}>{`${c.plan}, ${formatMoney(Math.round(c.monthly * 100), c.currency, { cents: false })} A Month`}</button>)}
                 {o.device.protection && <button type="button" className="btn btn-sm btn-ghost" disabled={!protect.open} onClick={() => run('phone.protect', { itemId: o.id })}>End The Cover</button>}
@@ -502,6 +507,11 @@ function WatchingAndPlaying() {
   const mine = subscriptionsOf(person);
   const [planId, setPlanId] = useState('');
   const [consoleId, setConsoleId] = useState('');
+  const [progId, setProgId] = useState('');
+  const watchTv = useFeature('tv.watch');
+  // Least watched that week first, the market's most watched last.
+  const shows = [...programmesHere(person)].reverse();
+  const show = shows.find((x) => x.id === progId) ?? shows[shows.length - 1];
   const l = licenceHere(person);
   const consoles = consolesHere(person);
   if (plans.length === 0 && !l && consoles.length === 0) return null;
@@ -557,6 +567,24 @@ function WatchingAndPlaying() {
         <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
           {ways.map((w) => { const no = watchRefusal(sim, person, w.how); return <button key={w.how} type="button" className="btn btn-sm btn-ghost" disabled={!unwind.open || Boolean(no)} title={no ?? unwind.reason} onClick={() => { if (run('life.look_after', { action: 'unwind', how: w.how }).ok) toast('An hour to yourself.', 'positive'); }}>{w.label}</button>; })}
         </div>
+        {show && (() => {
+          const at = placeIn(person, show);
+          const no = programmeRefusal(sim, person, show);
+          const watch = (to: 'episode' | 'hour') => { const r = run<{ watched: number; finished: boolean }>('tv.watch', { programmeId: show.id, to }); if (r.ok) toast(r.value!.finished ? `${show.title}, watched to the end.` : `${r.value!.watched} minutes of ${show.title}.`, 'positive'); };
+          return (
+            <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+              <div className="field" style={{ margin: 0 }}>
+                <label htmlFor="homelife-programme">Program</label>
+                <select id="homelife-programme" value={show.id} onChange={(e) => setProgId(e.target.value)}>
+                  {shows.map((x) => <option key={x.id} value={x.id}>{x.title}</option>)}
+                </select>
+              </div>
+              <span className="small">{finished(show, at) ? 'Watched to the end.' : `On ${show.service}${show.confirmed ? '' : ' (its episodes read secondhand)'}: season ${at.season + 1} of ${show.seasons.length}, episode ${at.episode + 1} of ${show.seasons[at.season]![0]}${at.minute > 0 ? `, ${at.minute} minutes in` : ''}.`}</span>
+              <button type="button" className="btn btn-sm btn-ghost" disabled={!watchTv.open || Boolean(no)} title={no ?? watchTv.reason} onClick={() => watch('episode')}>{at.minute > 0 ? 'Finish The Episode' : 'Watch An Episode'}</button>
+              <button type="button" className="btn btn-sm btn-ghost" disabled={!watchTv.open || Boolean(no)} title={no ?? watchTv.reason} onClick={() => watch('hour')}>Watch For An Hour</button>
+            </div>
+          );
+        })()}
       </div>
     </Panel>
   );
