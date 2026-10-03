@@ -183,10 +183,10 @@ Correctness first, then the connected day the plan asks to be shown working
 | 41c | Usable space | Done, 2026-10-03 | beds, baths, size; the floor that can be furnished, half the home's or a let room's 11.5 m², each piece its own footprint, a piece that won't fit not bought or brought out of storage; shown on Home (`systems/rooms.ts`) | Half is SLATE's estimate; room by room layout |
 | 41d–e | Terrain, access, utilities | Not implemented / partial | services on bare land | Parcel attributes read by the build |
 | 41f | Restrictions | Partial | zoning | HOA, conservation, setbacks |
-| 41g | Inspection | Partial | home inspection | Survey, title, environment |
+| 41g | Inspection | Done | home inspection; from 2026-10-03 the inspection at each town’s own published fee, a flat’s or a house’s (`inspectionFee`); a parcel’s survey and title insurance (`closingLines`, 2026-10-01) | — (an environmental search: none read, `docs/DATA-GAPS.md`) |
 | 41j | Development | Partial | renovation; one house on land | Outbuildings; subdivision for sale |
 | 41l | Verified vs simulated | Partial | fine print says simulated | A `source` field |
-| 42 | Construction walkthrough | Partial | builds by stages (complete); home projects paid up front | Bid choice, stages and payments for projects, change orders, cancellation, acceptance |
+| 42 | Construction walkthrough | Done | builds by stages (complete); home projects paid up front; from 2026-10-03 a project’s bid chosen of three, California’s down payment capped at the lesser of $1,000 and 10% and the rest at completion, and a contract cancelled for what was paid within the FTC’s, Britain’s, Ireland’s, Ontario’s and Mexico’s cooling-off periods (`coolingOffUntil`, `home.cancel_works`); tests/homeworks.test.ts | — (change orders and acceptance on a project: no rate or rule read, `docs/DATA-GAPS.md`) |
 | 43a–b | Rooms, finishes | Partial | parts with ages; from 2026-10-03 rooms as bedrooms, floor and built-in storage (`roomsOf`) | Each room's own size; finish grade kept |
 | 43c | Furniture | Partial | 5 pieces; from 2026-10-02 IKEA's seats, tables, wardrobes, frames, chests and bookcases (163 pieces, `systems/furnishings.ts`), seats and table places read by hosting, storage holding its outside measure | Desks, TV benches, coffee tables (no reader yet) |
 | 43d–h | Appliances, lighting, storage, security, utilities | Partial | fixtures; security | Fixture choice, lighting, capacity |

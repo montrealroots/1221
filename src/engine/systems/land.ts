@@ -30,9 +30,9 @@
  * one year's change for ever and a lot none, so a life's farmland in England
  * fell near nine-tenths in fifty years and a Brooklyn lot stood at 2022's
  * price while the houses around it rose. What a sale fetches is
- * that value, SLATE's estimate of the market; a buyer's survey, title
- * insurance and lawyer, whose prices no authority publishes, aren't kept, nor
- * is the fee for splitting a lot where it isn't published.
+ * that value, SLATE's estimate of the market. A buyer's survey, title
+ * insurance and lawyer weren't kept at first; from 2026-10-01 they are where
+ * published (`closingLines`), and the fee for splitting a lot (`SPLIT_FEES`).
  */
 
 import type { Simulation } from '../core/simulation';
