@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-290 commands; 285 named by a test, 5 not.
+292 commands; 286 named by a test, 6 not.
 
 ## aircraft
 
@@ -164,6 +164,13 @@ Each command the player can run: the engine file that handles it, the screens th
 | `clothes.sell` | `src/engine/systems/resale.ts` | `ClothesWorkspace.tsx` | `resale.test.ts` | Rent And A Roof |
 | `clothes.to_basket` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `hamper.test.ts` | Rent And A Roof |
 | `clothes.wear_outfit` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` | `clothing.test.ts` `wardrobe.test.ts` | Rent And A Roof |
+
+## club
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `club.join` | `src/engine/systems/clubs.ts` | `PeopleWorkspace.tsx` | `clubs.test.ts` | People |
+| `club.leave` | `src/engine/systems/clubs.ts` | `PeopleWorkspace.tsx` | **none** | People |
 
 ## dating
 
