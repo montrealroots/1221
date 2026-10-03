@@ -56,6 +56,7 @@ import { registerWatches } from './systems/watches';
 import { registerClubs } from './systems/clubs';
 import { registerAway } from './systems/away';
 import { registerReservations } from './systems/reservations';
+import { registerBulky } from './systems/bulky';
 import { registerClothing, starterWardrobe } from './systems/clothing';
 import { registerAlcohol } from './systems/alcohol';
 import { registerKitchen } from './systems/kitchen';
@@ -245,6 +246,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerClubs(sim);
   registerAway(sim);
   registerReservations(sim);
+  registerBulky(sim);
   registerClothing(sim);
   registerAlcohol(sim);
   registerKitchen(sim);

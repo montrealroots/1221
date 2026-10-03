@@ -311,6 +311,8 @@ export interface Person {
   pawns?: import('../systems/pawn').Pawn[];
   /** This month's test drive of a used car (`systems/usedcars.ts`, from 2026-10-03). */
   testDriven?: import('../systems/usedcars').Driven;
+  /** The year of their last bulky collection, for New Haven's first free one (`systems/bulky.ts`). */
+  bulkyYear?: number;
   /** Tables booked ahead (`systems/reservations.ts`, from 2026-10-03). */
   reservations?: import('../systems/reservations').Reservation[];
   /** The post held at home, and a house sitter staying (`systems/away.ts`, from 2026-10-03). */
