@@ -9,7 +9,7 @@ import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { INTERNET } from '@/engine/content/telecom';
-import { atlasBillsOf, billsOf, telecomPartOf } from '@/engine/systems/household';
+import { atlasBillsOf, billsOf, telecomPartOf, waterOf } from '@/engine/systems/household';
 import { internetIn, internetMonth, leavingCost, telecomLines, telecomOf } from '@/engine/systems/telecom';
 
 const life = (city: string, seed: string, kind: 'own' | 'shared' = 'own') => {
@@ -25,7 +25,9 @@ describe('the internet and the phone', () => {
   it('are their providers’ bills where SLATE keeps the offers, their estimate out of the bills, and the bills’ elsewhere', () => {
     const ldn = life('uk-eng-london', 'tc-ldn');
     expect(telecomPartOf(ldn, ldn.player)).toBeGreaterThan(0);
-    expect(billsOf(ldn, ldn.player)).toBe(atlasBillsOf(ldn, ldn.player) - telecomPartOf(ldn, ldn.player));
+    // And the water from 2026-10-03, Thames Water billing a London renter (`systems/water.ts`).
+    expect(billsOf(ldn, ldn.player)).toBe(atlasBillsOf(ldn, ldn.player) - telecomPartOf(ldn, ldn.player) + waterOf(ldn, ldn.player));
+    expect(waterOf(ldn, ldn.player)).toBeGreaterThan(0);
     const lines = telecomLines(ldn, ldn.player, ldn.now);
     expect(lines).toEqual([
       { memo: 'Internet, Virgin Media', amount: inSave(ldn, 23.99, 'GBP'), shared: true },
