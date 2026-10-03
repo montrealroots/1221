@@ -23,7 +23,15 @@ import { MS_DAY, formatDate, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
-import { CAR_MODELS, type CarModel, type VehicleKind } from '../content/vehiclecatalog';
+import { CAR_MODELS as CATALOG, type CarModel, type VehicleKind } from '../content/vehiclecatalog';
+import { CA_WEIGHT_FEE, GB_PICKUP_TAX, PICKUP_BODIES, PICKUP_MODELS } from '../content/pickups';
+
+/** The catalog's cars with its pickups marked and weighed, and the pickups added (`content/pickups.ts`). */
+export const CAR_MODELS: readonly CarModel[] = [
+  ...CATALOG.map((m) => { const p = PICKUP_BODIES[m.id]; return p ? { ...m, body: 'pickup' as const, kerbKg: m.kerbKg ?? p.kerbKg ?? null } : m; }),
+  ...PICKUP_MODELS,
+];
+export const isPickup = (m: CarModel): boolean => m.body === 'pickup';
 import { BIKE_MODELS } from '../content/bikecatalog';
 import { RV_MODELS } from '../content/rvcatalog';
 import { RIDE_MODELS } from '../content/ridecatalog';
@@ -389,7 +397,14 @@ export function caYear(model: CarModel, value: Money, age = 0): Money {
   const v = value / 100;
   // The smog abatement fee, to a car's eighth year, in place of the smog check; none on an electric car.
   const abatement = model.fuel === 'ev' ? 0 : CA_STATE.abatement.find(([upTo]) => age < upTo)?.[1] ?? 0;
-  return Math.round((CA_STATE.registration + CA_STATE.chp + bracket(CA_STATE.tif, v) + (model.fuel === 'ev' ? CA_STATE.zev : 0) + abatement) * 100 + value * CA_STATE.vlf);
+  return Math.round((CA_STATE.registration + CA_STATE.chp + bracket(CA_STATE.tif, v) + (model.fuel === 'ev' ? CA_STATE.zev : 0) + abatement + caWeightFee(model)) * 100 + value * CA_STATE.vlf);
+}
+
+/** California's weight fee on a pickup by its unladen weight, its curb weight taken (VC §9400); nothing where its maker publishes no weight, or it isn't one. */
+export function caWeightFee(model: CarModel): number {
+  if (!isPickup(model) || !model.kerbKg) return 0;
+  const lb = model.kerbKg * 2.20462;
+  return CA_WEIGHT_FEE.find(([upTo]) => lb <= upTo)?.[1] ?? CA_WEIGHT_FEE[CA_WEIGHT_FEE.length - 1]![1];
 }
 
 /**
@@ -511,7 +526,9 @@ export function renewal(v: OwnedVehicle, at: Instant): { amount: Money; next: In
     case 'US-NY': return { amount: c(bracket(NY_REGISTRATION_BY_WEIGHT, lbOf(m)) + (NYC.has(v.cityId) ? NY.nycUseTax + NY.mctd : 0)), next: year(2), memo: 'Registration renewed, two years' };
     case 'US-CT': return { amount: c(CT.registration + CT.admin + CT.cleanAir + CT.parks), next: year(3), memo: 'Registration renewed, three years' };
     case 'US-CA': return { amount: caYear(m, valueOf(v, at), age), next: year(1), memo: 'Registration renewed, the year' };
-    case 'GB': return { amount: c(GB.vedStandard + (age < 6 && m.price / 100 > (m.fuel === 'ev' ? GB.supplementOverEv : GB.supplementOver) ? GB.supplement : 0)), next: year(1), memo: 'Vehicle tax, the year' };
+    // A pickup is a commercial vehicle to Britain's vehicle tax (`content/pickups.ts`).
+    case 'GB': if (isPickup(m)) return { amount: c(GB_PICKUP_TAX), next: year(1), memo: 'Vehicle tax, the year, a pickup' };
+      return { amount: c(GB.vedStandard + (age < 6 && m.price / 100 > (m.fuel === 'ev' ? GB.supplementOverEv : GB.supplementOver) ? GB.supplement : 0)), next: year(1), memo: 'Vehicle tax, the year' };
     case 'IE': return { amount: c(bracket(IE_MOTOR_TAX, m.co2 ?? 150)), next: year(1), memo: 'Motor tax, the year' };
     case 'CA-ON': return { amount: 0, next: year(1), memo: 'Plate renewed, the year (free since 2022)' };
     case 'CA-BC': return { amount: c(bracket(BC.licence, m.kerbKg ?? BC.assumedKg)), next: year(1), memo: 'License renewed, the year' };

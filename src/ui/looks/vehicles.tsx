@@ -22,7 +22,7 @@ import { BOAT_RULES } from '@/engine/content/boats';
 import { CARAVANS } from '@/engine/content/caravans';
 import type { VehicleKind } from '@/engine/content/vehiclecatalog';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { insuranceCurrency, kindOf, modelById, monthlyInsurance, valueOf, type OwnedVehicle } from '@/engine/systems/vehicles';
+import { insuranceCurrency, isPickup, kindOf, modelById, monthlyInsurance, valueOf, type OwnedVehicle } from '@/engine/systems/vehicles';
 import { caravanValue, type OwnedCaravan } from '@/engine/systems/caravans';
 import type { OwnedBoat } from '@/engine/systems/boats';
 import type { OwnedAircraft } from '@/engine/systems/aviation';
@@ -228,7 +228,7 @@ function carLook(
 
   return {
     name,
-    kind: KIND_WORD[kindOf(model)],
+    kind: isPickup(model) ? 'A Pickup Of Your Own' : KIND_WORD[kindOf(model)],
     parent: at('person', sim.universe.playerId),
     summary,
     body: (

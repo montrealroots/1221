@@ -32,6 +32,7 @@ import { CITIES } from '../content/geography';
 import { FUEL } from '../content/vehiclefees';
 import { CHARGING, EV_MODELS } from '../content/evcatalog';
 import { CAR_MODELS } from '../content/vehiclecatalog';
+import { PICKUP_MODELS } from '../content/pickups';
 import { BIKE_MODELS } from '../content/bikecatalog';
 import { RV_MODELS } from '../content/rvcatalog';
 import { RIDE_MODELS } from '../content/ridecatalog';
@@ -71,7 +72,7 @@ export function capacityOf(m: CarModel): { size: number; unit: 'L' | 'kWh'; esti
   return est ? { size: est, unit: 'L', estimated: true } : undefined;
 }
 
-const models: readonly CarModel[] = [...CAR_MODELS, ...EV_MODELS, ...BIKE_MODELS, ...RV_MODELS, ...RIDE_MODELS];
+const models: readonly CarModel[] = [...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS, ...BIKE_MODELS, ...RV_MODELS, ...RIDE_MODELS];
 function medianOf(match: (m: CarModel) => boolean, field: 'tankL' | 'batteryKwh'): number | undefined {
   const xs = models.filter(match).map((m) => TANKS[m.id]?.[field]).filter((x): x is number => typeof x === 'number' && x > 0).sort((a, b) => a - b);
   if (xs.length === 0) return undefined;

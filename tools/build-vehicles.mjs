@@ -94,6 +94,8 @@ export interface CarModel {
   id: string;
   /** A car where not given. */
   kind?: VehicleKind;
+  /** A pickup's body, from 2026-10-03 (`content/pickups.ts`): a car to drive, a goods vehicle to some taxes. */
+  body?: 'pickup';
   /** A motorcycle's or scooter's engine, cc: what taxes and insures it by size. */
   cc?: number;
   market: 'US' | 'CA' | 'MX' | 'GB' | 'IE';
