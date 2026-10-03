@@ -19,6 +19,7 @@ import { MS_DAY, WEEKDAY_NAMES, formatDateTime, zonedParts } from '@/engine/core
 import { PERFORMER_NOUN } from '@/engine/core/performer';
 import { Children, useState, type ReactNode } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
+import { petsOf, sheltersIn } from '@/engine/systems/pets';
 import { Panel, Stat, Meter, MoneyText, Empty } from '@/ui/components/primitives';
 import { openDecisions, lifeSnapshot, unreadNotifications } from '@/engine/world/world';
 import { entriesBetween, nextCommitment, upcoming } from '@/engine/world/calendar';
@@ -1036,6 +1037,7 @@ function YourPlace({ cur }: { cur: string }) {
         <p className="xs dim" style={{ margin: 0 }}>{`The cleaner’s visits: ${living.cleanerLog!.slice(0, 4).map((v) => `${formatDate(v.at, sim.zone)}, ${v.paid !== undefined ? formatMoney(v.paid, cur, { cents: false }) : v.unpaid ? 'not paid, so not cleaned' : 'couldn’t get in'}`).join('; ')}.`}</p>
       )}
       {home.kind !== 'sofa' && <WhileAway cur={cur} />}
+      {home.kind !== 'sofa' && <YourPets cur={cur} />}
     </div>
   );
 }
@@ -1045,6 +1047,31 @@ function YourPlace({ cur }: { cur: string }) {
  * days, and a house sitter for some nights, each somebody or something that
  * keeps a parcel from the door.
  */
+/** A dog or a cat of your own, adopted at a shelter where you live (`systems/pets.ts`). */
+function YourPets({ cur }: { cur: string }) {
+  const { sim, run, toast } = useGame();
+  const pets = useWorld((s) => [...petsOf(s.player)]);
+  const here = useWorld((s) => sheltersIn(s.player.home?.cityId ?? ''));
+  const [petName, setPetName] = useState('');
+  if (here.length === 0 && pets.length === 0) return null;
+  return (
+    <div className="col gap-1">
+      {pets.length > 0 && <span className="small">{`Your pets: ${pets.map((p) => `${p.name}, a ${p.species}`).join('; ')}. On a trip, someone stays or they come along.`}</span>}
+      {here.length > 0 && (
+        <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+          <div className="field" style={{ margin: 0 }}>
+            <label htmlFor="pet-name">A Name For It</label>
+            <input id="pet-name" value={petName} onChange={(e) => setPetName(e.target.value)} style={{ width: '10rem' }} />
+          </div>
+          {here.map((s) => (
+            <Gated key={s.id} feature="pets.adopt" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.adopt', { shelterId: s.id, name: petName }).ok) { toast(`Adopted from ${s.name}.`, 'positive'); setPetName(''); } }}>{`Adopt A ${s.species === 'dog' ? 'Dog' : 'Cat'}, ${s.name}${s.fee > 0 ? `, ${formatMoney(inSaveMoney(sim, Math.round(s.fee * 100), s.currency), cur, { cents: false })}${s.confirmed ? '' : ', Read Secondhand'}` : ''}`}</Gated>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function WhileAway({ cur }: { cur: string }) {
   const { sim, run, toast } = useGame();
   const [days, setDays] = useState(7);

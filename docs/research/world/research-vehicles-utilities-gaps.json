@@ -1,0 +1,457 @@
+{
+  "_meta": {
+    "purpose": "Published real-world figures for SLATE's life simulation: pickup trucks (A), recreational boats and light aircraft (B), car-wrap removal and partial wraps (C), Mexico City LP gas and SACMEX water (D), utility outages (E), and vehicle crime by where the car is parked (F). Markets: US, UK, Ireland, Canada, Mexico.",
+    "retrieved": "2026-10-03",
+    "conventions": "confirmed = true only where the figure was read on the publisher's own page or PDF during retrieval (HTML fetched directly, or a PDF/XLSX downloaded from the publisher and converted to text locally). confirmed = false where the figure came from a search-engine excerpt, a press report of the publisher's figure, or a page that could not be loaded; the note says which. Figures are never estimated or derived here, except where a note shows the plain arithmetic.",
+    "accessNotes": "ford.com, ford.ca, ramtrucks.com, chevrolet.com and toyota.com refused the summarising fetcher (HTTP 403) but served full HTML to a direct request; prices were read from those pages' own markup. gob.mx (CNE) returned a JavaScript challenge page, so no CNE figure could be read at the source."
+  },
+
+  "A_pickups": {
+    "US": [
+      {
+        "model": "Ford F-150 XL (2026)",
+        "baseMsrp": { "value": 39585, "unit": "USD", "basis": "page data field baseMsrp / msrpPrice for the 2026 F-150 XL thumbnail on the F-150 model page; the page's starting-at text is a template filled by script, so the figure was read from the embedded data. Ford's disclosure on the same page says destination charges are separate from MSRP." },
+        "source": { "title": "2026 Ford F-150 Pickup Truck", "url": "https://www.ford.com/trucks/f150/", "publisher": "Ford Motor Company", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "fuelEconomy": {
+          "value": "19 city / 25 hwy / 21 combined", "unit": "mpg (EPA)",
+          "config": "2026 F150 Pickup 2WD, 2.7 L V6 turbo, Automatic (S10), rear-wheel drive (fueleconomy.gov vehicle id 50092)",
+          "source": { "title": "fueleconomy.gov web services, vehicle 50092", "url": "https://www.fueleconomy.gov/ws/rest/vehicle/50092", "publisher": "U.S. Department of Energy / U.S. EPA", "date": "accessed 2026-10-03" },
+          "confirmed": true
+        },
+        "curbWeight": {
+          "value": 4391, "unit": "lb", "basis": "\"Min Vehicle Base Curb Weight - 4x2 4,391 lbs.\"; the same page's base-curb-weight table lists 2.7L EcoBoost SuperCab 4x2 at 4,396 lb and 4x4 at 4,679 lb.",
+          "source": { "title": "2026 Ford F-150 Pickup Truck (specifications section)", "url": "https://www.ford.com/trucks/f150/", "publisher": "Ford Motor Company", "date": "accessed 2026-10-03" },
+          "confirmed": true
+        }
+      },
+      {
+        "model": "Ram 1500 (2026)",
+        "baseMsrp": { "value": 42025, "unit": "USD", "basis": "schema.org Offer price on the Ram 1500 page (\"priceCurrency\":\"USD\",\"price\":\"42025\"), the lowest trim; the visible model-compare card shows \"EXPRESS Starting at MSRP $42,400\". Page footnote: \"*MSRP excludes destination, taxes, title and registration fees\". The trim behind $42,025 is not named in that data field (search excerpts tie it to Tradesman)." },
+        "source": { "title": "2026 Ram 1500", "url": "https://www.ramtrucks.com/ram-1500.html", "publisher": "FCA US LLC (Stellantis)", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "fuelEconomy": {
+          "value": "20 city / 25 hwy / 22 combined", "unit": "mpg (EPA)",
+          "config": "2026 Ram 1500 2WD, 3.6 L V6, Automatic 8-spd (fueleconomy.gov id 49834). The Ram page itself states \"20 MPG City/25 MPG Highway\".",
+          "source": { "title": "fueleconomy.gov web services, vehicle 49834", "url": "https://www.fueleconomy.gov/ws/rest/vehicle/49834", "publisher": "U.S. Department of Energy / U.S. EPA", "date": "accessed 2026-10-03" },
+          "confirmed": true
+        },
+        "curbWeight": { "value": null, "note": "Not on the static Ram 1500 page; not found." }
+      },
+      {
+        "model": "Chevrolet Silverado 1500 (2026)",
+        "baseMsrp": { "value": 38145, "unit": "USD", "basis": "Page FAQ: \"the starting at MSRP ranges from $38,145 to $74,295, depending on trim\" (lowest = WT). Whether destination is included is not stated in the captured text." },
+        "source": { "title": "2026 Chevy Silverado 1500 | Pickup Truck | Chevrolet", "url": "https://www.chevrolet.com/trucks/silverado/1500", "publisher": "General Motors (Chevrolet)", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "fuelEconomy": {
+          "value": "18 city / 21 hwy / 20 combined", "unit": "mpg (EPA)",
+          "config": "2026 Silverado 2WD, 2.7 L 4-cyl turbo (TurboMax), Automatic 8-spd (fueleconomy.gov id 49358)",
+          "source": { "title": "fueleconomy.gov web services, vehicle 49358", "url": "https://www.fueleconomy.gov/ws/rest/vehicle/49358", "publisher": "U.S. Department of Energy / U.S. EPA", "date": "accessed 2026-10-03" },
+          "confirmed": true
+        },
+        "curbWeight": {
+          "value": "4,410–5,710", "unit": "lb", "basis": "\"Here's the weight range for an unloaded 2026 Chevy Silverado: 4,410 lbs.–5,710 lbs.\"",
+          "source": { "title": "2026 Chevy Silverado 1500", "url": "https://www.chevrolet.com/trucks/silverado/1500", "publisher": "General Motors (Chevrolet)", "date": "accessed 2026-10-03" },
+          "confirmed": true
+        }
+      },
+      {
+        "model": "Toyota Tacoma SR (2026)",
+        "baseMsrp": { "value": 32545, "unit": "USD", "basis": "\"2026 Tacoma Starting MSRP $32,545\"; SR trim card \"$32,545 Base MSRP 20/26 MPG Est. City/Hwy\". Other trims on the page: SR5 $36,635, TRD PreRunner $39,135. Whether delivery/processing is included is not stated in the captured text." },
+        "source": { "title": "2026 Toyota Tacoma", "url": "https://www.toyota.com/tacoma/", "publisher": "Toyota Motor North America", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "fuelEconomy": {
+          "value": "20 city / 26 hwy / 23 combined", "unit": "mpg (EPA)",
+          "config": "2026 Tacoma 2WD, 2.4 L 4-cyl turbo, Automatic (S8) (fueleconomy.gov id 50081)",
+          "source": { "title": "fueleconomy.gov web services, vehicle 50081", "url": "https://www.fueleconomy.gov/ws/rest/vehicle/50081", "publisher": "U.S. Department of Energy / U.S. EPA", "date": "accessed 2026-10-03" },
+          "confirmed": true
+        },
+        "curbWeight": { "value": null, "note": "Not on the static Tacoma page; not found." }
+      }
+    ],
+    "Canada": [
+      {
+        "model": "Ford F-150 XL (2026)",
+        "baseMsrp": { "value": 50940, "unit": "CAD", "basis": "page data: \"metricsModelName\":\"xl\" ... \"baseMsrp\":\"50940.0\"" },
+        "startingAtPrice": { "value": 53735, "unit": "CAD", "basis": "page data \"startingAtPrice\":\"53735\". Ford Canada's disclaimer: the Starting At price \"includes destination & delivery, air tax fees, green levy charges (if applicable), and currently applicable adjustments and incentives. Excludes taxes, options, dealer fees, lien registration...\"" },
+        "source": { "title": "2026 Ford F-150", "url": "https://www.ford.ca/trucks/f150/", "publisher": "Ford Motor Company of Canada", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "fuelConsumption": {
+          "value": "12 city / 9.2 hwy / 10.7 combined", "unit": "L/100 km (Government of Canada approved test methods)",
+          "config": "first column of the page's \"Fuel Consumption - 4x2 w/Start/Stop\" row, which lines up with the 2.7L EcoBoost V6 in the spec table. Without start/stop the same column reads 13 / 9.6 / 11.5.",
+          "source": { "title": "2026 Ford F-150 (specifications)", "url": "https://www.ford.ca/trucks/f150/", "publisher": "Ford Motor Company of Canada", "date": "accessed 2026-10-03" },
+          "confirmed": true,
+          "note": "Column-to-engine mapping read from flattened table text; treat the engine attribution as the page's first engine column."
+        },
+        "curbWeight": {
+          "value": 4220, "unit": "lb (1,914.2 kg)", "basis": "\"Min Vehicle Base Curb Weight - 4x2 4,220 lbs.\" and the metric table \"Base Curb Weight - 4x2 1,914.2\"",
+          "source": { "title": "2026 Ford F-150 (specifications)", "url": "https://www.ford.ca/trucks/f150/", "publisher": "Ford Motor Company of Canada", "date": "accessed 2026-10-03" },
+          "confirmed": true
+        }
+      }
+    ],
+    "Mexico": [
+      {
+        "model": "Ford F-150 2026 — XL Cabina Regular V6 4x2 Caja 8'",
+        "price": { "value": 1027000, "unit": "MXN", "basis": "\"Precio desde: $1,027,000\". Other versions on the page: XL Cabina y Media V6 4x2 $1,060,500; XL Doble Cabina V6 4x2 $1,069,500; XL Doble Cabina V6 4x4 $1,111,500; XL Doble Cabina V6 4x4 Híbrida $1,180,000; XL Doble Cabina V8 4x4 $1,208,500; XLT Cabina y Media V8 4x4 $1,254,500; XLT Doble Cabina V8 4x2 $1,299,500; XLT Doble Cabina V8 4x4 $1,356,500." },
+        "source": { "title": "F-150 2026 — Versiones y precios", "url": "https://www.ford.mx/camiones/f150/2026/versiones-precios/", "publisher": "Ford Motor Company S.A. de C.V.", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "fuelEconomy": { "value": null, "note": "The page cites NOM-163 laboratory fuel-economy figures in its legal text but no km/l value was in the static HTML; not found." },
+        "curbWeight": { "value": null, "note": "Not found on the price page." }
+      }
+    ],
+    "UK": [
+      {
+        "model": "Toyota Hilux (All New Hilux, diesel base grade)",
+        "price": { "value": 34670, "unit": "GBP excl. VAT", "basis": "\"All New Hilux £34,670.00 (Excl. VAT) — Price shown is the recommended On The Road price for our base grade for this diesel model\"" },
+        "source": { "title": "Toyota Hilux", "url": "https://www.toyota.co.uk/new-cars/hilux", "publisher": "Toyota (GB) PLC", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "fuelConsumption": { "value": "9.7 - 9.8", "unit": "l/100 km (WLTP), CO2 254 - 258 g/km", "basis": "\"Diesel Fuel Economy (l/100 km) WLTP 9.7 - 9.8 l/100 km WLTP CO2 WLTP 254 - 258 g/km\"", "confirmed": true },
+        "roadTax": { "value": 360, "unit": "GBP per year", "basis": "\"Both the All-Electric Hilux, and the Diesel Hilux are subject to standard commercial vehicle road tax, currently set at £360 per year ... As it is classified as a commercial vehicle, it is not affected by the luxury car tax supplement\"", "confirmed": true, "note": "This is the UK registration/tax difference for pickups: they pay the flat light-goods-vehicle rate rather than CO2-banded car VED, as stated on Toyota's page. DVLA/GOV.UK page itself not read." },
+        "curbWeight": { "value": null, "note": "Not on the static Hilux page." }
+      },
+      {
+        "model": "Ford Ranger XL Single Chassis Cab",
+        "price": { "value": 36250, "unit": "GBP excl. VAT", "basis": "price module label \"Recommended Retail Price Excl. Vat\" with disclosure \"Basic Recommended Retail price new\": \"£36,250 Ranger XL Single Chassis Cab\"" },
+        "source": { "title": "Ford Ranger", "url": "https://www.ford.co.uk/vans-and-pickups/ranger", "publisher": "Ford Motor Company Limited", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "fuelConsumption": { "value": null, "note": "No WLTP figure in the static UK Ranger page; not found." }
+      }
+    ],
+    "Ireland": [
+      {
+        "model": "Toyota Hilux",
+        "price": { "value": 52950, "unit": "EUR", "basis": "Toyota Ireland model list: \"Hilux From €52,950\"" },
+        "source": { "title": "Toyota Hilux", "url": "https://www.toyota.ie/new-cars/hilux", "publisher": "Toyota Ireland", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "fuelConsumption": { "value": null, "note": "WLTP figures were not in the static Irish page; the UK page gives 9.7-9.8 l/100 km for the diesel." }
+      },
+      {
+        "model": "Ford Ranger Double Cab XLT 3.0L TD EcoBlue V6 240PS, 10-speed auto, 4WD (27MY)",
+        "price": { "value": 59308.50, "unit": "EUR (GRP incl. VRT)", "basis": "price-list row: NRP €42,250.00; VRT €7,341.00; GRP excluding VRT €51,967.50; GRP €59,308.50. Cheapest row in the list: Double Cab XLT 2.3 EcoBoost PHEV, NRP €41,250.00, VRT €7,167.25, GRP excl. VRT €50,737.50, GRP €57,904.75." },
+        "source": { "title": "Ranger 27MY IRL Customer Price List — Effective 5th August 2026", "url": "https://www.ford.ie/content/dam/guxeu/ie/Documents/Pricelists/Cars/PL-ford_all_new_ranger.pdf", "publisher": "Ford Ireland", "date": "2026-08-05" },
+        "confirmed": true,
+        "fuelConsumption": { "value": 10.3, "unit": "l/100 km (WLTP overall)", "basis": "XLT 4WD row of the WLTP table: fuel low 14.1, high 8.7 l/100km, CO2 272 g/km, overall 10.3 l/100km; min kerb weight 2,252 kg, GVM 3,350 kg, payload 1,098 kg, braked towing 3,500 kg", "confirmed": true, "note": "Row read from layout-converted PDF text; the row sits under the 3.0 diesel heading." },
+        "curbWeight": { "value": 2252, "unit": "kg (min kerb)", "confirmed": true }
+      }
+    ],
+    "registrationDifference": {
+      "US_California": {
+        "rule": "California charges a weight fee on commercial vehicles, explicitly including pickups, based on unladen weight and axles, in addition to other registration fees. \"A weight fee based on the vehicle's unladen weight and number of axles is imposed on commercial vehicles (trucks, pickups, and some trailers).\" \"Weight fees for pickup trucks and electric vehicles are calculated under this section.\"",
+        "twoAxleWeightFees": [
+          { "unladenLb": "0 – 1,999", "code": "A", "feeUSD": 8 },
+          { "unladenLb": "2,000 – 2,999", "code": "B", "feeUSD": 8 },
+          { "unladenLb": "3,000 – 4,000", "code": "C", "feeUSD": 24 },
+          { "unladenLb": "4,001 – 5,000", "code": "D", "feeUSD": 80 },
+          { "unladenLb": "5,001 – 6,000", "code": "E", "feeUSD": 154 },
+          { "unladenLb": "6,001 – 7,000", "code": "F", "feeUSD": 204 },
+          { "unladenLb": "7,001 – 8,000", "code": "G", "feeUSD": 257 },
+          { "unladenLb": "8,001 – 9,000", "code": "H", "feeUSD": 308 },
+          { "unladenLb": "9,001 – 10,000", "code": "J", "feeUSD": 360 }
+        ],
+        "effective": "01/01/2002 (VC §9400) for vehicles with declared GVW of 10,000 lb or less",
+        "source": { "title": "Vehicle Industry Registration Procedures Manual — Appendix 1F Fees", "url": "https://www.dmv.ca.gov/portal/handbook/vehicle-industry-registration-procedures-manual-2/appendix-1f-fees/", "publisher": "California Department of Motor Vehicles", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "example": "A 2026 F-150 at the 4,391 lb minimum curb weight falls in band D ($80); a 5,710 lb Silverado falls in band E ($154). Curb weight is used here as a stand-in for DMV unladen weight, which can differ slightly."
+      },
+      "UK": "See Toyota Hilux roadTax above (flat £360 commercial-vehicle rate).",
+      "Canada": { "value": null, "note": "No provincial (Ontario/BC) registry page stating a different plate fee or insurance class for personal-use pickups was read; not found." },
+      "insurance": { "value": null, "note": "No DMV or regulator page stating an insurance premium difference for pickups was found." }
+    }
+  },
+
+  "B_boatsAndAircraft": {
+    "boats": [
+      {
+        "model": "Bayliner Element E16", "price": 27024, "unit": "USD", "basis": "\"E16 STARTING AT $27,024*\"",
+        "source": { "title": "Bayliner Element", "url": "https://www.bayliner.com/en-us/boats/element/element-e16", "publisher": "Bayliner (Brunswick Corporation)", "date": "accessed 2026-10-03" }, "confirmed": true,
+        "note": "The asterisk footnote was not captured. The existing research-boats.json records that Bayliner prices are footnoted \"Pricing reflects NAP\" (nationally advertised price)."
+      },
+      { "model": "Bayliner Element E18", "price": 30872, "unit": "USD", "basis": "\"E18 STARTING AT $30,872*\"", "source": { "title": "Bayliner Element", "url": "https://www.bayliner.com/en-us/boats/element/element-e16", "publisher": "Bayliner (Brunswick Corporation)", "date": "accessed 2026-10-03" }, "confirmed": true },
+      { "model": "Bayliner M17 (pontoon)", "price": 31433, "unit": "USD", "basis": "\"M17 STARTING AT $31,433* 90 HP Maximum Horsepower 7 Persons Capacity 17'0\"\"", "source": { "title": "Bayliner Element", "url": "https://www.bayliner.com/en-us/boats/element/element-e16", "publisher": "Bayliner (Brunswick Corporation)", "date": "accessed 2026-10-03" }, "confirmed": true },
+      { "model": "Yamaha SX180 (jet boat, 18 ft)", "price": 39999, "unit": "USD", "basis": "\"18FT SX180 SX180 Value-Packed Boating Experience Starting at $39,999.00\"", "source": { "title": "Yamaha Boats (site menu)", "url": "https://www.yamahaboats.com/boats/ar190", "publisher": "Yamaha Motor Corporation, U.S.A.", "date": "accessed 2026-10-03" }, "confirmed": true },
+      { "model": "Yamaha AR182 (jet boat)", "price": 43499, "unit": "USD", "basis": "\"AR182 Affordable Watersports Excitement Starting at $43,499.00\"", "source": { "title": "Yamaha Boats (site menu)", "url": "https://www.yamahaboats.com/boats/ar190", "publisher": "Yamaha Motor Corporation, U.S.A.", "date": "accessed 2026-10-03" }, "confirmed": true },
+      { "model": "Yamaha 190 FSH Sport (jet fishing boat)", "price": 52599, "unit": "USD", "basis": "\"190 FSH® Sport Exceed Your Expectations Starting at $52,599.00\"", "source": { "title": "Yamaha Boats (site menu)", "url": "https://www.yamahaboats.com/boats/ar190", "publisher": "Yamaha Motor Corporation, U.S.A.", "date": "accessed 2026-10-03" }, "confirmed": true },
+      { "model": "Yamaha AR200", "price": 53599, "unit": "USD", "basis": "\"20FT AR200 AR200 Twenty Feet. Within Reach. Starting at $53,599.00\"", "source": { "title": "Yamaha Boats (site menu)", "url": "https://www.yamahaboats.com/boats/ar190", "publisher": "Yamaha Motor Corporation, U.S.A.", "date": "accessed 2026-10-03" }, "confirmed": true },
+      {
+        "model": "Sea Ray SPX 190", "price": null,
+        "specs": "Fuel capacity 29 gal; cruising speed 30–31 mph; WOT 44–46 mph (maker page)",
+        "source": { "title": "Sea Ray SPX 190", "url": "https://www.searay.com/us/en/boats/spx/spx-190", "publisher": "Sea Ray (Brunswick Corporation)", "date": "accessed 2026-10-03" },
+        "confirmed": true, "note": "No list price in the page's static HTML (price is script-loaded or dealer-only); price not found."
+      },
+      {
+        "model": "Boston Whaler 130 Super Sport", "price": null,
+        "specs": "Fuel capacity 6.5 gal (portable tank); standard Mercury 40 ELPT EFI FourStroke; weight (dry, no engine) 695 lb; weight with engine and fuel 1,005 lb; length with platforms 14'0\"",
+        "source": { "title": "130 Super Sport", "url": "https://www.bostonwhaler.com/us/en/boats/super-sport/130-super-sport", "publisher": "Boston Whaler (Brunswick Corporation)", "date": "accessed 2026-10-03" },
+        "confirmed": true, "note": "The page's performance table (speed/GPH) and price are script-loaded; neither was readable. Price not found."
+      },
+      {
+        "model": "Quicksilver Activ 505 Open (UK)", "price": 21870, "unit": "GBP incl. VAT",
+        "source": { "title": "Search-engine excerpt of a UK dealer's 2026 listing", "url": "https://avonmarina.com/product/quicksilver-activ-505-open/", "publisher": "Avon Marina (dealer)", "date": "2026" },
+        "confirmed": false, "note": "Dealer price from a search excerpt, not read on the page; Quicksilver (Brunswick) does not publish a UK list price on its own site that was found."
+      },
+      {
+        "model": "Jeanneau Cap Camarat 5.5 (UK/Ireland)", "price": null,
+        "confirmed": false, "note": "Jeanneau publishes no price list on jeanneau.com that could be found; only dealer listings (e.g. €41,240–€48,672 for a 5.5 CC) appeared in search excerpts. Not recorded as a figure."
+      }
+    ],
+    "boatEngineFuelBurn": {
+      "engine": "Yamaha F115XB (115 hp outboard) on a Parker 1801 CC",
+      "rows": [
+        { "rpm": 3500, "mph": 18.0, "gph": 3.7, "mpg": 4.86 },
+        { "rpm": 4000, "mph": 24.3, "gph": 4.4, "mpg": 5.51 },
+        { "rpm": 4500, "mph": 28.6, "gph": 5.6, "mpg": 5.15 },
+        { "rpm": 5000, "mph": 33.1, "gph": 7.0, "mpg": 4.72 },
+        { "rpm": 6000, "mph": 39.8, "gph": 10.9, "mpg": 3.66, "note": "WOT" }
+      ],
+      "source": { "title": "F115XB on Parker 1801 CC Performance Bulletin", "url": "https://yamahaoutboards.com/outboards/115-30-hp/115-75-hp/f115/pb_pkr_1801-cc_0_f115xb_04-08-2022_occ", "publisher": "Yamaha Motor Corporation, U.S.A. (Yamaha Outboards)", "date": "test 2022-04-07" },
+      "confirmed": true,
+      "note": "Yamaha jet boats (SX/AR) fuel burn was not published on the pages read; not found."
+    },
+    "aircraft": [
+      {
+        "model": "Cirrus SR20 (G7)", "price": 474900, "unit": "USD",
+        "basis": "Cirrus's own finance/trip calculator data on the SR20 page: \"SR20 - $474,900\", \"SR20 Premium - $574,900\"; same list: SR22 $654,900, SR22T $754,900, SR22 GTS $834,900.",
+        "source": { "title": "Cirrus SR20", "url": "https://cirrusaircraft.com/aircraft/sr20/", "publisher": "Cirrus Aircraft", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "fuelBurn": { "value": null, "note": "Not on the static SR20 page (a separate price list/spec download is referenced). Search excerpts quote 11.9 gal/hr at 72% power, 8,000 ft, from the POH, but that was not read on a Cirrus page; not recorded." }
+      },
+      {
+        "model": "Piper Archer LX", "price": 422350, "unit": "USD", "priceYear": 2021,
+        "basis": "\"2021 Standard Equipped List Price ARCHER LX $422,350*\"",
+        "source": { "title": "Archer LX single sheet (2021)", "url": "https://www.piper.com/wp-content/uploads/2021/02/2021_Archer-LX-Single-Sheet_Lo-Res.pdf", "publisher": "Piper Aircraft, Inc.", "date": "2021" },
+        "confirmed": true,
+        "note": "This is Piper's 2021 list price, the newest Piper-published price found; a current (2026) Piper list price was not found. Fuel capacity 48 US gal (182 L). No fuel-flow figure on the sheet.",
+        "fuelBurn": { "value": null, "note": "Not on the Piper sheet; not found." }
+      },
+      {
+        "model": "Diamond DA40 NG", "price": null,
+        "fuelBurn": { "value": 19.3, "unit": "l/h at 60% power (5.1 US gal/h), Jet A-1", "basis": "\"Fuel consumption 19.3 l/h (@60%)\" / \"5.1 US gal/h (@60%)\"", "confirmed": true },
+        "fuelBurnXLT": { "value": 31, "unit": "l/h at 65% power (8.2 US gal/h), DA40 XLT (avgas)", "confirmed": true },
+        "source": { "title": "DA40 Series — Tech Specs", "url": "https://www.diamondaircraft.com/en/private-owners/aircraft/da40/tech-specs/", "publisher": "Diamond Aircraft Industries", "date": "accessed 2026-10-03" },
+        "note": "Diamond publishes no new-aircraft list price (configurator/sales only). Its pre-owned factory-rebuilt DA40 NG listings appeared in search excerpts at EUR 410,000 and EUR 478,000 excl. VAT (not read; confirmed false)."
+      },
+      {
+        "model": "Cessna 172S Skyhawk", "price": null, "fuelBurn": null,
+        "source": { "title": "Cessna Skyhawk", "url": "https://www.cessna.txtav.com/en/piston/cessna-skyhawk", "publisher": "Textron Aviation", "date": "accessed 2026-10-03" },
+        "confirmed": true,
+        "note": "Textron's page gives maximum range 640 nm and 4 occupants, no price and no fuel flow (sales contact only). Search excerpts quote 172S POH cruise of about 10.4 gal/hr at 2,700 rpm/8,000 ft; not read on a Textron page, not recorded."
+      }
+    ],
+    "usedAircraftPrices": {
+      "value": null,
+      "note": "Aircraft Bluebook (Informa) and Vref are subscription products; their average used prices are paywalled and were not read. No free publisher average was found."
+    }
+  },
+
+  "C_carWraps": {
+    "New York": {
+      "shop": "WRP (We Reject Paint), 1489 Blondell Ave, Bronx, NY 10461",
+      "figures": { "fullWrapCompact": "$2,200–$3,200", "midsizeEV": "$2,800–$4,000", "suvTruck": "$3,500–$5,000", "luxuryExotic": "$4,000–$8,000+" },
+      "partialWrap": null, "removal": null,
+      "source": { "title": "How Much Does a Car Wrap Cost in NYC? (2026 Pricing Guide)", "url": "https://werejectpaint.com/blog-post/nyc-vinyl-wrap-cost-guide", "publisher": "WRP", "date": "2026-07-16" },
+      "confirmed": true,
+      "note": "The shop says these are \"market ranges, not our menu\"; it quotes per vehicle. No named NYC shop page with a hood/roof or removal price was found."
+    },
+    "Los Angeles": {
+      "shop": "Hussle Customz, Los Angeles",
+      "partialWrap": { "value": "$600–$1,300", "unit": "USD", "basis": "\"Partial wrap (accent panels)\" covering \"Hood / roof / mirrors\"" },
+      "removal": null,
+      "source": { "title": "Car Wrap Cost Los Angeles: 2026 Pricing Guide", "url": "https://husslecustomz.com/blog/car-wrap-cost-los-angeles/", "publisher": "Hussle Customz", "date": "updated April 2026" },
+      "confirmed": true
+    },
+    "London": {
+      "shop": "Raccoon, Unit 5 Edenbridge Trade Centre, Hever Road, Edenbridge, Kent TN8 5EA (outside London, ~30 miles)",
+      "removal": { "smallCar": 500, "mediumCar": 700, "van": 900, "unit": "GBP", "basis": "approximate figures; the firm says it cannot give an exact price until it discusses the project" },
+      "partialWrap": null,
+      "source": { "title": "Removing a vehicle wrap", "url": "https://www.raccoon.co.uk/blog/removing-a-vehicle-wrap", "publisher": "Raccoon", "date": "accessed 2026-10-03" },
+      "confirmed": true,
+      "note": "No London-based shop page with itemised roof/bonnet or removal prices was found. The Vehicle Wrapping Company (Horsham) lists full wraps £1,200–£3,900+ and part colour changes from £90–£150 but no roof/bonnet/removal line (https://venomwraps.co.uk/prices/)."
+    },
+    "Toronto": {
+      "shop": "Advanced Vehicle Guard, 222 Evans Ave., Etobicoke, ON M8Z 1J8",
+      "roofWrap": { "compact": "$350–$550", "midSize": "$400–$650", "fullSizeSuvTruck": "$500–$800", "unit": "CAD" },
+      "partialWrap": { "compact": "$600–$1,200", "midSize": "$700–$1,400", "fullSize": "$900–$1,600", "unit": "CAD" },
+      "removal": null,
+      "source": { "title": "How Much Does It Cost to Wrap a Car in Toronto? (2026)", "url": "https://advancedvehicleguard.com/blog/vinyl-wrap-cost-toronto-2026", "publisher": "Advanced Vehicle Guard", "date": "2026-05-31" },
+      "confirmed": true
+    },
+    "Vancouver": { "value": null, "note": "No named Vancouver shop page with hood/roof or removal prices was found (wrapguys.com advertises wraps \"from $697\" only)." },
+    "Dublin": {
+      "shop": "Carwrapping.ie, 123 Quarry Crescent, Crumlin, Dublin",
+      "figures": { "standardSingleColourWrap": "€1,000–€1,400" },
+      "partialWrap": null, "removal": null,
+      "source": { "title": "How much does a car wrap cost in Ireland?", "url": "https://carwrapping.ie/car-wrap-cost-ireland/", "publisher": "Carwrapping.ie", "date": "accessed 2026-10-03" },
+      "confirmed": true,
+      "note": "Bonnet/roof \"€300–€600\" appeared only in a search excerpt without an identified shop; not recorded."
+    },
+    "Mexico City": {
+      "shop": "Los Deslumbrantes, San Luis Potosí #38, Col. Roma, CDMX",
+      "roofWrapToldo": { "small": 5900, "medium": 6900, "largeOrSmallTruck": 7900, "unit": "MXN" },
+      "hoodWrapCofre": { "small": 5490, "medium": 6490, "largeOrSmallTruck": 7490, "extraLarge": 9500, "unit": "MXN" },
+      "fullWrap": { "small0to4m": 29500, "medium4to4_5m": 31000, "large4_5to5m": 32500, "extraLarge5to5_5m": 34000, "unit": "MXN" },
+      "removal": null,
+      "source": { "title": "Wrapping car / wrap car / vinil automotriz", "url": "https://www.losdeslumbrantes.com.mx/wrapping-car-wrap-car-vinil-automotriz", "publisher": "Los Deslumbrantes", "date": "accessed 2026-10-03 (undated page)" },
+      "confirmed": true,
+      "note": "IVA inclusion not stated. Paid in advance; 5–9 days installation. Prices rise for brushed, chrome and specialty vinyl."
+    },
+    "notFound": "No shop page in any of the seven cities published a wrap-removal price except Raccoon (Kent, UK)."
+  },
+
+  "D_mexicoCity": {
+    "lpGasMaxPrice": {
+      "weekly": [
+        { "week": "2026-09-06 to 2026-09-12", "perKg": 19.55, "perLitre": 10.56 },
+        { "week": "2026-09-13 to 2026-09-19", "perKg": 19.84, "perLitre": 10.72 },
+        { "week": "2026-09-20 to 2026-09-26", "perKg": 20.05, "perLitre": 10.83 },
+        { "week": "2026-09-27 to 2026-10-03", "perKg": 20.10, "perLitre": 10.85 }
+      ],
+      "unit": "MXN, maximum retail price incl. IVA, Ciudad de México region",
+      "publisher": "Comisión Nacional de Energía (CNE), which took over the CRE's role; price caps under SENER's 2021 directive",
+      "officialSource": { "title": "Precios máximos aplicables de Gas LP", "url": "https://www.gob.mx/cne/documentos/precios-maximos-aplicables-de-gas-lp-399897" },
+      "readFrom": { "title": "Nuevo precio del gas LP: consulta cuánto costará del 27 de septiembre al 3 de octubre de 2026", "url": "https://www.unotv.com/negocios/nuevo-precio-del-gas-lp-consulta-cuanto-costara-del-27-de-septiembre-al-3-de-octubre-de-2026/", "publisher": "UnoTV (reporting CNE)" },
+      "confirmed": false,
+      "note": "gob.mx served a bot-challenge page, so the CNE document could not be read. The 27 Sep–3 Oct figure was read on UnoTV's page; the earlier weeks come from search excerpts of UnoTV pages."
+    },
+    "cylinderSizes": { "value": null, "note": "The common 20 kg and 30 kg cylinders are covered by NOM-011-SESH, but no publisher page was read; no per-cylinder CDMX price was published in the sources read." },
+    "householdLpGasUse": { "value": null, "note": "INEGI ENCEVI 2018 results presentation was read: 79% of dwellings use LP gas as main fuel. It gives no kg-per-household-per-month figure; not found." },
+    "sacmexDomesticTariff": {
+      "law": "Código Fiscal de la Ciudad de México, Art. 172, I. Uso doméstico, a) Servicio medido; charged bimonthly per connection by litres consumed",
+      "tarifaSinSubsidio": [
+        { "litres": "0 – 15,000", "minimumMXN": 652.35, "perExtra1000LitresMXN": 0.00 },
+        { "litres": ">15,000 – 20,000", "minimumMXN": 652.35, "perExtra1000LitresMXN": 43.50 },
+        { "litres": ">20,000 – 30,000", "minimumMXN": 869.78, "perExtra1000LitresMXN": 43.50 },
+        { "litres": ">30,000 – 40,000", "minimumMXN": 1304.66, "perExtra1000LitresMXN": 43.50 },
+        { "litres": ">40,000 – 50,000", "minimumMXN": 1739.56, "perExtra1000LitresMXN": 43.50 },
+        { "litres": ">50,000 – 70,000", "minimumMXN": 2174.44, "perExtra1000LitresMXN": 52.94 },
+        { "litres": ">70,000 – 90,000", "minimumMXN": 3233.30, "perExtra1000LitresMXN": 57.68 },
+        { "litres": ">90,000 – 120,000", "minimumMXN": 4386.73, "perExtra1000LitresMXN": 76.59 },
+        { "litres": ">120,000", "minimumMXN": 6684.05, "perExtra1000LitresMXN": 119.13 }
+      ],
+      "tarifaPopular": [
+        { "litres": "0 – 15,000", "minimumMXN": 56.72, "perExtra1000LitresMXN": 0.00 },
+        { "litres": ">15,000 – 20,000", "minimumMXN": 56.72, "perExtra1000LitresMXN": 4.92 },
+        { "litres": ">20,000 – 30,000", "minimumMXN": 81.30, "perExtra1000LitresMXN": 7.79 },
+        { "litres": ">30,000 – 40,000", "minimumMXN": 159.16, "perExtra1000LitresMXN": 15.90 },
+        { "litres": ">40,000 – 50,000", "minimumMXN": 318.12, "perExtra1000LitresMXN": 23.20 },
+        { "litres": ">50,000 – 70,000", "minimumMXN": 550.07, "perExtra1000LitresMXN": 34.55 },
+        { "litres": ">70,000 – 90,000", "minimumMXN": 1241.07, "perExtra1000LitresMXN": 43.81 },
+        { "litres": ">90,000 – 120,000", "minimumMXN": 2116.98, "perExtra1000LitresMXN": 75.67 },
+        { "litres": ">120,000", "minimumMXN": 4386.57, "perExtra1000LitresMXN": 119.13 }
+      ],
+      "subsidyNote": "Subsidies apply by manzana class (Popular, Baja, Media, Alta). Popular subsidy on the 0–15,000 L minimum is 91.3047%: 652.35 × (1 − 0.913047) = 56.72, which checks the row alignment. The Baja/Media/Alta tables are in the same PDF.",
+      "source": { "title": "Capítulo IX, Sección Primera: De los derechos por el suministro de agua (Art. 172)", "url": "https://transparencia.finanzas.cdmx.gob.mx/repositorio/public/upload/repositorio/Tesoreria/123/b/Criterio_9/123_XV%20Suministro%20de%20Agua.pdf", "publisher": "Tesorería de la Ciudad de México, Secretaría de Administración y Finanzas", "date": "PDF created and last modified 2025-04-14" },
+      "confirmed": true,
+      "year": "2025 tariffs, judging by the file date; the PDF names no year. The 2026 figures were not read. A search excerpt gave a different popular minimum of $622.83, unsourced and of unknown year.",
+      "note": "1 m³ = 1,000 litres."
+    },
+    "householdWaterConsumption": { "value": null, "note": "No SACMEX-published average household consumption was found." }
+  },
+
+  "E_utilityOutages": {
+    "water": {
+      "EnglandWales_Ofwat": {
+        "metric": "Water supply interruptions longer than 3 hours, average minutes lost per property per year (hh:mm:ss)",
+        "values": [
+          { "company": "Thames Water (London)", "2019-20": "00:17:59", "2024-25": "00:09:35", "commitment2024-25": "00:05:00" },
+          { "company": "Affinity Water (NW London/Home Counties)", "2019-20": "00:13:36", "2024-25": "00:03:21", "commitment2024-25": "00:05:00" },
+          { "company": "SES Water (Surrey)", "2019-20": "00:01:25", "2024-25": "00:26:40", "commitment2024-25": "00:05:00" },
+          { "company": "Sector median", "2019-20": "00:09:17", "2024-25": "00:10:00", "note": "8% deterioration" }
+        ],
+        "context": "Thames Water had the biggest percentage reduction from 2023-24 to 2024-25 (43%) but missed the five-minute commitment. Four companies (Southern, Dŵr Cymru, SES, Thames) reported that interruptions over 12 hours made up 50% or more of their 2024-25 performance.",
+        "source": { "title": "Water company performance report 2024-25", "url": "https://www.ofwat.gov.uk/wp-content/uploads/2025/10/WCPR-24-25.pdf", "publisher": "Ofwat", "date": "October 2025" },
+        "confirmed": true,
+        "searchCorrection": "A search summary said the 2024-25 sector median was 9:17. In Ofwat's table 9:17 is the 2019-20 median; 2024-25 is 10:00."
+      },
+      "NewYorkCity_DEP": {
+        "values": [
+          { "metric": "Water main breaks", "FY2022": 459, "FY2023": 403, "FY2024": 359, "FY2025": 552, "FY2026": 618 },
+          { "metric": "Water main breaks per 100 miles of main (last 12 months)", "FY2022": 6.6, "FY2023": 5.8, "FY2024": 5.1, "FY2025": 7.9, "FY2026": 8.7 },
+          { "metric": "Average time to restore water to customers after confirming breaks (h:mm)", "FY2022": "4:18", "FY2023": "4:34", "FY2024": "3:47", "FY2025": "3:47", "FY2026": "3:54", "target": "6:00" }
+        ],
+        "source": { "title": "Mayor's Management Report, Fiscal 2026 — Department of Environmental Protection", "url": "https://www.nyc.gov/assets/operations/downloads/pdf/mmr2026/dep.pdf", "publisher": "NYC Mayor's Office of Operations", "date": "September 2026" },
+        "confirmed": true,
+        "note": "City fiscal years run July–June. Column-to-year mapping read from the converted PDF (five actual columns, FY22–FY26)."
+      },
+      "Toronto_TorontoWater": { "value": null, "note": "The 2026 Budget Notes chart breaks by year without printed values. Search excerpts cite about 1,100 breaks a year since 2016 and 681 in 2020, but neither was read on a City page; not recorded. No figure for supply interruption duration per property was found." },
+      "Dublin_UisceEireann": { "value": null, "note": "Not researched to a figure in this pass; not found." },
+      "MexicoCity_tandeo": { "value": null, "note": "No SACMEX-published count or frequency of tandeo/cortes was read. A press headline (El Universal) reports \"276 colonias reciben agua por tandeo\", but it was not opened and is undated here; not recorded." }
+    },
+    "gas": {
+      "GB_Ofgem": {
+        "metric": "Average unplanned loss-of-supply duration (hours), gas distribution",
+        "values": [ { "network": "SGN Southern (south of England, not London)", "2024-25": 33.3, "minimumPerformanceLevel": 26, "excessiveDeteriorationThreshold": 33.5 } ],
+        "context": "All Cadent regions, including Cadent London, outperformed their minimum performance levels for unplanned interruptions in MOBs and non-MOBs in 2024/25, but the Cadent London hour figure is in a chart, not in the text.",
+        "source": { "title": "RIIO-GD2 Annual Report 2024/25 — Appendix", "url": "https://www.ofgem.gov.uk/sites/default/files/2026-01/GD_annual_report_2024-25_Appendix.pdf", "publisher": "Ofgem", "date": "January 2026" },
+        "confirmed": true
+      },
+      "otherMarkets": { "value": null, "note": "No published frequency or duration of gas supply outages was found for the US (Con Edison/National Grid NY, SoCalGas), Canada (Enbridge), Ireland (Gas Networks Ireland) or CDMX (LP gas is delivered by truck, not by network)." }
+    },
+    "electricity": {
+      "US_EIA": {
+        "values": { "avgHoursInterrupted2024AllEvents": 11, "majorEventsHours2024": "nearly nine", "nonMajorEventsTypicalHoursPerYear": "about two", "highestState2024": "South Carolina, nearly 53 hours" },
+        "source": { "title": "Hurricanes in 2024 led to the most hours without power in the United States in 10 years", "url": "https://www.eia.gov/todayinenergy/detail.php?id=66744", "publisher": "U.S. Energy Information Administration", "date": "2025-12-01" },
+        "confirmed": true,
+        "note": "No New York or California state figure in the article; EIA Electric Power Annual Table 11.x has state SAIDI/SAIFI but was not read."
+      },
+      "Toronto_TorontoHydro": {
+        "values": { "SAIDI2024_hours": 0.94, "SAIDIstandard_hours": 0.87, "SAIFI2024_interruptions": 1.29, "SAIFIstandard": 1.20 },
+        "basis": "\"In 2024, the average customer experienced 0.94 hours without power ... the average annual number of electricity supply interruptions that a customer experienced was 1.29\" (excluding loss of supply)",
+        "source": { "title": "Scorecard - Toronto Hydro-Electric System Limited (2024 scorecard)", "url": "https://www.oeb.ca/documents/scorecard/2024/Scorecard%20-%20Toronto%20Hydro-Electric%20System%20Limited.pdf", "publisher": "Ontario Energy Board", "date": "2025-09-22" },
+        "confirmed": true
+      },
+      "Ireland_ESBNetworks": {
+        "values": { "unplannedCML2024": 117.47, "unplannedCI2024_per100Customers": 137.86, "CMLtarget": 78.7, "CItarget": 112.7, "unplannedCML2023": "105" },
+        "source": { "title": "Distribution Annual Performance Report 2024", "url": "https://media.esbnetworks.ie/media/docs/default-source/publications/distribution-annual-performance-report-2024.pdf?sfvrsn=ecf1234e_3", "publisher": "ESB Networks", "date": "September 2025" },
+        "confirmed": true,
+        "note": "CML = customer minutes lost per customer per year (SAIDI equivalent); CI = interruptions per 100 customers (SAIFI × 100)."
+      },
+      "Mexico_CFE": {
+        "values": { "SAIDI2024_minutesPerCustomer": 16.708, "SAIDI2023": 17.788, "SAIDI2022": 19.248, "SAIDI2021": 20.625, "SAIDI2020": 22.08 },
+        "basis": "CFE Distribución: \"tiempo promedio sin servicio por cliente (SAIDI)\" was 16.708 minutes in 2024, 6.07% better than 17.788 in 2023",
+        "source": { "title": "Informe Anual 2024", "url": "https://www.cfe.gob.mx/finanzas/reportes-financieros/Reportes%20Anuales%20Documentos/Informe%20Anual%202024.pdf", "publisher": "Comisión Federal de Electricidad", "date": "2025" },
+        "confirmed": true,
+        "note": "National figure; no CDMX-specific value. A search excerpt said the regulatory maximum is 50 minutes, but that was not confirmed in the text read."
+      },
+      "UK_Ofgem": { "value": null, "note": "The Ofgem RIIO-ED2 2024-25 annual report says LPN (London Power Networks) met its targets, but CML/CI values are only in charts; not found as text." }
+    }
+  },
+
+  "F_vehicleCrimeByParking": {
+    "EnglandWales_CSEW": {
+      "metric": "Where incidents occurred, % of household incidents, Apr 2024 to Mar 2025 (previous year in brackets)",
+      "theftOfVehicles": { "Home - Private": 13.6, "Home - Semi-private": 37.3, "Home - Street": 16.1, "Work - Car park": 8.9, "Work - Street": 2.1, "Other - Car park": 8.7, "Other - Street": 7.0, "Other - other": 6.5, "unweightedBase": 103, "priorYear": { "Home - Private": 7.4, "Home - Semi-private": 44.5, "Home - Street": 19.0, "Other - Street": 14.8 } },
+      "theftFromVehicles": { "Home - Private": 3.3, "Home - Semi-private": 37.7, "Home - Street": 39.1, "Work - Car park": 1.4, "Work - Street": 0.2, "Other - Car park": 6.6, "Other - Street": 7.1, "Other - other": 4.7, "unweightedBase": 475 },
+      "allVehicleRelatedTheft": { "Home - Private": 5.9, "Home - Semi-private": 37.0, "Home - Street": 35.9, "Work - Car park": 2.7, "Work - Street": 0.5, "Other - Car park": 6.2, "Other - Street": 6.8, "Other - other": 5.0, "unweightedBase": 710 },
+      "definition": "Note 10: \"'Semi-private' includes outside areas on the premises and garages or car parks around but not connected to the home.\" So a driveway is semi-private; 'Private' is the home's own private area (its exact definition is in the CSEW user guide, not this workbook).",
+      "source": { "title": "Nature of crime: vehicle-related theft, year ending March 2025 (Tables 2a–2c)", "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/crimeandjustice/datasets/natureofcrimevehiclerelatedtheft/yearendingmarch2025/nocvehiclethefttables202425.xlsx", "publisher": "Office for National Statistics (Crime Survey for England and Wales)", "date": "2025" },
+      "confirmed": true,
+      "caution": "These are shares of incidents by location, not risk per car parked there. Turning them into a per-location theft risk needs the share of cars normally parked in each place, which this table does not give. The theft-of-vehicle base is small (103 incidents), so single-year shares move a lot."
+    },
+    "US_BJS_carjacking": {
+      "metric": "Location of nonfatal carjacking victimizations, 2012–21",
+      "values": { "atOrNearVictimHome": 39, "onStreetNotNearHome": 22, "parkingLotOrGarage": 19, "atOrNearFriendNeighborHome": 8, "otherCommercialOrOther": 13 },
+      "unit": "% (standard errors 6.8, 5.6, 5.3, 3.6, 4.5)",
+      "source": { "title": "Carjacking Victimization, 1995–2021", "url": "https://bjs.ojp.gov/carjacking-victimization-1995-2021", "publisher": "Bureau of Justice Statistics", "date": "accessed 2026-10-03" },
+      "confirmed": true,
+      "note": "Carjacking only. A BJS location breakdown for motor vehicle theft (garage vs driveway vs street) from a recent NCVS report was not found; search excerpts citing \"parking lot or garage (32%)\" refer to old NCVS tables and were not read."
+    },
+    "insurers": { "value": null, "note": "No insurer (e.g. NICB, Aviva, Direct Line) published theft rates by overnight parking location that could be read at the source." }
+  },
+
+  "notFound": [
+    "Ram 1500 and Toyota Tacoma curb weights (not on the makers' static pages)",
+    "Ford Ranger UK WLTP l/100 km; Toyota Hilux Ireland WLTP; F-150 Mexico km/l and weight",
+    "Canadian (Ontario/BC) registration or insurance difference for personal-use pickups; any regulator-published insurance difference for pickups",
+    "Sea Ray SPX 190 and Boston Whaler 130 Super Sport list prices (script-loaded or dealer-only)",
+    "Jeanneau Cap Camarat and Quicksilver maker-published UK/IE list prices",
+    "Yamaha jet boat fuel burn",
+    "Cessna 172S list price (Textron publishes none) and maker-published fuel burn; Diamond DA40 NG new list price; current (2026) Piper Archer list price; Cirrus SR20 fuel burn on a Cirrus page",
+    "Used-aircraft average prices: Aircraft Bluebook and Vref are paywalled",
+    "Wrap removal prices at named shops in New York, Los Angeles, London (city proper), Toronto, Vancouver, Dublin, Mexico City; any Vancouver shop price page; partial-wrap prices at named NYC and Dublin shops",
+    "CNE weekly LP gas maximum prices read on gob.mx (bot challenge); per-cylinder CDMX prices; INEGI/SENER kg of LP gas per household per month",
+    "SACMEX 2026 tariff (2025 read); SACMEX average household consumption; SACMEX tandeo/corte frequency",
+    "Toronto Water and Uisce Éireann supply-interruption statistics; NY/CA state SAIDI from EIA tables; UK DNO CML values as text; gas outage statistics outside GB",
+    "Recent BJS or insurer motor-vehicle-theft breakdown by garage vs driveway vs street (US)"
+  ]
+}
