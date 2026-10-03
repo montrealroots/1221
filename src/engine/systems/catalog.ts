@@ -6,9 +6,17 @@
  * an installment, a one-time cost against a monthly one. A price SLATE
  * doesn't know is never taken as nothing. It goes last, said to be a quote or
  * unknown. Search, filters and the other sorts are the player's to change.
+ *
+ * Favorites, from 2026-10-03 (the master plan's §10): anything in a list
+ * can be marked, kept with the character by its list, and a list narrowed to
+ * its favorites. The order stays the cheapest first: a favorite is found,
+ * not put ahead.
  */
 
 import type { Money } from '../core/money';
+import type { Simulation } from '../core/simulation';
+import { CommandError } from '../core/simulation';
+import type { Person } from '../domain/model';
 
 /** What a list's price is: a published one, SLATE's estimate, a quote to be asked for, or none known. */
 export type PriceKind = 'advertised' | 'estimate' | 'quote' | 'unknown';
@@ -32,7 +40,24 @@ export interface CatalogEntry<T = unknown> {
 export type CatalogSort = 'cheapest' | 'dearest' | 'name';
 export const SORT_LABEL: Readonly<Record<CatalogSort, string>> = { name: 'By Name', dearest: 'Most Expensive First', cheapest: 'Cheapest First' };
 
-export interface CatalogView { sort?: CatalogSort; query?: string; filters?: Readonly<Record<string, string>> }
+export interface CatalogView { sort?: CatalogSort; query?: string; filters?: Readonly<Record<string, string>>; /** Only these, a list's favorites as they stood when it was narrowed to them. */ only?: readonly string[] }
+
+/** The ids marked favorite in a list. */
+export const favoritesIn = (person: Pick<Person, 'favorites'>, list: string): readonly string[] => person.favorites?.[list] ?? [];
+
+export function registerCatalog(sim: Simulation): void {
+  sim.onCommand<{ list: string; id: string }, { favorite: boolean }>('catalog.favorite', (p, { sim: s }) => {
+    const list = String(p?.list ?? '');
+    const id = String(p?.id ?? '');
+    if (!list || !id) throw new CommandError('Choose something in a list.');
+    const all = (s.player.favorites ??= {});
+    const mine = all[list] ?? [];
+    const favorite = !mine.includes(id);
+    all[list] = favorite ? [...mine, id] : mine.filter((x) => x !== id);
+    if (all[list]!.length === 0) delete all[list];
+    return { favorite };
+  });
+}
 
 /**
  * A list arranged: filtered by its facets and a search, then sorted, the
@@ -43,6 +68,7 @@ export function arrange<T>(entries: readonly CatalogEntry<T>[], view: CatalogVie
   const words = (view.query ?? '').trim().toLowerCase().split(/\s+/).filter(Boolean);
   const kept = entries.filter((e) => {
     for (const [facet, value] of Object.entries(view.filters ?? {})) if (value && e.facets?.[facet] !== value) return false;
+    if (view.only && !view.only.includes(e.id)) return false;
     const text = `${e.label} ${e.words ?? ''}`.toLowerCase();
     return words.every((w) => text.includes(w));
   });

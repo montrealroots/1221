@@ -10,7 +10,7 @@ import { GEAR_LABEL } from '@/engine/content/kitchengear';
 import { TABLE_POLICIES, lateFee, reservationsOf, reserveRefusal } from '@/engine/systems/reservations';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Fine } from '@/ui/components/primitives';
-import { CatalogControls, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
+import { CatalogControls, FavoriteToggle, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { titleCaseLabel } from '@/engine/core/text';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -73,7 +73,7 @@ export function FoodWorkspace() {
                         <td className="small"><Open subject={at('restaurant', e.value.restaurant.id)}>{e.value.restaurant.name}</Open></td>
                         <td className="small">{e.facets?.tier}</td>
                         <td className="num mono">{catalogPrice(e, money)}</td>
-                        <td><button type="button" className="btn btn-sm btn-ghost" disabled={e.price === null} onClick={() => add(e.value.restaurant.id, e.value.item)}>Add</button></td>
+                        <td className="row gap-1"><FavoriteToggle list="menus" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" disabled={e.price === null} onClick={() => add(e.value.restaurant.id, e.value.item)}>Add</button></td>
                       </tr>
                     ))}
                   </tbody>
@@ -326,7 +326,7 @@ function Groceries() {
                     <td className="small">{e.facets?.chain}</td>
                     <td className="num mono small">{`${money(unit.price)} / ${unit.per}`}</td>
                     <td className="num mono">{catalogPrice(e, money)}</td>
-                    <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('food.buy_groceries', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button></td>
+                    <td className="row gap-1"><FavoriteToggle list="groceries" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('food.buy_groceries', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button></td>
                   </tr>
                 );
               })}

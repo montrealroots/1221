@@ -11,7 +11,7 @@ import { goatPayout, sneakerOffers, sneakerRefusal } from '@/engine/systems/snea
 import { Fragment, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
-import { CatalogControls, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
+import { CatalogControls, FavoriteToggle, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -267,7 +267,7 @@ function Shop() {
                     <td className="small">{retailerById(p.retailer)?.name}</td>
                     <td className="small">{e.facets?.where}</td>
                     <td className="num mono">{catalogPrice(e, money)}</td>
-                    <td><button type="button" className="btn btn-sm btn-ghost" onClick={() => setChosen(e.id === chosen ? undefined : e.id)}>{e.id === chosen ? 'Close' : 'Choose'}</button></td>
+                    <td className="row gap-1"><FavoriteToggle list="clothes" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" onClick={() => setChosen(e.id === chosen ? undefined : e.id)}>{e.id === chosen ? 'Close' : 'Choose'}</button></td>
                   </tr>
                 );
               })}
@@ -620,7 +620,7 @@ function Bathroom() {
                         <td>{e.label}</td>
                         <td className="small">{e.facets?.chain}</td>
                         <td className="num mono">{catalogPrice(e, money)}</td>
-                        <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('hygiene.buy', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button></td>
+                        <td className="row gap-1"><FavoriteToggle list="toiletries" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('hygiene.buy', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button></td>
                       </tr>
                     );
                   })}

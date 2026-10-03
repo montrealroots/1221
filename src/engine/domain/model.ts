@@ -311,6 +311,8 @@ export interface Person {
   pets?: import('../systems/pets').Pet[];
   /** Where each program was left, by its id (`systems/programmes.ts`, from 2026-10-03). */
   watching?: Record<string, import('../systems/programmes').Watching>;
+  /** What's marked favorite, by list (`systems/catalog.ts`, from 2026-10-03). */
+  favorites?: Record<string, string[]>;
   /** How often they shave at home, chosen (`systems/hygiene.ts`, from 2026-10-03); not at all where unset. */
   shaves?: import('../systems/hygiene').ShaveEvery;
   lastShave?: number;

@@ -1,0 +1,242 @@
+{
+  "topic": "Mexico City household LP gas and water use; water and gas supply interruptions (London, NYC, LA, Toronto, Vancouver, Dublin, CDMX)",
+  "researched": "2026-10-03",
+  "notes": "confirmed=true means read on the publisher's own page/PDF/dataset (including INEGI microdata processed locally). Derived figures give their arithmetic. Scratch processing was done outside the repo.",
+
+  "lpGasMexicoCity": {
+    "enigh2024HouseholdSpend": {
+      "method": "INEGI ENIGH 2024 microdata gastoshogar.csv: clave 045222 'Gas LP en cilindro y estacionario' (catalogue: 045210 gas natural; 045221 gas LP por tuberia; 045222 gas LP en cilindro y estacionario). Rows with entidad=09 (CDMX), weighted by factor. gasto_tri = quarterly spending; monthly = gasto_tri/3. Households from concentradohogar.csv (ubica_geo state 09, sum of factor).",
+      "source": { "title": "Encuesta Nacional de Ingresos y Gastos de los Hogares (ENIGH) 2024, Nueva serie: microdatos (gastoshogar, concentradohogar, viviendas) and Catalogo para gastos del hogar", "url": "https://www.inegi.org.mx/contenidos/programas/enigh/nc/2024/microdatos/enigh2024_ns_gastoshogar_csv.zip", "catalogueUrl": "https://www.inegi.org.mx/contenidos/programas/enigh/nc/2024/doc/enigh2024_ns_catalogo_gastos.pdf", "publisher": "INEGI", "date": "2025-07-30", "confirmed": true },
+      "period": "ENIGH 2024 fieldwork Aug-Nov 2024; gas LP is a monthly-reference item (last month's spending)",
+      "figures": [
+        { "name": "CDMX households (weighted)", "value": 3082330, "unit": "households" },
+        { "name": "CDMX households reporting cylinder/stationary LP spending (045222)", "value": 1616575, "unit": "households", "share": 0.524 },
+        { "name": "CDMX mean quarterly LP (cylinder/stationary) spending per reporting household", "value": 1679.2, "unit": "MXN per quarter" },
+        { "name": "CDMX mean monthly LP (cylinder/stationary) spending per reporting household", "value": 559.7, "unit": "MXN per month" },
+        { "name": "CDMX median quarterly LP spending per reporting row", "value": 1190.32, "unit": "MXN per quarter", "monthly": 396.8 },
+        { "name": "CDMX households reporting piped LP (045221)", "value": 259042, "unit": "households", "meanQuarterlyMXN": 1207.2, "meanMonthlyMXN": 402.4 },
+        { "name": "CDMX households reporting natural gas (045210)", "value": 664758, "unit": "households", "meanQuarterlyMXN": 1021.4, "meanMonthlyMXN": 340.5 },
+        { "name": "Mexico national households reporting cylinder/stationary LP", "value": 20226613, "unit": "households", "meanQuarterlyMXN": 1371.8, "meanMonthlyMXN": 457.3 }
+      ]
+    },
+    "priceUsed": {
+      "value": 19.01, "unit": "MXN per kg (CDMX maximum price, mean of the four August 2024 weekly caps: 18.83, 19.10, 18.96, 19.16)",
+      "perLitre": { "value": 10.35, "unit": "MXN per litre", "week": "2024-08-25 to 2024-08-31" },
+      "source": { "title": "Precio del gas LP del 18 al 24 de agosto de 2024 (and weekly CRE price reports for Aug 2024)", "url": "https://www.unotv.com/negocios/precio-del-gas-lp-del-18-al-24-de-agosto-de-2024/", "altUrl": "https://diariocdmx.net/cdmx/precios-gas-lp-ciudad-mexico-edomex-agosto-2024/", "publisher": "UnoTV / Diario CDMX citing CRE (Acuerdo A/023/2022 weekly maximum prices)", "date": "2024-08", "confirmed": false },
+      "note": "The CRE's own weekly price list PDF was not retrieved; figures come from press reports of it."
+    },
+    "derivedKgPerMonth": {
+      "mean": { "value": 29.4, "unit": "kg LP per month per CDMX household using cylinder/stationary LP", "arithmetic": "1679.2 / 3 = 559.7 MXN/month; 559.7 / 19.01 MXN/kg = 29.4 kg" },
+      "median": { "value": 20.9, "unit": "kg per month", "arithmetic": "1190.32 / 3 = 396.8 MXN; 396.8 / 19.01 = 20.9 kg (about one 20 kg cylinder a month)" },
+      "litresEquivalent": { "value": 54.1, "unit": "litres per month (mean)", "arithmetic": "559.7 / 10.35 MXN/L" },
+      "confirmed": false,
+      "caveat": "Spending is INEGI-confirmed; the price is from press reports of the CRE cap and actual retail can be below the cap, so kg is an upper-bound-ish estimate if households paid less than the cap."
+    },
+    "directKgFigure": { "found": false, "note": "ENCEVI 2018 asked kg per cylinder purchase (q3.3) and duration (q3.6), but its microdata/tabulados could not be downloaded from INEGI (download links not resolvable); no published kg-per-household figure was found." },
+    "cylinderSizes": {
+      "values": [
+        { "nominalKg": 10, "volumeLitresMin": 23.0, "volumeLitresMax": 24.0 },
+        { "nominalKg": 20, "volumeLitresMin": 45.0, "volumeLitresMax": 48.0 },
+        { "nominalKg": 30, "volumeLitresMin": 68.0, "volumeLitresMax": 73.0 },
+        { "nominalKg": 45, "volumeLitresMin": 102.0, "volumeLitresMax": 108.0 }
+      ],
+      "source": { "title": "NORMA Oficial Mexicana NOM-008-SESH/SCFI-2010, Recipientes transportables para contener Gas L.P.", "url": "https://www.dof.gob.mx/normasOficiales/4242/sener/sener.htm", "publisher": "SENER / Diario Oficial de la Federacion", "date": "2010-12-21", "confirmed": true }
+    },
+    "cylinderVsStationaryCDMX": {
+      "method": "ENIGH 2024 viviendas.csv, CDMX (state 09), weighted: combus (main cooking fuel: 3 = gas de tanque, 4 = gas natural o de tuberia) crossed with tanque_gas (has stationary gas tank: 1 yes, 2 no).",
+      "source": { "title": "ENIGH 2024 microdatos: viviendas", "url": "https://www.inegi.org.mx/contenidos/programas/enigh/nc/2024/microdatos/enigh2024_ns_viviendas_csv.zip", "publisher": "INEGI", "date": "2025-07-30", "confirmed": true },
+      "figures": [
+        { "name": "CDMX dwellings (weighted)", "value": 3029724, "unit": "dwellings" },
+        { "name": "Main cooking fuel 'gas de tanque' (LP)", "value": 0.692, "unit": "share of dwellings" },
+        { "name": "Main cooking fuel natural gas or piped gas", "value": 0.276, "unit": "share of dwellings" },
+        { "name": "Electricity main cooking fuel", "value": 0.023, "unit": "share" },
+        { "name": "Dwellings with a stationary gas tank (any fuel)", "value": 0.273, "unit": "share of dwellings" },
+        { "name": "Among LP-tank cooking dwellings: with stationary tank", "value": 0.318, "unit": "share", "count": 666898 },
+        { "name": "Among LP-tank cooking dwellings: no stationary tank (cylinder)", "value": 0.682, "unit": "share", "count": 1430999 },
+        { "name": "Mexico national: stationary gas tank", "value": 0.125, "unit": "share of dwellings" },
+        { "name": "Mexico national: main cooking fuel gas de tanque", "value": 0.773, "unit": "share of dwellings" }
+      ]
+    },
+    "encevi2018": {
+      "value": 0.79, "unit": "share of Mexican dwellings whose main cooking fuel is LP gas (national, 2018)",
+      "source": { "title": "ENCEVI 2018 Presentacion de resultados", "url": "https://www.inegi.org.mx/contenidos/programas/encevi/2018/doc/encevi2018_presentacion_resultados.pdf", "publisher": "INEGI", "date": "2018-11-07", "confirmed": true },
+      "note": "Published results do not split cylinder vs stationary by state."
+    }
+  },
+
+  "waterMexicoCity": {
+    "perCapitaFigures": [
+      { "value": 366, "unit": "litres per person per day (CDMX average, 2021)", "source": { "title": "Boletin DCS/207/2022", "url": "https://infocdmx.org.mx/index.php/2-boletines/7845-dcs-207-2022.html", "publisher": "INFO CDMX (transparency institute), statement by Commissioner Marina San Martin Rebolloso", "date": "2022-10-11", "confirmed": true }, "note": "Original data owner not cited on the page." },
+      { "value": 380, "unit": "litres per person per day consumed (SACMEX per infographic)", "source": { "title": "Infografia manejo sustentable del agua 2022", "url": "https://www.congresocdmx.gob.mx/archivos/finanzas/infografiamanejosustentabledelagua2022.pdf", "publisher": "Congreso de la Ciudad de Mexico", "date": "2022", "confirmed": true }, "note": "Same infographic: SACMEX supply (dotacion) averages 150 L/person/day across the 16 alcaldias; consumption rises because of cisterns/tinacos. Secondary citation of SACMEX." },
+      { "value": 150, "unit": "litres per person per day supplied (dotacion, SACMEX)", "source": { "title": "Infografia manejo sustentable del agua 2022", "url": "https://www.congresocdmx.gob.mx/archivos/finanzas/infografiamanejosustentabledelagua2022.pdf", "publisher": "Congreso de la Ciudad de Mexico", "date": "2022", "confirmed": true } },
+      { "value": "16 to 710", "unit": "litres per person per day (poor vs high-income households)", "source": { "title": "search excerpt (Ibero/UAM coverage)", "url": "https://www.comunicacionsocial.uam.mx/boletinesuam/645-21.html", "publisher": "UAM", "date": "2021", "confirmed": false } }
+    ],
+    "perTomaBimonthly": {
+      "method": "SACMEX 'Consumo de agua' open dataset, consumo_agua_historico_2019.csv (bimesters 1-3 of 2019), column consumo_prom_dom = average domestic consumption per toma in the record (unit assumed m3 per bimester; data dictionary not retrieved). Unweighted across records with consumo_prom_dom > 0.",
+      "source": { "title": "Consumo de agua (SACMEX), consumo_agua_historico_2019.csv", "url": "https://datos.cdmx.gob.mx/dataset/eb38823c-488a-49e8-a2cf-62e628fa246f/resource/2263bf74-c0ed-4e7c-bb9c-73f0624ac1a9/download/consumo_agua_historico_2019.csv", "retrievedVia": "web.archive.org (datos.cdmx.gob.mx refused connections)", "publisher": "SACMEX via Portal de Datos Abiertos CDMX", "date": "2019 data", "confirmed": true },
+      "figures": [
+        { "name": "All records mean", "value": 31.5, "unit": "m3 per toma per bimester", "records": 61241 },
+        { "name": "ALTO manzanas", "mean": 36.1, "median": 28.2, "unit": "m3 per toma per bimester" },
+        { "name": "MEDIO", "mean": 28.7, "median": 25.9, "unit": "m3 per toma per bimester" },
+        { "name": "BAJO", "mean": 31.3, "median": 29.4, "unit": "m3 per toma per bimester" },
+        { "name": "POPULAR", "mean": 28.5, "median": 24.0, "unit": "m3 per toma per bimester" }
+      ],
+      "derived": { "value": 517, "unit": "litres per toma per day", "arithmetic": "31.5 m3 / 61 days = 0.516 m3/day; a toma can serve more than one dwelling", "confirmed": false }
+    },
+    "tariff2026": {
+      "source": { "title": "Codigo Fiscal de la Ciudad de Mexico, texto vigente, ultima reforma G.O. CDMX 19 de diciembre de 2025, Articulo 172 fraccion I", "url": "https://data.consejeria.cdmx.gob.mx/images/leyes/2025/2026/210126/CODIGO_FISCAL_DE_LA_CDMX_26.1.pdf", "publisher": "Consejeria Juridica y de Servicios Legales CDMX", "date": "2025-12-19", "confirmed": true },
+      "structure": "Domestic metered (servicio medido), billed per bimester per toma: pay cuota minima of the band + (litres above band's lower limit / 1000) x cuota adicional. Subsidy depends on the manzana class (Popular, Baja, Media, Alta).",
+      "bandsLitres": ["0-15000", ">15000-20000", ">20000-30000", ">30000-40000", ">40000-50000", ">50000-70000", ">70000-90000", ">90000-120000", ">120000"],
+      "unsubsidised": { "minimumMXN": [677.86, 677.86, 903.79, 1355.67, 1807.58, 2259.46, 3359.72, 4558.25, 6945.40], "perExtra1000LMXN": [0.00, 45.20, 45.20, 45.20, 45.20, 55.01, 59.94, 79.58, 123.79] },
+      "popular": { "minimumMXN": [58.94, 58.94, 84.47, 165.38, 330.56, 571.58, 1289.59, 2199.76, 4558.09], "perExtra1000LMXN": [0.00, 5.11, 8.09, 16.52, 24.11, 35.90, 45.52, 78.62, 123.79] },
+      "baja": { "minimumMXN": [66.81, 66.81, 123.78, 277.16, 494.59, 799.66, 1571.61, 2515.48, 4873.81], "perExtra1000LMXN": [0.00, 11.40, 15.34, 21.75, 30.52, 38.59, 47.21, 78.62, 123.79] },
+      "media": { "minimumMXN": [221.05, 221.05, 363.47, 675.29, 1044.41, 1442.19, 2322.00, 3500.83, 5859.16], "perExtra1000LMXN": [0.00, 28.49, 31.19, 36.92, 39.79, 43.99, 58.96, 78.62, 123.79] },
+      "alta": { "minimumMXN": [265.25, 265.25, 414.49, 748.22, 1144.31, 1567.37, 2474.15, 3652.98, 6011.31], "perExtra1000LMXN": [0.00, 29.86, 33.38, 39.62, 42.32, 45.34, 58.96, 78.62, 123.79] },
+      "cuotaFijaTandeoOrNoMeter": { "unsubsidisedMXN": 4912.46, "bimonthlyMXN": { "popular": 147.34, "baja": 233.82, "media": 591.52, "alta": 1012.43 }, "note": "Applies to domestic tomas in colonias on the annual tandeo list (and unmetered tomas where the colonia is under 70% metered)." },
+      "warning": "Press/calculator summaries giving '$4.22/m3 popular ... $82.40 fixed' do not match the Codigo Fiscal and should not be used."
+    },
+    "manzanaClassForColonias": {
+      "method": "Share of records by indice_des in the SACMEX 2019 consumption dataset (same file as above). Classification is per manzana, so a colonia is mixed.",
+      "source": { "title": "Consumo de agua (SACMEX), consumo_agua_historico_2019.csv", "url": "https://datos.cdmx.gob.mx/dataset/eb38823c-488a-49e8-a2cf-62e628fa246f/resource/2263bf74-c0ed-4e7c-bb9c-73f0624ac1a9/download/consumo_agua_historico_2019.csv", "publisher": "SACMEX via Portal de Datos Abiertos CDMX", "date": "2019 data", "confirmed": true },
+      "figures": [
+        { "colonias": "Polanco (all 'POLANCO' catastral colonias, Miguel Hidalgo)", "alta": 0.94, "media": 0.01, "baja": 0.0, "popular": 0.05 },
+        { "colonias": "Condesa + Hipodromo + Hipodromo Condesa (Cuauhtemoc)", "alta": 0.69, "media": 0.12, "baja": 0.11, "popular": 0.08 },
+        { "colonias": "Roma Norte I-III", "alta": 0.57, "media": 0.13, "baja": 0.23, "popular": 0.07 },
+        { "colonias": "Roma Sur I-II", "alta": 0.39, "media": 0.14, "baja": 0.41, "popular": 0.06 }
+      ],
+      "note": "Typical class: Polanco = Alta; Condesa = mostly Alta; Roma Norte = mostly Alta with Baja/Media blocks; Roma Sur = split Alta/Baja. 2019 classification; later reclassification not checked."
+    }
+  },
+
+  "waterInterruptions": {
+    "london": {
+      "source": { "title": "Thames Water 2025-26 Annual Performance Report tables, Table 3C lines 3C.10-3C.13", "url": "https://www.thameswater.co.uk/media-library/dvrggetx/2025-26-apr-tables.xlsx", "reportUrl": "https://www.thameswater.co.uk/media-library/2upd1y40/apr-2025-26.pdf", "publisher": "Thames Water Utilities Ltd", "date": "2026 (year 1 Apr 2025 - 31 Mar 2026)", "confirmed": true },
+      "scope": "Whole Thames Water supply area (London + Thames Valley); London alone not separable.",
+      "propertiesServed": { "value": 4107209, "unit": "properties (standardising data)" },
+      "figures": [
+        { "threshold": ">=3 hours", "propertiesInterrupted": 91252, "annualShare": 0.0222, "avgMinutesPerPropertyServed": 11.2, "totalPropertyMinutes": 45986514, "avgHoursPerInterruptedProperty": 8.4 },
+        { "threshold": ">=6 hours", "propertiesInterrupted": 35288, "annualShare": 0.0086, "avgMinutesPerPropertyServed": 7.79, "avgHoursPerInterruptedProperty": 15.1 },
+        { "threshold": ">=12 hours", "propertiesInterrupted": 15424, "annualShare": 0.0038, "avgMinutesPerPropertyServed": 5.42, "avgHoursPerInterruptedProperty": 24.1 },
+        { "threshold": ">=24 hours", "propertiesInterrupted": 6727, "annualShare": 0.0016, "avgMinutesPerPropertyServed": 3.27, "avgHoursPerInterruptedProperty": 33.3 }
+      ],
+      "arithmetic": "Table stores total minutes lost as Excel day-fractions in thousands of properties: e.g. 31935.079 x 1440 = 45,986,514 property-minutes; / 4,107,209 = 11.20 min (reported 00:11:12); / 91,252 = 504 min = 8.4 h. Shares = properties interrupted / 4,107,209. A property interrupted twice may be counted twice.",
+      "priorYear": { "value": "00:09:35", "unit": "avg minutes per property, >=3h interruptions, 2024-25", "source": { "title": "Water company performance report 2024-25", "url": "https://www.ofwat.gov.uk/wp-content/uploads/2025/10/WCPR-24-25.pdf", "publisher": "Ofwat", "date": "2025-10", "confirmed": true }, "commitment": "00:05:00", "thames2019_20": "00:17:59", "sectorMedian2024_25": "00:10:00" },
+      "note": "Largest 2025-26 event: 800 mm trunk main burst at Swinford (OX29), 4-6 March 2026, reservoir feeding 45,000 properties; ~7,000 still without water at repair completion (APR 2025-26 p.17)."
+    },
+    "newYorkCity": {
+      "source": { "title": "Mayor's Management Report Fiscal 2026: Department of Environmental Protection", "url": "https://www.nyc.gov/assets/operations/downloads/pdf/mmr2026/dep.pdf", "publisher": "NYC Mayor's Office of Operations", "date": "2026-09", "confirmed": true },
+      "figures": [
+        { "name": "Water main breaks", "FY2022": 459, "FY2023": 403, "FY2024": 359, "FY2025": 552, "FY2026": 618, "unit": "breaks per fiscal year" },
+        { "name": "Breaks per 100 miles of main", "FY2022": 6.6, "FY2023": 5.8, "FY2024": 5.1, "FY2025": 7.9, "FY2026": 8.7 },
+        { "name": "Average time to restore water to customers after confirming breaks", "FY2022": "4:18", "FY2023": "4:34", "FY2024": "3:47", "FY2025": "3:47", "FY2026": "3:54", "unit": "hours:minutes", "target": "6:00" },
+        { "name": "Water and sewer accounts billed", "value": 838000, "unit": "accounts" }
+      ],
+      "derived": { "value": 0.00074, "unit": "main breaks per account per year (FY2026)", "arithmetic": "618 / 838,000", "confirmed": false, "caveat": "Customers affected per break not published, so per-home probability cannot be derived; one break can shut off one block to several buildings." }
+    },
+    "losAngeles": {
+      "source": { "title": "Information on Recent Water Main Breaks in the City of LA", "url": "https://ladwpnews.com/information-on-recent-water-main-breaks-in-the-city-of-la/", "publisher": "LADWP", "date": "2023-02-03", "confirmed": true },
+      "figures": [
+        { "name": "Main breaks", "value": "3 to 4 per day", "unit": "breaks", "derivedAnnual": "1,095-1,460" },
+        { "name": "Distribution system length", "value": 7340, "unit": "miles" },
+        { "name": "Leak rate", "value": 16.8, "unit": "leaks per 100 miles per year (national average 25)" }
+      ],
+      "laterFigures": [ { "value": 14.7, "unit": "leaks per 100 miles, FY2023-24", "confirmed": false }, { "value": 16.1, "unit": "leaks per 100 miles (2026 statement)", "confirmed": false, "source": "search excerpt of https://opa.lacity.gov/blog/porter-ranch-and-granada-hills-water-outage-highlights-risks-aging-infrastructure-and-value (403 on fetch)" } ]
+    },
+    "toronto": {
+      "source": { "title": "2026 Operating Budget and 2026-2035 Capital Budget and Plan: Toronto Water (Budget Notes)", "url": "https://www.toronto.ca/legdocs/mmis/2026/bu/bgrd/backgroundfile-261774.pdf", "publisher": "City of Toronto", "date": "2026", "confirmed": true },
+      "figures": [
+        { "name": "Watermain breaks per 100 km of distribution pipe, 2024 actual", "value": 10.1, "unit": "breaks per 100 km per year", "note": "PDF table text is jumbled; 2025 target appears as 22 and 2025 projection 13.9" },
+        { "name": "Watermain length", "value": 6100, "unit": "km", "source": "City of Toronto (x.com/cityoftoronto, 2024-02)", "confirmed": false },
+        { "name": "Average watermain breaks since 2016", "value": 1100, "unit": "per year", "confirmed": false, "source": "search excerpt of toronto.ca watermains page" }
+      ],
+      "derived": { "value": 616, "unit": "breaks in 2024", "arithmetic": "10.1 x 6100/100", "confirmed": false }
+    },
+    "dublin": {
+      "source": { "title": "Uisce Eireann Performance Assessment Framework 2023 Annual Report (CRU/2025/42)", "url": "https://cruie-live-96ca64acab2247eca8a850a7e54b-5b34f62.divio-media.com/documents/CRU202542_Performance_Assessment_Framework_2023_Annual_Report_Final.pdf", "publisher": "Commission for Regulation of Utilities (CRU)", "date": "2025", "confirmed": true },
+      "scope": "All of Ireland (Dublin not separated).",
+      "figures": [
+        { "name": "Properties with an unplanned interruption >12 hours", "2020": 0.204, "2021": 0.253, "2022": 0.163, "2023": 0.091, "target2024": "<0.12", "unit": "share of connected properties per year", "note": "2020-22 are overestimates (greatest estimated); 2023 uses revised method" },
+        { "name": "Properties with an unplanned interruption >24 hours", "2020": 0.076, "2021": 0.064, "2022": 0.089, "2023": 0.055, "target2024": "<0.036", "unit": "share of connected properties per year" },
+        { "name": "Minutes of lost supply (planned + unplanned interruptions >3h)", "2023": 555, "unit": "average minutes per property per year (9.25 h)" }
+      ],
+      "uisce2024": { "value": "over 14,000 planned and unplanned outages, >95% resolved in under 24 hours; 32 boil water notices issued affecting ~91,000 people; 1.8 million households and businesses served", "source": { "title": "Uisce Eireann Annual Report 2024 - Operating review", "url": "https://www.water.ie/about/model-publication-scheme/financial-information/strategic-report/operating-review.html", "publisher": "Uisce Eireann", "date": "2025", "confirmed": true } }
+    },
+    "mexicoCity": {
+      "frequencyENIGH": {
+        "method": "ENIGH 2024 viviendas.csv, dotac_agua ('How many days a week does water reach this dwelling?'), CDMX weighted, share of all dwellings.",
+        "source": { "title": "ENIGH 2024 microdatos: viviendas; Cuestionario de hogares y vivienda pregunta 14", "url": "https://www.inegi.org.mx/contenidos/programas/enigh/nc/2024/microdatos/enigh2024_ns_viviendas_csv.zip", "publisher": "INEGI", "date": "2025-07-30", "confirmed": true },
+        "figures": [
+          { "answer": "Daily", "CDMX": 0.769, "national": 0.633 },
+          { "answer": "Every third day", "CDMX": 0.112, "national": 0.165 },
+          { "answer": "Twice a week", "CDMX": 0.055, "national": 0.069 },
+          { "answer": "Once a week", "CDMX": 0.038, "national": 0.055 },
+          { "answer": "Now and then", "CDMX": 0.015, "national": 0.046 },
+          { "answer": "Not asked (no piped water)", "CDMX": 0.011, "national": 0.033 }
+        ],
+        "storage": { "CDMX": { "cisterna": 0.593, "tinacoOnRoof": 0.799, "waterPump": 0.682, "pipedInsideDwelling": 0.909 } }
+      },
+      "falta_de_agua_reports": {
+        "method": "Count of 'Falta de agua' reports in SACMEX/0311 water reports dataset by year.",
+        "source": { "title": "Reportes de agua, reportes_agua_2024_01.csv (Jan 2022-Feb 2024)", "url": "https://datos.cdmx.gob.mx/dataset/57ffc13a-7207-4b69-a9a9-2fef3fce6331/resource/a8069e94-c7cb-45d7-8166-561e80884422/download/reportes_agua_2024_01.csv", "retrievedVia": "web.archive.org", "publisher": "SACMEX via Portal de Datos Abiertos CDMX", "date": "2024", "confirmed": true },
+        "figures": [
+          { "year": 2022, "value": 90710, "unit": "'Falta de agua' reports" },
+          { "year": 2023, "value": 70525, "unit": "'Falta de agua' reports" },
+          { "year": 2023, "colonia": "Roma Norte", "value": 740 }, { "year": 2023, "colonia": "Roma Sur", "value": 247 }, { "year": 2023, "colonia": "Hipodromo", "value": 143 }, { "year": 2023, "colonia": "Condesa", "value": 32 }, { "year": 2023, "colonia": "Hipodromo Condesa", "value": 19 }, { "year": 2023, "colonia": "Polanco I-V Seccion (sum)", "value": 162 }
+        ],
+        "derived": { "value": 0.023, "unit": "reports per dwelling per year, 2023", "arithmetic": "70,525 / 3,029,724 dwellings", "confirmed": false, "caveat": "Reports, not affected homes; tandeo areas often do not report." }
+      },
+      "tandeo": { "value": 284, "unit": "colonias receiving water by tandeo in 2025, in 10 alcaldias (Alvaro Obregon, Coyoacan, Cuajimalpa, GAM, Iztapalapa, Magdalena Contreras, Milpa Alta, Tlahuac, Tlalpan, Xochimilco); listed in Gaceta Oficial 2025-01-29", "source": { "title": "Recibiran 284 colonias agua por tandeo", "url": "https://www.eluniversal.com.mx/metropoli/recibiran-284-colonias-agua-por-tandeo/", "publisher": "El Universal", "date": "2025", "confirmed": false } },
+      "cutzamala": { "value": "Total Cutzamala supply suspension of about 72 hours (early Nov 2025) for maintenance; Cutzamala supplies ~25% of CDMX water", "source": { "title": "search excerpts (El Universal, Cronista)", "url": "https://www.eluniversal.com.mx/metropoli/corte-de-agua-del-sistema-cutzamala-en-cdmx-que-alcaldias-son-las-afectadas-y-cuales-no/", "publisher": "El Universal", "date": "2025", "confirmed": false } }
+    }
+  },
+
+  "gasInterruptions": {
+    "london": {
+      "source": { "title": "Cadent Strategic Performance Overview 2024/25", "url": "https://cadentgas.com/getmedia/831502b4-e530-44d9-8668-d95394bb2e52/Our-Strategic-Performance-Overview-2025.pdf", "publisher": "Cadent Gas Ltd", "date": "2025", "confirmed": true },
+      "network": "Cadent London (LN, North London)",
+      "figures": [
+        { "name": "Non-MOB unplanned interruptions (standard)", "value": 7704, "unit": "interruptions, 2024/25", "totalMinutesMillions": 4.69 },
+        { "name": "Complex non-MOB unplanned interruptions", "value": 144, "unit": "interruptions, 2024/25", "avgHours": 128.5, "totalMinutesMillions": 1.11 },
+        { "name": "Average non-MOB unplanned interruption duration", "value": 12.3, "unit": "hours (about 10 h excluding complex non-MOBs); MPL 14 h" },
+        { "name": "Average MOB (multi-occupancy building with riser) unplanned interruption duration", "value": 318.3, "unit": "hours, 2024/25; MPL 601 h" },
+        { "name": "Other Cadent networks non-MOB average", "EN": 5.6, "NW": 8.8, "WM": 5.7, "unit": "hours" },
+        { "name": "Other Cadent networks MOB average", "EN": 87.2, "NW": 67.7, "WM": 159.7, "unit": "hours" }
+      ],
+      "standardMinutesCheck": "4.69M min / 7,704 = 609 min = 10.1 h",
+      "customers": { "value": 2300000, "unit": "'around 2.3 million people' on the North London network (wording ambiguous: people vs supply points)", "source": "search excerpt of https://cadentgas.com/mynetwork", "confirmed": false },
+      "derived": { "value": 0.0034, "unit": "non-MOB unplanned interruptions per supply point per year", "arithmetic": "(7,704 + 144) / ~2.3M", "confirmed": false, "caveat": "MOB interruption count not published; denominator unconfirmed." },
+      "ofgem": { "title": "RIIO-GD2 Annual Report 2024/25 - Appendix", "url": "https://www.ofgem.gov.uk/sites/default/files/2026-01/GD_annual_report_2024-25_Appendix.pdf", "publisher": "Ofgem", "date": "2026-01", "confirmed": true, "note": "Confirms Cadent London MPL 14 h non-MOB; SGN Southern combined average 33.3 h in 2024/25 (MPL 26 h)." }
+    },
+    "dublin": {
+      "source": { "title": "Customer Performance Report 2022", "url": "https://www.gasnetworks.ie/sites/default/files/docs/corporate/gas-regulation/Customer-Performance-Report-2022.pdf", "publisher": "Gas Networks Ireland", "date": "2023", "confirmed": true },
+      "scope": "All of Ireland",
+      "figures": [
+        { "name": "Change in gas supply interruptions 2022 vs 2021", "value": 0.148, "unit": "increase" },
+        { "name": "Customers restored within 24 hours", "value": 0.9998, "unit": "share, 2022" },
+        { "name": "Customers on network", "value": 713000, "unit": "customers (over)" },
+        { "name": "'Notified of no gas' annual count", "value": "chart only, axis 10,000-14,000 for 2018-2022; exact values not extractable", "unit": "notifications per year" }
+      ],
+      "systemLevel": { "value": 0, "unit": "unplanned major outages (Systems Performance Report 2020, KPI 4A)", "url": "https://www.gasnetworks.ie/sites/default/files/docs/corporate/gas-regulation/Systems-Performance-Report-2020.pdf", "confirmed": true }
+    }
+  },
+
+  "notFound": [
+    "CRE official weekly gas LP maximum price PDF for Aug 2024 (only press reports of it).",
+    "ENCEVI 2018 microdata or tabulados (kg per cylinder purchase, duration per cylinder); INEGI download links did not resolve.",
+    "A SENER/CRE direct kg-per-household-per-month figure for CDMX.",
+    "SACMEX/CONAGUA primary publication of litres per person per day for CDMX (only INFO CDMX and Congreso CDMX citations).",
+    "SACMEX consumption data dictionary (unit of consumo_prom_dom assumed m3/bimester); 2024-2026 manzana classification list; tandeo2019 dataset (not archived).",
+    "Official 2025/2026 Gaceta list of tandeo colonias and hours/days of supply per colonia (only press count of 284).",
+    "Thames Water London-only interruption split.",
+    "NYC DEP customers or accounts affected per main break.",
+    "LADWP customers affected per break and restore times.",
+    "Toronto Water time to restore water after a break.",
+    "City of Vancouver main breaks per year (council reports returned 403).",
+    "Dublin-specific (vs national) Uisce Eireann interruption figures; Uisce Eireann 2024 PAF figures.",
+    "Cadent London MOB unplanned interruption count and confirmed customer count.",
+    "Con Edison gas outage frequency/duration (only electric reliability is published by NY DPS).",
+    "SoCalGas gas interruption statistics.",
+    "Enbridge Gas (Toronto) interruption statistics.",
+    "Gas Networks Ireland exact count of no-gas notifications (chart values) and any post-2022 Customer Performance Report (2023/2024 URLs 404)."
+  ]
+}
