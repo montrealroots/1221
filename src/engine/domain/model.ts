@@ -307,6 +307,8 @@ export interface Person {
   suppliesSince?: number;
   /** The toiletry of each kind they use first and buy again, by its id (`hygiene.use_first`, from 2026-10-02). */
   usesFirst?: Record<string, string>;
+  /** Jewelry and watches pledged at a pawnbroker (`systems/pawn.ts`, from 2026-10-02). */
+  pawns?: import('../systems/pawn').Pawn[];
   /** When their laundry and dishwasher detergent began to be counted (`systems/hygiene.ts`, from 2026-10-02). */
   cleaningSince?: number;
   /** Breakdown cover with a motoring club (`systems/roadside.ts`, from 2026-10-02). */
