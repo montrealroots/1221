@@ -15,7 +15,7 @@ import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWor
 import { bagsOf, buyLuggageRefusal, luggageCatalog, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
 import { consolesHere, consolesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
 import { activationCost, batteryQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
-import { ordersOf } from '@/engine/systems/orders';
+import { orderStage, ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
 import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
 import { batteryOptions, batteryRefusal, batteryYears, stopped } from '@/engine/systems/watches';
@@ -79,6 +79,12 @@ export function BelongingsWorkspace() {
             <Stat label="To Hand" value={String(toHandCount)} note="Where you are now" />
             <Stat label="On Their Way" value={String(coming.length)} note={coming.length ? `The next arrives ${formatDate(Math.min(...coming.map((o) => o.arrivesAt)), sim.zone)}` : 'No orders outstanding'} />
           </div>
+          {coming.length > 0 && (
+            <div className="col gap-1 small" style={{ marginTop: '0.5rem' }}>
+              {/* Each order's stage as the carrier's tracking says it (`orderStage`). */}
+              {coming.map((o) => <div key={o.id}>{`${o.from}: ${orderStage(person, o, sim.now)}, due ${formatDate(o.arrivesAt, sim.zone)}`}</div>)}
+            </div>
+          )}
         </Panel>
         <Suitcase />
         <Luggage />
