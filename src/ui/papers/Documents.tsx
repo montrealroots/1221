@@ -8,7 +8,7 @@
  */
 
 import { replaceRefusal } from '@/engine/systems/licensing';
-import { LICENSE_REPLACEMENT } from '@/engine/content/replacements';
+import { ID_CARD_REPLACEMENT, LICENSE_REPLACEMENT } from '@/engine/content/replacements';
 import { useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
@@ -26,7 +26,7 @@ import {
   passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument, type VehicleClass,
 } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
-import { idCardHere, idCardRefusal, realIdRefusal, tsaAccepts } from '@/engine/systems/identity';
+import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, realIdRefusal, tsaAccepts } from '@/engine/systems/identity';
 import { applies, attemptFee, exchangeRefusal, exchangeable, idpRefusal, pathHere, renewRefusal, renewable, stepRefusal } from '@/engine/systems/licensing';
 import { caPermitRefusal, o1Evidence, o1Refusal, optRefusal, programEnd, workRefusal, usStatusEnds } from '@/engine/systems/permission';
 import { careerOf, roleById, workCityOf } from '@/engine/systems/career';
@@ -66,6 +66,7 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
                   {d.status === 'valid' && !expired && (
                     <Gated feature="documents.report_lost" className="btn btn-sm btn-ghost" onClick={() => { if (run('documents.report_lost', { documentId: d.id }).ok) toast(`${KIND_WORD[d.kind]} reported lost and canceled.`, 'positive'); }}>Report Lost</Gated>
                   )}
+                  {d.kind === 'idcard' && d.status === 'lost' && (() => { const no = idReplaceRefusal(sim.player, d.id); const rule = ID_CARD_REPLACEMENT[d.issuer]; return <Gated feature="documents.replace_idcard" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (rule && !rule.daysRead ? 'Its time to come isn’t published: the license’s, there.' : undefined)} onClick={() => { const a = run<{ readyAt: number }>('documents.replace_idcard', { documentId: d.id }); if (a.ok) toast(`Replaced; the card comes ${formatDate(a.value!.readyAt, sim.zone)}.`, 'positive'); }}>{rule && !no ? `Replace It, ${formatMoney(idReplaceFee(sim, sim.player, d.issuer), saveCurrency(sim.universe), { cents: false })}` : 'Replace It'}</Gated>; })()}
                   {d.kind === 'license' && d.status === 'lost' && (() => { const no = replaceRefusal(sim.player, d.id); const rule = LICENSE_REPLACEMENT[d.issuer]; return <Gated feature="documents.replace_license" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (rule?.first ? `It needs ${rule.first} first, free.` : undefined)} onClick={() => { const a = run<{ readyAt: number }>('documents.replace_license', { documentId: d.id }); if (a.ok) toast(rule && !rule.driveMeanwhile && rule.days ? `Replaced; the card comes ${formatDate(a.value!.readyAt, sim.zone)}, and until then you can’t drive.` : 'Replaced; you may drive meanwhile.', 'positive'); }}>{rule ? `Replace It, ${formatMoney(Math.round(rule.fee * 100), rule.currency, { cents: false })}` : 'Replace It'}</Gated>; })()}
                 </td>
               </tr>

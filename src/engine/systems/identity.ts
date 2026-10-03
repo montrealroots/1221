@@ -10,6 +10,7 @@ import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { ID_CARDS, REAL_ID } from '../content/identity';
+import { ID_CARD_REPLACEMENT } from '../content/replacements';
 import { payFromBank, owe } from './household';
 import { addYears, citizenOf, documentsOf, inForce, isoOfCity, licensingOf, numberFor, type PersonDocument } from './documents';
 import type { Journey } from './journey';
@@ -103,7 +104,50 @@ export function realIdRefusal(person: Person, at: Instant): string | undefined {
   return undefined;
 }
 
+export const ID_CARD_KIND = 'documents.idcard_arrives';
+
+/** Why a lost ID card can't be replaced, or nothing: it must be reported lost, and replaced by its issuer for someone living there. */
+export function idReplaceRefusal(person: Person, documentId: string): string | undefined {
+  const doc = documentsOf(person).find((d) => d.id === documentId);
+  if (!doc || doc.kind !== 'idcard') return 'That isn’t an ID card of yours.';
+  if (doc.status !== 'lost') return 'It isn’t lost: report it lost first.';
+  if (!ID_CARD_REPLACEMENT[doc.issuer]) return 'SLATE doesn’t have what its issuer charges to replace it.';
+  if (idCardHere(person)?.jurisdiction !== doc.issuer) return 'It’s replaced where it was issued, for someone living there.';
+  return undefined;
+}
+
+/** A replacement's fee for them, in the save's money: the reduced one from its age where there is one. */
+export function idReplaceFee(sim: Simulation, person: Person, issuer: string): Money {
+  const rule = ID_CARD_REPLACEMENT[issuer]!;
+  const age = (sim.now - person.birthInstant) / (365.25 * MS_DAY);
+  const fee = rule.seniorFee !== undefined && age >= (rule.seniorFrom ?? Infinity) ? rule.seniorFee : rule.fee;
+  return inMoney(sim, fee, rule.currency);
+}
+
 export function registerIdentity(sim: Simulation): void {
+  sim.onCommand<{ documentId: string }, { readyAt: Instant; fee: Money }>('documents.replace_idcard', (p, { sim: s }) => {
+    const person = s.player;
+    const no = idReplaceRefusal(person, String(p?.documentId));
+    if (no) throw new CommandError(no);
+    const lost = documentsOf(person).find((d) => d.id === p.documentId)!;
+    const rule = ID_CARD_REPLACEMENT[lost.issuer]!;
+    const fee = idReplaceFee(s, person, lost.issuer);
+    if (fee > 0 && !payFromBank(s, person, fee, `${lost.name}, replaced`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    lost.status = 'cancelled';
+    const id = s.nextId('document');
+    const readyAt = s.now + rule.days * MS_DAY;
+    documentsOf(person).push({ ...lost, id, number: numberFor('ID', id), status: 'pending', appliedAt: s.now, readyAt });
+    s.schedule({ at: readyAt, kind: ID_CARD_KIND, label: 'The ID Card Comes', category: 'personal', priority: 30, payload: { personId: person.id, documentId: id } });
+    return { readyAt, fee };
+  });
+  sim.onSchedule(ID_CARD_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const doc = person ? documentsOf(person).find((d) => d.id === item.payload.documentId) : undefined;
+    if (!doc || doc.status !== 'pending') return;
+    doc.status = 'valid';
+    doc.issuedAt = item.at;
+  });
+
   sim.onCommand<Record<string, never>, { expiresAt?: Instant; fee: Money }>('documents.apply_idcard', (_p, { sim: s }) => {
     const person = s.player;
     const no = idCardRefusal(person, s.now);

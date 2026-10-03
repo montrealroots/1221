@@ -26,3 +26,26 @@ export const LICENSE_REPLACEMENT: Readonly<Record<string, Replacement>> = {
   gb: { fee: 20, currency: 'GBP', days: 7, driveMeanwhile: true, source: 'https://www.gov.uk/apply-online-to-replace-a-driving-licence' },
   ie: { fee: 35, currency: 'EUR', days: 14, driveMeanwhile: true, first: 'a Garda declaration', source: 'https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/replacing-a-lost-or-stolen-irish-driving-licence/' },
 };
+
+/**
+ * Replacing a lost or stolen ID card (from later on 2026-10-02;
+ * `docs/research/world/research-id-replace.json`, each issuer's own page): New
+ * York's Non-Driver ID, $8 or $6.50 from 62, allow three weeks; Connecticut's,
+ * $30, within 30 days; California's, $40, free from 62, three to four weeks;
+ * Ontario's Photo Card, $10, four to six weeks; British Columbia's BCID, $15,
+ * its time not stated, so the license's two weeks there, SLATE's reading;
+ * Mexico's INE, free, a month; Ireland's passport card, €35, ten working
+ * days. The later end of a range is taken. Nothing interim stands in for
+ * the card as a photo ID meanwhile.
+ */
+export interface IdCardReplacement { fee: number; seniorFee?: number; seniorFrom?: number; currency: string; days: number; daysRead: boolean; source: string }
+export const ID_CARD_REPLACEMENT: Readonly<Record<string, IdCardReplacement>> = {
+  'us-ny': { fee: 8, seniorFee: 6.5, seniorFrom: 62, currency: 'USD', days: 21, daysRead: true, source: 'https://dmv.ny.gov/non-driver-id/replace-a-non-driver-id' },
+  'us-ct': { fee: 30, currency: 'USD', days: 30, daysRead: true, source: 'https://portal.ct.gov/dmv/licenses-permits-ids/request-duplicate-non-driver-id' },
+  'us-ca': { fee: 40, seniorFee: 0, seniorFrom: 62, currency: 'USD', days: 28, daysRead: true, source: 'https://www.dmv.ca.gov/portal/driver-licenses-identification-cards/replace-your-driver-license-or-identification-dl-id-card' },
+  'ca-on': { fee: 10, currency: 'CAD', days: 42, daysRead: true, source: 'https://www.ontario.ca/page/ontario-photo-card' },
+  'ca-bc': { fee: 15, currency: 'CAD', days: 14, daysRead: false, source: 'https://www.icbc.com/driver-licensing/visit-dl-office/Fees' },
+  'mx-cmx': { fee: 0, currency: 'MXN', days: 30, daysRead: true, source: 'https://www.gob.mx/public/tramites/detalleTramite.xhtml?homoclave=INE-2023-1790-002-D' },
+  ie: { fee: 35, currency: 'EUR', days: 14, daysRead: true, source: 'https://www.ireland.ie/en/dfa/passports/passport-fees/' },
+};
+
