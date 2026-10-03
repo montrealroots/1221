@@ -41,6 +41,7 @@ import { atTown } from './homes';
 import { expenseFor, spend } from './household';
 import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place } from './items';
 import { cancelOrder, ordersOf, placeOrder } from './orders';
+import { CLICK_COLLECT, type CollectTerms } from '../content/clickcollect';
 import { stow } from './trips';
 import { fitOf, fitKgFor, measuresRefusal, shoeRow, sizeFor, type Measures } from './tailoring';
 import { bodyOf } from './body';
@@ -51,7 +52,7 @@ export interface ClothesPurchase {
   id: string;
   productId: string;
   retailerId: string;
-  how: 'store' | 'online';
+  how: BuyWay;
   /** The order it came on, bought online. */
   orderId?: string;
   at: Instant;
@@ -133,7 +134,19 @@ export function clothingCatalog(sim: Simulation, cityId: string): CatalogEntry<C
 // ---------------------------------------------------------------------------
 // Buying
 
-export interface BuyOptions { productId: string; how: 'store' | 'online'; size?: string; color?: string; quantity?: number }
+/** In store; online, delivered home; or online and collected in the retailer's store where you live (`content/clickcollect.ts`, from 2026-10-02). */
+export type BuyWay = 'store' | 'online' | 'collect';
+export const toBuyWay = (how: unknown): BuyWay => (how === 'online' ? 'online' : how === 'collect' ? 'collect' : 'store');
+
+export interface BuyOptions { productId: string; how: BuyWay; size?: string; color?: string; quantity?: number }
+
+/** When an order to be collected is ready: that day, two hours on, for one ready in hours; else its days, working days five to a week. */
+export function collectReadyAt(sim: Simulation, t: CollectTerms): Instant {
+  return sim.now + (t.readyDays === 0 ? 2 * 3_600_000 : (t.working ? calendarDays(t.readyDays) : t.readyDays) * MS_DAY);
+}
+
+export const COLLECT_DUE_KIND = 'clothes.collect_due';
+const collectPlace = (retailerId: string, cityId: string) => `collect:${retailerId}:${cityId}`;
 
 /** Working days to calendar days, five to a week. */
 const calendarDays = (working: number): number => Math.ceil((working * 7) / 5);
@@ -153,6 +166,10 @@ export function buyRefusal(person: Person, o: BuyOptions): string | undefined {
   const here = CITIES.get(person.currentLocationId)?.name ?? 'here';
   if (o.how === 'store') {
     if (!r.storesIn.includes(person.currentLocationId)) return `SLATE knows of no ${r.name} store in ${here}.${r.delivers ? ' It can be ordered online.' : ''}`;
+  } else if (o.how === 'collect') {
+    if (!CLICK_COLLECT[r.id]) return `SLATE doesn’t have ${r.name}’s terms for collecting in store.`;
+    if (!person.home || person.home.kind === 'sofa') return 'An order is collected where you live.';
+    if (!r.storesIn.includes(person.home.cityId)) return `SLATE knows of no ${r.name} store where you live.`;
   } else {
     if (!r.delivers) return `${r.name} doesn’t deliver; it sells in its stores.`;
     if (!person.home || person.home.kind === 'sofa') return 'An order needs a home to be sent to.';
@@ -183,10 +200,17 @@ export function checkoutQuote(sim: Simulation, person: Person, lines: readonly B
   const r = p0 && retailerById(p0.retailer);
   if (!p0 || !r) return undefined;
   const how = lines[0]!.how;
-  const where = how === 'online' ? person.home?.cityId ?? person.currentLocationId : person.currentLocationId;
+  const where = how === 'store' ? person.currentLocationId : person.home?.cityId ?? person.currentLocationId;
   const goods = lines.map((o) => productPrice(sim, where, productById(o.productId)!) * Math.max(1, Math.floor(o.quantity ?? 1)));
   const sum = goods.reduce((a, b) => a + b, 0);
   if (how === 'store') return { goods, delivery: 0, total: sum };
+  // Collected in store: the retailer's own fee, free over its threshold where it has one.
+  const terms = how === 'collect' ? CLICK_COLLECT[r.id] : undefined;
+  if (terms) {
+    const listedGoods = lines.reduce((a, o) => a + productById(o.productId)!.price * Math.max(1, Math.floor(o.quantity ?? 1)), 0);
+    const fee = terms.freeOver !== undefined && listedGoods >= terms.freeOver ? 0 : inSaveMoney(sim, Math.round(terms.fee * 100), terms.currency);
+    return { goods, delivery: fee, total: sum + fee, arrivesAt: collectReadyAt(sim, terms) };
+  }
   // A threshold is on the goods before any sales tax.
   const listed = lines.reduce((a, o) => a + productById(o.productId)!.price * Math.max(1, Math.floor(o.quantity ?? 1)), 0);
   const free = r.freeOver !== null && listed >= r.freeOver;
@@ -231,9 +255,12 @@ export function checkoutClothes(sim: Simulation, person: Person, lines: readonly
     const line = { kind: p.id, label: p.name, quantity: 1, condition: 1, paid: Math.round(q.goods[i]! / count), spec, garment: { ...garmentOf(p), fitKg: fitKgFor(sim, person, p.sizes, o.size, p), ...((): { footCm?: number } => { const row = o.size ? shoeRow(person, p, o.size) : undefined; return row ? { footCm: row.footCm } : {}; })() } };
     return { purchase, count, line };
   });
-  if (how === 'online') {
-    const order = placeOrder(sim, person, { from: r.name, arrivesAt: q.arrivesAt!, to: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'wardrobe' }, paid: q.total }, made.flatMap((m) => Array.from({ length: m.count }, () => ({ ...m.line, garment: { ...m.line.garment } }))));
+  if (how === 'online' || how === 'collect') {
+    const to: Place = how === 'collect' ? { kind: 'service', serviceId: collectPlace(r.id, person.home!.cityId), readyAt: q.arrivesAt! } : { kind: 'home', home: homeKeyOf(person.home)!, spot: 'wardrobe' };
+    const order = placeOrder(sim, person, { from: r.name, arrivesAt: q.arrivesAt!, to, paid: q.total }, made.flatMap((m) => Array.from({ length: m.count }, () => ({ ...m.line, garment: { ...m.line.garment } }))));
     for (const m of made) m.purchase.orderId = order.id;
+    // Held for its days at the store, then sent back and refunded.
+    if (how === 'collect') sim.schedule({ at: q.arrivesAt! + CLICK_COLLECT[r.id]!.holdDays * MS_DAY, kind: COLLECT_DUE_KIND, label: `Collect From ${r.name}`, category: 'home', priority: 30, payload: { personId: person.id, orderId: order.id } });
   } else {
     // Carried home where home is in this town; on them otherwise, and in the car or arms on a trip (`stow`).
     const home = homeKeyOf(person.home);
@@ -313,14 +340,20 @@ export function returnClothes(sim: Simulation, person: Person, purchaseId: strin
   const purchase = person.clothesBought!.find((x) => x.id === purchaseId)!;
   const fee = returnFee(sim, purchase, how)!;
   const back = purchase.goods - fee;
+  refundPurchase(sim, person, purchase, back, `${retailerById(purchase.retailerId)!.name}: a return, refunded`);
+  return back;
+}
+
+/** A purchase's money back, to what paid, in its shares, and its garments gone; its order ended once all of it is back. */
+function refundPurchase(sim: Simulation, person: Person, purchase: ClothesPurchase, back: Money, memo: string): void {
+  const purchaseId = purchase.id;
   const account = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && a.kind === 'checking');
   // Back to what paid, in its shares, an account since closed to checking; checking where nothing was kept (from 2026-10-02; until then always checking).
   const to = (purchase.paidFrom ?? []).map((x) => ({ accountId: sim.universe.accounts[x.accountId] && !sim.universe.accounts[x.accountId]!.closedAt ? x.accountId : account?.id, share: x.share })).filter((x): x is { accountId: string; share: number } => Boolean(x.accountId));
   const shares = to.length ? to : account ? [{ accountId: account.id, share: 1 }] : [];
   if (shares.length === 0) throw new CommandError('There’s no account to refund to.');
-  const r = retailerById(purchase.retailerId)!;
   const parts = shares.map((x, n) => ({ accountId: x.accountId, amount: n === shares.length - 1 ? back - shares.slice(0, -1).reduce((t, y) => t + Math.round(back * y.share), 0) : Math.round(back * x.share) }));
-  sim.post({ memo: `${r.name}: a return, refunded`, category: 'clothing', postings: [...parts, { accountId: sim.nominalAccount('expense', expenseFor('clothing')).id, amount: -back }] });
+  sim.post({ memo, category: 'clothing', postings: [...parts, { accountId: sim.nominalAccount('expense', expenseFor('clothing')).id, amount: -back }] });
   const gone = new Set(purchaseItems(person, purchaseId).map((i) => i.id));
   person.items = itemsOf(person).filter((i) => !gone.has(i.id));
   forget(person, gone);
@@ -328,7 +361,16 @@ export function returnClothes(sim: Simulation, person: Person, purchaseId: strin
   // The order it came on, once all of it has gone back.
   const order = ordersOf(person).find((o) => o.id === purchase.orderId);
   if (order && (person.clothesBought ?? []).every((x) => x.orderId !== order.id || x.returnedAt !== undefined)) { order.status = 'returned'; order.endedAt = sim.now; }
-  return back;
+}
+
+/** Why an order to collect can't be collected now, or nothing: it must be ready, at the store, and they in its town. */
+export function collectRefusal(person: Person, orderId: string): string | undefined {
+  const waiting = itemsOf(person).filter((i) => i.at.kind === 'service' && i.at.serviceId.startsWith('collect:') && (person.clothesBought ?? []).some((b) => b.orderId === orderId && i.spec?.purchase === b.id));
+  if (waiting.length === 0) return ordersOf(person).some((o) => o.id === orderId && o.status === 'placed') ? 'It isn’t ready yet.' : 'No order of yours is waiting to be collected.';
+  const at = waiting[0]!.at as Extract<Place, { kind: 'service' }>;
+  const city = at.serviceId.split(':')[2]!;
+  if (person.currentLocationId !== city) return `It’s collected in ${CITIES.get(city)?.name ?? 'its town'}.`;
+  return undefined;
 }
 
 /**
@@ -631,12 +673,37 @@ export function registerClothing(sim: Simulation): void {
   });
   sim.onCommand<BuyOptions, { purchaseId: string }>('clothes.buy', (p, { sim: s }) => {
     if (!p || typeof p.productId !== 'string') throw new CommandError('What to buy?');
-    return { purchaseId: buyClothes(s, s.player, { productId: p.productId, how: p.how === 'online' ? 'online' : 'store', size: p.size, color: p.color, quantity: p.quantity }).id };
+    return { purchaseId: buyClothes(s, s.player, { productId: p.productId, how: toBuyWay(p.how), size: p.size, color: p.color, quantity: p.quantity }).id };
+  });
+  // An order collected in store: its garments home, or on them away from it (from 2026-10-02).
+  sim.onCommand<{ orderId: string }, { collected: number }>('clothes.collect_order', (p, { sim: s }) => {
+    const person = s.player;
+    const no = collectRefusal(person, String(p?.orderId));
+    if (no) throw new CommandError(no);
+    const ids = new Set((person.clothesBought ?? []).filter((b) => b.orderId === p.orderId).map((b) => b.id));
+    const home = homeKeyOf(person.home);
+    const waiting = itemsOf(person).filter((i) => i.at.kind === 'service' && i.at.serviceId.startsWith('collect:') && ids.has(String(i.spec?.purchase)));
+    for (const i of waiting) stow(person, Object.assign(i, { at: home && person.home!.cityId === person.currentLocationId ? { kind: 'home', home, spot: 'wardrobe' } : { kind: 'person' } }) as Item, s.now);
+    return { collected: waiting.length };
+  });
+  // Uncollected past its hold, it goes back, and the goods are refunded.
+  sim.onSchedule(COLLECT_DUE_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    if (!person) return;
+    const bought = (person.clothesBought ?? []).filter((b) => b.orderId === item.payload.orderId && b.returnedAt === undefined);
+    let back = 0;
+    for (const b of bought) {
+      const items = purchaseItems(person, b.id);
+      if (items.length === 0 || !items.every((i) => i.at.kind === 'service' && i.at.serviceId.startsWith('collect:'))) continue;
+      refundPurchase(s, person, b, b.goods, `${retailerById(b.retailerId)!.name}: uncollected, refunded`);
+      back += b.goods;
+    }
+    if (back > 0 && person.id === s.universe.playerId) s.notify({ category: 'home', title: 'An Order Went Back', body: 'It wasn’t collected in time, so the store sent it back and refunded it.', importance: 40, route: '/workspace/clothes' });
   });
   sim.onCommand<{ purchaseId: string; how: 'store' | 'mail' }, { refunded: Money }>('clothes.return', (p, { sim: s }) => ({ refunded: returnClothes(s, s.player, String(p?.purchaseId), p?.how === 'mail' ? 'mail' : 'store') }));
   // The basket: lines put in and taken out, then checked out a retailer at a time (from 2026-10-02).
   sim.onCommand<BuyOptions, { lineId: string }>('clothes.basket_add', (p, { sim: s }) => {
-    const o: BuyOptions = { productId: String(p?.productId), how: p?.how === 'online' ? 'online' : 'store', ...(p?.size ? { size: String(p.size) } : {}), ...(p?.color ? { color: String(p.color) } : {}), quantity: p?.quantity === undefined ? 1 : Number(p.quantity) };
+    const o: BuyOptions = { productId: String(p?.productId), how: toBuyWay(p?.how), ...(p?.size ? { size: String(p.size) } : {}), ...(p?.color ? { color: String(p.color) } : {}), quantity: p?.quantity === undefined ? 1 : Number(p.quantity) };
     const no = buyRefusal(s.player, o);
     if (no) throw new CommandError(no);
     // Numbered from the purchases', which is what a line becomes.
@@ -650,7 +717,7 @@ export function registerClothing(sim: Simulation): void {
     s.player.basket = basket.filter((l) => l.id !== p.lineId);
     return { left: s.player.basket.length };
   });
-  sim.onCommand<{ retailerId: string; how: 'store' | 'online' }, { purchaseIds: string[]; paid: Money }>('clothes.checkout', (p, { sim: s }) => {
+  sim.onCommand<{ retailerId: string; how: BuyWay }, { purchaseIds: string[]; paid: Money }>('clothes.checkout', (p, { sim: s }) => {
     const person = s.player;
     const lines = basketOf(person).filter((l) => productById(l.productId)?.retailer === p?.retailerId && l.how === p?.how);
     const q = checkoutQuote(s, person, lines);
