@@ -54,15 +54,15 @@ describe('fit', () => {
 });
 
 describe('a tailor', () => {
-  it('takes in what’s too big, and lets out no top, in the town you’re in', () => {
+  it('takes in what’s too big, and lets a top out only so far, in the town you’re in', () => {
     const sim = life('us-ny-newyork', 'tl-refuse');
     const kg = sim.player.body!.weightKg;
     const t = top(sim);
     const shop = tailorsIn('us-ny-newyork')[0]!;
     expect(alterRefusal(sim.player, t.id, shop.id)).toBe('It fits.');
     weigh(sim, kg * 1.2);
-    // Proper Cloth gives no shirt's figure for letting out.
-    expect(alterRefusal(sim.player, t.id, shop.id)).toBe('A tailor can’t let it out.');
+    // A shirt lets out half a size, SLATE's reading: a fifth more is past it.
+    expect(alterRefusal(sim.player, t.id, shop.id)).toBe('It can’t be let out that far.');
     weigh(sim, kg * 0.85);
     expect(alterRefusal(sim.player, t.id, shop.id)).toBeUndefined();
     expect(alterRefusal(sim.player, t.id, tailorsIn('uk-eng-london')[0]!.id)).toBe('The tailor is in another town.');
@@ -133,5 +133,9 @@ describe('letting out', () => {
     weigh(sim, made * 0.7);
     expect(alterRefusal(sim.player, b.id, tailorsIn('us-ny-newyork')[0]!.id)).toBe('It can’t be taken in that far.');
     expect(alteredKg(sim.player, b.garment)).toBeCloseTo(made * (1 - SIZE_STEP), 6);
+    // Underwear isn't let out at all.
+    const under = garmentsOf(sim.player).find((x) => x.garment.slot === 'underwear')!;
+    weigh(sim, under.garment.fitKg! * 1.12);
+    expect(alterRefusal(sim.player, under.id, tailorsIn('us-ny-newyork')[0]!.id)).toBe('A tailor can’t let it out.');
   });
 });

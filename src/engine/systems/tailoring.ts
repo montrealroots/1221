@@ -22,8 +22,10 @@
  * in 2. SLATE reads a size step as 2 inches around, as trouser waists and
  * jacket chests are numbered, so a bottom lets out three quarters of a size
  * and a suit or a coat two fifths, once, its spare cloth then used; each is
- * taken in a size at most. Proper Cloth gives no shirt's or dress's figure,
- * so those are only taken in, as far as before. Letting out costs what the
+ * taken in a size at most. Proper Cloth gives no shirt's or dress's figure;
+ * until 2026-10-03 those were only taken in, and since they let out half a
+ * size, SLATE's reading of the trade's 'an inch or two' at a shirt's chest,
+ * and take in a size at most. Letting out costs what the
  * tailor charges to take in the waist, as Nordstrom, Stitch It and Paul
  * Henry Tailoring each price a waist the same either way.
  */
@@ -211,8 +213,8 @@ export function fitOf(person: Person, g: Garment): 'fits' | 'big' | 'small' {
 /** The weight a garment is made for now. */
 export const fitKgOf = (person: Person): number | undefined => person.body?.weightKg;
 
-/** How far a garment lets out and takes in, in size steps, by its slot (Proper Cloth's figures). */
-export const ALTER_STEPS: Readonly<Partial<Record<Slot, { out: number; in: number }>>> = { bottom: { out: 0.75, in: 1 }, suit: { out: 0.4, in: 1 }, outer: { out: 0.4, in: 1 } };
+/** How far a garment lets out and takes in, in size steps, by its slot: Proper Cloth's figures for trousers and jackets; a shirt's or a dress's half a size out, SLATE's reading of the trade's 'an inch or two' at a shirt's chest (from 2026-10-03; until then neither let out at all). */
+export const ALTER_STEPS: Readonly<Partial<Record<Slot, { out: number; in: number }>>> = { top: { out: 0.5, in: 1 }, dress: { out: 0.5, in: 1 }, bottom: { out: 0.75, in: 1 }, suit: { out: 0.4, in: 1 }, outer: { out: 0.4, in: 1 } };
 
 /** The weight a garment is altered to for this body: as far as it goes toward it. */
 export function alteredKg(person: Person, g: Garment): number | undefined {
