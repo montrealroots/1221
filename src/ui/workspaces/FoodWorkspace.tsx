@@ -12,7 +12,7 @@ import { useGame, useWorld } from '@/app/game-context';
 import { livingIn } from '@/engine/systems/homes';
 import { atHome } from '@/engine/systems/dwelling';
 import { Panel, Fine } from '@/ui/components/primitives';
-import { CatalogControls, FavoriteToggle, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
+import { CatalogControls, catalogPrice, CompareTable, CompareToggle, FavoriteToggle, useCatalogView, useCompare } from '@/ui/components/Catalog';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { titleCaseLabel } from '@/engine/core/text';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -43,6 +43,9 @@ export function FoodWorkspace() {
   const shown = arrange(entries, view);
   const [count, setCount] = useState(PAGE);
   const [basket, setBasket] = useState<{ restaurantId: string; items: string[] } | undefined>(undefined);
+  // Up to three dishes side by side (from 2026-10-04), across restaurants: each one's price and how it can be had.
+  const [compared, toggleCompare, clearCompare] = useCompare(`menus-${here}`);
+  const side = compared.map((id) => entries.find((e) => e.id === id)).filter((e): e is (typeof entries)[number] => Boolean(e));
   const add = (restaurantId: string, item: string) => setBasket(basket && basket.restaurantId === restaurantId ? { restaurantId, items: [...basket.items, item].slice(0, 6) } : { restaurantId, items: [item] });
   return (
     <>
@@ -75,7 +78,7 @@ export function FoodWorkspace() {
                         <td className="small"><Open subject={at('restaurant', e.value.restaurant.id)}>{e.value.restaurant.name}</Open></td>
                         <td className="small">{e.facets?.tier}</td>
                         <td className="num mono">{catalogPrice(e, money)}</td>
-                        <td className="row gap-1"><FavoriteToggle list="menus" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" disabled={e.price === null} onClick={() => add(e.value.restaurant.id, e.value.item)}>Add</button></td>
+                        <td className="row gap-1"><FavoriteToggle list="menus" id={e.id} /><CompareToggle on={compared.includes(e.id)} onToggle={() => toggleCompare(e.id)} /><button type="button" className="btn btn-sm btn-ghost" disabled={e.price === null} onClick={() => add(e.value.restaurant.id, e.value.item)}>Add</button></td>
                       </tr>
                     ))}
                   </tbody>
@@ -83,6 +86,16 @@ export function FoodWorkspace() {
               </div>
               </LookRegion>
               {shown.length > count && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCount(count + PAGE)}>{shown.length - count <= PAGE ? `Show The Last ${shown.length - count}` : `Show ${PAGE} More Of ${shown.length - count}`}</button>}
+              <CompareTable heads={side.map((e) => e.label)} onClear={clearCompare} rows={[
+                { label: 'Price', values: side.map((e) => catalogPrice(e, money)) },
+                { label: 'Restaurant', values: side.map((e) => e.value.restaurant.name) },
+                { label: 'Kind', values: side.map((e) => e.facets?.tier ?? '—') },
+                { label: 'Cuisine', values: side.map((e) => e.value.restaurant.cuisine ?? '—') },
+                { label: 'Neighborhood', values: side.map((e) => e.value.restaurant.neighborhood ?? '—') },
+                { label: 'Taken Away', values: side.map((e) => (e.value.restaurant.takeout ? 'Yes' : 'No')) },
+                { label: 'Delivered', values: side.map((e) => (e.value.restaurant.delivery ? 'Yes' : 'No')) },
+                { label: 'On The Menu', values: side.map((e) => e.value.restaurant.menu.find((m) => m.item === e.value.item)?.note ?? '—') },
+              ]} />
             </div>
           </Panel>
         )}
@@ -300,6 +313,8 @@ function Recipes() {
   );
 }
 
+const STORAGE_WORD: Readonly<Record<string, string>> = { pantry: 'The Cupboard', fridge: 'The Fridge', freezer: 'The Freezer' };
+
 /** The town's groceries, cheapest first, each with its price a kilo, a liter or each. */
 function Groceries() {
   const { sim, run, toast } = useGame();
@@ -311,6 +326,9 @@ function Groceries() {
   const [view, setView] = useCatalogView(`groceries-${here}`);
   const shown = arrange(entries, view);
   const [count, setCount] = useState(PAGE);
+  // Up to three side by side (from 2026-10-04): what a kilo, a liter or one costs, and how long each keeps where it's kept.
+  const [compared, toggleCompare, clearCompare] = useCompare(`groceries-${here}`);
+  const side = compared.map((id) => entries.find((e) => e.id === id)).filter((e): e is (typeof entries)[number] => Boolean(e));
   const buy = useFeature('food.buy_groceries');
   if (entries.length === 0) return <Panel title="Groceries"><p className="small muted" style={{ margin: 0 }}>SLATE doesn’t keep a grocery chain’s prices in this town yet.</p></Panel>;
   return (
@@ -330,7 +348,7 @@ function Groceries() {
                     <td className="small">{e.facets?.chain}</td>
                     <td className="num mono small">{`${money(unit.price)} / ${unit.per}`}</td>
                     <td className="num mono">{catalogPrice(e, money)}</td>
-                    <td className="row gap-1"><FavoriteToggle list="groceries" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('food.buy_groceries', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button></td>
+                    <td className="row gap-1"><FavoriteToggle list="groceries" id={e.id} /><CompareToggle on={compared.includes(e.id)} onToggle={() => toggleCompare(e.id)} /><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('food.buy_groceries', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button></td>
                   </tr>
                 );
               })}
@@ -338,6 +356,14 @@ function Groceries() {
           </table>
         </div>
         {shown.length > count && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCount(count + PAGE)}>{shown.length - count <= PAGE ? `Show The Last ${shown.length - count}` : `Show ${PAGE} More Of ${shown.length - count}`}</button>}
+        <CompareTable heads={side.map((e) => e.label)} onClear={clearCompare} rows={[
+          { label: 'Price', values: side.map((e) => catalogPrice(e, money)) },
+          { label: 'Unit Price', values: side.map((e) => { const u = unitPrice(sim, here, e.value); return `${money(u.price)} / ${u.per}`; }) },
+          { label: 'Chain', values: side.map((e) => e.facets?.chain ?? '—') },
+          { label: 'Size', values: side.map((e) => (e.value.sizeUnit === 'ct' ? `${e.value.sizeQty} in the pack` : `${e.value.sizeQty} ${e.value.sizeUnit}`)) },
+          { label: 'Keeps', values: side.map((e) => (e.value.keepsDays === null ? '—' : `${e.value.keepsDays} ${e.value.keepsDays === 1 ? 'Day' : 'Days'}${e.value.keepsEstimated ? ' (Estimate)' : ''}`)) },
+          { label: 'Kept In', values: side.map((e) => STORAGE_WORD[e.value.storage] ?? e.value.storage) },
+        ]} />
         <Fine>Each product is its chain’s regular shelf price as its own data listed it, or a price tracker’s where the chain blocked the read, with the town’s sales tax where groceries carry one. How long each keeps where it’s kept is USDA FoodKeeper’s, from purchase, or SLATE’s estimate where FoodKeeper gives none. Groceries are bought in a store and go home.</Fine>
       </div>
     </Panel>

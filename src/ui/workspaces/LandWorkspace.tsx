@@ -5,7 +5,7 @@
  */
 
 import { useState } from 'react';
-import { CatalogControls, useCatalogView } from '@/ui/components/Catalog';
+import { CatalogControls, CompareTable, CompareToggle, useCatalogView, useCompare } from '@/ui/components/Catalog';
 import { arrange } from '@/engine/systems/catalog';
 import { landCatalog } from '@/engine/systems/catalogs';
 import { useGame, useWorld } from '@/app/game-context';
@@ -147,6 +147,9 @@ function ForSale() {
   const landEntries = useWorld((s) => landCatalog(s, s.player, homeOf(s.player)));
   const shown = arrange(landEntries, view).map((e) => e.value);
   const [pick, setPick] = useState('');
+  // Up to three parcels side by side (from 2026-10-04): each one's whole cost to buy, as an offer at its asking would close.
+  const [compared, toggleCompare, clearCompare] = useCompare('land');
+  const side = compared.map((id) => listings.find((l) => l.id === id)).filter((l): l is (typeof listings)[number] => Boolean(l));
   const listing = listings.find((l) => l.id === pick) ?? listings[0];
   const [typed, setTyped] = useState('');
   const [financed, setFinanced] = useState(false);
@@ -182,13 +185,21 @@ function ForSale() {
                     <td>{areaWords(l.acres, lm.place)}</td>
                     <td className="num mono">{formatMoney(l.asking, lm.currency, { cents: false })}</td>
                     <td className="small">{formatDate(l.listedAt, sim.zone)}</td>
-                    <td><button type="button" className={`btn btn-sm ${l.id === listing.id ? '' : 'btn-ghost'}`} aria-pressed={l.id === listing.id} onClick={() => { setPick(l.id); setTyped(''); }}>{l.id === listing.id ? 'Chosen' : 'Choose'}</button></td>
+                    <td className="row gap-1"><CompareToggle on={compared.includes(l.id)} onToggle={() => toggleCompare(l.id)} /><button type="button" className={`btn btn-sm ${l.id === listing.id ? '' : 'btn-ghost'}`} aria-pressed={l.id === listing.id} onClick={() => { setPick(l.id); setTyped(''); }}>{l.id === listing.id ? 'Chosen' : 'Choose'}</button></td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
         </div>
+        <CompareTable heads={side.map((l) => `${LAND_MARKETS[l.market]!.label}, ${formatMoney(l.asking, LAND_MARKETS[l.market]!.currency, { cents: false })}`)} onClear={clearCompare} rows={[
+          { label: 'Asking', values: side.map((l) => formatMoney(l.asking, LAND_MARKETS[l.market]!.currency, { cents: false })) },
+          { label: 'Size', values: side.map((l) => areaWords(l.acres, LAND_MARKETS[l.market]!.place)) },
+          { label: 'Asking Per Acre', values: side.map((l) => formatMoney(Math.round(l.asking / l.acres), LAND_MARKETS[l.market]!.currency, { cents: false })) },
+          { label: 'All In, At Its Asking', values: side.map((l) => formatMoney(landQuote(l.market, l.acres, sim.now, l.asking).total, LAND_MARKETS[l.market]!.currency, { cents: false })) },
+          { label: 'Can Be Financed', values: side.map((l) => (financeable(l.market) ? 'Yes' : 'No')) },
+          { label: 'Listed', values: side.map((l) => formatDate(l.listedAt, sim.zone)) },
+        ]} />
         <div className="field-row field-row-tight">
           <div className="field">
             <label htmlFor="land-price">Your Offer</label>

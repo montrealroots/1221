@@ -148,6 +148,9 @@ function ForSalePane() {
   const [view, setView] = useCatalogView(`homes-${town}`);
   const homeEntries = useWorld((s) => homeCatalog(s, town), [town]);
   const shown = arrange(homeEntries, view).map((e) => e.value);
+  // Up to three set side by side (from 2026-10-04), kept for the town.
+  const [compared, toggleCompare, clearCompare] = useCompare(`homes-${town}`);
+  const side = compared.map((id) => homes.find((h) => h.id === id)).filter((h): h is (typeof homes)[number] => Boolean(h));
   const buying = useWorld((s) => s.player.buying);
   const counter = useWorld((s) => s.player.counter);
   const [chosen, setChosen] = useState<string | undefined>(undefined);
@@ -271,12 +274,22 @@ function ForSalePane() {
                     <td className="num mono">{one.built}</td>
                     <td className="num mono">{daysListed(sim, one)}</td>
                     <td className="num mono">{money(askingPrice(sim, one))}</td>
-                    <td><button type="button" className="btn btn-sm btn-ghost" onClick={() => choose(one)}>Look</button></td>
+                    <td className="row gap-1"><CompareToggle on={compared.includes(one.id)} onToggle={() => toggleCompare(one.id)} /><button type="button" className="btn btn-sm btn-ghost" onClick={() => choose(one)}>Look</button></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          <CompareTable heads={side.map((h) => h.address)} onClear={clearCompare} rows={[
+            { label: 'Asking Price', values: side.map((h) => money(askingPrice(sim, h))) },
+            { label: 'Kind', values: side.map((h) => typeLabel(h.type, city.countryId)) },
+            { label: 'Bedrooms', values: side.map((h) => bedsText(h.beds)) },
+            { label: 'Bathrooms', values: side.map((h) => bathsText(h.baths)) },
+            { label: 'Size', values: side.map((h) => sizeText(h.size, city.countryId)) },
+            { label: 'Built', values: side.map((h) => String(h.built)) },
+            { label: 'Days Listed', values: side.map((h) => String(daysListed(sim, h))) },
+            { label: 'Has', values: side.map((h) => h.features.map((f) => FEATURE_LABEL[f]).join(', ') || '—') },
+          ]} />
           <Fine>
             {typical.kind === 'zillow'
               ? 'The town’s typical home is Zillow’s Home Value Index (Zillow Research, zillow.com/research/data), its middle third, and its five years’ growth. '
