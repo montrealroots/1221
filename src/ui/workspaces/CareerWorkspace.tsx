@@ -20,7 +20,7 @@ import { AGENCIES, AGENCY_SOURCE, AGENT_COMMISSION, CAREER_CITIES, EQUITY, ROLES
 import { SKILLS, YALE_DRAMA } from '@/engine/content/school';
 import { GENRE_BY_ID } from '@/engine/content/interests';
 import {
-  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal } from '@/engine/systems/career';
+  AGENCY_TERM, ESTIMATE, LEAVING, WORKSHOP_KIND, workshopPrice, acceptRefusal, agencyById, publicistRefusal, publicityFor, bookingChance, careerOf, managerById, mayLeave, onSite, rateOf, roleById, staleHeadshots, submissionsAWeek, workCityOf, t1287Quote, workDays, type Booking, type CareerRecord, type CastingSite, workCity, homeTownOf, queryRefusal } from '@/engine/systems/career';
 import { exchange } from '@/engine/content/currency';
 import { SOCIAL_SECURITY, claimFactor, socialSecurityOf, socialSecurityRefusal } from '@/engine/systems/socialsecurity';
 import { STATE_PENSION, qualifyingYears, statePensionAge, statePensionRefusal, weeklyPension } from '@/engine/systems/statepension';
@@ -728,7 +728,7 @@ function WorkCostsPanel() {
           {!career.improv && <Gated feature="career.improv" onClick={() => { const a = run<{ first: number }>('career.improv'); if (a.ok && a.value) toast(`The first class is ${formatDate(a.value.first, sim.zone)}.`, 'positive'); }}>Take The Course</Gated>}
         </div>
         <div className="row-between small">
-          <span>A casting director workshop, {dollars(WORK_COSTS.workshop)} an evening of cold reading for one office: {sim.universe.scheduled.some((i) => i.kind === WORKSHOP_KIND && i.status === 'pending') ? 'Booked' : 'None booked'}. Builds cold reading and reputation, the nerves of it composure.</span>
+          <span>{(() => { const w = workshopPrice(sim, workCity(person)); return `A casting director workshop${w.venue ? ` at ${w.venue}` : ''}, ${formatMoney(w.price, saveCurrency(sim.universe), { cents: false })} an evening of cold reading for one office`; })()}: {sim.universe.scheduled.some((i) => i.kind === WORKSHOP_KIND && i.status === 'pending') ? 'Booked' : 'None booked'}. Builds cold reading and reputation, the nerves of it composure.{career.castingContacts?.length ? ` Casting contacts: ${[...new Set(career.castingContacts.map((x) => x.office))].join(', ')}.` : ''}</span>
           {!sim.universe.scheduled.some((i) => i.kind === WORKSHOP_KIND && i.status === 'pending') && <Gated feature="career.workshop" onClick={() => { const a = run<{ at: number }>('career.workshop'); if (a.ok && a.value) toast(`Booked for ${formatDate(a.value.at, sim.zone)}.`, 'positive'); }}>Book A Workshop</Gated>}
         </div>
         <div className="row-between small">

@@ -8,7 +8,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
-import { careMonthly, careOf, careRefusal, deathOf, meetParents, needsCare, parentsMonth, type Parent } from '@/engine/systems/parents';
+import { CARE_VISIT_KIND, careMonthly, careOf, careRefusal, deathOf, meetParents, needsCare, parentsMonth, type Parent } from '@/engine/systems/parents';
 
 const YEAR = 365.2425 * MS_DAY;
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -88,5 +88,26 @@ describe('their care', () => {
     parentsMonth(sim, sim.player, p.dies + MS_DAY);
     expect(p.died).toBe(true);
     expect(sim.player.wellbeing.morale).toBeLessThan(80);
+  });
+});
+
+describe('care given as time', () => {
+  const parent = (cityId: string, kind: 'home' | 'facility', at: number): Parent => ({ role: 'mother', born: at - 80 * YEAR, cityId, dies: at + 2 * YEAR, care: { from: at - YEAR, kind } });
+  it('books an evening visit in their town, a seventh of the week’s hours, and stops when it’s no longer given', () => {
+    const sim = life('us-ny-newyork', 'care-time');
+    const p = parent('us-ny-newyork', 'home', sim.now);
+    sim.player.parents = [p];
+    sim.must({ kind: 'family.care', payload: { role: 'mother', how: 'give' } });
+    const visits = () => sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === CARE_VISIT_KIND);
+    expect(visits()).toHaveLength(1);
+    const v = visits()[0]!;
+    expect(v.requiresPlayer).toBe(true);
+    expect(v.durationMinutes).toBe(Math.round((27 * 60) / 7));
+    expect(v.at - sim.now).toBeLessThan(2 * MS_DAY);
+    // A week on, still one booked: each visit books the next.
+    sim.advanceBy(7 * MS_DAY);
+    expect(visits()).toHaveLength(1);
+    sim.must({ kind: 'family.care', payload: { role: 'mother', how: 'pay' } });
+    expect(visits()).toHaveLength(0);
   });
 });

@@ -224,7 +224,9 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
   const invite = useFeature('social.invite');
   const zone = CITIES.require(contact.cityId).timeZone;
   const places = RESTAURANTS.filter((r) => r.cityId === contact.cityId && r.menu.some((m) => m.price !== null));
-  const [what, setWhat] = useState<'meal' | 'visit' | 'play'>(places.length ? 'meal' : 'visit');
+  const [what, setWhat] = useState<'meal' | 'visit' | 'play' | 'class'>(places.length ? 'meal' : 'visit');
+  const classes = DROP_INS.filter((d) => d.cityId === contact.cityId);
+  const [classId, setClassId] = useState(classes[0]?.id ?? '');
   const courts = homeCourts(sim.player);
   const [court, setCourt] = useState(courts[0]?.court ?? 'tennis');
   const [restaurantId, setRestaurantId] = useState(places[0]?.id ?? '');
@@ -236,7 +238,7 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
   const [hour, setHour] = useState(19);
   const today = zonedParts(sim.now, zone);
   const at = instantFromZoned({ year: today.year, month: today.month, day: today.day, hour, minute: 0 }, zone) + day * MS_DAY;
-  const inv: Invitation = { contactId: contact.id, at, what, ...(what === 'meal' && r ? { restaurantId: r.id, item: dish?.item } : {}), ...(what === 'play' ? { court } : {}) };
+  const inv: Invitation = { contactId: contact.id, at, what, ...(what === 'meal' && r ? { restaurantId: r.id, item: dish?.item } : {}), ...(what === 'play' ? { court } : {}), ...(what === 'class' ? { classId } : {}) };
   const no = inviteRefusal(sim, sim.player, inv);
   const cur = saveCurrency(sim.universe);
   const quote = what === 'meal' && r && dish ? diningQuote(sim, r, [dish.item], 'in') : undefined;
@@ -247,12 +249,21 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
         <div className="field-row">
           <div className="field">
             <label htmlFor="people-what">To</label>
-            <select id="people-what" value={what} onChange={(e) => setWhat(e.target.value as 'meal' | 'visit' | 'play')}>
+            <select id="people-what" value={what} onChange={(e) => setWhat(e.target.value as 'meal' | 'visit' | 'play' | 'class')}>
               <option value="visit" disabled={!homeCity}>Come Over</option>
               {places.length > 0 && <option value="meal">A Meal Out</option>}
               {courts.length > 0 && <option value="play" disabled={!homeCity}>Come Over To Play</option>}
+              {classes.length > 0 && <option value="class">A Class Together</option>}
             </select>
           </div>
+          {what === 'class' && (
+            <div className="field">
+              <label htmlFor="people-class">Class</label>
+              <select id="people-class" value={classId} onChange={(e) => setClassId(e.target.value)}>
+                {classes.map((c) => <option key={c.id} value={c.id}>{`${c.label}, ${c.studio}`}</option>)}
+              </select>
+            </div>
+          )}
           {what === 'play' && courts.length > 1 && (
             <div className="field">
               <label htmlFor="people-court">Play</label>

@@ -59,3 +59,36 @@ describe('an IKEA piece', () => {
     expect(assemblyFee(dub, iePiece, 3)).toBe(inSaveMoney(dub, 40_00, 'EUR'));
   });
 });
+
+describe('Taskrabbit’s hours, and IKEA’s buyback', () => {
+  it('puts a BILLY together in Taskrabbit’s 45 minutes, the middle of its range', () => {
+    const sim = life('uk-eng-london', 'billy-time');
+    ownPlace(sim);
+    sim.must({ kind: 'home.buy_piece', payload: { pieceId: 'uk-billy-80263832', quantity: 1 } });
+    const billy = ikea(sim, 'uk-billy-80263832')[0]!;
+    const start = sim.now;
+    sim.must({ kind: 'items.assemble', payload: { itemId: billy.id } });
+    expect(sim.now - start).toBe(45 * 60_000);
+  });
+
+  it('takes a put-together bookcase back in Britain for credit at its tiers, spent on the next piece; no sofa', () => {
+    const sim = life('uk-eng-london', 'buyback');
+    ownPlace(sim);
+    sim.must({ kind: 'home.buy_piece', payload: { pieceId: 'uk-billy-59182201', quantity: 1 } });
+    const billy = ikea(sim, 'uk-billy-59182201')[0]!;
+    expect(sim.execute({ kind: 'home.sell_back', payload: { itemId: billy.id } }).error).toBe('IKEA takes a piece back put together.');
+    sim.must({ kind: 'items.assemble', payload: { itemId: billy.id } });
+    const credit = sim.must<{ credit: number }>({ kind: 'home.sell_back', payload: { itemId: billy.id } }).credit;
+    expect(credit).toBe(Math.round(billy.paid! * 0.45 * 1.15));
+    expect(ikea(sim, 'uk-billy-59182201')).toHaveLength(0);
+    sim.must({ kind: 'home.buy_piece', payload: { pieceId: 'uk-glostad-90489010', quantity: 1 } });
+    const sofa = ikea(sim, 'uk-glostad-90489010')[0]!;
+    expect(sim.player.ikeaCredit).toBe(Math.max(0, credit - sofa.paid!));
+    sim.must({ kind: 'items.assemble', payload: { itemId: sofa.id } });
+    expect(sim.execute({ kind: 'home.sell_back', payload: { itemId: sofa.id } }).error).toMatch(/no sofa/);
+    const ny = life('us-ny-newyork', 'buyback-us');
+    ownPlace(ny);
+    ny.must({ kind: 'home.buy_piece', payload: { pieceId: 'us-brimnes-00576139', quantity: 1 } });
+    expect(ny.execute({ kind: 'home.sell_back', payload: { itemId: ikea(ny, 'us-brimnes-00576139')[0]!.id } }).error).toMatch(/only in Britain and Ireland/);
+  });
+});

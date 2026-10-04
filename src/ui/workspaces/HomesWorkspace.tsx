@@ -29,7 +29,7 @@ import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { COOLING_LABEL, COUNCIL_TAX, FEATURE_LABEL, GYM_LABEL, LAUNDRY_LABEL, OUTDOOR_LABEL, PART_LABEL, conditionWord, homeValueAt, sharedCostsLabel, typeLabel, type Part } from '@/engine/content/homes';
 import {
-  HOME, askingPrice, minimumDown, atTown, borrowRefusal, councilBand, councilLetter, councilNation, daysListed, downChoices, equityIn, equityRate, equityRoom, homeValue, letRefusal, lifeOf,
+  HOME, askingPrice, minimumDown, atTown, inspectionFee, borrowRefusal, councilBand, councilLetter, councilNation, daysListed, downChoices, equityIn, equityRate, equityRoom, homeValue, letRefusal, lifeOf,
   listingById, listingsIn, livingIn, marketRent, refinanceOffer, refinanceRefusal, moveInRefusal, offerFor, offerRefusal, owedOn, ownedMonth, projectsFor, saleNet,
   sellRefusal, sizeText, termsIn, type HomeFacts, type Listing, type OwnedHome, type SellerAnswer, type Tenancy,
 } from '@/engine/systems/homes';
@@ -199,7 +199,7 @@ function ForSalePane() {
       {listing && offer && (
         <>
           <div id="home-chosen" />
-          <Panel title={listing.address} look={at('listing', listing.id)} subtitle={`${money(asking)} · #${listing.rank} of ${homes.length} · ${daysListed(sim, listing)} days on the market`}>
+          <Panel title={listing.address} look={at('listing', listing.id)} subtitle={`${money(asking)} · #${listing.rank} of ${homes.length} · ${daysListed(sim, listing)} days on the market${listing.source === 'simulated' ? ' · A Simulated Listing' : ''}`}>
             <div className="col gap-3">
               <Facts facts={listing} countryId={city.countryId} />
               <div className="xs dim">How old each part is comes with the inspection’s report.</div>
@@ -230,13 +230,14 @@ function ForSalePane() {
                     <tr><th scope="row">Down Payment</th><td className="num mono">{money(offer.down)}</td></tr>
                     {offer.loan > 0 && <tr><th scope="row">Mortgage</th><td className="num mono">{money(offer.loan)} at {pct(offer.rate)} over {terms.years} years</td></tr>}
                     <tr><th scope="row">Closing Costs</th><td className="num mono">{money(offer.closing)}</td></tr>
-                    {inspect && <tr><th scope="row">The Inspection, When Its Report Comes</th><td className="num mono">{money(atTown(sim, town, HOME.inspectionFeeUsd))}</td></tr>}
+                    {inspect && <tr><th scope="row">The Inspection, When Its Report Comes</th><td className="num mono">{money(inspectionFee(sim, town, listing!.type))}</td></tr>}
                     <tr><th scope="row">At Closing</th><td className="num mono">{money(offer.cash - offer.earnest)}</td></tr>
                     {offer.loan > 0 && <tr><th scope="row">Principal And Interest</th><td className="num mono">{money(offer.month.mortgage)}</td></tr>}
                     <tr><th scope="row">{councilNation(town) ? `Council Tax, Band ${councilLetter(town, councilBand(sim, offer.price, town))}${living ? '' : ', Until It’s Let'}` : 'Property Tax'}</th><td className="num mono">{money(offer.month.tax)}</td></tr>
                     <tr><th scope="row">Insurance</th><td className="num mono">{money(offer.month.insurance)}</td></tr>
                     {offer.month.pmi > 0 && <tr><th scope="row">Mortgage Insurance</th><td className="num mono">{money(offer.month.pmi)}</td></tr>}
-                    {offer.month.hoa > 0 && <tr><th scope="row">{shared}</th><td className="num mono">{money(offer.month.hoa)}</td></tr>}
+                    {offer.month.hoa > 0 && <tr><th scope="row">{listing!.tenure === 'leasehold' ? 'Ground Rent And Service Charge' : shared}</th><td className="num mono">{money(offer.month.hoa)}</td></tr>}
+                    {listing!.tenure && <tr><th scope="row">Tenure</th><td className="num">{listing!.tenure === 'leasehold' ? 'Leasehold' : 'Freehold'}</td></tr>}
                     <tr><th scope="row">A Month</th><td className="num mono">{money(offer.month.total)}</td></tr>
                   </tbody>
                 </table>
@@ -353,6 +354,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
   const [paying, setPaying] = useState('');
   const bank = useWorld((s) => inTheBank(s, s.player));
   const [borrowing, setBorrowing] = useState('');
+  const [bidPick, setBidPick] = useState<Record<string, number>>({});
   const noBorrow = useWorld((s) => borrowRefusal(s, s.player, owned, centsFromTyped(borrowing || '0')), [owned, borrowing]);
   const [then, setThen] = useState<'shared' | 'own'>('own');
   const year = new Date(sim.now).getUTCFullYear();
@@ -435,21 +437,21 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
           <div className="strong small">Work On It{owned.works.length > 0 ? ` · ${owned.works.length} under way` : ''}</div>
           {owned.works.length > 0 && (
             <ul className="small">
-              {owned.works.map((w) => <li key={w.projectId}>{projects.find((p) => p.project.id === w.projectId)?.project.label ?? w.projectId}: done <Open subject={at('day', dateKey(w.doneAt, sim.homeZone))}>{formatDate(w.doneAt, city.timeZone)}</Open></li>)}
+              {owned.works.map((w) => <li key={w.projectId}>{projects.find((p) => p.project.id === w.projectId)?.project.label ?? w.projectId}: done <Open subject={at('day', dateKey(w.doneAt, sim.homeZone))}>{formatDate(w.doneAt, city.timeZone)}</Open>{w.paid !== undefined && w.paid < w.cost ? ` · ${money(w.paid)} paid, ${money(w.cost - w.paid)} when it’s done` : ''}{w.coolUntil !== undefined && w.coolUntil > sim.now && <> · <Gated feature="home.cancel_works" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ refunded: number }>('home.cancel_works', { homeId: owned.id, projectId: w.projectId }); if (r.ok) toast(`Canceled, ${money(r.value!.refunded)} back.`, 'positive'); }}>{`Cancel It, Until ${formatDate(w.coolUntil, city.timeZone)}`}</Gated></>}</li>)}
             </ul>
           )}
           <div className="table-scroll">
             <table>
-              <thead><tr><th scope="col">Work</th><th scope="col" className="num">Cheapest Of Three Bids</th><th scope="col" className="num">Permit</th><th scope="col" className="num">Takes</th><th scope="col" className="num">Adds To Its Worth</th><th scope="col" /></tr></thead>
+              <thead><tr><th scope="col">Work</th><th scope="col" className="num">Three Bids</th><th scope="col" className="num">Permit</th><th scope="col" className="num">Takes</th><th scope="col" className="num">Adds To Its Worth</th><th scope="col" /></tr></thead>
               <tbody>
-                {[...projects].sort((a, b) => a.cost - b.cost || a.project.label.localeCompare(b.project.label)).map(({ project, cost, bids, adds, permit, refusal }) => (
+                {[...projects].sort((a, b) => a.cost - b.cost || a.project.label.localeCompare(b.project.label)).map(({ project, bids, adds, permit, refusal, instead }) => (
                   <tr key={project.id}>
-                    <td>{project.label}{permit && <div className="xs dim">{permit.basis}</div>}{refusal && <div className="xs dim">{refusal}</div>}</td>
-                    <td className="num mono" title={`The bids: ${bids.map(money).join(', ')}`}>{money(cost)}</td>
+                    <td>{project.label}{permit && <div className="xs dim">{permit.basis}</div>}{refusal && <div className="xs dim">{refusal}</div>}{instead && <div className="xs dim">{`Instead: ${instead.join('; ')}.`}</div>}</td>
+                    <td className="num mono"><select aria-label={`The Bid For ${project.label}`} value={bidPick[project.id] ?? 0} onChange={(e) => setBidPick({ ...bidPick, [project.id]: Number(e.target.value) })}>{bids.map((b, i) => <option key={i} value={i}>{money(b)}</option>)}</select></td>
                     <td className="num mono">{permit ? money(permit.lines.reduce((a, l) => a + l.amount, 0)) : '—'}</td>
                     <td className="num mono">{project.days + (permit?.waitDays ?? 0)} {project.days + (permit?.waitDays ?? 0) === 1 ? 'day' : 'days'}</td>
                     <td className="num mono">{money(adds)}</td>
-                    <td><Gated feature="home.renovate" className="btn btn-sm btn-ghost" disabled={Boolean(refusal)} onClick={() => run('home.renovate', { homeId: owned.id, projectId: project.id })}>Start The Work</Gated></td>
+                    <td><Gated feature="home.renovate" className="btn btn-sm btn-ghost" disabled={Boolean(refusal)} onClick={() => run('home.renovate', { homeId: owned.id, projectId: project.id, bid: bidPick[project.id] ?? 0 })}>Start The Work</Gated></td>
                   </tr>
                 ))}
               </tbody>
@@ -607,7 +609,7 @@ function FromIkea() {
   return (
     <div className="col gap-2">
       <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
-        <div className="strong small" style={{ marginRight: 'auto' }}>From IKEA</div>
+        <div className="strong small" style={{ marginRight: 'auto' }}>From IKEA{(sim.player.ikeaCredit ?? 0) > 0 ? ` · ${formatMoney(sim.player.ikeaCredit!, saveCurrency(sim.universe), { cents: false })} Credit, Spent First` : ''}</div>
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="ikea-kind">Kind</label>
           <select id="ikea-kind" value={kind || kinds[0]} onChange={(e) => setKind(e.target.value)}>
@@ -623,7 +625,7 @@ function FromIkea() {
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="ikea-built">Put Together</label>
           <select id="ikea-built" value={built ? 'ikea' : 'you'} onChange={(e) => setBuilt(e.target.value === 'ikea')}>
-            <option value="you">By You, An Hour A Piece</option>
+            <option value="you">By You, At Taskrabbit’s Hours</option>
             <option value="ikea">By IKEA, At Its Price</option>
           </select>
         </div>

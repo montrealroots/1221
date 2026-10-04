@@ -30,9 +30,9 @@
  * one year's change for ever and a lot none, so a life's farmland in England
  * fell near nine-tenths in fifty years and a Brooklyn lot stood at 2022's
  * price while the houses around it rose. What a sale fetches is
- * that value, SLATE's estimate of the market; a buyer's survey, title
- * insurance and lawyer, whose prices no authority publishes, aren't kept, nor
- * is the fee for splitting a lot where it isn't published.
+ * that value, SLATE's estimate of the market. A buyer's survey, title
+ * insurance and lawyer weren't kept at first; from 2026-10-01 they are where
+ * published (`closingLines`), and the fee for splitting a lot (`SPLIT_FEES`).
  */
 
 import type { Simulation } from '../core/simulation';
@@ -76,7 +76,8 @@ export interface Parcel {
 }
 
 /** Land for sale: a market's size at an asking price, in its money, cents. */
-export interface Listing { id: string; market: number; acres: number; asking: Money; listedAt: Instant }
+/** A parcel for sale; `source` says it's the game's own, drawn at the market's published value, not a real listing (from 2026-10-03). */
+export interface Listing { id: string; market: number; acres: number; asking: Money; listedAt: Instant; source?: 'simulated' }
 
 /** An offer accepted, on its way to the closing. */
 export interface LandDeal {
@@ -200,7 +201,7 @@ export function listingsFor(sim: Simulation, person: Person, cityId: string, at:
       const acres = m.sizes[Math.floor(r.next() * m.sizes.length)]!;
       const over = LAND_DEAL.askOver[0] + r.next() * (LAND_DEAL.askOver[1] - LAND_DEAL.askOver[0]);
       const listedAt = start - Math.floor(r.next() * DAYS_TO_SELL * 2) * MS_DAY;
-      out.push({ id, market: i, acres, asking: Math.round(landValue(m, acres, start) * (1 + over) / 100_00) * 100_00, listedAt });
+      out.push({ id, source: 'simulated', market: i, acres, asking: Math.round(landValue(m, acres, start) * (1 + over) / 100_00) * 100_00, listedAt });
     }
   }
   return out;

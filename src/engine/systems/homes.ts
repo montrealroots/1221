@@ -84,7 +84,10 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { MS_DAY, dateKey, formatDate, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, dateKey, formatDate, startOfDay, zonedParts, type Instant } from '../core/time';
+import { usBankHoliday } from '../content/usholidays';
+import { CLUBS } from '../content/clubs';
+import { DROP_INS } from '../content/dropins';
 import { clamp } from '../core/rng';
 import { CITIES } from '../content/geography';
 import { exchange } from '../content/currency';
@@ -239,6 +242,10 @@ export interface HomeFacts {
   hoaUsd: number;
   /** What's inside it (`content/homes.ts`); a home bought before 2026-09-28's later build has none recorded, and `fixturesOf` draws them. */
   fixtures?: Fixtures;
+  /** In England, from 2026-10-03: held leasehold or freehold, and a leaseholder's ground rent and service charge a year, pounds (`TENURE`). */
+  tenure?: 'leasehold' | 'freehold';
+  groundRentGbp?: number;
+  serviceChargeGbp?: number;
 }
 
 export interface Listing extends HomeFacts {
@@ -250,6 +257,13 @@ export interface Listing extends HomeFacts {
   value: Money;
   /** When it came on the market. */
   listedAt: Instant;
+  /**
+   * Where it came from (from 2026-10-03, the master plan's §41l): every home
+   * for sale is the game's own, drawn from the town's published prices,
+   * not a real listing. Said on the listing, so nothing reads as real that
+   * isn't.
+   */
+  source?: 'simulated';
 }
 
 /** The inverse of the standard normal's distribution, near enough (Acklam's approximation). */
@@ -397,7 +411,9 @@ function drawListings(sim: Simulation, cityId: string, typical: Money, slots: { 
     const fixtures = drawFixtures(rng, { countryId: country, latitude: city.latitude, longitude: city.longitude, dense }, type, q, features.includes('yard'));
     // What it has inside moves its price about the spread's (`premiumOf`).
     const priced = Math.round(value * premiumOf(fixtures));
-    out.push({ id: `${cityId}~${i}~${generation}`, cityId, rank: 0, value: priced, listedAt, type, address, beds, baths, size, ...(lot !== undefined ? { lot } : {}), built, features, parts, hoaUsd, fixtures });
+    // Held leasehold or freehold in England, drawn last so the rest of the listing is as it was (`TENURE`).
+    const tenure = inEngland(cityId) ? tenureOf(rng, flat, built) : {};
+    out.push({ id: `${cityId}~${i}~${generation}`, source: 'simulated', cityId, rank: 0, value: priced, listedAt, type, address, beds, baths, size, ...(lot !== undefined ? { lot } : {}), built, features, parts, hoaUsd, fixtures, ...tenure });
   }
   return out.sort((x, y) => x.value - y.value).map((one, n) => ({ ...one, rank: n + 1 }));
 }
@@ -438,6 +454,10 @@ export interface Improvement { projectId: string; at: Instant; value: Money; cos
 
 export interface Works {
   projectId: string; startedAt: Instant; doneAt: Instant; cost: Money;
+  /** What's been paid on the contract so far, where it isn't the whole (from 2026-10-03; absent, all of it). */
+  paid?: Money;
+  /** The last moment it can be canceled for everything paid back, by the place's cooling-off law (from 2026-10-03). */
+  coolUntil?: Instant;
   /** Days it ran late, drawn once on the day it was due (`lateDays`, from 2026-10-02). */
   late?: number;
 }
@@ -604,6 +624,37 @@ export function councilNation(cityId: string): CouncilTaxNation | undefined {
 const inEngland = (cityId: string): boolean => councilNation(cityId) !== undefined;
 
 /** What an amount in dollars at an American cost of living a hundred is in a town, in the save's money. */
+/**
+ * A pre-purchase inspection or survey at the town's own published price, a
+ * flat's or a house's, from 2026-10-03 (`research-pets-property.json`): New
+ * York's $350 to 1,000 square feet; Los Angeles's $350 to $550 on a house,
+ * the middle, and $300 on a condo or townhome; New Haven's $399 and $299;
+ * a RICS Level 2 survey in London, £400 to £1,000, the middle; Dublin's
+ * €749 on a house and €599 on an apartment with VAT; Toronto's C$600 and
+ * C$525 with HST; Vancouver's C$675 and C$450; Mexico City's bank appraisal,
+ * MX$3,500 to MX$9,000, the middle, read secondhand. Elsewhere SLATE's $450,
+ * at the town's prices, as before.
+ */
+export const INSPECTION_FEES: Readonly<Record<string, { currency: string; house: number; flat: number; townhouseAsFlat?: boolean }>> = {
+  'us-ny-newyork': { currency: 'USD', house: 350, flat: 350 },
+  'us-ca-losangeles': { currency: 'USD', house: 450, flat: 300, townhouseAsFlat: true },
+  'us-ct-newhaven': { currency: 'USD', house: 399, flat: 299 },
+  'uk-eng-london': { currency: 'GBP', house: 700, flat: 700 },
+  'ie-lei-dublin': { currency: 'EUR', house: 749, flat: 599 },
+  'ca-on-toronto': { currency: 'CAD', house: 600 * 1.13, flat: 525 * 1.13 },
+  'ca-bc-vancouver': { currency: 'CAD', house: 675, flat: 450 },
+  'mx-cmx-mexicocity': { currency: 'MXN', house: 6_250, flat: 6_250 },
+};
+const FLAT_TYPES: readonly HomeType[] = ['studio', 'condo', 'penthouse'];
+export function inspectionFee(sim: Simulation, cityId: string, type: HomeType): Money {
+  const t = INSPECTION_FEES[cityId];
+  if (!t) return atTown(sim, cityId, HOME.inspectionFeeUsd);
+  const flat = FLAT_TYPES.includes(type) || (t.townhouseAsFlat === true && type === 'townhouse');
+  const cents = Math.round((flat ? t.flat : t.house) * 100);
+  const cur = saveCurrency(sim.universe);
+  return cur === t.currency ? cents : exchange(cents, t.currency, cur) ?? cents;
+}
+
 export function atTown(sim: Simulation, cityId: string, usd: number): Money {
   return townPrice(cityId, usd, saveCurrency(sim.universe));
 }
@@ -651,6 +702,24 @@ export interface OwnerMonth {
 }
 
 /**
+ * Tenure in England, from 2026-10-03 (`research-home-garden-furniture.json`):
+ * MHCLG's 92.5% of owner-occupied flats and 7.7% of houses held leasehold
+ * (2024-25). A leaseholder pays the English Housing Survey's ground rent,
+ * 77% of them, the median £160 a year on a flat and £20 on a house, and none
+ * on a lease granted from 30 June 2022 (the Leasehold Reform (Ground Rent)
+ * Act 2022), taken as a home built from 2023; and its service charge, a
+ * London flat's mean £2,338 a year (2023-24) and a house's median £300, in
+ * place of SLATE's estimated charge on a flat. Freehold, neither. Until then
+ * every English home was taken as freehold.
+ */
+export const TENURE = { leaseholdShare: { flat: 0.925, house: 0.077 }, groundRentPays: 0.77, groundRent: { flat: 160, house: 20 }, serviceCharge: { flat: 2_338, house: 300 }, peppercornFrom: 2023 } as const;
+function tenureOf(rng: { next(): number }, flat: boolean, built: number): Pick<HomeFacts, 'tenure' | 'groundRentGbp' | 'serviceChargeGbp'> {
+  if (rng.next() >= (flat ? TENURE.leaseholdShare.flat : TENURE.leaseholdShare.house)) return { tenure: 'freehold' };
+  const pays = built < TENURE.peppercornFrom && rng.next() < TENURE.groundRentPays;
+  return { tenure: 'leasehold', groundRentGbp: pays ? (flat ? TENURE.groundRent.flat : TENURE.groundRent.house) : 0, serviceChargeGbp: flat ? TENURE.serviceCharge.flat : TENURE.serviceCharge.house };
+}
+
+/**
  * What a home costs a month, averaged: what the screens show and the lender
  * weighs. England's tax here is council tax, which whoever lives in the home
  * pays; a tenant's is theirs.
@@ -661,7 +730,9 @@ export function monthOf(sim: Simulation, facts: HomeFacts, cityId: string, value
   const flat = isFlat(facts.type);
   const insurance = Math.round(value * (flat ? HOME.insuranceFlat : HOME.insurance) * loading / 12);
   const pmi = loans.mortgage?.pmi ? Math.round(loans.mortgage.balance * HOME.pmi / 12) : 0;
-  const hoa = atTown(sim, cityId, facts.hoaUsd);
+  // A leaseholder's ground rent and service charge in place of the estimated charge (`TENURE`, from 2026-10-03).
+  const lease = facts.tenure === 'leasehold' ? ((facts.groundRentGbp ?? 0) + (facts.serviceChargeGbp ?? 0)) / 12 : undefined;
+  const hoa = lease !== undefined ? (saveCurrency(sim.universe) === 'GBP' ? Math.round(lease * 100) : exchange(Math.round(lease * 100), 'GBP', saveCurrency(sim.universe)) ?? Math.round(lease * 100)) : atTown(sim, cityId, facts.hoaUsd);
   const pay = loans.mortgage?.payment ?? 0;
   const equity = loans.equity ?? 0;
   return { mortgage: pay, equity, tax, insurance, pmi, hoa, total: pay + equity + tax + insurance + pmi + hoa };
@@ -965,6 +1036,46 @@ export const projectBids = (sim: Simulation, owned: OwnedHome, project: Project)
 /** The contract: the cheapest bid. */
 export const projectBid = (sim: Simulation, owned: OwnedHome, project: Project): Money => projectBids(sim, owned, project)[0]!;
 
+/**
+ * A home improvement contract's money and its cooling-off, from 2026-10-03
+ * (`research-pets-property.json`). California's law caps the down payment at
+ * the lesser of $1,000 and 10%, the rest paid as the work is done, taken here
+ * as on completion; elsewhere no law was read, and the bid is paid up front,
+ * as before. A contract made at home can be canceled for everything paid:
+ * in America by the FTC's Cooling-Off Rule until midnight of the third
+ * business day, Sundays and federal holidays not counted; in Britain within
+ * 14 days of the contract (the Consumer Contracts Regulations 2013); in
+ * Ireland within 30 days of a doorstep contract; in Ontario within 10 days
+ * under the Consumer Protection Act; in Mexico within 5 business days (the
+ * consumer law's article 56). The contractor came to the home to bid, so
+ * each contract is taken as made there, SLATE's reading; a permit's fee,
+ * paid to the authority, isn't the contractor's to give back.
+ */
+export function worksDeposit(cityId: string, bid: Money, sim: Simulation): Money {
+  if (CITIES.require(cityId).parentId !== 'us-ca') return bid;
+  const cap = exchange(1_000_00, 'USD', saveCurrency(sim.universe)) ?? 1_000_00;
+  return Math.min(bid, Math.round(bid * 0.1), cap);
+}
+export const PLANNING_KIND = 'home.planning_refused';
+/** Whether a planning application is refused, at its share (decider `homes.planning`). */
+export function planningRefused(sim: Simulation, homeId: string, projectId: string, at: Instant, share: number): boolean {
+  return sim.rng('homes.planning', homeId, projectId, String(at)).next() < share;
+}
+
+export function coolingOffUntil(cityId: string, at: Instant): Instant | undefined {
+  const city = CITIES.require(cityId);
+  const zone = city.timeZone;
+  const day = (n: number) => startOfDay(at + n * MS_DAY, zone);
+  switch (city.countryId) {
+    case 'us': { let n = 0; let d = 0; while (n < 3) { d += 1; const p = zonedParts(day(d), zone); const iso = `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; if (p.weekday !== 0 && !usBankHoliday(iso)) n += 1; } return day(d + 1); }
+    case 'uk': return at + 14 * MS_DAY;
+    case 'ie': return at + 30 * MS_DAY;
+    case 'ca': return cityId.startsWith('ca-on-') ? at + 10 * MS_DAY : undefined;
+    case 'mx': { let n = 0; let d = 0; while (n < 5) { d += 1; const w = zonedParts(day(d), zone).weekday; if (w !== 0 && w !== 6) n += 1; } return day(d + 1); }
+    default: return undefined;
+  }
+}
+
 /** What a project costs on a home, as the guides give it: the job, by the size where it's done by the foot, at the town's cost of living. */
 export function projectCost(sim: Simulation, owned: OwnedHome, project: Project): Money {
   const scale = project.perSize ? Math.max(0.5, owned.facts.size / project.perSize) : 1;
@@ -981,7 +1092,7 @@ export function projectAdds(sim: Simulation, owned: OwnedHome, project: Project)
 }
 
 /** The projects a home can take now, and the ones it can't, with why. */
-export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): { project: Project; cost: Money; bids: Money[]; adds: Money; permit?: WorksPermit; refusal?: string }[] {
+export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): { project: Project; cost: Money; bids: Money[]; adds: Money; permit?: WorksPermit; refusal?: string; instead?: string[] }[] {
   // Every project, those this kind of home doesn't take shown refused with the kinds that do (from 2026-10-02; until then they were left off unseen).
   const country = CITIES.get(owned.cityId)?.countryId ?? 'us';
   const kind = (t: HomeType) => typeLabel(t, country).toLowerCase();
@@ -991,8 +1102,31 @@ export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): 
       const bids = projectBids(sim, owned, project);
       const cost = bids[0]!;
       const permit = worksPermit(sim, owned.cityId, project, cost);
-      return { project, cost, bids, adds: projectAdds(sim, owned, project), ...(permit ? { permit } : {}), ...(refusal ? { refusal } : {}) };
+      const instead = refusal ? projectAlternatives(owned.cityId, project.id) : [];
+      return { project, cost, bids, adds: projectAdds(sim, owned, project), ...(permit ? { permit } : {}), ...(refusal ? { refusal } : {}), ...(instead.length ? { instead } : {}) };
     });
+}
+
+/**
+ * What else does a refused project's job where the home is, from 2026-10-03
+ * (the master plan's §44e–f): a pool's swimming at a named pool's lessons, a
+ * court's game at a club's or a league's, a dance studio's at a studio's
+ * drop-in class, a spare room's lodger for a cottage or a suite. Each is
+ * something SLATE keeps in that town, so what's offered can be done.
+ */
+const INSTEAD: readonly { projects: RegExp; names: RegExp; also?: string }[] = [
+  { projects: /^(pool|hot-tub)$/, names: /swim/i },
+  { projects: /^(tennis-|pickleball)/, names: /tennis|pickleball/i },
+  { projects: /^(basketball-|pitch-)/, names: /soccer|football|fútbol|five-a-side|kickball|netball/i },
+  { projects: /^dance-studio$/, names: /dance/i },
+  { projects: /^(adu|suite|suite-upscale|bath-add)/, names: /$^/, also: 'Take a lodger into a spare room you have, at the town’s rent for one.' },
+];
+export function projectAlternatives(cityId: string, projectId: string): string[] {
+  const rule = INSTEAD.find((r) => r.projects.test(projectId));
+  if (!rule) return [];
+  const clubs = CLUBS.filter((c) => c.cityId === cityId && rule.names.test(`${c.name} ${c.place}`)).map((c) => `${c.name} at ${c.place}`);
+  const classes = DROP_INS.filter((d) => d.cityId === cityId && rule.names.test(`${d.kind} ${d.label}`)).map((d) => `${d.label} at ${d.studio}`);
+  return [...clubs, ...classes, ...(rule.also ? [rule.also] : [])];
 }
 
 /** Work this long, where they live, weighs on them every day of it: SLATE's estimate. */
@@ -1015,6 +1149,15 @@ function finishWorks(sim: Simulation, person: Person, owned: OwnedHome, works: W
   }
   owned.works = owned.works.filter((w) => w !== works);
   if (!project) return;
+  // The rest of a contract paid on a deposit, at completion (California's, from 2026-10-03).
+  if (works.paid !== undefined && works.paid < works.cost) {
+    const rest = works.cost - works.paid;
+    const draw = drawFromBank(sim, person, rest, false, true);
+    const paid = rest - draw.short;
+    if (paid > 0) sim.post({ memo: `${project.label}, the balance, ${owned.facts.address}`, category: 'home', postings: [...draw.postings, { accountId: sim.nominalAccount('asset_value', 'Home Improvements').id, amount: paid }] });
+    owe(sim, person, draw.short, `${project.label}, the balance`, 'home');
+    works.paid = works.cost;
+  }
   // Finished, it may come in over the bid, the difference billed now (`overrunOf`, from 2026-10-02).
   const over = overrunOf(sim, key, owned.cityId, works.cost);
   if (over > 0) {
@@ -1323,7 +1466,7 @@ function accept(sim: Simulation, person: Person, listing: Listing, price: Money,
   sim.post({ memo: `Earnest money on ${listing.address}`, category: 'home', postings: [...drawFromBank(sim, person, earnest, false, true).postings, { accountId: escrow.id, amount: earnest }] });
   const facts: HomeFacts = structuredClone({
     type: listing.type, address: listing.address, beds: listing.beds, baths: listing.baths, size: listing.size,
-    ...(listing.lot !== undefined ? { lot: listing.lot } : {}), built: listing.built, features: listing.features, parts: listing.parts, hoaUsd: listing.hoaUsd,
+    ...(listing.lot !== undefined ? { lot: listing.lot } : {}), built: listing.built, features: listing.features, parts: listing.parts, hoaUsd: listing.hoaUsd, ...(listing.tenure ? { tenure: listing.tenure, groundRentGbp: listing.groundRentGbp, serviceChargeGbp: listing.serviceChargeGbp } : {}),
     ...(listing.fixtures ? { fixtures: listing.fixtures } : {}),
   });
   const buying: Purchase = {
@@ -1341,7 +1484,7 @@ function accept(sim: Simulation, person: Person, listing: Listing, price: Money,
 function inspection(sim: Simulation, person: Person): void {
   const buying = person.buying;
   if (!buying) return;
-  const fee = atTown(sim, buying.cityId, HOME.inspectionFeeUsd);
+  const fee = inspectionFee(sim, buying.cityId, buying.facts.type);
   // Paid the way anything is, the card where the bank can't; with neither, the inspector doesn't come.
   if (!spend(sim, person, fee, 'Home inspection', 'home')) {
     if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'The Inspection Didn’t Happen', body: `The inspector's ${formatMoney(fee, saveCurrency(sim.universe), { cents: false })} couldn't be paid, so there's no report. You can still call the purchase off before ${formatDate(buying.inspectionUntil!, CITIES.require(buying.cityId).timeZone)}.`, importance: 75, route: '/workspace/homes' });
@@ -1898,6 +2041,19 @@ export function registerHomes(sim: Simulation): void {
     const owned = person ? homeById(person, String(item.payload.homeId)) : undefined;
     if (person && owned) saleCloses(s, person, owned);
   });
+  sim.onSchedule(PLANNING_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const owned = person ? homeById(person, String(item.payload.homeId)) : undefined;
+    const works = owned?.works.find((w) => w.projectId === item.payload.projectId);
+    if (!person || !owned || !works) return;
+    const refunded = works.paid ?? works.cost;
+    const label = PROJECTS.find((x) => x.id === works.projectId)?.label ?? 'Works';
+    s.post({ memo: `${label}, planning refused, the contract refunded`, category: 'home', postings: [{ accountId: person.primaryAccountId!, amount: refunded }, { accountId: s.nominalAccount('asset_value', 'Home Improvements').id, amount: -refunded }] });
+    owned.works = owned.works.filter((w) => w !== works);
+    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === WORKS_KIND && one.payload.homeId === owned.id && one.payload.projectId === works.projectId) s.timeline.cancel(one.id, s.now);
+    if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Planning Refused', body: `The council refused ${label.toLowerCase()} at ${owned.facts.address}. The contractor refunded ${formatMoney(refunded, saveCurrency(s.universe), { cents: false })}; the application’s fee isn’t returned.`, importance: 60, route: '/workspace/homes' });
+  });
+
   sim.onSchedule(WORKS_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const owned = person ? homeById(person, String(item.payload.homeId)) : undefined;
@@ -1963,7 +2119,7 @@ export function registerHomes(sim: Simulation): void {
     return { cancelled: 'purchase' };
   });
 
-  sim.onCommand<{ homeId: string; projectId: string }, { doneAt: Instant }>('home.renovate', (p, { sim: s }) => {
+  sim.onCommand<{ homeId: string; projectId: string; bid?: number }, { doneAt: Instant; paid: Money }>('home.renovate', (p, { sim: s }) => {
     const person = s.player;
     const owned = homeById(person, String(p.homeId));
     if (!owned) throw new CommandError('You don’t own that home.');
@@ -1971,18 +2127,41 @@ export function registerHomes(sim: Simulation): void {
     if (!project) throw new CommandError('No such work.');
     const refusal = projectRefusal(s, person, owned, project);
     if (refusal) throw new CommandError(refusal);
-    // The cheapest of three bids (`projectBids`, from 2026-10-02).
-    const cost = projectBid(s, owned, project);
-    const draw = drawFromBank(s, person, cost, false, true);
-    s.post({ memo: `${project.label}, ${owned.facts.address}`, category: 'home', postings: [...draw.postings, { accountId: s.nominalAccount('asset_value', 'Home Improvements').id, amount: cost }] });
+    // One of three bids, the cheapest unless another's chosen (`projectBids`, from 2026-10-02; the choice from 2026-10-03).
+    const bids = projectBids(s, owned, project);
+    const pick = Number.isInteger(p.bid) && p.bid! >= 0 && p.bid! < bids.length ? p.bid! : 0;
+    const cost = bids[pick]!;
+    // What's paid now: the whole, or California's capped deposit.
+    const now = worksDeposit(owned.cityId, cost, s);
+    const draw = drawFromBank(s, person, now, false, true);
+    s.post({ memo: `${project.label}, ${owned.facts.address}${now < cost ? ', the deposit' : ''}`, category: 'home', postings: [...draw.postings, { accountId: s.nominalAccount('asset_value', 'Home Improvements').id, amount: now }] });
     // Its permit or planning, paid now; the work waits for a decision a law gives time to.
     const permit = worksPermit(s, owned.cityId, project, cost);
     const fees = (permit?.lines ?? []).reduce((a, l) => a + l.amount, 0);
     if (fees > 0) s.post({ memo: `${permit!.lines.map((l) => l.label).join(', ')}, ${project.label}`, category: 'home', postings: [...drawFromBank(s, person, fees, false, true).postings, { accountId: s.nominalAccount('expense', 'Permits').id, amount: fees }] });
     const doneAt = s.now + ((permit?.waitDays ?? 0) + project.days) * MS_DAY;
-    owned.works.push({ projectId: project.id, startedAt: s.now, doneAt, cost });
+    // A planning application decided against it (`PLANNING_REFUSED`, decider `homes.planning`): the contract refunded on the day, the fee kept.
+    if (permit?.refused !== undefined && planningRefused(s, owned.id, project.id, s.now, permit.refused)) {
+      s.schedule({ at: s.now + permit.waitDays * MS_DAY, kind: PLANNING_KIND, label: `The Planning Decision, ${project.label}`, category: 'home', priority: 40, payload: { personId: person.id, homeId: owned.id, projectId: project.id } });
+    }
+    const coolUntil = coolingOffUntil(owned.cityId, s.now);
+    owned.works.push({ projectId: project.id, startedAt: s.now, doneAt, cost, ...(now < cost ? { paid: now } : {}), ...(coolUntil !== undefined ? { coolUntil } : {}) });
     s.schedule({ at: doneAt, kind: WORKS_KIND, label: project.label, category: 'home', priority: 40, payload: { personId: person.id, homeId: owned.id, projectId: project.id } });
-    return { doneAt };
+    return { doneAt, paid: now };
+  });
+
+  sim.onCommand<{ homeId: string; projectId: string }, { refunded: Money }>('home.cancel_works', (p, { sim: s }) => {
+    const person = s.player;
+    const owned = homeById(person, String(p?.homeId));
+    const works = owned?.works.find((w) => w.projectId === p?.projectId);
+    if (!owned || !works) throw new CommandError('There’s no such work under way.');
+    if (works.coolUntil === undefined) throw new CommandError('No cooling-off law was read where the home is, and the contract stands.');
+    if (s.now >= works.coolUntil) throw new CommandError(`The cooling-off period ended ${formatDate(works.coolUntil, CITIES.require(owned.cityId).timeZone)}, and the contract stands.`);
+    const refunded = works.paid ?? works.cost;
+    s.post({ memo: `${PROJECTS.find((x) => x.id === works.projectId)?.label ?? 'Works'}, canceled and refunded`, category: 'home', postings: [{ accountId: person.primaryAccountId!, amount: refunded }, { accountId: s.nominalAccount('asset_value', 'Home Improvements').id, amount: -refunded }] });
+    owned.works = owned.works.filter((w) => w !== works);
+    for (const item of s.universe.scheduled) if (item.status === 'pending' && item.kind === WORKS_KIND && item.payload.homeId === owned.id && item.payload.projectId === works.projectId) s.timeline.cancel(item.id, s.now);
+    return { refunded };
   });
 
   sim.onCommand<{ homeId: string; amount: Money; loan?: 'mortgage' | 'equity' }, { paid: Money }>('home.pay_mortgage', (p, { sim: s }) => {

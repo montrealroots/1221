@@ -282,7 +282,8 @@ export function closingLines(place: string, cents: number): { label: string; amo
  * - Upstate (Hudson): the Town of Greenport's $250 a lot, two lots.
  * - Connecticut (Litchfield): $250 a lot and the state's $60 (its 2011 form).
  * - Los Angeles: the parcel map, $13,666 preliminary (LAMC 19.02, July 2024's
- *   adjustment) and $8,240 final.
+ *   adjustment) and $8,240 final; from 2026-10-03 City Planning's current
+ *   $14,978 for a preliminary map of up to four lots (`research-pets-property.json`).
  * - California farmland (Kern County): the tentative parcel map's $4,908 and
  *   $75 a lot (from 1 July 2026).
  * - Ontario (Cavan Monaghan): Peterborough County's $1,150 consent, its $450
@@ -298,7 +299,7 @@ export const SPLIT_FEES: Readonly<Record<string, number>> = {
   nyc: 73,
   'ny-state': 250 * 2,
   'ct-state': 250 * 2 + 60,
-  'los-angeles': 13_666 + 8_240,
+  'los-angeles': 14_978 + 8_240,
   'ca-state': 4_908 + 75 * 2,
   ontario: 1_150 + 450 + 500,
   bc: 500 + 5_000,

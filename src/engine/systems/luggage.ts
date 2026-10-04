@@ -171,7 +171,9 @@ export function unpack(person: Person, force = false): number {
  */
 export function traveled(person: Person, from: string): void {
   const homeCity = person.home?.cityId;
-  if (!homeCity || from === person.currentLocationId) return;
+  if (from === person.currentLocationId) return;
+  repackStay(person, from);
+  if (!homeCity) return;
   if (person.currentLocationId === homeCity) unpack(person);
   else if (from === homeCity) pack(person);
 }
@@ -182,6 +184,36 @@ export function moveTo(person: Person, cityId: string): void {
   const from = person.currentLocationId;
   person.currentLocationId = cityId;
   traveled(person, from);
+}
+
+/**
+ * Unpacked where they're staying, from 2026-10-03: the suitcase's things go
+ * into the room, to hand there as in the bag. Leaving the town packs them
+ * back while the suitcase holds them; what no longer fits, bought on the way,
+ * is left behind, as it would be, and gone from what they own.
+ */
+export function unpackAtStay(person: Person): number {
+  const bag = suitcaseOf(person);
+  const cityId = person.currentLocationId;
+  if (!bag || !person.stay) return 0;
+  let out = 0;
+  for (const i of packedIn(person, bag)) { i.at = { kind: 'stay', cityId }; out += 1; }
+  return out;
+}
+
+/** Leaving a town: what was unpacked at the stay there back into the suitcase, as far as it holds; the rest left. What was left. */
+export function repackStay(person: Person, cityId: string): Item[] {
+  const there = itemsOf(person).filter((i) => i.at.kind === 'stay' && i.at.cityId === cityId);
+  if (there.length === 0) return [];
+  const bag = suitcaseOf(person);
+  let room = bag ? (bag.holdsL ?? 0) - usedL(person, bag.id) : 0;
+  const left: Item[] = [];
+  for (const i of there) {
+    const v = volumeOf(i) * i.quantity;
+    if (bag && v <= room + 1e-9) { i.at = { kind: 'inside', itemId: bag.id }; room -= v; } else left.push(i);
+  }
+  if (left.length) person.items = itemsOf(person).filter((i) => !left.includes(i));
+  return left;
 }
 
 /** Why the suitcase can't be packed or unpacked here now, or nothing: at home, with it to hand. */
@@ -226,6 +258,14 @@ export function registerLuggage(sim: Simulation): void {
   });
   sim.onCommand<Record<string, never>, { unpacked: number }>('luggage.unpack', (_p, { sim: s }) => {
     const person = s.player;
+    // Away, into the room where they're staying (from 2026-10-03).
+    if (person.stay && person.currentLocationId !== person.home?.cityId) {
+      const bag = suitcaseOf(person);
+      if (!bag || !reachable(s, person, bag.at)) throw new CommandError('The suitcase isn’t to hand.');
+      const n = unpackAtStay(person);
+      if (n === 0) throw new CommandError('The suitcase is empty.');
+      return { unpacked: n };
+    }
     const no = luggageRefusal(s, person);
     if (no) throw new CommandError(no);
     const out = unpack(person, true);

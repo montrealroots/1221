@@ -120,6 +120,8 @@ describe('a football pitch, and friends over to play', () => {
     expect(homeCourts(sim.player)).toEqual([{ court: 'football', lit: false }]);
     const friend = newContact(sim, sim.player, LA, 'pitch-friend', { at: sim.now, how: 'school' });
     friend.hours = 100;
+    // One who cares for a game (`caresFor`, from 2026-10-03).
+    friend.interests = ['sport', 'music', 'film'];
     contactsOf(sim.player).push(friend);
     // Half an hour into a fine afternoon hour of daylight, the same day's weather.
     let fine = nextHour(sim, true);
@@ -144,6 +146,7 @@ describe('a game after dark', () => {
     const sim = home(['footballPitch'], 'pitch-dark');
     const friend = newContact(sim, sim.player, LA, 'pitch-dark-friend', { at: sim.now, how: 'school' });
     friend.hours = 100;
+    friend.interests = ['sport', 'music', 'film'];
     contactsOf(sim.player).push(friend);
     // Nine at night, dark in Los Angeles all year.
     const p = zonedParts(sim.now + 2 * 24 * MS_HOUR, 'America/Los_Angeles');
@@ -175,5 +178,24 @@ describe('special rooms and outdoor additions', () => {
     expect(billsOf(tub, tub.player) - billsOf(without, without.player)).toBeGreaterThan(0);
     expect(billsOf(green, green.player) - billsOf(without, without.player)).toBeGreaterThan(0);
     expect(billsOf(tub, tub.player)).toBeGreaterThan(billsOf(green, green.player));
+  });
+});
+
+describe('a dance studio at home', () => {
+  it('is danced in at a dance class’s METs, and only where the home has one', async () => {
+    const { quickSave } = await import('@/engine');
+    const { DANCE_MET, lookAfterRefusal } = await import('@/engine/systems/life');
+    const { ownBuilt } = await import('@/engine/systems/homes');
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'dance-home');
+    sim.player.wellbeing.energy = 90;
+    expect(lookAfterRefusal(sim, 'dance')).toBe('You have no dance studio at home.');
+    const owned = ownBuilt(sim, sim.player, { cityId: 'us-ny-newyork', facts: { type: 'house', address: 'Test House', beds: 3, baths: 2, size: 1_200, built: 2000, features: ['danceStudio'], parts: {}, hoaUsd: 0 }, price: 600_000_00, closing: 0 });
+    sim.player.home = { kind: 'owned', cityId: 'us-ny-newyork', homeId: owned.id, since: sim.now };
+    sim.player.currentLocationId = 'us-ny-newyork';
+    expect(lookAfterRefusal(sim, 'dance')).toBeUndefined();
+    const t0 = sim.now;
+    sim.must({ kind: 'life.look_after', payload: { action: 'dance' } });
+    expect(sim.now - t0).toBe(60 * 60_000);
+    expect(DANCE_MET).toBe(5);
   });
 });

@@ -6,7 +6,7 @@
  */
 import { Fragment, useState } from 'react';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { assembleRefusal } from '@/engine/systems/furnishings';
+import { assembleRefusal, assemblyMinutes, buybackRefusal, buybackShare } from '@/engine/systems/furnishings';
 import { bulkyFee, bulkyRefusal } from '@/engine/systems/bulky';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
@@ -66,6 +66,7 @@ export function BelongingsWorkspace() {
   const items = itemsOf(person);
   const move = useFeature('items.move');
   const assemble = useFeature('items.assemble');
+  const sellBack = useFeature('home.sell_back');
   const [target, setTarget] = useState<Record<string, string>>({});
   const [filter, setFilter] = useState<FacetFilter>({});
   const places = placesNow(sim, person, items);
@@ -160,9 +161,10 @@ export function BelongingsWorkspace() {
                                   <button type="button" className="btn btn-sm btn-ghost" disabled={!move.open || !to} title={move.reason} onClick={() => { if (to && run('items.move', { itemId: item.id, to }).ok) toast(`The ${item.label}, moved.`, 'positive'); }}>Move It</button>
                                   <GiveTo itemId={item.id} label={item.label} />
                                   <Collected item={item} />
-                                  {item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? 'An hour'} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}
+                                  {item.kind.startsWith('ikea:') && !buybackRefusal(person, item.id) && <button type="button" className="btn btn-sm btn-ghost" disabled={!sellBack.open} title={sellBack.reason ?? 'IKEA’s refund card, for the next piece'} onClick={() => { const r = run<{ credit: number }>('home.sell_back', { itemId: item.id }); if (r.ok) toast(`${formatMoney(r.value!.credit, saveCurrency(sim.universe))} of IKEA credit.`, 'positive'); }}>{`Sell It Back To IKEA, ${formatMoney(Math.round((item.paid ?? 0) * buybackShare(item.condition)), saveCurrency(sim.universe))}`}</button>}
+                                  {item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? `About ${Math.round(assemblyMinutes(item.label))} minutes`} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}
                                 </div>
-                              ) : (item.flatPacked || item.bulky) && here ? <div className="row gap-1" style={{ justifyContent: 'flex-end' }}><Collected item={item} />{item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? 'An hour'} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}</div> : <div className="xs dim" style={{ textAlign: 'right' }}>{here ? 'Stays Where It Is' : 'Not To Hand'}</div>}
+                              ) : (item.flatPacked || item.bulky) && here ? <div className="row gap-1" style={{ justifyContent: 'flex-end' }}><Collected item={item} />{item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? `About ${Math.round(assemblyMinutes(item.label))} minutes`} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}</div> : <div className="xs dim" style={{ textAlign: 'right' }}>{here ? 'Stays Where It Is' : 'Not To Hand'}</div>}
                             </td>
                           </tr>
                         );
@@ -458,13 +460,17 @@ function Suitcase() {
   const used = usedL(person, bag.id);
   const inIt = packedIn(person, bag);
   const no = luggageRefusal(sim, person);
+  // Away at a stay, it's unpacked into the room (from 2026-10-03).
+  const away = Boolean(person.stay) && person.currentLocationId !== person.home?.cityId;
+  const unpackNo = away ? undefined : no;
+  const inRoom = itemsOf(person).filter((i) => i.at.kind === 'stay').length;
   return (
     <Panel title="Suitcase" subtitle={`${bag.label}: ${Math.round(used)} of ${bag.holdsL} liters packed, ${inIt.length} ${inIt.length === 1 ? 'thing' : 'things'}`}>
       <div className="col gap-2">
-        <p className="small muted" style={{ margin: 0 }}>Move what you want into it on Each Thing, or have a week’s clothes and the bathroom’s things packed for you. Leaving home takes it as you packed it; an empty one is packed for you as you go.</p>
+        <p className="small muted" style={{ margin: 0 }}>Move what you want into it on Each Thing, or have a week’s clothes and the bathroom’s things packed for you. Leaving home takes it as you packed it; an empty one is packed for you as you go. Away, it can be unpacked into the room; leaving packs it back while it holds, and what doesn’t fit stays behind.{inRoom > 0 ? ` ${inRoom} unpacked in the room.` : ''}</p>
         <div className="row gap-1">
           <button type="button" className="btn btn-sm" disabled={!pack.open || Boolean(no)} title={no ?? pack.reason} onClick={() => { const a = run<{ packed: number }>('luggage.pack', {}); if (a.ok) toast(`${a.value!.packed} packed.`, 'positive'); }}>Pack For Me</button>
-          <button type="button" className="btn btn-sm btn-ghost" disabled={!empty.open || Boolean(no) || inIt.length === 0} title={no ?? empty.reason} onClick={() => { const a = run<{ unpacked: number }>('luggage.unpack', {}); if (a.ok) toast(`${a.value!.unpacked} put away.`, 'positive'); }}>Unpack</button>
+          <button type="button" className="btn btn-sm btn-ghost" disabled={!empty.open || Boolean(unpackNo) || inIt.length === 0} title={unpackNo ?? empty.reason} onClick={() => { const a = run<{ unpacked: number }>('luggage.unpack', {}); if (a.ok) toast(`${a.value!.unpacked} put away.`, 'positive'); }}>{away ? 'Unpack Into The Room' : 'Unpack'}</button>
         </div>
       </div>
     </Panel>

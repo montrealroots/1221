@@ -16,6 +16,20 @@
  * A home that came furnished, a let or one owned before 2026-09-29, is taken
  * to have a three-seat sofa and a table for four with its chairs, SLATE's
  * reading of a furnished home; an empty one has only what's been bought.
+ *
+ * From 2026-10-03 (`research-home-garden-furniture.json`): putting a piece
+ * together yourself takes Taskrabbit's own hours for it, the middle of each
+ * range (a PAX module 1 to 4 hours, a BILLY or KALLAX half an hour to an
+ * hour, a MALM bed 1 to 2.5, a STORKLINTA, ÅHEIM or BRIMNES 1 to 2, a BESTÅ
+ * 45 minutes to 2 hours); others an hour, as before. And in Britain and
+ * Ireland a piece is sold back to IKEA for credit at its own tiers: 45% of
+ * what was paid as new, 35% very good, 25% well used, and 15% more for an
+ * IKEA Family member, which is free, so SLATE takes them as one; the
+ * tier is read from the piece's condition, SLATE's reading of its
+ * scratches. Only what IKEA takes: chests of drawers, bookcases, dining
+ * tables and chairs, put together; no sofa, armchair, wardrobe or bed. The
+ * credit is IKEA's refund card, spent on the next piece; America and
+ * Canada publish no tiers, and Mexico no buyback.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -117,8 +131,30 @@ export const ASSEMBLY: Readonly<Record<string, { currency: string; perPiece?: nu
   ie: { currency: 'EUR', callOut: 40 },
   mx: { currency: 'MXN', share: { sofa: 0.025, other: 0.09 } },
 };
-/** Minutes to put a piece together yourself. SLATE's estimate. */
+/** Minutes to put a piece together yourself where Taskrabbit gives none. SLATE's estimate. */
 export const ASSEMBLE_MINUTES = 60;
+/** Taskrabbit's hours for a range, the middle, in minutes, by the name it's sold under. */
+export const ASSEMBLY_HOURS: readonly (readonly [RegExp, number])[] = [
+  [/^PAX/i, 150], [/^(BILLY|KALLAX)/i, 45], [/^MALM.*bed/i, 105], [/^(STORKLINTA|ÅHEIM|AHEIM|BRIMNES)/i, 90], [/^BEST[ÅA]/i, 82.5],
+];
+export const assemblyMinutes = (label: string): number => ASSEMBLY_HOURS.find(([re]) => re.test(label))?.[1] ?? ASSEMBLE_MINUTES;
+
+/** IKEA's buyback where it publishes tiers: its shares of the price paid, and the Family member's 15% more. */
+export const BUYBACK = { asNew: 0.45, veryGood: 0.35, wellUsed: 0.25, family: 1.15, countries: ['uk', 'ie'] as readonly string[], kinds: new Set<FurnitureKind>(['chestOfDrawers', 'bookcase', 'diningTable', 'diningChair']) };
+export const buybackShare = (condition: number): number => (condition >= 0.95 ? BUYBACK.asNew : condition >= 0.6 ? BUYBACK.veryGood : BUYBACK.wellUsed) * BUYBACK.family;
+
+/** Why IKEA won't take a piece back here, or nothing. */
+export function buybackRefusal(person: Person, itemId: string): string | undefined {
+  const item = itemsOf(person).find((i) => i.id === itemId);
+  const piece = item ? pieceOfItem(item.kind) : undefined;
+  if (!item || !piece) return 'Only an IKEA piece goes back to IKEA.';
+  if (!BUYBACK.countries.includes(CITIES.get(person.currentLocationId)?.countryId ?? '')) return 'IKEA publishes its buyback terms only in Britain and Ireland.';
+  if (!BUYBACK.kinds.has(piece.kind)) return 'IKEA doesn’t take that back: no sofa, armchair, wardrobe or bed.';
+  if (item.flatPacked) return 'IKEA takes a piece back put together.';
+  if (!(item.at.kind === 'home' && item.at.home === homeKeyOf(person.home) && person.home?.cityId === person.currentLocationId)) return 'It goes back from home.';
+  if (itemsOf(person).some((i) => i.at.kind === 'inside' && i.at.itemId === item.id)) return 'Empty it first.';
+  return undefined;
+}
 
 /** IKEA putting so many of a piece together, in the save's money; nothing where it isn't offered. */
 export function assemblyFee(sim: Simulation, p: CatalogPiece, quantity: number): Money | undefined {
@@ -147,8 +183,12 @@ export function registerFurnishings(sim: Simulation): void {
     const piece = pieceById(String(p.pieceId))!;
     const fee = p.assembly ? assemblyFee(s, piece, quantity) : 0;
     if (fee === undefined) throw new CommandError('IKEA doesn’t put it together there.');
-    const paid = piecePrice(s, person.home!.cityId, piece) * quantity + fee;
-    if (!payFromBank(s, person, paid, `IKEA, ${piece.name}${quantity > 1 ? ` × ${quantity}` : ''}, delivered${fee ? ' and put together' : ''}`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
+    const total = piecePrice(s, person.home!.cityId, piece) * quantity + fee;
+    // IKEA's refund card first, where there's credit on it (from 2026-10-03).
+    const credit = Math.min(total, person.ikeaCredit ?? 0);
+    if (credit > 0) person.ikeaCredit = (person.ikeaCredit ?? 0) - credit;
+    const paid = total - credit;
+    if (paid > 0 && !payFromBank(s, person, paid, `IKEA, ${piece.name}${quantity > 1 ? ` × ${quantity}` : ''}, delivered${fee ? ' and put together' : ''}`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
     const [w, d, h] = piece.cm;
     const volumeL = w && d && h ? (w * d * h) / 1000 : undefined;
     // Each one its own, so each can be filled; chairs come as many as were bought.
@@ -159,6 +199,16 @@ export function registerFurnishings(sim: Simulation): void {
     }
     return { paid };
   });
+  sim.onCommand<{ itemId: string }, { credit: Money }>('home.sell_back', (p, { sim: s }) => {
+    const person = s.player;
+    const no = buybackRefusal(person, String(p?.itemId));
+    if (no) throw new CommandError(no);
+    const item = itemsOf(person).find((i) => i.id === p.itemId)!;
+    const credit = Math.round((item.paid ?? 0) * buybackShare(item.condition));
+    person.items = itemsOf(person).filter((i) => i !== item);
+    person.ikeaCredit = (person.ikeaCredit ?? 0) + credit;
+    return { credit };
+  });
   sim.onCommand<{ itemId: string }, { doneAt: Instant }>('items.assemble', (p, { sim: s }) => {
     const person = s.player;
     const no = assembleRefusal(person, String(p?.itemId));
@@ -166,7 +216,7 @@ export function registerFurnishings(sim: Simulation): void {
     const busy = occupiedAt(s, s.now);
     if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
     const item = itemsOf(person).find((i) => i.id === p.itemId)!;
-    s.advanceTo(s.now + ASSEMBLE_MINUTES * 60_000);
+    s.advanceTo(s.now + assemblyMinutes(item.label) * 60_000);
     delete item.flatPacked;
     return { doneAt: s.now };
   });

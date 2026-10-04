@@ -83,7 +83,7 @@ describe('what a car costs to buy', () => {
 });
 
 describe('moving home', () => {
-  it('takes the car from New Haven to New York and registers it there, and leaves it registered where it was across the border', () => {
+  it('takes the car from New Haven to New York and registers it there, imports it into Canada, and leaves it where it was across the sea', () => {
     const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'wealthy' }, 'car-move');
     expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } }).ok).toBe(true);
     const v = vehiclesOf(sim.player)[0]!;
@@ -94,7 +94,8 @@ describe('moving home', () => {
     expect(sim.universe.transactions.some((t) => t.memo === 'Registering the Toyota Camry in its new home')).toBe(true);
     move(sim, sim.player, 'shared', 'ca-on-toronto');
     expect(v.at).toBe('ca-on-toronto');
-    expect(v.jurisdiction).toBe('US-NY');
+    // Into Canada it's imported and registered there, from 2026-10-03 (`CANADA_IMPORT`); across other borders it keeps its plates.
+    expect(v.jurisdiction).toBe('CA-ON');
     // No road to London: the car stays in Toronto.
     move(sim, sim.player, 'shared', 'uk-eng-london');
     expect(v.at).toBe('ca-on-toronto');

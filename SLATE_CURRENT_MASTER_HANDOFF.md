@@ -279,7 +279,19 @@ Done and gated so far:
     - Where a car is kept, England and Wales, and a stereo taken in a break-in (`5fc0f944`, decider `vehicle.break_in`). London cars can now be stolen: watch the London life on the next replay.
     - A Tissot serviced, the PRX's battery, Monte de Piedad and CCE Pawn, commissions and engraving (`47610718`, `systems/commissions.ts`).
     - New research this stretch: `research-tv-phones.json`, `research-vehicles-utilities-gaps.json`, `research-utilities-mx-outages.json`, `research-watches-pawn-parking.json`.
-    - Still open from the 85, in REQUIREMENTS order: 36c, 38d, 41b to 45, 46, 48j–n, 50.1–2, 51.1, 52.5–9, 53, 57.
+    - **Lives replayed at `47610718`** (`$TEMP/lives-47610718`): New York died at 89 worth $4,560,229, London at 49 worth £49,844, 0 errors and 0 anomalies each, in step with `ec774f0e`.
+  - **The third stretch, to `e63899a4`** (gate at exit 0, 2,977 tests), closing every row of `docs/REQUIREMENTS.md` but 57:
+    - Works contracts (`b92b18f7`): a project's bid chosen of three, California's capped deposit and the balance at completion, cancellation within each place's cooling-off law (`coolingOffUntil`); home inspections at each town's own fee (`inspectionFee`).
+    - Unpacking into the room where you stay (`feea99f2`, `unpackAtStay`, a new `Place` kind `stay`); a coaching session takes its hour.
+    - IKEA's buyback for credit in Britain and Ireland, and Taskrabbit's assembly hours (`d5a9121c`).
+    - A course of CBT for depression (`977d9aad`, `systems/therapy.ts`, decider `health.therapy`); Specsavers' eye tests.
+    - Three more hotels' holds (`22fd7f48`); England's leasehold and freehold (`3384c873`, `TENURE`); planning refused one time in ten in England and an engineer's report (`761da8c2`, decider `homes.planning`); listings carry `source: 'simulated'`.
+    - A dance studio danced in (`640180eb`, a new `LookAfter` `dance`); care given and a child's school run as calendar time, and alternatives for a refused project (`9403e7b5`, `systems/schoolrun.ts`).
+    - Contacts' own interests read by what they say yes to, and a class taken together (`f5d12a5a`; `caresFor` lives in `enjoyment.ts`, the one file allowed to read interests; decider `social.cares`).
+    - Casting workshops at each town's venue and its casting offices kept as contacts (`3af293ee`); a car's dealer, and a car taken from America into Canada imported (`e63899a4`, `CANADA_IMPORT`, `DEALERS`).
+    - New research: `research-home-garden-furniture.json`, `research-casting-therapy-hotels-cars.json`.
+    - What's left of the 85 is recorded row by row in `docs/DATA-GAPS.md` with why; row 57 (a development-proposal role) is held for Stage 14.
+    - **Next, by the owner's order:** Stage 14 (the built-in assistant; it needs the owner's API key) and then the Base44 deployment, which needs the gate and the owner first (read §10 before deploying).
   - A tooling note: bash heredocs here collapse `\b` into a backspace byte. Write edit scripts with the Write tool, and `grep -rlP '\x08' src tests tools` after a regex edit.
 - **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
 - **Stage 14** needs the owner's API key.

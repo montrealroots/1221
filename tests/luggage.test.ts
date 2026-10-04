@@ -111,3 +111,26 @@ describe('packing by hand', () => {
     expect(sim.execute({ kind: 'luggage.pack', payload: {} }).error).toBe('You pack and unpack at home.');
   });
 });
+
+describe('unpacked where they’re staying', () => {
+  it('goes into the room, to hand, and is packed back on leaving while the bag holds it; the rest is left', () => {
+    const sim = life('bag-stay');
+    moveTo(sim.player, 'us-ca-losangeles');
+    sim.player.stay = { kind: 'hotel', cityId: 'us-ca-losangeles' } as never;
+    const bag = suitcaseOf(sim.player)!;
+    const n = packedIn(sim.player, bag).length;
+    expect(sim.must<{ unpacked: number }>({ kind: 'luggage.unpack', payload: {} }).unpacked).toBe(n);
+    const room = sim.player.items!.filter((i) => i.at.kind === 'stay');
+    expect(room).toHaveLength(n);
+    expect(room.every((i) => reachable(sim, sim.player, i.at))).toBe(true);
+    expect(cleanOutfits(sim, sim.player)).toBeGreaterThan(0);
+    // Something bought on the way too big to go back in: left behind.
+    const extra = { ...room[0]!, id: 'extra', quantity: 100 };
+    sim.player.items!.push(extra);
+    delete sim.player.stay;
+    moveTo(sim.player, 'uk-eng-london');
+    expect(sim.player.items!.some((i) => i.id === 'extra')).toBe(false);
+    expect(packedIn(sim.player, bag)).toHaveLength(n);
+    expect(sim.player.items!.some((i) => i.at.kind === 'stay')).toBe(false);
+  });
+});

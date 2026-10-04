@@ -20,6 +20,7 @@ import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA
 import { UNION_HEALTH } from '@/engine/content/career';
 import { deadline, owedOn, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
 import { CONDITION_LABEL, COVER_LABEL, PROGRAM_NAMES, benchmarkFor, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, longestFillOf, type Chronic, careQuote } from '@/engine/systems/health';
+import { THERAPY, sessionPrice, therapistsIn, therapyRefusal } from '@/engine/systems/therapy';
 import { PERMITS, permitRefusal, usesWheelchair } from '@/engine/systems/access';
 import { earningsOf, homeOf } from '@/engine/systems/earnings';
 import { titleCaseLabel } from '@/engine/core/text';
@@ -277,6 +278,27 @@ function HealthPane() {
 const AID_WORD: Record<string, string> = { free: 'Free Care', discount: '67% Off', refused: 'Over The Limit', screened: 'Charity Taken Off' };
 
 /** The conditions carried, and keeping each up or not. */
+/** A course of CBT for depression at a named practice where you live, its sessions weekly (`systems/therapy.ts`). */
+function TherapyRow() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const here = therapistsIn(person.home?.cityId ?? '');
+  const [name, setName] = useState('');
+  if (person.therapy) return <div className="small">{`Therapy with ${person.therapy.therapist}: ${person.therapy.done} of ${THERAPY.sessions} sessions`}</div>;
+  if (here.length === 0) return null;
+  const t = here.find((x) => x.name === name) ?? here[0]!;
+  const no = therapyRefusal(person, t.name);
+  return (
+    <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+      <div className="field" style={{ margin: 0 }}>
+        <label htmlFor="therapist">Therapist</label>
+        <select id="therapist" value={t.name} onChange={(e) => setName(e.target.value)}>{here.map((x) => <option key={x.name} value={x.name}>{x.price > 0 ? `${x.name}, ${formatMoney(sessionPrice(sim, x), saveCurrency(sim.universe), { cents: false })} A Session` : `${x.name}, Free`}</option>)}</select>
+      </div>
+      <Gated feature="health.therapy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const r = run<{ first: number }>('health.therapy', { therapist: t.name }); if (r.ok) toast(`The first session, ${formatDate(r.value!.first, sim.zone)}.`, 'positive'); }}>{`Begin A Course Of ${THERAPY.sessions}`}</Gated>
+    </div>
+  );
+}
+
 function ConditionsPanel() {
   const { sim, run, toast } = useGame();
   const cur = saveCurrency(sim.universe);
@@ -297,6 +319,7 @@ function ConditionsPanel() {
             </Gated>
           </div>
         ))}
+        {h.chronic?.depression && <TherapyRow />}
         {conditions.some(([, s]) => s.treated) && <Gated feature="health.extra_supply" className="btn btn-sm btn-ghost" disabled={Boolean(noSupply)} title={noSupply ?? `Before a trip: up to ${longest} days at once here`} onClick={() => { if (run('health.extra_supply', { days: longest }).ok) toast(`${longest} days of medicine filled.`, 'positive'); }}>{`Fill A Longer Supply, ${longest} Days`}</Gated>}
         <Fine>
           Medicine is filled as a supply at the pharmacy where you live, with a week left: 28 days in England, 30 in America, a month elsewhere; away past it, the condition goes untreated until you’re home, so fill a longer one before a trip. Drawn at the rates of adults 18 to 34: depression {CHRONIC.share.depression * 100}%, asthma {(CHRONIC.share.asthma * 100).toFixed(1)}%, high blood pressure {(CHRONIC.share.hypertension * 100).toFixed(1)}%, diabetes {(CHRONIC.share.diabetes * 100).toFixed(1)}%, arthritis {(CHRONIC.share.arthritis * 100).toFixed(1)}%. Kept up, each month’s care and each fill is paid then, at what your plan leaves: therapy twice and a generic for depression, a brand inhaler for asthma, a generic for blood pressure, insulin and a glucose monitor (or a generic for type 2) and a visit a quarter for diabetes, a generic for arthritis. Insulin is never more than the makers’ {formatMoney(inSaveMoney(sim, INSULIN.cashCap, 'USD'), cur)} a month, and nothing on a plan New York regulates; the monitor never more than Abbott’s {formatMoney(inSaveMoney(sim, INSULIN.monitor.program, 'USD'), cur)}. Left alone, depression weighs on your morale each week, asthma doubles your emergencies, type 1 diabetes quadruples them, diabetes wears your body down and arthritis tires it, which is SLATE’s estimate. Source: {CHRONIC.source}; {INSULIN.source}; {PHARMACY.source}; {DENTAL_VISION.source}.

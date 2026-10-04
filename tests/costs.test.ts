@@ -133,7 +133,10 @@ describe('an actor’s working costs', () => {
     expect(careerOf(sim.player).kit).toBe(true);
     expect(sim.execute({ kind: 'career.buy_kit', payload: {} })).toMatchObject({ ok: false, error: 'You have a kit.' });
     careerOf(sim.player).auditions.push({ id: 'x1', roleId: 'costar', at: sim.now + MS_DAY, mode: 'room', cityId: 'us-ny-newyork', status: 'ahead' });
+    const t0 = sim.now;
     expect(sim.execute({ kind: 'career.coach', payload: { auditionId: 'x1' } }).ok).toBe(true);
+    // The session is the hour it's paid for (from 2026-10-03).
+    expect(sim.now - t0).toBe(60 * 60_000);
     expect(sim.execute({ kind: 'career.coach', payload: { auditionId: 'x1' } }).ok).toBe(false);
     // The kit is goods, and New York City's 8.875% is on top.
     expect(yearOf(sim.player, yearNow(sim)).jobCosts).toBe(Math.round(WORK_COSTS.kit * (1 + salesTaxRate('us-ny-newyork', sim.now, 'goods'))) + WORK_COSTS.coach);

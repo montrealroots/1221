@@ -14,6 +14,13 @@
  * What a garment would fetch is `resaleOf`, the market’s own way of selling
  * where you live; where it wouldn’t sell, the look says why, in the words the
  * sale itself would refuse with.
+ *
+ * A watch or a piece of jewelry is worn in the accessory’s place, but until
+ * 2026-10-03 its page was a garment’s: washed by hand, never washed, and
+ * sold as a bag of clothes, with nothing of what a watch has. It has its own
+ * now: whether it runs, its battery or its maker’s service and their price
+ * where you are, where it’s kept and whether a safe holds it, its insurance,
+ * what a pawnbroker here would lend on it, its engraving, and what it cost.
  */
 
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -30,6 +37,9 @@ import { defineLook, type Way } from './registry';
 import { at, type Subject } from './subject';
 import { said } from './words';
 import { asName, waysThatOpen } from './homes';
+import { isValuable, lockedAway, scheduleRefusal, scheduledPremium } from '@/engine/systems/valuables';
+import { batteryOptions, batteryRunsOut, makerServiceOf, serviceDue, servicePrice, stopped } from '@/engine/systems/watches';
+import { pawnTermsIn, pledgeQuote, pledgeRefusal } from '@/engine/systems/pawn';
 
 type Worn = Item & { garment: Garment };
 
@@ -122,6 +132,54 @@ defineLook<Item>('item', {
 // A garment
 // ---------------------------------------------------------------------------
 
+/** A watch or a piece of jewelry: whether it runs and what keeps it running, where it’s kept and how it’s covered, and what it would raise. */
+function valuableLook(sim: Simulation, person: Person, g: Worn) {
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur, { cents: false });
+  const watch = /watch|reloj/i.test(g.label);
+  const runsOut = batteryRunsOut(g);
+  const due = serviceDue(g);
+  const maker = makerServiceOf(g);
+  const halted = stopped(g, sim.now);
+  const change = runsOut !== undefined ? batteryOptions(sim, person, g)[0] : undefined;
+  const service = maker ? servicePrice(sim, person, g) : undefined;
+  const movement = !watch ? undefined
+    : runsOut !== undefined ? (halted ? `Its battery ran down ${formatDate(runsOut, sim.homeZone)}, and it’s stopped until it’s changed${change ? `, ${money(change.price)} at ${change.service.name}` : ', which no one where you are publishes a price for'}.`
+      : `It’s quartz, its battery good until about ${formatDate(runsOut, sim.homeZone)}${change ? `; a change is ${money(change.price)} at ${change.service.name}` : ''}.`)
+    : due !== undefined ? (halted ? `It’s past ${maker!.brand}’s service, due ${formatDate(due, sim.homeZone)}, and stopped until it’s serviced${service !== undefined ? `, ${money(service)} and three weeks away` : ''}.`
+      : `It’s mechanical; ${maker!.brand} asks for its service every ${maker!.years} years, next by ${formatDate(due, sim.homeZone)}${service !== undefined ? `, at ${money(service)}` : ''}.`)
+    : 'Its maker publishes no battery life or service interval, so it isn’t counted as running down.';
+  const safe = lockedAway(person, g);
+  const noSchedule = g.scheduled ? undefined : scheduleRefusal(sim, person, g);
+  const cover = g.scheduled ? `It’s scheduled on your policy, ${money(scheduledPremium(g))} a month, and paid in full if it’s taken.` : noSchedule ? `It isn’t insured: ${noSchedule.charAt(0).toLowerCase()}${noSchedule.slice(1)}` : `It’s covered only to your policy’s jewelry limit; scheduled, it would be ${money(scheduledPremium(g))} a month.`;
+  const broker = pawnTermsIn(person.currentLocationId);
+  const noPawn = broker ? pledgeRefusal(sim, person, [g.id]) : undefined;
+  const loan = broker && !noPawn ? pledgeQuote(sim, person, [g.id]).loan : undefined;
+  return {
+    name: asName(g.label, watch ? 'A Watch' : 'A Piece Of Jewelry'),
+    kind: watch ? 'A Watch Of Yours' : 'A Piece Of Jewelry',
+    parent: parentOf(sim, person, g),
+    summary: `${whereSentence(sim, person, g)}${safe ? ', locked in a safe' : ''}${watch ? (halted ? ', and it’s stopped' : ', and it’s running') : ''}.`,
+    body: (
+      <>
+        <p className="small">
+          {movement ? `${movement} ` : ''}
+          {g.engraved ? `It’s engraved “${g.engraved}”. ` : ''}
+          {cover}{' '}
+          {safe ? 'A burglary can’t take it from the safe.' : 'Left out at home, a burglary would take it.'}{' '}
+          {g.paid !== undefined ? `It cost ${money(g.paid)}.` : 'What it cost isn’t known.'}
+        </p>
+        <div className="grid grid-3">
+          <Stat label={watch ? 'Running' : 'Condition'} value={watch ? (halted ? 'Stopped' : 'Yes') : percent(g.condition)} note={watch ? (runsOut !== undefined ? 'On its battery' : due !== undefined ? 'On its service' : 'Not counted') : 'As it is'} tone={halted ? 'warning' : undefined} />
+          <Stat label="Covered" value={g.scheduled ? 'Scheduled' : noSchedule ? 'Not Covered' : 'To The Limit'} note={g.scheduled ? `${money(scheduledPremium(g))} a month` : noSchedule ? 'No policy on what’s in your home' : 'Your policy’s jewelry limit'} tone={!g.scheduled && noSchedule ? 'warning' : undefined} />
+          <Stat label="A Pawnbroker Lends" value={loan !== undefined ? <span className="mono">{money(loan)}</span> : 'Not Here'} note={loan !== undefined ? broker!.lender : noPawn ?? 'No terms kept where you are'} />
+        </div>
+      </>
+    ),
+    ways: [...(g.spec?.purchase ? waysThatOpen(sim, [{ to: at('receipt', String(g.spec.purchase)), label: 'Its Receipt', detail: 'What it cost, what paid, and until when it goes back' }]) : []), ...waysOf(sim, person, g)],
+  };
+}
+
 /** What state it’s in to wear, in one clause. */
 function stateOf(sim: Simulation, g: Worn): string {
   if (g.condition <= 0) return 'it’s worn out';
@@ -142,6 +200,7 @@ defineLook<Worn>('garment', {
   look: (g, { sim }) => {
     const person = sim.player;
     const cur = saveCurrency(sim.universe);
+    if (isValuable(g)) return valuableLook(sim, person, g);
     const rule = careFor(g.garment.kind);
     const fit = fitOf(person, g.garment);
     const fitWords = fit === 'fits' ? 'it fits you as you are now' : fit === 'big' ? 'it’s too big for you now, and isn’t worn until it’s taken in' : 'you’ve grown out of it, and it isn’t worn';

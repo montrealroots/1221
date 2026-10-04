@@ -109,6 +109,8 @@ export interface OwnedVehicle {
   stolen?: { at: Instant; recoverAt?: Instant };
   /** Where it's kept overnight, from 2026-10-03, where its owner says (`systems/theft.ts`). */
   keptIn?: 'garage' | 'street';
+  /** The dealer it was bought from, new (`DEALERS`, from 2026-10-03). */
+  seller?: string;
   /** An unscheduled repair it needs, and a garage that has it (`systems/repairs.ts`, from 2026-10-01). */
   fault?: import('./repairs').Fault;
   /** A stereo fitted (`systems/caraudio.ts`, from 2026-10-02), and speakers and an amplifier (from 2026-10-03). */
@@ -413,10 +415,46 @@ export function caWeightFee(model: CarModel): number {
  * Moving home takes the car where a road reaches (from 2026-09-29): it's
  * driven there, and within one country it's registered in the new state or
  * province at that place's registration, and its title and plates where
- * they're charged. Across a border the car keeps its registration: importing
- * one isn't kept. Until then a car stayed where it was bought, and a life
- * that moved on left it there.
+ * they're charged. Across a border the car kept its registration, importing
+ * one not being kept; from 2026-10-03 a car taken from America to Canada is
+ * imported, as the CBSA's Memorandum D19-12-1 has it
+ * (`research-casting-therapy-hotels-cars.json`): the Registrar of Imported
+ * Vehicles' C$325 with the tax on it, the GST on its value at the border,
+ * the C$100 excise on its air conditioning, and in Ontario the provincial
+ * part of the HST at licensing; no duty on a car made in America or Mexico,
+ * which SLATE's American catalog is taken as. Then it's registered there as
+ * a move within Canada is. The Green Levy (13 L/100 km and over) and the
+ * luxury tax's amounts weren't read, nor British Columbia's PST on one, and
+ * none is charged; across other borders the car keeps its registration.
+ * Until 2026-09-29 a car stayed where it was bought, and a life that moved
+ * on left it there.
  */
+/**
+ * The dealer a new car is bought from, from 2026-10-03 (the master plan's
+ * §36c; `research-casting-therapy-hotels-cars.json`): a real dealership in
+ * the town that sells the make, its name kept with the car, for
+ * identification. Toyota Universidad's and Toyota Polanco's were read on
+ * their own pages; the rest from listings and their own sites' excerpts,
+ * read secondhand. A make no named dealer in the town sells is bought from
+ * "a dealer", as before.
+ */
+export const DEALERS: Readonly<Record<string, readonly { name: string; brands: readonly string[] }[]>> = {
+  'us-ny-newyork': [{ name: 'Toyota of Manhattan', brands: ['Toyota'] }, { name: 'Mercedes-Benz Manhattan', brands: ['Mercedes-Benz'] }, { name: 'BMW of Manhattan', brands: ['BMW'] }, { name: 'Open Road Volkswagen Manhattan', brands: ['Volkswagen'] }, { name: 'Lexus of Manhattan', brands: ['Lexus'] }, { name: 'Cadillac of Manhattan', brands: ['Cadillac'] }],
+  'us-ca-losangeles': [{ name: 'Toyota of Downtown LA', brands: ['Toyota'] }, { name: 'Honda of Hollywood', brands: ['Honda'] }, { name: 'Galpin Motors', brands: ['Ford', 'Lincoln', 'Mazda', 'Volvo'] }, { name: 'Beverly Hills BMW', brands: ['BMW'] }],
+  'uk-eng-london': [{ name: 'BMW Park Lane', brands: ['BMW', 'MINI'] }, { name: 'Mercedes-Benz of West London', brands: ['Mercedes-Benz'] }, { name: 'H.R. Owen Ferrari Mayfair', brands: ['Ferrari'] }, { name: 'H.R. Owen Lamborghini London', brands: ['Lamborghini'] }],
+  'ie-lei-dublin': [{ name: 'Denis Mahony', brands: ['Toyota', 'Lexus'] }, { name: 'Ballsbridge Motors', brands: ['Mercedes-Benz'] }, { name: 'Joe Duffy Group', brands: ['Volkswagen', 'BMW', 'Audi', 'Volvo', 'Kia', 'MINI', 'Mazda', 'Ford', 'Land Rover', 'Porsche'] }, { name: 'Spirit Motor Group', brands: ['Jaguar', 'Land Rover', 'Volvo', 'Ford', 'Mercedes-Benz', 'Audi', 'BMW', 'Peugeot', 'Nissan', 'Hyundai', 'Toyota'] }],
+  'ca-on-toronto': [{ name: 'Downtown Toyota', brands: ['Toyota'] }, { name: 'Yorkdale Ford', brands: ['Ford'] }, { name: 'Toronto Honda', brands: ['Honda'] }, { name: 'Downtown Fine Cars Group', brands: ['Porsche', 'Volkswagen', 'Audi', 'Infiniti'] }],
+  'ca-bc-vancouver': [{ name: 'Destination Toyota', brands: ['Toyota'] }, { name: 'Brian Jessel BMW', brands: ['BMW'] }, { name: 'Dueck Downtown', brands: ['Chevrolet', 'Buick', 'GMC'] }],
+  'mx-cmx-mexicocity': [{ name: 'Toyota Universidad', brands: ['Toyota'] }, { name: 'Nissan Imperio Coapa', brands: ['Nissan'] }, { name: 'Honda Universidad', brands: ['Honda'] }, { name: 'Mazda Pasión del Valle', brands: ['Mazda'] }],
+};
+export const dealerFor = (cityId: string, make: string): string | undefined => DEALERS[cityId]?.find((d) => d.brands.some((b) => b.toLowerCase() === make.toLowerCase()))?.name;
+
+export const CANADA_IMPORT = { riv: 325, ac: 100, gst: 0.05, rivTax: { 'CA-ON': 0.13, 'CA-BC': 0.05 }, provincialHst: { 'CA-ON': 0.08, 'CA-BC': 0 } } as const;
+/** What importing a car from America costs where it's going in Canada, in Canadian dollars. */
+export function canadaImportCad(valueCad: number, j: 'CA-ON' | 'CA-BC'): number {
+  const c = CANADA_IMPORT;
+  return c.riv * (1 + c.rivTax[j]) + valueCad * (c.gst + c.provincialHst[j]) + c.ac;
+}
 export function carryCars(sim: Simulation, person: Person, fromCity: string, toCity: string): void {
   if (fromCity === toCity) return;
   for (const v of vehiclesOf(person)) {
@@ -426,7 +464,15 @@ export function carryCars(sim: Simulation, person: Person, fromCity: string, toC
     v.at = toCity;
     const j = jurisdictionOf(toCity);
     const sameCountry = CITIES.get(fromCity)?.countryId === CITIES.get(toCity)?.countryId;
-    if (!j || j === v.jurisdiction || !sameCountry) continue;
+    const intoCanada = v.jurisdiction.startsWith('US-') && (j === 'CA-ON' || j === 'CA-BC');
+    if (!j || j === v.jurisdiction || (!sameCountry && !intoCanada)) continue;
+    // From America to Canada, imported first (`CANADA_IMPORT`, from 2026-10-03).
+    if (intoCanada) {
+      const m0 = modelById(v.modelId)!;
+      const valueCad = (exchange(valueOf(v, sim.now), m0.currency, 'CAD') ?? valueOf(v, sim.now)) / 100;
+      const fee = inSave(sim, Math.round(canadaImportCad(valueCad, j as 'CA-ON' | 'CA-BC') * 100), 'CAD');
+      if (!payFromBank(sim, person, fee, `Importing the ${m0.make} ${m0.model} into Canada`, 'vehicle')) owe(sim, person, fee, 'Importing the car', 'vehicle');
+    }
     const moved: OwnedVehicle = { ...v, jurisdiction: j, cityId: toCity };
     const r = renewal(moved, sim.now);
     const c = (x: number) => Math.round(x * 100);
@@ -661,7 +707,8 @@ export function registerVehicles(sim: Simulation): void {
     const down = Math.max(0, total - lent);
     if (!payFromBank(s, person, down, `${model.make} ${model.model}${age ? `, ${age} years old` : ', new'}${financed ? ', the taxes and fees' : ''}`, 'vehicle')) throw new CommandError(`${formatMoney(down, cur)} is more than the bank can cover.`);
     const id = s.nextId('vehicle');
-    const v: OwnedVehicle = { id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: renewal({ id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: 0 }, s.now).next };
+    const seller = age === 0 ? dealerFor(cityId, model.make) : undefined;
+    const v: OwnedVehicle = { id, modelId: model.id, ...(seller ? { seller } : {}), boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: renewal({ id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: 0 }, s.now).next };
     // The listing's odometer, and a private sale's transfer to do (`systems/usedcars.ts`).
     if (listing) {
       v.odometerAtPurchase = listing.odometerKm;

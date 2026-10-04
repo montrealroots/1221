@@ -57,7 +57,16 @@ export const WORKS_PERMITS = {
   dublin: { fee: 34, exemptM2: 40, days: 8 * 7 + 4 * 7, commencement: 30 },
 } as const;
 
-export interface WorksPermit { lines: { label: string; amount: Money }[]; waitDays: number; basis: string }
+/**
+ * A planning application can be refused, from 2026-10-03
+ * (`research-home-garden-furniture.json`): England's householder
+ * applications were 90% granted in the year to June 2026 (MHCLG, 145,600
+ * decisions), so one is refused one time in ten. Its fee isn't returned.
+ */
+export const PLANNING_REFUSED = 0.1;
+/** A structural engineer's inspection and report in London, the middle of £500 to £1,200 (read secondhand). */
+export const STRUCTURAL_REPORT_GBP = (500 + 1_200) / 2;
+export interface WorksPermit { lines: { label: string; amount: Money }[]; waitDays: number; basis: string; /** The share of such applications refused, where it's an application decided. */ refused?: number }
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
 const c = (units: number) => Math.round(units * 100);
@@ -147,8 +156,10 @@ export function worksPermit(sim: Simulation, cityId: string, project: Project, c
     // Building control on what's added (from 2026-09-30), and on what's converted (from 2026-10-01).
     const control = londonControl(project.id);
     const bc = control !== undefined ? [{ label: 'Building Control', amount: inSave(sim, c(control), 'GBP') }] : [];
+    // A structural engineer's inspection and written report on work that adds to the house, from 2026-10-03: the middle of London's £500 to £1,200, read secondhand.
+    if (bc.length && ADDITIONS.has(project.id)) bc.push({ label: 'A Structural Engineer’s Report, Read Secondhand', amount: inSave(sim, c(STRUCTURAL_REPORT_GBP), 'GBP') });
     if (project.id === 'suite') return { lines: [{ label: 'Prior Approval, A Larger Home Extension', amount: inSave(sim, c(f.priorApproval), 'GBP') }, ...bc], waitDays: f.priorApprovalDays, basis: 'permitted development, the neighbors asked first' };
-    if (project.id === 'suite-upscale' || project.id === 'adu') return { lines: [{ label: 'Householder Planning Application', amount: inSave(sim, c(f.householder), 'GBP') }, ...bc], waitDays: f.householderDays, basis: 'a householder application, decided in eight weeks' };
+    if (project.id === 'suite-upscale' || project.id === 'adu') return { lines: [{ label: 'Householder Planning Application', amount: inSave(sim, c(f.householder), 'GBP') }, ...bc], waitDays: f.householderDays, basis: 'a householder application, decided in eight weeks, one in ten refused', refused: PLANNING_REFUSED };
     // A conversion inside the house is permitted development and asks building control alone.
     if (bc.length) return { lines: bc, waitDays: 0, basis: 'building control on the conversion, permitted development asking no planning' };
     return undefined;

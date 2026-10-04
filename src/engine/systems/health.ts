@@ -952,8 +952,9 @@ export function dentalPlanFor(person: Person, at: Instant): DentalPlan | undefin
 export const NAMED_TEETH_EYES: Readonly<Record<string, Partial<Record<'cleaning' | 'exam', { name: string; price: number; currency: string }>>>> = {
   'us-ny-newyork': { cleaning: { name: '209 NYC Dental', price: 144, currency: 'USD' }, exam: { name: 'Warby Parker', price: 95, currency: 'USD' } },
   'us-ca-losangeles': { cleaning: { name: 'Holistic Smile Care', price: 150, currency: 'USD' } },
-  'uk-eng-london': { cleaning: { name: 'South Kensington Medical & Dental', price: 89, currency: 'GBP' } },
-  'ie-lei-dublin': { cleaning: { name: 'Truly Dental', price: 100, currency: 'EUR' } },
+  // Specsavers' own posted eye tests, from 2026-10-03 (`research-casting-therapy-hotels-cars.json`): "usually between £20 and £25" in Britain, the middle, and €30 in Ireland.
+  'uk-eng-london': { cleaning: { name: 'South Kensington Medical & Dental', price: 89, currency: 'GBP' }, exam: { name: 'Specsavers', price: 22.5, currency: 'GBP' } },
+  'ie-lei-dublin': { cleaning: { name: 'Truly Dental', price: 100, currency: 'EUR' }, exam: { name: 'Specsavers', price: 30, currency: 'EUR' } },
   'ca-on-toronto': { cleaning: { name: 'Lockwood Clinic', price: 175, currency: 'CAD' }, exam: { name: 'Spadina Optometry', price: 198, currency: 'CAD' } },
   'ca-bc-vancouver': { cleaning: { name: 'Aarm Dental Group', price: 297.4, currency: 'CAD' } },
   'mx-cmx-mexicocity': { cleaning: { name: 'hi sonrisa', price: 1_199, currency: 'MXN' }, exam: { name: 'Ópticas Devlyn', price: 0, currency: 'MXN' } },

@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-326 commands; 320 named by a test, 6 not.
+329 commands; 323 named by a test, 6 not.
 
 ## aircraft
 
@@ -278,6 +278,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `health.parking_permit` | `src/engine/systems/access.ts` | `PapersWorkspace.tsx` | `access.test.ts` | Between Jobs |
 | `health.pay_bill` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `worklife.test.ts` | Between Jobs |
 | `health.prepay` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `appointments.test.ts` | Between Jobs |
+| `health.therapy` | `src/engine/systems/therapy.ts` | `PapersWorkspace.tsx` | `therapy.test.ts` | Between Jobs |
 | `health.treat` | `src/engine/systems/health.ts` | `PapersWorkspace.tsx` | `carried.test.ts` | Between Jobs |
 
 ## home
@@ -291,6 +292,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.buy_portable` | `src/engine/systems/appliances.ts` | `Home.tsx` | `appliances.test.ts` | Rent And A Roof |
 | `home.buy_units` | `src/engine/systems/appliances.ts` | `Home.tsx` | `appliances.test.ts` | Rent And A Roof |
 | `home.cancel` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
+| `home.cancel_works` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homeworks.test.ts` | Rent And A Roof |
 | `home.charger` | `src/engine/systems/charging.ts` | `Home.tsx` | `evs.test.ts` | Rent And A Roof |
 | `home.cleaner` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `away.test.ts` `dwelling.test.ts` | Rent And A Roof |
 | `home.cleaner_key` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `dwelling.test.ts` | Rent And A Roof |
@@ -313,12 +315,13 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.pay_landlord` | `src/engine/systems/household.ts` | `Home.tsx` | `homes-cohesion.test.ts` `payments.test.ts` | Rent And A Roof |
 | `home.pay_mortgage` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
 | `home.refinance` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes-open.test.ts` | Rent And A Roof |
-| `home.renovate` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `assistant.test.ts` `homes.test.ts` `permits.test.ts` | Rent And A Roof |
+| `home.renovate` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `assistant.test.ts` `homes.test.ts` `homeworks.test.ts` `permits.test.ts` | Rent And A Roof |
 | `home.renters_insurance` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `homes-open.test.ts` `valuables.test.ts` | Rent And A Roof |
 | `home.repair_machine` | `src/engine/systems/appliancefaults.ts` | `Home.tsx` | `appliancefaults.test.ts` | Rent And A Roof |
 | `home.replace_mattress` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `furniture.test.ts` | Rent And A Roof |
 | `home.security` | `src/engine/systems/homesecurity.ts` | `Home.tsx` | `homesecurity.test.ts` | Rent And A Roof |
 | `home.sell` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `homes.test.ts` `routines.test.ts` | Rent And A Roof |
+| `home.sell_back` | `src/engine/systems/furnishings.ts` | `BelongingsWorkspace.tsx` | `assembly.test.ts` | Rent And A Roof |
 | `home.sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` | Rent And A Roof |
 | `home.subscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `partway.test.ts` `programmes.test.ts` `shortfalls.test.ts` | Rent And A Roof |
 | `home.take_lodger` | `src/engine/systems/lodgers.ts` | `HomesWorkspace.tsx` | `lodgers.test.ts` | Rent And A Roof |
@@ -473,7 +476,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `social.break_up` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` `people.test.ts` | People |
 | `social.divorce` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` | People |
 | `social.host` | `src/engine/systems/hosting.ts` | `PeopleWorkspace.tsx` | `cooking-household.test.ts` `hosting.test.ts` | People |
-| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `people.test.ts` | People |
+| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `people.test.ts` `together.test.ts` | People |
 | `social.marry` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` | People |
 | `social.move_in` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `people.test.ts` | People |
 | `social.split` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` | People |
@@ -531,7 +534,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `vehicle.audio` | `src/engine/systems/caraudio.ts` | `VehiclesWorkspace.tsx` | `caraudio-parts.test.ts` | A Car Of Your Own |
-| `vehicle.buy` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `caraudio-parts.test.ts` `caravans.test.ts` `carcare.test.ts` `caroptions.test.ts` `carsale.test.ts` `connected-day.test.ts` `driving.test.ts` `evs.test.ts` `ferries.test.ts` `fueltank.test.ts` `hotels.test.ts` `inspections.test.ts` `interiors.test.ts` `landlease.test.ts` `leasing.test.ts` `mods.test.ts` `motorcycles.test.ts` `motorhomes.test.ts` `networth-holdings.test.ts` `outings.test.ts` `parking.test.ts` `pickups.test.ts` `repairs.test.ts` `repossession.test.ts` `roadside.test.ts` `roofbox.test.ts` `standin.test.ts` `staytypes.test.ts` `theft.test.ts` `tint-road.test.ts` `tint.test.ts` `tires-drive.test.ts` `tires.test.ts` `tirewear.test.ts` `tradein.test.ts` `trips.test.ts` `underway.test.ts` `usedcars.test.ts` `usedlistings.test.ts` `vehicles.test.ts` `wraps.test.ts` | A Car Of Your Own |
+| `vehicle.buy` | `src/engine/systems/vehicles.ts` | `VehiclesWorkspace.tsx` | `caraudio-parts.test.ts` `caravans.test.ts` `carcare.test.ts` `carmarket.test.ts` `caroptions.test.ts` `carsale.test.ts` `connected-day.test.ts` `driving.test.ts` `evs.test.ts` `ferries.test.ts` `fueltank.test.ts` `hotels.test.ts` `inspections.test.ts` `interiors.test.ts` `landlease.test.ts` `leasing.test.ts` `mods.test.ts` `motorcycles.test.ts` `motorhomes.test.ts` `networth-holdings.test.ts` `outings.test.ts` `parking.test.ts` `pickups.test.ts` `repairs.test.ts` `repossession.test.ts` `roadside.test.ts` `roofbox.test.ts` `standin.test.ts` `staytypes.test.ts` `theft.test.ts` `tint-road.test.ts` `tint.test.ts` `tires-drive.test.ts` `tires.test.ts` `tirewear.test.ts` `tradein.test.ts` `trips.test.ts` `underway.test.ts` `usedcars.test.ts` `usedlistings.test.ts` `vehicles.test.ts` `wraps.test.ts` | A Car Of Your Own |
 | `vehicle.coverage` | `src/engine/systems/wraps.ts` | `VehiclesWorkspace.tsx` | `carcare.test.ts` `wraps.test.ts` | A Car Of Your Own |
 | `vehicle.hitch` | `src/engine/systems/caravans.ts` | `VehiclesWorkspace.tsx` | `caravans.test.ts` | Rent And A Roof |
 | `vehicle.inspect_used` | `src/engine/systems/usedcars.ts` | `VehiclesWorkspace.tsx` | `usedcars.test.ts` | A Car Of Your Own |
