@@ -265,13 +265,6 @@ export function registerTrips(sim: Simulation): void {
     return r;
   });
 
-  // A shortcut set or cleared: each does what its manual action does, on the same rules.
-  sim.onCommand<{ key: 'unloadShopping'; on: boolean }, { on: boolean }>('life.set_automation', (p, { sim: s }) => {
-    if (p?.key !== 'unloadShopping') throw new CommandError('There’s no such shortcut.');
-    const a = (s.player.automation ??= {});
-    if (p.on) a[p.key] = true; else delete a[p.key];
-    return { on: Boolean(p.on) };
-  });
 
   // A leg on the road: to the next stop, or home, which ends the trip.
   sim.onCommand<{ to: LegKind | 'home'; by?: TripMode; vehicleId?: string; passengerId?: string; passengerIds?: string[]; driven?: boolean }, { minutes: number; km: number }>('errand.go', (p, { sim: s }) => {

@@ -51,6 +51,7 @@ import { SITTING_MET, coldRefusal } from './coldstress';
 import { BODY } from '../content/body';
 import { GARMENTS_PER_LOAD, cleanOutfits, swimsuitFor, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
+import { isOn } from './automation';
 import { detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
 import { amenitiesOf } from './hotels';
 import { machinesDay } from './appliancefaults';
@@ -468,15 +469,15 @@ export function livingDay(sim: Simulation, person: Person): void {
   machinesDay(sim, person);
   starterLuggage(sim, person);
   const w = person.wellbeing;
-  // Left to themselves, somebody with a free day keeps up: the washing when it's nearly all worn, a tidy-up when the
-  // place is getting bad, not as well as a proper clean. A day of work doesn't leave the time, and it all waits.
+  // A free day keeps up where they've chosen the shortcut for it (from 2026-10-03, `systems/automation.ts`; until then
+  // everybody did, without asking): the washing when it's nearly all worn, what's worn out and what's run out bought
+  // again. A day of work doesn't leave the time, and it all waits.
   const free = !busyDay(sim, person);
   const lowOnClean = cleanOutfits(sim, person) <= 1 && washableDirty(sim, person).length > 0;
-  if (free && lowOnClean) doLaundry(sim, person, sim.now);
-  // What's worn out, replaced the same way, on a day with time for the shops.
-  if (free) replaceWornOut(sim, person);
+  if (free && lowOnClean && isOn(person, 'laundry')) doLaundry(sim, person, sim.now);
+  if (free && isOn(person, 'replaceClothes')) replaceWornOut(sim, person);
   // And toiletries run out (`systems/hygiene.ts`).
-  if (free) restock(sim, person, place.fixtures.dishwasher);
+  if (free && isOn(person, 'restock')) restock(sim, person, place.fixtures.dishwasher);
   if (!wearOutfit(sim, person)) {
     w.morale = clamp(w.morale - WORN_CLOTHES.morale * personalityOf(person, 'moraleSwing'), 0, 100);
   }
@@ -491,8 +492,8 @@ export function livingDay(sim: Simulation, person: Person): void {
   const piled = !machine && (l.dishes ?? 0) > 0;
   l.tidy = clamp(l.tidy - TIDY.perDay * (piled ? 1 : TIDY.dishwasher), 0, 100);
   if (machine) delete l.dishes; else l.dishes = Math.min(WASH_UP.full, (l.dishes ?? 0) + 1);
-  if (free) washUp(sim, person);
-  if (free && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
+  if (free && isOn(person, 'washUp')) washUp(sim, person);
+  if (free && isOn(person, 'tidy') && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
   // A partner living there does their share of the housework, a cleaning when it adds up to one.
   if (livesWithPartner(person)) {
     l.partnerMinutes = (l.partnerMinutes ?? 0) + PARTNER_HOUSEWORK_HOURS * 60;

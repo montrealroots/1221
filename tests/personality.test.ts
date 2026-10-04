@@ -14,6 +14,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { EVERY_SHORTCUT } from '@/engine/systems/automation';
 import { createSave, defaultConfig, migrate, quickSave, validateUniverse } from '@/engine';
 import type { Person, Personality } from '@/engine/domain/model';
 import {
@@ -99,10 +100,13 @@ function pickFor(knob: PersonalityKnob, way: 'down' | 'up'): string[] {
  * moves these. Working life has its own year in `tests/work.test.ts`.
  */
 function build(c: Case, birthYear: number, seed: string): Simulation {
-  return quickSave({
+  const sim = quickSave({
     personality: { ...defaultPersonality(), ...c.personality }, personalityTraits: c.traits, birthYear,
     wealth: 'inherited',
   }, seed);
+  // Left on autopilot: every shortcut chosen, as a hands-off player would (from 2026-10-03 none is on unless chosen).
+  sim.player.automation = { ...EVERY_SHORTCUT };
+  return sim;
 }
 
 /** How many years old somebody is, as `ceilingAt` counts them. */

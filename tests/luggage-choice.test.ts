@@ -7,6 +7,7 @@
  * shortcuts it had.
  */
 import { describe, expect, it } from 'vitest';
+import { EVERY_SHORTCUT } from '@/engine/systems/automation';
 import { loadSave, quickSave } from '@/engine';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
@@ -107,7 +108,7 @@ describe('a save from before', () => {
     const sim = life('lc-old');
     delete sim.player.automation;
     const back = loadSave(deserialise(serialise(sim.universe)) as never);
-    expect(back.player.automation).toEqual({ unloadShopping: true, packForMe: true });
+    expect(back.player.automation).toEqual(EVERY_SHORTCUT);
   });
 });
 

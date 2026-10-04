@@ -342,7 +342,7 @@ export interface Person {
    * each one does what its manual action does, on the same rules, only when
    * set. None is on unless chosen.
    */
-  automation?: { unloadShopping?: true; packForMe?: true };
+  automation?: Partial<Record<import('../systems/automation').Shortcut, true>>;
   /** The bags that go away with them (from 2026-10-03); none chosen, the one suitcase. */
   goingBags?: string[];
   /** Garments in a parcel taken from the door, to buy again (`systems/orders.ts`, from 2026-10-02). */
