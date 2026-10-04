@@ -28,6 +28,7 @@ import { lockedAway, safeCatalog, safesAtHome, scheduleRefusal, scheduledPremium
 import { contactsOf } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
+import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { LookRegion, Open, at } from '@/ui/looks';
 
@@ -60,6 +61,67 @@ function Collected({ item }: { item: Item }) {
   return <Gated feature="items.discard" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (fee ? `The council's collection, ${formatMoney(fee, saveCurrency(sim.universe))}` : 'The council collects it free')} onClick={() => { const a = run<{ collectAt: number }>('items.discard', { itemIds: [item.id] }); if (a.ok) toast(`Booked for collection ${formatDate(a.value!.collectAt, sim.zone)}.`, 'positive'); }}>Have It Collected</Gated>;
 }
 
+/**
+ * Shopping bought on a trip and not yet put away (from 2026-10-03): in the
+ * car or in your arms, each with where it keeps and, for what needs the
+ * fridge, how long before USDA's two hours run out; put away one by one or
+ * all at once, where it keeps or where chosen; and the shortcut that puts it
+ * all away on getting home.
+ */
+function ShoppingOut() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const waiting = waitingShopping(person);
+  const [spots, setSpots] = useState<Record<string, Spot>>({});
+  const auto = person.automation?.unloadShopping === true;
+  const say = (r: { put: number; spoiled: number; refused: { label: string; why: string }[] }) => toast(`Put away ${r.put}${r.spoiled ? `, ${r.spoiled} thrown out` : ''}${r.refused.length ? `; ${r.refused[0]!.label}: ${r.refused[0]!.why}` : ''}.`, r.refused.length ? 'negative' : 'positive');
+  if (!waiting.length && !auto) {
+    return (
+      <Panel title="Your Shopping" subtitle="Nothing waiting to be put away">
+        <Gated feature="life.set_automation" className="btn btn-sm btn-ghost" onClick={() => run('life.set_automation', { key: 'unloadShopping', on: true })}>Put It Away When I Get Home</Gated>
+      </Panel>
+    );
+  }
+  return (
+    <Panel title="Your Shopping" subtitle="Bought on a trip and not yet put away: it waits where it rode until you bring it in">
+      {waiting.length > 0 && (
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Item</th><th scope="col">Where It Is</th><th scope="col">Keeps</th><th scope="col">Put It In</th><th scope="col"><span className="sr-only">Put Away</span></th></tr></thead>
+            <tbody>
+              {waiting.map((i) => {
+                const spot = spots[i.id] ?? i.storeIn!;
+                const cold = i.storeIn === 'fridge' || i.storeIn === 'freezer';
+                const left = cold ? COLD_CHAIN_HOURS * 60 - Math.floor((sim.now - i.acquiredAt) / 60_000) : undefined;
+                const home = homeKeyOf(person.home);
+                const no = home ? moveRefusal(sim, person, i, { kind: 'home', home, spot }) : 'You have no home to put it in.';
+                return (
+                  <tr key={i.id}>
+                    <td>{i.label}{i.quantity > 1 ? ` × ${i.quantity}` : ''}</td>
+                    <td className="small">{i.at.kind === 'vehicle' ? 'In The Car' : 'In Your Arms'}</td>
+                    <td className="small">{SPOT_LABEL[i.storeIn!]}{left !== undefined ? <div className="xs dim">{left > 0 ? `${left} minutes of the two hours left` : 'Out past the two hours'}</div> : null}</td>
+                    <td>
+                      <select aria-label={`Where To Put ${i.label}`} value={spot} onChange={(e) => setSpots((x) => ({ ...x, [i.id]: e.target.value as Spot }))}>
+                        {(Object.keys(SPOT_LABEL) as Spot[]).filter((sp) => sp !== 'hamper').map((sp) => <option key={sp} value={sp}>{SPOT_LABEL[sp]}</option>)}
+                      </select>
+                    </td>
+                    <td><Gated feature="items.put_away" className="btn btn-sm btn-ghost" disabled={Boolean(no) && !(left !== undefined && left <= 0)} title={no} onClick={() => { const r = run<{ put: number; spoiled: number; refused: { label: string; why: string }[] }>('items.put_away', { itemIds: [i.id], spot }); if (r.ok) say(r.value!); }}>Put It Away</Gated></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+        {waiting.length > 0 && <Gated feature="items.put_away" className="btn btn-sm btn-primary" onClick={() => { const r = run<{ put: number; spoiled: number; refused: { label: string; why: string }[] }>('items.put_away', {}); if (r.ok) say(r.value!); }}>Put It All Away</Gated>}
+        <Gated feature="life.set_automation" className="btn btn-sm btn-ghost" onClick={() => run('life.set_automation', { key: 'unloadShopping', on: !auto })}>{auto ? 'Leave It Out Until I Put It Away' : 'Put It Away When I Get Home'}</Gated>
+        <span className="xs dim">{auto ? 'Getting home puts it all away where each keeps, on the same rules as by hand.' : 'Food is cooked from once it’s brought in from the car; what needs the fridge keeps two hours out, USDA’s limit.'}</span>
+      </div>
+    </Panel>
+  );
+}
+
 export function BelongingsWorkspace() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -89,6 +151,7 @@ export function BelongingsWorkspace() {
         <p className="muted">What you own, and where each thing is: only what’s to hand can be used or moved.</p>
       </div>
       <div className="col gap-5">
+        <ShoppingOut />
         <Panel title="Where Things Are">
           <div className="grid grid-3">
             <Stat label="Owned" value={String(items.length)} note="Each thing, or each set of the same" />

@@ -24,6 +24,15 @@
  * estimate; what's bought is carried, as on foot, and anybody along pays
  * their own fare. A town whose fare isn't kept has no transit trip.
  *
+ * **Bringing it in** (from 2026-10-03, the owner's expansion; until then
+ * it was put away the moment the trip was home): what was bought stays where
+ * it rode, in the car or in your arms, until you put it away (`items.put_away`),
+ * thing by thing or all at once, where it keeps or where you choose, the
+ * home's room for it checked as any move is. Food that needed the fridge and
+ * was out past USDA's two hours goes in the bin when it's brought in, and
+ * food in the car isn't cooked from. Putting it all away on getting home is
+ * a shortcut you can set (`life.set_automation`), on the same rules.
+ *
  * Not kept: a ticket for an unpaid or overstayed meter, SLATE always
  * paying for the time; how often meters are checked isn't published.
  */
@@ -51,7 +60,7 @@ import { standInFor } from './standin';
 import { DRIVERS, type DriverService } from '../content/drivers';
 import { formatDate, type Instant , zonedParts } from '../core/time';
 import { tireFactor } from './tires';
-import { homeKeyOf, itemById, itemsOf, volumeOf, type Item, type Spot } from './items';
+import { homeKeyOf, itemById, itemsOf, moveRefusal, volumeOf, type Item, type Place, type Spot } from './items';
 import { specOf } from './caroptions';
 import { burn, capacityOf, levelOf, rangeKm } from './fueltank';
 import { TRANSIT } from '../content/transit';
@@ -197,25 +206,42 @@ export function stow(person: Person, item: Item, at: Instant): void {
     }
   }
   (trip.shopping ??= []).push({ itemId: item.id, ...(item.at.spot ? { spot: item.at.spot } : {}), at });
+  if (item.at.spot) item.storeIn = item.at.spot;
   item.at = inCar ? { kind: 'vehicle', vehicleId: trip.vehicleId! } : { kind: 'person' };
 }
 
-/** The trip's shopping put away at home; chilled food out past the two hours thrown out. How many were thrown out. */
-function unload(sim: Simulation, person: Person, trip: Trip): number {
+/** Shopping not yet put away: bought on a trip, in a car or in their arms. */
+export const waitingShopping = (person: Person): Item[] => itemsOf(person).filter((i) => i.storeIn !== undefined && (i.at.kind === 'vehicle' || i.at.kind === 'person'));
+
+/** Out of the cold too long to keep: food that needs the fridge or freezer, bought more than USDA's two hours ago. */
+export const outTooLong = (item: Item, now: Instant): boolean => (item.storeIn === 'fridge' || item.storeIn === 'freezer') && now - item.acquiredAt > COLD_CHAIN_HOURS * 3_600_000;
+
+/**
+ * Shopping put away at home, each where it keeps or where chosen, checked as
+ * any move is; chilled food out past the two hours thrown out. What went
+ * where, what was thrown out, and what couldn't go and why.
+ */
+export function putAway(sim: Simulation, person: Person, items: Item[], spot?: Spot): { put: number; spoiled: number; refused: { label: string; why: string }[] } {
   const home = homeKeyOf(person.home);
+  let put = 0;
   let spoiled = 0;
-  for (const s of trip.shopping ?? []) {
-    const item = itemById(person, s.itemId);
-    if (!item || !home) continue;
-    if ((s.spot === 'fridge' || s.spot === 'freezer') && sim.now - s.at > COLD_CHAIN_HOURS * 3_600_000) {
+  const refused: { label: string; why: string }[] = [];
+  for (const item of items) {
+    if (!home) { refused.push({ label: item.label, why: 'You have no home to put it in.' }); continue; }
+    if (item.food && outTooLong(item, sim.now)) {
       person.items = (person.items ?? []).filter((i) => i.id !== item.id);
       spoiled += 1;
       continue;
     }
-    item.at = { kind: 'home', home, ...(s.spot ? { spot: s.spot } : {}) };
+    const to: Place = { kind: 'home', home, ...(spot ?? item.storeIn ? { spot: spot ?? item.storeIn } : {}) };
+    const no = moveRefusal(sim, person, item, to);
+    if (no) { refused.push({ label: item.label, why: no }); continue; }
+    item.at = to;
+    delete item.storeIn;
+    put += 1;
   }
-  if (spoiled && person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Shopping Left Out Too Long', body: `${spoiled} of what needed the fridge was out more than ${COLD_CHAIN_HOURS} hours, USDA's limit, and went in the bin.`, importance: 40, route: '/workspace/food' });
-  return spoiled;
+  if (spoiled && person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Shopping Left Out Too Long', body: `${spoiled} of what needed the fridge was out more than ${COLD_CHAIN_HOURS} hours, USDA's limit, and went in the bin.`, importance: 40, route: '/workspace/belongings' });
+  return { put, spoiled, refused };
 }
 
 const carOf = (person: Person, trip: Trip): OwnedVehicle | undefined => (trip.vehicleId ? vehiclesOf(person).find((v) => v.id === trip.vehicleId) : undefined);
@@ -228,6 +254,25 @@ function payFuel(sim: Simulation, person: Person, trip: Trip, station: string): 
 }
 
 export function registerTrips(sim: Simulation): void {
+  // The shopping put away: these, or all that's waiting, where each keeps or where chosen.
+  sim.onCommand<{ itemIds?: string[]; spot?: Spot }, { put: number; spoiled: number; refused: { label: string; why: string }[] }>('items.put_away', (p, { sim: s }) => {
+    const person = s.player;
+    const waiting = waitingShopping(person);
+    const chosen = p?.itemIds?.length ? p.itemIds.map((id) => waiting.find((i) => i.id === id)).filter((x): x is Item => Boolean(x)) : waiting;
+    if (!chosen.length) throw new CommandError('There’s no shopping waiting to be put away.');
+    const r = putAway(s, person, chosen, p?.spot);
+    if (r.put === 0 && r.spoiled === 0) throw new CommandError(r.refused[0]!.why);
+    return r;
+  });
+
+  // A shortcut set or cleared: each does what its manual action does, on the same rules.
+  sim.onCommand<{ key: 'unloadShopping'; on: boolean }, { on: boolean }>('life.set_automation', (p, { sim: s }) => {
+    if (p?.key !== 'unloadShopping') throw new CommandError('There’s no such shortcut.');
+    const a = (s.player.automation ??= {});
+    if (p.on) a[p.key] = true; else delete a[p.key];
+    return { on: Boolean(p.on) };
+  });
+
   // A leg on the road: to the next stop, or home, which ends the trip.
   sim.onCommand<{ to: LegKind | 'home'; by?: TripMode; vehicleId?: string; passengerId?: string; passengerIds?: string[]; driven?: boolean }, { minutes: number; km: number }>('errand.go', (p, { sim: s }) => {
     const person = s.player;
@@ -282,7 +327,10 @@ export function registerTrips(sim: Simulation): void {
     const along = (trip.passengerIds ?? (trip.passengerId ? [trip.passengerId] : [])).map((id) => contactsOf(person).find((x) => x.id === id)).filter((x): x is NonNullable<typeof x> => Boolean(x));
     for (const c of along) { c.hours += l.minutes / 60; c.lastSeen = s.now; }
     if (p?.to === 'home') {
-      unload(s, person, trip);
+      // Put away on getting home only where that's the shortcut chosen; otherwise it waits where it rode.
+      const bought = (trip.shopping ?? []).map((x) => itemById(person, x.itemId)).filter((x): x is Item => Boolean(x) && x!.storeIn !== undefined);
+      if (bought.length && person.automation?.unloadShopping) putAway(s, person, bought);
+      else if (bought.length && person.id === s.universe.playerId) s.notify({ category: 'home', title: 'The Shopping Is Still Out', body: `${bought.length} ${bought.length === 1 ? 'thing is' : 'things are'} ${trip.by === 'car' ? 'in the car' : 'in your arms'}. Put ${bought.length === 1 ? 'it' : 'them'} away; what needs the fridge keeps two hours out.`, importance: 35, route: '/workspace/belongings' });
       if (trip.fuel > 0) payFuel(s, person, trip, (STATIONS[here] ?? ['a station'])[0]!);
       if (trip.driver) {
         const d = DRIVERS.find((x) => x.id === trip!.driver!.id)!;

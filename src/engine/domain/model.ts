@@ -337,6 +337,12 @@ export interface Person {
   sitter?: import('../systems/away').SitterStay;
   /** Clubs joined: parkrun, a running club, a league (`systems/clubs.ts`, from 2026-10-03). */
   clubs?: import('../systems/clubs').Membership[];
+  /**
+   * The shortcuts they've chosen (from 2026-10-03, the owner's expansion):
+   * each one does what its manual action does, on the same rules, only when
+   * set. None is on unless chosen.
+   */
+  automation?: { unloadShopping?: true };
   /** Garments in a parcel taken from the door, to buy again (`systems/orders.ts`, from 2026-10-02). */
   garmentsToReplace?: { kind: string; slot: import('../content/garmentcare').Slot; care: import('./../systems/wardrobe').Garment['care']; label: string }[];
   /** When their laundry and dishwasher detergent began to be counted (`systems/hygiene.ts`, from 2026-10-02). */
