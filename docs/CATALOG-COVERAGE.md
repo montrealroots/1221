@@ -12,21 +12,21 @@ which never counts toward the target.
 
 | Department | Category | Brands | Of 50 | Products | Per brand (least / median / most) | Brands at 100 | Variants | Offers | Unbranded | Markets | Met |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Apparel | Everyday Clothing | 47 | 94% | 209 | 1 / 2 / 21 | 0 | 6147 | 225 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Formalwear | 54 | 100% | 179 | 1 / 2 / 34 | 0 | 2324 | 187 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Outerwear | 43 | 86% | 119 | 1 / 2 / 16 | 0 | 1540 | 128 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Activewear | 26 | 52% | 77 | 1 / 2 / 16 | 0 | 1851 | 83 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Underwear, Lingerie And Socks | 29 | 58% | 93 | 1 / 2 / 12 | 0 | 1555 | 102 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Sleepwear | 34 | 68% | 62 | 1 / 1 / 7 | 0 | 722 | 66 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Swimwear | 11 | 22% | 18 | 1 / 1 / 4 | 0 | 18 | 19 | 0 | CA, GB, MX, US | No |
-| Apparel | Thermals, Shapewear, Hosiery And Slips | 26 | 52% | 79 | 1 / 2 / 11 | 0 | 79 | 81 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Everyday Clothing | 124 | 100% | 1346 | 1 / 2 / 114 | 1 | 33392 | 1493 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Formalwear | 80 | 100% | 308 | 1 / 2 / 34 | 0 | 5345 | 333 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Outerwear | 70 | 100% | 287 | 1 / 2 / 18 | 0 | 4651 | 333 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Activewear | 52 | 100% | 303 | 1 / 3 / 55 | 0 | 11218 | 362 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Underwear, Lingerie And Socks | 42 | 84% | 136 | 1 / 2 / 12 | 0 | 2486 | 157 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Sleepwear | 41 | 82% | 101 | 1 / 1 / 13 | 0 | 2595 | 120 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Swimwear | 14 | 28% | 26 | 1 / 1 / 9 | 0 | 236 | 30 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Thermals, Shapewear, Hosiery And Slips | 26 | 52% | 78 | 1 / 2 / 11 | 0 | 78 | 80 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Cultural Clothing | 8 | 16% | 11 | 1 / 1 / 2 | 0 | 11 | 11 | 0 | IE, MX | No |
-| Footwear | Shoes, Boots And Sandals | 45 | 90% | 129 | 1 / 1 / 15 | 0 | 1605 | 148 | 0 | CA, GB, IE, MX, US | No |
+| Footwear | Shoes, Boots And Sandals | 45 | 90% | 128 | 1 / 1 / 15 | 0 | 1596 | 145 | 0 | CA, GB, IE, MX, US | No |
 | Footwear | Sneakers | 0 | 0% | 30 | — | 0 | 403 | 30 | 30 | — | No |
-| Accessories | Bags | 36 | 72% | 70 | 1 / 1 / 9 | 0 | 125 | 74 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Bags | 36 | 72% | 70 | 1 / 1 / 9 | 0 | 126 | 73 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Hats, Scarves, Belts And Small Accessories | 33 | 66% | 74 | 1 / 1 / 17 | 0 | 392 | 77 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Watches | 22 | 44% | 50 | 1 / 2 / 8 | 0 | 50 | 50 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Jewelry | 34 | 68% | 69 | 1 / 1 / 15 | 0 | 126 | 71 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Jewelry | 34 | 68% | 69 | 1 / 1 / 15 | 0 | 130 | 70 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Luggage | 47 | 94% | 1738 | 1 / 30 / 100 | 2 | 6018 | 3233 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Phones | 3 | 6% | 26 | 7 / 9 / 10 | 0 | 90 | 273 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 0 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
@@ -70,6 +70,6 @@ Counted by their own structure: providers, branches or listings, and the towns t
 | Restaurants | 105 | 107 | 8 |
 | Clubs And Lessons | 30 | 31 | 8 |
 | Clinics, Dentists And Opticians | 35 | 35 | 8 |
-| Stores And Chains | 83 | 108 | 8 |
+| Stores And Chains | 99 | 126 | 8 |
 | Barbers And Salons | 36 | 37 | 8 |
 

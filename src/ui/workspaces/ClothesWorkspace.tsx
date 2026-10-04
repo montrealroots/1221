@@ -11,14 +11,14 @@ import { goatPayout, sneakerOffers, sneakerRefusal } from '@/engine/systems/snea
 import { Fragment, useState } from 'react';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
-import { CatalogControls, FavoriteToggle, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
+import { CatalogControls, CompareTable, CompareToggle, FavoriteToggle, ShowMore, catalogPrice, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import type { Slot } from '@/engine/content/garmentcare';
 import type { ClothingProduct } from '@/engine/content/clothingcatalog';
-import { arrange } from '@/engine/systems/catalog';
+import { arrange, type CatalogEntry } from '@/engine/systems/catalog';
 import type { Item } from '@/engine/systems/items';
 import { CHANGE_MINUTES, chosenMissing, cleanOutfits, wornNow, dryCleanDirty, garmentsOf, outfitFor, unwearable, wearable, washableDirty, type Garment, toBasketRefusal } from '@/engine/systems/wardrobe';
 import { groomingQuote, groomingRefusal, salonsIn, suppliesOf, toiletryCatalog, toiletryRefusal, lastGroomed, daysSince } from '@/engine/systems/hygiene';
@@ -29,7 +29,7 @@ import { sizeFor, sizeRun } from '@/engine/systems/tailoring';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { cloOf } from '@/engine/content/clo';
 import type { PayWith } from '@/engine/systems/household';
-import { buyRefusal, otherSellers, collectRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
+import { buyRefusal, fitsOf, otherSellers, collectRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, type BasketLine, dressRefusal, dryCleanPrice, productById, purchaseItems, purchaseQuote, readyToCollect, retailerById, returnFee, returnRefusal, againOptions } from '@/engine/systems/clothing';
 
 /** The parts of an outfit, as the screen names them. */
 const SLOT_LABEL: Readonly<Partial<Record<Slot, string>>> = {
@@ -248,6 +248,7 @@ function Shop() {
   const shown = arrange(entries, view);
   const [count, setCount] = useState(PAGE);
   const [chosen, setChosen] = useState<string | undefined>(undefined);
+  const [compared, toggleCompare, clearCompare] = useCompare(`clothes-${here}`);
   if (entries.length === 0) {
     return <Panel title={`Shops In ${town}`}><p className="small muted" style={{ margin: 0 }}>SLATE doesn’t keep the clothes sold in this country yet: America, Britain, Ireland, Canada and Mexico so far.</p></Panel>;
   }
@@ -267,7 +268,7 @@ function Shop() {
                     <td className="small">{retailerById(p.retailer)?.name}</td>
                     <td className="small">{e.facets?.where}</td>
                     <td className="num mono">{catalogPrice(e, money)}</td>
-                    <td className="row gap-1"><FavoriteToggle list="clothes" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" onClick={() => setChosen(e.id === chosen ? undefined : e.id)}>{e.id === chosen ? 'Close' : 'Choose'}</button></td>
+                    <td className="row gap-1"><FavoriteToggle list="clothes" id={e.id} /><CompareToggle on={compared.includes(e.id)} onToggle={() => toggleCompare(e.id)} /><button type="button" className="btn btn-sm btn-ghost" onClick={() => setChosen(e.id === chosen ? undefined : e.id)}>{e.id === chosen ? 'Close' : 'Choose'}</button></td>
                   </tr>
                 );
               })}
@@ -275,10 +276,29 @@ function Shop() {
           </table>
         </div>
         {shown.length > count && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCount(count + PAGE)}>{shown.length - count <= PAGE ? `Show The Last ${shown.length - count}` : `Show ${PAGE} More Of ${shown.length - count}`}</button>}
+        <ClothesCompared ids={compared} entries={entries} money={money} onClear={clearCompare} />
         {chosen && <Choose key={chosen} productId={chosen} onPick={setChosen} />}
         {chosen === undefined && <div className="xs dim">{`${Math.min(count, shown.length)} of ${shown.length} shown.`}</div>}
       </div>
     </Panel>
+  );
+}
+
+/** Clothes compared: each one's price here, maker, seller, what it's made of, its care, and the sizes and colors it comes in. */
+function ClothesCompared({ ids, entries, money, onClear }: { ids: readonly string[]; entries: readonly CatalogEntry[]; money: (c: number) => string; onClear: () => void }) {
+  const chosen = ids.map((id) => entries.find((e) => e.id === id)).filter((e): e is CatalogEntry => Boolean(e));
+  const of = (e: CatalogEntry) => e.value as ClothingProduct;
+  return (
+    <CompareTable heads={chosen.map((e) => of(e).name)} onClear={onClear} rows={[
+      { label: 'Price', values: chosen.map((e) => catalogPrice(e, money)) },
+      { label: 'Brand', values: chosen.map((e) => of(e).brand) },
+      { label: 'Retailer', values: chosen.map((e) => retailerById(of(e).retailer)?.name ?? '—') },
+      { label: 'Cut And Fit', values: chosen.map((e) => fitsOf(of(e)).join(', ') || e.facets?.cut || '—') },
+      { label: 'Material', values: chosen.map((e) => of(e).material ?? '—') },
+      { label: 'Care', values: chosen.map((e) => of(e).careLabel ?? '—') },
+      { label: 'Sizes', values: chosen.map((e) => sizeRun(of(e).sizes).join(', ') || '—') },
+      { label: 'Colors', values: chosen.map((e) => of(e).colors.join(', ') || '—') },
+    ]} />
   );
 }
 
@@ -581,7 +601,9 @@ function Bathroom() {
   const kept = useWorld((s) => suppliesOf(s.player));
   const entries = useWorld((s) => toiletryCatalog(s, here), [here]);
   const [view, setView] = useCatalogView(`toiletries-${here}`);
-  const shown = arrange(entries, view).slice(0, PAGE);
+  const arranged = arrange(entries, view);
+  const [count, more] = usePaged(`toiletries-${here}`, PAGE);
+  const shown = arranged.slice(0, count);
   const buy = useFeature('hygiene.buy');
   const useFirst = useFeature('hygiene.use_first');
   const shaveEvery = useFeature('hygiene.shave_every');
@@ -627,6 +649,7 @@ function Bathroom() {
                 </tbody>
               </table>
             </div>
+            <ShowMore shown={shown.length} total={arranged.length} onMore={more} />
           </>
         )}
         <Fine>What a shower and a day use is weighed use: 11.3 g of body wash and 11.76 g of shampoo a shower (Loretz et al., via the EPA), two pea-sized brushings of 0.25 g a day (the CDC), 0.898 g of deodorant a day, a toothbrush every three months (the ADA). Without soap a shower leaves you at most 85 clean, without shampoo 90, and a morning without toothpaste or deodorant starts five points down for each, SLATE’s estimates.</Fine>

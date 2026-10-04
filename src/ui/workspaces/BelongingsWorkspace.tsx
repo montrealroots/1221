@@ -10,7 +10,7 @@ import { assembleRefusal, assemblyMinutes, buybackRefusal, buybackShare } from '
 import { bulkyFee, bulkyRefusal } from '@/engine/systems/bulky';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
-import { CatalogControls, CompareTable, FavoriteToggle, ShowMore, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
+import { CatalogControls, CompareTable, CompareToggle, FavoriteToggle, ShowMore, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
@@ -615,7 +615,7 @@ function Luggage() {
                       <div className="row gap-1" style={{ flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                         {offered.length > 1 && <select aria-label={`Color Of ${e.label}`} value={color} onChange={(ev) => setColors((x) => ({ ...x, [piece.id]: ev.target.value }))}>{offered.map((c) => <option key={c} value={c}>{c}</option>)}</select>}
                         <FavoriteToggle list="luggage" id={piece.id} />
-                        <button type="button" className="btn btn-sm btn-ghost" aria-pressed={compared.includes(piece.id)} onClick={() => toggleCompare(piece.id)}>{compared.includes(piece.id) ? 'Comparing' : 'Compare'}</button>
+                        <CompareToggle on={compared.includes(piece.id)} onToggle={() => toggleCompare(piece.id)} />
                         <button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('luggage.buy', { pieceId: piece.id, ...(offered.length > 1 && color ? { color } : {}) }).ok) toast(`${e.label}${color ? `, ${color}` : ''}, bought.`, 'positive'); }}>Buy</button>
                       </div>
                     </td>

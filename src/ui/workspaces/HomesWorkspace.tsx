@@ -11,7 +11,7 @@
 import { useState } from 'react';
 import { harvestRefusal, plantRefusal, plantingIn, plotsOf, ripeAt } from '@/engine/systems/garden';
 import { CROPS, type Crop } from '@/engine/content/garden';
-import { CatalogControls, useCatalogView } from '@/ui/components/Catalog';
+import { CatalogControls, CompareTable, CompareToggle, FavoriteToggle, ShowMore, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
 import { arrange } from '@/engine/systems/catalog';
 import { applianceCatalog, furnitureCatalog, homeCatalog } from '@/engine/systems/catalogs';
 import { useGame, useWorld } from '@/app/game-context';
@@ -636,43 +636,42 @@ function FitOut({ owned }: { owned: OwnedHome }) {
   );
 }
 
-/** IKEA's seats, tables and storage where they live (`systems/furnishings.ts`), cheapest first, by kind. */
+/** IKEA's seats, tables and storage where they live (`systems/furnishings.ts`), cheapest first: searched, by kind, a page at a time, favorites kept and up to three compared (from 2026-10-04). */
 function FromIkea() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
   const all = piecesCatalog(sim, person);
-  const kinds = [...new Set(all.map((e) => e.facets!.kind!))];
-  const [kind, setKind] = useState('');
-  const shown = all.filter((e) => e.facets!.kind === (kind || kinds[0]));
+  const [view, setView] = useCatalogView('ikea');
+  const arranged = arrange(all, view);
+  const [shownCount, more] = usePaged('ikea');
+  const shown = arranged.slice(0, shownCount);
+  const [compared, toggleCompare, clearCompare] = useCompare('ikea');
+  const chosen = compared.map((id) => all.find((e) => e.id === id)).filter((e): e is (typeof all)[number] => Boolean(e));
+  const size = (p: (typeof all)[number]['value']) => (p.cm.every((x) => x !== null) ? `${p.cm.map((x) => Math.round(x!)).join(' × ')} cm` : '—');
+  const does = (p: (typeof all)[number]['value']) => (p.kind === 'diningTable' ? (p.seats ? `Seats ${p.seats} At A Table` : '—') : p.seats ? `Seats ${p.seats}` : p.holdsL ? `Holds ${Math.round(p.holdsL)} Liters` : '—');
   const [count, setCount] = useState(1);
   const [built, setBuilt] = useState(false);
   if (all.length === 0) return null;
   const room = seatsAtHome(person);
   return (
     <div className="col gap-2">
-      <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
-        <div className="strong small" style={{ marginRight: 'auto' }}>From IKEA{(sim.player.ikeaCredit ?? 0) > 0 ? ` · ${formatMoney(sim.player.ikeaCredit!, saveCurrency(sim.universe), { cents: false })} Credit, Spent First` : ''}</div>
-        <div className="field" style={{ margin: 0 }}>
-          <label htmlFor="ikea-kind">Kind</label>
-          <select id="ikea-kind" value={kind || kinds[0]} onChange={(e) => setKind(e.target.value)}>
-            {kinds.map((k) => <option key={k} value={k}>{k}</option>)}
-          </select>
-        </div>
-        <div className="field" style={{ margin: 0 }}>
+      <div className="strong small">From IKEA{(sim.player.ikeaCredit ?? 0) > 0 ? ` · ${formatMoney(sim.player.ikeaCredit!, saveCurrency(sim.universe), { cents: false })} Credit, Spent First` : ''}</div>
+      <CatalogControls id="ikea-catalog" entries={all} view={view} onChange={setView} facets={{ kind: 'Kind' }} lead={<>
+        <div className="field">
           <label htmlFor="ikea-count">How Many</label>
           <select id="ikea-count" value={count} onChange={(e) => setCount(Number(e.target.value))}>
             {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}
           </select>
         </div>
-        <div className="field" style={{ margin: 0 }}>
+        <div className="field">
           <label htmlFor="ikea-built">Put Together</label>
           <select id="ikea-built" value={built ? 'ikea' : 'you'} onChange={(e) => setBuilt(e.target.value === 'ikea')}>
             <option value="you">By You, At Taskrabbit’s Hours</option>
             <option value="ikea">By IKEA, At Its Price</option>
           </select>
         </div>
-      </div>
+      </>} />
       <div className="table-scroll">
         <table>
           <thead><tr><th scope="col">Piece</th><th scope="col">Size</th><th scope="col">Does</th><th scope="col" className="num">Delivered</th><th scope="col"><span className="sr-only">Buy</span></th></tr></thead>
@@ -683,16 +682,25 @@ function FromIkea() {
               return (
                 <tr key={e.id}>
                   <td>{e.label}</td>
-                  <td className="small">{p.cm.every((x) => x !== null) ? `${p.cm.map((x) => Math.round(x!)).join(' × ')} cm` : '—'}</td>
-                  <td className="small">{p.kind === 'diningTable' ? (p.seats ? `Seats ${p.seats} At A Table` : '—') : p.seats ? `Seats ${p.seats}` : p.holdsL ? `Holds ${Math.round(p.holdsL)} Liters` : '—'}</td>
+                  <td className="small">{size(p)}</td>
+                  <td className="small">{does(p)}</td>
                   <td className="num mono">{formatMoney((e.price ?? 0) * count + (built ? assemblyFee(sim, p, count) ?? 0 : 0), cur, { cents: false })}</td>
-                  <td><Gated feature="home.buy_piece" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_piece', { pieceId: p.id, quantity: count, assembly: built }).ok) toast(built ? `${p.name}, delivered and put together.` : `${p.name}, delivered flat-packed: put it together from Belongings.`, 'positive'); }}>Buy From IKEA</Gated></td>
+                  <td className="row gap-1"><FavoriteToggle list="ikea" id={e.id} /><CompareToggle on={compared.includes(e.id)} onToggle={() => toggleCompare(e.id)} /><Gated feature="home.buy_piece" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_piece', { pieceId: p.id, quantity: count, assembly: built }).ok) toast(built ? `${p.name}, delivered and put together.` : `${p.name}, delivered flat-packed: put it together from Belongings.`, 'positive'); }}>Buy From IKEA</Gated></td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
+      {arranged.length === 0 && <div className="small">None sold here matches that; clear the search or a filter.</div>}
+      <ShowMore shown={shown.length} total={arranged.length} onMore={more} />
+      <CompareTable heads={chosen.map((e) => e.label)} onClear={clearCompare} rows={[
+        { label: 'Delivered, One', values: chosen.map((e) => formatMoney(e.price ?? 0, cur, { cents: false })) },
+        { label: 'Kind', values: chosen.map((e) => e.facets?.kind ?? '—') },
+        { label: 'Size', values: chosen.map((e) => size(e.value)) },
+        { label: 'Does', values: chosen.map((e) => does(e.value)) },
+        { label: 'Put Together By IKEA, One', values: chosen.map((e) => { const fee = assemblyFee(sim, e.value, 1); return fee === undefined ? '—' : formatMoney(fee, cur, { cents: false }); }) },
+      ]} />
       <div className="xs dim">{`Seats for ${room.seats} and a table for ${room.table} at home now. Friends come over only to what there are seats for, and a dinner sits everyone at a table. A wardrobe, a frame, a chest or a bookcase holds its outside measure in liters, worked out from IKEA’s, and is filled from Belongings. It comes flat-packed and does nothing until it’s put together, by you or by IKEA’s service: from $52, C$45 or £33 a piece, Ireland’s €40 call-out, Mexico’s 2.5% of a sofa’s price and 9% of the rest. IKEA’s regular price, with the town’s sales tax where it’s added, delivered at its large-item rate.`}</div>
     </div>
   );

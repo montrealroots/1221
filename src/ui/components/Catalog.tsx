@@ -121,6 +121,11 @@ export function useCompare(key: string, most = 3): [readonly string[], (id: stri
   return [ids, toggle, () => set([])];
 }
 
+/** One thing set beside the others, or taken out; as wide either way, so a row's buttons don't shift when it's chosen. */
+export function CompareToggle({ on, onToggle, className = 'btn btn-sm btn-ghost' }: { on: boolean; onToggle: () => void; className?: string }) {
+  return <button type="button" className={className} style={{ minWidth: '6.5rem', justifyContent: 'center' }} aria-pressed={on} onClick={onToggle}>{on ? 'Comparing' : 'Compare'}</button>;
+}
+
 /** The chosen side by side: a row for each thing compared, a column for each chosen. */
 export function CompareTable({ heads, rows, onClear }: { heads: readonly string[]; rows: readonly { label: string; values: readonly ReactNode[] }[]; onClear: () => void }) {
   if (heads.length < 2) return heads.length === 1 ? <div className="xs dim">Choose one more to compare.</div> : null;
