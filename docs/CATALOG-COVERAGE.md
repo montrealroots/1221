@@ -41,7 +41,7 @@ which never counts toward the target.
 | Home | Kitchenware | 0 | 0% | 10 | — | 0 | 10 | 10 | 10 | CA, GB, IE, MX, US | No |
 | Personal Care | Toiletries And Grooming | 79 | 100% | 182 | 1 / 1 / 15 | 0 | 182 | 183 | 1 | CA, GB, IE, MX, US | No |
 | Personal Care | Cosmetics And Haircare | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
-| Household | Cleaning Products And Consumables | 46 | 92% | 105 | 1 / 1 / 9 | 0 | 105 | 110 | 0 | CA, GB, IE, MX, US | No |
+| Household | Cleaning Products And Consumables | 80 | 100% | 289 | 1 / 2 / 27 | 0 | 289 | 312 | 3 | CA, GB, IE, MX, US | No |
 | Food | Groceries | 160 | 100% | 461 | 1 / 1 / 59 | 0 | 461 | 472 | 41 | CA, GB, IE, MX, US | No |
 | Food | Beverages | 28 | 56% | 39 | 1 / 1 / 3 | 0 | 39 | 40 | 1 | CA, GB, IE, MX, US | No |
 | Vehicles | Cars, Pickups And Vans | 16 | 32% | 37 | 1 / 1 / 7 | 0 | 37 | 53 | 0 | CA, GB, IE, MX, US | No |

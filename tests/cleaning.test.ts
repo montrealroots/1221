@@ -97,6 +97,18 @@ describe('detergents', () => {
     const kinds = new Set(toiletryCatalog(sim, 'us-ny-newyork').map((e) => e.facets?.kind));
     for (const k of ['Dish Soap', 'Laundry Detergent', 'Dishwasher Detergent', 'Bleach', 'Paper Towels', 'Trash Bags', 'Sponges', 'All-Purpose Cleaner']) expect(kinds).toContain(k);
   });
+  it('carry a shelf’s brands, each product once though the feed was read twice', () => {
+    // Read again on 2026-10-04 (`research-household-supplies-more.json`): Ajax and Pine-Sol at Price Rite, Cif in Dublin.
+    const brands = (chain: string) => new Set(CLEANING.filter((c) => c.chain === chain).map((c) => c.brand));
+    expect(brands('pricerite')).toContain('Ajax');
+    expect(brands('pricerite')).toContain('Pine-Sol');
+    expect(brands('supervalu-ie')).toContain('Cif');
+    // Read both times, it's one product, the first read's.
+    const soap = CLEANING.filter((c) => c.chain === 'pricerite' && c.name === 'Paperbird Original Dish Soap, 24 fl oz');
+    expect(soap.map((c) => c.id)).toEqual(['pricerite-paperbird-original-dish-soap-24-fl-oz']);
+    // A maker's line is the maker: Dawn Ultra is Dawn's.
+    expect(CLEANING.some((c) => c.brand === 'Dawn Ultra')).toBe(false);
+  });
 });
 
 describe('the bins', () => {
