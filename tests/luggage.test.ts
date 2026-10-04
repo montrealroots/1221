@@ -12,7 +12,8 @@ import { dailyCare, showerUses } from '@/engine/systems/hygiene';
 import { reachable, usedL, volumeOf } from '@/engine/systems/items';
 import { GARMENT_L } from '@/engine/content/garmentcare';
 
-const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
+/** A life that chose Pack For Me: packing, unpacking and repacking on its own (from 2026-10-03, a shortcut it sets). */
+const life = (seed: string, packForMe = true) => { const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed); if (packForMe) sim.player.automation = { packForMe: true }; return sim; };
 
 describe('a suitcase', () => {
   it('a life starts with a carry-on in storage', () => {
@@ -24,7 +25,7 @@ describe('a suitcase', () => {
 
   it('is packed with a week’s clothes and the bathroom’s things on leaving town, so away there’s something to wear and wash with', () => {
     const sim = life('bag-away');
-    moveTo(sim.player, 'us-ca-losangeles');
+    moveTo(sim, sim.player, 'us-ca-losangeles');
     const bag = suitcaseOf(sim.player)!;
     expect(bag.at.kind).toBe('person');
     const packed = garmentsOf(sim.player).filter((g) => g.at.kind === 'inside');
@@ -41,10 +42,10 @@ describe('a suitcase', () => {
 
   it('goes on to the next town with them, and is unpacked at home', () => {
     const sim = life('bag-home');
-    moveTo(sim.player, 'us-ca-losangeles');
-    moveTo(sim.player, 'uk-eng-london');
+    moveTo(sim, sim.player, 'us-ca-losangeles');
+    moveTo(sim, sim.player, 'uk-eng-london');
     expect(suitcaseOf(sim.player)!.at.kind).toBe('person');
-    moveTo(sim.player, 'us-ny-newyork');
+    moveTo(sim, sim.player, 'us-ny-newyork');
     expect(suitcaseOf(sim.player)!.at).toMatchObject({ kind: 'home', spot: 'storage' });
     expect(sim.player.items!.some((i) => i.at.kind === 'inside')).toBe(false);
     expect(garmentsOf(sim.player).every((g) => g.at.kind === 'home')).toBe(true);
@@ -55,11 +56,11 @@ describe('a suitcase', () => {
     for (const g of garmentsOf(sim.player)) if (g.garment.kind === 't-shirt') g.garment.dirty = true;
     const paste = sim.player.items!.find((i) => i.supply?.kind === 'toothpaste')!;
     sim.player.items!.push({ ...paste, id: 'paste-2' });
-    moveTo(sim.player, 'us-ca-losangeles');
+    moveTo(sim, sim.player, 'us-ca-losangeles');
     const packed = sim.player.items!.filter((i) => i.at.kind === 'inside');
     expect(packed.some((i) => i.garment?.kind === 't-shirt')).toBe(false);
     expect(packed.filter((i) => i.supply?.kind === 'toothpaste')).toHaveLength(1);
-    moveTo(sim.player, 'us-ny-newyork');
+    moveTo(sim, sim.player, 'us-ny-newyork');
     expect(sim.player.items!.filter((i) => i.supply).every((i) => i.at.kind === 'home' && i.at.spot === 'bathroom')).toBe(true);
   });
 
@@ -67,7 +68,7 @@ describe('a suitcase', () => {
     const sim = life('bag-chosen');
     const tops = garmentsOf(sim.player).filter((g) => g.garment.slot === 'top');
     sim.player.dressed = [tops[tops.length - 1]!.id];
-    moveTo(sim.player, 'us-ca-losangeles');
+    moveTo(sim, sim.player, 'us-ca-losangeles');
     expect(garmentsOf(sim.player).find((g) => g.id === tops[tops.length - 1]!.id)!.at.kind).toBe('inside');
   });
 });
@@ -81,7 +82,7 @@ describe('packing by hand', () => {
     const shirt = garmentsOf(sim.player).find((g) => g.garment.slot === 'top' && g.at.kind === 'home')!;
     const r = sim.execute({ kind: 'items.move', payload: { itemId: shirt.id, to: { kind: 'inside', itemId: bag.id } } });
     expect(r.ok, r.error).toBe(true);
-    moveTo(sim.player, 'us-ca-losangeles');
+    moveTo(sim, sim.player, 'us-ca-losangeles');
     expect(packedIn(sim.player, bag).map((i) => i.id)).toEqual([shirt.id]);
   });
 
@@ -113,9 +114,9 @@ describe('packing by hand', () => {
 });
 
 describe('unpacked where they’re staying', () => {
-  it('goes into the room, to hand, and is packed back on leaving while the bag holds it; the rest is left', () => {
+  it('goes into the room, to hand, and is packed back on leaving while the bag holds it; the rest is held where they stayed', () => {
     const sim = life('bag-stay');
-    moveTo(sim.player, 'us-ca-losangeles');
+    moveTo(sim, sim.player, 'us-ca-losangeles');
     sim.player.stay = { kind: 'hotel', cityId: 'us-ca-losangeles' } as never;
     const bag = suitcaseOf(sim.player)!;
     const n = packedIn(sim.player, bag).length;
@@ -128,8 +129,8 @@ describe('unpacked where they’re staying', () => {
     const extra = { ...room[0]!, id: 'extra', quantity: 100 };
     sim.player.items!.push(extra);
     delete sim.player.stay;
-    moveTo(sim.player, 'uk-eng-london');
-    expect(sim.player.items!.some((i) => i.id === 'extra')).toBe(false);
+    moveTo(sim, sim.player, 'uk-eng-london');
+    expect(sim.player.items!.find((i) => i.id === 'extra')!.at).toMatchObject({ kind: 'held', cityId: 'us-ca-losangeles' });
     expect(packedIn(sim.player, bag)).toHaveLength(n);
     expect(sim.player.items!.some((i) => i.at.kind === 'stay')).toBe(false);
   });

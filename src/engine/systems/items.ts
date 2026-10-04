@@ -42,8 +42,10 @@ export type Place =
   | { kind: 'inside'; itemId: string }
   | { kind: 'order'; orderId: string }
   | { kind: 'service'; serviceId: string; readyAt: Instant }
-  /** Unpacked where they're staying away, in its town (from 2026-10-03, `systems/luggage.ts`). */
-  | { kind: 'stay'; cityId: string };
+  /** Unpacked where they're staying away, in its town (from 2026-10-03, `systems/luggage.ts`); where, by name. */
+  | { kind: 'stay'; cityId: string; by?: string }
+  /** Left behind at a stay, held there until a day (from 2026-10-03). */
+  | { kind: 'held'; cityId: string; by: string; until: Instant };
 
 /** The spots a home keeps things in. Rooms come with Stage 12 of the backlog. */
 export type Spot = 'floor' | 'wardrobe' | 'drawers' | 'fridge' | 'freezer' | 'pantry' | 'bathroom' | 'storage' | 'hamper';
@@ -145,6 +147,7 @@ export function reachable(sim: Simulation, person: Person, place: Place): boolea
       return Boolean(holder && reachable(sim, person, holder.at));
     }
     case 'stay': return Boolean(person.stay) && person.currentLocationId === place.cityId;
+    case 'held':
     case 'order':
     case 'service': return false;
   }
@@ -227,7 +230,8 @@ export function whereWords(person: Person, place: Place): string {
     case 'inside': return `in the ${itemById(person, place.itemId)?.label ?? 'bag'}`;
     case 'order': return 'on its way';
     case 'service': return 'with a service';
-    case 'stay': return 'unpacked where you’re staying';
+    case 'stay': return place.by ? `unpacked in your room at ${place.by}` : 'unpacked where you’re staying';
+    case 'held': return `left at ${place.by}`;
   }
 }
 

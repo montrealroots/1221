@@ -13,7 +13,7 @@ import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
-import { bagsOf, buyLuggageRefusal, luggageCatalog, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
+import { bagKg, bagsGoing, bagsOf, buyLuggageRefusal, checkedSize, luggageCatalog, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
 import { CITIES } from '@/engine/content/geography';
 import { ENGRAVERS, JEWELERS, METAL_LABEL, PIECE_LABEL, commissionMoney, commissionRefusal, commissionsOf, jewelersFor, type Metal, type PieceKind } from '@/engine/systems/commissions';
 import { cheapestPlanFor, finished, placeIn, programmeRefusal, programmesHere } from '@/engine/systems/programmes';
@@ -166,6 +166,7 @@ export function BelongingsWorkspace() {
           )}
         </Panel>
         <Suitcase />
+        <LeftBehind />
         <Luggage />
         <Phones />
         <WatchingAndPlaying />
@@ -441,7 +442,6 @@ function Luggage() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const buy = useFeature('luggage.buy');
-  const choose = useFeature('luggage.choose');
   const cur = saveCurrency(sim.universe);
   const owned = bagsOf(person);
   const going = suitcaseOf(person);
@@ -452,13 +452,8 @@ function Luggage() {
   if (shop.length === 0 && owned.length < 2) return null;
   const TYPE: Record<string, string> = { 'carry-on': 'Carry-On', medium: 'Medium', large: 'Large', duffel: 'Duffel', backpack: 'Backpack' };
   return (
-    <Panel title="Bags" subtitle={going ? `${going.label} Goes Away With You` : 'None Yet'}>
+    <Panel title="Bags" subtitle={going ? 'On Sale Where You Live, Cheapest First' : 'None Yet'}>
       <div className="col gap-2">
-        {owned.length > 1 && (
-          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-            {owned.map((b) => <button key={b.id} type="button" className="btn btn-sm btn-ghost" disabled={!choose.open || b.id === going?.id} title={choose.reason} onClick={() => { if (run('luggage.choose', { itemId: b.id }).ok) toast(`${b.label} goes away with you now.`, 'positive'); }}>{b.id === going?.id ? `${b.label}, Going` : `Take The ${b.label}`}</button>)}
-          </div>
-        )}
         {shop.length > 0 && (
           <>
             <div className="field" style={{ margin: 0, maxWidth: '14rem' }}>
@@ -512,29 +507,82 @@ function GiveTo({ itemId, label }: { itemId: string; label: string }) {
   );
 }
 
-/** The suitcase: what's in it and how full, packed by hand on Each Thing, or a week's packed for you (`luggage.pack`). */
+/**
+ * Your bags (from 2026-10-03): each one, whether it goes away, how full and
+ * how heavy packed against a checked bag's allowance, packed by hand on Each
+ * Thing or a week packed for you, unpacked one by one; away, the room's
+ * things repacked; and the Pack For Me shortcut that does all of it on its
+ * own (`systems/luggage.ts`).
+ */
 function Suitcase() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
-  const bag = suitcaseOf(person);
-  const pack = useFeature('luggage.pack');
-  const empty = useFeature('luggage.unpack');
-  if (!bag) return null;
-  const used = usedL(person, bag.id);
-  const inIt = packedIn(person, bag);
+  const bags = bagsOf(person);
+  if (!bags.length) return null;
+  const going = new Set(bagsGoing(person).map((b) => b.id));
+  const main = suitcaseOf(person);
   const no = luggageRefusal(sim, person);
-  // Away at a stay, it's unpacked into the room (from 2026-10-03).
   const away = Boolean(person.stay) && person.currentLocationId !== person.home?.cityId;
-  const unpackNo = away ? undefined : no;
-  const inRoom = itemsOf(person).filter((i) => i.at.kind === 'stay').length;
+  const inRoom = itemsOf(person).filter((i) => i.at.kind === 'stay' && i.at.cityId === person.currentLocationId).length;
+  const auto = person.automation?.packForMe === true;
   return (
-    <Panel title="Suitcase" subtitle={`${bag.label}: ${Math.round(used)} of ${bag.holdsL} liters packed, ${inIt.length} ${inIt.length === 1 ? 'thing' : 'things'}`}>
+    <Panel title="Your Bags" subtitle={`${going.size} of ${bags.length} going away with you${inRoom ? `; ${inRoom} ${inRoom === 1 ? 'thing' : 'things'} out in the room` : ''}`}>
       <div className="col gap-2">
-        <p className="small muted" style={{ margin: 0 }}>Move what you want into it on Each Thing, or have a week’s clothes and the bathroom’s things packed for you. Leaving home takes it as you packed it; an empty one is packed for you as you go. Away, it can be unpacked into the room; leaving packs it back while it holds, and what doesn’t fit stays behind.{inRoom > 0 ? ` ${inRoom} unpacked in the room.` : ''}</p>
-        <div className="row gap-1">
-          <button type="button" className="btn btn-sm" disabled={!pack.open || Boolean(no)} title={no ?? pack.reason} onClick={() => { const a = run<{ packed: number }>('luggage.pack', {}); if (a.ok) toast(`${a.value!.packed} packed.`, 'positive'); }}>Pack For Me</button>
-          <button type="button" className="btn btn-sm btn-ghost" disabled={!empty.open || Boolean(unpackNo) || inIt.length === 0} title={unpackNo ?? empty.reason} onClick={() => { const a = run<{ unpacked: number }>('luggage.unpack', {}); if (a.ok) toast(`${a.value!.unpacked} put away.`, 'positive'); }}>{away ? 'Unpack Into The Room' : 'Unpack'}</button>
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Bag</th><th scope="col" className="num">Packed</th><th scope="col" className="num">Weighs</th><th scope="col">Goes Away</th><th scope="col"><span className="sr-only">Unpack</span></th></tr></thead>
+            <tbody>
+              {bags.map((bag) => {
+                const kg = bagKg(person, bag);
+                const inIt = packedIn(person, bag);
+                return (
+                  <tr key={bag.id}>
+                    <td>{bag.label}{bag.id === main?.id ? <div className="xs dim">The main one: Pack For Me fills it</div> : null}</td>
+                    <td className="num small">{`${Math.round(usedL(person, bag.id))} of ${bag.holdsL} L, ${inIt.length} ${inIt.length === 1 ? 'thing' : 'things'}`}</td>
+                    <td className="num small">{`${kg.toFixed(1)} kg`}{checkedSize(bag) && kg > 23 ? <div className="xs dim">Past the 23 kg most airlines allow</div> : null}</td>
+                    <td>
+                      <div className="row gap-1">
+                        <Gated feature="luggage.take" className="btn btn-sm btn-ghost" onClick={() => run('luggage.take', { itemId: bag.id, going: !going.has(bag.id) })}>{going.has(bag.id) ? 'Leave It Home' : 'Take It'}</Gated>
+                        {bag.id !== main?.id && <Gated feature="luggage.choose" className="btn btn-sm btn-ghost" onClick={() => { if (run('luggage.choose', { itemId: bag.id }).ok) toast(`${bag.label} is the main one now.`, 'positive'); }}>Make It The Main One</Gated>}
+                      </div>
+                    </td>
+                    <td><Gated feature="luggage.unpack" className="btn btn-sm btn-ghost" disabled={inIt.length === 0} onClick={() => { const r = run<{ unpacked: number }>('luggage.unpack', { itemId: bag.id }); if (r.ok) toast(`${r.value!.unpacked} unpacked.`, 'positive'); }}>{away ? 'Unpack Into The Room' : 'Unpack'}</Gated></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          <Gated feature="luggage.pack" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { const r = run<{ packed: number }>('luggage.pack', {}); if (r.ok) toast(`${r.value!.packed} packed.`, 'positive'); }}>Pack For Me</Gated>
+          {away && <Gated feature="luggage.repack" className="btn btn-sm" disabled={inRoom === 0} onClick={() => { const r = run<{ packed: number; left: number }>('luggage.repack', {}); if (r.ok) toast(`${r.value!.packed} repacked${r.value!.left ? `, ${r.value!.left} won’t fit` : ''}.`, r.value!.left ? 'negative' : 'positive'); }}>Repack The Room</Gated>}
+          <Gated feature="life.set_automation" className="btn btn-sm btn-ghost" onClick={() => run('life.set_automation', { key: 'packForMe', on: !auto })}>{auto ? 'Pack Only When I Do' : 'Pack And Unpack For Me'}</Gated>
+        </div>
+        <p className="xs dim" style={{ margin: 0 }}>{auto ? 'Leaving home packs a week into an empty main bag, coming back unpacks, and leaving a room repacks it, as far as the bags hold.' : 'Bags go as they’re packed, an empty one empty; home, they’re set down packed. A room left without repacking leaves its things behind, held there 90 days.'} A packed bag’s weight is reckoned from laundry tables’ grams a garment; checked bags past the airline’s allowance pay at the counter.</p>
+      </div>
+    </Panel>
+  );
+}
+
+/** What was left behind at a stay or taken out at an airport's counter, held there until a day, collected in that town (`items.recover`). */
+function LeftBehind() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const held = itemsOf(person).filter((i): i is Item & { at: { kind: 'held'; cityId: string; by: string; until: number } } => i.at.kind === 'held' && i.at.until > sim.now);
+  if (!held.length) return null;
+  const towns = [...new Set(held.map((i) => i.at.cityId))];
+  return (
+    <Panel title="Left Behind" subtitle="Held where it was left, to collect in person before the day it’s kept to">
+      <div className="col gap-2">
+        {towns.map((cityId) => {
+          const here = held.filter((i) => i.at.cityId === cityId);
+          return (
+            <div key={cityId} className="row gap-2" style={{ alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+              <span className="small">{`${here.length} at ${here[0]!.at.by}, ${CITIES.get(cityId)?.name ?? cityId}, until ${formatDate(here[0]!.at.until, sim.zone)}: ${here.slice(0, 4).map((i) => i.label).join(', ')}${here.length > 4 ? ' and more' : ''}`}</span>
+              <Gated feature="items.recover" className="btn btn-sm btn-ghost" disabled={person.currentLocationId !== cityId} title={person.currentLocationId !== cityId ? `It’s collected in ${CITIES.get(cityId)?.name ?? 'its town'}.` : undefined} onClick={() => { const r = run<{ collected: number }>('items.recover', { cityId }); if (r.ok) toast(`Collected ${r.value!.collected}.`, 'positive'); }}>Collect It</Gated>
+            </div>
+          );
+        })}
       </div>
     </Panel>
   );
