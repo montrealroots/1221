@@ -500,7 +500,7 @@ export function registerLife(sim: Simulation): void {
       // A reader unwinding at home with a book of their own reads it (`readFor`, from 2026-10-03).
       const reads = action === 'unwind' && atHome(person) && (p.how === 'read' || (!p.how && lovedIn(person, 'unwind').includes('reading')));
       if (action === 'swim') wearForSwim(s, person);
-      else if (action === 'exercise' || action === 'ride' || action === 'court') wearOutfit(s, person, true);
+      else if (action === 'exercise' || action === 'ride' || action === 'court' || action === 'dance') wearOutfit(s, person, true);
       // The lawn cut (`systems/lawns.ts`, from 2026-10-02).
       if (action === 'mow') { const home = livingIn(person); if (home) mow(home, s.now); }
       // The place's spray, where there's some (from 2026-10-03).
@@ -515,7 +515,7 @@ export function registerLife(sim: Simulation): void {
       const where = placed && coached > 1 ? { where: 'gym' as const, builds: TRAINING.gym * coached } : placed;
       // A bike's ride builds as a run does, the same hour's work outdoors (`content/rides.ts`).
       const bike = action === 'ride' ? bikeHere(person) : undefined;
-      applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : action === 'ride' || action === 'court' ? TRAINING.run : 1, action === 'unwind' && atHome(person) ? unwindComfort(person) : 1);
+      applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : action === 'ride' || action === 'court' || action === 'dance' ? TRAINING.run : 1, action === 'unwind' && atHome(person) ? unwindComfort(person) : 1);
       // Read after the hour's enjoyment is counted, so a book finished in it still gave it.
       if (reads) readFor(s, person, LOOKING_AFTER.unwind.minutes);
       // A shower or a bath uses its soap and shampoo, and without them doesn't leave them as clean (`systems/hygiene.ts`).
@@ -538,6 +538,7 @@ export function registerLife(sim: Simulation): void {
       // An hour on your own court at its MET value; no injury rate for a home court is kept (`courtAt`, from 2026-10-01).
       const court = action === 'court' ? courtAt(person) : undefined;
       if (court) exerts(person, COURT_MET[court.court], 1);
+      if (action === 'dance') exerts(person, DANCE_MET, 1);
       // A ride's effort and a cyclist's risk on the road; the trail's effort (`systems/outings.ts`).
       if (action === 'ride' && bike) rideOut(s, person, bike);
       if (action === 'trail') trailOut(person);
@@ -568,7 +569,7 @@ export function registerLife(sim: Simulation): void {
  * Each takes real time off the clock, and the clock charges that time as
  * waking before the action pays out.
  */
-export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'washup' | 'mow';
+export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'dance' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'washup' | 'mow';
 
 export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
   eat: { label: 'Eat A Meal', minutes: 40, does: 'Cooked at home, or a meal out: feeds you, and lifts the mood by as much as you needed it' },
@@ -577,6 +578,8 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   bathe: { label: 'Take A Bath', minutes: 45, does: 'Clean again, and a long soak takes more of the stress off' },
   exercise: { label: 'Work Out', minutes: 60, does: 'Builds fitness, more the readier you are, and eases stress; costs energy, food, a shower and an outfit' },
   swim: { label: 'Swim In The Pool', minutes: 45, does: 'Builds fitness as a gym does, and lifts the mood more' },
+  // From 2026-10-03: a spare bedroom made a dance studio, danced in at the Compendium's ballet, modern or jazz class (`DANCE_MET`).
+  dance: { label: 'Dance In Your Studio', minutes: 60, does: 'An hour on your own sprung floor at a dance class’s effort: builds fitness as a run does and eases stress' },
   court: { label: 'Play On Your Court', minutes: 60, does: 'Tennis or basketball on your own court in the fine weather, and after dark where it’s lit: builds fitness as a run does' },
   ride: { label: 'Go For A Ride', minutes: 60, does: 'On your own bicycle or e-bike in the fine weather: builds fitness as a run does and eases stress, at a cyclist’s risk on the road' },
   outside: { label: 'Sit Outside', minutes: 45, does: 'Out on your balcony, terrace or yard in the fine weather: calmer, and in better spirits' },
@@ -590,6 +593,9 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   // From 2026-10-02 (`systems/lawns.ts`): the 1.9 hours ATUS finds a day of lawn and garden care takes.
   mow: { label: 'Mow The Lawn', minutes: MOW_MINUTES, does: 'Cuts the grass at the home you live in to 5 cm, ahead of any notice from the city' },
 };
+
+/** The 2024 Adult Compendium's ballet, modern or jazz class (03010), the dance studios' own class (`content/dropins.ts`). */
+export const DANCE_MET = 5.0;
 
 /** What a bath's soak takes off stress beyond a shower's: SLATE's estimate. */
 const BATH_RELIEF = 8;
@@ -694,8 +700,9 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   }
   if ((action === 'wash' || action === 'bathe') && !atHome(person) && roomGone(person)) return person.stay?.readyAt !== undefined ? `The room isn’t ready until ${formatTime(person.stay.readyAt, sim.zone)}.` : 'You’ve checked out, and the room is gone until you leave.';
   if (action === 'bathe' && !place?.fixtures.bathtub) return atHome(person) ? 'There’s no bath where you live, only a shower.' : 'There’s no bath where you’re staying, only a shower.';
-  if ((action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
-  if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court') { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
+  if ((action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court' || action === 'dance') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
+  if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court' || action === 'dance') { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
+  if (action === 'dance' && !(atHome(person) && livingIn(person)?.facts.features.includes('danceStudio'))) return 'You have no dance studio at home.';
   if (action === 'ride') { const no = rideRefusal(sim, person); if (no) return no; }
   if (action === 'trail') { const no = trailRefusal(sim, person); if (no) return no; }
   if (action === 'swim') { const no = swimRefusal(sim, person); if (no) return no; }
@@ -768,7 +775,7 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
     // Time outside in fine weather does more for the mood than an hour indoors, in less of it; an afternoon on the water or the trail is taken as the same, SLATE's estimate.
     w.stress = clamp(w.stress - 12 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
     w.morale = clamp(w.morale + 5 * swing, 0, 100);
-  } else if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court') {
+  } else if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court' || action === 'dance') {
     const ceiling = at === undefined ? 100 : ceilingAt(yearsSince(person.birthInstant, at)).fitness;
     // A gym builds more than a workout at home with nothing (`trainingAt` in `systems/dwelling.ts`).
     const builds = workoutBuilds(person) * training;

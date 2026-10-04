@@ -42,6 +42,7 @@ const LOVED_IN: Record<LookAfter, readonly string[]> = {
   trail: ['nature', 'sport'],
   swim: ['fitness', 'sport'],
   court: ['fitness', 'sport'],
+  dance: ['dance', 'fitness'],
   outside: ['nature'],
   boat: ['nature', 'sport'],
   charter: ['nature', 'sport'],
