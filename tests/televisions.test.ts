@@ -115,6 +115,19 @@ describe('its name', () => {
   });
 });
 
+describe('a model read under a region’s code', () => {
+  it('is the one product, its offer there named by that code, and no second product of it', () => {
+    const code = (s: string) => s.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    // Best Buy Canada reads Samsung's UN40F6000FFXZA as UN40F6000FFXZC, Canada's code for it.
+    const read = TV_PRODUCTS.flatMap((p) => p.offers.filter((o) => o.seller === 'Best Buy' && o.market === 'ca' && o.model).map((o) => ({ p, o })));
+    expect(read.length).toBeGreaterThan(0);
+    for (const { p, o } of read) {
+      expect(code(o.model!)).not.toBe(code(p.model));
+      expect(TV_PRODUCTS.some((q) => q.id !== p.id && q.brand === p.brand && code(q.model) === code(o.model!)), `${p.brand} ${o.model}`).toBe(false);
+    }
+  });
+});
+
 describe('watching it', () => {
   it('adds the set’s power past the usual one’s for the minutes watched, and nothing with the usual set or none', () => {
     const sim = life('us-ny-newyork', 'tv-watts');

@@ -19,13 +19,19 @@ const dir = 'docs/research/catalog';
 const tranches = existsSync(dir) ? readdirSync(dir).filter((f) => /^tv-.*\.json$/.test(f)).sort() : [];
 const products = new Map();
 const offerIds = new Set();
+// Each product by its model codes, its own and its regions': a tranche that read a model under a region's code (Best
+// Buy Canada's UN65DU7100FXZC for Samsung's UN65DU7100FXZA) adds its offers to the product that lists that code.
+const byCode = new Map();
 for (const f of tranches) {
   const j = JSON.parse(readFileSync(`${dir}/${f}`, 'utf8'));
   for (const x of j.products ?? []) {
     const size = num(x.sizeIn);
     if (!x.brand || !x.model || !size) continue;
     const key = `${slug(x.brand)}|${slug(x.model)}`;
-    let p = products.get(key);
+    const known = [x.model, ...Object.values(x.regionalModels ?? {})].map((c) => byCode.get(`${brandKey(x.brand)}|${code(c)}`)).find((q) => q && Math.abs(q.attrs.sizeIn - size) <= 1);
+    let p = products.get(key) ?? known;
+    // Read under another code than the product's own: the offers here carry it as their market's.
+    const readAs = p && code(p.model) !== code(x.model) ? String(x.model).trim() : '';
     if (!p) {
       p = {
         id: `${slug(x.brand)}-${slug(x.model)}`.slice(0, 80), category: 'televisions', brand: String(x.brand).trim(), family: x.series ?? null, model: String(x.model).trim(),
@@ -40,7 +46,10 @@ for (const f of tranches) {
       products.set(key, p);
     } else if (p.attrs.onModeWatts === null && num(x.onModeWatts)) { p.attrs.onModeWatts = num(x.onModeWatts); p.attrs.powerBasis = x.powerBasis ?? null; p.attrs.powerUrl = x.powerUrl ?? null; }
     // Its model number, and each region's where it's sold under another: what an energy label is matched by.
-    for (const c of [x.model, ...Object.values(x.regionalModels ?? {})]) if (code(c).length >= 7 && !p.codes.includes(code(c))) p.codes.push(code(c));
+    for (const c of [x.model, ...Object.values(x.regionalModels ?? {})]) {
+      if (code(c).length >= 7 && !p.codes.includes(code(c))) p.codes.push(code(c));
+      if (code(c)) byCode.set(`${brandKey(x.brand)}|${code(c)}`, p);
+    }
     for (const c of Array.isArray(x.colors) ? x.colors : []) {
       const vid = `${p.id}-${slug(c)}`.slice(0, 100);
       if (!p.variants.some((v) => v.id === vid)) p.variants.push({ id: vid, attrs: { color: String(c) } });
@@ -53,7 +62,7 @@ for (const f of tranches) {
       for (let n = 2; offerIds.has(id); n += 1) id = `${id.slice(0, 96)}-${n}`;
       offerIds.add(id);
       // The model number it's sold under there, where the market's own differs from the product's (a British QE for an American QN).
-      const local = String((x.regionalModels ?? {})[market] ?? '').trim();
+      const local = String((x.regionalModels ?? {})[market] ?? readAs).trim();
       p.offers.push({ id, market, seller: o.seller ?? p.brand, channel: 'online', price: o.price, currency: o.currency, taxIncluded: o.taxIncluded === true, url: o.url ?? null, read: j.read ?? '2026-10-04', status: o.status === 'verified' ? 'verified' : 'secondhand', ...(local && code(local) !== code(p.model) ? { model: local } : {}) });
     }
   }

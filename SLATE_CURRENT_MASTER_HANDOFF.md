@@ -44,6 +44,10 @@ Run the four checks of CLAUDE.md's rules 2 and 3 first; the tree wins over this 
 
 **Lives replayed at `202b7c42`**, the same five, 0 errors and 0 anomalies each, and every one as at `2d47f079`: New York modest died at 72, London modest at 55, New York wealthy at 83, Dublin wealthy at 53, Toronto wealthy at 84. Gate at `c3aa1957`: exit 0, 315 files, 3,106 tests.
 
+**Merged to `main`** as `05d2f7e6` (PR #26, at `8148374e`) after that replay; the branch was fast-forwarded to it.
+
+**Since that merge:** Best Buy Canada's own TV listings, read mechanically (`tv-ca-bestbuy.json`, 489 models): Philips, Pioneer, Insignia and Neptune are new, and televisions stand at 975 sets from 28 makers with 1,697 offers. `tools/build-tvs.mjs` now files a model read under a region's code with the product that lists that code (220 of the 489 did), its offer named by it.
+
 The driver was rebuilt in this container (`probe/play-to-death.ts`, git-ignored, so it goes with the container). It turns every shortcut on, buys the hungriest labeled set in the second year, watches an episode a week and makes no career moves. Its lives aren't comparable to the owner's Windows driver of the same name, whose New York dies at 89 and London at 50.
 
 **Open in the TV catalog.**
@@ -65,9 +69,9 @@ The driver was rebuilt in this container (`probe/play-to-death.ts`, git-ignored,
 - A generated catalog of real product names joins `NOT_OURS` in `tools/spelling.mjs`, and a name the sweep would change joins `REAL_NAMES`. Bang & Olufsen's Beovision Theatre did both.
 
 **Next, in order:**
-1. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`: 0 of 45 met; appliances at 47 of 50, televisions at 24, and 16 categories with no catalog yet), then the open rows in `docs/REQUIREMENTS.md`.
+1. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`: 0 of 45 met; appliances at 47 of 50, televisions at 28, and 12 categories with no catalog yet), then the open rows in `docs/REQUIREMENTS.md`.
    - 41c's guest room is done (`202b7c42`); its office is held, the row saying why: an actor's work at home is a self-tape, which needs no room of its own, or a voice tape, which needs the soundproofed room an office isn't, and a home office's tax relief is a self-employed earner's, which no return here takes. A Canadian performer is self-employed here (`systems/eiself.ts`), but Canada's tax is withheld from each check and no Canadian return exists for a deduction to land in.
-   - Next tranche, already fetched: Best Buy Canada's own TV listings (1,699 of them, scratchpad `tv/bbca/`, gone with the container: refetch with its search JSON) would add Philips, Pioneer, Insignia and Neptune and Canada's offers. Its model codes are Canada's (Samsung's FXZC for the FXZA), so the builder should merge a code with a product's regional one.
+   - Televisions at 28 of 50 makers: the makers researched in tv-b and tv-c without a price read (Vizio's range, Panasonic, Sharp, Westinghouse, Grundig, Hitachi, Finlux, Blaupunkt and others) are the next prices to read.
    - 22f, garment repair, is held back for want of how much a repair restores; inventing that figure was avoided.
    - Stage 14 and deployment come last.
 
