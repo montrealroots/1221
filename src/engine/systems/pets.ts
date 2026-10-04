@@ -53,12 +53,16 @@ import { placeOrder } from './orders';
 import { payFromBank, petArrives } from './household';
 import { exerts } from './body';
 import { isOn } from './automation';
+import { countWash } from './water';
+import { salesTaxRate } from '../content/tax';
 
 export type Species = 'dog' | 'cat';
 export interface Pet {
   id: string; species: Species; name: string; adoptedAt: Instant; from: string; licensedUntil?: Instant;
   /** The day it was last fed and, a dog, walked (from 2026-10-04); days running without; its vaccines good until; a walker booked. */
   fedOn?: string; walkedOn?: string; hungryDays?: number; unwalkedDays?: number; vetUntil?: Instant; walker?: true;
+  /** A dog's last bath (from 2026-10-04), at home or at a groomer; until one, since it came. */
+  groomedAt?: Instant;
 }
 export interface Shelter { id: string; cityId: string; name: string; species: Species; fee: number; currency: string; confirmed: boolean }
 
@@ -96,6 +100,38 @@ export const WALKER_30: Readonly<Record<string, { fee: number; currency: string 
   'uk-eng-london': { fee: 14.19, currency: 'GBP' }, 'ie-lei-dublin': { fee: 15, currency: 'EUR' },
 };
 
+
+/**
+ * A dog's bath (from 2026-10-04): the ASPCA's at least once every three
+ * months. A cat is brushed and bathed only when it needs it, so none is due.
+ * Each town's named groomer, a medium dog's bath at its own list's price
+ * (`research-pet-care.json`, read 2026-10-03; New Haven's secondhand from its
+ * booking page's summary, Mexico City's the basic package). Toronto's is before
+ * Ontario's HST, the others as listed. A bath at home is SLATE's estimate: half
+ * an hour, and a bath's water.
+ */
+export const GROOM_EVERY_DAYS = 90;
+export const HOME_BATH_MINUTES = 30;
+export const GROOMERS: Readonly<Record<string, { name: string; bath: number; currency: string; plusTax?: true }>> = {
+  'us-ny-newyork': { name: 'Urban Woof NYC', bath: 90, currency: 'USD' },
+  'us-ca-losangeles': { name: 'Mobile Dog Grooming LA', bath: 85, currency: 'USD' },
+  'us-ct-newhaven': { name: 'Pawtero', bath: 69, currency: 'USD' },
+  'uk-eng-london': { name: 'Dogtown', bath: 53, currency: 'GBP' },
+  'ie-lei-dublin': { name: 'Glamour Dogs', bath: 45, currency: 'EUR' },
+  'ca-on-toronto': { name: 'K9+', bath: 105, currency: 'CAD', plusTax: true },
+  'ca-bc-vancouver': { name: 'Woof & Meow Spa', bath: 95, currency: 'CAD' },
+  'mx-cmx-mexicocity': { name: 'Barbacan', bath: 295, currency: 'MXN' },
+};
+
+/** When a dog's next bath is due: three months from its last, or from when it came. */
+export const groomDue = (pet: Pet): Instant => (pet.groomedAt ?? pet.adoptedAt) + GROOM_EVERY_DAYS * MS_DAY;
+
+/** The groomer's bath where they live, in the save's money, or why there isn't one. */
+export function groomerPrice(sim: Simulation, person: Person): Money | string {
+  const g = GROOMERS[person.home?.cityId ?? ''];
+  if (!g) return 'SLATE keeps no groomer where you live.';
+  return Math.round(inSaveMoney(sim, Math.round(g.bath * 100), g.currency) * (g.plusTax ? 1 + salesTaxRate(person.home!.cityId, sim.now, 'goods') : 1));
+}
 
 export const PET_MONTH_KIND = 'pets.month';
 export const petsOf = (person: Person): Pet[] => (person.pets ??= []);
@@ -254,6 +290,8 @@ function petDay(sim: Simulation, person: Person): void {
         if (mine) sim.notify({ category: 'home', title: `${pet.name} Wasn’t Walked`, body: `${pet.name} had no walk yesterday; the PDSA asks an hour a day at the least.`, importance: 40, route: '/workspace/belongings' });
       } else pet.unwalkedDays = 0;
     }
+    // A dog's bath come due: said the day it is (from 2026-10-04).
+    if (pet.species === 'dog' && mine && dayKey(sim, groomDue(pet)) === yesterday) sim.notify({ category: 'home', title: `${pet.name} Is Due A Bath`, body: `Three months since ${pet.name}’s last bath, the ASPCA’s longest: bathe it at home or take it to the groomer, from Your Pets on Belongings.`, importance: 35, route: '/workspace/belongings' });
     if (pet.species === 'cat' && !away) {
       const before = litterLeftKg(person);
       let use = LITTER_KG_A_WEEK / 7;
@@ -316,6 +354,25 @@ export function registerPets(sim: Simulation): void {
     if (p.on && typeof fee === 'string') throw new CommandError(fee);
     if (p.on) pet.walker = true; else delete pet.walker;
     return { on: Boolean(p.on) };
+  });
+
+  sim.onCommand<{ petId: string; at: 'home' | 'groomer' }, { paid: Money; due: Instant }>('pets.groom', (p, { sim: s }) => {
+    const person = s.player;
+    const pet = petsOf(person).find((x) => x.id === p?.petId);
+    if (!pet || pet.species !== 'dog') throw new CommandError('That isn’t a dog of yours.');
+    if (person.currentLocationId !== person.home?.cityId) throw new CommandError(p.at === 'groomer' ? 'Its groomer is where you live.' : 'It’s bathed at home.');
+    let paid = 0;
+    if (p.at === 'groomer') {
+      const price = groomerPrice(s, person);
+      if (typeof price === 'string') throw new CommandError(price);
+      if (!spend(s, person, price, `${GROOMERS[person.home!.cityId]!.name}, ${pet.name}’s bath`, 'personal')) throw new CommandError('The payment didn’t go through.');
+      paid = price;
+    } else {
+      countWash(person, true);
+      s.advanceTo(s.now + HOME_BATH_MINUTES * 60_000);
+    }
+    pet.groomedAt = s.now;
+    return { paid, due: groomDue(pet) };
   });
 
   sim.onCommand<{ petId: string }, { paid: Money; until: Instant }>('pets.vet', (p, { sim: s }) => {

@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-348 commands; 342 named by a test, 6 not.
+349 commands; 343 named by a test, 6 not.
 
 ## aircraft
 
@@ -429,9 +429,10 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `pets.adopt` | `src/engine/systems/pets.ts` | `Home.tsx` | `journeys.test.ts` `pet-care.test.ts` `pet-tenancy.test.ts` `pets.test.ts` | Rent And A Roof |
+| `pets.adopt` | `src/engine/systems/pets.ts` | `Home.tsx` | `journeys.test.ts` `pet-care.test.ts` `pet-grooming.test.ts` `pet-tenancy.test.ts` `pets.test.ts` | Rent And A Roof |
 | `pets.buy` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
 | `pets.feed` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
+| `pets.groom` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-grooming.test.ts` | Rent And A Roof |
 | `pets.vet` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
 | `pets.walk` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
 | `pets.walker` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |

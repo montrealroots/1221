@@ -33,7 +33,7 @@ import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets'
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
 import { ROOM_USE_LABEL, roomList } from '@/engine/systems/rooms';
-import { foodLeftG, litterLeftKg, petShop, petsOf, vetPrice } from '@/engine/systems/pets';
+import { GROOMERS, foodLeftG, groomDue, groomerPrice, litterLeftKg, petShop, petsOf, vetPrice } from '@/engine/systems/pets';
 import { livingIn } from '@/engine/systems/homes';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -94,11 +94,13 @@ function PetCare() {
                 <tr key={p.id}>
                   <td>{p.name}<div className="xs dim">{p.species === 'dog' ? 'A Dog' : 'A Cat'}</div></td>
                   <td className="small">{p.fedOn === today ? 'Fed' : 'Not Fed Yet'}{p.species === 'dog' ? (p.walkedOn === today ? ', Walked' : ', Not Walked Yet') : ''}{(p.hungryDays ?? 0) > 0 ? <div className="xs dim">{`${p.hungryDays} days unfed running`}</div> : null}</td>
-                  <td className="small">{p.vetUntil && p.vetUntil > sim.now ? `Vaccinated to ${formatDate(p.vetUntil, sim.zone)}` : 'Due'}{typeof vet === 'number' ? <div className="xs dim">{`A visit, ${money(vet)}`}</div> : null}</td>
+                  <td className="small">{p.vetUntil && p.vetUntil > sim.now ? `Vaccinated to ${formatDate(p.vetUntil, sim.zone)}` : 'Due'}{typeof vet === 'number' ? <div className="xs dim">{`A visit, ${money(vet)}`}</div> : null}{p.species === 'dog' ? <div className="xs dim">{groomDue(p) <= sim.now ? 'A Bath Is Due' : `Bath Due ${formatDate(groomDue(p), sim.zone)}`}</div> : null}</td>
                   <td>
                     <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
                       {p.species === 'dog' && <Gated feature="pets.walk" className="btn btn-sm btn-ghost" disabled={p.walkedOn === today} onClick={() => { if (run('pets.walk', { petId: p.id }).ok) toast(`An hour’s walk with ${p.name}.`, 'positive'); }}>Walk It</Gated>}
                       {p.species === 'dog' && <Gated feature="pets.walker" className="btn btn-sm btn-ghost" onClick={() => run('pets.walker', { petId: p.id, on: !p.walker })}>{p.walker ? 'Stop The Walker' : 'Book A Walker'}</Gated>}
+                      {p.species === 'dog' && <Gated feature="pets.groom" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.groom', { petId: p.id, at: 'home' }).ok) toast(`${p.name}, bathed.`, 'positive'); }}>Bathe It At Home</Gated>}
+                      {p.species === 'dog' && typeof groomerPrice(sim, person) === 'number' && <Gated feature="pets.groom" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.groom', { petId: p.id, at: 'groomer' }).ok) toast(`${p.name}, bathed at ${GROOMERS[person.home!.cityId]!.name}.`, 'positive'); }}>{`To ${GROOMERS[person.home?.cityId ?? '']?.name}, ${money(groomerPrice(sim, person) as number)}`}</Gated>}
                       <Gated feature="pets.vet" className="btn btn-sm btn-ghost" disabled={typeof vet === 'string'} onClick={() => { if (run('pets.vet', { petId: p.id }).ok) toast(`${p.name} saw the vet.`, 'positive'); }}>Take It To The Vet</Gated>
                     </div>
                   </td>
