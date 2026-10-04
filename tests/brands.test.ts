@@ -67,6 +67,19 @@ describe('a garment’s brand', () => {
     expect(at('mx-andrea-mx', /^cl[oó]e$/i)).toBe('Cloe');
   });
 
+  it('carries no market where a retailer’s name was taken for it, and M&S is M&S', () => {
+    const brands = new Set(CLOTHING_PRODUCTS.map((p) => plain(p.brand)));
+    for (const p of CLOTHING_PRODUCTS) {
+      const market = p.brand.match(/^(.*?)\s+(?:Canada|UK|US|USA|Ireland|M[eé]xico)$/i);
+      expect(market !== null && brands.has(plain(market[1]!)), p.id).toBe(false);
+    }
+    // Uniqlo UK's thermals were a brand of their own, and Marks & Spencer's another beside M&S.
+    const thermals = CLOTHING_PRODUCTS.filter((p) => p.retailer === 'gb-uniqlo' && p.category === 'thermals');
+    expect(thermals.length).toBeGreaterThan(0);
+    expect(thermals.every((p) => p.brand === 'Uniqlo')).toBe(true);
+    expect(CLOTHING_PRODUCTS.some((p) => p.brand === 'Marks & Spencer')).toBe(false);
+  });
+
   it('reads a shoe on its maker’s size chart where its seller wrote the maker another way', () => {
     // Coppel lists the UltraRun 5 as Adidas's: adidas's own chart for Mexico sizes it.
     const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true }, 'brands-shoe');

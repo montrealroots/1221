@@ -18,8 +18,8 @@ which never counts toward the target.
 | Apparel | Activewear | 50 | 100% | 302 | 1 / 3 / 55 | 0 | 11194 | 362 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Underwear, Lingerie And Socks | 41 | 82% | 135 | 1 / 2 / 15 | 0 | 2436 | 157 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Sleepwear | 40 | 80% | 101 | 1 / 1 / 13 | 0 | 2595 | 120 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Swimwear | 13 | 26% | 26 | 1 / 1 / 9 | 0 | 236 | 30 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Thermals, Shapewear, Hosiery And Slips | 26 | 52% | 78 | 1 / 2 / 11 | 0 | 78 | 80 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Swimwear | 12 | 24% | 26 | 1 / 1 / 12 | 0 | 236 | 30 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Thermals, Shapewear, Hosiery And Slips | 22 | 44% | 72 | 1 / 2 / 23 | 0 | 72 | 80 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Cultural Clothing | 8 | 16% | 11 | 1 / 1 / 2 | 0 | 11 | 11 | 0 | IE, MX | No |
 | Footwear | Shoes, Boots And Sandals | 41 | 82% | 128 | 1 / 2 / 15 | 0 | 1596 | 145 | 0 | CA, GB, IE, MX, US | No |
 | Footwear | Sneakers | 1 | 2% | 30 | 30 / 30 / 30 | 0 | 403 | 66 | 0 | CA, GB, IE, MX, US | No |

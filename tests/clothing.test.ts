@@ -426,3 +426,23 @@ describe('who it’s cut for', () => {
     expect(buyRefusal(sim.player, { productId: womens.value.id, how: 'store', size: womens.value.sizes[0], color: womens.value.colors[0] })).toBeUndefined();
   });
 });
+
+describe('what a garment is', () => {
+  const worn = (id: string) => { const p = CLOTHING_PRODUCTS.find((x) => x.id === id)!; return [p.slot, p.kind, p.subtype]; };
+
+  it('is a swimsuit by any of its names, and the trade’s swimwear where its retailer files it so', () => {
+    // Until 2026-10-04 M&S's Tie Detail swimsuit was an accessory for its tie, and Old Navy's swim trunks underwear.
+    expect(worn('gb-marks-and-spencer-maternity-ruched-tie-detail-v-neck-swimsuit')).toEqual(['active', 'swimsuit', 'swimwear']);
+    expect(worn('us-old-navy-swim-trunks-7-inch-inseam')).toEqual(['active', 'swimsuit', 'swimwear']);
+    // A swim top filed with the bras is a swimsuit, if not the trade's swimwear there.
+    expect(worn('us-old-navy-ribbed-bra-bikini-swim-top')).toEqual(['active', 'swimsuit', null]);
+  });
+
+  it('takes its subcategory’s noun where its name has none, and a bikini alone is knickers', () => {
+    // Filed under underwear in "underwear and socks", it was a pair of socks.
+    expect(worn('us-everlane-the-invisible-bikini').slice(0, 2)).toEqual(['underwear', 'underwear']);
+    expect(worn('mx-cya-mx-bikini-calzon-estampado').slice(0, 2)).toEqual(['underwear', 'underwear']);
+    expect(worn('mx-cya-mx-brasier-color-negro').slice(0, 2)).toEqual(['underwear', 'bra']);
+    expect(worn('mx-zara-mx-pack-de-2-calcetines-rib-fruit-of-the-loomTM').slice(0, 2)).toEqual(['socks', 'socks']);
+  });
+});

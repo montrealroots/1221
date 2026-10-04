@@ -38,6 +38,9 @@ const WORDS = [
   [/\b(belts?|scarf|scarves|hats?|caps?|beanies?|gloves?|mittens?|sunglasses|ties?|bow tie|pocket squares?)\b/, 'accessory', 'accessory'],
   [/\b(socks?|hosiery|tights|stockings?)\b/, 'socks', 'socks'],
   [/\b(shoes?|boots?|trainers?|sneakers?|sandals?|heels?|loafers?|slippers?|flip-?flops?|mules?|pumps?|espadrilles?|brogues?|oxfords|derbys?|clogs?|slides)\b/, 'shoes', 'shoes'],
+  // A swimsuit by any of its names (from 2026-10-04): until then a swim top was a top, swim trunks underwear, and M&S's
+  // Tie Detail Swimsuit an accessory for its tie. A bikini alone is also a cut of knickers, so it names no swimsuit.
+  [/\b(swimsuits?|swim (?:trunks|shorts|briefs|bottoms?|tops?|dress(?:es)?|shirts?)|bikini (?:tops?|bottoms?|sets?)|tankinis?|board ?shorts|rash ?guards?|bathing suits?|trajes? de baño)\b/, 'active', 'swimsuit'],
   [/\b(bras?|bralettes?)\b/, 'underwear', 'bra'],
   [/\b(boxer shorts|boxers?|briefs?|trunks?|knickers|underwear|thongs?|hipsters?|undershirts?)\b/, 'underwear', 'underwear'],
   [/\b(pyjamas?|pajamas?|nightdress(es)?|nighties?|robes?|dressing gowns?|loungewear|sleep ?shirts?)\b/, 'sleep', 'pajamas'],
@@ -72,7 +75,9 @@ function wornAs(p, market) {
   const name = String(p.name).toLowerCase();
   const vest = /\bvests?\b/.test(name) && !/vest tops?/.test(name);
   const head = headOf(name, market) ?? (vest ? (market === 'GB' || market === 'IE' ? ['underwear', 'underwear'] : ['outer', 'coat']) : undefined)
-    ?? headOf(`${p.subcategory ?? ''} ${p.category ?? ''}`.toLowerCase(), market);
+    // The subcategory's words last, so its noun is the head: until 2026-10-04 the category's came last, and Everlane's
+    // Invisible Bikini, filed under underwear in "underwear and socks", was a pair of socks.
+    ?? headOf(`${p.category ?? ''} ${p.subcategory ?? ''}`.toLowerCase(), market);
   const [slot, kind] = head ?? ['top', 'shirt'];
   const category = String(p.category ?? '').toLowerCase();
   // A category that decides more than the word: sportswear is worn to exercise, a suit's parts are a suit's, sleepwear is slept in.
@@ -153,6 +158,7 @@ function terms(r, market) {
   };
 }
 
+const SUBTYPES = new Set(['swimwear', 'thermals', 'shapewear', 'hosiery', 'slips', 'cultural']);
 const retailers = [];
 const products = [];
 const seen = new Set();
@@ -205,7 +211,8 @@ for (const file of FILES) {
       id, retailer: retailer.id, market, brand: p.brand ?? retailer.name, name: p.name, category: p.category, subcategory: p.subcategory ?? null,
       slot, kind, ...careOf(p, kind), pack: packOf(p.name), price: p.price, currency: p.currency, taxIncluded: market === 'GB' || market === 'IE' || market === 'MX',
       sizes: sizesOf(p), colors: Array.isArray(p.colors) ? p.colors.map(String) : [],
-      material: p.material ?? null, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true, subtype: null, sameAs: null,
+      // A kind the trade names apart, where its retailer files it so (from 2026-10-04; until then only the gaps' research had one).
+      material: p.material ?? null, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true, subtype: SUBTYPES.has(p.category) ? p.category : null, sameAs: null,
       // The department the retailer files it under, where the research read one (from 2026-10-04).
       dept: deptOf(p.gender),
       // The fit lines it's filed under (maternity, petite, tall, plus; `research-clothing-fit.json`, from 2026-10-04).
@@ -299,6 +306,16 @@ for (const r of retailers) {
 // 2026-10-04), where Andrea's listings wrote CLÓE and Liverpool's CLOE. Preferring the accented form chose CLÓE.
 const OWN_SPELLING = new Map([['cloe', 'Cloe']]);
 const brandKey = (b) => String(b).normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+// A retailer's name taken for a product's brand, where the research read none, carries its market: Uniqlo UK's and
+// UNIQLO Canada's thermals are Uniqlo's, Old Navy Canada's swimwear Old Navy's, and Marks & Spencer's thermals M&S's,
+// the name its labels and the rest of the catalog carry. Until 2026-10-04 each counted as a brand of its own.
+const ALIAS = new Map([['marks & spencer', 'M&S']]);
+const stems = new Set(products.map((p) => brandKey(p.brand)));
+for (const p of products) {
+  const market = String(p.brand).match(/^(.*?)\s+(?:Canada|UK|US|USA|Ireland|M[eé]xico)$/i);
+  if (ALIAS.has(brandKey(p.brand))) p.brand = ALIAS.get(brandKey(p.brand));
+  else if (market && stems.has(brandKey(market[1]))) p.brand = market[1];
+}
 const spellings = new Map();
 for (const p of products) { const seen = spellings.get(brandKey(p.brand)) ?? new Map(); seen.set(p.brand, (seen.get(p.brand) ?? 0) + 1); spellings.set(brandKey(p.brand), seen); }
 const capitals = (s) => s.split(/\s+/).filter((w) => /[A-Z]/.test(w) && !/[a-z]/.test(w)).length;
