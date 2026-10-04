@@ -27,7 +27,7 @@ which never counts toward the target.
 | Accessories | Hats, Scarves, Belts And Small Accessories | 32 | 64% | 72 | 1 / 1 / 17 | 0 | 378 | 77 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Watches | 19 | 38% | 50 | 1 / 2 / 8 | 0 | 50 | 50 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Jewelry | 34 | 68% | 69 | 1 / 1 / 15 | 0 | 130 | 70 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Luggage | 47 | 94% | 1738 | 1 / 30 / 100 | 2 | 6018 | 3233 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Luggage | 55 | 100% | 1906 | 1 / 26 / 100 | 2 | 6580 | 3567 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Phones | 3 | 6% | 26 | 7 / 9 / 10 | 0 | 90 | 273 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 0 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
 | Electronics | Computers | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |

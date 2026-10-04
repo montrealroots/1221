@@ -1,0 +1,8497 @@
+{
+ "read": "2026-10-04",
+ "source": "Each maker's own Shopify store, its whole catalog read mechanically from /products.json, and each market's from the storefront its homepage's hreflang links name for it (Db's /en-us, /en-ca, /en-gb and, for Ireland, /en-eu; Dakine's /en-ca); a market without one isn't sold there. A bag's kind is what its title names (its store's product type where the title names none), a suitcase naming no size a carry-on to 45 liters, a medium to 90, a large past it; its liters what its title states, else the figure its text calls the capacity, else its text's one figure; its outside measure and weight only where its text states them. Its price is the regular one, the compare-at price where a sale shows one, the middle of its colors' where they differ, for a color still sold there. Prices in America and Canada are before tax, in Britain and Ireland with it.",
+ "brands": [
+  {
+   "name": "Db",
+   "url": "https://dbjourney.com",
+   "status": "verified"
+  },
+  {
+   "name": "Cotopaxi",
+   "url": "https://www.cotopaxi.com",
+   "status": "verified"
+  },
+  {
+   "name": "Dakine",
+   "url": "https://www.dakine.com",
+   "status": "verified"
+  },
+  {
+   "name": "Matador",
+   "url": "https://www.matadorup.com",
+   "status": "verified"
+  },
+  {
+   "name": "Topo Designs",
+   "url": "https://topodesigns.com",
+   "status": "verified"
+  },
+  {
+   "name": "Aer",
+   "url": "https://www.aersf.com",
+   "status": "verified"
+  },
+  {
+   "name": "Arlo Skye",
+   "url": "https://arloskye.com",
+   "status": "verified"
+  },
+  {
+   "name": "Tortuga",
+   "url": "https://www.tortugabackpacks.com",
+   "status": "verified"
+  }
+ ],
+ "products": [
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Weigh Lighter Hugger Backpack 30L",
+   "type": "backpack",
+   "liters": 30,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Monochrome"
+    },
+    {
+     "color": "Weigh Darker"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 399,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/weigh-lighter-hugger-backpack-30l-monochrome",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 500,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/weigh-lighter-hugger-backpack-30l-monochrome",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 259,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/weigh-lighter-hugger-backpack-30l-monochrome",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 299,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/weigh-lighter-hugger-backpack-30l-monochrome",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/weigh-lighter-hugger-backpack-30l-monochrome",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Weigh Lighter Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Monochrome"
+    },
+    {
+     "color": "Weigh Darker"
+    },
+    {
+     "color": "Aurora"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 499,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/weigh-lighter-backpack-25l-weigh-darker",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 550,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/weigh-lighter-backpack-25l-weigh-darker",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 349,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/weigh-lighter-backpack-25l-weigh-darker",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 399,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/weigh-lighter-backpack-25l-weigh-darker",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/weigh-lighter-backpack-25l-monochrome",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Weigh Lighter Split Duffel 70L",
+   "type": "duffel",
+   "liters": 70,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Monochrome"
+    },
+    {
+     "color": "Weigh Darker"
+    },
+    {
+     "color": "Aurora"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 599,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/weigh-lighter-split-duffel-70l-weigh-darker",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 700,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/weigh-lighter-split-duffel-70l-weigh-darker",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 399,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/weigh-lighter-split-duffel-70l-weigh-darker",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 449,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/weigh-lighter-split-duffel-70l-weigh-darker",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/weigh-lighter-split-duffel-70l-monochrome",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Essential Weekender 40L",
+   "type": "duffel",
+   "liters": 40,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Sand Grey"
+    },
+    {
+     "color": "Fogbow Beige"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 129,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/essential-weekender-40l-sand-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 160,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/essential-weekender-40l-sand-grey",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 89,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/essential-weekender-40l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/essential-weekender-40l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/essential-weekender-40l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Entour Weekender 40L",
+   "type": "duffel",
+   "liters": 40,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Chrome Black"
+    },
+    {
+     "color": "Magnet Grey"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 399,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/entour-weekender-40l-magnet-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 500,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/entour-weekender-40l-magnet-grey",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 359,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/entour-weekender-40l-chrome-black",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 369,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/entour-weekender-40l-chrome-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/entour-weekender-40l-chrome-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Entour Daypack 18L",
+   "type": "backpack",
+   "liters": 18,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Chrome Black"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 349,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/entour-daypack-18l-chrome-black",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 420,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/entour-daypack-18l-chrome-black",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 259,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/entour-daypack-18l-chrome-black",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 299,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/entour-daypack-18l-chrome-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/entour-daypack-18l-chrome-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Db x PMO"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 349,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/backpack-25l-db-x-pmo",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 497,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/backpack-25l-db-x-pmo",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 250,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/backpack-25l-db-x-pmo",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 299,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/backpack-25l-db-x-pmo",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/backpack-25l-db-x-pmo",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hauler Backpack 15L",
+   "type": "backpack",
+   "liters": 15,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Affogato Brown"
+    },
+    {
+     "color": "Basil Green"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 149,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hauler-backpack-15l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 120,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hauler-backpack-15l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 129,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hauler-backpack-15l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 109,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hauler-backpack-15l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hauler-backpack-15l-blue-hour",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hauler Gym Bag 30L",
+   "type": "duffel",
+   "liters": 30,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Affogato Brown"
+    },
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Basil Green"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 139,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hauler-gym-bag-30l-affogato-brown",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 160,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hauler-gym-bag-30l-affogato-brown",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 119,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hauler-gym-bag-30l-affogato-brown",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 129,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hauler-gym-bag-30l-affogato-brown",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hauler-gym-bag-30l-blue-hour",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hauler Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Basil Green"
+    },
+    {
+     "color": "Affogato Brown"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 159,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hauler-backpack-25l-basil-green",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 140,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hauler-backpack-25l-basil-green",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 149,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hauler-backpack-25l-basil-green",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 129,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hauler-backpack-25l-basil-green",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hauler-backpack-25l-blue-hour",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hauler Weekender 40L",
+   "type": "duffel",
+   "liters": 40,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Basil Green"
+    },
+    {
+     "color": "Affogato Brown"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 129,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hauler-weekender-40l-affogato-brown",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 150,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hauler-weekender-40l-affogato-brown",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 109,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hauler-weekender-40l-basil-green",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 119,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hauler-weekender-40l-basil-green",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hauler-weekender-40l-blue-hour",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Roamer Pro Split Duffel 90L",
+   "type": "duffel",
+   "liters": 90,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Forest Green"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 329,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/roamer-pro-split-duffel-90l-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 350,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/roamer-pro-split-duffel-90l-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 220,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/roamer-pro-split-duffel-90l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 258.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/roamer-pro-split-duffel-90l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/roamer-pro-split-duffel-90l-black-out-1",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Roamer Pro Split Duffel 50L",
+   "type": "duffel",
+   "liters": 50,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Cappuccino"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Mash Green"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 269,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/roamer-pro-split-duffel-50l-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 290,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/roamer-pro-split-duffel-50l-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 229,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/roamer-pro-split-duffel-50l-black-out-1",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 249,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/roamer-pro-split-duffel-50l-black-out-1",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/roamer-pro-split-duffel-50l-black-out-1",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Roamer Pro Split Duffel 70L",
+   "type": "duffel",
+   "liters": 70,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "USA"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Mash Green"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 299,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/roamer-pro-split-duffel-70l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 320,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/roamer-pro-split-duffel-70l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 249,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/roamer-pro-split-duffel-70l-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 269,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/roamer-pro-split-duffel-70l-forest-green",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/roamer-pro-split-duffel-70l-black-out-1",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Roamer Pro Split Duffel 30L",
+   "type": "duffel",
+   "liters": 30,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 249,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/roamer-pro-split-duffel-30l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 260,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/roamer-pro-split-duffel-30l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 209,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/roamer-pro-split-duffel-30l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 229,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/roamer-pro-split-duffel-30l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/roamer-pro-split-duffel-30l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Ramverk Backpack 21L",
+   "type": "backpack",
+   "liters": 21,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Basil Green"
+    },
+    {
+     "color": "Affogato Brown"
+    },
+    {
+     "color": "Agate Green"
+    },
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Oatmilk"
+    },
+    {
+     "color": "Charcoal Grey"
+    },
+    {
+     "color": "Line Cluster"
+    },
+    {
+     "color": "Midnight Teal"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Moss Green"
+    },
+    {
+     "color": "Sand Grey"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 229,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/ramverk-backpack-21l-charcoal-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 240,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/ramverk-backpack-21l-charcoal-grey",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 189,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/ramverk-backpack-21l-charcoal-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 189,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/ramverk-backpack-21l-charcoal-grey",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/ramverk-backpack-21l-basil-green",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger Backpack 30L",
+   "type": "backpack",
+   "liters": 30,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Basil Green"
+    },
+    {
+     "color": "Affogato Brown"
+    },
+    {
+     "color": "Mash Green"
+    },
+    {
+     "color": "USA"
+    },
+    {
+     "color": "Germany"
+    },
+    {
+     "color": "England"
+    },
+    {
+     "color": "Coral Flash"
+    },
+    {
+     "color": "Agate Green"
+    },
+    {
+     "color": "Basalt White"
+    },
+    {
+     "color": "Acorn Brown"
+    },
+    {
+     "color": "Db x Former"
+    },
+    {
+     "color": "Cappuccino"
+    },
+    {
+     "color": "Espresso"
+    },
+    {
+     "color": "Oatmilk"
+    },
+    {
+     "color": "Charcoal Grey"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Homegrown with Lu"
+    },
+    {
+     "color": "Reflective Black"
+    },
+    {
+     "color": "Sand Grey"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 229,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-backpack-30l-cappuccino",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 260,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-backpack-30l-cappuccino",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 189,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hugger-backpack-30l-basalt-white",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 209,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hugger-backpack-30l-cappuccino",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-backpack-30l-basil-green",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Ramverk Backpack 26L",
+   "type": "backpack",
+   "liters": 26,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Affogato Brown"
+    },
+    {
+     "color": "Basil Green"
+    },
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Sand Grey"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 259,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/ramverk-backpack-26l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 270,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/ramverk-backpack-26l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 229,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/ramverk-backpack-26l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 199,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/ramverk-backpack-26l-fogbow-beige",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/ramverk-backpack-26l-affogato-brown",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger Roller Bag 90L",
+   "type": "medium",
+   "liters": 90,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Affogato Brown"
+    },
+    {
+     "color": "Db x Former"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 429,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-roller-bag-90l-affogato-brown",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 480,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-roller-bag-90l-affogato-brown",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 369,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hugger-roller-bag-90l-affogato-brown",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 399,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hugger-roller-bag-90l-affogato-brown",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-roller-bag-90l-affogato-brown",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger Backpack 20L",
+   "type": "backpack",
+   "liters": 20,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Basil Green"
+    },
+    {
+     "color": "Affogato Brown"
+    },
+    {
+     "color": "Cappuccino"
+    },
+    {
+     "color": "Oatmilk"
+    },
+    {
+     "color": "Espresso"
+    },
+    {
+     "color": "Charcoal Grey"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Sand Grey"
+    },
+    {
+     "color": "Reflective Black"
+    },
+    {
+     "color": "Moss Green"
+    },
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Fogbow Beige"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 199,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-backpack-20l-charcoal-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 220,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-backpack-20l-charcoal-grey",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 169,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hugger-backpack-20l-sand-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 189,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hugger-backpack-20l-oatmilk",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-backpack-20l-blue-hour-1",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Affogato Brown"
+    },
+    {
+     "color": "Basil Green"
+    },
+    {
+     "color": "Mash Green"
+    },
+    {
+     "color": "Moss Green"
+    },
+    {
+     "color": "Cappuccino"
+    },
+    {
+     "color": "Coral Flash"
+    },
+    {
+     "color": "Basalt White"
+    },
+    {
+     "color": "Agate Green"
+    },
+    {
+     "color": "Sienna Red"
+    },
+    {
+     "color": "Acorn Brown"
+    },
+    {
+     "color": "Ultraviolet"
+    },
+    {
+     "color": "Oatmilk"
+    },
+    {
+     "color": "Espresso"
+    },
+    {
+     "color": "Charcoal Grey"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Polestar Edt."
+    },
+    {
+     "color": "Reflective Black"
+    },
+    {
+     "color": "Sand Grey"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 219,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-backpack-25l-oatmilk",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 240,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-backpack-25l-oatmilk",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 179,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hugger-backpack-25l-sienna-red",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 199,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hugger-backpack-25l-acorn-brown",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-backpack-25l-affogato-brown",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger Roller Bag Carry-on 40L",
+   "type": "carry-on",
+   "liters": 40,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Affogato Brown"
+    },
+    {
+     "color": "Sand Grey"
+    },
+    {
+     "color": "Espresso"
+    },
+    {
+     "color": "Cappuccino"
+    },
+    {
+     "color": "Oatmilk"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 349,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-roller-bag-carry-on-40l-sand-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 380,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-roller-bag-carry-on-40l-cappuccino",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 249,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hugger-roller-bag-carry-on-40l-cappuccino",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 279,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hugger-roller-bag-carry-on-40l-cappuccino",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-roller-bag-carry-on-40l-affogato-brown",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger Roller Bag 60L",
+   "type": "medium",
+   "liters": 60,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Affogato Brown"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 399,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-roller-bag-60l-affogato-brown",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 420,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-roller-bag-60l-affogato-brown",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 329,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hugger-roller-bag-60l-affogato-brown",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 349,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hugger-roller-bag-60l-affogato-brown",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-roller-bag-60l-affogato-brown",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Entour Backpack 26L",
+   "type": "backpack",
+   "liters": 26,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Magnet Grey"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 379,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/entour-backpack-26l-magnet-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 450,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/entour-backpack-26l-magnet-grey",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 319,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/entour-backpack-26l-magnet-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 349,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/entour-backpack-26l-magnet-grey",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/entour-backpack-26l-magnet-grey",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Freya Backpack 16L",
+   "type": "backpack",
+   "liters": 16,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Midnight Teal"
+    },
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Moss Green"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 189,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/freya-backpack-16l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 230,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/freya-backpack-16l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 169,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/freya-backpack-16l-midnight-teal",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 189,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/freya-backpack-16l-midnight-teal",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/freya-backpack-16l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Ramverk Pro 1st Generation Backpack 32L",
+   "type": "backpack",
+   "liters": 32,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 379,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/ramverk-pro-1st-generation-backpack-32l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 450,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/ramverk-pro-1st-generation-backpack-32l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 275,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/ramverk-pro-1st-generation-backpack-32l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 323.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/ramverk-pro-1st-generation-backpack-32l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/ramverk-pro-1st-generation-backpack-32l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Roamer Duffel 100L",
+   "type": "duffel",
+   "liters": 100,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 199,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/roamer-duffel-100l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 240,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/roamer-duffel-100l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/roamer-duffel-100l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Ramverk Check-in Luggage Medium",
+   "type": "medium",
+   "liters": 70,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Fogbow Beige"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 499,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/ramverk-check-in-luggage-medium-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 700,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/ramverk-check-in-luggage-medium-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 449,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/ramverk-check-in-luggage-medium-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 499,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/ramverk-check-in-luggage-medium-forest-green",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/ramverk-check-in-luggage-medium-blue-hour",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Ramverk Check-in Luggage Large",
+   "type": "large",
+   "liters": 105,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Fogbow Beige"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 599,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/ramverk-check-in-luggage-large-blue-hour",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 800,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/ramverk-check-in-luggage-large-blue-hour",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 499,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/ramverk-check-in-luggage-large-blue-hour",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 549,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/ramverk-check-in-luggage-large-blue-hour",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/ramverk-check-in-luggage-large-forest-green",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Roamer Duffel Backpack 25L",
+   "type": "duffel",
+   "liters": 25,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Sand Grey"
+    },
+    {
+     "color": "Espresso"
+    },
+    {
+     "color": "Cappuccino"
+    },
+    {
+     "color": "Falu Red"
+    },
+    {
+     "color": "Reflective Black"
+    },
+    {
+     "color": "Midnight Teal"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 149,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/roamer-duffel-backpack-25l-falu-red",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 180,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/roamer-duffel-backpack-25l-falu-red",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 109,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/roamer-duffel-backpack-25l-cappuccino",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 129,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/roamer-duffel-backpack-25l-cappuccino",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/roamer-duffel-backpack-25l-sand-grey",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Roamer Duffel 60L",
+   "type": "duffel",
+   "liters": 60,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Sand Grey"
+    },
+    {
+     "color": "Cappuccino"
+    },
+    {
+     "color": "Espresso"
+    },
+    {
+     "color": "Chris Burkard"
+    },
+    {
+     "color": "Falu Red"
+    },
+    {
+     "color": "Midnight Teal"
+    },
+    {
+     "color": "White Out"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Parhelion Orange"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 189,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/roamer-duffel-60l-falu-red",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 230,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/roamer-duffel-60l-falu-red",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 159,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/roamer-duffel-60l-cappuccino",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 169,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/roamer-duffel-60l-cappuccino",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/roamer-duffel-60l-sand-grey",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Roamer Duffel 40L",
+   "type": "duffel",
+   "liters": 40,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Sand Grey"
+    },
+    {
+     "color": "Cappuccino"
+    },
+    {
+     "color": "Espresso"
+    },
+    {
+     "color": "Falu Red"
+    },
+    {
+     "color": "Midnight Teal"
+    },
+    {
+     "color": "White Out"
+    },
+    {
+     "color": "Parhelion Orange"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 169,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/roamer-duffel-40l-midnight-teal",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 210,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/roamer-duffel-40l-midnight-teal",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 139,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/roamer-duffel-40l-cappuccino",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 149,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/roamer-duffel-40l-cappuccino",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/roamer-duffel-40l-sand-grey",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Daypack 17L",
+   "type": "backpack",
+   "liters": 17,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Charcoal Grey"
+    },
+    {
+     "color": "Espresso"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Fogbow Beige"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 139,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/daypack-17l-espresso",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 150,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/daypack-17l-espresso",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 119,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/daypack-17l-espresso",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 129,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/daypack-17l-espresso",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/daypack-17l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Essential Backpack 24L",
+   "type": "backpack",
+   "liters": 24,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": true,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Charcoal Grey"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Oatmilk"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 139,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/essential-backpack-24l-charcoal-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 170,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/essential-backpack-24l-charcoal-grey",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 119,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/essential-backpack-24l-charcoal-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 129,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/essential-backpack-24l-charcoal-grey",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/essential-backpack-24l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Essential Backpack 12L",
+   "type": "backpack",
+   "liters": 12,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Charcoal Grey"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Midnight Teal"
+    },
+    {
+     "color": "Sand Grey"
+    },
+    {
+     "color": "Moss Green"
+    },
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/essential-backpack-12l-sand-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 120,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/essential-backpack-12l-sand-grey",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 79,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/essential-backpack-12l-midnight-teal",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 89,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/essential-backpack-12l-midnight-teal",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/essential-backpack-12l-charcoal-grey",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger Roller Bag Check-in 60L",
+   "type": "medium",
+   "liters": 60,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Espresso"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 399,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-roller-bag-check-in-60l-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 420,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-roller-bag-check-in-60l-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 329,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hugger-roller-bag-check-in-60l-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 349,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hugger-roller-bag-check-in-60l-forest-green",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-roller-bag-check-in-60l-espresso",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger Roller Bag Check-in 90L",
+   "type": "medium",
+   "liters": 90,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Espresso"
+    },
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 429,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-roller-bag-check-in-90l-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 480,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-roller-bag-check-in-90l-forest-green",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 369,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hugger-roller-bag-check-in-90l-blue-hour",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 399,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hugger-roller-bag-check-in-90l-blue-hour",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-roller-bag-check-in-90l-espresso",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Explorer Backpack 34L",
+   "type": "backpack",
+   "liters": 34,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Scarlet Red"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 299,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/explorer-backpack-34l-scarlet-red",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 350,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/explorer-backpack-34l-scarlet-red",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/explorer-backpack-34l-scarlet-red",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Freya 1st Generation Backpack 16L",
+   "type": "backpack",
+   "liters": 16,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Gneiss"
+    },
+    {
+     "color": "Birchwood Brown"
+    },
+    {
+     "color": "Sage & Alana"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 189,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/freya-1st-generation-backpack-16l-birchwood-brown",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 230,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/freya-1st-generation-backpack-16l-birchwood-brown",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/freya-1st-generation-backpack-16l-gneiss",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Essential Backpack 17L",
+   "type": "backpack",
+   "liters": 17,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Ice Blue"
+    },
+    {
+     "color": "Sunbleached Red"
+    },
+    {
+     "color": "Raspberry"
+    },
+    {
+     "color": "Desert Khaki"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/essential-backpack-17l-sunbleached-red",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 150,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/essential-backpack-17l-sunbleached-red",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/essential-backpack-17l-ice-blue",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Freya 1st Generation Backpack 22L",
+   "type": "backpack",
+   "liters": 22,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Gneiss"
+    },
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 199,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/freya-1st-generation-backpack-22l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 240,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/freya-1st-generation-backpack-22l-fogbow-beige",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/freya-1st-generation-backpack-22l-gneiss",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger 1st Generation Base Backpack 15L",
+   "type": "backpack",
+   "liters": 15,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Glacier Green"
+    },
+    {
+     "color": "Blue Hour"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 139,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-base-backpack-15l-glacier-green",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 180,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-base-backpack-15l-glacier-green",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-base-backpack-15l-glacier-green",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger 1st Generation Backpack 20L Black Out 19/20",
+   "type": "backpack",
+   "liters": 20,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 199,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-1st-generation-backpack-20l-black-out-19-20",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 220,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-1st-generation-backpack-20l-black-out-19-20",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-1st-generation-backpack-20l-black-out-19-20",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger 1st Generation Backpack 30L",
+   "type": "backpack",
+   "liters": 30,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Fogbow Beige"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 229,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-1st-generation-backpack-30l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 260,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-1st-generation-backpack-30l-fogbow-beige",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-1st-generation-backpack-30l-fogbow-beige",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Roamer Pro 1st Generation Split Duffel 50L",
+   "type": "duffel",
+   "liters": 50,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 269,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/roamer-pro-1st-generation-split-duffel-50l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 290,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/roamer-pro-1st-generation-split-duffel-50l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/roamer-pro-1st-generation-split-duffel-50l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Ramverk 1st Generation Backpack 21L",
+   "type": "backpack",
+   "liters": 21,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Moss Green"
+    },
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Blue Hour"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 229,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/ramverk-1st-generation-backpack-21l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 240,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/ramverk-1st-generation-backpack-21l-fogbow-beige",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/ramverk-1st-generation-backpack-21l-moss-green",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Ramverk 1st Generation Backpack 26L",
+   "type": "backpack",
+   "liters": 26,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 259,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/ramverk-1st-generation-backpack-26l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 270,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/ramverk-1st-generation-backpack-26l-fogbow-beige",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/ramverk-1st-generation-backpack-26l-fogbow-beige",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Daypack 20L",
+   "type": "backpack",
+   "liters": 20,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Line Cluster"
+    },
+    {
+     "color": "Midnight Teal"
+    },
+    {
+     "color": "Moss Green"
+    },
+    {
+     "color": "Blue Hour"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 139,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/daypack-20l-midnight-teal",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 150,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/daypack-20l-midnight-teal",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 110,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/daypack-20l-blue-hour",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 129.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/daypack-20l-blue-hour",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/daypack-20l-line-cluster",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Ramverk 1st Generation Backpack 21L Black Out 19/20",
+   "type": "backpack",
+   "liters": 21,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 229,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/ramverk-backpack-21l-black-out-19-20",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 240,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/ramverk-backpack-21l-black-out-19-20",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/ramverk-backpack-21l-black-out-19-20",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Essential Backpack 16L",
+   "type": "backpack",
+   "liters": 16,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Scarlet Red"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 179,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/essential-backpack-16l-scarlet-red",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 220,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/essential-backpack-16l-scarlet-red",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/essential-backpack-16l-scarlet-red",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Hugger Base Backpack 15L",
+   "type": "backpack",
+   "liters": 15,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Forest Green"
+    },
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Sand Grey"
+    },
+    {
+     "color": "Moss Green"
+    },
+    {
+     "color": "Falu Red"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 139,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/hugger-base-backpack-15l-sand-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 180,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/hugger-base-backpack-15l-sand-grey",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 110,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/hugger-base-backpack-15l-sand-grey",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 129.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/hugger-base-backpack-15l-sand-grey",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/hugger-base-backpack-15l-forest-green",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Backcountry Backpack 20L",
+   "type": "backpack",
+   "liters": 20,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    },
+    {
+     "color": "Blue Hour"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 179,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/backcountry-backpack-20l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 220,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/backcountry-backpack-20l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 149,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/backcountry-backpack-20l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 169,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/backcountry-backpack-20l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/backcountry-backpack-20l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Backcountry Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 199,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/backcountry-backpack-25l-blue-hour",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 260,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/backcountry-backpack-25l-blue-hour",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 179,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/backcountry-backpack-25l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 199,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/backcountry-backpack-25l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/backcountry-backpack-25l-blue-hour",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Freya Backpack 22L",
+   "type": "backpack",
+   "liters": 22,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Midnight Teal"
+    },
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Moss Green"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 199,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/freya-backpack-22l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 240,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/freya-backpack-22l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 179,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/freya-backpack-22l-midnight-teal",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 199,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/freya-backpack-22l-midnight-teal",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/freya-backpack-22l-midnight-teal",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Skate Duffel 65L",
+   "type": "duffel",
+   "liters": 65,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 299,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/skate-duffel-65l",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 350,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/skate-duffel-65l",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 249,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/skate-duffel-65l",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 269,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/skate-duffel-65l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/skate-duffel-65l",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Essential Rolltop Backpack 32L",
+   "type": "backpack",
+   "liters": 32,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": true,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 349,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/essential-rolltop-backpack-32l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 390,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/essential-rolltop-backpack-32l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 259,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/essential-rolltop-backpack-32l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 299,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/essential-rolltop-backpack-32l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/essential-rolltop-backpack-32l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Ramverk Pro Backpack 32L",
+   "type": "backpack",
+   "liters": 32,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 379,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/ramverk-pro-backpack-32l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 450,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/ramverk-pro-backpack-32l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 319,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/ramverk-pro-backpack-32l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 349,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/ramverk-pro-backpack-32l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/ramverk-pro-backpack-32l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Ramverk Pro Backpack 26L",
+   "type": "backpack",
+   "liters": 26,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 299,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/ramverk-pro-backpack-26l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 370,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/ramverk-pro-backpack-26l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 259,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/ramverk-pro-backpack-26l-black-out",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 249,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/ramverk-pro-backpack-26l-black-out",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/ramverk-pro-backpack-26l-black-out",
+   "status": "verified"
+  },
+  {
+   "brand": "Db",
+   "family": null,
+   "model": "Daypack 15L",
+   "type": "backpack",
+   "liters": 15,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Moss Green"
+    },
+    {
+     "color": "Fogbow Beige"
+    },
+    {
+     "color": "Blue Hour"
+    },
+    {
+     "color": "Black Out"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Db",
+     "channel": "online",
+     "price": 89,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-us/products/daypack-15l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Db",
+     "channel": "online",
+     "price": 110,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://dbjourney.com/en-ca/products/daypack-15l-fogbow-beige",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Db",
+     "channel": "online",
+     "price": 63,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-gb/products/daypack-15l-moss-green",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Db",
+     "channel": "online",
+     "price": 73.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://dbjourney.com/en-eu/products/daypack-15l-moss-green",
+     "status": "verified"
+    }
+   ],
+   "url": "https://dbjourney.com/en-us/products/daypack-15l-moss-green",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Tasra 16L Backpack",
+   "type": "backpack",
+   "liters": 16,
+   "outsideCm": [
+    43.2,
+    26.7,
+    14
+   ],
+   "kg": 0.45,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Moonbeam/Aster"
+    },
+    {
+     "color": "Cotopaxi Black"
+    },
+    {
+     "color": "Del Día"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 90,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/tasra-16l-backpack",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/tasra-16l-backpack-1",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Allpa Getaway 55L Duffel",
+   "type": "duffel",
+   "liters": 55,
+   "outsideCm": [
+    59.7,
+    34.3,
+    31.1
+   ],
+   "kg": 0.91,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Tide Pool"
+    },
+    {
+     "color": "Bronze"
+    },
+    {
+     "color": "Blue Smoke/Carbon"
+    },
+    {
+     "color": "Crimson"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 175,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/allpa-getaway-55l-duffel",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/allpa-getaway-55l-duffel-3",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Empacable 16L Daypack",
+   "type": "backpack",
+   "liters": 16,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Del Día"
+    },
+    {
+     "color": "Cotopaxi Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 75,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/empacable-16l-daypack-del-dia",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/empacable-16l-daypack-del-dia",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Allpa 50L Adventure Travel Pack",
+   "type": "backpack",
+   "liters": 50,
+   "outsideCm": [
+    68.6,
+    35.6,
+    25.4
+   ],
+   "kg": 1.81,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Del Día Dark"
+    },
+    {
+     "color": "Bronze"
+    },
+    {
+     "color": "Vapor/Smoke"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 310,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/allpa-50l-adventure-travel-pack",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/allpa-50l-adventure-travel-pack-del-dia-dark",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Allpa 28L Travel Pack",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": [
+    48.3,
+    30.5,
+    22.9
+   ],
+   "kg": 0.91,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Bronze"
+    },
+    {
+     "color": "Smoke/Cinder"
+    },
+    {
+     "color": "Del Día Dark"
+    },
+    {
+     "color": "Del Día"
+    },
+    {
+     "color": "Crimson"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 205,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/allpa-28l-travel-pack-del-dia",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/allpa-28l-travel-pack-5",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Arenal 32L Backpack",
+   "type": "backpack",
+   "liters": 32,
+   "outsideCm": null,
+   "kg": 0.91,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Grain/Lemongrass"
+    },
+    {
+     "color": "Kale"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 195,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/arenal-32l-backpack",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/arenal-32l-backpack-1",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Elqui 24L Daypack",
+   "type": "backpack",
+   "liters": 24,
+   "outsideCm": [
+    48.3,
+    27.9,
+    21.6
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Foam/Silver Leaf"
+    },
+    {
+     "color": "Carbon"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 100,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/elqui-24l-daypack",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/elqui-24l-daypack-1",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Elqui 18L Daypack",
+   "type": "backpack",
+   "liters": 18,
+   "outsideCm": [
+    44.5,
+    26.7,
+    19.1
+   ],
+   "kg": 0.45,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Foam/Silver Leaf"
+    },
+    {
+     "color": "Del Día"
+    },
+    {
+     "color": "Kale"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 90,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/elqui-18l-daypack-del-dia",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/elqui-18l-daypack-1",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Allpa Getaway 70L Duffel",
+   "type": "duffel",
+   "liters": 70,
+   "outsideCm": [
+    66,
+    33,
+    30.5
+   ],
+   "kg": 0.91,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Smoke/Cinder"
+    },
+    {
+     "color": "Lemongrass/Cedar"
+    },
+    {
+     "color": "Crimson"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 200,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/allpa-getaway-70l-duffel",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/allpa-getaway-70l-duffel-2",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Allpa 42L Travel Pack",
+   "type": "backpack",
+   "liters": 42,
+   "outsideCm": [
+    55.9,
+    35.6,
+    27.9
+   ],
+   "kg": 1.36,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Fig"
+    },
+    {
+     "color": "Smoke/Cinder"
+    },
+    {
+     "color": "Del Día Dark"
+    },
+    {
+     "color": "Cotopaxi Black"
+    },
+    {
+     "color": "Del Día"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 255,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/allpa-42l-travel-pack-3",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/allpa-42l-travel-pack-6",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Allpa 35L Travel Pack",
+   "type": "backpack",
+   "liters": 35,
+   "outsideCm": [
+    55.9,
+    30.5,
+    25.4
+   ],
+   "kg": 0.91,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Blue Smoke"
+    },
+    {
+     "color": "Lemongrass/Cedar"
+    },
+    {
+     "color": "Del Día Dark"
+    },
+    {
+     "color": "Cotopaxi Black"
+    },
+    {
+     "color": "Del Día"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 230,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-7",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Allpa 38L Roller Bag",
+   "type": "carry-on",
+   "liters": 38,
+   "outsideCm": [
+    55.9,
+    35.6,
+    30.5
+   ],
+   "kg": 2.72,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Woods"
+    },
+    {
+     "color": "Rusty"
+    },
+    {
+     "color": "Wine"
+    },
+    {
+     "color": "Blue Spruce"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 355,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/allpa-roller-bag-38l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/allpa-38l-roller-bag-2",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Allpa 65L Roller Bag",
+   "type": "medium",
+   "liters": 65,
+   "outsideCm": [
+    68.6,
+    40.6,
+    33
+   ],
+   "kg": 3.63,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Woods"
+    },
+    {
+     "color": "Rusty"
+    },
+    {
+     "color": "Pacific"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 400,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/allpa-roller-bag-65l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/allpa-65l-roller-bag-2",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Viaje 45L Travel Duffel",
+   "type": "duffel",
+   "liters": 45,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Blue Spruce"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 150,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/viaje-45l-travel-duffel",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/viaje-45l-travel-duffel",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Viaje 35L Travel Duffel",
+   "type": "duffel",
+   "liters": 35,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Sepia"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 130,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/viaje-35l-travel-duffel",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/viaje-35l-travel-duffel",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Consuelo 22L Daypack",
+   "type": "backpack",
+   "liters": 22,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Moonbeam"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 120,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/consuelo-22l-daypack",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/consuelo-22l-daypack",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Clase 28L Daypack",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Cotopaxi Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 120,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/clase-28l-daypack",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/clase-28l-daypack",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Abierto 26L Daypack",
+   "type": "backpack",
+   "liters": 26,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Mineral"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 105,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/abierto-26l-daypack",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/abierto-26l-daypack",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Allpa 18L Daypack",
+   "type": "backpack",
+   "liters": 18,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Del Día"
+    },
+    {
+     "color": "Spicy"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 130,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/allpa-18l-daypack-del-dia",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/allpa-18l-daypack-del-dia",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Allpa 26L Daypack",
+   "type": "backpack",
+   "liters": 26,
+   "outsideCm": [
+    52.1,
+    33,
+    22.9
+   ],
+   "kg": 0.45,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Del Día"
+    },
+    {
+     "color": "Spicy"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 150,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/allpa-26l-daypack-del-dia",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/allpa-26l-daypack-del-dia",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Mente 32L Daypack - Cada Día",
+   "type": "backpack",
+   "liters": 32,
+   "outsideCm": [
+    53.3,
+    31.8,
+    25.4
+   ],
+   "kg": 0.45,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Desert"
+    },
+    {
+     "color": "Abyss"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 145,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/mente-32l-daypack-cada-dia",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/mente-32l-daypack-cada-dia-1",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Viaje 35L Weekender Bag - Cada Día",
+   "type": "duffel",
+   "liters": 35,
+   "outsideCm": [
+    53.3,
+    38.1,
+    30.5
+   ],
+   "kg": 0.45,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Chestnut"
+    },
+    {
+     "color": "Wine"
+    },
+    {
+     "color": "Woods"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 130,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/viaje-35l-weekender-bag-cada-dia",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/viaje-35l-weekender-bag-cada-dia-3",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Batac 16L Daypack",
+   "type": "backpack",
+   "liters": 16,
+   "outsideCm": [
+    48.3,
+    27.9,
+    10.2
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Del Día"
+    },
+    {
+     "color": "Del Día Dark"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 70,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/batac-16l-backpack-del-dia-dark",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/batac-16l-pack-del-dia",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Allpa Getaway 100L Duffel",
+   "type": "duffel",
+   "liters": 100,
+   "outsideCm": [
+    64.8,
+    40.6,
+    38.1
+   ],
+   "kg": 0.91,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Blue Spruce/Abyss"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 220,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/allpa-getaway-100l-duffel",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/allpa-getaway-100l-duffel",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Chiquillo 26L Daypack - Cada Día",
+   "type": "backpack",
+   "liters": 26,
+   "outsideCm": [
+    48.3,
+    27.9,
+    15.2
+   ],
+   "kg": 0.45,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Whiskey"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 80,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/chiquillo-26l-daypack-cada-dia",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/chiquillo-26l-daypack-cada-dia",
+   "status": "verified"
+  },
+  {
+   "brand": "Cotopaxi",
+   "family": null,
+   "model": "Vaya 18L Daypack - Cada Día",
+   "type": "backpack",
+   "liters": 18,
+   "outsideCm": [
+    48.3,
+    30.5,
+    17.8
+   ],
+   "kg": 0.45,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Cotopaxi",
+     "channel": "online",
+     "price": 120,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.cotopaxi.com/products/vaya-18l-daypack-cada-dia",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cotopaxi.com/products/vaya-18l-daypack-cada-dia",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Verge Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": [
+    45,
+    32,
+    15
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": true,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Mulled Basil"
+    },
+    {
+     "color": "Black Ripstop"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 138,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/verge-backpack-25l-rosin",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 145,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/verge-backpack-25l-black-ripstop",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/verge-backpack-25l-rosin",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Verge Backpack 32L",
+   "type": "backpack",
+   "liters": 32,
+   "outsideCm": [
+    49,
+    35,
+    16
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": true,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Black Ripstop"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 155,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/verge-backpack-32l-black-ripstop",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 170,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/verge-backpack-32l-black-ripstop",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/verge-backpack-32l-rosin",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Tardy Slip Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": [
+    42,
+    30,
+    16
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Chimera"
+    },
+    {
+     "color": "Dune"
+    },
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Oasis"
+    },
+    {
+     "color": "Marron"
+    },
+    {
+     "color": "Mulled Basil"
+    },
+    {
+     "color": "Silver Lining"
+    },
+    {
+     "color": "Pink Lotus"
+    },
+    {
+     "color": "Light Stargazer"
+    },
+    {
+     "color": "Black Onyx"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 68,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/tardy-slip-backpack-25l-black",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 75,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/tardy-slip-backpack-25l-black-onyx",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/tardy-slip-backpack-25l-chimera",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Split Adventure Backpack 38L",
+   "type": "backpack",
+   "liters": 38,
+   "outsideCm": [
+    54,
+    37,
+    12
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Black Ripstop"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 198,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/split-adventure-backpack-38l-rosin",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/split-adventure-backpack-38l-rosin",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Split Adventure Backpack 28L",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": [
+    47,
+    37,
+    12
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Black Ripstop"
+    },
+    {
+     "color": "Mulled Basil"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 168,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/split-adventure-backpack-28l-black-ripstop",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/split-adventure-backpack-28l-rosin",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Renovation LT Backpack 22L",
+   "type": "backpack",
+   "liters": 22,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Everglades"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 68,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/renovation-lt-backpack-22l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/renovation-lt-backpack-22l-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "EQ Duffle 2.0 35L",
+   "type": "duffel",
+   "liters": 35,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": true,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Dark Ephemera"
+    },
+    {
+     "color": "Carbon Heather"
+    },
+    {
+     "color": "Rosin"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 74,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/eq-duffle-2-0-35l-dark-ephemera",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/eq-duffle-2-0-35l-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Method Backpack 32L",
+   "type": "backpack",
+   "liters": 32,
+   "outsideCm": [
+    49,
+    31,
+    22.5
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Carbon Heather"
+    },
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Geyser Grey"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 92,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/method-backpack-32l-carbon-heather",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 100,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/method-backpack-32l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/method-backpack-32l-carbon-heather",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "365 Backpack 28L",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": [
+    48,
+    31,
+    23
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Shaka Dots"
+    },
+    {
+     "color": "Mojave"
+    },
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Sub Topo"
+    },
+    {
+     "color": "Odyssey"
+    },
+    {
+     "color": "Tropical Utopia"
+    },
+    {
+     "color": "Silver Lining"
+    },
+    {
+     "color": "Harvest Plum"
+    },
+    {
+     "color": "Misty Bloom"
+    },
+    {
+     "color": "Kelp Floral"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 68,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/365-backpack-28l-odyssey",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 75,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/365-pack-28l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/365-backpack-28l-shaka-dots",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Mission Backpack 18L",
+   "type": "backpack",
+   "liters": 18,
+   "outsideCm": [
+    47,
+    32,
+    15
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Carbon Heather"
+    },
+    {
+     "color": "Sub Topo"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 67,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/mission-backpack-18l-carbon-heather",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/mission-backpack-18l-carbon-heather",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Atlas Backpack 2.0 28L",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Castlerock"
+    },
+    {
+     "color": "Mojave"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 78,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/atlas-backpack-2-0-28l-castlerock",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/atlas-backpack-2-0-28l-rosin",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "EQ Duffle 2.0 50L",
+   "type": "duffel",
+   "liters": 50,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": true,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Dark Ephemera"
+    },
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Carbon Heather"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 80,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/eq-duffle-2-0-50l-dark-ephemera",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/eq-duffle-2-0-50l-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Mission Street Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": [
+    51,
+    32,
+    12
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Castlerock"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 86,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/mission-street-backpack-25l-castlerock",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 90,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/mission-street-pack-25l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/mission-street-backpack-25l-rosin",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Method Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": [
+    48,
+    30,
+    20
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Carbon Heather"
+    },
+    {
+     "color": "Dune"
+    },
+    {
+     "color": "Pyramid Lake"
+    },
+    {
+     "color": "Hanalei"
+    },
+    {
+     "color": "Withered Rose"
+    },
+    {
+     "color": "Forest Pond"
+    },
+    {
+     "color": "Midnight Blooms"
+    },
+    {
+     "color": "Bisque"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 81,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/method-backpack-25l-hanalei",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 85,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/method-backpack-25l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/method-backpack-25l-carbon-heather",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Campus Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": [
+    46,
+    29,
+    19
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Raindrops"
+    },
+    {
+     "color": "Dark Ephemera"
+    },
+    {
+     "color": "Carbon Heather"
+    },
+    {
+     "color": "Vintage Chicory"
+    },
+    {
+     "color": "Ephemera"
+    },
+    {
+     "color": "Dusted Clay"
+    },
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Whimsical Forest"
+    },
+    {
+     "color": "Withered Rose"
+    },
+    {
+     "color": "Midnight Blooms"
+    },
+    {
+     "color": "Marron"
+    },
+    {
+     "color": "Flame Scarlet"
+    },
+    {
+     "color": "Sunrise Canyon"
+    },
+    {
+     "color": "Mulled Basil"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 75,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/campus-backpack-25l-whimsical-forest",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 75,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/campus-m-25l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/campus-backpack-25l-raindrops",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Educated Backpack 30L",
+   "type": "backpack",
+   "liters": 30,
+   "outsideCm": [
+    46,
+    33,
+    18
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Dune"
+    },
+    {
+     "color": "Mediterranea"
+    },
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Silver Lining"
+    },
+    {
+     "color": "Sunrise Canyon"
+    },
+    {
+     "color": "Mulled Basil"
+    },
+    {
+     "color": "Light Stargazer"
+    },
+    {
+     "color": "Black Onyx"
+    },
+    {
+     "color": "Trellis"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 75,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/educated-backpack-30l-black",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 80,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/educated-backpack-30l-black-onyx",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/educated-backpack-30l-dune",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Campus Backpack 33L",
+   "type": "backpack",
+   "liters": 33,
+   "outsideCm": [
+    52,
+    33,
+    21
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Burlwood"
+    },
+    {
+     "color": "Ephemera"
+    },
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Vintage Chicory"
+    },
+    {
+     "color": "Dusted Clay"
+    },
+    {
+     "color": "Dark Ephemera"
+    },
+    {
+     "color": "Raindrops"
+    },
+    {
+     "color": "Flame Scarlet"
+    },
+    {
+     "color": "Coyote Morse Code"
+    },
+    {
+     "color": "Tropical Utopia"
+    },
+    {
+     "color": "Sunrise Canyon"
+    },
+    {
+     "color": "Midnight Blooms"
+    },
+    {
+     "color": "Mulled Basil"
+    },
+    {
+     "color": "Odyssey"
+    },
+    {
+     "color": "Carbon"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 86,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/campus-backpack-33l-raindrops",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/campus-backpack-33l-burlwood",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Atlas Backpack 2.0 21L",
+   "type": "backpack",
+   "liters": 21,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Castlerock"
+    },
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Mojave"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 60,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/atlas-backpack-2-0-21l-castlerock",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/atlas-backpack-2-0-21l-rosin",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "365 Backpack 21L",
+   "type": "backpack",
+   "liters": 21,
+   "outsideCm": [
+    45,
+    31,
+    21
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Crestline"
+    },
+    {
+     "color": "Shaka Dots"
+    },
+    {
+     "color": "Mojave"
+    },
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Ephemera"
+    },
+    {
+     "color": "Dawn To Dusk"
+    },
+    {
+     "color": "Pyramid Lake"
+    },
+    {
+     "color": "Sub Topo"
+    },
+    {
+     "color": "Harvest Plum"
+    },
+    {
+     "color": "Silver Lining"
+    },
+    {
+     "color": "Misty Bloom"
+    },
+    {
+     "color": "Tropical Utopia"
+    },
+    {
+     "color": "Odyssey"
+    },
+    {
+     "color": "Kelp Floral"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 58,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/365-backpack-21l-pyramid-lake",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 65,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/365-pack-21l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/365-backpack-21l-crestline",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Campus Hybrid Backpack 26L",
+   "type": "backpack",
+   "liters": 26,
+   "outsideCm": [
+    60,
+    42,
+    7
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Carbon Heather"
+    },
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Burlwood"
+    },
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Midnight Blooms"
+    },
+    {
+     "color": "Mulled Basil"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 86,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/campus-hybrid-backpack-26l-burlwood",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 90,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/campus-hybrid-backpack-26l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/campus-hybrid-backpack-26l-carbon-heather",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Grom Backpack 2.0 13L",
+   "type": "backpack",
+   "liters": 13,
+   "outsideCm": [
+    41,
+    31,
+    17
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Dusted Clay"
+    },
+    {
+     "color": "Crestline"
+    },
+    {
+     "color": "Sundown"
+    },
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Purple Rein"
+    },
+    {
+     "color": "Dawn To Dusk"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 55,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/grom-backpack-2-0-13l-sundown",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/grom-backpack-2-0-13l-dusted-clay",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Grom Backpack 23L",
+   "type": "backpack",
+   "liters": 23,
+   "outsideCm": [
+    47,
+    33,
+    19
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Dusted Clay"
+    },
+    {
+     "color": "Sundown"
+    },
+    {
+     "color": "Crestline"
+    },
+    {
+     "color": "Dawn To Dusk"
+    },
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Purple Rein"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 71,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/grom-backpack-23l-crestline",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/grom-backpack-23l-dusted-clay",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Campus 20 Year Anniversary Backpack 28L",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": [
+    60,
+    6,
+    47
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Shifting Sand"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 115,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/campus-20-year-anniversary-backpack-28l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/campus-20-year-anniversary-backpack-28l-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Campus Premium Backpack 28L",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": [
+    49,
+    33,
+    20
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": true,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Carbon Heather"
+    },
+    {
+     "color": "Rosin"
+    },
+    {
+     "color": "Midnight Blooms"
+    },
+    {
+     "color": "Marron"
+    },
+    {
+     "color": "Hanalei"
+    },
+    {
+     "color": "Carbon"
+    },
+    {
+     "color": "Mulled Basil"
+    },
+    {
+     "color": "Odyssey"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 115,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/campus-premium-backpack-28l-marron",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/campus-premium-backpack-28l-carbon-heather",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Mission Pack 18L",
+   "type": "backpack",
+   "liters": 18,
+   "outsideCm": [
+    47,
+    32,
+    15
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Whimsical Forest"
+    },
+    {
+     "color": "Playground"
+    },
+    {
+     "color": "Harvest Plum"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 67,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/mission-pack-18l-whimsical-forest",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/mission-pack-18l-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Renovation Hybrid Backpack 21L",
+   "type": "backpack",
+   "liters": 21,
+   "outsideCm": [
+    47,
+    43,
+    7
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": true,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Withered Rose"
+    },
+    {
+     "color": "Kula Botanica"
+    },
+    {
+     "color": "Cypress"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 98,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/renovation-hybrid-backpack-21l-kula-botanica",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/renovation-hybrid-backpack-21l-withered-rose",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Wednesday Backpack 21L",
+   "type": "backpack",
+   "liters": 21,
+   "outsideCm": [
+    41,
+    31,
+    15
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Kelp Floral"
+    },
+    {
+     "color": "Neutral Stripe"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 66,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/wednesday-backpack-21l-kelp-floral",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/wednesday-backpack-21l-kelp-floral",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Mission Street Backpack DLX 32L X Independent",
+   "type": "backpack",
+   "liters": 32,
+   "outsideCm": [
+    51,
+    32,
+    20
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Port Independent"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 135,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/mission-street-backpack-dlx-32l-x-independent-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/mission-street-backpack-dlx-32l-x-independent-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "June Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": [
+    64,
+    31,
+    15
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Watercolor"
+    },
+    {
+     "color": "Silver Lining"
+    },
+    {
+     "color": "Woods Cove"
+    },
+    {
+     "color": "Jadeite"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 86,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/june-backpack-25l-silver-lining",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 90,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/june-backpack-25l-jadeite",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/june-backpack-25l-watercolor",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Mission Street Backpack 25L X Independent",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": [
+    51,
+    32,
+    12
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Independent"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 85,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/mission-street-backpack-25l-x-independent-independent",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/mission-street-backpack-25l-x-independent-independent",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Method Backpack DLX 28L",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": [
+    49,
+    31,
+    22.5
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Ripstop"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 95,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/method-backpack-dlx-28l-black-ripstop",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/method-backpack-dlx-28l-black-ripstop",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Team 365 Backpack 21L X Erin Brooks",
+   "type": "backpack",
+   "liters": 21,
+   "outsideCm": [
+    45,
+    31,
+    21
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Brooks Black Neon"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 63,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/team-365-backpack-21l-erin-brooks-brooks-black-neon",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/team-365-backpack-21l-erin-brooks-brooks-black-neon",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Campus Premium Backpack 28L X Mayhem",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": [
+    49,
+    33,
+    20
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": true,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Mayhem Marron"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 121,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/campus-premium-backpack-28l-x-mayhem-mayhem-marron",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/campus-premium-backpack-28l-x-mayhem-mayhem-marron",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "365 Backpack 21L X Independent",
+   "type": "backpack",
+   "liters": 21,
+   "outsideCm": [
+    45,
+    31,
+    21
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black Independent"
+    },
+    {
+     "color": "Port Independent"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 67,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/365-backpack-21l-x-independent-black-independent",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/365-backpack-21l-x-independent-black-independent",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Class Backpack 25L",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": [
+    47,
+    31,
+    18
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Honey Mustard"
+    },
+    {
+     "color": "Midnight Blooms"
+    },
+    {
+     "color": "Port Royale"
+    },
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Carbon"
+    },
+    {
+     "color": "Midnight"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 56,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/class-backpack-25l-port-royale",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 65,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/class-backpack-25l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/class-backpack-25l-honey-mustard",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Class Backpack 33L",
+   "type": "backpack",
+   "liters": 33,
+   "outsideCm": [
+    56,
+    35,
+    21
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Midnight Blooms"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 68,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/class-backpack-33l-midnight-blooms",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/class-backpack-33l-midnight-blooms",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Grom Backpack 13L",
+   "type": "backpack",
+   "liters": 13,
+   "outsideCm": [
+    41,
+    31,
+    17
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Mulled Basil"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 55,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/grom-backpack-13l-mulled-basil",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 60,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/grom-13l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/grom-backpack-13l-mulled-basil",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "EQ Duffle 50L",
+   "type": "duffel",
+   "liters": 50,
+   "outsideCm": [
+    54,
+    31,
+    32
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Carbon"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 75,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/eq-duffle-50l-carbon",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/eq-duffle-50l-carbon",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "365 Backpack 21L X",
+   "type": "backpack",
+   "liters": 21,
+   "outsideCm": [
+    45,
+    31,
+    21
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Independent"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 58,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/365-backpack-21l-x-independent-independent",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/365-backpack-21l-x-independent-independent",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Campus Backpack 25L Hawaii",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": [
+    46,
+    29,
+    19
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Stargazer Stripe"
+    },
+    {
+     "color": "Asphalt Checker"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 65,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/campus-backpack-25l-hawaii-stargazer-stripe",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 75,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/campus-m-25l-hawaii-asphalt-checker",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/campus-backpack-25l-hawaii-stargazer-stripe",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Cyclone Wet/Dry Rolltop Duffle 60L",
+   "type": "duffel",
+   "liters": 60,
+   "outsideCm": [
+    70,
+    60,
+    23
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "ca",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 210,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/en-ca/products/cyclone-wet-dry-rolltop-duffle-60l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/cyclone-wet-dry-rolltop-duffle-60l-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Wednesday Backpack 21L X Loindaflow",
+   "type": "backpack",
+   "liters": 21,
+   "outsideCm": [
+    41,
+    31,
+    15
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Loindaflow"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 70,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/wednesday-backpack-21l-x-loindaflow-loindaflow",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/wednesday-backpack-21l-x-loindaflow-loindaflow",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Mission Pro Backpack 32L",
+   "type": "backpack",
+   "liters": 32,
+   "outsideCm": [
+    55,
+    45,
+    30
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Rubber"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 200,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/mission-pro-pack-32l-rubber",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/mission-pro-pack-32l-rubber",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "Mission Street Backpack DLX 32L",
+   "type": "backpack",
+   "liters": 32,
+   "outsideCm": [
+    51,
+    32,
+    20
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 138,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/mission-street-pack-dlx-32l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/mission-street-pack-dlx-32l-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Dakine",
+   "family": null,
+   "model": "EQ Duffle 70L",
+   "type": "duffel",
+   "liters": 70,
+   "outsideCm": [
+    60,
+    35,
+    34
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Dakine",
+     "channel": "online",
+     "price": 84,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.dakine.com/products/eq-duffle-70l-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.dakine.com/products/eq-duffle-70l-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Matador",
+   "family": null,
+   "model": "18L Packable Backpack",
+   "type": "backpack",
+   "liters": 18,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Juniper"
+    },
+    {
+     "color": "Garnet"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Matador",
+     "channel": "online",
+     "price": 75,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.matadorup.com/products/18l-packable-backpack-juniper",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.matadorup.com/products/18l-packable-backpack",
+   "status": "verified"
+  },
+  {
+   "brand": "Matador",
+   "family": null,
+   "model": "18L Waterproof Packable Backpack",
+   "type": "backpack",
+   "liters": 18,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Juniper"
+    },
+    {
+     "color": "Garnet"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Matador",
+     "channel": "online",
+     "price": 95,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.matadorup.com/products/18l-waterproof-packable-backpack-juniper",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.matadorup.com/products/18l-waterproof-packable-backpack",
+   "status": "verified"
+  },
+  {
+   "brand": "Matador",
+   "family": null,
+   "model": "24L Adventure Pack",
+   "type": "backpack",
+   "liters": 24,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Juniper"
+    },
+    {
+     "color": "Garnet"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Matador",
+     "channel": "online",
+     "price": 209,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.matadorup.com/products/24l-adventure-pack-juniper-drip-arcticwhite",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.matadorup.com/products/24l-adventure-pack",
+   "status": "verified"
+  },
+  {
+   "brand": "Matador",
+   "family": null,
+   "model": "24L Tote Pack",
+   "type": "backpack",
+   "liters": 24,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Juniper"
+    },
+    {
+     "color": "Garnet"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Matador",
+     "channel": "online",
+     "price": 139,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.matadorup.com/products/24l-tote-pack-juniper-drip-arcticwhite",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.matadorup.com/products/24l-tote-pack",
+   "status": "verified"
+  },
+  {
+   "brand": "Matador",
+   "family": null,
+   "model": "30L Packable Duffel",
+   "type": "duffel",
+   "liters": 30,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Juniper"
+    },
+    {
+     "color": "Garnet"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Matador",
+     "channel": "online",
+     "price": 75,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.matadorup.com/products/30l-packable-duffel-juniper",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.matadorup.com/products/30l-packable-duffel",
+   "status": "verified"
+  },
+  {
+   "brand": "Matador",
+   "family": null,
+   "model": "35L Global Travel Pack",
+   "type": "backpack",
+   "liters": 35,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Juniper"
+    },
+    {
+     "color": "Garnet"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Matador",
+     "channel": "online",
+     "price": 289,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.matadorup.com/products/35l-global-travel-pack-juniper-drip-arcticwhite",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.matadorup.com/products/35l-global-travel-pack",
+   "status": "verified"
+  },
+  {
+   "brand": "Matador",
+   "family": null,
+   "model": "45L Global Travel Pack",
+   "type": "backpack",
+   "liters": 45,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    },
+    {
+     "color": "Juniper"
+    },
+    {
+     "color": "Garnet"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Matador",
+     "channel": "online",
+     "price": 309,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.matadorup.com/products/45l-global-travel-pack-juniper-drip-arcticwhite",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.matadorup.com/products/45l-global-travel-pack",
+   "status": "verified"
+  },
+  {
+   "brand": "Topo Designs",
+   "family": null,
+   "model": "Daypack Classic",
+   "type": "backpack",
+   "liters": 20,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Navy"
+    },
+    {
+     "color": "Bone White / Black"
+    },
+    {
+     "color": "Asphalt / Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Topo Designs",
+     "channel": "online",
+     "price": 109,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://topodesigns.com/products/daypack-classic-bone-white-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://topodesigns.com/products/daypack-classic-navy",
+   "status": "verified"
+  },
+  {
+   "brand": "Topo Designs",
+   "family": null,
+   "model": "Commuter Backpack",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Beetle / Khaki"
+    },
+    {
+     "color": "Black / Neutral"
+    },
+    {
+     "color": "Desert Palm / Elmwood"
+    },
+    {
+     "color": "Navy / Sahara"
+    },
+    {
+     "color": "Classic Blue / Bone White"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Topo Designs",
+     "channel": "online",
+     "price": 129,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://topodesigns.com/products/commuter-backpack-desert-palm-elmwood",
+     "status": "verified"
+    }
+   ],
+   "url": "https://topodesigns.com/products/commuter-backpack-beetle-khaki",
+   "status": "verified"
+  },
+  {
+   "brand": "Topo Designs",
+   "family": null,
+   "model": "Mountain Duffel 40L",
+   "type": "duffel",
+   "liters": 40,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Grid / Very Peri"
+    },
+    {
+     "color": "Black / Neutral"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Topo Designs",
+     "channel": "online",
+     "price": 169,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://topodesigns.com/products/mountain-duffel-40l-grid-very-peri",
+     "status": "verified"
+    }
+   ],
+   "url": "https://topodesigns.com/products/mountain-duffel-40l-grid-very-peri",
+   "status": "verified"
+  },
+  {
+   "brand": "Topo Designs",
+   "family": null,
+   "model": "Rover Trail Pack",
+   "type": "backpack",
+   "liters": 22,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Nightshade / Grid"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Topo Designs",
+     "channel": "online",
+     "price": 169,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://topodesigns.com/products/rover-trail-pack-final-sale-1",
+     "status": "verified"
+    }
+   ],
+   "url": "https://topodesigns.com/products/rover-trail-pack-final-sale-1",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "City Pack Pro 2 20L",
+   "type": "backpack",
+   "liters": 20,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 199,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/city-pack-pro-2-20l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/city-pack-pro-2-20l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "City Pack Pro 2 Ultra 20L",
+   "type": "backpack",
+   "liters": 20,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Ultra"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 249,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/city-pack-pro-2-ultra-20l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/city-pack-pro-2-ultra-20l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "City Pack Pro 2 X-Pac 20L",
+   "type": "backpack",
+   "liters": 20,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "X-Pac"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 229,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/city-pack-pro-2-x-pac-20l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/city-pack-pro-2-x-pac-20l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "City Pack Pro 2 Ultra 24L",
+   "type": "backpack",
+   "liters": 24,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Ultra"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 269,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/city-pack-pro-2-ultra-24l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/city-pack-pro-2-ultra-24l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "City Pack Pro 2 X-Pac 24L",
+   "type": "backpack",
+   "liters": 24,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "X-Pac"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 249,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/city-pack-pro-2-x-pac-24l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/city-pack-pro-2-x-pac-24l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "City Pack Pro 2 24L",
+   "type": "backpack",
+   "liters": 24,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 219,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/city-pack-pro-2-24l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/city-pack-pro-2-24l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "Travel Pack 4 X-Pac 35L",
+   "type": "backpack",
+   "liters": 35,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "X-Pac"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 289,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/travel-pack-4-x-pac-35l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/travel-pack-4-x-pac-35l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "Travel Pack 4 X-Pac 28L",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "X-Pac"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 269,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/travel-pack-4-x-pac-28l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/travel-pack-4-x-pac-28l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "Travel Pack 4 Ultra 28L",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Ultra"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 289,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/travel-pack-4-ultra-28l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/travel-pack-4-ultra-28l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "Travel Pack 4 Ultra 35L",
+   "type": "backpack",
+   "liters": 35,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Ultra"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 309,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/travel-pack-4-ultra-35l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/travel-pack-4-ultra-35l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "Travel Pack 4 28L",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 239,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/travel-pack-4-28l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/travel-pack-4-28l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "Travel Pack 4 35L",
+   "type": "backpack",
+   "liters": 35,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 259,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/travel-pack-4-35l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/travel-pack-4-35l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "City Pack Pro 2 ECOPAK 24L",
+   "type": "backpack",
+   "liters": 24,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Coyote"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 249,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/city-pack-pro-2-ecopak-24l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/city-pack-pro-2-ecopak-24l",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "City Pack Pro 2 Ultra (2025)",
+   "type": "backpack",
+   "liters": 24,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Ultra"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 259,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/city-pack-pro-2-ultra",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/city-pack-pro-2-ultra",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "City Pack Pro 2 X-Pac (2025)",
+   "type": "backpack",
+   "liters": 24,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "X-Pac"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 239,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/city-pack-pro-2-x-pac",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/city-pack-pro-2-x-pac",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "Travel Pack 3 Small",
+   "type": "backpack",
+   "liters": 28,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Ultra"
+    },
+    {
+     "color": "X-Pac"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 259,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/travel-pack-3-small-x-pac",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/travel-pack-3-small-ultra",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "Travel Pack 3",
+   "type": "backpack",
+   "liters": 35,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "X-Pac"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 249,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/travel-pack-3",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/travel-pack-3-x-pac",
+   "status": "verified"
+  },
+  {
+   "brand": "Aer",
+   "family": null,
+   "model": "Pro Pack 24L",
+   "type": "backpack",
+   "liters": 24,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Aer",
+     "channel": "online",
+     "price": 199,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.aersf.com/products/pro-pack-24l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.aersf.com/products/pro-pack-24l",
+   "status": "verified"
+  },
+  {
+   "brand": "Arlo Skye",
+   "family": null,
+   "model": "The Arc Weekender by Arlo Skye x Dusen Dusen",
+   "type": "duffel",
+   "liters": 31,
+   "outsideCm": [
+    52.1,
+    23.1,
+    29
+   ],
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Arlo Skye",
+     "channel": "online",
+     "price": 295,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://arloskye.com/products/the-arc-weekender-by-arlo-skye-x-dusen-dusen",
+     "status": "verified"
+    }
+   ],
+   "url": "https://arloskye.com/products/the-arc-weekender-by-arlo-skye-x-dusen-dusen",
+   "status": "verified"
+  },
+  {
+   "brand": "Arlo Skye",
+   "family": null,
+   "model": "The Backpack",
+   "type": "backpack",
+   "liters": 25,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Mint"
+    },
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Arlo Skye",
+     "channel": "online",
+     "price": 250,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://arloskye.com/products/the-backpack-mint-1",
+     "status": "verified"
+    }
+   ],
+   "url": "https://arloskye.com/products/the-backpack-mint-1",
+   "status": "verified"
+  },
+  {
+   "brand": "Arlo Skye",
+   "family": null,
+   "model": "Original Check-In - Medium",
+   "type": "medium",
+   "liters": 71,
+   "outsideCm": null,
+   "kg": 4.08,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Arlo Skye",
+     "channel": "online",
+     "price": 395,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://arloskye.com/products/the-polycarbonate-zipper-check-in",
+     "status": "verified"
+    }
+   ],
+   "url": "https://arloskye.com/products/the-polycarbonate-zipper-check-in",
+   "status": "verified"
+  },
+  {
+   "brand": "Arlo Skye",
+   "family": null,
+   "model": "Original Carry-On Max",
+   "type": "carry-on",
+   "liters": 45,
+   "outsideCm": null,
+   "kg": 3.18,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Navy"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Arlo Skye",
+     "channel": "online",
+     "price": 275,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://arloskye.com/products/the-polycarbonate-zipper-carry-on-max",
+     "status": "verified"
+    }
+   ],
+   "url": "https://arloskye.com/products/the-polycarbonate-zipper-carry-on-max",
+   "status": "verified"
+  },
+  {
+   "brand": "Arlo Skye",
+   "family": null,
+   "model": "Original Carry-On Max — Front Pocket",
+   "type": "carry-on",
+   "liters": 47,
+   "outsideCm": null,
+   "kg": 3.67,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Champagne"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Arlo Skye",
+     "channel": "online",
+     "price": 295,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://arloskye.com/products/the-polycarbonate-zipper-carry-on-max-with-front-pocket",
+     "status": "verified"
+    }
+   ],
+   "url": "https://arloskye.com/products/the-polycarbonate-zipper-carry-on-max-with-front-pocket",
+   "status": "verified"
+  },
+  {
+   "brand": "Arlo Skye",
+   "family": null,
+   "model": "Original Frame Carry-On Max",
+   "type": "carry-on",
+   "liters": 44,
+   "outsideCm": null,
+   "kg": 3.95,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [
+    {
+     "color": "Black"
+    }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Arlo Skye",
+     "channel": "online",
+     "price": 475,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://arloskye.com/products/the-bigger-carry-on-polycarbonate-zipperless",
+     "status": "verified"
+    }
+   ],
+   "url": "https://arloskye.com/products/the-bigger-carry-on-polycarbonate-zipperless",
+   "status": "verified"
+  },
+  {
+   "brand": "Tortuga",
+   "family": null,
+   "model": "Pro Backpack 34L",
+   "type": "backpack",
+   "liters": 34,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Tortuga",
+     "channel": "online",
+     "price": 300,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.tortugabackpacks.com/products/travel-backpack-34l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.tortugabackpacks.com/products/travel-backpack-34l",
+   "status": "verified"
+  },
+  {
+   "brand": "Tortuga",
+   "family": null,
+   "model": "Lite Backpack 40L",
+   "type": "backpack",
+   "liters": 40,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Tortuga",
+     "channel": "online",
+     "price": 250,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.tortugabackpacks.com/products/travel-backpack-lite-40l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.tortugabackpacks.com/products/travel-backpack-lite-40l",
+   "status": "verified"
+  },
+  {
+   "brand": "Tortuga",
+   "family": null,
+   "model": "Pro Backpack 40L",
+   "type": "backpack",
+   "liters": 40,
+   "outsideCm": null,
+   "kg": null,
+   "material": null,
+   "wheels": null,
+   "expandable": null,
+   "warrantyYears": null,
+   "variants": [],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Tortuga",
+     "channel": "online",
+     "price": 350,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.tortugabackpacks.com/products/travel-backpack-40l",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.tortugabackpacks.com/products/travel-backpack-40l",
+   "status": "verified"
+  }
+ ],
+ "notFound": [
+  "Db (https://dbjourney.com, its own store's products.json): 59 bags kept; left out 199 not a bag the catalog sells (a hip pack, a board bag, an accessory, clothing), 23 no liters or outside measure in its own listing.",
+  "Cotopaxi (https://www.cotopaxi.com, its own store's products.json): 51 bags kept; left out 1307 not a bag the catalog sells (a hip pack, a board bag, an accessory, clothing), 4 another maker sold there, 4 no liters or outside measure in its own listing.",
+  "Dakine (https://www.dakine.com, its own store's products.json): 45 bags kept; left out 1043 not a bag the catalog sells (a hip pack, a board bag, an accessory, clothing), 107 another maker sold there.",
+  "Matador (https://www.matadorup.com, its own store's products.json): 10 bags kept; left out 88 not a bag the catalog sells (a hip pack, a board bag, an accessory, clothing), 1 no liters or outside measure in its own listing.",
+  "Topo Designs (https://topodesigns.com, its own store's products.json): 4 bags kept; left out 472 not a bag the catalog sells (a hip pack, a board bag, an accessory, clothing), 59 no liters or outside measure in its own listing.",
+  "Aer (https://www.aersf.com, its own store's products.json): 19 bags kept; left out 66 not a bag the catalog sells (a hip pack, a board bag, an accessory, clothing), 27 no liters or outside measure in its own listing.",
+  "Arlo Skye (https://arloskye.com, its own store's products.json): 8 bags kept; left out 9 not a bag the catalog sells (a hip pack, a board bag, an accessory, clothing), 9 no liters or outside measure in its own listing, 2 a listing of several bags under one Model option.",
+  "Tortuga (https://www.tortugabackpacks.com, its own store's products.json): 3 bags kept; left out 29 not a bag the catalog sells (a hip pack, a board bag, an accessory, clothing), 7 no liters or outside measure in its own listing.",
+  "31 bags read had no color still sold in any market, and aren't kept."
+ ]
+}
