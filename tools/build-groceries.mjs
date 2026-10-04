@@ -47,7 +47,7 @@ const KEYS = [
   ['sausage', /sausages?|salchichas?|chorizo/],
   ['fish', /fish|tilapia|\bcod\b|salmon|haddock|pescado|filete/],
   ['tuna', /tuna|at[uú]n/],
-  ['beans', /beans|chickpeas|garbanzo|lentils|dhal|dal\b|frijol(es)?/],
+  ['beans', /beans|chick ?peas|garbanzo|lentils|dhal|dal\b|frijol(es)?/],
   ['onion', /onions?|cebollas?/],
   ['garlic', /garlic|\bajo\b/],
   ['potato', /potato(es)?|\bpapas?\b/],
@@ -63,7 +63,7 @@ const KEYS = [
   ['celery', /celery|apio/],
   ['courgette', /courgettes?|zucchini|calabacitas?/],
   ['pepper', /(bell|sweet|red|green|yellow) peppers?|peppers?\b(?! \()|pimientos?/],
-  ['chilli', /chill?i(es)?\b(?! powder)|jalape[nñ]os?|serrano/],
+  ['chilli', /chill?i(es)?\b(?! powder)|jalape[nñ]o peppers?|jalape[nñ]os?|serrano/],
   ['spinach', /spinach|espinacas?/],
   ['broccoli', /broccoli|br[oó]coli/],
   ['cabbage', /cabbage|col\b|repollo/],
@@ -90,8 +90,11 @@ const KEYS = [
 /** Taken as in the cupboard: seasonings, spices, stock, water and the like. */
 const CUPBOARD = /^(salt|pepper)\b|\b(black|white|ground) pepper|salt and pepper|herbs?|oregano|cumin|chill?i powder|cayenne|turmeric|garam|paprika|cinnamon|\bginger\b|coriander|cilantro|parsley|chives|thyme|bay leaf|epazote|vanilla|stock|broth|bouillon|gravy|water\b|baking soda|mustard|soy sauce|curry paste|pesto|honey|mayonnaise|cornflour|wheat (germ|bran)|zest/;
 
-/** A name without what it's packed or flavored with: "tuna in spring water" is tuna, "soft cheese with garlic and herbs" cheese. */
-const headOf = (text) => String(text).toLowerCase().split(/ (?:in|with|en|con) /)[0];
+/**
+ * A name without what it's packed or flavored with, or made without: "tuna in spring water" is tuna, "soft cheese
+ * with garlic and herbs" cheese, Hunt's "Tomato Paste - No Salt Added" tomato paste (salt until 2026-10-04).
+ */
+const headOf = (text) => String(text).toLowerCase().replace(/\bno [a-z ]+ added\b/g, '').split(/ (?:in|with|en|con) /)[0];
 
 function keyOf(text, first = false) {
   const t = headOf(text);
@@ -109,28 +112,33 @@ function keyOf(text, first = false) {
 /** Made from a food, and not it: a stock, a bouillon, a soup. A recipe's stock is the cupboard's, so no recipe buys one. */
 const MADE = /stock|bouillon|broth|consom[eé]|\bsoups?\b|\bsopas?\b|\bcaldos?\b|gravy/;
 const SAUCE = new RegExp(KEYS.find(([key]) => key === 'pasta-sauce')[1].source);
+/** A fresh food off the pantry shelf is kept another way: a tomato there is canned, cranberries dried. */
+const PRESERVED = { tomato: 'tomatoes-canned', berries: 'dried-fruit' };
 
 /**
  * The food a product is (from 2026-10-04). A Mexican product's name is
  * Spanish, read from its first food word, as Chedraui names a product noun
  * first: "Jugo Jumex Naranja" is juice and "Naranja de Jugo" an orange,
- * "Tortilla de Maíz" a tortilla. A stock, a bouillon or a soup is no food a recipe buys; what the
- * shop sells as a ready meal is one; a sauce is the sauce whatever's in it; a
- * tomato off the produce shelf is a canned one. Until then every name was read
- * from its last food word and none of this held, and a recipe short of chicken
- * bought stock cubes for it, cheapest in five of the eight towns: Herb-Ox's,
- * Knorr's, Tesco's, Chedraui's consommé, and in Dublin Oxo's beef for the
- * mince. Once the cubes were gone, London's chicken was Tesco's Chicken Tikka
- * Masala and Vancouver's a butter chicken entrée. Los Angeles' garlic was First
- * Street's pasta sauce, Toronto's peppers Prego's, Mexico City's beef mince
- * Nissin's instant soup and its peas a pack of tortillas.
+ * "Tortilla de Maíz" a tortilla. A stock, a bouillon or a soup is no food a
+ * recipe buys; what the shop sells as a ready meal is one; a sauce is the
+ * sauce whatever's in it; a fresh food off the pantry shelf is its canned or
+ * dried kind. Until then every name was read from its last food word and none
+ * of this held, and a recipe short of chicken bought stock cubes for it,
+ * cheapest in five of the eight towns: Herb-Ox's, Knorr's, Tesco's, Chedraui's
+ * consommé, and in Dublin Oxo's beef for the mince. Once the cubes were gone,
+ * London's chicken was Tesco's Chicken Tikka Masala and Vancouver's a butter
+ * chicken entrée. Los Angeles' garlic was First Street's pasta sauce, its bell
+ * pepper a jalapeño and its blueberries Ocean Spray's dried cranberries;
+ * Toronto's peppers were Prego's sauce, Vancouver's peas Italissima's chick
+ * peas, Mexico City's beef mince Nissin's instant soup and its peas a pack of
+ * tortillas.
  */
 function productKey(p) {
   const head = headOf(p.name);
   const key = MADE.test(head) ? undefined : SAUCE.test(head) ? 'pasta-sauce' : keyOf(p.name, p.market === 'MX');
   // Sold as a ready meal, it's eaten as one, a pizza pocket as a pizza: Tesco's Chicken Tikka Masala isn't the chicken.
   if (p.category === 'ready-meal') return key === 'pizza' ? key : 'ready-meal';
-  return key === 'tomato' && p.category !== 'produce' ? 'tomatoes-canned' : key;
+  return (p.category === 'pantry' && PRESERVED[key]) || key;
 }
 
 /** The FoodKeeper row for a food, by its key and category. */
@@ -161,7 +169,9 @@ function keepsFor(key, category, storage) {
   if (days !== undefined) return { keepsDays: days, keepsEstimated: false, keepsSource: row.source };
   // Sugar, salt, water, beer and wine keep: FoodKeeper gives them no limit.
   if (['sugar', 'salt', 'water', 'beer', 'wine'].includes(key)) return { keepsDays: null, keepsEstimated: false, keepsSource: 'Keeps indefinitely' };
-  const est = storage === 'freezer' ? ESTIMATE.frozen : ESTIMATE[category] ?? 7;
+  // A ready meal kept in the cupboard is a dry one, a box of macaroni and cheese or an instant soup: a dry good's year,
+  // not a chilled meal's three days (until 2026-10-04 it went off in three).
+  const est = storage === 'freezer' ? ESTIMATE.frozen : storage === 'pantry' && category === 'ready-meal' ? ESTIMATE.pantry : ESTIMATE[category] ?? 7;
   return { keepsDays: est, keepsEstimated: true, keepsSource: 'SLATE’s estimate' };
 }
 

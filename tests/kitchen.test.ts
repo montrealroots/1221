@@ -292,6 +292,23 @@ describe('the food a product is', () => {
     expect(GROCERY_PRODUCTS.filter((p) => /stock|bouillon|consom/i.test(p.name)).map((p) => p.id)).toEqual([]);
   });
 
+  it('is a chilli for a jalapeño, beans for chick peas, and a fresh food’s canned or dried kind off the pantry shelf', () => {
+    const food = (id: string) => productById(id)?.food;
+    expect(food('smartfinal-jalapeno-peppers')).toBe('chilli');
+    expect(food('saveonfoods-jalapeno-peppers-hot-green')).toBe('chilli');
+    expect(RECIPES.find((r) => r.id === 'canada-turkey-chili')!.ingredients.find((i) => i.name === 'jalapeño pepper')).toMatchObject({ food: 'chilli' });
+    expect(food('saveonfoods-italissima-chick-peas')).toBe('beans');
+    expect(food('saveonfoods-hunts-tomato-paste-no-salt-added')).toBe('tomatoes-canned');
+    expect(food('smartfinal-ocean-spray-cranberries-dried')).toBe('dried-fruit');
+    expect(food('tesco-gb-tesco-perfectly-imperfect-frozen-mixed-berries-1kg')).toBe('berries');
+  });
+
+  it('keeps a dry good’s year as a ready meal in the cupboard, and three days chilled', () => {
+    // SLATE's estimates: FoodKeeper has no row for a boxed or instant meal.
+    expect(productById('saveonfoods-kraft-dinner-original-macaroni-and-cheese-dinner-200-g')).toMatchObject({ storage: 'pantry', keepsDays: 365, keepsEstimated: true });
+    expect(productById('tesco-gb-tesco-chicken-tikka-masala-with-pilau-rice-400g')).toMatchObject({ storage: 'fridge', keepsDays: 3, keepsEstimated: true });
+  });
+
   it('is meat from the meat counter where a recipe is short of meat, in every town with a grocer', () => {
     const towns = ['us-ny-newyork', 'us-ca-losangeles', 'us-ct-newhaven', 'uk-eng-london', 'ie-lei-dublin', 'ca-on-toronto', 'ca-bc-vancouver', 'mx-cmx-mexicocity'];
     const meaty = RECIPES.filter((r) => r.ingredients.some((i) => !i.cupboard && (i.food === 'chicken' || i.food === 'beef')));
