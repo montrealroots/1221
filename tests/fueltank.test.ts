@@ -16,7 +16,7 @@ import { FUEL } from '@/engine/content/vehiclefees';
 import { CHARGING } from '@/engine/content/evcatalog';
 import { documentsOf } from '@/engine/systems/documents';
 import { modelById, monthKm, vehiclesOf } from '@/engine/systems/vehicles';
-import { FILL, PUBLIC_KW, burnOf, capacityOf, everydayFuel, fillQuote, levelOf, rangeKm } from '@/engine/systems/fueltank';
+import { FILL, PUBLIC_KW, burnOf, capacityOf, chargeMinutes, everydayFuel, levelOf, planFill, rangeKm } from '@/engine/systems/fueltank';
 import { leg } from '@/engine/systems/trips';
 import { tintFuelFactor } from '@/engine/systems/tint';
 
@@ -50,7 +50,8 @@ describe('the tank', () => {
     const cap = capacityOf(modelById(v.modelId)!)!;
     v.fuelLevel = 0.4;
     expect(sim.execute({ kind: 'vehicle.refuel', payload: { vehicleId: v.id, home: true } }).error).toBe('Only a battery charges at home.');
-    const q = fillQuote(sim, v, 1)!;
+    const q = planFill(sim, v, { by: 'full' });
+    if (typeof q === 'string') throw new Error(q);
     expect(q.amount).toBeCloseTo(0.6 * cap.size, 9);
     expect(q.cost).toBe(inSave(sim, Math.round(0.6 * cap.size * FUEL['US-NY'].petrol), 'USD'));
     const r = sim.execute<{ paid: number }>({ kind: 'vehicle.refuel', payload: { vehicleId: v.id } });
@@ -128,7 +129,7 @@ describe('the tank', () => {
 });
 
 describe('the battery', () => {
-  it('charges publicly to full at the public price over the time a 50 kW charger takes', () => {
+  it('charges publicly to full at the public price over the time a 50 kW charger takes, slower past 80% by its curve', () => {
     const sim = life('ev-charge');
     const v = withCar(sim, 'us-tesla-model-y');
     noon(sim);
@@ -140,7 +141,10 @@ describe('the battery', () => {
     expect(r.ok, r.error).toBe(true);
     expect(r.value!.amount).toBeCloseTo(0.7 * cap.size, 9);
     expect(r.value!.paid).toBe(inSave(sim, Math.round(0.7 * cap.size * CHARGING['US-NY'].public), 'USD'));
-    expect(sim.now - start).toBe(Math.round(((0.7 * cap.size) / PUBLIC_KW) * 60) * 60_000);
+    const minutes = chargeMinutes(modelById(v.modelId)!, cap.size, 0.3, 1, PUBLIC_KW);
+    expect(sim.now - start).toBe(minutes * 60_000);
+    // Past 80% the Model Y takes less than 50 kW, so the last fifth is slower than 50 kW would be.
+    expect(minutes).toBeGreaterThan(Math.round(((0.7 * cap.size) / PUBLIC_KW) * 60));
     expect(levelOf(v)).toBe(1);
   });
 
@@ -150,7 +154,8 @@ describe('the battery', () => {
     v.fuelLevel = 0.3;
     expect(sim.execute({ kind: 'vehicle.refuel', payload: { vehicleId: v.id, home: true } }).error).toBe('There’s no charger where you live.');
     // With one, to the 80% for every day, at the home price, and none of the player's time.
-    const q = fillQuote(sim, v, FILL.batteryTo, true)!;
+    const q = planFill(sim, v, { by: 'level', value: FILL.batteryTo }, { home: true });
+    if (typeof q === 'string') throw new Error(q);
     expect(q.cost).toBe(inSave(sim, Math.round(0.5 * capacityOf(modelById(v.modelId)!)!.size * CHARGING['US-NY'].home), 'USD'));
   });
 });

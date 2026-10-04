@@ -43,7 +43,8 @@ import { CAR_SHOPS } from '@/engine/content/carshops';
 import { standInFor, standInQuote } from '@/engine/systems/standin';
 import { optionsFor, optionsQuote, orderWeeksOf, specOf } from '@/engine/systems/caroptions';
 import { FITS, MATERIAL_LABEL, PART_LABEL, UPHOLSTERERS, interiorQuote, type Material, type Part } from '@/engine/systems/interiors';
-import { capacityOf, fillRefusal, fillingOf, levelOf, lowAt, planFill, rangeKm, type FillAmount } from '@/engine/systems/fueltank';
+import { GRADE_LABEL, capacityOf, chargersIn, fillRefusal, fillingOf, gradesFor, levelOf, lowAt, planFill, priceAt, rangeKm, type FillAmount, type FillAt, type UnitPrice } from '@/engine/systems/fueltank';
+import type { Grade } from '@/engine/content/fuelcharging';
 import { STATIONS } from '@/engine/content/errandtrips';
 import { homeShareOf } from '@/engine/systems/charging';
 import { audioQuote, stereoQuote } from '@/engine/systems/caraudio';
@@ -546,7 +547,7 @@ function FuelPanel({ cars }: { cars: OwnedVehicle[] }) {
   const tanked = cars.filter((v) => capacityOf(modelById(v.modelId)!) !== undefined && v.repossessed === undefined);
   if (!tanked.length) return null;
   return (
-    <Panel title="Fuel And Charging" subtitle="Where, how much, and what it comes to; the price is the area’s average where no station’s own is kept">
+    <Panel title="Fuel And Charging" subtitle="Where, which grade or charger, how much, and what it comes to; a station’s own posted price where one is published, the area’s average where not">
       <div className="col gap-4">{tanked.map((v) => <FillForm key={v.id} v={v} />)}</div>
     </Panel>
   );
@@ -563,17 +564,26 @@ function FillForm({ v }: { v: OwnedVehicle }) {
   const cur = saveCurrency(sim.universe);
   const money = (c: number) => formatMoney(c, cur);
   const stations = STATIONS[person.currentLocationId] ?? [];
-  const places = ev ? ['public', ...(homeShareOf(person) > 0 ? ['home'] : [])] : stations.map((_, i) => String(i));
+  // An electric car's places: the town's named chargers, any public one at the area's average, and home with a charger.
+  // Cheapest first on one basis, a kWh or a liter of the car's usual grade in the save's money; a place the car can't use after them, and one by the hour last of those it can.
+  const usual: Grade = m.fuel === 'diesel' ? 'diesel' : 'regular';
+  const rank = (p: UnitPrice | string): number => (typeof p === 'string' ? Infinity : p.perHour !== undefined ? 1e9 : inSaveMoney(sim, Math.round(p.minor * 1000), p.currency) / 1000);
+  const chargers = ev ? [...chargersIn(person.currentLocationId)].sort((a, b) => rank(priceAt(v, { chargerId: a.id }, sim.now)) - rank(priceAt(v, { chargerId: b.id }, sim.now))) : [];
+  const stationOrder = stations.map((_, i) => i).sort((a, b) => rank(priceAt(v, { station: a, grade: usual }, sim.now)) - rank(priceAt(v, { station: b, grade: usual }, sim.now)));
+  const places = ev ? [...chargers.map((c) => c.id), 'public', ...(homeShareOf(person) > 0 ? ['home'] : [])] : stationOrder.map(String);
   const [place, setPlace] = useState(places[0] ?? '0');
+  const grades = gradesFor(m);
+  const [grade, setGrade] = useState<Grade>(grades[0]!);
   const [by, setBy] = useState<FillBy>('full');
   const [value, setValue] = useState('');
   const home = place === 'home';
+  const at: FillAt = ev ? (home ? { home: true } : place === 'public' ? {} : { chargerId: place }) : { station: Number(place), grade };
   const amount: FillAmount = by === 'full' ? { by: 'full' } : by === 'level' ? { by: 'level', value: Number(value) / 100 } : by === 'spend' ? { by: 'spend', value: Math.round(Number(value) * 100) } : { by: 'quantity', value: Number(value) };
   const no = fillRefusal(person, v.id, home);
-  const plan = no ? no : by !== 'full' && !(Number(value) > 0) ? 'Enter an amount.' : planFill(sim, v, amount, home);
+  const plan = no ? no : by !== 'full' && !(Number(value) > 0) ? 'Enter an amount.' : planFill(sim, v, amount, at);
   const unit = cap.unit === 'kWh' ? 'kWh' : 'Liters';
   const range = rangeKm(v);
-  const basis = ev ? (home ? 'the home rate where you live' : 'the area’s public charging average') : 'the area’s pump average, not this station’s own price';
+  const unitPrice = (p: UnitPrice) => (p.perHour !== undefined ? `${formatMoney(Math.round(p.perHour), p.currency)} an hour` : `${formatMoney(Math.round(p.minor), p.currency)} a ${ev ? 'kWh' : 'liter'}`);
   return (
     <div className="col gap-2">
       <div className="row" style={{ justifyContent: 'space-between', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
@@ -584,9 +594,22 @@ function FillForm({ v }: { v: OwnedVehicle }) {
         <div className="field">
           <label htmlFor={`fill-at-${v.id}`}>{ev ? 'Charge At' : 'Station'}</label>
           <select id={`fill-at-${v.id}`} value={place} onChange={(e) => setPlace(e.target.value)}>
-            {ev ? places.map((p) => <option key={p} value={p}>{p === 'home' ? 'Home, On Your Charger' : 'A Public Fast Charger'}</option>) : stations.map((st, i) => <option key={st} value={String(i)}>{st}</option>)}
+            {ev ? places.map((p) => {
+              const c = chargers.find((x) => x.id === p);
+              if (!c) return <option key={p} value={p}>{p === 'home' ? 'Home, On Your Charger' : 'Any Public Fast Charger, The Area’s Average'}</option>;
+              const price = priceAt(v, { chargerId: c.id }, sim.now);
+              return <option key={p} value={p}>{`${c.network}, ${c.name}, ${c.kw} kW, ${typeof price === 'string' ? price.replace(/\.$/, '') : unitPrice(price)}`}</option>;
+            }) : stationOrder.map((i) => { const price = priceAt(v, { station: i, grade: usual }, sim.now); return <option key={stations[i]} value={String(i)}>{`${stations[i]}${typeof price === 'string' ? '' : `, ${GRADE_LABEL[usual]} ${unitPrice(price)}`}`}</option>; })}
           </select>
         </div>
+        {!ev && (
+          <div className="field">
+            <label htmlFor={`fill-grade-${v.id}`}>Grade</label>
+            <select id={`fill-grade-${v.id}`} value={grade} onChange={(e) => setGrade(e.target.value as Grade)}>
+              {grades.map((g) => { const p = priceAt(v, { station: Number(place), grade: g }, sim.now); return <option key={g} value={g}>{`${GRADE_LABEL[g]}${typeof p === 'string' ? ' (Not Here)' : `, ${unitPrice(p)}${p.basis === 'station' ? ', Posted' : ', Area Average'}`}`}</option>; })}
+            </select>
+          </div>
+        )}
         <div className="field">
           <label htmlFor={`fill-by-${v.id}`}>How Much</label>
           <select id={`fill-by-${v.id}`} value={by} onChange={(e) => { setBy(e.target.value as FillBy); setValue(''); }}>
@@ -606,9 +629,9 @@ function FillForm({ v }: { v: OwnedVehicle }) {
       <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
         <Gated feature="vehicle.refuel" className="btn btn-sm btn-primary" disabled={typeof plan === 'string'} title={typeof plan === 'string' ? plan : undefined} onClick={() => {
           const a = run<{ amount: number; paid: number; minutes: number }>('vehicle.refuel', { vehicleId: v.id, ...(home ? { home: true } : ev ? {} : { station: Number(place) }), amount });
-          if (a.ok) toast(`${a.value!.amount.toFixed(1)} ${unit.toLowerCase()} for ${money(a.value!.paid)}${a.value!.minutes ? `, ${a.value!.minutes} minutes` : ''}.`, 'positive');
+          if (a.ok) toast(`${a.value!.amount.toFixed(1)} ${cap.unit === 'kWh' ? 'kWh' : 'liters'} for ${money(a.value!.paid)}${a.value!.minutes ? `, ${a.value!.minutes} minutes` : ''}.`, 'positive');
         }}>{ev ? 'Charge It' : 'Fill It'}</Gated>
-        <span className="small">{typeof plan === 'string' ? plan : `${plan.amount.toFixed(1)} ${unit.toLowerCase()} for ${money(plan.cost)}${plan.minutes ? `, ${plan.minutes} minutes` : ', overnight'}, at ${basis}.`}</span>
+        <span className="small">{typeof plan === 'string' ? plan : `${plan.amount.toFixed(1)} ${cap.unit === 'kWh' ? 'kWh' : 'liters'} for ${money(plan.cost)}${plan.minutes ? `, ${plan.minutes} minutes` : ', overnight'}, at ${unitPrice(plan.price)}: ${plan.price.why}.`}</span>
       </div>
       <label className="small row gap-1" style={{ alignItems: 'center' }}>
         <Gated feature="vehicle.set_filling" className="btn btn-sm btn-ghost" onClick={() => { if (run('vehicle.set_filling', { vehicleId: v.id, auto: fillingOf(v) !== 'auto' }).ok) toast(fillingOf(v) === 'auto' ? 'It’s filled as it’s driven now.' : 'Only you fill it now.', 'positive'); }}>{fillingOf(v) === 'auto' ? 'Fill It Only When I Do' : 'Fill It As It’s Driven'}</Gated>
@@ -616,7 +639,7 @@ function FillForm({ v }: { v: OwnedVehicle }) {
       </label>
       {(v.fills ?? []).length > 0 && (
         <ul className="list-plain xs dim">
-          {(v.fills ?? []).slice(0, 5).map((f) => <li key={f.at}>{`${formatDate(f.at, sim.zone)}: ${f.amount.toFixed(1)} ${f.unit === 'kWh' ? 'kWh' : 'liters'} at ${f.where}, ${money(f.cost)}${f.basis === 'area' ? ' (the area’s price)' : ''}, to ${Math.round(f.level * 100)}%`}</li>)}
+          {(v.fills ?? []).slice(0, 5).map((f) => <li key={f.at}>{`${formatDate(f.at, sim.zone)}: ${f.amount.toFixed(1)} ${f.unit === 'kWh' ? 'kWh' : 'liters'}${f.grade ? ` of ${GRADE_LABEL[f.grade].toLowerCase()}` : ''} at ${f.where}, ${money(f.cost)}, to ${Math.round(f.level * 100)}%${f.priceWhy ? `; ${f.priceWhy}` : f.basis === 'area' ? '; the area’s price' : ''}`}</li>)}
         </ul>
       )}
     </div>

@@ -51,12 +51,13 @@ import { RIDE_MODELS } from '../content/ridecatalog';
 import { FUEL_STOP_MINUTES, STATIONS } from '../content/errandtrips';
 import { TANKS } from '../content/tanks';
 import { spend } from './household';
-import { modelById, startDays, vehiclesOf, type OwnedVehicle } from './vehicles';
+import { jurisdictionOf, modelById, startDays, vehiclesOf, type OwnedVehicle } from './vehicles';
 import { tintFuelFactor } from './tint';
 import { roofFuelFactor } from './roofbox';
 import { livingIn } from './homes';
 import type { CarModel } from '../content/vehiclecatalog';
 import type { Instant } from '../core/time';
+import { AREA_GRADES, CHARGERS, CHARGE_CURVES, EV_PORTS, STATION_GRADES, type Charger, type Connector, type Grade, type Station } from '../content/fuelcharging';
 
 /** When a driver fills, and to what: AAA's quarter tank; a battery at a fifth to the 80% makers advise daily. */
 export const FILL = { petrolAt: 0.25, petrolTo: 1, batteryAt: 0.2, batteryTo: 0.8 } as const;
@@ -130,7 +131,8 @@ export type FillAmount = { by: 'full' } | { by: 'quantity'; value: number } | { 
 /** One fill kept on the car. */
 export interface FillRecord {
   at: Instant; where: string; amount: number; unit: 'L' | 'kWh'; cost: Money;
-  /** The station's own price, or the area's average. */ basis: 'station' | 'area';
+  /** The station's own price, the area's average, a charger's own or its network's, or the home rate. */ basis: UnitPrice['basis'];
+  /** The grade bought, where it's fuel; what the price was. */ grade?: Grade; priceWhy?: string;
   minutes: number; /** 0 to 1, after. */ level: number; rangeKm?: number;
 }
 export const FILL_LOG_KEEP = 20;
@@ -149,16 +151,6 @@ function unitPrice(v: OwnedVehicle, m: CarModel, home: boolean): { cents: number
 }
 
 const inSave = (sim: Simulation, cents: number, from: string): Money => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };
-
-/** What filling to a level costs now, and how much goes in: at a station, or at home on a charger. */
-export function fillQuote(sim: Simulation, v: OwnedVehicle, to: number, home = false): { amount: number; unit: 'L' | 'kWh'; cost: Money; estimated: boolean } | undefined {
-  const m = modelById(v.modelId)!;
-  const cap = capacityOf(m);
-  if (!cap) return undefined;
-  const amount = Math.max(0, to - levelOf(v)) * cap.size;
-  const p = unitPrice(v, m, home);
-  return { amount, unit: cap.unit, cost: inSave(sim, Math.round(amount * p.cents), p.currency), estimated: cap.estimated };
-}
 
 /**
  * The month's everyday driving through the tank: burned kilometer by
@@ -194,20 +186,137 @@ export function everydayFuel(sim: Simulation, v: OwnedVehicle, km: number, homeS
   return { bought, cost: inSave(sim, Math.round(cents), out.currency), fills };
 }
 
+/** Where a fill is bought: at home, a station of the town by its place in the list and a grade, or a named charger; a public charger at the area's average where none is named. */
+export interface FillAt { home?: boolean; station?: number; grade?: Grade; chargerId?: string }
+
+/** A unit's price as it will be paid, in the place's minor unit a liter or kWh, or by the hour; and what it rests on. */
+export interface UnitPrice {
+  minor: number; currency: string; perHour?: number;
+  basis: 'station' | 'area' | 'site' | 'network' | 'home'; /** What the price is, in a sentence. */ why: string; date?: string;
+  /** The charger's power, kW, where it's one. */ kw?: number;
+}
+
+export const GRADE_LABEL: Readonly<Record<Grade, string>> = { regular: 'Regular', mid: 'Mid-Grade', premium: 'Premium', diesel: 'Diesel', 'premium-diesel': 'Premium Diesel' };
+const CONNECTOR_LABEL: Readonly<Record<Connector, string>> = { nacs: 'NACS', ccs1: 'CCS1', ccs2: 'CCS2', chademo: 'CHAdeMO' };
+
+/** What a car may be filled with: a petrol car any petrol grade (no catalog trim's maker requires premium, research-fuel-charging.json); a diesel car takes diesel. */
+export const gradesFor = (m: CarModel): Grade[] => (m.fuel === 'diesel' ? ['diesel', 'premium-diesel'] : ['regular', 'mid', 'premium']);
+
+/** A town's station by its place in the list, and what's kept of it. */
+export function stationAt(cityId: string, index = 0): { name: string; kept?: Station } | undefined {
+  const list = STATIONS[cityId] ?? [];
+  const name = list[Math.max(0, Math.min(list.length - 1, index))];
+  return name ? { name, ...(STATION_GRADES.find((x) => x.cityId === cityId && x.name === name) ? { kept: STATION_GRADES.find((x) => x.cityId === cityId && x.name === name)! } : {}) } : undefined;
+}
+
+export const chargersIn = (cityId: string): Charger[] => CHARGERS.filter((c) => c.cityId === cityId);
+
+/** Why a car can't charge at a charger: connectors not published, none that fit, or a network that keeps it to Teslas. */
+export function chargerRefusal(m: CarModel, c: Charger): string | undefined {
+  if (!c.connectors.length) return 'Its connectors aren’t published.';
+  const ports = EV_PORTS[m.id];
+  if (!ports) return 'Your car’s connector isn’t kept.';
+  if (!c.connectors.some((x) => ports.connectors.includes(x))) return `It has ${c.connectors.map((x) => CONNECTOR_LABEL[x]).join(' and ')}; your car takes ${ports.connectors.map((x) => CONNECTOR_LABEL[x]).join(' or ')}.`;
+  if (m.make !== 'Tesla' && c.open === 'tesla') return 'It’s for Teslas only.';
+  if (m.make !== 'Tesla' && c.open === 'unknown') return 'It isn’t known to be open to other makes.';
+  return undefined;
+}
+
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as const;
+/** A read's day, "2026-10-04", as it's said: October 4, 2026; a month alone, October 2026. */
+const said = (day: string): string => { const [y, m, d] = day.split('-').map(Number); return d ? `${MONTHS[m! - 1]} ${d}, ${y}` : `${MONTHS[m! - 1]} ${y}`; };
+/** The instant a read's day began, UTC. */
+const dayStart = (day: string): Instant => { const [y, m, d] = day.split('-').map(Number); return Date.UTC(y!, m! - 1, d ?? 1); };
+
 /**
- * A fill planned: the level it reaches, how much goes in, its cost and the
- * minutes it takes, or why it can't be: no room for the quantity, a level
- * not above where it is, or a limit too small to buy anything.
+ * A unit's price at where it's bought then, or why it can't be bought there.
+ * A station's posted price stands from the day it was read: before it, the
+ * station's price that day wasn't read, and the area's average stands.
  */
-export function planFill(sim: Simulation, v: OwnedVehicle, want: FillAmount, home = false): { to: number; amount: number; unit: 'L' | 'kWh'; cost: Money; minutes: number; estimated: boolean } | string {
+export function priceAt(v: OwnedVehicle, at: FillAt, now: Instant): UnitPrice | string {
+  const m = modelById(v.modelId)!;
+  const cityId = v.at ?? v.cityId;
+  const j = jurisdictionOf(cityId) ?? v.jurisdiction;
+  if (m.fuel === 'ev') {
+    const area = CHARGING[j] ?? CHARGING[v.jurisdiction];
+    if (at.home) return { minor: area.home, currency: area.currency, basis: 'home', why: 'the home rate where you live' };
+    if (!at.chargerId) return { minor: area.public, currency: area.currency, basis: 'area', why: 'the area’s public charging average', kw: PUBLIC_KW };
+    const c = chargersIn(cityId).find((x) => x.id === at.chargerId);
+    if (!c) return 'There’s no such charger here.';
+    const no = chargerRefusal(m, c);
+    if (no) return no;
+    const p = c.price;
+    if (p?.perKwh !== undefined) return { minor: Math.round(p.perKwh * 100_000) / 1000, currency: p.currency, basis: p.basis === 'network-average' || p.basis === 'network-range' ? 'network' : 'site', why: p.basis === 'network-average' ? `${c.network}’s average rate in the state, not this site’s own` : p.basis === 'network-range' ? `the middle of ${c.network}’s published range` : p.basis === 'site-peak' ? `${c.network}’s rate here at its dearest hours` : `${c.network}’s rate here`, date: c.date, kw: c.kw };
+    if (p?.perHour !== undefined) return { minor: 0, perHour: p.perHour * 100, currency: p.currency, basis: 'site', why: `${c.network}’s rate by the hour here`, date: c.date, kw: c.kw };
+    return { minor: area.public, currency: area.currency, basis: 'area', why: `the area’s public charging average; ${c.network} publishes no price for it`, kw: c.kw };
+  }
+  const grade = at.grade ?? (m.fuel === 'diesel' ? 'diesel' : 'regular');
+  if (!gradesFor(m).includes(grade)) return m.fuel === 'diesel' ? 'A diesel takes diesel.' : 'A petrol car can’t take diesel.';
+  const st = stationAt(cityId, at.station ?? 0);
+  if (!st) return 'SLATE knows no station in this town.';
+  if (st.kept && !st.kept.grades.includes(grade)) return `${st.name} doesn’t sell ${GRADE_LABEL[grade].toLowerCase()}.`;
+  const posted = st.kept?.prices?.[grade];
+  if (posted && now >= dayStart(posted.date)) return { minor: posted.minor, currency: posted.currency, basis: 'station', why: `${st.name}’s own price, posted ${said(posted.date)}${posted.status === 'secondhand' ? ', read secondhand' : ''}`, date: posted.date };
+  const f = FUEL[j] ?? FUEL[v.jurisdiction];
+  if (grade === 'regular' || grade === 'diesel') return { minor: grade === 'diesel' ? f.diesel : f.petrol, currency: f.currency, basis: 'area', why: 'the area’s pump average, not this station’s own' };
+  const avg = AREA_GRADES[j]?.[grade];
+  if (avg) return { minor: avg.minor, currency: avg.currency, basis: 'area', why: `${avg.area}’s ${GRADE_LABEL[grade].toLowerCase()} average, read ${said(avg.date)}, not this station’s own`, date: avg.date };
+  return `No price for ${GRADE_LABEL[grade].toLowerCase()} is published here.`;
+}
+
+/** Each catalog car's measured curve (`content/fuelcharging.ts`). */
+const CURVE_OF: Readonly<Record<string, string>> = {
+  'us-tesla-model-y': 'tesla-model-y-standard-64kWh-LFP', 'ca-tesla-model-y': 'tesla-model-y-standard-64kWh-LFP', 'mx-tesla-model-y': 'tesla-model-y-standard-64kWh-LFP',
+  'gb-tesla-model-y': 'tesla-model-y-standard-64kWh-LFP', 'ie-tesla-model-y': 'tesla-model-y-standard-64kWh-LFP',
+  'us-chevrolet-equinox-ev': 'chevrolet-equinox-ev-fwd', 'ca-chevrolet-equinox-ev': 'chevrolet-equinox-ev-fwd', 'gb-ford-puma-gen-e': 'ford-puma-gen-e',
+};
+function curveKw(points: readonly (readonly [number, number])[], soc: number): number {
+  if (soc <= points[0]![0]) return points[0]![1];
+  for (let i = 1; i < points.length; i += 1) {
+    const [s1, k1] = points[i]!;
+    const [s0, k0] = points[i - 1]!;
+    if (soc <= s1) return k0 + ((k1 - k0) * (soc - s0)) / (s1 - s0);
+  }
+  return points.at(-1)![1];
+}
+
+/**
+ * A public charge's minutes from one level to another: each percent at the
+ * slower of the charger's power and what the car takes there, by its
+ * measured curve where one is kept (charging slows past 80%), or its
+ * maker's top rate where not.
+ */
+export function chargeMinutes(m: CarModel, size: number, from: number, to: number, chargerKw: number): number {
+  const curve = CHARGE_CURVES[CURVE_OF[m.id] ?? ''];
+  const top = EV_PORTS[m.id]?.maxDcKw ?? chargerKw;
+  let minutes = 0;
+  for (let at = from; at < to - 1e-9;) {
+    const next = Math.min(to, Math.floor(at * 100 + 1e-9) / 100 + 0.01);
+    const kw = Math.min(chargerKw, curve ? curveKw(curve, at * 100) : top);
+    minutes += (((next - at) * size) / kw) * 60;
+    at = next;
+  }
+  return Math.round(minutes);
+}
+
+/**
+ * A fill planned: the level it reaches, how much goes in, its cost, the
+ * minutes it takes and the price it's paid at, or why it can't be: a grade
+ * or charger the car can't take, no room for the quantity, a level not above
+ * where it is, or a limit too small to buy anything.
+ */
+export function planFill(sim: Simulation, v: OwnedVehicle, want: FillAmount, at: FillAt = {}): { to: number; amount: number; unit: 'L' | 'kWh'; cost: Money; minutes: number; estimated: boolean; price: UnitPrice } | string {
   const m = modelById(v.modelId)!;
   const cap = capacityOf(m);
   if (!cap) return 'SLATE keeps no tank for it.';
+  const price = priceAt(v, at, sim.now);
+  if (typeof price === 'string') return price;
   const level = levelOf(v);
   const room = Math.max(0, 1 - level) * cap.size;
   const word = cap.unit === 'kWh' ? 'kWh' : 'liters';
-  const p = unitPrice(v, m, home);
-  const each = inSave(sim, p.cents, p.currency);
+  const minutesTo = (to: number): number => (at.home ? 0 : m.fuel === 'ev' ? chargeMinutes(m, cap.size, level, to, price.kw ?? PUBLIC_KW) : FUEL_STOP_MINUTES);
+  // By the hour, a level's cost is its minutes; by the unit, its amount.
+  const costTo = (to: number): Money => (price.perHour !== undefined ? inSave(sim, Math.round((minutesTo(to) / 60) * price.perHour), price.currency) : inSave(sim, Math.round(Math.max(0, to - level) * cap.size * price.minor), price.currency));
   let to: number;
   if (want.by === 'full') to = 1;
   else if (want.by === 'level') {
@@ -219,15 +328,21 @@ export function planFill(sim: Simulation, v: OwnedVehicle, want: FillAmount, hom
     if (want.value > room + 1e-6) return `It holds ${room.toFixed(1)} ${word} more.`;
     to = level + want.value / cap.size;
   } else {
-    if (!(each > 0) || !(want.value >= each / 10)) return 'That buys almost nothing.';
-    to = Math.min(1, level + want.value / each / cap.size);
+    // A spending limit stops at the money: the most it buys, found a step at a time where it's by the hour.
+    const first = Math.min(1, level + 0.01);
+    if (!(want.value > 0) || costTo(first) > want.value) return 'That buys almost nothing.';
+    if (price.perHour !== undefined) {
+      to = first;
+      while (to < 1 - 1e-9 && costTo(Math.min(1, to + 0.005)) <= want.value) to = Math.min(1, to + 0.005);
+    } else {
+      const each = inSave(sim, Math.round(price.minor * 1000), price.currency) / 1000;
+      to = Math.min(1, level + want.value / each / cap.size);
+    }
   }
   const amount = Math.max(0, to - level) * cap.size;
   if (amount < 1e-6) return m.fuel === 'ev' ? 'It’s charged.' : 'The tank is full.';
-  // A spending limit stops at the limit: the amount is what the money buys, so it never costs more.
-  const cost = want.by === 'spend' ? Math.round(amount * each) : inSave(sim, Math.round(amount * p.cents), p.currency);
-  const minutes = home ? 0 : m.fuel === 'ev' ? Math.round((amount / PUBLIC_KW) * 60) : FUEL_STOP_MINUTES;
-  return { to, amount, unit: cap.unit, cost, minutes, estimated: cap.estimated };
+  // Held to a limit's cent: where the pump's money isn't the save's, the amount and its price round apart (tests/fuel-stations.test.ts).
+  return { to, amount, unit: cap.unit, cost: Math.min(costTo(to), want.by === 'spend' ? want.value : Infinity), minutes: minutesTo(to), estimated: cap.estimated, price };
 }
 
 /** Why it can't be filled here now, or nothing. */
@@ -248,7 +363,7 @@ export function fillRefusal(person: Person, vehicleId: string, home = false): st
 
 export function registerFuelTank(sim: Simulation): void {
   // Filled at a station in its town, or a battery charged, publicly or at home: to full, or to the 80% for every day at home.
-  sim.onCommand<{ vehicleId: string; station?: number; home?: boolean; amount?: FillAmount }, { amount: number; paid: Money; minutes: number; level: number; rangeKm?: number }>('vehicle.refuel', (p, { sim: s }) => {
+  sim.onCommand<{ vehicleId: string; station?: number; home?: boolean; grade?: Grade; chargerId?: string; amount?: FillAmount }, { amount: number; paid: Money; minutes: number; level: number; rangeKm?: number }>('vehicle.refuel', (p, { sim: s }) => {
     const person = s.player;
     const home = p?.home === true;
     const no = fillRefusal(person, String(p?.vehicleId), home);
@@ -257,16 +372,17 @@ export function registerFuelTank(sim: Simulation): void {
     const m = modelById(v.modelId)!;
     // Chosen, or as before: full at a station, the 80% for every day at home.
     const want: FillAmount = p.amount ?? (m.fuel === 'ev' && home ? { by: 'level', value: FILL.batteryTo } : { by: 'full' });
-    const q = planFill(s, v, want, home);
+    const at: FillAt = { ...(home ? { home: true } : {}), ...(p.station !== undefined ? { station: Number(p.station) || 0 } : {}), ...(p.grade ? { grade: p.grade } : {}), ...(p.chargerId ? { chargerId: String(p.chargerId) } : {}) };
+    const q = planFill(s, v, want, at);
     if (typeof q === 'string') throw new CommandError(q);
-    const stations = STATIONS[person.currentLocationId] ?? [];
-    const where = home ? 'at home' : m.fuel === 'ev' ? 'at a public charger' : `at ${stations[Math.max(0, Math.min(stations.length - 1, Number(p?.station) || 0))]}`;
+    const charger = p.chargerId ? chargersIn(person.currentLocationId).find((c) => c.id === p.chargerId) : undefined;
+    const where = home ? 'at home' : m.fuel === 'ev' ? (charger ? `at ${charger.network}, ${charger.name}` : 'at a public charger') : `at ${stationAt(person.currentLocationId, at.station ?? 0)?.name ?? 'a station'}`;
     if (!spend(s, person, q.cost, `${m.fuel === 'ev' ? 'Charging' : 'Fuel'} ${where}, the ${m.make} ${m.model}`, 'vehicle', true)) throw new CommandError(`It comes to ${formatMoney(q.cost, saveCurrency(s.universe))}, more than you can pay.`);
     v.fuelLevel = q.to;
     delete v.dry;
     if (q.minutes > 0) s.advanceTo(s.now + q.minutes * 60_000);
     const range = rangeKm(v);
-    v.fills = [{ at: s.now, where: where.replace(/^at /, ''), amount: q.amount, unit: q.unit, cost: q.cost, basis: 'area' as const, minutes: q.minutes, level: q.to, ...(range !== undefined ? { rangeKm: range } : {}) }, ...(v.fills ?? [])].slice(0, FILL_LOG_KEEP);
+    v.fills = [{ at: s.now, where: where.replace(/^at /, ''), amount: q.amount, unit: q.unit, cost: q.cost, basis: q.price.basis, priceWhy: q.price.why, ...(m.fuel !== 'ev' ? { grade: at.grade ?? (m.fuel === 'diesel' ? 'diesel' : 'regular') } : {}), minutes: q.minutes, level: q.to, ...(range !== undefined ? { rangeKm: range } : {}) }, ...(v.fills ?? [])].slice(0, FILL_LOG_KEEP);
     return { amount: q.amount, paid: q.cost, minutes: q.minutes, level: q.to, ...(range !== undefined ? { rangeKm: range } : {}) };
   });
 

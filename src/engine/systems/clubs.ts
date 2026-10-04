@@ -204,7 +204,7 @@ function cancelPending(sim: Simulation, person: Person, clubId: string): void {
 function scheduleNext(sim: Simulation, person: Person, club: Club, m: Membership, after: Instant): void {
   const at = nextMeeting(club, after);
   sim.schedule({ at, kind: CLUB_MEET_KIND, label: club.name, category: 'personal', priority: 35, durationMinutes: club.minutes, locationId: club.cityId, payload: { personId: person.id, clubId: club.id } });
-  sim.schedule({ at: at + club.minutes * 60_000, kind: CLUB_CLOSE_KIND, label: `${club.name} Ends`, category: 'personal', priority: 35, locationId: club.cityId, payload: { personId: person.id, clubId: club.id, meetingAt: at } });
+  sim.schedule({ at: at + club.minutes * 60_000, kind: CLUB_CLOSE_KIND, label: `${club.name} Ends`, category: 'system', priority: 35, locationId: club.cityId, payload: { personId: person.id, clubId: club.id, meetingAt: at } });
   if (attendOf(m) !== 'ask' || m.rsvp?.[String(at)] === 'not' || person.id !== sim.universe.playerId) return;
   const leave = at - Math.round(legTo(club, m.by ?? 'foot').minutes * 60_000) - READY_MINUTES * 60_000;
   if (leave > sim.now) sim.schedule({ at: leave, kind: CLUB_DUE_KIND, label: `Set Out For ${club.name}`, category: 'personal', priority: 35, stopsClock: true, locationId: club.cityId, payload: { personId: person.id, clubId: club.id, meetingAt: at } });
@@ -427,7 +427,7 @@ export function registerClubs(sim: Simulation): void {
     const answer = m.rsvp?.[String(item.at)];
     // A meeting put on the calendar before 2026-10-03 had no end of its own, which now carries the next.
     if (!s.universe.scheduled.some((x) => x.status === 'pending' && x.kind === CLUB_CLOSE_KIND && x.payload.clubId === club.id && x.payload.meetingAt === item.at && x.payload.personId === person.id)) {
-      s.schedule({ at: item.at + club.minutes * 60_000, kind: CLUB_CLOSE_KIND, label: `${club.name} Ends`, category: 'personal', priority: 35, locationId: club.cityId, payload: { personId: person.id, clubId: club.id, meetingAt: item.at } });
+      s.schedule({ at: item.at + club.minutes * 60_000, kind: CLUB_CLOSE_KIND, label: `${club.name} Ends`, category: 'system', priority: 35, locationId: club.cityId, payload: { personId: person.id, clubId: club.id, meetingAt: item.at } });
     }
     if (m.attending === item.at) {
       // Checked in by hand: the trip carries the session.

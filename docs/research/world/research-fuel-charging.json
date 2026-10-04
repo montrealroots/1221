@@ -1,0 +1,3091 @@
+{
+  "read": "2026-10-03",
+  "meta": {
+    "purpose": "Real, sourced data for filling a car at a named station and charging an EV at a named charger in SLATE's eight towns, beside the regional averages in content/vehiclefees.ts (FUEL) and content/evcatalog.ts (CHARGING).",
+    "statusValues": {
+      "verified": "read from the primary source for that exact station, charger, model or figure",
+      "verified-govdata": "read from a government open-data feed or locator (AFDC/NREL station API, fueleconomy.gov, NRCan, CNE, Statistics Canada, Ontario)",
+      "secondhand": "read from an aggregator or press (GasBuddy, Zapmap, PlugShare, checkfuelprices, DCFC Tracker, EVKX, Infobae, search summaries)",
+      "estimate": "derived here; the entry says how",
+      "none": "nothing found; the area average applies"
+    },
+    "snapshotWarning": "Every price is a dated snapshot, not a live price.",
+    "notes": [
+      "London: both Esso sites are run by Motor Fuel Group and appear in MFG's statutory feed, not Esso's. The game's \"Esso, Marylebone Road\" is matched to MFG Dorset House, 170 Marylebone Road, NW1 5AR, the only Esso on that road in any feed checked.",
+      "Mexico City prices come from the CNE (formerly CRE) station-by-station open data, matched by coordinates and permit; the feed carries no date, so the retrieval date is recorded.",
+      "Station conflicts to settle before use: Mobil 1474 Whalley Ave also appears as a Shell in Shell's locator; CITGO 801 Whalley Ave is marked closed on one Yelp listing; \"TotalEnergies, Insurgentes Sur 507\" is described elsewhere as Valero and tagged Pemex on OpenStreetMap; Esso 1110 Bathurst lists diesel on esso.ca but not on GasBuddy.",
+      "Spot-checked by the compiler on 2026-10-03: the MFG feed (Park Lane and 170 Marylebone Road, all four grades) and the CNE price feed (place 9251, Pemex Vertiz: 23.39 / 27.69) match what is recorded."
+    ],
+    "chargerConventions": {
+      "readOn": "2026-10-03",
+      "statusKey": {
+        "verified": "operator's own page for that site or network",
+        "verified-govdata": "US DOE AFDC station data (open API, now served at developer.nlr.gov after NREL's rename); AFDC 'TESLA' = NACS/J3400, 'J1772COMBO' = CCS1, 'J1772' = J1772 AC",
+        "secondhand": "aggregator (Zapmap, DCFC Tracker, Irish Times, trade press, search-index snippet of an operator page)",
+        "estimate": "derived; derivation stated"
+      },
+      "afdcNote": "AFDC queries were made with DEMO_KEY at developer.nlr.gov/api/alt-fuel-stations/v1/nearest.json; the key hit its hourly limit (429) before Electrify Canada / Petro-Canada / Ivy could be queried by network in Canada. AFDC 'max power' is the per-port power_kw in ev_charging_units. AFDC ev_pricing was empty for most sites; where it was filled it is quoted verbatim."
+    }
+  },
+  "stations": [
+    {
+      "station": "BP, 255 E 125th St",
+      "townId": "us-ny-newyork",
+      "operator": "BP",
+      "address": "255 E 125th St, New York, NY 10035",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium"
+      ],
+      "gradesSource": "https://www.gasbuddy.com/station/56274 (GasBuddy station page lists these grade fields; prices are behind login, none readable 2026-10-03); bp.com locator https://map.bp.com/en-US/US/gas-station/new-york/bp/37569901772551003500100000000000 renders no grade list without JS",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.gasbuddy.com/station/56274",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    {
+      "station": "Shell, 232 W 145th St",
+      "townId": "us-ny-newyork",
+      "operator": "Shell",
+      "address": "232 W 145th St, New York, NY 10039",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium"
+      ],
+      "gradesSource": "https://www.gasbuddy.com/station/56305 (GasBuddy station page lists these grade fields; prices are behind login, none readable 2026-10-03); Shell locator https://find.shell.com/us/fuel/10047192-232-w-145th-st/en_US confirms the station but its fuel list is JS-rendered",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.gasbuddy.com/station/56305",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    {
+      "station": "BP, 3936 10th Ave",
+      "townId": "us-ny-newyork",
+      "operator": "BP",
+      "address": "3936 10th Ave, New York, NY 10034 (Inwood)",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium"
+      ],
+      "gradesSource": "https://www.gasbuddy.com/station/56275 (grade list as summarised from the GasBuddy listing in search results; page not opened)",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.gasbuddy.com/station/56275",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    {
+      "station": "Chevron, 2065 S La Cienega Blvd",
+      "townId": "us-ca-losangeles",
+      "operator": "Chevron",
+      "address": "2065 S La Cienega Blvd, Los Angeles, CA",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium",
+        "Diesel"
+      ],
+      "gradesSource": "https://www.gasbuddy.com/station/5380 (GasBuddy station page lists these grade fields; prices are behind login, none readable 2026-10-03)",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.gasbuddy.com/station/5380",
+      "date": "2026-10-03",
+      "status": "secondhand",
+      "note": "A search snippet quoted Regular $5.04 / Mid $5.24 / Premium $5.44 / Diesel $5.79 with no date; the GasBuddy page itself showed no prices, so not recorded."
+    },
+    {
+      "station": "Chevron, 3300 S La Cienega Blvd",
+      "townId": "us-ca-losangeles",
+      "operator": "Chevron",
+      "address": "3300 S La Cienega Blvd (at Boden St), Los Angeles, CA 90016",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium",
+        "Diesel"
+      ],
+      "gradesSource": "https://www.gasbuddy.com/station/5822 (GasBuddy station page lists these grade fields; prices are behind login, none readable 2026-10-03)",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.gasbuddy.com/station/5822",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    {
+      "station": "Mobil, 284 Whalley Ave",
+      "townId": "us-ct-newhaven",
+      "operator": "Mobil (ExxonMobil branded; site 'Whalley Avenue Mart')",
+      "address": "284 Whalley Avenue, New Haven, CT 06511",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium",
+        "Diesel"
+      ],
+      "gradesSource": "Operator page https://www.exxonmobilfuels.com/en/find-gas-station/mobil-newhaven-ct-whalleyavenuemart-200308972 confirms 'Synergy Diesel Efficient / Diesel' (gasoline grades not rendered); Regular/Midgrade/Premium/Diesel per https://www.gasbuddy.com/station/117073",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.exxonmobilfuels.com/en/find-gas-station/mobil-newhaven-ct-whalleyavenuemart-200308972",
+      "date": "2026-10-03",
+      "status": "secondhand",
+      "note": "Diesel verified on operator page; gasoline grade set secondhand."
+    },
+    {
+      "station": "CITGO, 801 Whalley Ave",
+      "townId": "us-ct-newhaven",
+      "operator": "CITGO",
+      "address": "801 Whalley Ave, New Haven, CT 06515",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium"
+      ],
+      "gradesSource": "https://www.gasbuddy.com/station/155478 (as summarised in search results); CITGO locator https://gas-stations.citgo.com/ct/new-haven/06515/801-whalley-ave refused connection",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.gasbuddy.com/station/155478",
+      "date": "2026-10-03",
+      "status": "secondhand",
+      "note": "One Yelp listing ('Whalley Avenue Citgo') is marked CLOSED while another ('Whalley Ave Citgo', June 2025) is not; CITGO's locator still lists the site. Operating status not confirmed."
+    },
+    {
+      "station": "Mobil, 1474 Whalley Ave",
+      "townId": "us-ct-newhaven",
+      "operator": "Mobil per GasBuddy/Yelp; Shell's own locator also lists this address as a Shell station",
+      "address": "1474 Whalley Ave, New Haven, CT 06515",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium",
+        "Diesel"
+      ],
+      "gradesSource": "https://www.gasbuddy.com/station/104319 (as summarised in search results)",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.gasbuddy.com/station/104319",
+      "date": "2026-10-03",
+      "status": "secondhand",
+      "note": "Brand conflict: https://find.shell.com/us/fuel/13068846-1474-whalley-ave/en_US lists a Shell at 1474 Whalley Ave. The station may have rebranded from Mobil to Shell; unresolved."
+    },
+    {
+      "station": "Esso, 77-83 Park Lane",
+      "townId": "uk-eng-london",
+      "operator": "Motor Fuel Group (Esso-branded, 'MFG Park Lane')",
+      "address": "77 - 83 Park Lane, London W1K 7HB",
+      "grades": [
+        "E10 unleaded",
+        "E5 super unleaded",
+        "B7 diesel",
+        "SDV premium diesel"
+      ],
+      "gradesSource": "MFG statutory open price feed https://fuel.motorfuelgroup.com/fuel_prices_data.json (site_id gcpvh2zt315c)",
+      "prices": [
+        {
+          "grade": "E10",
+          "price": 185.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-10-04 00:00:01 (feed last_updated)",
+          "source": "https://fuel.motorfuelgroup.com/fuel_prices_data.json",
+          "status": "verified"
+        },
+        {
+          "grade": "E5",
+          "price": 195.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-10-04 00:00:01 (feed last_updated)",
+          "source": "https://fuel.motorfuelgroup.com/fuel_prices_data.json",
+          "status": "verified"
+        },
+        {
+          "grade": "B7",
+          "price": 209.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-10-04 00:00:01 (feed last_updated)",
+          "source": "https://fuel.motorfuelgroup.com/fuel_prices_data.json",
+          "status": "verified"
+        },
+        {
+          "grade": "SDV",
+          "price": 219.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-10-04 00:00:01 (feed last_updated)",
+          "source": "https://fuel.motorfuelgroup.com/fuel_prices_data.json",
+          "status": "verified"
+        }
+      ],
+      "source": "https://fuel.motorfuelgroup.com/fuel_prices_data.json",
+      "date": "2026-10-04",
+      "status": "verified",
+      "note": "Not in Esso's own feed (fuelprices.esso.co.uk covers Esso-operated sites only); this dealer site is MFG's."
+    },
+    {
+      "station": "Shell, 106 Old Brompton Road",
+      "townId": "uk-eng-london",
+      "operator": "Shell",
+      "address": "106 Old Brompton Road, London SW7 3RA",
+      "grades": [
+        "E10 unleaded",
+        "E5 super unleaded",
+        "B7 diesel",
+        "SDV premium diesel"
+      ],
+      "gradesSource": "Fuel Finder scheme data via https://checkfuelprices.co.uk/stations/shell-106-old-brompton-road-sw7-3ra; Shell's own CMA feed lists only B7 and E10 for this site",
+      "prices": [
+        {
+          "grade": "E10",
+          "price": 174.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-10-04 03:32",
+          "source": "https://checkfuelprices.co.uk/stations/shell-106-old-brompton-road-sw7-3ra (Fuel Finder scheme)",
+          "status": "secondhand"
+        },
+        {
+          "grade": "E5",
+          "price": 204.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-09-18 17:23",
+          "source": "https://checkfuelprices.co.uk/stations/shell-106-old-brompton-road-sw7-3ra (Fuel Finder scheme)",
+          "status": "secondhand"
+        },
+        {
+          "grade": "B7",
+          "price": 199.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-10-04 03:32",
+          "source": "https://checkfuelprices.co.uk/stations/shell-106-old-brompton-road-sw7-3ra (Fuel Finder scheme)",
+          "status": "secondhand"
+        },
+        {
+          "grade": "SDV",
+          "price": 224.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-09-29 09:48",
+          "source": "https://checkfuelprices.co.uk/stations/shell-106-old-brompton-road-sw7-3ra (Fuel Finder scheme)",
+          "status": "secondhand"
+        }
+      ],
+      "source": "https://checkfuelprices.co.uk/stations/shell-106-old-brompton-road-sw7-3ra",
+      "date": "2026-10-04",
+      "status": "secondhand",
+      "note": "Shell's statutory feed https://www.shell.co.uk/fuel-prices-data.html (site_id gcpugvv3hnv6) is stale: last_updated 13/05/2026, B7 187.9p, E10 158.9p. Not used as current."
+    },
+    {
+      "station": "Esso, Marylebone Road",
+      "townId": "uk-eng-london",
+      "operator": "Motor Fuel Group (Esso-branded, 'MFG Dorset House')",
+      "address": "170 Marylebone Road, London NW1 5AR",
+      "grades": [
+        "E10 unleaded",
+        "E5 super unleaded",
+        "B7 diesel",
+        "SDV premium diesel"
+      ],
+      "gradesSource": "MFG statutory open price feed https://fuel.motorfuelgroup.com/fuel_prices_data.json (site_id gcpvh77c236k)",
+      "prices": [
+        {
+          "grade": "E10",
+          "price": 175.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-10-04 00:00:01 (feed last_updated)",
+          "source": "https://fuel.motorfuelgroup.com/fuel_prices_data.json",
+          "status": "verified"
+        },
+        {
+          "grade": "E5",
+          "price": 195.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-10-04 00:00:01 (feed last_updated)",
+          "source": "https://fuel.motorfuelgroup.com/fuel_prices_data.json",
+          "status": "verified"
+        },
+        {
+          "grade": "B7",
+          "price": 202.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-10-04 00:00:01 (feed last_updated)",
+          "source": "https://fuel.motorfuelgroup.com/fuel_prices_data.json",
+          "status": "verified"
+        },
+        {
+          "grade": "SDV",
+          "price": 219.9,
+          "currency": "GBP",
+          "unit": "pence per litre",
+          "date": "2026-10-04 00:00:01 (feed last_updated)",
+          "source": "https://fuel.motorfuelgroup.com/fuel_prices_data.json",
+          "status": "verified"
+        }
+      ],
+      "source": "https://fuel.motorfuelgroup.com/fuel_prices_data.json",
+      "date": "2026-10-04",
+      "status": "verified",
+      "note": "The game string has no street number; the only Esso on Marylebone Road in any feed checked is 170 Marylebone Road (Dorset House)."
+    },
+    {
+      "station": "Maxol, 134 Richmond Road",
+      "townId": "ie-lei-dublin",
+      "operator": "Maxol",
+      "address": "134 Richmond Road, Drumcondra, Dublin 9",
+      "grades": [
+        "Unleaded petrol",
+        "Diesel"
+      ],
+      "gradesSource": "fuelcompare.ie listing (search snippet); Maxol locator https://stations.maxol.ie/dublin/dublin/134-richmond-road is JS-rendered, fuel list not readable",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://stations.maxol.ie/dublin/dublin/134-richmond-road",
+      "date": "2026-10-03",
+      "status": "secondhand",
+      "note": "fuelcompare.ie snippet showed Diesel EUR 1.84 / Unleaded EUR 1.81 'updated ~96 days ago' (about late June 2026); stale and the site refused connection, not recorded."
+    },
+    {
+      "station": "Maxol, Ringsend Road",
+      "townId": "ie-lei-dublin",
+      "operator": "Maxol",
+      "address": "Ringsend Road, Ringsend, Dublin D04 C9F6",
+      "grades": [
+        "Unleaded petrol",
+        "Diesel",
+        "AdBlue"
+      ],
+      "gradesSource": "Directory listings summarised in search (yourlocal.ie / goldenpages.ie, quoting Maxol); Maxol locator https://stations.maxol.ie/dublin/dublin/ringsend-road is JS-rendered",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://stations.maxol.ie/dublin/dublin/ringsend-road",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    {
+      "station": "Applegreen, 16 Ballinteer Avenue",
+      "townId": "ie-lei-dublin",
+      "operator": "Applegreen",
+      "address": "16 Ballinteer Ave, Ballinteer, Dublin 16 (D16 AH39)",
+      "grades": [
+        "Unleaded petrol",
+        "Diesel"
+      ],
+      "gradesSource": "Pick A Pump listing https://pickapump.com/stations/dublin/applegreen-16-ballinteer-ave-ballinteer-d16-ah39-86ee5e (grades per search snippet; page is a JS app)",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://pickapump.com/stations/dublin/applegreen-16-ballinteer-ave-ballinteer-d16-ah39-86ee5e",
+      "date": "2026-10-03",
+      "status": "secondhand",
+      "note": "Search snippets gave conflicting undated figures (169.8c both fuels; or diesel EUR 1.73 / unleaded EUR 1.71); not recorded. Ireland has no statutory station price feed."
+    },
+    {
+      "station": "Petro-Canada, 117 Jarvis St",
+      "townId": "ca-on-toronto",
+      "operator": "Petro-Canada (Suncor)",
+      "address": "117 Jarvis St, Toronto, ON M5C 2H6",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium",
+        "Diesel"
+      ],
+      "gradesSource": "https://www.gasbuddy.com/station/4441 (as summarised in search results); petro-canada.ca station page not reached",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.gasbuddy.com/station/4441",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    {
+      "station": "Esso, 1110 Bathurst St",
+      "townId": "ca-on-toronto",
+      "operator": "Esso (Imperial Oil brand; Circle K store)",
+      "address": "1110 Bathurst St, Toronto, ON M5R 3H2",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium (Synergy Supreme+)",
+        "Diesel (Synergy Diesel Efficient)",
+        "Propane"
+      ],
+      "gradesSource": "Operator page https://www.esso.ca/en-ca/find-station/toronto-on-esso-200302395 lists Synergy Supreme+ premium and Synergy Diesel Efficient; GasBuddy https://www.gasbuddy.com/station/25473 lists Regular/Midgrade/Premium and propane, no diesel",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.esso.ca/en-ca/find-station/toronto-on-esso-200302395",
+      "date": "2026-10-03",
+      "status": "verified",
+      "note": "Premium and diesel verified on the operator page; regular, mid-grade and propane secondhand (GasBuddy). The operator's diesel listing conflicts with GasBuddy's."
+    },
+    {
+      "station": "Esso, 3069 Bathurst St",
+      "townId": "ca-on-toronto",
+      "operator": "Esso",
+      "address": "3069 Bathurst St, Toronto (North York), ON",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium",
+        "Diesel",
+        "Propane"
+      ],
+      "gradesSource": "https://www.gasbuddy.com/station/22194 (as summarised in search results)",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.gasbuddy.com/station/22194",
+      "date": "2026-10-03",
+      "status": "secondhand",
+      "note": "Snippet quoted Regular 137.9c / Premium 168.9c / Diesel 150.9c with no date; plainly old (Toronto regular was about 181c the week of 2026-09-28), not recorded."
+    },
+    {
+      "station": "Esso, 1205 Burrard St",
+      "townId": "ca-bc-vancouver",
+      "operator": "Esso ('Smart Stop 37852')",
+      "address": "1205 Burrard St, Vancouver, BC V6Z 1Z5",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium"
+      ],
+      "gradesSource": "GasBuddy https://www.gasbuddy.com/station/9707 (as summarised in search results); operator page https://www.esso.ca/en-ca/find-station/vancouver-bc-esso-200302425 confirms the site but lists no grades",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.esso.ca/en-ca/find-station/vancouver-bc-esso-200302425",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    {
+      "station": "Chevron, 1900 Burrard St",
+      "townId": "ca-bc-vancouver",
+      "operator": "Chevron ('3rd & Burrard Chevron')",
+      "address": "1900 Burrard St, Vancouver, BC (Kitsilano)",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium",
+        "Diesel"
+      ],
+      "gradesSource": "https://www.gasbuddy.com/station/65543 (as summarised in search results)",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.gasbuddy.com/station/65543",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    {
+      "station": "Esso, 1795 W Broadway",
+      "townId": "ca-bc-vancouver",
+      "operator": "Esso (7-Eleven store 37883)",
+      "address": "1795 W Broadway, Vancouver, BC",
+      "grades": [
+        "Regular",
+        "Midgrade",
+        "Premium"
+      ],
+      "gradesSource": "https://www.gasbuddy.com/station/65554 (as summarised in search results)",
+      "prices": [],
+      "priceStatus": "none; area average applies",
+      "source": "https://www.gasbuddy.com/station/65554",
+      "date": "2026-10-03",
+      "status": "secondhand",
+      "note": "Snippet quoted 138.9 / 166.9 / 173.9c with no date; old, not recorded."
+    },
+    {
+      "station": "TotalEnergies, Av. Insurgentes Sur 507",
+      "townId": "mx-cmx-mexicocity",
+      "operator": "SUAGUE, S.A. de C.V. (CNE place_id 3428, permit PL/1525/EXP/ES/2015); listed as 'TOTAL INSURGENTES', reported now operating as 'VALERO INSURGENTES'",
+      "address": "Av. Insurgentes Sur 507, Hipódromo Condesa, Cuauhtémoc, CDMX 06100",
+      "grades": [
+        "Regular (Magna)",
+        "Premium"
+      ],
+      "gradesSource": "CNE open data prices XML https://publicacionexterna.azurewebsites.net/publicaciones/prices (no diesel reported for this place)",
+      "prices": [
+        {
+          "grade": "Regular",
+          "price": 24,
+          "currency": "MXN",
+          "unit": "per litre",
+          "date": "2026-10-03 (retrieved; feed carries no date)",
+          "source": "https://publicacionexterna.azurewebsites.net/publicaciones/prices (place_id 3428)",
+          "status": "verified"
+        },
+        {
+          "grade": "Premium",
+          "price": 28.79,
+          "currency": "MXN",
+          "unit": "per litre",
+          "date": "2026-10-03 (retrieved; feed carries no date)",
+          "source": "https://publicacionexterna.azurewebsites.net/publicaciones/prices (place_id 3428)",
+          "status": "verified"
+        }
+      ],
+      "source": "https://publicacionexterna.azurewebsites.net/publicaciones/places",
+      "date": "2026-10-03",
+      "status": "verified",
+      "note": "Matched by coordinates (19.40325,-99.16972; 4 m from OSM fuel node at Insurgentes Sur 507) and confirmed by https://gasolinerasmx.mx/ciudad-de-mexico/cuauhtemoc/suague-s-a-de-c-v/. Brand: gasolinerias.net/total-insurgentes-f50e75c4 says formerly TotalEnergies, now Valero; OSM tags it Pemex. Current brand unresolved."
+    },
+    {
+      "station": "BP, Av. Ribera de San Cosme 114",
+      "townId": "mx-cmx-mexicocity",
+      "operator": "SEVEN SERVICE, S.A. de C.V. (BP-branded; CNE place_id 2319, permit PL/895/EXP/ES/2015)",
+      "address": "Av. Ribera de San Cosme 114, San Rafael, Cuauhtémoc, CDMX 06470",
+      "grades": [
+        "Regular (Magna)",
+        "Premium"
+      ],
+      "gradesSource": "CNE open data prices XML (no diesel reported for this place)",
+      "prices": [
+        {
+          "grade": "Regular",
+          "price": 23.99,
+          "currency": "MXN",
+          "unit": "per litre",
+          "date": "2026-10-03 (retrieved; feed carries no date)",
+          "source": "https://publicacionexterna.azurewebsites.net/publicaciones/prices (place_id 2319)",
+          "status": "verified"
+        },
+        {
+          "grade": "Premium",
+          "price": 28.59,
+          "currency": "MXN",
+          "unit": "per litre",
+          "date": "2026-10-03 (retrieved; feed carries no date)",
+          "source": "https://publicacionexterna.azurewebsites.net/publicaciones/prices (place_id 2319)",
+          "status": "verified"
+        }
+      ],
+      "source": "https://publicacionexterna.azurewebsites.net/publicaciones/places",
+      "date": "2026-10-03",
+      "status": "verified",
+      "note": "Matched by coordinates (19.4423,-99.16319; 13 m from OSM BP on Ribera de San Cosme); address and permit confirmed by gasolinerasmx.mx and gasolinamexico.com.mx/estacion/2319."
+    },
+    {
+      "station": "Pemex, Dr. José María Vértiz 431",
+      "townId": "mx-cmx-mexicocity",
+      "operator": "SERVICIO VERTIZ, S.A. de C.V. (Pemex-branded; CNE place_id 9251, permit PL/7797/EXP/ES/2015)",
+      "address": "Calle Dr. José María Vértiz 431, Doctores, Cuauhtémoc, CDMX 06720",
+      "grades": [
+        "Regular (Magna)",
+        "Premium"
+      ],
+      "gradesSource": "CNE open data prices XML (no diesel reported for this place)",
+      "prices": [
+        {
+          "grade": "Regular",
+          "price": 23.39,
+          "currency": "MXN",
+          "unit": "per litre",
+          "date": "2026-10-03 (retrieved; feed carries no date)",
+          "source": "https://publicacionexterna.azurewebsites.net/publicaciones/prices (place_id 9251)",
+          "status": "verified"
+        },
+        {
+          "grade": "Premium",
+          "price": 27.69,
+          "currency": "MXN",
+          "unit": "per litre",
+          "date": "2026-10-03 (retrieved; feed carries no date)",
+          "source": "https://publicacionexterna.azurewebsites.net/publicaciones/prices (place_id 9251)",
+          "status": "verified"
+        }
+      ],
+      "source": "https://publicacionexterna.azurewebsites.net/publicaciones/places",
+      "date": "2026-10-03",
+      "status": "verified",
+      "note": "Address, permit and prices confirmed by https://gasolinerasmx.mx/ciudad-de-mexico/cuauhtemoc/servicio-vertiz-sa-de-cv/ (prices as of 2026-10-03)."
+    }
+  ],
+  "premiumAverages": [
+    {
+      "jurisdiction": "US-NY",
+      "area": "New York state",
+      "grade": "Regular",
+      "value": 1.1824,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 4.4759,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=NY",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-NY",
+      "area": "New York City metro",
+      "grade": "Regular",
+      "value": 1.2044,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 4.5591,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=NY",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-NY",
+      "area": "New York state",
+      "grade": "Mid-Grade",
+      "value": 1.3229,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 5.0077,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=NY",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-NY",
+      "area": "New York City metro",
+      "grade": "Mid-Grade",
+      "value": 1.3389,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 5.0683,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=NY",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-NY",
+      "area": "New York state",
+      "grade": "Premium",
+      "value": 1.4304,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 5.4148,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=NY",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-NY",
+      "area": "New York City metro",
+      "grade": "Premium",
+      "value": 1.4437,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 5.465,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=NY",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-NY",
+      "area": "New York state",
+      "grade": "Diesel",
+      "value": 1.7224,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 6.5201,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=NY",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-NY",
+      "area": "New York City metro",
+      "grade": "Diesel",
+      "value": 1.7771,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 6.7272,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=NY",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CT",
+      "area": "Connecticut state",
+      "grade": "Regular",
+      "value": 1.1786,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 4.4613,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CT",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CT",
+      "area": "New Haven-Meriden metro",
+      "grade": "Regular",
+      "value": 1.1703,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 4.4299,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CT",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CT",
+      "area": "Connecticut state",
+      "grade": "Mid-Grade",
+      "value": 1.3382,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 5.0655,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CT",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CT",
+      "area": "New Haven-Meriden metro",
+      "grade": "Mid-Grade",
+      "value": 1.3273,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 5.0243,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CT",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CT",
+      "area": "Connecticut state",
+      "grade": "Premium",
+      "value": 1.4479,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 5.4808,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CT",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CT",
+      "area": "New Haven-Meriden metro",
+      "grade": "Premium",
+      "value": 1.4209,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 5.3786,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CT",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CT",
+      "area": "Connecticut state",
+      "grade": "Diesel",
+      "value": 1.7103,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 6.4743,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CT",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CT",
+      "area": "New Haven-Meriden metro",
+      "grade": "Diesel",
+      "value": 1.7006,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 6.4375,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CT",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CA",
+      "area": "California state",
+      "grade": "Regular",
+      "value": 1.6891,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 6.3938,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CA",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CA",
+      "area": "Los Angeles-Long Beach metro",
+      "grade": "Regular",
+      "value": 1.6972,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 6.4245,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CA",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CA",
+      "area": "California state",
+      "grade": "Mid-Grade",
+      "value": 1.7504,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 6.6261,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CA",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CA",
+      "area": "Los Angeles-Long Beach metro",
+      "grade": "Mid-Grade",
+      "value": 1.7552,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 6.6442,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CA",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CA",
+      "area": "California state",
+      "grade": "Premium",
+      "value": 1.8007,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 6.8163,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CA",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CA",
+      "area": "Los Angeles-Long Beach metro",
+      "grade": "Premium",
+      "value": 1.8012,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 6.8184,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CA",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CA",
+      "area": "California state",
+      "grade": "Diesel",
+      "value": 2.2134,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 8.3788,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CA",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "US-CA",
+      "area": "Los Angeles-Long Beach metro",
+      "grade": "Diesel",
+      "value": 2.2076,
+      "currency": "USD",
+      "unit": "per litre",
+      "valuePerGallon": 8.3568,
+      "unitPerGallon": "USD per US gallon",
+      "date": "2026-10-03",
+      "source": "https://gasprices.aaa.com/?state=CA",
+      "status": "verified",
+      "note": "AAA current average, converted at 3.785411784 L/gal"
+    },
+    {
+      "jurisdiction": "GB",
+      "area": "UK",
+      "grade": "Super unleaded (E5)",
+      "value": 191.7,
+      "currency": "GBP",
+      "unit": "pence per litre",
+      "date": "2026-10-04 (7-day average)",
+      "source": "https://fuelpricetoday.co.uk/",
+      "status": "secondhand",
+      "note": "Mean of Fuel Finder scheme prices over the last 7 days, 8,126 stations (median 190.9p). Same source: E10 175.0p, B7 200.2p. RAC Fuel Watch tables are JS-rendered and could not be read; the DESNZ weekly series has ULSP/ULSD only (28 Sep 2026: 173.5p / 197.6p, via petrolprices.co.uk/fuel-price-index.php)."
+    },
+    {
+      "jurisdiction": "GB",
+      "area": "UK",
+      "grade": "Premium diesel (SDV)",
+      "value": 219.2,
+      "currency": "GBP",
+      "unit": "pence per litre",
+      "date": "2026-10-04 (7-day average)",
+      "source": "https://fuelpricetoday.co.uk/",
+      "status": "secondhand",
+      "note": "Mean of Fuel Finder scheme prices, median 219.9p."
+    },
+    {
+      "jurisdiction": "IE",
+      "area": "Ireland",
+      "grade": "Premium",
+      "value": null,
+      "currency": "EUR",
+      "unit": "per litre",
+      "date": "2026-09-14",
+      "source": "https://www.theaa.ie/blog/september-fuel-prices-2026/",
+      "status": "verified",
+      "note": "AA Ireland publishes petrol and diesel only (September 2026: petrol EUR 1.87, diesel EUR 1.94). No premium average published."
+    },
+    {
+      "jurisdiction": "CA-ON",
+      "area": "Toronto West",
+      "grade": "Mid-Grade",
+      "value": 202.6,
+      "currency": "CAD",
+      "unit": "cents per litre",
+      "date": "2026-09-28 (week)",
+      "source": "https://ontario.ca/v1/files/fuel-prices/fueltypesall.csv",
+      "status": "verified",
+      "note": "Ontario Ministry weekly fuel price survey. Toronto East 203.3; Ontario average 195.4. Same week regular: Toronto West 181.8, East 181.0, Ontario 176.1; diesel 248.6 / 248.2 / 255.9."
+    },
+    {
+      "jurisdiction": "CA-ON",
+      "area": "Toronto West",
+      "grade": "Premium",
+      "value": 212.9,
+      "currency": "CAD",
+      "unit": "cents per litre",
+      "date": "2026-09-28 (week)",
+      "source": "https://ontario.ca/v1/files/fuel-prices/fueltypesall.csv",
+      "status": "verified",
+      "note": "Toronto East 211.3; Ontario average 206.1."
+    },
+    {
+      "jurisdiction": "CA-ON",
+      "area": "Toronto",
+      "grade": "Premium",
+      "value": 201.5,
+      "currency": "CAD",
+      "unit": "cents per litre",
+      "date": "2026-08 (month)",
+      "source": "https://www150.statcan.gc.ca/n1/tbl/csv/18100001-eng.zip (table 18-10-0001-01)",
+      "status": "verified",
+      "note": "StatCan monthly, self-service. Same month regular 170.3, diesel 221.1."
+    },
+    {
+      "jurisdiction": "CA-BC",
+      "area": "Vancouver",
+      "grade": "Premium",
+      "value": 233,
+      "currency": "CAD",
+      "unit": "cents per litre",
+      "date": "2026-08 (month)",
+      "source": "https://www150.statcan.gc.ca/n1/tbl/csv/18100001-eng.zip (table 18-10-0001-01)",
+      "status": "verified",
+      "note": "StatCan monthly, self-service; latest month published. Same month regular 206.7, diesel 251.7. Premium Jul 2026 226.7, Jun 227.4. No mid-grade series."
+    },
+    {
+      "jurisdiction": "MX-CMX",
+      "area": "Ciudad de México",
+      "grade": "Premium",
+      "value": 28.806,
+      "currency": "MXN",
+      "unit": "per litre",
+      "date": "2026-10-02",
+      "source": "https://www.infobae.com/mexico/2026/10/02/cual-es-el-precio-de-la-gasolina-hoy-viernes-2-de-octubre-en-ciudad-de-mexico/",
+      "status": "secondhand",
+      "note": "CDMX average citing CNE/Profeco. Same report: Magna 23.81 (equals the game's regular), Diesel 26.975. Search snippets gave 28.808 (Oct 1) and 28.809 (Oct 3)."
+    },
+    {
+      "jurisdiction": "MX-CMX",
+      "area": "Ciudad de México",
+      "grade": "Diesel",
+      "value": 26.975,
+      "currency": "MXN",
+      "unit": "per litre",
+      "date": "2026-10-02",
+      "source": "https://www.infobae.com/mexico/2026/10/02/cual-es-el-precio-de-la-gasolina-hoy-viernes-2-de-octubre-en-ciudad-de-mexico/",
+      "status": "secondhand",
+      "note": "CDMX average citing CNE/Profeco."
+    }
+  ],
+  "chargers": {
+    "us-ny-newyork": [
+      {
+        "network": "Tesla Supercharger",
+        "siteName": "New York, NY - E 47th Street - Tesla Supercharger",
+        "address": "212 East 47th Street, New York, NY",
+        "connectors": [
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 150,
+        "stalls": 4,
+        "price": null,
+        "nonTeslaAccess": "unknown",
+        "source": "https://developer.nlr.gov/api/alt-fuel-stations/v1/nearest.json (AFDC id 102336)",
+        "date": "2026-10-03 (AFDC last confirmed 2026-06-18)",
+        "status": "verified-govdata",
+        "notes": "AFDC lists only the TESLA connector; tesla.com/findus returned 403, so open-to-others status not confirmed."
+      },
+      {
+        "network": "Revel",
+        "siteName": "Revel - Lower Manhattan",
+        "address": "299 South St, New York, NY",
+        "connectors": [
+          "CCS1",
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 320,
+        "stalls": 10,
+        "price": {
+          "perKwh": 0.61,
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": "Revel network page: 'Starting at $0.45 per kWh + tax (NY only)' with the app, '$0.52 per kWh + tax' without; site rate varies by location and time of use",
+          "currency": "USD",
+          "taxNote": "+ tax"
+        },
+        "nonTeslaAccess": true,
+        "source": "AFDC id 358440 (ev_pricing '$0.61 per kWh + tax'); https://gorevel.com/charging",
+        "date": "2026-10-03 (AFDC last confirmed 2026-02-13)",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "Revel",
+        "siteName": "South Williamsburg",
+        "address": "260 S 4th St, Brooklyn, NY",
+        "connectors": [
+          "CCS1",
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 150,
+        "stalls": 15,
+        "price": {
+          "perKwh": 0.54,
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": null,
+          "currency": "USD",
+          "taxNote": "+ tax"
+        },
+        "nonTeslaAccess": true,
+        "source": "AFDC id 307032",
+        "date": "2026-10-03 (AFDC last confirmed 2026-02-13)",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "EVgo",
+        "siteName": "33rd Street",
+        "address": "32-16 36th Ave, Long Island City (Queens), NY",
+        "connectors": [
+          "CCS1",
+          "CHAdeMO"
+        ],
+        "maxPowerKw": 200,
+        "stalls": 12,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 373927",
+        "date": "2026-10-03",
+        "status": "verified-govdata",
+        "notes": "AFDC power range 100-200 kW. EVgo NY average peak rate $0.673/kWh per DCFC Tracker (see networks)."
+      },
+      {
+        "network": "Gravity",
+        "siteName": "Gravity Charging Center",
+        "address": "401-471 W 42nd St, New York, NY",
+        "connectors": [
+          "CCS1",
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 500,
+        "stalls": 24,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 350559",
+        "date": "2026-10-03 (AFDC last confirmed 2026-03-13)",
+        "status": "verified-govdata",
+        "notes": "AFDC lists 250.0/500.0 kW units."
+      },
+      {
+        "network": "EV Connect (NYC DOT municipal garage)",
+        "siteName": "DES - Delancey and Essex Municipal Parking Garage",
+        "address": "107 Essex Street, New York, NY",
+        "connectors": [
+          "CCS1",
+          "CHAdeMO",
+          "J1772"
+        ],
+        "maxPowerKw": 150,
+        "stalls": 4,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 155100",
+        "date": "2026-10-03",
+        "status": "verified-govdata",
+        "notes": "4 DC fast ports; AFDC power range 7.4-150 kW across L2 and DC."
+      }
+    ],
+    "us-ca-losangeles": [
+      {
+        "network": "Tesla Supercharger",
+        "siteName": "5420 Sunset - Tesla Supercharger",
+        "address": "5420 Sunset Blvd, Los Angeles, CA 90027",
+        "connectors": [
+          "NACS/J3400",
+          "CCS1"
+        ],
+        "maxPowerKw": 325,
+        "stalls": 6,
+        "price": {
+          "perKwh": 0.65,
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": "AFDC gives one figure; not stated whether Tesla or non-Tesla rate",
+          "currency": "USD",
+          "taxNote": null
+        },
+        "nonTeslaAccess": true,
+        "source": "AFDC id 461014",
+        "date": "2026-10-03 (AFDC last confirmed 2026-07-15)",
+        "status": "verified-govdata",
+        "notes": "AFDC lists J1772COMBO alongside TESLA, i.e. CCS1 available (Magic Dock style); nonTeslaAccess inferred from that listing."
+      },
+      {
+        "network": "Tesla Supercharger",
+        "siteName": "Tesla Diner - Tesla Supercharger",
+        "address": "7001 Santa Monica Blvd, Los Angeles, CA 90038",
+        "connectors": [
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 325,
+        "stalls": 80,
+        "price": null,
+        "nonTeslaAccess": "unknown",
+        "source": "AFDC id 417537",
+        "date": "2026-10-03 (AFDC last confirmed 2026-06-18)",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "Electrify America",
+        "siteName": "BOA LA Chinatown CA9-167",
+        "address": "850 N Broadway, Los Angeles, CA 90012",
+        "connectors": [
+          "CCS1"
+        ],
+        "maxPowerKw": 350,
+        "stalls": 3,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 170207",
+        "date": "2026-10-03",
+        "status": "verified-govdata",
+        "notes": "EA California average peak $0.693/kWh per DCFC Tracker (see networks)."
+      },
+      {
+        "network": "EVgo",
+        "siteName": "Vons #2261 3rd St",
+        "address": "3461 W 3rd St, Los Angeles, CA 90020",
+        "connectors": [
+          "CCS1",
+          "CHAdeMO"
+        ],
+        "maxPowerKw": 200,
+        "stalls": 6,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 416940",
+        "date": "2026-10-03",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "PowerFlex (LA County)",
+        "siteName": "LA County DHS 313 Fig",
+        "address": "313 N Figueroa St, Los Angeles, CA 90012",
+        "connectors": [
+          "CCS1",
+          "CHAdeMO",
+          "J1772"
+        ],
+        "maxPowerKw": 100,
+        "stalls": 12,
+        "price": {
+          "perKwh": {
+            "16:00-21:00": 0.45,
+            "allOtherTimes": 0.3
+          },
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": null,
+          "currency": "USD",
+          "taxNote": null
+        },
+        "nonTeslaAccess": true,
+        "source": "AFDC id 63052",
+        "date": "2026-10-03 (AFDC last confirmed 2025-05-12)",
+        "status": "verified-govdata",
+        "notes": "AFDC lists access as public; DC count 12."
+      }
+    ],
+    "us-ct-newhaven": [
+      {
+        "network": "Tesla Supercharger",
+        "siteName": "New Haven, CT - Tesla Supercharger",
+        "address": "500 Sargent Dr, New Haven, CT 06511",
+        "connectors": [
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 250,
+        "stalls": 12,
+        "price": null,
+        "nonTeslaAccess": "unknown",
+        "source": "AFDC id 237649",
+        "date": "2026-10-03 (AFDC last confirmed 2026-06-18)",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "VIALYNK",
+        "siteName": "Cody's Diner",
+        "address": "95 Water St, New Haven, CT 06511",
+        "connectors": [
+          "CCS1"
+        ],
+        "maxPowerKw": 120,
+        "stalls": 2,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 334529",
+        "date": "2026-10-03",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "EVgo",
+        "siteName": "Dunkin' Donuts",
+        "address": "189 Forbes Ave, New Haven, CT 06512",
+        "connectors": [
+          "CCS1",
+          "CHAdeMO"
+        ],
+        "maxPowerKw": 50,
+        "stalls": 1,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 227974",
+        "date": "2026-10-03",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "Electrify America",
+        "siteName": "Brixmor North Haven Crossing",
+        "address": "410 Universal Dr N, North Haven, CT 06473",
+        "connectors": [
+          "CCS1"
+        ],
+        "maxPowerKw": 350,
+        "stalls": 4,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 189349",
+        "date": "2026-10-03",
+        "status": "verified-govdata",
+        "notes": "In North Haven (adjacent town), not New Haven proper; nearest EA site."
+      },
+      {
+        "network": "Applegreen Electric",
+        "siteName": "I-95 Branford NB Service Plaza",
+        "address": "I-95 Branford Service Plaza N, Branford, CT 06405",
+        "connectors": [
+          "CCS1",
+          "CHAdeMO"
+        ],
+        "maxPowerKw": 150,
+        "stalls": 2,
+        "price": {
+          "perKwh": 0.64,
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": null,
+          "currency": "USD",
+          "taxNote": null
+        },
+        "nonTeslaAccess": true,
+        "source": "AFDC id 323256",
+        "date": "2026-10-03 (AFDC last confirmed 2026-03-12)",
+        "status": "verified-govdata",
+        "notes": "Branford, ~10 km east of New Haven on I-95."
+      }
+    ],
+    "uk-eng-london": [
+      {
+        "network": "Shell Recharge",
+        "siteName": "Shell Fulham (Shell Recharge hub)",
+        "address": "923-931 Fulham Road, Fulham, London SW6 5HY",
+        "connectors": [
+          "CCS2",
+          "CHAdeMO"
+        ],
+        "maxPowerKw": 175,
+        "stalls": 10,
+        "price": {
+          "perKwh": 0.79,
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": "Zapmap search snippet also showed 89p/kWh via Zap-Pay vs 79p/kWh PAYG; site page shows 79p/kWh",
+          "currency": "GBP",
+          "taxNote": "UK public charging carries 20% VAT, included in the displayed price"
+        },
+        "nonTeslaAccess": true,
+        "source": "https://www.zapmap.com/charge-points/fulham/C50X4NI",
+        "date": "2026-10-03 (Zapmap page updated 2026-06-03)",
+        "status": "secondhand",
+        "notes": "Zapmap: 10 CCS at 175 kW and 10 CHAdeMO at 70 kW (20 connectors across 10 dual units)."
+      },
+      {
+        "network": "Tesla Supercharger",
+        "siteName": "Tesla Centre London Park Royal Supercharger",
+        "address": "52 Dukes Road, Acton, London W3 0SL",
+        "connectors": [
+          "CCS2"
+        ],
+        "maxPowerKw": 250,
+        "stalls": 16,
+        "price": null,
+        "nonTeslaAccess": false,
+        "source": "https://www.zapmap.com/charge-points/acton/uiyne75",
+        "date": "2026-10-03 (Zapmap page updated 2026-07-29)",
+        "status": "secondhand",
+        "notes": "Zapmap lists it on the 'Tesla-only Supercharger' network; tariff 'consult the Tesla app'. tesla.com/findus returned 403."
+      },
+      {
+        "network": "InstaVolt",
+        "siteName": "London A210 McDonald's",
+        "address": "Westhorne Avenue, Eltham Road, Eltham, London SE9 5LN",
+        "connectors": [
+          "CCS2",
+          "CHAdeMO"
+        ],
+        "maxPowerKw": 160,
+        "stalls": 4,
+        "price": {
+          "perKwh": 0.92,
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": "Zap-Pay 92p/kWh, PAYG 92p/kWh",
+          "currency": "GBP",
+          "taxNote": "VAT included"
+        },
+        "nonTeslaAccess": true,
+        "source": "https://www.zapmap.com/charge-points/eltham/2UEUUCQ",
+        "date": "2026-10-03",
+        "status": "secondhand",
+        "notes": "4 CCS at 160 kW, 1 CHAdeMO at 60 kW."
+      },
+      {
+        "network": "IONITY",
+        "siteName": "IONITY Greenwich Shopping Park",
+        "address": "Greenwich Shopping Park, Bugsby's Way, London SE10",
+        "connectors": [
+          "CCS2"
+        ],
+        "maxPowerKw": 400,
+        "stalls": 12,
+        "price": {
+          "perKwh": 0.83,
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": "Direct 83p/kWh; Passport plans per networks.ionity-GB",
+          "currency": "GBP",
+          "taxNote": "VAT included"
+        },
+        "nonTeslaAccess": true,
+        "source": "https://transportandenergy.com/2026/08/19/ionity-opens-ev-charging-hub-in-london/ ; price from https://www.ionity.eu/subscriptions",
+        "date": "2026-10-03 (site opened 2026-08-19/21)",
+        "status": "secondhand",
+        "notes": "Site facts from trade press on opening; exact postcode not given; connector CCS2 inferred from IONITY being CCS-only (estimate)."
+      },
+      {
+        "network": "bp pulse",
+        "siteName": "bp pulse Cromwell Road hub",
+        "address": "Cromwell Road (A4), Hammersmith, London",
+        "connectors": [
+          "CCS2"
+        ],
+        "maxPowerKw": 300,
+        "stalls": 5,
+        "price": {
+          "perKwh": "0.79-0.93 (network range for 150-400 kW)",
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": null,
+          "currency": "GBP",
+          "taxNote": "VAT included"
+        },
+        "nonTeslaAccess": true,
+        "source": "bp press release via search: https://www.bp.com/en_gb/united-kingdom/home/news/press-releases/bp-launches-first-dedicated-ev-charging-and-convenience-hub.html ; Zapmap bp pulse guide",
+        "date": "2026-10-03",
+        "status": "secondhand",
+        "notes": "Five 300 kW units per search summary of bp's release; full street number not captured; connectors estimated CCS2."
+      }
+    ],
+    "ie-lei-dublin": [
+      {
+        "network": "ESB ecars",
+        "siteName": "ESB High Power Charging Hub, Blanchardstown Centre",
+        "address": "Blanchardstown Centre retail park, Dublin 15 (off M50/N3)",
+        "connectors": [
+          "CCS2"
+        ],
+        "maxPowerKw": 200,
+        "stalls": 8,
+        "price": {
+          "perKwh": {
+            "payg": 0.72,
+            "member": 0.67,
+            "contactless": 0.73
+          },
+          "sessionFee": null,
+          "idleFee": "EUR 0.50/min after 45 min on High Power, max EUR 22.50",
+          "memberVsNonMember": "Membership EUR 4.79/month, 12-month minimum",
+          "currency": "EUR",
+          "taxNote": "inclusive of VAT at 9%"
+        },
+        "nonTeslaAccess": true,
+        "source": "https://esb.ie/news---insights/press-releases/article/2024/03/12/esb-launches-major-high-power-ev-charging-hub-at-prime-dublin-location-in-blanchardstown-centre ; https://esb.ie/what-we-do/ecars/price-plans",
+        "date": "2026-10-03 (hub opened 2024-03-12; prices valid from 2026-07-01)",
+        "status": "verified",
+        "notes": "Four 200 kW units, eight vehicles at once. Connector type not stated by ESB; CCS2 is an estimate."
+      },
+      {
+        "network": "IONITY",
+        "siteName": "IONITY Charlestown Shopping Centre",
+        "address": "Charlestown Shopping Centre, Finglas, Dublin 11 (near M50 J5)",
+        "connectors": [
+          "CCS2"
+        ],
+        "maxPowerKw": 350,
+        "stalls": 12,
+        "price": {
+          "perKwh": 0.81,
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": "Direct EUR 0.81/kWh; Passport plans per networks.ionity-IE",
+          "currency": "EUR",
+          "taxNote": "VAT included"
+        },
+        "nonTeslaAccess": true,
+        "source": "https://www.electrive.com/2024/12/04/ionity-opens-irelands-largest-fast-charging-hub/ ; https://www.ionity.eu/subscriptions",
+        "date": "2026-10-03 (opened Dec 2024)",
+        "status": "secondhand"
+      },
+      {
+        "network": "Circle K",
+        "siteName": "Circle K Clonshaugh EV Hub",
+        "address": "Circle K Clonshaugh, behind Clayton Hotel Dublin Airport, M1/M50 junction, Dublin 17",
+        "connectors": [
+          "CCS2"
+        ],
+        "maxPowerKw": 400,
+        "stalls": 10,
+        "price": {
+          "perKwh": 0.69,
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": null,
+          "currency": "EUR",
+          "taxNote": "VAT included (Irish Times figure)"
+        },
+        "nonTeslaAccess": true,
+        "source": "https://www.circlek.ie/2025-news/ev-charging-hub-launch ; price https://www.irishtimes.com/motors/2026/09/02/ev-public-charging-price-rises-can-i-save-money-by-shopping-around/",
+        "date": "2026-10-03",
+        "status": "verified",
+        "notes": "Circle K: 5 chargers, 10 bays, up to 400 kW. Price is secondhand (Irish Times 2026-09-02, 'high-speed charging'); connector estimated CCS2."
+      },
+      {
+        "network": "Tesla Supercharger",
+        "siteName": "Dublin, Ireland (Sandyford) Supercharger",
+        "address": "92 Bracken Road, Sandyford, Dublin 18 D18 CY92",
+        "connectors": [
+          "CCS2"
+        ],
+        "maxPowerKw": 250,
+        "stalls": 8,
+        "price": {
+          "perKwh": {
+            "nonTeslaPeak_08-23": 0.67,
+            "nonTeslaOffPeak_00-04_and_23-24": 0.4
+          },
+          "sessionFee": null,
+          "idleFee": "up to EUR 1.00/min",
+          "memberVsNonMember": "figures shown are for non-Tesla; Tesla/member rates not captured",
+          "currency": "EUR",
+          "taxNote": null
+        },
+        "nonTeslaAccess": true,
+        "source": "search-index snippet of https://www.tesla.com/en_IE/findus/location/supercharger/dublinsandyford (direct fetch 403)",
+        "date": "2026-10-03 (snippet date unknown)",
+        "status": "secondhand",
+        "notes": "Irish Times 2026-09-02 gives Tesla non-Tesla range 57c-64c/kWh nationally."
+      }
+    ],
+    "ca-on-toronto": [
+      {
+        "network": "Tesla Supercharger",
+        "siteName": "Toronto, ON - Lawrence Avenue West - Tesla Supercharger",
+        "address": "700 Lawrence Ave W, Toronto, ON M6A 3B4 (Lawrence Allen Centre)",
+        "connectors": [
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 325,
+        "stalls": 20,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 416137; access per search snippet of tesla.com findus ('Open to Tesla and NACS Enabled Vehicles with CCS Compatibility', adapter needed)",
+        "date": "2026-10-03 (AFDC last confirmed 2026-06-18)",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "FLO (Green P / Toronto Parking Authority)",
+        "siteName": "GreenP - CP43 - 2 Church St - Fast Chargers West",
+        "address": "2 Church St, Toronto, ON M5E 1Z3",
+        "connectors": [
+          "CCS1"
+        ],
+        "maxPowerKw": 100,
+        "stalls": 2,
+        "price": {
+          "perHour": {
+            "50kW": 15,
+            "100kW": 20
+          },
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": null,
+          "currency": "CAD",
+          "taxNote": "parking charged separately; HST treatment not confirmed"
+        },
+        "nonTeslaAccess": true,
+        "source": "AFDC id 315916; price from search summary of https://parking.greenp.com/ev-charging/ (page fetch returned empty)",
+        "date": "2026-10-03",
+        "status": "verified-govdata",
+        "notes": "Same garage also has a 50 kW CCS1/CHAdeMO FLO unit (AFDC id 315923). Price is secondhand."
+      },
+      {
+        "network": "Shell Recharge",
+        "siteName": "C45065 Toronto EV",
+        "address": "548 Richmond St E, Toronto, ON M5A 1R5",
+        "connectors": [
+          "CCS1",
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 180,
+        "stalls": 4,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 446791",
+        "date": "2026-10-03 (AFDC last confirmed 2025-12-03)",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "JULE",
+        "siteName": "King's College Circle Garage",
+        "address": "27 King's College Cir, Toronto, ON M5S 1A1",
+        "connectors": [
+          "CCS1",
+          "CHAdeMO"
+        ],
+        "maxPowerKw": 150,
+        "stalls": 3,
+        "price": {
+          "perKwh": 0.5,
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": null,
+          "currency": "CAD",
+          "taxNote": null
+        },
+        "nonTeslaAccess": true,
+        "source": "AFDC id 416140",
+        "date": "2026-10-03 (AFDC last confirmed 2025-08-12)",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "Electrify Canada",
+        "siteName": "Electrify Canada Scarborough",
+        "address": "4630 Sheppard Ave E, Scarborough, ON M1S 3V5",
+        "connectors": [
+          "CCS1"
+        ],
+        "maxPowerKw": 350,
+        "stalls": null,
+        "price": {
+          "perKwh": "0.60-0.70 (Ontario range, 2024)",
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": "Pass+ $7/month, 20% off",
+          "currency": "CAD",
+          "taxNote": null
+        },
+        "nonTeslaAccess": true,
+        "source": "web search summary (Apple Maps / ChargeHub listing); pricing https://driveteslacanada.ca/news/electrify-canada-switches-to-kwh-billing/",
+        "date": "2026-10-03",
+        "status": "secondhand",
+        "notes": "Stall count and max kW not confirmed for this site; 350 kW is Electrify Canada's standard top unit (estimate). AFDC DEMO_KEY rate-limited before this could be checked."
+      }
+    ],
+    "ca-bc-vancouver": [
+      {
+        "network": "Tesla Supercharger",
+        "siteName": "Seymour St - Tesla Supercharger",
+        "address": "898 Seymour St, Vancouver, BC V6B 3L5",
+        "connectors": [
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 250,
+        "stalls": 12,
+        "price": null,
+        "nonTeslaAccess": "unknown",
+        "source": "AFDC id 461319",
+        "date": "2026-10-03 (AFDC last confirmed 2026-06-18)",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "BC Hydro EV",
+        "siteName": "BC Hydro - Homer St",
+        "address": "561 Homer St, Vancouver, BC V6B 2V7",
+        "connectors": [
+          "CCS1",
+          "CHAdeMO"
+        ],
+        "maxPowerKw": 50,
+        "stalls": 2,
+        "price": {
+          "perKwh": 0.3969,
+          "sessionFee": null,
+          "idleFee": "CAD 0.40/min after 5-minute grace",
+          "memberVsNonMember": "single rate",
+          "currency": "CAD",
+          "taxNote": "before 5% GST"
+        },
+        "nonTeslaAccess": true,
+        "source": "AFDC id 88209; https://www.bchydro.com/powersmart/electric-vehicles/public-charging/charging-rates-roaming.html",
+        "date": "2026-10-03 (rates effective 2026-04-01)",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "Petro-Canada EV",
+        "siteName": "PETRO-CANADA B 91340 - 1",
+        "address": "1743 Burrard St, Vancouver, BC V6J 3G6",
+        "connectors": [
+          "CCS1",
+          "CHAdeMO"
+        ],
+        "maxPowerKw": 350,
+        "stalls": 1,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 422751 (AFDC files it under ChargePoint network)",
+        "date": "2026-10-03 (AFDC last confirmed 2026-10-02)",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "Shell Recharge",
+        "siteName": "C01213 Vancouver",
+        "address": "1785 Main St, Vancouver, BC V5T 3B5",
+        "connectors": [
+          "CCS1",
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 180,
+        "stalls": 2,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 446799",
+        "date": "2026-10-03",
+        "status": "verified-govdata"
+      },
+      {
+        "network": "FLO",
+        "siteName": "VCH - Vancouver General Hospital",
+        "address": "899 W 12th Ave, Vancouver, BC V5Z 1M9",
+        "connectors": [
+          "CCS1",
+          "CHAdeMO"
+        ],
+        "maxPowerKw": 50,
+        "stalls": 1,
+        "price": null,
+        "nonTeslaAccess": true,
+        "source": "AFDC id 326758",
+        "date": "2026-10-03",
+        "status": "verified-govdata"
+      }
+    ],
+    "mx-cmx-mexicocity": [
+      {
+        "network": "Tesla Supercharger",
+        "siteName": "Mexico City South, CDMX (Estacionamiento de Paga) - Perisur",
+        "address": "Anillo Periférico 4690, Insurgentes Cuicuilco, Coyoacán, Ciudad de México 04500",
+        "connectors": [
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 250,
+        "stalls": 8,
+        "price": null,
+        "nonTeslaAccess": "unknown",
+        "source": "search-index snippet of https://www.tesla.com/es_mx/findus/location/supercharger/6353 ; Expansión 2026-06-23 CFE directory",
+        "date": "2026-10-03",
+        "status": "secondhand",
+        "notes": "Paid parking site. Connector inferred from North American Tesla standard (estimate)."
+      },
+      {
+        "network": "Tesla Supercharger",
+        "siteName": "Santa Fe, CDMX",
+        "address": "Av. Vasco de Quiroga 200 (Patio Santa Fe), Álvaro Obregón, Ciudad de México",
+        "connectors": [
+          "NACS/J3400"
+        ],
+        "maxPowerKw": 72,
+        "stalls": 8,
+        "price": null,
+        "nonTeslaAccess": "unknown",
+        "source": "search-index snippet of https://www.tesla.com/findus/location/supercharger/santafemxsupercharger",
+        "date": "2026-10-03",
+        "status": "secondhand",
+        "notes": "Snippet gave postcode 45620, which looks wrong for CDMX (01219 is Santa Fe); postcode omitted."
+      },
+      {
+        "network": "VEMO",
+        "siteName": "VEMO HUB San Pedro de los Pinos",
+        "address": "San Pedro de los Pinos, Benito Juárez, Ciudad de México",
+        "connectors": [],
+        "maxPowerKw": 96,
+        "stalls": 41,
+        "price": null,
+        "nonTeslaAccess": "unknown",
+        "source": "https://expansion.mx/empresas/2026/06/23/donde-cargar-auto-electrico-cdmx-estaciones-cfe",
+        "date": "2026-10-03 (article 2026-06-23)",
+        "status": "secondhand",
+        "notes": "41 DC chargers at 96 kW per Expansión; public access and connectors not stated (VEMO hubs serve ride-hail fleets)."
+      },
+      {
+        "network": "Evergo",
+        "siteName": "Evergo Metrópoli Patriotismo",
+        "address": "Plaza Metrópoli Patriotismo, Av. Patriotismo, Ciudad de México",
+        "connectors": [],
+        "maxPowerKw": 50,
+        "stalls": 3,
+        "price": {
+          "perKwh": 10.5,
+          "sessionFee": null,
+          "idleFee": null,
+          "memberVsNonMember": "BMW owners get preferential subscription pricing",
+          "currency": "MXN",
+          "taxNote": "IVA treatment not stated"
+        },
+        "nonTeslaAccess": true,
+        "source": "https://www.xataka.com.mx/automovil/adios-a-carga-gratuita-para-autos-electricos-mexico-bmw-evergo-instalaran-4-000-cargadores-pago-todo-pais ; price from petroleoenergia.com 2026 article (search snippet)",
+        "date": "2026-10-03 (site opened 2023-01-25)",
+        "status": "secondhand",
+        "notes": "3 DC at 50 kW plus 6 AC at 19 kW. Price is a network approximation, not a site tariff."
+      },
+      {
+        "network": "GOenergy",
+        "siteName": "Estación de carga rápida Mixcoac",
+        "address": "Mixcoac, Ciudad de México (street address not published in source)",
+        "connectors": [],
+        "maxPowerKw": 240,
+        "stalls": null,
+        "price": null,
+        "nonTeslaAccess": "unknown",
+        "source": "https://heraldodemexico.com.mx/edicion-impresa/2026/6/17/goenergy-inaugura-un-centro-de-carga-rapida-en-la-cdmx-833493.html",
+        "date": "2026-10-03 (article 2026-06-17)",
+        "status": "secondhand",
+        "notes": "Huawei Digital Power equipment up to 240 kW; with DiDi Volt."
+      }
+    ]
+  },
+  "chargingNetworks": {
+    "ElectrifyAmerica-US": {
+      "plans": {
+        "Pass": "no monthly fee",
+        "Pass+": "USD 7/month, about 25% savings (EA page says 'about 25%'; $7 fee from secondhand)"
+      },
+      "perKwhAverages": {
+        "NY": 0.54,
+        "CA": 0.693,
+        "CT": 0.65,
+        "national": 0.615
+      },
+      "averagesBasis": "DCFC Tracker peak $/kWh, unweighted across sites, data as of 2026-10-03",
+      "idleFee": "on charger screen; not published",
+      "currency": "USD",
+      "source": "https://www.electrifyamerica.com/pricing/ (no per-state figures published; prices in app/at charger) ; https://dcfctracker.com/reports/electrify-america",
+      "date": "2026-10-03",
+      "status": "secondhand (figures); verified (plan structure)"
+    },
+    "EVgo-US": {
+      "perKwhAverages": {
+        "NY": 0.673,
+        "CA": 0.653,
+        "CT": 0.667,
+        "national": 0.636
+      },
+      "averagesBasis": "DCFC Tracker: 'EVgo charges a single public per-kWh rate that varies by site and, in some markets, by time of day'; peak rate recorded",
+      "plans": null,
+      "currency": "USD",
+      "source": "https://dcfctracker.com/reports/evgo (evgo.com/pricing returned 429)",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    "Tesla-US": {
+      "perKwhAverages": {
+        "NY": 0.548,
+        "CA": 0.705,
+        "CT": 0.691,
+        "national": 0.615
+      },
+      "averagesBasis": "DCFC Tracker standard rate at sites open to non-Teslas, peak; members paid ~29% less ($0.18/kWh gap)",
+      "membership": "USD 12.99/month for non-Tesla owners (secondhand)",
+      "currency": "USD",
+      "source": "https://dcfctracker.com/reports/tesla",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    "Revel-NYC": {
+      "perKwh": {
+        "withApp": "from 0.45 + tax",
+        "withoutApp": "0.52 + tax"
+      },
+      "note": "Exact pricing varies by location and time of use; AFDC site rates $0.54 (South Williamsburg) and $0.61 (Lower Manhattan)",
+      "currency": "USD",
+      "source": "https://gorevel.com/charging",
+      "date": "2026-10-03",
+      "status": "verified"
+    },
+    "Applegreen-CT": {
+      "perKwh": 0.64,
+      "currency": "USD",
+      "source": "AFDC ev_pricing at I-95/RT15 service plazas",
+      "date": "2026-10-03 (AFDC confirmed 2026-03-12)",
+      "status": "verified-govdata"
+    },
+    "IONITY-GB": {
+      "direct": 0.83,
+      "PowerMonthly": {
+        "fee": 10.5,
+        "perKwh": 0.49
+      },
+      "PowerAnnual": {
+        "fee": 104.99,
+        "perKwh": 0.47
+      },
+      "MotionMonthly": {
+        "fee": 5.49,
+        "perKwh": 0.62
+      },
+      "MotionAnnual": {
+        "fee": 54.99,
+        "perKwh": 0.59
+      },
+      "currency": "GBP",
+      "source": "https://www.ionity.eu/subscriptions",
+      "date": "2026-10-03",
+      "status": "verified"
+    },
+    "IONITY-IE": {
+      "direct": 0.81,
+      "PowerMonthly": {
+        "fee": 11.99,
+        "perKwh": 0.47
+      },
+      "PowerAnnual": {
+        "fee": 119.99,
+        "perKwh": 0.46
+      },
+      "MotionMonthly": {
+        "fee": 5.99,
+        "perKwh": 0.59
+      },
+      "MotionAnnual": {
+        "fee": 59.99,
+        "perKwh": 0.58
+      },
+      "currency": "EUR",
+      "source": "https://www.ionity.eu/subscriptions",
+      "date": "2026-10-03",
+      "status": "verified",
+      "note": "Irish Times 2026-09-02 also cites 77c/kWh via app ad hoc."
+    },
+    "InstaVolt-GB": {
+      "perKwh": 0.92,
+      "note": "Zap-Pay and PAYG both 92p/kWh at the Eltham site; network page instavolt.co.uk/pricing returned 404",
+      "currency": "GBP",
+      "source": "https://www.zapmap.com/charge-points/eltham/2UEUUCQ",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    "bpPulse-GB": {
+      "perKwh": {
+        "50-149kW": "0.79-0.93",
+        "150-400kW": "0.79-0.93"
+      },
+      "note": "connection/overstay fees may apply; subscription rates not captured",
+      "currency": "GBP",
+      "source": "https://www.zapmap.com/ev-guides/public-charging-point-networks/bp-pulse",
+      "date": "2026-10-03 (Zapmap updated Sep 2026)",
+      "status": "secondhand"
+    },
+    "ShellRecharge-GB": {
+      "perKwh": 0.79,
+      "note": "Fulham hub PAYG; Zap-Pay 89p shown in a Zapmap snippet",
+      "currency": "GBP",
+      "source": "https://www.zapmap.com/charge-points/fulham/C50X4NI",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    "ESBecars-IE": {
+      "membership": {
+        "monthlyFee": 4.79,
+        "termMonths": 12,
+        "standardAC_upTo50kW": 0.55,
+        "fastHighPowerDC_50kWPlus": 0.67
+      },
+      "payg": {
+        "standardAC": 0.6,
+        "fastHighPowerDC": 0.72
+      },
+      "contactless": {
+        "standardAC": 0.61,
+        "fastHighPowerDC": 0.73
+      },
+      "overstay": "EUR 0.50/min after 10 h on Standard, after 45 min on Fast & High Power; max EUR 22.50",
+      "currency": "EUR",
+      "taxNote": "All prices inclusive of VAT at 9%",
+      "effective": "2026-07-01",
+      "source": "https://esb.ie/what-we-do/ecars/price-plans",
+      "date": "2026-10-03",
+      "status": "verified"
+    },
+    "ESBecars-NI": {
+      "membership": {
+        "monthlyFee": 4.99,
+        "AC": 0.57,
+        "DC": 0.7
+      },
+      "payg": {
+        "AC": 0.6,
+        "DC": 0.74
+      },
+      "contactless": {
+        "AC": 0.61,
+        "DC": 0.75
+      },
+      "currency": "GBP",
+      "taxNote": "inclusive of VAT at 20%",
+      "effective": "2026-07-01",
+      "source": "https://esb.ie/what-we-do/ecars/price-plans",
+      "date": "2026-10-03",
+      "status": "verified"
+    },
+    "CircleK-IE": {
+      "perKwh": 0.69,
+      "note": "'69c per kWh for high-speed charging' (Irish Times); another 2026 guide cited 52c-57c, conflicting",
+      "currency": "EUR",
+      "source": "https://www.irishtimes.com/motors/2026/09/02/ev-public-charging-price-rises-can-i-save-money-by-shopping-around/",
+      "date": "2026-10-03 (article 2026-09-02)",
+      "status": "secondhand"
+    },
+    "Tesla-IE": {
+      "nonTeslaPerKwh": "0.57-0.64 national range peak/off-peak (Irish Times); Sandyford snippet 0.40 off-peak to 0.67 peak, idle up to EUR 1.00/min",
+      "currency": "EUR",
+      "source": "Irish Times 2026-09-02; tesla.com snippet",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    "OtherIE-fromIrishTimes": {
+      "Applegreen": "0.68/kWh fast via app",
+      "Blink": "0.65/kWh",
+      "EZO(formerly EasyGo)": "0.51/kWh up to 22 kW; 0.76/kWh up to 200 kW + 0.24 access fee",
+      "ePower": "0.73/kWh up to 180 kW + 0.24 access fee",
+      "currency": "EUR",
+      "source": "https://www.irishtimes.com/motors/2026/09/02/ev-public-charging-price-rises-can-i-save-money-by-shopping-around/",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    "BCHydro-BC": {
+      "fastPerKwh": 0.3969,
+      "level2PerKwh": 0.3083,
+      "idleFee": "CAD 0.40/min after 5-minute grace; not at Level 2",
+      "basis": "rate by the charger's labelled maximum kW",
+      "currency": "CAD",
+      "taxNote": "shown before 5% GST",
+      "effective": "2026-04-01",
+      "source": "https://www.bchydro.com/powersmart/electric-vehicles/public-charging/charging-rates-roaming.html",
+      "date": "2026-10-03",
+      "status": "verified"
+    },
+    "ElectrifyCanada-ON": {
+      "perKwh": "0.60-0.70 depending on location",
+      "plans": {
+        "Pass": "no monthly fee",
+        "Pass+": "CAD 7/month, 20% discount (secondhand); operator says 'savings of up to 20%'"
+      },
+      "currency": "CAD",
+      "source": "https://driveteslacanada.ca/news/electrify-canada-switches-to-kwh-billing/ (2024-01-09); https://www.electrify-canada.ca/pricing/ (no figures published)",
+      "date": "2026-10-03 (figures dated 2024-01-09)",
+      "status": "secondhand"
+    },
+    "ElectrifyCanada-BC": {
+      "perKwh": 0.7,
+      "currency": "CAD",
+      "source": "https://driveteslacanada.ca/news/electrify-canada-switches-to-kwh-billing/",
+      "date": "2026-10-03 (figures dated 2024-01-09)",
+      "status": "secondhand"
+    },
+    "GreenP-FLO-Toronto": {
+      "dcFastPerHour": {
+        "50kW": 15,
+        "100kW": 20
+      },
+      "note": "parking billed separately",
+      "currency": "CAD",
+      "source": "search summary of https://parking.greenp.com/ev-charging/ (direct fetch returned empty body)",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    "Ivy-ON": {
+      "perKwh": 0.62,
+      "note": "ONroute locations, tax inclusive; 50-150 kW, 3-4 chargers per site",
+      "currency": "CAD",
+      "source": "search summary of https://ivycharge.com/onroute/ (ivycharge.com returned 403 to fetch)",
+      "date": "2026-10-03",
+      "status": "secondhand"
+    },
+    "JULE-ON": {
+      "perKwh": "0.50 (King's College Circle); 0.40-0.55/min variable (Loblaws Bayview Village, AFDC wording)",
+      "currency": "CAD",
+      "source": "AFDC ids 416140, 298651",
+      "date": "2026-10-03",
+      "status": "verified-govdata"
+    },
+    "PowerFlex-LACounty": {
+      "perKwh": {
+        "16:00-21:00": 0.45,
+        "otherTimes": 0.3
+      },
+      "currency": "USD",
+      "source": "AFDC ids 63047, 63052",
+      "date": "2026-10-03",
+      "status": "verified-govdata"
+    },
+    "Evergo-MX": {
+      "perKwh": 10.5,
+      "alt": "or MXN 15 per hour of connection",
+      "currency": "MXN",
+      "source": "search snippet of https://petroleoenergia.com/industrias/cuanto-cuesta-cargar-un-auto-electrico-en-mexico-en-2026/",
+      "date": "2026-10-03",
+      "status": "secondhand",
+      "note": "Same source gives Tesla/Evergo public average MXN 7.50-9.00/kWh in 2026; the two figures conflict."
+    }
+  },
+  "evConnectors": {
+    "us-tesla-model-y": {
+      "market": "US",
+      "connectors": [
+        "NACS/J3400 inlet (AC and DC)"
+      ],
+      "adapters": "Tesla sells a CCS1 adapter for non-Tesla DC sites in North America",
+      "maxDcKw": {
+        "64 kWh LFP (CATL)": 175,
+        "72 kWh (Panasonic)": 225
+      },
+      "maxDcSource": "https://evkx.net/models/tesla/model_y/model_y_standard/specifications/",
+      "maxDcStatus": "secondhand",
+      "connectorSource": "https://en.wikipedia.org/wiki/Plug-in_electric_vehicles_in_the_United_States_and_Canada_by_charging_connector (all North American Teslas use NACS); tesla.com returned HTTP 403 to every fetch",
+      "connectorStatus": "secondhand",
+      "note": "Tesla does not say which pack a given Model Y Standard carries; evkx lists both for the Standard. The maker page could not be read, so neither figure is verified.",
+      "date": "2026-10-03"
+    },
+    "ca-tesla-model-y": {
+      "market": "CA",
+      "connectors": [
+        "NACS/J3400 inlet (AC and DC)"
+      ],
+      "adapters": "Tesla sells a CCS1 adapter for non-Tesla DC sites in North America",
+      "maxDcKw": {
+        "64 kWh LFP (CATL)": 175,
+        "72 kWh (Panasonic)": 225
+      },
+      "maxDcSource": "https://evkx.net/models/tesla/model_y/model_y_standard/specifications/",
+      "maxDcStatus": "secondhand",
+      "connectorSource": "https://en.wikipedia.org/wiki/Plug-in_electric_vehicles_in_the_United_States_and_Canada_by_charging_connector (all North American Teslas use NACS); tesla.com returned HTTP 403 to every fetch",
+      "connectorStatus": "secondhand",
+      "note": "Tesla does not say which pack a given Model Y Standard carries; evkx lists both for the Standard. The maker page could not be read, so neither figure is verified.",
+      "date": "2026-10-03"
+    },
+    "mx-tesla-model-y": {
+      "market": "MX",
+      "connectors": [
+        "NACS/J3400 inlet (AC and DC)"
+      ],
+      "adapters": "Tesla sells a CCS1 adapter for non-Tesla DC sites in North America",
+      "maxDcKw": {
+        "64 kWh LFP (CATL)": 175,
+        "72 kWh (Panasonic)": 225
+      },
+      "maxDcSource": "https://evkx.net/models/tesla/model_y/model_y_standard/specifications/",
+      "maxDcStatus": "secondhand",
+      "connectorSource": "https://en.wikipedia.org/wiki/Plug-in_electric_vehicles_in_the_United_States_and_Canada_by_charging_connector (all North American Teslas use NACS); tesla.com returned HTTP 403 to every fetch",
+      "connectorStatus": "secondhand",
+      "note": "Tesla does not say which pack a given Model Y Standard carries; evkx lists both for the Standard. The maker page could not be read, so neither figure is verified. Tesla's Mexican cars and Superchargers use the North American (NACS) plug; tesla.com/es_mx returned HTTP 403, so this is secondhand.",
+      "date": "2026-10-03"
+    },
+    "gb-tesla-model-y": {
+      "market": "GB",
+      "connectors": [
+        "CCS2 (Type 2 AC + CCS DC combo inlet)"
+      ],
+      "maxDcKw": {
+        "64 kWh LFP (CATL)": 175,
+        "72 kWh (Panasonic)": 225
+      },
+      "acKw": 11,
+      "maxDcSource": "https://evkx.net/models/tesla/model_y/model_y_standard/specifications/",
+      "maxDcStatus": "secondhand",
+      "connectorSource": "https://www.zapmap.com/ev-guides/model-charging/tesla-model-y",
+      "connectorStatus": "secondhand",
+      "note": "Zapmap's general Model Y guide says CCS, \"up to 210 kW DC\" and an 11 kW AC on-board charger, without separating trims; evkx gives 175 kW (LFP) or 225 kW (Panasonic) for the Standard. tesla.com/en_gb and /en_ie returned HTTP 403.",
+      "date": "2026-10-03"
+    },
+    "ie-tesla-model-y": {
+      "market": "IE",
+      "connectors": [
+        "CCS2 (Type 2 AC + CCS DC combo inlet)"
+      ],
+      "maxDcKw": {
+        "64 kWh LFP (CATL)": 175,
+        "72 kWh (Panasonic)": 225
+      },
+      "acKw": 11,
+      "maxDcSource": "https://evkx.net/models/tesla/model_y/model_y_standard/specifications/",
+      "maxDcStatus": "secondhand",
+      "connectorSource": "https://www.zapmap.com/ev-guides/model-charging/tesla-model-y",
+      "connectorStatus": "secondhand",
+      "note": "Zapmap's general Model Y guide says CCS, \"up to 210 kW DC\" and an 11 kW AC on-board charger, without separating trims; evkx gives 175 kW (LFP) or 225 kW (Panasonic) for the Standard. tesla.com/en_gb and /en_ie returned HTTP 403.",
+      "date": "2026-10-03"
+    },
+    "us-chevrolet-equinox-ev": {
+      "market": "US",
+      "byModelYear": {
+        "2026": {
+          "connectors": [
+            "CCS1 (DC)",
+            "J1772 (AC)"
+          ],
+          "adapter": "GM-approved NACS DC adapter, sold separately, for Tesla Superchargers",
+          "source": "https://www.greencars.com/expert-insights/2026-chevrolet-equinox-ev-drive-review-two-sides-to-the-story",
+          "status": "secondhand"
+        },
+        "2027": {
+          "connectors": [
+            "NACS/J3400 native inlet"
+          ],
+          "quote": "chevrolet.com (2027 Equinox EV): \"You can add up to 80 miles of range in 10 minutes with public DC fast charging,* plus the new standard NACS charging port expands access to more charging stations.\"",
+          "source": "https://www.chevrolet.com/electric/equinox-ev",
+          "status": "verified",
+          "note": "GM Authority: the 2027 drops the 19.2 kW on-board charger option; 11.5 kW standard."
+        }
+      },
+      "maxDcKw": 150,
+      "maxDcSource": "https://gmauthority.com/blog/2026/06/2027-chevy-equinox-ev-gets-nacs-charge-port/ (85 kWh pack, 150 kW peak)",
+      "maxDcStatus": "secondhand",
+      "note": "SLATE's catalog row records no model year; the LT FWD trim exists in both.",
+      "date": "2026-10-03"
+    },
+    "ca-chevrolet-equinox-ev": {
+      "market": "CA",
+      "connectors": [
+        "CCS1 (DC)",
+        "J1772 (AC)"
+      ],
+      "adapter": "chevrolet.ca (page titled \"2026 Equinox EV\"): \"Order your GM-approved NACS DC adapter\"; access to \"Tesla Superchargers\" through it",
+      "maxDcKw": 150,
+      "maxDcSource": "https://gmauthority.com/blog/2026/06/2027-chevy-equinox-ev-gets-nacs-charge-port/",
+      "maxDcStatus": "secondhand",
+      "connectorSource": "https://www.chevrolet.ca/en/electric/equinox-ev (read by curl; WebFetch got 403)",
+      "connectorStatus": "verified for the adapter wording; CCS1 inlet secondhand",
+      "date": "2026-10-03"
+    },
+    "gb-ford-puma-gen-e": {
+      "market": "GB",
+      "connectors": [
+        "CCS2 (Type 2 AC + CCS DC combo inlet)"
+      ],
+      "maxDcKw": 100,
+      "dcTime": "Ford UK: \"10-80% in just 26 minutes\" on a \"100kW fast charger\" (Zapmap and press repeat 23 minutes)",
+      "acKw": "Ford UK: 7 kW wallbox, approx. 7 hours",
+      "batteryKwh": {
+        "usable": 43,
+        "total": 53
+      },
+      "maxDcSource": "https://www.ford.co.uk/cars/puma-gen-e",
+      "maxDcStatus": "verified",
+      "connectorSource": "search summaries of ford.co.uk and https://www.techeblog.com/electric-ford-puma-gen-e-specs-range-price-interior/; the Ford UK page as fetched did not name the plug",
+      "connectorStatus": "secondhand",
+      "date": "2026-10-03"
+    }
+  },
+  "premiumRequired": {
+    "_basis": "US and Canada: the official EPA/DOE fueleconomy.gov web service and NRCan's 2026 Fuel Consumption Ratings open data (updated 2026-09-28), which list each engine's fuel (EPA: Regular / Midgrade / Premium Gasoline; NRCan: X regular, Z premium, D diesel, E E85). Neither separates \"premium required\" from \"premium recommended\"; only the owner's manual does, and no owner's manual was read for a North American model. Europe: these mass-market engines are rated on 95 RON standard unleaded (E10); none is known to require 98 RON super. The luxury/performance makes named in the brief (BMW, Mercedes-Benz, Audi, Porsche, Lexus) are not in CAR_MODELS at all; the only premium-fuel engines in the catalog's model lines are optional ones (GM 6.2 L V8, Ram 3.0 L Hurricane HO/RHO, Ford Raptor R 5.2 L), not the trims SLATE sells.",
+    "us-ford-f-series": {
+      "fuel": "regular",
+      "detail": "EPA 2026 F150 Pickup 2WD: 2.7 L turbo, 3.5 L turbo and 5.0 L V8 all \"Regular Gasoline\"",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/50092 (also 50093, 50094)",
+      "status": "verified-govdata",
+      "date": "2026-10-03"
+    },
+    "us-chevrolet-silverado": {
+      "fuel": "regular",
+      "detail": "EPA 2026 Silverado 2WD: 2.7 L turbo and 5.3 L V8 Regular; 3.0 L Duramax Diesel. The 6.2 L V8 (not on the Work Truck) is Z/premium per NRCan",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49358, 49361, 49362",
+      "status": "verified-govdata",
+      "date": "2026-10-03",
+      "premiumEngines": [
+        "6.2 L V8"
+      ]
+    },
+    "us-toyota-rav4": {
+      "fuel": "regular",
+      "detail": "EPA 2026 RAV4 2.5 L hybrid: Regular",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/50285",
+      "status": "verified-govdata",
+      "date": "2026-10-03"
+    },
+    "us-honda-cr-v": {
+      "fuel": "regular",
+      "detail": "EPA 2026 CR-V FWD 1.5 L turbo: Regular",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49352",
+      "status": "verified-govdata",
+      "date": "2026-10-03"
+    },
+    "us-ram-pickup-1500-heavy-duty": {
+      "fuel": "regular",
+      "detail": "EPA 2026 Ram 1500 2WD: 3.0 L turbo (Hurricane) and 3.6 L Regular; 5.7 L HEMI \"Midgrade Gasoline\". NRCan lists the 3.0 L HO and RHO as Z (premium)",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49368, 49834, 50096",
+      "status": "verified-govdata",
+      "date": "2026-10-03",
+      "midgradeEngines": [
+        "5.7 L HEMI V8"
+      ],
+      "premiumEngines": [
+        "3.0 L Hurricane HO",
+        "3.0 L Hurricane RHO"
+      ]
+    },
+    "us-gmc-sierra": {
+      "fuel": "regular",
+      "detail": "EPA 2026 Sierra 4WD: 2.7 L turbo and 5.3 L V8 Regular; 6.2 L V8 \"Premium Gasoline\". The Pro trim carries the 2.7 L",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49401, 49413, 49406",
+      "status": "verified-govdata",
+      "date": "2026-10-03",
+      "premiumEngines": [
+        "6.2 L V8"
+      ]
+    },
+    "us-chevrolet-equinox": {
+      "fuel": "regular",
+      "detail": "EPA 2026 Equinox FWD 1.5 L turbo: Regular",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49442",
+      "status": "verified-govdata",
+      "date": "2026-10-03"
+    },
+    "us-toyota-camry": {
+      "fuel": "regular",
+      "detail": "EPA 2026 Camry HEV FF LE 2.5 L: Regular",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49823",
+      "status": "verified-govdata",
+      "date": "2026-10-03"
+    },
+    "ca-ford-f-series": {
+      "fuel": "regular",
+      "detail": "NRCan 2026 F-150 2.7/3.5/5.0: X; only the Raptor R 5.2 L is Z",
+      "source": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+      "status": "verified-govdata",
+      "date": "2026-10-03"
+    },
+    "ca-toyota-rav4": {
+      "fuel": "regular",
+      "detail": "NRCan 2026 RAV4 AWD LE 2.5 L: X",
+      "source": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+      "status": "verified-govdata",
+      "date": "2026-10-03"
+    },
+    "ca-gmc-sierra": {
+      "fuel": "regular",
+      "detail": "NRCan 2026 Sierra 2.7 L and 5.3 L: X; 6.2 L: Z; 3.0 L: D",
+      "source": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+      "status": "verified-govdata",
+      "date": "2026-10-03",
+      "premiumEngines": [
+        "6.2 L V8"
+      ]
+    },
+    "ca-honda-cr-v": {
+      "fuel": "regular",
+      "detail": "NRCan 2026 CR-V 1.5 L: X",
+      "source": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+      "status": "verified-govdata",
+      "date": "2026-10-03"
+    },
+    "ca-chevrolet-silverado": {
+      "fuel": "regular",
+      "detail": "NRCan 2026 Silverado 2.7 L and 5.3 L: X; 6.2 L: Z; 3.0 L: D",
+      "source": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+      "status": "verified-govdata",
+      "date": "2026-10-03",
+      "premiumEngines": [
+        "6.2 L V8"
+      ]
+    },
+    "ca-ram-pickup-1500-heavy-duty": {
+      "fuel": "regular",
+      "detail": "NRCan 2026 Ram 1500 3.0, 3.6 eTorque, 5.7 eTorque: X; 1500 4X4 HO and RHO (3.0 L): Z",
+      "source": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+      "status": "verified-govdata",
+      "date": "2026-10-03",
+      "premiumEngines": [
+        "3.0 L Hurricane HO",
+        "3.0 L Hurricane RHO"
+      ]
+    },
+    "ca-hyundai-tucson": {
+      "fuel": "regular",
+      "detail": "NRCan 2026 Tucson AWD 2.5 L: X",
+      "source": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+      "status": "verified-govdata",
+      "date": "2026-10-03"
+    },
+    "ca-nissan-rogue": {
+      "fuel": "regular",
+      "detail": "NRCan 2026 Rogue AWD 1.5 L: X",
+      "source": "https://open.canada.ca/data/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64/resource/9df1b18d-d036-4783-a61c-99f1f75b3ac5/download/my2026-fuel-consumption-ratings.csv",
+      "status": "verified-govdata",
+      "date": "2026-10-03"
+    },
+    "mx-mazda-cx-30": {
+      "fuel": "regular",
+      "detail": "Mazda's owner's manual for the SKYACTIV-G 2.0 calls for regular unleaded, 87 AKI or higher (Magna in Mexico); the 2.5 L sold in the US and Canada is Regular/X",
+      "source": "https://owners-manual.mazda.com/gen/es/cx-30/cx-30_8hq3sp19i/contents/04040101.html (search summary; the fuel page itself was not opened)",
+      "status": "secondhand",
+      "date": "2026-10-03"
+    },
+    "mx-volkswagen-virtus": {
+      "fuel": "unconfirmed",
+      "detail": "VW Mexico's ficha tecnica (2022, the latest that loads; 2025 and 2026 return 404) says only \"Gasolina\". A dealer listing claims Premium (91) is needed for the 1.6 MSI; not from VW, so not used",
+      "source": "https://www.vw.com.mx/idhub/content/dam/onehub_pkw/importers/mx/fichas-tecnicas/producto/2022/virtus/vw-virtus-2022-ft.pdf",
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "mx-nissan-versa": {
+      "fuel": "unconfirmed",
+      "detail": "No Mexican owner's manual or ficha tecnica giving an octane was read. Related-market fact only: the US Kicks 2.0 L and the Kia K4 (K3's US sibling) 1.6 L/2.0 L are Regular per EPA and NRCan",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49845, 50059",
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "mx-chevrolet-aveo": {
+      "fuel": "unconfirmed",
+      "detail": "No Mexican owner's manual or ficha tecnica giving an octane was read. Related-market fact only: the US Kicks 2.0 L and the Kia K4 (K3's US sibling) 1.6 L/2.0 L are Regular per EPA and NRCan",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49845, 50059",
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "mx-nissan-np300": {
+      "fuel": "unconfirmed",
+      "detail": "No Mexican owner's manual or ficha tecnica giving an octane was read. Related-market fact only: the US Kicks 2.0 L and the Kia K4 (K3's US sibling) 1.6 L/2.0 L are Regular per EPA and NRCan",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49845, 50059",
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "mx-kia-k3-sedan": {
+      "fuel": "unconfirmed",
+      "detail": "No Mexican owner's manual or ficha tecnica giving an octane was read. Related-market fact only: the US Kicks 2.0 L and the Kia K4 (K3's US sibling) 1.6 L/2.0 L are Regular per EPA and NRCan",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49845, 50059",
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "mx-nissan-march": {
+      "fuel": "unconfirmed",
+      "detail": "No Mexican owner's manual or ficha tecnica giving an octane was read. Related-market fact only: the US Kicks 2.0 L and the Kia K4 (K3's US sibling) 1.6 L/2.0 L are Regular per EPA and NRCan",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49845, 50059",
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "mx-nissan-kicks": {
+      "fuel": "unconfirmed",
+      "detail": "No Mexican owner's manual or ficha tecnica giving an octane was read. Related-market fact only: the US Kicks 2.0 L and the Kia K4 (K3's US sibling) 1.6 L/2.0 L are Regular per EPA and NRCan",
+      "source": "https://www.fueleconomy.gov/ws/rest/vehicle/49845, 50059",
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "gb-ford-puma": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "No owner's manual read; no 98 RON requirement is known for this engine",
+      "source": null,
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "gb-kia-sportage": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "No owner's manual read; no 98 RON requirement is known for this engine",
+      "source": null,
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "gb-nissan-qashqai": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "No owner's manual read; no 98 RON requirement is known for this engine",
+      "source": null,
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "gb-vauxhall-corsa": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "No owner's manual read; no 98 RON requirement is known for this engine",
+      "source": null,
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "gb-nissan-juke": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "No owner's manual read; no 98 RON requirement is known for this engine",
+      "source": null,
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "gb-volkswagen-golf": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "VW Group TSI manuals give \"95/91 RON\": 95 RON, or 91 RON with a slight loss of performance (search summary of VW fuel guidance); no 98 RON requirement",
+      "source": null,
+      "status": "secondhand",
+      "date": "2026-10-03"
+    },
+    "gb-volvo-xc40": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "No owner's manual read; no 98 RON requirement is known for this engine",
+      "source": null,
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "gb-mg-hs": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "No owner's manual read; no 98 RON requirement is known for this engine",
+      "source": null,
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "ie-skoda-octavia": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "VW Group TSI manuals give \"95/91 RON\": 95 RON, or 91 RON with a slight loss of performance (search summary of VW fuel guidance); no 98 RON requirement",
+      "source": null,
+      "status": "secondhand",
+      "date": "2026-10-03"
+    },
+    "ie-toyota-yaris-cross": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "No owner's manual read; no 98 RON requirement is known for this engine",
+      "source": null,
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "ie-toyota-rav4": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "No owner's manual read; no 98 RON requirement is known for this engine",
+      "source": null,
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "ie-toyota-corolla": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "No owner's manual read; no 98 RON requirement is known for this engine",
+      "source": null,
+      "status": "none",
+      "date": "2026-10-03"
+    },
+    "ie-skoda-kodiaq": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "VW Group TSI manuals give \"95/91 RON\": 95 RON, or 91 RON with a slight loss of performance (search summary of VW fuel guidance); no 98 RON requirement",
+      "source": null,
+      "status": "secondhand",
+      "date": "2026-10-03"
+    },
+    "ie-volkswagen-tiguan": {
+      "fuel": "95 RON standard unleaded (not read per model)",
+      "detail": "VW Group TSI manuals give \"95/91 RON\": 95 RON, or 91 RON with a slight loss of performance (search summary of VW fuel guidance); no 98 RON requirement",
+      "source": null,
+      "status": "secondhand",
+      "date": "2026-10-03"
+    },
+    "ie-hyundai-tucson": {
+      "fuel": "diesel",
+      "detail": "Diesel (EN 590); no petrol grade applies",
+      "source": null,
+      "status": "n/a",
+      "date": "2026-10-03"
+    },
+    "ie-kia-sportage": {
+      "fuel": "diesel",
+      "detail": "Diesel (EN 590); no petrol grade applies",
+      "source": null,
+      "status": "n/a",
+      "date": "2026-10-03"
+    }
+  },
+  "dcTaper": {
+    "general": {
+      "statement": "AFDC: DC fast charging gives \"approximately 100 to 200+ miles of range per 30 minutes of charging\"; \"charging power varies by vehicle and battery state of charge\". DOE (via search summary): most batteries reduce charging power between 80 and 100 percent during fast charging.",
+      "source": "https://afdc.energy.gov/fuels/electricity-stations",
+      "status": "verified for the two AFDC sentences; secondhand for the 80-100% sentence (not found on an opened DOE page)",
+      "date": "2026-10-03"
+    },
+    "stateGuidance": {
+      "statement": "Drive Electric Minnesota FAQ: a 2020 Model 3 Long Range on a 250 kW V3 Supercharger reaches about 23% in 5 minutes, \"80 percent in about 20 minutes, and 100 percent in less than 25 minutes\"; 350 kW stations charge 100 kWh+ packs \"to 80 percent in about 15 minutes\"; \"vehicles take longer to charge in cold weather\".",
+      "source": "https://driveelectricmn.org/wp-content/uploads/2022/10/Frequently-Asked-Questions-DC-Fast-Charging_digital.pdf",
+      "status": "secondhand (state EV coalition, 2022)",
+      "date": "2026-10-03"
+    },
+    "curves": {
+      "note": "Charge curves from EVKX.net, an aggregator of published charging tests, for the catalog's own cars. Each point is [state of charge %, kW, cumulative time from 0% (m:ss)] on a charger that is not the limit. Usable directly as a kW-by-SoC lookup.",
+      "status": "secondhand",
+      "date": "2026-10-03",
+      "tesla-model-y-standard-64kWh-LFP": {
+        "maxKw": 175,
+        "usableKwh": 60.5,
+        "avgKw": {
+          "10-80": 84.1,
+          "10-100": 59.9,
+          "0-100": 63.8
+        },
+        "points": [
+          [
+            0,
+            120,
+            "0:00"
+          ],
+          [
+            10,
+            170,
+            "2:23"
+          ],
+          [
+            20,
+            136,
+            "4:52"
+          ],
+          [
+            30,
+            126,
+            "7:48"
+          ],
+          [
+            40,
+            107,
+            "11:03"
+          ],
+          [
+            50,
+            89,
+            "15:00"
+          ],
+          [
+            60,
+            75,
+            "19:39"
+          ],
+          [
+            70,
+            60,
+            "25:21"
+          ],
+          [
+            80,
+            46,
+            "32:36"
+          ],
+          [
+            85,
+            40,
+            "37:01"
+          ],
+          [
+            90,
+            36,
+            "42:03"
+          ],
+          [
+            95,
+            29,
+            "47:53"
+          ],
+          [
+            99,
+            18,
+            "54:20"
+          ],
+          [
+            100,
+            12,
+            "56:53"
+          ]
+        ],
+        "source": "https://evkx.net/models/tesla/model_y/model_y_standard/chargingcurve/"
+      },
+      "tesla-model-y-standard-72kWh-Panasonic": {
+        "maxKw": 225,
+        "points": [
+          [
+            0,
+            50,
+            "0:00"
+          ],
+          [
+            10,
+            230,
+            "2:13"
+          ],
+          [
+            20,
+            165,
+            "4:21"
+          ],
+          [
+            30,
+            154,
+            "7:10"
+          ],
+          [
+            40,
+            128,
+            "10:16"
+          ],
+          [
+            50,
+            105,
+            "14:03"
+          ],
+          [
+            60,
+            84,
+            "18:42"
+          ],
+          [
+            70,
+            71,
+            "24:28"
+          ],
+          [
+            80,
+            60,
+            "31:14"
+          ],
+          [
+            85,
+            48,
+            "35:18"
+          ],
+          [
+            90,
+            39,
+            "40:25"
+          ],
+          [
+            95,
+            30,
+            "46:43"
+          ],
+          [
+            99,
+            18,
+            "54:00"
+          ],
+          [
+            100,
+            13,
+            "56:50"
+          ]
+        ],
+        "source": "https://evkx.net/models/tesla/model_y/model_y_standard/chargingcurve/"
+      },
+      "chevrolet-equinox-ev-fwd": {
+        "maxKw": 150,
+        "batteryKwh": 89,
+        "avgKw": {
+          "10-80": 97.1
+        },
+        "time10to80": "36 m 46 s",
+        "points": [
+          [
+            0,
+            50,
+            "0:00"
+          ],
+          [
+            10,
+            150,
+            "5:53"
+          ],
+          [
+            20,
+            150,
+            "9:25"
+          ],
+          [
+            30,
+            139,
+            "13:07"
+          ],
+          [
+            40,
+            121,
+            "17:17"
+          ],
+          [
+            50,
+            116,
+            "21:49"
+          ],
+          [
+            60,
+            79,
+            "26:44"
+          ],
+          [
+            70,
+            75,
+            "35:34"
+          ],
+          [
+            80,
+            65,
+            "42:40"
+          ],
+          [
+            85,
+            54,
+            "47:12"
+          ],
+          [
+            90,
+            42,
+            "52:48"
+          ],
+          [
+            95,
+            31,
+            "1:00:08"
+          ],
+          [
+            99,
+            22,
+            "1:08:14"
+          ],
+          [
+            100,
+            20,
+            "1:10:46"
+          ]
+        ],
+        "source": "https://evkx.net/models/chevrolet/equinox_ev/equinox_ev_fwd/chargingcurve/",
+        "note": "evkx gives 89 kWh; GM sells an 85 kWh pack. Its printed 10-80% time (36:46) agrees with the table (42:40 - 5:53)."
+      },
+      "ford-puma-gen-e": {
+        "maxKw": 100,
+        "batteryKwh": 46,
+        "avgKw": {
+          "10-80": 76.9
+        },
+        "time10to80": "23 m 48 s",
+        "points": [
+          [
+            10,
+            100,
+            "10:42"
+          ],
+          [
+            20,
+            96,
+            "13:30"
+          ],
+          [
+            30,
+            92,
+            "16:26"
+          ],
+          [
+            40,
+            89,
+            "19:28"
+          ],
+          [
+            50,
+            85,
+            "22:38"
+          ],
+          [
+            60,
+            80,
+            "25:58"
+          ],
+          [
+            70,
+            66,
+            "29:43"
+          ],
+          [
+            80,
+            50,
+            "34:30"
+          ],
+          [
+            85,
+            30,
+            "38:01"
+          ],
+          [
+            90,
+            22,
+            "43:18"
+          ],
+          [
+            95,
+            15,
+            "50:44"
+          ],
+          [
+            100,
+            6,
+            "1:17:56"
+          ]
+        ],
+        "source": "https://evkx.net/models/ford/puma/puma_gen-e/chargingcurve/",
+        "note": "Ford UK itself says 10-80% in 26 minutes. The table's 0-10% rows are anomalous (1 kW at 0%) and are left out."
+      }
+    },
+    "modelSuggestion": {
+      "status": "estimate",
+      "derivation": "Read off the curves above, not published as a rule: at 80% the car draws 26-50% of its peak (Model Y LFP 46/175, Panasonic 60/225, Equinox 65/150, Puma 50/100), and 80 to 100% takes 24-43 minutes, about as long as or longer than 10 to 80%. A per-car piecewise-linear kW-by-SoC lookup, capped by the charger's kW, reproduces those times; one rule for all cars would not."
+    }
+  },
+  "notFound": [
+    {
+      "area": "stations/premiumAverages",
+      "what": "Posted prices for all US stations (NY, LA, New Haven)",
+      "whereLooked": "GasBuddy station pages 5380, 5822, 56274, 56305; operator locators (map.bp.com, find.shell.com, exxonmobilfuels.com); CITGO locator",
+      "result": "GasBuddy prices are behind login; operator pages post no prices; CITGO locator refused connection. Area average applies."
+    },
+    {
+      "area": "stations/premiumAverages",
+      "what": "Posted prices for Toronto and Vancouver stations",
+      "whereLooked": "GasBuddy listings via search; esso.ca station pages",
+      "result": "Only undated, plainly old snippet prices; esso.ca shows no prices. Area average applies."
+    },
+    {
+      "area": "stations/premiumAverages",
+      "what": "Posted prices for Dublin stations",
+      "whereLooked": "stations.maxol.ie, pickapump.com, fuelcompare.ie, fuelfinder.ie",
+      "result": "Maxol and Pick A Pump pages are JS apps; fuelcompare.ie refused connection; only stale or undated snippets. Ireland has no statutory station price feed. Area average applies."
+    },
+    {
+      "area": "stations/premiumAverages",
+      "what": "Esso Park Lane and Marylebone Road in Esso's own feed",
+      "whereLooked": "https://fuelprices.esso.co.uk/latestdata.json (193 sites, last_updated 04/10/2026)",
+      "result": "Not present; both are MFG dealer sites, found in MFG's feed instead."
+    },
+    {
+      "area": "stations/premiumAverages",
+      "what": "Current price from Shell's own UK feed for Old Brompton Road",
+      "whereLooked": "https://www.shell.co.uk/fuel-prices-data.html",
+      "result": "Feed last_updated 13/05/2026 (stale). The government Fuel Finder API needs registration; used checkfuelprices.co.uk, which republishes Fuel Finder data."
+    },
+    {
+      "area": "stations/premiumAverages",
+      "what": "RAC Fuel Watch super unleaded average",
+      "whereLooked": "https://www.rac.co.uk/drive/advice/fuel-watch/ (WebFetch and raw HTML)",
+      "result": "Tables load by JavaScript; no figures in page source. Used a Fuel Finder-based aggregate instead (secondhand)."
+    },
+    {
+      "area": "stations/premiumAverages",
+      "what": "Ireland premium petrol average",
+      "whereLooked": "AA Ireland September 2026 survey",
+      "result": "Only petrol and diesel published."
+    },
+    {
+      "area": "stations/premiumAverages",
+      "what": "Vancouver mid-grade average; BC weekly figures",
+      "whereLooked": "StatCan 18-10-0001-01",
+      "result": "StatCan has regular, premium and diesel only, monthly, latest August 2026."
+    },
+    {
+      "area": "stations/premiumAverages",
+      "what": "Diesel at the three CDMX stations",
+      "whereLooked": "CNE prices XML",
+      "result": "No diesel price reported for place_ids 3428, 2319, 9251."
+    },
+    {
+      "area": "stations/premiumAverages",
+      "what": "Petro-Canada operator page for 117 Jarvis St",
+      "whereLooked": "search only",
+      "result": "Not reached; grades from GasBuddy listing."
+    },
+    {
+      "area": "chargers",
+      "what": "Tesla per-site pages (stall counts, open-to-others flag, prices) for all towns",
+      "whereLooked": "tesla.com/findus/location/supercharger/* (US, UK, IE, MX)",
+      "result": "HTTP 403 to fetch; some details recovered only from search-index snippets (marked secondhand)"
+    },
+    {
+      "area": "chargers",
+      "what": "Electrify America per-state Pass/Pass+ prices",
+      "whereLooked": "https://www.electrifyamerica.com/pricing/",
+      "result": "Page publishes no per-state figures; prices only in app/at charger. Used DCFC Tracker averages (secondhand)."
+    },
+    {
+      "area": "chargers",
+      "what": "EVgo pricing page",
+      "whereLooked": "https://www.evgo.com/pricing/",
+      "result": "HTTP 429; used DCFC Tracker averages"
+    },
+    {
+      "area": "chargers",
+      "what": "Electrify Canada current per-province prices",
+      "whereLooked": "https://www.electrify-canada.ca/pricing/ ; media.electrify-canada.ca/en-ca/releases/47",
+      "result": "Operator page has no figures; release page body empty. Only 2024 secondhand figures."
+    },
+    {
+      "area": "chargers",
+      "what": "Petro-Canada EV prices for ON/BC",
+      "whereLooked": "https://www.petro-canada.ca/en/personal/ev-charging ; web search",
+      "result": "Operator site 403; search returned only inconsistent blog ranges ($0.35-$0.66/kWh, older $0.50/min) - not recorded as a figure"
+    },
+    {
+      "area": "chargers",
+      "what": "FLO network-wide published pricing",
+      "whereLooked": "web search",
+      "result": "FLO prices are set per site host; only Green P per-hour rates found"
+    },
+    {
+      "area": "chargers",
+      "what": "Electrify Canada and Petro-Canada sites in Toronto via AFDC; Electrify Canada site in Vancouver",
+      "whereLooked": "AFDC API filtered by network",
+      "result": "Network-code filter returned 0 without country=CA, then DEMO_KEY hit rate limit (429, retry-after ~20 h). Vancouver Petro-Canada found in the unfiltered pull; no Vancouver Electrify Canada site found."
+    },
+    {
+      "area": "chargers",
+      "what": "Ivy Charging Network site inside Toronto",
+      "whereLooked": "ivycharge.com (403), web search",
+      "result": "Only ONroute highway locations found; no Toronto-proper site confirmed"
+    },
+    {
+      "area": "chargers",
+      "what": "Open Charge Map data for London/Dublin/Mexico City",
+      "whereLooked": "api.openchargemap.io/v3/poi",
+      "result": "HTTP 403 (API key required)"
+    },
+    {
+      "area": "chargers",
+      "what": "InstaVolt network price page",
+      "whereLooked": "https://instavolt.co.uk/pricing/",
+      "result": "HTTP 404; per-site Zapmap tariff used"
+    },
+    {
+      "area": "chargers",
+      "what": "bp pulse Cromwell Road exact street number and site tariff",
+      "whereLooked": "web search, Zapmap bp pulse guide",
+      "result": "Only press-release summary and network price range found"
+    },
+    {
+      "area": "chargers",
+      "what": "Shell Recharge, Iberdrola, BP pulse or CFE-operated public DC sites in Mexico City with prices",
+      "whereLooked": "web search (es), Expansión 2026-06-23 directory",
+      "result": "No such sites with published prices found; CFE directory lists VEMO, Tesla, City Energy without prices"
+    },
+    {
+      "area": "chargers",
+      "what": "Mexico City connector types for Evergo, VEMO, GOenergy sites",
+      "whereLooked": "press articles",
+      "result": "Not stated; left empty rather than guessed"
+    },
+    {
+      "area": "chargers",
+      "what": "Revel per-site idle fees",
+      "whereLooked": "https://gorevel.com/charging",
+      "result": "Not published on page"
+    },
+    {
+      "area": "evConnectors/premiumRequired/dcTaper",
+      "what": "Tesla maker pages (Model Y specs, charge port, Supercharging kW) in every market",
+      "whereLooked": "tesla.com/modely, /en_gb/modely, /en_ca/modely, /es_mx/modely, /support/charging/supercharging, /ownersmanual (WebFetch and curl)",
+      "result": "HTTP 403 on every request; connector and kW figures are secondhand (evkx, Zapmap, Wikipedia)"
+    },
+    {
+      "area": "evConnectors/premiumRequired/dcTaper",
+      "what": "A government-published DC taper curve with numbers (kW by state of charge)",
+      "whereLooked": "afdc.energy.gov/fuels/electricity-stations, /electricity-infrastructure-development, /electricity-charging-public; transportation.gov rural EV toolkit (403); INL fast-charge pack study (OSTI 1499640, CC-CV protocol only, no vehicle curve); NREL/AFDC publications",
+      "result": "Only qualitative statements; numeric curves taken from EVKX.net (secondhand)"
+    },
+    {
+      "area": "evConnectors/premiumRequired/dcTaper",
+      "what": "Owner's-manual octane for each Mexican-market and European-market petrol model",
+      "whereLooked": "VW Mexico ficha tecnica (2022 only; 2025/2026 404, says \"Gasolina\"); Mazda owner's manual portal (search summary); search for VW/Skoda TSI manuals",
+      "result": "Not read per model; recorded as unconfirmed or secondhand"
+    },
+    {
+      "area": "evConnectors/premiumRequired/dcTaper",
+      "what": "A \"premium required vs recommended\" distinction in official US/Canadian data",
+      "whereLooked": "fueleconomy.gov web service (fuelType1), NRCan 2026 Fuel Consumption Ratings CSV",
+      "result": "Both list the fuel the vehicle was rated on (Regular/Midgrade/Premium; X/Z) without separating required from recommended"
+    }
+  ]
+}

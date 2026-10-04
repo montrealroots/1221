@@ -195,7 +195,7 @@ function drivenThen(sim: Simulation, person: Person, v: OwnedVehicle, m: CarMode
 /** Starts a car you fill yourself on its days, where it isn't already. */
 export function startDays(sim: Simulation, person: Person, v: OwnedVehicle): void {
   if (sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === VEHICLE_DAY_KIND && i.payload.vehicleId === v.id)) return;
-  sim.schedule({ at: sim.now + MS_DAY, kind: VEHICLE_DAY_KIND, label: 'The Car’s Day', category: 'home', priority: 20, payload: { personId: person.id, vehicleId: v.id } });
+  sim.schedule({ at: sim.now + MS_DAY, kind: VEHICLE_DAY_KIND, label: 'The Car’s Day', category: 'system', priority: 20, payload: { personId: person.id, vehicleId: v.id } });
 }
 
 /** The jurisdiction a town's car is registered in, where SLATE has its rules. */
@@ -822,7 +822,7 @@ export function registerVehicles(sim: Simulation): void {
         v.dry = true;
       } else if (mine && was >= lowAt(m) && levelOf(v) < lowAt(m)) s.notify({ category: 'home', title: 'Running Low', body: `The ${m.make} ${m.model} is at ${Math.round(levelOf(v) * 100)}%, about ${Math.round(rangeKm(v) ?? 0)} km left.`, importance: 35, route: '/workspace/vehicles' });
     }
-    s.schedule({ at: item.at + MS_DAY, kind: VEHICLE_DAY_KIND, label: 'The Car’s Day', category: 'home', priority: 20, payload: { personId: person.id, vehicleId: v.id } });
+    s.schedule({ at: item.at + MS_DAY, kind: VEHICLE_DAY_KIND, label: 'The Car’s Day', category: 'system', priority: 20, payload: { personId: person.id, vehicleId: v.id } });
   });
 
   sim.onSchedule(VEHICLE_MONTH_KIND, (item, s) => {
