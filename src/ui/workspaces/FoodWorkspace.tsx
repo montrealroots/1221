@@ -382,7 +382,7 @@ function Groceries() {
   return (
     <Panel title="Groceries" subtitle={`${entries.length} things from ${new Set(entries.map((e) => e.value.chain)).size === 1 ? 'one chain' : `${new Set(entries.map((e) => e.value.chain)).size} chains`}`}>
       <div className="col gap-3">
-        <CatalogControls id="groceries-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ aisle: 'Aisle', chain: 'Chain' }} lead={<PayWithField id="groceries-pay" way={way} onChange={setWay} />} />
+        <CatalogControls id="groceries-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ aisle: 'Aisle', chain: 'Chain', brand: 'Brand' }} lead={<PayWithField id="groceries-pay" way={way} onChange={setWay} />} />
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Product</th><th scope="col">Chain</th><th scope="col" className="num">Unit Price</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>

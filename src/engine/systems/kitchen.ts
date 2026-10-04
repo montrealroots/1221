@@ -106,7 +106,8 @@ export function groceryCatalog(sim: Simulation, cityId: string): CatalogEntry<Gr
   const chains = new Set(chainsIn(cityId).map((c) => c.id));
   return GROCERY_PRODUCTS.filter((p) => chains.has(p.chain)).map((p) => ({
     id: p.id, label: p.name, value: p, basis: 'Shelf Price, Tax In', price: groceryPrice(sim, cityId, p), priceKind: 'advertised' as const,
-    facets: { chain: GROCERY_CHAINS.find((c) => c.id === p.chain)!.name, aisle: FOOD_LABEL[p.category] ?? 'Other' },
+    // Its brand where its name states one (from 2026-10-04), found by it in the list's Brand filter.
+    facets: { chain: GROCERY_CHAINS.find((c) => c.id === p.chain)!.name, aisle: FOOD_LABEL[p.category] ?? 'Other', ...(p.brand ? { brand: p.brand } : {}) },
     words: `${p.food} ${p.category}`,
   }));
 }

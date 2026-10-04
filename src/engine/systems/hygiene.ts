@@ -97,7 +97,8 @@ export function toiletryCatalog(sim: Simulation, cityId: string): CatalogEntry<T
   const chains = chainsHere(cityId);
   return TOILETRIES.filter((t) => chains.has(t.chain)).map((t) => ({
     id: t.id, label: t.name, value: t, basis: 'Shelf Price, Tax In', price: toiletryPrice(sim, cityId, t), priceKind: 'advertised' as const,
-    facets: { kind: KIND_LABEL[t.kind] ?? 'Other', chain: GROCERY_CHAINS.find((c) => c.id === t.chain)?.name ?? t.chain },
+    // Its brand where its name states one (from 2026-10-04), found by it in the list's Brand filter.
+    facets: { kind: KIND_LABEL[t.kind] ?? 'Other', chain: GROCERY_CHAINS.find((c) => c.id === t.chain)?.name ?? t.chain, ...(t.brand ? { brand: t.brand } : {}) },
   }));
 }
 

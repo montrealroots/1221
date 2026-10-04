@@ -630,7 +630,7 @@ function Bathroom() {
         )}
         {entries.length > 0 && (
           <>
-            <CatalogControls id="toiletries-catalog" entries={entries} view={view} onChange={setView} facets={{ kind: 'Kind', chain: 'Chain' }} />
+            <CatalogControls id="toiletries-catalog" entries={entries} view={view} onChange={setView} facets={{ kind: 'Kind', chain: 'Chain', brand: 'Brand' }} />
             <div className="table-scroll">
               <table>
                 <thead><tr><th scope="col">Product</th><th scope="col">Chain</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>

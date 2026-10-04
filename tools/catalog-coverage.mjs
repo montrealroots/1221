@@ -57,9 +57,10 @@ const READ = {
   phones: () => PHONES.map((p) => row(p.maker, `${p.maker}|${p.model}`, Math.max(1, p.colors.length), p.market)),
   consoles: () => CONSOLES.map((c) => row(c.maker, `${c.maker}|${c.model}`, 1, c.market)),
   furniture: () => FURNITURE_CATALOG.map((p) => row('IKEA', `IKEA|${p.name}|${p.type ?? ''}`, 1, p.country)),
-  toiletries: () => TOILETRIES.map((t) => row(null, t.name, 1, t.market)),
-  cleaning: () => CLEANING.map((t) => row(null, t.name, 1, t.market)),
-  groceries: () => GROCERY_PRODUCTS.map((g) => row(null, g.name, 1, g.market)),
+  // Brands from 2026-10-04: the one each product's own name states (`tools/brands.mjs`).
+  toiletries: () => TOILETRIES.map((t) => row(t.brand, t.name, 1, t.market)),
+  cleaning: () => CLEANING.map((t) => row(t.brand, t.name, 1, t.market)),
+  groceries: () => GROCERY_PRODUCTS.map((g) => row(g.brand, g.name, 1, g.market)),
   cars: () => cars([...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS]),
   motorcycles: () => cars(BIKE_MODELS),
   bicycles: () => cars(RIDE_MODELS),
