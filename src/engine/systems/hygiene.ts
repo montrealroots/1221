@@ -37,7 +37,7 @@ import { SALONS, TOILETRIES as BATHROOM, type Salon, type Toiletry } from '../co
 import { CLEANING } from '../content/cleaning';
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
-import { spend } from './household';
+import { payWith, payWithRefusal, spend, type PayWith } from './household';
 import { closedNow, shutAllDay } from './errands';
 import { addItem, homeKeyOf, itemsOf, reachable, type Item } from './items';
 import { stow } from './trips';
@@ -245,17 +245,21 @@ export function toiletryRefusal(person: Person, id: string, quantity: number, at
 }
 
 /** Buys toiletries: paid, and into the bathroom. */
-export function buyToiletries(sim: Simulation, person: Person, id: string, quantity: number, inOpenHours = false): Money {
+export function buyToiletries(sim: Simulation, person: Person, id: string, quantity: number, inOpenHours = false, way: PayWith = 'debit'): Money {
   const no = toiletryRefusal(person, id, quantity, inOpenHours ? undefined : sim.now);
   if (no) throw new CommandError(no);
   const t = toiletryById(id)!;
   const paid = toiletryPrice(sim, person.currentLocationId, t) * quantity;
-  if (!spend(sim, person, paid, GROCERY_CHAINS.find((c) => c.id === t.chain)?.name ?? 'A chemist', 'personal')) throw new CommandError('The payment didn’t go through.');
+  const memo = GROCERY_CHAINS.find((c) => c.id === t.chain)?.name ?? 'A chemist';
+  // Paid the way chosen at the till (from 2026-10-04).
+  const wayNo = way === 'debit' ? undefined : payWithRefusal(sim, person, paid, way, true);
+  if (wayNo) throw new CommandError(wayNo);
+  if (!(way === 'debit' ? spend(sim, person, paid, memo, 'personal') : payWith(sim, person, paid, memo, 'personal', way, true))) throw new CommandError('The payment didn’t go through.');
   for (let i = 0; i < quantity; i += 1) giveToiletry(sim, person, t, Math.round(paid / quantity));
   return paid;
 }
 
-function giveToiletry(sim: Simulation, person: Person, t: Toiletry, paid?: Money): void {
+export function giveToiletry(sim: Simulation, person: Person, t: Toiletry, paid?: Money): void {
   // A toothbrush is one brush a count; anything else is its size.
   // Carried, or in the car, until a trip out is home (`stow`).
   stow(person, addItem(sim, person, { kind: t.id, label: t.name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: CLEANING.includes(t) ? 'storage' : 'bathroom' }, acquiredAt: sim.now, ...(paid !== undefined ? { paid } : {}), supply: { kind: t.kind, unit: t.sizeUnit, left: t.sizeQty } }), sim.now);
@@ -407,7 +411,7 @@ export const daysSince = (sim: Simulation, at: Instant | undefined): number | un
 
 export function registerHygiene(sim: Simulation): void {
   registerShaving(sim);
-  sim.onCommand<{ productId: string; quantity?: number }, { paid: Money }>('hygiene.buy', (p, { sim: s }) => ({ paid: buyToiletries(s, s.player, String(p?.productId), Number(p?.quantity ?? 1)) }));
+  sim.onCommand<{ productId: string; quantity?: number; payWith?: PayWith }, { paid: Money }>('hygiene.buy', (p, { sim: s }) => ({ paid: buyToiletries(s, s.player, String(p?.productId), Number(p?.quantity ?? 1), false, p?.payWith === 'credit' || p?.payWith === 'cash' ? p.payWith : 'debit') }));
   sim.onCommand<{ productId: string }, { kind: string }>('hygiene.use_first', (p, { sim: s }) => {
     const t = toiletryById(String(p?.productId));
     if (!t) throw new CommandError('There’s no such product.');

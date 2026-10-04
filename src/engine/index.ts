@@ -69,6 +69,7 @@ import { registerKitchen } from './systems/kitchen';
 import { registerRoutines } from './systems/routines';
 import { registerPartners, registerPeople } from './systems/people';
 import { registerHygiene, starterCleaning, starterSupplies } from './systems/hygiene';
+import { registerShoppingCart } from './systems/shoppingcart';
 import { registerFittings } from './systems/fittings';
 import { starterLuggage } from './systems/luggage';
 import { EVERY_SHORTCUT, registerAutomation } from './systems/automation';
@@ -282,6 +283,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerDating(sim);
   registerTailoring(sim);
   registerHygiene(sim);
+  registerShoppingCart(sim);
   registerFittings(sim);
   registerAwards(sim);
   registerUtilities(sim);

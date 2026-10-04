@@ -642,7 +642,7 @@ function Bathroom() {
                         <td>{e.label}</td>
                         <td className="small">{e.facets?.chain}</td>
                         <td className="num mono">{catalogPrice(e, money)}</td>
-                        <td className="row gap-1"><FavoriteToggle list="toiletries" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('hygiene.buy', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button></td>
+                        <td className="row gap-1"><FavoriteToggle list="toiletries" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('hygiene.buy', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button><Gated feature="cart.add" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('cart.add', { kind: 'toiletry', productId: e.id }).ok) toast(`${e.label}, in the basket on Food.`, 'positive'); }}>Add To Basket</Gated></td>
                       </tr>
                     );
                   })}

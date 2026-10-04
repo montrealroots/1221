@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-356 commands; 350 named by a test, 6 not.
+359 commands; 353 named by a test, 6 not.
 
 ## aircraft
 
@@ -135,6 +135,14 @@ Each command the player can run: the engine file that handles it, the screens th
 | `career.t1287` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `carried.test.ts` | — |
 | `career.workshop` | `src/engine/systems/career.ts` | `CareerWorkspace.tsx` | `attributes.test.ts` | The Business |
 
+## cart
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `cart.add` | `src/engine/systems/shoppingcart.ts` | `ClothesWorkspace.tsx` `FoodWorkspace.tsx` | `shopping-cart.test.ts` | Rent And A Roof |
+| `cart.checkout` | `src/engine/systems/shoppingcart.ts` | `FoodWorkspace.tsx` | `shopping-cart.test.ts` | Rent And A Roof |
+| `cart.remove` | `src/engine/systems/shoppingcart.ts` | `FoodWorkspace.tsx` | `shopping-cart.test.ts` | Rent And A Roof |
+
 ## cash
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
@@ -246,7 +254,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `food.buy_gear` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `kitchengear.test.ts` | Rent And A Roof |
-| `food.buy_groceries` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` `RoutinesWorkspace.tsx` | `connected-day.test.ts` `cooking-household.test.ts` `journeys.test.ts` `kitchen.test.ts` `kitchengear.test.ts` `trips.test.ts` `utilities.test.ts` | Rent And A Roof |
+| `food.buy_groceries` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` `RoutinesWorkspace.tsx` | `connected-day.test.ts` `cooking-household.test.ts` `journeys.test.ts` `kitchen.test.ts` `kitchengear.test.ts` `shopping-cart.test.ts` `trips.test.ts` `utilities.test.ts` | Rent And A Roof |
 | `food.buy_short` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `kitchen.test.ts` | Rent And A Roof |
 | `food.cancel_table` | `src/engine/systems/reservations.ts` | `FoodWorkspace.tsx` | `reservations.test.ts` | Rent And A Roof |
 | `food.cook` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` `RoutinesWorkspace.tsx` | `connected-day.test.ts` `cooking-household.test.ts` `garden.test.ts` `kitchen.test.ts` `kitchengear.test.ts` | Rent And A Roof |
