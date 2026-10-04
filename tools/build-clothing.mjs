@@ -7,7 +7,7 @@
 // product whose page gave no care label takes its kind's usual care, said so.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
-const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json', 'research-clothing-fit.json'].map((f) => `docs/research/world/${f}`);
+const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json', 'research-clothing-fit.json', 'research-clothing-shopify.json'].map((f) => `docs/research/world/${f}`);
 const OUT = 'src/engine/content/clothingcatalog.ts';
 
 /** A retailer's department, as read: women's, men's or unisex, in English or Spanish; none where none was read. */
@@ -70,6 +70,11 @@ function headOf(text, market) {
   return [best.slot, best.kind];
 }
 
+/** How the kinds the trade names apart are worn (from 2026-10-03 for the gaps' research, 2026-10-04 for any retailer's). */
+const SUBTYPE_WORN = { swimwear: ['active', 'swimsuit'], shapewear: ['underwear', 'underwear'], slips: ['base', 'slip'], hosiery: ['socks', 'socks'] };
+// Thermals: long underwear, worn under the rest, as a base layer; socks and a pajama set are what they are.
+const thermalWorn = (name) => (/socks|calcet/i.test(name) ? ['socks', 'socks'] : /pijama/i.test(name) ? ['sleep', 'pajamas'] : /leggings|tights|pantal|bottoms?/i.test(name) ? ['base', 'thermal-bottom'] : ['base', 'thermal-top']);
+
 /** The slot and care kind a product is: its name's head noun, else its subcategory's, its category's where that says more. */
 function wornAs(p, market) {
   const name = String(p.name).toLowerCase();
@@ -86,7 +91,20 @@ function wornAs(p, market) {
   if (category === 'formalwear' && kind === 'trousers') return ['bottom', 'suit'];
   if (category === 'formalwear' && kind === 'coat') return ['outer', 'suit'];
   if (category === 'sleepwear' && !worn) return ['sleep', 'pajamas'];
-  if (category === 'footwear' && !head) return ['shoes', 'shoes'];
+  // A shoe, a watch, a piece of jewelry, a bag or an accessory is worn as one whatever its name (from 2026-10-04): until
+  // then a name without a word the list knows (goodr's Feral Hula Hooper sunglasses, an anklet, Vessi's High Top) was a
+  // shirt or a top. A sock a shoe shop sells stays a sock.
+  if (category === 'footwear' && slot !== 'socks') return ['shoes', 'shoes'];
+  if (['watches', 'jewelry', 'bags', 'accessories'].includes(category)) return ['accessory', 'accessory'];
+  // Underwear is worn as underwear but for its socks, its bras and a swimsuit filed with it: a lingerie maker's shaper
+  // bodysuit isn't a shirt, nor its suspender belt an accessory.
+  if ((category === 'underwear' || category === 'underwear and socks') && !['socks', 'underwear', 'active'].includes(slot)) return ['underwear', 'underwear'];
+  // The kinds the trade names apart, worn their way where a retailer files a garment so: swimwear a swimsuit but for its
+  // shoes, its bags and hats, and what's worn over one on the beach (a maker's Triangle Top names no swim word);
+  // shapewear as underwear, hosiery as socks, a slip under the rest, thermals as a base layer.
+  if (category === 'swimwear' && slot !== 'shoes' && slot !== 'accessory' && !/cover-?up|kaftan|caftan|sarong|pareo/.test(name)) return ['active', 'swimsuit'];
+  if (SUBTYPE_WORN[category] && category !== 'swimwear') return SUBTYPE_WORN[category];
+  if (category === 'thermals') return thermalWorn(name);
   return [slot, kind];
 }
 
@@ -225,9 +243,6 @@ for (const file of FILES) {
 // SLATE's retailers (Spanx's own site, Converse's, a marketplace's third party) is left out, as is a product read
 // only at a sale price, its regular price unread.
 const GAPS = 'docs/research/world/research-clothing-gaps.json';
-const SUBTYPE_WORN = { swimwear: ['active', 'swimsuit'], shapewear: ['underwear', 'underwear'], slips: ['base', 'slip'], hosiery: ['socks', 'socks'] };
-// Thermals: long underwear, worn under the rest, as a base layer; socks and a pajama set are what they are.
-const thermalWorn = (name) => (/socks|calcet/i.test(name) ? ['socks', 'socks'] : /pijama/i.test(name) ? ['sleep', 'pajamas'] : /leggings|tights|pantal|bottoms?/i.test(name) ? ['base', 'thermal-bottom'] : ['base', 'thermal-top']);
 // Spanish garment words a Mexican listing names its garment by.
 const SPANISH = [[/\b(pijamas?)\b/i, 'sleep', 'pajamas'], [/\b(pantal[oó]n(es)?|mallas?)\b/i, 'bottom', 'trousers'], [/\b(camisetas?|playeras?)\b/i, 'top', 't-shirt'], [/\b(su[eé]ter|chamarra)\b/i, 'top', 'sweater']];
 function sellerOf(name, market) {

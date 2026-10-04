@@ -16,17 +16,17 @@ which never counts toward the target.
 | Apparel | Formalwear | 78 | 100% | 307 | 1 / 2 / 34 | 0 | 5333 | 333 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Outerwear | 69 | 100% | 286 | 1 / 2 / 18 | 0 | 4616 | 333 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Activewear | 50 | 100% | 302 | 1 / 3 / 55 | 0 | 11194 | 362 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Underwear, Lingerie And Socks | 41 | 82% | 135 | 1 / 2 / 15 | 0 | 2436 | 157 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Sleepwear | 40 | 80% | 101 | 1 / 1 / 13 | 0 | 2595 | 120 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Swimwear | 12 | 24% | 26 | 1 / 1 / 12 | 0 | 236 | 30 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Thermals, Shapewear, Hosiery And Slips | 22 | 44% | 72 | 1 / 2 / 23 | 0 | 72 | 80 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Underwear, Lingerie And Socks | 54 | 100% | 287 | 1 / 2 / 15 | 0 | 5156 | 384 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Sleepwear | 50 | 100% | 207 | 1 / 2 / 13 | 0 | 4520 | 230 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Swimwear | 38 | 76% | 338 | 1 / 12 / 12 | 0 | 4371 | 628 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Thermals, Shapewear, Hosiery And Slips | 32 | 64% | 217 | 1 / 3 / 24 | 0 | 1621 | 248 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Cultural Clothing | 8 | 16% | 11 | 1 / 1 / 2 | 0 | 11 | 11 | 0 | IE, MX | No |
-| Footwear | Shoes, Boots And Sandals | 41 | 82% | 128 | 1 / 2 / 15 | 0 | 1596 | 145 | 0 | CA, GB, IE, MX, US | No |
+| Footwear | Shoes, Boots And Sandals | 52 | 100% | 258 | 1 / 3 / 15 | 0 | 5870 | 376 | 0 | CA, GB, IE, MX, US | No |
 | Footwear | Sneakers | 1 | 2% | 30 | 30 / 30 / 30 | 0 | 403 | 66 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Bags | 35 | 70% | 69 | 1 / 1 / 9 | 0 | 118 | 73 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Hats, Scarves, Belts And Small Accessories | 32 | 64% | 72 | 1 / 1 / 17 | 0 | 378 | 77 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Watches | 19 | 38% | 50 | 1 / 2 / 8 | 0 | 50 | 50 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Jewelry | 34 | 68% | 69 | 1 / 1 / 15 | 0 | 130 | 70 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Bags | 47 | 94% | 213 | 1 / 2 / 12 | 0 | 663 | 302 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Hats, Scarves, Belts And Small Accessories | 45 | 90% | 221 | 1 / 2 / 17 | 0 | 1246 | 309 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Watches | 35 | 70% | 210 | 1 / 4 / 12 | 0 | 267 | 281 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Jewelry | 52 | 100% | 285 | 1 / 2 / 15 | 0 | 543 | 387 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Luggage | 55 | 100% | 1906 | 1 / 26 / 100 | 2 | 6580 | 3567 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Phones | 3 | 6% | 26 | 7 / 9 / 10 | 0 | 90 | 273 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 0 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
@@ -70,6 +70,6 @@ Counted by their own structure: providers, branches or listings, and the towns t
 | Restaurants | 105 | 107 | 8 |
 | Clubs And Lessons | 30 | 31 | 8 |
 | Clinics, Dentists And Opticians | 35 | 35 | 8 |
-| Stores And Chains | 99 | 126 | 8 |
+| Stores And Chains | 289 | 126 | 8 |
 | Barbers And Salons | 36 | 37 | 8 |
 

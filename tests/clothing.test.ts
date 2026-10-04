@@ -445,4 +445,22 @@ describe('what a garment is', () => {
     expect(worn('mx-cya-mx-brasier-color-negro').slice(0, 2)).toEqual(['underwear', 'bra']);
     expect(worn('mx-zara-mx-pack-de-2-calcetines-rib-fruit-of-the-loomTM').slice(0, 2)).toEqual(['socks', 'socks']);
   });
+
+  it('is worn as what its retailer files it under, whatever its name', () => {
+    // Swim shorts named without a swim word are a swimsuit, filed with the swimwear: Boardies' LUCKY DIP SHORTS were trousers.
+    expect(worn('us-boardies-lucky-dip-shorts')).toEqual(['active', 'swimsuit', 'swimwear']);
+    expect(worn('us-orlebar-brown-bulldog-drawcord')).toEqual(['active', 'swimsuit', 'swimwear']);
+    // A shoe named a High Top was a top; sunglasses named a Feral Hula Hooper, an anklet, and a watch named for its Polo
+    // Club were shirts.
+    expect(worn('us-vessi-mens-alta-high-top').slice(0, 2)).toEqual(['shoes', 'shoes']);
+    expect(worn('us-goodr-feral-hula-hooper').slice(0, 2)).toEqual(['accessory', 'accessory']);
+    expect(worn('us-gorjana-capri-anklet').slice(0, 2)).toEqual(['accessory', 'accessory']);
+    expect(worn('mx-coppel-mx-reloj-york-team-polo-club-para-hombre-dnh-2110-con-1-accesorio').slice(0, 2)).toEqual(['accessory', 'accessory']);
+    // A shaper bodysuit filed as underwear is underwear, not a shirt.
+    expect(worn('us-knix-customizable-shaper-thong-bodysuit').slice(0, 2)).toEqual(['underwear', 'underwear']);
+    // The trade's own kinds, worn their way: shapewear under the rest, tights as hosiery, merino bottoms as a base layer.
+    expect(worn('us-commando-classic-control-short')).toEqual(['underwear', 'underwear', 'shapewear']);
+    expect(worn('us-sheertex-backseam-sheer-rip-resist-tights')).toEqual(['socks', 'socks', 'hosiery']);
+    expect(worn('us-minus33-heavyweight-wool-zip-off-bottoms-34-length-100-merino-wool')).toEqual(['base', 'thermal-bottom', 'thermals']);
+  });
 });
