@@ -86,6 +86,8 @@ import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, dateKey, formatDate, startOfDay, zonedParts, type Instant } from '../core/time';
 import { usBankHoliday } from '../content/usholidays';
+import { CLUBS } from '../content/clubs';
+import { DROP_INS } from '../content/dropins';
 import { clamp } from '../core/rng';
 import { CITIES } from '../content/geography';
 import { exchange } from '../content/currency';
@@ -1090,7 +1092,7 @@ export function projectAdds(sim: Simulation, owned: OwnedHome, project: Project)
 }
 
 /** The projects a home can take now, and the ones it can't, with why. */
-export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): { project: Project; cost: Money; bids: Money[]; adds: Money; permit?: WorksPermit; refusal?: string }[] {
+export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): { project: Project; cost: Money; bids: Money[]; adds: Money; permit?: WorksPermit; refusal?: string; instead?: string[] }[] {
   // Every project, those this kind of home doesn't take shown refused with the kinds that do (from 2026-10-02; until then they were left off unseen).
   const country = CITIES.get(owned.cityId)?.countryId ?? 'us';
   const kind = (t: HomeType) => typeLabel(t, country).toLowerCase();
@@ -1100,8 +1102,31 @@ export function projectsFor(sim: Simulation, person: Person, owned: OwnedHome): 
       const bids = projectBids(sim, owned, project);
       const cost = bids[0]!;
       const permit = worksPermit(sim, owned.cityId, project, cost);
-      return { project, cost, bids, adds: projectAdds(sim, owned, project), ...(permit ? { permit } : {}), ...(refusal ? { refusal } : {}) };
+      const instead = refusal ? projectAlternatives(owned.cityId, project.id) : [];
+      return { project, cost, bids, adds: projectAdds(sim, owned, project), ...(permit ? { permit } : {}), ...(refusal ? { refusal } : {}), ...(instead.length ? { instead } : {}) };
     });
+}
+
+/**
+ * What else does a refused project's job where the home is, from 2026-10-03
+ * (the master plan's §44e–f): a pool's swimming at a named pool's lessons, a
+ * court's game at a club's or a league's, a dance studio's at a studio's
+ * drop-in class, a spare room's lodger for a cottage or a suite. Each is
+ * something SLATE keeps in that town, so what's offered can be done.
+ */
+const INSTEAD: readonly { projects: RegExp; names: RegExp; also?: string }[] = [
+  { projects: /^(pool|hot-tub)$/, names: /swim/i },
+  { projects: /^(tennis-|pickleball)/, names: /tennis|pickleball/i },
+  { projects: /^(basketball-|pitch-)/, names: /soccer|football|fútbol|five-a-side|kickball|netball/i },
+  { projects: /^dance-studio$/, names: /dance/i },
+  { projects: /^(adu|suite|suite-upscale|bath-add)/, names: /$^/, also: 'Take a lodger into a spare room you have, at the town’s rent for one.' },
+];
+export function projectAlternatives(cityId: string, projectId: string): string[] {
+  const rule = INSTEAD.find((r) => r.projects.test(projectId));
+  if (!rule) return [];
+  const clubs = CLUBS.filter((c) => c.cityId === cityId && rule.names.test(`${c.name} ${c.place}`)).map((c) => `${c.name} at ${c.place}`);
+  const classes = DROP_INS.filter((d) => d.cityId === cityId && rule.names.test(`${d.kind} ${d.label}`)).map((d) => `${d.label} at ${d.studio}`);
+  return [...clubs, ...classes, ...(rule.also ? [rule.also] : [])];
 }
 
 /** Work this long, where they live, weighs on them every day of it: SLATE's estimate. */

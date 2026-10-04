@@ -444,9 +444,9 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
             <table>
               <thead><tr><th scope="col">Work</th><th scope="col" className="num">Three Bids</th><th scope="col" className="num">Permit</th><th scope="col" className="num">Takes</th><th scope="col" className="num">Adds To Its Worth</th><th scope="col" /></tr></thead>
               <tbody>
-                {[...projects].sort((a, b) => a.cost - b.cost || a.project.label.localeCompare(b.project.label)).map(({ project, bids, adds, permit, refusal }) => (
+                {[...projects].sort((a, b) => a.cost - b.cost || a.project.label.localeCompare(b.project.label)).map(({ project, bids, adds, permit, refusal, instead }) => (
                   <tr key={project.id}>
-                    <td>{project.label}{permit && <div className="xs dim">{permit.basis}</div>}{refusal && <div className="xs dim">{refusal}</div>}</td>
+                    <td>{project.label}{permit && <div className="xs dim">{permit.basis}</div>}{refusal && <div className="xs dim">{refusal}</div>}{instead && <div className="xs dim">{`Instead: ${instead.join('; ')}.`}</div>}</td>
                     <td className="num mono"><select aria-label={`The Bid For ${project.label}`} value={bidPick[project.id] ?? 0} onChange={(e) => setBidPick({ ...bidPick, [project.id]: Number(e.target.value) })}>{bids.map((b, i) => <option key={i} value={i}>{money(b)}</option>)}</select></td>
                     <td className="num mono">{permit ? money(permit.lines.reduce((a, l) => a + l.amount, 0)) : '—'}</td>
                     <td className="num mono">{project.days + (permit?.waitDays ?? 0)} {project.days + (permit?.waitDays ?? 0) === 1 ? 'day' : 'days'}</td>

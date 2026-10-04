@@ -9,12 +9,18 @@
  * Look After Them chooses how: pay for it where they live, give it yourself
  * in their town for the hours a carer gives, or leave it to the state and
  * their own means. A death weighs on you.
+ *
+ * Care given is time, from 2026-10-03 (the master plan's §52.5–6): the
+ * carer's weekly hours (`CARE_HOURS`) as a visit each evening in their
+ * town, a seventh of them, from six, on the calendar like any commitment, so
+ * a shoot or a class that evening clashes with it. Until then the hours
+ * were only the stress they weigh, and the evenings stayed free.
  */
 
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, zonedParts, type Instant } from '../core/time';
+import { MS_DAY, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { clamp } from '../core/rng';
 import { exchange } from '../content/currency';
@@ -121,11 +127,30 @@ export function parentsMonth(sim: Simulation, person: Person, at: Instant): void
     } else if (p.how === 'give') {
       const w = person.wellbeing;
       w.stress = clamp(w.stress + careHours(person) * (52 / 12) * CARING.stressPerHour * personalityOf(person, 'stressGain'), 0, 100);
+      if (!visitBooked(sim, person, p.role)) scheduleVisit(sim, person, p, at);
     }
   }
 }
 
+export const CARE_VISIT_KIND = 'family.care_visit';
+/** Tomorrow evening's visit, from six, a seventh of the week's hours. */
+function scheduleVisit(sim: Simulation, person: Person, p: Parent, from: Instant): void {
+  const zone = CITIES.require(p.cityId).timeZone;
+  const next = zonedParts(from + MS_DAY, zone);
+  const at = instantFromZoned({ year: next.year, month: next.month, day: next.day, hour: 18 }, zone);
+  sim.schedule({ at, kind: CARE_VISIT_KIND, label: `Caring For Your ${p.role === 'mother' ? 'Mother' : 'Father'}`, category: 'relationship', priority: 33, requiresPlayer: true, durationMinutes: Math.round((careHours(person) * 60) / 7), locationId: p.cityId, payload: { personId: person.id, role: p.role } });
+}
+const visitBooked = (sim: Simulation, person: Person, role: Parent['role']) => sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === CARE_VISIT_KIND && i.payload.personId === person.id && i.payload.role === role);
+
 export function registerParents(sim: Simulation): void {
+  // Each evening's visit, and the next one booked while care is still given (from 2026-10-03).
+  sim.onSchedule(CARE_VISIT_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const p = person ? (person.parents ?? []).find((x) => x.role === item.payload.role) : undefined;
+    if (!person || !p || p.died || p.how !== 'give' || !needsCare(p, item.at)) return;
+    if (person.currentLocationId !== p.cityId) item.status = 'missed';
+    if (!visitBooked(s, person, p.role)) scheduleVisit(s, person, p, item.at);
+  });
   sim.onEvent('world.day_rollover', 'family.parents', (_e, { sim: s }) => {
     const person = s.player;
     if (zonedParts(s.now, s.homeZone).day !== 1) return;
@@ -138,6 +163,9 @@ export function registerParents(sim: Simulation): void {
     const no = careRefusal(person, parent, how, s.now);
     if (no) throw new CommandError(no);
     if (how === 'none') delete parent!.how; else parent!.how = how;
+    // Given yourself, the evenings are theirs from tomorrow; stopped, the visits booked go.
+    if (how === 'give' && needsCare(parent!, s.now) && !visitBooked(s, person, parent!.role)) scheduleVisit(s, person, parent!, s.now);
+    if (how !== 'give') for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === CARE_VISIT_KIND && one.payload.personId === person.id && one.payload.role === parent!.role) s.timeline.cancel(one.id, s.now);
     const monthly = how === 'pay' ? careMonthly(s, parent!) : 0;
     if (how === 'pay' && monthly === 0 && person.id === s.universe.playerId) s.notify({ category: 'relationship', title: 'Their Care', body: 'Where they live it isn’t the family’s to pay.', importance: 30, route: '/workspace/people' });
     return { how, monthly: monthly || 0 };

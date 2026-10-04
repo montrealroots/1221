@@ -10,7 +10,7 @@ import { MS_DAY, zonedParts } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { PROJECTS } from '@/engine/content/homes';
-import { planningRefused } from '@/engine/systems/homes';
+import { planningRefused, projectAlternatives } from '@/engine/systems/homes';
 import { PLANNING_REFUSED } from '@/engine/systems/permits';
 import { coolingOffUntil, inspectionFee, ownBuilt, projectBids, worksDeposit, type HomeFacts } from '@/engine/systems/homes';
 
@@ -102,5 +102,15 @@ describe('a planning application', () => {
       done = true;
     }
     expect(done).toBe(true);
+  });
+});
+
+describe('a project the home can’t take', () => {
+  it('names what in town does its job instead', () => {
+    expect(projectAlternatives('us-ny-newyork', 'pool')).toContain('Adult Swimming, Stage 1 at Cross Island YMCA');
+    expect(projectAlternatives('uk-eng-london', 'tennis-clay')).toContain('Adult Tennis, Level 1 at Islington Tennis Center');
+    expect(projectAlternatives('us-ny-newyork', 'dance-studio').some((x) => x.includes('Broadway Dance Center'))).toBe(true);
+    expect(projectAlternatives('us-ny-newyork', 'adu')).toEqual(['Take a lodger into a spare room you have, at the town’s rent for one.']);
+    expect(projectAlternatives('us-ny-newyork', 'paint')).toEqual([]);
   });
 });

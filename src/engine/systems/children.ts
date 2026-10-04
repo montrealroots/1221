@@ -17,8 +17,9 @@
  * brings nothing more.
  *
  * A child may come by adoption or a surrogacy too (`systems/adoption.ts`,
- * from 2026-10-02). Not kept: a child's own day, and childcare beside the
- * cost of raising (which counts it, where the estimate does). After a
+ * from 2026-10-02). Childcare beside the cost of raising isn't kept (it
+ * counts it, where the estimate does); a child's day was neither until
+ * 2026-10-03, when the school run came (`systems/schoolrun.ts`). After a
  * separation the children live with one of you, and the other pays support
  * (`systems/support.ts`, from 2026-10-02).
  */
