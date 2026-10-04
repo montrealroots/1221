@@ -36,7 +36,7 @@ which never counts toward the target.
 | Home | Furniture | 1 | 2% | 90 | 90 / 90 / 90 | 0 | 90 | 163 | 0 | CA, GB, IE, MX, US | No |
 | Home | Mattresses And Beds | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Home | Bedding And Towels | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
-| Home | Appliances | 38 | 76% | 1511 | 1 / 23 / 211 | 3 | 1541 | 2176 | 0 | CA, GB, IE, MX, US | No |
+| Home | Appliances | 47 | 94% | 2025 | 1 / 23 / 232 | 5 | 2090 | 2895 | 0 | CA, GB, IE, MX, US | No |
 | Home | Lighting | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Home | Kitchenware | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Personal Care | Toiletries And Grooming | 79 | 100% | 182 | 1 / 1 / 15 | 0 | 182 | 183 | 1 | CA, GB, IE, MX, US | No |

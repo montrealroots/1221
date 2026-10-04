@@ -80,7 +80,6 @@ for (const [source, part] of [['es', L.es], ['eprel', L.eprel]]) {
     });
   }
 }
-let labeled = 0;
 for (const p of products.values()) {
   let best = null;
   for (const l of labels) {
@@ -92,7 +91,7 @@ for (const p of products.values()) {
       if (extra >= 0 && (!best || extra < best.extra)) best = { l, extra };
     }
   }
-  if (best) { p.attrs.kwhPerCycle = best.l.kwhPerCycle; p.attrs.energyBasis = best.l.basis; p.attrs.energyUrl = best.l.url; labeled += 1; }
+  if (best) { p.attrs.kwhPerCycle = best.l.kwhPerCycle; p.attrs.energyBasis = best.l.basis; p.attrs.energyUrl = best.l.url; }
 }
 for (const p of products.values()) delete p.codes;
 const list = [...products.values()].filter((p) => p.offers.length > 0);
@@ -115,4 +114,4 @@ export const APPLIANCE_PRODUCTS: readonly CatalogProduct[] = JSON.parse(${JSON.s
 writeFileSync(OUT, body);
 const kinds = {};
 for (const p of list) kinds[p.attrs.kind] = (kinds[p.attrs.kind] ?? 0) + 1;
-console.log(`products ${list.length} ${JSON.stringify(kinds)}, offers ${list.reduce((n, p) => n + p.offers.length, 0)}, brands ${new Set(list.map((p) => p.brand)).size}, with a label ${labeled}, tranches ${tranches.length}, left out ${JSON.stringify(left)}`);
+console.log(`products ${list.length} ${JSON.stringify(kinds)}, offers ${list.reduce((n, p) => n + p.offers.length, 0)}, brands ${new Set(list.map((p) => p.brand)).size}, with a label ${list.filter((p) => p.attrs.kwhPerCycle !== null).length}, tranches ${tranches.length}, left out ${JSON.stringify(left)}`);
