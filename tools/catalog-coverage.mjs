@@ -59,7 +59,13 @@ const READ = {
   swimwear: () => clothing('swimwear'), thermals: () => clothing('thermals'), cultural: () => clothing('cultural'),
   footwear: () => clothing('footwear'), bags: () => clothing('bags'), accessories: () => clothing('accessories'),
   watches: () => clothing('watches'), jewelry: () => clothing('jewelry'),
-  sneakers: () => SNEAKERS.map((s) => row(null, s.styleCode, Math.max(1, ...SNEAKER_RETAIL.filter((o) => o.styleCode === s.styleCode).map((o) => o.sizes?.length ?? 1)), null)),
+  // The Air Jordans are Jordan Brand's, Nike's (`content/sneakers.ts`); from 2026-10-04 counted under it, a row each
+  // retail offer, where they were unbranded and in no market.
+  sneakers: () => SNEAKERS.flatMap((s) => {
+    const offers = SNEAKER_RETAIL.filter((o) => o.styleCode === s.styleCode);
+    const sizes = Math.max(1, ...offers.map((o) => o.sizes?.length ?? 1));
+    return offers.length ? offers.map((o) => row('Jordan', s.styleCode, sizes, o.market)) : [row('Jordan', s.styleCode, sizes, null)];
+  }),
   // As products from 2026-10-04: a row an offer, the product its own, its colors its variants.
   luggage: () => LUGGAGE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   // From 2026-10-04: a row an offer, a model a product, its colors its variants.

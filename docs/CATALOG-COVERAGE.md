@@ -12,20 +12,20 @@ which never counts toward the target.
 
 | Department | Category | Brands | Of 50 | Products | Per brand (least / median / most) | Brands at 100 | Variants | Offers | Unbranded | Markets | Met |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Apparel | Everyday Clothing | 124 | 100% | 1346 | 1 / 2 / 114 | 1 | 33392 | 1493 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Formalwear | 80 | 100% | 308 | 1 / 2 / 34 | 0 | 5345 | 333 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Outerwear | 70 | 100% | 287 | 1 / 2 / 18 | 0 | 4651 | 333 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Activewear | 52 | 100% | 303 | 1 / 3 / 55 | 0 | 11218 | 362 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Underwear, Lingerie And Socks | 42 | 84% | 136 | 1 / 2 / 12 | 0 | 2486 | 157 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Sleepwear | 41 | 82% | 101 | 1 / 1 / 13 | 0 | 2595 | 120 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Swimwear | 14 | 28% | 26 | 1 / 1 / 9 | 0 | 236 | 30 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Everyday Clothing | 121 | 100% | 1343 | 1 / 2 / 114 | 1 | 33326 | 1493 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Formalwear | 78 | 100% | 307 | 1 / 2 / 34 | 0 | 5333 | 333 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Outerwear | 69 | 100% | 286 | 1 / 2 / 18 | 0 | 4616 | 333 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Activewear | 50 | 100% | 302 | 1 / 3 / 55 | 0 | 11194 | 362 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Underwear, Lingerie And Socks | 41 | 82% | 135 | 1 / 2 / 15 | 0 | 2436 | 157 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Sleepwear | 40 | 80% | 101 | 1 / 1 / 13 | 0 | 2595 | 120 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Swimwear | 13 | 26% | 26 | 1 / 1 / 9 | 0 | 236 | 30 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Thermals, Shapewear, Hosiery And Slips | 26 | 52% | 78 | 1 / 2 / 11 | 0 | 78 | 80 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Cultural Clothing | 8 | 16% | 11 | 1 / 1 / 2 | 0 | 11 | 11 | 0 | IE, MX | No |
-| Footwear | Shoes, Boots And Sandals | 45 | 90% | 128 | 1 / 1 / 15 | 0 | 1596 | 145 | 0 | CA, GB, IE, MX, US | No |
-| Footwear | Sneakers | 0 | 0% | 30 | — | 0 | 403 | 30 | 30 | — | No |
-| Accessories | Bags | 36 | 72% | 70 | 1 / 1 / 9 | 0 | 126 | 73 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Hats, Scarves, Belts And Small Accessories | 33 | 66% | 74 | 1 / 1 / 17 | 0 | 392 | 77 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Watches | 22 | 44% | 50 | 1 / 2 / 8 | 0 | 50 | 50 | 0 | CA, GB, IE, MX, US | No |
+| Footwear | Shoes, Boots And Sandals | 41 | 82% | 128 | 1 / 2 / 15 | 0 | 1596 | 145 | 0 | CA, GB, IE, MX, US | No |
+| Footwear | Sneakers | 1 | 2% | 30 | 30 / 30 / 30 | 0 | 403 | 66 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Bags | 35 | 70% | 69 | 1 / 1 / 9 | 0 | 118 | 73 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Hats, Scarves, Belts And Small Accessories | 32 | 64% | 72 | 1 / 1 / 17 | 0 | 378 | 77 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Watches | 19 | 38% | 50 | 1 / 2 / 8 | 0 | 50 | 50 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Jewelry | 34 | 68% | 69 | 1 / 1 / 15 | 0 | 130 | 70 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Luggage | 47 | 94% | 1738 | 1 / 30 / 100 | 2 | 6018 | 3233 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Phones | 3 | 6% | 26 | 7 / 9 / 10 | 0 | 90 | 273 | 0 | CA, GB, IE, MX, US | No |

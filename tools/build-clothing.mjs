@@ -290,6 +290,21 @@ for (const r of retailers) {
   if (r.days === null) { r.days = median(same.map((x) => x.days)); r.daysEstimated = true; }
 }
 
+// One spelling a brand (from 2026-10-04). Where listings write one in capitals, another case or without its accent (VANS
+// and Vans, adidas and Adidas, AEROPOSTALE and Aéropostale), the spelling with the fewest words in capitals is kept,
+// then the most common, so the maker filter shows a brand once and the coverage report counts it once: Only Petite, as
+// ASOS writes it in America, over the ONLY Petite its British and Irish stores write, read more often. Until then
+// Footwear counted VANS and Vans as two makers.
+// Where no listing used the brand's own spelling, the one its own store writes: Cloe's (www.cloe.com.mx, read
+// 2026-10-04), where Andrea's listings wrote CLÓE and Liverpool's CLOE. Preferring the accented form chose CLÓE.
+const OWN_SPELLING = new Map([['cloe', 'Cloe']]);
+const brandKey = (b) => String(b).normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const spellings = new Map();
+for (const p of products) { const seen = spellings.get(brandKey(p.brand)) ?? new Map(); seen.set(p.brand, (seen.get(p.brand) ?? 0) + 1); spellings.set(brandKey(p.brand), seen); }
+const capitals = (s) => s.split(/\s+/).filter((w) => /[A-Z]/.test(w) && !/[a-z]/.test(w)).length;
+const canonical = new Map([...spellings].map(([k, seen]) => [k, OWN_SPELLING.get(k) ?? [...seen].sort((a, z) => capitals(a[0]) - capitals(z[0]) || z[1] - a[1] || a[0].localeCompare(z[0]))[0][0]]));
+for (const p of products) p.brand = canonical.get(brandKey(p.brand));
+
 const header = `/**
  * SLATE — clothes on sale, by market (Stage 3 of \`docs/BACKLOG.md\`), built by
  * \`tools/build-clothing.mjs\` from \`docs/research/world/research-clothing-*.json\`.
