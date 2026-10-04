@@ -138,11 +138,13 @@ export const KIND_LABEL: Readonly<Record<string, string>> = {
  */
 export function cutOf(p: ClothingProduct): string {
   const n = `${p.name} ${p.url ?? ''}`.toLowerCase();
+  // A fit line first, then the retailer's own department where it was read, then the name's word for it.
   if (/maternity|\bmama\b/.test(n)) return 'Maternity';
   if (/petite/.test(n)) return 'Petite';
   if (/\btall\b/.test(n)) return 'Tall';
   if (/plus[- ]size|\bplus\b|\bcurve\b/.test(n)) return 'Plus';
   if (/\b(kids|girls|boys|baby|toddler)\b/.test(n)) return 'Children';
+  if (p.dept) return p.dept;
   if (/women|womens|ladies/.test(n)) return 'Women';
   if (/\bmen\b|\bmens\b|men's/.test(n)) return 'Men';
   return 'Not Named';

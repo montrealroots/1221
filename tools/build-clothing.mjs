@@ -10,6 +10,8 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json'].map((f) => `docs/research/world/${f}`);
 const OUT = 'src/engine/content/clothingcatalog.ts';
 
+/** A retailer's department, as read: women's, men's or unisex, in English or Spanish; none where none was read. */
+const deptOf = (g) => { const x = String(g ?? '').toLowerCase(); return x === 'women' || x === 'mujer' ? 'Women' : x === 'men' || x === 'hombre' ? 'Men' : x === 'unisex' ? 'Unisex' : null; };
 const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 
 /**
@@ -172,6 +174,8 @@ for (const file of FILES) {
       slot, kind, ...careOf(p, kind), pack: packOf(p.name), price: p.price, currency: p.currency, taxIncluded: market === 'GB' || market === 'IE' || market === 'MX',
       sizes: Array.isArray(p.sizes) ? p.sizes.map(String) : [], colors: Array.isArray(p.colors) ? p.colors.map(String) : [],
       material: p.material ?? null, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true, subtype: null, sameAs: null,
+      // The department the retailer files it under, where the research read one (from 2026-10-04).
+      dept: deptOf(p.gender),
     });
   }
 }
@@ -206,7 +210,7 @@ function addGap(p, market, retailer, extra) {
     id, retailer: retailer.id, market, brand: p.brand ?? retailer.name, name: p.name, category: extra.category, subcategory: extra.subcategory ?? null,
     slot, kind, ...careOf(p, kind), pack: p.pack ?? packOf(p.name), price, currency: { US: 'USD', GB: 'GBP', IE: 'EUR', CA: 'CAD', MX: 'MXN' }[market],
     taxIncluded: market === 'GB' || market === 'IE' || market === 'MX', sizes, colors: [], material: null, url: p.url ?? null, date: '2026-10-03',
-    confirmed: extra.confirmed !== false, subtype: extra.subtype ?? null, sameAs: extra.sameAs ?? null,
+    confirmed: extra.confirmed !== false, subtype: extra.subtype ?? null, sameAs: extra.sameAs ?? null, dept: deptOf(p.gender),
   });
 }
 if (existsSync(GAPS)) {
@@ -296,6 +300,8 @@ export interface ClothingProduct {
   subtype: string | null;
   /** The same product as other sellers' listings with this key, from 2026-10-03. */
   sameAs: string | null;
+  /** The department the retailer files it under, where one was read: Women, Men or Unisex (from 2026-10-04). */
+  dept: string | null;
 }
 
 export const CLOTHING_RETAILERS: readonly ClothingRetailer[] = ${JSON.stringify(retailers, null, 0)};
