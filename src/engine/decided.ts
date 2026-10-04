@@ -81,6 +81,7 @@ import { PHONE_RISK } from './content/phoneclaims';
 import { mishap } from './systems/phones';
 import { therapyLifts } from './systems/therapy';
 import { planningRefused } from './systems/homes';
+import { interestsOf } from './systems/enjoyment';
 import { usedFault, usedListings } from './systems/usedcars';
 import { takenFromDoor } from './systems/orders';
 import { bathroomWait } from './systems/rooms';
@@ -1412,4 +1413,16 @@ defineDecider<{ sim: Simulation; job: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), job: seed }),
   decide: ({ sim, job }) => (planningRefused(sim, `home-${job}`, 'adu', sim.now, 0.5) ? 'refused' : 'granted'),
+});
+
+defineDecider<{ sim: Simulation; who: number }, string>({
+  id: 'social.cares',
+  decides: 'The three interests a person you know cares about, drawn from the creation screen’s general ones the first time it matters (CONTACT_INTERESTS).',
+  drawnIn: 'src/engine/systems/enjoyment.ts',
+  reads: {
+    who: (o, t) => ({ ...o, who: Math.round(t * 400) }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), who: seed }),
+  decide: ({ sim, who }) => interestsOf(sim, sim.player, { id: `contact-${who}` } as Contact).join(','),
 });

@@ -120,6 +120,8 @@ describe('a football pitch, and friends over to play', () => {
     expect(homeCourts(sim.player)).toEqual([{ court: 'football', lit: false }]);
     const friend = newContact(sim, sim.player, LA, 'pitch-friend', { at: sim.now, how: 'school' });
     friend.hours = 100;
+    // One who cares for a game (`caresFor`, from 2026-10-03).
+    friend.interests = ['sport', 'music', 'film'];
     contactsOf(sim.player).push(friend);
     // Half an hour into a fine afternoon hour of daylight, the same day's weather.
     let fine = nextHour(sim, true);
@@ -144,6 +146,7 @@ describe('a game after dark', () => {
     const sim = home(['footballPitch'], 'pitch-dark');
     const friend = newContact(sim, sim.player, LA, 'pitch-dark-friend', { at: sim.now, how: 'school' });
     friend.hours = 100;
+    friend.interests = ['sport', 'music', 'film'];
     contactsOf(sim.player).push(friend);
     // Nine at night, dark in Los Angeles all year.
     const p = zonedParts(sim.now + 2 * 24 * MS_HOUR, 'America/Los_Angeles');

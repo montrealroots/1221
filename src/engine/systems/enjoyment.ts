@@ -23,6 +23,9 @@
  */
 
 import type { Person } from '../domain/model';
+import type { Simulation } from '../core/simulation';
+import type { Contact } from './people';
+import { GENERAL_INTERESTS } from '../content/interests';
 import { clamp } from '../core/rng';
 import type { LookAfter } from './life';
 import { personalityOf } from './personality';
@@ -250,3 +253,25 @@ export function enjoyCrafts(person: Person, crafts: readonly string[]): boolean 
   w.stress = clamp(w.stress - LOVED_WORK.relief, 0, 100);
   return true;
 }
+
+/**
+ * What a person you know cares about, from 2026-10-03 (the master plan's
+ * §52.7–9): three of the creation screen's general interests, drawn the
+ * first time it matters, SLATE's reading, no survey giving how many a
+ * person has. Read only for what they'd enjoy, as the player's are: asked
+ * to a game, they say yes if sport or fitness is one; to a class, sport,
+ * fitness or dance.
+ */
+export const CONTACT_INTERESTS = 3;
+export function interestsOf(sim: Simulation, person: Person, c: Contact): string[] {
+  if (c.interests) return c.interests;
+  const rng = sim.rng('social.cares', person.id, c.id);
+  const pool = GENERAL_INTERESTS.map((i) => i.id);
+  const out: string[] = [];
+  while (out.length < CONTACT_INTERESTS && out.length < pool.length) { const id = pool[Math.floor(rng.next() * pool.length)]!; if (!out.includes(id)) out.push(id); }
+  c.interests = out;
+  return out;
+}
+const CARES_FOR: Readonly<Record<string, readonly string[]>> = { play: ['sport', 'fitness'], class: ['sport', 'fitness', 'dance'] };
+/** Whether they'd enjoy being asked to it: always, but to a game or a class, by what they care about. */
+export const caresFor = (sim: Simulation, person: Person, c: Contact, what: string): boolean => { const want = CARES_FOR[what]; return !want || interestsOf(sim, person, c).some((i) => want.includes(i)); };
