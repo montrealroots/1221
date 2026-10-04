@@ -182,6 +182,36 @@ function packAWeek(person: Person, bag: Item, home: string): number {
 }
 
 /**
+ * A packing list packed again (from 2026-10-04): each thing on it into the
+ * bag that's at home and fit to go, a garment clean and whole, while the bag
+ * holds it; what isn't is named, never skipped quietly: gone, dirty, not
+ * here, or no room. Already in the bag counts as packed.
+ */
+export function packList(person: Person, list: { itemIds: readonly string[] }, bag: Item): { packed: number; already: number; short: { label: string; why: string }[] } {
+  const home = homeKeyOf(person.home);
+  const into = { kind: 'inside' as const, itemId: bag.id };
+  let room = (bag.holdsL ?? 0) - usedL(person, bag.id);
+  const mine = new Map(itemsOf(person).map((i) => [i.id, i]));
+  const short: { label: string; why: string }[] = [];
+  let packed = 0;
+  let already = 0;
+  for (const id of list.itemIds) {
+    const item = mine.get(id);
+    if (!item) { short.push({ label: 'One Thing', why: 'no longer yours' }); continue; }
+    if (item.at.kind === 'inside' && item.at.itemId === bag.id) { already += 1; continue; }
+    if (!home || item.at.kind !== 'home' || item.at.home !== home) { short.push({ label: item.label, why: 'not at home' }); continue; }
+    if (item.garment?.dirty) { short.push({ label: item.label, why: 'in the wash' }); continue; }
+    if (item.condition <= 0) { short.push({ label: item.label, why: 'worn out' }); continue; }
+    const v = volumeOf(item) * item.quantity;
+    if (v > room + 1e-9) { short.push({ label: item.label, why: 'no room left' }); continue; }
+    room -= v;
+    item.at = into;
+    packed += 1;
+  }
+  return { packed, already, short };
+}
+
+/**
  * Home with the bags: each set down in storage, and unpacked (the clothes to
  * the wardrobe, the toiletries to the bathroom) where that's the shortcut
  * chosen, or when Unpack is pressed (`force`, for one bag or all).
@@ -430,6 +460,39 @@ export function registerLuggage(sim: Simulation): void {
     const packed = packAWeek(person, bag, homeKeyOf(person.home)!);
     if (packed === 0) throw new CommandError('It’s full, or what’s left at home isn’t clean.');
     return { packed, usedL: usedL(person, bag.id) };
+  });
+  // Packing lists: what's in a bag kept under a name, packed again, or let go (from 2026-10-04).
+  sim.onCommand<{ name: string; bagId?: string }, { listId: string; things: number }>('luggage.save_list', (p, { sim: s }) => {
+    const person = s.player;
+    const name = String(p?.name ?? '').trim();
+    if (!name) throw new CommandError('Give the list a name.');
+    const bag = p?.bagId ? bagsOf(person).find((b) => b.id === p.bagId) : suitcaseOf(person);
+    if (!bag) throw new CommandError('That isn’t a bag of yours.');
+    const itemIds = packedIn(person, bag).map((i) => i.id);
+    if (itemIds.length === 0) throw new CommandError('The bag is empty: pack it first, then keep what’s in it.');
+    const lists = (person.packingLists ??= []);
+    const same = lists.find((l) => l.name.toLowerCase() === name.toLowerCase());
+    if (same) { same.itemIds = itemIds; return { listId: same.id, things: itemIds.length }; }
+    const list = { id: s.nextId('packlist'), name, itemIds };
+    lists.push(list);
+    return { listId: list.id, things: itemIds.length };
+  });
+  sim.onCommand<{ listId: string; bagId?: string }, { packed: number; already: number; short: { label: string; why: string }[] }>('luggage.pack_list', (p, { sim: s }) => {
+    const person = s.player;
+    const list = person.packingLists?.find((l) => l.id === p?.listId);
+    if (!list) throw new CommandError('There’s no such list.');
+    const no = luggageRefusal(s, person);
+    if (no) throw new CommandError(no);
+    const bag = p?.bagId ? bagsOf(person).find((b) => b.id === p.bagId) : suitcaseOf(person);
+    if (!bag) throw new CommandError('That isn’t a bag of yours.');
+    return packList(person, list, bag);
+  });
+  sim.onCommand<{ listId: string }, { removed: boolean }>('luggage.delete_list', (p, { sim: s }) => {
+    const person = s.player;
+    const before = person.packingLists?.length ?? 0;
+    person.packingLists = (person.packingLists ?? []).filter((l) => l.id !== p?.listId);
+    if (person.packingLists.length === before) throw new CommandError('There’s no such list.');
+    return { removed: true };
   });
   sim.onCommand<{ itemId?: string }, { unpacked: number }>('luggage.unpack', (p, { sim: s }) => {
     const person = s.player;

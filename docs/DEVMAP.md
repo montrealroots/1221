@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-353 commands; 347 named by a test, 6 not.
+356 commands; 350 named by a test, 6 not.
 
 ## aircraft
 
@@ -398,12 +398,15 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `luggage.buy` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `luggagebuy.test.ts` `travelchange.test.ts` | Rent And A Roof |
+| `luggage.buy` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `luggagebuy.test.ts` `packing-lists.test.ts` `travelchange.test.ts` | Rent And A Roof |
 | `luggage.choose` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `luggagebuy.test.ts` `travelchange.test.ts` | Rent And A Roof |
-| `luggage.pack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` | Rent And A Roof |
+| `luggage.delete_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `packing-lists.test.ts` | Rent And A Roof |
+| `luggage.pack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
+| `luggage.pack_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `packing-lists.test.ts` | Rent And A Roof |
 | `luggage.repack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journeys.test.ts` `luggage-choice.test.ts` | Rent And A Roof |
+| `luggage.save_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `packing-lists.test.ts` | Rent And A Roof |
 | `luggage.take` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `luggage-choice.test.ts` | Rent And A Roof |
-| `luggage.unpack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` | Rent And A Roof |
+| `luggage.unpack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
 
 ## pawn
 

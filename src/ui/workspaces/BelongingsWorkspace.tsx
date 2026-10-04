@@ -741,9 +741,42 @@ function Suitcase() {
           {away && <Gated feature="luggage.repack" className="btn btn-sm" disabled={inRoom === 0} onClick={() => { const r = run<{ packed: number; left: number }>('luggage.repack', {}); if (r.ok) toast(`${r.value!.packed} repacked${r.value!.left ? `, ${r.value!.left} won’t fit` : ''}.`, r.value!.left ? 'negative' : 'positive'); }}>Repack The Room</Gated>}
           <Gated feature="life.set_automation" className="btn btn-sm btn-ghost" onClick={() => run('life.set_automation', { key: 'packForMe', on: !auto })}>{auto ? 'Pack Only When I Do' : 'Pack And Unpack For Me'}</Gated>
         </div>
+        <PackingLists />
         <p className="xs dim" style={{ margin: 0 }}>{auto ? 'Leaving home packs a week into an empty main bag, coming back unpacks, and leaving a room repacks it, as far as the bags hold.' : 'Bags go as they’re packed, an empty one empty; home, they’re set down packed. A room left without repacking leaves its things behind, held there 90 days.'} A packed bag’s weight is reckoned from laundry tables’ grams a garment; checked bags past the airline’s allowance pay at the counter.</p>
       </div>
     </Panel>
+  );
+}
+
+/** Packing lists (`luggage.save_list`, `luggage.pack_list`, from 2026-10-04): the main bag's things kept under a name, and packed again, what can't go named. */
+function PackingLists() {
+  const { run, toast } = useGame();
+  const lists = useWorld((s) => s.player.packingLists ?? []);
+  const [name, setName] = useState('');
+  const [pick, setPick] = useState('');
+  const chosen = lists.find((l) => l.id === pick) ?? lists[0];
+  return (
+    <div className="field-row field-row-tight">
+      <div className="field">
+        <label htmlFor="pack-list-name">Keep What’s In The Main Bag As</label>
+        <input id="pack-list-name" value={name} placeholder="A Week In London" onChange={(e) => setName(e.target.value)} />
+      </div>
+      <div className="field" style={{ alignSelf: 'flex-end' }}>
+        <Gated feature="luggage.save_list" className="btn btn-sm" disabled={!name.trim()} onClick={() => { const r = run<{ things: number }>('luggage.save_list', { name }); if (r.ok) { toast(`${name.trim()}, kept: ${r.value!.things} things.`, 'positive'); setName(''); } }}>Keep The List</Gated>
+      </div>
+      {chosen && (
+        <>
+          <div className="field">
+            <label htmlFor="pack-list-pick">A Packing List</label>
+            <select id="pack-list-pick" value={chosen.id} onChange={(e) => setPick(e.target.value)}>{lists.map((l) => <option key={l.id} value={l.id}>{`${l.name}, ${l.itemIds.length} Things`}</option>)}</select>
+          </div>
+          <div className="field row gap-1" style={{ alignSelf: 'flex-end' }}>
+            <Gated feature="luggage.pack_list" className="btn btn-sm" onClick={() => { const r = run<{ packed: number; already: number; short: { label: string; why: string }[] }>('luggage.pack_list', { listId: chosen.id }); if (r.ok) toast(`${r.value!.packed} packed${r.value!.already ? `, ${r.value!.already} in already` : ''}${r.value!.short.length ? `; not packed: ${r.value!.short.map((x) => `${x.label} (${x.why})`).join(', ')}` : ''}.`, r.value!.short.length ? 'negative' : 'positive'); }}>Pack This List</Gated>
+            <Gated feature="luggage.delete_list" className="btn btn-sm btn-ghost" onClick={() => run('luggage.delete_list', { listId: chosen.id })}>Delete It</Gated>
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 
