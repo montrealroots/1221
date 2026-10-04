@@ -843,7 +843,7 @@ function Televisions() {
         { label: 'Smart TV', values: chosen.map((e) => String(e.value.product.attrs.smartOs ?? '—')) },
         { label: 'Sold By', values: chosen.map((e) => e.value.offer.seller) },
       ]} />
-      <div className="xs dim">{`Each set at its maker’s or a retailer’s own price on ${shop[0]!.offer.read}, delivered. Its power is its energy label’s on-mode figure: the EU and UK label’s, or ENERGY STAR’s under the federal test. A typical household’s electricity already has a usual set on${GENERIC_TV_WATTS !== undefined ? `, ${Math.round(GENERIC_TV_WATTS)} W` : ''}, so watching adds what yours draws past it, or takes off what it saves.`}</div>
+      <div className="xs dim">{`Each set at its maker’s or a retailer’s own price on ${shop[0]!.offer.read}, delivered. Its power is the on-mode figure its energy label gives, the EU and UK label’s or ENERGY STAR’s under the federal test, or where no label was read, the figure its maker or a retailer publishes; a set with neither draws the usual one’s. A typical household’s electricity already has a usual set on${GENERIC_TV_WATTS !== undefined ? `, ${Math.round(GENERIC_TV_WATTS)} W` : ''}, so watching adds what yours draws past it, or takes off what it saves.`}</div>
     </div>
   );
 }

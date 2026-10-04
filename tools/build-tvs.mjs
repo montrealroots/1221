@@ -68,7 +68,9 @@ for (const r of es.rows) {
 const eu = existsSync(`${dir}/eu-labels-tvs.json`) ? JSON.parse(readFileSync(`${dir}/eu-labels-tvs.json`, 'utf8')) : { labels: [] };
 for (const l of eu.labels ?? []) {
   if (!num(l.onModeWatts)) continue;
-  labels.push({ brand: brandKey(l.brand), sizeIn: num(l.sizeIn), codes: [l.model, ...(l.otherModels ?? [])].map(code).filter(Boolean), watts: l.onModeWatts, basis: l.powerBasis ?? 'EU/UK energy label: on-mode power SDR', url: l.powerUrl ?? null });
+  // A registry row's label is EPREL's own page for its registration number.
+  labels.push({ brand: brandKey(l.brand), sizeIn: num(l.sizeIn), codes: [l.model, ...(l.otherModels ?? [])].map(code).filter(Boolean), watts: l.onModeWatts,
+    basis: l.powerBasis ?? 'EU energy label (EPREL): on-mode power demand in SDR', url: l.powerUrl ?? (l.eprel ? `https://eprel.ec.europa.eu/qr/${l.eprel}` : null) });
 }
 let labeled = 0;
 for (const p of products.values()) {

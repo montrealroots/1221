@@ -2,7 +2,8 @@
  * SLATE — a television of one's own (from 2026-10-04): the models sold where
  * they live (`content/tvcatalog.ts`), bought at a store's price with the
  * place's tax and brought home, kept as the home's TV with its make, model,
- * size and the power its energy label gives.
+ * size and the power it draws on: its energy label's figure, or its maker's
+ * or a retailer's where no label was read.
  *
  * Watching it draws that power for the time watched. The month's electricity
  * is a typical household's (`systems/electricity.ts`), and a typical household
