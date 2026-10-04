@@ -19,7 +19,7 @@
  * of what's in stock, the soonest to go off first. Seasonings, spices,
  * stock and water are taken as in the cupboard. Where an ingredient's unit
  * isn't its product's, a milliliter is taken as a gram and a count by its
- * grams each (`GRAMS_EACH`).
+ * grams each (`gramsEach`).
  *
  * **A dish** is one serving eaten now, as a meal cooked at home is, and the
  * rest in the fridge, for the recipe's own days or the 3 to 4 days
@@ -71,14 +71,33 @@ export const groceryMarketOf = (cityId: string): string | undefined => MARKET[ci
 export const KITCHEN = { has: new Set(['stove', 'oven', 'grill', 'freezer', 'microwave']), minutes: 30, reheatMinutes: 5, leftoverDays: 3 } as const;
 /**
  * Grams of one, where a recipe counts and a shop weighs: USDA FoodData
- * Central's medium portion (a large egg 50 g, a medium tomato 123 g, onion
- * 110 g, russet potato 213 g, carrot 61 g, apple 182 g, banana 118 g, sweet
- * pepper 119 g, a boneless chicken breast half 174 g). Anything else counted
- * is taken as 100 g, and an ingredient with no amount as 50 g or one, SLATE's
- * estimates.
+ * Central's portion (a large egg 50 g, a medium tomato 123 g, onion 110 g,
+ * russet potato 213 g, carrot 61 g, apple 182 g, banana 118 g, sweet pepper
+ * 119 g, a boneless chicken breast half 174 g). From 2026-10-04 the rest a
+ * recipe counts, from FDC's SR Legacy portions (FDC id): a garlic clove 3 g
+ * (169230), a medium celery stalk 40 g (169988), a leek 89 g (169246), a
+ * medium courgette 196 g (169291), an unpeeled aubergine 548 g (169228), a
+ * lemon 58 g (167746), an orange 131 g (169097), a hot chilli 45 g (170497), a
+ * medium turnip 122 g (170465), a medium head of cabbage 908 g (169975), a
+ * 7-8" flour tortilla 49 g (173242), a raw slice of bacon 28 g (168277), a
+ * slice of wholemeal bread 32 g (172688); a tin of chopped tomatoes or of
+ * beans 400 g, SLATE's estimate from the British chains' tins. Until then each
+ * was 100 g, and a recipe's four garlic cloves asked for 400 g of garlic.
+ * Anything else counted (a fish fillet, a sausage, which FDC weighs only by
+ * the whole side or pack) is taken as 100 g, and an ingredient with no amount
+ * as 50 g or one, SLATE's estimates.
  */
-export const GRAMS_EACH: Readonly<Record<string, number>> = { eggs: 50, tomato: 123, onion: 110, potato: 213, carrot: 61, apple: 182, banana: 118, pepper: 119, chicken: 174 };
+export const GRAMS_EACH: Readonly<Record<string, number>> = {
+  eggs: 50, tomato: 123, onion: 110, potato: 213, carrot: 61, apple: 182, banana: 118, pepper: 119, chicken: 174,
+  garlic: 3, celery: 40, leek: 89, courgette: 196, aubergine: 548, lemon: 58, orange: 131, chilli: 45, turnip: 122, cabbage: 908,
+  tortilla: 49, bacon: 28, bread: 32, 'tomatoes-canned': 400, beans: 400,
+};
+/** A counted ingredient whose name says it's another size than its food's: a spring onion (170005), a jalapeño (168576), a roll (172794), a slice of fruit bread (172680) or of white bread (174924), a medium ear of sweetcorn (169998). */
+const GRAMS_EACH_NAMED: readonly (readonly [RegExp, number])[] = [[/spring onions?|scallions?/, 15], [/jalape/, 14], [/\b(?:rolls?|baps?)\b/, 43], [/fruit bread/, 26], [/white bread/, 29], [/sweet ?corn/, 102]];
 export const COUNTS = { countG: 100, someG: 50 } as const;
+
+/** Grams of one of an ingredient a recipe counts: its name's size where it says one, else its food's. */
+export const gramsEach = (ingredient: { name: string; food: string | null }): number => GRAMS_EACH_NAMED.find(([re]) => re.test(ingredient.name))?.[1] ?? GRAMS_EACH[ingredient.food ?? ''] ?? COUNTS.countG;
 
 export const productById = (id: string): GroceryProduct | undefined => GROCERY_PRODUCTS.find((p) => p.id === id);
 export const recipeById = (id: string): Recipe | undefined => RECIPES.find((r) => r.id === id);
@@ -163,7 +182,7 @@ export function amountIn(ingredient: Extract<Ingredient, { food: string | null }
   if (q === null || from === null) return unit === 'ct' ? 1 : COUNTS.someG;
   const need = q * scale;
   if (from === unit || (from !== 'ct' && unit !== 'ct')) return need;
-  const perCount = GRAMS_EACH[ingredient.food ?? ''] ?? COUNTS.countG;
+  const perCount = gramsEach(ingredient);
   return from === 'ct' ? need * perCount : Math.max(1, Math.ceil(need / perCount));
 }
 

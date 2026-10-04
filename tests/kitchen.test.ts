@@ -10,7 +10,7 @@ import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { GROCERY_PRODUCTS, RECIPES } from '@/engine/content/groceries';
-import { amountIn, cookRefusal, groceryCatalog, kitchenMeal, shortfall, groceryPrice, groceryRefusal, productById, unitPrice } from '@/engine/systems/kitchen';
+import { COUNTS, amountIn, cookRefusal, gramsEach, groceryCatalog, kitchenMeal, shortfall, groceryPrice, groceryRefusal, productById, unitPrice } from '@/engine/systems/kitchen';
 import { foodOf, mealsFromStock, mealsReady, throwOutSpoiled } from '@/engine/systems/pantry';
 import { buyTheDaysFood, canPay, foodOf as daysFoodCost, mealOf } from '@/engine/systems/household';
 import { bacAt } from '@/engine/systems/alcohol';
@@ -79,7 +79,26 @@ describe('cooking', () => {
     expect(amountIn({ name: 'tomatoes', food: 'tomato', quantity: 8, unit: 'ct' }, 'g', 1)).toBe(8 * 123);
     expect(amountIn({ name: 'eggs', food: 'eggs', quantity: 2, unit: 'ct' }, 'ct', 1)).toBe(2);
     expect(amountIn({ name: 'yoghurt', food: 'yogurt', quantity: 120, unit: 'ml' }, 'g', 1)).toBe(120);
-    expect(amountIn({ name: 'leeks', food: 'leek', quantity: 300, unit: 'g' }, 'ct', 1)).toBe(3);
+    // 300 g of leeks is four of USDA's 89 g leeks (three of the 100 g taken for any count until 2026-10-04).
+    expect(amountIn({ name: 'leeks', food: 'leek', quantity: 300, unit: 'g' }, 'ct', 1)).toBe(4);
+  });
+
+  it('weighs a garlic clove, a spring onion and a slice as what they are, and a tin as a tin', () => {
+    // Four cloves were 400 g of garlic, five spring onions 550 g of onions.
+    expect(amountIn({ name: 'garlic clove', food: 'garlic', quantity: 4, unit: 'ct' }, 'g', 1)).toBe(12);
+    expect(amountIn({ name: 'spring onions', food: 'onion', quantity: 5, unit: 'ct' }, 'g', 1)).toBe(75);
+    expect(amountIn({ name: 'onion', food: 'onion', quantity: 1, unit: 'ct' }, 'g', 1)).toBe(110);
+    expect(amountIn({ name: 'white bread slice', food: 'bread', quantity: 4, unit: 'ct' }, 'g', 1)).toBe(116);
+    expect(amountIn({ name: 'wholemeal bread', food: 'bread', quantity: 4, unit: 'ct' }, 'g', 1)).toBe(128);
+    expect(amountIn({ name: 'wholemeal bread rolls', food: 'bread', quantity: 4, unit: 'ct' }, 'g', 1)).toBe(172);
+    expect(amountIn({ name: 'fruit bread', food: 'bread', quantity: 4, unit: 'ct' }, 'g', 1)).toBe(104);
+    expect(amountIn({ name: 'canned chopped tomatoes', food: 'tomatoes-canned', quantity: 1, unit: 'ct' }, 'g', 1)).toBe(400);
+    expect(amountIn({ name: 'jalapeño pepper', food: 'chilli', quantity: 1, unit: 'ct' }, 'g', 1)).toBe(14);
+    // A sausage FDC weighs only by the pack: SLATE's 100 g.
+    expect(amountIn({ name: 'reduced-fat sausage', food: 'sausage', quantity: 8, unit: 'ct' }, 'g', 1)).toBe(800);
+    // Every food a recipe counts has its portion but those FDC weighs only by the side or the pack.
+    const counted = RECIPES.flatMap((r) => r.ingredients).filter((i): i is Extract<(typeof i), { food: string | null }> => !i.cupboard && i.unit === 'ct' && i.food !== null);
+    expect([...new Set(counted.filter((i) => gramsEach(i) === COUNTS.countG).map((i) => i.name))].sort()).toEqual(['reduced-fat sausage', 'salmon fillet', 'white fish fillet']);
   });
 
   it('needs the ingredients in stock and a kitchen, and says what’s short', () => {
