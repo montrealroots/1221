@@ -1,0 +1,5168 @@
+{
+  "read": "2026-10-04",
+  "method": "brand read from each product's own name as researched; null where the name names none",
+  "items": [
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Whole Milk, one gallon",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Fresh White Eggs, Large, 12 Count",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Round Top White Sliced Bread, 20 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Sweet Cream Salted Butter, 4 count, 16 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Natural Mild Cheddar Cheese, 8 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Chobani Nonfat Plain Greek Yogurt, 32 oz",
+      "brand": "Chobani"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Arroz Rico Long Grain Rice, 5 lb",
+      "brand": "Arroz Rico"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Price Rite Enriched Macaroni Product Spaghetti, 16 oz",
+      "brand": "Price Rite"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Price Rite Bleached Enriched All Purpose Flour, 80 oz",
+      "brand": "Price Rite"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket 100% Vegetable Oil, 48 fl oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Granulated Sugar, 4 lb",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Iodized Salt, 26 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Value Size Boneless Skinless Chicken Breast",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Prepacked Ground Beef, 80% Lean / 20% Fat",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Tilapia Fillets Boneless & Skinless, 32 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Goya Black Beans, 15.5 oz",
+      "brand": "Goya"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Russet Potatoes, 5 lb bag",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Carrots, 2 lb bag",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Iceberg Lettuce, each",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Gala Apple",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Yellow Banana",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Steam in Bag Mixed Vegetables (carrots, corn, green beans, peas), 12 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Red Baron Classic Crust Four Cheese Pizza, 21.06 oz",
+      "brand": "Red Baron"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Toasted Corn Flakes Cereal, 18 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Old Fashioned Oats, 42 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Martinson Classic Medium Roast Ground Coffee, 24.2 oz",
+      "brand": "Martinson"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Creamy Peanut Butter, 16.3 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Chunk Light Tuna in Water, 5 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Olé Fajita Flour Tortillas, 10 count, 11.3 oz",
+      "brand": "Olé"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Traditional Pasta Sauce, 24 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Tropicana No Pulp Pure Premium 100% Orange Juice, 46 fl oz",
+      "brand": "Tropicana"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Poland Spring 100% Natural Spring Water, 16.9 fl oz, 24 count",
+      "brand": "Poland Spring"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bud Light Beer, 30 pack cans, 12 fl oz each",
+      "brand": "Bud Light"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Corona Extra Beer, 18 count, 12 fl oz",
+      "brand": "Corona Extra"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Original Macaroni & Cheese, 7.25 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Hot Pockets Four Cheese Pizza Sandwiches, 4 count, 17 oz",
+      "brand": "Hot Pockets"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket White Sandwich Sliced Bread, 20 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Fresh White Eggs, Large, 12 Count",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Sweet Cream Unsalted Butter, 4 count, 16 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Natural Sharp Cheddar Cheese, 8 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Chobani Nonfat Plain Greek Yogurt, 32 oz",
+      "brand": "Chobani"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Enriched Long Grain White Rice, 5 lb",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Spaghetti Pasta, 16 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Gold Medal All Purpose Flour, 5 lb",
+      "brand": "Gold Medal"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket 100% Vegetable Oil, 48 fl oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Granulated Sugar, 4 lb",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Morton Kosher Salt, Coarse, 16 oz",
+      "brand": "Morton"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Perdue 99% Fat Free Boneless Skinless Chicken Breasts",
+      "brand": "Perdue"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Freshly Ground Beef, 80% Lean / 20% Fat",
+      "brand": "Freshly"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Boneless & Skinless Whole Tilapia Fillets, 16 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Goya Black Beans, 15.5 oz",
+      "brand": "Goya"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Grape Tomatoes, pint",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Yellow Onions, 3 lb bag",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Russet Potatoes, 5 lb bag",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Fresh Carrots, 2 lb bag",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Fresh Iceberg Lettuce, each",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Fresh Gala Apple",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Fresh Yellow Banana",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Peas & Carrots Vegetable Blend, 32 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Thin Crust Margherita Pizza, 19 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Quaker Oats Old Fashioned 100% Whole Grain Oats, 18 oz",
+      "brand": "Quaker"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Colombian Medium Roast Ground Coffee, 12 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Lipton Yellow Label Black Tea Bags, 100 count, 8 oz",
+      "brand": "Lipton"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bowl & Basket Creamy Peanut Butter, 16.3 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Bumble Bee Chunk Light Tuna in Water, 5 oz",
+      "brand": "Bumble"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Mission Burrito Flour Tortillas, 8 count, 20 oz",
+      "brand": "Mission"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Tropicana Pure Premium 100% Orange Juice, 46 fl oz",
+      "brand": "Tropicana"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Poland Spring 100% Natural Spring Water, 16.9 fl oz, 24 count",
+      "brand": "Poland Spring"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Stouffer's Lasagna with Meat & Sauce, Large Size, 19 oz",
+      "brand": "Stouffer's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Sandwich Bread, Enriched, White, 24 oz",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Milk, Lactose Free, Whole, 64 fl oz",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Eggs, Cage Free, Large, 12 count",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Butter, with Sea Salt, Sweet Cream, Sticks",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Cheese, Sharp Cheddar, 16 oz",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Yogurt, Greek, Nonfat, Plain, 32 oz",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Long Grain Rice, Extra Fancy, 5 lb",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Spaghetti, 32 oz",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street All Purpose Flour, Bleached, 5 lb",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Vegetable Oil, All Purpose, 48 fl oz",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Pure Cane White Granulated Sugar, 4 lb",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Morton Salt, Iodized, 26 oz",
+      "brand": "Morton"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Boneless Skinless Chicken Breast With Rib Meat",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street 80/20 Ground Beef",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street/Great American Tilapia Fillets, 3 lb",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Black Beans, 15 oz",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Roma Tomatoes",
+      "brand": "Roma"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Yellow Onions",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Bagged Russet Potatoes, 5 lb",
+      "brand": "Bagged"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Carrots, 1 lb",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Wrapped Iceberg Lettuce",
+      "brand": "Wrapped"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Gala Apples",
+      "brand": "Gala"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Bananas",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Mixed Vegetables, 40 oz",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "California Pizza Kitchen Margherita Pizza, Crispy Thin Crust, 15.5 oz",
+      "brand": "California"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Kellogg's Corn Flakes Breakfast Cereal, Original, Family Size, 18 oz",
+      "brand": "Kellogg's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Quaker Old Fashioned 100% Whole Grain Oats, 42 oz",
+      "brand": "Quaker"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Folgers Ground Medium Classic Roast Coffee, 40.3 oz",
+      "brand": "Folgers"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Lipton Yellow Label Black Tea, 100 bags",
+      "brand": "Lipton"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Skippy Creamy Peanut Butter, 16.3 oz",
+      "brand": "Skippy"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Tuna, in Water, Chunk Light, 5 oz",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Flour Tortillas, Burrito Size, 12 count",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Pasta Sauce, Tomato, Basil & Garlic, 24 oz",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Simply Pulp-Free Orange Juice, 46 fl oz",
+      "brand": "Simply"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Crystal Geyser Natural Alpine Spring Water, 1 gal",
+      "brand": "Crystal"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Barefoot Cellars Cabernet Sauvignon Red Wine, 750 ml",
+      "brand": "Barefoot"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Stouffer's Classic Lasagna with Meat & Sauce, 10.5 oz",
+      "brand": "Stouffer's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Michelina's Macaroni & Cheese, 9.6 oz",
+      "brand": "Michelina's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco British Semi Skimmed Milk 2.272L, 4 Pints",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco British Whole Milk 2.272L, 4 Pints",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Medium Sliced White Bread 800g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco 10 British Barn Eggs",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco British Salted Block Butter 250g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Mature Cheddar 400g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Natural Yogurt 1kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Easy Cook Long Grain Rice 1kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Spaghetti Pasta 1kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Plain Flour 1.5kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Pure Vegetable Oil 3L",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Golden Granulated Sugar 1kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Cooking Salt 1.5kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco 5% Fat Beef Mince 500g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Diced Chicken Breast Fillets 640g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Cod Fillets 360g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Baked Beans In Tomato Sauce 420g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Red Kidney Beans In Water 400g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Salad Tomatoes 650g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Brown Onions Each",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Baking Potatoes 2kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Carrots 1kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Iceberg Lettuce Each",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Large Gala Apples Loose Class 1",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Bananas Loose",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Stonebaked BBQ Meat Feast Pizza 340g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Corn Flakes 500g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Scottish Oats Porridge 1kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Classic Instant Coffee 200g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco 80 Gold Tea Bags 250g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Smooth Peanut Butter 700g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Tuna Chunks In Brine 145g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Plain White Tortilla Wraps, 8 pack",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Pure Orange Juice With Bits 1L",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Chicken Tikka Masala With Pilau Rice 400g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Vegetarian Vegetable Lasagne 375g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's British Semi Skimmed Milk 1 pint",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Soft Medium Sliced White Bread 800g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's British Butter Salted 500g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's British Mature Cheddar Cheese 400g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Basmati Rice 2kg",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Wholewheat Fusilli Pasta 500g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Self Raising Flour 1.5kg",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Sunflower Oil 3L",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's British Chicken Breast Mini Fillets 500g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's 5% Fat Beef Mince 500g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Salmon Fillets 360g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Reduced Sugar & Salt Baked Beans In Tomato Sauce 400g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Chickpeas in Water 400g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Chopped Tomatoes 227g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Carrots 1kg",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Baby Potatoes 1kg",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Garden Peas 1.81kg",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Stonebaked Margherita Pizza 265g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Scottish Porridge Oats 1kg",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Red Label Fairtrade Tea Bags 500g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Tuna Chunks in Spring Water 145g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Pure Orange Juice 1L",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's House Merlot Red Wine 2.25L",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Cottage Pie (Serves 1) 400g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu White Sliced Pan (800 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Fresh Irish Whole Milk (2 L)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Free Range Large Eggs (12 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Kerrygold Creamery Butter (454 g)",
+      "brand": "Kerrygold"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Mature Red Cheddar (200 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Natural Yogurt (1 kg)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Basmati Rice (1 kg)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Fusilli (1 kg)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Plain Flour (2 kg)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Sunflower Oil (1 L)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Caster Sugar (1 kg)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Table Salt (750 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Fresh Irish Free Range Chicken Breast Fillets (440 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Fresh Irish Beef Round Steak Mince (454 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Donegal Catch Salmon Fillets 4 Pack (400 g)",
+      "brand": "Donegal"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Donegal Catch 4 Breaded Cod Fillets (400 g)",
+      "brand": "Donegal"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Baked Beans (420 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Heinz Baked Beans (415 g)",
+      "brand": "Heinz"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Chopped Tomatoes (400 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Loose Tomatoes",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Loose Brown Onion",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Irish Rooster Potatoes (2 kg)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Carrots (1 kg)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Iceberg Lettuce (1 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Pink Lady Apples (6 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Freddy Fyffes Bananas Bag (7 Piece)",
+      "brand": "Freddy"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Garden Peas (750 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Daily Basics Pepperoni Pizza (314 g)",
+      "brand": "Daily Basics"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Kellogg's Corn Flakes (450 g)",
+      "brand": "Kellogg's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Porridge Oats (1 kg)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu French Style Ground Coffee (227 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Barry's Tea Gold Blend 160 Bags (500 g)",
+      "brand": "Barry's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Kelkin Smooth Peanut Butter (350 g)",
+      "brand": "Kelkin"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Tuna Chunks In Brine (145 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Fitzgeralds Plain Wraps 6 Pack (370 g)",
+      "brand": "Fitzgeralds"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Heinz Tomato & Basil Margherita Pasta Sauce (490 g)",
+      "brand": "Heinz"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Orange Juice (1 L)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Still Water (2 L)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Heineken Lager Can 6 Pack (500 ml)",
+      "brand": "Heineken"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Rio Alto Classic Merlot (75 cl)",
+      "brand": "Rio"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Carrolls Traditional Lasagne (350 g)",
+      "brand": "Carrolls"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Clean Cut Meals Chicken Curry with Long Grain Rice (400 g)",
+      "brand": "Clean"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Dairyland 2% Regular Milk, 4 L",
+      "brand": "Dairyland"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family Free Run Eggs, 12",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family White Bread, 570 g",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Dairyland Creamery Butter Salted, 454 g",
+      "brand": "Dairyland"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family Medium Cheddar Cheese Block, 600 g",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "OIKOS Greek Yogurt 2% M.F. Plain, 750 g",
+      "brand": "OIKOS"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family Long Grain White Rice, 1.81 kg",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family Spaghetti, 900 g",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family All Purpose Flour, Unbleached, 2.5 kg",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family Pure Canola Oil, 946 ml",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Rogers Granulated White Sugar, 2 kg",
+      "brand": "Rogers"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Windsor Table Salt, 1 kg",
+      "brand": "Windsor"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Canadian Chicken Breast Boneless Skinless, Fresh",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Canadian Lean Ground Beef, 454 g",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family Wild Cod Fish Loins, 5 Pack, 568 g",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Unico Black Beans, 540 ml",
+      "brand": "Unico"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Hot House Tomatoes on Vine, Fresh",
+      "brand": "Hot"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Onions - Yellow, Large",
+      "brand": "Onions"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Potatoes - Small Russet Potatoes, 5 lb",
+      "brand": "Potatoes"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Carrots - Bulk, Fresh",
+      "brand": "Carrots"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Lettuce - Iceberg Cello Wrapped",
+      "brand": "Lettuce"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Apples - Gala, Fresh",
+      "brand": "Apples"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Bananas - Yellow, Fresh",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family Mixed Vegetables, 750 g",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Dr. Oetker Suprema Margherita Pizza, 475 g",
+      "brand": "Dr."
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "General Mills Cheerios Cereal, Family Size, 570 g",
+      "brand": "General"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Robin Hood Quick Oats, 1 kg",
+      "brand": "Robin"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Value Priced Coffee Medium Roast Ground, 864 g",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Tetley Orange Pekoe Tea Bags, 72",
+      "brand": "Tetley"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Kraft Smooth Peanut Butter, 1 kg",
+      "brand": "Kraft"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Ocean's Chunk Light Tuna In Water, 170 g",
+      "brand": "Ocean's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Manny's Flour Tortillas - Soft Taco Size, 10",
+      "brand": "Manny's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Prego Pasta Sauce - Original, 645 ml",
+      "brand": "Prego"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "SunRype Orange Juice, 900 ml",
+      "brand": "SunRype"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family Spring Water, 24 x 500 mL",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Red Rooster Signature Pinot Noir, 750 ml",
+      "brand": "Red Rooster"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family 4 Cheese Ravioli Lasagna With Meat Sauce, 850 g",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family Butter Chicken Entree with Basmati Rice, 350 g",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Kraft Dinner Original Macaroni and Cheese Dinner, 200 g",
+      "brand": "Kraft"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Beatrice Homogenized Milk 3.25% M.F., 4 L",
+      "brand": "Beatrice"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Burnbrae Farms White Large Eggs, 6-Pack",
+      "brand": "Burnbrae"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value White Bread, 570 g",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Salted Butter, 454 g",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Cheese Old Cheddar, 400 g",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Astro Original Plain Balkan Yogurt 2% M.F., 750 g",
+      "brand": "Astro"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Ben's Original Converted Long Grain Rice, 2.2 kg",
+      "brand": "Ben's"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Spaghetti Pasta, 900 g",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value All Purpose Flour, 2.5 kg",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Vegetable Oil, 3 L",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Windsor Iodized Table Salt, 1 kg",
+      "brand": "Windsor"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Maple Leaf Prime Chicken Breast, 460 g",
+      "brand": "Maple"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Lean Ground Beef, 367 g",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "High Liner Market Cuts Cod Boned, 227 g",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Vine Tomatoes, 1 lb",
+      "brand": "Vine"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "MR Farms Yellow Onions, 2 lbs",
+      "brand": "MR"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "White Potatoes, 5 lbs",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Carrots, 2 lbs",
+      "brand": "Carrots"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Romaine Lettuce Hearts, 3-Pack",
+      "brand": "Romaine"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "McIntosh Apples, 3 lb",
+      "brand": "McIntosh"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Bananas, 3 lbs",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Frozen Peas, 750 g",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Red Baron Fully Loaded Pepperoni Pizza, 815 g",
+      "brand": "Red Baron"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Corn Flakes Cereal, 280 g",
+      "brand": "Corn"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Quick Oats, 1 kg",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Folgers Classic Roast Ground Coffee, Medium Roast, 272 g",
+      "brand": "Folgers"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Red Rose Orange Pekoe, 140 Black Tea Bags, 406 g",
+      "brand": "Red Rose"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Jif Crunchy Peanut Butter, 1 kg",
+      "brand": "Jif"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value 10-in Tortillas, 10-Pack",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Prego Pasta Sauce Mushroom & Green Pepper Extra Chunky, 645 ml",
+      "brand": "Prego"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Simply Orange 100% Pure & Natural Orange Juice - Pulp Free, 1.36 L",
+      "brand": "Simply"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Ice River Spring Water, 500 ml, 24-Pack",
+      "brand": "Ice"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Meat Lasagna, 907 g",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Leche Entera Lala Fresca Cartón 1L",
+      "brand": "Leche"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Leche Entera Lala UHT Cartón 1L",
+      "brand": "Leche"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Huevo Blanco Bachoco 18 Piezas",
+      "brand": "Huevo"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Pan Bimbo Blanco 620g",
+      "brand": "Pan"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Mantequilla Gloria con Sal 225g",
+      "brand": "Mantequilla"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Queso Panela Carranco 400g",
+      "brand": "Queso"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Queso Oaxaca Carranco 400g",
+      "brand": "Queso"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Yoghurt Nutri Yoghurt Batido Natural 900g",
+      "brand": "Yoghurt"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Arroz Verde Valle Grueso 750g",
+      "brand": "Arroz"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Arroz kg (granel)",
+      "brand": "Arroz"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Spaghetti La Moderna 220g",
+      "brand": "Spaghetti"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Harina de Trigo Selecta 1Kg",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Aceite Vegetal Comestible Ave 850ml",
+      "brand": "Aceite"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Aceite Vegetal Nutrioli Puro de Soya 850ml",
+      "brand": "Aceite"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Azúcar Chedraui Estándar 900g",
+      "brand": "Azúcar"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Sal La Fina Yodada Bolsa 1kg",
+      "brand": "Sal"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Pechuga sin Hueso de Pollo kg",
+      "brand": "Pechuga"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Molida de Res kg",
+      "brand": "Molida"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Filete de Tilapia por Kg",
+      "brand": "Filete"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Frijol Negro Chedraui 900g",
+      "brand": "Frijol"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Frijoles Refritos Isadora Bayos 400g",
+      "brand": "Frijoles"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Tomate Saladet por kg",
+      "brand": "Tomate"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Cebolla Blanca por kg",
+      "brand": "Cebolla"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Papa Blanca por kg",
+      "brand": "Papa"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Zanahoria por kg",
+      "brand": "Zanahoria"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Lechuga Romana Pieza",
+      "brand": "Lechuga"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Manzana Roja Mediana por Kg",
+      "brand": "Manzana"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Plátano Chiapas por Kg",
+      "brand": "Plátano"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Guarnición de Verduras La Huerta 500g",
+      "brand": "Guarnición"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Pizza Red Baron Pepperoni 583g",
+      "brand": "Pizza"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Cereal Kelloggs Corn Flakes 370g",
+      "brand": "Cereal"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Avena Pelicano 500g",
+      "brand": "Avena"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Café Soluble Nescafé Clásico 120g",
+      "brand": "Café"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Crema Mister Cacahuate 840g",
+      "brand": "Crema"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Atún en Agua Ancla Jumbo 295g",
+      "brand": "Atún"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Tortilla de Maíz 500g",
+      "brand": "Tortilla"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Pure Herdez Tomate Molidos 1Kg",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Jugo Jumex Naranja 1.89 L",
+      "brand": "Jugo"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Agua Natural Epura 5L",
+      "brand": "Agua"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Cerveza Corona Extra Clara 410ml",
+      "brand": "Cerveza"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Vino Tinto Chauvenet Tinto 750ml",
+      "brand": "Vino"
+    },
+    {
+      "file": "research-groceries.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Sopa Instantánea Nissin Res 64g",
+      "brand": "Sopa"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket White Mushrooms, 10 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Price Rite Diced Tomatoes in Tomato Juice, 14.5 oz",
+      "brand": "Price Rite"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Tomato Paste, 6 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Organic Leeks, bunch",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Celery, each",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Green Squash",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Green Bell Pepper",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Express Spinach, 8 oz bag",
+      "brand": "Fresh Express"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Broccoli Crowns",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Green Cabbage",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Cucumber, each",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Navel Oranges, 4 lb bag",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Lemon, each",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Jalapeno Pepper",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Berry Medley, 12 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Sweetened Dried Cranberries, 5 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Hatfield Classic Cut Hardwood Smoked Bacon, 16 oz",
+      "brand": "Hatfield"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bob Evans Original Pork Sausage, 16 oz",
+      "brand": "Bob Evans"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Garlic, 5 count",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Chicken Flavor Instant Bouillon Cubes, 3.4 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Chick Peas, 15 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Goya Red Lentils, 16 oz",
+      "brand": "Goya"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Goya Prime Premium Red Kidney Beans, 15.5 oz",
+      "brand": "Goya"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Sweet Whole Kernel Golden Corn, 15.25 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Bowl & Basket Clover Honey, 24 oz",
+      "brand": "Bowl & Basket"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Price Rite Real Mayonnaise, 30 fl oz",
+      "brand": "Price Rite"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Ginger",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Fresh Butternut Squash",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street White Whole Mushrooms, 16 oz",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Hunt's Diced Tomatoes",
+      "brand": "Hunt's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Tomato Paste",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Celery",
+      "brand": "Celery"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Italian Squash",
+      "brand": "Italian"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Green Bell Peppers",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Spinach",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Broccoli Florets",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Green Cabbage",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Cucumbers",
+      "brand": "Cucumbers"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Navel Oranges, 8 lb bag",
+      "brand": "Navel"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Produce Lemon",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Jalapeno Peppers",
+      "brand": "Jalapeno"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Berry Medley",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Sun-Maid California Sun-Dried Raisins",
+      "brand": "Sun-Maid"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Ocean Spray Cranberries, Dried",
+      "brand": "Ocean Spray"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Bacon, Hickory Smoked",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Farmer John Pork Sausage Links, Classic",
+      "brand": "Farmer John"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Herb-Ox Chicken Flavor Bouillon Cubes",
+      "brand": "Herb-Ox"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Garbanzo Beans",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Dark Red Kidney Beans",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Sweet Corn, Whole Kernel",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Honey",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Best Foods Real Mayonnaise",
+      "brand": "Best Foods"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Ginger Root",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Butternut Squash",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Irish Baby Button Mushrooms (150 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Daily Basics Chopped Tomatoes (400 g)",
+      "brand": "Daily Basics"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Roma Tomato Puree Tubes (140 g)",
+      "brand": "Roma"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Leeks (500 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Celery (1 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Courgettes (2 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Mixed Peppers (3 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Loose Red Pepper (1 Piece)",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Baby Spinach (200 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Broccoli (350 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Round Cabbage (1 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Cucumber (1 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Large Loose Oranges (1 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Net Oranges (1.5 kg)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Loose Lemons (1 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Mixed Chillies (50 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Frozen Mixed Berries (340 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Sultanas (375 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Daily Basics Raisins (375 g)",
+      "brand": "Daily Basics"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Dried Apricots (250 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Unsmoked Back Rasher (200 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Superquinn Pork Sausages 6 Pack (240 g)",
+      "brand": "Superquinn"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Garlic (3 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Oxo Beef Stock 12 Cubes (71 g)",
+      "brand": "Oxo"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Bunalun Organic Chick Peas (400 g)",
+      "brand": "Bunalun"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Red Lentils (500 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Red Kidney Beans (400 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Sweetcorn (500 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Squeezy Honey (340 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Real Mayonnaise (401 g)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Loose Ginger (1 kg)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Butternut Squash Loose (1 Piece)",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Loose Turnip (1 Piece)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "ONLY GOODNESS - Organic White Mushrooms",
+      "brand": "ONLY"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Aylmer - Canned Diced Tomatoes",
+      "brand": "Aylmer"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Hunt's - Tomato Paste - No Salt Added",
+      "brand": "Hunt's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Leeks - Fresh Bulk",
+      "brand": "Leeks"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Celery - Bunch, Fresh",
+      "brand": "Celery"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Zucchini - Green Squash, Fresh",
+      "brand": "Zucchini"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Bell Peppers - Green Field Grown, Fresh",
+      "brand": "Bell"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Spinach - Bunch, Fresh",
+      "brand": "Spinach"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Broccoli - Crowns, Fresh",
+      "brand": "Broccoli"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Cabbage - Green, Fresh",
+      "brand": "Cabbage"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Cucumber - Long English",
+      "brand": "Cucumber"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Oranges - Navel, Large",
+      "brand": "Oranges"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Lemons - Large, Fresh",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Jalapeno Peppers - Hot Green",
+      "brand": "Jalapeno"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family - Berry Blend",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Sun-Maid - California Raisins",
+      "brand": "Sun-Maid"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Ocean Spray - Craisins Dried Cranberries Original",
+      "brand": "Ocean Spray"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family - Naturally Hardwood Smoked Bacon Slices",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Johnsonville - Original Breakfast Sausages",
+      "brand": "Johnsonville"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Garlic - Bulb, Mesh",
+      "brand": "Garlic"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Knorr - Chicken Bouillon Cubes",
+      "brand": "Knorr"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Italissima - Chick Peas",
+      "brand": "Italissima"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family - Red Split Lentils",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Unico - Red Kidney Beans",
+      "brand": "Unico"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Green Giant - Whole Kernel Corn",
+      "brand": "Green Giant"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Natural Honey Farms - Pure Natural Honey",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family - Mayonnaise",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Ginger Root - Fresh",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Squash - Butternut, Fresh",
+      "brand": "Squash"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Essex Kent Whole Mushrooms, 227 g",
+      "brand": "Essex"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Zucchini, 2-Pack",
+      "brand": "Zucchini"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Red Peppers, 4-Pack",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Green Cabbage, Single",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "English Cucumber",
+      "brand": "English"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Seedless Oranges, 3lb",
+      "brand": "Seedless"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Lemon",
+      "brand": "Lemon"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Frozen 4 Berry Blend, 600 g",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Schneiders Sliced Bacon, 375 g",
+      "brand": "Schneiders"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Garlic 3-Pack",
+      "brand": "Garlic"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Clic Chickpeas, 907 g",
+      "brand": "Clic"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Green Giant Niblets Whole Kernel Corn - 341ml",
+      "brand": "Green Giant"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Liquid Honey, 500 g",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Mayonnaise, 890 ml",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Ginger Root, 100 g",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Butternut Squash, Single",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Sleeved Celery",
+      "brand": "Sleeved"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Champiñón Monteblanco Selección 225g",
+      "brand": "Champiñón"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Champiñón por kg",
+      "brand": "Champiñón"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Tomates First Street Cubos 411g",
+      "brand": "Tomates"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Pure de Tomate Selecto Condimentado 210g",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Tomates Molidos Del Fuerte Natural 210g",
+      "brand": "Tomates"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Poro Pieza",
+      "brand": "Poro"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Apio por kg",
+      "brand": "Apio"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Calabaza Italiana por Kg",
+      "brand": "Calabaza"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Pimiento Rojo por kg",
+      "brand": "Pimiento"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Pimiento Verde por kg",
+      "brand": "Pimiento"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Espinaca Daily 300g",
+      "brand": "Espinaca"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Brócoli por Kg",
+      "brand": "Brócoli"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Col Blanca por kg",
+      "brand": "Col"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Pepino Verde por Kg",
+      "brand": "Pepino"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Naranja de Jugo por Kg",
+      "brand": "Naranja"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Limón Eureka Paramount kg",
+      "brand": "Limón"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Limón Colima por Kg",
+      "brand": "Limón"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Chile Jalapeño por Kg",
+      "brand": "Chile"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Chile Serrano por Kg",
+      "brand": "Chile"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Fresas Enteras Congeladas Selecto 500g",
+      "brand": "Fresas"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Pasas First Street 1.13kg",
+      "brand": "Pasas"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Arándano Craisins Original Bolsa de 130g",
+      "brand": "Arándano"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Tocino Fud Ahumado 250g",
+      "brand": "Tocino"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Salchicha Chedraui 664g",
+      "brand": "Salchicha"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Ajo por Kg",
+      "brand": "Ajo"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Consomé de Pollo RikoPollo 8 Cubos 88g",
+      "brand": "Consomé"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Garbanzo LaCuna Cocido 540g",
+      "brand": "Garbanzo"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Garbanzo Schettino 500g",
+      "brand": "Garbanzo"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Lenteja Chedraui 450g",
+      "brand": "Lenteja"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Granos de Elote Herdez 220 g",
+      "brand": "Granos"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Miel De Abeja Selecto 500g",
+      "brand": "Miel"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Aderezo De Mayonesa Mccormick 420g",
+      "brand": "Aderezo"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Jengibre por kg",
+      "brand": "Jengibre"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Calabaza Butternut kg",
+      "brand": "Calabaza"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Chayote sin Espinas por kg",
+      "brand": "Chayote"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Harina de Maíz Maseca 1Kg",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Harina De Maíz Maseca Para Tortill 570g",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Baby Button Mushrooms 200g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Italian Finely Chopped Tomatoes 400g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Tomato Puree 200g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Leeks 500g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Celery",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Courgettes Pre Packed 500g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Red Peppers Each",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Baby Spinach 250g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Broccoli Loose",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco White Cabbage Each",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Whole Cucumber Each",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Oranges Each",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Lemons Each",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Mixed Chillies 65g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Perfectly Imperfect Frozen Mixed Berries 1kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Sultanas 1kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Ready To Eat Apricots 250g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Smoked Back Bacon 10 Rashers 300g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco 8 British Pork Sausages 454g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Large Garlic",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Garlic, 4 pack",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco 10 Chicken Stock Cubes 100g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Chickpeas In Water 400g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Red Split Lentils 1kg",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Clear Honey 454g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Mayonnaise 450ml",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Ginger 100g",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Butternut Squash Each",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Swede",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "tesco-gb",
+      "market": "GB",
+      "name": "Tesco Turnip",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Sliced White Mushrooms 250g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Tomato Puree Double Concentrate 200g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Leeks 500g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Celery",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Courgettes 500g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Red Pepper",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Young Spinach 260g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Whole Cucumber",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Oranges, 5 pack",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Green Chillies 65g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Four Berry Medley Frozen Fruit 1kg",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Sultanas 500g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Ready to Eat Dried Apricots 500g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Smoked Back Bacon Rashers 300g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Thick Pork Sausages 900g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Garlic",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Dried Red Lentils 500g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Red Kidney Beans in Water 400g (240g drained)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Sweetcorn 198g (157g drained)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Runny Honey 340g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Mayonnaise Thick & Creamy 500ml",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Ginger 100g",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Butternut Squash Loose",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-groceries2.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's British Swede",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Irish Spring Original Deodorant Soap Bars, 3.7 oz, 6 count",
+      "brand": "Irish Spring"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Dial Complete Spring Water Antibacterial Deodorant Bar Soap, 4 oz, 8 count",
+      "brand": "Dial"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Suave Mango & Citrus Energizing Body Wash, 18 fl oz",
+      "brand": "Suave"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Dove Deep Moisture Body Wash, 20 fl oz",
+      "brand": "Dove"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Finesse Shampoo Moisturizer, 13 fl oz",
+      "brand": "Finesse"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Dove Daily Moisture Shampoo, 12 fl oz",
+      "brand": "Dove"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Finesse Moisturizing Conditioner, 13 fl oz",
+      "brand": "Finesse"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Dove Daily Moisture Conditioner, 12 fl oz",
+      "brand": "Dove"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Colgate Cavity Protection Anticavity Fluoride Toothpaste, 6.0 oz",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "RM Oral Plaque Defense Soft Toothbrushes Value Pack, 5 Count",
+      "brand": "RM"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Degree Total Protection Clean Antiperspirant Deodorant, 2.6 oz",
+      "brand": "Degree"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Barbasol Classic 3 Disposable Razors, 2 count",
+      "brand": "Barbasol"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Barbasol Original Shaving Cream, 10 oz",
+      "brand": "Barbasol"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Paperbird Bathroom Tissue, 1000 1-ply sheets per roll, 20 count",
+      "brand": "Paperbird"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Charmin Essentials Soft Toilet Paper 12 Mega Rolls, 330 sheets per roll",
+      "brand": "Charmin"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Stayfree Maxi Super Pads, 24 count",
+      "brand": "Stayfree"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Always Maxi Pads for Women, Overnight Pad with Wings, Size 4, Unscented, 26 Count",
+      "brand": "Always"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "pricerite",
+      "market": "US",
+      "name": "Tampax Pearl Tampons Multipack, with LeakGuard Braid, Regular/Super Absorbency, Unscented, 34 Count",
+      "brand": "Tampax"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Dial Complete Gold Antibacterial Deodorant Bar Soap, 4 oz, 3 count",
+      "brand": "Dial"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Suave Cocoa Butter & Shea Comforting Body Wash, 18 fl oz",
+      "brand": "Suave"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Garnier Fructis Triple Nutrition Vitamin E + Avacado Oil Nourishing Shampoo, 12.5 fl oz",
+      "brand": "Garnier"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Pantene Daily Moisture Renewal Shampoo 12.0oz",
+      "brand": "Pantene"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Pantene Daily Moisture Renewal Conditioner 10.4oz/308mL",
+      "brand": "Pantene"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Herbal Essences Rose Hips Smooth Conditioner - 13.5 fl oz",
+      "brand": "Herbal Essences"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Colgate Whitening Baking Soda & Peroxide Brisk Mint Anticavity Fluoride Toothpaste, 6.0 oz",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Oral-B Soft Toothbrush",
+      "brand": "Oral-B"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Colgate Plus Medium Toothbrush",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Secret Invisible Solid Antiperspirant and Deodorant, Powder Fresh, 2.6 oz",
+      "brand": "Secret"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Barbasol Ultra 3 Disposable Razors, 4 count",
+      "brand": "Barbasol"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Harry's 3-Blade Disposable Razors Variety Pack, 4 count",
+      "brand": "Harry's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Edge Soothing Aloe Shave Gel, 7 oz",
+      "brand": "Edge"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Charmin Toilet Paper Ultra Soft, 12 Mega XL Rolls, 2-ply Bath Tissue",
+      "brand": "Charmin"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Reach 55 yd Unflavored Waxed Floss",
+      "brand": "Reach"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Always Ultra Thin Overnight Pads with Wings, Size 5, Extra Heavy Overnight, 34 Count",
+      "brand": "Always"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "thefreshgrocer",
+      "market": "US",
+      "name": "Tampax Pearl Tampons, with LeakGuard Braid, Regular Absorbency, Unscented, 18 Count",
+      "brand": "Tampax"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Ivory Ivory Gentle Bar Soap Original Scent 4 oz., 10 Count",
+      "brand": "Ivory"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Irish Spring Deodorant Bar Soap for Men",
+      "brand": "Irish Spring"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Softsoap Exfoliating Body Wash, Coconut Butter",
+      "brand": "Softsoap"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Dial Marula Oil Body Wash",
+      "brand": "Dial"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Alberto VO5 Shampoo, Clarifying, Kiwi Lime Squeeze",
+      "brand": "Alberto VO5"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Head & Shoulders Dandruff Shampoo, Classic Clean",
+      "brand": "Head & Shoulders"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Alberto VO5 Conditioner, Kiwi Lime Squeeze, Bonus Size",
+      "brand": "Alberto VO5"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Dove Daily Moisture Conditioner",
+      "brand": "Dove"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Colgate Cavity Toothpaste , With Fluoride & Cavity Protection, Great Regular Flavor",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Colgate Adult Manual Full Head Toothbrush, Medium",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Colgate Colgate Extra Clean Full Head Medium Toothbrush",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Mennen Speed Stick Men's Deodorant, Regular",
+      "brand": "Mennen"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Axe Apollo Antiperspirant",
+      "brand": "Axe"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Gillette Sensor2 Plus Pivoting Head Men's Disposable Razors",
+      "brand": "Gillette"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Barbasol Thick & Rich Original Shaving Cream",
+      "brand": "Barbasol"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "SIMPLY VALUE Bathroom Tissue, Soft & Strong, Double Rolls, 2 Ply",
+      "brand": "SIMPLY"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "First Street Bathroom Tissue, Mega Rolls, Premium, 2 Ply",
+      "brand": "First Street"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Oral-B Glide Comfort Plus Dental Floss, Extra Soft, Value 2 Pack",
+      "brand": "Oral-B"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Always Ultra Thin Overnight Pads, Size 4, Overnight, Unscented",
+      "brand": "Always"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Always Maxi Pads with Wings, Size 2",
+      "brand": "Always"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "smartfinal",
+      "market": "US",
+      "name": "Tampax Pearl Tampons with LeakGuard Braid, Regular",
+      "brand": "Tampax"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "IVORY - Gentle Bar Soap - Original",
+      "brand": "IVORY"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "IVORY - Gentle Bar Soap - Original",
+      "brand": "IVORY"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Dove - Body Wash Deep Moisture",
+      "brand": "Dove"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "IVORY - Body Wash Original Pump",
+      "brand": "IVORY"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "PANTENE - Classic Clean Shampoo",
+      "brand": "PANTENE"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "L'OREAL - Hydrating Shampoo",
+      "brand": "L'OREAL"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "TRESemme - Moisture Rich Conditioner",
+      "brand": "TRESemme"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "L'OREAL - Hyaluron Plump Conditioner",
+      "brand": "L'OREAL"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Colgate - Cavity Protection Toothpaste, Regular",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Sensodyne - Toothpaste Fresh Mint",
+      "brand": "Sensodyne"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Johnson & Johnson - Crystal Clean Toothbrush Soft",
+      "brand": "Johnson"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Oral-B - Dual Clean Toothbrushes - Soft",
+      "brand": "Oral-B"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Speed Stick - Ocean Surf Deodorant",
+      "brand": "Speed"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Old Spice - Deodorant - Krakengard",
+      "brand": "Old"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family - Twin Blade Plus Disposable Razors",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Gillette - Sensor3 Disposable Razors - Sensitive",
+      "brand": "Gillette"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Gillette - Foamy Regular Shave Foam",
+      "brand": "Gillette"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "NIVEA - Mens Shaving Foam, Sensitive",
+      "brand": "NIVEA"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family - Ultra Soft Bath Tissue",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Western Family - Super Soft Double Roll Bathroom Tissue",
+      "brand": "Western Family"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "GUM - Fine Mint Waxed Dental String Floss - 165m",
+      "brand": "GUM"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Always - Ultra Thin Overnight Pads, Size 4-5",
+      "brand": "Always"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Playtex - Sport Tampons Unscented Regular",
+      "brand": "Playtex"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "saveonfoods",
+      "market": "CA",
+      "name": "Kotex - Click Regular Unscented Tampons",
+      "brand": "Kotex"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Palmolive Moisture Care Bar Soap 4 Pack (90 g)",
+      "brand": "Palmolive"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Simple Pure Soap Bars 2 Pack (100 g)",
+      "brand": "Simple"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Sanex Moisturising Hydrating Shower Gel (450 ml)",
+      "brand": "Sanex"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Radox Feel Uplifted Bodywash Shower Gel (450 ml)",
+      "brand": "Radox"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Pantene Classic Shampoo (500 ml)",
+      "brand": "Pantene"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Aussie Mega Shampoo (300 ml)",
+      "brand": "Aussie"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Pantene Classic Hair Conditioner (350 ml)",
+      "brand": "Pantene"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Aussie Mega Conditioner (200 ml)",
+      "brand": "Aussie"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Colgate Toothpaste Triple Action (75 ml)",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Colgate Max White Medium Toothbrush (1 Piece)",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Corsodyl Daily Gum Care Soft Toothbrush (1 Piece)",
+      "brand": "Corsodyl"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Nivea Men Black & White Roll On Deodorant (50 ml)",
+      "brand": "Nivea"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Dove Men Clean Comfort Antiperspirant Deodorant (150 ml)",
+      "brand": "Dove"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Gillette Blue 3 Disposable Razors (4 Piece)",
+      "brand": "Gillette"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Gillette Mach3 Disposable Razor (3 Piece)",
+      "brand": "Gillette"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Gillette Series Sensitive Shaving Foam (250 ml)",
+      "brand": "Gillette"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "SuperValu Luxury Quilted Toilet Tissue (18 Roll)",
+      "brand": "SuperValu"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Cushelle Toilet Tissue (4 Roll)",
+      "brand": "Cushelle"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Oral-B Essential Dental Floss (50 m)",
+      "brand": "Oral-B"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Always Ultra Sanitary Towels Size 1 (26 Piece)",
+      "brand": "Always"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Always Maxi Long Sanitary Towels (12 Piece)",
+      "brand": "Always"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Tampax Super Tampons (20 Piece)",
+      "brand": "Tampax"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "supervalu-ie",
+      "market": "IE",
+      "name": "Tampax Compak Regular Applicator Tampons (18 Piece)",
+      "brand": "Tampax"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Ivory Original Soap Bar 3pk. - 90g",
+      "brand": "Ivory"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Irish Spring Original Clean Soap Bars, 6-Pack, 104.8-g",
+      "brand": "Irish Spring"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Zest Simply Body Wash Ocean Wave, 449 ml",
+      "brand": "Zest"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Glow Body Wash, Honey Coconut, 750 ml",
+      "brand": "Glow"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Simile Argan Oil Shampoo, 385 ml",
+      "brand": "Simile"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Tag Power 3-in-1 Shampoo, 532-ml",
+      "brand": "Tag"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Simile Moisture Conditioner, 828 ml",
+      "brand": "Simile"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Pantene Pro-V Daily Moisture Renewal Conditioner, 100 ml",
+      "brand": "Pantene"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Crest Pro-Health Clean Mint Toothpaste, 130-mL",
+      "brand": "Crest"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Colgate Cavity Protection Regular Flouride Toothpaste, 60-mL",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Colgate Toothbrush, Medium",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Action Toothbrush, 4-Pack",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Brut Men's Classic Stick Deodorant - 70g",
+      "brand": "Brut"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Secret Outlast Sweat & Odor Deodorant, Unscented, 73 g",
+      "brand": "Secret"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "BIC 3 Men Sensitive Skin Disposable Razors, 8-Pack",
+      "brand": "BIC"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Super-Z Twin Blade Disposable Razors, 10-Pack, Blue",
+      "brand": "Super"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Umbro Shave Foam Ice, 300 ml",
+      "brand": "Umbro"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Nivea Men Sensitive Skin Shaving Foam, 200 ml",
+      "brand": "Nivea"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Giant Value Bathroom Tissue, 12-Pack",
+      "brand": "Giant Value"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Royale Original 2-Ply Bathroom Tissue, 12-Pack",
+      "brand": "Royale"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Oral-B Essential Cavity Defense Mint Floss - 50m",
+      "brand": "Oral-B"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Incognito Maxi Regular Pads - 24pk.",
+      "brand": "Incognito"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Always Ultra Thin Long Pads with Flexi Wings, 20-Pack",
+      "brand": "Always"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "Tampax Pearl Super - 18pk.",
+      "brand": "Tampax"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "gianttiger",
+      "market": "CA",
+      "name": "o.b. Super Tampons, 40-Pack",
+      "brand": null,
+      "reason": "no brand in the name"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Jabón en Barra Escudo Antibacterial Azul 150g",
+      "brand": "Jabón"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Jabón de Tocador Zest Granada 135g",
+      "brand": "Jabón"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Gel de Baño Lactovit Lactourea 500ml",
+      "brand": "Gel"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Gel de Baño Dr. Teals Líquido 710ml",
+      "brand": "Gel"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Shampoo Alert Aloe 700ml",
+      "brand": "Shampoo"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Shampoo Head & Shoulders Hidratación 375ml",
+      "brand": "Shampoo"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Acondicionador Savile Reparación 700ml",
+      "brand": "Acondicionador"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Acondicionador Tresemme Keratina 715ml",
+      "brand": "Acondicionador"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Pasta Dental Colgate Triple Acción 100ml",
+      "brand": "Pasta"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Cepillo Dental Colgate 1 Pieza",
+      "brand": "Cepillo"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Cepillo Dental Condor Familiar 2 Piezas",
+      "brand": "Cepillo"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Desodorante en Barra Brut Classic 60g",
+      "brand": "Desodorante"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Gillette Daisy Rastrillo Desechable 2 Unidades",
+      "brand": "Gillette"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Rastrillo Desechable Schick hombre Xtreme 3 piel sensible 3 Rastrillos",
+      "brand": "Rastrillo"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Espuma para Afeitar Brut Classic Piel Normal 210ml",
+      "brand": "Espuma"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Espuma para Afeitar Barbasol Aloe Vera 283g",
+      "brand": "Espuma"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Papel Higiénico Chedraui 6 Rollos",
+      "brand": "Papel"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Papel Higiénico Suavel 24 Rollos",
+      "brand": "Papel"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Hilo Dental Oral-B Essential Floss 50m",
+      "brand": "Hilo"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Hilo Dental Condor 25m",
+      "brand": "Hilo"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Toallas Femeninas Kotex Nocturna con Alas 34 Toallas",
+      "brand": "Toallas"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Toallas Femeninas Always Suave 10 Unidades",
+      "brand": "Toallas"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Tampones Tampax Regular 10 Unidades",
+      "brand": "Tampones"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "chedraui",
+      "market": "MX",
+      "name": "Tampones Kotex Regular 12 Piezas",
+      "brand": "Tampones"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Tesco Essentials Soap (125g)",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Tesco Essentials Shower Gel Lightly Fragranced (300ml)",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Tesco Extracts Shampoo Apple (500ml)",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Tesco Extracts Apple Conditioner (500ml)",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Tesco Essentials Cavity Protect Toothpaste (100ml)",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Colgate Extra Clean Medium Toothbrush (3)",
+      "brand": "Colgate"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Expert For Men Anti Perspirant Refreshing (250ml)",
+      "brand": "Expert"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Gillette Blue3 Smooth Men's Disposable Razors (12)",
+      "brand": "Gillette"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Gillette Blue II Men's Disposable Razors (20)",
+      "brand": "Gillette"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Gillette Sensitive Foam (250ml)",
+      "brand": "Gillette"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Tesco Luxury Soft 100% Recycled Toilet Tissue 4 Rolls",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Tesco Luxury Soft Quilted Toilet Tissue 12 Long Roll",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Oral-B Essential Dental Floss Twin Pack 2x1Each (2 x 50m)",
+      "brand": "Oral-B"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Tesco Free Spirit Ultra Towels Regular (16)",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "tesco",
+      "market": "GB",
+      "name": "Tesco Free Spirit Tampons with Applicator Super Plus (20)",
+      "brand": "Tesco"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Collection Tea Tree Bar Soap (125g)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Moisturise Shower Gel (500ml)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Apple Shampoo (500ml)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Apple Conditioner (500ml)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Toothpaste (100ml)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Complete Care Medium Toothbrush (2)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Medium Toothbrushes (4)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sure Men Invisible Ice 72hr Nonstop Antiperspirant Deodorant (250ml)",
+      "brand": "Sure"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Smooth! 3 Blade Disposable Razors (4)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Smooth 2 Blade Disposable Razors (10)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Shaving Foam (250ml)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Super Soft White Toilet Tissue Double Rolls 4 equals 8 Rolls",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Super Soft Toilet Tissue Quilted Rolls (9)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Mint Dental Tape (40m)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Ultra Towels with Wings Normal Size 1 (14)",
+      "brand": "Sainsbury's"
+    },
+    {
+      "file": "research-hygiene.json",
+      "chain": "sainsburys",
+      "market": "GB",
+      "name": "Sainsbury's Applicator Tampons Super (20)",
+      "brand": "Sainsbury's"
+    }
+  ]
+}
