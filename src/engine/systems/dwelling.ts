@@ -618,22 +618,23 @@ export function homeCourts(person: Person): { court: Court; lit: boolean }[] {
     ...(f.includes('tennisCourt') ? [{ court: 'tennis' as const, lit: f.includes('tennisLights') }] : []),
     ...(f.includes('basketballCourt') ? [{ court: 'basketball' as const, lit: f.includes('basketballLights') }] : []),
     ...(f.includes('pickleballCourt') ? [{ court: 'pickleball' as const, lit: false }] : []),
-    ...(f.includes('footballPitch') ? [{ court: 'football' as const, lit: false }] : []),
+    ...(f.includes('footballPitch') ? [{ court: 'football' as const, lit: f.includes('pitchLights') }] : []),
   ];
 }
 
-/** The court to play on alone at home now: football isn't one, it needs players. */
-export function courtAt(person: Person): { court: 'tennis' | 'basketball' | 'pickleball'; lit: boolean } | undefined {
+/** The court to play on alone at home now; from 2026-10-04 a pitch too, for drills on your own, where there's no court. */
+export function courtAt(person: Person): { court: Court; lit: boolean } | undefined {
   const f = atHome(person) ? livingIn(person)?.facts.features : undefined;
   if (f?.includes('tennisCourt')) return { court: 'tennis', lit: f.includes('tennisLights') };
   if (f?.includes('basketballCourt')) return { court: 'basketball', lit: f.includes('basketballLights') };
   if (f?.includes('pickleballCourt')) return { court: 'pickleball', lit: false };
+  if (f?.includes('footballPitch')) return { court: 'football', lit: f.includes('pitchLights') };
   return undefined;
 }
 
 /** Why the court can't be played on now: none, the weather a run would stop for, or the dark on an unlit court. */
 export function courtRefusal(sim: Simulation, person: Person, court: { court: string; lit: boolean } | undefined = courtAt(person)): string | undefined {
-  if (!court) return homeCourts(person).some((c) => c.court === 'football') ? 'A football pitch needs players: invite friends to play.' : 'You have no court.';
+  if (!court) return 'You have no court.';
   const w = weatherNow(sim, person);
   if (w && (wet(w.condition) || heatIndexC(w.highC, w.humidity) > FINE.highC)) return 'It isn’t a day for the court.';
   const cold = coldRefusal(sim, person, COURT_MET[court.court as Court], 60, 'play');

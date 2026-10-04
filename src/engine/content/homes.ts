@@ -231,7 +231,8 @@ export function conditionWord(age: number, life: number): 'New' | 'Good' | 'Date
 
 export type Feature = 'garage' | 'yard' | 'basement' | 'finishedBasement' | 'attic' | 'furnace' | 'heatPump' | 'metalRoof'
   | 'deck' | 'patio' | 'pool' | 'solar' | 'generator' | 'adu' | 'stone' | 'tennisCourt' | 'basketballCourt' | 'tennisLights' | 'basketballLights' | 'pickleballCourt' | 'footballPitch'
-  | 'homeTheater' | 'danceStudio' | 'soundproofRoom' | 'library' | 'walkInCloset' | 'sauna' | 'hotTub' | 'puttingGreen' | 'irrigation';
+  | 'homeTheater' | 'danceStudio' | 'soundproofRoom' | 'library' | 'walkInCloset' | 'sauna' | 'hotTub' | 'puttingGreen' | 'irrigation'
+  | 'outdoorKitchen' | 'gardenBed' | 'greenhouse' | 'pitchLights';
 
 export const FEATURE_LABEL: Readonly<Record<Feature, string>> = {
   garage: 'Garage', yard: 'Yard', basement: 'Unfinished Basement', finishedBasement: 'Finished Basement', attic: 'Attic',
@@ -239,6 +240,7 @@ export const FEATURE_LABEL: Readonly<Record<Feature, string>> = {
   solar: 'Solar Panels', generator: 'Backup Generator', adu: 'Backyard Cottage', stone: 'Stone Front',
   tennisCourt: 'Tennis Court', basketballCourt: 'Half Basketball Court', tennisLights: 'Lights On The Tennis Court', basketballLights: 'Lights On The Basketball Court', pickleballCourt: 'Pickleball Court', footballPitch: 'Football Pitch',
   homeTheater: 'Home Theater', danceStudio: 'Dance Studio', soundproofRoom: 'Soundproofed Room', library: 'Library', walkInCloset: 'Walk-In Closet', sauna: 'Sauna', hotTub: 'Hot Tub', puttingGreen: 'Putting Green', irrigation: 'Sprinklers',
+  outdoorKitchen: 'Outdoor Kitchen', gardenBed: 'Raised Garden Bed', greenhouse: 'Greenhouse', pitchLights: 'Lights On The Pitch',
 };
 
 // ---------------------------------------------------------------------------
@@ -373,6 +375,14 @@ export const PROJECTS: readonly Project[] = [
   { id: 'walk-in-closet', label: 'Build A Walk-In Closet', usd: 7_500, recoup: 0, days: 7, on: HOUSES, lacks: ['walkInCloset'], adds: { gains: ['walkInCloset'] } },
   { id: 'sauna', label: 'Put In A Sauna', usd: 6_000, recoup: 0, days: 14, on: HOUSES, lacks: ['sauna'], adds: { gains: ['sauna'] } },
   { id: 'hot-tub', label: 'Put In A Hot Tub', usd: 8_500, recoup: 0, days: 7, on: DETACHED, needs: ['yard'], lacks: ['hotTub'], adds: { gains: ['hotTub'] } },
+  // From 2026-10-04 (`research-special-rooms-outdoor.json`): an outdoor kitchen at Angi's 2026 average and the middle of
+  // HomeAdvisor's four to six weeks; a raised bed five by twelve feet at the middle of HomeGuide's $1,200 to $4,000; a
+  // greenhouse of a hundred square feet at the middle of its $500 to $3,000, in its one to three days; and a pitch's
+  // lights at the middle of Angi's $1,500 to $6,000 for a court's.
+  { id: 'outdoor-kitchen', label: 'Build An Outdoor Kitchen', usd: 16_533, recoup: 0, days: 35, on: HOUSES, needs: ['yard'], lacks: ['outdoorKitchen'], adds: { gains: ['outdoorKitchen'] } },
+  { id: 'raised-bed', label: 'Put In A Raised Garden Bed', usd: 2_600, recoup: 0, days: 3, on: HOUSES, needs: ['yard'], lacks: ['gardenBed'], adds: { gains: ['gardenBed'] } },
+  { id: 'greenhouse', label: 'Put Up A Greenhouse', usd: 1_750, recoup: 0, days: 3, on: HOUSES, needs: ['yard'], lacks: ['greenhouse'], adds: { gains: ['greenhouse'] } },
+  { id: 'pitch-lights', label: 'Light The Pitch', usd: 3_750, recoup: 0.3, days: 3, on: HOUSES, needs: ['footballPitch'], lacks: ['pitchLights'], adds: { gains: ['pitchLights'] } },
   { id: 'putting-green', label: 'Put In A Putting Green', usd: Math.round(400 * 32.5), recoup: 0, days: 7, on: DETACHED, needs: ['yard'], lacks: ['puttingGreen'], lot: 400, adds: { gains: ['puttingGreen'] } },
   { id: 'sprinklers', label: 'Put In Sprinklers', usd: 6_500, recoup: 0, days: 5, on: DETACHED, needs: ['yard'], lacks: ['irrigation'], adds: { gains: ['irrigation'] } },
   { id: 'home-gym', label: 'Make A Spare Bedroom A Home Gym', usd: 6_000, recoup: 0, days: 7, on: ALL, spareBedroom: true, adds: { gym: 'home' } },

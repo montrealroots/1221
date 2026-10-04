@@ -114,9 +114,15 @@ describe('a football pitch, and friends over to play', () => {
     expect(five.adds?.gains).toEqual(['footballPitch']);
   });
 
-  it('isn’t played alone, and is played with a friend over, at football’s METs, unless the weather stops it', () => {
+  it('is drilled on alone by daylight, or lit after dark (from 2026-10-04), and played with a friend over, at football’s METs, unless the weather stops it', () => {
     const sim = home(['footballPitch'], 'pitch-play');
-    expect(courtRefusal(sim, sim.player)).toBe('A football pitch needs players: invite friends to play.');
+    const lit = home(['footballPitch', 'pitchLights'], 'pitch-lit');
+    nextHour(sim, false);
+    expect(courtRefusal(sim, sim.player)).toBe('It’s dark, and the court has no lights.');
+    nextHour(lit, false);
+    expect(courtRefusal(lit, lit.player)).toBeUndefined();
+    nextHour(sim, true);
+    expect(courtRefusal(sim, sim.player)).toBeUndefined();
     expect(homeCourts(sim.player)).toEqual([{ court: 'football', lit: false }]);
     const friend = newContact(sim, sim.player, LA, 'pitch-friend', { at: sim.now, how: 'school' });
     friend.hours = 100;

@@ -584,7 +584,7 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   swim: { label: 'Swim In The Pool', minutes: 45, does: 'Builds fitness as a gym does, and lifts the mood more' },
   // From 2026-10-03: a spare bedroom made a dance studio, danced in at the Compendium's ballet, modern or jazz class (`DANCE_MET`).
   dance: { label: 'Dance In Your Studio', minutes: 60, does: 'An hour on your own sprung floor at a dance class’s effort: builds fitness as a run does and eases stress' },
-  court: { label: 'Play On Your Court', minutes: 60, does: 'Tennis or basketball on your own court in the fine weather, and after dark where it’s lit: builds fitness as a run does' },
+  court: { label: 'Play On Your Court', minutes: 60, does: 'Tennis or basketball on your own court, or drills alone on your pitch, in the fine weather, and after dark where it’s lit: builds fitness as a run does' },
   ride: { label: 'Go For A Ride', minutes: 60, does: 'On your own bicycle or e-bike in the fine weather: builds fitness as a run does and eases stress, at a cyclist’s risk on the road' },
   outside: { label: 'Sit Outside', minutes: 45, does: 'Out on your balcony, terrace or yard in the fine weather: calmer, and in better spirits' },
   charter: { label: 'Charter A Boat', minutes: 180, does: 'Out on the water with a captain, no boat or certificate of your own, in the fine weather: calmer, and in better spirits' },
@@ -780,8 +780,9 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
     w.morale = clamp(w.morale + 2 * swing, 0, 100);
   } else if (action === 'outside' || action === 'boat' || action === 'charter' || action === 'trail') {
     // Time outside in fine weather does more for the mood than an hour indoors, in less of it; an afternoon on the water or the trail is taken as the same, SLATE's estimate.
-    w.stress = clamp(w.stress - 12 * personalityOf(person, 'stressRecovery') * relief, 0, 100);
-    w.morale = clamp(w.morale + 5 * swing, 0, 100);
+    // A share of the time outside, where it's part of something else (cooking outdoors), at the same rate (`comfort`).
+    w.stress = clamp(w.stress - 12 * personalityOf(person, 'stressRecovery') * relief * comfort, 0, 100);
+    w.morale = clamp(w.morale + 5 * swing * comfort, 0, 100);
   } else if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court' || action === 'dance') {
     const ceiling = at === undefined ? 100 : ceilingAt(yearsSince(person.birthInstant, at)).fitness;
     // A gym builds more than a workout at home with nothing (`trainingAt` in `systems/dwelling.ts`).

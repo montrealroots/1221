@@ -504,6 +504,8 @@ export interface Tenancy {
 
 export interface OwnedHome {
   id: string;
+  /** What's growing in its bed and greenhouse (`systems/garden.ts`, from 2026-10-04). */
+  garden?: Partial<Record<import('./garden').Plot, import('./garden').Planting>>;
   /** Its lawn, where it has a yard (`systems/lawns.ts`, from 2026-10-02). */
   lawn?: import('./lawns').Lawn;
   /** The letting agent managing it, where one is hired (`systems/propertymanagers.ts`, from 2026-10-01). */
