@@ -46,6 +46,7 @@ import { livesWithPartner } from './marriage';
 import { homeKeyOf, itemsOf, volumeOf, type Item, type Spot } from './items';
 import { pieceById } from './furnishings';
 import { bareHome } from './furniture';
+import { WALK_IN_L } from '../content/specialrooms';
 
 const SQFT_M2 = 0.092903;
 export const NDSS = { doubleM2: 11.5, ceilingM: 2.3, storageM2: [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0] } as const;
@@ -70,7 +71,9 @@ export function roomsOf(sim: Simulation, person: Person): Rooms | undefined {
     return { floorM2: NDSS.doubleM2, closetL: NDSS.storageM2[0]! * NDSS.ceilingM * 1_000, flatmates: Math.max(0, (home.unit?.beds ?? 2) - 1), bathrooms: home.unit?.baths ?? 1 };
   }
   const storage = NDSS.storageM2[Math.min(NDSS.storageM2.length - 1, Math.max(1, bedrooms))]!;
-  return { floorM2: place.size * SQFT_M2, closetL: storage * NDSS.ceilingM * 1_000, flatmates: 0, bathrooms: owned?.facts.baths ?? home.unit?.baths ?? 1 };
+  // A walk-in closet built adds its hanging (`content/specialrooms.ts`, from 2026-10-04).
+  const walkIn = owned?.facts.features.includes('walkInCloset') ? WALK_IN_L : 0;
+  return { floorM2: place.size * SQFT_M2, closetL: storage * NDSS.ceilingM * 1_000 + walkIn, flatmates: 0, bathrooms: owned?.facts.baths ?? home.unit?.baths ?? 1 };
 }
 
 /** A piece's footprint, m². */

@@ -1,0 +1,161 @@
+{
+  "read": "2026-10-04",
+  "scope": "Real uses and real figures for the home projects in src/engine/content/homes.ts PROJECTS: home-theater, library, soundproofing, walk-in-closet, sauna (home-gym and dance-studio not researched here). Status: verified = read on the publisher's own page on 2026-10-04; secondhand = figure seen only in a search-engine summary or a third-party page, primary page blocked or not read; estimate = derived here, derivation given.",
+  "voiceover": {
+    "studios": [
+      { "town": "New York", "name": "Open Jar Studios, The Recording Booth (Times Square)", "hourlyRate": 125, "currency": "USD", "includes": "5 ft x 7 ft isolation booth, engineer, studio and equipment; uses listed: vocal tracks, voice overs, demo tracks, audiobooks, dubbing", "url": "https://www.openjarstudios.com/recording-booth", "status": "verified" },
+      { "town": "Los Angeles", "name": "Voice Trax West (12215 Ventura Blvd #205, Studio City)", "hourlyRate": 100, "currency": "USD", "includes": "Voiceover audition recording with engineer: $50 per half hour total time (15-20 min recording, 10-15 min engineer edits and sends); offered on a limited basis subject to engineer availability. Same page: actor recording $80/h, half-hour minimum; self-service booth $25/h general, $50/h with own engineer or coach. hourlyRate here = 2 x $50 half hour.", "url": "https://www.voicetraxwest.com/actor-services", "status": "verified" },
+      { "town": "New Haven", "name": "Horizon Music Group, Studio B (678 1/2 Campbell Ave, West Haven CT, adjoining New Haven)", "hourlyRate": 50, "currency": "USD", "includes": "Engineered session; $30/h if self-operated or with own engineer; Studio A $65/h engineered. Page does not mention voice-over specifically; it is a general recording studio serving New Haven.", "url": "https://www.horizonmusicgroup.com/rates/", "status": "verified" },
+      { "town": "New Haven", "name": "Myke Foo Media (27 Main St, Studio 8, New Milford CT; about 30 mi from New Haven, not in the town)", "hourlyRate": 75, "currency": "USD", "includes": "Voiceover recording, $150 minimum per session", "url": "https://www.mykefoomedia.com/recording", "status": "verified" },
+      { "town": "London", "name": "Spotlight Voiceover Booth (Garrick Street, Covent Garden)", "hourlyRate": 70, "currency": "GBP", "includes": "VAT inclusive, 60-minute appointments; mic, interface, headphones; bring own laptop; uses listed: demo reads, voiceover work, podcasts", "url": "https://www.spotlight.com/rooms-and-studios/voiceover-booth/", "status": "verified" },
+      { "town": "London", "name": "London Voice Over Studio", "hourlyRate": 72, "currency": "GBP", "includes": "Voice reel sessions incl. VAT with producer/engineer; block booking from GBP 50/h + VAT", "url": "https://londonvoiceoverstudio.com/", "status": "secondhand" },
+      { "town": "Dublin", "name": "The Podcast Studios (14a Magennis Place, Dublin 2) - Pod 2 one-person studio marketed for voice-over", "hourlyRate": 70, "currency": "EUR", "includes": "Audio only, without producer, + VAT (EUR 130/h + VAT with producer). Studio's own pages say 'Contact for pricing'; the EUR 70 figure came from a search summary only.", "url": "https://www.thepodcaststudios.ie/voiceover", "status": "secondhand" },
+      { "town": "Dublin", "name": "SG Studios (Unit 13c, Block 13, Blanchardstown, Dublin 15)", "hourlyRate": 90, "currency": "EUR", "includes": "Audio podcast session + 23% VAT, technician included; dry hire EUR 85/h + VAT. A podcast studio, not a dedicated VO booth.", "url": "https://sgstudios.ie/", "status": "verified" },
+      { "town": "Toronto", "name": "B Street Recording Studio, TAPA (1100 Bathurst Street)", "hourlyRate": 40, "currency": "CAD", "includes": "+ HST; engineer + CAD 60/h; 2 m x 4 m insulated room; uses listed include voice-over and ADR", "url": "https://tapa.ca/b-street/the-recording-studio/", "status": "verified" },
+      { "town": "Vancouver", "name": "Monarch Studios (3702 Commercial St)", "hourlyRate": 250, "currency": "CAD", "includes": "ADR/dubbing/voiceover with post-production engineer, 2-hour minimum, + 5% GST. A professional session rate; no cheaper Vancouver audition booth with a published rate was found on a studio's own page.", "url": "https://monarchstudios.com/rates/", "status": "verified" },
+      { "town": "Mexico City", "name": "Elemento (Mérida 5, Roma Norte)", "hourlyRate": 399, "currency": "MXN", "includes": "'desde 399 pesos por hora en adelante'; booths for locución, doblaje, ADR, audiobooks; final price depends on booth and project", "url": "https://elemento.com.mx/services/cabinas-de-grabacion/", "status": "verified" },
+      { "town": "Mexico City", "name": "Filma Fácil, estudio de grabación / cabina de audio (Santa María la Ribera, Cuauhtémoc)", "hourlyRate": 400, "currency": "MXN", "includes": "Before IVA", "url": "https://filmafacil.com/producto/servicios/servicios-post-produccion/estudio-de-grabacion-y-musicalizacion/estudio-de-grabacion-cabina-de-audio/", "status": "secondhand" }
+    ],
+    "practice": [
+      { "claim": "SAG-AFTRA Foundation members book its Virtual VO Lab 'for technical help with their home setup or to record auditions/practice sessions with our audio engineers'; virtual sessions require 'a quiet recording space'. Sessions are 50 minutes.", "source": "SAG-AFTRA Foundation, Voiceover Labs", "url": "https://sagaftra.foundation/voiceover-labs/", "status": "verified" },
+      { "claim": "SAG-AFTRA Foundation audition-prep classes require participants to 'self-record, edit, label, save and submit voiceover auditions from home'.", "source": "SAG-AFTRA, Voiceover Audition Prep: Home Submission", "url": "https://www.sagaftra.org/sag-aftra-foundation-voiceover-audition-prep-home-submission-animation-edition", "status": "secondhand", "note": "sagaftra.org returned 403; wording from search summary" },
+      { "claim": "SAG-AFTRA guidance on building a home voiceover studio: the space must allow high-quality recording and timely submissions to employers.", "source": "SAG-AFTRA, Create a Home Voiceover Studio Like a Pro", "url": "https://www.sagaftra.org/create-home-voiceover-studio-pro", "status": "secondhand", "note": "403 on fetch" },
+      { "claim": "Backstage advises recording voice acting at home in the least noisy small enclosed space, such as a closet full of clothes, with fans and air conditioning off.", "source": "Backstage, Voiceover Acting Tips: How to Record Voice Acting at Home", "url": "https://www.backstage.com/magazine/article/voice-over-acting-tips-75135/", "status": "secondhand", "note": "403 on fetch" },
+      { "claim": "Studios sell audition recording as a service for actors without a home setup: Voice Trax West books VO auditions in half-hour slots with an engineer who edits and sends the file.", "source": "Voice Trax West", "url": "https://www.voicetraxwest.com/actor-services", "status": "verified" },
+      { "claim": "Most commercial scripts are about 30 seconds (also 10 or 5 seconds for social); time the take to about one second under the allowance.", "source": "Spotlight, Getting Started in Commercial Voice Over", "url": "https://www.spotlight.com/news-and-advice/the-essentials/commercial-voice-over-acting/", "status": "verified" }
+    ],
+    "sessionMinutes": {
+      "value": 30,
+      "detail": "Voice Trax West books a VO audition as one half hour total: 15-20 minutes recording plus 10-15 minutes editing and sending. SAG-AFTRA Foundation virtual lab sessions are 50 minutes.",
+      "url": "https://www.voicetraxwest.com/actor-services",
+      "status": "verified"
+    }
+  },
+  "sauna": {
+    "heaters": [
+      { "maker": "Harvia", "model": "Moderna V45XE", "kW": 4.5, "roomM3": [3, 6], "url": "https://www.harvia.com/en/products/HVE454XEM/electric-sauna-heater-harvia-moderna-v45xe-45-kw-black", "status": "verified" },
+      { "maker": "HUUM", "model": "DROP 4 / DROP 6 / DROP 7", "kW": [4.5, 6, 7.5], "roomM3": [[3, 7], [5, 9], [7, 11]], "url": "https://huum.eu/product/drop-electric-sauna-heater/", "status": "verified" },
+      { "maker": "Finnleo", "model": "Designer B 4.5B / 6.0B / 8.0B", "kW": [4.5, 6, 8], "roomCuFt": [[100, 210], [175, 310], [250, 425]], "url": "https://saunasupplyco.com/finnleo-designer-b-series-sauna-heater-specifications/", "status": "secondhand", "note": "dealer page via search summary, not Finnleo's own" },
+      { "maker": "Harvia", "model": "KIP60B", "kW": 6, "roomCuFt": [170, 300], "persons": "2-4", "url": "https://finnishsaunabuilders.com/products/harvia-kip60b-stainless-steel-6kw-sauna-heater-jh60b2401-240vac-1-ph-60hz-with-built-in-control", "status": "secondhand", "note": "dealer page" }
+    ],
+    "typicalKW": { "value": 6, "range": [4.5, 6], "status": "estimate", "derivation": "A 2-4 person room is about 5-9 m3 (170-300 cu ft per the KIP60B listing); HUUM DROP 6 (6 kW) covers 5-9 m3 and Harvia/HUUM 4.5 kW units cover 3-6/3-7 m3." },
+    "preheat": {
+      "minutes": 60,
+      "detail": "Harvia manuals: 'If the heater output is suitable for the sauna room, it will take about an hour for a properly insulated sauna to reach the required bathing temperature'; suitable bathing temperature about 65-80 C. The Harvia-built kit installation guide (Home Depot-hosted PDF, read directly) says 'Be sure to let the sauna heat for at least one hour before using the sauna' and its timer runs one hour and shuts off. HUUM DROP manual (via search, PDF now 404): about 10 C per 8 minutes, 80 C in about one hour.",
+      "urls": [
+        "https://images.thdstatic.com/catalog/pdfImages/78/78293e8e-f0f4-41f4-aae3-1e4a20ba86ed.pdf",
+        "https://www.kbauthority.com/files/PDF/Harvia/HAFU4502401%20Manual%20Sheet.pdf",
+        "https://huumsauna.com/wp-content/uploads/2023/06/huum-drop-manual-us.pdf"
+      ],
+      "status": "verified for the one-hour kit guide line; secondhand for the Harvia manual quotation and HUUM rate (PDF text not extractable / 404)"
+    },
+    "session": {
+      "meanMinutesPerSession": 14.2,
+      "sdMinutes": 7.5,
+      "meanTempC": 78.9,
+      "frequencyBands": ["1 per week", "2-3 per week", "4-7 per week"],
+      "durationBands": ["<11 min", "11-19 min", ">19 min"],
+      "source": "Laukkanen T, Khan H, Zaccardi F, Laukkanen JA. Association Between Sauna Bathing and Fatal Cardiovascular and All-Cause Mortality Events. JAMA Intern Med 2015;175(4):542-548 (KIHD cohort, 2,315 Finnish men)",
+      "url": "https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2130724",
+      "status": "secondhand",
+      "note": "figures from search summaries of the paper and a hosted PDF copy; not read on jamanetwork directly, and this fullarticle URL was not opened"
+    },
+    "rounds": {
+      "detail": "Finnish practice: two or three hot-room rounds of about 10-15 minutes, each followed by a cool-down (shower, outdoors, plunge); the Finnish Sauna Society's own guidance says to take breaks, cool off and drink water, and leave if unwell, without stating minutes.",
+      "urls": ["https://sauna.fi/en/sauna-knowledge/guidelines-for-bathing-in-the-sauna/", "https://en.wikipedia.org/wiki/Finnish_sauna"],
+      "status": "secondhand for round counts and minutes (Wikipedia / sauna retailers); Finnish Sauna Society page verified but gives no numbers"
+    }
+  },
+  "walkInCloset": {
+    "sizes": [
+      { "label": "Minimum", "ft": [4, 4], "sqft": 16 },
+      { "label": "Small", "ft": [5, 8], "sqft": 40 },
+      { "label": "Average", "ft": [6, 10], "sqft": 60 },
+      { "label": "Comfortable", "ft": [7, 10], "sqft": 70 },
+      { "label": "Large", "ft": [10, 12], "sqft": 120 }
+    ],
+    "hangingDepthIn": 24,
+    "walkwayIn": { "min": 24, "comfortable": 36 },
+    "doubleSidedMinWidthFt": 6,
+    "rodHeightsIn": { "doubleHangLower": [40, 42], "doubleHangUpper": [80, 82] },
+    "rodFeetByGarments": [ { "items": 50, "ft": [6, 8] }, { "items": 100, "ft": [12, 16] }, { "items": 150, "ft": [18, 22] } ],
+    "url": "https://renuityhome.com/blog/walk-in-closet-sizes-dimensions/",
+    "status": "verified (builder/remodeler guide; NKBA's own closet figures not found)"
+  },
+  "library": {
+    "booksPerFoot": [
+      { "value": 8, "basis": "compact-shelving vendors' planning average, volumes per linear foot", "url": "https://www.clir.org/pubs/reports/pub115/part5/", "status": "verified" },
+      { "value": 9, "basis": "measured average across the Tri-College (Bryn Mawr, Haverford, Swarthmore) libraries, books and bound journals", "url": "https://www.clir.org/pubs/reports/pub115/part5/", "status": "verified" },
+      { "value": 12, "basis": "average book width 0.99 in across disciplines = 12 books per linear foot packed solid", "url": "https://www.clir.org/pubs/reports/pub115/part5/", "status": "verified" }
+    ],
+    "workingCapacity": { "value": 0.86, "detail": "'working capacity' = 86% of linear feet occupied", "url": "https://www.clir.org/pubs/reports/pub115/part5/", "status": "verified" },
+    "billy": {
+      "model": "IKEA BILLY 80 cm white",
+      "outerIn": { "w": 31.5, "d": 11, "h": 79.5 },
+      "shelves": "1 fixed + 4 adjustable shelves (6 book levels counting the base)",
+      "maxLoadLbPerShelf": 66,
+      "url": "https://www.ikea.com/us/en/p/billy-bookcase-white-20522046/",
+      "status": "verified",
+      "booksPerShelfEstimate": { "value": [20, 23], "status": "estimate", "derivation": "IKEA publishes no book count. Inner width about 2.5 ft (31.5 in outer less two side panels) x 8-9 volumes/ft (CLIR) = 20-23; x 6 levels = about 120-140 books per BILLY." }
+    },
+    "spareBedroomShelvingFeet": { "status": "estimate", "value": 120, "derivation": "No published typical figure found. Four BILLY units (10.5 ft of wall) x 6 levels x ~2.5 ft = 60 ft; lining two 10-ft walls of a 10x10 bedroom = about 8 units = ~120 linear ft = ~960-1,080 books at 8-9/ft. Room size is an assumption, not a source." }
+  },
+  "homeTheater": {
+    "seatsByRoom": [
+      { "sqft": [100, 150], "seats": [2, 4] },
+      { "sqft": [150, 250], "seats": [4, 6] },
+      { "sqft": [250, 400], "seats": [6, 10] },
+      { "sqft": [400, null], "seats": [10, 16] }
+    ],
+    "mostCommon": "Four seats ('one of the most popular home theater seating configurations in America')",
+    "rowSpacingFt": { "standardRecliners": [6, 7] },
+    "url": "https://www.seatcraft.com/blogs/news/how-many-seats-should-a-home-theater-have",
+    "status": "verified (seating manufacturer guide; CEDIA's recommended practices are paywalled and not read)",
+    "spareBedroomSeats": { "value": 4, "status": "estimate", "derivation": "A spare bedroom of 100-150 sq ft falls in Seatcraft's 2-4 seat band; four is the top of it and the stated most common layout." },
+    "filmRunningTime": {
+      "allFilms2024Minutes": 103.6,
+      "wideReleases2020sMinutes": 114,
+      "wideReleasesEarly2000sMinutes": 106,
+      "sample": "36,431 films with runtimes, OpusData/The Numbers",
+      "source": "Stephen Follows, 'Are two-hour movies the new normal?', 2 April 2026",
+      "url": "https://stephenfollows.com/p/are-two-hour-movies-the-new-normal",
+      "status": "verified"
+    }
+  },
+  "soundproofing": {
+    "cost": { "avgUSD": 1874, "rangeUSD": [1036, 2721], "perSqFtUSD": [10, 30], "source": "HomeAdvisor/Angi via Bob Vila", "url": "https://www.bobvila.com/articles/how-much-does-it-cost-to-soundproof-a-room/", "status": "secondhand", "note": "the game's $2,850 figure is from a different cost guide; Angi's own page returned 403" },
+    "assemblies": [
+      { "wall": "2x4 stud, 5/8 in gypsum one layer each side, batt insulation", "stc": [34, 39] },
+      { "wall": "same plus resilient channel one side", "stc": [45, 52], "note": "lab figure; 'actual results could be substantially lower' if installed carelessly" },
+      { "wall": "2x4 with insulation, 4 layers gypsum total", "stc": [43, 45] },
+      { "wall": "double 2x4 stud, 2 layers gypsum, insulation", "stc": [56, 59] }
+    ],
+    "assembliesUrl": "https://www.stcratings.com/assemblies.html",
+    "assembliesStatus": "verified",
+    "whatIsHeard": [
+      { "stc": 30, "heard": "normal to loud speech intelligible" },
+      { "stc": 40, "heard": "loud speech audible but unclear" },
+      { "stc": 45, "heard": "loud speech inaudible" },
+      { "stc": 50, "heard": "loud TV audible" },
+      { "stc": 55, "heard": "loud music audible" },
+      { "stc": 60, "heard": "loud music faintly audible" }
+    ],
+    "whatIsHeardUrl": "https://commercial-acoustics.com/guides/recommended-stc-ratings/",
+    "whatIsHeardStatus": "verified",
+    "typicalProjectSTC": { "value": [45, 52], "status": "estimate", "derivation": "A retrofit spare-bedroom job at a $2-3k cost-guide price is insulation plus resilient channel and new drywall on existing studs, not a double-stud rebuild; stcratings.com puts that at STC 45-52, against 34-39 for an ordinary insulated wall. At 45-50 loud speech is not heard through it and a loud TV is; it suits voice recording and rehearsing lines, not drums." },
+    "whatItIsFor": "A quiet room for recording self-taped and voice-over auditions (SAG-AFTRA Foundation asks for 'a quiet recording space') and for rehearsing without disturbing others."
+  },
+  "notFound": [
+    "Dublin: no studio-own page with a published hourly rate for a dedicated VO booth; The Podcast Studios and Egoboo say 'contact for pricing' (EUR 70 + VAT figure is search-summary only).",
+    "Vancouver: no cheap audition-booth rate on a studio's own page; only Monarch's CAD 250/h professional VO/ADR rate. Search summaries attributed Voice Trax West (actually Studio City, CA) and Voice One (San Francisco) to Vancouver/Toronto in error; both excluded.",
+    "New Haven: no studio inside New Haven proper with a published VO rate; nearest are West Haven (Horizon) and New Milford (Myke Foo).",
+    "sagaftra.org, backstage.com, angi.com, homeguide.com, manuals.plus and mayoclinicproceedings.org returned HTTP 403; those claims are marked secondhand.",
+    "Harvia and Finnleo PDF manuals: text not extractable (encoded fonts); HUUM DROP US manual PDF now 404.",
+    "Finnish Sauna Society publishes no minutes or round counts in its web guidance (its instructions are comic-strip PDFs, not read).",
+    "CEDIA recommended practice (seating counts) is behind membership; not read.",
+    "NKBA closet dimensions not found; builder guide used instead.",
+    "No published 'typical shelving length in a spare-bedroom library'; given as an estimate with derivation.",
+    "IKEA publishes no book count for BILLY; estimate derived from CLIR volumes per foot.",
+    "Home-gym and dance-studio projects were not part of this research brief."
+  ]
+}

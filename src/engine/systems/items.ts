@@ -32,6 +32,7 @@ import { PIECE_LABEL, type Piece } from '../content/furniture';
 import { GARMENT_L } from '../content/garmentcare';
 import { BUILT_IN, closetRefusal, fitRefusal, footprintOf } from './rooms';
 import { COLD_STORE } from '../content/coldstorage';
+import { LIBRARY_BOOKS } from '../content/specialrooms';
 import { CITIES } from '../content/geography';
 
 /** Where a thing is. */
@@ -48,10 +49,10 @@ export type Place =
   | { kind: 'held'; cityId: string; by: string; until: Instant };
 
 /** The spots a home keeps things in. Rooms come with Stage 12 of the backlog. */
-export type Spot = 'floor' | 'wardrobe' | 'drawers' | 'fridge' | 'freezer' | 'pantry' | 'bathroom' | 'storage' | 'hamper';
+export type Spot = 'floor' | 'wardrobe' | 'drawers' | 'fridge' | 'freezer' | 'pantry' | 'bathroom' | 'storage' | 'hamper' | 'shelves';
 export const SPOT_LABEL: Readonly<Record<Spot, string>> = {
   floor: 'In The Rooms', wardrobe: 'The Wardrobe', drawers: 'The Drawers', fridge: 'The Fridge', freezer: 'The Freezer',
-  pantry: 'The Pantry', bathroom: 'The Bathroom', storage: 'Storage', hamper: 'The Laundry Basket',
+  pantry: 'The Pantry', bathroom: 'The Bathroom', storage: 'Storage', hamper: 'The Laundry Basket', shelves: 'The Library’s Shelves',
 };
 
 export interface Item {
@@ -192,6 +193,13 @@ export function moveRefusal(sim: Simulation, person: Person, item: Item, to: Pla
     if (to.home === homeKeyOf(person.home)) {
       if (BUILT_IN.has(spot) && !(was && BUILT_IN.has(was))) { const full = closetRefusal(sim, person, item); if (full) return full; }
       if (spot === 'floor' && was !== 'floor' && item.bulky) { const tight = fitRefusal(sim, person, footprintOf(item)); if (tight) return tight; }
+      // A library's shelves, where the home has one, hold a thousand books (`content/specialrooms.ts`, from 2026-10-04).
+      if (spot === 'shelves' && was !== spot) {
+        const owned = (person.homes ?? []).find((h) => `owned:${h.id}` === to.home);
+        if (!owned?.facts.features.includes('library')) return 'This home has no library.';
+        const shelved = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === to.home && i.at.spot === 'shelves').reduce((n, i) => n + i.quantity, 0);
+        if (shelved + item.quantity > LIBRARY_BOOKS) return `The library’s shelves are full: ${LIBRARY_BOOKS} books.`;
+      }
       // The fridge and freezer hold so much (from 2026-10-04).
       if ((spot === 'fridge' || spot === 'freezer') && was !== spot) {
         const holds = coldRoomL(person, spot);
@@ -218,6 +226,7 @@ export function spotRefusal(item: Item, spot: Spot): string | undefined {
   if (item.bulky && spot !== 'floor' && spot !== 'storage') return `The ${item.label} stands in a room, or in storage.`;
   const food = item.food !== undefined;
   if ((spot === 'fridge' || spot === 'freezer' || spot === 'pantry') && !food) return `${SPOT_LABEL[spot]} is for food.`;
+  if (spot === 'shelves' && !item.kind.startsWith('book:')) return `${SPOT_LABEL[spot]} are for books.`;
   return undefined;
 }
 

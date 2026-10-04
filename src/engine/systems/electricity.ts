@@ -114,7 +114,8 @@ export function electricityAdjustment(sim: Simulation, person: Person, month: nu
   const base = cityId ? kwhUsed(person, cityId) : undefined;
   if (!t || base === undefined) return 0;
   // An electric heater's showers past the average, or short of it (`systems/hotwater.ts`, from 2026-10-03).
-  const used = base + showerKwhDelta(sim, person, month);
+  // And what a sauna's heater used (from 2026-10-04).
+  const used = base + showerKwhDelta(sim, person, month) + (person.living?.extraKwh ?? 0);
   const days = DAYS[month - 1]!;
   const typical = t.typicalKwh * KIND_SHARE[person.home!.kind]!;
   return inSave(sim, t.bill(used, month, days) - t.bill(typical, month, days), t.currency);

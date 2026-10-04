@@ -9,6 +9,7 @@ exists, this file says so, and the item stays out.
 
 | Gap | Stage | How the number is got | Status |
 |---|---|---|---|
+| What a special room takes and holds | 12 | Sauna heaters' makers' specs (Harvia, HUUM, Finnleo), Laukkanen's session length (secondhand); builders' walk-in closet guides; CLIR's books a shelf foot; a seating maker's home theater counts; Stephen Follows' running times; each town's voice-over booth's own rate (research-special-rooms-indoor.json) | Got (`content/specialrooms.ts`); a library's shelving length and a walk-in's liters are SLATE's reckoning from those; Dublin's booth is a podcast studio, standing in. |
 | What a garment weighs | 6 | No maker's per-garment table; two laundry-load tables (a Speed Queen franchise's, a British laundry site's) and single summaries for a suit and shoes, secondhand (research-baggage-weight.json) | Got (`GARMENT_G`), each labeled; a thing with no weight kept is reckoned at a quarter kilogram a liter, SLATE's estimate. |
 | An airline's overweight fees | 6 | Each carrier's baggage page: Delta's read (verified); American, BA, Aer Lingus, Air Canada and WestJet refused automated reads, their fees read secondhand; Volaris's per-kilogram fee is in a PDF not read | Got: each flight by its departure country's flag carrier (`BAG_RULES`), the low end where only a range was read. |
 | A hotel's lost-property hold | 6 | None of SLATE's hotels' own terms read | Open: 90 days is SLATE's reading (`HELD_DAYS`). |

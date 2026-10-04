@@ -36,6 +36,7 @@ import { starvedPastTheLimit } from './mortality';
 import { chanceOver, mayHurt, trainingRefusal } from './injury';
 import { INJURY } from '../content/injury';
 import { BODY } from '../content/body';
+import { SAUNA } from '../content/specialrooms';
 import { LOVED_MOOD, LOVED_RELIEF, lovedIn } from './enjoyment';
 import { buyTheDaysFood, canPayFor, fedOn, mealOf, spend } from './household';
 import { SINK_FULL, cook, kitchenMeal, sinkFull } from './kitchen';
@@ -515,7 +516,8 @@ export function registerLife(sim: Simulation): void {
       const where = placed && coached > 1 ? { where: 'gym' as const, builds: TRAINING.gym * coached } : placed;
       // A bike's ride builds as a run does, the same hour's work outdoors (`content/rides.ts`).
       const bike = action === 'ride' ? bikeHere(person) : undefined;
-      applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : action === 'ride' || action === 'court' || action === 'dance' ? TRAINING.run : 1, action === 'unwind' && atHome(person) ? unwindComfort(person) : 1);
+      // A sauna unwinds at an hour's unwinding rate for its minutes, SLATE's reading, as a program's minutes do.
+      applyLookingAfter(person, action, s.now, where ? where.builds : action === 'swim' ? TRAINING.gym : action === 'ride' || action === 'court' || action === 'dance' ? TRAINING.run : 1, action === 'unwind' && atHome(person) ? unwindComfort(person) : action === 'sauna' ? SAUNA.sessionMinutes / 60 : 1);
       // Read after the hour's enjoyment is counted, so a book finished in it still gave it.
       if (reads) readFor(s, person, LOOKING_AFTER.unwind.minutes);
       // A shower or a bath uses its soap and shampoo, and without them doesn't leave them as clean (`systems/hygiene.ts`).
@@ -539,6 +541,8 @@ export function registerLife(sim: Simulation): void {
       const court = action === 'court' ? courtAt(person) : undefined;
       if (court) exerts(person, COURT_MET[court.court], 1);
       if (action === 'dance') exerts(person, DANCE_MET, 1);
+      // The heater's hour to heat and the session on the month's bill, where it's billed by the kilowatt-hour (`systems/electricity.ts`).
+      if (action === 'sauna') { const l = livingOf(person); l.extraKwh = (l.extraKwh ?? 0) + (SAUNA.heaterKw * (SAUNA.preheatMinutes + SAUNA.sessionMinutes)) / 60; }
       // A ride's effort and a cyclist's risk on the road; the trail's effort (`systems/outings.ts`).
       if (action === 'ride' && bike) rideOut(s, person, bike);
       if (action === 'trail') trailOut(person);
@@ -569,7 +573,7 @@ export function registerLife(sim: Simulation): void {
  * Each takes real time off the clock, and the clock charges that time as
  * waking before the action pays out.
  */
-export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'dance' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'washup' | 'mow';
+export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'dance' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'washup' | 'mow' | 'sauna';
 
 export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
   eat: { label: 'Eat A Meal', minutes: 40, does: 'Cooked at home, or a meal out: feeds you, and lifts the mood by as much as you needed it' },
@@ -587,6 +591,8 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   boat: { label: 'Take The Boat Out', minutes: 180, does: 'Three hours on the water in the fine weather, its gas at the marina: calmer, and in better spirits' },
   trail: { label: 'Ride The ATV', minutes: 120, does: 'Two hours on land of your own in the fine weather: calmer, and in better spirits' },
   unwind: { label: 'Unwind', minutes: 60, does: 'Takes the edge off stress and lifts the mood' },
+  // From 2026-10-04: a sauna of your own, a session's 14 minutes after the hour its heater takes (`content/specialrooms.ts`).
+  sauna: { label: 'Take A Sauna', minutes: SAUNA.sessionMinutes, does: 'A session in your own sauna: unwinding for its minutes, and the heater’s hour and more on the electricity bill' },
   laundry: { label: 'Do The Laundry', minutes: 20, does: 'Washes what you’ve worn: in your own machines, the building’s, or at the laundromat' },
   tidy: { label: 'Clean The Place', minutes: 60, does: 'A clean home, which stops a mess weighing on you' },
   washup: { label: 'Wash Up', minutes: 38, does: 'The dishes in the sink washed by hand, so the kitchen can be cooked in and they don’t add to the mess' },
@@ -703,6 +709,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if ((action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court' || action === 'dance') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';
   if (action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court' || action === 'dance') { const hurt = trainingRefusal(person, sim.now); if (hurt) return hurt; }
   if (action === 'dance' && !(atHome(person) && livingIn(person)?.facts.features.includes('danceStudio'))) return 'You have no dance studio at home.';
+  if (action === 'sauna' && !(atHome(person) && livingIn(person)?.facts.features.includes('sauna'))) return 'You have no sauna at home.';
   if (action === 'ride') { const no = rideRefusal(sim, person); if (no) return no; }
   if (action === 'trail') { const no = trailRefusal(sim, person); if (no) return no; }
   if (action === 'swim') { const no = swimRefusal(sim, person); if (no) return no; }

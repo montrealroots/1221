@@ -1,0 +1,547 @@
+{
+  "read": "2026-10-04",
+  "scope": "Outdoor features on a home's lot that the owner wants buildable and usable: outdoor kitchen, raised beds, greenhouse, a running track, pitch lights, natural grass upkeep and a guesthouse. Statuses: verified = figure read on the source page or file itself on 2026-10-04; secondhand = a search summary or a third party quoting the source; estimate = derived here, with the arithmetic shown. Existing engine figures this bears on: src/engine/content/homes.ts 'patio' (Stone Patio And Outdoor Kitchen, usd 51,000, 21 days), 'tennis-lights' (usd 3,500), 'basketball-lights' (usd 3,000), 'adu' (usd 162,000).",
+
+  "outdoorKitchen": {
+    "us": [
+      {
+        "source": "Angi, 'How Much Does It Cost to Build an Outdoor Kitchen?'",
+        "url": "https://www.angi.com/articles/how-much-does-outdoor-kitchen-cost.htm",
+        "pageUpdated": "2026-07-31",
+        "currency": "USD",
+        "status": "verified",
+        "average": 16533,
+        "typicalRange": [6269, 27087],
+        "extremes": { "low": 1000, "high": 60000, "note": "'as low as $1,000 for a basic setup to over $60,000 for a luxury build'" },
+        "perSquareFoot": [200, 600],
+        "bySize": {
+          "small": { "range": [4000, 10000], "is": "Compact grill island, minimal storage" },
+          "medium": { "range": [10000, 20000], "is": "Grill, prep space, storage, 1-2 appliances" },
+          "large": { "range": [20000, 50000], "is": "Multiple appliances, bar, seating, extras", "openEnded": true }
+        },
+        "components": {
+          "grill": [1500, 7500],
+          "countertops": [1000, 5000],
+          "cabinets": [2000, 8000],
+          "appliances_fridge_sink_sideBurners": [1500, 10000],
+          "plumbing_waterAndGas": [500, 2500],
+          "electrical": [800, 3000],
+          "labor": [3000, 10000],
+          "design": [500, 3000]
+        },
+        "typicallyIncluded": "'A standard outdoor kitchen project includes a grill, countertops, cabinets, appliances (like refrigerators or sinks), and essential utilities such as plumbing and electrical.'",
+        "other": { "sitePrepAndDemolition": [500, 3000], "permits": [200, 2000], "laborShareOfTotal": "30% to 50%", "laborRatePerHour": [50, 150], "diyMaterialsAndBasicAppliances": [4000, 10000] }
+      },
+      {
+        "source": "Fixr, 'How Much Does It Cost to Build an Outdoor Kitchen?'",
+        "url": "https://www.fixr.com/costs/outdoor-kitchen",
+        "pageUpdated": "2025-02-07",
+        "currency": "USD",
+        "status": "verified",
+        "average": 16000,
+        "typicalRange": [6000, 30000],
+        "extremes": { "low": 1400, "high": 65000, "note": "Low is 'a small pre-made island with cabinets and a grill'; high is custom with pergola, pizza oven and full cabinets, countertops and appliances." },
+        "perSquareFoot": { "average": 75, "range": [40, 130], "note": "Fixr says these assume a full build: new patio, counters, storage, cooking element, refrigeration, plumbing and cover." },
+        "buildTime": "'a minimum of 2 to 3 weeks to build your outdoor kitchen, with many taking 4 to 6 weeks and some high-end outdoor kitchens taking several months'"
+      },
+      {
+        "source": "HomeAdvisor, 'How Much Does It Cost to Install an Outdoor Kitchen? [2025 Data]'",
+        "url": "https://www.homeadvisor.com/cost/outdoor-living/build-an-outdoor-kitchen/",
+        "currency": "USD",
+        "status": "verified",
+        "buildTime": "'Most outdoor kitchen pros finish the actual build in four to six weeks. That window covers framing, flooring, utilities, and appliance installation.' Planning, permits and design happen before that.",
+        "note": "Only the build-time FAQ was read; its cost figures were not extracted."
+      }
+    ],
+    "buildTimeDays": {
+      "value": { "typical": [28, 42], "minimum": [14, 21] },
+      "status": "estimate",
+      "derivation": "Weeks converted to calendar days from HomeAdvisor ('four to six weeks') and Fixr ('minimum of 2 to 3 weeks ... many taking 4 to 6 weeks'). The engine's 'patio' project uses 21 days for patio plus kitchen, which sits at Fixr's minimum."
+    },
+    "uk": [
+      {
+        "source": "Checkatrade, quoted in Ideal Home, 'What's the cost of an outdoor kitchen?' (Sophie King)",
+        "url": "https://www.idealhome.co.uk/garden/outdoor-living/how-much-does-an-outdoor-kitchen-cost",
+        "pageUpdated": "2024-07-17",
+        "currency": "GBP",
+        "status": "secondhand",
+        "figures": {
+          "minimum": 1000,
+          "bespokeHigh": 50000,
+          "averageGoodQuality": 20000,
+          "basicSetup": [3000, 5000],
+          "basicSetupIs": "'countertops, cabinets, appliances and other essential elements'",
+          "electricalHalfDay": [250, 300],
+          "plumbingUpToADayAndAHalfNearMains": [700, 800],
+          "electricWaterHeaterFrom": 200
+        },
+        "note": "Read on the Ideal Home page itself; the Checkatrade cost guide was not found at the URLs tried (see notFound). The electrical and plumbing figures are from an installer quoted by Ideal Home ('Steve from EO'), not Checkatrade."
+      }
+    ]
+  },
+
+  "gardenBeds": {
+    "us": {
+      "source": "HomeGuide, 'How Much Does a Flower Bed or Raised Garden Bed Cost? (2026)'",
+      "url": "https://homeguide.com/costs/flower-bed-installation-cost",
+      "pageWritten": "2025-12-23",
+      "currency": "USD",
+      "status": "verified",
+      "customBuiltPerSqFtGround": [20, 65],
+      "customBuilt5x12ft": [1200, 4000],
+      "byMaterial5x12ft": {
+        "wood": [1300, 3800],
+        "brick": [1400, 3500],
+        "naturalStone": [1800, 4000],
+        "cinderBlock": [1200, 3300],
+        "metal": [1300, 3800],
+        "pouredConcrete": [1300, 3600],
+        "rammedEarth": [1300, 3300]
+      },
+      "includes": "'For materials, flowers, and installation labor.'",
+      "diyKitPerSqFt": [5, 15],
+      "diyKit5x12ft": [300, 900],
+      "landscaperPerHour": [50, 100]
+    },
+    "uk": {
+      "source": "Checkatrade, 'Cost of building a raised garden bed'",
+      "url": "https://www.checkatrade.com/blog/cost-guides/cost-building-raised-garden-bed/",
+      "pageUpdated": "2023-07-09 (table marked 'Last updated: May 2024')",
+      "currency": "GBP",
+      "status": "verified",
+      "labourAndMaterials": { "cedar": [200, 300], "brick": [300, 500], "limestone": [500, 600] },
+      "fourByFourFtWooden": 150,
+      "carpenterTypical": 250,
+      "note": "Per bed; Checkatrade does not state the bed size behind the cedar, brick and limestone rows."
+    },
+    "setOfBeds": {
+      "status": "estimate",
+      "derivation": "No source prices a 'set'. Multiply the per-bed figures above by the count the player chooses. Colorado State's raised-bed guide (below) is laid out on 4 ft rows; Growing Places says a family of 4 to 6 should plant three 4x8 or six 4x4 beds."
+    }
+  },
+
+  "greenhouse": {
+    "us": {
+      "source": "HomeGuide, 'How Much Does a Greenhouse Cost? (2026)' (Tara Farmer)",
+      "url": "https://homeguide.com/costs/greenhouse-cost",
+      "pageWritten": "2025-07-29",
+      "currency": "USD",
+      "status": "verified",
+      "perSqFtInstalled": [5, 30],
+      "bySizeSqFtInstalled": { "50": [250, 1500], "100": [500, 3000], "250": [1300, 7500], "500": [2500, 15000], "750": [3800, 22500], "1000": [5000, 30000] },
+      "hoopHousePerSqFt": [5, 10],
+      "buildTime": "'1 to 3 days up to several weeks, depending on the size and type'",
+      "lifespanYears": { "overall": [3, 60], "pvcAndPlasticSheeting": "3 to 5+", "polycarbonatePanels": [10, 15] }
+    },
+    "uk": {
+      "source": "Checkatrade, 'Greenhouse installation cost guide'",
+      "url": "https://www.checkatrade.com/blog/cost-guides/greenhouse-installation-cost/",
+      "pageUpdated": "2022-09-01 (table marked 'Last updated: May 2024')",
+      "currency": "GBP",
+      "status": "verified",
+      "installationBySizeFeet": {
+        "4x4": { "low": 160, "high": 220, "average": 190 },
+        "4x6": { "low": 250, "high": 310, "average": 280 },
+        "6x6": { "low": 320, "high": 380, "average": 350 },
+        "6x8": { "low": 390, "high": 450, "average": 420 },
+        "6x10": { "low": 470, "high": 530, "average": 500 },
+        "8x8": { "low": 650, "high": 710, "average": 680 },
+        "8x10": { "low": 790, "high": 850, "average": 820 },
+        "10x13": { "low": 970, "high": 1030, "average": 1000 }
+      },
+      "note": "The column is headed 'Installation cost'. The text says installation involves site preparation, the greenhouse itself and assembly labour, but the figures are low enough that they may be the fitting alone; treat as ambiguous. Planning permission is not usually needed (exceptions: front garden, National Park, listed building, over 2.5 m tall, under 2 m from a boundary, more than half the garden built on)."
+    }
+  },
+
+  "yields": {
+    "primary": {
+      "source": "Virginia Cooperative Extension 426-331 (SPES-673P), 'Virginia's Home Garden Vegetable Planting Guide', Table 5",
+      "url": "https://www.pubs.ext.vt.edu/content/dam/pubs_ext_vt_edu/426/426-331/SPES-673.pdf",
+      "published": "VT/0425 (April 2025)",
+      "units": "lb per 10-ft row; spacings in inches",
+      "status": "verified",
+      "crops": {
+        "tomatoes": { "inRow": "18-36 in", "betweenRows": "36-50 in", "per10ftRow": "7 transplants", "yieldLbPer10ftRow": [15, 45], "plantsPerPerson": "2-4" },
+        "lettuceHead": { "inRow": "6-10 in", "betweenRows": "10-18 in", "per10ftRow": "20 transplants", "yieldLbPer10ftRow": [2, 4], "plantsPerPerson": "5-10" },
+        "lettuceBabySalad": { "inRow": "0.2-0.4 in", "betweenRows": "6-12 in", "per10ftRow": "1/4 oz seed", "yieldLbPer10ftRow": [2, 4], "perPerson": "10-15 ft of row" },
+        "peppers": { "inRow": "12-24 in", "betweenRows": "30-36 in", "per10ftRow": "10 transplants", "yieldLbPer10ftRow": [5, 18], "plantsPerPerson": "3-5" },
+        "beansBush": { "inRow": "1-3 in", "betweenRows": "24-36 in", "per10ftRow": "1 oz seed", "yieldLbPer10ftRow": [3, 5], "plantsPerPerson": "10" },
+        "beansPole": { "inRow": "4-12 in", "betweenRows": "36-48 in", "per10ftRow": "1 oz seed", "yieldLbPer10ftRow": [6, 10], "plantsPerPerson": "3-5" }
+      }
+    },
+    "perArea": {
+      "status": "estimate",
+      "derivation": "Row yield divided by the row's ground area: 10 ft x between-row spacing. Low = low yield / widest spacing; high = high yield / narrowest spacing. 1 lb/sq ft = 4.882 kg/m2.",
+      "lbPerSqFt": {
+        "tomatoes": [0.36, 1.5],
+        "lettuceHead": [0.13, 0.48],
+        "peppers": [0.17, 0.72],
+        "beansBush": [0.10, 0.25],
+        "beansPole": [0.15, 0.33]
+      },
+      "kgPerM2": {
+        "tomatoes": [1.8, 7.3],
+        "lettuceHead": [0.65, 2.3],
+        "peppers": [0.81, 3.5],
+        "beansBush": [0.49, 1.2],
+        "beansPole": [0.73, 1.6]
+      },
+      "note": "These are row-garden figures. Raised beds planted intensively come out higher; see the Colorado State figures."
+    },
+    "raisedBed": {
+      "source": "Colorado State University Extension, 'Sample Planting Guide for Raised-Bed Garden' (formerly CMG GardenNotes #721)",
+      "url": "https://extension.colostate.edu/resource/sample-planting-guide-for-raised-bed-garden/",
+      "published": "September 2024, reviewed October 2024",
+      "status": "secondhand",
+      "basis": "Read through a page-summarising fetch, not the raw table.",
+      "crops": {
+        "tomatoes": "24 in between plants, trellised single row; '~ 26 lbs. (1/2 bushel) per plant'; harvest August until first frost",
+        "lettuceLeafAndSoftHead": "thin to 7-9 in, rows 7-9 in apart; '~ 6 heads per 4' row, ~ 3 lbs. per 4' row'; plantings early April to mid-August, harvest May to late September",
+        "peppers": "3 plants across a 4 ft row, rows 18 in apart; '~ 18 bell peppers/4' row (6 fruit per plant)'; harvest August until first frost",
+        "beansPole": "thin to 4 in, single row; '~ 10 lbs. per 10' row'; plant mid-May, harvest July until first frost"
+      },
+      "lettuceLbPerSqFt": { "value": [1.0, 1.3], "status": "estimate", "derivation": "3 lb / (4 ft x 0.58-0.75 ft row spacing) = 1.0-1.3 lb/sq ft (4.9-6.3 kg/m2), about three times the row-garden figure." }
+    },
+    "otherPerPlant": {
+      "source": "University of Maine Cooperative Extension, 'Planting Chart for the Home Vegetable Garden'",
+      "url": "https://extension.umaine.edu/gardening/manual/vegetables/planting-chart/",
+      "status": "secondhand",
+      "basis": "Read through a page-summarising fetch.",
+      "figures": { "tomatoes": "8 lbs/plant", "peppers": "6-12 fruits/plant", "beansPole": "12 lbs/10 ft row", "beansBushSnap": "8 lbs/10 ft row" }
+    },
+    "daysToHarvest": {
+      "source": "University of Georgia Extension Circular 963, 'Vegetable Planting Chart'",
+      "url": "https://fieldreport.caes.uga.edu/wp-content/uploads/2023/06/vegetable-planting-chart-for-Georgia-C963-UGA-extension.pdf",
+      "status": "verified",
+      "definition": "'Days to maturity are from planting seed or setting transplants in the garden. The number of days will vary depending on cultivar ..., temperature and general growing conditions.'",
+      "days": {
+        "beansBush": [50, 60],
+        "beansPole": [65, 75],
+        "lettuce": [60, 85],
+        "pepperBell": [65, 80],
+        "pepperHot": [65, 95],
+        "tomatoDeterminate": [70, 90],
+        "tomatoIndeterminate": [70, 90]
+      },
+      "lettuceNote": "UGA's lettuce row lists Butterhead, Romaine and Buttercrunch; loose-leaf and baby salad mature sooner but UGA gives no separate figure."
+    }
+  },
+
+  "growingSeasons": {
+    "method": "US: NOAA NCEI 1991-2020 annual/seasonal normals, 50% probability dates for the last spring and first autumn minimum at or below 32 F (and 28 F), plus the growing-season length between them. Canada: Environment and Climate Change Canada 1981-2010 normals through the MSC GeoMet API (the 1991-2020 station pages would not load). UK, Ireland, Mexico: the national services publish frost-day counts or daily minima, not frost dates.",
+    "New York": {
+      "station": "NEW YORK CNTRL PK TWR (USW00094728)",
+      "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00094728.csv",
+      "status": "verified",
+      "lastSpring32F_p50": "03-30",
+      "firstFall32F_p50": "11-20",
+      "season32F_p50_days": 236,
+      "lastSpring28F_p50": "03-19",
+      "firstFall28F_p50": "12-01",
+      "season28F_p50_days": 257,
+      "growingDegreeDaysBase50F_annual": 3867.3
+    },
+    "Los Angeles": {
+      "station": "LOS ANGELES INTL AP (USW00023174)",
+      "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00023174.csv",
+      "status": "verified",
+      "lastSpring32F_p50": null,
+      "firstFall32F_p50": null,
+      "season32F_p50_days": 365,
+      "growingDegreeDaysBase50F_annual": 4985.7,
+      "note": "NOAA gives no freeze dates (-9999) and a 365-day season: the coastal station has no normal freeze. Inland valleys are colder; this is the airport only."
+    },
+    "New Haven": {
+      "station": "NEW HAVEN TWEED AP (USW00014758)",
+      "url": "https://www.ncei.noaa.gov/data/normals-annualseasonal/1991-2020/access/USW00014758.csv",
+      "status": "verified",
+      "lastSpring32F_p50": "04-17",
+      "firstFall32F_p50": "10-27",
+      "season32F_p50_days": 193,
+      "lastSpring28F_p50": "04-04",
+      "firstFall28F_p50": "11-06",
+      "season28F_p50_days": 215,
+      "growingDegreeDaysBase50F_annual": 3027.6
+    },
+    "Toronto": {
+      "station": "TORONTO (climate ID 6158350, downtown), 1981-2010",
+      "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=1500&CLIMATE_IDENTIFIER=6158350",
+      "status": "verified",
+      "meanLastSpringFrost": "04-13",
+      "meanFirstFallFrost": "11-03",
+      "frostFreeDays": 203,
+      "degreeDaysAbove5C_annual": 2506.36,
+      "degreeDaysAbove10C_annual": 1480.18,
+      "airport": {
+        "station": "TORONTO LESTER B. PEARSON INT'L A (6158733), 1981-2010",
+        "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=1500&CLIMATE_IDENTIFIER=6158733",
+        "meanLastSpringFrost": "04-30",
+        "meanFirstFallFrost": "10-16",
+        "frostFreeDays": 168,
+        "degreeDaysAbove5C_annual": 2290.15
+      },
+      "note": "A search summary of ECCC's 1991-2020 page gave a 174-day frost-free period and first fall frost of Oct 20 (station unclear); not read directly."
+    },
+    "Vancouver": {
+      "station": "VANCOUVER INT'L A (climate ID 1108447), 1981-2010",
+      "url": "https://api.weather.gc.ca/collections/climate-normals/items?f=json&limit=1000&CLIMATE_IDENTIFIER=1108447",
+      "status": "verified",
+      "meanLastSpringFrost": "03-18",
+      "meanFirstFallFrost": "11-10",
+      "frostFreeDays": 237,
+      "degreeDaysAbove5C_annual": 2176.81,
+      "degreeDaysAbove10C_annual": 965.73
+    },
+    "London": {
+      "station": "Heathrow, Met Office 1991-2020 averages",
+      "url": "https://www.metoffice.gov.uk/research/climate/maps-and-data/location-specific-long-term-averages/gcpsvg3nc",
+      "status": "verified",
+      "airFrostDaysByMonth": { "jan": 6.80, "feb": 6.20, "mar": 2.93, "apr": 0.80, "may": 0.03, "jun": 0, "jul": 0, "aug": 0, "sep": 0, "oct": 0.33, "nov": 2.73, "dec": 7.17, "year": 26.99 },
+      "meanMinC": { "jan": 2.68, "feb": 2.65, "mar": 4.14, "apr": 6.03, "may": 9.08, "jun": 12.03, "jul": 14.18, "aug": 14.06, "sep": 11.62, "oct": 8.78, "nov": 5.26, "dec": 3.08 },
+      "frostDates": "Not published by the Met Office.",
+      "derivedFrostFreeWindow": { "value": "May to September has effectively no air frost (May 0.03 days, October 0.33)", "status": "estimate", "derivation": "Read from the monthly air-frost counts; not a date statistic." }
+    },
+    "Dublin": {
+      "station": "Dublin Airport, Met Éireann 1991-2020 averages",
+      "url": "https://www.met.ie/cms/assets/uploads/2023/07/www_met_ie_dublin_9120-1.htm",
+      "status": "verified",
+      "airFrostDaysByMonth": { "jan": 7.1, "feb": 7.2, "mar": 5.5, "apr": 3.9, "may": 0.5, "jun": 0, "jul": 0, "aug": 0, "sep": 0, "oct": 0.8, "nov": 3.3, "dec": 6.7, "year": 35 },
+      "groundFrostDaysByMonth": { "jan": 15.2, "feb": 14.3, "mar": 13.3, "apr": 10.4, "may": 4.2, "jun": 0.4, "jul": 0, "aug": 0.2, "sep": 0.7, "oct": 4.9, "nov": 9.5, "dec": 13.9, "year": 87 },
+      "frostDates": "Not published by Met Éireann.",
+      "derivedFrostFreeWindow": { "value": "June to September without air frost; May still averages 0.5 air-frost and 4.2 ground-frost days", "status": "estimate", "derivation": "Read from the monthly counts." }
+    },
+    "Mexico City": {
+      "station": "TACUBAYA CENTRAL (OBS), SMN station 9048, Normal Climatológica 1991-2020 (issued 25/09/2026)",
+      "url": "https://smn.conagua.gob.mx/tools/RESOURCES/Normales_Climatologicas/Normales9120/df/nor9120_09048.txt",
+      "status": "verified",
+      "lowestDailyMinimumC_1991_2020": { "jan": 1, "feb": 0.1, "mar": 1, "apr": 7, "may": 7.4, "jun": 9.5, "jul": 8.7, "aug": 9.8, "sep": 6, "oct": 3, "nov": 1.5, "dec": 1.1 },
+      "normalMinC": { "jan": 8.3, "feb": 9.5, "mar": 11.1, "apr": 13.1, "may": 13.7, "jun": 13.8, "jul": 13.0, "aug": 13.2, "sep": 13.1, "oct": 11.8, "nov": 9.9, "dec": 8.4 },
+      "precipitationMm": { "jan": 11.9, "feb": 5.7, "mar": 11.8, "apr": 24.2, "may": 59.4, "jun": 132.5, "jul": 174.0, "aug": 175.6, "sep": 158.1, "oct": 71.3, "nov": 17.4, "dec": 5.0, "year": 846.9 },
+      "derivedFrostFree": { "value": "No air frost at Tacubaya in 1991-2020; outdoor growing is limited by the November-April dry season (water), not frost", "status": "estimate", "derivation": "The coldest daily minimum in 30 years was 0.1 C (2 Feb 1995), so no day fell to 0 C. Outlying high-altitude boroughs are colder and do get frost; this is the central observatory only." }
+    }
+  },
+
+  "gardeningTime": [
+    {
+      "source": "Growing Places (nonprofit), 'Square Foot Garden Methods'",
+      "url": "https://growingplaces.org/wp-content/uploads/Raised-Bed-Garden-Methods.pdf",
+      "status": "verified",
+      "figures": "'About 3-4 hours per week for the first month with seed and seedling watering, daily checks, and the beginning of a weeding program'; 'About 2-3 hours per week for the second month with watering, harvesting, weeding and inspections'; in the third and final months time varies with weather, watering and harvest, with little weeding.",
+      "scale": "Stated for their square-foot garden; the same page says a 4x4 garden feeds one person all summer and a family of 4-6 should plant three 4x8 or six 4x4 gardens. The hours are not stated per bed.",
+      "note": "Not an extension service. No extension service per-bed weekly hours figure was found."
+    },
+    {
+      "source": "US Bureau of Labor Statistics, American Time Use Survey 2025, Table 1, 'Lawn and garden care'",
+      "url": "https://www.bls.gov/news.release/atus.t01.htm",
+      "status": "secondhand",
+      "basis": "BLS blocks scripted fetches; read through a page-summarising fetch.",
+      "averageHoursPerDayAllPersons": { "total": 0.19, "men": 0.26, "women": 0.13 },
+      "percentEngagedOnAverageDay": { "total": 10.0, "men": 11.2, "women": 8.9 },
+      "hoursPerDayForThoseWhoEngaged": { "total": 1.90, "men": 2.29, "women": 1.43 },
+      "note": "Lawn and garden together, all households; not per bed."
+    }
+  ],
+
+  "runningTrack": {
+    "isRealResidentialProject": {
+      "finding": "Rare. No cost guide from Angi, HomeAdvisor, Fixr, HomeGuide or Checkatrade prices a backyard running track. The real residential equivalents found are a garden jogging/walking path in gravel, crushed stone or decomposed granite, and shared tracks in multi-unit buildings (2200 Brickell, Miami, a quarter-mile rooftop track, completing 2026).",
+      "url": "https://resident.com/real-estate/2026/07/23/2200-brickell-delivers-a-quarter-mile-rooftop-running-track-this-summer",
+      "status": "secondhand"
+    },
+    "crushedStoneOrGravelPath": [
+      {
+        "source": "Angi, '20 Walkway Ideas to Level Up Your Landscaping'",
+        "url": "https://www.angi.com/articles/walkway-ideas.htm",
+        "pageUpdated": "2026-07-31",
+        "currency": "USD",
+        "status": "verified",
+        "crushedStonePerSqFt": 2.30,
+        "gravelInstalledPerSqFt": [1, 4]
+      },
+      {
+        "source": "Angi, 'How Much Does Decomposed Granite Cost?'",
+        "url": "https://www.angi.com/articles/how-much-does-decomposed-granite-cost.htm",
+        "pageUpdated": "2026-07-09",
+        "currency": "USD",
+        "status": "verified",
+        "perTon": { "average": 60, "range": [20, 300] },
+        "perCubicYard": [40, 255],
+        "walkway50x3ft_3inDeep": [130, 300],
+        "deliveryPerLoad": [50, 75],
+        "walkwayDepthInches": [3, 4],
+        "note": "Material costs without installation or delivery."
+      }
+    ],
+    "rubberSurface": {
+      "figures": "Rubber track surface $4-$10 per sq ft; tartan $4-$12 per sq ft for lining and surface only; about $8-$20 per sq ft installed depending on system and subgrade",
+      "urls": ["https://currentcost.org/running-track-cost-price-ranges-materials-installation/", "https://wellbuiltflorida.com/running-track-surface-cost/"],
+      "currency": "USD",
+      "status": "secondhand",
+      "basis": "Search summary of commercial cost-blog pages; these price school/club tracks, not residential."
+    },
+    "sizingNote": { "value": "A standard 400 m track needs about 2 to 2.5 acres", "status": "not sourced here", "note": "Left out of figures; see notFound." }
+  },
+
+  "mets": {
+    "source": "2024 Adult Compendium of Physical Activities (Herrmann et al.), full listing PDF",
+    "url": "https://pacompendium.com/wp-content/uploads/2025/02/1_2024-adult-compendium_1_2024.pdf",
+    "status": "verified",
+    "running": {
+      "12020": { "met": 7.5, "activity": "Jogging, general, self-selected pace" },
+      "12028": { "met": 6.5, "activity": "Running, 4 to 4.2 mph (13 min/mile)" },
+      "12029": { "met": 7.8, "activity": "Running 4.3 to 4.8 mph" },
+      "12030": { "met": 8.5, "activity": "Running, 5.0 to 5.2 mph (12 min/mile)" },
+      "12045": { "met": 9.0, "activity": "Running, 5.5 -5.8 mph" },
+      "12050": { "met": 9.3, "activity": "Running, 6-6.3 mph (10 min/mile)" },
+      "12060": { "met": 10.5, "activity": "Running, 6.7 mph (9 min/mile)" },
+      "12070": { "met": 11.0, "activity": "Running, 7 mph (8.5 min/mile)" },
+      "12080": { "met": 11.8, "activity": "Running, 7.5 mph (8 min/mile)" },
+      "12090": { "met": 12.0, "activity": "Running, 8 mph (7.5 min/mile)" },
+      "12100": { "met": 12.5, "activity": "Running, 8.6 mph (7 min/mile)" },
+      "12110": { "met": 13.0, "activity": "Running, 9 mph (6.5 min/mile)" },
+      "12120": { "met": 14.8, "activity": "Running, 10 mph (6 min/mile)" },
+      "12140": { "met": 9.3, "activity": "Running, cross country" },
+      "12145": { "met": 10.5, "activity": "Running, self-selected pace" },
+      "12180": { "met": 10.0, "activity": "Running, on a track, team practice" },
+      "12184": { "met": 18.0, "activity": "Running, on track, 500-1500m, competitive" },
+      "12186": { "met": 19.3, "activity": "Running, on track, 2000-3000m, competitive" },
+      "17255": { "met": 4.0, "activity": "Walking, self-selected speed, indoor track or outdoors, firm surface" },
+      "17260": { "met": 4.8, "activity": "Walking, grass track" }
+    },
+    "trackNote": "The Compendium has no solo 'running on a track at X mph' code; the only track codes are team practice (12180) and competitive racing. Solo running on a home track takes the pace codes 12028-12120.",
+    "soccer": {
+      "15605": { "met": 9.5, "activity": "Soccer, competitive" },
+      "15610": { "met": 7.0, "activity": "Soccer, casual, general (Taylor Code 540)" },
+      "15615": { "met": 3.5, "activity": "Walking football/soccer" },
+      "15140": { "met": 4.0, "activity": "Coaching, football, soccer, basketball, baseball, swimming, etc." }
+    },
+    "soccerDrillsNote": "No code for soccer drills or skills practice exists in the 2024 Adult Compendium (searched 'drill', 'skill', 'juggl', 'kick'). The nearest is 15610 (casual, general, 7.0). By comparison softball practice is 15625 at 4.0."
+  },
+
+  "pitchLights": {
+    "installCost": [
+      {
+        "source": "Angi, 'How Much Does It Cost to Build a Tennis Court? [2026 Data]', cost-by-component table",
+        "url": "https://www.angi.com/articles/how-much-does-tennis-court-cost.htm",
+        "pageUpdated": "2026-04-16",
+        "currency": "USD",
+        "status": "verified",
+        "lighting": { "range": [1500, 6000], "is": "Court lights and electrical installation" },
+        "electricianPerHour": [50, 130]
+      },
+      {
+        "source": "LED Light Expert, 'LED Basketball Court Lights' (retailer)",
+        "url": "https://www.ledlightexpert.com/led-basketball-court-lights",
+        "currency": "USD",
+        "status": "verified",
+        "packages": {
+          "20ftPolePlus2x300W": { "listed": [3299.99, 2099.00], "note": "Page shows '$3,299.99 Original price $2,099.00'; which is the sale price is ambiguous in the text." },
+          "15ftPolePlus2x300W": { "listed": [2859.99, 1999.00] },
+          "2x300WWithBullhornNoPole": { "listed": [799.99, 599.99] },
+          "3x600WLightTower": { "listed": [9999.99, 7999.99] },
+          "single300WFixture": 449.99
+        },
+        "fullOutdoorCourtSystem": "'Full systems with poles, fixtures, wiring, and installation for outdoor courts range from $15,000-$40,000'; fixtures alone for an outdoor recreational court '$3,000-$8,000'",
+        "note": "Hardware only, no installation, except the full-system sentence."
+      }
+    ],
+    "powerPerLight": {
+      "source": "LED Light Expert (same page)",
+      "status": "verified",
+      "figures": "Residential pole packages carry two 300 W LED sports lights (45,000 lumens each). A full-size outdoor basketball court (94 x 50 ft) on 25-30 ft poles: '6-8 fixtures at 300-500 watts each provides adequate recreational lighting'.",
+      "derivedKW": { "onePolePair": 0.6, "fullCourt": [1.8, 4.0], "status": "estimate", "derivation": "2 x 300 W = 0.6 kW per pole; 6 x 300 W = 1.8 kW to 8 x 500 W = 4.0 kW per court." }
+    },
+    "illuminance": {
+      "outdoorBasketballRecreational": "20-30 foot-candles (competitive 30-50)",
+      "tennisRecreational4Pole": "30 fc / 300 lux to 50 fc / 500 lux, poles 20-26 ft",
+      "urls": ["https://www.ledlightexpert.com/led-basketball-court-lights", "https://sportsvenuecalculator.com/single-tennis-court-led-lighting-layout-with-four-poles/"],
+      "status": "verified"
+    },
+    "pitchNote": "No residential cost source found for lighting a five-a-side or larger football pitch; the court figures are the nearest residential evidence."
+  },
+
+  "naturalGrass": {
+    "fieldMaintenance": {
+      "source": "Sports Turf Managers Association (STMA), 'Natural Grass Athletic Fields' bulletin",
+      "url": "https://www.stma.org/sites/stma/files/STMA_Bulletins/NaturalGrassFields.pdf",
+      "currency": "USD (2009 budgets)",
+      "status": "verified",
+      "mowingsPerSeason": { "nativeSoilPracticeFields": 33, "sandCappedStadiumField": 33, "sandBasedSoccerField": 50 },
+      "watering": "1 acre-inch per week (soccer field: for 26 weeks)",
+      "annualCost": {
+        "nativeSoilPracticeFields_214000sqft": 23254.58,
+        "oneNativeSoilFootballPracticeField_57600sqft": 6045,
+        "sandCappedStadiumField_70000sqft": 13997.77
+      },
+      "laborRate": "$16.44 x 20% benefits = $19.72 per hour",
+      "constructionPerSqFt": {
+        "naturalOnSiteNativeSoil": [0.90, 1.50],
+        "naturalTurfgrassWithNativeSoils": [2.25, 5.25],
+        "naturalWithSandCap": [4.00, 6.50],
+        "naturalWithSandAndDrainage": [7.00, 10.00],
+        "syntheticInfill": [6.50, 11.00]
+      },
+      "derivedPerSqFtPerYear": { "value": { "nativeSoilPractice": 0.105, "stadium": 0.20 }, "status": "estimate", "derivation": "6,045 / 57,600 and 13,997.77 / 70,000, in 2009 dollars at a $19.72 hourly labour rate." }
+    },
+    "homeLawnGuidance": [
+      {
+        "source": "University of Maryland Extension, 'Maintaining an Established Lawn' (and Virginia Tech, NDSU, MSU pages in the same search)",
+        "url": "https://extension.umd.edu/resource/maintaining-established-lawn",
+        "status": "secondhand",
+        "basis": "Search summary.",
+        "figures": "About 1 inch of water per week in active growth, from rain or irrigation, applied deeply and infrequently (1 inch soaks about 6 inches deep); weekly mowing may not be enough for tall fescue at peak spring growth, while zoysia may need mowing only every 1.5 to 2 weeks."
+      },
+      {
+        "source": "Penn State Extension, 'Lawn Management Through the Seasons' (already recorded in research-gaps-services.json, read 2026-10-02)",
+        "url": "https://extension.psu.edu/lawn-management-through-the-seasons",
+        "status": "verified (earlier file)",
+        "figures": "Never remove more than one-third of leaf height; at peak spring growth may need mowing more than once a week; mow at 2 inches or higher."
+      }
+    ],
+    "artificialTurfHomeComparison": {
+      "figures": "Residential natural lawn upkeep $0.20-$1.50 per sq ft per year; synthetic upkeep $150-$350 a year; artificial install $9-$12 per sq ft; sod $1.75-$3.00 per sq ft",
+      "urls": ["https://www.ergeon.com/blog/post/artificial-vs-real-grass-cost", "https://www.californiaturfco.com/grass-vs-turf-cost-compare-installation-maintenance-and-impact"],
+      "currency": "USD",
+      "status": "secondhand",
+      "basis": "Search summary of commercial landscaping pages, some of which sell turf. Not a turf association or extension figure."
+    },
+    "seeAlso": "src/engine/systems/lawns.ts and docs/research/world/research-gaps-services.json (growing_season_by_place) for lawn growth rates and seasons already in the engine."
+  },
+
+  "guesthouse": {
+    "furnishing": {
+      "source": "Techvestor, 'Cost of Furnishing an Airbnb: Room-by-Room'",
+      "url": "https://www.techvestor.com/blog/cost-of-furnishing-an-airbnb",
+      "currency": "USD",
+      "status": "verified",
+      "figures": {
+        "modestStudioFullyEquipped": [4000, 8000],
+        "smallSimpleListingLowEnd": [1000, 2000],
+        "additionalBedroomMidRange": [2500, 5000],
+        "livingRoomMidRange": [3000, 7000],
+        "kitchenOutfitting": [2000, 10000],
+        "bathroomOutfitting": [200, 800]
+      },
+      "note": "A short-term-rental furnishing guide, the closest published analogue of a small guesthouse. Not a primary source. For itemised prices, SLATE already has docs/research/world/research-furniture-catalog.json and research-contents.json; furnishing a guesthouse could be built from those items instead of a lump sum."
+    },
+    "guestFrequency": "Not researched, per the brief (no source for how often friends stay over was looked for)."
+  },
+
+  "notFound": [
+    "Checkatrade's own outdoor-kitchen cost guide: the URLs tried (/outdoor-kitchen-cost/, /outdoor-kitchen-cost-uk/, /cost-of-outdoor-kitchen/) returned 404 or empty; the UK figures are Checkatrade as quoted by Ideal Home.",
+    "Outdoor kitchen build time in days from a cost guide: only weeks are published (HomeAdvisor 4-6 weeks, Fixr minimum 2-3 weeks); days are converted.",
+    "Herb yields per square foot or metre from an extension service: none found. UGA C963 and VT 426-331 list no basil or parsley rows that were read.",
+    "Days to maturity for leaf lettuce separately from head types in UGA C963.",
+    "RHS, Cornell, Penn State and University of California yield tables: not reached; Virginia Tech, Colorado State, Maine and Georgia extension were used instead.",
+    "Time a home gardener spends per bed per week from ATUS or an extension service: ATUS reports lawn and garden together per person per day; only a nonprofit (Growing Places) gives weekly hours, and not per bed.",
+    "ECCC 1991-2020 frost normals for Toronto and Vancouver: the station pages returned the search form to scripted fetches, and the MSC GeoMet API carries 1981-2010 only.",
+    "Frost dates for London and Dublin: the Met Office and Met Éireann publish monthly air- and ground-frost day counts, not first/last frost dates.",
+    "A residential (backyard) running track cost from Angi, HomeAdvisor, Fixr, HomeGuide or Checkatrade: none publishes one. Rubber-surface figures found are commercial-track blog figures (secondhand).",
+    "Land needed for a 400 m track: not sourced in this pass.",
+    "Soccer drills or skills practice MET code: none in the 2024 Adult Compendium.",
+    "Residential football-pitch lighting cost: none found; court lighting used as the nearest.",
+    "A turf association or extension figure for residential natural-grass annual cost: STMA publishes athletic-field budgets (2009) only; the residential lawn-versus-turf figures are from commercial landscaping pages.",
+    "Mexico City outlying-borough frost data (e.g., Milpa Alta, Tlalpan heights): not looked up; only Tacubaya.",
+    "BLS ATUS table read directly: BLS blocks scripted access; values came through a summarising fetch."
+  ]
+}
