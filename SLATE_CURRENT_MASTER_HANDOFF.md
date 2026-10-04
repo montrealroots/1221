@@ -30,10 +30,12 @@ Run the four checks of CLAUDE.md's rules 2 and 3 first; the tree wins over this 
 - Toronto, wealthy (`death-tor`): died at 84. It watched 107 episodes, adding 7.84 kWh.
 - Dublin, wealthy (`death-dub`): died at 53. It watched none, because the driver buys no TV license.
 
+**Merged to `main`** as `16ca1f0f` (PR #25, at `be34ed64`) after that replay, with the owner's standing approval; the branch was fast-forwarded to it.
+
 The driver was rebuilt in this container (`probe/play-to-death.ts`, git-ignored, so it goes with the container). It turns every shortcut on, buys the hungriest labeled set in the second year, watches an episode a week and makes no career moves. Its lives aren't comparable to the owner's Windows driver of the same name, whose New York dies at 89 and London at 50.
 
 **Open in the TV catalog.**
-- The research merged a model's regions under its American code, so a British, Irish or Mexican shopper sees that code. London's driver was offered Samsung's QN115QN90FFXZA, which Britain sells as a QE model. `tools/build-tvs.mjs` drops `regionalModels`: keep them and show each market's own code.
+- The research merged a model's regions under its American code, and until the commit after the merge a British, Irish or Mexican shopper saw that code: London's driver was offered Samsung's QN115QN90FFXZA, which Britain sells as a QE model. Each offer now keeps the model number its market sells it under (`CatalogOffer.model`, on 346 offers), and the shop, the compare table and the set bought show it (`tvName`).
 - 274 sets have no figure and draw the median. They are mostly sold in America, Canada and Mexico (140, 108 and 73 of them), where no label was read; 15 are sold in Britain and 7 in Ireland:
   - ENERGY STAR's certified list (`energystar-tvs.json`) holds 183 sets, none of them Hisense, Sony or TCL.
   - The FTC EnergyGuide gives kilowatt-hours a year, and the research brief forbids turning that into watts.
@@ -50,8 +52,7 @@ The driver was rebuilt in this container (`probe/play-to-death.ts`, git-ignored,
 - A generated catalog of real product names joins `NOT_OURS` in `tools/spelling.mjs`, and a name the sweep would change joins `REAL_NAMES`. Bang & Olufsen's Beovision Theatre did both.
 
 **Next, in order:**
-1. Each market's own model code on a TV (above).
-2. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`: 0 of 45 met, televisions at 24 of 50, and 17 categories with no catalog yet), then the open rows in `docs/REQUIREMENTS.md`.
+1. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`: 0 of 45 met, televisions at 24 of 50, and 17 categories with no catalog yet), then the open rows in `docs/REQUIREMENTS.md`.
    - Rows a player can act on, with no published rate needed: 41c, a guest room and an office, each with something real that reads it.
    - 22f, garment repair, is held back for want of how much a repair restores; inventing that figure was avoided.
    - Stage 14 and deployment come last.

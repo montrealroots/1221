@@ -26,7 +26,7 @@ import { bedAtHome, bedQuote, bedsIn, furnishRefusal, mattressCost, mattressRefu
 import { BED_MARKET, bedSize } from '@/engine/content/beds';
 import { RENTED_TRUCK } from '@/engine/content/furniture';
 import { assemblyFee, pieceRefusal, piecesCatalog, seatsAtHome } from '@/engine/systems/furnishings';
-import { GENERIC_TV_WATTS, buyTvRefusal, tvAtHome, tvCatalog } from '@/engine/systems/televisions';
+import { GENERIC_TV_WATTS, buyTvRefusal, tvAtHome, tvCatalog, tvName } from '@/engine/systems/televisions';
 import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -789,9 +789,10 @@ function Televisions() {
   const [compared, toggleCompare, clearCompare] = useCompare('tv');
   if (shop.length === 0) return null;
   const entries: CatalogEntry<(typeof shop)[number]>[] = shop.map((x) => ({
-    id: x.offer.id, label: `${x.product.brand} ${x.product.model}`, price: x.price, priceKind: 'advertised', basis: 'Each, with the tax as the place shows it',
+    // By the model number it's sold under here; the maker's other code still finds it.
+    id: x.offer.id, label: tvName(x.product, x.offer), price: x.price, priceKind: 'advertised', basis: 'Each, with the tax as the place shows it',
     facets: { brand: x.product.brand, panel: String(x.product.attrs.panel ?? 'LED') },
-    words: [x.product.family, x.product.attrs.resolution, x.product.attrs.smartOs, x.offer.seller, `${x.product.attrs.sizeIn} inch`].filter(Boolean).join(' '), value: x,
+    words: [x.product.family, x.product.model, x.product.attrs.resolution, x.product.attrs.smartOs, x.offer.seller, `${x.product.attrs.sizeIn} inch`].filter(Boolean).join(' '), value: x,
   }));
   const arranged = arrange(entries, view);
   const page = arranged.slice(0, shownCount);
