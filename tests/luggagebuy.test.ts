@@ -54,4 +54,16 @@ describe('a bag as a product', () => {
     expect(bag.spec).toMatchObject({ product: piece.productId, offer: piece.id });
     expect(luggageProduct(piece)!.offers.some((o) => o.id === piece.id)).toBe(true);
   });
+
+  it('holds its maker’s liters, or where the maker gives only its outside measure, an estimate marked as one', () => {
+    const estimated = LUGGAGE.filter((x) => x.litersEstimated);
+    expect(estimated.length).toBeGreaterThan(0);
+    // Every estimate is from an outside measure, and holds no more than the room the bag takes up, to the whole liter.
+    for (const x of estimated) expect(x.liters).toBeLessThanOrEqual(Math.round(x.outsideL!));
+    const sim = life('bag-estimate');
+    const piece = luggageCatalog(sim, sim.player).find((x) => x.piece.litersEstimated)!.piece;
+    const r = sim.execute<{ itemId: string }>({ kind: 'luggage.buy', payload: { pieceId: piece.id } });
+    expect(r.ok, r.error).toBe(true);
+    expect(bagsOf(sim.player).find((b) => b.id === r.value!.itemId)!.holdsL).toBe(piece.liters);
+  });
 });

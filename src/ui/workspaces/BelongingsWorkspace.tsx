@@ -608,7 +608,7 @@ function Luggage() {
                 return (
                   <tr key={piece.id}>
                     <td>{e.label}<div className="xs dim">{TYPE[piece.type] ?? piece.type}{piece.retailer ? `, ${piece.retailer}` : ''}</div></td>
-                    <td className="num">{piece.liters} L</td>
+                    <td className="num" title={piece.litersEstimated ? 'Estimated from its outside measure; the maker doesn’t publish what it holds' : undefined}>{piece.litersEstimated ? '≈' : ''}{piece.liters} L</td>
                     <td className="num">{piece.kg !== null ? `${piece.kg} kg` : '—'}</td>
                     <td className="num mono">{money(price)}</td>
                     <td>
@@ -629,7 +629,7 @@ function Luggage() {
         <ShowMore shown={Math.min(shownCount, arranged.length)} total={arranged.length} onMore={more} />
         <CompareTable heads={chosen.map((e) => e.label)} onClear={clearCompare} rows={[
           { label: 'Price', values: chosen.map((e) => money(e.value.price)) },
-          { label: 'Holds', values: chosen.map((e) => `${e.value.piece.liters} L`) },
+          { label: 'Holds', values: chosen.map((e) => `${e.value.piece.litersEstimated ? '≈' : ''}${e.value.piece.liters} L`) },
           { label: 'Weighs', values: chosen.map((e) => (e.value.piece.kg !== null ? `${e.value.piece.kg} kg` : '—')) },
           { label: 'Outside', values: chosen.map((e) => (e.value.piece.outsideL !== null ? `${e.value.piece.outsideL} L` : '—')) },
           { label: 'Material', values: chosen.map((e) => attr(e, 'material')) },
