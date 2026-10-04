@@ -95,8 +95,10 @@ export interface VetYear { clinic: string; dog: number; cat: number; currency: s
 export const RATION_G = { dog: 273, cat: 56 } as const;
 export const LITTER_KG_A_WEEK = 1.9;
 export const WALK = { minutes: 60, met: 3.0 } as const;
-export const PET_FOODS: readonly PetFood[] = ${JSON.stringify(foods)};
-export const LITTERS: readonly Litter[] = ${JSON.stringify(litters)};
+// Parsed from strings, as the grocery, toiletry and cleaning catalogs are: their names are the retailers', not SLATE's
+// prose (from 2026-10-04, when the grocers' foods brought fourteen of Chedraui's opening on "Alimento").
+export const PET_FOODS: readonly PetFood[] = JSON.parse(${JSON.stringify(JSON.stringify(foods))});
+export const LITTERS: readonly Litter[] = JSON.parse(${JSON.stringify(JSON.stringify(litters))});
 export const VET_YEAR: Readonly<Record<string, VetYear>> = ${JSON.stringify(vets)};
 `;
 writeFileSync(OUT, head + body);

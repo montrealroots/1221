@@ -55,7 +55,7 @@ describe('a pet’s food', () => {
     expect([...spellings.values()].filter((v) => v.size > 1).map((v) => [...v])).toEqual([]);
     // The earlier read's PURINA ONE is Purina ONE, its Pro Plan Purina Pro Plan, as the grocers' feeds write them.
     expect(PET_FOODS.some((f) => f.brand === 'PURINA ONE' || f.brand === 'Pro Plan')).toBe(false);
-    expect(new Set(PET_FOODS.map((f) => f.brand)).size).toBeGreaterThanOrEqual(40);
+    expect(new Set(PET_FOODS.map((f) => f.brand)).size).toBeGreaterThanOrEqual(50);
   });
 
   it('a day unfed is said and counted; the shortcut feeds them from what’s at home', () => {
