@@ -90,7 +90,7 @@ describe('a pet', () => {
     expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'us-ny-newyork', 1, Date.UTC(2027, 0, 3, 15))).toMatch(/no pets in the hold/);
     expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'us-ny-newyork', 1, Date.UTC(2027, 0, 6, 15))).toBe(inSaveMoney(sim, 105_00, 'CAD'));
     // Out of America no airline takes it for an ordinary passenger.
-    expect(petFlightFee(sim, sim.player, 'us-ny-newyork', 'us-ca-losangeles', 1)).toMatch(/^Rua: No airline flies a dog this size out of America/);
+    expect(petFlightFee(sim, sim.player, 'us-ny-newyork', 'us-ca-losangeles', 1)).toMatch(/^Rua: No airline flies a pet in the hold out of America/);
     // Aeromexico: the hold, in pesos either way.
     expect(petFlightFee(sim, sim.player, 'mx-cmx-mexicocity', 'us-ny-newyork', 1)).toBe(inSaveMoney(sim, 5_570_00, 'MXN'));
     // Each pet its own, and none without a flight.
@@ -103,7 +103,9 @@ describe('a pet', () => {
     const sim = life('us-ny-newyork', 'pet-cat-fly');
     sim.must({ kind: 'pets.adopt', payload: { shelterId: 'aspca-cat', name: 'Mog' } });
     expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'us-ny-newyork', 1, Date.UTC(2026, 11, 20, 15))).toBe(inSaveMoney(sim, 50_00, 'CAD'));
-    expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'uk-eng-london', 1)).toBe(inSaveMoney(sim, 100_00, 'CAD'));
+    expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'ie-lei-dublin', 1)).toBe(inSaveMoney(sim, 100_00, 'CAD'));
+    // Britain takes no pet arriving in a cabin: it comes in the hold.
+    expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'uk-eng-london', 1)).toBe(inSaveMoney(sim, 270_00, 'CAD'));
     // Aeromexico prices the cabin within Mexico in pesos and abroad in dollars.
     expect(petFlightFee(sim, sim.player, 'mx-cmx-mexicocity', 'mx-cmx-mexicocity', 1)).toBe(inSaveMoney(sim, 1_520_00, 'MXN'));
     expect(petFlightFee(sim, sim.player, 'mx-cmx-mexicocity', 'us-ny-newyork', 1)).toBe(inSaveMoney(sim, 182_00, 'USD'));

@@ -56,7 +56,7 @@ export const PET_FLIGHT: Readonly<Record<string, PetFlightRule>> = {
   us: {
     carrier: 'Delta',
     cabin: { domestic: 150, abroad: 150, currency: 'USD', status: 'verified' },
-    hold: { refused: 'No airline flies a dog this size out of America for an ordinary passenger now: Delta checks no pets and its cargo carries them only for military and State Department moves, United’s PetSafe has been closed since 2018, and American’s is military-only.' },
+    hold: { refused: 'No airline flies a pet in the hold out of America for an ordinary passenger now: Delta checks no pets and its cargo carries them only for military and State Department moves, United’s PetSafe has been closed since 2018, and American’s is military-only.' },
   },
   uk: {
     carrier: 'British Airways',

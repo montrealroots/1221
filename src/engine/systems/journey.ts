@@ -51,7 +51,7 @@ import { laidUp } from './repairs';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
 import { cabinBagRefusal, moveTo, weighIn } from './luggage';
-import { hotelPetFee, petCareRefusal, petFlightFee, petsOf } from './pets';
+import { arrivalFee, entryRefusal, hotelPetFee, petCareRefusal, petFlightFee, petsOf } from './pets';
 import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking, freeCancelUntil, roomReadyAt } from './hotels';
 import { claimCancellation } from './travelinsurance';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
@@ -621,7 +621,13 @@ export function registerJourneys(sim: Simulation): void {
       const backFee = by || !back ? 0 : petFlightFee(s, person, toCity, fromCity, flights(back), back[0]!.departAt);
       if (typeof outFee === 'string') throw new CommandError(outFee);
       if (typeof backFee === 'string') throw new CommandError(backFee);
-      petFees = stayFee + outFee + backFee;
+      // Each country's papers, good on the day they arrive there, and on the day home (from 2026-10-04).
+      // The way home only on what lasts: a certificate or a tapeworm treatment is got near the day, at a vet there.
+      const inNo = entryRefusal(person, fromCity, toCity, out[out.length - 1]!.arriveAt) ?? (back ? entryRefusal(person, toCity, fromCity, back[back.length - 1]!.arriveAt, { lasting: true }) : undefined);
+      if (inNo) throw new CommandError(inNo);
+      // A fee on arriving with them, each way (Heathrow's, Canada's), paid with the way out.
+      const arrive = arrivalFee(s, person, fromCity, toCity) + (back ? arrivalFee(s, person, toCity, fromCity) : 0);
+      petFees = stayFee + outFee + backFee + arrive;
     }
     const outCost = total(out) + (hotel?.price ?? 0) + petFees;
     const cost = outCost + (back ? total(back) : 0);

@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-349 commands; 343 named by a test, 6 not.
+353 commands; 347 named by a test, 6 not.
 
 ## aircraft
 
@@ -429,10 +429,14 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `pets.adopt` | `src/engine/systems/pets.ts` | `Home.tsx` | `journeys.test.ts` `pet-care.test.ts` `pet-grooming.test.ts` `pet-tenancy.test.ts` `pets.test.ts` | Rent And A Roof |
+| `pets.adopt` | `src/engine/systems/pets.ts` | `Home.tsx` | `journeys.test.ts` `pet-care.test.ts` `pet-grooming.test.ts` `pet-papers.test.ts` `pet-tenancy.test.ts` `pets.test.ts` | Rent And A Roof |
 | `pets.buy` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
+| `pets.certificate` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-papers.test.ts` | Rent And A Roof |
+| `pets.chip` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-papers.test.ts` | Rent And A Roof |
 | `pets.feed` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
 | `pets.groom` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-grooming.test.ts` | Rent And A Roof |
+| `pets.import_form` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-papers.test.ts` | Rent And A Roof |
+| `pets.tapeworm` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-papers.test.ts` | Rent And A Roof |
 | `pets.vet` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
 | `pets.walk` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
 | `pets.walker` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
@@ -517,7 +521,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `travel.book` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `airportparking.test.ts` `aviation.test.ts` `boardingid.test.ts` `caravans.test.ts` `checkin.test.ts` `childtravel.test.ts` `companions.test.ts` `compensation.test.ts` `deposits.test.ts` `driving.test.ts` `extend.test.ts` `ferries.test.ts` `hotelid.test.ts` `hotelrooms.test.ts` `hotels.test.ts` `identity.test.ts` `journey.test.ts` `journeys.test.ts` `latecheckout.test.ts` `lets.test.ts` `luggage-choice.test.ts` `motorhomes.test.ts` `paratransit.test.ts` `pets.test.ts` `rail.test.ts` `rentals.test.ts` `staytypes.test.ts` `stepfree.test.ts` `travelchange.test.ts` `travelinsurance.test.ts` | Getting Around |
+| `travel.book` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `airportparking.test.ts` `aviation.test.ts` `boardingid.test.ts` `caravans.test.ts` `checkin.test.ts` `childtravel.test.ts` `companions.test.ts` `compensation.test.ts` `deposits.test.ts` `driving.test.ts` `extend.test.ts` `ferries.test.ts` `hotelid.test.ts` `hotelrooms.test.ts` `hotels.test.ts` `identity.test.ts` `journey.test.ts` `journeys.test.ts` `latecheckout.test.ts` `lets.test.ts` `luggage-choice.test.ts` `motorhomes.test.ts` `paratransit.test.ts` `pet-papers.test.ts` `pets.test.ts` `rail.test.ts` `rentals.test.ts` `staytypes.test.ts` `stepfree.test.ts` `travelchange.test.ts` `travelinsurance.test.ts` | Getting Around |
 | `travel.cancel` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `caravans.test.ts` `companions.test.ts` `journey.test.ts` `rail.test.ts` `rentals.test.ts` `travelinsurance.test.ts` | Getting Around |
 | `travel.change` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `travelchange.test.ts` | Getting Around |
 | `travel.child` | `src/engine/systems/companions.ts` | `TravelWorkspace.tsx` | `childtravel.test.ts` | Getting Around |

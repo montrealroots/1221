@@ -33,7 +33,8 @@ import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets'
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
 import { ROOM_USE_LABEL, roomList } from '@/engine/systems/rooms';
-import { GROOMERS, foodLeftG, groomDue, groomerPrice, litterLeftKg, petShop, petsOf, vetPrice } from '@/engine/systems/pets';
+import { GROOMERS, certificatePrice, chipPrice, foodLeftG, groomDue, groomerPrice, litterLeftKg, petShop, petsOf, vetPrice } from '@/engine/systems/pets';
+import { PET_ENTRY } from '@/engine/content/petentry';
 import { livingIn } from '@/engine/systems/homes';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -101,6 +102,9 @@ function PetCare() {
                       {p.species === 'dog' && <Gated feature="pets.walker" className="btn btn-sm btn-ghost" onClick={() => run('pets.walker', { petId: p.id, on: !p.walker })}>{p.walker ? 'Stop The Walker' : 'Book A Walker'}</Gated>}
                       {p.species === 'dog' && <Gated feature="pets.groom" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.groom', { petId: p.id, at: 'home' }).ok) toast(`${p.name}, bathed.`, 'positive'); }}>Bathe It At Home</Gated>}
                       {p.species === 'dog' && typeof groomerPrice(sim, person) === 'number' && <Gated feature="pets.groom" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.groom', { petId: p.id, at: 'groomer' }).ok) toast(`${p.name}, bathed at ${GROOMERS[person.home!.cityId]!.name}.`, 'positive'); }}>{`To ${GROOMERS[person.home?.cityId ?? '']?.name}, ${money(groomerPrice(sim, person) as number)}`}</Gated>}
+                      {p.chippedAt === undefined && typeof chipPrice(sim, person) === 'number' && <Gated feature="pets.chip" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.chip', { petId: p.id }).ok) toast(`${p.name}, chipped.`, 'positive'); }}>{`Microchip It, ${money(chipPrice(sim, person) as number)}`}</Gated>}
+                      {p.species === 'dog' && <Gated feature="pets.tapeworm" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.tapeworm', { petId: p.id }).ok) toast(`${p.name}, treated for tapeworm.`, 'positive'); }}>Treat For Tapeworm</Gated>}
+                      {p.species === 'dog' && <Gated feature="pets.import_form" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.import_form', { petId: p.id }).ok) toast(`${p.name}’s CDC form, filed.`, 'positive'); }}>File The CDC Form</Gated>}
                       <Gated feature="pets.vet" className="btn btn-sm btn-ghost" disabled={typeof vet === 'string'} onClick={() => { if (run('pets.vet', { petId: p.id }).ok) toast(`${p.name} saw the vet.`, 'positive'); }}>Take It To The Vet</Gated>
                     </div>
                   </td>
@@ -110,6 +114,7 @@ function PetCare() {
           </tbody>
         </table>
       </div>
+      <PetPapers />
       <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
         <Gated feature="pets.feed" className="btn btn-sm btn-primary" onClick={() => { const r = run<{ fed: string[] }>('pets.feed', {}); if (r.ok) toast(`Fed ${r.value!.fed.join(' and ')}.`, 'positive'); }}>Feed Them</Gated>
         <span className="small">{`At home: ${pets.some((p) => p.species === 'dog') ? `${(foodLeftG(person, 'dog') / 1000).toFixed(1)} kg of dog food, ` : ''}${pets.some((p) => p.species === 'cat') ? `${(foodLeftG(person, 'cat') / 1000).toFixed(1)} kg of cat food, ${litterLeftKg(person).toFixed(1)} kg of litter` : ''}`.replace(/, $/, '')}</span>
@@ -642,6 +647,27 @@ function Luggage() {
         ]} />
       </div>
     </Panel>
+  );
+}
+
+const PAPERS_FOR: Readonly<Record<string, string>> = { mx: 'Mexico', ca: 'Canada', us: 'America', ie: 'Ireland', uk: 'Great Britain' };
+/** A health certificate for the pets, for where they're going (`pets.certificate`, from 2026-10-04): each country's own days from issue to arrival. */
+function PetPapers() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const [to, setTo] = useState('uk');
+  const price = certificatePrice(sim, person);
+  if (petsOf(person).length === 0) return null;
+  const cur = saveCurrency(sim.universe);
+  return (
+    <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+      <div className="field" style={{ margin: 0 }}>
+        <label htmlFor="pet-papers-to">A Health Certificate For</label>
+        <select id="pet-papers-to" value={to} onChange={(e) => setTo(e.target.value)}>{Object.keys(PET_ENTRY).sort((a, z) => PAPERS_FOR[a]!.localeCompare(PAPERS_FOR[z]!)).map((c) => <option key={c} value={c}>{PAPERS_FOR[c]}</option>)}</select>
+      </div>
+      <Gated feature="pets.certificate" className="btn btn-sm" disabled={typeof price === 'string'} title={typeof price === 'string' ? price : undefined} onClick={() => { if (run('pets.certificate', { to }).ok) toast(`A health certificate for ${PAPERS_FOR[to]}.`, 'positive'); }}>{typeof price === 'number' ? `Get One, ${formatMoney(price, cur, { cents: false })}` : 'Get One'}</Gated>
+      <span className="xs dim">Each country’s own list is checked on the day you arrive: a microchip, rabies, the certificate’s days, a dog’s tapeworm treatment or the CDC’s form.</span>
+    </div>
   );
 }
 
