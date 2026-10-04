@@ -254,7 +254,7 @@ function Shop() {
   return (
     <Panel title={`Shops In ${town}`} subtitle={`${entries.length} products from ${new Set(entries.map((e) => (e.value as ClothingProduct).retailer)).size} retailers`}>
       <div className="col gap-3">
-        <CatalogControls id="clothes-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ department: 'Department', type: 'Type', kind: 'Kind', special: 'Special Kinds', retailer: 'Retailer', where: 'Where' }} />
+        <CatalogControls id="clothes-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ department: 'Department', cut: 'Cut And Fit', type: 'Type', kind: 'Kind', special: 'Special Kinds', retailer: 'Retailer', where: 'Where' }} />
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Product</th><th scope="col">Retailer</th><th scope="col">Where</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>

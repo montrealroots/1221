@@ -132,6 +132,22 @@ export const KIND_LABEL: Readonly<Record<string, string>> = {
  * The clothes on sale to them: the market where they are, each at its price
  * tax in, and each saying whether a store here sells it.
  */
+/**
+ * Who a garment is cut for, and its fit line, as the retailer's own name or
+ * page says it (from 2026-10-04): a filter, never a rule; anyone buys anything.
+ */
+export function cutOf(p: ClothingProduct): string {
+  const n = `${p.name} ${p.url ?? ''}`.toLowerCase();
+  if (/maternity|\bmama\b/.test(n)) return 'Maternity';
+  if (/petite/.test(n)) return 'Petite';
+  if (/\btall\b/.test(n)) return 'Tall';
+  if (/plus[- ]size|\bplus\b|\bcurve\b/.test(n)) return 'Plus';
+  if (/\b(kids|girls|boys|baby|toddler)\b/.test(n)) return 'Children';
+  if (/women|womens|ladies/.test(n)) return 'Women';
+  if (/\bmen\b|\bmens\b|men's/.test(n)) return 'Men';
+  return 'Not Named';
+}
+
 export function clothingCatalog(sim: Simulation, cityId: string): CatalogEntry<ClothingProduct>[] {
   const market = marketOf(cityId);
   if (!market) return [];
@@ -140,7 +156,7 @@ export function clothingCatalog(sim: Simulation, cityId: string): CatalogEntry<C
     return {
       id: p.id, label: p.name, value: p, basis: 'Price, Tax In', price: productPrice(sim, cityId, p), priceKind: 'advertised' as const,
       // The department and the retailer's own type of garment, as its site files it (from 2026-10-02).
-      facets: { retailer: r.name, kind: KIND_LABEL[p.kind] ?? 'Other', department: p.category, type: p.subcategory ?? p.category, special: p.subtype ? SUBTYPE_LABEL[p.subtype] ?? p.subtype : 'None', where: r.storesIn.includes(cityId) ? 'In Store' : r.delivers ? 'Online' : 'Elsewhere' },
+      facets: { retailer: r.name, kind: KIND_LABEL[p.kind] ?? 'Other', department: p.category, cut: cutOf(p), type: p.subcategory ?? p.category, special: p.subtype ? SUBTYPE_LABEL[p.subtype] ?? p.subtype : 'None', where: r.storesIn.includes(cityId) ? 'In Store' : r.delivers ? 'Online' : 'Elsewhere' },
       words: `${p.brand} ${p.category} ${p.subcategory ?? ''} ${p.material ?? ''} ${p.colors.join(' ')}`,
     };
   });
