@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-342 commands; 336 named by a test, 6 not.
+343 commands; 337 named by a test, 6 not.
 
 ## aircraft
 
@@ -331,6 +331,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.renters_insurance` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `homes-open.test.ts` `valuables.test.ts` | Rent And A Roof |
 | `home.repair_machine` | `src/engine/systems/appliancefaults.ts` | `Home.tsx` | `appliancefaults.test.ts` | Rent And A Roof |
 | `home.replace_mattress` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `furniture.test.ts` | Rent And A Roof |
+| `home.room_use` | `src/engine/systems/rooms.ts` | `BelongingsWorkspace.tsx` | `room-list.test.ts` | Rent And A Roof |
 | `home.security` | `src/engine/systems/homesecurity.ts` | `Home.tsx` | `homesecurity.test.ts` | Rent And A Roof |
 | `home.sell` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `homes.test.ts` `routines.test.ts` | Rent And A Roof |
 | `home.sell_back` | `src/engine/systems/furnishings.ts` | `BelongingsWorkspace.tsx` | `assembly.test.ts` | Rent And A Roof |
@@ -362,7 +363,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `items.assemble` | `src/engine/systems/furnishings.ts` | `BelongingsWorkspace.tsx` | `assembly.test.ts` `journeys.test.ts` | Rent And A Roof |
 | `items.discard` | `src/engine/systems/bulky.ts` | `BelongingsWorkspace.tsx` | `bulky.test.ts` | Rent And A Roof |
 | `items.give` | `src/engine/systems/gifts.ts` | `BelongingsWorkspace.tsx` | `gifts.test.ts` | Rent And A Roof |
-| `items.move` | `src/engine/systems/items.ts` | `BelongingsWorkspace.tsx` | `items.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `special-rooms.test.ts` | Rent And A Roof |
+| `items.move` | `src/engine/systems/items.ts` | `BelongingsWorkspace.tsx` | `items.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `room-list.test.ts` `special-rooms.test.ts` | Rent And A Roof |
 | `items.put_away` | `src/engine/systems/trips.ts` | `BelongingsWorkspace.tsx` | `connected-day.test.ts` `journeys.test.ts` `trips.test.ts` | Rent And A Roof |
 | `items.recover` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journeys.test.ts` `luggage-choice.test.ts` | Rent And A Roof |
 

@@ -29,6 +29,8 @@ import { contactsOf } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
+import { ROOM_USE_LABEL, roomList } from '@/engine/systems/rooms';
+import { livingIn } from '@/engine/systems/homes';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { LookRegion, Open, at } from '@/ui/looks';
 
@@ -59,6 +61,65 @@ function Collected({ item }: { item: Item }) {
   const no = bulkyRefusal(person, [item.id]);
   const fee = no ? 0 : bulkyFee(sim, person, 1);
   return <Gated feature="items.discard" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (fee ? `The council's collection, ${formatMoney(fee, saveCurrency(sim.universe))}` : 'The council collects it free')} onClick={() => { const a = run<{ collectAt: number }>('items.discard', { itemIds: [item.id] }); if (a.ok) toast(`Booked for collection ${formatDate(a.value!.collectAt, sim.zone)}.`, 'positive'); }}>Have It Collected</Gated>;
+}
+
+/**
+ * The home room by room (`roomList`, from 2026-10-04): each room's use, size,
+ * whose and what's fixed in it, the furniture standing in it, a piece on the
+ * floor put in a room that can take it, and a spare bedroom kept spare or
+ * used for storage.
+ */
+function YourRooms() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const [piece, setPiece] = useState<Record<string, string>>({});
+  const rooms = roomList(sim, person);
+  const home = homeKeyOf(person.home);
+  if (!rooms.length || !home || person.currentLocationId !== person.home?.cityId) return null;
+  const floor = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor' && (i.bulky || i.kind.startsWith('ikea:')));
+  const owns = Boolean(livingIn(person));
+  return (
+    <Panel title="Your Rooms" subtitle="Each room, what it’s used for and what stands in it">
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Room</th><th scope="col">Used For</th><th scope="col" className="num">Size</th><th scope="col">In It</th><th scope="col"><span className="sr-only">Put Something Here</span></th></tr></thead>
+          <tbody>
+            {rooms.map((r) => {
+              const inIt = floor.filter((i) => i.at.kind === 'home' && i.at.room === r.id);
+              const loose = floor.filter((i) => i.at.kind === 'home' && i.at.room === undefined);
+              const chosen = piece[r.id] ?? loose[0]?.id ?? '';
+              const item = loose.find((i) => i.id === chosen);
+              const no = item ? moveRefusal(sim, person, item, { kind: 'home', home, spot: 'floor', room: r.id }) : 'Every piece on the floor is in a room.';
+              return (
+                <tr key={r.id}>
+                  <td>{r.label}{r.access === 'shared' ? <div className="xs dim">Shared</div> : null}{r.fixtures.length ? <div className="xs dim">{r.fixtures.join(', ')}</div> : null}</td>
+                  <td className="small">
+                    {r.use ? ROOM_USE_LABEL[r.use] : r.kind === 'bedroom' ? 'A Flatmate’s Room' : '—'}
+                    {owns && (r.use === 'spare' || r.use === 'storage') && (
+                      <div><Gated feature="home.room_use" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.room_use', { roomId: r.id, use: r.use === 'spare' ? 'storage' : 'spare' }).ok) toast(r.use === 'spare' ? 'It’s a storage room now.' : 'It’s kept spare now.', 'positive'); }}>{r.use === 'spare' ? 'Use It For Storage' : 'Keep It Spare'}</Gated></div>
+                    )}
+                  </td>
+                  <td className="num small">{`${r.m2.toFixed(1)} m²`}</td>
+                  <td className="small">{inIt.length ? inIt.map((i) => i.label).join(', ') : '—'}</td>
+                  <td>
+                    {loose.length > 0 && r.kind !== 'bathroom' && (
+                      <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+                        <select aria-label={`What To Put In ${r.label}`} value={chosen} onChange={(e) => setPiece((x) => ({ ...x, [r.id]: e.target.value }))}>
+                          {loose.map((i) => <option key={i.id} value={i.id}>{i.label}</option>)}
+                        </select>
+                        <Gated feature="items.move" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('items.move', { itemId: chosen, to: { kind: 'home', home, spot: 'floor', room: r.id } }).ok) toast(`Put in ${r.label.replace(/^The /, 'the ')}.`, 'positive'); }}>Put It Here</Gated>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="xs dim">Bedrooms at the space standard’s least, a bathroom four square meters, the living room and kitchen sharing the rest, scaled to the home; a storage room holds half its volume.</div>
+    </Panel>
+  );
 }
 
 /**
@@ -152,6 +213,7 @@ export function BelongingsWorkspace() {
       </div>
       <div className="col gap-5">
         <ShoppingOut />
+        <YourRooms />
         <Panel title="Where Things Are">
           <div className="grid grid-3">
             <Stat label="Owned" value={String(items.length)} note="Each thing, or each set of the same" />

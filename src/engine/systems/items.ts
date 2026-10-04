@@ -30,14 +30,15 @@ import type { Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { PIECE_LABEL, type Piece } from '../content/furniture';
 import { GARMENT_L } from '../content/garmentcare';
-import { BUILT_IN, closetRefusal, fitRefusal, footprintOf } from './rooms';
+import { BUILT_IN, closetRefusal, fitRefusal, footprintOf, roomFitRefusal } from './rooms';
 import { COLD_STORE } from '../content/coldstorage';
 import { LIBRARY_BOOKS } from '../content/specialrooms';
 import { CITIES } from '../content/geography';
 
 /** Where a thing is. */
 export type Place =
-  | { kind: 'home'; home: string; spot?: Spot }
+  /** At a home, in a spot there, and from 2026-10-04 in one of its rooms (`roomList`). */
+  | { kind: 'home'; home: string; spot?: Spot; room?: string }
   | { kind: 'person' }
   | { kind: 'vehicle'; vehicleId: string }
   | { kind: 'inside'; itemId: string }
@@ -193,6 +194,8 @@ export function moveRefusal(sim: Simulation, person: Person, item: Item, to: Pla
     if (to.home === homeKeyOf(person.home)) {
       if (BUILT_IN.has(spot) && !(was && BUILT_IN.has(was))) { const full = closetRefusal(sim, person, item); if (full) return full; }
       if (spot === 'floor' && was !== 'floor' && item.bulky) { const tight = fitRefusal(sim, person, footprintOf(item)); if (tight) return tight; }
+      // Into a room by name (from 2026-10-04): what that room is for, and its own floor.
+      if (to.room !== undefined) { if (spot !== 'floor') return 'A room is chosen for what stands on the floor.'; const fit = roomFitRefusal(sim, person, item, to.room); if (fit) return fit; }
       // A library's shelves, where the home has one, hold a thousand books (`content/specialrooms.ts`, from 2026-10-04).
       if (spot === 'shelves' && was !== spot) {
         const owned = (person.homes ?? []).find((h) => `owned:${h.id}` === to.home);
@@ -272,7 +275,7 @@ export function registerItems(sim: Simulation): void {
     if (!to || typeof to !== 'object') throw new CommandError('Where to?');
     const no = moveRefusal(s, person, item, to);
     if (no) throw new CommandError(no);
-    item.at = to.kind === 'home' ? { kind: 'home', home: to.home, spot: to.spot ?? 'floor' } : to;
+    item.at = to.kind === 'home' ? { kind: 'home', home: to.home, spot: to.spot ?? 'floor', ...(to.room !== undefined && (to.spot ?? 'floor') === 'floor' ? { room: String(to.room) } : {}) } : to;
     return { at: item.at };
   });
 }
