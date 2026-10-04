@@ -42,8 +42,8 @@ which never counts toward the target.
 | Personal Care | Toiletries And Grooming | 75 | 100% | 182 | 1 / 1 / 15 | 0 | 182 | 183 | 1 | CA, GB, IE, MX, US | No |
 | Personal Care | Cosmetics And Haircare | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Household | Cleaning Products And Consumables | 80 | 100% | 289 | 1 / 2 / 27 | 0 | 289 | 312 | 3 | CA, GB, IE, MX, US | No |
-| Food | Groceries | 133 | 100% | 455 | 1 / 1 / 58 | 0 | 455 | 466 | 63 | CA, GB, IE, MX, US | No |
-| Food | Beverages | 28 | 56% | 39 | 1 / 1 / 3 | 0 | 39 | 40 | 1 | CA, GB, IE, MX, US | No |
+| Food | Groceries | 112 | 100% | 514 | 1 / 1 / 59 | 0 | 514 | 534 | 123 | CA, GB, IE, MX, US | No |
+| Food | Beverages | 27 | 54% | 39 | 1 / 1 / 3 | 0 | 39 | 40 | 1 | CA, GB, IE, MX, US | No |
 | Vehicles | Cars, Pickups And Vans | 16 | 32% | 37 | 1 / 1 / 7 | 0 | 37 | 53 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Motorcycles And Scooters | 9 | 18% | 25 | 1 / 2 / 10 | 0 | 25 | 36 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Bicycles, E-Bikes And ATVs | 9 | 18% | 20 | 1 / 2 / 5 | 0 | 20 | 26 | 0 | CA, GB, IE, MX, US | No |

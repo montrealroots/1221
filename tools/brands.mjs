@@ -1,6 +1,6 @@
 // The brand each everyday product's own name states (from 2026-10-04), for the grocery, toiletry and cleaning
-// builders: read in docs/research/world/research-brands-from-names.json, research-cleaning-brands.json and the Mexican
-// corrections (research-brands-mx-corrections.json), keyed by
+// builders: read in docs/research/world/research-brands-from-names.json, research-cleaning-brands.json and their
+// corrections (research-brands-corrections.json), keyed by
 // the product's chain, market and name as researched, null where the name states none.
 //
 // One spelling a brand across every list. Where a listing writes a brand in capitals beside its ordinary spelling
@@ -9,8 +9,9 @@
 // coverage report counts it once.
 import { readFileSync } from 'node:fs';
 
-// Chedraui's corrected (from 2026-10-04, `research-brands-mx-corrections.json`): read last, so its brand stands.
-const FILES = ['research-brands-from-names.json', 'research-cleaning-brands.json', 'research-brands-mx-corrections.json'];
+// The corrections (from 2026-10-04, `research-brands-corrections.json`), read last so theirs stands: Chedraui's Spanish
+// nouns, Save-On-Foods' and others' produce given its own noun for a maker, and a maker's name cut to its first word.
+const FILES = ['research-brands-from-names.json', 'research-cleaning-brands.json', 'research-brands-corrections.json'];
 
 export function brandIndex() {
   const items = FILES.flatMap((f) => JSON.parse(readFileSync(`docs/research/world/${f}`, 'utf8')).items);

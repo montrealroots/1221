@@ -1,6 +1,6 @@
 {
  "read": "2026-10-04",
- "method": "Chedraui's products, named in Spanish noun first, were given the noun for their brand: Leche for Lala's milk, Shampoo for Head & Shoulders', Cerveza for Corona. Each is corrected here to the maker its own name states, read from the name itself (the maker after the noun and its description), and to none where the name states none: produce, meat and fish by the kilo, a loose tortilla. A maker spelled elsewhere in the lists keeps that spelling (Kellogg's, TRESemme). The original research file is left as it was read.",
+ "method": "Corrections to the brands read from the products' names (research-brands-from-names.json and research-cleaning-brands.json), each to the maker its own name states, and to none where the name states none. Chedraui's products, named in Spanish noun first, were given the noun for their brand: Leche for Lala's milk, Shampoo for Head & Shoulders', Cerveza for Corona; each is corrected to the maker after the noun and its description, and to none for produce, meat and fish by the kilo and a loose tortilla. Save-On-Foods names a product \"Maker - Product\" and its produce \"Noun - Detail\", so its spinach, onions and oranges were given their own noun for a maker, as were Giant Tiger's and Smart & Final's unbranded produce (Carrots, Zucchini, Gala, Navel, Seedless, Wrapped, Sleeved): each is corrected to none. A maker's name of two words or more was cut to its first (Bumble for Bumble Bee, Dr. for Dr. Oetker, Old for Old Spice, General for General Mills, Robin for Robin Hood): each is corrected to the whole name. A maker spelled elsewhere in the lists keeps that spelling (Kellogg's, TRESemme, Corona). The original research files are left as they were read.",
  "items": [
   {
    "chain": "chedraui",
@@ -680,6 +680,475 @@
    "name": "Tampones Kotex Regular 12 Piezas",
    "brand": "Kotex",
    "was": "Tampones"
+  },
+  {
+   "chain": "chedraui",
+   "market": "MX",
+   "name": "Champiñón Monteblanco Selección 225g",
+   "brand": "Monteblanco",
+   "was": "Champiñón"
+  },
+  {
+   "chain": "chedraui",
+   "market": "MX",
+   "name": "Champiñón por kg",
+   "brand": null,
+   "was": "Champiñón"
+  },
+  {
+   "chain": "chedraui",
+   "market": "MX",
+   "name": "Lenteja Chedraui 450g",
+   "brand": "Chedraui",
+   "was": "Lenteja"
+  },
+  {
+   "chain": "chedraui",
+   "market": "MX",
+   "name": "Miel De Abeja Selecto 500g",
+   "brand": "Selecto",
+   "was": "Miel"
+  },
+  {
+   "chain": "chedraui",
+   "market": "MX",
+   "name": "Aderezo De Mayonesa Mccormick 420g",
+   "brand": "McCormick",
+   "was": "Aderezo"
+  },
+  {
+   "chain": "chedraui",
+   "market": "MX",
+   "name": "Jengibre por kg",
+   "brand": null,
+   "was": "Jengibre"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Apples - Gala, Fresh",
+   "brand": null,
+   "was": "Apples"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "Bagged Russet Potatoes, 5 lb",
+   "brand": null,
+   "was": "Bagged"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Bell Peppers - Green Field Grown, Fresh",
+   "brand": null,
+   "was": "Bell"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Broccoli - Crowns, Fresh",
+   "brand": null,
+   "was": "Broccoli"
+  },
+  {
+   "chain": "thefreshgrocer",
+   "market": "US",
+   "name": "Bumble Bee Chunk Light Tuna in Water, 5 oz",
+   "brand": "Bumble Bee",
+   "was": "Bumble"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Cabbage - Green, Fresh",
+   "brand": null,
+   "was": "Cabbage"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "California Pizza Kitchen Margherita Pizza, Crispy Thin Crust, 15.5 oz",
+   "brand": "California Pizza Kitchen",
+   "was": "California"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Carrots, 2 lbs",
+   "brand": null,
+   "was": "Carrots"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Carrots - Bulk, Fresh",
+   "brand": null,
+   "was": "Carrots"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Celery - Bunch, Fresh",
+   "brand": null,
+   "was": "Celery"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "Celery",
+   "brand": null,
+   "was": "Celery"
+  },
+  {
+   "chain": "supervalu-ie",
+   "market": "IE",
+   "name": "Clean Cut Meals Chicken Curry with Long Grain Rice (400 g)",
+   "brand": "Clean Cut Meals",
+   "was": "Clean"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Corn Flakes Cereal, 280 g",
+   "brand": null,
+   "was": "Corn"
+  },
+  {
+   "chain": "pricerite",
+   "market": "US",
+   "name": "Corona Extra Beer, 18 count, 12 fl oz",
+   "brand": "Corona",
+   "was": "Corona Extra"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "Crystal Geyser Natural Alpine Spring Water, 1 gal",
+   "brand": "Crystal Geyser",
+   "was": "Crystal"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Cucumber - Long English",
+   "brand": null,
+   "was": "Cucumber"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "Cucumbers",
+   "brand": null,
+   "was": "Cucumbers"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "English Cucumber",
+   "brand": null,
+   "was": "English"
+  },
+  {
+   "chain": "supervalu-ie",
+   "market": "IE",
+   "name": "Donegal Catch 4 Breaded Cod Fillets (400 g)",
+   "brand": "Donegal Catch",
+   "was": "Donegal"
+  },
+  {
+   "chain": "supervalu-ie",
+   "market": "IE",
+   "name": "Donegal Catch Salmon Fillets 4 Pack (400 g)",
+   "brand": "Donegal Catch",
+   "was": "Donegal"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Dr. Oetker Suprema Margherita Pizza, 475 g",
+   "brand": "Dr. Oetker",
+   "was": "Dr."
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Essex Kent Whole Mushrooms, 227 g",
+   "brand": "Essex Kent",
+   "was": "Essex"
+  },
+  {
+   "chain": "supervalu-ie",
+   "market": "IE",
+   "name": "Freddy Fyffes Bananas Bag (7 Piece)",
+   "brand": "Fyffes",
+   "was": "Freddy"
+  },
+  {
+   "chain": "thefreshgrocer",
+   "market": "US",
+   "name": "Freshly Ground Beef, 80% Lean / 20% Fat",
+   "brand": null,
+   "was": "Freshly"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "Gala Apples",
+   "brand": null,
+   "was": "Gala"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Garlic 3-Pack",
+   "brand": null,
+   "was": "Garlic"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Garlic - Bulb, Mesh",
+   "brand": null,
+   "was": "Garlic"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "General Mills Cheerios Cereal, Family Size, 570 g",
+   "brand": "General Mills",
+   "was": "General"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Hot House Tomatoes on Vine, Fresh",
+   "brand": null,
+   "was": "Hot"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Ice River Spring Water, 500 ml, 24-Pack",
+   "brand": "Ice River",
+   "was": "Ice"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "Italian Squash",
+   "brand": null,
+   "was": "Italian"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Jalapeno Peppers - Hot Green",
+   "brand": null,
+   "was": "Jalapeno"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "Jalapeno Peppers",
+   "brand": null,
+   "was": "Jalapeno"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Leeks - Fresh Bulk",
+   "brand": null,
+   "was": "Leeks"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Lemon",
+   "brand": null,
+   "was": "Lemon"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Lettuce - Iceberg Cello Wrapped",
+   "brand": null,
+   "was": "Lettuce"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Maple Leaf Prime Chicken Breast, 460 g",
+   "brand": "Maple Leaf",
+   "was": "Maple"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "McIntosh Apples, 3 lb",
+   "brand": null,
+   "was": "McIntosh"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "Navel Oranges, 8 lb bag",
+   "brand": null,
+   "was": "Navel"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "ONLY GOODNESS - Organic White Mushrooms",
+   "brand": "Only Goodness",
+   "was": "ONLY"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Onions - Yellow, Large",
+   "brand": null,
+   "was": "Onions"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Oranges - Navel, Large",
+   "brand": null,
+   "was": "Oranges"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Potatoes - Small Russet Potatoes, 5 lb",
+   "brand": null,
+   "was": "Potatoes"
+  },
+  {
+   "chain": "supervalu-ie",
+   "market": "IE",
+   "name": "Rio Alto Classic Merlot (75 cl)",
+   "brand": "Rio Alto",
+   "was": "Rio"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Robin Hood Quick Oats, 1 kg",
+   "brand": "Robin Hood",
+   "was": "Robin"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "Roma Tomatoes",
+   "brand": null,
+   "was": "Roma"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Romaine Lettuce Hearts, 3-Pack",
+   "brand": null,
+   "was": "Romaine"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Seedless Oranges, 3lb",
+   "brand": null,
+   "was": "Seedless"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Sleeved Celery",
+   "brand": null,
+   "was": "Sleeved"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Spinach - Bunch, Fresh",
+   "brand": null,
+   "was": "Spinach"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Squash - Butternut, Fresh",
+   "brand": null,
+   "was": "Squash"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Vine Tomatoes, 1 lb",
+   "brand": null,
+   "was": "Vine"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "Wrapped Iceberg Lettuce",
+   "brand": null,
+   "was": "Wrapped"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Zucchini, 2-Pack",
+   "brand": null,
+   "was": "Zucchini"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Zucchini - Green Squash, Fresh",
+   "brand": null,
+   "was": "Zucchini"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Ben's Original Converted Long Grain Rice, 2.2 kg",
+   "brand": "Ben's Original",
+   "was": "Ben's"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Johnson & Johnson - Crystal Clean Toothbrush Soft",
+   "brand": "Johnson & Johnson",
+   "was": "Johnson"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Old Spice - Deodorant - Krakengard",
+   "brand": "Old Spice",
+   "was": "Old"
+  },
+  {
+   "chain": "saveonfoods",
+   "market": "CA",
+   "name": "Speed Stick - Ocean Surf Deodorant",
+   "brand": "Speed Stick",
+   "was": "Speed"
+  },
+  {
+   "chain": "gianttiger",
+   "market": "CA",
+   "name": "Super-Z Twin Blade Disposable Razors, 10-Pack, Blue",
+   "brand": "Super-Z",
+   "was": "Super"
+  },
+  {
+   "chain": "smartfinal",
+   "market": "US",
+   "name": "SIMPLY VALUE Bathroom Tissue, Soft & Strong, Double Rolls, 2 Ply",
+   "brand": "Simply Value",
+   "was": "SIMPLY"
   }
  ]
 }

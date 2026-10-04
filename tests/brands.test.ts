@@ -2,7 +2,7 @@
  * The brands of the everyday catalogs (from 2026-10-04): each grocery,
  * toiletry and cleaning product keeps the brand its own name states, read in
  * `research-brands-from-names.json` and `research-cleaning-brands.json`, and
- * Chedraui's in `research-brands-mx-corrections.json` (`tools/brands.mjs`),
+ * the corrections in `research-brands-corrections.json` (`tools/brands.mjs`),
  * and its list filters by it: the groceries' and the
  * bathroom's, where the cleaning products are sold beside the toiletries. A
  * product whose name states no brand (fresh produce, mostly) keeps none,
@@ -46,6 +46,21 @@ describe('a product’s brand', () => {
     expect(brand('chedraui-tomate-saladet-por-kg')).toBeNull();
     // Only Gillette's name starts with its maker.
     expect(mexican.filter((p) => p.brand && p.name.startsWith(`${p.brand} `)).map((p) => p.brand)).toEqual(['Gillette']);
+  });
+
+  it('is never the food’s own noun, nor a maker’s name cut to its first word', () => {
+    // Save-On-Foods' "Spinach - Bunch, Fresh" had Spinach for its maker, Giant Tiger's "Zucchini, 2-Pack" Zucchini.
+    const nouns = new Set([...GROCERY_PRODUCTS.map((p) => p.food), 'zucchini', 'bell', 'gala', 'navel', 'mcintosh', 'romaine', 'seedless', 'vine', 'jalapeno', 'english', 'italian', 'hot', 'bagged', 'wrapped', 'sleeved', 'freshly', 'fresh']);
+    for (const p of GROCERY_PRODUCTS) if (p.brand) expect(nouns.has(plain(p.brand).replace(/s$/, '')), `${p.id}: ${p.brand}`).toBe(false);
+    expect(GROCERY_PRODUCTS.find((p) => p.id === 'saveonfoods-spinach-bunch-fresh')?.brand).toBeNull();
+    const brand = (id: string) => [...GROCERY_PRODUCTS, ...TOILETRIES].find((p) => p.id === id)?.brand;
+    expect(brand('thefreshgrocer-bumble-bee-chunk-light-tuna-in-water-5-oz')).toBe('Bumble Bee');
+    expect(brand('saveonfoods-dr-oetker-suprema-margherita-pizza-475-g')).toBe('Dr. Oetker');
+    expect(brand('saveonfoods-general-mills-cheerios-cereal-family-size-570-g')).toBe('General Mills');
+    expect(brand('saveonfoods-old-spice-deodorant-krakengard')).toBe('Old Spice');
+    // Read from the grocers' feeds on 2026-10-04, a product keeps the feed's brand where its name states it.
+    expect(brand('thefreshgrocer-cream-o-land-whole-milk-1-gal')).toBe('Cream-O-Land');
+    expect(brand('pricerite-fresh-tomatoes-on-the-vine')).toBeNull();
   });
 
   it('is spelled one way in every list, its ordinary spelling where a listing writes it in capitals', () => {

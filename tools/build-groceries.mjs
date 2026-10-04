@@ -1,5 +1,5 @@
 // Builds src/engine/content/groceries.ts from docs/research/world/research-groceries.json
-// (and research-groceries2.json where it's there) and the recipes in
+// (and research-groceries2.json and research-groceries3.json where they're there) and the recipes in
 // research-cooking-alcohol.json (Stage 4 of docs/BACKLOG.md, from 2026-10-01).
 //
 // Each product keeps its chain, exact name, size, regular price, where it's
@@ -18,6 +18,9 @@ const OUT = 'src/engine/content/groceries.ts';
 const read = (f) => JSON.parse(readFileSync(`docs/research/world/${f}`, 'utf8'));
 const g = read('research-groceries.json');
 const more = existsSync('docs/research/world/research-groceries2.json') ? read('research-groceries2.json') : { products: [] };
+// The foods a town's recipes asked for that its grocer had none of in those two, read from the chains' own feeds on
+// 2026-10-04, each with the brand its name states.
+const third = existsSync('docs/research/world/research-groceries3.json') ? read('research-groceries3.json') : { products: [] };
 const recipesIn = read('research-cooking-alcohol.json').recipes;
 
 /**
@@ -26,7 +29,7 @@ const recipesIn = read('research-cooking-alcohol.json').recipes;
  */
 const KEYS = [
   ['peanut-butter', /peanut butter|crema de cacahuate|crema mister cacahuate/],
-  ['pasta-sauce', /pasta sauce|marinara|bolognese sauce|passata|tomato sauce/],
+  ['pasta-sauce', /pasta sauce|marinara|bolognese sauce|passata|tomato sauce|salsa para pasta/],
   ['tomatoes-canned', /(canned|tinned|chopped|diced) tomato(es)?|tomato pur[eé]e|tomato paste|tomate molido|pur[eé] de tomate|tomates? (en lata|picad)/],
   ['tortilla', /tortillas?|masa harina|harina de ma[ií]z|wraps?\b|maseca/],
   ['milk', /\bmilk\b|buttermilk|leche/],
@@ -47,7 +50,7 @@ const KEYS = [
   ['sausage', /sausages?|salchichas?|chorizo/],
   ['fish', /fish|tilapia|\bcod\b|salmon|haddock|pescado|filete/],
   ['tuna', /tuna|at[uú]n/],
-  ['beans', /beans|chick ?peas|garbanzo|lentils|dhal|dal\b|frijol(es)?/],
+  ['beans', /beans|chick ?peas|garbanzo|lentils|lentejas?|dhal|dal\b|frijol(es)?/],
   ['onion', /onions?|cebollas?/],
   ['garlic', /garlic|\bajo\b/],
   ['potato', /potato(es)?|\bpapas?\b/],
@@ -58,22 +61,22 @@ const KEYS = [
   ['orange', /\boranges?\b|naranjas?/],
   ['lemon', /\blemons?\b|\blimes?\b|lim[oó]n(es)?/],
   ['tomato', /tomato(es)?|jitomates?|tomates?/],
-  ['mushroom', /mushrooms?|champi[nñ]on(es)?/],
+  ['mushroom', /mushrooms?|champi[nñ][oó]n(es)?/],
   ['leek', /\bleeks?\b|poro/],
   ['celery', /celery|apio/],
-  ['courgette', /courgettes?|zucchini|calabacitas?/],
-  ['pepper', /(bell|sweet|red|green|yellow) peppers?|peppers?\b(?! \()|pimientos?/],
+  ['courgette', /courgettes?|zucchini|calabacitas?|(?:green|italian) squash|calabaza italiana/],
+  ['pepper', /(bell|sweet|red|green|yellow|mixed) peppers?|peppers?\b(?! \()|pimientos?/],
   ['chilli', /chill?i(es)?\b(?! powder)|jalape[nñ]o peppers?|jalape[nñ]os?|serrano/],
   ['spinach', /spinach|espinacas?/],
   ['broccoli', /broccoli|br[oó]coli/],
   ['cabbage', /cabbage|col\b|repollo/],
   ['cucumber', /cucumbers?|pepinos?/],
   ['squash', /squash|butternut|calabaza/],
-  ['chayote', /chayotes?/],
-  ['swede', /\bswede\b|rutabaga/],
+  ['chayote', /chayotes?(?: squash)?/],
+  ['swede', /\bswedes?\b|rutabagas?/],
   ['turnip', /turnips?|nabo/],
-  ['berries', /berries|blueberr|raspberr|strawberr|cherries|summer fruits|frutos rojos|fresas?/],
-  ['dried-fruit', /sultanas|raisins|dried (cranberries|apricots)|pasas/],
+  ['berries', /berries|berry (?:medley|blend|mix)|blueberr|raspberr|strawberr|cherries|summer fruits|frutos rojos|fresas?/],
+  ['dried-fruit', /sultanas|raisins|dried (cranberries|apricots)|ready to eat apricots|pasas/],
   ['frozen-veg', /\bpeas\b|mixed vegetables|sweetcorn|sweet corn|\bcorn\b(?! flakes)|green beans|frozen vegetables|vegetable blend|peas (&|and) carrots|verduras|elote|ma[ií]z/],
   ['oats', /\boats\b|porridge|oatmeal|avena/],
   ['cereal', /cereal|corn ?flakes/],
@@ -83,6 +86,8 @@ const KEYS = [
   ['water', /\bwater\b|\bagua\b/],
   ['beer', /\bbeer\b|lager|cerveza|\bale\b/],
   ['wine', /\bwine\b|merlot|cabernet|pinot|\bvino\b|shiraz|sauvignon/],
+  ['aubergine', /aubergines?|eggplants?|berenjenas?/],
+  ['pineapple', /pineapples?|\bpi[nñ]a\b/],
   ['pizza', /pizza/],
   ['ready-meal', /lasagn[ae]|cottage pie|macaroni (&|and) cheese|hot pockets|shepherd'?s pie|enchiladas/],
 ];
@@ -92,9 +97,10 @@ const CUPBOARD = /^(salt|pepper)\b|\b(black|white|ground) pepper|salt and pepper
 
 /**
  * A name without what it's packed or flavored with, or made without: "tuna in spring water" is tuna, "soft cheese
- * with garlic and herbs" cheese, Hunt's "Tomato Paste - No Salt Added" tomato paste (salt until 2026-10-04).
+ * with garlic and herbs" cheese, Hunt's "Tomato Paste - No Salt Added" tomato paste (salt until 2026-10-04). A bag
+ * to steam in is the pack: Price Rite's "Steam in Bag Mixed Vegetables" were a steam and no food until then.
  */
-const headOf = (text) => String(text).toLowerCase().replace(/\bno [a-z ]+ added\b/g, '').split(/ (?:in|with|en|con) /)[0];
+const headOf = (text) => String(text).toLowerCase().replace(/\bno [a-z ]+ added\b/g, '').replace(/steam[- ]in[- ]bag/g, 'steam bag').split(/ (?:in|with|en|con) /)[0];
 
 function keyOf(text, first = false) {
   const t = headOf(text);
@@ -184,7 +190,7 @@ const BRANDS = brandIndex();
 
 const seen = new Set();
 const products = [];
-for (const p of [...g.products, ...(more.products ?? [])]) {
+for (const p of [...g.products, ...(more.products ?? []), ...(third.products ?? [])]) {
   if (typeof p.price !== 'number' || !(p.price > 0)) continue;
   const key = productKey(p);
   if (!key) continue;
@@ -195,7 +201,7 @@ for (const p of [...g.products, ...(more.products ?? [])]) {
   // A dry pint of cherry or grape tomatoes is two cups, 298 g (USDA FoodData Central: 149 g a cup).
   const pint = p.sizeUnit === 'ct' && p.sizeQty === 1 && /\bpint\b/i.test(`${p.size} ${p.name}`) && p.category === 'produce';
   products.push({
-    id, chain: p.chain, market: p.market, name: p.name, brand: BRANDS.get(`${p.chain}|${p.market}|${p.name}`) ?? null, category: p.category, food: key,
+    id, chain: p.chain, market: p.market, name: p.name, brand: BRANDS.has(`${p.chain}|${p.market}|${p.name}`) ? BRANDS.get(`${p.chain}|${p.market}|${p.name}`) : p.brand ?? null, category: p.category, food: key,
     sizeQty: pint ? 298 : p.sizeQty, sizeUnit: pint ? 'g' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true,
     storage, ...keepsFor(key, p.category, storage),
     url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true,

@@ -303,6 +303,24 @@ describe('the food a product is', () => {
     expect(food('tesco-gb-tesco-perfectly-imperfect-frozen-mixed-berries-1kg')).toBe('berries');
   });
 
+  it('is a courgette by its other names, a chayote squash a chayote, and the words the earlier reads missed', () => {
+    const food = (id: string) => productById(id)?.food;
+    expect(food('pricerite-fresh-green-squash')).toBe('courgette');
+    expect(food('chedraui-calabaza-italiana-por-kg')).toBe('courgette');
+    expect(food('pricerite-fresh-green-chayote-squash-each')).toBe('chayote');
+    expect(food('supervalu-ie-supervalu-swedes-3-piece')).toBe('swede');
+    expect(food('pricerite-bowl-basket-berry-medley-12-oz')).toBe('berries');
+    expect(food('pricerite-bowl-basket-steam-in-bag-mixed-vegetables-carrots-corn-green-beans-pea')).toBe('frozen-veg');
+    expect(food('chedraui-champinon-monteblanco-seleccion-225g')).toBe('mushroom');
+    expect(food('chedraui-lenteja-chedraui-450g')).toBe('beans');
+    expect(food('tesco-gb-tesco-ready-to-eat-apricots-250g')).toBe('dried-fruit');
+    expect(food('supervalu-ie-supervalu-mixed-peppers-3-piece')).toBe('pepper');
+    // An aubergine and canned pineapple are foods a shop sells now; no recipe's ingredient is one no shop stocks.
+    expect(food('supervalu-ie-supervalu-loose-aubergines-1-piece')).toBe('aubergine');
+    expect(food('pricerite-bowl-basket-pineapple-chunks-in-pineapple-juice-20-oz')).toBe('pineapple');
+    expect(RECIPES.flatMap((r) => r.ingredients).filter((i) => !i.cupboard && !i.food).map((i) => i.name)).toEqual([]);
+  });
+
   it('keeps a dry good’s year as a ready meal in the cupboard, and three days chilled', () => {
     // SLATE's estimates: FoodKeeper has no row for a boxed or instant meal.
     expect(productById('saveonfoods-kraft-dinner-original-macaroni-and-cheese-dinner-200-g')).toMatchObject({ storage: 'pantry', keepsDays: 365, keepsEstimated: true });
@@ -322,6 +340,29 @@ describe('the food a product is', () => {
           if (p.food === 'chicken' || p.food === 'beef') expect(p.category, `${town} ${r.id}: ${p.name}`).toBe('meat');
         }
       }
+    }
+  });
+});
+
+describe('a recipe’s foods', () => {
+  it('are on sale in every town with a grocer but for what its grocers weren’t read selling', () => {
+    // From the grocers' own feeds on 2026-10-04 (`research-groceries3.json`); until then New York couldn't buy
+    // everything for 39 of the 44 recipes, New Haven for 37, Los Angeles 27 and Toronto 25.
+    const lacking: Record<string, string[]> = {
+      'us-ny-newyork': ['aubergine', 'chayote', 'lemon', 'swede', 'turnip'],
+      'us-ct-newhaven': ['aubergine'],
+      'us-ca-losangeles': ['chayote', 'leek', 'swede'],
+      'ca-on-toronto': ['aubergine', 'broccoli', 'chayote', 'green chilli', 'jalapeño pepper', 'leek', 'red chilli', 'turnip'],
+      'ca-bc-vancouver': ['aubergine', 'canned pineapple pieces in juice', 'chayote', 'swede', 'turnip'],
+      'uk-eng-london': ['aubergine', 'canned pineapple pieces in juice', 'canned tomato sauce', 'chayote'],
+      'ie-lei-dublin': ['chayote'],
+      'mx-cmx-mexicocity': ['swede', 'turnip'],
+    };
+    for (const [town, foods] of Object.entries(lacking)) {
+      const sim = life(town, `lacking-${town}`);
+      sim.player.items = (sim.player.items ?? []).filter((i) => !i.food);
+      const unbuyable = new Set(RECIPES.flatMap((r) => shortfall(sim, sim.player, r.id)!.unbuyable));
+      expect([...unbuyable].sort(), town).toEqual(foods);
     }
   });
 });
