@@ -43,7 +43,8 @@ import { CAR_SHOPS } from '@/engine/content/carshops';
 import { standInFor, standInQuote } from '@/engine/systems/standin';
 import { optionsFor, optionsQuote, orderWeeksOf, specOf } from '@/engine/systems/caroptions';
 import { FITS, MATERIAL_LABEL, PART_LABEL, UPHOLSTERERS, interiorQuote, type Material, type Part } from '@/engine/systems/interiors';
-import { FILL, capacityOf, fillQuote, fillRefusal, levelOf, rangeKm } from '@/engine/systems/fueltank';
+import { capacityOf, fillRefusal, fillingOf, levelOf, lowAt, planFill, rangeKm, type FillAmount } from '@/engine/systems/fueltank';
+import { STATIONS } from '@/engine/content/errandtrips';
 import { homeShareOf } from '@/engine/systems/charging';
 import { audioQuote, stereoQuote } from '@/engine/systems/caraudio';
 import { PRE_PURCHASE, drivenOn, inspectionPrice, reportOn, testDriveMinutes, usedListings } from '@/engine/systems/usedcars';
@@ -146,7 +147,6 @@ export function VehiclesWorkspace() {
                             <div className="row gap-1" style={{ flexWrap: 'wrap', justifyContent: 'flex-end', maxWidth: 240 }}>
                             {!tiresRefusal(v) && <Gated feature="vehicle.winter_tires" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number }>('vehicle.winter_tires', { vehicleId: v.id }); if (a.ok) toast(`Winter tires on, for ${money(a.value!.paid)}.`, 'positive'); }}>Winter Tires</Gated>}
                             {(['rear', 'full'] as const).filter((k) => !tintRefusal(v, k, glazed(v))).map((k) => <Gated key={k} feature="vehicle.tint" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number; legal: boolean }>('vehicle.tint', { vehicleId: v.id, kind: k }); if (a.ok) toast(a.value!.legal ? `Tinted, within the law here, for ${money(a.value!.paid)}.` : `Tinted darker than the law here allows, for ${money(a.value!.paid)}.`, a.value!.legal ? 'positive' : 'neutral'); }}>{k === 'rear' ? 'Tint The Back' : 'Tint All Round'}</Gated>)}
-                            <FuelControl v={v} />
                             <StereoControl v={v} />
                             <RoofControl v={v} />
                             {tireSetCost(sim, v) !== undefined && kindOf(modelById(v.modelId)!) === 'car' && <Gated feature="vehicle.replace_tires" className="btn btn-sm btn-ghost" title={tiresWorn(v) ? 'Worn to the legal limit: a test that checks them fails them' : `${Math.round((TIRE_LIFE_KM - (odometerOf(v) - tiresFittedAt(v))) / 1000).toLocaleString('en-US')} thousand km of tread left`} onClick={() => { const a = run<{ paid: number }>('vehicle.replace_tires', { vehicleId: v.id }); if (a.ok) toast(`Four tires fitted, for ${money(a.value!.paid)}.`, 'positive'); }}>{`${tiresWorn(v) ? 'Replace The Worn Tires' : 'Fit New Tires'}, ${money(tireSetCost(sim, v)!)}`}</Gated>}
@@ -171,6 +171,8 @@ export function VehiclesWorkspace() {
             </LookRegion>
           )}
         </Panel>
+
+        <FuelPanel cars={owned} />
 
         <InteriorWork />
 
@@ -534,24 +536,90 @@ function FuelGauge({ v }: { v: OwnedVehicle }) {
   return <div className="xs dim">{cap.unit === 'kWh' ? 'Battery' : 'Tank'} {Math.round(levelOf(v) * 100)}%{range !== undefined ? `, ${Math.round(range)} km` : ''} of {Math.round(cap.size)} {cap.unit === 'kWh' ? 'kWh' : 'Liters'}{cap.estimated ? ' (SLATE’s Estimate)' : ''}</div>;
 }
 
-/** Filled at a station in its town, or charged: publicly, or at home on a charger (`vehicle.refuel`). */
-function FuelControl({ v }: { v: OwnedVehicle }) {
+/**
+ * Fuel and charging (from 2026-10-03): each car's tank or battery, where it's
+ * filled (a station of the town, a public charger, or at home on a charger),
+ * how much (full, liters or kWh, a spending limit, or a level), what it comes
+ * to on what price, and the last fills; and who fills it as the month goes.
+ */
+function FuelPanel({ cars }: { cars: OwnedVehicle[] }) {
+  const tanked = cars.filter((v) => capacityOf(modelById(v.modelId)!) !== undefined && v.repossessed === undefined);
+  if (!tanked.length) return null;
+  return (
+    <Panel title="Fuel And Charging" subtitle="Where, how much, and what it comes to; the price is the area’s average where no station’s own is kept">
+      <div className="col gap-4">{tanked.map((v) => <FillForm key={v.id} v={v} />)}</div>
+    </Panel>
+  );
+}
+
+type FillBy = 'full' | 'quantity' | 'spend' | 'level';
+
+function FillForm({ v }: { v: OwnedVehicle }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const m = modelById(v.modelId)!;
-  const cur = saveCurrency(sim.universe);
+  const cap = capacityOf(m)!;
   const ev = m.fuel === 'ev';
-  const ways = ev ? [false, ...(homeShareOf(person) > 0 ? [true] : [])] : [false];
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur);
+  const stations = STATIONS[person.currentLocationId] ?? [];
+  const places = ev ? ['public', ...(homeShareOf(person) > 0 ? ['home'] : [])] : stations.map((_, i) => String(i));
+  const [place, setPlace] = useState(places[0] ?? '0');
+  const [by, setBy] = useState<FillBy>('full');
+  const [value, setValue] = useState('');
+  const home = place === 'home';
+  const amount: FillAmount = by === 'full' ? { by: 'full' } : by === 'level' ? { by: 'level', value: Number(value) / 100 } : by === 'spend' ? { by: 'spend', value: Math.round(Number(value) * 100) } : { by: 'quantity', value: Number(value) };
+  const no = fillRefusal(person, v.id, home);
+  const plan = no ? no : by !== 'full' && !(Number(value) > 0) ? 'Enter an amount.' : planFill(sim, v, amount, home);
+  const unit = cap.unit === 'kWh' ? 'kWh' : 'Liters';
+  const range = rangeKm(v);
+  const basis = ev ? (home ? 'the home rate where you live' : 'the area’s public charging average') : 'the area’s pump average, not this station’s own price';
   return (
-    <>
-      {ways.map((home) => {
-        if (fillRefusal(person, v.id, home)) return null;
-        const q = fillQuote(sim, v, ev && home ? FILL.batteryTo : 1, home);
-        if (!q) return null;
-        const label = ev ? (home ? 'Charge At Home' : 'Charge It') : 'Fill Up';
-        return <Gated key={String(home)} feature="vehicle.refuel" className="btn btn-sm btn-ghost" title={`${q.amount.toFixed(1)} ${q.unit === 'kWh' ? 'kWh' : 'liters'} at the place’s ${ev ? (home ? 'home' : 'public') + ' price' : 'pump price'}`} onClick={() => { const a = run<{ paid: number }>('vehicle.refuel', { vehicleId: v.id, ...(home ? { home: true } : {}) }); if (a.ok) toast(`${ev ? 'Charged' : 'Filled'}, for ${formatMoney(a.value!.paid, cur)}.`, 'positive'); }}>{`${label}, ${formatMoney(q.cost, cur, { cents: false })}`}</Gated>;
-      })}
-    </>
+    <div className="col gap-2">
+      <div className="row" style={{ justifyContent: 'space-between', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
+        <strong>{`${m.make} ${m.model}`}</strong>
+        <span className="xs dim">{`${ev ? 'Battery' : 'Tank'} ${Math.round(levelOf(v) * 100)}%${range !== undefined ? `, about ${Math.round(range)} km` : ''}, of ${Math.round(cap.size)} ${unit}${cap.estimated ? ' (SLATE’s estimate)' : ''}${v.dry ? '; run dry' : levelOf(v) < lowAt(m) ? '; running low' : ''}`}</span>
+      </div>
+      <div className="field-row">
+        <div className="field">
+          <label htmlFor={`fill-at-${v.id}`}>{ev ? 'Charge At' : 'Station'}</label>
+          <select id={`fill-at-${v.id}`} value={place} onChange={(e) => setPlace(e.target.value)}>
+            {ev ? places.map((p) => <option key={p} value={p}>{p === 'home' ? 'Home, On Your Charger' : 'A Public Fast Charger'}</option>) : stations.map((st, i) => <option key={st} value={String(i)}>{st}</option>)}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor={`fill-by-${v.id}`}>How Much</label>
+          <select id={`fill-by-${v.id}`} value={by} onChange={(e) => { setBy(e.target.value as FillBy); setValue(''); }}>
+            <option value="full">{ev ? 'To Full' : 'Fill It'}</option>
+            <option value="quantity">{`A Number Of ${unit}`}</option>
+            <option value="spend">Up To An Amount Of Money</option>
+            <option value="level">To A Level</option>
+          </select>
+        </div>
+        {by !== 'full' && (
+          <div className="field">
+            <label htmlFor={`fill-n-${v.id}`}>{by === 'quantity' ? unit : by === 'spend' ? cur : 'Percent'}</label>
+            <input id={`fill-n-${v.id}`} type="number" min={0} step={by === 'level' ? 5 : 1} value={value} onChange={(e) => setValue(e.target.value)} />
+          </div>
+        )}
+      </div>
+      <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+        <Gated feature="vehicle.refuel" className="btn btn-sm btn-primary" disabled={typeof plan === 'string'} title={typeof plan === 'string' ? plan : undefined} onClick={() => {
+          const a = run<{ amount: number; paid: number; minutes: number }>('vehicle.refuel', { vehicleId: v.id, ...(home ? { home: true } : ev ? {} : { station: Number(place) }), amount });
+          if (a.ok) toast(`${a.value!.amount.toFixed(1)} ${unit.toLowerCase()} for ${money(a.value!.paid)}${a.value!.minutes ? `, ${a.value!.minutes} minutes` : ''}.`, 'positive');
+        }}>{ev ? 'Charge It' : 'Fill It'}</Gated>
+        <span className="small">{typeof plan === 'string' ? plan : `${plan.amount.toFixed(1)} ${unit.toLowerCase()} for ${money(plan.cost)}${plan.minutes ? `, ${plan.minutes} minutes` : ', overnight'}, at ${basis}.`}</span>
+      </div>
+      <label className="small row gap-1" style={{ alignItems: 'center' }}>
+        <Gated feature="vehicle.set_filling" className="btn btn-sm btn-ghost" onClick={() => { if (run('vehicle.set_filling', { vehicleId: v.id, auto: fillingOf(v) !== 'auto' }).ok) toast(fillingOf(v) === 'auto' ? 'It’s filled as it’s driven now.' : 'Only you fill it now.', 'positive'); }}>{fillingOf(v) === 'auto' ? 'Fill It Only When I Do' : 'Fill It As It’s Driven'}</Gated>
+        <span className="xs dim">{fillingOf(v) === 'auto' ? `It’s filled as the month’s driving goes: at a ${ev ? 'fifth' : 'quarter'}, to ${ev ? '80%' : 'full'}.` : 'Only you fill it: everyday driving runs it down a day at a time, and it stops where it runs dry.'}</span>
+      </label>
+      {(v.fills ?? []).length > 0 && (
+        <ul className="list-plain xs dim">
+          {(v.fills ?? []).slice(0, 5).map((f) => <li key={f.at}>{`${formatDate(f.at, sim.zone)}: ${f.amount.toFixed(1)} ${f.unit === 'kWh' ? 'kWh' : 'liters'} at ${f.where}, ${money(f.cost)}${f.basis === 'area' ? ' (the area’s price)' : ''}, to ${Math.round(f.level * 100)}%`}</li>)}
+        </ul>
+      )}
+    </div>
   );
 }
 

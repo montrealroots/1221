@@ -38,7 +38,7 @@ import { RIDE_MODELS } from '../content/ridecatalog';
 import { CHARGING, EV_MODELS, evIncentives } from '../content/evcatalog';
 import { chargingRewards, homeShareOf, kwhPrice } from './charging';
 import { registerTint, tintAtInspection, tintFuelFactor, tintOnTheRoad, type TintKind } from './tint';
-import { everydayFuel } from './fueltank';
+import { burn, capacityOf, everydayFuel, fillingOf, levelOf, lowAt, rangeKm } from './fueltank';
 import { registerInteriors } from './interiors';
 import { optionsQuote, optionsRefusal, orderWeeksOf } from './caroptions';
 import { modLoading, registerMods } from './mods';
@@ -63,6 +63,13 @@ import { faultCost, inShopNow, mayBreak, registerRepairs, upkeepPerKm } from './
 const YEAR_MS = 365.2425 * MS_DAY;
 const NYC = new Set(['us-ny-newyork', 'us-ny-brooklyn', 'us-ny-queens', 'us-ny-manhattan', 'us-ny-thebronx', 'us-ny-statenisland']);
 export const VEHICLE_MONTH_KIND = 'vehicle.month';
+/**
+ * A car you fill yourself is driven its everyday kilometers a day at a time
+ * (from 2026-10-03), so its tank falls as the month goes and can be filled
+ * before it's empty: a month of New York's driving is more than a Camry's
+ * tank, and burned in one lump it would always run dry.
+ */
+export const VEHICLE_DAY_KIND = 'vehicle.day';
 export const VEHICLE_RENEWAL_KIND = 'vehicle.renewal';
 
 /** Liters per 100 km for a motorcycle or scooter whose maker publishes none: the mean of the catalog's that do (from 2026-09-30). */
@@ -139,6 +146,12 @@ export interface OwnedVehicle {
   deliveredAt?: Instant;
   /** How full its tank or battery is, 0 to 1 (`systems/fueltank.ts`, from 2026-10-02); an older save's is full. */
   fuelLevel?: number;
+  /** Who fills it as the month's driving goes (`systems/fueltank.ts`, from 2026-10-03); none kept before, filled as it went. */
+  fillUp?: 'auto' | 'self';
+  /** The last fills, newest first. */
+  fills?: import('./fueltank').FillRecord[];
+  /** Filled by you: the month's everyday kilometers driven so far, the errand kilometers already taken off them, and whether it's run dry. */
+  dayKm?: number; errandUsed?: number; dry?: boolean;
   /** A wrap in film over the paint (`systems/wraps.ts`, from 2026-10-01). */
   wrap?: import('./wraps').Wrap;
   /** Its services, and when one was first missed (`systems/carcare.ts`, from 2026-10-01). */
@@ -170,6 +183,20 @@ export const upkeepCost = (sim: Simulation, v: OwnedVehicle, km: number): Money 
 
 /** A month of everyday driving, in kilometers: the place's published year, over twelve. */
 export const monthKm = (v: OwnedVehicle) => KM_A_YEAR[v.jurisdiction] / 12;
+/** A day's share of the year's everyday driving. */
+export const dayKm = (v: OwnedVehicle) => KM_A_YEAR[v.jurisdiction] / 365;
+
+/** Driven about its owner's town then: theirs, not stolen, broken or in the shop, delivered, where they live, and theirs to drive. */
+function drivenThen(sim: Simulation, person: Person, v: OwnedVehicle, m: CarModel, at: Instant): boolean {
+  return !v.repossessed && !stolenNow(v, at) && !forOutings(m) && !v.fault?.severe && !inShopNow(v, at) && !(v.deliveredAt !== undefined && v.deliveredAt > at)
+    && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, sim.now, sim.now, classFor(m), m.cc).ok;
+}
+
+/** Starts a car you fill yourself on its days, where it isn't already. */
+export function startDays(sim: Simulation, person: Person, v: OwnedVehicle): void {
+  if (sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === VEHICLE_DAY_KIND && i.payload.vehicleId === v.id)) return;
+  sim.schedule({ at: sim.now + MS_DAY, kind: VEHICLE_DAY_KIND, label: 'The Car’s Day', category: 'home', priority: 20, payload: { personId: person.id, vehicleId: v.id } });
+}
 
 /** The jurisdiction a town's car is registered in, where SLATE has its rules. */
 export function jurisdictionOf(cityId: string): Jurisdiction | undefined {
@@ -680,7 +707,7 @@ export function listingFor(sim: Simulation, person: Person, modelId: string, age
 }
 
 export function registerVehicles(sim: Simulation): void {
-  sim.onCommand<{ modelId: string; age?: number; financed?: boolean; months?: number; coverage?: OwnedVehicle['coverage']; tradeIn?: string; options?: string[] }, { vehicleId: string; paid: Money; monthly?: Money; deliveredAt?: Instant }>('vehicle.buy', (p, { sim: s }) => {
+  sim.onCommand<{ modelId: string; age?: number; financed?: boolean; months?: number; coverage?: OwnedVehicle['coverage']; tradeIn?: string; options?: string[]; fillUp?: 'auto' | 'self' }, { vehicleId: string; paid: Money; monthly?: Money; deliveredAt?: Instant }>('vehicle.buy', (p, { sim: s }) => {
     const person = s.player;
     const age = Math.max(0, Math.round(Number(p?.age ?? 0)));
     const financed = p?.financed === true;
@@ -708,7 +735,7 @@ export function registerVehicles(sim: Simulation): void {
     if (!payFromBank(s, person, down, `${model.make} ${model.model}${age ? `, ${age} years old` : ', new'}${financed ? ', the taxes and fees' : ''}`, 'vehicle')) throw new CommandError(`${formatMoney(down, cur)} is more than the bank can cover.`);
     const id = s.nextId('vehicle');
     const seller = age === 0 ? dealerFor(cityId, model.make) : undefined;
-    const v: OwnedVehicle = { id, modelId: model.id, ...(seller ? { seller } : {}), boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: renewal({ id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: 0 }, s.now).next };
+    const v: OwnedVehicle = { id, modelId: model.id, fillUp: p.fillUp === 'auto' ? 'auto' : 'self', ...(seller ? { seller } : {}), boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: renewal({ id, modelId: model.id, boughtAt: s.now, ageAtPurchase: age, listPrice: model.price, jurisdiction: j, cityId, coverage, registrationDue: 0 }, s.now).next };
     // The listing's odometer, and a private sale's transfer to do (`systems/usedcars.ts`).
     if (listing) {
       v.odometerAtPurchase = listing.odometerKm;
@@ -738,6 +765,7 @@ export function registerVehicles(sim: Simulation): void {
     if (hidden) v.fault = hidden;
     vehiclesOf(person).push(v);
     s.schedule({ at: s.now + 30 * MS_DAY, kind: VEHICLE_MONTH_KIND, label: 'The Car’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
+    if (fillingOf(v) === 'self' && capacityOf(model)) startDays(s, person, v);
     if (registers(model, j)) s.schedule({ at: v.registrationDue, kind: VEHICLE_RENEWAL_KIND, label: 'Registration Renewal', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
     return { vehicleId: id, paid: down, ...(v.loan ? { monthly: v.loan.monthly } : {}), ...(v.deliveredAt ? { deliveredAt: v.deliveredAt } : {}) };
   });
@@ -774,6 +802,29 @@ export function registerVehicles(sim: Simulation): void {
   // Sold to a dealer at its offer, or listed to sell privately (`systems/carsale.ts`, from 2026-10-03; until then sold at once at its full value).
   registerCarSale(sim);
 
+  // A day's everyday driving from the tank, for a car you fill yourself: errands that day taken off it, low said once, dry said once.
+  sim.onSchedule(VEHICLE_DAY_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
+    if (!person || !v || v.soldAt !== undefined || fillingOf(v) !== 'self') return;
+    const m = modelById(v.modelId)!;
+    if (capacityOf(m) && drivenThen(s, person, v, m, item.at)) {
+      const credit = Math.min(dayKm(v), Math.max(0, (v.errandKm ?? 0) - (v.errandUsed ?? 0)));
+      v.errandUsed = (v.errandUsed ?? 0) + credit;
+      const want = dayKm(v) - credit;
+      const was = levelOf(v);
+      const reach = Math.min(want, rangeKm(v) ?? want);
+      burn(v, reach);
+      v.dayKm = (v.dayKm ?? 0) + reach;
+      const mine = person.id === s.universe.playerId;
+      if (reach < want - 0.01) {
+        if (!v.dry && mine) s.notify({ category: 'home', title: 'Ran Dry', body: `The ${m.make} ${m.model} has run dry, and isn't driven until it's filled.`, importance: 50, route: '/workspace/vehicles' });
+        v.dry = true;
+      } else if (mine && was >= lowAt(m) && levelOf(v) < lowAt(m)) s.notify({ category: 'home', title: 'Running Low', body: `The ${m.make} ${m.model} is at ${Math.round(levelOf(v) * 100)}%, about ${Math.round(rangeKm(v) ?? 0)} km left.`, importance: 35, route: '/workspace/vehicles' });
+    }
+    s.schedule({ at: item.at + MS_DAY, kind: VEHICLE_DAY_KIND, label: 'The Car’s Day', category: 'home', priority: 20, payload: { personId: person.id, vehicleId: v.id } });
+  });
+
   sim.onSchedule(VEHICLE_MONTH_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
@@ -797,7 +848,7 @@ export function registerVehicles(sim: Simulation): void {
     // Only where the owner lives: a car left in another town sits. Until 2026-09-29 one left in New Haven was driven every day by its owner in Dublin.
     let driven = 0;
     // Broken down, or at the garage, it stays put (`systems/repairs.ts`).
-    if (!v.repossessed && !missing && !forOutings(m) && !v.fault?.severe && !inShopNow(v, s.now) && !(v.deliveredAt !== undefined && v.deliveredAt > item.at) && (v.at ?? v.cityId) === homeOf(person) && mayDrive(person, v.at ?? v.cityId, s.now, s.now, classFor(m), m.cc).ok) {
+    if (!missing && drivenThen(s, person, v, m, item.at)) {
       // The month's everyday driving, less what errands have already driven and paid for (`systems/trips.ts`).
       const km = Math.max(0, monthKm(v) - (v.errandKm ?? 0));
       const errandKm = v.errandKm ?? 0;
@@ -805,18 +856,22 @@ export function registerVehicles(sim: Simulation): void {
       // Through the tank where one is kept (`systems/fueltank.ts`, from 2026-10-02): the month's fill-ups, and
       // upkeep on every kilometer, the errands' too, whose fuel came out of the tank. Tried on a copy, and kept if paid.
       const trial = { ...v };
-      const filled = everydayFuel(s, trial, km, homeShareOf(person));
-      const run = filled ? filled.cost + upkeepCost(s, v, km + errandKm) : runningCost(s, v, km, homeShareOf(person));
+      // Filled only when you fill it (from 2026-10-03): its days have burned the tank, and the month is what they drove.
+      const own = fillingOf(v) === 'self' && capacityOf(m) !== undefined;
+      const reach = own ? v.dayKm ?? 0 : km;
+      if (own) { v.dayKm = 0; v.errandUsed = 0; }
+      const filled = own ? undefined : everydayFuel(s, trial, km, homeShareOf(person));
+      const run = own ? upkeepCost(s, v, reach + errandKm) : filled ? filled.cost + upkeepCost(s, v, km + errandKm) : runningCost(s, v, km, homeShareOf(person));
       // Fuel is bought at the pump, by the bank or the card: a month neither can pay for, the car isn't driven. Until
       // 2026-09-29 the fuel went into arrears as if it had been burned, and a New York life starved paying for it.
-      if (spend(s, person, run, `Fuel and upkeep, the ${m.make} ${m.model}`, 'vehicle')) {
+      if (spend(s, person, run, `${own ? 'Upkeep' : 'Fuel and upkeep'}, the ${m.make} ${m.model}`, 'vehicle')) {
         if (filled) v.fuelLevel = trial.fuelLevel;
         // The utility's rewards for charging at home off the peak (`systems/charging.ts`).
-        const reward = m.fuel === 'ev' && m.kwhPer100km ? chargingRewards(s, person, v.jurisdiction, (km * m.kwhPer100km * homeShareOf(person)) / 100, v.monthsCharged ?? 0, zonedParts(item.at, s.homeZone).month) : 0;
+        const reward = !own && m.fuel === 'ev' && m.kwhPer100km ? chargingRewards(s, person, v.jurisdiction, (km * m.kwhPer100km * homeShareOf(person)) / 100, v.monthsCharged ?? 0, zonedParts(item.at, s.homeZone).month) : 0;
         if (reward > 0) { s.post({ memo: 'Charging rewards, the month', category: 'vehicle', postings: [{ accountId: person.primaryAccountId!, amount: reward }, { accountId: s.nominalAccount('income', 'Charging Rewards').id, amount: -reward }] }); v.monthsCharged = (v.monthsCharged ?? 0) + 1; }
-        v.km = (v.km ?? 0) + km;
-        drive(s, person, v.jurisdiction, km, item.at, `${v.id}-${item.at}`, kindOf(m), tireFactor(v, item.at));
-        driven = km;
+        v.km = (v.km ?? 0) + reach;
+        drive(s, person, v.jurisdiction, reach, item.at, `${v.id}-${item.at}`, kindOf(m), tireFactor(v, item.at));
+        driven = reach;
         // And may need a repair for it, or meet another car (`systems/carcare.ts`).
         mayBreak(s, person, v, m, item.at);
         if (mayCollide(s, person, v, m, inSave(s, valueOf(v, item.at), m.currency), item.at) && v.soldAt !== undefined) return;

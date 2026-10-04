@@ -85,7 +85,7 @@ describe('what a car costs to buy', () => {
 describe('moving home', () => {
   it('takes the car from New Haven to New York and registers it there, imports it into Canada, and leaves it where it was across the sea', () => {
     const sim = quickSave({ startLocationId: 'us-ct-newhaven', homeRegionId: 'us-ct-newhaven', livesWhereBorn: true, wealth: 'wealthy' }, 'car-move');
-    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry', fillUp: 'auto' } }).ok).toBe(true);
     const v = vehiclesOf(sim.player)[0]!;
     expect(v.jurisdiction).toBe('US-CT');
     move(sim, sim.player, 'shared', 'us-ny-newyork');
@@ -120,7 +120,7 @@ describe('owning one', () => {
     const sim = quickSave({ startLocationId: 'ie-lei-dublin', homeRegionId: 'ie-lei-dublin', livesWhereBorn: true, wealth: 'wealthy' }, 'car-run');
     // A license: a car whose owner may not drive sits idle (`systems/driving.ts`).
     documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: 'ie', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
-    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'ie-skoda-octavia' } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'ie-skoda-octavia', fillUp: 'auto' } }).ok).toBe(true);
     const v = vehiclesOf(sim.player)[0]!;
     // Ireland's 15,196 km a year, a twelfth; 5.3 liters a hundred at €1.87.
     expect(monthKm(v)).toBeCloseTo(15_196 / 12, 6);

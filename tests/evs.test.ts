@@ -84,7 +84,7 @@ describe('charging rewards', () => {
     const sim = house('us-ny-newyork', 'rw-month');
     documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: 'us', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
     expect(sim.execute({ kind: 'home.charger', payload: {} }).ok).toBe(true);
-    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-tesla-model-y' } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-tesla-model-y', fillUp: 'auto' } }).ok).toBe(true);
     sim.advanceBy(40 * MS_DAY);
     expect(sim.universe.transactions.some((t) => t.memo === 'Charging rewards, the month')).toBe(true);
   });
@@ -95,7 +95,7 @@ describe('charging it', () => {
     const sim = house('us-ny-newyork', 'ev-month');
     documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: 'us', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
     expect(sim.execute({ kind: 'home.charger', payload: {} }).ok).toBe(true);
-    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-tesla-model-y' } }).ok).toBe(true);
+    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'us-tesla-model-y', fillUp: 'auto' } }).ok).toBe(true);
     sim.advanceBy(40 * MS_DAY);
     const v = vehiclesOf(sim.player)[0]!;
     const fuel = sim.universe.transactions.find((t) => t.memo === 'Fuel and upkeep, the Tesla Model Y')!;
@@ -145,7 +145,7 @@ describe('charging it', () => {
   it('is driven at home for a month at the charged price, and skips Mexico City’s verificación', () => {
     const sim = life('mx-cmx-mexicocity', 'ev-mx');
     documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: 'mx', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
-    const r = sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'mx-tesla-model-y' } });
+    const r = sim.execute({ kind: 'vehicle.buy', payload: { modelId: 'mx-tesla-model-y', fillUp: 'auto' } });
     expect(r.ok, r.error).toBe(true);
     expect(modelById('mx-tesla-model-y')!.fuel).toBe('ev');
     sim.advanceBy(400 * MS_DAY);

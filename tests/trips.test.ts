@@ -29,7 +29,7 @@ const life = (city: string, seed: string) => quickSave({ startLocationId: city, 
 const at = (_city: string, zone: string, d: number, h: number) => instantFromZoned({ year: 2026, month: 1, day: d, hour: h, minute: 0 }, zone);
 const usd = (sim: Simulation, c: number) => { const cur = saveCurrency(sim.universe); return cur === 'USD' ? c : exchange(c, 'USD', cur)!; };
 const licensed = (sim: Simulation, issuer: string) => documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer, name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
-const withCar = (sim: Simulation) => { licensed(sim, 'us-ny'); const r = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } }); expect(r.ok, r.error).toBe(true); return vehiclesOf(sim.player)[0]!; };
+const withCar = (sim: Simulation) => { licensed(sim, 'us-ny'); const r = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry', fillUp: 'auto' } }); expect(r.ok, r.error).toBe(true); return vehiclesOf(sim.player)[0]!; };
 const salonStop = (city: string) => { const s = salonsIn(city).find((x) => x.services.some((v) => v.price !== null && v.minutes))!; const v = s.services.find((x) => x.price !== null && x.minutes)!; return { kind: 'hygiene.groom', payload: { salonId: s.id, service: v.service }, leg: 'errand' as const, minutes: v.minutes! }; };
 
 describe('a leg', () => {

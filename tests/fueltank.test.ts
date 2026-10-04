@@ -24,7 +24,7 @@ const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', hom
 const inSave = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
 function withCar(sim: Simulation, modelId = 'us-toyota-camry') {
   documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer: 'us-ny', name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
-  const r = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId } });
+  const r = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId, fillUp: 'auto' } });
   expect(r.ok, r.error).toBe(true);
   return vehiclesOf(sim.player).find((v) => v.id === r.value!.vehicleId)!;
 }
