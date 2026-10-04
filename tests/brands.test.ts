@@ -1,8 +1,9 @@
 /**
  * The brands of the everyday catalogs (from 2026-10-04): each grocery,
  * toiletry and cleaning product keeps the brand its own name states, read in
- * `research-brands-from-names.json` and `research-cleaning-brands.json`
- * (`tools/brands.mjs`), and its list filters by it: the groceries' and the
+ * `research-brands-from-names.json` and `research-cleaning-brands.json`, and
+ * Chedraui's in `research-brands-mx-corrections.json` (`tools/brands.mjs`),
+ * and its list filters by it: the groceries' and the
  * bathroom's, where the cleaning products are sold beside the toiletries. A
  * product whose name states no brand (fresh produce, mostly) keeps none,
  * never a guess. A garment's brand (`tools/build-clothing.mjs`) is spelled
@@ -19,7 +20,8 @@ import { toiletryCatalog } from '@/engine/systems/hygiene';
 import { arrange, facetValues, type CatalogEntry } from '@/engine/systems/catalog';
 import { shoeRow } from '@/engine/systems/tailoring';
 
-const plain = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[’']/g, "'");
+// A brand's spelling, read without its case, accents or apostrophes: Chedraui's "Kelloggs" is Kellogg's.
+const plain = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[’']/g, '');
 
 describe('a product’s brand', () => {
   it('is the one its own name states, and none where the name states none', () => {
@@ -31,10 +33,25 @@ describe('a product’s brand', () => {
     expect(GROCERY_PRODUCTS.some((p) => p.brand === null && p.category === 'produce')).toBe(true);
   });
 
+  it('is the maker after the noun in a Spanish name, not the noun', () => {
+    // Chedraui's products were read as Leche's milk and Cerveza's beer until 2026-10-04.
+    const mexican = [...GROCERY_PRODUCTS, ...TOILETRIES].filter((p) => p.market === 'MX');
+    expect(mexican.length).toBeGreaterThan(90);
+    const brand = (id: string) => mexican.find((p) => p.id === id)?.brand;
+    expect(brand('chedraui-leche-entera-lala-fresca-carton-1l')).toBe('Lala');
+    expect(brand('chedraui-cerveza-corona-extra-clara-410ml')).toBe('Corona');
+    expect(brand('chedraui-shampoo-head-shoulders-hidratacion-375ml')).toBe('Head & Shoulders');
+    // Spelled as the other lists spell it, though the name leaves out the apostrophe.
+    expect(brand('chedraui-cereal-kelloggs-corn-flakes-370g')).toBe("Kellogg's");
+    expect(brand('chedraui-tomate-saladet-por-kg')).toBeNull();
+    // Only Gillette's name starts with its maker.
+    expect(mexican.filter((p) => p.brand && p.name.startsWith(`${p.brand} `)).map((p) => p.brand)).toEqual(['Gillette']);
+  });
+
   it('is spelled one way in every list, its ordinary spelling where a listing writes it in capitals', () => {
     const all = [...GROCERY_PRODUCTS, ...TOILETRIES, ...CLEANING].map((p) => p.brand).filter((b): b is string => Boolean(b));
     const spellings = new Map<string, Set<string>>();
-    for (const b of all) spellings.set(b.toLowerCase(), (spellings.get(b.toLowerCase()) ?? new Set()).add(b));
+    for (const b of all) spellings.set(plain(b), (spellings.get(plain(b)) ?? new Set()).add(b));
     expect([...spellings.values()].filter((s) => s.size > 1).map((s) => [...s])).toEqual([]);
     // Save-On-Foods' "IVORY - Gentle Bar Soap" is Ivory's, though its capitals are read three times to Ivory's two.
     expect(TOILETRIES.find((p) => p.name.startsWith('IVORY'))?.brand).toBe('Ivory');

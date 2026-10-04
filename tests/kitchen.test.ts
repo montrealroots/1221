@@ -9,7 +9,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
-import { RECIPES } from '@/engine/content/groceries';
+import { GROCERY_PRODUCTS, RECIPES } from '@/engine/content/groceries';
 import { amountIn, cookRefusal, groceryCatalog, kitchenMeal, shortfall, groceryPrice, groceryRefusal, productById, unitPrice } from '@/engine/systems/kitchen';
 import { foodOf, mealsFromStock, mealsReady, throwOutSpoiled } from '@/engine/systems/pantry';
 import { buyTheDaysFood, canPay, foodOf as daysFoodCost, mealOf } from '@/engine/systems/household';
@@ -271,6 +271,40 @@ describe('the cheapest pack', () => {
     for (const p of here) {
       const quantity = Math.max(1, Math.ceil(amountIn(ing, p.sizeUnit, 1) / p.sizeQty - 1e-9));
       expect(groceryPrice(sim, 'uk-eng-london', p) * quantity).toBeGreaterThanOrEqual(oats.cost);
+    }
+  });
+});
+
+describe('the food a product is', () => {
+  it('is read from a Spanish name’s first food word, and a stock, a sauce or a ready meal isn’t what’s in it', () => {
+    const food = (id: string) => productById(id)?.food;
+    // Chedraui names a product noun first.
+    expect(food('chedraui-jugo-jumex-naranja-189-l')).toBe('juice');
+    expect(food('chedraui-naranja-de-jugo-por-kg')).toBe('orange');
+    expect(food('chedraui-tortilla-de-maiz-500g')).toBe('tortilla');
+    // Maseca is the masa harina a DIF recipe's tortillas are made from.
+    expect(food('chedraui-harina-de-maiz-maseca-1kg')).toBe('tortilla');
+    expect(food('chedraui-tomates-first-street-cubos-411g')).toBe('tomatoes-canned');
+    expect(food('chedraui-sopa-instantanea-nissin-res-64g')).toBe('ready-meal');
+    expect(food('smartfinal-first-street-pasta-sauce-tomato-basil-garlic-24-oz')).toBe('pasta-sauce');
+    expect(food('tesco-gb-tesco-chicken-tikka-masala-with-pilau-rice-400g')).toBe('ready-meal');
+    // No stock cube is on sale as the meat it's made from.
+    expect(GROCERY_PRODUCTS.filter((p) => /stock|bouillon|consom/i.test(p.name)).map((p) => p.id)).toEqual([]);
+  });
+
+  it('is meat from the meat counter where a recipe is short of meat, in every town with a grocer', () => {
+    const towns = ['us-ny-newyork', 'us-ca-losangeles', 'us-ct-newhaven', 'uk-eng-london', 'ie-lei-dublin', 'ca-on-toronto', 'ca-bc-vancouver', 'mx-cmx-mexicocity'];
+    const meaty = RECIPES.filter((r) => r.ingredients.some((i) => !i.cupboard && (i.food === 'chicken' || i.food === 'beef')));
+    expect(meaty.length).toBeGreaterThan(10);
+    for (const town of towns) {
+      const sim = life(town, `meat-${town}`);
+      sim.player.items = (sim.player.items ?? []).filter((i) => !i.food);
+      for (const r of meaty) {
+        for (const b of shortfall(sim, sim.player, r.id)!.buys) {
+          const p = productById(b.productId)!;
+          if (p.food === 'chicken' || p.food === 'beef') expect(p.category, `${town} ${r.id}: ${p.name}`).toBe('meat');
+        }
+      }
     }
   });
 });

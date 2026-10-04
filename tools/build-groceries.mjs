@@ -5,7 +5,8 @@
 // Each product keeps its chain, exact name, size, regular price, where it's
 // kept and how long it keeps there (USDA FoodKeeper, from purchase). The food
 // it is, which a recipe's ingredient asks for, is read from its name: the last
-// food word in it, as a garment is read (tools/build-clothing.mjs). A recipe
+// food word in it, as a garment is read (tools/build-clothing.mjs), or in a
+// Spanish name the first (\`productKey\`). A recipe
 // keeps its source, servings, minutes and appliances, and each ingredient as
 // the food it is and how much; seasonings, spices, stock, water and the like
 // are taken as in the cupboard. An ingredient no shop here stocks is kept by
@@ -19,12 +20,15 @@ const g = read('research-groceries.json');
 const more = existsSync('docs/research/world/research-groceries2.json') ? read('research-groceries2.json') : { products: [] };
 const recipesIn = read('research-cooking-alcohol.json').recipes;
 
-/** Food words, the key each names. Order doesn't matter: the last word in a name wins, the longer where two end together. */
+/**
+ * Food words, the key each names. Order doesn't matter: the last word in a name wins, the longer where two end together;
+ * in a Spanish name the first, the longer where two start together.
+ */
 const KEYS = [
   ['peanut-butter', /peanut butter|crema de cacahuate|crema mister cacahuate/],
   ['pasta-sauce', /pasta sauce|marinara|bolognese sauce|passata|tomato sauce/],
   ['tomatoes-canned', /(canned|tinned|chopped|diced) tomato(es)?|tomato pur[eé]e|tomato paste|tomate molido|pur[eé] de tomate|tomates? (en lata|picad)/],
-  ['tortilla', /tortillas?|masa harina|wraps?\b|maseca/],
+  ['tortilla', /tortillas?|masa harina|harina de ma[ií]z|wraps?\b|maseca/],
   ['milk', /\bmilk\b|buttermilk|leche/],
   ['eggs', /\beggs?\b|huevos?/],
   ['bread', /\bbread\b|\bloaf\b|\bbap\b|bread rolls?|breadcrumbs|baguette|\bpan\b|bolillo/],
@@ -89,16 +93,44 @@ const CUPBOARD = /^(salt|pepper)\b|\b(black|white|ground) pepper|salt and pepper
 /** A name without what it's packed or flavored with: "tuna in spring water" is tuna, "soft cheese with garlic and herbs" cheese. */
 const headOf = (text) => String(text).toLowerCase().split(/ (?:in|with|en|con) /)[0];
 
-function keyOf(text) {
+function keyOf(text, first = false) {
   const t = headOf(text);
   let best;
   for (const [key, re] of KEYS) {
     for (const m of t.matchAll(new RegExp(re.source, 'g'))) {
       const end = m.index + m[0].length;
-      if (!best || end > best.end || (end === best.end && m[0].length > best.len)) best = { end, len: m[0].length, key };
+      const better = first ? !best || m.index < best.start || (m.index === best.start && m[0].length > best.len) : !best || end > best.end || (end === best.end && m[0].length > best.len);
+      if (better) best = { start: m.index, end, len: m[0].length, key };
     }
   }
   return best?.key;
+}
+
+/** Made from a food, and not it: a stock, a bouillon, a soup. A recipe's stock is the cupboard's, so no recipe buys one. */
+const MADE = /stock|bouillon|broth|consom[eé]|\bsoups?\b|\bsopas?\b|\bcaldos?\b|gravy/;
+const SAUCE = new RegExp(KEYS.find(([key]) => key === 'pasta-sauce')[1].source);
+
+/**
+ * The food a product is (from 2026-10-04). A Mexican product's name is
+ * Spanish, read from its first food word, as Chedraui names a product noun
+ * first: "Jugo Jumex Naranja" is juice and "Naranja de Jugo" an orange,
+ * "Tortilla de Maíz" a tortilla. A stock, a bouillon or a soup is no food a recipe buys; what the
+ * shop sells as a ready meal is one; a sauce is the sauce whatever's in it; a
+ * tomato off the produce shelf is a canned one. Until then every name was read
+ * from its last food word and none of this held, and a recipe short of chicken
+ * bought stock cubes for it, cheapest in five of the eight towns: Herb-Ox's,
+ * Knorr's, Tesco's, Chedraui's consommé, and in Dublin Oxo's beef for the
+ * mince. Once the cubes were gone, London's chicken was Tesco's Chicken Tikka
+ * Masala and Vancouver's a butter chicken entrée. Los Angeles' garlic was First
+ * Street's pasta sauce, Toronto's peppers Prego's, Mexico City's beef mince
+ * Nissin's instant soup and its peas a pack of tortillas.
+ */
+function productKey(p) {
+  const head = headOf(p.name);
+  const key = MADE.test(head) ? undefined : SAUCE.test(head) ? 'pasta-sauce' : keyOf(p.name, p.market === 'MX');
+  // Sold as a ready meal, it's eaten as one, a pizza pocket as a pizza: Tesco's Chicken Tikka Masala isn't the chicken.
+  if (p.category === 'ready-meal') return key === 'pizza' ? key : 'ready-meal';
+  return key === 'tomato' && p.category !== 'produce' ? 'tomatoes-canned' : key;
 }
 
 /** The FoodKeeper row for a food, by its key and category. */
@@ -144,7 +176,7 @@ const seen = new Set();
 const products = [];
 for (const p of [...g.products, ...(more.products ?? [])]) {
   if (typeof p.price !== 'number' || !(p.price > 0)) continue;
-  const key = keyOf(p.name) ?? (p.category === 'ready-meal' ? 'ready-meal' : undefined);
+  const key = productKey(p);
   if (!key) continue;
   let id = `${p.chain}-${slug(p.name)}`.slice(0, 80);
   for (let n = 2; seen.has(id); n += 1) id = `${p.chain}-${slug(p.name)}`.slice(0, 76) + `-${n}`;
