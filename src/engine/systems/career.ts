@@ -2036,7 +2036,7 @@ export function registerCareer(sim: Simulation): void {
       }
       const go = (stay?: Person['stay']) => {
         if (item.payload.slot !== undefined && startCareerJourney(s, person, city, Number(item.payload.day), Number(item.payload.slot), { bookingId: booking.id, paidBy: 'self', ...(by ? { by } : {}), ...(stay ? { onArrival: stay } : {}) })) return;
-        moveTo(person, city); s.universe.currentZone = zoneOf(city);
+        moveTo(s, person, city); s.universe.currentZone = zoneOf(city);
         if (stay) person.stay = stay;
       };
       // A room, sublet for the nights: the town's room rent by the night, SLATE's estimate of what it costs.
@@ -2083,7 +2083,7 @@ export function registerCareer(sim: Simulation): void {
         if (startCareerJourney(s, person, home, flight.day, flight.slot, { bookingId: booking.id, paidBy: 'self', ...(flight.by ? { by: flight.by } : {}) })) return;
       }
     }
-    moveTo(person, home);
+    moveTo(s, person, home);
     s.universe.currentZone = zoneOf(home);
     delete person.stay;
   });
@@ -2108,7 +2108,7 @@ export function registerCareer(sim: Simulation): void {
       // The production's flight, from 2026-09-29; until then they were there in an instant.
       const trip = item.payload.slot !== undefined ? startCareerJourney(s, person, booking.location, Number(item.payload.day), Number(item.payload.slot), { bookingId: booking.id, paidBy: 'production', onArrival: { kind: 'hotel', cityId: booking.location }, ...(item.payload.by !== undefined ? { by: String(item.payload.by) } : {}) }) : undefined;
       if (!trip) {
-        moveTo(person, booking.location);
+        moveTo(s, person, booking.location);
         s.universe.currentZone = zoneOf(booking.location);
         person.stay = { kind: 'hotel', cityId: booking.location };
       }
@@ -2120,7 +2120,7 @@ export function registerCareer(sim: Simulation): void {
     booking.perDiemOwed = (booking.perDiemOwed ?? 0) + days * usd(rateOn(LOCATION.perDiem, dayKey(item.at, zoneOf(booking.location))), cur);
     const flight = careerTrip(s, booking.location, home, s.now, 'back');
     if (!flight || !startCareerJourney(s, person, home, flight.day, flight.slot, { bookingId: booking.id, paidBy: 'production', ...(flight.by ? { by: flight.by } : {}) })) {
-      moveTo(person, home);
+      moveTo(s, person, home);
       s.universe.currentZone = zoneOf(home);
       delete person.stay;
     }
@@ -2506,7 +2506,7 @@ export function registerCareer(sim: Simulation): void {
     // A home of their own there, empty, is where they go.
     const own = emptyHomeIn(person, p.cityId);
     if (own) { moveIntoOwned(s, person, own); s.universe.currentZone = zoneOf(p.cityId); return { cityId: p.cityId }; }
-    moveTo(person, p.cityId);
+    moveTo(s, person, p.cityId);
     s.universe.currentZone = zoneOf(p.cityId);
     // A move the bank can't pay for throws, and the command's rollback puts them back where they were.
     move(s, person, p.kind);

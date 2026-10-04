@@ -1,0 +1,329 @@
+{
+  "read": "2026-10-04",
+  "scope": "Economy checked-bag weight, overweight bands and fees, over-maximum rule, size limits, cabin bag and personal item for the carriers on SLATE's markets (New York, Los Angeles, New Haven, London, Dublin, Toronto, Vancouver, Mexico City); typical garment weights; the cabin liquids rules. Read for src/engine/content/air.ts, which today prices a flat $45 checked bag on US carriers and includes one across oceans, with no weight limit at all.",
+  "statusKey": {
+    "verified": "read on the airline's or authority's own page on 2026-10-04",
+    "secondhand": "from a third-party summary (search result or guide site) because the primary page blocked or failed; cross-checked against a second summary where noted",
+    "estimate": "derived; the derivation is given"
+  },
+  "commonRule": {
+    "text": "Across every full-service carrier read, the standard economy checked bag is 23 kg / 50 lb and 158 cm / 62 in linear (length + width + height). A bag over that weight up to 32 kg / 70 lb pays an overweight fee per bag per direction; 32 kg / 70 lb is the most any carrier read accepts on transatlantic and Canadian/European routes, and above it the bag must go as cargo or be repacked. Fees are cumulative: Delta's own page says there are separate fees for each limitation exceeded (size, weight, number).",
+    "status": "secondhand",
+    "note": "The 32 kg ceiling comes from airport/ground-handling manual-handling limits; on US domestic flights Delta, United and American accept up to 100 lb / 45 kg for a higher fee, and Volaris to 45 kg."
+  },
+  "airlines": {
+    "Delta": {
+      "checked": {
+        "limitKg": 23,
+        "limitLb": 50,
+        "overweight": [
+          { "fromLb": 51, "toLb": 70, "fromKg": 23, "toKg": 32, "fee": 100, "currency": "USD", "route": "US domestic", "status": "verified" },
+          { "fromLb": 71, "toLb": 99, "fromKg": 32, "toKg": 45, "fee": 200, "currency": "USD", "route": "US domestic", "status": "verified" },
+          { "fromLb": 51, "toLb": 70, "fromKg": 23, "toKg": 32, "fee": 100, "currency": "USD", "route": "US-Europe (transatlantic)", "status": "secondhand" }
+        ],
+        "maxKg": { "domestic": 45, "transatlantic": 32 },
+        "maxRule": "Domestic: bags over 100 lb or 80 in not accepted (verified). To/from/through Europe: bags over 70 lb not accepted at all (secondhand).",
+        "sizeCm": 158,
+        "sizeIn": 62,
+        "oversize": { "fromIn": 63, "toIn": 80, "fee": 200, "currency": "USD", "route": "US domestic", "status": "verified" }
+      },
+      "cabin": { "sizeCm": [56, 35, 23], "sizeIn": [22, 14, 9], "limitKg": null, "status": "secondhand" },
+      "personalItem": { "rule": "One personal item under the seat in addition to the carry-on; Delta publishes no fixed size, guides quote about 17 x 13 x 9 in.", "status": "secondhand" },
+      "sources": [
+        { "url": "https://www.delta.com/us/en/baggage/checked-baggage/excess-overweight-baggage", "status": "verified", "read": "2026-10-04" },
+        { "url": "https://www.nerdwallet.com/travel/learn/delta-baggage-weight-limit", "status": "secondhand", "read": "2026-10-04" },
+        { "url": "https://radicalstorage.com/travel/delta-baggage-allowance/", "status": "secondhand", "read": "2026-10-04" }
+      ]
+    },
+    "United": {
+      "checked": {
+        "limitKg": 23,
+        "limitLb": 50,
+        "overweight": [
+          { "fromLb": 51, "toLb": 70, "fromKg": 23, "toKg": 32, "fee": 100, "currency": "USD", "route": "US domestic", "status": "secondhand" },
+          { "fromLb": 71, "toLb": 100, "fromKg": 32, "toKg": 45, "fee": 200, "currency": "USD", "route": "US domestic", "status": "secondhand" },
+          { "fromLb": 51, "toLb": 70, "fromKg": 23, "toKg": 32, "feeRange": [100, 300], "currency": "USD", "route": "international, varies by route", "status": "secondhand" }
+        ],
+        "maxKg": 45,
+        "maxRule": "Bags over 100 lb / 45 kg not accepted; heavier goes as cargo. Some international routes cap at 70 lb.",
+        "sizeCm": 158,
+        "sizeIn": 62
+      },
+      "cabin": { "sizeCm": [56, 35, 23], "sizeIn": [22, 14, 9], "limitKg": null, "status": "secondhand" },
+      "personalItem": { "sizeIn": [17, 10, 9], "sizeCm": [43, 25, 22], "rule": "Under the seat; Basic Economy domestic is personal item only, transatlantic Basic Economy allows a carry-on too.", "status": "secondhand" },
+      "sources": [
+        { "url": "https://www.united.com/en/us/fly/baggage/excess-overweight-and-oversized-bags.html", "status": "blocked (timeout)", "read": "2026-10-04" },
+        { "url": "https://www.nerdwallet.com/travel/learn/united-airlines-bag-fees-how-they-work-and-how-to-avoid-them", "status": "secondhand", "read": "2026-10-04" },
+        { "url": "https://www.cabinzero.com/blogs/air-travel-tips/united-airlines-baggage-allowance", "status": "secondhand", "read": "2026-10-04" }
+      ]
+    },
+    "American": {
+      "checked": {
+        "limitKg": 23,
+        "limitLb": 50,
+        "overweight": [
+          { "fromLb": 51, "toLb": 53, "fromKg": 23, "toKg": 24, "fee": 30, "currency": "USD", "route": "US, Puerto Rico, USVI, Canada", "status": "secondhand" },
+          { "fromLb": 54, "toLb": 70, "fromKg": 24, "toKg": 32, "fee": 100, "currency": "USD", "route": "US, Puerto Rico, USVI, Canada", "status": "secondhand" },
+          { "fromLb": 71, "toLb": 100, "fromKg": 32, "toKg": 45, "fee": 200, "currency": "USD", "route": "US, Puerto Rico, USVI, Canada", "status": "secondhand" },
+          { "fromLb": 51, "toLb": 70, "fromKg": 23, "toKg": 32, "fee": 100, "currency": "USD", "route": "transatlantic (Europe)", "status": "secondhand" }
+        ],
+        "maxKg": { "domestic": 45, "transatlantic": 32 },
+        "maxRule": "Over 100 lb not accepted anywhere; over 70 lb not accepted to/from Europe, Israel, Qatar, Cuba, Australia/New Zealand.",
+        "sizeCm": 158,
+        "sizeIn": 62
+      },
+      "cabin": { "sizeCm": [56, 36, 23], "sizeIn": [22, 14, 9], "limitKg": null, "status": "secondhand" },
+      "personalItem": { "sizeIn": [18, 14, 8], "sizeCm": [45, 35, 20], "status": "secondhand" },
+      "otherFees": { "basicEconomyTransatlanticFirstBag": 85, "currency": "USD", "note": "for tickets issued after 18 May 2026, per summary", "status": "secondhand" },
+      "sources": [
+        { "url": "https://www.aa.com/i18n/travel-info/baggage/oversize-and-overweight-baggage.jsp", "status": "blocked (HTTP 403)", "read": "2026-10-04" },
+        { "url": "https://deeparrival.com/airlines/american-airlines/baggage-fees/", "status": "secondhand", "read": "2026-10-04" },
+        { "url": "https://thriftytraveler.com/guides/airlines/american-airlines-baggage-fees/", "status": "secondhand", "read": "2026-10-04" }
+      ]
+    },
+    "British Airways": {
+      "checked": {
+        "limitKg": 23,
+        "limitLb": 51,
+        "overweight": [
+          { "fromKg": 23, "toKg": 32, "fee": 65, "currency": "GBP", "route": "all, per bag per one-way journey, when over the allowance", "status": "secondhand" }
+        ],
+        "maxKg": 32,
+        "maxRule": "No checked bag may weigh over 32 kg (UK manual-handling limit); repack or send as cargo.",
+        "sizeCm": [90, 75, 43],
+        "sizeNote": "BA publishes per-side maxima rather than a linear sum (90 x 75 x 43 cm)."
+      },
+      "cabin": { "sizeCm": [56, 45, 25], "limitKg": 23, "limitNote": "Cabin bag and handbag/laptop bag each up to 23 kg; must be liftable unaided.", "status": "secondhand" },
+      "personalItem": { "sizeCm": [40, 30, 15], "rule": "One handbag/laptop bag plus one cabin bag on every fare.", "status": "secondhand" },
+      "sources": [
+        { "url": "https://www.britishairways.com/content/information/help/faq/baggage/bag-weighs-over-23kg", "status": "blocked (high-demand holding page)", "read": "2026-10-04" },
+        { "url": "https://www.cabinzero.com/blogs/air-travel-tips/british-airways-baggage-allowance", "status": "secondhand", "read": "2026-10-04" },
+        { "url": "https://www.mybaggage.com/shipping/airlines/british-airways/", "status": "secondhand", "read": "2026-10-04" }
+      ]
+    },
+    "Virgin Atlantic": {
+      "checked": {
+        "limitKg": 23,
+        "limitLb": 51,
+        "overweight": [
+          { "fromKg": 23, "toKg": 32, "fee": 65, "currency": "GBP", "altFees": { "USD": 100, "EUR": 77 }, "route": "per leg per bag", "status": "secondhand" }
+        ],
+        "maxKg": 32,
+        "maxRule": "32 kg / 70 lb is the maximum for any bag.",
+        "sizeCm": [90, 75, 43],
+        "oversize": { "fee": 200, "currency": "GBP", "altFees": { "USD": 300 }, "status": "secondhand" }
+      },
+      "cabin": { "sizeCm": [56, 36, 23], "limitKg": 10, "status": "secondhand" },
+      "personalItem": { "rule": "Economy: one 10 kg cabin bag; a small personal item (handbag) is allowed in addition per guides; dimensions not confirmed.", "status": "secondhand" },
+      "sources": [
+        { "url": "https://www.sendmybag.com/airlines/virgin-atlantic-baggage-allowance/", "status": "secondhand", "read": "2026-10-04" },
+        { "url": "https://upgradedpoints.com/travel/airlines/virgin-atlantic-baggage-fees/", "status": "secondhand", "read": "2026-10-04" }
+      ]
+    },
+    "Aer Lingus": {
+      "checked": {
+        "limitKg": { "europe": 20, "transatlantic": 23 },
+        "limitLb": { "europe": 44, "transatlantic": 50 },
+        "overweight": [
+          { "fromKg": 20, "toKg": 32, "feePerKg": 10, "currency": "EUR", "route": "Europe (incl. Dublin-London), at the airport", "status": "secondhand" },
+          { "fromKg": 23, "toKg": 32, "fee": 75, "currency": "EUR", "altFees": { "USD": 100 }, "route": "transatlantic", "status": "secondhand" }
+        ],
+        "maxKg": 32,
+        "sizeCm": 158,
+        "fareNote": "Europe Saver has no checked bag; Plus/Advantage/AerSpace include 20 kg; transatlantic Smart/Flex include 23 kg."
+      },
+      "cabin": { "sizeCm": [55, 40, 24], "limitKg": 10, "status": "secondhand" },
+      "personalItem": { "sizeCm": [33, 25, 20], "status": "secondhand" },
+      "sources": [
+        { "url": "https://www.aerlingus.com/prepare/bags/checked-baggage/", "status": "blocked (Imperva bot challenge)", "read": "2026-10-04" },
+        { "url": "https://deeparrival.com/airlines/aer-lingus/baggage-fees/", "status": "secondhand", "read": "2026-10-04" },
+        { "url": "https://stasher.com/blog/aer-lingus-baggage-allowance", "status": "secondhand", "read": "2026-10-04" }
+      ]
+    },
+    "Ryanair": {
+      "checked": {
+        "limitKg": 20,
+        "limitLb": 44,
+        "priceRange": { "from": 18.99, "to": 59.99, "currency": "EUR/GBP", "note": "bought per bag, up to three" },
+        "overweight": [
+          { "fromKg": 20, "toKg": 32, "feePerKg": 13, "currency": "EUR/GBP (route currency)", "route": "all", "status": "secondhand" }
+        ],
+        "maxKg": 32,
+        "maxRule": "32 kg per bag assumed from the EU/UK handling limit; not confirmed on Ryanair's page.",
+        "sizeCm": [81, 119, 119],
+        "sizeNote": "Size not confirmed in this pass; Ryanair's 20 kg bag is commonly quoted at 81 x 119 x 119 cm.",
+        "smallCheckedBag": { "kg": 10, "price": [9.49, 44.99], "currency": "EUR/GBP", "status": "secondhand" }
+      },
+      "cabin": { "sizeCm": [55, 40, 20], "limitKg": 10, "rule": "Only with Priority & 2 Cabin Bags (about 6-36 GBP one way).", "status": "secondhand" },
+      "personalItem": { "sizeCm": [40, 30, 20], "rule": "Free on every fare; the only free bag.", "status": "secondhand" },
+      "sources": [
+        { "url": "https://www.sendmybag.com/airlines/ryanair-baggage-allowance/", "status": "secondhand", "read": "2026-10-04" },
+        { "url": "https://upgradedpoints.com/travel/airlines/ryanair-baggage-fees/", "status": "secondhand", "read": "2026-10-04" }
+      ]
+    },
+    "Air Canada": {
+      "checked": {
+        "limitKg": 23,
+        "limitLb": 50,
+        "overweight": [
+          { "fromKg": 23, "toKg": 32, "feeRange": [100, 120], "currency": "CAD", "route": "varies by route; summaries give about 100 CAD in Canada/US", "status": "secondhand" }
+        ],
+        "maxKg": 32,
+        "maxRule": "Bags over 32 kg / 70 lb are not accepted.",
+        "sizeCm": 158,
+        "sizeIn": 62,
+        "oversize": { "fromCm": 160, "toCm": 292, "note": "accepted with a surcharge", "status": "secondhand" }
+      },
+      "cabin": { "sizeCm": [55, 40, 23], "limitKg": null, "status": "secondhand" },
+      "personalItem": { "sizeCm": [43, 33, 16], "status": "secondhand" },
+      "sources": [
+        { "url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/overweight-and-oversized-baggage.html", "status": "not found (HTTP 404)", "read": "2026-10-04" },
+        { "url": "https://wise.com/us/blog/lp-air-canada-baggage-policy", "status": "secondhand", "read": "2026-10-04" },
+        { "url": "https://www.cabinzero.com/blogs/air-travel-tips/air-canada-carry-on-size", "status": "secondhand", "read": "2026-10-04" }
+      ]
+    },
+    "WestJet": {
+      "checked": {
+        "limitKg": 23,
+        "limitLb": 50,
+        "overweight": [
+          { "fromKg": 23, "toKg": 32, "feeRange": [150, 177], "currency": "CAD", "route": "per summary; route-dependent", "status": "secondhand" }
+        ],
+        "maxKg": 32,
+        "sizeCm": 157,
+        "sizeIn": 62
+      },
+      "cabin": { "sizeCm": [56, 23, 36], "sizeIn": [22, 9, 14], "limitKg": null, "limitRule": "Must be light enough to lift into the overhead bin unaided.", "status": "verified" },
+      "personalItem": { "sizeCm": [41, 15, 33], "sizeIn": [16, 6, 13], "status": "verified" },
+      "sources": [
+        { "url": "https://www.westjet.com/en-ca/baggage/carry-on", "status": "verified", "read": "2026-10-04" },
+        { "url": "https://deeparrival.com/airlines/westjet/baggage-fees/", "status": "secondhand", "read": "2026-10-04" }
+      ]
+    },
+    "Aeromexico": {
+      "checked": {
+        "limitKg": 23,
+        "limitLb": 50,
+        "overweight": [
+          { "fromKg": 23, "toKg": 32, "feeRange": [800, 3000], "currency": "MXN", "route": "international; flat per piece, varies by route", "status": "secondhand" }
+        ],
+        "maxKg": 32,
+        "sizeCm": 158,
+        "status": "verified (23 kg, 23-32 kg overweight band, 32 kg max and 158 cm appeared on aeromexico.com behind an error banner); fees secondhand"
+      },
+      "cabin": { "sizeCm": [55, 40, 25], "limitKg": 10, "note": "15 kg on Clásica/AM Plus/Premier domestic per summary; from 2026 Basic domestic pays for the 10 kg cabin bag.", "status": "secondhand" },
+      "personalItem": { "rule": "One personal item under the seat; size not confirmed.", "status": "secondhand" },
+      "sources": [
+        { "url": "https://aeromexico.com/es-mx/equipaje/equipaje-documentado", "status": "partially read (site error page with policy text)", "read": "2026-10-04" },
+        { "url": "https://www.bestday.com.mx/vuelos/aerolineas/aeromexico/equipaje-en-aeromexico", "status": "secondhand", "read": "2026-10-04" }
+      ]
+    },
+    "Volaris": {
+      "checked": {
+        "limitKg": { "basic": 15, "plus": 25 },
+        "limitLb": { "basic": 33, "plus": 55 },
+        "overweight": [
+          { "fromKg": 25, "toKg": 45, "fee": null, "currency": "MXN", "route": "all; per-kg rate is in Volaris's 'Tarifas de Servicios Adicionales' PDF, not read", "status": "verified (band); fee not found" }
+        ],
+        "maxKg": 45,
+        "maxRule": "Up to 45 kg accepted with charges; above that it must go as cargo.",
+        "sizeCm": 158
+      },
+      "cabin": { "sizeCm": [55, 40, 25], "limitKg": 10, "combinedRule": "Personal item plus carry-on together may not exceed 20 kg.", "status": "verified" },
+      "personalItem": { "sizeCm": [45, 35, 20], "rule": "Must fit under the seat; the only bag on the Zero fare.", "status": "verified" },
+      "sources": [
+        { "url": "https://cms.volaris.com/es/informacion-util/politicas-de-equipaje/", "status": "verified", "read": "2026-10-04" }
+      ]
+    }
+  },
+  "garmentWeights": {
+    "basis": "Dry weights from laundry-load tables. No appliance maker publishes a per-garment table that could be read; Beko's own load guide gives only '7 kg is about 35 shirts' (=200 g a shirt). The tables below are a laundromat chain's (Speed Queen franchise, France) and a UK laundry site's, both secondhand. Use the midpoint unless a garment's fabric is known.",
+    "unit": "g",
+    "items": {
+      "tShirt": { "g": 175, "range": [150, 200], "note": "long-sleeve 250-350; inthewash: women's 150, men's 250", "status": "secondhand", "source": "speedQueen" },
+      "shirtBlouse": { "g": 225, "range": [200, 250], "note": "Beko: 7 kg load about 35 shirts = 200 g each", "status": "secondhand", "source": "speedQueen" },
+      "jeans": { "g": 750, "range": [600, 900], "note": "inthewash: women's 500, men's 700", "status": "secondhand", "source": "speedQueen" },
+      "trousers": { "g": 500, "range": [400, 600], "note": "cotton/chinos; inthewash smart trousers women's 400, men's 650", "status": "secondhand", "source": "speedQueen" },
+      "dress": { "g": 300, "range": [150, 600], "note": "summer dress 150-300, heavy (denim/wool) 400-600", "status": "secondhand", "source": "speedQueen" },
+      "suit": { "g": 1400, "range": [900, 2700], "note": "two-piece; merino 0.9-1.4 kg, tweed 1.8-2.7 kg. No laundry table lists a suit.", "status": "secondhand", "source": "suitSummary" },
+      "sweater": { "g": 500, "range": [250, 800], "note": "light 250-400, wool 500-800; hoodie 500-700; sweatshirt 350-500", "status": "secondhand", "source": "speedQueen" },
+      "jacketCoat": { "g": 1150, "range": [800, 1500], "note": "inthewash light jacket women's 1200, men's 2000 (looks high)", "status": "secondhand", "source": "speedQueen" },
+      "underwear": { "g": 55, "range": [30, 80], "status": "secondhand", "source": "speedQueen" },
+      "socksPair": { "g": 45, "range": [30, 70], "status": "secondhand", "source": "speedQueen" },
+      "shoesPair": { "g": 900, "range": [570, 1020], "note": "men's dress shoes; trainers 600 women's / 900 men's per inthewash", "status": "secondhand", "source": "shoeSummary" },
+      "pyjamas": { "g": 400, "range": [300, 500], "status": "secondhand", "source": "speedQueen" },
+      "swimsuit": { "g": 175, "range": [100, 250], "status": "secondhand", "source": "speedQueen" },
+      "shorts": { "g": 375, "range": [350, 400], "status": "secondhand", "source": "inthewash" },
+      "bathTowel": { "g": 500, "range": [400, 600], "status": "secondhand", "source": "speedQueen" }
+    },
+    "toiletries": {
+      "rule": "A water-based liquid, gel or cream weighs about 1 g per ml (water's density is 1.000 g/ml at 4 C; most toiletries are 0.9-1.1). A 100 ml bottle is therefore about 100 g of contents plus its container.",
+      "status": "estimate",
+      "derivation": "Physical density of water; container weights below are estimates of typical plastic travel packaging, not a published table.",
+      "items": {
+        "travelBottle100ml": { "g": 115, "derivation": "100 g contents + ~15 g plastic bottle", "status": "estimate" },
+        "fullSizeShampoo400ml": { "g": 440, "derivation": "400 g contents + ~40 g bottle", "status": "estimate" },
+        "toothpaste75ml": { "g": 100, "derivation": "75 ml paste at ~1.3 g/ml + tube", "status": "estimate" },
+        "toothbrush": { "g": 20, "status": "estimate" },
+        "deodorantStick": { "g": 75, "status": "estimate" },
+        "razor": { "g": 30, "status": "estimate" },
+        "washBagEmpty": { "g": 150, "status": "estimate" },
+        "typicalPackedWashBag": { "g": 800, "range": [500, 1200], "derivation": "empty bag + toothbrush + toothpaste + deodorant + razor + three or four 100 ml bottles", "status": "estimate" }
+      }
+    },
+    "sources": {
+      "speedQueen": { "url": "https://laveries-speed-queen.fr/en/blog/laundry-weight-guide/", "status": "secondhand", "read": "2026-10-04" },
+      "inthewash": { "url": "https://inthewash.co.uk/laundry-and-ironing/laundry-weight-calculator/", "status": "secondhand", "read": "2026-10-04", "note": "cites no source; says figures are averages" },
+      "beko": { "url": "https://www.beko.com/au-en/support/washing-machine--using--article/how-much-laundry-can-your-washing-machine-handle", "status": "secondhand (via search summary; 7 kg = about 35 shirts)", "read": "2026-10-04" },
+      "suitSummary": { "url": "https://www.y-zclothing.com/blog/what-is-the-weight-of-a-typical-wool-men-s-suit-559902.html", "status": "secondhand", "read": "2026-10-04" },
+      "shoeSummary": { "url": "https://www.cockeyed.com/science/weight/shoes-mens-dress.html", "status": "secondhand", "read": "2026-10-04" }
+    }
+  },
+  "liquids": {
+    "US": {
+      "rule": "TSA 3-1-1: liquids, aerosols, gels, creams and pastes in travel-size containers of 3.4 oz / 100 ml or less each, all in one quart-size bag, one bag per passenger.",
+      "overLimit": "Containers over 3.4 oz / 100 ml must go in checked baggage; at the checkpoint an over-size container is surrendered (discarded) or taken back to check in. Anything that alarms gets extra screening.",
+      "exemptions": "Medically necessary liquids, baby formula/breast milk in reasonable quantities, declared at the checkpoint.",
+      "status": "verified",
+      "source": { "url": "https://www.tsa.gov/travel/security-screening/liquids-aerosols-gels-rule", "read": "2026-10-04" }
+    },
+    "UK": {
+      "rule": "Default (GOV.UK): containers of at most 100 ml, in one transparent resealable bag holding no more than 1 litre (about 20 x 20 cm), one per person, where the airport requires the bag. GOV.UK says some airports allow containers up to 2 litres and tells travellers to check their departure and connecting airports.",
+      "byAirport": {
+        "upTo2Litres": ["Heathrow", "Gatwick", "Edinburgh", "Birmingham", "Bristol", "Belfast International", "Belfast City", "Bournemouth"],
+        "still100ml": ["Manchester", "Stansted", "Luton", "Glasgow", "Liverpool", "Newcastle", "London City", "Aberdeen", "Teesside"],
+        "asOf": "August 2026 per secondhand summaries; Which? (as of January 2026) listed the same 2-litre airports less Bournemouth",
+        "status": "secondhand"
+      },
+      "history": "The 100 ml rule dates from 2006. New CT scanners let some airports lift it in 2024; on 14 June 2024 the DfT reimposed 100 ml at all UK airports as a temporary measure; airports then lifted it one by one from 2025 as their scanners were approved. At 2-litre airports liquids may stay in the bag and electronics need not come out.",
+      "historyStatus": "secondhand (dates from general reporting, not re-read this pass)",
+      "overLimit": "An over-limit container is surrendered at security; frozen liquids are not allowed in hand luggage at any UK airport. Exemptions up to 2 litres: essential medicines, special dietary foods, baby food/milk. Sealed duty-free bags with receipt allowed.",
+      "connectionRule": "The return or connecting airport's rule governs: a 2-litre bottle accepted at Heathrow can be refused flying home from a 100 ml airport such as Manchester.",
+      "status": "verified (GOV.UK default rule and exemptions); secondhand (airport list)",
+      "sources": [
+        { "url": "https://www.gov.uk/hand-luggage-restrictions/liquids", "status": "verified", "read": "2026-10-04" },
+        { "url": "https://www.which.co.uk/news/article/100ml-rule-at-uk-airport-security-new-scanners-avLDH4E9xSVg", "status": "secondhand", "read": "2026-10-04" }
+      ]
+    },
+    "EU_Ireland_Canada_Mexico": {
+      "rule": "100 ml containers in a 1-litre bag remain the default at Dublin, Canadian (CATSA) and Mexican airports; EU airports with approved CT scanners (Dublin among them in 2024) were also pulled back to 100 ml by the EU in 2024. Current Dublin state not re-read in this pass.",
+      "status": "secondhand"
+    }
+  },
+  "notFound": [
+    "Delta: cabin weight limit (none published) and transatlantic overweight band confirmed only secondhand; international page not read.",
+    "United: united.com timed out; all figures secondhand. International overweight fees vary by route ($100-300 for 51-70 lb).",
+    "American: aa.com returned HTTP 403 on every baggage URL; all figures secondhand.",
+    "British Airways: ba.com served a high-demand holding page; all figures secondhand.",
+    "Virgin Atlantic: primary page not attempted after BA block; figures secondhand.",
+    "Aer Lingus: aerlingus.com blocked by an Imperva bot challenge; figures secondhand.",
+    "Ryanair: primary page not attempted (JS app); 20 kg bag dimensions and the 32 kg per-bag ceiling not confirmed.",
+    "Air Canada: overweight page URL returned 404; fee range secondhand.",
+    "WestJet: overweight/oversize page URL returned 404; overweight fee secondhand.",
+    "Aeromexico: site showed an error page; fees in MXN are a secondhand range only.",
+    "Volaris: per-kg overweight fee is in the 'Tarifas de Servicios Adicionales' PDF, not read.",
+    "Garment weights: no appliance maker publishes a per-garment table readable here; laundry-table figures are secondhand, suit and shoes from single summaries.",
+    "Toiletry item weights: no published table; estimates from water density.",
+    "UK liquids: GOV.UK does not list airports; the per-airport list and the 2024-2025 history are secondhand. Dublin's current liquids rule not read."
+  ]
+}

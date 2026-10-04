@@ -1,0 +1,213 @@
+{
+  "read": "2026-10-04",
+  "conversion": "1 cu ft = 28.3168 L. Every litre figure derived from cubic feet in this file was converted with that factor, by Claude, and is marked convertedFrom.",
+  "method": "Where a primary source gives a total only, the fresh/freezer split was applied from a sourced ratio for that market's commonest configuration (see splitRatios). Such rows have status 'estimate' and state the derivation. US adjusted volume (AV) = fresh + 1.76 x freezer for refrigerator-freezers (HRF-1-2019 as referenced by 10 CFR 430 App. A; 1.76 = (90-0)/(90-39), secondhand via search summary of the DOE test-procedure notice), so total = AV / (1 + 0.76 x freezerShare).",
+  "splitRatios": {
+    "US_CA_topMount": {
+      "freezerShareOfTotal": 0.261,
+      "measures": "median of (freezer volume / total volume) across ENERGY STAR certified product class 3 (top-mount, automatic defrost) refrigerator-freezers, n=693 (615 also listed for Canada); freezer volume derived per model as (adjustedVolume - totalVolume) / 0.76",
+      "otherClasses": { "PC5_bottomMount": 0.303, "PC5I_bottomMount_icemaker": 0.304, "PC5A_bottomMount_throughDoorIce": 0.311, "PC7_sideBySide": 0.352, "PC12_compactRefrigeratorFreezer": 0.263 },
+      "source": "https://data.energystar.gov/resource/p5st-her9.json (ENERGY STAR Certified Residential Refrigerators dataset, 4,846 rows)",
+      "status": "estimate",
+      "note": "Model-count median, not shipment-weighted. Total and AV are certified values; the split is derived from them."
+    },
+    "US_salesMix2009": {
+      "freezerShareOfTotal": 0.315,
+      "measures": "average declared compartment volumes of new US refrigerator-freezers, 2009: fresh 415 L, freezer 191 L (product-weighted over the Home Energy Magazine model database, not sales-weighted)",
+      "source": "https://www.iea-4e.org/wp-content/uploads/publications/2012/11/USA.pdf (IEA 4E Mapping & Benchmarking, USA domestic refrigerated appliances, Dec 2012, p.1)",
+      "status": "verified"
+    },
+    "GB_fridgeFreezer2010": {
+      "freezerShareOfTotal": 0.33,
+      "measures": "86 / (175 + 86) from UK sales-weighted declared volumes, 2010",
+      "source": "https://www.iea-4e.org/wp-content/uploads/publications/2012/11/UK.pdf",
+      "status": "verified"
+    },
+    "EU_COLD7_2014": {
+      "freezerShareOfTotal": 0.303,
+      "measures": "93.9 / 309.6 from CECED 2014 database average fridge-freezer",
+      "source": "https://ecodesign-fridges.eu/sites/ecodesign-fridges.eu/files/Household%20Refrigeration%20Review%20FINAL%20REPORT%2020160304.pdf",
+      "status": "verified"
+    }
+  },
+  "markets": {
+    "US": {
+      "typical": {
+        "freshL": 388.8,
+        "freezerL": 178.9,
+        "totalL": 567.8,
+        "measures": "net total volume; midpoint (20.05 cu ft) of the commonest US household size band, split by the 2009 US average compartment ratio",
+        "convertedFrom": "20.05 cu ft",
+        "status": "estimate",
+        "derivation": "RECS 2020: most-used refrigerator size, all homes (123.53 M): compact 1.16 M, small (<17.6 cu ft) 6.06 M, medium (17.6-22.5) 57.01 M, large (22.6-29.5) 56.34 M, very large (>29.5) 2.30 M. Medium is the modal band; midpoint 20.05 cu ft = 567.8 L. Split 0.315 freezer share from IEA 4E USA 2009 (fresh 415 L, freezer 191 L). RECS sizes are respondent-reported, not test volumes. Most-used type, all homes: top freezer 42.06 M, bottom freezer 26.49 M, side-by-side and 3+ door the rest, 1-door 11.66 M, compact 1.16 M.",
+        "source": "https://www.eia.gov/consumption/residential/data/2020/hc/pdf/HC%203.1.pdf",
+        "sourceStatus": "verified (RECS 2020 Table HC3.1, PDF text extracted with pdftotext; row labels are offset by one line in the extraction and were realigned against the 123.53 M total)",
+        "alternate_DOE_topMount": {
+          "freshL": 359.7, "freezerL": 127.0, "totalL": 486.8,
+          "measures": "DOE representative top-mount (PC 3) unit, adjusted volume 20.6 cu ft, which carries 77.7% of PC 3 purchases in DOE's LCC model (TraQline capacity data Q1 2018-Q1 2019); total and split derived with the 0.261 top-mount freezer share",
+          "convertedFrom": "AV 20.6 cu ft -> total 17.2 cu ft (fresh 12.7, freezer 4.5)",
+          "status": "estimate",
+          "source": "https://www.govinfo.gov/content/pkg/FR-2023-02-27/pdf/2023-03436.pdf (88 FR 12452, Feb 27 2023, Table IV.11 and IV.13)",
+          "sourceStatus": "verified for the AV and share; split derived"
+        },
+        "alternate_DOE_bottomMount": {
+          "measures": "DOE PC 5 representative AVs 23 cu ft (34.7%) and 30 cu ft (65.3%); PC 5A 35, PC 7 31.5. In 2020 top-mounts and their proxy classes were 36.7% of the market and bottom-mounts 40.2%.",
+          "source": "https://www.govinfo.gov/content/pkg/FR-2023-02-27/pdf/2023-03436.pdf",
+          "status": "verified"
+        },
+        "salesMix2009_4E": {
+          "freshL": 415, "freezerL": 191, "totalL": 606,
+          "measures": "average declared compartment volumes, new refrigerator-freezers, 2009, product-weighted (HEM model database)",
+          "source": "https://www.iea-4e.org/wp-content/uploads/publications/2012/11/USA.pdf",
+          "status": "verified"
+        }
+      },
+      "small": {
+        "freshL": 207.8,
+        "freezerL": 73.4,
+        "totalL": 281.2,
+        "measures": "net volumes of DOE's small representative top-mount unit (AV 11.9 cu ft, 22.3% of PC 3 purchases): an 'apartment-size' fridge-freezer",
+        "convertedFrom": "AV 11.9 cu ft -> total 9.9 cu ft (fresh 7.3, freezer 2.6)",
+        "status": "estimate",
+        "derivation": "total = 11.9 / (1 + 0.76 x 0.261); split by ENERGY STAR PC 3 median freezer share.",
+        "source": "https://www.govinfo.gov/content/pkg/FR-2023-02-27/pdf/2023-03436.pdf",
+        "note": "RECS 2020 shows that rented apartments mostly have a full-size fridge, not a small one: in 5+ unit buildings (22.84 M) the most-used refrigerator is medium 13.72 M (60%), large 6.16 M, small 2.28 M, compact 0.38 M; in 2-4 unit buildings (9.34 M) medium 5.77 M, large 2.33 M, small 0.86 M, compact 0.26 M. So the typical figure above also suits a US rental; this small unit is a studio/older-building case."
+      }
+    },
+    "CA": {
+      "typical": {
+        "freshL": 365.2,
+        "freezerL": 129.0,
+        "totalL": 494.1,
+        "measures": "net total volume; midpoint (17.45 cu ft) of the modal shipment band 16.5-18.4 cu ft (28.3% of 2019 standard-size shipments), split by the top-mount freezer share",
+        "convertedFrom": "17.45 cu ft (fresh 12.9, freezer 4.6)",
+        "status": "estimate",
+        "derivation": "NRCan 2019 distribution of standard-size (>=10.5 cu ft) refrigerator shipments by volume: 10.5-12.4 7.7%, 12.5-14.4 2.5%, 14.5-16.4 6.9%, 16.5-18.4 28.3%, 18.5-20.4 12.6%, 20.5-22.4 19.7%, 22.5-24.4 6.3%, 24.5-26.4 10.5%, 26.5-28.4 4.7%, >=28.5 1.3% (sums to 100.5). The page does not say whether the bands are adjusted or rated volume. The band-midpoint weighted mean is 19.62 cu ft = 555.7 L total (fresh 410.6 / freezer 145.0 at 0.261), if a mean rather than the mode is wanted. NRCan also says 54.5% of 2019 standard refrigerators were 18.5 cu ft or larger.",
+        "source": "https://oee.nrcan.gc.ca/publications/statistics/aham/2019/refrigerators.cfm",
+        "sourceStatus": "verified (fetched with curl; WebFetch was reset by the server)"
+      },
+      "small": {
+        "freshL": 239.6,
+        "freezerL": 84.6,
+        "totalL": 324.2,
+        "measures": "midpoint (11.45 cu ft) of NRCan's smallest standard band, 10.5-12.4 cu ft (7.7% of 2019 shipments): the 24-inch apartment-size fridge-freezer",
+        "convertedFrom": "11.45 cu ft",
+        "status": "estimate",
+        "derivation": "split by 0.261 top-mount freezer share; compacts under 10.5 cu ft are excluded from NRCan's distribution.",
+        "source": "https://oee.nrcan.gc.ca/publications/statistics/aham/2019/refrigerators.cfm"
+      }
+    },
+    "GB": {
+      "typical": {
+        "freshL": 175,
+        "freezerL": 86,
+        "totalL": 261,
+        "measures": "sales-weighted average declared (net) compartment volumes of new fridge-freezers sold in the UK, 2010 (latest year in the series; GfK sales data via Defra's Market Transformation Programme)",
+        "status": "verified",
+        "source": "https://www.iea-4e.org/wp-content/uploads/publications/2012/11/UK.pdf",
+        "sourceDetail": "IEA 4E Mapping & Benchmarking, United Kingdom, domestic refrigerated appliances, issued Dec 2012, p.1. Data years 1999, 2002, 2005-2010; series fresh 155/179/179/189/189/187/181/175 L and freezer 80/92/86/94/93/91/88/86 L. 2010 sample: 1,433 models, 1,404,237 units.",
+        "note": "Data are 2010; no newer UK sales-weighted figure was found. The EU 2014 model average (fresh 215.6 / freezer 93.9 / total 309.6 L) suggests sizes have grown since."
+      },
+      "small": {
+        "freshL": 149,
+        "freezerL": 14,
+        "totalL": 163,
+        "measures": "sales-weighted average declared volumes of new UK 'refrigerators and refrigerators with freezer compartments' (single-door larder fridges and fridges with an ice box), 2010",
+        "status": "verified",
+        "source": "https://www.iea-4e.org/wp-content/uploads/publications/2012/11/UK.pdf",
+        "note": "This category mixes tall larder fridges with under-counter fridges with ice boxes, so it is a single-door fridge average, not strictly an under-counter figure. No UK figure for rented flats specifically was found."
+      }
+    },
+    "IE": {
+      "typical": {
+        "freshL": 215.6,
+        "freezerL": 93.9,
+        "totalL": 309.6,
+        "measures": "average net compartment volumes of fridge-freezers (category 7, the study's base case) in the CECED 2014 database, EU-wide, 10,437 models; model average, not sales-weighted",
+        "status": "estimate",
+        "derivation": "No Ireland-specific figure was found; the EU review study's base case is used as Ireland's proxy. Ireland's market (same 230 V freestanding 55-60 cm units as the UK) also sits close to the UK's 2010 sales-weighted 175/86 L.",
+        "source": "https://ecodesign-fridges.eu/sites/ecodesign-fridges.eu/files/Household%20Refrigeration%20Review%20FINAL%20REPORT%2020160304.pdf",
+        "sourceDetail": "VHK & ARMINES, Ecodesign & Labelling Review Household Refrigeration, final report, March 2016, Table 14 (p.75): COLD7 Refrigerator-Freezer frozen 93.9 L, fresh 215.6 L, total net 309.6 L, equivalent volume 515.1 L.",
+        "sourceStatus": "verified (the figure is verified; its use for Ireland is the estimate)"
+      },
+      "small": {
+        "freshL": 250.9,
+        "freezerL": 11.8,
+        "totalL": 247.5,
+        "measures": "EU CECED 2014 average single-door refrigerator (category 1), 2,506 models: fresh 250.9 L, frozen 11.8 L, total net 247.5 L as printed",
+        "status": "estimate",
+        "derivation": "EU proxy, as above. The printed total (247.5) is less than fresh + frozen (262.7); the table is reproduced as printed (likely not every model declares an ice-box volume).",
+        "source": "https://ecodesign-fridges.eu/sites/ecodesign-fridges.eu/files/Household%20Refrigeration%20Review%20FINAL%20REPORT%2020160304.pdf"
+      }
+    },
+    "MX": {
+      "typical": {
+        "freshL": 240.7,
+        "freezerL": 85.0,
+        "totalL": 325.6,
+        "measures": "net total; midpoint (11.5 cu ft) of the 9-14 cu ft average-capacity range CLASP reports for Mexico, split by the top-mount freezer share",
+        "convertedFrom": "11.5 cu ft (range 9-14 cu ft = 254.9-396.4 L)",
+        "status": "estimate",
+        "derivation": "CLASP (2015): 'in Mexico, average refrigeration capacities are in the range of 9 to 14 cubic feet, which are lower than the average capacities of units sold in the US'. Market share 2014 (IIE data in the same report): class 3 top-mount auto-defrost 80%, class 1 manual-defrost 8%, class 5 bottom-mount 4%, class 7 side-by-side 3%, class 11 compact 5%. Split uses the 0.261 ENERGY STAR top-mount share because no Mexican fresh/freezer split was found.",
+        "source": "https://www.clasp.ngo/wp-content/uploads/2021/01/Impacts-Evaluation-of-Appliance-Energy-Efficiency-Standards-in-Mexico-since-2000.pdf",
+        "sourceStatus": "verified (CLASP Technical Report, Oct 2015, pp. 51-52; secondary to CONUEE/ANCE/IIE data)",
+        "corroboration": [
+          {
+            "text": "Arroyo, Ambriz & Romero (UNAM/UAM, c.2002): the most commercial Mexican models were 8-16 cu ft (184.06-466.95 L net), per PROFECO studies and the ANCE certified list.",
+            "source": "https://www.osti.gov/etdeweb/servlets/purl/20476416",
+            "status": "verified"
+          },
+          {
+            "text": "CONUEE sizing guidance as reported by press (2026-09-04): 9-11 cu ft for 2-3 people, 14-17 cu ft for 4-5, +2 cu ft per extra person. This is advice, not a stock or sales measurement.",
+            "source": "https://www.adn40.mx/es-tendencia/2026-09-04/como-elegir-el-refrigerador-adecuado-en-tu-hogar-el-truco-de-la-conuee-para-calcular-los-pies-cubicos-segun-cantidad-de-personas/",
+            "status": "secondhand"
+          }
+        ]
+      },
+      "small": {
+        "freshL": 188.4,
+        "freezerL": 66.5,
+        "totalL": 254.9,
+        "measures": "9 cu ft, the bottom of CLASP's 9-14 cu ft average range and CONUEE's 2-3 person size",
+        "convertedFrom": "9 cu ft (fresh 6.65, freezer 2.35)",
+        "status": "estimate",
+        "derivation": "split by 0.261 top-mount freezer share.",
+        "source": "https://www.clasp.ngo/wp-content/uploads/2021/01/Impacts-Evaluation-of-Appliance-Energy-Efficiency-Standards-in-Mexico-since-2000.pdf"
+      }
+    }
+  },
+  "minibar": {
+    "hotelMinibar": {
+      "totalL": 40,
+      "freshL": 40,
+      "freezerL": 0,
+      "range": "30-40 L is the common hotel-room minibar size; 26-30 L for a basic drinks offer, 40-50 L for an extended one",
+      "measures": "manufacturer-declared internal capacity of a hotel-room minibar (no freezer compartment)",
+      "status": "verified",
+      "source": "https://www.attrezzatureprofessionali.com/en/mini-bar-fridge-for-hotel-rooms-capacity-40-ltr.html",
+      "sourceDetail": "40 L internal, 44.1 x 45.7 x 56.6 cm, 60-65 W, 230 V, for hotel rooms. The 30 L sibling: https://www.attrezzatureprofessionali.com/en/mini-bar-fridge-for-hotel-rooms-capacity-30-ltr-mod-tec30n.html (not opened). The 26-30 / 40-50 L sizing guidance is secondhand (search summary).",
+      "note": "Hotel minibars are traditionally absorption units (silent); compressor units also exist. The EU review study's heat-loss example uses a 'typical small (mini-bar)' refrigerator of 68 L (VHK/ARMINES 2016)."
+    },
+    "underCounterMiniFridge_US": {
+      "totalL": 48.1,
+      "freshL": 48.1,
+      "freezerL": 0,
+      "measures": "DOE representative compact all-refrigerator (PC 11A, manual defrost) adjusted volume 1.7 cu ft, which carries 77.8% of PC 11A purchases; the larger representative is 4.4 cu ft (124.6 L, 22.2%). For an all-refrigerator AV equals net volume (factor 1.0)",
+      "convertedFrom": "1.7 cu ft",
+      "status": "verified",
+      "source": "https://www.govinfo.gov/content/pkg/FR-2023-02-27/pdf/2023-03436.pdf (Table IV.11)",
+      "note": "ENERGY STAR compact medians (model count): compact all-refrigerator manual defrost 3.2 cu ft (90.6 L), automatic 3.4 cu ft (96.3 L); compact refrigerator-freezer partial auto-defrost 4.5 cu ft total (127.4 L) with a 0.263 freezer share. These describe a dorm/office/small-flat under-counter unit, larger than a hotel minibar."
+    }
+  },
+  "notFound": [
+    "DOE / AHAM shipment-weighted average adjusted volume as a single number for recent years: not printed in the 2023 NOPR text (only representative AVs and their purchase shares); the TSD chapters were not fetched. federalregister.gov and ecfr.gov redirect WebFetch to unblock.federalregister.gov (blocked); govinfo.gov PDFs worked.",
+    "US shipment-weighted fresh/freezer split: none found; the IEA 4E 2009 split is product-weighted.",
+    "NRCan average adjusted volume of shipped refrigerators and shipment shares by type: the 2019 page gives UEC by type and a volume-band distribution only; it does not say whether the bands are adjusted or rated volume.",
+    "Canadian fresh/freezer split from NRCan or EnerGuide: not published; ENERGY STAR Canada-listed models were used instead.",
+    "UK sales-weighted volumes after 2010 (DESNZ/BEIS, Energy Saving Trust, MTP briefing notes): not found; EST pages give only advice ranges (e.g. 200-300 L for a standard freestanding fridge-freezer, secondhand).",
+    "Ireland-specific capacity data (SEAI, CSO, EPREL by country): none found. The EPREL public API needs a key for bulk queries and was not tried.",
+    "Mexico: no CONUEE, NOM-015-ENER-2018 annex, INEGI ENIGH or ANFAD figure giving average volume or a fresh/freezer split. ENIGH records refrigerator ownership, not size. Commercial market-research pages (Statista, Euromonitor, Bonafide) are paywalled or unsourced and were not used.",
+    "Typical fridge in UK/Irish rented flats specifically: no survey found (the English Housing Survey does not record appliance size).",
+    "A primary hotel-industry source for minibar size (e.g. AHLA standard): none; manufacturer catalogs used. vitrifrigo.com returned HTTP 403."
+  ]
+}

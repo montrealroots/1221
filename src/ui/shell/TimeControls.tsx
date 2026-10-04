@@ -29,6 +29,8 @@ import { INTEREST_BY_ID } from '@/engine/content/interests';
 import { spokenList } from '@/ui/looks/words';
 import type { ScheduledItem } from '@/engine/core/scheduler';
 import { Gated, useFeature } from '@/ui/guide/Guide';
+import { CLUB_DUE_KIND } from '@/engine/systems/clubs';
+import { ClubSetOut } from '@/ui/components/ClubsPanel';
 
 export function TimeControls() {
   // Why sleep can't start now, as the command has it: in the middle of a commitment.
@@ -82,7 +84,16 @@ export function TimeControls() {
         />
       </div>
 
-      {due && (
+      {due && due.item.kind === CLUB_DUE_KIND && (
+        // The time to set out for a club's meeting: going is a trip of its own, and after it the clock goes on (from 2026-10-03).
+        <ClubSetOut
+          clubId={String(due.item.payload.clubId)}
+          meetingAt={Number(due.item.payload.meetingAt)}
+          onDone={() => { clearStandingAt(); advanceTo(Math.max(due.wanted, sim.now), due.sentFrom); }}
+          onClose={clearStandingAt}
+        />
+      )}
+      {due && due.item.kind !== CLUB_DUE_KIND && (
         <DueNow
           item={due.item}
           wanted={due.wanted}

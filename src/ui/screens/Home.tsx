@@ -644,7 +644,7 @@ export function Home() {
           <YourTravel />
         </Panel>
         ))}
-        {(player.career || player.school) && (!shows.vehicles ? <LockedPanel feature="ui.vehicles" title="Cars" /> : (
+        {(player.career || player.school || (player.vehicles ?? []).some((v) => v.soldAt === undefined)) && (!shows.vehicles ? <LockedPanel feature="ui.vehicles" title="Cars" /> : (
         <Panel
           title="Cars"
           tight

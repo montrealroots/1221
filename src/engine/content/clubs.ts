@@ -46,6 +46,13 @@
  *   none read, and is time spent. A session under three METs is an hour
  *   unwinding, not a workout. A course runs its sessions from the week it's
  *   joined, as a league's season does.
+ *
+ * **Outdoors** (from 2026-10-03), where a thunderstorm stops it: parkrun and
+ * the running clubs, on their parks and streets; Volo's kickball in
+ * McCarren Park and on a school field; GO Mammoth's netball on Park Sports
+ * Hyde Park's open courts; FirmBalls' and Urban Rec's pitches; Pumas7's.
+ * Vauxhall's netball, the pickleball league and every lesson are taken as
+ * indoors, their venues not read for it.
  */
 
 export type ClubKind = 'parkrun' | 'running' | 'league' | 'lesson';
@@ -57,28 +64,29 @@ export interface Club {
   minutes: number; /** The Compendium's METs; none where none fits. */ met?: number;
   /** A season's fee, or a week's, in its money; none for a free club. */ fee?: { amount: number; per: 'season' | 'week'; currency: string; taxIncluded: boolean };
   seasonWeeks?: number;
+  /** Played or run outside, and so not in a thunderstorm. */ outdoor?: boolean;
   confirmed: boolean;
 }
 
 const RUN_MINUTES_5K = 31;
 
 export const CLUBS: readonly Club[] = [
-  { id: 'parkrun-brooklyn-bridge', cityId: 'us-ny-newyork', kind: 'parkrun', name: 'Brooklyn Bridge parkrun', place: 'Brooklyn Bridge Park', weekday: 6, hour: 9, minute: 0, summer: { from: 5, to: 10, hour: 8, minute: 0 }, minutes: RUN_MINUTES_5K, met: 9.3, confirmed: true },
-  { id: 'parkrun-battersea', cityId: 'uk-eng-london', kind: 'parkrun', name: 'Battersea parkrun', place: 'Battersea Park', weekday: 6, hour: 9, minute: 0, minutes: RUN_MINUTES_5K, met: 9.3, confirmed: true },
-  { id: 'parkrun-bushy', cityId: 'uk-eng-london', kind: 'parkrun', name: 'Bushy parkrun', place: 'Bushy Park, Teddington', weekday: 6, hour: 9, minute: 0, minutes: RUN_MINUTES_5K, met: 9.3, confirmed: true },
-  { id: 'parkrun-fairview', cityId: 'ie-lei-dublin', kind: 'parkrun', name: 'Fairview parkrun', place: 'Fairview Park', weekday: 6, hour: 9, minute: 30, minutes: RUN_MINUTES_5K, met: 9.3, confirmed: true },
-  { id: 'parkrun-budapest-park', cityId: 'ca-on-toronto', kind: 'parkrun', name: 'Budapest Park parkrun', place: 'Budapest Park', weekday: 6, hour: 9, minute: 0, summer: { from: 5, to: 9, hour: 8, minute: 0 }, minutes: RUN_MINUTES_5K, met: 9.3, confirmed: true },
-  { id: 'parkrun-spanish-banks', cityId: 'ca-bc-vancouver', kind: 'parkrun', name: 'Spanish Banks Beach parkrun', place: 'Spanish Banks Beach', weekday: 6, hour: 9, minute: 0, minutes: RUN_MINUTES_5K, met: 9.3, confirmed: true },
-  { id: 'nyrr-open-run-morningside', cityId: 'us-ny-newyork', kind: 'running', name: 'NYRR Open Run', place: 'Morningside Park', weekday: 6, hour: 9, minute: 0, minutes: 30, met: 9.3, confirmed: true },
-  { id: 'los-feliz-running-club', cityId: 'us-ca-losangeles', kind: 'running', name: 'Los Feliz Running Club', place: 'Griffith Park', weekday: 0, hour: 8, minute: 0, minutes: 40, met: 9.3, confirmed: true },
-  { id: 'parkdale-roadrunners', cityId: 'ca-on-toronto', kind: 'running', name: 'Parkdale Roadrunners', place: 'Brock Avenue', weekday: 2, hour: 19, minute: 0, minutes: RUN_MINUTES_5K, met: 9.3, confirmed: false },
-  { id: 'vrc-flight-crew', cityId: 'ca-bc-vancouver', kind: 'running', name: 'Flight Crew Run Club', place: 'West 4th Avenue', weekday: 4, hour: 18, minute: 15, minutes: RUN_MINUTES_5K, met: 9.3, confirmed: true },
-  { id: 'volo-ny-kickball', cityId: 'us-ny-newyork', kind: 'league', name: 'Volo Kickball', place: 'McCarren Park', weekday: 3, hour: 18, minute: 30, minutes: 60, met: 7.0, fee: { amount: 135, per: 'season', currency: 'USD', taxIncluded: true }, seasonWeeks: 6, confirmed: true },
-  { id: 'volo-la-kickball', cityId: 'us-ca-losangeles', kind: 'league', name: 'Volo Kickball', place: 'Immaculate Heart High School', weekday: 1, hour: 19, minute: 15, minutes: 60, met: 7.0, fee: { amount: 84.66, per: 'season', currency: 'USD', taxIncluded: true }, seasonWeeks: 8, confirmed: true },
-  { id: 'go-mammoth-netball', cityId: 'uk-eng-london', kind: 'league', name: 'GO Mammoth Netball', place: 'Park Sports Hyde Park', weekday: 1, hour: 19, minute: 0, minutes: 60, met: 7.0, fee: { amount: 11.1, per: 'week', currency: 'GBP', taxIncluded: true }, seasonWeeks: 8, confirmed: true },
-  { id: 'firmballs-spawell-fives', cityId: 'ie-lei-dublin', kind: 'league', name: 'FirmBalls Five-A-Side', place: 'Spawell Powerleague', weekday: 3, hour: 18, minute: 30, minutes: 54, met: 7.0, fee: { amount: 60 / 5, per: 'week', currency: 'EUR', taxIncluded: true }, confirmed: true },
+  { id: 'parkrun-brooklyn-bridge', cityId: 'us-ny-newyork', kind: 'parkrun', name: 'Brooklyn Bridge parkrun', place: 'Brooklyn Bridge Park', weekday: 6, hour: 9, minute: 0, summer: { from: 5, to: 10, hour: 8, minute: 0 }, minutes: RUN_MINUTES_5K, met: 9.3, outdoor: true, confirmed: true },
+  { id: 'parkrun-battersea', cityId: 'uk-eng-london', kind: 'parkrun', name: 'Battersea parkrun', place: 'Battersea Park', weekday: 6, hour: 9, minute: 0, minutes: RUN_MINUTES_5K, met: 9.3, outdoor: true, confirmed: true },
+  { id: 'parkrun-bushy', cityId: 'uk-eng-london', kind: 'parkrun', name: 'Bushy parkrun', place: 'Bushy Park, Teddington', weekday: 6, hour: 9, minute: 0, minutes: RUN_MINUTES_5K, met: 9.3, outdoor: true, confirmed: true },
+  { id: 'parkrun-fairview', cityId: 'ie-lei-dublin', kind: 'parkrun', name: 'Fairview parkrun', place: 'Fairview Park', weekday: 6, hour: 9, minute: 30, minutes: RUN_MINUTES_5K, met: 9.3, outdoor: true, confirmed: true },
+  { id: 'parkrun-budapest-park', cityId: 'ca-on-toronto', kind: 'parkrun', name: 'Budapest Park parkrun', place: 'Budapest Park', weekday: 6, hour: 9, minute: 0, summer: { from: 5, to: 9, hour: 8, minute: 0 }, minutes: RUN_MINUTES_5K, met: 9.3, outdoor: true, confirmed: true },
+  { id: 'parkrun-spanish-banks', cityId: 'ca-bc-vancouver', kind: 'parkrun', name: 'Spanish Banks Beach parkrun', place: 'Spanish Banks Beach', weekday: 6, hour: 9, minute: 0, minutes: RUN_MINUTES_5K, met: 9.3, outdoor: true, confirmed: true },
+  { id: 'nyrr-open-run-morningside', cityId: 'us-ny-newyork', kind: 'running', name: 'NYRR Open Run', place: 'Morningside Park', weekday: 6, hour: 9, minute: 0, minutes: 30, met: 9.3, outdoor: true, confirmed: true },
+  { id: 'los-feliz-running-club', cityId: 'us-ca-losangeles', kind: 'running', name: 'Los Feliz Running Club', place: 'Griffith Park', weekday: 0, hour: 8, minute: 0, minutes: 40, met: 9.3, outdoor: true, confirmed: true },
+  { id: 'parkdale-roadrunners', cityId: 'ca-on-toronto', kind: 'running', name: 'Parkdale Roadrunners', place: 'Brock Avenue', weekday: 2, hour: 19, minute: 0, minutes: RUN_MINUTES_5K, met: 9.3, outdoor: true, confirmed: false },
+  { id: 'vrc-flight-crew', cityId: 'ca-bc-vancouver', kind: 'running', name: 'Flight Crew Run Club', place: 'West 4th Avenue', weekday: 4, hour: 18, minute: 15, minutes: RUN_MINUTES_5K, met: 9.3, outdoor: true, confirmed: true },
+  { id: 'volo-ny-kickball', cityId: 'us-ny-newyork', kind: 'league', name: 'Volo Kickball', place: 'McCarren Park', weekday: 3, hour: 18, minute: 30, minutes: 60, met: 7.0, fee: { amount: 135, per: 'season', currency: 'USD', taxIncluded: true }, seasonWeeks: 6, outdoor: true, confirmed: true },
+  { id: 'volo-la-kickball', cityId: 'us-ca-losangeles', kind: 'league', name: 'Volo Kickball', place: 'Immaculate Heart High School', weekday: 1, hour: 19, minute: 15, minutes: 60, met: 7.0, fee: { amount: 84.66, per: 'season', currency: 'USD', taxIncluded: true }, seasonWeeks: 8, outdoor: true, confirmed: true },
+  { id: 'go-mammoth-netball', cityId: 'uk-eng-london', kind: 'league', name: 'GO Mammoth Netball', place: 'Park Sports Hyde Park', weekday: 1, hour: 19, minute: 0, minutes: 60, met: 7.0, fee: { amount: 11.1, per: 'week', currency: 'GBP', taxIncluded: true }, seasonWeeks: 8, outdoor: true, confirmed: true },
+  { id: 'firmballs-spawell-fives', cityId: 'ie-lei-dublin', kind: 'league', name: 'FirmBalls Five-A-Side', place: 'Spawell Powerleague', weekday: 3, hour: 18, minute: 30, minutes: 54, met: 7.0, fee: { amount: 60 / 5, per: 'week', currency: 'EUR', taxIncluded: true }, outdoor: true, confirmed: true },
   { id: 'new-haven-pickleball', cityId: 'us-ct-newhaven', kind: 'league', name: 'New Haven Pickleball League', place: 'Wilbur Cross High School', weekday: 2, hour: 17, minute: 30, minutes: 60, met: 4.1, fee: { amount: 30, per: 'week', currency: 'USD', taxIncluded: true }, seasonWeeks: 9, confirmed: true },
-  { id: 'pumas7-futbol7', cityId: 'mx-cmx-mexicocity', kind: 'league', name: 'Pumas7 Fútbol 7', place: 'Pumas7', weekday: 6, hour: 9, minute: 0, minutes: 60, met: 7.0, fee: { amount: 1_100, per: 'season', currency: 'MXN', taxIncluded: true }, seasonWeeks: 12, confirmed: true },
+  { id: 'pumas7-futbol7', cityId: 'mx-cmx-mexicocity', kind: 'league', name: 'Pumas7 Fútbol 7', place: 'Pumas7', weekday: 6, hour: 9, minute: 0, minutes: 60, met: 7.0, fee: { amount: 1_100, per: 'season', currency: 'MXN', taxIncluded: true }, seasonWeeks: 12, outdoor: true, confirmed: true },
   { id: 'go-mammoth-vauxhall-netball', cityId: 'uk-eng-london', kind: 'league', name: 'GO Mammoth Netball Vauxhall', place: 'Vauxhall', weekday: 2, hour: 18, minute: 0, minutes: 40, met: 7.0, fee: { amount: 10.6, per: 'week', currency: 'GBP', taxIncluded: true }, seasonWeeks: 8, confirmed: true },
   { id: 'ymca-cross-island-swim', cityId: 'us-ny-newyork', kind: 'lesson', name: 'Adult Swimming, Stage 1', place: 'Cross Island YMCA', weekday: 1, hour: 19, minute: 0, minutes: 45, met: 6.0, fee: { amount: 335, per: 'season', currency: 'USD', taxIncluded: true }, seasonWeeks: 8, confirmed: true },
   { id: 'ymca-new-haven-swim', cityId: 'us-ct-newhaven', kind: 'lesson', name: 'Swimming Lessons', place: 'New Haven YMCA Youth Center', weekday: 5, hour: 16, minute: 30, minutes: 30, met: 6.0, fee: { amount: 210, per: 'season', currency: 'USD', taxIncluded: true }, seasonWeeks: 7, confirmed: true },
@@ -93,5 +101,5 @@ export const CLUBS: readonly Club[] = [
   { id: 'northwood-guitar', cityId: 'ca-on-toronto', kind: 'lesson', name: 'Music: Guitar', place: 'Northwood Community Center', weekday: 6, hour: 11, minute: 0, minutes: 60, met: 2.0, fee: { amount: 102.62, per: 'season', currency: 'CAD', taxIncluded: true }, seasonWeeks: 9, confirmed: true },
   { id: 'barnsdall-painting', cityId: 'us-ca-losangeles', kind: 'lesson', name: 'Black And White Acrylic Portraiture', place: 'Barnsdall Arts Center', weekday: 3, hour: 10, minute: 0, minutes: 180, fee: { amount: 96 + 30, per: 'season', currency: 'USD', taxIncluded: true }, seasonWeeks: 8, confirmed: true },
   { id: 'rouge-valley-cooking', cityId: 'ca-on-toronto', kind: 'lesson', name: 'Cooking', place: 'Rouge Valley Community Rec Center', weekday: 6, hour: 14, minute: 45, minutes: 120, met: 2.0, fee: { amount: 135.15, per: 'season', currency: 'CAD', taxIncluded: true }, seasonWeeks: 9, confirmed: true },
-  { id: 'urban-rec-ubc-soccer', cityId: 'ca-bc-vancouver', kind: 'league', name: 'Urban Rec Soccer', place: 'UBC', weekday: 4, hour: 20, minute: 0, minutes: 60, met: 7.0, fee: { amount: 195, per: 'season', currency: 'CAD', taxIncluded: true }, seasonWeeks: 12, confirmed: true },
+  { id: 'urban-rec-ubc-soccer', cityId: 'ca-bc-vancouver', kind: 'league', name: 'Urban Rec Soccer', place: 'UBC', weekday: 4, hour: 20, minute: 0, minutes: 60, met: 7.0, fee: { amount: 195, per: 'season', currency: 'CAD', taxIncluded: true }, seasonWeeks: 12, outdoor: true, confirmed: true },
 ];

@@ -7,6 +7,7 @@
  * home.
  */
 import { describe, expect, it } from 'vitest';
+import { stockOf } from '@/engine/systems/pantry';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned } from '@/engine/core/time';
@@ -16,7 +17,7 @@ import { documentsOf } from '@/engine/systems/documents';
 import { modelById, monthKm, vehiclesOf } from '@/engine/systems/vehicles';
 import { burnOf, capacityOf, levelOf } from '@/engine/systems/fueltank';
 import { specOf } from '@/engine/systems/caroptions';
-import { addItem } from '@/engine/systems/items';
+import { addItem, coldRoomL, coldUsedL, homeKeyOf } from '@/engine/systems/items';
 import { COLD_CHAIN_HOURS, driverCost, driverIn, leg, meterCost, meterRefusal, runErrands, tripRefusal } from '@/engine/systems/trips';
 import { metAtWork } from '@/engine/systems/people';
 import { atWork, atWorkReason } from '@/engine/systems/availability';
@@ -29,7 +30,7 @@ const life = (city: string, seed: string) => quickSave({ startLocationId: city, 
 const at = (_city: string, zone: string, d: number, h: number) => instantFromZoned({ year: 2026, month: 1, day: d, hour: h, minute: 0 }, zone);
 const usd = (sim: Simulation, c: number) => { const cur = saveCurrency(sim.universe); return cur === 'USD' ? c : exchange(c, 'USD', cur)!; };
 const licensed = (sim: Simulation, issuer: string) => documentsOf(sim.player).push({ id: 'lic', kind: 'license', issuer, name: 'License', number: 'L1', status: 'valid', issuedAt: sim.now - 3650 * MS_DAY, expiresAt: sim.now + 3650 * MS_DAY });
-const withCar = (sim: Simulation) => { licensed(sim, 'us-ny'); const r = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry' } }); expect(r.ok, r.error).toBe(true); return vehiclesOf(sim.player)[0]!; };
+const withCar = (sim: Simulation) => { licensed(sim, 'us-ny'); const r = sim.execute<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId: 'us-toyota-camry', fillUp: 'auto' } }); expect(r.ok, r.error).toBe(true); return vehiclesOf(sim.player)[0]!; };
 const salonStop = (city: string) => { const s = salonsIn(city).find((x) => x.services.some((v) => v.price !== null && v.minutes))!; const v = s.services.find((x) => x.price !== null && x.minutes)!; return { kind: 'hygiene.groom', payload: { salonId: s.id, service: v.service }, leg: 'errand' as const, minutes: v.minutes! }; };
 
 describe('a leg', () => {
@@ -69,7 +70,7 @@ describe('a leg', () => {
 describe('the shopping on a trip', () => {
   const chicken = 'thefreshgrocer-perdue-99-fat-free-boneless-skinless-chicken-breasts';
   const potatoes = 'thefreshgrocer-bowl-basket-russet-potatoes-5-lb-bag';
-  it('rides in the car until the trip is home, then goes where it keeps', () => {
+  it('rides in the car until it’s put away, then goes where it keeps; food in the car isn’t cooked from', () => {
     const sim = life('us-ny-newyork', 'tr-carry');
     const v = withCar(sim);
     sim.advanceTo(at('us-ny-newyork', 'America/New_York', 13, 11));
@@ -78,6 +79,59 @@ describe('the shopping on a trip', () => {
     const item = sim.player.items!.find((i) => i.kind === chicken)!;
     expect(item.at).toEqual({ kind: 'vehicle', vehicleId: v.id });
     expect(sim.execute({ kind: 'errand.go', payload: { to: 'home' } }).ok).toBe(true);
+    // Home, it's still in the car, and the kitchen doesn't have it.
+    expect(item.at).toEqual({ kind: 'vehicle', vehicleId: v.id });
+    expect(stockOf(sim, sim.player, item.food!.key).some((x) => x.id === item.id)).toBe(false);
+    expect(sim.universe.notifications.at(-1)!.title).toBe('The Shopping Is Still Out');
+    expect(sim.must<{ put: number }>({ kind: 'items.put_away', payload: { itemIds: [item.id] } }).put).toBe(1);
+    expect(item.at).toMatchObject({ kind: 'home', spot: 'fridge' });
+    expect(item.storeIn).toBeUndefined();
+    expect(stockOf(sim, sim.player, item.food!.key).some((x) => x.id === item.id)).toBe(true);
+    expect(sim.execute({ kind: 'items.put_away', payload: {} }).error).toBe('There’s no shopping waiting to be put away.');
+  });
+
+  it('is put away on getting home only where that shortcut is set, on the same rules', () => {
+    const sim = life('us-ny-newyork', 'tr-auto');
+    const v = withCar(sim);
+    sim.must({ kind: 'life.set_automation', payload: { key: 'unloadShopping', on: true } });
+    sim.advanceTo(at('us-ny-newyork', 'America/New_York', 13, 11));
+    sim.must({ kind: 'errand.go', payload: { to: 'shopping', by: 'car', vehicleId: v.id } });
+    sim.must({ kind: 'food.buy_groceries', payload: { productId: chicken, quantity: 1 } });
+    sim.must({ kind: 'errand.go', payload: { to: 'home' } });
+    expect(sim.player.items!.find((i) => i.kind === chicken)!.at).toMatchObject({ kind: 'home', spot: 'fridge' });
+    sim.must({ kind: 'life.set_automation', payload: { key: 'unloadShopping', on: false } });
+    expect(sim.player.automation?.unloadShopping).toBeUndefined();
+  });
+
+  it('waits in the car when the fridge is full, the fridge’s liters by the home’s country', () => {
+    const sim = life('us-ny-newyork', 'tr-full');
+    const v = withCar(sim);
+    sim.advanceTo(at('us-ny-newyork', 'America/New_York', 13, 11));
+    sim.must({ kind: 'errand.go', payload: { to: 'shopping', by: 'car', vehicleId: v.id } });
+    sim.must({ kind: 'food.buy_groceries', payload: { productId: chicken, quantity: 1 } });
+    sim.must({ kind: 'errand.go', payload: { to: 'home' } });
+    const holds = coldRoomL(sim.player, 'fridge')!;
+    expect(holds).toBeCloseTo(388.8, 6);
+    // Something already filling the fridge to all but a liter.
+    const home = homeKeyOf(sim.player.home)!;
+    const used = coldUsedL(sim.player, home, 'fridge');
+    addItem(sim, sim.player, { kind: 'test:crate', label: 'Crate', quantity: 1, condition: 1, at: { kind: 'home', home, spot: 'fridge' }, acquiredAt: sim.now, volumeL: holds - used - 0.1, food: { key: 'water', unit: 'ml', left: 1 } } as never);
+    const item = sim.player.items!.find((i) => i.kind === chicken)!;
+    expect(sim.execute({ kind: 'items.put_away', payload: { itemIds: [item.id] } }).error).toMatch(/^The Fridge is full: 0 liters of its 389 are free/);
+    expect(item.at).toEqual({ kind: 'vehicle', vehicleId: v.id });
+    // The freezer has room.
+    sim.must({ kind: 'items.put_away', payload: { itemIds: [item.id], spot: 'freezer' } });
+    expect(item.at).toMatchObject({ kind: 'home', spot: 'freezer' });
+  });
+
+  it('goes where you choose', () => {
+    const sim = life('us-ny-newyork', 'tr-choose');
+    sim.advanceTo(at('us-ny-newyork', 'America/New_York', 13, 11));
+    sim.must({ kind: 'errand.go', payload: { to: 'shopping', by: 'foot' } });
+    sim.must({ kind: 'food.buy_groceries', payload: { productId: potatoes, quantity: 1 } });
+    sim.must({ kind: 'errand.go', payload: { to: 'home' } });
+    const item = sim.player.items!.find((i) => i.kind === potatoes)!;
+    sim.must({ kind: 'items.put_away', payload: { itemIds: [item.id], spot: 'fridge' } });
     expect(item.at).toMatchObject({ kind: 'home', spot: 'fridge' });
   });
 
@@ -101,8 +155,9 @@ describe('the shopping on a trip', () => {
     expect(sim.execute({ kind: 'errand.go', payload: { to: 'shopping', by: 'foot' } }).ok).toBe(true);
     for (const productId of [chicken, potatoes]) expect(sim.execute({ kind: 'food.buy_groceries', payload: { productId, quantity: 1 } }).ok).toBe(true);
     expect(sim.player.items!.find((i) => i.kind === chicken)!.at).toEqual({ kind: 'person' });
-    sim.advanceBy(COLD_CHAIN_HOURS * 3_600_000);
     expect(sim.execute({ kind: 'errand.go', payload: { to: 'home' } }).ok).toBe(true);
+    sim.advanceBy(COLD_CHAIN_HOURS * 3_600_000);
+    expect(sim.must<{ spoiled: number }>({ kind: 'items.put_away', payload: {} }).spoiled).toBe(1);
     expect(sim.player.items!.some((i) => i.kind === chicken)).toBe(false);
     expect(sim.player.items!.find((i) => i.kind === potatoes)!.at).toMatchObject({ kind: 'home', spot: 'pantry' });
     expect(sim.universe.notifications.at(-1)!.title).toBe('Shopping Left Out Too Long');

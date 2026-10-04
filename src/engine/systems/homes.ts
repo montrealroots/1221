@@ -1593,7 +1593,7 @@ export function emptyHomeIn(person: Person, cityId: string): OwnedHome | undefin
 
 /** Moves them into a home they own, from anywhere: `moveInto`, and the day on its clock. */
 export function moveIntoOwned(sim: Simulation, person: Person, owned: OwnedHome): void {
-  moveTo(person, owned.cityId);
+  moveTo(sim, person, owned.cityId);
   moveInto(sim, person, owned);
   if (person.id === sim.universe.playerId) rehome(sim, CITIES.require(owned.cityId).timeZone);
 }

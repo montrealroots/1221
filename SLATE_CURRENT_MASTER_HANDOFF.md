@@ -291,7 +291,22 @@ Done and gated so far:
     - Casting workshops at each town's venue and its casting offices kept as contacts (`3af293ee`); a car's dealer, and a car taken from America into Canada imported (`e63899a4`, `CANADA_IMPORT`, `DEALERS`).
     - New research: `research-home-garden-furniture.json`, `research-casting-therapy-hotels-cars.json`.
     - What's left of the 85 is recorded row by row in `docs/DATA-GAPS.md` with why; row 57 (a development-proposal role) is held for Stage 14.
-    - **Next, by the owner's order:** Stage 14 (the built-in assistant; it needs the owner's API key) and then the Base44 deployment, which needs the gate and the owner first (read §10 before deploying).
+    - **Then (2026-10-03) the owner expanded the plan** (below). Stage 14 and the Base44 deployment still come last, after it.
+  - **The 2026-10-03 expansion: start here.** The owner's command adds to the master plan and replaces nothing. It asks for every feature's whole lifecycle, manual control with automation only as an explicit preference, at least 50 real brands per product category with up to 100 real products each, separate brand, product, variant, offer and owned-item records, and journey tests saved and reloaded midway. Their rulings: moving an omission into DATA-GAPS doesn't complete a requirement, and a missing statistic doesn't stop a player-directed action from being built.
+    - **The audit** (`7ea51212`): 86 rows reopened as "Partial (reopened in the 2026-10-03 audit)", leaving 31 Done and 99 open, and the expansion's rows E1 to E12 at the end of `docs/REQUIREMENTS.md`. `content/catalogtaxonomy.ts` sets out 45 brand and narrow categories and six service categories. `tools/catalog-coverage.mjs` counts brands, products, variants and offers from the catalogs into `docs/CATALOG-COVERAGE.md`, and the gate checks it. It reads 0 of 45 categories at the target, which is where the catalog work starts. Merged to `main` as `efb93b37` after the lives replayed at `e63899a4` with 0 errors and 0 anomalies.
+    - **Clubs and lessons as a lifecycle** (the commit after the audit, `systems/clubs.ts`, `ui/components/ClubsPanel.tsx`, `tests/clubs-going.test.ts`):
+      - The town's clubs compared by a session's price, cheapest first.
+      - Joined asking each time by default, with each meeting answered Going or Not Going.
+      - The clock stops at the time to set out (`club.due`, `stopsClock`), and `club.go` is a trip there on foot, by transit, or by car with its tank and meter. Check-in is `club.check_in`, also a stop on Run Errands, and a meeting can be joined until halfway.
+      - Staying after meets more of the club. A meeting not gone to is missed, settled at its end (`club.close`).
+      - An outdoor club doesn't meet in a thunderstorm, read from the weather model.
+      - A season is renewed by hand or by preference.
+      - Going on its own is a preference (`club.set`) on a trip's rules.
+      - Memberships from before keep going on their own, and their meetings gain the missing close item at load.
+      - Transit is new to trips (`TripMode`, `transitFare`): the town's adult fare a leg, at rail's 30-minute estimate.
+      - Gate 2,992 tests, exit 0; 11 mutations, all killed. Checked in the built app: the panel, its alignment, and Set Out Now.
+      - Still open in the row: a lesson's discipline as an ability something reads, and providers' refund terms.
+    - **Next, in the owner's order:** fuel and charging chosen at a station or charger; shopping kept in hand and unloaded by choice; packing several bags and a hotel room's own items; individual rooms and special rooms' uses; pets' whole care; the product, variant and offer model; catalog research in tranches; navigation at scale; journey tests. Stage 14 and deployment come last.
   - A tooling note: bash heredocs here collapse `\b` into a backspace byte. Write edit scripts with the Write tool, and `grep -rlP '\x08' src tests tools` after a regex edit.
 - **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
 - **Stage 14** needs the owner's API key.

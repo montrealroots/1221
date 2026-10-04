@@ -36,9 +36,9 @@ export const foodOf = (person: Person): Stocked[] => itemsOf(person).filter((i):
 /** Fresh where it is now: not gone off. */
 export const fresh = (item: Stocked, at: Instant): boolean => item.food.expiresAt === undefined || item.food.expiresAt > at;
 
-/** What's to hand and fresh of a food, the soonest to go off first. */
+/** What's to hand and fresh of a food, the soonest to go off first; food still in the car isn't, until it's brought in (from 2026-10-03). */
 export function stockOf(sim: Simulation, person: Person, key: string, at: Instant = sim.now): Stocked[] {
-  return foodOf(person).filter((i) => i.food.key === key && i.food.left > 0 && fresh(i, at) && reachable(sim, person, i.at))
+  return foodOf(person).filter((i) => i.food.key === key && i.food.left > 0 && fresh(i, at) && reachable(sim, person, i.at) && i.at.kind !== 'vehicle')
     .sort((a, b) => (a.food.expiresAt ?? Infinity) - (b.food.expiresAt ?? Infinity) || a.id.localeCompare(b.id));
 }
 
@@ -47,7 +47,7 @@ export const MEAL_KEYS = new Set(['dish', 'ready-meal', 'pizza']);
 
 /** Meals ready to eat at home: a portion each. */
 export function mealsReady(sim: Simulation, person: Person, at: Instant = sim.now): Stocked[] {
-  return foodOf(person).filter((i) => MEAL_KEYS.has(i.food.key) && i.food.left > 0 && fresh(i, at) && reachable(sim, person, i.at))
+  return foodOf(person).filter((i) => MEAL_KEYS.has(i.food.key) && i.food.left > 0 && fresh(i, at) && reachable(sim, person, i.at) && i.at.kind !== 'vehicle')
     .sort((a, b) => (a.food.expiresAt ?? Infinity) - (b.food.expiresAt ?? Infinity) || a.id.localeCompare(b.id));
 }
 

@@ -65,6 +65,9 @@ describe('a connected day', () => {
     expect(levelOf(v)).toBeGreaterThan(0.9);
     expect(sim.universe.transactions.some((t) => /^Fuel at /.test(t.memo))).toBe(true);
     expect(sim.universe.notifications.some((n) => n.title === 'Shopping Left Out Too Long')).toBe(false);
+    // Home, the shopping is in the car until it's brought in: put away where each keeps, inside USDA's two hours.
+    expect(sim.universe.notifications.at(-1)?.title).toBe('The Shopping Is Still Out');
+    must(sim, 'items.put_away');
 
     // Lunch, once home: cooked for two from what was bought, one eaten and one kept.
     sim.advanceTo(Math.max(sim.now, at(14)));

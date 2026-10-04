@@ -50,7 +50,7 @@ import { stolenNow } from './theft';
 import { laidUp } from './repairs';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
-import { cabinBagRefusal, moveTo } from './luggage';
+import { cabinBagRefusal, moveTo, weighIn } from './luggage';
 import { cabinFeeFor, hotelPetFee, petCareRefusal, petsOf } from './pets';
 import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking, freeCancelUntil, roomReadyAt } from './hotels';
 import { claimCancellation } from './travelinsurance';
@@ -780,6 +780,13 @@ export function registerJourneys(sim: Simulation): void {
       tell('Refused At Check-In', `${j.why} The fare is gone${forfeitReturn(s, person, j) ? ', and the way home with it' : ''}.`);
       return;
     }
+    // The checked bags weighed at the counter, on a flight (from 2026-10-04): past the allowance the band's fee, past the most it takes the heaviest things out.
+    if (!j.by && j.bags > 0) {
+      const w = weighIn(s, person, j.fromCity, j.toCity, j.bags);
+      if (w.fees > 0 && !payFromBank(s, person, w.fees, `Overweight bags, ${w.rule!.carrier}`, 'travel')) owe(s, person, w.fees, 'Overweight bags', 'travel');
+      if (w.taken.length) tell('Taken Out At The Counter', `${w.rule!.carrier} takes no bag over ${w.rule!.maxKg} kg: ${w.taken.map((i) => i.label).slice(0, 3).join(', ')}${w.taken.length > 3 ? ' and more' : ''} came out, and the airport holds ${w.taken.length === 1 ? 'it' : 'them'} until you're back.`);
+      else if (w.fees > 0) tell('Overweight', `A bag was over ${w.rule!.allowanceKg} kg: ${w.rule!.carrier} charged for it.`);
+    }
     // Leaving a let: its host's claim, where there is one.
     if (person.stay?.kind === 'let' && person.stay.cityId === j.fromCity && letDamaged(s, person, j.id)) {
       const claim = inSave(s, LET_DAMAGE.usd, 'USD');
@@ -889,7 +896,7 @@ export function registerJourneys(sim: Simulation): void {
     // One's own plane: there now, its hours on the engine (`systems/aviation.ts`).
     const flown = j.legs.find((l) => l.mode === 'fly' && l.routeId === 'own');
     if (flown) ownFlown(person, j.fromCity, j.toCity, (flown.arriveAt - flown.departAt) / 3_600_000);
-    moveTo(person, j.toCity);
+    moveTo(s, person, j.toCity);
     if (person.id === s.universe.playerId) s.universe.currentZone = CITIES.require(j.toCity).timeZone;
     if (person.home?.cityId === j.toCity) delete person.stay;
     else if (j.onArrival) person.stay = j.onArrival;

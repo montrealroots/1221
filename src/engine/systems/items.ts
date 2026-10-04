@@ -31,6 +31,8 @@ import type { Money } from '../core/money';
 import { PIECE_LABEL, type Piece } from '../content/furniture';
 import { GARMENT_L } from '../content/garmentcare';
 import { BUILT_IN, closetRefusal, fitRefusal, footprintOf } from './rooms';
+import { COLD_STORE } from '../content/coldstorage';
+import { CITIES } from '../content/geography';
 
 /** Where a thing is. */
 export type Place =
@@ -40,8 +42,10 @@ export type Place =
   | { kind: 'inside'; itemId: string }
   | { kind: 'order'; orderId: string }
   | { kind: 'service'; serviceId: string; readyAt: Instant }
-  /** Unpacked where they're staying away, in its town (from 2026-10-03, `systems/luggage.ts`). */
-  | { kind: 'stay'; cityId: string };
+  /** Unpacked where they're staying away, in its town (from 2026-10-03, `systems/luggage.ts`); where, by name. */
+  | { kind: 'stay'; cityId: string; by?: string }
+  /** Left behind at a stay, held there until a day (from 2026-10-03). */
+  | { kind: 'held'; cityId: string; by: string; until: Instant };
 
 /** The spots a home keeps things in. Rooms come with Stage 12 of the backlog. */
 export type Spot = 'floor' | 'wardrobe' | 'drawers' | 'fridge' | 'freezer' | 'pantry' | 'bathroom' | 'storage' | 'hamper';
@@ -93,6 +97,8 @@ export interface Item {
   engraved?: string;
   /** Jewelry or a watch scheduled on the home's insurance, at what was paid (`systems/valuables.ts`, from 2026-10-02). */
   scheduled?: true;
+  /** Where it keeps, bought on a trip and not yet put away (from 2026-10-03): the fridge, the pantry, the wardrobe. */
+  storeIn?: Spot;
   /** A bed's market and size (`content/beds.ts`, from 2026-10-01); an older bed is its country's usual double. */
   bed?: { country: string; size: string };
 }
@@ -141,6 +147,7 @@ export function reachable(sim: Simulation, person: Person, place: Place): boolea
       return Boolean(holder && reachable(sim, person, holder.at));
     }
     case 'stay': return Boolean(person.stay) && person.currentLocationId === place.cityId;
+    case 'held':
     case 'order':
     case 'service': return false;
   }
@@ -162,6 +169,15 @@ export function volumeOf(item: Item): number {
 /** How much of a container is used, liters. */
 export const usedL = (person: Person, holderId: string): number => itemsOf(person).filter((i) => i.at.kind === 'inside' && i.at.itemId === holderId).reduce((sum, i) => sum + volumeOf(i) * i.quantity, 0);
 
+/** The fridge's or freezer's liters at the home they live in, by its country (`content/coldstorage.ts`); none where the country's isn't kept. */
+export function coldRoomL(person: Person, spot: 'fridge' | 'freezer'): number | undefined {
+  const store = COLD_STORE[CITIES.get(person.home?.cityId ?? '')?.countryId ?? ''];
+  return store ? (spot === 'fridge' ? store.fridgeL : store.freezerL) : undefined;
+}
+
+/** What's in the fridge or freezer at a home now, liters. */
+export const coldUsedL = (person: Person, home: string, spot: 'fridge' | 'freezer'): number => itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && i.at.spot === spot).reduce((sum, i) => sum + volumeOf(i) * i.quantity, 0);
+
 /** Why a thing can't go to a place now, or nothing where it can. */
 export function moveRefusal(sim: Simulation, person: Person, item: Item, to: Place): string | undefined {
   if (!reachable(sim, person, item.at)) return `The ${item.label} isn’t to hand: ${whereWords(person, item.at)}.`;
@@ -176,6 +192,12 @@ export function moveRefusal(sim: Simulation, person: Person, item: Item, to: Pla
     if (to.home === homeKeyOf(person.home)) {
       if (BUILT_IN.has(spot) && !(was && BUILT_IN.has(was))) { const full = closetRefusal(sim, person, item); if (full) return full; }
       if (spot === 'floor' && was !== 'floor' && item.bulky) { const tight = fitRefusal(sim, person, footprintOf(item)); if (tight) return tight; }
+      // The fridge and freezer hold so much (from 2026-10-04).
+      if ((spot === 'fridge' || spot === 'freezer') && was !== spot) {
+        const holds = coldRoomL(person, spot);
+        const left = holds === undefined ? Infinity : holds - coldUsedL(person, to.home, spot);
+        if (volumeOf(item) * item.quantity > left + 1e-9) return `${SPOT_LABEL[spot]} is full: ${Math.max(0, Math.floor(left))} liters of its ${Math.round(holds!)} are free, and the ${item.label} needs ${Math.ceil(volumeOf(item) * item.quantity)}.`;
+      }
     }
   }
   if (to.kind === 'inside') {
@@ -208,7 +230,8 @@ export function whereWords(person: Person, place: Place): string {
     case 'inside': return `in the ${itemById(person, place.itemId)?.label ?? 'bag'}`;
     case 'order': return 'on its way';
     case 'service': return 'with a service';
-    case 'stay': return 'unpacked where you’re staying';
+    case 'stay': return place.by ? `unpacked in your room at ${place.by}` : 'unpacked where you’re staying';
+    case 'held': return `left at ${place.by}`;
   }
 }
 
