@@ -11,6 +11,7 @@
 // are taken as in the cupboard. An ingredient no shop here stocks is kept by
 // name, and the recipe isn't cooked where it can't be bought.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { brandIndex } from './brands.mjs';
 
 const OUT = 'src/engine/content/groceries.ts';
 const read = (f) => JSON.parse(readFileSync(`docs/research/world/${f}`, 'utf8'));
@@ -135,6 +136,10 @@ function keepsFor(key, category, storage) {
 const storageOf = (p, key) => p.storage ?? (p.category === 'frozen' ? 'freezer' : ['dairy', 'meat', 'seafood', 'ready-meal'].includes(p.category) ? 'fridge' : 'pantry');
 const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 
+// The brand each product's own name states (`tools/brands.mjs`, from 2026-10-04), null where it names none: fresh
+// produce, mostly.
+const BRANDS = brandIndex();
+
 const seen = new Set();
 const products = [];
 for (const p of [...g.products, ...(more.products ?? [])]) {
@@ -148,7 +153,7 @@ for (const p of [...g.products, ...(more.products ?? [])]) {
   // A dry pint of cherry or grape tomatoes is two cups, 298 g (USDA FoodData Central: 149 g a cup).
   const pint = p.sizeUnit === 'ct' && p.sizeQty === 1 && /\bpint\b/i.test(`${p.size} ${p.name}`) && p.category === 'produce';
   products.push({
-    id, chain: p.chain, market: p.market, name: p.name, category: p.category, food: key,
+    id, chain: p.chain, market: p.market, name: p.name, brand: BRANDS.get(`${p.chain}|${p.market}|${p.name}`) ?? null, category: p.category, food: key,
     sizeQty: pint ? 298 : p.sizeQty, sizeUnit: pint ? 'g' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true,
     storage, ...keepsFor(key, p.category, storage),
     url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true,
@@ -199,7 +204,10 @@ export type Storage = 'pantry' | 'fridge' | 'freezer';
 export interface GroceryChain { id: string; name: string; market: string; storesIn: readonly string[]; nearestTo: readonly string[] }
 
 export interface GroceryProduct {
-  id: string; chain: string; market: string; name: string; category: string; food: string;
+  id: string; chain: string; market: string; name: string;
+  /** The brand its own name states (from 2026-10-04): a maker's, or the chain's own label; null where it names none. */
+  brand: string | null;
+  category: string; food: string;
   sizeQty: number; sizeUnit: FoodUnit; price: number; currency: string; taxIncluded: boolean;
   storage: Storage; keepsDays: number | null; keepsEstimated: boolean; keepsSource: string;
   url: string | null; date: string | null; confirmed: boolean;

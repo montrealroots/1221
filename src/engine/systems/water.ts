@@ -54,7 +54,7 @@ import type { Person } from '../domain/model';
 import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { isFlat } from '../content/homes';
-import { homePlace } from './dwelling';
+import { homePlace, livingOf } from './dwelling';
 import { contactsOf } from './people';
 import { KIND_SHARE } from './electricity';
 
@@ -106,13 +106,22 @@ export const WASHING: Readonly<Record<string, { showerL: number; showersADay: nu
   gb: { showerL: 60, showersADay: 4.4 / 7, bathL: 80, bathsADay: 1.3 / 7 },
 };
 
-/** The month's liters used at home: each of the household a day there, the player's own showers and baths in place of the average's. */
+/**
+ * What a pet drinks a day, liters (from 2026-10-04): the Ontario SPCA's 60 to
+ * 80 ml a kilogram for a dog, 40 to 60 for a cat, at the middle of each for
+ * SLATE's 20 kg dog and 4 kg cat (`content/petair.ts`). It counts toward the
+ * month's water every day of it: a pet drinks at home whoever's there.
+ */
+export const PET_WATER_L = { dog: 0.07 * 20, cat: 0.05 * 4 } as const;
+
+/** The month's liters used at home: each of the household a day there, the player's own showers and baths in place of the average's, and the pets' water. */
 export function litersUsed(person: Person, cityId: string, month: number): number {
   const t = WATER_TARIFFS[cityId];
   if (!t) return 0;
   const l = person.living;
   const days = l?.billDays ? l.homeDays ?? 0 : DAYS[month - 1]!;
-  const average = t.perPersonLiters * householdOf(person) * days;
+  const pets = (person.pets ?? []).reduce((n, pet) => n + PET_WATER_L[pet.species], 0) * DAYS[month - 1]!;
+  const average = t.perPersonLiters * householdOf(person) * days + pets;
   const w = WASHING[CITIES.get(cityId)?.countryId === 'uk' ? 'gb' : CITIES.get(cityId)?.countryId ?? ''];
   if (!w || !l?.billDays || t.perPersonLiters === 0) return average;
   const showers = ((l.showers ?? 0) - w.showersADay * days) * w.showerL;
@@ -120,11 +129,11 @@ export function litersUsed(person: Person, cityId: string, month: number): numbe
   return average + showers + baths;
 }
 
-/** A shower or a bath at home, counted toward the month's water. */
+/** A shower or a bath at home, counted toward the month's water. Until 2026-10-04 one taken before the home's record was first kept wasn't counted. */
 export function countWash(person: Person, bath: boolean): void {
-  if (!person.living) return;
-  if (bath) person.living.baths = (person.living.baths ?? 0) + 1;
-  else person.living.showers = (person.living.showers ?? 0) + 1;
+  const l = livingOf(person);
+  if (bath) l.baths = (l.baths ?? 0) + 1;
+  else l.showers = (l.showers ?? 0) + 1;
 }
 
 /** The month's water and sewer, in the save's money; nothing where the town doesn't bill this home. */

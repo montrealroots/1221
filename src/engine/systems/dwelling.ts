@@ -321,7 +321,10 @@ export function cleanerGetsIn(sim: Simulation, person: Person, dayStart: Instant
 export const WORN_CLOTHES = { hygiene: 55, morale: 1 };
 
 export interface Living {
-  /** The month's kilowatt-hours past the household's usual, a sauna's (from 2026-10-04): billed and cleared with the month's electricity. */
+  /**
+   * The month's kilowatt-hours past the household's usual: a sauna's, and a TV's watching past the usual set's, which
+   * takes some off where the set draws less (both from 2026-10-04). Billed and cleared with the month's electricity.
+   */
   extraKwh?: number;
   /**
    * Until 2026-10-01 clothes were a count of outfits, clean and dirty, and

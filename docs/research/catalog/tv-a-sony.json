@@ -1,0 +1,2966 @@
+{
+ "read": "2026-10-04",
+ "category": "televisions",
+ "products": [
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 2 II",
+   "model": "K43S20M2",
+   "regionalModels": {
+    "uk": "K43S25M2PB",
+    "ie": "K43S25M2PB.UKA",
+    "mx": "K-43S20M2"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": 46,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K43S25M2PB): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/ac/a9/de/1778682148/SON-K43S25M2PB-F.pdf",
+   "eprel": "2651402",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 398,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-2-II-LED-TV-43-Inch-4K-Smart-with-Google-TV-K43S20M2/p/230790.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 549,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k43s25m2pb",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 549,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-2-ii-k43s25m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 499.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-43-bravia-2-lcd-4k-uhd-smart-google-tv-k43s20m2-2025-model",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 649.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-2-ii-43-4k-smart-tv-black-k43s25m2pb-uka",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 14999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-43s20m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-2-II-LED-TV-43-Inch-4K-Smart-with-Google-TV-K43S20M2/p/230790.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 2 II",
+   "model": "K50S20M2",
+   "regionalModels": {
+    "uk": "K50S25M2PB",
+    "ie": "K50S25M2PB.UKA",
+    "mx": "K-50S20M2"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": 58,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K50S25M2PB): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/f4/3c/1e/1778682248/SON-K50S25M2PB-F.pdf",
+   "eprel": "2651439",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 498,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-2-II-LED-TV-50-Inch-4K-Smart-with-Google-TV-K50S20M2/p/230789.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 619,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k50s25m2pb",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 619,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-2-ii-k50s25m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 699.99,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-50-bravia-2-lcd-4k-uhd-smart-google-tv-k50s20m2-2025-model",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 729.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-2-ii-50-4k-smart-tv-black-k50s25m2pb-uka",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 15999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-50s20m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-2-II-LED-TV-50-Inch-4K-Smart-with-Google-TV-K50S20M2/p/230789.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 2 II",
+   "model": "K55S20M2",
+   "regionalModels": {
+    "uk": "K55S25M2PB",
+    "ie": "K55S25M2PB.UKA",
+    "mx": "K-55S20M2"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": 65,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K55S25M2PB): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/1a/8d/7b/1778682338/SON-K55S25M2PB-F.pdf",
+   "eprel": "2651469",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 598,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-2-II-LED-TV-55-Inch-4K-Smart-with-Google-TV-K55S20M2/p/221628.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 699,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k55s25m2pb",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 699,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-2-ii-k55s25m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 779.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-55-bravia-2-4k-ultra-hd-lcd-google-smart-tv",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 819.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-2-ii-55-4k-smart-tv-black-k55s25m2pb-uka",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 19499,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-55s20m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-2-II-LED-TV-55-Inch-4K-Smart-with-Google-TV-K55S20M2/p/221628.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 2 II",
+   "model": "K65S20M2",
+   "regionalModels": {
+    "uk": "K65S25M2PB",
+    "ie": "K65S25M2PB.UKA",
+    "mx": "K-65S20M2"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": 82,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K65S25M2PB): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/eb/8e/7c/1778682417/SON-K65S25M2PB-F.pdf",
+   "eprel": "2651553",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 698,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-2-II-LED-TV-65-Inch-4K-Smart-with-Google-TV-K65S20M2/p/221627.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 899,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k65s25m2pb",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 899,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-2-ii-k65s25m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 899.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-65-bravia-2-4k-ultra-hd-lcd-google-smart-tv",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 1049.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-2-ii-65-4k-smart-tv-black-k65s25m2pb-uka",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 25499,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-65s20m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-2-II-LED-TV-65-Inch-4K-Smart-with-Google-TV-K65S20M2/p/221627.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 2 II",
+   "model": "K75S20M2",
+   "regionalModels": {
+    "uk": "K75S25M2PB",
+    "ie": "K75S25M2PB.UKA",
+    "mx": "K-75S20M2"
+   },
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": 107,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K75S25M2PB): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/dd/d5/a7/1778682512/SON-K75S25M2PB-F.pdf",
+   "eprel": "2652575",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 898,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-2-II-LED-TV-75-Inch-4K-Smart-with-Google-TV-K75S20M2/p/221626.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1199,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k75s25m2pb",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1199,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-2-ii-k75s25m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1199.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-75-bravia-2-4k-ultra-hd-lcd-google-smart-tv",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 1399.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-2-ii-75-4k-smart-tv-black-k75s25m2pb-uka",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 32999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-75s20m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-2-II-LED-TV-75-Inch-4K-Smart-with-Google-TV-K75S20M2/p/221626.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3",
+   "model": "K43S30",
+   "regionalModels": null,
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2024,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 649.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-43-bravia-3-4k-led-hdr-smart-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.thebrick.com/products/sony-43-bravia-3-4k-led-hdr-smart-google-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3",
+   "model": "K50S30",
+   "regionalModels": {
+    "uk": "K50S38B"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2024,
+   "smartOs": "Google TV",
+   "onModeWatts": 60,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K50S38B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/d2/7d/f9/1749726635/SON-K50S38B-F.pdf",
+   "eprel": "2145080",
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 659,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k50s38b.uka",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 659,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-3-k50s38b/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 749.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-50-bravia-3-4k-led-hdr-smart-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k50s38b.uka",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3",
+   "model": "K55S30",
+   "regionalModels": {
+    "uk": "K55S38B",
+    "ie": "K55S38B.UKA"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2024,
+   "smartOs": "Google TV",
+   "onModeWatts": 77,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K55S38B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/ba/20/72/1749726794/SON-K55S38B-F.pdf",
+   "eprel": "2145081",
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 827.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k55s38b.uka",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 849,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-3-k55s38b/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 799.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-55-bravia-3-4k-led-hdr-smart-google-tv",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 729.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-3-55-4k-uhd-smart-tv-black-k55s38b-uka",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k55s38b.uka",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3",
+   "model": "K65S38B",
+   "regionalModels": {
+    "ie": "K65S38B.UKA"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2024,
+   "smartOs": "Google TV",
+   "onModeWatts": 93,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K65S38B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/65/94/e1/1749726921/SON-K65S38B-F.pdf",
+   "eprel": "2145082",
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1099,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k65s38b.uka",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 889.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-3-65-4k-smart-tv-black-k65s38b-uka",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k65s38b.uka",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3",
+   "model": "K75S38B",
+   "regionalModels": null,
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2024,
+   "smartOs": "Google TV",
+   "onModeWatts": 106,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K75S38B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/09/ea/23/1749727078/SON-K75S38B-F.pdf",
+   "eprel": "2145085",
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1299,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k75s38b.uka",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k75s38b.uka",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3",
+   "model": "K85S30",
+   "regionalModels": {
+    "uk": "K85S38BP"
+   },
+   "sizeIn": 85,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2024,
+   "smartOs": "Google TV",
+   "onModeWatts": 128,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K85S38BP): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/0b/fd/47/1749727240/SON-K85S38BP-F.pdf",
+   "eprel": "2145086",
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1699,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k85s38bp.uka",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1699.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-85-bravia-3-4k-led-hdr-smart-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k85s38bp.uka",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3 II",
+   "model": "K43XR30M2",
+   "regionalModels": {
+    "uk": "K43XR38M2PB",
+    "mx": "K-43XR30M2"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 598,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-43-Inch-4K-HDR-LED-Google-TV-with-Gemini-K43XR30M2/p/242527.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 749,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-3-ii-k43xr38m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 829.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-43-bravia-3-ii-led-4k-hdr-smart-google-tv-8937704-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 18499,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-43xr30m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-43-Inch-4K-HDR-LED-Google-TV-with-Gemini-K43XR30M2/p/242527.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3 II",
+   "model": "K50XR30M2",
+   "regionalModels": {
+    "uk": "K50XR38M2PB",
+    "mx": "K-50XR30M2"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 698,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-50-Inch-4K-HDR-LED-Google-TV-with-Gemini-K50XR30M2/p/242526.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 849,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-3-ii-k50xr38m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 899.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-50-bravia-3-ii-led-4k-hdr-smart-google-tv-8937703-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 21599,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-50xr30m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-50-Inch-4K-HDR-LED-Google-TV-with-Gemini-K50XR30M2/p/242526.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3 II",
+   "model": "K55XR30M2",
+   "regionalModels": {
+    "uk": "K55XR38M2PB",
+    "mx": "K-55XR30M2"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 798,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-55-Inch-4K-HDR-LED-Google-TV-with-Gemini-K55XR30M2/p/242525.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 899,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-3-ii-k55xr38m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 979.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-55-bravia-3-ii-led-4k-hdr-smart-google-tv-8937702-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 23099,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-55xr30m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-55-Inch-4K-HDR-LED-Google-TV-with-Gemini-K55XR30M2/p/242525.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3 II",
+   "model": "K65XR30M2",
+   "regionalModels": {
+    "uk": "K65XR38M2PB",
+    "mx": "K-65XR30M2"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 898,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-65-Inch-4K-HDR-LED-Google-TV-with-Gemini-K65XR30M2/p/242524.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1199,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-3-ii-k65xr38m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1099.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-65-bravia-3-ii-led-4k-hdr-smart-google-tv-8937701-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 29299,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-65xr30m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-65-Inch-4K-HDR-LED-Google-TV-with-Gemini-K65XR30M2/p/242524.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3 II",
+   "model": "K75XR30M2",
+   "regionalModels": {
+    "uk": "K75XR38M2PB",
+    "mx": "K-75XR30M2"
+   },
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1198,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-75-Inch-4K-HDR-LED-Google-TV-with-Gemini-K75XR30M2/p/242523.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1399,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-3-ii-k75xr38m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1399.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-75-bravia-3-ii-led-4k-hdr-smart-google-tv-8937700-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 35399,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-75xr30m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-75-Inch-4K-HDR-LED-Google-TV-with-Gemini-K75XR30M2/p/242523.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3 II",
+   "model": "K85XR30M2",
+   "regionalModels": {
+    "uk": "K85XR38M2PB",
+    "mx": "K-85XR30M2"
+   },
+   "sizeIn": 85,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1598,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-85-Inch-4K-HDR-LED-Google-TV-with-Gemini-K85XR30M2/p/242522.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1999,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-3-ii-k85xr38m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1799.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-85-bravia-3-ii-led-4k-hdr-smart-google-tv-8937699-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 46199,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-85xr30m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-85-Inch-4K-HDR-LED-Google-TV-with-Gemini-K85XR30M2/p/242522.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 3 II",
+   "model": "K100XR30M2",
+   "regionalModels": {
+    "uk": "K100XR38M2PB",
+    "mx": "K-100XR30M2"
+   },
+   "sizeIn": 100,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 3098,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-100-Inch-4K-HDR-LED-Google-TV-with-Gemini-K100XR30M2/p/242521.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 3299,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-3-ii-k100xr38m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 3499.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-100-bravia-3-ii-led-4k-hdr-smart-google-tv-8937698-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 71999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-100xr30m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-3-II-TV-100-Inch-4K-HDR-LED-Google-TV-with-Gemini-K100XR30M2/p/242521.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 5",
+   "model": "K55XR50",
+   "regionalModels": {
+    "uk": "K55XR55B",
+    "ie": "K55XR55B.UKA"
+   },
+   "sizeIn": 55,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": 57,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K55XR55B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/77/81/68/1743771509/SON-K55XR55B-F.pdf",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1398,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-5-Mini-LED-TV-55-Inch-4K-Smart-with-Google-TV-K55XR50/p/221625.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1299,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k55xr55b.uka",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1399.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-55-bravia-5-4k-hdr-mini-led-google-tv",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 1099.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-5-55-4k-smart-tv-black-k55xr55b-uka",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-5-Mini-LED-TV-55-Inch-4K-Smart-with-Google-TV-K55XR50/p/221625.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 5",
+   "model": "K65XR50",
+   "regionalModels": {
+    "uk": "K65XR55B",
+    "ie": "K65XR55B.UKA"
+   },
+   "sizeIn": 65,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": 66,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K65XR55B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/57/8a/21/1743771590/SON-K65XR55B-F.pdf",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1498,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-5-Mini-LED-TV-65-Inch-4K-Smart-with-Google-TV-K65XR50/p/221624.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1499,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k65xr55b.uka",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1499,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-5-k65xr55b/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1599.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-65-bravia-5-4k-hdr-mini-led-google-tv",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 1499.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-5-65-4k-smart-tv-black-k65xr55b-uka",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-5-Mini-LED-TV-65-Inch-4K-Smart-with-Google-TV-K65XR50/p/221624.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 5",
+   "model": "K75XR50",
+   "regionalModels": {
+    "uk": "K75XR55B",
+    "mx": "K-75XR50"
+   },
+   "sizeIn": 75,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": 78,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K75XR55B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/aa/00/e5/1743771672/SON-K75XR55B-F.pdf",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1998,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-5-Mini-LED-TV-75-Inch-4K-Smart-with-Google-TV-K75XR50/p/221623.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1899,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k75xr55bp.uka",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1999.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-75-bravia-5-4k-hdr-mini-led-google-tv",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 59999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-75xr50/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-5-Mini-LED-TV-75-Inch-4K-Smart-with-Google-TV-K75XR50/p/221623.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 5",
+   "model": "K85XR50",
+   "regionalModels": {
+    "uk": "K85XR55B"
+   },
+   "sizeIn": 85,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": 83,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K85XR55B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/9e/9c/2e/1743773186/SON-K85XR55B-F.pdf",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 2398,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-5-Mini-LED-TV-85-Inch-4K-Smart-with-Google-TV-K85XR50/p/221622.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 2199,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k85xr55bp.uka",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 2699.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-85-bravia-5-4k-hdr-mini-led-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-5-Mini-LED-TV-85-Inch-4K-Smart-with-Google-TV-K85XR50/p/221622.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 5",
+   "model": "K98XR50",
+   "regionalModels": {
+    "uk": "K98XR55B"
+   },
+   "sizeIn": 98,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": 100,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K98XR55B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/2a/90/f0/1743771755/SON-K98XR55B-F.pdf",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 4998,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-5-Mini-LED-TV-98-Inch-4K-Smart-with-Google-TV-K98XR50/p/221621.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 3999,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k98xr55bp.uka",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 3999,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-5-k98xr55bp/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 4999.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-98-bravia-5-4k-hdr-mini-led-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-5-Mini-LED-TV-98-Inch-4K-Smart-with-Google-TV-K98XR50/p/221621.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 6",
+   "model": "K48A60",
+   "regionalModels": {
+    "mx": "K-48A60"
+   },
+   "sizeIn": 48,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1298,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-6-OLED-4K-48-Inch-HDR-Google-TV-with-Gemini-K48A60/p/248474.html",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1799.99,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-48-bravia-6-oled-4k-hdr-smart-google-tv-13531662-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 34999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-48a60/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-6-OLED-4K-48-Inch-HDR-Google-TV-with-Gemini-K48A60/p/248474.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 6",
+   "model": "K55A60",
+   "regionalModels": {
+    "mx": "K-55A60"
+   },
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1498,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-6-OLED-4K-55-Inch-HDR-Google-TV-with-Gemini-K55A60/p/248487.html",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 2199.99,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-55-bravia-6-oled-4k-hdr-smart-google-tv-13531663-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 37999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-55a60/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-6-OLED-4K-55-Inch-HDR-Google-TV-with-Gemini-K55A60/p/248487.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 6",
+   "model": "K65A60",
+   "regionalModels": {
+    "mx": "K-65A60"
+   },
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1998,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-6-OLED-4K-65-Inch-HDR-Google-TV-with-Gemini-K65A60/p/248488.html",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 2799.99,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-65-bravia-6-oled-4k-hdr-smart-google-tv-13531664-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 43999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-65a60/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-6-OLED-4K-65-Inch-HDR-Google-TV-with-Gemini-K65A60/p/248488.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 6",
+   "model": "K77A60",
+   "regionalModels": {
+    "mx": "K-77A60"
+   },
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 2998,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-6-OLED-4K-77-Inch-HDR-Google-TV-with-Gemini-K77A60/p/248489.html",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 4199.99,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-77-bravia-6-oled-4k-hdr-smart-google-tv-13531665-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 62999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-77a60/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-6-OLED-4K-77-Inch-HDR-Google-TV-with-Gemini-K77A60/p/248489.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 6",
+   "model": "K83A60",
+   "regionalModels": {
+    "mx": "K-83A60"
+   },
+   "sizeIn": 83,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 3998,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-6-OLED-4K-83-Inch-HDR-Google-TV-with-Gemini-K83A60/p/248490.html",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 5599.99,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-83-bravia-6-oled-4k-hdr-smart-google-tv-13531666-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 87999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-83a60/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-6-OLED-4K-83-Inch-HDR-Google-TV-with-Gemini-K83A60/p/248490.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 7 II",
+   "model": "K50XR70M2",
+   "regionalModels": {
+    "uk": "K50XR75M2PB",
+    "mx": "K-50XR70M2"
+   },
+   "sizeIn": 50,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1598,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-7-II-50-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K50XR70M2/p/246493.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1599,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-7-ii-k50xr75m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1999.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-50-bravia-7-ii-true-rgb-4k-hdr-smart-google-tv-13212865-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 46199,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-50xr70m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-7-II-50-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K50XR70M2/p/246493.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 7 II",
+   "model": "K55XR70M2",
+   "regionalModels": {
+    "uk": "K55XR75M2B",
+    "mx": "K-55XR70M2"
+   },
+   "sizeIn": 55,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": 60,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K55XR75M2B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/86/2f/85/1788786257/SON-K55XR75M2B-F.pdf",
+   "eprel": "2603748",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 2098,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-7-II-55-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K55XR70M2/p/244173.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1699,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k55xr75m2b",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1699,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-7-ii-k55xr75m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1999.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-55-bravia-7-ii-true-rgb-4k-hdr-smart-google-tv-8994015-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 46199,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-55xr70m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-7-II-55-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K55XR70M2/p/244173.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 7 II",
+   "model": "K65XR70M2",
+   "regionalModels": {
+    "uk": "K65XR75M2B",
+    "mx": "K-65XR70M2"
+   },
+   "sizeIn": 65,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": 63,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K65XR75M2B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/75/1b/33/1788788650/SON-K65XR75M2B-F.pdf",
+   "eprel": "2603799",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 2598,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-7-II-65-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K65XR70M2/p/244172.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1899,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k65xr75m2b",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1899,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-7-ii-k65xr75m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 2199.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-65-bravia-7-ii-true-rgb-4k-hdr-smart-google-tv-8992019-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 53999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-65xr70m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-7-II-65-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K65XR70M2/p/244172.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 7 II",
+   "model": "K75XR70M2",
+   "regionalModels": {
+    "uk": "K75XR75M2PB",
+    "mx": "K-75XR70M2"
+   },
+   "sizeIn": 75,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": 67,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K75XR75M2PB): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/58/70/2e/1788790204/SON-K75XR75M2PB-F.pdf",
+   "eprel": "2603807",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 3098,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-7-II-75-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K75XR70M2/p/244171.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 2599,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k75xr75m2pb",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 2599,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-7-ii-k75xr75m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 2799.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-75-bravia-7-ii-true-rgb-4k-hdr-smart-google-tv-13183596-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 64999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-75xr70m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-7-II-75-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K75XR70M2/p/244171.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 7 II",
+   "model": "K85XR70M2",
+   "regionalModels": {
+    "uk": "K85XR75M2PB",
+    "mx": "K-85XR70M2"
+   },
+   "sizeIn": 85,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 3998,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-7-II-85-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K85XR70M2/p/244170.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 3499,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k85xr75m2pb",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 3499,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-7-ii-k85xr75m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 4399.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-85-bravia-7-ii-true-rgb-4k-hdr-smart-google-tv-13183595-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 76999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-85xr70m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-7-II-85-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K85XR70M2/p/244170.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 7 II",
+   "model": "K98XR70M2",
+   "regionalModels": {
+    "uk": "K98XR75M2PB",
+    "mx": "K-98XR70M2"
+   },
+   "sizeIn": 98,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": 88,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K98XR75M2PB): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/d6/70/d8/1788793453/SON-K98XR75M2PB-F.pdf",
+   "eprel": "2603828",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 8998,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-7-II-98-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K98XR70M2/p/245791.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 6999,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k98xr75m2pb",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 6999,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-7-ii-k98xr75m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 146199,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-98xr70m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-7-II-98-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K98XR70M2/p/245791.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 8",
+   "model": "K55XR80",
+   "regionalModels": {
+    "uk": "K55XR80PU",
+    "ie": "K55XR80PU"
+   },
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2024,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1598,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-8-OLED-TV-55-Inch-4K-HDR-Google-TV-in-Black-K55XR80/p/206977.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1499,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-8-55-k55xr80pu/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 2099.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-55-bravia-8-4k-uhd-oled-smart-tv",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 1899.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-8-55-4k-smart-tv-dark-silver-k55xr80pu",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-8-OLED-TV-55-Inch-4K-HDR-Google-TV-in-Black-K55XR80/p/206977.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 8",
+   "model": "K65XR80",
+   "regionalModels": {
+    "uk": "K65XR80U",
+    "ie": "K65XR80U"
+   },
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2024,
+   "smartOs": "Google TV",
+   "onModeWatts": 83,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K65XR80U): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/96/dc/5d/1734086822/SON-K65XR80U-F.pdf",
+   "eprel": "1815114",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1998,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-8-OLED-TV-65-Inch-4K-HDR-Google-TV-in-Black-K65XR80/p/206976.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1799,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k65xr80u",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1999,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-8-65-k65xr80pu/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 2399.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-65-bravia-8-4k-uhd-oled-smart-tv",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 2299.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-8-65-4k-smart-tv-dark-silver-k65xr80u",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-8-OLED-TV-65-Inch-4K-HDR-Google-TV-in-Black-K65XR80/p/206976.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 8",
+   "model": "K77XR80",
+   "regionalModels": {
+    "uk": "K77XR80PU",
+    "ie": "K77XR80PU"
+   },
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2024,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 2998,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-8-OLED-TV-77-Inch-4K-HDR-Google-TV-in-Black-K77XR80/p/206975.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 2699,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k77xr80pu",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 2799,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-8-77-k55xr80pu/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 3499.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-77-bravia-8-4k-uhd-oled-smart-tv",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 3249.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-8-77-4k-smart-tv-dark-silver-k77xr80pu",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-8-OLED-TV-77-Inch-4K-HDR-Google-TV-in-Black-K77XR80/p/206975.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 8 II",
+   "model": "K55XR80M2",
+   "regionalModels": {
+    "uk": "K55XR8M25BP",
+    "ie": "K55XR8M25BP.UKA"
+   },
+   "sizeIn": 55,
+   "panel": "QD-OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 2598,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-8-II-QD-OLED-TV-55-Inch-4K-Smart-with-Google-TV-K55XR80M2/p/221620.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1999,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k55xr8m25bp.uka",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1999,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-8-ii-k55xr8m25bp/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 2799.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-55-bravia-8-ii-qd-oled-4k-uhd-smart-google-tv-k-55xr80m2-2025-model",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 2099.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-8-ii-55-4k-smart-tv-black-k55xr8m25bp-uka",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-8-II-QD-OLED-TV-55-Inch-4K-Smart-with-Google-TV-K55XR80M2/p/221620.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 8 II",
+   "model": "K65XR80M2",
+   "regionalModels": {
+    "uk": "K65XR8M25B",
+    "mx": "K-65XR80M2"
+   },
+   "sizeIn": 65,
+   "panel": "QD-OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2025,
+   "smartOs": "Google TV",
+   "onModeWatts": 87,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K65XR8M25B): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/76/65/11/1743782649/SON-K65XR8M25B-F.pdf",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 3298,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-8-II-QD-OLED-TV-65-Inch-4K-Smart-with-Google-TV-K65XR80M2/p/221619.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 2399,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k65xr8m25b.uka",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 2399,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-8-ii-k65xr8m25b/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 3199.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-65-bravia-8-ii-qd-oled-4k-uhd-smart-google-tv-k-65xr80m2-2025-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 74999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-65xr80m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-8-II-QD-OLED-TV-65-Inch-4K-Smart-with-Google-TV-K65XR80M2/p/221619.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 9",
+   "model": "K75XR90PU",
+   "regionalModels": null,
+   "sizeIn": 75,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2024,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 3599.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-9-75-4k-smart-tv-black-k75xr90pu",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/sony-bravia-9-75-4k-smart-tv-black-k75xr90pu",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 9 II",
+   "model": "K65XR90M2",
+   "regionalModels": {
+    "uk": "K65XR95M2PB",
+    "mx": "K-65XR90M2"
+   },
+   "sizeIn": 65,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": 71,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K65XR95M2PB): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/b0/64/66/1788789480/SON-K65XR95M2PB-F.pdf",
+   "eprel": "2603737",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 3598,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-9-II-65-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K65XR90M2/p/244299.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 3499,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k65xr95m2pb",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 3499,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-9-ii-k65xr95m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 4499.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-65-bravia-9-ii-true-rgb-4k-hdr-smart-google-tv-13183594-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 76999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-65xr90m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-9-II-65-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K65XR90M2/p/244299.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 9 II",
+   "model": "K75XR90M2",
+   "regionalModels": {
+    "uk": "K75XR95M2PB",
+    "mx": "K-75XR90M2"
+   },
+   "sizeIn": 75,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": 79,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K75XR95M2PB): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/bb/88/f5/1788791801/SON-K75XR95M2PB-F.pdf",
+   "eprel": "2603739",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 4598,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-9-II-75-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K75XR90M2/p/244298.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 4299,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k75xr95m2pb",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 4299,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-9-ii-k75xr95m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 5999.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-75-bravia-9-ii-true-rgb-4k-hdr-smart-google-tv-13183593-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 95999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-75xr90m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-9-II-75-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K75XR90M2/p/244298.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 9 II",
+   "model": "K85XR90M2",
+   "regionalModels": {
+    "uk": "K85XR95M2PB",
+    "mx": "K-85XR90M2"
+   },
+   "sizeIn": 85,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": 98,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model K85XR95M2PB): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/e0/ac/17/1788792958/SON-K85XR95M2PB-F.pdf",
+   "eprel": "2603741",
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 6498,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-9-II-85-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K85XR90M2/p/244297.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 5499,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/k85xr95m2pb",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 5499,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-9-ii-k85xr95m2pb/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 8499.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-85-bravia-9-ii-true-rgb-4k-hdr-smart-google-tv-13183592-2026-model",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Sony",
+     "price": 109999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://store.sony.com.mx/k-85xr90m2/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-9-II-85-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K85XR90M2/p/244297.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA 9 II",
+   "model": "K115XR90M2",
+   "regionalModels": {
+    "uk": "K115XR95M2B"
+   },
+   "sizeIn": 115,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 30998,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-BRAVIA-9-II-115-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K115XR90M2/p/245790.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 22999,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-9-ii-k115xr95m2b/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-BRAVIA-9-II-115-Inch-True-RGB-4K-HDR-Google-TV-with-Gemini-K115XR90M2/p/245790.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA XR A95L",
+   "model": "XR77A95L",
+   "regionalModels": null,
+   "sizeIn": 77,
+   "panel": "QD-OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2023,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 3498,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-77-BRAVIA-XR-A95L-QD-OLED-4K-HDR-Google-TV-XR77A95L/p/196782.html",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 4999.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-bravia-xr-77-a95l-4k-hdr-oled-smart-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-77-BRAVIA-XR-A95L-QD-OLED-4K-HDR-Google-TV-XR77A95L/p/196782.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA XR A90K",
+   "model": "XR42A90K",
+   "regionalModels": null,
+   "sizeIn": 42,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2022,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1298,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-42-BRAVIA-XR-A90K-4K-HDR-OLED-TV-With-Smart-Google-TV-XR42A90K/p/178364.html",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1499.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-42-bravia-xr-a90k-4k-hdr-oled-tv-4a5263",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-42-BRAVIA-XR-A90K-4K-HDR-OLED-TV-With-Smart-Google-TV-XR42A90K/p/178364.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA XR A90K",
+   "model": "XR48A90K",
+   "regionalModels": {
+    "uk": "XR48A90KU",
+    "ie": "XR48A90KU"
+   },
+   "sizeIn": 48,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2022,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 1398,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-48-BRAVIA-XR-A90K-4K-HDR-OLED-TV-With-Smart-Google-TV-XR48A90K/p/178363.html",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1599,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-xr48a90ku/",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1599.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-48-bravia-xr-a90k-4k-hdr-oled-tv-4a5232",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 1449.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-xr-a90k-48-4k-smart-tv-titanium-black-xr48a90ku",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-48-BRAVIA-XR-A90K-4K-HDR-OLED-TV-With-Smart-Google-TV-XR48A90K/p/178363.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA XR X90L",
+   "model": "XR55X90LU",
+   "regionalModels": null,
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2023,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 1399.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-bravia-xr-55-4k-smart-tv-dark-silver-xr55x90lu",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/sony-bravia-xr-55-4k-smart-tv-dark-silver-xr55x90lu",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA XR X90L",
+   "model": "XR65X90L",
+   "regionalModels": null,
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2023,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 1799.13,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-bravia-65-xr-x90l-4k-hdr-full-array-led-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.thebrick.com/products/sony-bravia-65-xr-x90l-4k-hdr-full-array-led-google-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "BRAVIA XR Z9K",
+   "model": "XR75Z9K",
+   "regionalModels": null,
+   "sizeIn": 75,
+   "panel": "Mini-LED",
+   "resolution": "8K",
+   "refreshHz": 120,
+   "year": 2022,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 7999.99,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-75-bravia-xr-z9k-8k-hdr-mini-led-tv-4a5260",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.thebrick.com/products/sony-75-bravia-xr-z9k-8k-hdr-mini-led-tv-4a5260",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "W830K",
+   "model": "KD32W830K",
+   "regionalModels": null,
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": 2022,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Abt",
+     "price": 298,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abt.com/Sony-32-W830K-720p-HD-LED-HDR-TV-With-Google-TV-KD32W830K/p/180898.html",
+     "status": "verified"
+    },
+    {
+     "market": "ca",
+     "seller": "The Brick",
+     "price": 379.95,
+     "currency": "CAD",
+     "taxIncluded": false,
+     "url": "https://www.thebrick.com/products/sony-32-w830k-720p-hd-led-hdr-tv-with-google-tv-4a5262",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abt.com/Sony-32-W830K-720p-HD-LED-HDR-TV-With-Google-TV-KD32W830K/p/180898.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sony",
+   "series": "W800",
+   "model": "KD32W800P1U",
+   "regionalModels": null,
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": 2021,
+   "smartOs": "Android TV",
+   "onModeWatts": 32,
+   "powerBasis": "EU/UK energy label product information sheet (Hughes-hosted fiche for UK model KD32W800P1U): on-mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/a8/56/96/1788794249/SON-KD32W800P1U-F.pdf",
+   "eprel": "448133",
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 349,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/kd32w800p1u",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 349,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/sony-bravia-kd32w800p1u/",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 329.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/sony-32-hd-ready-smart-tv-black-kd32w800p1u",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/sony/kd32w800p1u",
+   "status": "verified"
+  }
+ ],
+ "notFound": [
+  "Sony's own US, UK, Canada and Ireland sites (electronics.sony.com, sony.co.uk, sony.ca, store.sony.ca, sony.ie) refused every request from this environment (Akamai 'Access Denied' / 403, or no connection for store.sony.co.uk and store.sony.ie), so US, UK, CA and IE offers come from retailers' own pages (Abt, Hughes, Richer Sounds, The Brick, DID Electrical) and only Sony Mexico's own store (store.sony.com.mx) was read as a maker page.",
+  "Best Buy US and CA, B&H, Crutchfield, Walmart US and MX, Currys UK and IE, Argos UK, John Lewis, AO, Harvey Norman IE, Coppel and DID's didelectrical.ie domain were blocked, refused or did not answer (403, bot-block redirect, 502 or no response), so no offers from them were captured.",
+  "Costco (US, CA, UK, MX), Target, Walmart.ca, Euronics IE, Expert.ie, Power City, Sears MX, Cyberpuerta and Liverpool MX were reachable but not read for lack of fetch budget, so each market has offers from only the retailers named in the offers arrays.",
+  "No readable US, CA or MX page states an on-mode wattage for any Sony TV: Sony US/CA spec pages are blocked, Abt and The Brick spec tables have no watt line, ENERGY STAR's certified-television dataset (data.energystar.gov) holds no Sony records, and Sony Mexico's spec sheets leave the on-mode power lines blank ('-') and give only 0.5 W standby.",
+  "onModeWatts is therefore filled only where a UK Hughes-hosted product information sheet (EU energy label fiche) was read, and it is the on-mode power in SDR of the UK variant named in regionalModels (for example UK K-55S25M2 for US K55S20M2), not of the US or Mexican variant.",
+  "No energy-label sheet was read for BRAVIA 3 II (all sizes), BRAVIA 6 (all sizes), BRAVIA 7 II 50in and 85in, BRAVIA 8 55in and 77in, BRAVIA 8 II 55in, BRAVIA 9 II 115in, BRAVIA 3 43in, BRAVIA 9 75in, A95L, A90K, X90L, Z9K and W830K, because Hughes showed no fiche link for them or the model is not sold in the UK and no other primary page gave watts.",
+  "The 2025 BRAVIA 5 (UK XR55B) and BRAVIA 8 II (UK XR8M25B) fiches are an older 'Test report V.2.4' layout that prints no EPREL registration number, so eprel is null for those products although onModeWatts is set; the newer-layout fiches print an EPREL number, which is recorded.",
+  "Where a page labelled a regular price above its current price (Abt's 'Regular Price: Comp. Value', and Sony Mexico's list price against its selling price, which is assumed to be shown struck-through because the store renders prices client-side and could not be checked) the regular price was recorded and the lower current price was not, so real selling prices are lower (Sony Mexico K-55S20M2 lists MXN 19,499 but sells at MXN 9,999, and Abt sells K65XR70M2 at USD 1,798 against a regular USD 2,598).",
+  "Where a page displayed only a current price, that displayed price is recorded as a sale price because no regular price was shown: every Abt tile without a Comp. Value, Hughes' non-member price (its lower Rewards Plus member price and 'Save' flags are ignored), DID, The Brick (its product feed carries a compare-at price such as CAD 3,699.99 on the 65in BRAVIA 7 II that the page does not show, so the displayed CAD 2,199.95 is used) and Richer Sounds (whose page shows the current price plus a 'price history' line, for example GBP 1,599 now and GBP 1,899 until 18/08/26 on the 50in BRAVIA 7 II).",
+  "UK offers for BRAVIA 3 II (K-xxXR38M2PB, 43 to 100in) at Richer Sounds are flagged 'AS' (arriving soon) and out of stock, and the 115in BRAVIA 9 II is a pre-order, so those UK prices are listed prices that may not be orderable yet; Hughes also shows the 98in BRAVIA 7 II as 'Available Soon', DID shows K55S38B, K65S38B and K65XR55B as unavailable online, and The Brick's feed marks every Sony TV available although its 65in BRAVIA 7 II page shows zero inventory and a 'no longer available online' notice, so Brick availability is unconfirmed.",
+  "Sony Mexico's store shows zero stock for K-75XR50 (BRAVIA 5 75in) and K-65XR90M2 (BRAVIA 9 II 65in), and Abt marks K50S20M2, K83A60, XR48A90K and XR42A90K 'Call for availability', but all four still carry a listed price and are included.",
+  "BRAVIA 3 (2024, K-xxS30) is absent from Abt's current Sony list, so it has no US offer and its US model code was not confirmed on a US page: `model` is the code from The Brick (43, 50, 55, 85in) or from Hughes (65 and 75in, UK code K65S38B / K75S38B).",
+  "No model number or price was found on any page read for a BRAVIA 2 II 85in, BRAVIA 8 II 77in, BRAVIA 9 II 98in or any BRAVIA 6 in the UK or Ireland, so those sizes and markets are left out; DID lists no BRAVIA 3 II, 6, 7 II or 9 II, and The Brick lists no BRAVIA 3 65/75in, 7 II 98in or A95L 55in.",
+  "The 2025 BRAVIA 7 (K-xxXR70), the 2024 BRAVIA 9 at 65 and 85in, the X75WL, X85K, A95K and BRAVIA 8A sets and the 55in A95L and 98in X90L were seen only on Richer Sounds' listing flagged 'Finished' and out of stock (or as DID ex-display units), so they are not listed as current products.",
+  "Model years for the X90L (2023), Z9K (2022), W830K (2022) and BRAVIA 9 (2024) are Sony's launch years and are not stated on the pages read; BRAVIA 3's 2024 comes from The Brick's '2024 Model' titles, W800's 2021 from its EPREL market date, and the other years from Sony Mexico's 'Año del modelo' spec line or The Brick's model-year titles.",
+  "Panel class for the 'True RGB' BRAVIA 7 II and 9 II is recorded as Mini-LED because the pages call them 'LED RGB' (Sony Mexico) or 'RGB Mini LED' (Richer Sounds) and no allowed class fits an RGB-backlit LCD better; BRAVIA 8 (2024) is recorded as OLED as its retailers state and BRAVIA 8 II as QD-OLED.",
+  "refreshHz is the native panel rate from Sony Mexico's spec sheet or The Brick's tags (60 for BRAVIA 2 II, BRAVIA 3 and the HD sets, 120 for the rest), although the UK fiches print a 50 Hz default for BRAVIA 2 II and Richer Sounds lists 144 Hz for BRAVIA 5.",
+  "The US, UK, IE and Mexican codes of BRAVIA 2 II, 3, 3 II, 5, 7 II, 8 II and 9 II differ (for example US K65XR70M2, UK K65XR75M2B, Mexico K-65XR70M2) and are merged by series and size on the assumption they are the same television, which no primary page states outright, so a UK or IE wattage may not match the US or Mexican variant exactly."
+ ]
+}

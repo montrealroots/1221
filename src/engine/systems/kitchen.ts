@@ -48,7 +48,7 @@ import { GROCERY_CHAINS, GROCERY_PRODUCTS, RECIPES, type FoodUnit, type GroceryP
 import { PINT, WIDMARK, drinkingAge } from '../content/alcohol';
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
-import { spend } from './household';
+import { payWith, payWithRefusal, spend, type PayWith } from './household';
 import { addItem, homeKeyOf, itemById } from './items';
 import { COOKING_MET, GEAR_LABEL, KITCHEN_GEAR, SUBSTITUTES, type Gear, type GearOffer } from '../content/kitchengear';
 import { exerts } from './body';
@@ -106,7 +106,8 @@ export function groceryCatalog(sim: Simulation, cityId: string): CatalogEntry<Gr
   const chains = new Set(chainsIn(cityId).map((c) => c.id));
   return GROCERY_PRODUCTS.filter((p) => chains.has(p.chain)).map((p) => ({
     id: p.id, label: p.name, value: p, basis: 'Shelf Price, Tax In', price: groceryPrice(sim, cityId, p), priceKind: 'advertised' as const,
-    facets: { chain: GROCERY_CHAINS.find((c) => c.id === p.chain)!.name, aisle: FOOD_LABEL[p.category] ?? 'Other' },
+    // Its brand where its name states one (from 2026-10-04), found by it in the list's Brand filter.
+    facets: { chain: GROCERY_CHAINS.find((c) => c.id === p.chain)!.name, aisle: FOOD_LABEL[p.category] ?? 'Other', ...(p.brand ? { brand: p.brand } : {}) },
     words: `${p.food} ${p.category}`,
   }));
 }
@@ -129,13 +130,22 @@ export function groceryRefusal(sim: Simulation, person: Person, productId: strin
 }
 
 /** Buys groceries in a store: paid, and home to where each keeps. */
-export function buyGroceries(sim: Simulation, person: Person, productId: string, quantity: number): Money {
+export function buyGroceries(sim: Simulation, person: Person, productId: string, quantity: number, way: PayWith = 'debit'): Money {
   const no = groceryRefusal(sim, person, productId, quantity);
   if (no) throw new CommandError(no);
   const p = productById(productId)!;
   const paid = groceryPrice(sim, person.currentLocationId, p) * quantity;
   const chain = GROCERY_CHAINS.find((c) => c.id === p.chain)!;
-  if (!spend(sim, person, paid, chain.name, 'food')) throw new CommandError('The payment didn’t go through.');
+  // Paid the way chosen at the till (from 2026-10-04): the debit card unless the credit card or cash is.
+  const wayNo = way === 'debit' ? undefined : payWithRefusal(sim, person, paid, way, true);
+  if (wayNo) throw new CommandError(wayNo);
+  if (!(way === 'debit' ? spend(sim, person, paid, chain.name, 'food') : payWith(sim, person, paid, chain.name, 'food', way, true))) throw new CommandError('The payment didn’t go through.');
+  deliverGroceries(sim, person, p, quantity, paid);
+  return paid;
+}
+
+/** Groceries paid for, each its own item, carried or in the car until a trip out is home. */
+export function deliverGroceries(sim: Simulation, person: Person, p: NonNullable<ReturnType<typeof productById>>, quantity: number, paid: Money): void {
   const home = homeKeyOf(person.home)!;
   for (let i = 0; i < quantity; i += 1) {
     // Carried, or in the car, until a trip out is home (`stow`).
@@ -144,7 +154,6 @@ export function buyGroceries(sim: Simulation, person: Person, productId: string,
       food: { key: p.food, unit: p.sizeUnit, left: p.sizeQty, ...(p.keepsDays === null ? {} : { expiresAt: sim.now + p.keepsDays * MS_DAY }) },
     }), sim.now);
   }
-  return paid;
 }
 
 /** How much of a food an ingredient takes, in a product's unit, for the servings cooked. */
@@ -381,7 +390,7 @@ export function registerKitchen(sim: Simulation): void {
       if (n > 0 && person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Thrown Out', body: `${n} ${n === 1 ? 'thing had' : 'things had'} gone off in the kitchen.`, importance: 15, route: '/workspace/food' });
     }
   });
-  sim.onCommand<{ productId: string; quantity?: number }, { paid: Money }>('food.buy_groceries', (p, { sim: s }) => ({ paid: buyGroceries(s, s.player, String(p?.productId), Number(p?.quantity ?? 1)) }));
+  sim.onCommand<{ productId: string; quantity?: number; payWith?: PayWith }, { paid: Money }>('food.buy_groceries', (p, { sim: s }) => ({ paid: buyGroceries(s, s.player, String(p?.productId), Number(p?.quantity ?? 1), p?.payWith === 'credit' || p?.payWith === 'cash' ? p.payWith : 'debit') }));
   // What a recipe is short of, bought at once where it's sold here, each by the same rules as buying it on its own.
   sim.onCommand<{ recipeId: string; servings?: number }, { paid: Money; bought: number }>('food.buy_short', (p, { sim: s }) => {
     const person = s.player;

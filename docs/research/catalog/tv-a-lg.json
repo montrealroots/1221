@@ -1,0 +1,1353 @@
+{
+ "read": "2026-10-04",
+ "category": "televisions",
+ "products": [
+  {
+   "brand": "LG",
+   "series": "OLED evo C6",
+   "model": "OLED42C6PUA",
+   "regionalModels": {
+    "uk": "OLED42C64LA",
+    "mx": "OLED42C6PSA"
+   },
+   "sizeIn": 42,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": 62.8,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=4518262",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 1399.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo C6",
+   "model": "OLED48C6PUA",
+   "regionalModels": {
+    "uk": "OLED48C64LA",
+    "mx": "OLED48C6PSA"
+   },
+   "sizeIn": 48,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": 66.8,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=4515243",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 1599.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo C6",
+   "model": "OLED55C6PUA",
+   "regionalModels": {
+    "uk": "OLED55C64LA",
+    "mx": "OLED55C6PSA"
+   },
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": 108.3,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=4515183",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 1999.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo C6",
+   "model": "OLED65C6PUA",
+   "regionalModels": {
+    "uk": "OLED65C64LA",
+    "mx": "OLED65C6PSA",
+    "ca": "OLED65C6PUA.ACC",
+    "ie": "OLED65C64LA.AEI"
+   },
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": 84.6,
+   "powerBasis": "UK retailer spec table (John Lewis): 'Power consumption - on mode' in W; the page also prints UK energy class E and SDR energy use 85 kWh/1000h",
+   "powerUrl": "https://www.johnlewis.com/lg-oled65c64la-2026-oled-evo-hdr-4k-ultra-hd-smart-ai-tv-65-inch-with-dolby-atmos-dark-titan-silver/p115240023",
+   "eprel": null,
+   "colors": [
+    "Dark Titan Silver"
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 2699.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "John Lewis",
+     "price": 2299.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.johnlewis.com/lg-oled65c64la-2026-oled-evo-hdr-4k-ultra-hd-smart-ai-tv-65-inch-with-dolby-atmos-dark-titan-silver/p115240023",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Euronics Ireland",
+     "price": 2399.0,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://euronics.ie/products/lg-65-inch-c6-series-4k-ultra-hd-smart-tv-oled65c64la-aei",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo C6",
+   "model": "OLED77C6PUA",
+   "regionalModels": {
+    "uk": "OLED77C64LA",
+    "mx": "OLED77C6PSA"
+   },
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 3699.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo C6",
+   "model": "OLED83C6PUA",
+   "regionalModels": {
+    "uk": "OLED83C64LA",
+    "mx": "OLED83C6PSA"
+   },
+   "sizeIn": 83,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 5299.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65c6pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo G6",
+   "model": "OLED55G6WUA",
+   "regionalModels": {
+    "uk": "OLED55G62LW"
+   },
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": 101.6,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=4515191",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 2499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65g6wua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65g6wua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo G6",
+   "model": "OLED65G6WUA",
+   "regionalModels": {
+    "uk": "OLED65G64LW"
+   },
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": 127.6,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=4517987",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 3399.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65g6wua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65g6wua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo G6",
+   "model": "OLED77G6WUA",
+   "regionalModels": {
+    "uk": "OLED77G64LW"
+   },
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": 156.5,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=4517986",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 4499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65g6wua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65g6wua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo G6",
+   "model": "OLED83G6WUA",
+   "regionalModels": {
+    "uk": "OLED83G64LW"
+   },
+   "sizeIn": 83,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": 98.1,
+   "powerBasis": "UK retailer spec table (John Lewis): 'Power consumption - on mode' in W; the page also prints UK energy class D (SDR) and SDR energy use 98 kWh/1000h",
+   "powerUrl": "https://www.johnlewis.com/lg-oled83g64lw-2026-oled-evo-hdr-4k-ultra-hd-smart-ai-tv-83-inch-with-dolby-atmos-one-wall-design-light-satin-silver/p115240040",
+   "eprel": null,
+   "colors": [
+    "Light Satin Silver"
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 6499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65g6wua-oled-4k-tv",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "John Lewis",
+     "price": 5499.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.johnlewis.com/lg-oled83g64lw-2026-oled-evo-hdr-4k-ultra-hd-smart-ai-tv-83-inch-with-dolby-atmos-one-wall-design-light-satin-silver/p115240040",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled83g6wua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo G6",
+   "model": "OLED97G6WUA",
+   "regionalModels": {
+    "uk": "OLED97G64LW"
+   },
+   "sizeIn": 97,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 24999.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65g6wua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65g6wua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo W6",
+   "model": "OLED77W6PUA",
+   "regionalModels": {},
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 5499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled77w6pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled77w6pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo W6",
+   "model": "OLED83W6PUA",
+   "regionalModels": {},
+   "sizeIn": 83,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 7499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled77w6pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled83w6pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED B6",
+   "model": "OLED48B6GUA",
+   "regionalModels": {},
+   "sizeIn": 48,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 999.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65b6gua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled48b6gua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED B6",
+   "model": "OLED65B6GUA",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 1999.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65b6gua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65b6gua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED B6",
+   "model": "OLED77B6GUA",
+   "regionalModels": {},
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 2799.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65b6gua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled77b6gua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED B6",
+   "model": "OLED83B6GUA",
+   "regionalModels": {},
+   "sizeIn": 83,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 4299.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65b6gua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled83b6gua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo B6",
+   "model": "OLED77B6AUA",
+   "regionalModels": {},
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 2799.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled77b6aua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled77b6aua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo B6",
+   "model": "OLED83B6AUA",
+   "regionalModels": {},
+   "sizeIn": 83,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 4299.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled77b6aua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled83b6aua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo C5",
+   "model": "OLED42C5PUA",
+   "regionalModels": {},
+   "sizeIn": 42,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 77.8,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3722353",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 1399.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo C5",
+   "model": "OLED48C5PUA",
+   "regionalModels": {},
+   "sizeIn": 48,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 87.0,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3798572",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 1599.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo C5",
+   "model": "OLED55C5PUA",
+   "regionalModels": {},
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 123.6,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3798865",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 1999.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo C5",
+   "model": "OLED65C5PUA",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 149.0,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3798866",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 2699.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo C5",
+   "model": "OLED77C5PUA",
+   "regionalModels": {},
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 187.0,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3798867",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 3699.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo C5",
+   "model": "OLED83C5PUA",
+   "regionalModels": {},
+   "sizeIn": 83,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 206.8,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3892239",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 5399.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled77c5pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo G5",
+   "model": "OLED55G5WUA",
+   "regionalModels": {},
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 118.8,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3722623",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 2499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65g5wua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65g5wua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo G5",
+   "model": "OLED65G5WUA",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 135.8,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3814874",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 3399.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65g5wua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65g5wua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo G5",
+   "model": "OLED77G5WUA",
+   "regionalModels": {},
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 189.1,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3814875",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 4499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65g5wua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65g5wua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo G5",
+   "model": "OLED83G5WUA",
+   "regionalModels": {},
+   "sizeIn": 83,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 204.2,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3814876",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 6499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65g5wua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65g5wua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED evo G5",
+   "model": "OLED97G5WUA",
+   "regionalModels": {},
+   "sizeIn": 97,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 24999.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65g5wua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65g5wua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED B5",
+   "model": "OLED55B5PUA",
+   "regionalModels": {},
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 110.9,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3892685",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 1499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65b5pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65b5pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED B5",
+   "model": "OLED65B5PUA",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 126.9,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3798904",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 1999.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65b5pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65b5pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED B5",
+   "model": "OLED77B5PUA",
+   "regionalModels": {},
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 187.0,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3892684",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 2999.0,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65b5pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65b5pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "OLED B5",
+   "model": "OLED83B5PUA",
+   "regionalModels": {},
+   "sizeIn": 83,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": 177.3,
+   "powerBasis": "ENERGY STAR certified-TV record: reported on-mode power per the federal test procedure (W)",
+   "powerUrl": "https://data.energystar.gov/resource/pd96-rr3d.json?pd_id=3942851",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 4499.0,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-oled65b5pua-oled-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-oled65b5pua-oled-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "QNED8MB",
+   "model": "65QNED8MBAA",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 699.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-65qned8mbaa-qned-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-65qned8mbaa-qned-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "QNED85B",
+   "model": "75QNED85BUA",
+   "regionalModels": {},
+   "sizeIn": 75,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 1099.0,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-75qned85bua-qned-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-75qned85bua-qned-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "QNED7SB",
+   "model": "55QNED7SBUA",
+   "regionalModels": {},
+   "sizeIn": 55,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 399.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-75qned7sbua-qned-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-75qned7sbua-qned-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "QNED7SB",
+   "model": "65QNED7SBUA",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 479.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-75qned7sbua-qned-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-75qned7sbua-qned-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "QNED7SB",
+   "model": "75QNED7SBUA",
+   "regionalModels": {},
+   "sizeIn": 75,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 679.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-75qned7sbua-qned-4k-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-75qned7sbua-qned-4k-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "UA77",
+   "model": "55UA7700PUB",
+   "regionalModels": {},
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 379.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-55ua7700pub-4k-uhd-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-55ua7700pub-4k-uhd-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "UA7000",
+   "model": "43UA7000PUB",
+   "regionalModels": {},
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": 2025,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "LG",
+     "price": 229.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.lg.com/us/tvs/lg-43ua7000pub-4k-uhd-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.lg.com/us/tvs/lg-43ua7000pub-4k-uhd-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "LG",
+   "series": "QNED70",
+   "model": "65QNED70B6C",
+   "regionalModels": {
+    "uk": "65QNED70B6C.AEK"
+   },
+   "sizeIn": 65,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": 2026,
+   "smartOs": "webOS",
+   "onModeWatts": 84.6,
+   "powerBasis": "UK retailer spec table (John Lewis): 'Power consumption - on mode' in W; the page also prints UK energy class E and SDR energy use 84 kWh/1000h",
+   "powerUrl": "https://www.johnlewis.com/lg-65qned70b6c-2026-qned-miniled-hdr-4k-ultra-hd-smart-ai-tv-65-inch-black/p115526033",
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "John Lewis",
+     "price": 579.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.johnlewis.com/lg-65qned70b6c-2026-qned-miniled-hdr-4k-ultra-hd-smart-ai-tv-65-inch-black/p115526033",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.johnlewis.com/lg-65qned70b6c-2026-qned-miniled-hdr-4k-ultra-hd-smart-ai-tv-65-inch-black/p115526033",
+   "status": "verified"
+  }
+ ],
+ "notFound": [
+  "Canada (ca): no offers captured, because lg.com/ca_en product pages print no price and Best Buy Canada (a listing page and a product page) and Visions returned HTTP 403, and no other Canadian retailer was tried within the budget; the C6 65-inch CA code OLED65C6PUA.ACC is recorded in regionalModels only.",
+  "Mexico (mx): no offers captured, because lg.com/mx pages print no price (they only gave the MX model codes OLED42/48/55/65/77/83C6PSA and '120 Hz (VRR 165Hz)') and Liverpool returned HTTP 403; Coppel, Walmart MX and Costco MX were not tried within the fetch budget.",
+  "United Kingdom (uk): only three UK offers are verified (John Lewis OLED65C64LA, OLED83G64LW and 65QNED70B6C) because Currys and Argos returned HTTP 403, John Lewis listing pages render client-side, and lg.com/uk pages print no price; the other UK model codes are therefore absent or only in regionalModels.",
+  "Ireland (ie): only one offer is verified (Euronics Ireland OLED65C64LA.AEI at EUR 2,399.00) because the DID Electrical collection and product pages printed no price in their static text, and Currys IE, Harvey Norman IE and Argos IE were not tried within the fetch budget.",
+  "EPREL registration numbers: lg.com/uk and the John Lewis and Euronics product pages link or print energy-label data but none printed an EPREL number or eprel.ec.europa.eu/qr link in readable text, so eprel is null for every product.",
+  "EU/UK energy-label PDFs: lg.com/uk links UK and EU label PDFs but they were not opened within the budget, so UK on-mode watts come from the John Lewis spec table (on mode, with SDR kWh/1000h printed beside it) for three models only; the 65-inch C6 and the 65-inch QNED70 both show 84.6 W there while their SDR kWh/1000h differ (85 and 84).",
+  "On-mode watts for US models: lg.com/us pages print no spec table, so US watts are the 'reported on-mode power per the federal test procedure' figure from the ENERGY STAR certified-TV dataset (data.energystar.gov pd96-rr3d, one record re-read live: OLED65C6PU* 141.60 W); where a UK figure was also read it is used instead per the brief, and the two bases are not comparable (OLED65C6PUA 84.6 W UK vs 141.6 W US).",
+  "On-mode watts left null: the 77-inch and 83-inch C6 (ENERGY STAR lists them as OLED77C6HU*/OLED83C6HU*, not the PUA numbers LG.com sells), the 97-inch G6 and G5, the W6, every B6 and the US QNED and UA models, because no record or spec line matching those model numbers was read.",
+  "LG Micro RGB evo (MRGB95) was not looked up, so no Micro RGB product is listed (an RGB-backlit LCD would not fit the allowed panel list exactly, and Mini-LED would be the closest value).",
+  "refreshHz is null wherever no spec line gave it (C5, G5, B5, W6, 75QNED85BUA, QNED7SB and the UA models), and QNED Mini LED models are filed as panel Mini-LED because the lg.com/us titles say Mini LED.",
+  "Refresh rate on C6, G6 and B6 is recorded as 120 Hz because the John Lewis and lg.com/mx spec lines read '120Hz' / '120 Hz (VRR 165Hz)', although LG markets up to 165 Hz and Euronics Ireland prints 165 Hz for the C6.",
+  "OLED evo M6 and OLED evo M5: lg.com/us names the M series only in navigation and the OLED77M5PUA page printed no price, so no M5 or M6 product was added.",
+  "LG StanbyME 2 (and the Signature OLED T transparent TV): the lg.com/us March 2026 press release said StanbyME 2 pricing would be announced later and no StanbyME or Signature OLED T product page was read, so neither is listed.",
+  "US sizes left out because the model number or the price could not be read: OLED55B6EUA, OLED65B6EUA and OLED48B6 evo variants, OLED48G5SUA and the G6/G5 stand-version SUA models, 75QNED8MBAA ($999.99 shown), 65QNED85BUA ($799.00 shown, code implied), the QNED84B pages (no price printed), UA77 43/50/65/75/86-inch (prices shown, codes not printed), UA7000 55/75-inch, and the UA75 and UA7100 pages (no prices printed).",
+  "lg.com/us category and listing pages (oled-tvs, qned-tvs, uhd-4k-tvs, collections) are client-rendered and printed no product grid, so coverage comes from series product pages found through search plus the 2026 OLED press release PDF; other current LG US lines (UT, NanoCell, QNED80/82/85A, QNED evo QNED90) were not found or not read.",
+  "Regular versus sale price: lg.com/us and John Lewis print an original (strike-through) price beside a current price on many models, and the original is recorded as the regular price (for example OLED65C6PUA $2,699.99 original, $1,699.99 current; John Lewis OLED65C64LA GBP 2,299.00 was, 2,199.00 now).",
+  "Single-price models: where lg.com/us printed only one price and no original, that price is recorded (OLED48B6GUA $999.99, 65QNED8MBAA $699.99, 75QNED85BUA $1,099.00, 43UA7000PUB $229.99, the G5 and B5 sizes, and the 42/48/55/83-inch C5), so some may be sale prices; John Lewis printed a single price for OLED83G64LW and 65QNED70B6C.",
+  "Model numbers OLED77G5WUA, OLED83G5WUA, OLED55B5PUA, OLED77B5PUA and OLED83B5PUA were not printed in the text read (the pages showed the sizes and prices, and only the 65-inch code); they follow LG's naming and match ENERGY STAR records OLED77G5***, OLED83G5***, OLED55B5***, OLED77B5*** and OLED83B5PU*.",
+  "B6 naming: lg.com/us sells OLED B6 (B6GUA) and OLED evo B6 (B6AUA, B6EUA) under different codes, and which B6 the 48-inch and 55-inch belong to was inconsistent in the page titles, so only the codes with a printed price are listed.",
+  "John Lewis search-result price text for 65QNED70B6C (GBP 649.00) disagreed with the product page itself (GBP 579.00), so search-result prices were not used for any offer and all offers here were read on the product page itself."
+ ]
+}

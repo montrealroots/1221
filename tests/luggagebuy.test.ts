@@ -7,7 +7,7 @@ import { quickSave } from '@/engine';
 import { LUGGAGE } from '@/engine/content/luggagecatalog';
 import { salesTaxRate } from '@/engine/content/tax';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { bagsOf, buyLuggageRefusal, luggageCatalog, luggagePrice, packedIn, suitcaseOf } from '@/engine/systems/luggage';
+import { bagsOf, buyLuggageRefusal, luggageCatalog, luggagePrice, luggageProduct, packedIn, suitcaseOf } from '@/engine/systems/luggage';
 import { garmentsOf } from '@/engine/systems/wardrobe';
 
 const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -41,5 +41,29 @@ describe('a bag', () => {
     shirt.at = { kind: 'person' };
     sim.must({ kind: 'luggage.choose', payload: { itemId: r.value!.itemId } });
     expect(suitcaseOf(p)!.id).toBe(r.value!.itemId);
+  });
+});
+
+describe('a bag as a product', () => {
+  it('keeps its product and the offer it was bought on, and refuses a color it isn’t offered in', () => {
+    const sim = life('bag-product');
+    const piece = luggageCatalog(sim, sim.player)[0]!.piece;
+    expect(sim.execute({ kind: 'luggage.buy', payload: { pieceId: piece.id, color: 'Not A Color' } }).error).toBe('It isn’t offered in that color.');
+    const r = sim.must<{ itemId: string }>({ kind: 'luggage.buy', payload: { pieceId: piece.id } });
+    const bag = sim.player.items!.find((i) => i.id === r.itemId)!;
+    expect(bag.spec).toMatchObject({ product: piece.productId, offer: piece.id });
+    expect(luggageProduct(piece)!.offers.some((o) => o.id === piece.id)).toBe(true);
+  });
+
+  it('holds its maker’s liters, or where the maker gives only its outside measure, an estimate marked as one', () => {
+    const estimated = LUGGAGE.filter((x) => x.litersEstimated);
+    expect(estimated.length).toBeGreaterThan(0);
+    // Every estimate is from an outside measure, and holds no more than the room the bag takes up, to the whole liter.
+    for (const x of estimated) expect(x.liters).toBeLessThanOrEqual(Math.round(x.outsideL!));
+    const sim = life('bag-estimate');
+    const piece = luggageCatalog(sim, sim.player).find((x) => x.piece.litersEstimated)!.piece;
+    const r = sim.execute<{ itemId: string }>({ kind: 'luggage.buy', payload: { pieceId: piece.id } });
+    expect(r.ok, r.error).toBe(true);
+    expect(bagsOf(sim.player).find((b) => b.id === r.value!.itemId)!.holdsL).toBe(piece.liters);
   });
 });
