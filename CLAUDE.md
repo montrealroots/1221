@@ -108,8 +108,9 @@ npm run gate
 ```
 
 It runs `npm run validate` (typecheck, lint, the full vitest suite) followed by
-twelve checks: title-case, label-sweep, plural-check, voice-check, tics,
-doc-refs, wired, deciders, spelling, typos, geo-check and inventory. Read its exit
+fourteen checks: title-case, label-sweep, plural-check, voice-check, tics,
+doc-refs, wired, deciders, spelling, typos, geo-check, inventory, devmap and
+catalog-coverage (the last added 2026-10-03). Read its exit
 status **from a file, never from a pipe**. A pipe that stops early, such as
 `| Select-Object -First 20`, ends the gate partway and leaves `$LASTEXITCODE`
 holding the previous command's code, which can read as a pass:
