@@ -25,7 +25,7 @@ describe('a club', () => {
   it('is gone to each week in town: its run, and someone from it met and seen again', () => {
     const sim = life('us-ny-newyork', 'club-parkrun');
     const p = sim.player;
-    sim.must({ kind: 'club.join', payload: { clubId: 'parkrun-brooklyn-bridge' } });
+    sim.must({ kind: 'club.join', payload: { clubId: 'parkrun-brooklyn-bridge', attend: 'always' } });
     expect(sim.execute({ kind: 'club.join', payload: { clubId: 'parkrun-brooklyn-bridge' } }).error).toBe('You’re in it.');
     sim.advanceBy(15 * MS_DAY);
     const m = membershipsOf(p)[0]!;
@@ -44,7 +44,7 @@ describe('a club', () => {
   it('a league takes its season’s fee and ends with its season', () => {
     const sim = life('us-ny-newyork', 'club-league');
     const p = sim.player;
-    const r = sim.must<{ paid: number }>({ kind: 'club.join', payload: { clubId: 'volo-ny-kickball' } });
+    const r = sim.must<{ paid: number }>({ kind: 'club.join', payload: { clubId: 'volo-ny-kickball', attend: 'always' } });
     expect(r.paid).toBe(inSaveMoney(sim, 135_00, 'USD'));
     sim.advanceBy(50 * MS_DAY);
     expect(membershipsOf(p)).toEqual([]);
@@ -53,7 +53,7 @@ describe('a club', () => {
 
   it('a week-by-week league charges at each game: GO Mammoth, £11.10', () => {
     const sim = life('uk-eng-london', 'club-weekly');
-    expect(sim.must<{ paid: number }>({ kind: 'club.join', payload: { clubId: 'go-mammoth-netball' } }).paid).toBe(0);
+    expect(sim.must<{ paid: number }>({ kind: 'club.join', payload: { clubId: 'go-mammoth-netball', attend: 'always' } }).paid).toBe(0);
     sim.advanceBy(8 * MS_DAY);
     const weeks = Object.values(sim.universe.transactions).filter((t) => t.memo === 'GO Mammoth Netball, the week');
     expect(weeks.length).toBe(membershipsOf(sim.player)[0]!.went);
@@ -65,7 +65,7 @@ describe('a lesson', () => {
   it('is a course of weekly sessions at the provider’s own price: Waltons’ guitar, €230 for ten, an hour unwinding each', () => {
     const sim = life('ie-lei-dublin', 'lesson-guitar');
     const p = sim.player;
-    const r = sim.must<{ paid: number }>({ kind: 'club.join', payload: { clubId: 'waltons-guitar' } });
+    const r = sim.must<{ paid: number }>({ kind: 'club.join', payload: { clubId: 'waltons-guitar', attend: 'always' } });
     expect(r.paid).toBe(inSaveMoney(sim, 230_00, 'EUR'));
     // Across one session: two METs isn't a workout, so no fitness is built.
     const first = nextMeeting(clubById('waltons-guitar')!, sim.now);

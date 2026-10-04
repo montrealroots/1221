@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-329 commands; 323 named by a test, 6 not.
+334 commands; 328 named by a test, 6 not.
 
 ## aircraft
 
@@ -181,8 +181,13 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `club.join` | `src/engine/systems/clubs.ts` | `PeopleWorkspace.tsx` | `clubs.test.ts` | People |
-| `club.leave` | `src/engine/systems/clubs.ts` | `PeopleWorkspace.tsx` | **none** | People |
+| `club.check_in` | `src/engine/systems/clubs.ts` | `RoutinesWorkspace.tsx` | `clubs-going.test.ts` | People |
+| `club.go` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` | People |
+| `club.join` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `clubs.test.ts` | People |
+| `club.leave` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | **none** | People |
+| `club.renew` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` | People |
+| `club.rsvp` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` | People |
+| `club.set` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` | People |
 
 ## dating
 
@@ -220,7 +225,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `errand.fuel` | `src/engine/systems/trips.ts` | `RoutinesWorkspace.tsx` | `connected-day.test.ts` `fueltank.test.ts` | Rent And A Roof |
-| `errand.go` | `src/engine/systems/trips.ts` | `RoutinesWorkspace.tsx` | `fueltank.test.ts` `standin.test.ts` `trips.test.ts` | Rent And A Roof |
+| `errand.go` | `src/engine/systems/trips.ts` | `RoutinesWorkspace.tsx` | `clubs-going.test.ts` `fueltank.test.ts` `standin.test.ts` `trips.test.ts` | Rent And A Roof |
 | `errand.park` | `src/engine/systems/trips.ts` | `RoutinesWorkspace.tsx` | `garages.test.ts` | Rent And A Roof |
 
 ## family

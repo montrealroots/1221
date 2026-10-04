@@ -31,7 +31,7 @@ import { hostRefusal, type Gathering } from '@/engine/systems/hosting';
 import { seatsAtHome } from '@/engine/systems/furnishings';
 import { RECIPES } from '@/engine/content/groceries';
 import { cookRefusal, servingsRange } from '@/engine/systems/kitchen';
-import { clubById, clubsIn, joinClubRefusal, joinFee, membershipsOf } from '@/engine/systems/clubs';
+import { ClubsPanel } from '@/ui/components/ClubsPanel';
 const COURT_LABEL = { tennis: 'Tennis', basketball: 'Basketball', pickleball: 'Pickleball', football: 'Football' } as const;
 import { HALL } from '@/engine/content/people';
 
@@ -75,7 +75,7 @@ export function PeopleWorkspace() {
         </Panel>
         {picked && <Invite contact={picked} key={picked.id} homeCity={person.home?.cityId} />}
         {person.home && person.home.kind !== 'sofa' && contacts.some((c) => c.cityId === person.home!.cityId) && <HaveFriendsOver />}
-        <Clubs />
+        <ClubsPanel />
       <Classes />
         <Family />
         <Parents />
@@ -85,49 +85,6 @@ export function PeopleWorkspace() {
   );
 }
 
-/** Friends asked home together, for dinner or drinks (`systems/hosting.ts`): as many as there are seats for, a dinner at a table. */
-const WEEKDAY = ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays'] as const;
-
-/** Clubs in the town you're in: parkrun, a running club, a league; joined or left (`systems/clubs.ts`). */
-function Clubs() {
-  const { sim, run, toast } = useGame();
-  const person = useWorld((s) => s.player);
-  const join = useFeature('club.join');
-  const quit = useFeature('club.leave');
-  const here = clubsIn(person.currentLocationId);
-  const mine = membershipsOf(person);
-  if (here.length === 0 && mine.length === 0) return null;
-  const cur = saveCurrency(sim.universe);
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return (
-    <Panel title="Clubs" subtitle="Parkrun, running clubs, leagues and lessons, each meeting weekly">
-      <div className="table-scroll">
-        <table>
-          <thead><tr><th scope="col">Club</th><th scope="col">Where</th><th scope="col">When</th><th scope="col" className="num">Fee</th><th scope="col"><span className="sr-only">Join</span></th></tr></thead>
-          <tbody>
-            {[...new Set([...here, ...mine.map((m) => clubById(m.clubId)!).filter(Boolean)])].map((c) => {
-              const m = mine.find((x) => x.clubId === c.id);
-              const no = m ? undefined : joinClubRefusal(person, c.id);
-              const fee = c.fee ? `${formatMoney(Math.round(c.fee.amount * 100), c.fee.currency)} ${c.fee.per === 'week' ? 'a week' : `a season of ${c.seasonWeeks} weeks`}` : 'Free';
-              return (
-                <tr key={c.id}>
-                  <td>{c.name}{m ? <span className="xs dim">{` · gone ${m.went} ${m.went === 1 ? 'time' : 'times'}${m.until ? `, to ${formatDate(m.until, sim.zone)}` : ''}`}</span> : null}</td>
-                  <td className="small">{c.place}</td>
-                  <td className="small">{`${WEEKDAY[c.weekday]} ${pad(c.hour)}:${pad(c.minute)}`}</td>
-                  <td className="num small">{fee}</td>
-                  <td>{m
-                    ? <button type="button" className="btn btn-sm btn-ghost" disabled={!quit.open} title={quit.reason} onClick={() => { if (run('club.leave', { clubId: c.id }).ok) toast(`Left ${c.name}.`, 'positive'); }}>Leave</button>
-                    : <button type="button" className="btn btn-sm btn-ghost" disabled={!join.open || Boolean(no)} title={no ?? (joinFee(sim, c) > 0 ? `${formatMoney(joinFee(sim, c), cur)} now` : join.reason)} onClick={() => { if (run('club.join', { clubId: c.id }).ok) toast(`Joined ${c.name}.`, 'positive'); }}>Join</button>}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      <div className="xs dim">Each week you go if you’re in town, awake and free then: the session’s exercise, and time with someone from the club you meet at the first.</div>
-    </Panel>
-  );
-}
 
 /** Yoga and dance classes in the town you're in, taken one at a time at each studio's single price (`content/dropins.ts`). */
 function Classes() {
@@ -151,6 +108,7 @@ function Classes() {
   );
 }
 
+/** Friends asked home together, for dinner or drinks (`systems/hosting.ts`): as many as there are seats for, a dinner at a table. */
 function HaveFriendsOver() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);

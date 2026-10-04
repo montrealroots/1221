@@ -18,6 +18,12 @@
  * 2026-10-02, when only one could come); on foot, any number. One at work
  * then can't come (`systems/availability.ts`).
  *
+ * **By transit** (from 2026-10-03): a ride on the town's own buses or
+ * trains for each leg, at its adult fare (`content/transit.ts`), paid as
+ * the leg sets out, and the half hour rail's station rides take, SLATE's
+ * estimate; what's bought is carried, as on foot, and anybody along pays
+ * their own fare. A town whose fare isn't kept has no transit trip.
+ *
  * Not kept: a ticket for an unpaid or overstayed meter, SLATE always
  * paying for the time; how often meters are checked isn't published.
  */
@@ -48,16 +54,31 @@ import { tireFactor } from './tires';
 import { homeKeyOf, itemById, itemsOf, volumeOf, type Item, type Spot } from './items';
 import { specOf } from './caroptions';
 import { burn, capacityOf, levelOf, rangeKm } from './fueltank';
+import { TRANSIT } from '../content/transit';
+import { rateOn } from '../content/career';
+import { STATION_RIDE_MINUTES } from './rail';
 
-export interface Trip { /** What was bought on the way, carried or in the car until the trip is home (from 2026-10-02). */ shopping?: { itemId: string; spot?: Spot; at: Instant }[]; by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; /** From 2026-10-02, everybody along; `passengerId` was the only one before. */ passengerIds?: string[]; fuel: Money; km: number; /** Out in the car's stand-in, its rental's id (`systems/standin.ts`). */ standInId?: string; /** A driver hired to drive it, and when they set out (`content/drivers.ts`, from 2026-10-01). */ driver?: { id: string; from: Instant } }
+export type TripMode = 'car' | 'foot' | 'transit';
+
+/** A ride's fare on the town's transit on a day, in the save's money, or nothing where the town's fare isn't kept. */
+export function transitFare(sim: Simulation, cityId: string, at: Instant = sim.now): Money | undefined {
+  const t = TRANSIT[cityId];
+  if (!t) return undefined;
+  const amount = rateOn(t.steps, new Date(at).toISOString().slice(0, 10));
+  const cur = saveCurrency(sim.universe);
+  return cur === t.currency ? amount : exchange(amount, t.currency, cur) ?? amount;
+}
+
+export interface Trip { /** What was bought on the way, carried or in the car until the trip is home (from 2026-10-02). */ shopping?: { itemId: string; spot?: Spot; at: Instant }[]; by: TripMode; vehicleId?: string; passengerId?: string; /** From 2026-10-02, everybody along; `passengerId` was the only one before. */ passengerIds?: string[]; fuel: Money; km: number; /** Out in the car's stand-in, its rental's id (`systems/standin.ts`). */ standInId?: string; /** A driver hired to drive it, and when they set out (`content/drivers.ts`, from 2026-10-01). */ driver?: { id: string; from: Instant } }
 export interface Stop { kind: string; payload: Record<string, unknown>; leg: LegKind }
 
 const market = (cityId: string): 'na' | 'eu' => (['us', 'ca'].includes(CITIES.get(cityId)?.countryId ?? '') ? 'na' : 'eu');
 
 /** A leg's kilometers and minutes in a town, by car or on foot. */
-export function leg(cityId: string, by: 'car' | 'foot', kind: LegKind): { km: number; minutes: number } {
+export function leg(cityId: string, by: TripMode, kind: LegKind): { km: number; minutes: number } {
   if (by === 'foot') return { km: WALK_KM, minutes: (WALK_KM / WALK_KMH) * 60 };
   const km = LEG_KM[market(cityId)][kind];
+  if (by === 'transit') return { km, minutes: STATION_RIDE_MINUTES };
   return { km, minutes: km * (MIN_PER_KM[cityId] ?? 58 / 60) };
 }
 
@@ -106,9 +127,10 @@ export function driverCost(sim: Simulation, d: DriverService, minutes: number, k
 }
 
 /** Why a trip can't start this way, or nothing. */
-export function tripRefusal(sim: Simulation, person: Person, by: 'car' | 'foot', vehicleId?: string, passengers?: string | readonly string[], driven = false): string | undefined {
+export function tripRefusal(sim: Simulation, person: Person, by: TripMode, vehicleId?: string, passengers?: string | readonly string[], driven = false): string | undefined {
   const along = passengers === undefined ? [] : typeof passengers === 'string' ? [passengers] : [...passengers];
   const here = person.currentLocationId;
+  if (by === 'transit' && transitFare(sim, here) === undefined) return `${CITIES.get(here)?.name ?? 'This town'}’s transit fare isn’t kept, so it can’t be taken here.`;
   if (by === 'car') {
     const v = vehiclesOf(person).find((x) => x.id === vehicleId && x.soldAt === undefined);
     if (!v) return 'That isn’t a car you own.';
@@ -207,12 +229,12 @@ function payFuel(sim: Simulation, person: Person, trip: Trip, station: string): 
 
 export function registerTrips(sim: Simulation): void {
   // A leg on the road: to the next stop, or home, which ends the trip.
-  sim.onCommand<{ to: LegKind | 'home'; by?: 'car' | 'foot'; vehicleId?: string; passengerId?: string; passengerIds?: string[]; driven?: boolean }, { minutes: number; km: number }>('errand.go', (p, { sim: s }) => {
+  sim.onCommand<{ to: LegKind | 'home'; by?: TripMode; vehicleId?: string; passengerId?: string; passengerIds?: string[]; driven?: boolean }, { minutes: number; km: number }>('errand.go', (p, { sim: s }) => {
     const person = s.player;
     let trip = person.trip;
     if (!trip) {
       if (p?.to === 'home') throw new CommandError('You’re home already.');
-      const by = p?.by === 'car' ? 'car' : 'foot';
+      const by: TripMode = p?.by === 'car' ? 'car' : p?.by === 'transit' ? 'transit' : 'foot';
       const driven = by === 'car' && p?.driven === true;
       const along = p?.passengerIds?.map(String) ?? (p?.passengerId ? [String(p.passengerId)] : []);
       const no = tripRefusal(s, person, by, p?.vehicleId, along, driven);
@@ -223,6 +245,11 @@ export function registerTrips(sim: Simulation): void {
     }
     const here = person.currentLocationId;
     const l = leg(here, trip.by, p?.to === 'errand' ? 'errand' : 'shopping');
+    // On transit, the leg's fare, paid as it sets out.
+    if (trip.by === 'transit') {
+      const fare = transitFare(s, here) ?? 0;
+      if (fare > 0 && !spend(s, person, fare, `${CITIES.get(here)?.name ?? 'The town'}’s transit, a ride`, 'personal')) throw new CommandError('The fare can’t be paid.');
+    }
     const v = carOf(person, trip);
     // Your own car runs on what's in its tank (`systems/fueltank.ts`, from 2026-10-02): a leg it can't make is refused
     // here, and the leg's upkeep is the month's. Until then each leg's fuel was charged, and paid at the end.
@@ -317,7 +344,7 @@ export interface ErrandRun { done: number; stopped?: { step: number; error: stri
  * executor given. It stops at the first stop that can't be done, and still
  * comes home.
  */
-export function runErrands(sim: Simulation, plan: { by: 'car' | 'foot'; vehicleId?: string; passengerId?: string; passengerIds?: string[]; driven?: boolean; garageId?: string; stops: Stop[] }, exec: (kind: string, payload: Record<string, unknown>) => CommandResult = (kind, payload) => sim.execute({ kind, payload })): ErrandRun {
+export function runErrands(sim: Simulation, plan: { by: TripMode; vehicleId?: string; passengerId?: string; passengerIds?: string[]; driven?: boolean; garageId?: string; stops: Stop[] }, exec: (kind: string, payload: Record<string, unknown>) => CommandResult = (kind, payload) => sim.execute({ kind, payload })): ErrandRun {
   let done = 0;
   let stopped: ErrandRun['stopped'];
   for (const [i, stop] of plan.stops.entries()) {

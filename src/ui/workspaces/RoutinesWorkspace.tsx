@@ -18,7 +18,8 @@ import { groceryCatalog } from '@/engine/systems/kitchen';
 import { salonsIn, toiletryCatalog } from '@/engine/systems/hygiene';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { contactsOf } from '@/engine/systems/people';
-import { leg, runErrands, tripRefusal, type Stop, driverIn, garagesIn } from '@/engine/systems/trips';
+import { clubById, membershipsOf } from '@/engine/systems/clubs';
+import { leg, runErrands, transitFare, tripRefusal, type Stop, type TripMode, driverIn, garagesIn } from '@/engine/systems/trips';
 import { sessionPrice, trainersIn } from '@/engine/systems/trainers';
 import { METER, STATIONS } from '@/engine/content/errandtrips';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -209,10 +210,12 @@ function ErrandsPanel() {
   const go = useFeature('errand.go');
   const park = useFeature('errand.park');
   const fuel = useFeature('errand.fuel');
+  // A club's meeting is a stop once Clubs' chapter has been read.
+  const checkIn = useFeature('club.check_in');
   const here = person.currentLocationId;
   const cars = vehiclesOf(person).filter((v) => v.soldAt === undefined && (v.at ?? v.cityId) === here);
   const friends = contactsOf(person).filter((c) => c.cityId === here && !c.rival);
-  const [by, setBy] = useState<'car' | 'foot'>('foot');
+  const [by, setBy] = useState<TripMode>('foot');
   const [vehicleId, setVehicleId] = useState('');
   const [passengers, setPassengers] = useState<string[]>([]);
   const [garageId, setGarageId] = useState('');
@@ -229,19 +232,23 @@ function ErrandsPanel() {
     { key: 'dry', label: 'Drop Off The Dry Cleaning', kind: 'clothes.dry_clean', payload: {}, leg: 'errand' },
     { key: 'collect', label: 'Collect The Dry Cleaning', kind: 'clothes.collect', payload: {}, leg: 'errand' },
     ...(by === 'car' ? (STATIONS[here] ?? []).map((st, i) => ({ key: `f:${i}`, label: `Fuel At ${st}`, kind: 'errand.fuel', payload: { station: i }, leg: 'errand' as const })) : []),
+    // A club's meeting on the way, checked in at as Set Out does (`systems/clubs.ts`, from 2026-10-03).
+    ...(checkIn.open ? membershipsOf(person) : []).map((m) => clubById(m.clubId)).filter((c): c is NonNullable<typeof c> => Boolean(c) && c!.cityId === here)
+      .map((c) => ({ key: `c:${c.id}`, label: `${c.name}, Its Meeting`, kind: 'club.check_in', payload: { clubId: c.id }, leg: 'errand' as const })),
   ];
   const picked = options.find((o) => o.key === choice) ?? options[0];
   const withDriver = by === 'car' && driven && Boolean(driver);
   const no = tripRefusal(sim, person, by, car?.id, passengers, withDriver) ?? (stops.length === 0 ? 'Add a stop.' : undefined);
   const each = leg(here, by, 'shopping');
   return (
-    <Panel title="Run Errands" subtitle={`A leg is about ${each.km.toFixed(1)} km, ${Math.round(each.minutes)} minutes${by === 'car' ? (METER[here] ? `; parking at ${METER[here]!.zone}` : '; no meter rate published here') : ' on foot'}`}>
+    <Panel title="Run Errands" subtitle={`A leg is about ${each.km.toFixed(1)} km, ${Math.round(each.minutes)} minutes${by === 'car' ? (METER[here] ? `; parking at ${METER[here]!.zone}` : '; no meter rate published here') : by === 'transit' ? `, a ride on the town’s transit at ${formatMoney(transitFare(sim, here) ?? 0, saveCurrency(sim.universe))} each leg` : ' on foot'}`}>
       <div className="col gap-3">
         <div className="field-row">
           <div className="field">
             <label htmlFor="errand-by">How</label>
-            <select id="errand-by" value={by} onChange={(e) => setBy(e.target.value === 'car' ? 'car' : 'foot')}>
+            <select id="errand-by" value={by} onChange={(e) => setBy(e.target.value === 'car' ? 'car' : e.target.value === 'transit' ? 'transit' : 'foot')}>
               <option value="foot">On Foot</option>
+              {transitFare(sim, here) !== undefined && <option value="transit">By Transit</option>}
               {cars.length > 0 && <option value="car">By Car</option>}
             </select>
           </div>
@@ -302,7 +309,7 @@ function ErrandsPanel() {
         <div className="small">{stops.length ? stops.map((x, i) => `${i + 1}. ${x.label}`).join('   ') : 'No stops yet.'}</div>
         {/* A stop at a time, the plan changed as you go (from 2026-10-02): each leg and stop the same commands a whole trip runs. */}
         <div className="row gap-1" style={{ flexWrap: 'wrap', alignItems: 'baseline' }}>
-          {person.trip && <span className="small">{`Out ${person.trip.by === 'car' ? 'in the car' : 'on foot'}, ${person.trip.km.toFixed(1)} km so far`}</span>}
+          {person.trip && <span className="small">{`Out ${person.trip.by === 'car' ? 'in the car' : person.trip.by === 'transit' ? 'on transit' : 'on foot'}, ${person.trip.km.toFixed(1)} km so far`}</span>}
           <button type="button" className="btn btn-sm btn-ghost" disabled={!go.open || !picked || (!person.trip && Boolean(tripRefusal(sim, person, by, car?.id, passengers, withDriver)))} title={go.reason} onClick={() => {
             if (!picked) return;
             const start = person.trip ? {} : { by, ...(by === 'car' && car ? { vehicleId: car.id } : {}), ...(passengers.length ? { passengerIds: passengers } : {}), ...(withDriver ? { driven: true } : {}) };
