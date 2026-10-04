@@ -15,6 +15,7 @@ import { SNEAKERS, SNEAKER_RETAIL } from '../src/engine/content/sneakers.ts';
 import { PHONES } from '../src/engine/content/phones.ts';
 import { FURNITURE_CATALOG } from '../src/engine/content/furniturecatalog.ts';
 import { LUGGAGE_PRODUCTS } from '../src/engine/content/luggagecatalog.ts';
+import { TV_PRODUCTS } from '../src/engine/content/tvcatalog.ts';
 import { TOILETRIES } from '../src/engine/content/hygiene.ts';
 import { GROCERY_PRODUCTS, GROCERY_CHAINS } from '../src/engine/content/groceries.ts';
 import { CONSOLES } from '../src/engine/content/homelife.ts';
@@ -54,6 +55,8 @@ const READ = {
   sneakers: () => SNEAKERS.map((s) => row(null, s.styleCode, Math.max(1, ...SNEAKER_RETAIL.filter((o) => o.styleCode === s.styleCode).map((o) => o.sizes?.length ?? 1)), null)),
   // As products from 2026-10-04: a row an offer, the product its own, its colors its variants.
   luggage: () => LUGGAGE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
+  // From 2026-10-04: a row an offer, a model a product, its colors its variants.
+  televisions: () => TV_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   phones: () => PHONES.map((p) => row(p.maker, `${p.maker}|${p.model}`, Math.max(1, p.colors.length), p.market)),
   consoles: () => CONSOLES.map((c) => row(c.maker, `${c.maker}|${c.model}`, 1, c.market)),
   furniture: () => FURNITURE_CATALOG.map((p) => row('IKEA', `IKEA|${p.name}|${p.type ?? ''}`, 1, p.country)),

@@ -26,6 +26,7 @@ import { marketOf, planPrice, plansHere, subscriptionsOf, watchRefusal } from '.
 import { applyLookingAfter, lookAfterRefusal } from './life';
 import { atHome } from './dwelling';
 import { unwindComfort } from './furniture';
+import { watchPower } from './televisions';
 
 /** Where a program was left: season and episode from 0, minutes into it. */
 export interface Watching { season: number; episode: number; minute: number; at: Instant }
@@ -105,6 +106,8 @@ export function registerProgrammes(sim: Simulation): void {
     const from = placeIn(person, prog);
     const { to, watched } = watchOn(prog, from, p?.to === 'hour' ? 60 : episodeLeft(prog, from));
     s.advanceTo(s.now + watched * 60_000);
+    // The set at home drew its power for the time watched (`systems/televisions.ts`, from 2026-10-04).
+    watchPower(person, watched);
     applyLookingAfter(person, 'unwind', s.now, 1, unwindComfort(person) * (watched / 60));
     watchingOf(person)[prog.id] = { ...to, at: s.now };
     return { watched, ...to, finished: finished(prog, to) };

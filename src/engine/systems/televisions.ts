@@ -2,11 +2,19 @@
  * SLATE — a television of one's own (from 2026-10-04): the models sold where
  * they live (`content/tvcatalog.ts`), bought at a store's price with the
  * place's tax and brought home, kept as the home's TV with its make, model,
- * size and the power its energy label gives. Watching it draws that power for
- * the time watched, onto the month's electricity (`living.extraKwh`).
+ * size and the power its energy label gives.
  *
- * A TV SLATE sold before as a piece of furniture, with no model, draws the
- * middle of the catalog's labeled sets: SLATE's estimate, never nothing.
+ * Watching it draws that power for the time watched. The month's electricity
+ * is a typical household's (`systems/electricity.ts`), and a typical household
+ * already has a TV on, so what watching adds is the difference: the set's
+ * watts against the middle of the catalog's labeled sets (`GENERIC_TV_WATTS`,
+ * SLATE's estimate of a usual one), for the minutes watched. A bigger or
+ * hungrier set costs more to watch than the usual one; a small one saves a
+ * little. Counted whole, the minutes would have paid for the usual household's
+ * TV twice.
+ *
+ * A TV SLATE sold before as a piece of furniture (`home.furnish`), with no
+ * model, draws the middle: SLATE's estimate, never nothing.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -21,10 +29,11 @@ import { inSaveMoney } from './banking';
 import { payFromBank } from './household';
 import { addItem, homeKeyOf, itemsOf } from './items';
 import { livingOf } from './dwelling';
+import { owns } from './furniture';
 
-const MARKET: Readonly<Record<string, string>> = { us: 'us', ca: 'ca', uk: 'uk', ie: 'ie', mx: 'mx' };
+const MARKET: Readonly<Record<string, CatalogOffer['market']>> = { us: 'us', ca: 'ca', uk: 'uk', ie: 'ie', mx: 'mx' };
 
-/** The middle on-mode power of every labeled set in the catalog, watts: what a TV with no model draws. */
+/** The middle on-mode power of every labeled set in the catalog, watts: what a TV with no model, and a usual household's, draws. */
 export const GENERIC_TV_WATTS: number | undefined = (() => {
   const w = TV_PRODUCTS.map((p) => p.attrs.onModeWatts).filter((x): x is number => typeof x === 'number').sort((a, b) => a - b);
   return w.length ? w[w.length >> 1] : undefined;
@@ -48,7 +57,7 @@ export function tvCatalog(sim: Simulation, person: Person): { product: CatalogPr
   const market = MARKET[CITIES.get(cityId)?.countryId ?? ''];
   if (!market) return [];
   return TV_PRODUCTS.flatMap((product) => product.offers.filter((o) => o.market === market).map((offer) => ({ product, offer, price: tvPrice(sim, cityId, offer) })))
-    .sort((a, b) => a.price - b.price || a.product.id.localeCompare(b.product.id));
+    .sort((a, b) => a.price - b.price || a.product.id.localeCompare(b.product.id) || a.offer.id.localeCompare(b.offer.id));
 }
 
 export function buyTvRefusal(person: Person, offerId: string): string | undefined {
@@ -56,6 +65,8 @@ export function buyTvRefusal(person: Person, offerId: string): string | undefine
   if (!found) return 'That isn’t on sale.';
   if (!person.home || person.home.kind === 'sofa' || person.home.cityId !== person.currentLocationId) return 'A television is bought where you live, for a home of your own.';
   if (MARKET[CITIES.get(person.home.cityId)?.countryId ?? ''] !== found.offer.market) return 'It’s sold in another country.';
+  // One TV at home, as `home.furnish` keeps one of each piece.
+  if (owns(person, 'tv')) return 'You have one.';
   return undefined;
 }
 
@@ -69,11 +80,15 @@ export function tvAtHome(person: Person): { label: string; watts: number | undef
   return { label: tv.label, watts, ...(product ? { product } : {}) };
 }
 
-/** What watching for some minutes draws, kilowatt-hours, onto the month's electricity; nothing without a set at home. */
+/**
+ * What watching for some minutes adds to the month's electricity, kilowatt-hours,
+ * past what a usual household's TV already draws in it: the set's watts less the
+ * usual one's, for the minutes. Nothing without a set at home or a figure for it.
+ */
 export function watchPower(person: Person, minutes: number): number {
   const tv = tvAtHome(person);
-  if (!tv || tv.watts === undefined || minutes <= 0) return 0;
-  const kwh = (tv.watts * minutes) / 60 / 1000;
+  if (!tv || tv.watts === undefined || GENERIC_TV_WATTS === undefined || minutes <= 0) return 0;
+  const kwh = ((tv.watts - GENERIC_TV_WATTS) * minutes) / 60 / 1000;
   const l = livingOf(person);
   l.extraKwh = (l.extraKwh ?? 0) + kwh;
   return kwh;
@@ -92,8 +107,12 @@ export function registerTelevisions(sim: Simulation): void {
     const paid = tvPrice(s, person.home!.cityId, offer);
     const label = `${product.brand} ${product.model}, ${product.attrs.sizeIn}-Inch`;
     if (!payFromBank(s, person, paid, `${offer.seller}: ${label}`, 'personal')) throw new CommandError('The bank couldn’t pay for it.');
-    // Kept as the home's TV, what a film or television lover unwinds with (`GEAR_FOR`), its model kept.
-    const item = addItem(s, person, { kind: 'furniture:tv', label, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'living' }, acquiredAt: s.now, paid, spec: { product: product.id, offer: offer.id, ...(color ? { color } : {}) } });
+    // Kept as the home's TV, what a film or television lover unwinds with (`GEAR_FOR`), its model kept. It stands
+    // on the floor, moved by movers or a delivery, as a bed or a sofa is.
+    const item = addItem(s, person, {
+      kind: 'furniture:tv', label, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid, bulky: true,
+      spec: { product: product.id, offer: offer.id, ...(color ? { color } : {}) },
+    });
     return { paid, itemId: item.id };
   });
 }

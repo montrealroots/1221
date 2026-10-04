@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { harvestRefusal, plantRefusal, plantingIn, plotsOf, ripeAt } from '@/engine/systems/garden';
 import { CROPS, type Crop } from '@/engine/content/garden';
 import { CatalogControls, CompareTable, CompareToggle, FavoriteToggle, ShowMore, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
-import { arrange } from '@/engine/systems/catalog';
+import { arrange, type CatalogEntry } from '@/engine/systems/catalog';
 import { applianceCatalog, furnitureCatalog, homeCatalog } from '@/engine/systems/catalogs';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
@@ -26,6 +26,7 @@ import { bedAtHome, bedQuote, bedsIn, furnishRefusal, mattressCost, mattressRefu
 import { BED_MARKET, bedSize } from '@/engine/content/beds';
 import { RENTED_TRUCK } from '@/engine/content/furniture';
 import { assemblyFee, pieceRefusal, piecesCatalog, seatsAtHome } from '@/engine/systems/furnishings';
+import { GENERIC_TV_WATTS, buyTvRefusal, tvAtHome, tvCatalog } from '@/engine/systems/televisions';
 import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -756,6 +757,7 @@ function Furniture() {
       </div>
       {!owns(person, 'bed') && <ChooseABed cityId={where} />}
       <FromIkea />
+      <Televisions />
       <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="move-by">When You Move</label>
@@ -766,6 +768,82 @@ function Furniture() {
         </div>
       </div>
       <div className="xs dim">{`U-Haul’s 15-foot truck, $${RENTED_TRUCK.perDay} a day and $${RENTED_TRUCK.perMile} a mile there and back, and its fuel: in America, within ${RENTED_TRUCK.withinMiles} miles, on a license you may drive on. Anywhere else, the movers come. A van of your own carries it first.`}</div>
+    </div>
+  );
+}
+
+/**
+ * Televisions sold where they live (`systems/televisions.ts`, from 2026-10-04), by make and model: searched,
+ * by maker and panel, cheapest first with the tax as the place shows it, a page at a time, favorites kept and up
+ * to three compared, each with the power its energy label gives. Watching bills a set's power past the usual one's.
+ */
+function Televisions() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const buy = useFeature('tv.buy');
+  const cur = saveCurrency(sim.universe);
+  const money = (c: number) => formatMoney(c, cur, { cents: false });
+  const shop = tvCatalog(sim, person);
+  const [view, setView] = useCatalogView('tv');
+  const [shownCount, more] = usePaged('tv');
+  const [compared, toggleCompare, clearCompare] = useCompare('tv');
+  if (shop.length === 0) return null;
+  const entries: CatalogEntry<(typeof shop)[number]>[] = shop.map((x) => ({
+    id: x.offer.id, label: `${x.product.brand} ${x.product.model}`, price: x.price, priceKind: 'advertised', basis: 'Each, with the tax as the place shows it',
+    facets: { brand: x.product.brand, panel: String(x.product.attrs.panel ?? 'LED') },
+    words: [x.product.family, x.product.attrs.resolution, x.product.attrs.smartOs, x.offer.seller, `${x.product.attrs.sizeIn} inch`].filter(Boolean).join(' '), value: x,
+  }));
+  const arranged = arrange(entries, view);
+  const page = arranged.slice(0, shownCount);
+  const chosen = compared.map((id) => entries.find((e) => e.id === id)).filter((e): e is (typeof entries)[number] => Boolean(e));
+  const watts = (e: (typeof entries)[number]) => { const w = e.value.product.attrs.onModeWatts; return typeof w === 'number' ? `${Math.round(w)} W` : '—'; };
+  const wattsWhy = (e: (typeof entries)[number]) => (typeof e.value.product.attrs.onModeWatts === 'number' ? String(e.value.product.attrs.powerBasis ?? 'Its energy label') : `No energy label read for it; it draws the usual set’s${GENERIC_TV_WATTS !== undefined ? `, ${Math.round(GENERIC_TV_WATTS)} W` : ''}`);
+  const mine = tvAtHome(person);
+  return (
+    <div className="col gap-2">
+      <div className="strong small">Televisions</div>
+      {mine && <div className="small">{`Yours: ${mine.label}${mine.watts !== undefined ? `, ${Math.round(mine.watts)} W on` : ''}${mine.product ? '' : ' (the usual set’s power, SLATE’s estimate)'}.`}</div>}
+      <CatalogControls id="tv-catalog" entries={entries} view={view} onChange={setView} facets={{ brand: 'Maker', panel: 'Panel' }} />
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Set</th><th scope="col" className="num">Size</th><th scope="col">Panel</th><th scope="col" className="num">Power On</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Choose</span></th></tr></thead>
+          <tbody>
+            {page.map((e) => {
+              const { product, offer, price } = e.value;
+              const no = buyTvRefusal(person, offer.id);
+              return (
+                <tr key={e.id}>
+                  <td>{e.label}<div className="xs dim">{[product.family, product.attrs.resolution, offer.seller].filter(Boolean).join(', ')}</div></td>
+                  <td className="num">{`${product.attrs.sizeIn}″`}</td>
+                  <td className="small">{String(product.attrs.panel ?? 'LED')}</td>
+                  <td className="num" title={wattsWhy(e)}>{watts(e)}</td>
+                  <td className="num mono">{money(price)}</td>
+                  <td>
+                    <div className="row gap-1" style={{ flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                      <FavoriteToggle list="tv" id={offer.id} />
+                      <CompareToggle on={compared.includes(offer.id)} onToggle={() => toggleCompare(offer.id)} />
+                      <button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('tv.buy', { offerId: offer.id }).ok) toast(`${e.label}, delivered.`, 'positive'); }}>Buy This TV</button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      {arranged.length === 0 && <div className="small">None on sale here matches that; clear the search or a filter.</div>}
+      <ShowMore shown={Math.min(shownCount, arranged.length)} total={arranged.length} onMore={more} />
+      <CompareTable heads={chosen.map((e) => e.label)} onClear={clearCompare} rows={[
+        { label: 'Price', values: chosen.map((e) => money(e.value.price)) },
+        { label: 'Size', values: chosen.map((e) => `${e.value.product.attrs.sizeIn}″`) },
+        { label: 'Panel', values: chosen.map((e) => String(e.value.product.attrs.panel ?? 'LED')) },
+        { label: 'Resolution', values: chosen.map((e) => String(e.value.product.attrs.resolution ?? '—')) },
+        { label: 'Refresh', values: chosen.map((e) => (typeof e.value.product.attrs.refreshHz === 'number' ? `${e.value.product.attrs.refreshHz} Hz` : '—')) },
+        { label: 'Power On', values: chosen.map((e) => watts(e)) },
+        { label: 'Smart TV', values: chosen.map((e) => String(e.value.product.attrs.smartOs ?? '—')) },
+        { label: 'Sold By', values: chosen.map((e) => e.value.offer.seller) },
+      ]} />
+      <div className="xs dim">{`Each set at its maker’s or a retailer’s own price on ${shop[0]!.offer.read}, delivered. Its power is its energy label’s on-mode figure: the EU and UK label’s, or ENERGY STAR’s under the federal test. A typical household’s electricity already has a usual set on${GENERIC_TV_WATTS !== undefined ? `, ${Math.round(GENERIC_TV_WATTS)} W` : ''}, so watching adds what yours draws past it, or takes off what it saves.`}</div>
     </div>
   );
 }
