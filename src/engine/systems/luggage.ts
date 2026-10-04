@@ -53,7 +53,8 @@ import { suppliesOf } from './hygiene';
 import type { Money } from '../core/money';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
-import { LUGGAGE, type LuggagePiece } from '../content/luggagecatalog';
+import { LUGGAGE, LUGGAGE_PRODUCTS, type LuggagePiece } from '../content/luggagecatalog';
+import type { CatalogProduct } from '../content/products';
 import { inSaveMoney } from './banking';
 import { payFromBank } from './household';
 import { HOTELS } from '../content/hotels';
@@ -80,6 +81,9 @@ export function bagsGoing(person: Person): Item[] {
 }
 
 export const luggageById = (id: string): LuggagePiece | undefined => LUGGAGE.find((x) => x.id === id);
+/** A bag's product, its maker's attributes and the colors it's offered in. */
+export const luggageProduct = (piece: LuggagePiece): CatalogProduct | undefined => LUGGAGE_PRODUCTS.find((x) => x.id === piece.productId);
+export const colorsOf = (piece: LuggagePiece): string[] => (luggageProduct(piece)?.variants ?? []).map((v) => v.attrs.color!).filter(Boolean);
 
 /** A bag's price where a town is, taxed where its tax is added, in the save's money. */
 export function luggagePrice(sim: Simulation, cityId: string, p: LuggagePiece): Money {
@@ -393,14 +397,18 @@ export function registerLuggage(sim: Simulation): void {
     return { packed: out.length - left.length, left: left.length };
   });
 
-  sim.onCommand<{ pieceId: string }, { paid: Money; itemId: string }>('luggage.buy', (p, { sim: s }) => {
+  sim.onCommand<{ pieceId: string; color?: string }, { paid: Money; itemId: string }>('luggage.buy', (p, { sim: s }) => {
     const person = s.player;
     const no = buyLuggageRefusal(person, String(p?.pieceId));
     if (no) throw new CommandError(no);
     const piece = luggageById(String(p.pieceId))!;
+    // A color it's offered in, chosen, kept on the bag (from 2026-10-04); none chosen where it's offered in one or none kept.
+    const colors = colorsOf(piece);
+    if (p.color !== undefined && !colors.includes(String(p.color))) throw new CommandError('It isn’t offered in that color.');
+    const color = p.color !== undefined ? String(p.color) : colors.length === 1 ? colors[0] : undefined;
     const paid = luggagePrice(s, person.home!.cityId, piece);
     if (!payFromBank(s, person, paid, `${piece.brand} ${piece.model}`, 'personal')) throw new CommandError('The bank couldn’t pay for it.');
-    const item = addItem(s, person, { kind: `luggage:${piece.id}`, label: `${piece.brand} ${piece.model}`, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'storage' }, acquiredAt: s.now, paid, holdsL: piece.liters, volumeL: piece.outsideL ?? piece.liters });
+    const item = addItem(s, person, { kind: `luggage:${piece.id}`, label: `${piece.brand} ${piece.model}${color ? `, ${color}` : ''}`, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'storage' }, acquiredAt: s.now, paid, holdsL: piece.liters, volumeL: piece.outsideL ?? piece.liters, spec: { product: piece.productId, offer: piece.id, ...(color ? { color } : {}) } });
     return { paid, itemId: item.id };
   });
   sim.onCommand<{ itemId: string }, { chosen: string }>('luggage.choose', (p, { sim: s }) => {

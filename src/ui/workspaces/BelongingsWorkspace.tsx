@@ -10,10 +10,13 @@ import { assembleRefusal, assemblyMinutes, buybackRefusal, buybackShare } from '
 import { bulkyFee, bulkyRefusal } from '@/engine/systems/bulky';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
+import { CatalogControls, CompareTable, FavoriteToggle, ShowMore, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatDate } from '@/engine/core/time';
 import { SPOT_LABEL, homeKeyOf, itemsOf, moveRefusal, reachable, usedL, whereWords, type Item, type Place, type Spot } from '@/engine/systems/items';
-import { bagKg, bagsGoing, bagsOf, buyLuggageRefusal, checkedSize, luggageCatalog, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
+import { bagKg, bagsGoing, bagsOf, buyLuggageRefusal, checkedSize, colorsOf, luggageCatalog, luggageProduct, luggageRefusal, packedIn, suitcaseOf } from '@/engine/systems/luggage';
+import type { LuggagePiece } from '@/engine/content/luggagecatalog';
+import { arrange, type CatalogEntry } from '@/engine/systems/catalog';
 import { CITIES } from '@/engine/content/geography';
 import { ENGRAVERS, JEWELERS, METAL_LABEL, PIECE_LABEL, commissionMoney, commissionRefusal, commissionsOf, jewelersFor, type Metal, type PieceKind } from '@/engine/systems/commissions';
 import { cheapestPlanFor, finished, placeIn, programmeRefusal, programmesHere } from '@/engine/systems/programmes';
@@ -492,7 +495,6 @@ function Valuables() {
   );
 }
 
-/** Bags: the ones owned, which goes away, and the ones on sale where you live, cheapest first (`systems/luggage.ts`). */
 /** A piece made to order by a named jeweler where you live, and words engraved on one (`systems/commissions.ts`). */
 function Commissions() {
   const { sim, run, toast } = useGame();
@@ -559,51 +561,83 @@ function Commissions() {
   );
 }
 
+/**
+ * Bags on sale where you live (`content/luggagecatalog.ts`, as products from
+ * 2026-10-04): searched, filtered by kind and brand, cheapest first with the
+ * tax as the place shows it, a page at a time, up to three compared side by
+ * side, marked favorite, and bought in a color it's offered in.
+ */
 function Luggage() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const buy = useFeature('luggage.buy');
   const cur = saveCurrency(sim.universe);
-  const owned = bagsOf(person);
-  const going = suitcaseOf(person);
+  const money = (c: number) => formatMoney(c, cur, { cents: false });
   const shop = luggageCatalog(sim, person);
-  const [type, setType] = useState('');
-  const types = [...new Set(shop.map((x) => x.piece.type))];
-  const shown = shop.filter((x) => !type || x.piece.type === type);
-  if (shop.length === 0 && owned.length < 2) return null;
-  const TYPE: Record<string, string> = { 'carry-on': 'Carry-On', medium: 'Medium', large: 'Large', duffel: 'Duffel', backpack: 'Backpack' };
+  const [view, setView] = useCatalogView('luggage');
+  const [shownCount, more] = usePaged('luggage');
+  const [compared, toggleCompare, clearCompare] = useCompare('luggage');
+  const [colors, setColors] = useState<Record<string, string>>({});
+  if (shop.length === 0) return null;
+  const TYPE: Record<string, string> = { 'carry-on': 'Carry-On', underseat: 'Underseat', medium: 'Medium', large: 'Large', duffel: 'Duffel', backpack: 'Backpack', garment: 'Garment Bag' };
+  const entries: CatalogEntry<{ piece: LuggagePiece; price: number }>[] = shop.map((x) => {
+    const p = luggageProduct(x.piece);
+    return {
+      id: x.piece.id, label: `${x.piece.brand} ${x.piece.model}`, price: x.price, priceKind: 'advertised', basis: 'Each, with the tax as the place shows it',
+      facets: { kind: TYPE[x.piece.type] ?? x.piece.type, brand: x.piece.brand },
+      words: [p?.family, p?.attrs.material, x.piece.retailer].filter(Boolean).join(' '), value: x,
+    };
+  });
+  const arranged = arrange(entries, view);
+  const page = arranged.slice(0, shownCount);
+  const chosen = compared.map((id) => entries.find((e) => e.id === id)).filter((e): e is NonNullable<typeof e> => Boolean(e));
+  const attr = (e: (typeof entries)[number], k: string): string => { const v = luggageProduct(e.value.piece)?.attrs[k]; return v === null || v === undefined ? '—' : typeof v === 'boolean' ? (v ? 'Yes' : 'No') : String(v); };
   return (
-    <Panel title="Bags" subtitle={going ? 'On Sale Where You Live, Cheapest First' : 'None Yet'}>
+    <Panel title="Bags" subtitle={`${shop.length} on sale where you live, from ${new Set(shop.map((x) => x.piece.brand)).size} makers`}>
       <div className="col gap-2">
-        {shop.length > 0 && (
-          <>
-            <div className="field" style={{ margin: 0, maxWidth: '14rem' }}>
-              <label htmlFor="bag-type">Kind</label>
-              <select id="bag-type" value={type} onChange={(e) => setType(e.target.value)}>
-                <option value="">Any</option>
-                {types.map((t) => <option key={t} value={t}>{TYPE[t] ?? t}</option>)}
-              </select>
-            </div>
-            <div className="table-scroll">
-              <table>
-                <thead><tr><th scope="col">Bag</th><th scope="col" className="num">Holds</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Buy</span></th></tr></thead>
-                <tbody>
-                  {shown.slice(0, 12).map(({ piece, price }) => {
-                    const no = buyLuggageRefusal(person, piece.id);
-                    return (
-                      <tr key={piece.id}>
-                        <td>{piece.brand} {piece.model}<div className="xs dim">{TYPE[piece.type] ?? piece.type}{piece.retailer ? `, ${piece.retailer}` : ''}</div></td>
-                        <td className="num">{piece.liters} L</td>
-                        <td className="num mono">{formatMoney(price, cur, { cents: false })}</td>
-                        <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('luggage.buy', { pieceId: piece.id }).ok) toast(`${piece.brand} ${piece.model}, bought.`, 'positive'); }}>Buy The Bag</button></td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
+        <CatalogControls id="luggage-catalog" entries={entries} view={view} onChange={setView} facets={{ kind: 'Kind', brand: 'Maker' }} />
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Bag</th><th scope="col" className="num">Holds</th><th scope="col" className="num">Weighs</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Choose</span></th></tr></thead>
+            <tbody>
+              {page.map((e) => {
+                const { piece, price } = e.value;
+                const no = buyLuggageRefusal(person, piece.id);
+                const offered = colorsOf(piece);
+                const color = colors[piece.id] ?? offered[0];
+                return (
+                  <tr key={piece.id}>
+                    <td>{e.label}<div className="xs dim">{TYPE[piece.type] ?? piece.type}{piece.retailer ? `, ${piece.retailer}` : ''}</div></td>
+                    <td className="num">{piece.liters} L</td>
+                    <td className="num">{piece.kg !== null ? `${piece.kg} kg` : '—'}</td>
+                    <td className="num mono">{money(price)}</td>
+                    <td>
+                      <div className="row gap-1" style={{ flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                        {offered.length > 1 && <select aria-label={`Color Of ${e.label}`} value={color} onChange={(ev) => setColors((x) => ({ ...x, [piece.id]: ev.target.value }))}>{offered.map((c) => <option key={c} value={c}>{c}</option>)}</select>}
+                        <FavoriteToggle list="luggage" id={piece.id} />
+                        <button type="button" className="btn btn-sm btn-ghost" aria-pressed={compared.includes(piece.id)} onClick={() => toggleCompare(piece.id)}>{compared.includes(piece.id) ? 'Comparing' : 'Compare'}</button>
+                        <button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('luggage.buy', { pieceId: piece.id, ...(offered.length > 1 && color ? { color } : {}) }).ok) toast(`${e.label}${color ? `, ${color}` : ''}, bought.`, 'positive'); }}>Buy</button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        {arranged.length === 0 && <div className="small">None on sale here matches that; clear the search or a filter.</div>}
+        <ShowMore shown={Math.min(shownCount, arranged.length)} total={arranged.length} onMore={more} />
+        <CompareTable heads={chosen.map((e) => e.label)} onClear={clearCompare} rows={[
+          { label: 'Price', values: chosen.map((e) => money(e.value.price)) },
+          { label: 'Holds', values: chosen.map((e) => `${e.value.piece.liters} L`) },
+          { label: 'Weighs', values: chosen.map((e) => (e.value.piece.kg !== null ? `${e.value.piece.kg} kg` : '—')) },
+          { label: 'Outside', values: chosen.map((e) => (e.value.piece.outsideL !== null ? `${e.value.piece.outsideL} L` : '—')) },
+          { label: 'Material', values: chosen.map((e) => attr(e, 'material')) },
+          { label: 'Wheels', values: chosen.map((e) => attr(e, 'wheels')) },
+          { label: 'Expands', values: chosen.map((e) => attr(e, 'expandable')) },
+          { label: 'Warranty, Years', values: chosen.map((e) => attr(e, 'warrantyYears')) },
+          { label: 'Colors', values: chosen.map((e) => colorsOf(e.value.piece).join(', ') || '—') },
+        ]} />
       </div>
     </Panel>
   );

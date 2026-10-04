@@ -335,7 +335,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.security` | `src/engine/systems/homesecurity.ts` | `Home.tsx` | `homesecurity.test.ts` | Rent And A Roof |
 | `home.sell` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `homes.test.ts` `routines.test.ts` | Rent And A Roof |
 | `home.sell_back` | `src/engine/systems/furnishings.ts` | `BelongingsWorkspace.tsx` | `assembly.test.ts` | Rent And A Roof |
-| `home.sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journeys.test.ts` | Rent And A Roof |
+| `home.sitter` | `src/engine/systems/away.ts` | `Home.tsx` | `away.test.ts` `journeys.test.ts` `pet-care.test.ts` | Rent And A Roof |
 | `home.subscribe` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `partway.test.ts` `programmes.test.ts` `shortfalls.test.ts` | Rent And A Roof |
 | `home.take_lodger` | `src/engine/systems/lodgers.ts` | `HomesWorkspace.tsx` | `lodgers.test.ts` | Rent And A Roof |
 | `home.tv_licence` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` `programmes.test.ts` | Rent And A Roof |
