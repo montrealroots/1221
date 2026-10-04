@@ -72,14 +72,17 @@ function headOf(text, market) {
 
 /** How the kinds the trade names apart are worn (from 2026-10-03 for the gaps' research, 2026-10-04 for any retailer's). */
 const SUBTYPE_WORN = { swimwear: ['active', 'swimsuit'], shapewear: ['underwear', 'underwear'], slips: ['base', 'slip'], hosiery: ['socks', 'socks'] };
-// Thermals: long underwear, worn under the rest, as a base layer; socks and a pajama set are what they are.
-const thermalWorn = (name) => (/socks|calcet/i.test(name) ? ['socks', 'socks'] : /pijama/i.test(name) ? ['sleep', 'pajamas'] : /leggings|tights|pantal|bottoms?/i.test(name) ? ['base', 'thermal-bottom'] : ['base', 'thermal-top']);
+// Thermals: long underwear, worn under the rest, as a base layer; socks and a pajama set are what they are. A pair of
+// thermal trousers is a bottom: until 2026-10-04 only leggings, tights and bottoms were.
+const thermalWorn = (name) => (/socks|calcet/i.test(name) ? ['socks', 'socks'] : /pijama/i.test(name) ? ['sleep', 'pajamas'] : /leggings|tights|pantal|bottoms?|trousers|pants|joggers|long johns/i.test(name) ? ['base', 'thermal-bottom'] : ['base', 'thermal-top']);
 
 /** The slot and care kind a product is: its name's head noun, else its subcategory's, its category's where that says more. */
 function wornAs(p, market) {
   const name = String(p.name).toLowerCase();
   const vest = /\bvests?\b/.test(name) && !/vest tops?/.test(name);
-  const head = headOf(name, market) ?? (vest ? (market === 'GB' || market === 'IE' ? ['underwear', 'underwear'] : ['outer', 'coat']) : undefined)
+  // A knitted vest is a sweater vest wherever it's sold: Inis Meáin's Cashmere Bréidín Vest isn't an Irish undershirt.
+  const knitVest = vest && /knit|cashmere|wool|merino|cable|aran|sweater/.test(name);
+  const head = headOf(name, market) ?? (knitVest ? ['top', 'sweater'] : vest ? (market === 'GB' || market === 'IE' ? ['underwear', 'underwear'] : ['outer', 'coat']) : undefined)
     // The subcategory's words last, so its noun is the head: until 2026-10-04 the category's came last, and Everlane's
     // Invisible Bikini, filed under underwear in "underwear and socks", was a pair of socks.
     ?? headOf(`${p.category ?? ''} ${p.subcategory ?? ''}`.toLowerCase(), market);

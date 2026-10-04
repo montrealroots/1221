@@ -449,7 +449,7 @@ describe('what a garment is', () => {
   it('is worn as what its retailer files it under, whatever its name', () => {
     // Swim shorts named without a swim word are a swimsuit, filed with the swimwear: Boardies' LUCKY DIP SHORTS were trousers.
     expect(worn('us-boardies-lucky-dip-shorts')).toEqual(['active', 'swimsuit', 'swimwear']);
-    expect(worn('us-orlebar-brown-bulldog-drawcord')).toEqual(['active', 'swimsuit', 'swimwear']);
+    expect(worn('gb-orlebar-brown-bulldog-drawcord')).toEqual(['active', 'swimsuit', 'swimwear']);
     // A shoe named a High Top was a top; sunglasses named a Feral Hula Hooper, an anklet, and a watch named for its Polo
     // Club were shirts.
     expect(worn('us-vessi-mens-alta-high-top').slice(0, 2)).toEqual(['shoes', 'shoes']);
@@ -462,5 +462,12 @@ describe('what a garment is', () => {
     expect(worn('us-commando-classic-control-short')).toEqual(['underwear', 'underwear', 'shapewear']);
     expect(worn('us-sheertex-backseam-sheer-rip-resist-tights')).toEqual(['socks', 'socks', 'hosiery']);
     expect(worn('us-minus33-heavyweight-wool-zip-off-bottoms-34-length-100-merino-wool')).toEqual(['base', 'thermal-bottom', 'thermals']);
+    // Thermal trousers are a bottom; they were worn as a top.
+    expect(worn('gb-heat-holders-mens-thermal-trousers').slice(0, 2)).toEqual(['base', 'thermal-bottom']);
+  });
+
+  it('is a sweater where it’s a knitted vest, an undershirt in Britain and Ireland, and a waistcoat in America', () => {
+    expect(worn('gb-marks-and-spencer-brushed-argyle-knitted-vest-with-mohair').slice(0, 2)).toEqual(['top', 'sweater']);
+    expect(worn('ie-inis-meain-cashmere-breidin-vest').slice(0, 2)).toEqual(['top', 'sweater']);
   });
 });

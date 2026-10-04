@@ -16,16 +16,16 @@ which never counts toward the target.
 | Apparel | Formalwear | 78 | 100% | 307 | 1 / 2 / 34 | 0 | 5333 | 333 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Outerwear | 69 | 100% | 286 | 1 / 2 / 18 | 0 | 4616 | 333 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Activewear | 50 | 100% | 302 | 1 / 3 / 55 | 0 | 11194 | 362 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Underwear, Lingerie And Socks | 54 | 100% | 287 | 1 / 2 / 15 | 0 | 5156 | 384 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Sleepwear | 50 | 100% | 207 | 1 / 2 / 13 | 0 | 4520 | 230 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Swimwear | 38 | 76% | 338 | 1 / 12 / 12 | 0 | 4371 | 628 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Thermals, Shapewear, Hosiery And Slips | 32 | 64% | 217 | 1 / 3 / 24 | 0 | 1621 | 248 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Cultural Clothing | 8 | 16% | 11 | 1 / 1 / 2 | 0 | 11 | 11 | 0 | IE, MX | No |
+| Apparel | Underwear, Lingerie And Socks | 55 | 100% | 299 | 1 / 2 / 15 | 0 | 6182 | 396 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Sleepwear | 50 | 100% | 207 | 1 / 2 / 13 | 0 | 4520 | 236 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Swimwear | 52 | 100% | 496 | 1 / 12 / 12 | 0 | 5692 | 754 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Thermals, Shapewear, Hosiery And Slips | 51 | 100% | 426 | 1 / 12 / 24 | 0 | 5045 | 488 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Cultural Clothing | 13 | 26% | 71 | 1 / 2 / 12 | 0 | 544 | 71 | 0 | IE, MX, US | No |
 | Footwear | Shoes, Boots And Sandals | 52 | 100% | 258 | 1 / 3 / 15 | 0 | 5870 | 376 | 0 | CA, GB, IE, MX, US | No |
 | Footwear | Sneakers | 1 | 2% | 30 | 30 / 30 / 30 | 0 | 403 | 66 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Bags | 47 | 94% | 213 | 1 / 2 / 12 | 0 | 663 | 302 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Hats, Scarves, Belts And Small Accessories | 45 | 90% | 221 | 1 / 2 / 17 | 0 | 1246 | 309 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Watches | 35 | 70% | 210 | 1 / 4 / 12 | 0 | 267 | 281 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Bags | 50 | 100% | 249 | 1 / 2 / 12 | 0 | 728 | 352 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Hats, Scarves, Belts And Small Accessories | 54 | 100% | 329 | 1 / 3 / 17 | 0 | 1776 | 384 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Watches | 52 | 100% | 362 | 1 / 8 / 12 | 0 | 563 | 479 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Jewelry | 52 | 100% | 285 | 1 / 2 / 15 | 0 | 543 | 387 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Luggage | 55 | 100% | 1906 | 1 / 26 / 100 | 2 | 6580 | 3567 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Phones | 3 | 6% | 26 | 7 / 9 / 10 | 0 | 90 | 273 | 0 | CA, GB, IE, MX, US | No |
@@ -70,6 +70,6 @@ Counted by their own structure: providers, branches or listings, and the towns t
 | Restaurants | 105 | 107 | 8 |
 | Clubs And Lessons | 30 | 31 | 8 |
 | Clinics, Dentists And Opticians | 35 | 35 | 8 |
-| Stores And Chains | 289 | 126 | 8 |
+| Stores And Chains | 360 | 126 | 8 |
 | Barbers And Salons | 36 | 37 | 8 |
 
