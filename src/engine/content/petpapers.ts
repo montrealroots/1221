@@ -22,7 +22,7 @@
  *   vet's price was read, so the town's vet visit, SLATE's estimate.
  * - **The CDC Dog Import Form**: nothing charged that was read; the CDC's own
  *   page doesn't say.
- * - **On arrival**: London's Heathrow Animal Reception Center, £213 with its
+ * - **On arrival**: London's Heathrow Animal Reception Centre, £213 with its
  *   pre-check and £55 each more pet, for a pet arriving in the hold (verified);
  *   Canada's inspection, CAD 36.95 and 6.16 each more, not from America
  *   (verified). Mexico's SENASICA certificate is free for one or two pets
@@ -43,21 +43,28 @@ export const CHIP_PRICE: Readonly<Record<string, { price: number; currency: stri
 /** Where a pet must be chipped by law, by species: it comes chipped from a shelter there. */
 export const CHIP_LAW: Readonly<Record<string, readonly ('dog' | 'cat')[]>> = { 'uk-eng': ['dog', 'cat'], ie: ['dog'] };
 
-/** A vet's own health certificate, by town: the first pet, and each more; where none, the town's vet visit stands. */
-export const CERTIFICATE_FEE: Readonly<Record<string, { first: number; more: number; currency: string; vet: string }>> = {
-  'uk-eng-london': { first: 232, more: 75, currency: 'GBP', vet: 'London Vet Clinic' },
-  'ie-lei-dublin': { first: 90, more: 90, currency: 'EUR', vet: 'Donnybrook Vets' },
-  'mx-cmx-mexicocity': { first: 89, more: 89, currency: 'MXN', vet: 'the Hospital Veterinario de la CDMX' },
+/**
+ * A vet's own health certificate, by town (the vets named above): the first pet, and each more; where none, the town's
+ * vet visit stands. Until 2026-10-04 each row also named its vet, and nothing read it.
+ */
+export const CERTIFICATE_FEE: Readonly<Record<string, { first: number; more: number; currency: string }>> = {
+  'uk-eng-london': { first: 232, more: 75, currency: 'GBP' },
+  'ie-lei-dublin': { first: 90, more: 90, currency: 'EUR' },
+  'mx-cmx-mexicocity': { first: 89, more: 89, currency: 'MXN' },
 };
 
-/** A government's endorsement of a certificate, by the country it's issued in: once for any number of pets, or a form each. */
-export const ENDORSEMENT: Readonly<Record<string, { fee: number; currency: string; each: boolean; by: string }>> = {
-  us: { fee: 101, currency: 'USD', each: false, by: 'USDA APHIS' },
-  ca: { fee: 22, currency: 'CAD', each: true, by: 'the CFIA' },
+/** A government's endorsement of a certificate (USDA APHIS's, the CFIA's), by the country it's issued in: once for any number of pets, or a form each. */
+export const ENDORSEMENT: Readonly<Record<string, { fee: number; currency: string; each: boolean }>> = {
+  us: { fee: 101, currency: 'USD', each: false },
+  ca: { fee: 22, currency: 'CAD', each: true },
 };
 
-/** A fee on arriving with pets, by the town or country arrived in: the first pet and each more, and where it's waived from. */
-export const ARRIVAL_FEE: Readonly<Record<string, { first: number; more: number; currency: string; by: string; inHold?: true; notFrom?: readonly string[] }>> = {
-  'uk-eng-london': { first: 213, more: 55, currency: 'GBP', by: 'Heathrow’s Animal Reception Center', inHold: true },
-  ca: { first: 36.95, more: 6.16, currency: 'CAD', by: 'the Canada Border Services Agency', notFrom: ['us'] },
+/**
+ * A fee on arriving with pets (the Heathrow Animal Reception Centre's, the Canada Border Services Agency's), by the town
+ * or country arrived in: the first pet and each more, and where it's waived from. Until 2026-10-04 each row also named
+ * who charges it, and London's said its pets come in the hold; nothing read either.
+ */
+export const ARRIVAL_FEE: Readonly<Record<string, { first: number; more: number; currency: string; notFrom?: readonly string[] }>> = {
+  'uk-eng-london': { first: 213, more: 55, currency: 'GBP' },
+  ca: { first: 36.95, more: 6.16, currency: 'CAD', notFrom: ['us'] },
 };
