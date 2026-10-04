@@ -30,6 +30,7 @@ import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets'
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
 import { ROOM_USE_LABEL, roomList } from '@/engine/systems/rooms';
+import { foodLeftG, litterLeftKg, petShop, petsOf, vetPrice } from '@/engine/systems/pets';
 import { livingIn } from '@/engine/systems/homes';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -61,6 +62,63 @@ function Collected({ item }: { item: Item }) {
   const no = bulkyRefusal(person, [item.id]);
   const fee = no ? 0 : bulkyFee(sim, person, 1);
   return <Gated feature="items.discard" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (fee ? `The council's collection, ${formatMoney(fee, saveCurrency(sim.universe))}` : 'The council collects it free')} onClick={() => { const a = run<{ collectAt: number }>('items.discard', { itemIds: [item.id] }); if (a.ok) toast(`Booked for collection ${formatDate(a.value!.collectAt, sim.zone)}.`, 'positive'); }}>Have It Collected</Gated>;
+}
+
+/**
+ * Each pet's care (`systems/pets.ts`, from 2026-10-04): fed today or not, the
+ * food and litter at home, its food and litter ordered at the retailer's
+ * price, a dog walked or a walker booked, and the yearly visit at the vet.
+ */
+function PetCare() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const pets = petsOf(person);
+  const [buy, setBuy] = useState('');
+  if (!pets.length) return null;
+  const shop = petShop(sim, person).filter((x) => x.kind === 'litter' ? pets.some((p) => p.species === 'cat') : pets.some((p) => p.species === x.species));
+  const chosen = shop.find((x) => x.id === buy) ?? shop[0];
+  const money = (c: number) => formatMoney(c, saveCurrency(sim.universe));
+  const today = new Date(sim.now).toLocaleDateString('en-CA', { timeZone: sim.homeZone });
+  return (
+    <Panel title="Your Pets" subtitle="Fed, walked, kept in food and litter, and seen by the vet each year">
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Pet</th><th scope="col">Today</th><th scope="col">The Vet</th><th scope="col"><span className="sr-only">Care</span></th></tr></thead>
+          <tbody>
+            {pets.map((p) => {
+              const vet = vetPrice(sim, person, p);
+              return (
+                <tr key={p.id}>
+                  <td>{p.name}<div className="xs dim">{p.species === 'dog' ? 'A Dog' : 'A Cat'}</div></td>
+                  <td className="small">{p.fedOn === today ? 'Fed' : 'Not Fed Yet'}{p.species === 'dog' ? (p.walkedOn === today ? ', Walked' : ', Not Walked Yet') : ''}{(p.hungryDays ?? 0) > 0 ? <div className="xs dim">{`${p.hungryDays} days unfed running`}</div> : null}</td>
+                  <td className="small">{p.vetUntil && p.vetUntil > sim.now ? `Vaccinated to ${formatDate(p.vetUntil, sim.zone)}` : 'Due'}{typeof vet === 'number' ? <div className="xs dim">{`A visit, ${money(vet)}`}</div> : null}</td>
+                  <td>
+                    <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+                      {p.species === 'dog' && <Gated feature="pets.walk" className="btn btn-sm btn-ghost" disabled={p.walkedOn === today} onClick={() => { if (run('pets.walk', { petId: p.id }).ok) toast(`An hour’s walk with ${p.name}.`, 'positive'); }}>Walk It</Gated>}
+                      {p.species === 'dog' && <Gated feature="pets.walker" className="btn btn-sm btn-ghost" onClick={() => run('pets.walker', { petId: p.id, on: !p.walker })}>{p.walker ? 'Stop The Walker' : 'Book A Walker'}</Gated>}
+                      <Gated feature="pets.vet" className="btn btn-sm btn-ghost" disabled={typeof vet === 'string'} onClick={() => { if (run('pets.vet', { petId: p.id }).ok) toast(`${p.name} saw the vet.`, 'positive'); }}>Take It To The Vet</Gated>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+        <Gated feature="pets.feed" className="btn btn-sm btn-primary" onClick={() => { const r = run<{ fed: string[] }>('pets.feed', {}); if (r.ok) toast(`Fed ${r.value!.fed.join(' and ')}.`, 'positive'); }}>Feed Them</Gated>
+        <span className="small">{`At home: ${pets.some((p) => p.species === 'dog') ? `${(foodLeftG(person, 'dog') / 1000).toFixed(1)} kg of dog food, ` : ''}${pets.some((p) => p.species === 'cat') ? `${(foodLeftG(person, 'cat') / 1000).toFixed(1)} kg of cat food, ${litterLeftKg(person).toFixed(1)} kg of litter` : ''}`.replace(/, $/, '')}</span>
+      </div>
+      {chosen && (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          <select aria-label="Food Or Litter To Order" value={chosen.id} onChange={(e) => setBuy(e.target.value)}>
+            {shop.map((x) => <option key={x.id} value={x.id}>{`${x.label}, ${money(x.price)} at ${x.retailer}`}</option>)}
+          </select>
+          <Gated feature="pets.buy" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.buy', { productId: chosen.id }).ok) toast('Ordered: it comes in two days.', 'positive'); }}>Order It</Gated>
+        </div>
+      )}
+    </Panel>
+  );
 }
 
 /**
@@ -213,6 +271,7 @@ export function BelongingsWorkspace() {
       </div>
       <div className="col gap-5">
         <ShoppingOut />
+        <PetCare />
         <YourRooms />
         <Panel title="Where Things Are">
           <div className="grid grid-3">
