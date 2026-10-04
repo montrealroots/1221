@@ -220,6 +220,7 @@ function carLook(
         : `It’s worth about ${money(worth ?? 0)} with ${km.toLocaleString('en-US')} km on the clock, and it’s yours outright.`;
 
   const condition: string[] = [];
+  if (v.seller) condition.push(`Bought new from ${v.seller}.`);
   if (v.fault) condition.push(v.fault.severe ? `It’s broken down, about ${formatMoney(faultCost(v, cur), cur, { cents: false })} to mend.` : `Its check engine light is on, about ${formatMoney(faultCost(v, cur), cur, { cents: false })} to mend.`);
   if (laid && !v.fault?.severe) condition.push(laid);
   if (due) condition.push(`Its next service is due by ${formatDate(due.at, zone)} or ${Math.round(due.km).toLocaleString('en-US')} km${servicingKept(v, model, sim.now) ? '' : ', and its servicing hasn’t been kept'}.`);
