@@ -72,6 +72,12 @@ describe('a product’s brand', () => {
     expect(TOILETRIES.find((p) => p.name.startsWith('IVORY'))?.brand).toBe('Ivory');
   });
 
+  it('is one of at least fifty makers of drinks', () => {
+    // From the grocers' feeds on 2026-10-04 (`research-groceries-drinks.json`): 27 until then.
+    const drinks = GROCERY_PRODUCTS.filter((p) => p.category === 'beverage' || p.category === 'alcohol');
+    expect(new Set(drinks.map((p) => p.brand).filter(Boolean)).size).toBeGreaterThanOrEqual(50);
+  });
+
   it('filters the grocery list and the toiletries where they live', () => {
     const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true }, 'brands');
     const lists: readonly (readonly CatalogEntry<{ brand: string | null }>[])[] = [groceryCatalog(sim, 'uk-eng-london'), toiletryCatalog(sim, 'uk-eng-london')];

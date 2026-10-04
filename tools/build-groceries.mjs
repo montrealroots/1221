@@ -21,6 +21,8 @@ const more = existsSync('docs/research/world/research-groceries2.json') ? read('
 // The foods a town's recipes asked for that its grocer had none of in those two, read from the chains' own feeds on
 // 2026-10-04, each with the brand its name states.
 const third = existsSync('docs/research/world/research-groceries3.json') ? read('research-groceries3.json') : { products: [] };
+// Coffee, tea, juice, bottled water, beer and wine from the same feeds, a shelf's makers before its sizes (2026-10-04).
+const drinks = existsSync('docs/research/world/research-groceries-drinks.json') ? read('research-groceries-drinks.json') : { products: [] };
 const recipesIn = read('research-cooking-alcohol.json').recipes;
 
 /**
@@ -80,8 +82,8 @@ const KEYS = [
   ['frozen-veg', /\bpeas\b|mixed vegetables|sweetcorn|sweet corn|\bcorn\b(?! flakes)|green beans|frozen vegetables|vegetable blend|peas (&|and) carrots|verduras|elote|ma[ií]z/],
   ['oats', /\boats\b|porridge|oatmeal|avena/],
   ['cereal', /cereal|corn ?flakes/],
-  ['coffee', /coffee|caf[eé]/],
-  ['tea', /\btea\b/],
+  ['coffee', /coffee(?: whole)? beans?|coffee|caf[eé]/],
+  ['tea', /\btea\b|(?<![a-z])t[eé](?![a-z])/],
   ['juice', /juice|jugo/],
   ['water', /\bwater\b|\bagua\b/],
   ['beer', /\bbeer\b|lager|cerveza|\bale\b/],
@@ -118,6 +120,8 @@ function keyOf(text, first = false) {
 /** Made from a food, and not it: a stock, a bouillon, a soup. A recipe's stock is the cupboard's, so no recipe buys one. */
 const MADE = /stock|bouillon|broth|consom[eé]|\bsoups?\b|\bsopas?\b|\bcaldos?\b|gravy/;
 const SAUCE = new RegExp(KEYS.find(([key]) => key === 'pasta-sauce')[1].source);
+/** A juice is the juice, whatever fruit it's of: Smart & Final's "First Street Juice, Apple" isn't an apple. A Spanish name's first word already says so. */
+const JUICE = /\bjuice\b/;
 /** A fresh food off the pantry shelf is kept another way: a tomato there is canned, cranberries dried. */
 const PRESERVED = { tomato: 'tomatoes-canned', berries: 'dried-fruit' };
 
@@ -127,7 +131,7 @@ const PRESERVED = { tomato: 'tomatoes-canned', berries: 'dried-fruit' };
  * first: "Jugo Jumex Naranja" is juice and "Naranja de Jugo" an orange,
  * "Tortilla de Maíz" a tortilla. A stock, a bouillon or a soup is no food a
  * recipe buys; what the shop sells as a ready meal is one; a sauce is the
- * sauce whatever's in it; a fresh food off the pantry shelf is its canned or
+ * sauce and a juice the juice whatever's in it; a fresh food off the pantry shelf is its canned or
  * dried kind. Until then every name was read from its last food word and none
  * of this held, and a recipe short of chicken bought stock cubes for it,
  * cheapest in five of the eight towns: Herb-Ox's, Knorr's, Tesco's, Chedraui's
@@ -141,7 +145,7 @@ const PRESERVED = { tomato: 'tomatoes-canned', berries: 'dried-fruit' };
  */
 function productKey(p) {
   const head = headOf(p.name);
-  const key = MADE.test(head) ? undefined : SAUCE.test(head) ? 'pasta-sauce' : keyOf(p.name, p.market === 'MX');
+  const key = MADE.test(head) ? undefined : SAUCE.test(head) ? 'pasta-sauce' : JUICE.test(head) ? 'juice' : keyOf(p.name, p.market === 'MX');
   // Sold as a ready meal, it's eaten as one, a pizza pocket as a pizza: Tesco's Chicken Tikka Masala isn't the chicken.
   if (p.category === 'ready-meal') return key === 'pizza' ? key : 'ready-meal';
   return (p.category === 'pantry' && PRESERVED[key]) || key;
@@ -190,7 +194,7 @@ const BRANDS = brandIndex();
 
 const seen = new Set();
 const products = [];
-for (const p of [...g.products, ...(more.products ?? []), ...(third.products ?? [])]) {
+for (const p of [...g.products, ...(more.products ?? []), ...(third.products ?? []), ...(drinks.products ?? [])]) {
   if (typeof p.price !== 'number' || !(p.price > 0)) continue;
   const key = productKey(p);
   if (!key) continue;

@@ -340,6 +340,21 @@ describe('the food a product is', () => {
     expect(RECIPES.flatMap((r) => r.ingredients).filter((i) => !i.cupboard && !i.food).map((i) => i.name)).toEqual([]);
   });
 
+  it('is a juice whatever fruit it’s of, coffee in the bean, and tea in Spanish too', () => {
+    const food = (id: string) => productById(id)?.food;
+    // Smart & Final names it "First Street Juice, Apple": the last food word, an apple, until 2026-10-04.
+    expect(food('smartfinal-first-street-juice-apple')).toBe('juice');
+    expect(food('supervalu-ie-lavazza-qualita-rossa-coffee-beans-1-kg')).toBe('coffee');
+    expect(food('chedraui-te-doblett-jamaica-cte-verde-24g')).toBe('tea');
+    // A glass at home is drunk by the milliliter, so beer and wine are sold by it.
+    const alcohol = GROCERY_PRODUCTS.filter((p) => p.food === 'beer' || p.food === 'wine');
+    expect(alcohol.length).toBeGreaterThan(40);
+    expect(alcohol.every((p) => p.sizeUnit === 'ml')).toBe(true);
+    // A product is read once: SuperValu's Rio Alto Merlot came back under its feed's doubled space.
+    const names = GROCERY_PRODUCTS.map((p) => `${p.chain}|${p.name.replace(/\s+/g, ' ').toLowerCase()}`);
+    expect(names.length - new Set(names).size).toBe(0);
+  });
+
   it('keeps a dry good’s year as a ready meal in the cupboard, and three days chilled', () => {
     // SLATE's estimates: FoodKeeper has no row for a boxed or instant meal.
     expect(productById('saveonfoods-kraft-dinner-original-macaroni-and-cheese-dinner-200-g')).toMatchObject({ storage: 'pantry', keepsDays: 365, keepsEstimated: true });
