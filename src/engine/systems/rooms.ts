@@ -54,6 +54,7 @@ import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_MINUTE, startOfDay, type Instant } from '../core/time';
+import type { Money } from '../core/money';
 import { CITIES } from '../content/geography';
 import { BED_MARKET, DEFAULT_BED_SIZE, bedSize } from '../content/beds';
 import { fixturesOf, homePlace } from './dwelling';
@@ -61,7 +62,9 @@ import { livingIn } from './homes';
 import { livesWithPartner } from './marriage';
 import { homeKeyOf, itemsOf, volumeOf, type Item, type Spot } from './items';
 import { pieceById } from './furnishings';
-import { bareHome } from './furniture';
+import { bareHome, pieceCost } from './furniture';
+import { payFromBank } from './household';
+import { addItem } from './items';
 import { WALK_IN_L } from '../content/specialrooms';
 
 const SQFT_M2 = 0.092903;
@@ -77,11 +80,11 @@ export const MORNING = { fromMinute: 6 * 60 + 30, spanMinutes: 120, showerMinute
 export interface Rooms { floorM2: number; closetL: number; flatmates: number; /** Its bathrooms: an owned home's count, else one (from 2026-10-03). */ bathrooms: number }
 
 export type RoomKind = 'bedroom' | 'bathroom' | 'kitchen' | 'living';
-export type RoomUse = 'yours' | 'homeTheater' | 'danceStudio' | 'soundproofRoom' | 'library' | 'gym' | 'lodger' | 'storage' | 'spare';
+export type RoomUse = 'yours' | 'homeTheater' | 'danceStudio' | 'soundproofRoom' | 'library' | 'gym' | 'lodger' | 'storage' | 'guest' | 'spare';
 export interface Room { id: string; kind: RoomKind; label: string; use?: RoomUse; m2: number; access: 'yours' | 'shared'; fixtures: string[] }
 export const ROOM_USE_LABEL: Readonly<Record<RoomUse, string>> = {
   yours: 'Your Bedroom', homeTheater: 'A Home Theater', danceStudio: 'A Dance Studio', soundproofRoom: 'A Soundproofed Room', library: 'A Library',
-  gym: 'A Home Gym', lodger: 'A Lodger’s Room', storage: 'A Storage Room', spare: 'A Spare Room',
+  gym: 'A Home Gym', lodger: 'A Lodger’s Room', storage: 'A Storage Room', guest: 'A Guest Room', spare: 'A Spare Room',
 };
 /** The standard's single bedroom; a bathroom, SLATE's reading where the standard sets none; a storage room's usable share, SLATE's estimate. */
 export const SINGLE_M2 = 7.5;
@@ -111,7 +114,7 @@ export function roomList(sim: Simulation, person: Person): Room[] {
   for (let n = 0; n < beds; n += 1) {
     const id = `bedroom-${n + 1}`;
     const chosen = owned?.roomUses?.[id];
-    const use: RoomUse = uses[n] ?? (chosen === 'storage' ? 'storage' : 'spare');
+    const use: RoomUse = uses[n] ?? (chosen === 'storage' || chosen === 'guest' ? chosen : 'spare');
     rooms.push({ id, kind: 'bedroom', label: n === 0 ? 'The Main Bedroom' : `Bedroom ${n + 1}`, use, m2: bedM2[n]! * scale, access: shared && n > 0 ? 'shared' : 'yours', fixtures: [] });
   }
   if (shared) for (const r of rooms.slice(1)) r.use = undefined;
@@ -121,8 +124,23 @@ export function roomList(sim: Simulation, person: Person): Room[] {
   return rooms;
 }
 
-/** Spare bedrooms free for something new: a lodger or a room given over. */
-export const spareRooms = (sim: Simulation, person: Person): Room[] => roomList(sim, person).filter((r) => r.kind === 'bedroom' && (r.use === 'spare' || r.use === 'storage'));
+/** Spare bedrooms free for something new: a lodger or a room given over, which take one kept for storage or guests first. */
+export const spareRooms = (sim: Simulation, person: Person): Room[] => roomList(sim, person).filter((r) => r.kind === 'bedroom' && (r.use === 'spare' || r.use === 'storage' || r.use === 'guest'));
+
+/** A bed kept for guests, apart from the one slept in, which the bed's wear and the night read (from 2026-10-04). */
+export const GUEST_BED = 'furniture:guestbed';
+const isBedItem = (i: Item): boolean => i.kind === 'furniture:bed' || i.kind === GUEST_BED || /bed/i.test(pieceById(i.kind.slice(5))?.type ?? '');
+
+/**
+ * The guest room of the home they own and live in, made up: a spare bedroom kept for guests with a bed in it (from
+ * 2026-10-04). A friend from another town asked home comes and stays the night in it (`declines` in
+ * `systems/people.ts`), where without it they'd say they live elsewhere. One room sleeps one friend, so a gathering of
+ * several isn't put up.
+ */
+export function guestRoom(sim: Simulation, person: Person): Room | undefined {
+  const home = homeKeyOf(person.home);
+  return roomList(sim, person).find((r) => r.use === 'guest' && itemsOf(person).some((i) => i.at.kind === 'home' && i.at.home === home && i.at.room === r.id && isBedItem(i)));
+}
 
 /** What a storage room adds to the built-in storage, liters. */
 export const storageRoomsL = (sim: Simulation, person: Person): number => roomList(sim, person).filter((r) => r.use === 'storage').reduce((n, r) => n + r.m2 * NDSS.ceilingM * STORAGE_ROOM_SHARE * 1_000, 0);
@@ -134,7 +152,7 @@ export function roomFitRefusal(sim: Simulation, person: Person, item: Item, room
   if (room.access === 'shared' && room.kind === 'bedroom') return 'That’s a flatmate’s room.';
   if (room.use === 'lodger') return 'That’s the lodger’s room.';
   const kind = item.kind;
-  const isBed = kind === 'furniture:bed' || /bed/i.test(pieceById(kind.slice(5))?.type ?? '');
+  const isBed = isBedItem(item);
   const isSofa = kind === 'furniture:sofa' || /sofa/i.test(pieceById(kind.slice(5))?.type ?? '');
   const isTable = kind === 'furniture:table' || /table/i.test(pieceById(kind.slice(5))?.type ?? '');
   if (isBed && room.kind !== 'bedroom') return 'A bed goes in a bedroom.';
@@ -166,7 +184,7 @@ export function roomsOf(sim: Simulation, person: Person): Rooms | undefined {
 
 /** A piece's footprint, m². */
 export function footprintOf(item: Item): number {
-  if (item.kind === 'furniture:bed') {
+  if (item.kind === 'furniture:bed' || item.kind === GUEST_BED) {
     const country = item.bed?.country ?? 'us';
     const s = bedSize(BED_MARKET[country] ?? 'na', item.bed?.size ?? DEFAULT_BED_SIZE[country] ?? 'queen');
     return s ? (s.widthCm * s.lengthCm) / 10_000 : 0;
@@ -254,23 +272,48 @@ export function bathroomWait(sim: Simulation, person: Person, at: Instant, minut
   return wait;
 }
 
+/** What making a room up for guests costs: nothing where a bed stands in it, else the place's usual bed delivered there. */
+export function guestBedCost(sim: Simulation, person: Person, roomId: string): Money | undefined {
+  const home = homeKeyOf(person.home);
+  if (itemsOf(person).some((i) => i.at.kind === 'home' && i.at.home === home && i.at.room === roomId && isBedItem(i))) return 0;
+  return person.home ? pieceCost(sim, person.home.cityId, 'bed')?.amount : undefined;
+}
+
+/** The place's usual bed, as a guest's: its country's commonest size. */
+const guestBedOf = (person: Person): { country: string; size: string } | undefined => {
+  const country = CITIES.get(person.home?.cityId ?? '')?.countryId ?? '';
+  return BED_MARKET[country] && DEFAULT_BED_SIZE[country] ? { country, size: DEFAULT_BED_SIZE[country]! } : undefined;
+};
+
 export function registerRooms(sim: Simulation): void {
-  // A spare bedroom kept spare or used for storage (from 2026-10-04).
-  sim.onCommand<{ roomId: string; use: 'storage' | 'spare' }, { use: 'storage' | 'spare' }>('home.room_use', (p, { sim: s }) => {
+  // A spare bedroom kept spare or used for storage (from 2026-10-04), or kept for guests with a bed delivered for it.
+  sim.onCommand<{ roomId: string; use: 'storage' | 'spare' | 'guest' }, { use: 'storage' | 'spare' | 'guest'; paid: Money }>('home.room_use', (p, { sim: s }) => {
     const person = s.player;
     const owned = livingIn(person);
     if (!owned) throw new CommandError('A room’s use is chosen in a home you own and live in.');
     const room = roomList(s, person).find((r) => r.id === p?.roomId);
-    if (!room || room.kind !== 'bedroom' || (room.use !== 'spare' && room.use !== 'storage')) throw new CommandError('That isn’t a spare bedroom.');
-    const use = p.use === 'storage' ? 'storage' : 'spare';
-    const before = owned.roomUses?.[room.id];
+    if (!room || room.kind !== 'bedroom' || (room.use !== 'spare' && room.use !== 'storage' && room.use !== 'guest')) throw new CommandError('That isn’t a spare bedroom.');
+    const use = p.use === 'storage' || p.use === 'guest' ? p.use : 'spare';
+    // A refusal below puts the room back as it was: a command refused leaves the world as it found it (`execute`).
     owned.roomUses = { ...(owned.roomUses ?? {}), [room.id]: use };
-    // Kept spare again only where what's stored still fits the closets without it.
+    // Kept spare or for guests again only where what's stored still fits the closets without it.
     const rooms = roomsOf(s, person);
-    if (use === 'spare' && rooms && closetUsedL(person) > rooms.closetL + 1e-9) {
-      owned.roomUses = { ...owned.roomUses, [room.id]: before ?? 'storage' };
-      throw new CommandError('What’s stored wouldn’t fit the closets without it: move some of it out first.');
+    if (use !== 'storage' && rooms && closetUsedL(person) > rooms.closetL + 1e-9) throw new CommandError('What’s stored wouldn’t fit the closets without it: move some of it out first.');
+    // Made up for guests, a bed for it where none stands there: the place's usual one, delivered, as `home.furnish` prices it.
+    let paid: Money = 0;
+    if (use === 'guest') {
+      const cost = guestBedCost(s, person, room.id);
+      const bed = guestBedOf(person);
+      if (cost === undefined || (cost > 0 && !bed)) throw new CommandError('SLATE keeps no price for a bed where you live yet.');
+      if (cost > 0) {
+        const item = { kind: GUEST_BED, label: 'A Guest Bed', quantity: 1, condition: 1, at: { kind: 'home' as const, home: homeKeyOf(person.home)!, spot: 'floor' as const }, acquiredAt: s.now, paid: cost, bulky: true, bed: bed! };
+        const tight = roomFitRefusal(s, person, { ...item, id: 'guest-bed' } as Item, room.id);
+        if (tight) throw new CommandError(tight);
+        if (!payFromBank(s, person, cost, `A bed for the guest room, ${owned.facts.address}`, 'home')) throw new CommandError('The bank couldn’t pay for a bed for it.');
+        addItem(s, person, { ...item, at: { ...item.at, room: room.id } });
+        paid = cost;
+      }
     }
-    return { use };
+    return { use, paid };
   });
 }

@@ -504,8 +504,8 @@ export interface Tenancy {
 
 export interface OwnedHome {
   id: string;
-  /** Each spare bedroom's use chosen: storage, or kept spare (`systems/rooms.ts`, from 2026-10-04). */
-  roomUses?: Record<string, 'storage' | 'spare'>;
+  /** Each spare bedroom's use chosen: storage, kept for guests, or kept spare (`systems/rooms.ts`, from 2026-10-04). */
+  roomUses?: Record<string, 'storage' | 'spare' | 'guest'>;
   /** What's growing in its bed and greenhouse (`systems/garden.ts`, from 2026-10-04). */
   garden?: Partial<Record<import('./garden').Plot, import('./garden').Planting>>;
   /** Its lawn, where it has a yard (`systems/lawns.ts`, from 2026-10-02). */

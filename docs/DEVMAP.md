@@ -339,7 +339,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.renters_insurance` | `src/engine/systems/dwelling.ts` | `Home.tsx` | `homes-open.test.ts` `valuables.test.ts` | Rent And A Roof |
 | `home.repair_machine` | `src/engine/systems/appliancefaults.ts` | `Home.tsx` | `appliancefaults.test.ts` | Rent And A Roof |
 | `home.replace_mattress` | `src/engine/systems/furniture.ts` | `HomesWorkspace.tsx` | `beds.test.ts` `furniture.test.ts` | Rent And A Roof |
-| `home.room_use` | `src/engine/systems/rooms.ts` | `BelongingsWorkspace.tsx` | `room-list.test.ts` | Rent And A Roof |
+| `home.room_use` | `src/engine/systems/rooms.ts` | `BelongingsWorkspace.tsx` | `guest-room.test.ts` `room-list.test.ts` | Rent And A Roof |
 | `home.security` | `src/engine/systems/homesecurity.ts` | `Home.tsx` | `homesecurity.test.ts` | Rent And A Roof |
 | `home.sell` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `construction.test.ts` `homes.test.ts` `routines.test.ts` | Rent And A Roof |
 | `home.sell_back` | `src/engine/systems/furnishings.ts` | `BelongingsWorkspace.tsx` | `assembly.test.ts` | Rent And A Roof |
@@ -515,7 +515,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `social.break_up` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` `people.test.ts` | People |
 | `social.divorce` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` | People |
 | `social.host` | `src/engine/systems/hosting.ts` | `PeopleWorkspace.tsx` | `cooking-household.test.ts` `hosting.test.ts` | People |
-| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `people.test.ts` `together.test.ts` | People |
+| `social.invite` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `availability.test.ts` `courts.test.ts` `guest-room.test.ts` `people.test.ts` `together.test.ts` | People |
 | `social.marry` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` | People |
 | `social.move_in` | `src/engine/systems/people.ts` | `PeopleWorkspace.tsx` | `people.test.ts` | People |
 | `social.split` | `src/engine/systems/marriage.ts` | `PeopleWorkspace.tsx` | `marriage.test.ts` | People |
