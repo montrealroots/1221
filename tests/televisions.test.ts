@@ -51,6 +51,17 @@ describe('the catalog', () => {
     expect(GENERIC_TV_WATTS).toBe(all[all.length >> 1]);
   });
 
+  it('names no panel where no page named one, and takes from a later read what an earlier one left unstated', () => {
+    const tv = (id: string) => TV_PRODUCTS.find((p) => p.id === id)!;
+    // Loewe's own page sells the Antares at 42 and 65 inches as an OLED; Richer Sounds' list, the only read of the 55, names no panel.
+    expect(tv('loewe-antares-42').attrs.panel).toBe('OLED');
+    expect(tv('loewe-antares-55').attrs.panel).toBeNull();
+    // LG's own page left the C5's refresh unstated; Best Buy Canada's listing states it.
+    expect(tv('lg-oled55c5pua').attrs.refreshHz).toBe(120);
+    // Where both state one, the first read keeps it: Samsung's own 60 Hz for the U7900H, not Best Buy Canada's 120.
+    expect(tv('samsung-un65u7900hfxzc').attrs.refreshHz).toBe(60);
+  });
+
   it('sells where they live, cheapest first, with the place’s tax where the price is before it', () => {
     const ny = life('us-ny-newyork', 'tv-ny');
     const shop = tvCatalog(ny, ny.player);

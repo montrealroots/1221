@@ -880,7 +880,8 @@ function Televisions() {
   const entries: CatalogEntry<(typeof shop)[number]>[] = shop.map((x) => ({
     // By the model number it's sold under here; the maker's other code still finds it.
     id: x.offer.id, label: tvName(x.product, x.offer), price: x.price, priceKind: 'advertised', basis: 'Each, with the tax as the place shows it',
-    facets: { brand: x.product.brand, panel: String(x.product.attrs.panel ?? 'LED') },
+    // A set whose panel no page named is under no panel.
+    facets: { brand: x.product.brand, ...(x.product.attrs.panel ? { panel: String(x.product.attrs.panel) } : {}) },
     words: [x.product.family, x.product.model, x.product.attrs.resolution, x.product.attrs.smartOs, x.offer.seller, `${x.product.attrs.sizeIn} inch`].filter(Boolean).join(' '), value: x,
   }));
   const arranged = arrange(entries, view);
@@ -905,7 +906,7 @@ function Televisions() {
                 <tr key={e.id}>
                   <td>{e.label}<div className="xs dim">{[product.family, product.attrs.resolution, offer.seller].filter(Boolean).join(', ')}</div></td>
                   <td className="num">{`${product.attrs.sizeIn}″`}</td>
-                  <td className="small">{String(product.attrs.panel ?? 'LED')}</td>
+                  <td className="small">{String(product.attrs.panel ?? '—')}</td>
                   <td className="num" title={wattsWhy(e)}>{watts(e)}</td>
                   <td className="num mono">{money(price)}</td>
                   <td>
@@ -926,7 +927,7 @@ function Televisions() {
       <CompareTable heads={chosen.map((e) => e.label)} onClear={clearCompare} rows={[
         { label: 'Price', values: chosen.map((e) => money(e.value.price)) },
         { label: 'Size', values: chosen.map((e) => `${e.value.product.attrs.sizeIn}″`) },
-        { label: 'Panel', values: chosen.map((e) => String(e.value.product.attrs.panel ?? 'LED')) },
+        { label: 'Panel', values: chosen.map((e) => String(e.value.product.attrs.panel ?? '—')) },
         { label: 'Resolution', values: chosen.map((e) => String(e.value.product.attrs.resolution ?? '—')) },
         { label: 'Refresh', values: chosen.map((e) => (typeof e.value.product.attrs.refreshHz === 'number' ? `${e.value.product.attrs.refreshHz} Hz` : '—')) },
         { label: 'Power On', values: chosen.map((e) => watts(e)) },

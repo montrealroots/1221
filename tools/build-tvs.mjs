@@ -14,6 +14,10 @@ const PANELS = new Set(['LED', 'QLED', 'Mini-LED', 'OLED', 'QD-OLED', 'MicroLED'
 const num = (v) => (typeof v === 'number' && Number.isFinite(v) && v > 0 ? v : null);
 const code = (s) => String(s ?? '').toUpperCase().replace(/[^A-Z0-9]/g, '');
 const brandKey = (s) => slug(String(s ?? '').split(',')[0]).replace(/-+$/, '');
+// A panel as a page names it, and none where no page named one. Until 2026-10-04 a set whose panel went unread was
+// filed LED: Loewe's Antares at 48 and 55 inches among them, read only on Richer Sounds' list, which Loewe's own page
+// sells at 42 and 65 inches as an OLED.
+const panelOf = (v) => (PANELS.has(v) ? v : null);
 
 const dir = 'docs/research/catalog';
 const tranches = existsSync(dir) ? readdirSync(dir).filter((f) => /^tv-.*\.json$/.test(f)).sort() : [];
@@ -36,7 +40,7 @@ for (const f of tranches) {
       p = {
         id: `${slug(x.brand)}-${slug(x.model)}`.slice(0, 80), category: 'televisions', brand: String(x.brand).trim(), family: x.series ?? null, model: String(x.model).trim(),
         attrs: {
-          sizeIn: size, panel: PANELS.has(x.panel) ? x.panel : 'LED', resolution: x.resolution ?? null, refreshHz: num(x.refreshHz), year: num(x.year), smartOs: x.smartOs ?? null,
+          sizeIn: size, panel: panelOf(x.panel), resolution: x.resolution ?? null, refreshHz: num(x.refreshHz), year: num(x.year), smartOs: x.smartOs ?? null,
           onModeWatts: num(x.onModeWatts), powerBasis: num(x.onModeWatts) ? x.powerBasis ?? null : null,
           powerUrl: num(x.onModeWatts) ? x.powerUrl ?? null : null,
         },
@@ -44,7 +48,12 @@ for (const f of tranches) {
         variants: [], offers: [], url: x.url ?? null, status: x.status === 'verified' ? 'verified' : 'secondhand',
       };
       products.set(key, p);
-    } else if (p.attrs.onModeWatts === null && num(x.onModeWatts)) { p.attrs.onModeWatts = num(x.onModeWatts); p.attrs.powerBasis = x.powerBasis ?? null; p.attrs.powerUrl = x.powerUrl ?? null; }
+    } else {
+      // A later read fills what an earlier one left unstated (from 2026-10-04; until then only the power).
+      const read = { panel: panelOf(x.panel), resolution: x.resolution ?? null, refreshHz: num(x.refreshHz), year: num(x.year), smartOs: x.smartOs ?? null };
+      for (const [k, v] of Object.entries(read)) if (p.attrs[k] === null && v !== null) p.attrs[k] = v;
+      if (p.attrs.onModeWatts === null && num(x.onModeWatts)) { p.attrs.onModeWatts = num(x.onModeWatts); p.attrs.powerBasis = x.powerBasis ?? null; p.attrs.powerUrl = x.powerUrl ?? null; }
+    }
     // Its model number, and each region's where it's sold under another: what an energy label is matched by.
     for (const c of [x.model, ...Object.values(x.regionalModels ?? {})]) {
       if (code(c).length >= 7 && !p.codes.includes(code(c))) p.codes.push(code(c));

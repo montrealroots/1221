@@ -1,0 +1,5469 @@
+{
+ "read": "2026-10-04",
+ "category": "televisions",
+ "products": [
+  {
+   "brand": "Aiwa",
+   "series": "B4SMRK",
+   "model": "AW32B4SMRK",
+   "regionalModels": {
+    "mx": "AW32B4SMRK"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2669.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Aiwa-Smart-TV-LED-AW32B4SMRK-32-HD-Negro-2.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Aiwa-Smart-TV-LED-AW32B4SMRK-32-HD-Negro-2.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Aiwa",
+   "series": "B4SMRK",
+   "model": "AW40B4SMRK",
+   "regionalModels": {
+    "mx": "AW40B4SMRK"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3719.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Aiwa-Smart-TV-LED-AW40B4SMRK-40-Full-HD-Negro-2.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Aiwa-Smart-TV-LED-AW40B4SMRK-40-Full-HD-Negro-2.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Aiwa",
+   "series": "B4SMRK",
+   "model": "AW43B4SMRK",
+   "regionalModels": {
+    "mx": "AW43B4SMRK"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4279.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Aiwa-Smart-TV-LED-AW43B4SMRK-43-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Aiwa-Smart-TV-LED-AW43B4SMRK-43-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Aiwa",
+   "series": "RKQ",
+   "model": "AW50RKQ",
+   "regionalModels": {
+    "mx": "AW50RKQ"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5869.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Aiwa-Smart-TV-QLED-AW50RKQ-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Aiwa-Smart-TV-QLED-AW50RKQ-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Aiwa",
+   "series": "RKQ",
+   "model": "AW55RKQ",
+   "regionalModels": {
+    "mx": "AW55RKQ"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6469.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Aiwa-Smart-TV-QLED-AW55RKQ-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Aiwa-Smart-TV-QLED-AW55RKQ-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "AOC",
+   "series": "S5045",
+   "model": "32S5045/85A",
+   "regionalModels": {
+    "mx": "32S5045/85A"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2409.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/AOC-Smart-TV-LED-32S5045-85A-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/AOC-Smart-TV-LED-32S5045-85A-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "AOC",
+   "series": "S5025",
+   "model": "40S5025",
+   "regionalModels": {
+    "mx": "40S5025"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3359.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/AOC-Smart-TV-LED-40S5025-40-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/AOC-Smart-TV-LED-40S5025-40-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "AOC",
+   "series": "U7045",
+   "model": "50U7045",
+   "regionalModels": {
+    "mx": "50U7045"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5149.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/AOC-Smart-TV-LED-50U7045-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/AOC-Smart-TV-LED-50U7045-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "AOC",
+   "series": "U7045",
+   "model": "58U7045",
+   "regionalModels": {
+    "mx": "58U7045"
+   },
+   "sizeIn": 58,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6829.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/AOC-Smart-TV-LED-58U7045-58-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/AOC-Smart-TV-LED-58U7045-58-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "CHiQ",
+   "series": "F621",
+   "model": "32F621FR",
+   "regionalModels": {
+    "mx": "32F621FR"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2999.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-LED-32F621FR-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-LED-32F621FR-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "CHiQ",
+   "series": "F621",
+   "model": "40F621FR",
+   "regionalModels": {
+    "mx": "40F621FR"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3899.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-LED-40F621FR-40-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-LED-40F621FR-40-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "CHiQ",
+   "series": "F621",
+   "model": "43F621FR",
+   "regionalModels": {
+    "mx": "43F621FR"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 4295.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-chiq-43-pulgadas-fhd-led-roku-tv-43f621-3893406/p",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3649.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-LED-43F621FR-43-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-chiq-43-pulgadas-fhd-led-roku-tv-43f621-3893406/p",
+   "status": "verified"
+  },
+  {
+   "brand": "CHiQ",
+   "series": "U610",
+   "model": "50U610M",
+   "regionalModels": {
+    "mx": "50U610M"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6139.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-QLED-50U610M-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-QLED-50U610M-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "CHiQ",
+   "series": "U721",
+   "model": "50U721XR",
+   "regionalModels": {
+    "mx": "50U721XR"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4979.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-DLED-50U721XR-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-DLED-50U721XR-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "CHiQ",
+   "series": "U610",
+   "model": "55U610M",
+   "regionalModels": {
+    "mx": "55U610M"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 7339.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-QLED-55U610M-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-QLED-55U610M-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "CHiQ",
+   "series": "U721",
+   "model": "55U721XR",
+   "regionalModels": {
+    "mx": "55U721XR"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5799.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-LED-55U721XR-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-LED-55U721XR-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "CHiQ",
+   "series": "U711",
+   "model": "60U711VR",
+   "regionalModels": {
+    "mx": "60U711VR"
+   },
+   "sizeIn": 60,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 7995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-chiq-60-pulgadas-4k-uhd-roku-tv-60u711v-3893407/p",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6969.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-DLED-60U711VR-60-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-chiq-60-pulgadas-4k-uhd-roku-tv-60u711v-3893407/p",
+   "status": "verified"
+  },
+  {
+   "brand": "CHiQ",
+   "series": "U712",
+   "model": "65U712XR",
+   "regionalModels": {
+    "mx": "65U712XR"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 8489.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-DLED-65U712XR-65-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-DLED-65U712XR-65-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "CHiQ",
+   "series": "U610",
+   "model": "75U610M",
+   "regionalModels": {
+    "mx": "75U610M"
+   },
+   "sizeIn": 75,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro",
+    "Plata"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 13809.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-QLED-75U610M-75-4K-Ultra-HD-Negro-Plata.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Chiq-Smart-TV-QLED-75U610M-75-4K-Ultra-HD-Negro-Plata.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Compaq",
+   "series": "EHD",
+   "model": "QLG32EHD",
+   "regionalModels": {
+    "mx": "QLG32EHD"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2219.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Compaq-Smart-TV-LED-QLG32EHD-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Compaq-Smart-TV-LED-QLG32EHD-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Compaq",
+   "series": "EFHD",
+   "model": "QLG40EFHD",
+   "regionalModels": {
+    "mx": "QLG40EFHD"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3789.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Compaq-Smart-TV-LED-QLG40EFHD-40-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Compaq-Smart-TV-LED-QLG40EFHD-40-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Compaq",
+   "series": "EFHD",
+   "model": "QLG43EFHD",
+   "regionalModels": {
+    "mx": "QLG43EFHD"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3969.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Compaq-Smart-TV-LED-QLG43EFHD-43-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Compaq-Smart-TV-LED-QLG43EFHD-43-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Cuory",
+   "series": null,
+   "model": "CUOHDTV32",
+   "regionalModels": {
+    "mx": "CUOHDTV32"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2219.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Cuory-Smart-TV-DLED-CUOHDTV32-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Cuory-Smart-TV-DLED-CUOHDTV32-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Cuory",
+   "series": "HX",
+   "model": "WT-32HX",
+   "regionalModels": {
+    "mx": "WT-32HX"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2209.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Cuory-Smart-TV-LED-WT-32HX-32-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Cuory-Smart-TV-LED-WT-32HX-32-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Cuory",
+   "series": null,
+   "model": "CUO-HDTV43",
+   "regionalModels": {
+    "mx": "CUO-HDTV43"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3659.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Cuory-Smart-TV-LED-CUO-HDTV43-43-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Cuory-Smart-TV-LED-CUO-HDTV43-43-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Daewoo",
+   "series": "H",
+   "model": "DAW32H",
+   "regionalModels": {
+    "mx": "DAW32H"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 2195.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-daewoo-32-pulgadas-basica-tv-hd-daw32h-3767330/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-daewoo-32-pulgadas-basica-tv-hd-daw32h-3767330/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Daewoo",
+   "series": "R",
+   "model": "DAW32R",
+   "regionalModels": {
+    "mx": "DAW32R"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 2995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-daewoo-32-pulgadas-roku-daw32r-3747399/p",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Liverpool (sold by Daewoo TV)",
+     "price": 4049.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.liverpool.com.mx/tienda/pantallas/CATST14457077",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-daewoo-32-pulgadas-roku-daw32r-3747399/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Daewoo",
+   "series": "QRF",
+   "model": "DAW40QRF",
+   "regionalModels": {
+    "mx": "DAW40QRF"
+   },
+   "sizeIn": 40,
+   "panel": "QLED",
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 3795.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-daewoo-40-pulgadas-smart-tv-roku-qled-daw40qrf-3855489/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-daewoo-40-pulgadas-smart-tv-roku-qled-daw40qrf-3855489/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Daewoo",
+   "series": "FRF",
+   "model": "DAW50FRF",
+   "regionalModels": {
+    "mx": "DAW50FRF"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 4995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-daewoo-roku-tv-50-pulgadas-smart-fhd-daw50frf-3880285/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-daewoo-roku-tv-50-pulgadas-smart-fhd-daw50frf-3880285/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Daewoo",
+   "series": "UR",
+   "model": "DAW50UR",
+   "regionalModels": {
+    "mx": "DAW50UR"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 5995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-daewoo-50-pulgadas-smart-tv-uhd-roku-daw50ur-3753485/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-daewoo-50-pulgadas-smart-tv-uhd-roku-daw50ur-3753485/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Daewoo",
+   "series": "UR",
+   "model": "DAW70UR",
+   "regionalModels": {
+    "mx": "DAW70UR"
+   },
+   "sizeIn": 70,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 9995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-daewoo-70-pulgadas-smart-tv-roku-4k-uhd-frameless-daw70ur-3794471/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-daewoo-70-pulgadas-smart-tv-roku-4k-uhd-frameless-daw70ur-3794471/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Daewoo",
+   "series": "URF",
+   "model": "DAW75URF",
+   "regionalModels": {
+    "mx": "DAW75URF"
+   },
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 10995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-daewoo-75-pulgadas-smart-tv-roku-uhd-frameless-daw75urf-negra-3830909/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-daewoo-75-pulgadas-smart-tv-roku-uhd-frameless-daw75urf-negra-3830909/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "BHD22",
+   "model": "G32BHD22",
+   "regionalModels": {
+    "mx": "G32BHD22"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 1869.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G32BHD22-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G32BHD22-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "NTFXHD20",
+   "model": "G32NTFXHD20",
+   "regionalModels": {
+    "mx": "G32NTFXHD20"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2199.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G32NTFXHD20-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G32NTFXHD20-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "W25",
+   "model": "G32W25",
+   "regionalModels": {
+    "mx": "G32W25"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2159.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G32W25-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G32W25-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": null,
+   "model": "GHISTV32",
+   "regionalModels": {
+    "mx": "GHISTV32"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3419.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-GHISTV32-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-GHISTV32-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "ATV22",
+   "model": "G40ATV22",
+   "regionalModels": {
+    "mx": "G40ATV22"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3359.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G40ATV22-40-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G40ATV22-40-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "W25",
+   "model": "G40W25",
+   "regionalModels": {
+    "mx": "G40W25"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3689.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G40W25-40-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G40W25-40-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "W25",
+   "model": "G43W25",
+   "regionalModels": {
+    "mx": "G43W25"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Whale OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3519.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-DLED-Whale-43-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-DLED-Whale-43-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "Q4K-GA",
+   "model": "G50Q4K-GA",
+   "regionalModels": {
+    "mx": "G50Q4K-GA"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6009.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-QLED-G50Q4K-GA-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-QLED-G50Q4K-GA-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "W25",
+   "model": "G50W25",
+   "regionalModels": {
+    "mx": "G50W25"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5159.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G50W25-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G50W25-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "W26Q",
+   "model": "G50W26Q",
+   "regionalModels": {
+    "mx": "G50W26Q"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5929.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-QLED-G50W26Q-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-QLED-G50W26Q-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "W26Q",
+   "model": "G55W26Q",
+   "regionalModels": {
+    "mx": "G55W26Q"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 7039.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-QLED-G55W26Q-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-QLED-G55W26Q-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "W26Q",
+   "model": "G65W26Q",
+   "regionalModels": {
+    "mx": "G65W26Q"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 9609.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-QLED-G65W26Q-65-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-QLED-G65W26Q-65-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": null,
+   "model": "TV-GHI65",
+   "regionalModels": {
+    "mx": "TV-GHI65"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 10529.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-TV-GHI65-65-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-TV-GHI65-65-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "W25",
+   "model": "G75W25",
+   "regionalModels": {
+    "mx": "G75W25"
+   },
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 11879.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G75W25-75-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G75W25-75-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "W25",
+   "model": "G85W25",
+   "regionalModels": {
+    "mx": "G85W25"
+   },
+   "sizeIn": 85,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 16299.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G85W25-85-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Ghia-Smart-TV-LED-G85W25-85-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S80",
+   "model": "H43S80FUX",
+   "regionalModels": {
+    "mx": "H43S80FUX"
+   },
+   "sizeIn": 43,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5299.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Haier-Smart-TV-QLED-H43S80FUX-43-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Haier-Smart-TV-QLED-H43S80FUX-43-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S80",
+   "model": "H50S80FUX",
+   "regionalModels": {
+    "mx": "H50S80FUX"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6889.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Haier-Smart-TV-QLED-H50S80FUX-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Haier-Smart-TV-QLED-H50S80FUX-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "K700",
+   "model": "H55K700UX",
+   "regionalModels": {
+    "mx": "H55K700UX"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 9995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-haier-55-pulgadas-4k-uhd-h55k700ux-negro-3842133/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-haier-55-pulgadas-4k-uhd-h55k700ux-negro-3842133/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "K85",
+   "model": "H70K85EUX",
+   "regionalModels": {
+    "mx": "H70K85EUX"
+   },
+   "sizeIn": 70,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 11379.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Haier-Smart-TV-DLED-H70K85EUX-70-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Haier-Smart-TV-DLED-H70K85EUX-70-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S800",
+   "model": "H85S800UX",
+   "regionalModels": {
+    "mx": "H85S800UX"
+   },
+   "sizeIn": 85,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 14939.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Haier-Smart-TV-QLED-H85S800UX-85-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Haier-Smart-TV-QLED-H85S800UX-85-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "QR",
+   "model": "HYLED3258QR",
+   "regionalModels": {
+    "mx": "HYLED3258QR"
+   },
+   "sizeIn": 32,
+   "panel": "QLED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 3095.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-32-pulgadas-fhd-roku-hyled3258qr-3873702/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-32-pulgadas-fhd-roku-hyled3258qr-3873702/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "RiM",
+   "model": "HYLED4027RiM",
+   "regionalModels": {
+    "mx": "HYLED4027RiM"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 4295.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-led-smart-fhd-40-pulgadas-1016-cm-hyled4027rim-3861522/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-led-smart-fhd-40-pulgadas-1016-cm-hyled4027rim-3861522/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "QR",
+   "model": "HYLED4028QR",
+   "regionalModels": {
+    "mx": "HYLED4028QR"
+   },
+   "sizeIn": 40,
+   "panel": "QLED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 4395.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-40-pulgadas-fhd-roku-hyled4028qr-3873703/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-40-pulgadas-fhd-roku-hyled4028qr-3873703/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "RiM",
+   "model": "HYLED4325RiM",
+   "regionalModels": {
+    "mx": "HYLED4325RiM"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 4795.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-led-smart-fhd-43-pulgadas-10922cm-3855020/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-led-smart-fhd-43-pulgadas-10922cm-3855020/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "QR",
+   "model": "HYLED4327QR",
+   "regionalModels": {
+    "mx": "HYLED4327QR"
+   },
+   "sizeIn": 43,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 4895.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-43-pulgadas-uhd-qled-hyled4327qr-3873704/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-43-pulgadas-uhd-qled-hyled4327qr-3873704/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "QR",
+   "model": "HYLED5026QR",
+   "regionalModels": {
+    "mx": "HYLED5026QR"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 6995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-50-pulgadas-fhd-qled-hyled5026qr-3873705/p",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Liverpool (sold by HYUNDAI ELECTRONICS MEXICO)",
+     "price": 6999.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.liverpool.com.mx/tienda?s=hyundai+pantalla",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-50-pulgadas-fhd-qled-hyled5026qr-3873705/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "FG",
+   "model": "HYLED5028FG",
+   "regionalModels": {
+    "mx": "HYLED5028FG"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5359.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Hyundai-Smart-TV-LED-HYLED5028FG-50-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Hyundai-Smart-TV-LED-HYLED5028FG-50-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "FQR",
+   "model": "HYLED5031FQR",
+   "regionalModels": {
+    "mx": "HYLED5031FQR"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 5695.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/null-3918247/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/null-3918247/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": null,
+   "model": "HYLED5530",
+   "regionalModels": {
+    "mx": "HYLED5530"
+   },
+   "sizeIn": 55,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 8495.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-min-qled-smart-4k-uhd-55-pulgadas-1397-cm-3861523/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-min-qled-smart-4k-uhd-55-pulgadas-1397-cm-3861523/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "QR",
+   "model": "HYLED5531QR",
+   "regionalModels": {
+    "mx": "HYLED5531QR"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 7795.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-55-pulgadas-uhd-qled-hyled5531qr-3873706/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-55-pulgadas-uhd-qled-hyled5531qr-3873706/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "R4KM",
+   "model": "HYLED5811R4KM",
+   "regionalModels": {
+    "mx": "HYLED5811R4KM"
+   },
+   "sizeIn": 58,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 7995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-led-smart-4k-fhd-58-pulgadas-14732-cm-3861524/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-led-smart-4k-fhd-58-pulgadas-14732-cm-3861524/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "QR",
+   "model": "HYLED6007QR",
+   "regionalModels": {
+    "mx": "HYLED6007QR"
+   },
+   "sizeIn": 60,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 7795.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-led-smart-roku-4k-uhd-hyled6007qr-60-pulgadas-3870721/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-led-smart-roku-4k-uhd-hyled6007qr-60-pulgadas-3870721/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "QR",
+   "model": "HYLED6516QR",
+   "regionalModels": {
+    "mx": "HYLED6516QR"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 10495.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-65-qled-smart-roku-tv-hyled6516qr-3897442/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-65-qled-smart-roku-tv-hyled6516qr-3897442/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "QG",
+   "model": "HYLED7007QG",
+   "regionalModels": {
+    "mx": "HYLED7007QG"
+   },
+   "sizeIn": 70,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 13595.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-hyundai-qled-smart-4k-uhd-hyled7007qg-70-pulgadas-3870722/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-hyundai-qled-smart-4k-uhd-hyled7007qg-70-pulgadas-3870722/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Insignia",
+   "series": "F40",
+   "model": "NS-40F401NA26",
+   "regionalModels": {
+    "mx": "NS-40F401NA26"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3639.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Insignia-Smart-TV-LED-F40-Series-40-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Insignia-Smart-TV-LED-F40-Series-40-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Insignia",
+   "series": "F50",
+   "model": "NS-43F501NA26",
+   "regionalModels": {
+    "mx": "NS-43F501NA26"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3749.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Insignia-Smart-TV-LED-F50-Series-43-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Insignia-Smart-TV-LED-F50-Series-43-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Insignia",
+   "series": "F50",
+   "model": "NS-55F501NA26",
+   "regionalModels": {
+    "mx": "NS-55F501NA26"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6229.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Insignia-Smart-TV-LED-Class-F50-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Insignia-Smart-TV-LED-Class-F50-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "R",
+   "model": "SI24R",
+   "regionalModels": {
+    "mx": "SI24R"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2159.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI24R-24-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI24R-24-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "QRF",
+   "model": "SI32QRF",
+   "regionalModels": {
+    "mx": "SI32QRF"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2849.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI32QRF-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI32QRF-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "R",
+   "model": "SI32R",
+   "regionalModels": {
+    "mx": "SI32R"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2929.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI32R-32-HD-Negro-2.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI32R-32-HD-Negro-2.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "RF",
+   "model": "SI32RF",
+   "regionalModels": {
+    "mx": "SI32RF"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2939.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI32RF-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI32RF-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "FR",
+   "model": "SI40FR",
+   "regionalModels": {
+    "mx": "SI40FR"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3769.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI40FR-40-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI40FR-40-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "FRF",
+   "model": "SI43FRF",
+   "regionalModels": {
+    "mx": "SI43FRF"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 4495.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-jvc-43-pulgadas-smart-tv-roku-fhd-si43frf-3765799/p",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3759.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI43FRF-43-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-jvc-43-pulgadas-smart-tv-roku-fhd-si43frf-3765799/p",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "QRF",
+   "model": "SI43QRF",
+   "regionalModels": {
+    "mx": "SI43QRF"
+   },
+   "sizeIn": 43,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4319.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-QLED-SI43QRF-43-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-QLED-SI43QRF-43-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "QRF",
+   "model": "SI50QRF",
+   "regionalModels": {
+    "mx": "SI50QRF"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5879.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-QLED-SI50QRF-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-QLED-SI50QRF-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "UR",
+   "model": "SI50UR",
+   "regionalModels": {
+    "mx": "SI50UR"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro",
+    "Plata"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6109.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI50UR-50-4K-Ultra-HD-Negro-Plata.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI50UR-50-4K-Ultra-HD-Negro-Plata.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "URF",
+   "model": "SI50URF",
+   "regionalModels": {
+    "mx": "SI50URF"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5999.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-Roku-Frameless-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-Roku-Frameless-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "UR",
+   "model": "SI55UR",
+   "regionalModels": {
+    "mx": "SI55UR"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6769.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI55UR-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI55UR-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "URF",
+   "model": "SI55URF",
+   "regionalModels": {
+    "mx": "SI55URF"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 7269.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-Roku-Frameless-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-Roku-Frameless-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "URF",
+   "model": "SI70URF",
+   "regionalModels": {
+    "mx": "SI70URF"
+   },
+   "sizeIn": 70,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 10959.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI70URF-70-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI70URF-70-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "URF",
+   "model": "SI75URF",
+   "regionalModels": {
+    "mx": "SI75URF"
+   },
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 13429.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI75URF-75-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/JVC-Smart-TV-LED-SI75URF-75-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "QRF",
+   "model": "SI86QRF",
+   "regionalModels": {
+    "mx": "SI86QRF"
+   },
+   "sizeIn": 86,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 18995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-jvc-86-pulgadas-qled-smart-tv-roku-uhd-frameless-si86qrf-3890039/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-jvc-86-pulgadas-qled-smart-tv-roku-uhd-frameless-si86qrf-3890039/p",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "UR",
+   "model": "SI98UR",
+   "regionalModels": {
+    "mx": "SI98UR"
+   },
+   "sizeIn": 98,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 29995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-jvc-98-qled-4k-si98ur-3890880/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-jvc-98-qled-4k-si98ur-3890880/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Kodak",
+   "series": null,
+   "model": "38362",
+   "regionalModels": {
+    "mx": "38362"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4209.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Kodak-Smart-TV-LED-38362-40-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Kodak-Smart-TV-LED-38362-40-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Kodak",
+   "series": "SVA1003BT",
+   "model": "50SVA1003BT",
+   "regionalModels": {
+    "mx": "50SVA1003BT"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6019.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Kodak-Smart-TV-LED-50SVA1003BT-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Kodak-Smart-TV-LED-50SVA1003BT-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Motorola",
+   "series": "HLE11",
+   "model": "MOT32HLE11",
+   "regionalModels": {
+    "mx": "MOT32HLE11"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2969.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-DLED-MOT32HLE11-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-DLED-MOT32HLE11-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Motorola",
+   "series": "FLE11",
+   "model": "MOT43FLE11",
+   "regionalModels": {
+    "mx": "MOT43FLE11"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4399.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-DLED-MOT43FLE11-43-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-DLED-MOT43FLE11-43-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Motorola",
+   "series": "FLE11A",
+   "model": "MOT43FLE11A",
+   "regionalModels": {
+    "mx": "MOT43FLE11A"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4789.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-LED-MOT43FLE11A-43-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-LED-MOT43FLE11A-43-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Motorola",
+   "series": "NUQE05",
+   "model": "MOT50NUQE05",
+   "regionalModels": {
+    "mx": "MOT50NUQE05"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro",
+    "Plata"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6219.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-QLED-MOT50NUQE05-50-4K-Ultra-HD-Negro-Plata.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-QLED-MOT50NUQE05-50-4K-Ultra-HD-Negro-Plata.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Motorola",
+   "series": "NUQE05",
+   "model": "MOT58NUQE05",
+   "regionalModels": {
+    "mx": "MOT58NUQE05"
+   },
+   "sizeIn": 58,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro",
+    "Plata"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 7879.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-QLED-MOT58NUQE05-58-4K-Ultra-HD-Negro-Plata.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-QLED-MOT58NUQE05-58-4K-Ultra-HD-Negro-Plata.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Motorola",
+   "series": "UQE11",
+   "model": "MOT65UQE11",
+   "regionalModels": {
+    "mx": "MOT65UQE11"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 11039.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-QLED-MOT65UQE11-65-4K-Ultra-HD-Negro-2.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Motorola-Smart-TV-QLED-MOT65UQE11-65-4K-Ultra-HD-Negro-2.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Pioneer",
+   "series": null,
+   "model": "PN43-751-24U",
+   "regionalModels": {
+    "mx": "PN43-751-24U"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4479.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Pioneer-Smart-TV-LED-PN43-751-24U-43-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Pioneer-Smart-TV-LED-PN43-751-24U-43-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Pioneer",
+   "series": null,
+   "model": "PN43-R851-26U",
+   "regionalModels": {
+    "mx": "PN43-R851-26U"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4009.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Pioneer-Smart-TV-LED-PN43-R851-26U-43-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Pioneer-Smart-TV-LED-PN43-R851-26U-43-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Pioneer",
+   "series": null,
+   "model": "PN50R85126U",
+   "regionalModels": {
+    "mx": "PN50R85126U"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6519.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Pioneer-Smart-TV-LED-PN50R85126U-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Pioneer-Smart-TV-LED-PN50R85126U-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Quaroni",
+   "series": "W24",
+   "model": "Q32W24",
+   "regionalModels": {
+    "mx": "Q32W24"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3649.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Quaroni-Smart-TV-LED-Q32W24-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Quaroni-Smart-TV-LED-Q32W24-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Quaroni",
+   "series": "W24",
+   "model": "Q40W24",
+   "regionalModels": {
+    "mx": "Q40W24"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2819.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Quaroni-Smart-TV-LED-Q40W24-40-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Quaroni-Smart-TV-LED-Q40W24-40-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Quaroni",
+   "series": "NTFX",
+   "model": "Q43NTFX",
+   "regionalModels": {
+    "mx": "Q43NTFX"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3239.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Quaroni-Smart-TV-LED-Q43NTFX-43-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Quaroni-Smart-TV-LED-Q43NTFX-43-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Quaroni",
+   "series": "W25",
+   "model": "Q50W25",
+   "regionalModels": {
+    "mx": "Q50W25"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5549.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Quaroni-Smart-TV-DLED-Q50W25-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Quaroni-Smart-TV-DLED-Q50W25-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Quaroni",
+   "series": "N24",
+   "model": "Q58N24",
+   "regionalModels": {
+    "mx": "Q58N24"
+   },
+   "sizeIn": 58,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5879.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Quaroni-Smart-TV-LED-Q58N24-58-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Quaroni-Smart-TV-LED-Q58N24-58-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "RCA",
+   "series": "TC-LE32K",
+   "model": "TC-LE32K-AN2401",
+   "regionalModels": {
+    "mx": "TC-LE32K-AN2401"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2449.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/RCA-Smart-TV-LED-TC-LE32K-AN2401-32-HD-Negro-2.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/RCA-Smart-TV-LED-TC-LE32K-AN2401-32-HD-Negro-2.html",
+   "status": "verified"
+  },
+  {
+   "brand": "RCA",
+   "series": "TC-LE43K",
+   "model": "TC-LE43K-AN2401",
+   "regionalModels": {
+    "mx": "TC-LE43K-AN2401"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4029.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/RCA-Smart-TV-DLED-TC-LE43K-AN2401-43-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/RCA-Smart-TV-DLED-TC-LE43K-AN2401-43-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "RCA",
+   "series": "TC-LE50K",
+   "model": "TC-LE50K-GO2401",
+   "regionalModels": {
+    "mx": "TC-LE50K-GO2401"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5449.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/RCA-Smart-TV-LED-TC-LE50K-GO2401-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/RCA-Smart-TV-LED-TC-LE50K-GO2401-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "VA",
+   "model": "SMX24VAHW",
+   "regionalModels": {
+    "mx": "SMX24VAHW"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 1795.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-24-pulgadas-led-webos-smx24vahw-negro-3823964/p",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2219.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX24VAHW-24-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-24-pulgadas-led-webos-smx24vahw-negro-3823964/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "KA",
+   "model": "SMX32KAHW",
+   "regionalModels": {
+    "mx": "SMX32KAHW"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 3095.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-32-pulgadas-hd-webos-smx32kahw-3892017/p",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2569.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-DLED-SMX32KAHW-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-32-pulgadas-hd-webos-smx32kahw-3892017/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "T1",
+   "model": "SMX32T1H",
+   "regionalModels": {
+    "mx": "SMX32T1H"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 2195.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-32-pulgadas-hd-smx32t1h-3733416/p",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2519.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-TV-LED-Basica-TV-SMX32T1H-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-32-pulgadas-hd-smx32t1h-3733416/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "VA",
+   "model": "SMX32VAHG",
+   "regionalModels": {
+    "mx": "SMX32VAHG"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3289.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX32VAHG-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX32VAHG-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "VA",
+   "model": "SMX32VAHW",
+   "regionalModels": {
+    "mx": "SMX32VAHW"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 2295.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-32-pulgadas-webos-tv-smx32vahw-negra-3823017/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-32-pulgadas-webos-tv-smx32vahw-negra-3823017/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "KA",
+   "model": "SMX40KAFG",
+   "regionalModels": {
+    "mx": "SMX40KAFG"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3519.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX40KAFG-40-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX40KAFG-40-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "KA",
+   "model": "SMX40KAFW",
+   "regionalModels": {
+    "mx": "SMX40KAFW"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 2995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-40-pulgadas-fhd-webos-smx40kafw-3892018/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-40-pulgadas-fhd-webos-smx40kafw-3892018/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "VA",
+   "model": "SMX40VAFW",
+   "regionalModels": {
+    "mx": "SMX40VAFW"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 2995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-40-pulgadas-webos-smx40vafw-negro-3823018/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-40-pulgadas-webos-smx40vafw-negro-3823018/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "KA",
+   "model": "SMX43KAFW",
+   "regionalModels": {
+    "mx": "SMX43KAFW"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 3795.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-43-pulgadas-fhd-smx43kafw-webos-3882148/p",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4079.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-DLED-SMX43KAFW-43-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-43-pulgadas-fhd-smx43kafw-webos-3882148/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "VA",
+   "model": "SMX43VAUG",
+   "regionalModels": {
+    "mx": "SMX43VAUG"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5049.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-DLED-SMX43VAUG-43-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-DLED-SMX43VAUG-43-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "V1",
+   "model": "S50V1UA",
+   "regionalModels": {
+    "mx": "S50V1UA"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6539.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-S50V1UA-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-S50V1UA-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "F3",
+   "model": "SMX50F3UAD",
+   "regionalModels": {
+    "mx": "SMX50F3UAD"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6489.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX50F3UAD-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX50F3UAD-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "KA",
+   "model": "SMX50KAUW",
+   "regionalModels": {
+    "mx": "SMX50KAUW"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 6995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-50-4k-smx50kauw-webos-3890478/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-50-4k-smx50kauw-webos-3890478/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "N1",
+   "model": "SMX50N1UNF",
+   "regionalModels": {
+    "mx": "SMX50N1UNF"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 7149.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX50N1UNF-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX50N1UNF-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "VA",
+   "model": "SMX50VAUW",
+   "regionalModels": {
+    "mx": "SMX50VAUW"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 4595.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-de-50-pulgadas-webos-uhd-4k-smx50vauw-negra-3820461/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-de-50-pulgadas-webos-uhd-4k-smx50vauw-negra-3820461/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "F3",
+   "model": "SMX55F3UAD",
+   "regionalModels": {
+    "mx": "SMX55F3UAD"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6879.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX55F3UAD-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX55F3UAD-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "KA",
+   "model": "SMX55KAUW",
+   "regionalModels": {
+    "mx": "SMX55KAUW"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 7995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-55-4k-smx55kauw-webos-3890479/p",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6339.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-DLED-SMX55KAUW-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-55-4k-smx55kauw-webos-3890479/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "V1",
+   "model": "SMX55V1UA",
+   "regionalModels": {
+    "mx": "SMX55V1UA"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 7139.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX55V1UA-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-LED-SMX55V1UA-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "VA",
+   "model": "SMX55VAUW",
+   "regionalModels": {
+    "mx": "SMX55VAUW"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6339.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-DLED-SMX55VAUW-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-DLED-SMX55VAUW-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "KA",
+   "model": "SMX65KAUW",
+   "regionalModels": {
+    "mx": "SMX65KAUW"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 11995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-65-pulgadas-4k-smx65kauw-webos-3882153/p",
+     "status": "verified"
+    },
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 8899.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Sansui-Smart-TV-DLED-SMX65KAUW-65-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-65-pulgadas-4k-smx65kauw-webos-3882153/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "VA",
+   "model": "SMX65VAUG",
+   "regionalModels": {
+    "mx": "SMX65VAUG"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 7995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-65-pulgadas-4k-google-tv-smx65vaug-3789657/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-65-pulgadas-4k-google-tv-smx65vaug-3789657/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "VH",
+   "model": "SMX75VHUG",
+   "regionalModels": {
+    "mx": "SMX75VHUG"
+   },
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 9995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sansui-75-pulgadas-4k-smx75vhug-google-tv-3850090/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sansui-75-pulgadas-4k-smx75vhug-google-tv-3850090/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "GF2",
+   "model": "2T-C32GF232",
+   "regionalModels": {
+    "mx": "2T-C32GF232"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 2995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sharp-roku-tv-32-pulgadas-hd-2t-c32gf232-3879186/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sharp-roku-tv-32-pulgadas-hd-2t-c32gf232-3879186/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "GF2",
+   "model": "2T-C40GF232",
+   "regionalModels": {
+    "mx": "2T-C40GF232"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 3995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sharp-roku-tv-40-pulgadas-fhd-2t-c40gf232-3879183/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sharp-roku-tv-40-pulgadas-fhd-2t-c40gf232-3879183/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "GF2",
+   "model": "2T-C43GF2020U",
+   "regionalModels": {
+    "mx": "2T-C43GF2020U"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 4295.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sharp-roku-43-fhd-2t-c43gf2020u-3746790/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sharp-roku-43-fhd-2t-c43gf2020u-3746790/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "DL7",
+   "model": "4T-C50DL7UR",
+   "regionalModels": {
+    "mx": "4T-C50DL7UR"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 4995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sharp-50-pulgadas-smart-tv-roku-4k-uhd-4t-c50dl7ur-3728458/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sharp-50-pulgadas-smart-tv-roku-4k-uhd-4t-c50dl7ur-3728458/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "DL7",
+   "model": "4T-C55DL7UR",
+   "regionalModels": {
+    "mx": "4T-C55DL7UR"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 7795.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sharp-55-pulgadas-4k-uhd-smart-roku-4t-c55dl7ur-3736950/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sharp-55-pulgadas-4k-uhd-smart-roku-4t-c55dl7ur-3736950/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "EL8",
+   "model": "4T-C65EL8UR",
+   "regionalModels": {
+    "mx": "4T-C65EL8UR"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 8495.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sharp-65-pulgadas-roku-smart-tv-4k-ultra-hd-led-4t-c65el8ur-3803119/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sharp-65-pulgadas-roku-smart-tv-4k-ultra-hd-led-4t-c65el8ur-3803119/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "EL8",
+   "model": "4T-C75EL8UR",
+   "regionalModels": {
+    "mx": "4T-C75EL8UR"
+   },
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 11495.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sharp-75-pulgadas-roku-smart-tv-4k-ultra-hd-led-tv-4t-c75el8ur-3803120/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sharp-75-pulgadas-roku-smart-tv-4k-ultra-hd-led-tv-4t-c75el8ur-3803120/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "HM6",
+   "model": "4T-C75HM6320U",
+   "regionalModels": {
+    "mx": "4T-C75HM6320U"
+   },
+   "sizeIn": 75,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 10995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sharp-roku-75-qled-4t-c75hm6320u-3900078/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sharp-roku-75-qled-4t-c75hm6320u-3900078/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "EL8",
+   "model": "4T-C86EL8UR",
+   "regionalModels": {
+    "mx": "4T-C86EL8UR"
+   },
+   "sizeIn": 86,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Chedraui",
+     "price": 13995.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.chedraui.com.mx/pantalla-sharp-86-pulgadas-roku-smart-tv-4k-ultra-hd-tv-4t-c86el8ur-3803118/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.chedraui.com.mx/pantalla-sharp-86-pulgadas-roku-smart-tv-4k-ultra-hd-tv-4t-c86el8ur-3803118/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Thorus",
+   "series": "CV1000A",
+   "model": "32CV1000A",
+   "regionalModels": {
+    "mx": "32CV1000A"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2089.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Thorus-Smart-TV-LED-32CV1000A-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Thorus-Smart-TV-LED-32CV1000A-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Thorus",
+   "series": "CV100HDA",
+   "model": "32CV100HDA",
+   "regionalModels": {
+    "mx": "32CV100HDA"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2099.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Thorus-Smart-TV-LED-32CV100HDA-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Thorus-Smart-TV-LED-32CV100HDA-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Thorus",
+   "series": "Imperial",
+   "model": "43CV100HDA",
+   "regionalModels": {
+    "mx": "43CV100HDA"
+   },
+   "sizeIn": 43,
+   "panel": "QLED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2929.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Thorus-Smart-TV-QLED-Imperial-43-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Thorus-Smart-TV-QLED-Imperial-43-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Toshiba",
+   "series": "V35",
+   "model": "32V35KC",
+   "regionalModels": {
+    "mx": "32V35KC"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2379.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LCD-32V35KC-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LCD-32V35KC-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Toshiba",
+   "series": "V35",
+   "model": "32V35RU",
+   "regionalModels": {
+    "mx": "32V35RU"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2649.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LED-32V35RU-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LED-32V35RU-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Toshiba",
+   "series": "C350",
+   "model": "43C350NM",
+   "regionalModels": {
+    "mx": "43C350NM"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3659.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LED-43C350NM-43-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LED-43C350NM-43-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Toshiba",
+   "series": "C350",
+   "model": "50C350NU",
+   "regionalModels": {
+    "mx": "50C350NU"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5209.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LED-C350N-Series-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LED-C350N-Series-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Toshiba",
+   "series": "C350",
+   "model": "55C350NM",
+   "regionalModels": {
+    "mx": "55C350NM"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5199.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LED-55C350NM-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LED-55C350NM-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Toshiba",
+   "series": "M550",
+   "model": "55M550NU",
+   "regionalModels": {
+    "mx": "55M550NU"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6229.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-QLED-55M550NU-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-QLED-55M550NU-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Toshiba",
+   "series": "C350",
+   "model": "75C350NU",
+   "regionalModels": {
+    "mx": "75C350NU"
+   },
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 11899.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LED-75C350NU-75-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Toshiba-Smart-TV-LED-75C350NU-75-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "HX2210",
+   "model": "WR24HX2210",
+   "regionalModels": {
+    "mx": "WR24HX2210"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 1829.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WR24HX2210-24-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WR24HX2210-24-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "HX2800",
+   "model": "WX24HX2800",
+   "regionalModels": {
+    "mx": "WX24HX2800"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 1729.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-DLED-WX24HX2800-24-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-DLED-WX24HX2800-24-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "EX2100",
+   "model": "WR32EX2100",
+   "regionalModels": {
+    "mx": "WR32EX2100"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2769.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WR32EX2100-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WR32EX2100-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "HE2520",
+   "model": "WR32HE2520",
+   "regionalModels": {
+    "mx": "WR32HE2520"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 2769.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LCD-WR32HE2520-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LCD-WR32HE2520-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "HX2800",
+   "model": "WX32HX2800",
+   "regionalModels": {
+    "mx": "WX32HX2800"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Xumo TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 1789.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-Xumo-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-Xumo-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "FE2520",
+   "model": "WR40FE2520",
+   "regionalModels": {
+    "mx": "WR40FE2520"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3659.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WR40FE2520-40-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WR40FE2520-40-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "FX2212",
+   "model": "WR43FX2212",
+   "regionalModels": {
+    "mx": "WR43FX2212"
+   },
+   "sizeIn": 42,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4179.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-DLED-WR43FX2212-42-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-DLED-WR43FX2212-42-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "UE4520",
+   "model": "WR50UE4520",
+   "regionalModels": {
+    "mx": "WR50UE4520"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5489.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WR50UE4520-50-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WR50UE4520-50-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "EX4300",
+   "model": "WR55EX4300",
+   "regionalModels": {
+    "mx": "WR55EX4300"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 6389.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-DLED-WR55EX4300-55-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-DLED-WR55EX4300-55-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "UX4800",
+   "model": "WX58UX4800",
+   "regionalModels": {
+    "mx": "WX58UX4800"
+   },
+   "sizeIn": 58,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 5189.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WX58UX4800-58-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WX58UX4800-58-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "UE4520",
+   "model": "WR65UE4520",
+   "regionalModels": {
+    "mx": "WR65UE4520"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 8989.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WR65UE4520-65-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Westinghouse-Smart-TV-LED-WR65UE4520-65-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Winia",
+   "series": "B9000QN",
+   "model": "L32B9000QN",
+   "regionalModels": {
+    "mx": "L32B9000QN"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 3379.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Winia-Smart-TV-LED-L32B9000QN-32-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Winia-Smart-TV-LED-L32B9000QN-32-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Winia",
+   "series": "B7500QN",
+   "model": "L43B7500QN",
+   "regionalModels": {
+    "mx": "L43B7500QN"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4929.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Winia-Smart-TV-LED-L43B7500QN-43-Full-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Winia-Smart-TV-LED-L43B7500QN-43-Full-HD-Negro.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Winia",
+   "series": "B9000QN",
+   "model": "U43B9000QN",
+   "regionalModels": {
+    "mx": "U43B9000QN"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Negro"
+   ],
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Cyberpuerta",
+     "price": 4909.0,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Winia-Smart-TV-LED-U43B9000QN-43-4K-Ultra-HD-Negro.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cyberpuerta.mx/Audio-y-Video/TV-y-Pantallas/Pantallas/Winia-Smart-TV-LED-U43B9000QN-43-4K-Ultra-HD-Negro.html",
+   "status": "verified"
+  }
+ ],
+ "notFound": [
+  "Walmart Mexico and Bodega Aurrera (walmart.com.mx): the search page answered a 'Verifica tu identidad' bot-check page to curl and to a second fetch tool, so no listing was read; Atvio and Onn (Walmart house lines) therefore have no record (a search-engine result title names an Atvio 55 in model ATV5523KR at walmart.com.mx, but that page was not readable, so no model number or price was taken from it).",
+  "Philips: Liverpool's search for 'philips pantalla smart tv' returned 119 records and none is a television (remote controls and Hue light strips only), and Philips is not among the 30 brands in Cyberpuerta's TV filter, so no Philips TV price was confirmed.",
+  "Panasonic, Philco, Polaroid and Vizio: none is among the 30 brands in Cyberpuerta's TV filter or the 24 brands in Liverpool's filter for its 472-record TV category, and no other readable Mexican retailer page listed them, so no price was confirmed.",
+  "Coppel (coppel.com): the VTEX search API closed the connection (HTTP/2 INTERNAL_ERROR, then an empty reply over HTTP/1.1) and a second fetch tool got HTTP 503, so nothing was read.",
+  "Elektra (Incapsula challenge, HTTP 403), Soriana (Cloudflare 'Attention Required', HTTP 403), Sanborns (HTTP 403) and Office Depot Mexico (HTTP 503) refused the VTEX search request, so none of them was read.",
+  "Sears Mexico: the catalogue path answered the site's empty app shell (HTTP 200, no product data) and its data host seapi.sears.com.mx was not called, so no Sears listing was read.",
+  "Home Depot Mexico: its HCL search API answered HTTP 500 'CWXFS2002E Cannot connect to the search server' on three attempts with two endpoint forms and its search page is drawn in the browser, so no TV listing was read.",
+  "Costco Mexico, HEB and Famsa: the Costco search URL returned an app shell with no product data, and the HEB and Famsa catalogue paths returned ordinary HTML pages instead of a product feed, so none of them was read.",
+  "Liverpool: the Pantallas category (472 records, the first 56 read) and the Hyundai and Philips searches were read, but Hyundai, Daewoo, Aiwa, AOC, Toshiba and the other makers there are sold mostly by marketplace sellers (RANOR INFINITY, Electro Casa, Digimart and others) that are not recorded; only the two records whose sole seller is the maker's own store are kept (Hyundai HYLED5026QR sold by HYUNDAI ELECTRONICS MEXICO, Daewoo DAW32R sold by Daewoo TV) and their offer url is the listing page because the records carry no product-page link.",
+  "Chedraui: its Pantallas category lists 101 televisions, 51 from makers in scope and 48 recorded; left out are a JVC 55 in QLED Roku (id 3855488) and a Sharp 60 in 4K Roku LED (id 3876238) because their pages give no model number, and a JVC listed as 86 in with code SI70URF (id 3830960) because SI70URF is a 70 in model on Cyberpuerta, so title and code contradict.",
+  "Chedraui marketplace sellers (Doto, Endomex, Tienda Mercadazo) are not recorded, so Aiwa AW32B4SMRK has no Chedraui offer (Chedraui itself shows price 0 and no stock) and the Audiotek projection screens are not televisions.",
+  "Cyberpuerta: only the first page of JVC (16 of 19) and Sansui (16 of 18) was read, so 3 JVC and 2 Sansui listings are missing; the Hyundai, Daewoo, Sharp and Xiaomi brand pages and the Qtouch and BenQ brands were not opened (one Hyundai model appeared on the unfiltered page).",
+  "Cyberpuerta CHiQ 65 in 'U610M' is left out because the listing shows no full model number (the SKU is a barcode), while its 50, 55 and 75 in siblings carry 50U610M, 55U610M and 75U610M.",
+  "Prices: where a retailer shows a reduced price the regular (list) price is recorded and the reduced one is not (14 of the 48 Chedraui offers and both Liverpool offers carry a lower sale price), and Chedraui's list prices sometimes sit well above another retailer's price for the same model (Sansui SMX65KAUW 11,995 at Chedraui against 8,899 at Cyberpuerta); Cyberpuerta shows a single price, which is recorded.",
+  "Cyberpuerta marks 18 of the televisions recorded as out of stock when read; they are kept with the price shown.",
+  "Conflicting retailer text was settled thus: Hyundai HYLED5026QR (title FHD, description UHD and '4K') and HYLED4327QR (title UHD, long text both UHD and FHD) are recorded as 4K, HYLED5811R4KM (title '4K FHD', long text 'FHD') as 4K, HYLED3258QR (FHD at Chedraui, HD at Liverpool) as Full HD, HYLED6007QR (titled 'Led' but technology field QLED) as QLED, and HYLED5530 (sold as 'Mini QLED') as Mini-LED.",
+  "More settled conflicts: Sansui SMX43KAFW is Full HD (1920 x 1080) at Chedraui but HD at Cyberpuerta (Chedraui kept), Daewoo DAW40QRF is titled 40 in but its size field says 43 in (40 kept, matching the model code), Westinghouse WR43FX2212 is listed as 42 in (42 kept), JVC SI55URF and SI70URF are each listed twice on Cyberpuerta (the listing whose SKU equals the model number is kept), and Motorola MOT65UQE11 is listed twice (the in-stock listing is kept).",
+  "Fields left null because no page read states them: year and refreshHz throughout, resolution for Daewoo DAW32R and DAW40QRF, and smartOs wherever the listing does not name the system (every Cyberpuerta row except Xumo TV and Whale OS).",
+  "onModeWatts, powerBasis, powerUrl and eprel are null throughout because the energy label was not needed; Chedraui prints 'Consumo de energia' watt figures for many models but with no on-mode or SDR basis, and no EPREL number appeared on any page.",
+  "Six models share their model number with products already in tv-b.json (Insignia NS-43F501NA26, RCA TC-LE32K-AN2401, TC-LE43K-AN2401 and TC-LE50K-GO2401, Toshiba 50C350NU and 75C350NU), so their Mexico offers here should be merged into those products."
+ ]
+}

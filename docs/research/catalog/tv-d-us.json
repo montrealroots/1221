@@ -1,0 +1,1608 @@
+{
+ "read": "2026-10-04",
+ "category": "televisions",
+ "products": [
+  {
+   "brand": "Sceptre",
+   "series": "4K UHD TV",
+   "model": "U515CV-UMRDD",
+   "regionalModels": {},
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Sceptre",
+     "price": 499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.sceptre.com/TV/4K-UHD-TV/U515CV-UMRDD-50-4K-UHD-TV-product1524category1category73.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.sceptre.com/TV/4K-UHD-TV/U515CV-UMRDD-50-4K-UHD-TV-product1524category1category73.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sceptre",
+   "series": "4K UHD TV",
+   "model": "U557CV-UMRB",
+   "regionalModels": {},
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Sceptre",
+     "price": 599.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.sceptre.com/TV/4K-UHD-TV/U557CV-UMRB-55-4K-UHD-TV-product1428category1category73.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.sceptre.com/TV/4K-UHD-TV/U557CV-UMRB-55-4K-UHD-TV-product1428category1category73.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sceptre",
+   "series": "4K UHD TV",
+   "model": "U517CV-UMRB",
+   "regionalModels": {},
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Sceptre",
+     "price": 499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.sceptre.com/TV/4K-UHD-TV/U517CV-UMRB-50-4K-UHD-TV-product1427category1category73.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.sceptre.com/TV/4K-UHD-TV/U517CV-UMRB-50-4K-UHD-TV-product1427category1category73.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sceptre",
+   "series": "Android TV",
+   "model": "A557CV-UMRBX",
+   "regionalModels": {},
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Android TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Sceptre",
+     "price": 599.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.sceptre.com/TV/Android-TV/A557CV-UMRBX-product1460category1category92.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.sceptre.com/TV/Android-TV/A557CV-UMRBX-product1460category1category92.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sceptre",
+   "series": "Android TV",
+   "model": "A517CV-UMRBX",
+   "regionalModels": {},
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Android TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Sceptre",
+     "price": 499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.sceptre.com/TV/Android-TV/A517CV-UMRBX-product1467category1category92.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.sceptre.com/TV/Android-TV/A517CV-UMRBX-product1467category1category92.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sceptre",
+   "series": "LED HDTV",
+   "model": "X322BV-SRDD",
+   "regionalModels": {},
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Sceptre",
+     "price": 249.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.sceptre.com/TV/LED-HDTV/X322BV-SRDD-32-LED-TV-product1477category1category21.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.sceptre.com/TV/LED-HDTV/X322BV-SRDD-32-LED-TV-product1477category1category21.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sceptre",
+   "series": "LED HDTV",
+   "model": "X437BV-FSRB",
+   "regionalModels": {},
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Sceptre",
+     "price": 249.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.sceptre.com/TV/LED-HDTV/X437BV-FSRB-43-Edgeless-LED-TV-product1426category1category21.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.sceptre.com/TV/LED-HDTV/X437BV-FSRB-43-Edgeless-LED-TV-product1426category1category21.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sceptre",
+   "series": "LED HDTV",
+   "model": "X437BV-FSRD",
+   "regionalModels": {},
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Sceptre",
+     "price": 249.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.sceptre.com/TV/LED-HDTV/X437BV-FSRD-43-Edgeless-LED-TV-product1423category1category21.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.sceptre.com/TV/LED-HDTV/X437BV-FSRD-43-Edgeless-LED-TV-product1423category1category21.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sceptre",
+   "series": "LED HDTV",
+   "model": "E247BD-FSRD",
+   "regionalModels": {},
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Sceptre",
+     "price": 169.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.sceptre.com/TV/LED-HDTV/E247BD-FSRD-24-Full-HD-LED-TV-product1403category1category21.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.sceptre.com/TV/LED-HDTV/E247BD-FSRD-24-Full-HD-LED-TV-product1403category1category21.html",
+   "status": "verified"
+  },
+  {
+   "brand": "RCA",
+   "series": null,
+   "model": "TC-LE32K-AN2401",
+   "regionalModels": {},
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Android TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "RCA",
+     "price": 159.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://rcatv.com/products/rca-32-hd-android-smart-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://rcatv.com/products/rca-32-hd-android-smart-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "RCA",
+   "series": null,
+   "model": "TC-LE43K-AN2401",
+   "regionalModels": {},
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Android TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "RCA",
+     "price": 229.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://rcatv.com/products/rca-43-fhd-android-smart-tv-copy-copy",
+     "status": "verified"
+    }
+   ],
+   "url": "https://rcatv.com/products/rca-43-fhd-android-smart-tv-copy-copy",
+   "status": "verified"
+  },
+  {
+   "brand": "RCA",
+   "series": null,
+   "model": "TC-LE50K-GO2401",
+   "regionalModels": {},
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "RCA",
+     "price": 329.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://rcatv.com/products/rca-50-uhd-android-smart-tv-copy",
+     "status": "verified"
+    },
+    {
+     "market": "us",
+     "seller": "ABC Warehouse",
+     "price": 189.0,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abcwarehouse.com/rca-tcle50kgo2401",
+     "status": "verified"
+    }
+   ],
+   "url": "https://rcatv.com/products/rca-50-uhd-android-smart-tv-copy",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "2K Series",
+   "model": "WX24HX2800",
+   "regionalModels": {},
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "ABC Warehouse",
+     "price": 69.0,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abcwarehouse.com/westinghouse-wx24hx2800",
+     "status": "verified"
+    }
+   ],
+   "url": "https://westinghouse.com/products/24-hd-smart-xumo-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "2K Series",
+   "model": "WX32HX2800",
+   "regionalModels": {},
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "ABC Warehouse",
+     "price": 99.0,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abcwarehouse.com/westinghouse-wx32hx2800",
+     "status": "verified"
+    }
+   ],
+   "url": "https://westinghouse.com/products/32-hd-smart-xumo-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "2K Series",
+   "model": "WX43FX2800",
+   "regionalModels": {},
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "ABC Warehouse",
+     "price": 139.0,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abcwarehouse.com/westinghouse-wx43fx2800",
+     "status": "verified"
+    }
+   ],
+   "url": "https://westinghouse.com/products/43-fhd-smart-xumo-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "4K UHD Series",
+   "model": "WX50UX4800",
+   "regionalModels": {},
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "ABC Warehouse",
+     "price": 179.0,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abcwarehouse.com/westinghouse-wx50ux4800",
+     "status": "verified"
+    }
+   ],
+   "url": "https://westinghouse.com/products/50-uhd-smart-xumo-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Westinghouse",
+   "series": "4K UHD Series",
+   "model": "WX55UX4800",
+   "regionalModels": {},
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "ABC Warehouse",
+     "price": 199.0,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abcwarehouse.com/westinghouse-wx55ux4800",
+     "status": "verified"
+    }
+   ],
+   "url": "https://westinghouse.com/products/55-uhd-smart-xumo-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "720P HD Xumo TV",
+   "model": "E300AE24C",
+   "regionalModels": {},
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 119.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-30-39-inch-e300ae24c-g",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-24-720p-hd-xumo-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "720P HD Xumo TV",
+   "model": "E300AE32C",
+   "regionalModels": {},
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 169.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-30-39-inch-e300ae32c-g",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-32-720p-hd-xumo-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "720P HD Roku TV",
+   "model": "E300AG32R",
+   "regionalModels": {},
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 149.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-30-39-inch-element-32-720p-hd-roku-tv-e300ag32r",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-32-720p-hd-roku-tv-e300ag32r/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "1080P FHD Xumo TV",
+   "model": "E300AE40C",
+   "regionalModels": {},
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 199.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-40-49-inch-40-1080p-hd-xumo-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-40-1080p-fhd-xumo-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "Portable Smart Google TV",
+   "model": "E300AF32PBG",
+   "regionalModels": {},
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 299.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-30-39-inch-32-1080p-fhd-portable-smart-google-tv",
+     "status": "verified"
+    },
+    {
+     "market": "us",
+     "seller": "Nebraska Furniture Mart",
+     "price": 229.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.nfm.com/element-32-class-1080p-fhd-portable-in-black---smart-google-tv-70429360/70429360.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-32-1080p-fhd-portable-smart-google-tv-e300af32pbg/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "4K UHD HDR Frameless Xumo TV",
+   "model": "E550AE43C",
+   "regionalModels": {},
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 249.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-40-49-inch-e550ae43c-g",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-43-4k-uhd-hdr-frameless-xumo-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "4K UHD HDR Frameless Xumo TV",
+   "model": "E550AE55C",
+   "regionalModels": {},
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 299.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-50-59-inch-55-4k-uhd-hdr-frameless-xumo-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-55-4k-uhd-hdr-frameless-xumo-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "4K UHD HDR Frameless Xumo TV",
+   "model": "E550AE65C",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 329.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-60-69-inch-65-4k-uhd-hdr-frameless-xumo-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-65-4k-uhd-hdr-frameless-xumo-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "4K UHD HDR Frameless Xumo TV",
+   "model": "E550AE75C",
+   "regionalModels": {},
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 799.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-70-79-inch-element-75-4k-uhd-hdr-frameless-xumo-tv-e550ae75c",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-75-4k-uhd-hdr-frameless-xumo-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "4K UHD Roku TV",
+   "model": "E550AG50R",
+   "regionalModels": {},
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 249.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-50-59-inch-element-50-4k-uhd-roku-tv-e550ag50r",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-50-4k-uhd-roku-tv-e550ag50r/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "4K UHD Powered by TiVo Smart TV",
+   "model": "E550AF50T",
+   "regionalModels": {},
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "TiVo OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 279.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-50-59-inch-50-4k-uhd-hdr10-tivo-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-50-4k-uhd-tivo-tv-e550af50t/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "4K UHD Powered by TiVo Smart TV",
+   "model": "E550AF65T",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "TiVo OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-60-69-inch-65-4k-uhd-hdr10-tivo-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-65-4k-uhd-hdr10-tivo-tv-e550af65t/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "Mini-LED QLED 4K UHD Smart Xumo TV",
+   "model": "EMQ650AE65C",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-60-69-inch-emq650ae65c-g",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-65-mini-led-qled-4k-uhd-xumo-tv-emq650ae65c/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "4K UHD Partial Sun Outdoor Xumo TV",
+   "model": "EP500AE55C",
+   "regionalModels": {},
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 899.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-50-59-inch-55-4k-uhd-partial-sun-outdoor-xumo-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-55-4k-uhd-partial-sun-outdoor-xumo-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "4K UHD HDR Frameless Xumo TV",
+   "model": "E550AE50C",
+   "regionalModels": {},
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Nebraska Furniture Mart",
+     "price": 228.0,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.nfm.com/element-50-4k-uhd-hdr-xumo-smart-tv-66846502/66846502.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-50-4k-uhd-hdr-frameless-xumo-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "4K UHD Partial Sun Outdoor Xumo TV",
+   "model": "EP500AE65C",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Nebraska Furniture Mart",
+     "price": 1299.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.nfm.com/element-65-4k-uhd-partial-sun-outdoor-xumo-smart-tv-67788844/67788844.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-65-4k-uhd-partial-sun-outdoor-xumo-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "QLED 4K UHD Smart Xumo TV",
+   "model": "EQ550AF75C",
+   "regionalModels": {},
+   "sizeIn": 75,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Nebraska Furniture Mart",
+     "price": 529.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.nfm.com/element-75-class-qled-4k-uhd-in-black---smart-xumo-tv-70699152/70699152.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-75-qled-4k-uhd-smart-xumo-tv-eq550af75c/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "Mini-LED QLED 4K UHD HDR 144Hz Smart Google TV",
+   "model": "EMQ600AF100G",
+   "regionalModels": {},
+   "sizeIn": 100,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 144,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Nebraska Furniture Mart",
+     "price": 1399.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.nfm.com/element-100-class-mini-led-qled-4k-in-black---smart-google-tv-70699194/70699194.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-100-mini-led-qled-4k-uhd-hdr-144hz-smart-google-tv-emq600af100g/",
+   "status": "verified"
+  },
+  {
+   "brand": "Element",
+   "series": "Building Block 1080P FHD Smart Roku TV",
+   "model": "EBG300AG32R",
+   "regionalModels": {},
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Green"
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Nebraska Furniture Mart",
+     "price": 199.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.nfm.com/element-32-class-1080p-fhd-building-block-in-green---smart-roku-tv-70429311/70429311.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://elementelectronics.com/product/element-32-building-block-1080p-fhd-smart-roku-tv-in-green-ebg300ag32r/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "Roku 6600 series",
+   "model": "50PUL6643/F7",
+   "regionalModels": {},
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 349.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-50-59-inch-50-led-4k-lcd-ultra-hd-borderless-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.usa.philips.com/c-p/50PUL6643_F7",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "Roku 6000 series",
+   "model": "65PUL6645/F7",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 599.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-60-69-inch-65-6000-series-4k-ultrahd-hdr-smart-roku-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.usa.philips.com/c-p/65PUL6645_F7",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "Roku TV 4500 Series",
+   "model": "32PFL4674/F7",
+   "regionalModels": {},
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 149.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-30-39-inch-32-4500-series-hd-720p-led-smart-roku-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.usa.philips.com/c-p/32PFL4674_F7",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "Roku 6000 series",
+   "model": "40PFL6543/F7",
+   "regionalModels": {},
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 249.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-40-49-inch-40pfl6543f7",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.usa.philips.com/c-p/40PFL6543_F7",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "Roku 6000 series",
+   "model": "32PFL6573/F7",
+   "regionalModels": {},
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 199.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-30-39-inch-philips-32-class-full-hd-1080p-roku-smart-led-tv-32pfl6573-f7",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.usa.philips.com/c-p/32PFL6573_F7",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "7000 series",
+   "model": "75PUL7552/F7",
+   "regionalModels": {},
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 649.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-70-79-inch-philips-75-7000-series-4k-uhd-led-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.usa.philips.com/c-p/75PUL7552_F7",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "Roku 6600 series",
+   "model": "75PUL6643/F7",
+   "regionalModels": {},
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 649.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-70-79-inch-6600-series-4k-ultra-hd-hdr-75-roku-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.usa.philips.com/c-p/75PUL6643_F7",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "Entertainment Series 7000 series",
+   "model": "85PUL7555/F7",
+   "regionalModels": {},
+   "sizeIn": 85,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 899.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-80-inches-85-7000-series-4k-ultra-hd-2160p-led-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.usa.philips.com/c-p/85PUL7555_F7",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": "Select Series",
+   "model": "LT-58MAW595",
+   "regionalModels": {},
+   "sizeIn": 58,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 449.95,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-50-59-inch-58-class-4k-hdr-uhd-smart-roku-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-50-59-inch-58-class-4k-hdr-uhd-smart-roku-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": null,
+   "model": "LT-40EP4257",
+   "regionalModels": {},
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 249.95,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-40-49-inch-40-dled-full-hd-smart-roku-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-40-49-inch-40-dled-full-hd-smart-roku-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": null,
+   "model": "LT-43EP4457",
+   "regionalModels": {},
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 249.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-40-49-inch-43-class-led-4k-hdr-uhd-smart-roku-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-40-49-inch-43-class-led-4k-hdr-uhd-smart-roku-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "JVC",
+   "series": null,
+   "model": "LT-32MAR205",
+   "regionalModels": {},
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 199.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-30-39-inch-32-inch-class-led-hd-roku-smart-tv-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-30-39-inch-32-inch-class-led-hd-roku-smart-tv-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "AQUOS XLED",
+   "model": "4T-C65FV1U",
+   "regionalModels": {},
+   "sizeIn": 65,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 2499.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-60-69-inch-sharp-65-class-aquos-xled-4k-ultra-hd-mini-led-google-tv-4t-c65fv1u",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-60-69-inch-sharp-65-class-aquos-xled-4k-ultra-hd-mini-led-google-tv-4t-c65fv1u",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "AQUOS QLED HP7050U",
+   "model": "4T-C55HP7050U",
+   "regionalModels": {},
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "RC Willey",
+     "price": 349.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.rcwilley.com/Electronics/TVs/QLED/4T-C55HP7050U/120031726/Sharp-55-Class-AQUOS-QLED-4K-Ultra-HD-Smart-Xumo-TV-View",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.rcwilley.com/Electronics/TVs/QLED/4T-C55HP7050U/120031726/Sharp-55-Class-AQUOS-QLED-4K-Ultra-HD-Smart-Xumo-TV-View",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": "AQUOS QLED HP7050U",
+   "model": "4T-C85HP7050U",
+   "regionalModels": {},
+   "sizeIn": 85,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Xumo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "ABC Warehouse",
+     "price": 999.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.abcwarehouse.com/sharp-aquos-4tc85hp7050u",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.abcwarehouse.com/sharp-aquos-4tc85hp7050u",
+   "status": "verified"
+  },
+  {
+   "brand": "Vizio",
+   "series": "V Series HD",
+   "model": "VHD32M",
+   "regionalModels": {},
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "BrandsMart USA",
+     "price": 129.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-30-39-inch-vhd32m",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.brandsmartusa.com/products/tv-home-theater-tvs-by-size-30-39-inch-vhd32m",
+   "status": "verified"
+  }
+ ],
+ "notFound": [
+  "Vizio: vizio.com has live model pages for 23 current models (Mini LED VQM43C-1001, VQM50C-1010, VQM55C-1004, VQM65C-1004, VQM75C-1004, VQM85C-1010; Quantum Pro VQP65C-84, VQP75C-84; Quantum 4K VQD43R-1004, VQD50R-1007, VQD55R-1004, VQD65R-1004, VQD70R-1001, VQD75R-1004, VQD85R-1004; Quantum Full HD VFQ40M-1004, VFQ43M-1004; Quantum HD VHQ24M-1007, VHQ32M-1007; D-Series D24fM-K01, D32fM-K01, D40fM-K09, D43fM-K04) with specs but prints no TV price, only Buy at Walmart and Sam's Club buttons and a $0.00 template, and the dollar tiles on its series pages are cross-wired between models (a 24-inch Quantum HD shown at $779.99) and link to retired V-Series pages (V4K43M-0801 to V4K86C-0804 now return 404), so none was used; only VHD32M, a V-Series model that is no longer on vizio.com, could be priced, at BrandsMart USA where it is tagged clearance.",
+  "Walmart and Sam's Club answered with a robot-check page, amazon.com with a continue-shopping gate, Best Buy product pages with a 503 or an empty reply and Target's price service with a CAPTCHA, and none of these was bypassed, so the makers sold mainly through them (onn., Insignia, Amazon Fire TV, Pioneer, Polaroid and most of Vizio) have no price from a maker or retailer page.",
+  "onn.: the only onn. listing reached was a Beach Camera resale of a 32-inch HD Roku TV (100012589) at $124.95, left out because onn. is a Walmart-only brand and the seller is a reseller.",
+  "Amazon Fire TV (Omni QLED, Omni Mini-LED, 2-Series, 4-Series): Nebraska Furniture Mart lists an Amazon 75-inch Omni Mini-LED Series QLED 4K UHD at $1,499.99 (UPC 840268972813) but its product page is blocked and the listing prints no model number, so it is left out; Target carries no Fire TV sets.",
+  "Insignia: sold only at Best Buy and Amazon, whose pages could not be read (Best Buy's search page lists the F50 and QF Fire TV series without any price), so no Insignia price or model number was confirmed.",
+  "Pioneer and Polaroid: usa.pioneer is a car-audio site, polaroid.com sits behind a Vercel security checkpoint, and no Pioneer or Polaroid television turned up at BrandsMart USA, ABC Warehouse, RC Willey, Nebraska Furniture Mart, Abt, Costco or Target.",
+  "Panasonic: television.panasonic.com/en-us (run by Skyworth USA) sells its 2026 US range with prices but prints no model numbers (its own press release says final model numbers are subject to approval), so nothing was entered; read on 2026-10-04, S65C Full HD QLED Fire TV 32/40/43 in at $199.99/$249.99/$279.99, W80C 4K Vivid QLED+ Fire TV 43/50/55/65/75/85 in at $379.99/$429.99/$499.99/$649.99/$949.99/$1,199.99, W85C 4K QD-Mini LED Google TV 55/65/75 in at $549.99/$699.99/$999.99, and marked coming soon W87C 55 in at $599.99, W75C Roku TV 55 in at $449.99, Z95B OLED Fire TV 55/65 in at $2,199.99/$2,799.99.",
+  "Westinghouse: westinghouse.com lists its models with a $0.00 placeholder and a Where to buy button, and Target shows only price ranges without model numbers (Roku 4K UHD $239.99 to $469.99), so only the five Xumo models that ABC Warehouse prices were entered; unpriced Xumo models are WX40FX2800, WX43UX4800, WX58UX4800, WX65UX4800, WX55PS4900 and WX65PS4900, and none of its Roku WR models (WR32QE2350, WR40QE2350, WR43QE2350, WR43QX400, WR50QX400, WR55QX400, WR65QX400, WR43MX6500, WR50MX6500, WR55MX6500, WR65MX6500, WR55MX7500, WR65MX7500, WR75MX7500, WR58UE4100, WR50UC4212, WR32HT2212, WR42FX2210, WR32EX2100) could be priced.",
+  "Element: elementelectronics.com prints no price (its structured data carries a 1.00 placeholder) and sends buyers to retailers, so Element prices come from BrandsMart USA and from Nebraska Furniture Mart, whose tiles were joined to Element's pages by the UPC printed on both; Element models still unpriced are E300AG24R, EBB300AG32R, E300AG40R, E550AG55R, E550AE70C, EQ550AG65R, EQ550AG75R, EMQ650AE75C, EMQ600AE100G, the 86-inch frameless Xumo and the 55 and 65-inch 144Hz Google TVs.",
+  "Element at Nebraska Furniture Mart: its soundbar bundles (no model number on the tile) and a 24-inch Xumo whose UPC (810649033396) is not the one on Element's E300AE24C page were skipped.",
+  "Philips: usa.philips.com lists 41 US models (Roku, Google TV and QLED+ series) but prints no price, so only the eight models BrandsMart USA prices were entered.",
+  "JVC and Sharp: jvc.com/usa has no televisions, sharpusa.com has none and sharpconsumer.com is the European Sharp site, so their prices come from BrandsMart USA, RC Willey and ABC Warehouse and the product url is the retailer page; JVC LT-32MAR205 is listed under JVC TV at BrandsMart USA although its description text names Westinghouse.",
+  "Sceptre: sceptre.com lists well over 150 models dating back to at least 2016 with no model year, marks the listed ones ReStock Soon and shows its own list prices, so only the nine with the highest product ids (1403 to 1524, the newest on its date-available sort and Android TV pages) were entered and the older sceptre.com models were left out.",
+  "RCA: the RCA EzGo 27-inch battery-powered portable Google TV (rcatv.com, $599.99 against $799.99 compare-at) is left out because its page prints no model number, and rcatv.com lists no other television.",
+  "Hisense: its American budget lines were not read, since a tv-a-hisense.json file already exists in this catalog folder.",
+  "Costco (its TV page highlights only Samsung, LG, Hisense, Sony and TCL), Abt (its brand filter lists only LG, Neptune, Samsung, Sony, SunBrite, Sylvox and TCL), Target (no Vizio, Element or Fire TV sets turned up, and a Philips, Sharp, JVC and RCA search returned only accessories) and RC Willey (Sharp only among these makers) carry none of the other makers on the list.",
+  "Where a page shows a struck-through regular price beside a lower current price (rcatv.com, BrandsMart USA, Nebraska Furniture Mart and ABC Warehouse's Sharp), the regular price is recorded as the brief asks, but the current price read the same day was lower on 29 of the 54 offers, by 4% to 68% (for example VHD32M $129.99 regular against $49.77, 4T-C65FV1U $2,499.99 against $799.77, E300AE32C $169.99 against $87.99); BrandsMart USA tags some of these as clearance.",
+  "ABC Warehouse's WX43FX2800 shows Compare at $149 beside its own $139 with no sale label, so $139 is recorded as its regular price.",
+  "No model year is printed on any maker or retailer page read, so year is null for every product.",
+  "The energy label was skipped as the task says, so onModeWatts, powerBasis, powerUrl and eprel are null for every product."
+ ]
+}

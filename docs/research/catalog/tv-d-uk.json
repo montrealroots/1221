@@ -1,0 +1,4744 @@
+{
+ "read": "2026-10-04",
+ "category": "televisions",
+ "products": [
+  {
+   "brand": "Panasonic",
+   "series": "W61",
+   "model": "TB-43W61AEYC",
+   "regionalModels": {
+    "uk": "TB-43W61AEYC"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": 42.0,
+   "powerBasis": "EU energy label product information sheet: on mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/a4/d3/89/1788440797/PAN-TB43W61AEYC-F.pdf",
+   "eprel": "2614230",
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 299.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tb43w61aeyc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tb43w61aeyc",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "S50",
+   "model": "TV-24S50AEY",
+   "regionalModels": {
+    "uk": "TV-24S50AEY"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": 16.0,
+   "powerBasis": "EU energy label product information sheet: on mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/35/af/98/1726673808/PAN-TV24S50AEY-F.pdf",
+   "eprel": "1883702",
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 219.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv24s50aeyc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv24s50aeyc",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "W61",
+   "model": "TB-55W61AEYC",
+   "regionalModels": {
+    "uk": "TB-55W61AEYC"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": 64.0,
+   "powerBasis": "EU energy label product information sheet: on mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/15/24/5e/1788439673/PAN-TB55W61AEYC-F.pdf",
+   "eprel": "2614218",
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 499.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tb55w61aeyc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tb55w61aeyc",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "Z90",
+   "model": "TV-48Z90BEB",
+   "regionalModels": {
+    "uk": "TV-48Z90BEB"
+   },
+   "sizeIn": 48,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1199.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv48z90beba",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv48z90beba",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "W61",
+   "model": "TB-50W61AEY",
+   "regionalModels": {
+    "uk": "TB-50W61AEY"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 399.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tb50w61aeyc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tb50w61aeyc",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "W85",
+   "model": "TV-43W85BEY",
+   "regionalModels": {
+    "uk": "TV-43W85BEY"
+   },
+   "sizeIn": 43,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 499.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv43w85beyc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv43w85beyc",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "S55",
+   "model": "TV-40S55AEYC",
+   "regionalModels": {
+    "uk": "TV-40S55AEYC"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 329.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv40s55aeyc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv40s55aeyc",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "W61",
+   "model": "TB-65W61AEY",
+   "regionalModels": {
+    "uk": "TB-65W61AEY"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 599.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tb65w61aeyc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tb65w61aeyc",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "S55",
+   "model": "TV-32S55AEYC",
+   "regionalModels": {
+    "uk": "TV-32S55AEYC"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": 26.0,
+   "powerBasis": "EU energy label product information sheet: on mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/5f/fa/c4/1786364972/PAN-TV32S55AEYC-F.pdf",
+   "eprel": "2613232",
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 269.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv32s55aeyc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv32s55aeyc",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "W85",
+   "model": "TV-65W85BEY",
+   "regionalModels": {
+    "uk": "TV-65W85BEY"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 849.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv65w85beyc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv65w85beyc",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "Z90",
+   "model": "TV-42Z90BEB",
+   "regionalModels": {
+    "uk": "TV-42Z90BEB"
+   },
+   "sizeIn": 42,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1099.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv42z90beba",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv42z90beba",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "Z90",
+   "model": "TV-55Z90BEB",
+   "regionalModels": {
+    "uk": "TV-55Z90BEB"
+   },
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": 84,
+   "powerBasis": "EU energy label product information sheet: on mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/4f/ca/ff/1749045736/PAN-TV55Z90BEB-F.pdf",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1399.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv55z90beba",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv55z90beba",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "Z90",
+   "model": "TV-65Z90BEB",
+   "regionalModels": {
+    "uk": "TV-65Z90BEB"
+   },
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 1699.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv65z90beba",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1699.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/panasonic-tv-65z90beb/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv65z90beba",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "W85",
+   "model": "TV-55W85BEY",
+   "regionalModels": {
+    "uk": "TV-55W85BEY"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": 64.0,
+   "powerBasis": "EU energy label product information sheet: on mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/8f/4e/f9/1754491140/mmo_131520242_1749717384_6338_1768211.pdf",
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 799.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv55w85beyc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv55w85beyc",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "W85",
+   "model": "TV-50W85BEY",
+   "regionalModels": {
+    "uk": "TV-50W85BEY"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 699.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv50w85beyc",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 699.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/panasonic-tv-50w85bey/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv50w85beyc",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "Z90",
+   "model": "TV-77Z90BEB",
+   "regionalModels": {
+    "uk": "TV-77Z90BEB"
+   },
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 2699.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv77z90beba",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 2699.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/panasonic-tv-77z90beb/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv77z90beba",
+   "status": "verified"
+  },
+  {
+   "brand": "Panasonic",
+   "series": "Z95",
+   "model": "TV-65Z95BEB",
+   "regionalModels": {
+    "uk": "TV-65Z95BEB"
+   },
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": 112,
+   "powerBasis": "EU energy label product information sheet: on mode power demand in SDR",
+   "powerUrl": "https://cdn6.hughes.co.uk/media/be/0e/30/1788438787/PAN-TV65Z95BEBA-F.pdf",
+   "eprel": "2203424",
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Hughes",
+     "price": 2099.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv65z95beba",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.hughes.co.uk/product/tv-and-entertainment/televisions/all-televisions/panasonic/tv65z95beba",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PFS6900",
+   "model": "32PFS6900",
+   "regionalModels": {
+    "uk": "32PFS6900"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Titan OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 229.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-32pfs6900/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-32pfs6900/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PHS6050",
+   "model": "32PHS6050",
+   "regionalModels": {
+    "uk": "32PHS6050"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 169.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-32phs6050/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-32phs6050/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PQS8501",
+   "model": "43PQS8501",
+   "regionalModels": {
+    "uk": "43PQS8501"
+   },
+   "sizeIn": 43,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 429.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-43pqs8501/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-43pqs8501/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PQS8601",
+   "model": "43PQS8601",
+   "regionalModels": {
+    "uk": "43PQS8601"
+   },
+   "sizeIn": 43,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 459.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-43pqs8601/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-43pqs8601/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PUS8001",
+   "model": "43PUS8001",
+   "regionalModels": {
+    "uk": "43PUS8001"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Titan OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 399.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-43pus8001/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-43pus8001/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PQS8601",
+   "model": "50PQS8601",
+   "regionalModels": {
+    "uk": "50PQS8601"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 499.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-50pqs8601/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-50pqs8601/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PUS8001",
+   "model": "50PUS8001",
+   "regionalModels": {
+    "uk": "50PUS8001"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Titan OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 449.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-50pus8001/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-50pus8001/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "OLED761",
+   "model": "55OLED761",
+   "regionalModels": {
+    "uk": "55OLED761"
+   },
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1199.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-55oled761/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-55oled761/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "OLED811",
+   "model": "55OLED811",
+   "regionalModels": {
+    "uk": "55OLED811"
+   },
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1399.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-55oled811/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-55oled811/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PQS8501",
+   "model": "55PQS8501",
+   "regionalModels": {
+    "uk": "55PQS8501"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 529.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-55pqs8501/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-55pqs8501/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PQS8601",
+   "model": "55PQS8601",
+   "regionalModels": {
+    "uk": "55PQS8601"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 559.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-55pqs8601/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-55pqs8601/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PUS8001",
+   "model": "55PUS8001",
+   "regionalModels": {
+    "uk": "55PUS8001"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Titan OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 499.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-55pus8001/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-55pus8001/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "OLED761",
+   "model": "65OLED761",
+   "regionalModels": {
+    "uk": "65OLED761"
+   },
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1499.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-65oled761/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-65oled761/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "OLED911",
+   "model": "65OLED911",
+   "regionalModels": {
+    "uk": "65OLED911"
+   },
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1999.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-65oled911/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-65oled911/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PQS8501",
+   "model": "65PQS8501",
+   "regionalModels": {
+    "uk": "65PQS8501"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 659.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-65pqs8501/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-65pqs8501/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PQS8601",
+   "model": "65PQS8601",
+   "regionalModels": {
+    "uk": "65PQS8601"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 699.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-65pqs8601/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-65pqs8601/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PUS8001",
+   "model": "65PUS8001",
+   "regionalModels": {
+    "uk": "65PUS8001"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Titan OS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 629.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-65pus8001/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-65pus8001/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "PQS8601",
+   "model": "75PQS8601",
+   "regionalModels": {
+    "uk": "75PQS8601"
+   },
+   "sizeIn": 75,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 899.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-75pqs8601/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-75pqs8601/",
+   "status": "verified"
+  },
+  {
+   "brand": "Philips",
+   "series": "OLED761",
+   "model": "77OLED761",
+   "regionalModels": {
+    "uk": "77OLED761"
+   },
+   "sizeIn": 77,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 2299.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/philips-77oled761/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/philips-77oled761/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "K85",
+   "model": "H43K85GUF",
+   "regionalModels": {
+    "uk": "H43K85GUF"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 249.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h43k85guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h43k85guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S80",
+   "model": "H43S80GUF",
+   "regionalModels": {
+    "uk": "H43S80GUF"
+   },
+   "sizeIn": 43,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 279.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h43s80guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h43s80guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "K85",
+   "model": "H50K85GUF",
+   "regionalModels": {
+    "uk": "H50K85GUF"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 299.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h50k85guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h50k85guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S80",
+   "model": "H50S80GUF",
+   "regionalModels": {
+    "uk": "H50S80GUF"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 349.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h50s80guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h50s80guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "K85",
+   "model": "H55K85GUF",
+   "regionalModels": {
+    "uk": "H55K85GUF"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 329.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h55k85guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h55k85guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S80",
+   "model": "H55S80GUF",
+   "regionalModels": {
+    "uk": "H55S80GUF"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 429.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h55s80guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h55s80guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S90",
+   "model": "H55S90GUF",
+   "regionalModels": {
+    "uk": "H55S90GUF"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 144,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 499.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h55s90guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h55s90guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S80",
+   "model": "H65S80GUF",
+   "regionalModels": {
+    "uk": "H65S80GUF"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 499.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h65s80guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h65s80guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S90",
+   "model": "H65S90GUF",
+   "regionalModels": {
+    "uk": "H65S90GUF"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 144,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 629.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h65s90guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h65s90guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S80",
+   "model": "H75S80GUF",
+   "regionalModels": {
+    "uk": "H75S80GUF"
+   },
+   "sizeIn": 75,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 699.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h75s80guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h75s80guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S90",
+   "model": "H75S90GUF",
+   "regionalModels": {
+    "uk": "H75S90GUF"
+   },
+   "sizeIn": 75,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 144,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 799.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h75s90guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h75s90guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Haier",
+   "series": "S90",
+   "model": "H85S90GUF",
+   "regionalModels": {
+    "uk": "H85S90GUF"
+   },
+   "sizeIn": 85,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 144,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1099.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/haier-h85s90guf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/haier-h85s90guf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "C1626TZH",
+   "regionalModels": {
+    "uk": "C1626TZH"
+   },
+   "sizeIn": 16,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 169.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-c1626tzh/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-c1626tzh/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "C1926TZH",
+   "regionalModels": {
+    "uk": "C1926TZH"
+   },
+   "sizeIn": 19,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 165.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-c1926tzh/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-c1926tzh/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "C2226TZH",
+   "regionalModels": {
+    "uk": "C2226TZH"
+   },
+   "sizeIn": 22,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 189.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-c2226tzh/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-c2226tzh/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "C22TZR-VOY",
+   "regionalModels": {
+    "uk": "C22TZR-VOY"
+   },
+   "sizeIn": 22,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 449.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-c22tzr-voy/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-c22tzr-voy/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "C2426TZH",
+   "regionalModels": {
+    "uk": "C2426TZH"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 159.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-c2426tzh/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-c2426tzh/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "C24RKH",
+   "regionalModels": {
+    "uk": "C24RKH"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 149.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-c24rkh/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-c24rkh/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "C24TZR-VOY",
+   "regionalModels": {
+    "uk": "C24TZR-VOY"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 469.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-c24tzr-voy/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-c24tzr-voy/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "CTrav-16TZ",
+   "regionalModels": {
+    "uk": "CTrav-16TZ"
+   },
+   "sizeIn": 16,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 189.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-ctrav-16tz/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-ctrav-16tz/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "CTrav-19TZ",
+   "regionalModels": {
+    "uk": "CTrav-19TZ"
+   },
+   "sizeIn": 19,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 199.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-ctrav-19tz/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-ctrav-19tz/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "CTrav-22TZ",
+   "regionalModels": {
+    "uk": "CTrav-22TZ"
+   },
+   "sizeIn": 22,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 219.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-ctrav-22tz/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-ctrav-22tz/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "CTrav-22TZF",
+   "regionalModels": {
+    "uk": "CTrav-22TZF"
+   },
+   "sizeIn": 22,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 249.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-ctrav-22tzf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-ctrav-22tzf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "CTrav-24TZ",
+   "regionalModels": {
+    "uk": "CTrav-24TZ"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 229.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-ctrav-24tz/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-ctrav-24tz/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "CTrav-27TZ",
+   "regionalModels": {
+    "uk": "CTrav-27TZ"
+   },
+   "sizeIn": 27,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 249.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-ctrav-27tz/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-ctrav-27tz/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "CTrav-27TZF",
+   "regionalModels": {
+    "uk": "CTrav-27TZF"
+   },
+   "sizeIn": 27,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 279.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-ctrav-27tzf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-ctrav-27tzf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "CTrav-32TZ",
+   "regionalModels": {
+    "uk": "CTrav-32TZ"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 249.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-ctrav-32tz/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-ctrav-32tz/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "CTrav-32TZF",
+   "regionalModels": {
+    "uk": "CTrav-32TZF"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 269.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-ctrav-32tzf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-ctrav-32tzf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "Q32UK9100R",
+   "regionalModels": {
+    "uk": "Q32UK9100R"
+   },
+   "sizeIn": 32,
+   "panel": "QLED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 349.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-q32uk9100r/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-q32uk9100r/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "Q43UK9100R",
+   "regionalModels": {
+    "uk": "Q43UK9100R"
+   },
+   "sizeIn": 43,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 449.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-q43uk9100r/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-q43uk9100r/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "Q50UK9000",
+   "regionalModels": {
+    "uk": "Q50UK9000"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 499.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-q50uk9000/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-q50uk9000/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "R55UK9000",
+   "regionalModels": {
+    "uk": "R55UK9000"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 549.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-r55uk9000/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-r55uk9000/",
+   "status": "verified"
+  },
+  {
+   "brand": "Cello",
+   "series": null,
+   "model": "CTrav-24TZF",
+   "regionalModels": {
+    "uk": "CTrav-24TZF"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 259.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/cello-ctrav-24tzf/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/cello-ctrav-24tzf/",
+   "status": "verified"
+  },
+  {
+   "brand": "Loewe",
+   "series": "iconic",
+   "model": "iconic i.55",
+   "regionalModels": {
+    "uk": "iconic i.55"
+   },
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 6999.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/loewe-iconic-i-55-pure-white/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/loewe-iconic-i-55-pure-white/",
+   "status": "verified"
+  },
+  {
+   "brand": "Loewe",
+   "series": "iconic",
+   "model": "iconic i.65",
+   "regionalModels": {
+    "uk": "iconic i.65"
+   },
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": 120,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 8499.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/loewe-iconic-i-65-pure-white/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/loewe-iconic-i-65-pure-white/",
+   "status": "verified"
+  },
+  {
+   "brand": "ProofVision",
+   "series": "Lifestyle MX",
+   "model": "PVO65SDMW",
+   "regionalModels": {
+    "uk": "PVO65SDMW"
+   },
+   "sizeIn": 65,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 3595.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/proofvision-65inch-lifestyle-mx-outdoor-tv/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/proofvision-65inch-lifestyle-mx-outdoor-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "ProofVision",
+   "series": "Lifestyle MX",
+   "model": "PVO75SDMW",
+   "regionalModels": {
+    "uk": "PVO75SDMW"
+   },
+   "sizeIn": 75,
+   "panel": "Mini-LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 4795.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/proofvision-75inch-lifestyle-mx-outdoor-tv/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/proofvision-75inch-lifestyle-mx-outdoor-tv/",
+   "status": "verified"
+  },
+  {
+   "brand": "Mitchell & Brown",
+   "series": null,
+   "model": "JB-32R1811",
+   "regionalModels": {
+    "uk": "JB-32R1811"
+   },
+   "sizeIn": 32,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 249.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+   "status": "verified"
+  },
+  {
+   "brand": "Mitchell & Brown",
+   "series": null,
+   "model": "JB-32W1811",
+   "regionalModels": {
+    "uk": "JB-32W1811"
+   },
+   "sizeIn": 32,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "White"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 279.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+   "status": "verified"
+  },
+  {
+   "brand": "Loewe",
+   "series": "Antares",
+   "model": "Antares 65",
+   "regionalModels": {
+    "uk": "Antares 65"
+   },
+   "sizeIn": 65,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 3999.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+   "status": "verified"
+  },
+  {
+   "brand": "Loewe",
+   "series": "Antares",
+   "model": "Antares 55",
+   "regionalModels": {
+    "uk": "Antares 55"
+   },
+   "sizeIn": 55,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 3099.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+   "status": "verified"
+  },
+  {
+   "brand": "Loewe",
+   "series": "Antares",
+   "model": "Antares 48",
+   "regionalModels": {
+    "uk": "Antares 48"
+   },
+   "sizeIn": 48,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 2799.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+   "status": "verified"
+  },
+  {
+   "brand": "Loewe",
+   "series": "Antares",
+   "model": "Antares 42",
+   "regionalModels": {
+    "uk": "Antares 42"
+   },
+   "sizeIn": 42,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 2499.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+   "status": "verified"
+  },
+  {
+   "brand": "Loewe",
+   "series": "We. SEE",
+   "model": "We. SEE 55 oled dc",
+   "regionalModels": {
+    "uk": "We. SEE 55 oled dc"
+   },
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 2199.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+   "status": "verified"
+  },
+  {
+   "brand": "Loewe",
+   "series": "We. SEE",
+   "model": "We. SEE 65 oled dc",
+   "regionalModels": {
+    "uk": "We. SEE 65 oled dc"
+   },
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 2899.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+   "status": "verified"
+  },
+  {
+   "brand": "Loewe",
+   "series": "We. SEE",
+   "model": "We. SEE 48 oled dc",
+   "regionalModels": {
+    "uk": "We. SEE 48 oled dc"
+   },
+   "sizeIn": 48,
+   "panel": "OLED",
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1999.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+   "status": "verified"
+  },
+  {
+   "brand": "Toshiba",
+   "series": null,
+   "model": "32WF2653DB",
+   "regionalModels": {
+    "uk": "32WF2653DB"
+   },
+   "sizeIn": 32,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 149.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+   "status": "verified"
+  },
+  {
+   "brand": "Sylvox",
+   "series": "Pergola ProQ G+",
+   "model": "OQ43A9K3RF",
+   "regionalModels": {
+    "uk": "OQ43A9K3RF"
+   },
+   "sizeIn": 43,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 2149.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100",
+   "status": "verified"
+  },
+  {
+   "brand": "Sylvox",
+   "series": "Porch",
+   "model": "OT50B1K4GC",
+   "regionalModels": {
+    "uk": "OT50B1K4GC"
+   },
+   "sizeIn": 50,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1559.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+   "status": "verified"
+  },
+  {
+   "brand": "Sylvox",
+   "series": "Porch",
+   "model": "OT43B1K4GC",
+   "regionalModels": {
+    "uk": "OT43B1K4GC"
+   },
+   "sizeIn": 43,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1299.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+   "status": "verified"
+  },
+  {
+   "brand": "Sylvox",
+   "series": "Pergola ProQ G+",
+   "model": "OQ75A9K3RF",
+   "regionalModels": {
+    "uk": "OQ75A9K3RF"
+   },
+   "sizeIn": 75,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 5399.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+   "status": "verified"
+  },
+  {
+   "brand": "Sylvox",
+   "series": "Pergola ProQ G+",
+   "model": "OQ65A9K3RF",
+   "regionalModels": {
+    "uk": "OQ65A9K3RF"
+   },
+   "sizeIn": 65,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 4099.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+   "status": "verified"
+  },
+  {
+   "brand": "Sylvox",
+   "series": "Pergola ProQ G+",
+   "model": "OQ55A9K3RF",
+   "regionalModels": {
+    "uk": "OQ55A9K3RF"
+   },
+   "sizeIn": 55,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 3049.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+   "status": "verified"
+  },
+  {
+   "brand": "Sylvox",
+   "series": "Cinema Pro",
+   "model": "OQ85A4K8RK",
+   "regionalModels": {
+    "uk": "OQ85A4K8RK"
+   },
+   "sizeIn": 85,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 18399.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+   "status": "verified"
+  },
+  {
+   "brand": "Sylvox",
+   "series": "Cinema Pro",
+   "model": "OQ65A4K8RJ",
+   "regionalModels": {
+    "uk": "OQ65A4K8RJ"
+   },
+   "sizeIn": 65,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 5999.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+   "status": "verified"
+  },
+  {
+   "brand": "Sylvox",
+   "series": "Cinema Pro",
+   "model": "OQHTA4K8RK",
+   "regionalModels": {
+    "uk": "OQHTA4K8RK"
+   },
+   "sizeIn": 110,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 64999.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+   "status": "verified"
+  },
+  {
+   "brand": "Sylvox",
+   "series": "Cinema Pro",
+   "model": "OQ75A4K8RJ",
+   "regionalModels": {
+    "uk": "OQ75A4K8RJ"
+   },
+   "sizeIn": 75,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 7599.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=2",
+   "status": "verified"
+  },
+  {
+   "brand": "Loewe",
+   "series": "Vega",
+   "model": "Vega 43",
+   "regionalModels": {
+    "uk": "Vega 43"
+   },
+   "sizeIn": 43,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1899.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=3",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=3",
+   "status": "verified"
+  },
+  {
+   "brand": "Loewe",
+   "series": "Vega",
+   "model": "Vega 32",
+   "regionalModels": {
+    "uk": "Vega 32"
+   },
+   "sizeIn": 32,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 1649.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=3",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=3",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": null,
+   "model": "40HE3245K",
+   "regionalModels": {
+    "uk": "40HE3245K"
+   },
+   "sizeIn": 40,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 209.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=3",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=3",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": null,
+   "model": "32HE3245K",
+   "regionalModels": {
+    "uk": "32HE3245K"
+   },
+   "sizeIn": 32,
+   "panel": null,
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Richer Sounds",
+     "price": 169.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=3",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.richersounds.com/tv-projectors/tvs-accessories/tvs/all-tvs/?limit=100&page=3",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": null,
+   "model": "1TC32DI2KL2AB",
+   "regionalModels": {
+    "uk": "1TC32DI2KL2AB"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Android TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Atlantic Electrics",
+     "price": 179.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.atlanticelectrics.co.uk/products/sharp-1tc32di2kl2ab-32-hd-ready-frameles-led-android-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.atlanticelectrics.co.uk/products/sharp-1tc32di2kl2ab-32-hd-ready-frameles-led-android-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": null,
+   "model": "1TC32HE2245KB",
+   "regionalModels": {
+    "uk": "1TC32HE2245KB"
+   },
+   "sizeIn": 32,
+   "panel": null,
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "TiVo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Atlantic Electrics",
+     "price": 140.24,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.atlanticelectrics.co.uk/products/sharp-1t-c32he2245kb-hdr-tv-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.atlanticelectrics.co.uk/products/sharp-1t-c32he2245kb-hdr-tv-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Metz",
+   "series": "MPE7002",
+   "model": "24MPE7002Z",
+   "regionalModels": {
+    "uk": "24MPE7002Z"
+   },
+   "sizeIn": 24,
+   "panel": null,
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Atlantic Electrics",
+     "price": 299.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.atlanticelectrics.co.uk/products/metz-24mpe7002z-24-full-hd-smart-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.atlanticelectrics.co.uk/products/metz-24mpe7002z-24-full-hd-smart-google-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Metz",
+   "series": "MQE7600",
+   "model": "50MQE7600ZUK",
+   "regionalModels": {
+    "uk": "50MQE7600ZUK"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Atlantic Electrics",
+     "price": 369.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.atlanticelectrics.co.uk/products/metz-50g4en-50-4k-ultra-hd-qled-smart-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.atlanticelectrics.co.uk/products/metz-50g4en-50-4k-ultra-hd-qled-smart-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Metz",
+   "series": "MQE7600",
+   "model": "55MQE7600ZUK",
+   "regionalModels": {
+    "uk": "55MQE7600ZUK"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Atlantic Electrics",
+     "price": 399.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.atlanticelectrics.co.uk/products/metz-55g4en-55-4k-ultra-hd-qled-smart-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.atlanticelectrics.co.uk/products/metz-55g4en-55-4k-ultra-hd-qled-smart-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Metz",
+   "series": "MQE7600",
+   "model": "65MQE7600ZUK",
+   "regionalModels": {
+    "uk": "65MQE7600ZUK"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Atlantic Electrics",
+     "price": 479.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.atlanticelectrics.co.uk/products/metz-65g4en-65-4k-ultra-hd-qled-smart-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.atlanticelectrics.co.uk/products/metz-65g4en-65-4k-ultra-hd-qled-smart-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Sharp",
+   "series": null,
+   "model": "1TC32HE2245KW",
+   "regionalModels": {
+    "uk": "1TC32HE2245KW"
+   },
+   "sizeIn": 32,
+   "panel": null,
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "TiVo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "White"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Atlantic Electrics",
+     "price": 159.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.atlanticelectrics.co.uk/products/sharp-1t-c32he2245kw-32-hd-ready-tivo-smart-tv-white",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.atlanticelectrics.co.uk/products/sharp-1t-c32he2245kw-32-hd-ready-tivo-smart-tv-white",
+   "status": "verified"
+  },
+  {
+   "brand": "Metz",
+   "series": "MTD6100",
+   "model": "24MTD6100Y/UK",
+   "regionalModels": {
+    "uk": "24MTD6100Y/UK"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": null,
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Roku TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Atlantic Electrics",
+     "price": 159.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.atlanticelectrics.co.uk/products/metz-24mtd6100y-uk-23-6-direct-led-roku-smart-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.atlanticelectrics.co.uk/products/metz-24mtd6100y-uk-23-6-direct-led-roku-smart-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Metz",
+   "series": "MRF6000",
+   "model": "50MRF6000ZUK",
+   "regionalModels": {
+    "uk": "50MRF6000ZUK"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Atlantic Electrics",
+     "price": 249.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.atlanticelectrics.co.uk/products/metz-50mrf6000zuk-50-4k-dled-smart-tv-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.atlanticelectrics.co.uk/products/metz-50mrf6000zuk-50-4k-dled-smart-tv-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Metz",
+   "series": "MRF6000",
+   "model": "43MRF6000ZUK",
+   "regionalModels": {
+    "uk": "43MRF6000ZUK"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Atlantic Electrics",
+     "price": 279.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.atlanticelectrics.co.uk/products/metz-43mrf6000zuk-43-4k-dled-smart-tv-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.atlanticelectrics.co.uk/products/metz-43mrf6000zuk-43-4k-dled-smart-tv-black",
+   "status": "verified"
+  },
+  {
+   "brand": "Metz",
+   "series": "MQH6800",
+   "model": "40MQH6800ZUK",
+   "regionalModels": {
+    "uk": "40MQH6800ZUK"
+   },
+   "sizeIn": 40,
+   "panel": "QLED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Atlantic Electrics",
+     "price": 189.0,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.atlanticelectrics.co.uk/products/metz-40mqh6800zuk-40-hd-smart-qled-tv-with-freely-power-by-tivo-black",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.atlanticelectrics.co.uk/products/metz-40mqh6800zuk-40-hd-smart-qled-tv-with-freely-power-by-tivo-black",
+   "status": "verified"
+  },
+  {
+   "brand": "NordMende",
+   "series": null,
+   "model": "ARTV90040FHD",
+   "regionalModels": {
+    "ie": "ARTV90040FHD"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "TiVo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 219.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/nordmende-40-full-hd-smart-tv-black-artv90040fhd",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/nordmende-40-full-hd-smart-tv-black-artv90040fhd",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N18",
+   "model": "TS4320",
+   "regionalModels": {
+    "ie": "TS4320"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 319.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n18-43-4k-smart-tv-ts4320",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n18-43-4k-smart-tv-ts4320",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N24",
+   "model": "N24-HD-T24",
+   "regionalModels": {
+    "ie": "N24-HD-T24"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 169.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n24-24-hd-smart-tv-black-n24-hd-t24",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n24-24-hd-smart-tv-black-n24-hd-t24",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N21",
+   "model": "N21-HD-T32",
+   "regionalModels": {
+    "ie": "N21-HD-T32"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 199.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n21-32-hd-smart-tv-black-n21-hd-t32",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n21-32-hd-smart-tv-black-n21-hd-t32",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N27",
+   "model": "N27-QLED-W50",
+   "regionalModels": {
+    "ie": "N27-QLED-W50"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 419.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n27-50-4k-smart-tv-black-n27-qled-w50",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n27-50-4k-smart-tv-black-n27-qled-w50",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N27",
+   "model": "N27-QLED-T43",
+   "regionalModels": {
+    "ie": "N27-QLED-T43"
+   },
+   "sizeIn": 43,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 339.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n27-43-4k-smart-tv-black-n27-qled-t43",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n27-43-4k-smart-tv-black-n27-qled-t43",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N21",
+   "model": "N21-HD-W32",
+   "regionalModels": {
+    "ie": "N21-HD-W32"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 199.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n21-32-hd-smart-tv-black-n21-hd-w32",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n21-32-hd-smart-tv-black-n21-hd-w32",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N21",
+   "model": "N21-FHD-W43",
+   "regionalModels": {
+    "ie": "N21-FHD-W43"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 289.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n21-43-full-hd-smart-tv-black-n21-fhd-w43",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n21-43-full-hd-smart-tv-black-n21-fhd-w43",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N27",
+   "model": "N27-QLED-W55",
+   "regionalModels": {
+    "ie": "N27-QLED-W55"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 479.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n27-55-4k-smart-tv-black-n27-qled-w55",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n27-55-4k-smart-tv-black-n27-qled-w55",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N27",
+   "model": "N27-QLED-T50",
+   "regionalModels": {
+    "ie": "N27-QLED-T50"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 419.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n27-50-4k-smart-tv-black-n27-qled-t50",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n27-50-4k-smart-tv-black-n27-qled-t50",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N27",
+   "model": "N27-QLED-W65",
+   "regionalModels": {
+    "ie": "N27-QLED-W65"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 629.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n27-65-4k-smart-tv-black-n27-qled-w65",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n27-65-4k-smart-tv-black-n27-qled-w65",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N27",
+   "model": "N27-QLED-W43",
+   "regionalModels": {
+    "ie": "N27-QLED-W43"
+   },
+   "sizeIn": 43,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 339.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n27-43-4k-smart-tv-black-n27-qled-w43",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n27-43-4k-smart-tv-black-n27-qled-w43",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N27",
+   "model": "N27-QLED-T65",
+   "regionalModels": {
+    "ie": "N27-QLED-T65"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 629.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n27-65-4k-smart-tv-black-n27-qled-t65",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n27-65-4k-smart-tv-black-n27-qled-t65",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N21",
+   "model": "N21-UHD-T70",
+   "regionalModels": {
+    "ie": "N21-UHD-T70"
+   },
+   "sizeIn": 70,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 699.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n21-70-4k-smart-tv-black-n21-uhd-t70",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n21-70-4k-smart-tv-black-n21-uhd-t70",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N27",
+   "model": "N27-QLED-T55",
+   "regionalModels": {
+    "ie": "N27-QLED-T55"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 479.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n27-55-4k-smart-tv-black-n27-qled-t55",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n27-55-4k-smart-tv-black-n27-qled-t55",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N21",
+   "model": "N21-UHD-W75",
+   "regionalModels": {
+    "ie": "N21-UHD-W75"
+   },
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 899.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n21-75-4k-smart-tv-black-n21-uhd-w75",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n21-75-4k-smart-tv-black-n21-uhd-w75",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N21",
+   "model": "N21-UHD-W50",
+   "regionalModels": {
+    "ie": "N21-UHD-W50"
+   },
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 399.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n21-50-4k-smart-tv-black-n21-uhd-w50",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n21-50-4k-smart-tv-black-n21-uhd-w50",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N21",
+   "model": "N21-UHD-W55",
+   "regionalModels": {
+    "ie": "N21-UHD-W55"
+   },
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 429.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n21-55-4k-smart-tv-black-n21-uhd-w55",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n21-55-4k-smart-tv-black-n21-uhd-w55",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N21",
+   "model": "N21-UHD-W65",
+   "regionalModels": {
+    "ie": "N21-UHD-W65"
+   },
+   "sizeIn": 65,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 579.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n21-65-4k-smart-tv-black-n21-uhd-w65",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n21-65-4k-smart-tv-black-n21-uhd-w65",
+   "status": "verified"
+  },
+  {
+   "brand": "NordMende",
+   "series": null,
+   "model": "ARQ50A",
+   "regionalModels": {
+    "ie": "ARQ50A"
+   },
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "TiVo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 344.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/nordmende-50-4k-uhd-smart-tv-black-arq50a",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/nordmende-50-4k-uhd-smart-tv-black-arq50a",
+   "status": "verified"
+  },
+  {
+   "brand": "NordMende",
+   "series": null,
+   "model": "ARQ55A",
+   "regionalModels": {
+    "ie": "ARQ55A"
+   },
+   "sizeIn": 55,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "TiVo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 394.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/nordmende-55-4k-smart-tv-black-arq55a",
+     "status": "verified"
+    },
+    {
+     "market": "ie",
+     "seller": "Expert",
+     "price": 394.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.expert.ie/nordmende-55-inch-smart-tv-ultra-high-definition-qled-900-arq55a/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/nordmende-55-4k-smart-tv-black-arq55a",
+   "status": "verified"
+  },
+  {
+   "brand": "NordMende",
+   "series": null,
+   "model": "ARQ65A",
+   "regionalModels": {
+    "ie": "ARQ65A"
+   },
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "TiVo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Matte Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 514.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/nordmende-65-4k-uhd-smart-tv-matte-black-arq65a",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/nordmende-65-4k-uhd-smart-tv-matte-black-arq65a",
+   "status": "verified"
+  },
+  {
+   "brand": "Telefunken",
+   "series": "N21",
+   "model": "N21-FHD-T43",
+   "regionalModels": {
+    "ie": "N21-FHD-T43"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Tizen",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": [
+    "Black"
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "DID Electrical",
+     "price": 289.99,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.did.ie/products/telefunken-n21-43-hd-smart-tv-black-n21-fhd-t43",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.did.ie/products/telefunken-n21-43-hd-smart-tv-black-n21-fhd-t43",
+   "status": "verified"
+  },
+  {
+   "brand": "NordMende",
+   "series": null,
+   "model": "V24HD",
+   "regionalModels": {
+    "ie": "V24HD"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Power City",
+     "price": 149.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.powercity.ie/product/V24HD",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.powercity.ie/product/V24HD",
+   "status": "verified"
+  },
+  {
+   "brand": "NordMende",
+   "series": null,
+   "model": "TV90032H",
+   "regionalModels": {
+    "ie": "TV90032H"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Power City",
+     "price": 169.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.powercity.ie/product/TV90032H",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.powercity.ie/product/TV90032H",
+   "status": "verified"
+  },
+  {
+   "brand": "Walker",
+   "series": null,
+   "model": "WPS32261HD",
+   "regionalModels": {
+    "ie": "WPS32261HD"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Power City",
+     "price": 179.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.powercity.ie/product/WPS32261HD",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.powercity.ie/product/WPS32261HD",
+   "status": "verified"
+  },
+  {
+   "brand": "Toshiba",
+   "series": null,
+   "model": "24WV3553",
+   "regionalModels": {
+    "ie": "24WV3553"
+   },
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Power City",
+     "price": 179.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.powercity.ie/product/24WV3553",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.powercity.ie/product/24WV3553",
+   "status": "verified"
+  },
+  {
+   "brand": "Walker",
+   "series": null,
+   "model": "2K32241",
+   "regionalModels": {
+    "ie": "2K32241"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Power City",
+     "price": 199.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.powercity.ie/product/2K32241",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.powercity.ie/product/2K32241",
+   "status": "verified"
+  },
+  {
+   "brand": "Toshiba",
+   "series": null,
+   "model": "32WV3553",
+   "regionalModels": {
+    "ie": "32WV3553"
+   },
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "HD",
+   "refreshHz": null,
+   "year": 2026,
+   "smartOs": "VIDAA",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Power City",
+     "price": 199.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.powercity.ie/product/32WV3553",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.powercity.ie/product/32WV3553",
+   "status": "verified"
+  },
+  {
+   "brand": "Walker",
+   "series": null,
+   "model": "2K40241",
+   "regionalModels": {
+    "ie": "2K40241"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Power City",
+     "price": 249.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.powercity.ie/product/2K40241",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.powercity.ie/product/2K40241",
+   "status": "verified"
+  },
+  {
+   "brand": "Walker",
+   "series": null,
+   "model": "2K40261",
+   "regionalModels": {
+    "ie": "2K40261"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Power City",
+     "price": 249.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.powercity.ie/product/2K40261",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.powercity.ie/product/2K40261",
+   "status": "verified"
+  },
+  {
+   "brand": "NordMende",
+   "series": null,
+   "model": "V43UHD",
+   "regionalModels": {
+    "ie": "V43UHD"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Power City",
+     "price": 269.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.powercity.ie/product/V43UHD",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.powercity.ie/product/V43UHD",
+   "status": "verified"
+  },
+  {
+   "brand": "Walker",
+   "series": null,
+   "model": "2K43241",
+   "regionalModels": {
+    "ie": "2K43241"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Power City",
+     "price": 299.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.powercity.ie/product/2K43241",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.powercity.ie/product/2K43241",
+   "status": "verified"
+  },
+  {
+   "brand": "Walker",
+   "series": null,
+   "model": "WP4K43251",
+   "regionalModels": {
+    "ie": "WP4K43251"
+   },
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "TiVo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Power City",
+     "price": 329.95,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://www.powercity.ie/product/WP4K43251",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.powercity.ie/product/WP4K43251",
+   "status": "verified"
+  },
+  {
+   "brand": "Walker",
+   "series": "S2K",
+   "model": "WPS2K40241",
+   "regionalModels": {
+    "ie": "WPS2K40241"
+   },
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "TiVo",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Euronics",
+     "price": 249.0,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://euronics.ie/products/walker-40-inch-s2k-full-hd-smart-tv-with-satellite-wps2k40241",
+     "status": "verified"
+    }
+   ],
+   "url": "https://euronics.ie/products/walker-40-inch-s2k-full-hd-smart-tv-with-satellite-wps2k40241",
+   "status": "verified"
+  },
+  {
+   "brand": "Walker",
+   "series": "2K QLED",
+   "model": "WPS2KQLED40251",
+   "regionalModels": {
+    "ie": "WPS2KQLED40251"
+   },
+   "sizeIn": 40,
+   "panel": "QLED",
+   "resolution": "Full HD",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "eprel": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Euronics",
+     "price": 269.0,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://euronics.ie/products/walker-2k-qled-tv-with-satellite-tuner-32-wps2kqled40251",
+     "status": "verified"
+    }
+   ],
+   "url": "https://euronics.ie/products/walker-2k-qled-tv-with-satellite-tuner-32-wps2kqled40251",
+   "status": "verified"
+  }
+ ],
+ "notFound": [
+  "Hitachi: Argos, its main UK seller, answered HTTP 403 Access Denied to both fetch tools, Laptops Direct's Hitachi TV category returned zero results, and no Hitachi-run UK TV site was found, so no model or price is recorded.",
+  "Grundig: Currys and AO (Cloudflare 403) and Argos (Akamai 403) block automated access, and none of the multi-brand listings read (Richer Sounds, Atlantic Electrics, DID, Euronics, Expert, Power City) carries a Grundig TV, so none is recorded.",
+  "Finlux: Very (403 Access Denied) and EE (Incapsula block) could not be read, and Laptops Direct's page for the Finlux MU24F 50in Fire TV (50MU24F, JSON-LD price GBP 329) says 'This product is no longer available', so no current Finlux price is recorded.",
+  "Blaupunkt: Currys returned a Cloudflare 403 and no reachable retailer page for a current Blaupunkt TV was found, so none is recorded.",
+  "Techwood: AO's own brand and ao.com returned a Cloudflare 403; the only page reached, Laptops Direct's Techwood 65AO5USB, says 'This product is no longer available' (and shows an old A+ energy class), so none is recorded.",
+  "Linsar: no Linsar TV appears in any listing read (Richer Sounds' first 300 'All TVs' entries, Atlantic Electrics' television collection, the DID and Euronics TV collections, Expert's 56 TVs, Power City's 22-43in page), so none is recorded.",
+  "Manhattan: only Freeview Play set-top boxes and streamers (T3, T4, Aero) surfaced in search and on one Richer Sounds record, and no Manhattan television model was found on any page read.",
+  "Ferguson: no Ferguson TV appears in any listing read, and search only surfaced trade news about Cello relaunching the brand, which is not a priced product page, so none is recorded.",
+  "Sharp UK range: Currys, AO and Argos are blocked, so only five Sharp sets are priced (Atlantic Electrics 1TC32DI2KL2AB, 1TC32HE2245KB and 1TC32HE2245KW, Richer Sounds 32HE3245K and 40HE3245K), not Sharp's larger 4K sets.",
+  "Toshiba current UK range: Currys, AO and Argos are blocked, so the UK shows only Richer Sounds 32WF2653DB, and Ireland shows only Power City 24WV3553 and 32WV3553, not Toshiba's larger sets.",
+  "Euronics Ireland: its Toshiba 43UA2063DB (published 2021) and 55QA4C63DB (published 2022) and its Walker WPT2421SAT, WPT3220LED, 39WPS21, WP4K55221BRD and WPT2421DVD (published 2021-2024) are all shown sold out and are older lines, so they were left out as not current, while the two 2026 Walker listings that were kept (WPS2K40241 and WPS2KQLED40251) are also shown sold out online but carry a price.",
+  "Panasonic, Philips, Sharp, Hitachi and Grundig in Ireland: Harvey Norman IE returned a Cloudflare 403 to both tools, and the DID smart-TV collection, Euronics, Expert (56 TVs: Samsung, LG, Hisense, Sony, Walker, NordMende) and Power City's 22-43in page list none of them, so no Irish offer exists in this file for those makers.",
+  "On-mode watts: only the seven Panasonic products have a watt figure (UK fiches on Hughes); Richer Sounds, DID, Power City and Euronics print the label energy only as kWh/1000h (for example Power City Toshiba 32WV3553 'energy consumption 26', Richer Sounds Philips 55PUS8001 '77 kwh'), which is not watts and was not converted, and DID's Telefunken fields are mislabelled or swapped on several items.",
+  "Philips watts and EPREL numbers: philips.co.uk/c-p/55PUS8001_12/ returned an error page and the Richer Sounds product page prints no fiche or EPREL number, so Philips has no onModeWatts or eprel.",
+  "Power City fiche: the product page links /groups/product/energyfiche?id=32WV3553 to a PDF at powercity.cdn.webangel.ie/energyfiche/32WV3553.pdf, which answered 404, so Toshiba 32WV3553 has no watts.",
+  "Panasonic fiches: ten of the 17 Hughes Panasonic models have no onModeWatts, because eight have a fiche link on the Hughes listing that was not fetched within the budget (TV-48Z90BEB, TV-43W85BEY, TB-65W61AEY, TV-65W85BEY, TV-42Z90BEB, TV-65Z90BEB, TV-50W85BEY, TV-77Z90BEB) and TB-50W61AEY and TV-40S55AEYC show no fiche link.",
+  "Panasonic native refresh rate and model year are not printed on the Hughes listing or the fiches (the fiche 'default' 50/100/120 Hz is not the native rate), so refreshHz and year are null for Panasonic; the W61 series' smart OS is also not stated in its Hughes title.",
+  "Richer Sounds stock status (Current/Finished) was read for Philips, Haier, Cello, Panasonic and ProofVision from its Klevu records, but the Loewe Antares, We. SEE and Vega, Sharp, Toshiba, Mitchell & Brown and Sylvox lines were read only as name and price from the category page's embedded data, so those are unconfirmed as current and carry that listing URL instead of a product URL.",
+  "Richer Sounds model year: its pages print no model year, so Philips, Haier and Cello have year null (the Philips lines carry a pricing start date of 2026-09-07/08, which is not a model year).",
+  "Prices: every price is the regular price shown; Atlantic Electrics lists the Sharp 1TC32HE2245KB at GBP 140.24, recorded as shown, and the Metz 55MQE7600ZUK is also sold there as a speaker bundle at the same GBP 399, which was not duplicated.",
+  "Power City: product codes 241SA, 31411, 31145, 332993 and the QLED32 and QLED40 shorthand are retailer codes without a model-style number, so those Walker and Toshiba lines were left out; the kept Walker codes (for example 2K40241) may be the same sets as Euronics' WPS-prefixed codes but are not merged.",
+  "Coverage gaps from the fetch budget: Expert's page 2 (16 of its 56 TVs, including its three Walker sets) and Power City's 46-100in TV category were not fetched, so larger Walker, NordMende and Toshiba sets and Expert's Walker prices are missing.",
+  "Richer Sounds' 'All TVs' list was read for its first 300 entries only (newest first), so older Panasonic, Sharp, Toshiba and other-maker lines beyond them are not covered, and only Hughes' Panasonic brand page was fetched from Hughes.",
+  "John Lewis and Sonic Direct: John Lewis was not reached (no listing URL known), and Sonic Direct's TV page was read only for its brand navigation (Haier, Hisense, LG, Panasonic, Samsung, Sony, TCL, all already covered or excluded), so neither adds an offer.",
+  "Currys, AO, Argos, Very and Harvey Norman IE all refused automated access (403) from this network, so none of their listings, prices or EPREL numbers are in this file.",
+  "Richer Sounds status codes: 'AS' (not explained on the page; Hughes shows 'Available Soon' for the same Panasonic 77Z90) applies to Cello CTrav-19TZ, Panasonic TV-65Z90BEB, Panasonic TV-77Z90BEB, Philips 55OLED811, Philips 65OLED911, Philips 75PQS8601, Philips 77OLED761 and 'Special' to Cello C1626TZH, Cello C1926TZH, Cello C22TZR-VOY, Cello C24TZR-VOY, Cello CTrav-16TZ, Cello CTrav-32TZF, Loewe iconic i.55, Loewe iconic i.65; all carry a shown price and are included, but some may not be shipping yet."
+ ]
+}
