@@ -56,7 +56,7 @@ which never counts toward the target.
 | Building And Garden | Building Materials, Fixtures And Finishes | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Building And Garden | Garden Equipment | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Sport | Sports Equipment | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
-| Pets | Pet Supplies | 11 | 22% | 28 | 1 / 1 / 3 | 0 | 28 | 31 | 11 | CA, GB, IE, MX, US | No |
+| Pets | Pet Supplies | 41 | 82% | 81 | 1 / 1 / 6 | 0 | 81 | 85 | 11 | CA, GB, IE, MX, US | No |
 
 0 of 45 brand and narrow categories meet the target.
 

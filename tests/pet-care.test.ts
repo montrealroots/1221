@@ -8,7 +8,7 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { RATION_G, VET_YEAR } from '@/engine/content/petcare';
+import { LITTERS, PET_FOODS, RATION_G, VET_YEAR } from '@/engine/content/petcare';
 import { foodLeftG, litterLeftKg, petShop, petsOf, vetPrice, walkerDay } from '@/engine/systems/pets';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { moveTo } from '@/engine/systems/luggage';
@@ -31,6 +31,31 @@ describe('a pet’s food', () => {
     sim.must({ kind: 'pets.feed', payload: {} });
     expect(before - foodLeftG(sim.player, 'dog')).toBeCloseTo(RATION_G.dog, 6);
     expect(sim.execute({ kind: 'pets.feed', payload: {} }).error).toBe('They’re fed for today.');
+  });
+
+  it('is each food’s own: two bags of one food are two things to buy, each its weight', () => {
+    // Walmart's 9.07 and 1.43 kg bags of Cat Chow shared one id until 2026-10-04, and either bought the first.
+    const ids = [...PET_FOODS, ...LITTERS].map((x) => x.id);
+    expect(new Set(ids).size).toBe(ids.length);
+    const sim = life('pc-two-bags');
+    sim.must({ kind: 'pets.adopt', payload: { shelterId: 'aspca-cat', name: 'Mog' } });
+    sim.must({ kind: 'pets.buy', payload: { productId: 'us-purina-cat-chow-complete-high-protein-dry-cat-food-1-43kg' } });
+    sim.advanceBy(2 * MS_DAY + 3_600_000);
+    expect(foodLeftG(sim.player, 'cat')).toBeGreaterThan(1430 - 2 * RATION_G.cat - 1e-6);
+    expect(foodLeftG(sim.player, 'cat')).toBeLessThanOrEqual(1430);
+  });
+
+  it('is sold by the grocers too, in their markets, each maker spelled one way', () => {
+    // Chedraui's Ganador, from the grocers' own feeds (2026-10-04).
+    const mx = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true, wealth: 'wealthy' }, 'pc-mx');
+    mx.must({ kind: 'pets.adopt', payload: { shelterId: 'brigada-dog', name: 'Rex' } });
+    expect(petShop(mx, mx.player).some((x) => x.id === 'mx-ganador-alimento-seco-para-perro-original-adulto' && x.retailer === 'Chedraui')).toBe(true);
+    const spellings = new Map<string, Set<string>>();
+    for (const f of PET_FOODS) spellings.set(f.brand.toLowerCase(), (spellings.get(f.brand.toLowerCase()) ?? new Set()).add(f.brand));
+    expect([...spellings.values()].filter((v) => v.size > 1).map((v) => [...v])).toEqual([]);
+    // The earlier read's PURINA ONE is Purina ONE, its Pro Plan Purina Pro Plan, as the grocers' feeds write them.
+    expect(PET_FOODS.some((f) => f.brand === 'PURINA ONE' || f.brand === 'Pro Plan')).toBe(false);
+    expect(new Set(PET_FOODS.map((f) => f.brand)).size).toBeGreaterThanOrEqual(40);
   });
 
   it('a day unfed is said and counted; the shortcut feeds them from what’s at home', () => {
