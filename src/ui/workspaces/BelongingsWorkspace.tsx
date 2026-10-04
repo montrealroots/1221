@@ -32,7 +32,7 @@ import { contactsOf } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
-import { ROOM_USE_LABEL, roomList } from '@/engine/systems/rooms';
+import { ROOM_USE_LABEL, guestBedCost, roomList } from '@/engine/systems/rooms';
 import { GROOMERS, certificatePrice, chipPrice, foodLeftG, groomDue, groomerPrice, litterLeftKg, petShop, petsOf, vetPrice } from '@/engine/systems/pets';
 import { PET_ENTRY } from '@/engine/content/petentry';
 import { livingIn } from '@/engine/systems/homes';
@@ -134,8 +134,8 @@ function PetCare() {
 /**
  * The home room by room (`roomList`, from 2026-10-04): each room's use, size,
  * whose and what's fixed in it, the furniture standing in it, a piece on the
- * floor put in a room that can take it, and a spare bedroom kept spare or
- * used for storage.
+ * floor put in a room that can take it, and a spare bedroom kept spare,
+ * used for storage, or kept for guests with a bed of its own.
  */
 function YourRooms() {
   const { sim, run, toast } = useGame();
@@ -146,6 +146,11 @@ function YourRooms() {
   if (!rooms.length || !home || person.currentLocationId !== person.home?.cityId) return null;
   const floor = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor' && (i.bulky || i.kind.startsWith('ikea:')));
   const owns = Boolean(livingIn(person));
+  // What making a room up for guests takes: its own bed where none stands in it (`guestBedCost`).
+  const guestHint = (roomId: string) => {
+    const cost = guestBedCost(sim, person, roomId);
+    return cost === undefined ? 'SLATE keeps no price for a bed where you live yet.' : cost === 0 ? 'A bed stands in it; a friend from another town can come and stay.' : `A bed delivered for it, ${formatMoney(cost, saveCurrency(sim.universe), { cents: false })}; then a friend from another town can come and stay.`;
+  };
   return (
     <Panel title="Your Rooms" subtitle="Each room, what it’s used for and what stands in it">
       <div className="table-scroll">
@@ -163,8 +168,12 @@ function YourRooms() {
                   <td>{r.label}{r.access === 'shared' ? <div className="xs dim">Shared</div> : null}{r.fixtures.length ? <div className="xs dim">{r.fixtures.join(', ')}</div> : null}</td>
                   <td className="small">
                     {r.use ? ROOM_USE_LABEL[r.use] : r.kind === 'bedroom' ? 'A Flatmate’s Room' : '—'}
-                    {owns && (r.use === 'spare' || r.use === 'storage') && (
-                      <div><Gated feature="home.room_use" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.room_use', { roomId: r.id, use: r.use === 'spare' ? 'storage' : 'spare' }).ok) toast(r.use === 'spare' ? 'It’s a storage room now.' : 'It’s kept spare now.', 'positive'); }}>{r.use === 'spare' ? 'Use It For Storage' : 'Keep It Spare'}</Gated></div>
+                    {owns && (r.use === 'spare' || r.use === 'storage' || r.use === 'guest') && (
+                      <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+                        {r.use !== 'storage' && <Gated feature="home.room_use" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.room_use', { roomId: r.id, use: 'storage' }).ok) toast('It’s a storage room now.', 'positive'); }}>Use It For Storage</Gated>}
+                        {r.use !== 'spare' && <Gated feature="home.room_use" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.room_use', { roomId: r.id, use: 'spare' }).ok) toast('It’s kept spare now.', 'positive'); }}>Keep It Spare</Gated>}
+                        {r.use !== 'guest' && <Gated feature="home.room_use" className="btn btn-sm btn-ghost" title={guestHint(r.id)} onClick={() => { if (run('home.room_use', { roomId: r.id, use: 'guest' }).ok) toast('It’s made up for guests.', 'positive'); }}>Keep It For Guests</Gated>}
+                      </div>
                     )}
                   </td>
                   <td className="num small">{`${r.m2.toFixed(1)} m²`}</td>

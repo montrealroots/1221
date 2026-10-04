@@ -46,6 +46,9 @@ const offerById = (id: string): { product: CatalogProduct; offer: CatalogOffer }
   return undefined;
 };
 
+/** A set as its seller names it: its make and the model number it's sold under there, a region's where it differs. */
+export const tvName = (product: CatalogProduct, offer: CatalogOffer): string => `${product.brand} ${offer.model ?? product.model}`;
+
 /** An offer's price where a town is: the place's sales tax on a price before it. */
 export function tvPrice(sim: Simulation, cityId: string, offer: CatalogOffer): Money {
   const tax = offer.taxIncluded ? 0 : salesTaxRate(cityId, sim.now, 'goods');
@@ -106,7 +109,7 @@ export function registerTelevisions(sim: Simulation): void {
     if (p.color !== undefined && !colors.includes(String(p.color))) throw new CommandError('It isn’t offered in that color.');
     const color = p.color !== undefined ? String(p.color) : colors.length === 1 ? colors[0] : undefined;
     const paid = tvPrice(s, person.home!.cityId, offer);
-    const label = `${product.brand} ${product.model}, ${product.attrs.sizeIn}-Inch`;
+    const label = `${tvName(product, offer)}, ${product.attrs.sizeIn}-Inch`;
     if (!payFromBank(s, person, paid, `${offer.seller}: ${label}`, 'personal')) throw new CommandError('The bank couldn’t pay for it.');
     // Kept as the home's TV, what a film or television lover unwinds with (`GEAR_FOR`), its model kept. It stands
     // on the floor, moved by movers or a delivery, as a bed or a sofa is.

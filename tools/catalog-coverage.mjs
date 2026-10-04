@@ -16,6 +16,7 @@ import { PHONES } from '../src/engine/content/phones.ts';
 import { FURNITURE_CATALOG } from '../src/engine/content/furniturecatalog.ts';
 import { LUGGAGE_PRODUCTS } from '../src/engine/content/luggagecatalog.ts';
 import { TV_PRODUCTS } from '../src/engine/content/tvcatalog.ts';
+import { APPLIANCE_PRODUCTS } from '../src/engine/content/appliancecatalog.ts';
 import { TOILETRIES } from '../src/engine/content/hygiene.ts';
 import { GROCERY_PRODUCTS, GROCERY_CHAINS } from '../src/engine/content/groceries.ts';
 import { CONSOLES } from '../src/engine/content/homelife.ts';
@@ -33,6 +34,9 @@ import { CLINICS } from '../src/engine/content/clinics.ts';
 import { CLOTHING_RETAILERS } from '../src/engine/content/clothingcatalog.ts';
 import { SALONS } from '../src/engine/content/hygiene.ts';
 import { CLEANING } from '../src/engine/content/cleaning.ts';
+import { PET_FOODS, LITTERS } from '../src/engine/content/petcare.ts';
+import { BED_PARTS } from '../src/engine/content/beds.ts';
+import { KITCHEN_GEAR } from '../src/engine/content/kitchengear.ts';
 
 const OUT = 'docs/CATALOG-COVERAGE.md';
 const mode = process.argv.includes('--write') ? 'write' : 'check';
@@ -44,6 +48,9 @@ const CLOTHING_GROUP = { 'underwear and socks': 'underwear', shapewear: 'thermal
 const clothing = (cat) => CLOTHING_PRODUCTS.filter((p) => (CLOTHING_GROUP[p.category] ?? p.category) === cat)
   .map((p) => row(p.brand, p.sameAs ?? `${p.brand}|${p.name}`, Math.max(1, p.sizes.length) * Math.max(1, p.colors.length), p.market));
 const cars = (list) => list.map((m) => row(m.make, `${m.make}|${m.model}`, 1, m.market));
+
+/** The grocery categories that are drinks: Beverages in the taxonomy. */
+const DRINKS = new Set(['beverage', 'alcohol']);
 
 /** What each category's rows are, where a catalog holds it. */
 const READ = {
@@ -57,13 +64,29 @@ const READ = {
   luggage: () => LUGGAGE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   // From 2026-10-04: a row an offer, a model a product, its colors its variants.
   televisions: () => TV_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
+  // From 2026-10-04: washing machines, dryers and dishwashers, a row an offer, a model a product.
+  appliances: () => APPLIANCE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   phones: () => PHONES.map((p) => row(p.maker, `${p.maker}|${p.model}`, Math.max(1, p.colors.length), p.market)),
   consoles: () => CONSOLES.map((c) => row(c.maker, `${c.maker}|${c.model}`, 1, c.market)),
   furniture: () => FURNITURE_CATALOG.map((p) => row('IKEA', `IKEA|${p.name}|${p.type ?? ''}`, 1, p.country)),
   // Brands from 2026-10-04: the one each product's own name states (`tools/brands.mjs`).
   toiletries: () => TOILETRIES.map((t) => row(t.brand, t.name, 1, t.market)),
   cleaning: () => CLEANING.map((t) => row(t.brand, t.name, 1, t.market)),
-  groceries: () => GROCERY_PRODUCTS.map((g) => row(g.brand, g.name, 1, g.market)),
+  groceries: () => GROCERY_PRODUCTS.filter((g) => !DRINKS.has(g.category)).map((g) => row(g.brand, g.name, 1, g.market)),
+  // From 2026-10-04 the drinks among the groceries are counted where the taxonomy puts them, as beverages; until then
+  // Groceries counted them.
+  beverages: () => GROCERY_PRODUCTS.filter((g) => DRINKS.has(g.category)).map((g) => row(g.brand, g.name, 1, g.market)),
+  // From 2026-10-04: the pet foods by their brands, and the litters, whose brand isn't kept apart from their names.
+  'pet-supplies': () => [...PET_FOODS.map((f) => row(f.brand, `${f.brand}|${f.product}`, 1, f.market)), ...LITTERS.map((l) => row(null, l.product, 1, l.market))],
+  // From 2026-10-04: IKEA's bed frames and mattresses, a model a product and its sizes its variants.
+  mattresses: () => {
+    const parts = Object.entries(BED_PARTS).flatMap(([market, b]) => [...b.frames, ...b.mattresses].map((x) => ({ ...x, market })));
+    const sizes = new Map();
+    for (const x of parts) sizes.set(x.name, (sizes.get(x.name) ?? new Set()).add(x.size));
+    return parts.map((x) => row('IKEA', `IKEA|${x.name}`, sizes.get(x.name).size, x.market));
+  },
+  // From 2026-10-04: the blenders and slow cookers, whose brand isn't kept apart from their names.
+  kitchenware: () => Object.entries(KITCHEN_GEAR).flatMap(([market, offers]) => offers.map((o) => row(null, o.name, 1, market))),
   cars: () => cars([...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS]),
   motorcycles: () => cars(BIKE_MODELS),
   bicycles: () => cars(RIDE_MODELS),

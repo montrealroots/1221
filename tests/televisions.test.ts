@@ -1,6 +1,6 @@
 /**
  * A television of one's own (`systems/televisions.ts`, from 2026-10-04): the
- * sets sold where you live by make and model at the place's price, bought and
+ * sets sold where you live by make and the model number sold there, at the place's price, bought and
  * kept as the home's TV, and watching billed by the set's power past the
  * usual one's, which a typical household's electricity already has on.
  */
@@ -10,7 +10,7 @@ import type { Simulation } from '@/engine';
 import { TV_PRODUCTS } from '@/engine/content/tvcatalog';
 import { SERVICES } from '@/engine/content/homelife';
 import { salesTaxRate } from '@/engine/content/tax';
-import { GENERIC_TV_WATTS, buyTvRefusal, tvAtHome, tvCatalog, watchPower } from '@/engine/systems/televisions';
+import { GENERIC_TV_WATTS, buyTvRefusal, tvAtHome, tvCatalog, tvName, watchPower } from '@/engine/systems/televisions';
 import { owns } from '@/engine/systems/furniture';
 import { itemsOf } from '@/engine/systems/items';
 import { inTheBank } from '@/engine/systems/household';
@@ -78,7 +78,7 @@ describe('buying one', () => {
     const item = itemsOf(sim.player).find((i) => i.id === r.itemId)!;
     expect(item).toMatchObject({ kind: 'furniture:tv', bulky: true, at: { kind: 'home', spot: 'floor' } });
     expect(item.spec?.product).toBe(product.id);
-    expect(item.label).toBe(`${product.brand} ${product.model}, ${product.attrs.sizeIn}-Inch`);
+    expect(item.label).toBe(`${tvName(product, offer)}, ${product.attrs.sizeIn}-Inch`);
     // It's the TV a film or television lover unwinds with.
     expect(owns(sim.player, 'tv')).toBe(true);
     expect(tvAtHome(sim.player)?.product?.id).toBe(product.id);
@@ -95,6 +95,23 @@ describe('buying one', () => {
     // Away from home, it waits until they're back.
     sim.player.currentLocationId = 'us-ca-losangeles';
     expect(buyTvRefusal(sim.player, here.offer.id)).toBe('A television is bought where you live, for a home of your own.');
+  });
+});
+
+describe('its name', () => {
+  it('is the model number it’s sold under where they live, a region’s where it differs from the maker’s', () => {
+    // A set sold in America under its own model and in Britain under another.
+    const both = TV_PRODUCTS.find((p) => p.offers.some((o) => o.market === 'uk' && o.model) && p.offers.some((o) => o.market === 'us'))!;
+    const uk = both.offers.find((o) => o.market === 'uk' && o.model)!;
+    expect(uk.model).not.toBe(both.model);
+    const london = life('uk-eng-london', 'tv-name');
+    const there = tvCatalog(london, london.player).find((x) => x.offer.id === uk.id)!;
+    expect(tvName(there.product, there.offer)).toBe(`${both.brand} ${uk.model}`);
+    const r = london.must<{ itemId: string }>({ kind: 'tv.buy', payload: { offerId: uk.id } });
+    expect(itemsOf(london.player).find((i) => i.id === r.itemId)!.label).toBe(`${both.brand} ${uk.model}, ${both.attrs.sizeIn}-Inch`);
+    const ny = life('us-ny-newyork', 'tv-name-ny');
+    const us = tvCatalog(ny, ny.player).find((x) => x.product.id === both.id)!;
+    expect(tvName(us.product, us.offer)).toBe(`${both.brand} ${both.model}`);
   });
 });
 

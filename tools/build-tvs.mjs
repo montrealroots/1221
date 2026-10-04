@@ -52,7 +52,9 @@ for (const f of tranches) {
       if (offerIds.has(id)) id = `${id.slice(0, 80)}-${slug(o.seller ?? 'seller')}`.slice(0, 100);
       for (let n = 2; offerIds.has(id); n += 1) id = `${id.slice(0, 96)}-${n}`;
       offerIds.add(id);
-      p.offers.push({ id, market, seller: o.seller ?? p.brand, channel: 'online', price: o.price, currency: o.currency, taxIncluded: o.taxIncluded === true, url: o.url ?? null, read: j.read ?? '2026-10-04', status: o.status === 'verified' ? 'verified' : 'secondhand' });
+      // The model number it's sold under there, where the market's own differs from the product's (a British QE for an American QN).
+      const local = String((x.regionalModels ?? {})[market] ?? '').trim();
+      p.offers.push({ id, market, seller: o.seller ?? p.brand, channel: 'online', price: o.price, currency: o.currency, taxIncluded: o.taxIncluded === true, url: o.url ?? null, read: j.read ?? '2026-10-04', status: o.status === 'verified' ? 'verified' : 'secondhand', ...(local && code(local) !== code(p.model) ? { model: local } : {}) });
     }
   }
 }

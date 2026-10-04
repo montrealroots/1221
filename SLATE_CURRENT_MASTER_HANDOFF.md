@@ -30,10 +30,24 @@ Run the four checks of CLAUDE.md's rules 2 and 3 first; the tree wins over this 
 - Toronto, wealthy (`death-tor`): died at 84. It watched 107 episodes, adding 7.84 kWh.
 - Dublin, wealthy (`death-dub`): died at 53. It watched none, because the driver buys no TV license.
 
+**Merged to `main`** as `16ca1f0f` (PR #25, at `be34ed64`) after that replay, with the owner's standing approval; the branch was fast-forwarded to it.
+
+**Since the merge**, each gated, none yet on `main`:
+- `ff3bcc12`: a TV named by the model number its market sells it under (`CatalogOffer.model`, on 346 offers): a British QE for an American QN.
+- `557f1477` and `6d0971b3`: washing machines, dryers and dishwashers by make and model (`systems/machines.ts`, `content/appliancecatalog.ts`), 2,025 machines from 47 makers with 2,895 offers in all five markets, 1,160 with their label's energy a cycle (ENERGY STAR's and EPREL's, `appliance-labels.json`).
+  - `home.fit` takes an offer: the model's price with the place's tax, plus the fitting the country's table keeps (none kept, as for a Mexican dryer, and the buyer plugs it in).
+  - A fitted washer's and dryer's loads bill the label's energy in place of the usual machine's 2.3 and 2.4 kWh.
+  - A dishwasher's runs, counted day by day with the tablets, bill what a fitted model takes past the usual labeled dishwasher in its market (1.116 kWh in America and Canada, 0.74 in Britain).
+  - Kept out: a washer dryer in one drum, a gas dryer's gas, a machine's water. Gate at `6d0971b3`: exit 0, 314 files, 3,101 tests; the machines test's 15 mutations killed.
+- `202b7c42`: requirement 41c's guest room. A spare bedroom kept for guests (`home.room_use`, beside storage and spare), its own bed (`furniture:guestbed`) delivered at the place's usual bed price where none stands there; a friend from another town asked home comes and stays the night in it (`guestRoom`, read by `declines`), one friend and never a gathering. The office is held back in the requirement row: nothing reads one honestly yet.
+- `c3aa1957`: the coverage report counts what the game already sold: the groceries' drinks as Beverages, the pets' foods and litters as Pet Supplies, IKEA's beds, the kitchen gear. Twelve categories have no catalog now.
+
+**Lives replayed at `202b7c42`**, the same five, 0 errors and 0 anomalies each, and every one as at `2d47f079`: New York modest died at 72, London modest at 55, New York wealthy at 83, Dublin wealthy at 53, Toronto wealthy at 84. Gate at `c3aa1957`: exit 0, 315 files, 3,106 tests.
+
 The driver was rebuilt in this container (`probe/play-to-death.ts`, git-ignored, so it goes with the container). It turns every shortcut on, buys the hungriest labeled set in the second year, watches an episode a week and makes no career moves. Its lives aren't comparable to the owner's Windows driver of the same name, whose New York dies at 89 and London at 50.
 
 **Open in the TV catalog.**
-- The research merged a model's regions under its American code, so a British, Irish or Mexican shopper sees that code. London's driver was offered Samsung's QN115QN90FFXZA, which Britain sells as a QE model. `tools/build-tvs.mjs` drops `regionalModels`: keep them and show each market's own code.
+- The research merged a model's regions under its American code, and until the commit after the merge a British, Irish or Mexican shopper saw that code: London's driver was offered Samsung's QN115QN90FFXZA, which Britain sells as a QE model. Each offer now keeps the model number its market sells it under (`CatalogOffer.model`, on 346 offers), and the shop, the compare table and the set bought show it (`tvName`).
 - 274 sets have no figure and draw the median. They are mostly sold in America, Canada and Mexico (140, 108 and 73 of them), where no label was read; 15 are sold in Britain and 7 in Ireland:
   - ENERGY STAR's certified list (`energystar-tvs.json`) holds 183 sets, none of them Hisense, Sony or TCL.
   - The FTC EnergyGuide gives kilowatt-hours a year, and the research brief forbids turning that into watts.
@@ -43,6 +57,7 @@ The driver was rebuilt in this container (`probe/play-to-death.ts`, git-ignored,
 **Working notes for the next session.**
 - The machine runs short of memory: the system killed background gates twice. Run `npm run gate` in the foreground (about six to ten minutes) and read its exit from the file, as CLAUDE.md says.
 - Use the cheaper models for research agents: Sonnet for reading product pages, Haiku for mechanical passes. Agents overrun their fetch budget: Sony's read more than 45 pages, and TCL's 54.
+- Mechanical price sources that answer curl: Best Buy Canada's search JSON (`www.bestbuy.ca/api/v2/json/search?query=...&pageSize=100`, its own listings at regular prices; `.../json/product/<sku>` gives a model number, but not for its "B" listings) and VTEX stores' catalog search (`/api/catalog_system/pub/products/search?ft=...`, ListPrice the regular price), Whirlpool Mexico's among them. ENERGY STAR's appliance datasets: washers `bghd-e2wd`, dryers `t9u7-4d2j`, dishwashers `q8py-6w3f`, refrigerators `p5st-her9`.
 - EPREL, the EU's energy-label registry, answers its public search (`https://eprel.ec.europa.eu/api/products/electronicdisplays?...`) only to curl with a browser user agent and `Referer: https://eprel.ec.europa.eu/screen/product/electronicdisplays`. Plain curl and WebFetch get 403. `eu-labels-tvs.json` was read that way, and the same registry covers appliances, lamps and tires. ENERGY STAR's open data answers plain curl (`data.energystar.gov/resource/pd96-rr3d.json` for TVs).
 - Edit scripts go in the scratchpad, written with the Write tool. The bash shell eats backticks in `node -e` strings and turns `\b` into a backspace.
 - New commands need the tutorial's `opens` and `names` and the COVERAGE-MATRIX row 19, or `tests/tutorial.test.ts` fails.
@@ -50,9 +65,9 @@ The driver was rebuilt in this container (`probe/play-to-death.ts`, git-ignored,
 - A generated catalog of real product names joins `NOT_OURS` in `tools/spelling.mjs`, and a name the sweep would change joins `REAL_NAMES`. Bang & Olufsen's Beovision Theatre did both.
 
 **Next, in order:**
-1. Each market's own model code on a TV (above).
-2. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`: 0 of 45 met, televisions at 24 of 50, and 17 categories with no catalog yet), then the open rows in `docs/REQUIREMENTS.md`.
-   - Rows a player can act on, with no published rate needed: 41c, a guest room and an office, each with something real that reads it.
+1. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`: 0 of 45 met; appliances at 47 of 50, televisions at 24, and 16 categories with no catalog yet), then the open rows in `docs/REQUIREMENTS.md`.
+   - 41c's guest room is done (`202b7c42`); its office is held, the row saying why: an actor's work at home is a self-tape, which needs no room of its own, or a voice tape, which needs the soundproofed room an office isn't, and a home office's tax relief is a self-employed earner's, which no return here takes. A Canadian performer is self-employed here (`systems/eiself.ts`), but Canada's tax is withheld from each check and no Canadian return exists for a deduction to land in.
+   - Next tranche, already fetched: Best Buy Canada's own TV listings (1,699 of them, scratchpad `tv/bbca/`, gone with the container: refetch with its search JSON) would add Philips, Pioneer, Insignia and Neptune and Canada's offers. Its model codes are Canada's (Samsung's FXZC for the FXZA), so the builder should merge a code with a product's regional one.
    - 22f, garment repair, is held back for want of how much a repair restores; inventing that figure was avoided.
    - Stage 14 and deployment come last.
 
