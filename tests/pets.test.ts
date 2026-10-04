@@ -11,7 +11,7 @@ import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { KEEPING, LICENCE, adoptRefusal, cabinFeeFor, hotelPetFee, petsOf } from '@/engine/systems/pets';
+import { LICENCE, adoptRefusal, cabinFeeFor, hotelPetFee, petsOf } from '@/engine/systems/pets';
 import { journeysOf } from '@/engine/systems/journey';
 import { contactsOf, newContact } from '@/engine/systems/people';
 
@@ -38,12 +38,12 @@ describe('a pet', () => {
     const r = sim.must<{ paid: number; petId: string }>({ kind: 'pets.adopt', payload: { shelterId: 'aspca-dog', name: 'Rex' } });
     expect(r.paid).toBe(inSaveMoney(sim, 150_00, 'USD'));
     expect(petsOf(sim.player).map((p) => p.name)).toEqual(['Rex']);
-    expect(memos(sim, 'Rex: food, care and the vet')).toHaveLength(1);
+    // From 2026-10-04 its keeping is thing by thing (tests/pet-care.test.ts), not a yearly figure a month.
+    expect(memos(sim, 'Rex: food, care and the vet')).toHaveLength(0);
     expect(memos(sim, 'Rex\'s license')).toHaveLength(1);
     expect(LICENCE['us-ny-newyork']!.dog!.fee).toBe(8.5);
-    expect(KEEPING.us!.dog!.perYear).toBe(1_391);
     sim.advanceBy(31 * MS_DAY);
-    expect(memos(sim, 'Rex: food, care and the vet')).toHaveLength(2);
+    expect(memos(sim, 'Rex: food, care and the vet')).toHaveLength(0);
     // The license runs a year.
     expect(memos(sim, 'Rex\'s license')).toHaveLength(1);
   });

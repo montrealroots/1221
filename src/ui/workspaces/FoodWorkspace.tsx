@@ -9,6 +9,8 @@ import { useState } from 'react';
 import { GEAR_LABEL } from '@/engine/content/kitchengear';
 import { TABLE_POLICIES, lateFee, reservationsOf, reserveRefusal } from '@/engine/systems/reservations';
 import { useGame, useWorld } from '@/app/game-context';
+import { livingIn } from '@/engine/systems/homes';
+import { atHome } from '@/engine/systems/dwelling';
 import { Panel, Fine } from '@/ui/components/primitives';
 import { CatalogControls, FavoriteToggle, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
 import { Gated, useFeature } from '@/ui/guide/Guide';
@@ -268,6 +270,8 @@ function Recipes() {
   const [serves, setServes] = useState<Record<string, number>>({});
   const rows = RECIPES.map((r) => ({ r, n: serves[r.id] ?? r.servings, no: cookRefusal(sim, person, r.id, serves[r.id] ?? r.servings) ?? cookingClash(sim, r.id) })).sort((a, b) => Number(Boolean(a.no)) - Number(Boolean(b.no)) || a.r.name.localeCompare(b.r.name));
   const ready = rows.filter((x) => !x.no).length;
+  // An outdoor kitchen of their own, where they are (from 2026-10-04).
+  const outdoors = atHome(person) && Boolean(livingIn(person)?.facts.features.includes('outdoorKitchen'));
   return (
     <Panel title="Recipes" subtitle={`${ready} of ${RECIPES.length} can be cooked with what’s in the kitchen`}>
       <div className="table-scroll">
@@ -285,7 +289,7 @@ function Recipes() {
                 </td>
                 <td className="num mono">{r.minutes ?? '30*'}</td>
                 <td className="small">{r.source}</td>
-                <td><button type="button" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={!cookable.open || Boolean(no)} title={no ?? cookable.reason} onClick={() => { const res = run<{ left: number }>('food.cook', { recipeId: r.id, servings: n }); if (res.ok) toast(`${r.name}: one eaten, ${res.value?.left ?? 0} kept.`, 'positive'); }}>Cook It</button></td>
+                <td><button type="button" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={!cookable.open || Boolean(no)} title={no ?? cookable.reason} onClick={() => { const res = run<{ left: number }>('food.cook', { recipeId: r.id, servings: n }); if (res.ok) toast(`${r.name}: one eaten, ${res.value?.left ?? 0} kept.`, 'positive'); }}>Cook It</button>{outdoors && <Gated feature="food.cook" className="btn btn-sm btn-ghost" style={{ whiteSpace: 'nowrap' }} disabled={Boolean(no)} title={no} onClick={() => { const res = run<{ left: number }>('food.cook', { recipeId: r.id, servings: n, outside: true }); if (res.ok) toast(`${r.name}, cooked outside: one eaten, ${res.value?.left ?? 0} kept.`, 'positive'); }}>Cook It Outside</Gated>}</td>
               </tr>
             ))}
           </tbody>

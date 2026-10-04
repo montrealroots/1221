@@ -36,6 +36,9 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { LOOKING_AFTER } from './life';
+import { livingIn } from './homes';
+import { fineWeatherRefusal } from './dwelling';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, formatTime, type Instant } from '../core/time';
@@ -294,7 +297,13 @@ export function shortfall(sim: Simulation, person: Person, recipeId: string, ser
 }
 
 /** Cooks a recipe for so many servings: its ingredients used at that scale, one serving eaten, the rest in the fridge. The portions left. */
-export function cook(sim: Simulation, person: Person, recipeId: string, servings?: number): number {
+export function cook(sim: Simulation, person: Person, recipeId: string, servings?: number, outside = false): number {
+  // In the outdoor kitchen (from 2026-10-04): built, and the weather fit to sit out in for the recipe's minutes.
+  if (outside) {
+    if (!(atHome(person) && livingIn(person)?.facts.features.includes('outdoorKitchen'))) throw new CommandError('You have no outdoor kitchen.');
+    const weather = fineWeatherRefusal(sim, person, 'cook outside', COOKING_MET, recipeById(recipeId)?.minutes ?? KITCHEN.minutes);
+    if (weather) throw new CommandError(weather);
+  }
   const no = cookRefusal(sim, person, recipeId, servings);
   if (no) throw new CommandError(no);
   const busy = occupiedAt(sim, sim.now);
@@ -308,6 +317,8 @@ export function cook(sim: Simulation, person: Person, recipeId: string, servings
   // Cooking's effort, the Compendium's 2.0 METs (from 2026-10-03).
   exerts(person, COOKING_MET, minutes / 60);
   applyLookingAfter(person, 'eat', sim.now);
+  // Outdoors, the minutes are time outside, at sitting out's rate for them.
+  if (outside) applyLookingAfter(person, 'outside', sim.now, 1, minutes / LOOKING_AFTER.outside.minutes);
   // A partner living with them, home, eats with them.
   const partner = atHome(person) ? contactsOf(person).find((c) => c.livesWith !== undefined) : undefined;
   if (partner) { partner.hours += minutes / 60; partner.lastSeen = sim.now; }
@@ -391,7 +402,7 @@ export function registerKitchen(sim: Simulation): void {
     addItem(s, person, { kind: `gear:${g.gear}`, label: g.name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid: g.cost });
     return { paid: g.cost };
   });
-  sim.onCommand<{ recipeId: string; servings?: number }, { left: number }>('food.cook', (p, { sim: s }) => ({ left: cook(s, s.player, String(p?.recipeId), p?.servings === undefined ? undefined : Number(p.servings)) }));
+  sim.onCommand<{ recipeId: string; servings?: number; outside?: boolean }, { left: number }>('food.cook', (p, { sim: s }) => ({ left: cook(s, s.player, String(p?.recipeId), p?.servings === undefined ? undefined : Number(p.servings), p?.outside === true) }));
   sim.onCommand<{ itemId?: string }, { ate: true }>('food.eat_ready', (p, { sim: s }) => {
     if (s.player.wellbeing.nourishment >= 90) throw new CommandError('You aren’t hungry.');
     // Without one named, what's ready that goes off soonest: a routine's "eat something ready".

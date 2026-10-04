@@ -23,6 +23,7 @@
  * a lodger is found when one is asked for.
  */
 
+import { fixturesOf } from './dwelling';
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
@@ -69,9 +70,12 @@ export const lodgersIn = (owned: OwnedHome): Lodger[] => (owned.lodgers ??= []);
 export function lodgerRefusal(sim: Simulation, person: Person, owned: OwnedHome): string | undefined {
   if (livingIn(person)?.id !== owned.id) return 'A lodger lives in a home you live in.';
   if (roomRent(sim, owned.cityId) === undefined) return 'No room’s rent is published for this town.';
-  const spare = Math.max(0, owned.facts.beds - 1);
-  if (spare === 0) return 'There’s no spare bedroom.';
-  if (lodgersIn(owned).length >= Math.min(spare, MOST_LODGERS)) return lodgersIn(owned).length >= MOST_LODGERS ? 'Two lodgers is the most.' : 'Every spare bedroom has a lodger.';
+  // A spare bedroom not given over to a theater, a studio, a library, a soundproofed room or a gym (from 2026-10-04; until then a
+  // lodger could be let the room the library was in).
+  const given = (['homeTheater', 'danceStudio', 'soundproofRoom', 'library'] as const).filter((x) => owned.facts.features.includes(x)).length + (fixturesOf(sim, person, owned.cityId, owned.facts, owned.id).gym === 'home' ? 1 : 0);
+  const spare = Math.max(0, owned.facts.beds - 1 - given);
+  if (spare === 0 && lodgersIn(owned).length === 0) return 'There’s no spare bedroom.';
+  if (lodgersIn(owned).length >= Math.min(spare, MOST_LODGERS)) return lodgersIn(owned).length >= MOST_LODGERS ? 'Two lodgers is the most.' : 'Every spare bedroom is taken.';
   return undefined;
 }
 

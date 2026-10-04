@@ -58,6 +58,7 @@
  */
 
 import type { Simulation } from '../core/simulation';
+import { VO_BOOTHS, VO_SESSION_MINUTES } from '../content/specialrooms';
 import { plural } from '../core/text';
 import type { ScheduledItem } from '../core/scheduler';
 import { CommandError } from '../core/simulation';
@@ -94,12 +95,13 @@ const DEMANDING_GENRES: ReadonlySet<string> = new Set(['action', 'musical']);
 import { commercialTermEnds, recordCommercialPay, scheduleCommercialWeek, type CommercialRep } from './commercial';
 import { RIVALS, classMonth, classmateBooked, inTheRoom, partTaken, report, reportBooking, signTheClass, type NewsItem } from './rivals';
 import { move, payFromCurrent, type Housing, spend, payFromBank } from './household';
-import { emptyHomeIn, moveIntoOwned } from './homes';
+import { emptyHomeIn, livingIn, moveIntoOwned } from './homes';
 import { crossingRefusal, isoOfCity, isoOfCountry, residenceRefusal } from './documents';
 import { careerTrip, planBy, planJourney, startCareerJourney } from './journey';
 import { contribute as contributeImss } from './imss';
 import { permitAtTheBorder, workRefusal } from './permission';
-import { drawRental } from './dwelling';
+import { atHome, drawRental } from './dwelling';
+import { inSaveMoney } from './banking';
 import { payeeAccount } from './cash';
 import { cppOnCheck } from './capensions';
 import { eiOnCheck } from './eiself';
@@ -1217,6 +1219,19 @@ function reaches(sim: Simulation, person: Person, when: Instant, cityId: string,
   return payForWork(sim, person, exchange(trip.fare, trip.currency, cur) ?? trip.fare, `The train to ${CITIES.get(cityId)?.name ?? 'the city'} and back: ${memo}`);
 }
 
+/** A soundproofed room at the home they're in, quiet enough to record in (`content/specialrooms.ts`, from 2026-10-04). */
+export function quietAtHome(person: Person): boolean {
+  return atHome(person) && Boolean(livingIn(person)?.facts.features.includes('soundproofRoom'));
+}
+
+/** A voice-over booth's fee in a town, its session's least booking at its rate with any tax, in the save's money; nothing where none is kept. */
+export function boothFee(sim: Simulation, cityId: string): { fee: Money; studio: string } | undefined {
+  const b = VO_BOOTHS[cityId];
+  if (!b) return undefined;
+  const hours = Math.max(b.minHours, VO_SESSION_MINUTES / 60);
+  return { fee: inSaveMoney(sim, Math.round(b.perHour * hours * (1 + b.tax) * 100), b.currency), studio: b.studio };
+}
+
 export function present(person: Person, when: Instant, cityId?: string): boolean {
   const asleep = person.awakeSince !== undefined && person.awakeSince > when;
   // In hospital, they're nowhere else (`systems/health.ts`).
@@ -1628,6 +1643,16 @@ export function registerCareer(sim: Simulation): void {
       if (career.missed >= ESTIMATE.dropAfterMissed) { endRepresentation(s, person, `You missed ${ESTIMATE.dropAfterMissed} auditions the agency got you.`, false); return; }
       if (isPlayer(person)) s.notify({ category: 'career', title: 'You Missed An Audition', body: `${roleById(audition.roleId).label}: the agency got you in, and you weren’t there. ${ESTIMATE.dropAfterMissed} missed and they let you go.`, importance: 75, route: '/workspace/career' });
       return;
+    }
+    // A voice audition on tape wants "a quiet recording space" (the SAG-AFTRA Foundation): a soundproofed room at home, or a booth (from 2026-10-04).
+    if (audition.mode === 'tape' && roleById(audition.roleId).medium === 'voice' && !quietAtHome(person)) {
+      const booth = boothFee(s, person.currentLocationId);
+      if (!booth || !spend(s, person, booth.fee, `A voice-over booth, ${booth.studio}`, 'career')) {
+        audition.status = 'missed';
+        item.status = 'missed';
+        if (isPlayer(person)) s.notify({ category: 'career', title: 'No Quiet Place To Record', body: `${roleById(audition.roleId).label} wanted a voice audition recorded somewhere quiet, ${booth ? `and the booth at ${booth.studio} couldn't be paid for` : 'and no booth is kept in this town'}. A soundproofed room at home records them free.`, importance: 50, route: '/workspace/career' });
+        return;
+      }
     }
     audition.status = 'done';
     if (audition.mode === 'room') takeTheRoom(person);

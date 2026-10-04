@@ -39,6 +39,8 @@ import { seatsAtHome } from './furnishings';
 import { mealOf, spend } from './household';
 import { TIDY, livingOf } from './dwelling';
 import { applyLookingAfter } from './life';
+import { livingIn } from './homes';
+import { THEATER } from '../content/specialrooms';
 import { personalityOf } from './personality';
 import { foodOf, fresh } from './pantry';
 import { drinkGrams, marketOf as drinkingMarketOf } from './alcohol';
@@ -46,13 +48,15 @@ import { cookRefusal, recipeById, servingsRange, takeIngredients } from './kitch
 
 export const HOST_KIND = 'social.host';
 const yearsOld = (person: Person, at: Instant) => (at - person.birthInstant) / (365.2425 * MS_DAY);
-export type Gathering = 'dinner' | 'drinks';
+/** A dinner, drinks, or from 2026-10-04 a film in the home theater (`content/specialrooms.ts`). */
+export type Gathering = 'dinner' | 'drinks' | 'film';
 /** A wine glass, NIAAA's five ounces at its 12%. */
 const GLASS = { ml: 148, abv: 0.12 } as const;
 /** What a mess takes off an evening's lift. SLATE's reading. */
 export const MESS_LIFT = 0.5;
 
-export const gatheringMinutes = (what: Gathering): number => (what === 'dinner' ? DINING_MINUTES.mid : SOCIAL.visitMinutes);
+export const gatheringMinutes = (what: Gathering): number => (what === 'dinner' ? DINING_MINUTES.mid : what === 'film' ? THEATER.filmMinutes : SOCIAL.visitMinutes);
+const WORD: Readonly<Record<Gathering, string>> = { dinner: 'Dinner', drinks: 'Drinks', film: 'A Film' };
 
 /** Why the evening can't be planned at all, before anybody's asked. */
 export function hostRefusal(sim: Simulation, person: Person, contactIds: readonly string[], at: Instant, what: Gathering): string | undefined {
@@ -61,9 +65,14 @@ export function hostRefusal(sim: Simulation, person: Person, contactIds: readonl
   if (new Set(contactIds).size !== contactIds.length) return 'Ask each of them once.';
   if (contactIds.some((id) => !contactsOf(person).some((c) => c.id === id))) return 'You don’t know them.';
   if (at <= sim.now) return 'Choose a time to come.';
-  const room = seatsAtHome(person);
   const everyone = contactIds.length + 1;
-  if (everyone > room.seats) return `You have seats for ${room.seats}, you among them.`;
+  // A film is watched in the home theater, at its seats.
+  if (what === 'film') {
+    if (!livingIn(person)?.facts.features.includes('homeTheater')) return 'You have no home theater.';
+    if (everyone > THEATER.seats) return `The theater seats ${THEATER.seats}, you among them.`;
+  }
+  const room = seatsAtHome(person);
+  if (what !== 'film' && everyone > room.seats) return `You have seats for ${room.seats}, you among them.`;
   if (what === 'dinner' && everyone > room.table) return room.table === 0 ? 'You have no table to sit them at.' : `Your table sits ${room.table}.`;
   const ends = at + gatheringMinutes(what) * 60_000;
   const clash = sim.universe.scheduled.find((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < ends && x.at + x.durationMinutes * 60_000 > at);
@@ -80,7 +89,7 @@ function pours(person: Person, at: Instant): { item: ReturnType<typeof foodOf>[n
 export function registerHosting(sim: Simulation): void {
   sim.onCommand<{ contactIds: string[]; at: number; what: Gathering; recipeId?: string }, { coming: string[]; declined: { contactId: string; reason: string }[] }>('social.host', (p, { sim: s }) => {
     const person = s.player;
-    const what: Gathering = p?.what === 'drinks' ? 'drinks' : 'dinner';
+    const what: Gathering = p?.what === 'drinks' || p?.what === 'film' ? p.what : 'dinner';
     const ids = Array.isArray(p?.contactIds) ? p.contactIds.map(String) : [];
     const at = Number(p?.at);
     const no = hostRefusal(s, person, ids, at, what);
@@ -99,17 +108,17 @@ export function registerHosting(sim: Simulation): void {
     }
     if (coming.length === 0) return { coming, declined };
     const names = coming.map((id) => contactsOf(person).find((c) => c.id === id)!.name.split(' ')[0]);
-    s.schedule({ at, kind: HOST_KIND, label: `${what === 'dinner' ? 'Dinner' : 'Drinks'} At Yours With ${names.join(', ')}`, category: 'relationship', priority: 40, requiresPlayer: true, durationMinutes: gatheringMinutes(what), locationId: person.home!.cityId, payload: { personId: person.id, what, contactIds: coming, ...(recipe ? { recipeId: recipe.id } : {}) } });
+    s.schedule({ at, kind: HOST_KIND, label: `${WORD[what]} At Yours With ${names.join(', ')}`, category: 'relationship', priority: 40, requiresPlayer: true, durationMinutes: gatheringMinutes(what), locationId: person.home!.cityId, payload: { personId: person.id, what, contactIds: coming, ...(recipe ? { recipeId: recipe.id } : {}) } });
     return { coming, declined };
   });
 
   sim.onSchedule(HOST_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     if (!person) return;
-    const what = item.payload.what === 'drinks' ? 'drinks' : 'dinner';
+    const what: Gathering = item.payload.what === 'drinks' || item.payload.what === 'film' ? item.payload.what : 'dinner';
     const guests = (item.payload.contactIds as string[]).map((id) => contactsOf(person).find((c) => c.id === id)).filter((c): c is NonNullable<typeof c> => Boolean(c));
     const mine = person.id === s.universe.playerId;
-    const word = what === 'dinner' ? 'Dinner' : 'Drinks';
+    const word = WORD[what];
     if (person.currentLocationId !== person.home?.cityId) {
       for (const c of guests) { c.stoodUp = item.at; c.memory.unshift({ at: item.at, what: 'You weren’t home' }); }
       if (mine) s.notify({ category: 'relationship', title: `Nobody Home For ${word}`, body: `${guests.map((c) => c.name.split(' ')[0]).join(', ')} came, and you weren’t there.`, importance: 55, route: '/workspace/people' });

@@ -37,6 +37,15 @@
  *   (secondhand) and £22 to fit them.
  * America publishes no insurer's loading for any of them, so there they're
  * the car's own look, and change nothing else.
+ *
+ * **In the shop while it's fitted** (from 2026-10-04): until then a
+ * modification was on the car the moment it was paid for. Now the car is at
+ * the fitter's for the work's hours (`MOD_HOURS`), as a wrap or a repair
+ * keeps it, and can't be driven meanwhile; the way about is on foot, by
+ * transit or a stand-in. A second fitted while it's there adds its hours.
+ * No fitter's own times were read: each is SLATE's estimate of the job, a
+ * respray a working week, a remap and an exhaust half a day, springs, a body
+ * kit's splitter and wheels a day's part, the bulbs an hour.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -63,6 +72,13 @@ export const MOD_OFFERS: Readonly<Record<Mod, Partial<Record<'GB' | 'US', { pric
 export const HALOGENS_BACK_GBP = 25.49 + 2 * 11;
 export const MOD_LABEL: Readonly<Record<Mod, string>> = { respray: 'A Full Respray', remap: 'An Engine Remap', lowering: 'Lowering Springs', exhaust: 'A Sports Exhaust', wheels: 'Alloy Wheels', bodykit: 'A Body Kit', led: 'LED Headlight Bulbs' };
 export const MODS: readonly Mod[] = ['led', 'wheels', 'bodykit', 'respray', 'remap', 'lowering', 'exhaust'];
+/** The hours each takes at the fitter's: SLATE's estimates, no shop's own time having been read. */
+export const MOD_HOURS: Readonly<Record<Mod, number>> = { respray: 120, remap: 4, lowering: 8, exhaust: 4, wheels: 2, bodykit: 8, led: 1 };
+/** Who fits it, by market: the shops whose prices are kept. */
+export const MOD_FITTER: Readonly<Record<Mod, Partial<Record<'GB' | 'US', string>>>> = {
+  respray: { GB: 'the body shop' }, remap: { GB: 'VUDU Performance' }, lowering: { GB: 'QT Performance' }, exhaust: { GB: 'QT Performance' },
+  wheels: { GB: 'LK Performance', US: 'the tire shop' }, bodykit: { GB: 'Delta Styling', US: 'a Vicrez installer' }, led: { GB: 'Halfords' },
+};
 const modMarket = (v: OwnedVehicle): 'GB' | 'US' | undefined => (v.jurisdiction === 'GB' ? 'GB' : v.jurisdiction.startsWith('US-') ? 'US' : undefined);
 
 /** What a car's declared modifications add to its premium, as a factor: Britain's measured loadings. */
@@ -98,6 +114,9 @@ export function registerMods(sim: Simulation, find: (person: Person, id: string)
     const cost = cur === offer.currency ? cents : exchange(cents, offer.currency, cur) ?? cents;
     if (!payFromBank(s, person, cost, `${MOD_LABEL[mod]}, fitted`, 'vehicle')) throw new CommandError(`${formatMoney(cost, cur)} is more than the bank can cover.`);
     v!.mods = [...(v!.mods ?? []), mod];
+    // At the fitter's for the work's hours, after any work already there.
+    const from = Math.max(s.now, v!.inShop?.until ?? 0);
+    v!.inShop = { shopId: `mods:${mod}`, until: from + MOD_HOURS[mod] * 3_600_000, name: MOD_FITTER[mod][modMarket(v!)!] ?? 'the fitter' };
     return { paid: cost };
   });
 }

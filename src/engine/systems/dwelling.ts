@@ -51,6 +51,7 @@ import { SITTING_MET, coldRefusal } from './coldstress';
 import { BODY } from '../content/body';
 import { GARMENTS_PER_LOAD, cleanOutfits, swimsuitFor, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
+import { isOn } from './automation';
 import { detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
 import { amenitiesOf } from './hotels';
 import { machinesDay } from './appliancefaults';
@@ -320,6 +321,8 @@ export function cleanerGetsIn(sim: Simulation, person: Person, dayStart: Instant
 export const WORN_CLOTHES = { hygiene: 55, morale: 1 };
 
 export interface Living {
+  /** The month's kilowatt-hours past the household's usual, a sauna's (from 2026-10-04): billed and cleared with the month's electricity. */
+  extraKwh?: number;
   /**
    * Until 2026-10-01 clothes were a count of outfits, clean and dirty, and
    * of loads drying. A save from before keeps them until its wardrobe of
@@ -468,15 +471,15 @@ export function livingDay(sim: Simulation, person: Person): void {
   machinesDay(sim, person);
   starterLuggage(sim, person);
   const w = person.wellbeing;
-  // Left to themselves, somebody with a free day keeps up: the washing when it's nearly all worn, a tidy-up when the
-  // place is getting bad, not as well as a proper clean. A day of work doesn't leave the time, and it all waits.
+  // A free day keeps up where they've chosen the shortcut for it (from 2026-10-03, `systems/automation.ts`; until then
+  // everybody did, without asking): the washing when it's nearly all worn, what's worn out and what's run out bought
+  // again. A day of work doesn't leave the time, and it all waits.
   const free = !busyDay(sim, person);
   const lowOnClean = cleanOutfits(sim, person) <= 1 && washableDirty(sim, person).length > 0;
-  if (free && lowOnClean) doLaundry(sim, person, sim.now);
-  // What's worn out, replaced the same way, on a day with time for the shops.
-  if (free) replaceWornOut(sim, person);
+  if (free && lowOnClean && isOn(person, 'laundry')) doLaundry(sim, person, sim.now);
+  if (free && isOn(person, 'replaceClothes')) replaceWornOut(sim, person);
   // And toiletries run out (`systems/hygiene.ts`).
-  if (free) restock(sim, person, place.fixtures.dishwasher);
+  if (free && isOn(person, 'restock')) restock(sim, person, place.fixtures.dishwasher);
   if (!wearOutfit(sim, person)) {
     w.morale = clamp(w.morale - WORN_CLOTHES.morale * personalityOf(person, 'moraleSwing'), 0, 100);
   }
@@ -491,8 +494,8 @@ export function livingDay(sim: Simulation, person: Person): void {
   const piled = !machine && (l.dishes ?? 0) > 0;
   l.tidy = clamp(l.tidy - TIDY.perDay * (piled ? 1 : TIDY.dishwasher), 0, 100);
   if (machine) delete l.dishes; else l.dishes = Math.min(WASH_UP.full, (l.dishes ?? 0) + 1);
-  if (free) washUp(sim, person);
-  if (free && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
+  if (free && isOn(person, 'washUp')) washUp(sim, person);
+  if (free && isOn(person, 'tidy') && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
   // A partner living there does their share of the housework, a cleaning when it adds up to one.
   if (livesWithPartner(person)) {
     l.partnerMinutes = (l.partnerMinutes ?? 0) + PARTNER_HOUSEWORK_HOURS * 60;
@@ -615,22 +618,23 @@ export function homeCourts(person: Person): { court: Court; lit: boolean }[] {
     ...(f.includes('tennisCourt') ? [{ court: 'tennis' as const, lit: f.includes('tennisLights') }] : []),
     ...(f.includes('basketballCourt') ? [{ court: 'basketball' as const, lit: f.includes('basketballLights') }] : []),
     ...(f.includes('pickleballCourt') ? [{ court: 'pickleball' as const, lit: false }] : []),
-    ...(f.includes('footballPitch') ? [{ court: 'football' as const, lit: false }] : []),
+    ...(f.includes('footballPitch') ? [{ court: 'football' as const, lit: f.includes('pitchLights') }] : []),
   ];
 }
 
-/** The court to play on alone at home now: football isn't one, it needs players. */
-export function courtAt(person: Person): { court: 'tennis' | 'basketball' | 'pickleball'; lit: boolean } | undefined {
+/** The court to play on alone at home now; from 2026-10-04 a pitch too, for drills on your own, where there's no court. */
+export function courtAt(person: Person): { court: Court; lit: boolean } | undefined {
   const f = atHome(person) ? livingIn(person)?.facts.features : undefined;
   if (f?.includes('tennisCourt')) return { court: 'tennis', lit: f.includes('tennisLights') };
   if (f?.includes('basketballCourt')) return { court: 'basketball', lit: f.includes('basketballLights') };
   if (f?.includes('pickleballCourt')) return { court: 'pickleball', lit: false };
+  if (f?.includes('footballPitch')) return { court: 'football', lit: f.includes('pitchLights') };
   return undefined;
 }
 
 /** Why the court can't be played on now: none, the weather a run would stop for, or the dark on an unlit court. */
 export function courtRefusal(sim: Simulation, person: Person, court: { court: string; lit: boolean } | undefined = courtAt(person)): string | undefined {
-  if (!court) return homeCourts(person).some((c) => c.court === 'football') ? 'A football pitch needs players: invite friends to play.' : 'You have no court.';
+  if (!court) return 'You have no court.';
   const w = weatherNow(sim, person);
   if (w && (wet(w.condition) || heatIndexC(w.highC, w.humidity) > FINE.highC)) return 'It isn’t a day for the court.';
   const cold = coldRefusal(sim, person, COURT_MET[court.court as Court], 60, 'play');

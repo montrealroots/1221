@@ -180,6 +180,17 @@ function audition(sim: Simulation, mode: 'tape' | 'room', self = false) {
 }
 
 describe('an audition, on the day', () => {
+  it('for a voice, on tape, wants a quiet place: a booth at the town’s rate where there’s no soundproofed room (from 2026-10-04)', () => {
+    const sim = signed('vo-booth', 2);
+    const career = careerOf(sim.player);
+    const a = { id: 'vo', roleId: 'commercial-vo', at: sim.now + 60_000, mode: 'tape' as const, cityId: 'us-ny-newyork' as const, status: 'ahead' as const };
+    career.auditions.push(a);
+    sim.schedule({ at: a.at, kind: AUDITION_KIND, label: 'x', category: 'career', priority: 30, requiresPlayer: true, payload: { personId: sim.player.id, auditionId: a.id } });
+    sim.advanceTo(a.at + 60_000);
+    expect(['done', 'booked']).toContain(career.auditions.find((x) => x.id === 'vo')!.status);
+    expect(sim.universe.transactions.some((t) => t.memo === 'A voice-over booth, Open Jar Studios, Times Square')).toBe(true);
+  });
+
   it('on tape is made anywhere; in the room, in its city or a day trip from it, the train paid', () => {
     const sim = signed('where', 2);
     sim.player.currentLocationId = 'us-ca-losangeles';

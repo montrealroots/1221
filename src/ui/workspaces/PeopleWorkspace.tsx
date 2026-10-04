@@ -28,6 +28,7 @@ import { dateKey } from '@/engine/core/time';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { homeCourts } from '@/engine/systems/dwelling';
 import { hostRefusal, type Gathering } from '@/engine/systems/hosting';
+import { livingIn } from '@/engine/systems/homes';
 import { seatsAtHome } from '@/engine/systems/furnishings';
 import { RECIPES } from '@/engine/content/groceries';
 import { cookRefusal, servingsRange } from '@/engine/systems/kitchen';
@@ -139,9 +140,10 @@ function HaveFriendsOver() {
         <div className="field-row">
           <div className="field">
             <label htmlFor="host-what">For</label>
-            <select id="host-what" value={what} onChange={(e) => setWhat(e.target.value === 'drinks' ? 'drinks' : 'dinner')}>
+            <select id="host-what" value={what} onChange={(e) => setWhat(e.target.value === 'drinks' || e.target.value === 'film' ? e.target.value : 'dinner')}>
               <option value="drinks">Drinks</option>
               <option value="dinner">Dinner</option>
+              {livingIn(person)?.facts.features.includes('homeTheater') && <option value="film">A Film In The Theater</option>}
             </select>
           </div>
           <div className="field">

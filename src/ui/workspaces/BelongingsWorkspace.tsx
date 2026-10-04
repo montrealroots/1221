@@ -29,6 +29,9 @@ import { contactsOf } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
+import { ROOM_USE_LABEL, roomList } from '@/engine/systems/rooms';
+import { foodLeftG, litterLeftKg, petShop, petsOf, vetPrice } from '@/engine/systems/pets';
+import { livingIn } from '@/engine/systems/homes';
 import { groupLabelOf } from '@/ui/shell/destinations';
 import { LookRegion, Open, at } from '@/ui/looks';
 
@@ -59,6 +62,122 @@ function Collected({ item }: { item: Item }) {
   const no = bulkyRefusal(person, [item.id]);
   const fee = no ? 0 : bulkyFee(sim, person, 1);
   return <Gated feature="items.discard" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? (fee ? `The council's collection, ${formatMoney(fee, saveCurrency(sim.universe))}` : 'The council collects it free')} onClick={() => { const a = run<{ collectAt: number }>('items.discard', { itemIds: [item.id] }); if (a.ok) toast(`Booked for collection ${formatDate(a.value!.collectAt, sim.zone)}.`, 'positive'); }}>Have It Collected</Gated>;
+}
+
+/**
+ * Each pet's care (`systems/pets.ts`, from 2026-10-04): fed today or not, the
+ * food and litter at home, its food and litter ordered at the retailer's
+ * price, a dog walked or a walker booked, and the yearly visit at the vet.
+ */
+function PetCare() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const pets = petsOf(person);
+  const [buy, setBuy] = useState('');
+  if (!pets.length) return null;
+  const shop = petShop(sim, person).filter((x) => x.kind === 'litter' ? pets.some((p) => p.species === 'cat') : pets.some((p) => p.species === x.species));
+  const chosen = shop.find((x) => x.id === buy) ?? shop[0];
+  const money = (c: number) => formatMoney(c, saveCurrency(sim.universe));
+  const today = new Date(sim.now).toLocaleDateString('en-CA', { timeZone: sim.homeZone });
+  return (
+    <Panel title="Your Pets" subtitle="Fed, walked, kept in food and litter, and seen by the vet each year">
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Pet</th><th scope="col">Today</th><th scope="col">The Vet</th><th scope="col"><span className="sr-only">Care</span></th></tr></thead>
+          <tbody>
+            {pets.map((p) => {
+              const vet = vetPrice(sim, person, p);
+              return (
+                <tr key={p.id}>
+                  <td>{p.name}<div className="xs dim">{p.species === 'dog' ? 'A Dog' : 'A Cat'}</div></td>
+                  <td className="small">{p.fedOn === today ? 'Fed' : 'Not Fed Yet'}{p.species === 'dog' ? (p.walkedOn === today ? ', Walked' : ', Not Walked Yet') : ''}{(p.hungryDays ?? 0) > 0 ? <div className="xs dim">{`${p.hungryDays} days unfed running`}</div> : null}</td>
+                  <td className="small">{p.vetUntil && p.vetUntil > sim.now ? `Vaccinated to ${formatDate(p.vetUntil, sim.zone)}` : 'Due'}{typeof vet === 'number' ? <div className="xs dim">{`A visit, ${money(vet)}`}</div> : null}</td>
+                  <td>
+                    <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+                      {p.species === 'dog' && <Gated feature="pets.walk" className="btn btn-sm btn-ghost" disabled={p.walkedOn === today} onClick={() => { if (run('pets.walk', { petId: p.id }).ok) toast(`An hour’s walk with ${p.name}.`, 'positive'); }}>Walk It</Gated>}
+                      {p.species === 'dog' && <Gated feature="pets.walker" className="btn btn-sm btn-ghost" onClick={() => run('pets.walker', { petId: p.id, on: !p.walker })}>{p.walker ? 'Stop The Walker' : 'Book A Walker'}</Gated>}
+                      <Gated feature="pets.vet" className="btn btn-sm btn-ghost" disabled={typeof vet === 'string'} onClick={() => { if (run('pets.vet', { petId: p.id }).ok) toast(`${p.name} saw the vet.`, 'positive'); }}>Take It To The Vet</Gated>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+        <Gated feature="pets.feed" className="btn btn-sm btn-primary" onClick={() => { const r = run<{ fed: string[] }>('pets.feed', {}); if (r.ok) toast(`Fed ${r.value!.fed.join(' and ')}.`, 'positive'); }}>Feed Them</Gated>
+        <span className="small">{`At home: ${pets.some((p) => p.species === 'dog') ? `${(foodLeftG(person, 'dog') / 1000).toFixed(1)} kg of dog food, ` : ''}${pets.some((p) => p.species === 'cat') ? `${(foodLeftG(person, 'cat') / 1000).toFixed(1)} kg of cat food, ${litterLeftKg(person).toFixed(1)} kg of litter` : ''}`.replace(/, $/, '')}</span>
+      </div>
+      {chosen && (
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          <select aria-label="Food Or Litter To Order" value={chosen.id} onChange={(e) => setBuy(e.target.value)}>
+            {shop.map((x) => <option key={x.id} value={x.id}>{`${x.label}, ${money(x.price)} at ${x.retailer}`}</option>)}
+          </select>
+          <Gated feature="pets.buy" className="btn btn-sm btn-ghost" onClick={() => { if (run('pets.buy', { productId: chosen.id }).ok) toast('Ordered: it comes in two days.', 'positive'); }}>Order It</Gated>
+        </div>
+      )}
+    </Panel>
+  );
+}
+
+/**
+ * The home room by room (`roomList`, from 2026-10-04): each room's use, size,
+ * whose and what's fixed in it, the furniture standing in it, a piece on the
+ * floor put in a room that can take it, and a spare bedroom kept spare or
+ * used for storage.
+ */
+function YourRooms() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const [piece, setPiece] = useState<Record<string, string>>({});
+  const rooms = roomList(sim, person);
+  const home = homeKeyOf(person.home);
+  if (!rooms.length || !home || person.currentLocationId !== person.home?.cityId) return null;
+  const floor = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor' && (i.bulky || i.kind.startsWith('ikea:')));
+  const owns = Boolean(livingIn(person));
+  return (
+    <Panel title="Your Rooms" subtitle="Each room, what it’s used for and what stands in it">
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Room</th><th scope="col">Used For</th><th scope="col" className="num">Size</th><th scope="col">In It</th><th scope="col"><span className="sr-only">Put Something Here</span></th></tr></thead>
+          <tbody>
+            {rooms.map((r) => {
+              const inIt = floor.filter((i) => i.at.kind === 'home' && i.at.room === r.id);
+              const loose = floor.filter((i) => i.at.kind === 'home' && i.at.room === undefined);
+              const chosen = piece[r.id] ?? loose[0]?.id ?? '';
+              const item = loose.find((i) => i.id === chosen);
+              const no = item ? moveRefusal(sim, person, item, { kind: 'home', home, spot: 'floor', room: r.id }) : 'Every piece on the floor is in a room.';
+              return (
+                <tr key={r.id}>
+                  <td>{r.label}{r.access === 'shared' ? <div className="xs dim">Shared</div> : null}{r.fixtures.length ? <div className="xs dim">{r.fixtures.join(', ')}</div> : null}</td>
+                  <td className="small">
+                    {r.use ? ROOM_USE_LABEL[r.use] : r.kind === 'bedroom' ? 'A Flatmate’s Room' : '—'}
+                    {owns && (r.use === 'spare' || r.use === 'storage') && (
+                      <div><Gated feature="home.room_use" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.room_use', { roomId: r.id, use: r.use === 'spare' ? 'storage' : 'spare' }).ok) toast(r.use === 'spare' ? 'It’s a storage room now.' : 'It’s kept spare now.', 'positive'); }}>{r.use === 'spare' ? 'Use It For Storage' : 'Keep It Spare'}</Gated></div>
+                    )}
+                  </td>
+                  <td className="num small">{`${r.m2.toFixed(1)} m²`}</td>
+                  <td className="small">{inIt.length ? inIt.map((i) => i.label).join(', ') : '—'}</td>
+                  <td>
+                    {loose.length > 0 && r.kind !== 'bathroom' && (
+                      <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+                        <select aria-label={`What To Put In ${r.label}`} value={chosen} onChange={(e) => setPiece((x) => ({ ...x, [r.id]: e.target.value }))}>
+                          {loose.map((i) => <option key={i.id} value={i.id}>{i.label}</option>)}
+                        </select>
+                        <Gated feature="items.move" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('items.move', { itemId: chosen, to: { kind: 'home', home, spot: 'floor', room: r.id } }).ok) toast(`Put in ${r.label.replace(/^The /, 'the ')}.`, 'positive'); }}>Put It Here</Gated>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div className="xs dim">Bedrooms at the space standard’s least, a bathroom four square meters, the living room and kitchen sharing the rest, scaled to the home; a storage room holds half its volume.</div>
+    </Panel>
+  );
 }
 
 /**
@@ -152,6 +271,8 @@ export function BelongingsWorkspace() {
       </div>
       <div className="col gap-5">
         <ShoppingOut />
+        <PetCare />
+        <YourRooms />
         <Panel title="Where Things Are">
           <div className="grid grid-3">
             <Stat label="Owned" value={String(items.length)} note="Each thing, or each set of the same" />

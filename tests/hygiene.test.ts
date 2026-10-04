@@ -110,6 +110,8 @@ describe('what each rule decides', () => {
   it('the morning shower nobody chooses uses them too, and the day’s turn buys what ran out', () => {
     const stocked = life('us-ny-newyork', 'hyg-morning');
     const bare = life('us-ny-newyork', 'hyg-morning');
+    // Buying what's run out on a free day is a shortcut chosen (from 2026-10-03).
+    for (const x of [stocked, bare]) x.player.automation = { restock: true };
     for (const k of ['body-wash', 'toothpaste', 'deodorant']) without(bare, k);
     // No shops on the way: a day of work, and nothing restocked.
     for (const sim of [stocked, bare]) { sim.onSchedule('test.work', () => undefined); sim.schedule({ at: sim.now + 60_000, kind: 'test.work', label: 'A Long Day', category: 'career', requiresPlayer: true, durationMinutes: 600, payload: {} }); }

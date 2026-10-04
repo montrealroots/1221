@@ -71,6 +71,9 @@ import { registerPartners, registerPeople } from './systems/people';
 import { registerHygiene, starterCleaning, starterSupplies } from './systems/hygiene';
 import { registerFittings } from './systems/fittings';
 import { starterLuggage } from './systems/luggage';
+import { EVERY_SHORTCUT, registerAutomation } from './systems/automation';
+import { registerGarden } from './systems/garden';
+import { registerRooms } from './systems/rooms';
 import { registerAwards } from './systems/awards';
 import { registerUtilities } from './systems/utilities';
 import { journeysOf as journeysFor, partnerOf as partnerFor } from './systems/journey';
@@ -267,6 +270,9 @@ export function registerAllSystems(sim: Simulation): void {
   registerPartners(sim);
   registerGyms(sim);
   registerTrips(sim);
+  registerAutomation(sim);
+  registerGarden(sim);
+  registerRooms(sim);
   registerFuelTank(sim);
   registerMarriage(sim);
   registerChildren(sim);
@@ -430,7 +436,7 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId]) starterCleaning(sim, sim.player, homePlace(sim, sim.player)?.fixtures.dishwasher ?? false);
   if (universe.people[universe.playerId]) starterLuggage(sim, sim.player);
   // A save from before 2026-10-03 packed, unpacked and put the shopping away on its own: it keeps those, now as shortcuts it can turn off.
-  if (universe.people[universe.playerId] && sim.player.automation === undefined) sim.player.automation = { unloadShopping: true, packForMe: true };
+  if (universe.people[universe.playerId] && sim.player.automation === undefined) sim.player.automation = { ...EVERY_SHORTCUT };
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
   if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);
   // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.

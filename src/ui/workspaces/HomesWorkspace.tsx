@@ -9,6 +9,8 @@
  */
 
 import { useState } from 'react';
+import { harvestRefusal, plantRefusal, plantingIn, plotsOf, ripeAt } from '@/engine/systems/garden';
+import { CROPS, type Crop } from '@/engine/content/garden';
 import { CatalogControls, useCatalogView } from '@/ui/components/Catalog';
 import { arrange } from '@/engine/systems/catalog';
 import { applianceCatalog, furnitureCatalog, homeCatalog } from '@/engine/systems/catalogs';
@@ -460,6 +462,7 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
         </div>
 
         <Furniture />
+        <Garden owned={owned} />
         <FitOut owned={owned} />
         <Lodgers owned={owned} />
 
@@ -496,6 +499,46 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
 }
 
 /** A letting agent for a home, where one publishes its fees (`systems/propertymanagers.ts`). */
+/** A garden bed and a greenhouse at the home they live in: planted, ripening, picked into the kitchen (`systems/garden.ts`, from 2026-10-04). */
+function Garden({ owned }: { owned: OwnedHome }) {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const [crop, setCrop] = useState<Record<string, Crop>>({});
+  if (livingIn(person)?.id !== owned.id) return null;
+  const plots = plotsOf(person);
+  if (!plots.length) return null;
+  return (
+    <div className="col gap-2">
+      <div className="strong small">The Garden</div>
+      {plots.map((plot) => {
+        const growing = plantingIn(person, plot);
+        const chosen = crop[plot] ?? 'tomato';
+        const plantNo = plantRefusal(sim, person, plot, chosen);
+        const pickNo = harvestRefusal(sim, person, plot);
+        return (
+          <div key={plot} className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+            <span className="small" style={{ minWidth: '9rem' }}>{plot === 'bed' ? 'Raised Garden Bed' : 'Greenhouse'}</span>
+            {growing ? (
+              <>
+                <span className="small">{`${CROPS[growing.crop].label}, ripe about ${formatDate(ripeAt(growing), sim.zone)}`}</span>
+                <Gated feature="garden.harvest" className="btn btn-sm btn-ghost" disabled={Boolean(pickNo)} title={pickNo} onClick={() => { const r = run<{ amount: number }>('garden.harvest', { plot }); if (r.ok) toast(`Picked: ${CROPS[growing.crop].unit === 'ct' ? `${r.value!.amount} heads` : `${(r.value!.amount / 1000).toFixed(1)} kg`} into the kitchen.`, 'positive'); }}>Pick It</Gated>
+              </>
+            ) : (
+              <>
+                <select aria-label="What To Plant" value={chosen} onChange={(e) => setCrop((x) => ({ ...x, [plot]: e.target.value as Crop }))}>
+                  {(Object.keys(CROPS) as Crop[]).map((c) => <option key={c} value={c}>{`${CROPS[c].label}, ${CROPS[c].days} Days`}</option>)}
+                </select>
+                <Gated feature="garden.plant" className="btn btn-sm btn-ghost" disabled={Boolean(plantNo)} title={plantNo} onClick={() => { const r = run<{ ripeAt: number }>('garden.plant', { plot, crop: chosen }); if (r.ok) toast(`Planted; ripe about ${formatDate(r.value!.ripeAt, sim.zone)}.`, 'positive'); }}>Plant It</Gated>
+                {plantNo ? <span className="xs dim">{plantNo}</span> : null}
+              </>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function Agent({ owned }: { owned: OwnedHome }) {
   const { run, toast } = useGame();
   const m = managerIn(owned.cityId);

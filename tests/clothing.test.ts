@@ -363,6 +363,8 @@ describe('the day’s turn of the wardrobe', () => {
 
   it('does the washing on a free day when it’s down to the last outfit', () => {
     const sim = life('turn-wash');
+    // The free day's washing is a shortcut a person chooses (from 2026-10-03).
+    sim.player.automation = { laundry: true };
     let worn = 0;
     while (cleanOutfits(sim, sim.player) > 1 && worn < 30) { wearTheDay(sim, sim.player); worn += 1; }
     expect(washableDirty(sim, sim.player).length).toBeGreaterThan(0);

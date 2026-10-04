@@ -12,6 +12,7 @@
  */
 
 import { describe, expect, it } from 'vitest';
+import { EVERY_SHORTCUT } from '@/engine/systems/automation';
 import { injuryOf } from '@/engine/systems/injury';
 import { quickSave } from '@/engine';
 import type { Person, Personality } from '@/engine/domain/model';
@@ -155,6 +156,8 @@ describe('played careers', () => {
   it('a year on autopilot keeps everyday fitness, and morale off the ceiling', () => {
     // The body on its own, and no money to worry about.
     const sim = quickSave({ wealth: 'inherited' });
+    // On autopilot: every shortcut chosen (from 2026-10-03 none is on unless chosen).
+    sim.player.automation = { ...EVERY_SHORTCUT };
     for (let d = 0; d < 365; d++) sim.advanceTo(at(sim, 7));
     sim.advanceTo(sim.now + 11 * MS_HOUR);
     const w = sim.player.wellbeing;

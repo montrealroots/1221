@@ -20,6 +20,7 @@ import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { contactsOf } from '@/engine/systems/people';
 import { clubById, membershipsOf } from '@/engine/systems/clubs';
 import { leg, runErrands, transitFare, tripRefusal, type Stop, type TripMode, driverIn, garagesIn } from '@/engine/systems/trips';
+import { SHORTCUTS, isOn, type Shortcut } from '@/engine/systems/automation';
 import { sessionPrice, trainersIn } from '@/engine/systems/trainers';
 import { METER, STATIONS } from '@/engine/content/errandtrips';
 import { groupLabelOf } from '@/ui/shell/destinations';
@@ -47,6 +48,34 @@ function RoutineTime({ routine }: { routine: Routine }) {
       {routine.at && <button type="button" className="btn btn-sm btn-ghost" disabled={!set.open} title={set.reason} onClick={() => { if (run('routine.set_time', { routineId: routine.id, at: null }).ok) toast(`${routine.name}, no longer set.`, 'positive'); }}>Clear The Time</button>}
       </div>
     </div>
+  );
+}
+
+/** The shortcuts a person chooses (`systems/automation.ts`, from 2026-10-03): each does on its own what its manual action does, only when set. */
+function ShortcutsPanel() {
+  const { run } = useGame();
+  const person = useWorld((s) => s.player);
+  return (
+    <Panel title="Your Shortcuts" subtitle="Each does on its own what you’d do by hand, on the same rules, only while it’s on">
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Shortcut</th><th scope="col">What It Does</th><th scope="col">By Hand</th><th scope="col"><span className="sr-only">On Or Off</span></th></tr></thead>
+          <tbody>
+            {(Object.keys(SHORTCUTS) as Shortcut[]).map((key) => {
+              const on = isOn(person, key);
+              return (
+                <tr key={key}>
+                  <td>{SHORTCUTS[key].label}</td>
+                  <td className="small">{SHORTCUTS[key].does}</td>
+                  <td className="small">{SHORTCUTS[key].byHand}</td>
+                  <td><Gated feature="life.set_automation" className="btn btn-sm btn-ghost" onClick={() => run('life.set_automation', { key, on: !on })}>{on ? 'Turn It Off' : 'Turn It On'}</Gated></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </Panel>
   );
 }
 
@@ -127,6 +156,7 @@ export function RoutinesWorkspace() {
             <div className="small">{steps.length ? steps.map((s, i) => `${i + 1}. ${stepLabel(person, s)}`).join('   ') : 'No steps yet.'}</div>
           </div>
         </Panel>
+        <ShortcutsPanel />
         <ErrandsPanel />
         <GymPanel />
           <TrainerPanel />
