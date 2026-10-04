@@ -46,10 +46,11 @@ import { spend } from './household';
 import { contactsOf } from './people';
 import { sitterThrough } from './away';
 import { HOTEL_AMENITIES } from '../content/hotelamenities';
+import { CABIN_MAX_KG, PET_FLIGHT, PET_KG, type PetFare } from '../content/petair';
 import { LITTERS, LITTER_KG_A_WEEK, PET_FOODS, RATION_G, VET_YEAR, WALK, type PetMarket } from '../content/petcare';
 import { homeKeyOf, itemsOf, type Item } from './items';
 import { placeOrder } from './orders';
-import { payFromBank } from './household';
+import { payFromBank, petArrives } from './household';
 import { exerts } from './body';
 import { isOn } from './automation';
 
@@ -95,14 +96,6 @@ export const WALKER_30: Readonly<Record<string, { fee: number; currency: string 
   'uk-eng-london': { fee: 14.19, currency: 'GBP' }, 'ie-lei-dublin': { fee: 15, currency: 'EUR' },
 };
 
-/** A pet in the cabin, one way, by the country flown from; null where the airline takes none. */
-export const CABIN_FEE: Readonly<Record<string, { fee: number; currency: string } | null>> = {
-  us: { fee: 150, currency: 'USD' },
-  ca: { fee: 55, currency: 'CAD' },
-  mx: { fee: 1_520, currency: 'MXN' },
-  ie: null,
-  uk: null,
-};
 
 export const PET_MONTH_KIND = 'pets.month';
 export const petsOf = (person: Person): Pet[] => (person.pets ??= []);
@@ -146,15 +139,39 @@ export function hotelPetFee(sim: Simulation, person: Person, hotelId: string | u
   return inSaveMoney(sim, Math.round(rule.fee * (rule.per === 'night' ? nights : 1) * 100), rule.currency) * pets.length;
 }
 
-/** The cabin fee for the pets on a flight out of a country, or why they can't fly; nothing where there are none. */
-export function cabinFeeFor(sim: Simulation, person: Person, fromCityId: string, flights: number): Money | string {
+/**
+ * The pets' way on a flight out of a town, each way, by the departure
+ * country's carrier (`content/petair.ts`, from 2026-10-04; until then one
+ * cabin fee a country, charged for a 20 kg dog no cabin takes): a pet light
+ * enough in the cabin where the carrier takes one there, otherwise the hold,
+ * checked or as cargo, at its own fare, inside or outside the country; or why
+ * it can't fly. Nothing where there are no pets or no flight.
+ */
+export function petFlightFee(sim: Simulation, person: Person, fromCityId: string, toCityId: string, flights: number, at: Instant = sim.now): Money | string {
   const pets = petsOf(person);
   if (pets.length === 0 || flights === 0) return 0;
-  const country = CITIES.get(fromCityId)?.countryId ?? '';
-  const fee = CABIN_FEE[country];
-  if (fee === null) return 'Its airlines take no pet in the cabin.';
-  if (!fee) return 'SLATE keeps no airline’s pet fee here.';
-  return inSaveMoney(sim, Math.round(fee.fee * 100), fee.currency) * pets.length;
+  const from = CITIES.get(fromCityId);
+  const rule = PET_FLIGHT[from?.countryId ?? ''];
+  if (!rule) return 'SLATE keeps no airline’s pet rules here.';
+  const to = CITIES.get(toCityId)?.countryId ?? '';
+  const domestic = (rule.domesticTo ?? [from!.countryId]).includes(to);
+  const fare = (f: PetFare): Money => inSaveMoney(sim, Math.round((domestic ? f.domestic : f.abroad) * 100), domestic ? f.currency : f.abroadCurrency ?? f.currency);
+  let total = 0;
+  for (const pet of pets) {
+    if (rule.cabin && PET_KG[pet.species] <= CABIN_MAX_KG) { total += fare(rule.cabin); continue; }
+    const hold = rule.hold;
+    if ('refused' in hold) return `${pet.name}: ${hold.refused}`;
+    if (hold.closed && inClosed(at, from!.timeZone, hold.closed)) return `${rule.carrier} carries no pets in the hold from ${hold.closed.from[1]} December to ${hold.closed.to[1]} January.`;
+    total += fare(hold);
+  }
+  return total;
+}
+
+/** Whether a day falls in a closed stretch running from one month and day across the new year to another. */
+function inClosed(at: Instant, zone: string, closed: { from: [number, number]; to: [number, number] }): boolean {
+  const [, m, d] = new Date(at).toLocaleDateString('en-CA', { timeZone: zone }).split('-').map(Number) as [number, number, number];
+  const key = m * 100 + d;
+  return key >= closed.from[0] * 100 + closed.from[1] || key <= closed.to[0] * 100 + closed.to[1];
 }
 
 const dayKey = (sim: Simulation, at: Instant): string => new Date(at).toLocaleDateString('en-CA', { timeZone: sim.homeZone });
@@ -325,6 +342,8 @@ export function registerPets(sim: Simulation): void {
     // A shelter's animal comes vaccinated, for a year.
     const pet: Pet = { id: s.nextId('pet'), species: shelter.species, name: String(p?.name ?? '').trim() || (shelter.species === 'dog' ? 'Your Dog' : 'Your Cat'), adoptedAt: s.now, from: shelter.id, vetUntil: s.now + 365 * MS_DAY, fedOn: dayKey(s, s.now), ...(shelter.species === 'dog' ? { walkedOn: dayKey(s, s.now) } : {}) };
     petsOf(person).push(pet);
+    // A rented home's pet deposit, where coming adds one (`petArrives`, from 2026-10-04).
+    petArrives(s, person);
     petMonth(s, person, pet);
     s.schedule({ at: s.now + 30 * MS_DAY, kind: PET_MONTH_KIND, label: `${pet.name}'s Month`, category: 'home', priority: 30, payload: { personId: person.id, petId: pet.id } });
     return { paid, petId: pet.id };

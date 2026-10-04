@@ -11,7 +11,7 @@ import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { LICENCE, adoptRefusal, cabinFeeFor, hotelPetFee, petsOf } from '@/engine/systems/pets';
+import { LICENCE, adoptRefusal, hotelPetFee, petFlightFee, petsOf } from '@/engine/systems/pets';
 import { journeysOf } from '@/engine/systems/journey';
 import { contactsOf, newContact } from '@/engine/systems/people';
 
@@ -61,7 +61,7 @@ describe('a pet', () => {
     const out = journeysOf(sim.player).find((j) => j.id === r.journeyId)!;
     const fee = hotelPetFee(sim, sim.player, 'freehand-los-angeles', out.hotel!.nights) as number;
     expect(fee).toBe(inSaveMoney(sim, 75_00, 'USD'));
-    expect(cabinFeeFor(sim, sim.player, 'us-ny-newyork', 1)).toBe(inSaveMoney(sim, 150_00, 'USD'));
+    expect(petFlightFee(sim, sim.player, 'us-ny-newyork', 'us-ca-losangeles', 1)).toBe(inSaveMoney(sim, 150_00, 'USD'));
     expect(before - sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(r.total);
     // The hotel's fee and the cabin each way are paid with the way out.
     const legs = out.legs.reduce((x, l) => x + l.fare, 0);
@@ -75,14 +75,39 @@ describe('a pet', () => {
     expect(other.execute({ kind: 'travel.book', payload: { ...trip, day: saturday(other, 14), returnDay: saturday(other, 14) + 3 * MS_DAY } }).ok).toBe(true);
   });
 
-  it('doesn’t fly in the cabin from Ireland or Britain', () => {
+  it('flies a 20 kg dog in the hold, at the carrier’s own fare in or out of its country, never in a cabin', () => {
     const sim = life('ie-lei-dublin', 'pet-ie');
+    sim.must({ kind: 'pets.adopt', payload: { shelterId: 'dogs-trust-ireland', name: 'Rua' } });
+    // Aer Lingus and British Airways: cargo only, at the stand-ins kept for a quote on request.
+    expect(petFlightFee(sim, sim.player, 'ie-lei-dublin', 'uk-eng-london', 1)).toBe(inSaveMoney(sim, 1_500_00, 'EUR'));
+    expect(petFlightFee(sim, sim.player, 'uk-eng-london', 'ie-lei-dublin', 1)).toBe(inSaveMoney(sim, 2_600_00, 'GBP'));
+    // Air Canada checks it: America priced as Canada is, further abroad dearer.
+    const toronto = Date.UTC(2026, 9, 10, 15);
+    expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'us-ny-newyork', 1, toronto)).toBe(inSaveMoney(sim, 105_00, 'CAD'));
+    expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'uk-eng-london', 1, toronto)).toBe(inSaveMoney(sim, 270_00, 'CAD'));
+    // But not over the holidays.
+    expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'us-ny-newyork', 1, Date.UTC(2026, 11, 20, 15))).toBe('Air Canada carries no pets in the hold from 18 December to 4 January.');
+    expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'us-ny-newyork', 1, Date.UTC(2027, 0, 3, 15))).toMatch(/no pets in the hold/);
+    expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'us-ny-newyork', 1, Date.UTC(2027, 0, 6, 15))).toBe(inSaveMoney(sim, 105_00, 'CAD'));
+    // Out of America no airline takes it for an ordinary passenger.
+    expect(petFlightFee(sim, sim.player, 'us-ny-newyork', 'us-ca-losangeles', 1)).toMatch(/^Rua: No airline flies a dog this size out of America/);
+    // Aeromexico: the hold, in pesos either way.
+    expect(petFlightFee(sim, sim.player, 'mx-cmx-mexicocity', 'us-ny-newyork', 1)).toBe(inSaveMoney(sim, 5_570_00, 'MXN'));
+    // Each pet its own, and none without a flight.
     sim.must({ kind: 'pets.adopt', payload: { shelterId: 'dogs-trust-ireland' } });
-    expect(cabinFeeFor(sim, sim.player, 'ie-lei-dublin', 1)).toBe('Its airlines take no pet in the cabin.');
-    expect(cabinFeeFor(sim, sim.player, 'uk-eng-london', 1)).toBe('Its airlines take no pet in the cabin.');
-    expect(cabinFeeFor(sim, sim.player, 'ca-on-toronto', 2)).toBe(inSaveMoney(sim, 55_00, 'CAD'));
-    // Each pet its own.
-    sim.must({ kind: 'pets.adopt', payload: { shelterId: 'dogs-trust-ireland' } });
-    expect(cabinFeeFor(sim, sim.player, 'ca-on-toronto', 2)).toBe(2 * inSaveMoney(sim, 55_00, 'CAD'));
+    expect(petFlightFee(sim, sim.player, 'ie-lei-dublin', 'uk-eng-london', 1)).toBe(2 * inSaveMoney(sim, 1_500_00, 'EUR'));
+    expect(petFlightFee(sim, sim.player, 'ie-lei-dublin', 'uk-eng-london', 0)).toBe(0);
+  });
+
+  it('flies a 4 kg cat in the cabin where the carrier takes one there, at its fare in or out of the country', () => {
+    const sim = life('us-ny-newyork', 'pet-cat-fly');
+    sim.must({ kind: 'pets.adopt', payload: { shelterId: 'aspca-cat', name: 'Mog' } });
+    expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'us-ny-newyork', 1, Date.UTC(2026, 11, 20, 15))).toBe(inSaveMoney(sim, 50_00, 'CAD'));
+    expect(petFlightFee(sim, sim.player, 'ca-on-toronto', 'uk-eng-london', 1)).toBe(inSaveMoney(sim, 100_00, 'CAD'));
+    // Aeromexico prices the cabin within Mexico in pesos and abroad in dollars.
+    expect(petFlightFee(sim, sim.player, 'mx-cmx-mexicocity', 'mx-cmx-mexicocity', 1)).toBe(inSaveMoney(sim, 1_520_00, 'MXN'));
+    expect(petFlightFee(sim, sim.player, 'mx-cmx-mexicocity', 'us-ny-newyork', 1)).toBe(inSaveMoney(sim, 182_00, 'USD'));
+    // British Airways takes no cat in the cabin: it goes as cargo.
+    expect(petFlightFee(sim, sim.player, 'uk-eng-london', 'us-ny-newyork', 1)).toBe(inSaveMoney(sim, 2_600_00, 'GBP'));
   });
 });

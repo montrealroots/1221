@@ -429,7 +429,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `pets.adopt` | `src/engine/systems/pets.ts` | `Home.tsx` | `journeys.test.ts` `pet-care.test.ts` `pets.test.ts` | Rent And A Roof |
+| `pets.adopt` | `src/engine/systems/pets.ts` | `Home.tsx` | `journeys.test.ts` `pet-care.test.ts` `pet-tenancy.test.ts` `pets.test.ts` | Rent And A Roof |
 | `pets.buy` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
 | `pets.feed` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
 | `pets.vet` | `src/engine/systems/pets.ts` | `BelongingsWorkspace.tsx` | `pet-care.test.ts` | Rent And A Roof |
