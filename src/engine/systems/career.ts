@@ -114,6 +114,44 @@ export const DUES_KIND = 'career.dues';
 export const CAREER_WEEK_KIND = 'career.week';
 export const IMPROV_KIND = 'career.improv';
 export const WORKSHOP_KIND = 'career.workshop';
+
+/**
+ * A casting director workshop where you work, at a named venue's own price,
+ * from 2026-10-03 (`research-casting-therapy-hotels-cars.json`): the Actors'
+ * Guild of Great Britain's £42 for three hours in London, the Gaiety School
+ * of Acting's €120 in Dublin, Actorvan Studios' C$295 in Vancouver,
+ * Armstrong Acting Studios' C$95.99 in Toronto, Actors Comedy Studio's $150
+ * master class for Los Angeles, and Actors Connection's $59 seminar in New
+ * York, read secondhand. Elsewhere SLATE's estimate, as before. The office
+ * met is one of the town's real casting offices, kept as a casting contact
+ * (identification, not a promise: no rate of call-ins from a workshop is
+ * published, and the recognition it earns is the same as before).
+ */
+export const WORKSHOPS: Readonly<Record<string, { venue: string; price: number; currency: string; confirmed: boolean }>> = {
+  'uk-eng-london': { venue: 'The Actors’ Guild of Great Britain', price: 42, currency: 'GBP', confirmed: true },
+  'ie-lei-dublin': { venue: 'The Gaiety School of Acting', price: 120, currency: 'EUR', confirmed: true },
+  'ca-bc-vancouver': { venue: 'Actorvan Studios', price: 295, currency: 'CAD', confirmed: true },
+  'ca-on-toronto': { venue: 'Armstrong Acting Studios', price: 95.99, currency: 'CAD', confirmed: true },
+  'us-ca-losangeles': { venue: 'Actors Comedy Studio', price: 150, currency: 'USD', confirmed: true },
+  'us-ny-newyork': { venue: 'Actors Connection', price: 59, currency: 'USD', confirmed: false },
+};
+export const CASTING_OFFICES: Readonly<Record<string, readonly string[]>> = {
+  'us-ny-newyork': ['The Telsey Office', 'Tara Rubin Casting', 'Avy Kaufman Casting'],
+  'us-ca-losangeles': ['Francine Maisler Casting', 'The Sarah Finn Company', 'Allison Jones Casting'],
+  'uk-eng-london': ['Nina Gold Casting', 'Shaheen Baig Casting', 'Lucy Bevan Casting'],
+  'ie-lei-dublin': ['Louise Kiely Casting', 'Amy Rowan Casting', 'Gillian Reynolds Casting'],
+  'ca-on-toronto': ['Lewis Kay Casting', 'Deirdre Bowen Casting', 'Robin D. Cook Casting'],
+  'ca-bc-vancouver': ['Clark & Page Casting', 'Mayrs/Brandstatter Casting', 'Kris & Kara Casting'],
+  'mx-cmx-mexicocity': ['Luis Rosales', 'Manuel Teil', 'Viridiana Olvera'],
+};
+/** A workshop's price where you work, in the save's money, and its venue. */
+export function workshopPrice(sim: Simulation, cityId: string): { price: Money; venue?: string } {
+  const w = WORKSHOPS[cityId];
+  const cur = saveCurrency(sim.universe);
+  if (!w) return { price: usd(WORK_COSTS.workshop, cur) };
+  const cents = Math.round(w.price * 100);
+  return { price: cur === w.currency ? cents : exchange(cents, w.currency, cur) ?? cents, venue: w.venue };
+}
 export const FESTIVAL_KIND = 'career.festival';
 export const PRESS_KIND = 'career.press';
 
@@ -406,6 +444,8 @@ export interface ManagerOffer { managerId: string; until: Instant }
 export interface CareerRecord {
   /** Work entered for awards, and what came of it (`systems/awards.ts`, from 2026-10-01). */
   awards?: import('./awards').AwardEntry[];
+  /** Casting offices met at a workshop, kept as contacts (`CASTING_OFFICES`, from 2026-10-03). */
+  castingContacts?: { office: string; cityId: string; at: Instant }[];
   /** Each showcase's reading, by city. */
   showcases: { cityId: CareerCity; at: Instant; score: number }[];
   /** Offers of representation standing. */
@@ -2327,8 +2367,9 @@ export function registerCareer(sim: Simulation): void {
     if (career.since === undefined && !summerOf(person, s.now)) throw new CommandError('While classes are in session, the school’s work comes first.');
     if (s.universe.scheduled.some((i) => i.kind === WORKSHOP_KIND && i.status === 'pending' && i.payload.personId === person.id)) throw new CommandError('You have one booked.');
     const cur = saveCurrency(s.universe);
-    if (!payForWork(s, person, usd(WORK_COSTS.workshop, cur), 'A casting director workshop')) throw new CommandError(`A workshop is ${formatMoney(usd(WORK_COSTS.workshop, cur), cur)}, which the bank can’t cover.`);
     const city = workCity(person);
+    const w = workshopPrice(s, city);
+    if (!payForWork(s, person, w.price, w.venue ? `${w.venue}, a casting director workshop` : 'A casting director workshop')) throw new CommandError(`A workshop is ${formatMoney(w.price, cur)}, which the bank can’t cover.`);
     const when = nextDayAt(s.now, zoneOf(city), 4, 19);
     s.schedule({ at: when, kind: WORKSHOP_KIND, label: 'Casting Director Workshop', category: 'career', priority: 34, requiresPlayer: true, durationMinutes: 180, locationId: city, payload: { personId: person.id, cityId: city } });
     return { at: when };
@@ -2338,7 +2379,9 @@ export function registerCareer(sim: Simulation): void {
     const person = personOf(item);
     if (!person) return;
     if (!reaches(s, person, item.at, String(item.payload.cityId), 'a workshop')) { item.status = 'missed'; return; }
-    // A cold read in front of the office: known to it after, and the nerves of it.
+    // A cold read in front of the office: known to it after, and the nerves of it; the office kept as a casting contact (from 2026-10-03).
+    const offices = CASTING_OFFICES[String(item.payload.cityId)];
+    if (offices?.length) { const office = offices[Math.floor(s.rng('career.workshop_office', person.id, String(item.at)).next() * offices.length)]!; const c = careerOf(person); (c.castingContacts ??= []).push({ office, cityId: String(item.payload.cityId), at: item.at }); }
     nerves(s, person, 'audition');
     earn(s, person, ATTRIBUTES.build.workshop);
     if (person.craft) grow(person.craft, 'coldReading', focusOf(person));

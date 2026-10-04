@@ -11,7 +11,7 @@ import { MS_DAY, zonedParts } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { ROLES } from '@/engine/content/career';
 import { ATTRIBUTES, earn, fadeRecognition, nerves, overscaleOf, presenceSwing, sendsFactor } from '@/engine/systems/attributes';
-import { FESTIVAL_KIND, IMPROV_KIND, beginCareer, bookingChance, careerOf, offersFor, publicistRefusal, publicityFor, recognitionFrom, roleById, unitRate, weekOfAuditions, workCostsWeek, rateOf } from '@/engine/systems/career';
+import { FESTIVAL_KIND, IMPROV_KIND, beginCareer, bookingChance, CASTING_OFFICES, careerOf, offersFor, publicistRefusal, publicityFor, recognitionFrom, roleById, unitRate, weekOfAuditions, workCostsWeek, rateOf } from '@/engine/systems/career';
 import { WORK_COSTS } from '@/engine/content/career';
 import { evaluate, evenCraft } from '@/engine/systems/school';
 import type { Craft } from '@/engine/systems/school';
@@ -258,6 +258,12 @@ describe('building them on purpose', () => {
     expect(a.reputation).toBeCloseTo(ATTRIBUTES.build.workshop, 10);
     expect(sim.player.craft!.coldReading).toBeGreaterThan(cold);
     expect(sim.player.wellbeing.stress).toBeGreaterThan(0);
+    // The office met is one of the town's, kept as a contact (from 2026-10-03).
+    const met = careerOf(sim.player).castingContacts ?? [];
+    expect(met).toHaveLength(1);
+    expect(CASTING_OFFICES[met[0]!.cityId]).toContain(met[0]!.office);
+    // Paid at the venue's own price where one is published.
+    expect(sim.universe.transactions.some((t) => /casting director workshop/.test(t.memo))).toBe(true);
   });
 
   it('halves an audition’s nerves with a coach', () => {
@@ -309,5 +315,16 @@ describe('building them on purpose', () => {
     const missed = run('attr-fest-missed', false);
     expect(missed.recognition).toBe(ATTRIBUTES.recognition.film + ATTRIBUTES.build.festival.indie * ATTRIBUTES.build.festival.absent);
     expect(missed.reputation).toBe(0);
+  });
+});
+
+describe('a workshop’s venue', () => {
+  it('is the town’s own at its price: the Actors’ Guild’s £42 in London', async () => {
+    const { workshopPrice } = await import('@/engine/systems/career');
+    const { inSaveMoney } = await import('@/engine/systems/banking');
+    const sim = life('attr-venue');
+    expect(workshopPrice(sim, 'uk-eng-london')).toEqual({ price: inSaveMoney(sim, 42_00, 'GBP'), venue: 'The Actors’ Guild of Great Britain' });
+    expect(workshopPrice(sim, 'ca-bc-vancouver').price).toBe(inSaveMoney(sim, 295_00, 'CAD'));
+    expect(workshopPrice(sim, 'us-ct-newhaven').venue).toBeUndefined();
   });
 });
