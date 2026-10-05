@@ -1,0 +1,947 @@
+{
+ "read": "2026-10-05",
+ "category": "televisions",
+ "products": [
+  {
+   "brand": "Bang & Olufsen",
+   "series": "Beovision Contour",
+   "model": "Beovision Contour 48",
+   "sizeIn": 48,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Bang & Olufsen",
+     "price": 8700,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.bang-olufsen.com/en/us/televisions/beovision-contour-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.bang-olufsen.com/en/us/televisions/beovision-contour-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Bang & Olufsen",
+   "series": "Beovision Harmony",
+   "model": "Beovision Harmony 65",
+   "sizeIn": 65,
+   "panel": "OLED",
+   "resolution": "8K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Bang & Olufsen",
+     "price": 24350,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.bang-olufsen.com/en/us/televisions/beovision-harmony",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.bang-olufsen.com/en/us/televisions/beovision-harmony",
+   "status": "verified"
+  },
+  {
+   "brand": "Bang & Olufsen",
+   "series": "Beovision Theatre",
+   "model": "Beovision Theatre 55",
+   "sizeIn": 55,
+   "panel": "OLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Bang & Olufsen",
+     "price": 18200,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.bang-olufsen.com/en/us/televisions/beovision-theatre",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.bang-olufsen.com/en/us/televisions/beovision-theatre",
+   "status": "verified"
+  },
+  {
+   "brand": "Grundig",
+   "series": "GHB 5340",
+   "model": "24GHB5340",
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "720p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Amazon.co.uk",
+     "price": 184.24,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.amazon.co.uk/GRUNDIG-24-GHB-5340-Black/dp/B0CCY5C516",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.amazon.co.uk/GRUNDIG-24-GHB-5340-Black/dp/B0CCY5C516",
+   "status": "verified"
+  },
+  {
+   "brand": "Finlux",
+   "series": "MH24F",
+   "model": "MH24F",
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "720p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Amazon.co.uk",
+     "price": 149,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.amazon.co.uk/Finlux-Freeview-Netflix-YouTube-Virtual/dp/B0DH8HSN4H",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.amazon.co.uk/Finlux-Freeview-Netflix-YouTube-Virtual/dp/B0DH8HSN4H",
+   "status": "verified"
+  },
+  {
+   "brand": "Finlux",
+   "series": "MU24F",
+   "model": "MU24F",
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Fire TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Amazon.co.uk",
+     "price": 329,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.amazon.co.uk/Freeview-Netflix-YouTube-Virtual-Dimming/dp/B0DH8HPTML",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.amazon.co.uk/Freeview-Netflix-YouTube-Virtual-Dimming/dp/B0DH8HPTML",
+   "status": "verified"
+  },
+  {
+   "brand": "Hitachi",
+   "series": "HK6200U",
+   "model": "43HK6200U",
+   "sizeIn": 43,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Argos",
+     "price": 289.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.argos.co.uk/product/9517415",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.argos.co.uk/product/9517415",
+   "status": "verified"
+  },
+  {
+   "brand": "Hitachi",
+   "series": "HK6100U",
+   "model": "55HK6100U",
+   "sizeIn": 55,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 50,
+   "year": 2021,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Argos",
+     "price": 379.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.argos.co.uk/product/9466937",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.argos.co.uk/product/9466937",
+   "status": "verified"
+  },
+  {
+   "brand": "Skyworth",
+   "series": "Q6500B",
+   "model": "32Q6500B",
+   "sizeIn": 32,
+   "panel": "QLED",
+   "resolution": "720p",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Skyworth USA",
+     "price": 199.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.skyworthusa.com/products/q6500b-series-qled-fhd-hd-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.skyworthusa.com/products/q6500b-series-qled-fhd-hd-google-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Skyworth",
+   "series": "Q6500B",
+   "model": "40Q6500B",
+   "sizeIn": 40,
+   "panel": "QLED",
+   "resolution": "1080p",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Skyworth USA",
+     "price": 199.99,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.skyworthusa.com/products/q6500b-series-qled-fhd-hd-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.skyworthusa.com/products/q6500b-series-qled-fhd-hd-google-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Skyworth",
+   "series": "Q6500A",
+   "model": "50Q6500A",
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Skyworth USA",
+     "price": 1199,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.skyworthusa.com/products/q6500a-series-tv-qled-4k-uhd-google-tv",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.skyworthusa.com/products/q6500a-series-tv-qled-4k-uhd-google-tv",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "NTFX HD20",
+   "model": "G32NTFXHD20",
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "720p",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Ghia (tienda oficial)",
+     "price": 2279,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://tienda.ghia.com.mx/producto/pantalla-smart-tv-ghia-32-pulgadas-netflix-full-hd-wifi-2-hdmi-modelo-g32ntfxhd20/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://tienda.ghia.com.mx/producto/pantalla-smart-tv-ghia-32-pulgadas-netflix-full-hd-wifi-2-hdmi-modelo-g32ntfxhd20/",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "ATV22",
+   "model": "G40ATV22",
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "1080p",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Android TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Ghia (tienda oficial)",
+     "price": 3485,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://tienda.ghia.com.mx/producto/pantalla-smart-tv-ghia-40-pulgadas-android-tv-full-hd-60-hz-asistente-de-google-integrado-modelo-g40atv22/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://tienda.ghia.com.mx/producto/pantalla-smart-tv-ghia-40-pulgadas-android-tv-full-hd-60-hz-asistente-de-google-integrado-modelo-g40atv22/",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "Whale TV",
+   "model": "G65W26Q",
+   "sizeIn": 65,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Ghia (tienda oficial)",
+     "price": 9555,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://tienda.ghia.com.mx/producto/television-smart-ghia-whale-tv-65-pulg-qled-uhd-4k-dolby-audio/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://tienda.ghia.com.mx/producto/television-smart-ghia-whale-tv-65-pulg-qled-uhd-4k-dolby-audio/",
+   "status": "verified"
+  },
+  {
+   "brand": "Ghia",
+   "series": "Google TV",
+   "model": "G50Q4K-GA",
+   "sizeIn": 50,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Ghia (tienda oficial)",
+     "price": 6125,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://tienda.ghia.com.mx/producto/television-smart-ghia-google-tv-50-pulg-qled-uhd-4k-dolby-audio/",
+     "status": "verified"
+    }
+   ],
+   "url": "https://tienda.ghia.com.mx/producto/television-smart-ghia-google-tv-50-pulg-qled-uhd-4k-dolby-audio/",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "VA Series",
+   "model": "S32VAFW",
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "1080p",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "webOS",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Walmart",
+     "price": 97.95,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.walmart.com/ip/Sansui-32-VA-Series-Full-HD-Frameless-Design-Smart-TV-with-Dolby-Vision-HDR-Dolby-Atmos-WebOS/14337862799",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.walmart.com/ip/Sansui-32-VA-Series-Full-HD-Frameless-Design-Smart-TV-with-Dolby-Vision-HDR-Dolby-Atmos-WebOS/14337862799",
+   "status": "verified"
+  },
+  {
+   "brand": "Sansui",
+   "series": "VA Series",
+   "model": "S75VAUG",
+   "sizeIn": 75,
+   "panel": "LED",
+   "resolution": "4K",
+   "refreshHz": 60,
+   "year": null,
+   "smartOs": "Google TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Walmart",
+     "price": 779.95,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.walmart.com/ip/Sansui-S75VAUG-75-inch-LED-4K-Google-Smart-TV/5685502079",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.walmart.com/ip/Sansui-S75VAUG-75-inch-LED-4K-Google-Smart-TV/5685502079",
+   "status": "verified"
+  },
+  {
+   "brand": "Magnavox",
+   "series": "MV306X",
+   "model": "32MV306X",
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "720p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Walmart",
+     "price": 234.74,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.walmart.com/ip/Magnavox-32-720-P-LED-Smart-TV-32MV306X/52955446",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.walmart.com/ip/Magnavox-32-720-P-LED-Smart-TV-32MV306X/52955446",
+   "status": "verified"
+  },
+  {
+   "brand": "Magnavox",
+   "series": "ME403V",
+   "model": "24ME403V",
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "720p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Walmart",
+     "price": 221.14,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.walmart.com/ip/Magnavox-24ME403V-LED-HDTV-Slim-24-720p-Black/35094488",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.walmart.com/ip/Magnavox-24ME403V-LED-HDTV-Slim-24-720p-Black/35094488",
+   "status": "verified"
+  },
+  {
+   "brand": "Magnavox",
+   "series": "MV336X",
+   "model": "50MV336X",
+   "sizeIn": 50,
+   "panel": "LED",
+   "resolution": "1080p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Walmart",
+     "price": 501.15,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.walmart.com/ip/Philips-Magnavox-50MV336X-50-Class-49-5-viewable-LED-TV-1080p-Full-HD-1920-x-1080/52945249",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.walmart.com/ip/Philips-Magnavox-50MV336X-50-Class-49-5-viewable-LED-TV-1080p-Full-HD-1920-x-1080/52945249",
+   "status": "verified"
+  },
+  {
+   "brand": "Akai",
+   "series": "AKTV2423",
+   "model": "AKTV2423NS",
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "720p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Amazon.co.uk",
+     "price": 129.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.amazon.co.uk/AKAI-Freeview-Inputs-Remote-Control/dp/B0BQJHRGB4",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.amazon.co.uk/AKAI-Freeview-Inputs-Remote-Control/dp/B0BQJHRGB4",
+   "status": "verified"
+  },
+  {
+   "brand": "Akai",
+   "series": "A50009",
+   "model": "A50009",
+   "sizeIn": 32,
+   "panel": "LED",
+   "resolution": "1080p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Amazon.co.uk",
+     "price": 199.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.amazon.co.uk/Akai-A50009-Widescreen-Full-Saorview/dp/B00QIT1MOA",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.amazon.co.uk/Akai-A50009-Widescreen-Full-Saorview/dp/B00QIT1MOA",
+   "status": "verified"
+  },
+  {
+   "brand": "Majestic",
+   "series": "Global Smart LED TV",
+   "model": "MJSGT220",
+   "sizeIn": 22,
+   "panel": "LED",
+   "resolution": "1080p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Android",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Cooltech Leisure",
+     "price": 369,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.cooltechleisure.co.uk/majestic-22-inch-global-smart-led-tv-mjsgt220-with-dvd-bluetooth-and-wireless-mirror-screen-sharing",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cooltechleisure.co.uk/majestic-22-inch-global-smart-led-tv-mjsgt220-with-dvd-bluetooth-and-wireless-mirror-screen-sharing",
+   "status": "verified"
+  },
+  {
+   "brand": "Majestic",
+   "series": "GTV1900DE",
+   "model": "GTV1900DE",
+   "sizeIn": 19,
+   "panel": "LED",
+   "resolution": "720p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Android",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Cooltech Leisure",
+     "price": 289,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.cooltechleisure.co.uk/majestic-gtv1900de-12-volt-19-android-tv-with-dvd-and-chromecast-built-in",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.cooltechleisure.co.uk/majestic-gtv1900de-12-volt-19-android-tv-with-dvd-and-chromecast-built-in",
+   "status": "verified"
+  },
+  {
+   "brand": "Majestic",
+   "series": "LED222GS",
+   "model": "LED222GS",
+   "sizeIn": 22,
+   "panel": "LED",
+   "resolution": "1080p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Majestic Electronics UK",
+     "price": 358.25,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://majesticelectronics.co.uk/led-tv/135-majestic-22-led-tv-12v-fhd-global-tuners-dvd-usb-mmmi-low-power-current.html",
+     "status": "verified"
+    }
+   ],
+   "url": "https://majesticelectronics.co.uk/led-tv/135-majestic-22-led-tv-12v-fhd-global-tuners-dvd-usb-mmmi-low-power-current.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Avtex",
+   "series": "W249TS",
+   "model": "W249TS-U",
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "1080p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Leisureshopdirect",
+     "price": 449.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.leisureshopdirect.com/electric/avtex/avtex-12v-tvs/avtex-w249ts-smart-tv-240v-ac-12v-24v-dc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.leisureshopdirect.com/electric/avtex/avtex-12v-tvs/avtex-w249ts-smart-tv-240v-ac-12v-24v-dc",
+   "status": "verified"
+  },
+  {
+   "brand": "Avtex",
+   "series": "W185TS",
+   "model": "W185TS-S",
+   "sizeIn": 19,
+   "panel": "LED",
+   "resolution": "1080p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Leisureshopdirect",
+     "price": 399.99,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.leisureshopdirect.com/electric/avtex/avtex-12v-tvs/avtex-w195ts-195inch-smart-tv-240v-ac-12v-24v-dc",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.leisureshopdirect.com/electric/avtex/avtex-12v-tvs/avtex-w195ts-195inch-smart-tv-240v-ac-12v-24v-dc",
+   "status": "verified"
+  },
+  {
+   "brand": "Atyme",
+   "series": "AM7HD",
+   "model": "400AM7HD",
+   "sizeIn": 40,
+   "panel": "LED",
+   "resolution": "1080p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Walmart",
+     "price": 212.71,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.walmart.com/ip/ATYME-40-Class-FHD-1080P-LED-TV-400AM7HD/109101307",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.walmart.com/ip/ATYME-40-Class-FHD-1080P-LED-TV-400AM7HD/109101307",
+   "status": "verified"
+  },
+  {
+   "brand": "Seiki",
+   "series": "HS950N",
+   "model": "SC-39HS950N",
+   "sizeIn": 39,
+   "panel": "LED",
+   "resolution": "720p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Walmart",
+     "price": 139.59,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.walmart.com/ip/Seiki-39-Class-HD-LED-TV-SC-39HS950N/970134792",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.walmart.com/ip/Seiki-39-Class-HD-LED-TV-SC-39HS950N/970134792",
+   "status": "verified"
+  },
+  {
+   "brand": "Seiki",
+   "series": "HE01",
+   "model": "SE19HE01",
+   "sizeIn": 19,
+   "panel": "LED",
+   "resolution": "720p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Walmart",
+     "price": 89.2,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.walmart.com/ip/Seiki-SE19HE01-19-Class-18-5-viewable-LED-TV-720p-1366-x-768/35030314",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.walmart.com/ip/Seiki-SE19HE01-19-Class-18-5-viewable-LED-TV-720p-1366-x-768/35030314",
+   "status": "verified"
+  },
+  {
+   "brand": "Daewoo",
+   "series": "DM54HA",
+   "model": "24DM54HA",
+   "sizeIn": 24,
+   "panel": "LED",
+   "resolution": "720p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": "Android TV",
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Amazon.co.uk",
+     "price": 244.02,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.amazon.co.uk/24DM54HA-Android-Definition-Bluetooth-Chromecast/dp/B0BVC25BJ1",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.amazon.co.uk/24DM54HA-Android-Definition-Bluetooth-Chromecast/dp/B0BVC25BJ1",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "HYLED4028QR",
+   "model": "HYLED4028QR",
+   "sizeIn": 40,
+   "panel": "QLED",
+   "resolution": "1080p",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Elektra",
+     "price": 4599,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.elektra.mx/pantalla-qled-hyundai-40-pulgadas-smart-hyled4028qr-1012646/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.elektra.mx/pantalla-qled-hyundai-40-pulgadas-smart-hyled4028qr-1012646/p",
+   "status": "verified"
+  },
+  {
+   "brand": "Hyundai",
+   "series": "HYLED6007QR",
+   "model": "HYLED6007QR",
+   "sizeIn": 60,
+   "panel": "QLED",
+   "resolution": "4K",
+   "refreshHz": null,
+   "year": null,
+   "smartOs": null,
+   "onModeWatts": null,
+   "powerBasis": null,
+   "powerUrl": null,
+   "colors": null,
+   "offers": [
+    {
+     "market": "mx",
+     "seller": "Elektra",
+     "price": 8999,
+     "currency": "MXN",
+     "taxIncluded": true,
+     "url": "https://www.elektra.mx/pantalla-qled-hyundai-60-pulgadas-4k-smart-hyled6007qr-1012607/p",
+     "status": "verified"
+    }
+   ],
+   "url": "https://www.elektra.mx/pantalla-qled-hyundai-60-pulgadas-4k-smart-hyled6007qr-1012607/p",
+   "status": "verified"
+  }
+ ],
+ "notFound": [
+  "Vestel: sold in the UK mainly as OEM/commercial displays (Currys Business signage) and as white-label brands (Logik, Alba); no own-brand consumer TV with a current regular price found in us/ca/mx/uk/ie",
+  "Technika: Tesco/Argos listings found in search were all archived (2008-2014) with no current price",
+  "Konka: only pre-2020 (2020-model) US Amazon listings found, all currently unavailable with no confirmed current price",
+  "Coocaa: current TV listings with prices found only on Amazon India (amazon.in); none found for sale in us/ca/mx/uk/ie",
+  "Medion: UK listings are rotating Aldi Specialbuys and third-party refurb sites; no stable current product page with a confirmed price could be fetched",
+  "Thomson: TV pricing found only for the Indian market; no us/ca/mx/uk/ie seller page found",
+  "Funai: current Amazon US listings are almost entirely remotes/accessories for older TVs; no new television with a confirmed current price found",
+  "Proton: no current television listing found in us/ca/mx/uk/ie",
+  "Manta: UK Amazon listings exist (e.g. 32LHA123E, 22LFN123D) but are out of stock with no readable UK price; current pricing found only in EU markets outside scope",
+  "Walker: no current television brand listing found at Tesco or Argos",
+  "Ferguson: no current UK seller page carrying Ferguson-branded TVs with a price was found",
+  "Alba: Argos (and Sainsbury's) discontinued the Alba TV range in 2022, replaced by Bush; no current regular price available",
+  "Linsar: UK Amazon/Currys Business listings found, but either out of stock with no price, or the exact seller model code could not be confirmed against the quoted price",
+  "Mitchell & Brown: UK listings found (24 inch HD LED TV, JB-321811FDVD) but currently unavailable, with no confirmed in-stock regular price",
+  "Seiki SC60UK850N: a Walmart-restored unit, not new; dropped 2026-10-05."
+ ]
+}

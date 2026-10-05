@@ -31,6 +31,10 @@ import { MOTO_MODELS } from '../src/engine/content/motocatalog.ts';
 import { RIDE_LINEUP } from '../src/engine/content/ridelineup.ts';
 import { RIDE_MODELS } from '../src/engine/content/ridecatalog.ts';
 import { RV_MODELS } from '../src/engine/content/rvcatalog.ts';
+import { RV_LINEUP } from '../src/engine/content/rvlineup.ts';
+import { LITTERS, PET_FOODS } from '../src/engine/content/petcare.ts';
+import { KITCHEN_GEAR } from '../src/engine/content/kitchengear.ts';
+import { GEAR_LINEUP } from '../src/engine/content/kitchengearlineup.ts';
 import { CAR_OPTIONS } from '../src/engine/content/caroptions.ts';
 import { HOTELS } from '../src/engine/content/hotels.ts';
 import { RESTAURANTS } from '../src/engine/content/restaurants.ts';
@@ -51,6 +55,7 @@ const clothing = (cat) => CLOTHING_PRODUCTS.filter((p) => (CLOTHING_GROUP[p.cate
   .map((p) => row(p.brand, p.sameAs ?? `${p.brand}|${p.name}`, Math.max(1, p.sizes.length) * Math.max(1, p.colors.length), p.market));
 const cars = (list) => list.map((m) => row(m.make, `${m.make}|${m.model}`, 1, m.market));
 
+const DRINK = new Set(['beverage', 'alcohol']);
 /** What each category's rows are, where a catalog holds it. */
 const READ = {
   everyday: () => clothing('everyday'), formalwear: () => clothing('formalwear'), outerwear: () => clothing('outerwear'),
@@ -60,7 +65,8 @@ const READ = {
   bedding: () => clothing('towels'),
   footwear: () => clothing('footwear'), bags: () => clothing('bags'), accessories: () => clothing('accessories'),
   watches: () => clothing('watches'), jewelry: () => clothing('jewelry'),
-  sneakers: () => SNEAKERS.map((s) => row(null, s.styleCode, Math.max(1, ...SNEAKER_RETAIL.filter((o) => o.styleCode === s.styleCode).map((o) => o.sizes?.length ?? 1)), null)),
+  // Every one is Nike's Jordan Brand's, an Air Jordan or a Jordan signature shoe (from 2026-10-05 counted as its brand, not unbranded).
+  sneakers: () => SNEAKERS.map((s) => row(/Jordan/.test(`${s.name} ${s.line}`) ? 'Jordan' : null, s.styleCode, Math.max(1, ...SNEAKER_RETAIL.filter((o) => o.styleCode === s.styleCode).map((o) => o.sizes?.length ?? 1)), null)),
   // As products from 2026-10-04: a row an offer, the product its own, its colors its variants.
   luggage: () => LUGGAGE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   // As products from 2026-10-05: a row an offer, each screen size its own product.
@@ -77,11 +83,17 @@ const READ = {
   furniture: () => FURNITURE_CATALOG.map((p) => row(p.brand, `${p.brand}|${p.name}|${p.type ?? ''}`, 1, p.country)),
   toiletries: () => TOILETRIES.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
   cleaning: () => CLEANING.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
-  groceries: () => GROCERY_PRODUCTS.map((g) => row(g.brand ?? null, g.name, 1, g.market)),
+  // Drinks the grocers sell (coffee, tea, juice, water, beer, wine) count as beverages, from 2026-10-05; until then as groceries.
+  groceries: () => GROCERY_PRODUCTS.filter((g) => !DRINK.has(g.category)).map((g) => row(g.brand ?? null, g.name, 1, g.market)),
+  beverages: () => GROCERY_PRODUCTS.filter((g) => DRINK.has(g.category)).map((g) => row(g.brand ?? null, g.name, 1, g.market)),
   cars: () => cars([...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS]),
   motorcycles: () => cars([...BIKE_MODELS, ...MOTO_MODELS]),
+  // Pet food by its brand, and litter, whose name states its maker, from 2026-10-05; until then neither was counted.
+  'pet-supplies': () => [...PET_FOODS.map((p) => row(p.brand, `${p.brand}|${p.product}`, 1, p.market.toUpperCase())), ...LITTERS.map((l) => row(null, l.product, 1, l.market.toUpperCase()))],
+  // Blenders and slow cookers, the cheapest first read and from 2026-10-05 each market's makes.
+  kitchenware: () => [...Object.entries(KITCHEN_GEAR).flatMap(([m, list]) => list.map((g) => row(g.brand ?? null, g.name, 1, m.toUpperCase()))), ...Object.entries(GEAR_LINEUP).flatMap(([m, list]) => list.map((g) => row(g.brand ?? null, g.name, 1, m.toUpperCase())))],
   bicycles: () => cars([...RIDE_MODELS, ...RIDE_LINEUP]),
-  rvs: () => cars(RV_MODELS),
+  rvs: () => cars([...RV_MODELS, ...RV_LINEUP]),
   'car-options': () => { const make = new Map([...CAR_MODELS, ...EV_MODELS, ...PICKUP_MODELS].map((m) => [m.id, m.make])); return CAR_OPTIONS.map((o) => row(make.get(o.carId) ?? null, o.key, 1, o.carId.slice(0, 2))); },
 };
 

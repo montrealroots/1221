@@ -16,6 +16,8 @@ const OUT = 'src/engine/content/groceries.ts';
 const read = (f) => JSON.parse(readFileSync(`docs/research/world/${f}`, 'utf8'));
 const g = read('research-groceries.json');
 const more = existsSync('docs/research/world/research-groceries2.json') ? read('research-groceries2.json') : { products: [] };
+// And from 2026-10-05 drinks from more brands, each with its brand and a beer's or wine's strength read (part three).
+const drinks = existsSync('docs/research/world/research-groceries3.json') ? read('research-groceries3.json') : { products: [] };
 const recipesIn = read('research-cooking-alcohol.json').recipes;
 
 /** Food words, the key each names. Order doesn't matter: the last word in a name wins, the longer where two end together. */
@@ -140,8 +142,8 @@ const products = [];
 // Each product's brand as its own name states it (`research-brands-from-names.json`, read 2026-10-04); null where the
 // name names none, as fresh produce mostly doesn't.
 const BRANDS = new Map(JSON.parse(readFileSync('docs/research/world/research-brands-from-names.json', 'utf8')).items.map((i) => [`${i.chain}|${i.name}`, i.brand ?? null]));
-const brandOf = (p) => BRANDS.get(`${p.chain}|${p.name}`) ?? null;
-for (const p of [...g.products, ...(more.products ?? [])]) {
+const brandOf = (p) => BRANDS.get(`${p.chain}|${p.name}`) ?? p.brand ?? null;
+for (const p of [...g.products, ...(more.products ?? []), ...(drinks.products ?? [])]) {
   if (typeof p.price !== 'number' || !(p.price > 0)) continue;
   const key = keyOf(p.name) ?? (p.category === 'ready-meal' ? 'ready-meal' : undefined);
   if (!key) continue;
@@ -156,6 +158,7 @@ for (const p of [...g.products, ...(more.products ?? [])]) {
     sizeQty: pint ? 298 : p.sizeQty, sizeUnit: pint ? 'g' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true,
     storage, ...keepsFor(key, p.category, storage),
     url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true,
+    ...((key === 'beer' || key === 'wine') && typeof p.abv === 'number' && p.abv > 0 && p.abv < 1 ? { abv: p.abv } : {}),
   });
 }
 const chainsWith = new Set(products.map((p) => p.chain));
@@ -210,6 +213,8 @@ export interface GroceryProduct {
   sizeQty: number; sizeUnit: FoodUnit; price: number; currency: string; taxIncluded: boolean;
   storage: Storage; keepsDays: number | null; keepsEstimated: boolean; keepsSource: string;
   url: string | null; date: string | null; confirmed: boolean;
+  /** A beer's or a wine's alcohol by volume as its label states it, a fraction (from 2026-10-05). */
+  abv?: number;
 }
 
 export type Ingredient = { name: string; cupboard: true } | { name: string; food: string | null; quantity: number | null; unit: FoodUnit | null; cupboard?: undefined };

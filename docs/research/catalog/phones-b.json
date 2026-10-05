@@ -1,0 +1,87 @@
+{
+  "read": "2026-10-05",
+  "devices": [
+    { "market": "us", "maker": "Alcatel", "model": "MyFlip", "storageGB": 4, "colors": ["Black"], "price": 29.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.walmart.com/c/kp/alcatel-cell-phones", "status": "secondhand" },
+    { "market": "us", "maker": "Alcatel", "model": "Insight", "storageGB": 16, "colors": ["Suede Black"], "price": 29.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.walmart.com/c/kp/alcatel-cell-phones", "status": "secondhand" },
+    { "market": "us", "maker": "Alcatel", "model": "CAMEOX", "storageGB": 16, "colors": ["Arctic White"], "price": 49.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.walmart.com/c/kp/alcatel-cell-phones", "status": "secondhand" },
+
+    { "market": "us", "maker": "Nubia", "model": "RedMagic 11S Pro", "storageGB": 256, "colors": ["Nightfreeze", "Subzero"], "price": 849.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://redmagic.tech/products/redmagic-11s-pro", "status": "verified" },
+    { "market": "us", "maker": "Nubia", "model": "RedMagic 11S Pro", "storageGB": 512, "colors": ["Nightfreeze", "Subzero"], "price": 849.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://redmagic.tech/products/redmagic-11s-pro", "status": "verified" },
+
+    { "market": "us", "maker": "Unihertz", "model": "Titan 2", "storageGB": 512, "colors": ["Black"], "price": 489.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://www.unihertz.com/collections/smartphones", "status": "secondhand" },
+    { "market": "us", "maker": "Unihertz", "model": "Jelly Star", "storageGB": 256, "colors": ["Black", "Red"], "price": 219.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://www.unihertz.com/products/jelly-star", "status": "secondhand" },
+    { "market": "us", "maker": "Unihertz", "model": "Tank 3 Pro", "storageGB": 512, "colors": ["Black"], "price": 599.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://www.unihertz.com/products/tank-3-pro", "status": "secondhand" },
+
+    { "market": "us", "maker": "Blackview", "model": "XPLORE 1", "storageGB": 256, "colors": ["Black"], "price": 369.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://store.blackview.hk/en-us", "status": "verified" },
+    { "market": "us", "maker": "Blackview", "model": "XPLORE 2", "storageGB": 256, "colors": ["Black"], "price": 509.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://store.blackview.hk/en-us", "status": "verified" },
+
+    { "market": "us", "maker": "Oukitel", "model": "WP30 Pro 5G", "storageGB": 512, "colors": ["Black"], "price": 529.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://oukitel.com/pages/store", "status": "secondhand" },
+    { "market": "us", "maker": "Oukitel", "model": "WP33 Pro", "storageGB": 256, "colors": ["Black"], "price": 399.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://oukitel.com/pages/store", "status": "secondhand" },
+    { "market": "us", "maker": "Oukitel", "model": "C50", "storageGB": 128, "colors": ["Black"], "price": 179.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://oukitel.com/pages/store", "status": "secondhand" },
+
+    { "market": "us", "maker": "Doogee", "model": "Note56 X", "storageGB": 64, "colors": ["Black", "Gold", "Gray"], "price": 119.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://www.doogee.com/collections/smart-phones", "status": "secondhand" },
+
+    { "market": "us", "maker": "Ulefone", "model": "Note 23", "storageGB": 32, "colors": ["Black"], "price": 84.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://store.ulefone.com/products/note-23", "status": "secondhand" },
+
+    { "market": "ie", "maker": "Cubot", "model": "Note 60", "storageGB": 128, "colors": ["Titan Gray", "Black"], "price": 169.99, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://shop.cubot.net/collections/best-sellers", "status": "verified" },
+    { "market": "ie", "maker": "Cubot", "model": "P90", "storageGB": 256, "colors": ["Black", "Purple"], "price": 199.99, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://shop.cubot.net/collections/best-sellers", "status": "verified" },
+    { "market": "ie", "maker": "Cubot", "model": "X100", "storageGB": 256, "colors": ["Black", "Gold"], "price": 219.99, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://shop.cubot.net/collections/best-sellers", "status": "verified" },
+    { "market": "ie", "maker": "Cubot", "model": "KingKong X", "storageGB": 256, "colors": ["Black"], "price": 319.99, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://shop.cubot.net/collections/best-sellers", "status": "verified" },
+
+    { "market": "ie", "maker": "Crosscall", "model": "Core-S5", "storageGB": null, "colors": ["Black"], "price": 99.90, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://www.crosscall.com/en/products/core-s5", "status": "secondhand" },
+
+    { "market": "us", "maker": "Sonim", "model": "XP3plus 5G", "storageGB": 32, "colors": ["Black"], "price": 374.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.att.com/buy/phones/sonim-xp3plus-5g.html", "status": "secondhand" },
+    { "market": "us", "maker": "Sonim", "model": "XP Pro", "storageGB": null, "colors": ["Black"], "price": 629.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.att.com/buy/phones/sonim-xp-pro.html", "status": "secondhand" },
+
+    { "market": "us", "maker": "Orbic", "model": "Trophy 5G", "storageGB": 128, "colors": ["Black"], "price": 359.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.verizon.com/smartphones/orbic-trophy-5g/", "status": "secondhand" },
+
+    { "market": "us", "maker": "Consumer Cellular", "model": "Iris Connect", "storageGB": null, "colors": ["Black"], "price": 89.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.theseniorlist.com/cell-phones/iris-connect/", "status": "secondhand" },
+    { "market": "us", "maker": "Consumer Cellular", "model": "Iris", "storageGB": 8, "colors": ["Black"], "price": 49.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.walmart.com/ip/Consumer-Cellular-Iris-8GB-Black-Flip-Phone/1144116809", "status": "secondhand" },
+
+    { "market": "us", "maker": "Lively", "model": "Jitterbug Flip3", "storageGB": 64, "colors": ["Red", "Black"], "price": 79.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://shop.lively.com/", "status": "verified" },
+    { "market": "us", "maker": "Lively", "model": "Jitterbug Smart5", "storageGB": 128, "colors": ["Black"], "price": 119.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://shop.lively.com/", "status": "verified" },
+
+    { "market": "us", "maker": "Teracube", "model": "2e", "storageGB": 64, "colors": ["Black"], "price": 299.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://store.myteracube.com/collections/all", "status": "verified" },
+    { "market": "us", "maker": "Teracube", "model": "2s", "storageGB": null, "colors": ["Black"], "price": 299.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://store.myteracube.com/collections/all", "status": "secondhand" },
+
+    { "market": "uk", "maker": "Punkt", "model": "MP02", "storageGB": 16, "colors": ["Black", "Light Blue", "Light Grey"], "price": 259.00, "currency": "GBP", "taxIncluded": true, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.amazon.co.uk/Punkt-MP02-Generation-Minimalist-Unlocked-Black/dp/B09K3ZTTPR", "status": "secondhand" },
+
+    { "market": "us", "maker": "Light", "model": "Light Phone III", "storageGB": null, "colors": ["Black"], "price": 799.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://www.thelightphone.com/", "status": "secondhand" },
+
+    { "market": "uk", "maker": "Emporia", "model": "SMART.8", "storageGB": null, "colors": ["Black"], "price": 499.99, "currency": "GBP", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://www.emporiamobile.com/en-gb", "status": "verified" },
+    { "market": "uk", "maker": "Emporia", "model": "JOY-LTE", "storageGB": null, "colors": ["Blue", "Black", "Red"], "price": 99.99, "currency": "GBP", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://www.emporiamobile.com/en-gb", "status": "verified" },
+
+    { "market": "ie", "maker": "Gigaset", "model": "GS6", "storageGB": 128, "colors": ["Black"], "price": 369.00, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://murena.com/products/smartphones/", "status": "secondhand" },
+    { "market": "ie", "maker": "Gigaset", "model": "GS6 PRO", "storageGB": 256, "colors": ["Black"], "price": 449.00, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://murena.com/products/smartphones/", "status": "secondhand" },
+
+    { "market": "ie", "maker": "Volla", "model": "Phone X23", "storageGB": 128, "colors": ["Black"], "price": 564.00, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://volla.online/en/devices/", "status": "verified" },
+    { "market": "ie", "maker": "Volla", "model": "Phone Plinius", "storageGB": 128, "colors": ["Black"], "price": 598.00, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://volla.online/en/devices/", "status": "verified" },
+    { "market": "ie", "maker": "Volla", "model": "Phone Quintus", "storageGB": 256, "colors": ["Black"], "price": 719.00, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://volla.online/en/devices/", "status": "verified" },
+
+    { "market": "us", "maker": "Murena", "model": "Fairphone (Gen. 6)", "storageGB": 256, "colors": ["Black"], "price": 749.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://murena.com/america/murena-fairphone-gen-6-now-at-749-in-the-usa/", "status": "verified" },
+    { "market": "ie", "maker": "Murena", "model": "One", "storageGB": null, "colors": ["Black"], "price": 199.90, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://murena.com/products/smartphones/", "status": "secondhand" },
+
+    { "market": "ie", "maker": "Shift", "model": "SHIFTphone 8.1", "storageGB": null, "colors": ["Black"], "price": 695.00, "currency": "EUR", "taxIncluded": true, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://shop.shift.eco/shiftphone-8", "status": "secondhand" },
+
+    { "market": "us", "maker": "Hisense", "model": "A5", "storageGB": null, "colors": ["Black"], "price": 229.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://hisenseeink.com/", "status": "secondhand" },
+    { "market": "us", "maker": "Hisense", "model": "A7 5G", "storageGB": null, "colors": ["Black"], "price": 289.99, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://hisenseeink.com/", "status": "secondhand" },
+
+    { "market": "us", "maker": "Vertu", "model": "Quantum Flip Calfskin", "storageGB": null, "colors": ["Black"], "price": 4160.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://vertu.com/shop", "status": "verified" },
+    { "market": "us", "maker": "Vertu", "model": "Agent Q Stitched Calfskin", "storageGB": null, "colors": ["Black"], "price": 5380.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://vertu.com/shop", "status": "verified" },
+    { "market": "us", "maker": "Vertu", "model": "Metavertu Max Calfskin", "storageGB": null, "colors": ["Black Ceramic"], "price": 2999.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "maker's own store, regular price", "source": "https://vertu.com/shop", "status": "verified" },
+
+    { "market": "us", "maker": "AGM", "model": "H6", "storageGB": 128, "colors": ["Black"], "price": 153.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.walmart.com/ip/AGM-H6-Rugged-unlocked-cell-phones-Ultra-Thin-10-75mm-Rugged-Smartphone-16GB-RAM-8-8-256GB-ROM-Android-13-T-mobile-Phone-6-56-inch-90Hz-Display-Water/5232272089", "status": "secondhand" },
+    { "market": "us", "maker": "AGM", "model": "H6", "storageGB": 256, "colors": ["Black"], "price": 246.00, "currency": "USD", "taxIncluded": false, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.walmart.com/ip/AGM-H6-Rugged-unlocked-cell-phones-Ultra-Thin-10-75mm-Rugged-Smartphone-16GB-RAM-8-8-256GB-ROM-Android-13-T-mobile-Phone-6-56-inch-90Hz-Display-Water/5232272089", "status": "secondhand" },
+
+    { "market": "uk", "maker": "Hammer", "model": "Construction 2 5G", "storageGB": 128, "colors": ["Black"], "price": 299.99, "currency": "GBP", "taxIncluded": true, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.onedirect.co.uk/mobile-phone-gsm/hammer", "status": "secondhand" },
+    { "market": "uk", "maker": "Hammer", "model": "Energy X2 5G", "storageGB": 256, "colors": ["Black"], "price": 258.99, "currency": "GBP", "taxIncluded": true, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.onedirect.co.uk/mobile-phone-gsm/hammer", "status": "secondhand" },
+    { "market": "uk", "maker": "Hammer", "model": "Iron 6 5G", "storageGB": 128, "colors": ["Black"], "price": 249.99, "currency": "GBP", "taxIncluded": true, "releaseDate": null, "priceBasis": "retailer's regular price", "source": "https://www.onedirect.co.uk/mobile-phone-gsm/hammer", "status": "secondhand" }
+  ],
+  "notFound": [
+    "Nokia: no current Nokia-branded live product page with a readable price could be confirmed on a maker store or major retailer in us/ca/mx/uk/ie as of this check (most listings found were discontinued/sold-out or third-party aggregator pages, not a retailer's own live page)",
+    "Lenovo: Legion gaming phones are sold through Chinese-market resellers (Giztop, AliExpress) rather than a maker store or major retailer in us/ca/mx/uk/ie; no qualifying page found",
+    "Meizu: current models are not sold through a maker store or major retailer in us/ca/mx/uk/ie; only reseller/aggregator listings (Giztop, AliExpress, Kimovil) were found",
+    "Sharp: phones are not sold at retail in us/ca/mx/uk/ie (Japan-market brand); no qualifying page found",
+    "Umidigi: prices found were aggregator figures (Kimovil, Techspecs, Smartprix) without a matching maker-store or major-retailer page carrying current storage/price together, so no entry was included to avoid guessing"
+  ]
+}

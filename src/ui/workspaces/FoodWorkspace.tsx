@@ -22,7 +22,7 @@ import { CITIES } from '@/engine/content/geography';
 import { arrange } from '@/engine/systems/catalog';
 import { diningQuote, diningRefusal, menuCatalog, restaurantById, restaurantsIn, type DineHow } from '@/engine/systems/dining';
 import { bacAt, drinkRefusal, pintPrice } from '@/engine/systems/alcohol';
-import { gearOffers, gearRefusal, kitchenHas, cookRefusal, cookingClash, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice } from '@/engine/systems/kitchen';
+import { gearOffers, gearRefusal, kitchenHas, cookRefusal, cookingClash, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice, cupOf } from '@/engine/systems/kitchen';
 import { MEAL_KEYS } from '@/engine/systems/pantry';
 import { RECIPES } from '@/engine/content/groceries';
 import { SPOT_LABEL } from '@/engine/systems/items';
@@ -250,8 +250,9 @@ function Kitchen() {
     <Panel title="Your Kitchen" subtitle="The day’s meals come out of what’s ready first; groceries are bought for the rest">
       <div className="row gap-2 small" style={{ alignItems: 'center', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
         <span className="muted">{`It Has: ${has.map((x) => titleCaseLabel(x.replace('-', ' '))).join(', ')}`}</span>
-        {gear.filter((g) => !g.no || !/has one/.test(g.no)).map((g) => <Gated key={g.gear} feature="food.buy_gear" className="btn btn-sm btn-ghost" disabled={Boolean(g.no)} title={g.no ?? `${g.name} at ${g.retailer}`} onClick={() => { if (run('food.buy_gear', { gear: g.gear }).ok) toast(`${g.name}, in the kitchen.`, 'positive'); }}>{`Buy A ${GEAR_LABEL[g.gear]} (${formatMoney(g.cost, cur)})`}</Gated>)}
+        {gear.filter((g, i) => (!g.no || !/has one/.test(g.no)) && gear.findIndex((x) => x.gear === g.gear) === i).map((g) => <Gated key={g.gear} feature="food.buy_gear" className="btn btn-sm btn-ghost" disabled={Boolean(g.no)} title={g.no ?? `${g.name} at ${g.retailer}`} onClick={() => { if (run('food.buy_gear', { gear: g.gear }).ok) toast(`${g.name}, in the kitchen.`, 'positive'); }}>{`Buy A ${GEAR_LABEL[g.gear]} (${formatMoney(g.cost, cur)})`}</Gated>)}
       </div>
+      {gear.length > 2 && <KitchenAppliances />}
       {stock.length === 0 ? <p className="small muted" style={{ margin: 0 }}>The fridge, the freezer and the pantry are bare.</p> : (
         <div className="table-scroll">
           <table>
@@ -265,6 +266,7 @@ function Kitchen() {
                   <td className="small">{i.food.expiresAt ? formatDate(i.food.expiresAt, sim.zone) : 'Keeps'}</td>
                   <td>
                     {MEAL_KEYS.has(i.food.key) && <button type="button" className="btn btn-sm btn-ghost" disabled={!eat.open} title={eat.reason} onClick={() => { if (run('food.eat_ready', { itemId: i.id }).ok) toast(`${i.label}, eaten.`, 'positive'); }}>Heat And Eat</button>}
+                    {cupOf(i) !== undefined && <button type="button" className="btn btn-sm btn-ghost" disabled={!drink.open} title={drink.reason} onClick={() => { if (run('food.drink_home', { itemId: i.id }).ok) toast(`A cup of ${i.label.split(',')[0]}.`, 'positive'); }}>Have A Cup</button>}
                     {(i.food.key === 'beer' || i.food.key === 'wine') && <button type="button" className="btn btn-sm btn-ghost" disabled={!drink.open} title={drink.reason} onClick={() => { if (run('food.drink_home', { itemId: i.id }).ok) toast(i.food.key === 'beer' ? 'A pint, at home.' : 'A glass, at home.', 'positive'); }}>{i.food.key === 'beer' ? 'Have A Pint' : 'Have A Glass'}</button>}
                   </td>
                 </tr>
@@ -317,6 +319,40 @@ function Recipes() {
 }
 
 const STORAGE_WORD: Readonly<Record<string, string>> = { pantry: 'The Cupboard', fridge: 'The Fridge', freezer: 'The Freezer' };
+
+/** Blenders and slow cookers by make and model where they live (from 2026-10-05), cheapest first, searched and filtered. */
+function KitchenAppliances() {
+  const { sim, run, toast } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const entries = useWorld((s) => gearOffers(s, s.player).map((g) => ({ id: g.id!, label: g.name, value: g, basis: 'Tax In', price: g.cost, priceKind: 'advertised' as const, facets: { gear: GEAR_LABEL[g.gear], brand: g.brand ?? g.name.split(' ')[0]!, retailer: g.retailer } })));
+  const [view, setView] = useCatalogView('kitchen-gear');
+  const shown = arrange(entries, view).slice(0, 12);
+  return (
+    <div className="col gap-2" style={{ marginBottom: '0.75rem' }}>
+      <div className="strong small">Kitchen Appliances</div>
+      <CatalogControls id="kitchen-gear-catalog" entries={entries} view={view} onChange={setView} facets={{ gear: 'Kind', brand: 'Maker', retailer: 'Seller' }} />
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Model</th><th scope="col">Kind</th><th scope="col">Seller</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Buy</span></th></tr></thead>
+          <tbody>
+            {shown.map((e) => {
+              const no = gearRefusal(sim, sim.player, e.value.gear);
+              return (
+                <tr key={e.id}>
+                  <td>{e.label}</td>
+                  <td className="small">{e.facets?.gear}</td>
+                  <td className="small">{e.value.retailer}</td>
+                  <td className="num mono">{formatMoney(e.price ?? 0, cur, { cents: false })}</td>
+                  <td><Gated feature="food.buy_gear" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('food.buy_gear', { gear: e.value.gear, offerId: e.id }).ok) toast(`${e.label}, in the kitchen.`, 'positive'); }}>Buy</Gated></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
 
 /** The till's ways to pay: cash in a store, the credit card, the debit card (`payWith`). */
 export function PayWithField({ id, way, onChange }: { id: string; way: PayWith; onChange: (w: PayWith) => void }) {

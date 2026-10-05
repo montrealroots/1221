@@ -21,9 +21,12 @@ describe('the kitchen’s gear', () => {
   it('a recipe needing a blender says to buy one; bought at Target’s $26.99 with the tax, the kitchen has it', () => {
     const sim = life('us-ny-newyork', 'gear-blender');
     expect(cookRefusal(sim, sim.player, 'chicken-jalfrezi')).toMatch(/^It needs a blender: buy one for the kitchen\.$/);
-    const offer = gearOffers(sim, sim.player).find((g) => g.gear === 'blender')!;
+    const offer = gearOffers(sim, sim.player).find((g) => g.id === 'us-blender')!;
     expect(offer.cost).toBe(inSaveMoney(sim, Math.round(26.99 * (1 + salesTaxRate('us-ny-newyork', sim.now, 'appliances')) * 100), 'USD'));
-    sim.must({ kind: 'food.buy_gear', payload: { gear: 'blender' } });
+    // A model named that isn't sold here is refused; the one named is bought (from 2026-10-05).
+    expect(sim.execute({ kind: 'food.buy_gear', payload: { gear: 'blender', offerId: 'uk-blender' } }).error).toBe('That model isn’t sold where you live.');
+    const paid = sim.must<{ paid: number }>({ kind: 'food.buy_gear', payload: { gear: 'blender', offerId: offer.id } }).paid;
+    expect(paid).toBe(offer.cost);
     expect(kitchenHas(sim.player).has('blender')).toBe(true);
     expect(cookRefusal(sim, sim.player, 'chicken-jalfrezi') ?? '').not.toMatch(/blender/);
     expect(sim.execute({ kind: 'food.buy_gear', payload: { gear: 'blender' } }).error).toBe('Your kitchen has one.');

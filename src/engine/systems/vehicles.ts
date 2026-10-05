@@ -51,7 +51,10 @@ export const CAR_MODELS: readonly CarModel[] = [
 export const isPickup = (m: CarModel): boolean => m.body === 'pickup';
 import { BIKE_MODELS as FIRST_BIKES } from '../content/bikecatalog';
 import { MOTO_MODELS } from '../content/motocatalog';
-import { RV_MODELS } from '../content/rvcatalog';
+import { RV_MODELS as FIRST_RVS } from '../content/rvcatalog';
+import { RV_LINEUP } from '../content/rvlineup';
+/** The motorhomes, campervans and vans on sale: the first catalog's, and from 2026-10-05 each market's wider lineup. */
+const RV_MODELS: readonly CarModel[] = [...FIRST_RVS, ...RV_LINEUP];
 import { RIDE_MODELS as FIRST_RIDES } from '../content/ridecatalog';
 import { RIDE_LINEUP } from '../content/ridelineup';
 /** The bicycles, e-bikes and ATVs on sale: the first catalog's, and from 2026-10-05 each market's wider lineup. */

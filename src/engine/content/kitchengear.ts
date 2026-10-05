@@ -29,28 +29,32 @@
 export type Gear = 'blender' | 'slow-cooker';
 export const GEAR_LABEL: Readonly<Record<Gear, string>> = { blender: 'Blender', 'slow-cooker': 'Slow Cooker' };
 
-export interface GearOffer { gear: Gear; name: string; retailer: string; price: number; currency: string; taxIncluded: boolean; confirmed: boolean }
+export interface GearOffer {
+  gear: Gear; name: string; retailer: string; price: number; currency: string; taxIncluded: boolean; confirmed: boolean;
+  /** A model of the wider lineup's, by make (`content/kitchengearlineup.ts`, from 2026-10-05). */
+  id?: string; brand?: string; url?: string | null;
+}
 
 export const KITCHEN_GEAR: Readonly<Record<string, readonly GearOffer[]>> = {
   us: [
-    { gear: 'blender', name: 'Hamilton Beach 50190J Blender', retailer: 'Target', price: 26.99, currency: 'USD', taxIncluded: false, confirmed: true },
-    { gear: 'slow-cooker', name: 'Kitchen Collection 6-Quart Slow Cooker', retailer: 'Target', price: 21.99, currency: 'USD', taxIncluded: false, confirmed: true },
+    { gear: 'blender', name: 'Hamilton Beach 50190J Blender', brand: 'Hamilton Beach', retailer: 'Target', price: 26.99, currency: 'USD', taxIncluded: false, confirmed: true },
+    { gear: 'slow-cooker', name: 'Kitchen Collection 6-Quart Slow Cooker', brand: 'Kitchen Collection', retailer: 'Target', price: 21.99, currency: 'USD', taxIncluded: false, confirmed: true },
   ],
   uk: [
-    { gear: 'blender', name: 'Cookworks 1.5L Jug Blender', retailer: 'Argos', price: 25, currency: 'GBP', taxIncluded: true, confirmed: false },
-    { gear: 'slow-cooker', name: 'Cookworks 6.5L Slow Cooker', retailer: 'Argos', price: 33, currency: 'GBP', taxIncluded: true, confirmed: false },
+    { gear: 'blender', name: 'Cookworks 1.5L Jug Blender', brand: 'Cookworks', retailer: 'Argos', price: 25, currency: 'GBP', taxIncluded: true, confirmed: false },
+    { gear: 'slow-cooker', name: 'Cookworks 6.5L Slow Cooker', brand: 'Cookworks', retailer: 'Argos', price: 33, currency: 'GBP', taxIncluded: true, confirmed: false },
   ],
   ie: [
-    { gear: 'blender', name: 'Braun PowerBlend 1 Jug Blender', retailer: 'DID Electrical', price: 69.99, currency: 'EUR', taxIncluded: true, confirmed: true },
-    { gear: 'slow-cooker', name: 'Morphy Richards 6.5L Slow Cooker', retailer: 'DID Electrical', price: 39.99, currency: 'EUR', taxIncluded: true, confirmed: true },
+    { gear: 'blender', name: 'Braun PowerBlend 1 Jug Blender', brand: 'Braun', retailer: 'DID Electrical', price: 69.99, currency: 'EUR', taxIncluded: true, confirmed: true },
+    { gear: 'slow-cooker', name: 'Morphy Richards 6.5L Slow Cooker', brand: 'Morphy Richards', retailer: 'DID Electrical', price: 39.99, currency: 'EUR', taxIncluded: true, confirmed: true },
   ],
   ca: [
-    { gear: 'blender', name: 'Black & Decker BL1220SGC Blender', retailer: 'Best Buy', price: 39.99, currency: 'CAD', taxIncluded: false, confirmed: true },
-    { gear: 'slow-cooker', name: 'Hamilton Beach 6-Quart Slow Cooker', retailer: 'Best Buy', price: 59.99, currency: 'CAD', taxIncluded: false, confirmed: true },
+    { gear: 'blender', name: 'Black & Decker BL1220SGC Blender', brand: 'Black & Decker', retailer: 'Best Buy', price: 39.99, currency: 'CAD', taxIncluded: false, confirmed: true },
+    { gear: 'slow-cooker', name: 'Hamilton Beach 6-Quart Slow Cooker', brand: 'Hamilton Beach', retailer: 'Best Buy', price: 59.99, currency: 'CAD', taxIncluded: false, confirmed: true },
   ],
   mx: [
-    { gear: 'blender', name: 'Bosstech 2 Blender', retailer: 'Liverpool', price: 429, currency: 'MXN', taxIncluded: true, confirmed: true },
-    { gear: 'slow-cooker', name: 'Chefman 4.7L Slow Cooker', retailer: 'Liverpool', price: 689, currency: 'MXN', taxIncluded: true, confirmed: true },
+    { gear: 'blender', name: 'Bosstech 2 Blender', brand: 'Bosstech', retailer: 'Liverpool', price: 429, currency: 'MXN', taxIncluded: true, confirmed: true },
+    { gear: 'slow-cooker', name: 'Chefman 4.7L Slow Cooker', brand: 'Chefman', retailer: 'Liverpool', price: 689, currency: 'MXN', taxIncluded: true, confirmed: true },
   ],
 };
 

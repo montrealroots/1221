@@ -27,6 +27,8 @@ export interface Food {
   expiresAt?: Instant;
   /** A dish cooked from a recipe. */
   recipeId?: string;
+  /** A beer's or a wine's strength, its label's (from 2026-10-05): the pint's or a glass's standard where not read. */
+  abv?: number;
 }
 
 export type Stocked = Item & { food: Food };

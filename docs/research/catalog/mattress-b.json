@@ -1,0 +1,1573 @@
+{
+ "read": "2026-10-05",
+ "category": "mattresses",
+ "products": [
+  {
+   "brand": "Bear",
+   "model": "Bear Original",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium-firm",
+   "heightIn": 10,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 712,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 927,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 927,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 998,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 1284,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 1284,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.bearmattress.com/products/bear-original-mattress",
+   "status": "verified"
+  },
+  {
+   "brand": "Nolah",
+   "model": "Evolution 15",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": null,
+   "heightIn": 14,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1610,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 1877,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 2144,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 2277,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 2544,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 2544,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.nolahsleep.com/products/nolah-evolution-15",
+   "status": "verified"
+  },
+  {
+   "brand": "Birch",
+   "model": "Birch Natural Mattress",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": 10,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1373.75,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 1498.75,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1686.25,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 1873.75,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 2248.75,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 2248.75,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://birchliving.com/products/birch-natural-organic-mattress",
+   "status": "verified"
+  },
+  {
+   "brand": "Big Fig",
+   "model": "Big Fig Classic",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": 12.5,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1609,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 1749,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1849,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 2049,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 2249,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 2249,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.bigfigmattress.com/products/big-fig-classic-mattress-queen",
+   "status": "verified"
+  },
+  {
+   "brand": "PlushBeds",
+   "model": "Botanical Bliss 10\" (Medium)",
+   "market": "us",
+   "type": "latex",
+   "firmness": "medium",
+   "heightIn": 10,
+   "trialNights": 100,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 3299,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 3299,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 3699,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 3824,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 4149,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 4149,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.plushbeds.com/products/the-botanical-bliss-organic-latex-mattress",
+   "status": "verified"
+  },
+  {
+   "brand": "Molecule",
+   "model": "Molecule Core 10\"",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium-firm",
+   "heightIn": 10,
+   "trialNights": null,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 799,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 799,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 899,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 999,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 1199,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 1199,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://moleculesleep.com/products/molecule-core",
+   "status": "verified"
+  },
+  {
+   "brand": "Nest Bedding",
+   "model": "Sparrow Signature Hybrid (Medium)",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 14,
+   "trialNights": 365,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1205,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 1320,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1665,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 2229,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 2549,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 2549,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.nestbedding.com/products/sparrow-signature-hybrid-mattress",
+   "status": "verified"
+  },
+  {
+   "brand": "Amerisleep",
+   "model": "AS2",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium-firm",
+   "heightIn": 12,
+   "trialNights": 100,
+   "warrantyYears": 20,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1299,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 1349,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1499,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 1549,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 1849,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 1849,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://amerisleep.com/as2.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Amerisleep",
+   "model": "AS3",
+   "market": "us",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 12,
+   "trialNights": 100,
+   "warrantyYears": 20,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1499,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 1549,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1699,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 1749,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 2049,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 2049,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://amerisleep.com/as3.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Amerisleep",
+   "model": "AS5",
+   "market": "us",
+   "type": "foam",
+   "firmness": "soft",
+   "heightIn": 14,
+   "trialNights": 100,
+   "warrantyYears": 20,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 2099,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 2149,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 2299,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 2349,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 2649,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 2649,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://amerisleep.com/as5.html",
+   "status": "verified"
+  },
+  {
+   "brand": "WinkBeds",
+   "model": "Blue Collection Luxe",
+   "market": "us",
+   "type": "hybrid",
+   "firmness": null,
+   "heightIn": null,
+   "trialNights": 120,
+   "warrantyYears": null,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 2570,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 2712,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 2998,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 3284,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 4141,
+     "currency": "USD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 4141,
+     "currency": "USD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://www.winkbeds.com/products/winkbeds-blue-collection-luxe",
+   "status": "verified"
+  },
+  {
+   "brand": "Polysleep",
+   "model": "The Polysleep Mattress",
+   "market": "ca",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 10,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 899.95,
+     "currency": "CAD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 999.95,
+     "currency": "CAD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1199.95,
+     "currency": "CAD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 1299.95,
+     "currency": "CAD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 1599.95,
+     "currency": "CAD",
+     "taxIncluded": false
+    },
+    {
+     "size": "cal-king",
+     "price": 1599.95,
+     "currency": "CAD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://polysleep.ca/products/the-polysleep-mattress",
+   "status": "verified"
+  },
+  {
+   "brand": "Hush",
+   "model": "Graph-Iced Mattress",
+   "market": "ca",
+   "type": "hybrid",
+   "firmness": null,
+   "heightIn": 12,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "twin",
+     "price": 1499,
+     "currency": "CAD",
+     "taxIncluded": false
+    },
+    {
+     "size": "twin-xl",
+     "price": 1599,
+     "currency": "CAD",
+     "taxIncluded": false
+    },
+    {
+     "size": "full",
+     "price": 1899,
+     "currency": "CAD",
+     "taxIncluded": false
+    },
+    {
+     "size": "queen",
+     "price": 2099,
+     "currency": "CAD",
+     "taxIncluded": false
+    },
+    {
+     "size": "king",
+     "price": 2499,
+     "currency": "CAD",
+     "taxIncluded": false
+    }
+   ],
+   "url": "https://hush.ca/products/mattress",
+   "status": "verified"
+  },
+  {
+   "brand": "Origin",
+   "model": "Hybrid Mattress",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "medium-firm",
+   "heightIn": 10.2,
+   "trialNights": 200,
+   "warrantyYears": 15,
+   "deliveryFee": 0,
+   "sizes": [
+    {
+     "size": "single",
+     "price": 363,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "small-double",
+     "price": 454,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "double",
+     "price": 508,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 538,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "super-king",
+     "price": 629,
+     "currency": "GBP",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://originmattress.co.uk/product/the-origin-hybrid-mattress/",
+   "status": "verified"
+  },
+  {
+   "brand": "Rest Assured",
+   "model": "Palm 2000 Pocket Latex Mattress",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": null,
+   "heightIn": 12.2,
+   "trialNights": 60,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "single",
+     "price": 660,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "double",
+     "price": 850,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 1020,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "super-king",
+     "price": 1270,
+     "currency": "GBP",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://www.silentnight.co.uk/rest-assured-palm-2000-pocket-latex-mattress.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Sleepeezee",
+   "model": "Fusion Pro Hybrid Mattress",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "firm",
+   "heightIn": 9.8,
+   "trialNights": null,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "single",
+     "price": 799,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "double",
+     "price": 1149,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 1299,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "super-king",
+     "price": 1449,
+     "currency": "GBP",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://www.mattressnextday.co.uk/sleepeezee-fusion-pro-hybrid-mattress",
+   "status": "verified"
+  },
+  {
+   "brand": "Hypnos",
+   "model": "Ortho Gold Mattress",
+   "market": "uk",
+   "type": "pocket-sprung",
+   "firmness": "firm",
+   "heightIn": 11.4,
+   "trialNights": 60,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "single",
+     "price": 1399,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "small-double",
+     "price": 1669,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "double",
+     "price": 1669,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 1669,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "super-king",
+     "price": 2339,
+     "currency": "GBP",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://www.landofbeds.co.uk/product/hypnos-mattresses-ortho-gold/23680",
+   "status": "verified"
+  },
+  {
+   "brand": "Kaymed",
+   "model": "Bali 1600 Mattress",
+   "market": "uk",
+   "type": "hybrid",
+   "firmness": "soft",
+   "heightIn": 10.2,
+   "trialNights": null,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "single",
+     "price": 949,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "small-double",
+     "price": 1199,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "double",
+     "price": 1199,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 1349,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "super-king",
+     "price": 1699,
+     "currency": "GBP",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://www.m6beds.co.uk/bali-1600-mattress",
+   "status": "verified"
+  },
+  {
+   "brand": "Harrison Spinks",
+   "model": "Classic Comfort Mattress",
+   "market": "uk",
+   "type": "pocket-sprung",
+   "firmness": "medium",
+   "heightIn": 8.3,
+   "trialNights": null,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "single",
+     "price": 569,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "double",
+     "price": 789,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 879,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "super-king",
+     "price": 1099,
+     "currency": "GBP",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://www.landofbeds.co.uk/product/harrison-spinks-mattresses-classic/25589",
+   "status": "verified"
+  },
+  {
+   "brand": "Vispring",
+   "model": "Elite Mattress",
+   "market": "uk",
+   "type": "pocket-sprung",
+   "firmness": null,
+   "heightIn": 10.6,
+   "trialNights": null,
+   "warrantyYears": 30,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "single",
+     "price": 1540,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "small-double",
+     "price": 2025,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "double",
+     "price": 2025,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 2450,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "super-king",
+     "price": 2900,
+     "currency": "GBP",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://www.landofbeds.co.uk/product/vispring-mattresses-elite/19215",
+   "status": "verified"
+  },
+  {
+   "brand": "Dunlopillo",
+   "model": "Firmrest Mattress",
+   "market": "uk",
+   "type": "latex",
+   "firmness": "firm",
+   "heightIn": 7.7,
+   "trialNights": null,
+   "warrantyYears": 15,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "single",
+     "price": 1469,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "small-double",
+     "price": 1969,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "double",
+     "price": 1969,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 2289,
+     "currency": "GBP",
+     "taxIncluded": true
+    },
+    {
+     "size": "super-king",
+     "price": 2779,
+     "currency": "GBP",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://www.landofbeds.co.uk/product/dunlopillo-mattresses-firmrest/26363",
+   "status": "verified"
+  },
+  {
+   "brand": "Respa",
+   "model": "Ardmore 1200",
+   "market": "ie",
+   "type": "pocket-sprung",
+   "firmness": "medium-firm",
+   "heightIn": 10.6,
+   "trialNights": null,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "single",
+     "price": 599,
+     "currency": "EUR",
+     "taxIncluded": true
+    },
+    {
+     "size": "double",
+     "price": 799,
+     "currency": "EUR",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 949,
+     "currency": "EUR",
+     "taxIncluded": true
+    },
+    {
+     "size": "super-king",
+     "price": 1199,
+     "currency": "EUR",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://murphyhome.ie/respa-ardmore-1200-king-5-mattress.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Odearest",
+   "model": "Continental Memory Mattress",
+   "market": "ie",
+   "type": "hybrid",
+   "firmness": null,
+   "heightIn": 10.6,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "double",
+     "price": 749,
+     "currency": "EUR",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://www.caseys.ie/odearest-caseys-continental-memory-4.6ft-mattress",
+   "status": "verified"
+  },
+  {
+   "brand": "Restonic",
+   "model": "Tomos",
+   "market": "mx",
+   "type": "innerspring",
+   "firmness": "firm",
+   "heightIn": 11,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "individual",
+     "price": 8000,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "matrimonial",
+     "price": 10000,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "queen",
+     "price": 11800,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 15000,
+     "currency": "MXN",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://norte.dico.com.mx/colchon-restonic-individual-tomos.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Restonic",
+   "model": "Vail",
+   "market": "mx",
+   "type": "innerspring",
+   "firmness": "medium",
+   "heightIn": 11,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "individual",
+     "price": 9000,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "matrimonial",
+     "price": 12000,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "queen",
+     "price": 13200,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 17000,
+     "currency": "MXN",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://bajio.dico.com.mx/bajio/colchon-individual-semi-flex-vail.html",
+   "status": "verified"
+  },
+  {
+   "brand": "Restonic",
+   "model": "Eternity",
+   "market": "mx",
+   "type": "innerspring",
+   "firmness": "medium",
+   "heightIn": 12.2,
+   "trialNights": null,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "individual",
+     "price": 9000,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "matrimonial",
+     "price": 11000,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "queen",
+     "price": 13000,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 16000,
+     "currency": "MXN",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://norte.dico.com.mx/colchon-restonic-individual-eternity.html",
+   "status": "verified"
+  },
+  {
+   "brand": "América",
+   "model": "Holiday",
+   "market": "mx",
+   "type": "innerspring",
+   "firmness": "medium",
+   "heightIn": 14.2,
+   "trialNights": null,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "individual",
+     "price": 11299,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "matrimonial",
+     "price": 14705,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "queen",
+     "price": 17719,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 23369,
+     "currency": "MXN",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://www.homedepot.com.mx/p/colchones-america-colchon-america-holiday-queen-size-holiday-221880",
+   "status": "verified"
+  },
+  {
+   "brand": "Sognare",
+   "model": "Base",
+   "market": "mx",
+   "type": "foam",
+   "firmness": "medium",
+   "heightIn": 8.3,
+   "trialNights": 100,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "individual",
+     "price": 6379,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "matrimonial",
+     "price": 8199,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "queen",
+     "price": 8799,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 10999,
+     "currency": "MXN",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://sognare.com.mx/collections/colchones/products/base",
+   "status": "verified"
+  },
+  {
+   "brand": "Sognare",
+   "model": "Duo",
+   "market": "mx",
+   "type": "foam",
+   "firmness": "medium-soft",
+   "heightIn": 9.8,
+   "trialNights": 100,
+   "warrantyYears": null,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "individual",
+     "price": 12319,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "matrimonial",
+     "price": 16239,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "queen",
+     "price": 17919,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 23399,
+     "currency": "MXN",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://sognare.com.mx/products/duo",
+   "status": "verified"
+  },
+  {
+   "brand": "Sognare",
+   "model": "Zero",
+   "market": "mx",
+   "type": "foam",
+   "firmness": "medium-firm",
+   "heightIn": 9.4,
+   "trialNights": 100,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "individual",
+     "price": 16999,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "matrimonial",
+     "price": 21999,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "queen",
+     "price": 23999,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 31999,
+     "currency": "MXN",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://sognare.com.mx/colchones/zero",
+   "status": "verified"
+  },
+  {
+   "brand": "King Koil",
+   "model": "Monaco",
+   "market": "mx",
+   "type": "hybrid",
+   "firmness": "medium",
+   "heightIn": 18.1,
+   "trialNights": null,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "individual",
+     "price": 46200,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "matrimonial",
+     "price": 74800,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "queen",
+     "price": 79800,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 96000,
+     "currency": "MXN",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://colchonesberun.com/products/colchon-lujo-king-koil-monaco",
+   "status": "verified"
+  },
+  {
+   "brand": "King Koil",
+   "model": "Nero",
+   "market": "mx",
+   "type": "hybrid",
+   "firmness": null,
+   "heightIn": null,
+   "trialNights": null,
+   "warrantyYears": 10,
+   "deliveryFee": null,
+   "sizes": [
+    {
+     "size": "individual",
+     "price": 56000,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "matrimonial",
+     "price": 70000,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "queen",
+     "price": 76000,
+     "currency": "MXN",
+     "taxIncluded": true
+    },
+    {
+     "size": "king",
+     "price": 90000,
+     "currency": "MXN",
+     "taxIncluded": true
+    }
+   ],
+   "url": "https://colchonesberun.com/products/colchon-nero-by-king-koil-copy-1",
+   "status": "verified"
+  }
+ ],
+ "notFound": [
+  {
+   "brand": "WinkBeds (classic 'The WinkBed')",
+   "market": "us",
+   "reason": "custom build-to-order configurator; price rendered only as an unresolved template placeholder, no JSON endpoint"
+  },
+  {
+   "brand": "GhostBed",
+   "market": "us",
+   "reason": "JS-rendered page; only the default-selected size's sale price appeared in fetched content, no per-size table"
+  },
+  {
+   "brand": "Awara",
+   "market": "us",
+   "reason": "only one size's price visible in fetched content; no per-size table found"
+  },
+  {
+   "brand": "Layla",
+   "market": "us",
+   "reason": "WooCommerce site with no product JSON endpoint; only one size's price confirmable, secondary sources gave conflicting numbers"
+  },
+  {
+   "brand": "Allswell",
+   "market": "us",
+   "reason": "official site TLS error; Walmart listing blocked by CAPTCHA"
+  },
+  {
+   "brand": "Cocoon by Sealy",
+   "market": "us",
+   "reason": "JS-rendered; only a single blended price visible, no per-size breakdown"
+  },
+  {
+   "brand": "Stearns & Foster",
+   "market": "us",
+   "reason": "only the Queen price visible on the collection page; no per-size table rendered"
+  },
+  {
+   "brand": "Beautyrest (Simmons)",
+   "market": "us",
+   "reason": "collection pages show 'starting at' prices only; no per-size table, product JSON endpoints 404"
+  },
+  {
+   "brand": "King Koil",
+   "market": "us",
+   "reason": "'starting at' pricing shown per model; no per-size breakdown found"
+  },
+  {
+   "brand": "Novaform",
+   "market": "us",
+   "reason": "Costco.com price is injected client-side and did not render; third-party snippets were mutually conflicting and not from Costco's own page"
+  },
+  {
+   "brand": "Cozey",
+   "market": "ca",
+   "reason": "product price rendered as $0 placeholder; collection pages show only 'starting at' ranges"
+  },
+  {
+   "brand": "Bloom (Sleep Country)",
+   "market": "ca",
+   "reason": "page's own JSON-LD contains only the currently-selected size's sale price, no size-differentiated structured data"
+  },
+  {
+   "brand": "Beautyrest Canada",
+   "market": "ca",
+   "reason": "no distinct Canadian brand-direct page with a readable per-size table found"
+  },
+  {
+   "brand": "King Koil Canada",
+   "market": "ca",
+   "reason": "no distinct Canadian brand-direct page with a readable per-size table found"
+  },
+  {
+   "brand": "Dormeo",
+   "market": "uk",
+   "reason": "JS-rendered site; WebFetch could not retrieve per-size prices from the page itself (only an unconfirmed WebSearch summary existed)"
+  },
+  {
+   "brand": "Panda",
+   "market": "uk",
+   "reason": "JS-rendered on maker and reseller sites; only one repeated price surfaced across all sizes"
+  },
+  {
+   "brand": "Dreams (own brand)",
+   "market": "uk",
+   "reason": "page rendering returned the same price for every size, not a genuine per-size table"
+  },
+  {
+   "brand": "Myers",
+   "market": "uk",
+   "reason": "official site unreachable; retailer listings showed only 'from' prices, not a full per-size table"
+  },
+  {
+   "brand": "Mammoth",
+   "market": "uk",
+   "reason": "retailer listings showed only a single price or range, never a verifiable distinct per-size table"
+  },
+  {
+   "brand": "Woolroom",
+   "market": "uk",
+   "reason": "pages truncated before the pricing section on fetch"
+  },
+  {
+   "brand": "Relyon",
+   "market": "uk",
+   "reason": "sold only through dealers; official site links only to PDF spec sheets with no pricing"
+  },
+  {
+   "brand": "Kaymed",
+   "market": "ie",
+   "reason": "maker's .ie chooser guide has no prices; the one retailer with a detailed table returned 404 on direct fetch of the product URLs"
+  },
+  {
+   "brand": "Dupree",
+   "market": "mx",
+   "reason": "no such Mexican mattress maker found; search only surfaced an unrelated Spanish brand (Dupen) not sold in Mexico"
+  },
+  {
+   "brand": "Selther",
+   "market": "mx",
+   "reason": "real brand sold in Mexico, but readable pages were either the Costa Rica site (non-Mexican sizing/currency) or a collection page mislabeling Restonic products as Selther"
+  },
+  {
+   "brand": "Olimpia",
+   "market": "mx",
+   "reason": "no standalone Mexican mattress maker by this name; only matches were a Restonic model line and an unrelated Colombian retailer"
+  },
+  {
+   "brand": "San Rafael",
+   "market": "mx",
+   "reason": "no distinct Mexican mattress-maker brand found; only generic retailer pages"
+  },
+  {
+   "brand": "Chaide y Chaide",
+   "market": "mx",
+   "reason": "confirmed Ecuadorian maker with no Mexican .com.mx presence or MXN pricing found"
+  },
+  {
+   "brand": "Darling",
+   "market": "mx",
+   "reason": "no matches found in Mexican retail search results"
+  },
+  {
+   "brand": "Stanzza",
+   "market": "mx",
+   "reason": "only match found was an unrelated Colombian mattress-protector product"
+  },
+  {
+   "brand": "World Partner",
+   "market": "mx",
+   "reason": "no matches found; only an unrelated already-excluded Spring Air sub-line"
+  },
+  {
+   "brand": "King Koil",
+   "market": "mx",
+   "reason": "Amiko priced only as a mattress and box set, not the mattress alone; dropped 2026-10-05."
+  }
+ ]
+}

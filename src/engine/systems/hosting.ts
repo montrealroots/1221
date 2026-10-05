@@ -142,7 +142,7 @@ export function registerHosting(sim: Simulation): void {
       const ml = Math.min(p.item.food.left, p.ml);
       p.item.food.left -= ml;
       if (p.item.food.left <= 1e-9) person.items = (person.items ?? []).filter((x) => x.id !== p.item.id);
-      if (drinker === 'host' && yearsOld(person, item.at) >= drinkingAge(person.currentLocationId)) drinkGrams(s, person, ml * (p.item.food.key === 'beer' ? (PINT[drinkingMarketOf(person.currentLocationId) ?? 'US'] ?? PINT.US).abv : GLASS.abv) * WIDMARK.gramsPerMl, 1, item.at);
+      if (drinker === 'host' && yearsOld(person, item.at) >= drinkingAge(person.currentLocationId)) drinkGrams(s, person, ml * (p.item.food.abv ?? (p.item.food.key === 'beer' ? (PINT[drinkingMarketOf(person.currentLocationId) ?? 'US'] ?? PINT.US).abv : GLASS.abv)) * WIDMARK.gramsPerMl, 1, item.at);
       else if (drinker === 'guest') poured += 1;
     }
     const messy = livingOf(person).tidy < TIDY.messy;

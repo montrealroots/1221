@@ -17,10 +17,13 @@ const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g
 // so a wet food is sold where its calories were read. Until then only dry foods were, by Royal Canin's grams.
 const ENERGY_FILE = 'docs/research/world/research-pet-food-energy.json';
 const ENERGY = new Map((existsSync(ENERGY_FILE) ? JSON.parse(readFileSync(ENERGY_FILE, 'utf8')).energy ?? [] : []).map((e) => [`${e.market}|${e.brand}|${e.product}`, e]));
-const kcalOf = (x) => { const e = ENERGY.get(`${x.market}|${x.brand}|${x.product}`); if (!e) return null; if (e.kcalPerKg > 0) return e.kcalPerKg; return e.kcalPerUnit > 0 && e.unitG > 0 ? Math.round((e.kcalPerUnit / e.unitG) * 1000) : null; };
+const kcalOf = (x) => { if (x.kcalPerKg > 0) return x.kcalPerKg; if (x.kcalPerUnit > 0 && x.unitG > 0) return Math.round((x.kcalPerUnit / x.unitG) * 1000); const e = ENERGY.get(`${x.market}|${x.brand}|${x.product}`); if (!e) return null; if (e.kcalPerKg > 0) return e.kcalPerKg; return e.kcalPerUnit > 0 && e.unitG > 0 ? Math.round((e.kcalPerUnit / e.unitG) * 1000) : null; };
 /** A pack's kilograms from its size where none was given: "32 x 5.5 oz", "40 x 85 g", "5.5 oz can", "85 g". */
 const kgOf = (x) => { if (x.kg) return x.kg; const m = String(x.size).match(/(?:(\d+)\s*x\s*)?([\d.]+)\s*(oz|g)\b/i); if (!m) return undefined; const each = Number(m[2]) * (m[3].toLowerCase() === 'oz' ? 28.349523125 : 1); return Math.round(((Number(m[1] ?? 1) * each) / 1000) * 10000) / 10000; };
-const foods = R.feeding.products.filter((x) => (/^dry /.test(x.type) || (/^wet /.test(x.type) && kcalOf(x))) && kgOf(x)).map((x) => ({
+// And from 2026-10-05 more brands, each read with its own calories (`research-pet-food-2.json`).
+const MORE_FOOD = 'docs/research/world/research-pet-food-2.json';
+const allFoods = [...R.feeding.products, ...(existsSync(MORE_FOOD) ? JSON.parse(readFileSync(MORE_FOOD, 'utf8')).products ?? [] : [])];
+const foods = allFoods.filter((x) => (/^dry /.test(x.type) || (/^wet /.test(x.type) && kcalOf(x))) && kgOf(x)).map((x) => ({
   id: `${market(x.market)}-${slug(`${x.brand} ${x.product}`)}`, market: market(x.market), species: /dog/.test(x.type) ? 'dog' : 'cat',
   brand: x.brand, product: x.product, kg: kgOf(x), wet: /^wet /.test(x.type), kcalPerKg: kcalOf(x), price: x.price, currency: x.currency, retailer: x.retailer.replace(/ \(.*\)$/, ''), url: x.url, status: x.status === 'verified' ? 'verified' : 'secondhand',
 }));
