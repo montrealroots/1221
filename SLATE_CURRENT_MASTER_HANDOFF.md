@@ -23,20 +23,20 @@ Run the four checks of CLAUDE.md's rules 2 and 3 first; the tree wins over this 
 - `3e82f937`: the hierarchy as the owner names it (68 brand and narrow categories, 14 service directories) and the report's functional table, checked against the engine and the screens.
 - The audit (the commit after `3e82f937`): four readers checked the 66 rows still marked Done or Complete; 44 were reopened with what's missing (`docs/REQUIREMENTS.md`, "The 2026-10-05 audit").
 
-**What the audit found that is a fault, not a missing feature,** to fix first:
-- The Food screen lists 12 of the 44 recipes (`rows.slice(0, 12)` in `FoodWorkspace.tsx`).
-- A garment still on order can be altered and charged (`alterRefusal`).
-- A delivered order goes into a full wardrobe; a store's purchase spills to the floor.
-- A canceled credit-card order is refunded to the bank.
-- A receipt's total leaves out the delivery fee.
-- Away from home with no stay, a shower is free at hotel fixtures (`stayPlace`).
-- Belongings moved into a car by hand aren't held to its cargo.
-- A car package and an option it includes are both charged; a car on order can be sold; a financed order's loan and insurance start before delivery; a trade-in is taken from another town.
+**What the audit found that was a fault, not a missing feature,** all fixed in the commit after the audit's, each with a test and its mutation killed (17 of 17):
+- The Food screen listed 12 of the 44 recipes; it pages them now, and the Serves picker no longer clips 10 (checked in the built app).
+- A garment still on order, or at home in another town, was altered and charged.
+- A delivered or collected order went into a full wardrobe; it spills to the floor as a store's purchase does.
+- A canceled credit-card order was refunded to the bank; it goes back to what paid (`refundShares` in `systems/orders.ts`, shared with returns).
+- A receipt's total left out the delivery fee; it says the order's whole payment, and the order's state, destination and day.
+- Away from home with no stay, a shower was free at hotel fixtures; it's refused.
+- Belongings moved into a car by hand weren't held to its cargo (`carHoldsL`, `carUsedL` in `systems/items.ts`, shared with a trip's shopping).
+- A car package and an option it includes were both charged (`includedIn`, 17 such pairs, "Requires" lines left out); a car on order could be sold; a factory order's months, loan, insurance and registration ran from the order; a trade-in went at the order, leaving the buyer with no car for the wait (`vehicle.delivered`, a new scheduled kind); a car was bought from abroad, and a trade-in taken from another town.
 
 **The midnight fallback (requirement E2).** Every night, with no preference behind it, the day's rollover buys groceries with the player's money, eats the fridge's ready meals, showers and brushes teeth, dresses for the day and for bed, and runs the dishwasher. The owner's rule makes each of these an explicit shortcut on the manual action's rules. Follow the pattern of `systems/automation.ts`: none on for a new life, every one on for a save from before, and the tests that play a hands-off year choosing them.
 
 **Next, in order:**
-1. The faults above, each with its test.
+1. The faults above: fixed, the commit after the audit’s.
 2. E2: the midnight fallback as shortcuts.
 3. The owner's six modules, each against its reopened rows: clubs and lessons (a lesson's skill something reads; leaving a club), fuel (running dry and its recovery, never a secret refill), shopping (what a person can carry by weight; a full fridge), packing and hotels (a cabin bag's weight, liquids at security), rooms (the guesthouse's guests, a theater's own screen and seats, a library read in), pets (each flight's own carrier's rules, not the flag carrier's).
 4. The catalogs out of the main bundle (15.7 MB of JavaScript), loaded when a screen needs them, then the mechanical readers raised from 12 a category to 100 a brand, category by category (`docs/CATALOG-COVERAGE.md`).

@@ -60,7 +60,7 @@ import { standInFor } from './standin';
 import { DRIVERS, type DriverService } from '../content/drivers';
 import { formatDate, type Instant , zonedParts } from '../core/time';
 import { tireFactor } from './tires';
-import { homeKeyOf, itemById, itemsOf, moveRefusal, volumeOf, type Item, type Place, type Spot } from './items';
+import { carHoldsL, carUsedL, homeKeyOf, itemById, itemsOf, moveRefusal, volumeOf, type Item, type Place, type Spot } from './items';
 import { specOf } from './caroptions';
 import { burn, capacityOf, levelOf, rangeKm } from './fueltank';
 import { TRANSIT } from '../content/transit';
@@ -195,13 +195,10 @@ export function stow(person: Person, item: Item, at: Instant): void {
   const inCar = trip.by === 'car' && trip.vehicleId && !trip.standInId;
   // The car holds what its maker says it does, seats up, or a pickup's bed (`content/caroptions.ts`); what won't fit isn't bought.
   if (inCar) {
-    const v = (person.vehicles ?? []).find((x) => x.id === trip.vehicleId);
-    const spec = v ? specOf(v.modelId) : undefined;
-    // And a roof box's liters where one's on (`systems/roofbox.ts`, from 2026-10-03).
-    const own = spec?.cargoL ?? spec?.bedL;
-    const holds = own === null || own === undefined ? own : own + (v?.roofBoxL ?? 0);
+    // And a roof box's liters where one's on (`systems/roofbox.ts`, from 2026-10-03; `carHoldsL`).
+    const holds = carHoldsL(person, trip.vehicleId!);
     if (holds !== null && holds !== undefined) {
-      const used = itemsOf(person).filter((i) => i.at.kind === 'vehicle' && i.at.vehicleId === trip.vehicleId).reduce((a, i) => a + volumeOf(i) * i.quantity, 0);
+      const used = carUsedL(person, trip.vehicleId!);
       if (used + volumeOf(item) * item.quantity > holds + 1e-9) throw new CommandError(`It won’t fit in the car: ${Math.max(0, Math.floor(holds - used))} liters of its ${holds} are left.`);
     }
   }

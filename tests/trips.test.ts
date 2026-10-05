@@ -147,6 +147,11 @@ describe('the shopping on a trip', () => {
     const cash = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
     expect(sim.execute({ kind: 'food.buy_groceries', payload: { productId: potatoes, quantity: 1 } }).error).toBe(`It won’t fit in the car: 1 liters of its ${holds} are left.`);
     expect(sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(cash);
+    // Nor does anything put in it by hand (from 2026-10-05: until then a crate of any size went in).
+    const crate = addItem(sim, sim.player, { kind: 'test:crate', label: 'Crate', quantity: 1, condition: 1, at: { kind: 'person' }, acquiredAt: sim.now, volumeL: 2 });
+    expect(sim.execute({ kind: 'items.move', payload: { itemId: crate.id, to: { kind: 'vehicle', vehicleId: v.id } } }).error).toBe(`The car has 1 liters of its ${holds} left; the Crate needs 2.`);
+    crate.volumeL = 1;
+    expect(sim.execute({ kind: 'items.move', payload: { itemId: crate.id, to: { kind: 'vehicle', vehicleId: v.id } } }).ok).toBe(true);
   });
 
   it('carried on foot; chilled food out past USDA’s two hours is thrown out at home, the cupboard’s isn’t', () => {

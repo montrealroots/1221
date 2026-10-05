@@ -9,6 +9,8 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { resolveLook, type Looked } from '@/ui/looks/registry';
 import { at } from '@/ui/looks/subject';
 import '@/ui/looks/all';
+import { purchaseQuote } from '@/engine/systems/clothing';
+import { ordersOf } from '@/engine/systems/orders';
 
 describe('a receipt', () => {
   it('holds every line of its order, and none of another', () => {
@@ -25,5 +27,18 @@ describe('a receipt', () => {
     const alone = resolveLook(sim, at('receipt', 'a')) as Looked;
     expect(alone.summary).toBe(`On ${formatDate(now - 2 * MS_DAY, sim.zone)} you paid ${formatMoney(48_00, cur)} for one line, bought in store.`);
     expect(resolveLook(sim, at('receipt', 'nope'))).toEqual({ gone: 'There’s no receipt by that name among what you’ve bought.' });
+  });
+
+  it('says what the order paid, its delivery with its goods (from 2026-10-05)', () => {
+    const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, 'receipt-delivery');
+    const o = { productId: 'us-uniqlo-supima-cotton-t-shirt', how: 'online' as const, size: 'M', color: '00 WHITE' };
+    const q = purchaseQuote(sim, sim.player, o)!;
+    expect(q.delivery).toBeGreaterThan(0);
+    const r = sim.execute<{ purchaseId: string }>({ kind: 'clothes.buy', payload: o });
+    expect(r.ok, r.error).toBe(true);
+    const order = ordersOf(sim.player).at(-1)!;
+    expect(order.paid).toBe(q.total);
+    const looked = resolveLook(sim, at('receipt', r.value!.purchaseId)) as Looked;
+    expect(looked.summary).toContain(`you paid ${formatMoney(q.total, saveCurrency(sim.universe))} for one line`);
   });
 });

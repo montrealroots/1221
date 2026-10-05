@@ -38,7 +38,7 @@ import { saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { TAILORS, type Tailor } from '../content/tailors';
 import type { Slot } from '../content/garmentcare';
-import { itemById, type Item } from './items';
+import { itemById, reachable, type Item } from './items';
 import { spend } from './household';
 import { bodyOf } from './body';
 import { BMI_EDGES, BODY_BY_COUNTRY, BODY_DEFAULT } from '../content/body';
@@ -283,9 +283,14 @@ export function alteredKg(person: Person, g: Garment): number | undefined {
   return Math.min(Math.max(kg, g.fitKg * (1 - steps.in * SIZE_STEP)), g.fitKg * (1 + steps.out * SIZE_STEP));
 }
 
-export function alterRefusal(person: Person, itemId: string, tailorId: string): string | undefined {
+export function alterRefusal(sim: Simulation, person: Person, itemId: string, tailorId: string): string | undefined {
   const item = itemById(person, itemId) as (Item & { garment?: Garment }) | undefined;
   if (!item?.garment) return 'That isn’t a garment of yours.';
+  // Taken to the tailor, so it's to hand where they are (from 2026-10-05): until then a garment still on order, or at
+  // home in another town, was taken in and paid for.
+  if (item.at.kind === 'order') return 'It hasn’t come yet.';
+  if (item.at.kind === 'service') return 'It’s away already.';
+  if (!reachable(sim, person, item.at)) return 'It isn’t to hand here.';
   const g = item.garment;
   const fit = fitOf(person, g);
   if (fit === 'fits') return 'It fits.';
@@ -298,7 +303,6 @@ export function alterRefusal(person: Person, itemId: string, tailorId: string): 
   const t = tailorById(tailorId);
   if (!t) return 'There’s no such tailor.';
   if (t.cityId !== person.currentLocationId) return 'The tailor is in another town.';
-  if (item.at.kind === 'service') return 'It’s away already.';
   return undefined;
 }
 
@@ -307,7 +311,7 @@ export const alterCost = (sim: Simulation, t: Tailor): Money => { const c = Math
 export function registerTailoring(sim: Simulation): void {
   sim.onCommand<{ itemId: string; tailorId: string }, { readyAt: number; paid: Money }>('clothes.alter', (p, { sim: s }) => {
     const person = s.player;
-    const no = alterRefusal(person, String(p?.itemId), String(p?.tailorId));
+    const no = alterRefusal(s, person, String(p?.itemId), String(p?.tailorId));
     if (no) throw new CommandError(no);
     const t = tailorById(String(p.tailorId))!;
     const item = itemById(person, String(p.itemId)) as Item & { garment: Garment };

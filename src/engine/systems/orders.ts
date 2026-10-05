@@ -47,6 +47,7 @@ import { addItem, homeKeyOf, itemsOf, type Item, type Place } from './items';
 import { expenseFor } from './household';
 import { CITIES } from '../content/geography';
 import { heldUntil, holdBack, someoneHome } from './away';
+import { overflow } from './rooms';
 
 export const ORDER_KIND = 'items.order_arrives';
 
@@ -143,24 +144,45 @@ export function deliver(sim: Simulation, person: Person, orderId: string): boole
     if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'A Parcel Was Taken', body: `Your order from ${order.from} was delivered and taken from the door.`, importance: 60, route: BELONGINGS_ROUTE });
     return true;
   }
-  for (const item of itemsOf(person)) if (item.at.kind === 'order' && item.at.orderId === orderId) item.at = to;
+  // Put away as a store's purchase is: the built-in storage full, the rest in the rooms (from 2026-10-05; until then a
+  // delivery went into a full wardrobe, ten coats ordered taking it 50 liters past what it holds).
+  for (const item of itemsOf(person)) if (item.at.kind === 'order' && item.at.orderId === orderId) overflow(sim, person, Object.assign(item, { at: { ...to } }));
   const collect = to.kind === 'service' && to.serviceId.startsWith('collect:');
   if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: collect ? 'Ready To Collect' : 'A Delivery', body: collect ? `Your order from ${order.from} is ready to collect in store.` : `Your order from ${order.from} has arrived.`, importance: 30, route: collect ? '/workspace/clothes' : BELONGINGS_ROUTE });
   return true;
 }
 
+/** An account that paid for something, and its share of what was paid. */
+export interface PaidShare { accountId: string; share: number }
+
+/**
+ * Money back to what paid, in its shares, as postings: an account since closed
+ * gives way to checking, and checking takes it where nothing was kept. Nothing
+ * where there's no account to refund to.
+ */
+export function refundShares(sim: Simulation, person: Person, back: Money, paidFrom: readonly PaidShare[] | undefined): { accountId: string; amount: Money }[] {
+  const open = (id: string) => Boolean(sim.universe.accounts[id] && !sim.universe.accounts[id]!.closedAt);
+  const checking = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && a.kind === 'checking')?.id
+    ?? (person.primaryAccountId && open(person.primaryAccountId) ? person.primaryAccountId : undefined);
+  const to = (paidFrom ?? []).map((x) => ({ accountId: open(x.accountId) ? x.accountId : checking, share: x.share })).filter((x): x is PaidShare => Boolean(x.accountId));
+  const shares = to.length ? to : checking ? [{ accountId: checking, share: 1 }] : [];
+  return shares.map((x, n) => ({ accountId: x.accountId, amount: n === shares.length - 1 ? back - shares.slice(0, -1).reduce((t, y) => t + Math.round(back * y.share), 0) : Math.round(back * x.share) }));
+}
+
 /**
  * An order called off before it's delivered: its items gone from it, its
  * delivery stood down, off the calendar too, and what was paid, delivery
- * and all, refunded. The caller says whether it may be.
+ * and all, refunded to what paid (from 2026-10-05: until then to the bank,
+ * whatever had paid, so a card's purchase came back to checking and the card
+ * kept its debt).
  */
-export function cancelOrder(sim: Simulation, person: Person, orderId: string, memo: string, category: string): Money {
+export function cancelOrder(sim: Simulation, person: Person, orderId: string, memo: string, category: string, paidFrom?: readonly PaidShare[]): Money {
   const order = ordersOf(person).find((o) => o.id === orderId);
   if (!order) return 0;
   person.items = itemsOf(person).filter((i) => !(i.at.kind === 'order' && i.at.orderId === orderId));
   for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === ORDER_KIND && one.payload.orderId === orderId) sim.timeline.cancel(one.id, sim.now);
-  const account = person.primaryAccountId;
-  if (account && order.paid > 0) sim.post({ memo, category, postings: [{ accountId: account, amount: order.paid }, { accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount: -order.paid }] });
+  const parts = order.paid > 0 ? refundShares(sim, person, order.paid, paidFrom) : [];
+  if (parts.length) sim.post({ memo, category, postings: [...parts, { accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount: -order.paid }] });
   order.status = 'canceled';
   order.endedAt = sim.now;
   return order.paid;

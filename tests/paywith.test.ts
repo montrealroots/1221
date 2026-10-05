@@ -8,7 +8,8 @@ import { quickSave } from '@/engine';
 import { cardOf, cardRoom } from '@/engine/systems/credit';
 import { walletOf } from '@/engine/systems/cash';
 import { payWithRefusal } from '@/engine/systems/household';
-import { purchaseQuote } from '@/engine/systems/clothing';
+import { buyRefusal, purchaseQuote, retailerById } from '@/engine/systems/clothing';
+import { CLOTHING_PRODUCTS } from '@/engine/content/clothingcatalog';
 import { pendingDaysOf, pendingOn } from '@/engine/systems/pending';
 
 const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
@@ -54,5 +55,21 @@ describe('paying at the till', () => {
     else expect(pendingOn(sim, card)).toBe(0);
     expect(cardRoom(sim.player, card)).toBe(room - total);
     expect(payWithRefusal(sim, sim.player, cardRoom(sim.player, card) + 1, 'credit', true)).toBe('It’s past what the credit card has left.');
+  });
+
+  it('called off, goes back to the card that paid, not the bank (from 2026-10-05)', () => {
+    // In London, where the law lets an order be called off before it comes.
+    const sim = quickSave({ startLocationId: 'uk-eng-london', homeRegionId: 'uk-eng-london', livesWhereBorn: true, wealth: 'wealthy' }, 'pay-cancel');
+    if (!cardOf(sim, sim.player)) expect(sim.execute({ kind: 'card.apply', payload: {} }).ok).toBe(true);
+    const card = cardOf(sim, sim.player)!;
+    const p = CLOTHING_PRODUCTS.find((x) => x.market === 'GB' && retailerById(x.retailer)!.delivers && x.sizes.length > 0 && x.price < 60 && !buyRefusal(sim.player, { productId: x.id, how: 'online', size: x.sizes[0], color: x.colors[0] }))!;
+    const bank = sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
+    const owed = card.balance;
+    const r = sim.execute<{ purchaseId: string }>({ kind: 'clothes.buy', payload: { productId: p.id, how: 'online', size: p.sizes[0], color: p.colors[0], payWith: 'credit' } });
+    expect(r.ok, r.error).toBe(true);
+    expect(card.balance).toBeLessThan(owed);
+    sim.must({ kind: 'clothes.cancel', payload: { purchaseId: r.value!.purchaseId } });
+    expect(card.balance).toBe(owed);
+    expect(sim.universe.accounts[sim.player.primaryAccountId!]!.balance).toBe(bank);
   });
 });

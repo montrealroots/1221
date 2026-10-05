@@ -704,6 +704,9 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
     const off = cutNow(person, 'gas', sim.now);
     if (off) return `There’s no hot water for a bath: ${off.by}’s gas is off until ${formatTime(off.until, sim.zone)}.`;
   }
+  // Away with no stay of their own in the town, there's no shower or bath of theirs to take (from 2026-10-05: until then
+  // one was taken anyway, free, at a hotel's fixtures, `stayPlace`'s stand-in for a stay).
+  if ((action === 'wash' || action === 'bathe') && !atHome(person) && person.stay?.cityId !== person.currentLocationId) return 'There’s nowhere of yours to wash in this town: no home and no stay.';
   if ((action === 'wash' || action === 'bathe') && !atHome(person) && roomGone(person)) return person.stay?.readyAt !== undefined ? `The room isn’t ready until ${formatTime(person.stay.readyAt, sim.zone)}.` : 'You’ve checked out, and the room is gone until you leave.';
   if (action === 'bathe' && !place?.fixtures.bathtub) return atHome(person) ? 'There’s no bath where you live, only a shower.' : 'There’s no bath where you’re staying, only a shower.';
   if ((action === 'exercise' || action === 'swim' || action === 'ride' || action === 'court' || action === 'dance') && w.energy < SPENT) return 'You’re too tired to train. Sleep first.';

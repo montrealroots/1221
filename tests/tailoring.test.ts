@@ -10,6 +10,7 @@ import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY } from '@/engine/core/time';
 import { garmentsOf, wearable, type Garment } from '@/engine/systems/wardrobe';
+import { homeKeyOf } from '@/engine/systems/items';
 import { replaceWornOut } from '@/engine/systems/clothing';
 import { SIZE_STEP, alterCost, alterRefusal, alteredKg, fitOf, tailorById, tailorsIn } from '@/engine/systems/tailoring';
 
@@ -59,18 +60,26 @@ describe('a tailor', () => {
     const kg = sim.player.body!.weightKg;
     const t = top(sim);
     const shop = tailorsIn('us-ny-newyork')[0]!;
-    expect(alterRefusal(sim.player, t.id, shop.id)).toBe('It fits.');
+    expect(alterRefusal(sim, sim.player, t.id, shop.id)).toBe('It fits.');
     weigh(sim, kg * 1.2);
     // A shirt lets out half a size, SLATE's reading: a fifth more is past it.
-    expect(alterRefusal(sim.player, t.id, shop.id)).toBe('It can’t be let out that far.');
+    expect(alterRefusal(sim, sim.player, t.id, shop.id)).toBe('It can’t be let out that far.');
     weigh(sim, kg * 0.85);
-    expect(alterRefusal(sim.player, t.id, shop.id)).toBeUndefined();
-    expect(alterRefusal(sim.player, t.id, tailorsIn('uk-eng-london')[0]!.id)).toBe('The tailor is in another town.');
+    expect(alterRefusal(sim, sim.player, t.id, shop.id)).toBeUndefined();
+    expect(alterRefusal(sim, sim.player, t.id, tailorsIn('uk-eng-london')[0]!.id)).toBe('The tailor is in another town.');
     // Away at the dry cleaner, it isn't to hand to take in, nor bought again meanwhile.
     t.at = { kind: 'service', serviceId: 'drycleaner:us-ny-newyork', readyAt: sim.now + 2 * MS_DAY };
-    expect(alterRefusal(sim.player, t.id, shop.id)).toBe('It’s away already.');
+    expect(alterRefusal(sim, sim.player, t.id, shop.id)).toBe('It’s away already.');
     replaceWornOut(sim, sim.player);
     expect(garmentsOf(sim.player).some((x) => x.id === t.id)).toBe(true);
+    // Still on order, or at home while they're in another town, it isn't taken to the tailor (from 2026-10-05).
+    t.at = { kind: 'order', orderId: 'on-its-way' };
+    expect(alterRefusal(sim, sim.player, t.id, shop.id)).toBe('It hasn’t come yet.');
+    expect(sim.execute({ kind: 'clothes.alter', payload: { itemId: t.id, tailorId: shop.id } }).error).toBe('It hasn’t come yet.');
+    t.at = { kind: 'home', home: homeKeyOf(sim.player.home)!, spot: 'wardrobe' };
+    expect(alterRefusal(sim, sim.player, t.id, shop.id)).toBeUndefined();
+    sim.player.currentLocationId = 'uk-eng-london';
+    expect(alterRefusal(sim, sim.player, t.id, tailorsIn('uk-eng-london')[0]!.id)).toBe('It isn’t to hand here.');
   });
 
   it('charges its price and keeps it its stated days, a week where none is stated, then it fits', () => {
@@ -109,10 +118,10 @@ describe('letting out', () => {
     const shop = tailorsIn('us-ny-newyork')[0]!;
     // Grown a size and a little: past what its seams give.
     weigh(sim, made * (1 + SIZE_STEP * 0.75 + 0.075 + 0.01));
-    expect(alterRefusal(sim.player, b.id, shop.id)).toBe('It can’t be let out that far.');
+    expect(alterRefusal(sim, sim.player, b.id, shop.id)).toBe('It can’t be let out that far.');
     // Within it: let out to as far as it goes, and it fits.
     weigh(sim, made * 1.15);
-    expect(alterRefusal(sim.player, b.id, shop.id)).toBeUndefined();
+    expect(alterRefusal(sim, sim.player, b.id, shop.id)).toBeUndefined();
     const r = sim.execute<{ paid: number }>({ kind: 'clothes.alter', payload: { itemId: b.id, tailorId: shop.id } });
     expect(r.ok, r.error).toBe(true);
     expect(r.value!.paid).toBe(alterCost(sim, shop));
@@ -121,9 +130,9 @@ describe('letting out', () => {
     expect(b.garment.letOut).toBe(true);
     expect(Object.values(sim.universe.transactions).some((t) => t.memo === `${shop.name}, let out`)).toBe(true);
     // Its spare cloth used, it doesn't let out again.
-    b.at = { kind: 'home', home: 'x', spot: 'drawers' };
+    b.at = { kind: 'home', home: homeKeyOf(sim.player.home)!, spot: 'drawers' };
     weigh(sim, made * 1.3);
-    expect(alterRefusal(sim.player, b.id, shop.id)).toBe('It’s been let out as far as its seams go.');
+    expect(alterRefusal(sim, sim.player, b.id, shop.id)).toBe('It’s been let out as far as its seams go.');
   });
 
   it('takes a bottom in a size at most, as far as it goes toward the body', () => {
@@ -131,11 +140,11 @@ describe('letting out', () => {
     const b = bottomOf(sim);
     const made = b.garment.fitKg!;
     weigh(sim, made * 0.7);
-    expect(alterRefusal(sim.player, b.id, tailorsIn('us-ny-newyork')[0]!.id)).toBe('It can’t be taken in that far.');
+    expect(alterRefusal(sim, sim.player, b.id, tailorsIn('us-ny-newyork')[0]!.id)).toBe('It can’t be taken in that far.');
     expect(alteredKg(sim.player, b.garment)).toBeCloseTo(made * (1 - SIZE_STEP), 6);
     // Underwear isn't let out at all.
     const under = garmentsOf(sim.player).find((x) => x.garment.slot === 'underwear')!;
     weigh(sim, under.garment.fitKg! * 1.12);
-    expect(alterRefusal(sim.player, under.id, tailorsIn('us-ny-newyork')[0]!.id)).toBe('A tailor can’t let it out.');
+    expect(alterRefusal(sim, sim.player, under.id, tailorsIn('us-ny-newyork')[0]!.id)).toBe('A tailor can’t let it out.');
   });
 });
