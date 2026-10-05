@@ -51,6 +51,7 @@ import { inSaveMoney } from './banking';
 import { payWith, payWithRefusal, spend, type PayWith } from './household';
 import { addItem, homeKeyOf, itemById } from './items';
 import { COOKING_MET, GEAR_LABEL, KITCHEN_GEAR, SUBSTITUTES, type Gear, type GearOffer } from '../content/kitchengear';
+import { GEAR_LINEUP } from '../content/kitchengearlineup';
 import { exerts } from './body';
 import { WASH_UP, atHome, livingOf, placeOf } from './dwelling';
 
@@ -150,7 +151,7 @@ export function deliverGroceries(sim: Simulation, person: Person, p: NonNullable
     // Carried, or in the car, until a trip out is home (`stow`).
     stow(person, addItem(sim, person, {
       kind: p.id, label: p.name, quantity: 1, condition: 1, at: { kind: 'home', home, spot: SPOT[p.storage] }, acquiredAt: sim.now, paid: Math.round(paid / quantity),
-      food: { key: p.food, unit: p.sizeUnit, left: p.sizeQty, ...(p.keepsDays === null ? {} : { expiresAt: sim.now + p.keepsDays * MS_DAY }) },
+      food: { key: p.food, unit: p.sizeUnit, left: p.sizeQty, ...(p.abv !== undefined ? { abv: p.abv } : {}), ...(p.keepsDays === null ? {} : { expiresAt: sim.now + p.keepsDays * MS_DAY }) },
     }), sim.now);
   }
 }
@@ -258,7 +259,8 @@ export function kitchenHas(person: Person): Set<string> {
 export function gearOffers(sim: Simulation, person: Person): (GearOffer & { cost: Money })[] {
   const cityId = person.home?.cityId ?? person.currentLocationId;
   const country = cityId.split('-')[0] ?? '';
-  return (KITCHEN_GEAR[country] ?? []).map((g) => ({ ...g, cost: inSaveMoney(sim, Math.round(g.price * (1 + (g.taxIncluded ? 0 : salesTaxRate(cityId, sim.now, 'appliances'))) * 100), g.currency) })).sort((a, b) => a.cost - b.cost);
+  // The cheapest of each first read, and from 2026-10-05 each market's makes and models.
+  return [...(KITCHEN_GEAR[country] ?? []).map((g) => ({ ...g, id: g.id ?? `${country}-${g.gear}` })), ...(GEAR_LINEUP[country] ?? [])].map((g) => ({ ...g, cost: inSaveMoney(sim, Math.round(g.price * (1 + (g.taxIncluded ? 0 : salesTaxRate(cityId, sim.now, 'appliances'))) * 100), g.currency) })).sort((a, b) => a.cost - b.cost);
 }
 
 export function gearRefusal(sim: Simulation, person: Person, gear: string): string | undefined {
@@ -400,7 +402,8 @@ export function drinkAtHome(sim: Simulation, person: Person, itemId: string): nu
   if (yearsOld(person, sim.now) < drinkingAge(person.currentLocationId)) throw new CommandError(`You have to be ${drinkingAge(person.currentLocationId)}.`);
   const pint = PINT[drinkingMarketOf(person.currentLocationId) as keyof typeof PINT ?? 'US'] ?? PINT.US;
   const ml = Math.min(item.food.left, item.food.key === 'beer' ? pint.ml : 148);
-  const abv = item.food.key === 'beer' ? pint.abv : 0.12;
+  // Its label's strength where read (from 2026-10-05), the pint's or a glass's standard where not.
+  const abv = item.food.abv ?? (item.food.key === 'beer' ? pint.abv : 0.12);
   item.food.left -= ml;
   if (item.food.left <= 1e-9) person.items = (person.items ?? []).filter((x) => x.id !== item.id);
   sim.advanceTo(sim.now + 30 * 60_000);
@@ -427,11 +430,13 @@ export function registerKitchen(sim: Simulation): void {
     for (const b of need.buys) paid += buyGroceries(s, person, b.productId, b.quantity);
     return { paid, bought: need.buys.length };
   });
-  sim.onCommand<{ gear: string }, { paid: Money }>('food.buy_gear', (p, { sim: s }) => {
+  // A model chosen, or the cheapest of its kind where none is (from 2026-10-05; until then always the one).
+  sim.onCommand<{ gear: string; offerId?: string }, { paid: Money }>('food.buy_gear', (p, { sim: s }) => {
     const person = s.player;
     const no = gearRefusal(s, person, String(p?.gear));
     if (no) throw new CommandError(no);
-    const g = gearOffers(s, person).find((x) => x.gear === p.gear)!;
+    const g = gearOffers(s, person).find((x) => x.gear === p.gear && (p.offerId === undefined || x.id === p.offerId));
+    if (!g) throw new CommandError('That model isn’t sold where you live.');
     if (!spend(s, person, g.cost, `${g.retailer}, ${g.name}`, 'household')) throw new CommandError('The bank couldn’t pay for it.');
     addItem(s, person, { kind: `gear:${g.gear}`, label: g.name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid: g.cost });
     return { paid: g.cost };

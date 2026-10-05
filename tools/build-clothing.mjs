@@ -7,7 +7,7 @@
 // product whose page gave no care label takes its kind's usual care, said so.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
-const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json', 'research-clothing-fit.json', 'research-clothing-swimsleep.json', 'research-clothing-shoesbags.json', 'research-clothing-towels.json', 'research-clothing-accessories.json'].map((f) => `docs/research/world/${f}`);
+const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json', 'research-clothing-fit.json', 'research-clothing-swimsleep.json', 'research-clothing-shoesbags.json', 'research-clothing-towels.json', 'research-clothing-accessories.json', 'research-clothing-cultural.json'].map((f) => `docs/research/world/${f}`);
 const OUT = 'src/engine/content/clothingcatalog.ts';
 
 /** A retailer's department, as read: women's, men's or unisex, in English or Spanish; none where none was read. */
@@ -49,6 +49,15 @@ const WORDS = [
   [/\b(t-?shirts?|tees?|tanks?|tank tops?|camisoles?|camis?|vest tops?)\b/, 'top', 't-shirt'],
   [/\b(shirts?|blouses?|polos?|tops?|henleys?|button-?downs?|overshirts?|bodysuits?)\b/, 'top', 'shirt'],
   [/\b(jeans?|denims?)\b/, 'bottom', 'jeans'],
+  // From 2026-10-05 the cultural garments, each where it's worn: a kilt or a lehenga below the waist, lederhosen as
+  // trousers; a sari, kimono, yukata, hanbok, abaya, qipao, dirndl, anarkali or salwar kameez worn whole, as a dress
+  // is; a kurta or dashiki as a shirt; a sherwani as a coat; a hijab as an accessory.
+  [/\b(kilts?|lehengas?)\b/, 'bottom', 'skirt'],
+  [/\blederhosen\b/, 'bottom', 'trousers'],
+  [/\b(saris?|sarees?|kimonos?|yukatas?|hanboks?|abayas?|qipaos?|cheongsams?|dirndls?|anarkalis?|salwar kameez|shalwar kameez)\b/, 'dress', 'dress'],
+  [/\b(kurtas?|dashikis?)\b/, 'top', 'shirt'],
+  [/\bsherwanis?\b/, 'outer', 'coat'],
+  [/\b(hijabs?)\b/, 'accessory', 'accessory'],
   // From 2026-10-05 a bath towel or bath sheet, used after a shower and washed (`useTowel` in `systems/wardrobe.ts`).
   [/\b(bath towels?|bath sheets?|towels?)\b/, 'towel', 'towel'],
   [/\b(trousers?|pants|chinos?|leggings?|shorts|joggers?|sweatpants|cargos?|slacks)\b/, 'bottom', 'trousers'],

@@ -32,6 +32,9 @@ import { RIDE_LINEUP } from '../src/engine/content/ridelineup.ts';
 import { RIDE_MODELS } from '../src/engine/content/ridecatalog.ts';
 import { RV_MODELS } from '../src/engine/content/rvcatalog.ts';
 import { RV_LINEUP } from '../src/engine/content/rvlineup.ts';
+import { LITTERS, PET_FOODS } from '../src/engine/content/petcare.ts';
+import { KITCHEN_GEAR } from '../src/engine/content/kitchengear.ts';
+import { GEAR_LINEUP } from '../src/engine/content/kitchengearlineup.ts';
 import { CAR_OPTIONS } from '../src/engine/content/caroptions.ts';
 import { HOTELS } from '../src/engine/content/hotels.ts';
 import { RESTAURANTS } from '../src/engine/content/restaurants.ts';
@@ -85,6 +88,10 @@ const READ = {
   beverages: () => GROCERY_PRODUCTS.filter((g) => DRINK.has(g.category)).map((g) => row(g.brand ?? null, g.name, 1, g.market)),
   cars: () => cars([...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS]),
   motorcycles: () => cars([...BIKE_MODELS, ...MOTO_MODELS]),
+  // Pet food by its brand, and litter, whose name states its maker, from 2026-10-05; until then neither was counted.
+  'pet-supplies': () => [...PET_FOODS.map((p) => row(p.brand, `${p.brand}|${p.product}`, 1, p.market.toUpperCase())), ...LITTERS.map((l) => row(null, l.product, 1, l.market.toUpperCase()))],
+  // Blenders and slow cookers, the cheapest first read and from 2026-10-05 each market's makes.
+  kitchenware: () => [...Object.entries(KITCHEN_GEAR).flatMap(([m, list]) => list.map((g) => row(g.brand ?? null, g.name, 1, m.toUpperCase()))), ...Object.entries(GEAR_LINEUP).flatMap(([m, list]) => list.map((g) => row(g.brand ?? null, g.name, 1, m.toUpperCase())))],
   bicycles: () => cars([...RIDE_MODELS, ...RIDE_LINEUP]),
   rvs: () => cars([...RV_MODELS, ...RV_LINEUP]),
   'car-options': () => { const make = new Map([...CAR_MODELS, ...EV_MODELS, ...PICKUP_MODELS].map((m) => [m.id, m.make])); return CAR_OPTIONS.map((o) => row(make.get(o.carId) ?? null, o.key, 1, o.carId.slice(0, 2))); },

@@ -29,6 +29,8 @@ export interface GroceryProduct {
   sizeQty: number; sizeUnit: FoodUnit; price: number; currency: string; taxIncluded: boolean;
   storage: Storage; keepsDays: number | null; keepsEstimated: boolean; keepsSource: string;
   url: string | null; date: string | null; confirmed: boolean;
+  /** A beer's or a wine's alcohol by volume as its label states it, a fraction (from 2026-10-05). */
+  abv?: number;
 }
 
 export type Ingredient = { name: string; cupboard: true } | { name: string; food: string | null; quantity: number | null; unit: FoodUnit | null; cupboard?: undefined };
