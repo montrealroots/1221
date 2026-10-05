@@ -35,6 +35,7 @@ import { RV_LINEUP } from '../src/engine/content/rvlineup.ts';
 import { LITTERS, PET_FOODS } from '../src/engine/content/petcare.ts';
 import { KITCHEN_GEAR } from '../src/engine/content/kitchengear.ts';
 import { GEAR_LINEUP } from '../src/engine/content/kitchengearlineup.ts';
+import { SPORT_GEAR } from '../src/engine/content/sportsgear.ts';
 import { CAR_OPTIONS } from '../src/engine/content/caroptions.ts';
 import { HOTELS } from '../src/engine/content/hotels.ts';
 import { RESTAURANTS } from '../src/engine/content/restaurants.ts';
@@ -95,6 +96,8 @@ const READ = {
   kitchenware: () => [...Object.entries(KITCHEN_GEAR).flatMap(([m, list]) => list.map((g) => row(g.brand ?? null, g.name, 1, m.toUpperCase()))), ...Object.entries(GEAR_LINEUP).flatMap(([m, list]) => list.map((g) => row(g.brand ?? null, g.name, 1, m.toUpperCase())))],
   // Makeup and hair styling at the chains, from 2026-10-05.
   cosmetics: () => TOILETRIES.filter((t) => COSMETIC.has(t.kind)).map((t) => row(t.brand ?? null, t.name, 1, t.market)),
+  // Rackets, paddles and balls for a home's court or pitch, from 2026-10-05.
+  sports: () => SPORT_GEAR.map((g) => row(g.brand, `${g.brand}|${g.name}`, 1, g.market.toUpperCase())),
   bicycles: () => cars([...RIDE_MODELS, ...RIDE_LINEUP]),
   rvs: () => cars([...RV_MODELS, ...RV_LINEUP]),
   'car-options': () => { const make = new Map([...CAR_MODELS, ...EV_MODELS, ...PICKUP_MODELS].map((m) => [m.id, m.make])); return CAR_OPTIONS.map((o) => row(make.get(o.carId) ?? null, o.key, 1, o.carId.slice(0, 2))); },

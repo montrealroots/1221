@@ -55,7 +55,7 @@ which never counts toward the target.
 | Vehicles | Car Audio | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Building And Garden | Building Materials, Fixtures And Finishes | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Building And Garden | Garden Equipment | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
-| Sport | Sports Equipment | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
+| Sport | Sports Equipment | 42 | 84% | 117 | 1 / 2 / 19 | 0 | 117 | 117 | 0 | CA, GB, IE, MX, US | No |
 | Pets | Pet Supplies | 57 | 100% | 85 | 1 / 1 / 3 | 0 | 85 | 88 | 11 | CA, GB, IE, MX, US | No |
 
 0 of 45 brand and narrow categories meet the target.

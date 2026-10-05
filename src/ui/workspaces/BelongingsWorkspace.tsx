@@ -9,6 +9,9 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { assembleRefusal, assemblyMinutes, buybackRefusal, buybackShare } from '@/engine/systems/furnishings';
 import { bulkyFee, bulkyRefusal } from '@/engine/systems/bulky';
 import { useGame, useWorld } from '@/app/game-context';
+import { gearRefusal, sportShop } from '@/engine/systems/sportsgear';
+import { homeCourts } from '@/engine/systems/dwelling';
+import { titleCaseLabel } from '@/engine/core/text';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { CatalogControls, CompareTable, CompareToggle, FavoriteToggle, ShowMore, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
 import { Gated, useFeature } from '@/ui/guide/Guide';
@@ -138,6 +141,46 @@ function PetCare() {
  * floor put in a room that can take it, and a spare bedroom kept spare or
  * used for storage.
  */
+const SPORT_KIND: Readonly<Record<string, string>> = { 'tennis-racket': 'Tennis Racket', 'tennis-balls': 'Tennis Balls', 'pickleball-paddle': 'Pickleball Paddle', pickleballs: 'Pickleballs', basketball: 'Basketball', football: 'Football' };
+/** Rackets, paddles and balls where they live (`systems/sportsgear.ts`, from 2026-10-05): what a home's court or pitch is played with. */
+function SportsEquipment() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const cur = saveCurrency(sim.universe);
+  const shop = useWorld((s) => sportShop(s, s.player));
+  const entries = shop.map((g) => ({ id: g.id, label: g.name, value: g, basis: 'Tax In', price: g.cost, priceKind: 'advertised' as const, facets: { kind: SPORT_KIND[g.kind]!, brand: g.brand } }));
+  const [view, setView] = useCatalogView('sport-gear');
+  const arranged = arrange(entries, view);
+  const [count, more] = usePaged('sport-gear');
+  const buy = useFeature('sport.buy');
+  if (entries.length === 0) return null;
+  const courts = homeCourts(person);
+  return (
+    <Panel title="Sports Equipment" subtitle={courts.length ? courts.map((c) => `${titleCaseLabel(c.court)}: ${gearRefusal(person, c.court) ?? 'Ready To Play'}`).join(' · ') : 'What a court or a pitch at home is played with'}>
+      <div className="col gap-2">
+        <CatalogControls id="sport-gear-catalog" entries={entries} view={view} onChange={setView} facets={{ kind: 'Kind', brand: 'Maker' }} />
+        <div className="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Product</th><th scope="col">Kind</th><th scope="col">Seller</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Buy</span></th></tr></thead>
+            <tbody>
+              {arranged.slice(0, count).map((e) => (
+                <tr key={e.id}>
+                  <td>{e.label}{e.value.count > 1 ? <span className="xs dim">{` · ${e.value.count} In A Pack`}</span> : null}</td>
+                  <td className="small">{e.facets?.kind}</td>
+                  <td className="small">{e.value.retailer}</td>
+                  <td className="num mono">{formatMoney(e.price ?? 0, cur, { cents: false })}</td>
+                  <td><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open} title={buy.reason} onClick={() => { if (run('sport.buy', { productId: e.id }).ok) toast(`${e.label}, at home.`, 'positive'); }}>Buy</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <ShowMore shown={Math.min(count, arranged.length)} total={arranged.length} onMore={more} />
+      </div>
+    </Panel>
+  );
+}
+
 function YourRooms() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -287,6 +330,7 @@ export function BelongingsWorkspace() {
         <ShoppingOut />
         <PetCare />
         <YourRooms />
+        <SportsEquipment />
         <Panel title="Where Things Are">
           <div className="grid grid-3">
             <Stat label="Owned" value={String(items.length)} note="Each thing, or each set of the same" />

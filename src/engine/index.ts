@@ -79,6 +79,7 @@ import { EVERY_SHORTCUT, registerAutomation } from './systems/automation';
 import { registerGarden } from './systems/garden';
 import { registerRooms } from './systems/rooms';
 import { registerHouseguests } from './systems/houseguests';
+import { registerSportsGear } from './systems/sportsgear';
 import { registerAwards } from './systems/awards';
 import { registerUtilities } from './systems/utilities';
 import { journeysOf as journeysFor, partnerOf as partnerFor } from './systems/journey';
@@ -282,6 +283,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerGarden(sim);
   registerRooms(sim);
   registerHouseguests(sim);
+  registerSportsGear(sim);
   registerFuelTank(sim);
   registerMarriage(sim);
   registerChildren(sim);
