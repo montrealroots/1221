@@ -171,6 +171,29 @@ export function activationCost(sim: Simulation, person: Person): { cost: Money; 
   return { cost: inSaveMoney(sim, cents, a.currency ?? line.currency), carrier: line.provider };
 }
 
+/**
+ * A repair's share of a phone's price, where its maker publishes none for the
+ * model (from 2026-10-05): the median, over every model whose maker publishes
+ * both, of the repair's price over the phone's own (its cheapest storage, in
+ * its market). SLATE's estimate from those makers' own figures, so a phone
+ * whose maker publishes no repair price can still be repaired, at a price in
+ * proportion to what it cost. Until then it couldn't.
+ */
+const median = (xs: number[]): number | undefined => { const s = xs.filter((x) => Number.isFinite(x) && x > 0).sort((a, b) => a - b); return s.length ? s[s.length >> 1] : undefined; };
+const basePrice = (market: string, maker: string, model: string): number | undefined => PHONES.filter((p) => p.market === market && p.maker === maker && p.model === model).sort((a, b) => a.storageGB - b.storageGB)[0]?.price;
+export const REPAIR_SHARE = {
+  screen: median(PHONE_REPAIR.map((r) => (r.screen ?? NaN) / (basePrice(r.market, r.maker, r.model) ?? NaN))),
+  battery: median(PHONE_REPAIR.map((r) => (r.battery ?? NaN) / (basePrice(r.market, r.maker, r.model) ?? NaN))),
+  other: median(OTHER_DAMAGE.map((r) => r.other / (basePrice(r.market, r.maker, r.model) ?? NaN))),
+};
+/** A repair at its share of the phone's price, taxed as the phone's price is: SLATE's estimate, or nothing where no share is known. */
+function estimatedRepair(sim: Simulation, person: Person, p: Phone, kind: keyof typeof REPAIR_SHARE): Money | undefined {
+  const share = REPAIR_SHARE[kind];
+  if (share === undefined) return undefined;
+  const tax = p.taxIncluded ? 0 : salesTaxRate(person.home?.cityId ?? person.currentLocationId, sim.now, 'general');
+  return inSaveMoney(sim, Math.round(p.price * share * (1 + tax) * 100), p.currency);
+}
+
 /** What a battery replacement costs now: the maker's price, or the protection plan's fee once it's worn below 80%. */
 export function batteryQuote(sim: Simulation, person: Person, owned: Owned): Money | undefined {
   const p = phoneById(owned.device.phoneId);
@@ -178,7 +201,7 @@ export function batteryQuote(sim: Simulation, person: Person, owned: Owned): Mon
   const cover = owned.device.protection;
   if (cover && cover.batteryFee !== null && owned.device.battery < BATTERY.keptAt) return cover.batteryFee;
   const r = PHONE_REPAIR.find((x) => x.market === p.market && x.maker === p.maker && x.model === p.model);
-  if (!r || r.battery === null) return undefined;
+  if (!r || r.battery === null) return estimatedRepair(sim, person, p, 'battery');
   const tax = r.taxIncluded === false ? salesTaxRate(person.home?.cityId ?? person.currentLocationId, sim.now, 'general') : 0;
   return inSaveMoney(sim, Math.round(r.battery * (1 + tax) * 100), r.currency);
 }
@@ -229,7 +252,8 @@ export function claimQuote(sim: Simulation, person: Person, owned: Owned): Money
     const screen = PHONE_REPAIR.find((x) => x.market === p.market && x.maker === p.maker && x.model === p.model);
     if (r) return inSaveMoney(sim, Math.round(r.other * (1 + tax(screen?.taxIncluded)) * 100), r.currency);
   }
-  return `${p.maker} publishes no price for that repair.`;
+  // No price of its maker's for the model: its share of the phone's price, SLATE's estimate.
+  return estimatedRepair(sim, person, p, d.broken === 'screen' ? 'screen' : 'other') ?? `${p.maker} publishes no price for that repair.`;
 }
 
 /** The protection plans open to a phone, by its model. */

@@ -11,9 +11,9 @@ import { MS_DAY } from '@/engine/core/time';
 import { saveCurrency } from '@/engine/core/money';
 import { exchange } from '@/engine/content/currency';
 import { salesTaxRate } from '@/engine/content/tax';
-import { PHONE_PROTECTION } from '@/engine/content/phones';
+import { PHONES, PHONE_PROTECTION, PHONE_REPAIR } from '@/engine/content/phones';
 import { APPROVE_FROM, INQUIRY } from '@/engine/systems/cardlife';
-import { PHONE_DAYS, claimQuote, phoneById, phonesOf, phonesOnSale, plansFor, riskFor } from '@/engine/systems/phones';
+import { PHONE_DAYS, REPAIR_SHARE, batteryQuote, claimQuote, phoneById, phonesOf, phonesOnSale, plansFor, riskFor } from '@/engine/systems/phones';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 const into = (sim: Simulation, c: number, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? c : exchange(c, from, cur)!; };
@@ -102,5 +102,24 @@ describe('a maker’s plan', () => {
     sim.player.credit!.score = 700;
     sim.must({ kind: 'phone.buy', payload: order });
     expect(sim.player.credit!.score).toBe(700 - INQUIRY);
+  });
+});
+
+describe('a phone whose maker publishes no repair price', () => {
+  it('is repaired at its share of the phone’s price that makers who publish both give, taxed as its price is', () => {
+    const sim = life('us-ny-newyork', 'claim-estimate');
+    const p = PHONES.find((x) => x.market === 'us' && !PHONE_REPAIR.some((r) => r.market === 'us' && r.maker === x.maker && r.model === x.model))!;
+    expect(p).toBeDefined();
+    const owned = bought(sim, p.id);
+    owned.device.broken = 'screen';
+    const tax = p.taxIncluded ? 0 : salesTaxRate('us-ny-newyork', sim.now, 'general');
+    expect(claimQuote(sim, sim.player, owned)).toBe(into(sim, Math.round(p.price * REPAIR_SHARE.screen! * (1 + tax) * 100), p.currency));
+    owned.device.broken = 'other';
+    expect(claimQuote(sim, sim.player, owned)).toBe(into(sim, Math.round(p.price * REPAIR_SHARE.other! * (1 + tax) * 100), p.currency));
+    delete owned.device.broken;
+    owned.device.battery = 0.7;
+    expect(batteryQuote(sim, sim.player, owned)).toBe(into(sim, Math.round(p.price * REPAIR_SHARE.battery! * (1 + tax) * 100), p.currency));
+    expect(REPAIR_SHARE.screen).toBeGreaterThan(0.1);
+    expect(REPAIR_SHARE.screen).toBeLessThan(0.6);
   });
 });
