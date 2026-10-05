@@ -55,8 +55,8 @@ describe('an appliance by make and model', () => {
     if (abroad) expect(modelFitCost(sim, home, 'washer', abroad.id)).toBe('It’s sold in another country.');
     expect(fittedModel(home, 'washer')).toBeUndefined();
     sim.player.home = { kind: 'owned', cityId: 'us-ny-newyork', since: sim.now, homeId: home.id };
-    livingOf(sim.player).loads = { washer: 3, dryer: 3 };
-    expect(machineUsd(sim.player)).toBeCloseTo((3 * MACHINE_KWH.washer + 3 * MACHINE_KWH.dryer) * KWH_USD, 9);
+    livingOf(sim.player).loads = { washer: 3, dryer: 3, dishwasher: 5 };
+    expect(machineUsd(sim.player)).toBeCloseTo((3 * MACHINE_KWH.washer + 3 * MACHINE_KWH.dryer + 5 * MACHINE_KWH.dishwasher) * KWH_USD, 9);
   });
 
   it('takes its energy from ENERGY STAR’s family, an asterisk a color letter, over the test’s 295 washes a year', () => {

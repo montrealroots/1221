@@ -49,9 +49,13 @@ export const CAR_MODELS: readonly CarModel[] = [
   ...PICKUP_MODELS,
 ];
 export const isPickup = (m: CarModel): boolean => m.body === 'pickup';
-import { BIKE_MODELS } from '../content/bikecatalog';
+import { BIKE_MODELS as FIRST_BIKES } from '../content/bikecatalog';
+import { MOTO_MODELS } from '../content/motocatalog';
 import { RV_MODELS } from '../content/rvcatalog';
-import { RIDE_MODELS } from '../content/ridecatalog';
+import { RIDE_MODELS as FIRST_RIDES } from '../content/ridecatalog';
+import { RIDE_LINEUP } from '../content/ridelineup';
+/** The bicycles, e-bikes and ATVs on sale: the first catalog's, and from 2026-10-05 each market's wider lineup. */
+const RIDE_MODELS: readonly CarModel[] = [...FIRST_RIDES, ...RIDE_LINEUP];
 import { chargingRewards, homeShareOf, kwhPrice } from './charging';
 import { registerTint, tintAtInspection, tintFuelFactor, tintOnTheRoad, type TintKind } from './tint';
 import { burn, capacityOf, everydayFuel, fillingOf, levelOf, lowAt, rangeKm } from './fueltank';
@@ -88,7 +92,10 @@ export const VEHICLE_MONTH_KIND = 'vehicle.month';
 export const VEHICLE_DAY_KIND = 'vehicle.day';
 export const VEHICLE_RENEWAL_KIND = 'vehicle.renewal';
 
-/** Liters per 100 km for a motorcycle or scooter whose maker publishes none: the mean of the catalog's that do (from 2026-09-30). */
+/** The motorcycles and scooters on sale: the first catalog's, and from 2026-10-05 each market's wider lineup (`content/motocatalog.ts`). */
+export const BIKE_MODELS: readonly CarModel[] = [...FIRST_BIKES, ...MOTO_MODELS];
+
+/** Liters per 100 km for a motorcycle or scooter whose maker publishes none: the mean of the catalog's that do (from 2026-09-30; over the wider lineup's too from 2026-10-05). */
 export const BIKE_UNRATED_PER100 = (() => { const rated = BIKE_MODELS.filter((m) => m.per100km !== null).map((m) => m.per100km!); return rated.reduce((a, x) => a + x, 0) / rated.length; })();
 
 const inSave = (sim: Simulation, cents: Money, from: string) => { const cur = saveCurrency(sim.universe); return cur === from ? cents : exchange(cents, from, cur) ?? cents; };

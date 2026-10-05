@@ -53,7 +53,7 @@ import { GARMENTS_PER_LOAD, cleanOutfits, swimsuitFor, washGarments, washableDir
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
 import { isOn } from './automation';
 import { fittedModel } from './appliances';
-import { detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
+import { DISHWASHER_CYCLES_A_DAY, detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
 import { amenitiesOf } from './hotels';
 import { machinesDay } from './appliancefaults';
 import { starterLuggage } from './luggage';
@@ -326,6 +326,8 @@ export interface Living {
   extraKwh?: number;
   /** The month's kilowatt-hours on a set of one's own, watched (from 2026-10-05): billed past the typical household's viewing, and cleared with the month's electricity. */
   tvKwh?: number;
+  /** The month's days a guest has stayed (`systems/houseguests.ts`, from 2026-10-05), each a person's water. */
+  guestDays?: number;
   /**
    * Until 2026-10-01 clothes were a count of outfits, clean and dirty, and
    * of loads drying. A save from before keeps them until its wardrobe of
@@ -342,8 +344,8 @@ export interface Living {
   rentersInsurance?: boolean;
   /** A renter's burglar alarm, monitored, which goes where they go (`systems/alarm.ts`, from 2026-09-30). */
   alarm?: boolean;
-  /** The month's loads in the home's own machines, for the bills. */
-  loads?: { washer: number; dryer: number };
+  /** The month's loads in the home's own machines, for the bills; a dishwasher's cycles from 2026-10-05. */
+  loads?: { washer: number; dryer: number; dishwasher?: number };
   /** The month's days counted, and those at home, for the electricity used (`systems/electricity.ts`, from 2026-10-02). */
   billDays?: number;
   homeDays?: number;
@@ -408,7 +410,7 @@ export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant):
   if (cost > 0 && !spend(sim, person, cost, way === 'none' ? 'The laundromat' : 'The laundry room', 'laundry')) return false;
   laundryDetergent(sim, person, loads);
   // A home's own machines run on its electricity, billed with the month.
-  if (way === 'in-unit' || way === 'washer-only') l.loads = { washer: (l.loads?.washer ?? 0) + loads, dryer: (l.loads?.dryer ?? 0) + (way === 'in-unit' ? loads : 0) };
+  if (way === 'in-unit' || way === 'washer-only') l.loads = { ...l.loads, washer: (l.loads?.washer ?? 0) + loads, dryer: (l.loads?.dryer ?? 0) + (way === 'in-unit' ? loads : 0) };
   washGarments(washed, finishedAt + LAUNDRY.readyHours[way] * MS_HOUR);
   return true;
 }
@@ -421,8 +423,13 @@ export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant):
  * a washer's energy; at the 18.19 cents a kWh America's homes paid in 2026
  * (EIA), at the town's cost of living. Until 2026-09-28 the hot water wasn't
  * counted. The water heated by gas is priced as if electric.
+ *
+ * A dishwasher's cycles were not billed until 2026-10-05. From then each is
+ * 1.43 kWh, the federal standard's ceiling for a standard dishwasher, 307 kWh
+ * a year over the test's 215 cycles (10 CFR 430.32(f)), its water's heating
+ * included; a fitted model rated by ENERGY STAR bills its own.
  */
-export const MACHINE_KWH = { washer: 0.23 / 0.1, dryer: 2.4 } as const;
+export const MACHINE_KWH = { washer: 0.23 / 0.1, dryer: 2.4, dishwasher: 307 / 215 } as const;
 export const KWH_USD = 0.1819;
 export const MACHINES = { washerUsd: MACHINE_KWH.washer * KWH_USD, dryerUsd: MACHINE_KWH.dryer * KWH_USD };
 
@@ -430,14 +437,15 @@ export const MACHINES = { washerUsd: MACHINE_KWH.washer * KWH_USD, dryerUsd: MAC
  * The month's machine loads, in dollars, billed with the month's bills on the
  * first, then counted again. From 2026-10-05 a home of one's own's washer or
  * dryer fitted as a make and model bills its own energy a cycle
- * (`fittedModel`), the typical machine's figure where it has none.
+ * (`fittedModel`), the typical machine's figure where it has none; and a
+ * dishwasher's cycles the same way.
  */
 export function machineUsd(person: Person): number {
   const l = person.living;
   if (!l?.loads) return 0;
   const owned = person.home?.kind === 'owned' ? (person.homes ?? []).find((h) => h.id === person.home!.homeId) : undefined;
-  const kwh = (kind: 'washer' | 'dryer') => { const m = fittedModel(owned, kind)?.attrs.kwhPerCycle; return typeof m === 'number' ? m : MACHINE_KWH[kind]; };
-  return (l.loads.washer * kwh('washer') + l.loads.dryer * kwh('dryer')) * KWH_USD;
+  const kwh = (kind: keyof typeof MACHINE_KWH) => { const m = fittedModel(owned, kind)?.attrs.kwhPerCycle; return typeof m === 'number' ? m : MACHINE_KWH[kind]; };
+  return (l.loads.washer * kwh('washer') + l.loads.dryer * kwh('dryer') + (l.loads.dishwasher ?? 0) * kwh('dishwasher')) * KWH_USD;
 }
 
 /**
@@ -505,7 +513,8 @@ export function livingDay(sim: Simulation, person: Person): void {
   const machine = place.fixtures.dishwasher && dishwasherRuns(sim, person);
   const piled = !machine && (l.dishes ?? 0) > 0;
   l.tidy = clamp(l.tidy - TIDY.perDay * (piled ? 1 : TIDY.dishwasher), 0, 100);
-  if (machine) delete l.dishes; else l.dishes = Math.min(WASH_UP.full, (l.dishes ?? 0) + 1);
+  // Its cycles go on the month's electricity (`machineUsd`, from 2026-10-05).
+  if (machine) { delete l.dishes; l.loads = { washer: l.loads?.washer ?? 0, dryer: l.loads?.dryer ?? 0, dishwasher: (l.loads?.dishwasher ?? 0) + DISHWASHER_CYCLES_A_DAY }; } else l.dishes = Math.min(WASH_UP.full, (l.dishes ?? 0) + 1);
   if (free && isOn(person, 'washUp')) washUp(sim, person);
   if (free && isOn(person, 'tidy') && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
   // A partner living there does their share of the housework, a cleaning when it adds up to one.

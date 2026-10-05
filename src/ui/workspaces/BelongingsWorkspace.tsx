@@ -145,7 +145,7 @@ function YourRooms() {
   const rooms = roomList(sim, person);
   const home = homeKeyOf(person.home);
   if (!rooms.length || !home || person.currentLocationId !== person.home?.cityId) return null;
-  const floor = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor' && (i.bulky || i.kind.startsWith('ikea:')));
+  const floor = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor' && (i.bulky || i.kind.startsWith('ikea:') || i.kind.startsWith('furn:')));
   const owns = Boolean(livingIn(person));
   return (
     <Panel title="Your Rooms" subtitle="Each room, what it’s used for and what stands in it">
@@ -164,8 +164,11 @@ function YourRooms() {
                   <td>{r.label}{r.access === 'shared' ? <div className="xs dim">Shared</div> : null}{r.fixtures.length ? <div className="xs dim">{r.fixtures.join(', ')}</div> : null}</td>
                   <td className="small">
                     {r.use ? ROOM_USE_LABEL[r.use] : r.kind === 'bedroom' ? 'A Flatmate’s Room' : '—'}
-                    {owns && (r.use === 'spare' || r.use === 'storage') && (
-                      <div><Gated feature="home.room_use" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.room_use', { roomId: r.id, use: r.use === 'spare' ? 'storage' : 'spare' }).ok) toast(r.use === 'spare' ? 'It’s a storage room now.' : 'It’s kept spare now.', 'positive'); }}>{r.use === 'spare' ? 'Use It For Storage' : 'Keep It Spare'}</Gated></div>
+                    {owns && (r.use === 'spare' || r.use === 'storage' || r.use === 'guest') && (
+                      <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+                        <Gated feature="home.room_use" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.room_use', { roomId: r.id, use: r.use === 'spare' ? 'storage' : 'spare' }).ok) toast(r.use === 'spare' ? 'It’s a storage room now.' : 'It’s kept spare now.', 'positive'); }}>{r.use === 'spare' ? 'Use It For Storage' : 'Keep It Spare'}</Gated>
+                        {r.use === 'spare' && <Gated feature="home.room_use" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.room_use', { roomId: r.id, use: 'guest' }).ok) toast('It’s a guest room now: put a bed in it, and a friend from out of town can come and stay.', 'positive'); }}>Make It A Guest Room</Gated>}
+                      </div>
                     )}
                   </td>
                   <td className="num small">{`${r.m2.toFixed(1)} m²`}</td>

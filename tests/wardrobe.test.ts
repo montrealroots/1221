@@ -12,7 +12,8 @@ import { CHANGE_MINUTES, chosenMissing, cleanOutfits, garmentsOf, outfitFor, wea
 import { doLaundry, wearOutfit } from '@/engine/systems/dwelling';
 import type { Slot, Care } from '@/engine/content/garmentcare';
 import { sellRefusal } from '@/engine/systems/resale';
-import { STARTER_TOWELS, starterTowels } from '@/engine/systems/clothing';
+import { STARTER_TOWELS, clothingCatalog, starterTowels } from '@/engine/systems/clothing';
+import { CLOTHING_PRODUCTS } from '@/engine/content/clothingcatalog';
 
 const HOUR = 3_600_000;
 /** A life with its starter wardrobe put away, for the tests' own garments. */
@@ -138,6 +139,18 @@ describe('a day’s outfit', () => {
     for (const t of towels) t.garment.dirty = true;
     shower();
     expect(sim.universe.notifications.at(-1)!.title).toBe('No Clean Towel');
+    // A towel bought from a maker's own, from 2026-10-05, dries the next one.
+    const towel = CLOTHING_PRODUCTS.find((p) => p.slot === 'towel' && p.market === 'US')!;
+    expect(towel.kind).toBe('towel');
+    expect(clothingCatalog(sim, 'us-ny-newyork').some((e) => e.value.id === towel.id)).toBe(true);
+    const how = sim.execute({ kind: 'clothes.buy', payload: { productId: towel.id, how: 'store', size: towel.sizes[0], color: towel.colors[0], quantity: 1 } }).ok ? 'store' : 'online';
+    if (how === 'online') sim.must({ kind: 'clothes.buy', payload: { productId: towel.id, how, size: towel.sizes[0], color: towel.colors[0], quantity: 1 } });
+    if (how === 'online') sim.advanceBy(14 * 86_400_000);
+    for (const t of towels) t.garment.dirty = true;
+    const notes = sim.universe.notifications.length;
+    shower();
+    expect(sim.universe.notifications.slice(notes).some((n) => n.title === 'No Clean Towel')).toBe(false);
+    expect(garmentsOf(sim.player).find((g) => g.kind === towel.id)!.garment.wears).toBe(1);
   });
 
   it('won’t be chosen dirty, drying, outgrown or out of reach, and a saved outfit with such a piece isn’t put on', () => {

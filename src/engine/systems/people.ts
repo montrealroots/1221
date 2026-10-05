@@ -104,6 +104,8 @@ export interface Contact {
   carries?: boolean;
   /** What they care about, three of the creation screen's, drawn when first asked (`interestsOf`, from 2026-10-03). */
   interests?: string[];
+  /** Coming to stay, or staying, in a guest room (`systems/houseguests.ts`, from 2026-10-05). */
+  stay?: import('./houseguests').Stay;
 }
 
 /** A meal out, a visit home, a game on your own court or pitch (`play`, from 2026-10-02), or a class taken together (`class`, from 2026-10-03). */

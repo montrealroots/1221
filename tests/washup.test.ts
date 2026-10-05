@@ -8,8 +8,8 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { RECIPES } from '@/engine/content/groceries';
-import { WASH_UP, livingOf } from '@/engine/systems/dwelling';
-import { DISH_SOAP_ML } from '@/engine/systems/hygiene';
+import { KWH_USD, MACHINE_KWH, WASH_UP, livingOf, machineUsd } from '@/engine/systems/dwelling';
+import { DISHWASHER_CYCLES_A_DAY, DISH_SOAP_ML } from '@/engine/systems/hygiene';
 import { SINK_FULL, cookRefusal } from '@/engine/systems/kitchen';
 import { lookAfterRefusal, minutesFor } from '@/engine/systems/life';
 import { itemsOf } from '@/engine/systems/items';
@@ -21,6 +21,23 @@ const busy = (sim: ReturnType<typeof life>, d: number) => sim.universe.scheduled
 const handWash = (sim: ReturnType<typeof life>) => { const unit = sim.player.home!.unit!; unit.fixtures = { ...unit.fixtures, dishwasher: false }; };
 
 describe('the dishes', () => {
+  it('in a running dishwasher, go on the month’s electricity at the standard’s 1.43 kWh a cycle, and not by hand', () => {
+    expect(MACHINE_KWH.dishwasher).toBeCloseTo(1.428, 3);
+    const sim = life('us-ny-newyork', 'wash-machine');
+    sim.player.home!.unit!.fixtures = { ...sim.player.home!.unit!.fixtures, dishwasher: true };
+    const l = livingOf(sim.player);
+    l.loads = { washer: 2, dryer: 1 };
+    const before = machineUsd(sim.player);
+    sim.advanceBy(MS_DAY);
+    expect(l.loads!.washer).toBe(2);
+    expect(l.loads!.dishwasher).toBeCloseTo(DISHWASHER_CYCLES_A_DAY, 9);
+    expect(machineUsd(sim.player) - before).toBeCloseTo(DISHWASHER_CYCLES_A_DAY * MACHINE_KWH.dishwasher * KWH_USD, 9);
+    // By hand, nothing more on the bill.
+    handWash(sim);
+    sim.advanceBy(MS_DAY);
+    expect(l.loads!.dishwasher).toBeCloseTo(DISHWASHER_CYCLES_A_DAY, 9);
+  });
+
   it('take Energy Star’s 230 hours a year by hand: 38 minutes a day’s', () => {
     expect(WASH_UP.minutesADay).toBeCloseTo(37.8, 1);
     expect(DISH_SOAP_ML).toBe(4.93);

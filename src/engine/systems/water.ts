@@ -121,7 +121,8 @@ export function litersUsed(person: Person, cityId: string, month: number): numbe
   const l = person.living;
   const days = l?.billDays ? l.homeDays ?? 0 : DAYS[month - 1]!;
   const pets = (person.pets ?? []).reduce((n, pet) => n + PET_WATER_L[pet.species], 0) * DAYS[month - 1]!;
-  const average = t.perPersonLiters * householdOf(person) * days + pets;
+  // And a guest's days staying, each a person's (from 2026-10-05).
+  const average = t.perPersonLiters * (householdOf(person) * days + (l?.guestDays ?? 0)) + pets;
   const w = WASHING[CITIES.get(cityId)?.countryId === 'uk' ? 'gb' : CITIES.get(cityId)?.countryId ?? ''];
   if (!w || !l?.billDays || t.perPersonLiters === 0) return average;
   const showers = ((l.showers ?? 0) - w.showersADay * days) * w.showerL;

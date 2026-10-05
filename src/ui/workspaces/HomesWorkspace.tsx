@@ -713,7 +713,7 @@ function Speakers() {
       fine="Each at its maker’s or a retailer’s own page, America’s and Canada’s prices with the place’s sales tax added; its power is its maker’s stated amplifier power. The one bought is the home’s speaker, what a music lover unwinds with." />
   );
 }
-/** IKEA's seats, tables and storage where they live (`systems/furnishings.ts`), cheapest first: searched, by kind, a page at a time, favorites kept and up to three compared (from 2026-10-04). */
+/** Seats, tables and storage where they live, IKEA's and from 2026-10-05 other makers' (`systems/furnishings.ts`), cheapest first: searched, by kind and maker, a page at a time, favorites kept and up to three compared (from 2026-10-04). */
 function FromIkea() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -726,15 +726,15 @@ function FromIkea() {
   const [compared, toggleCompare, clearCompare] = useCompare('ikea');
   const chosen = compared.map((id) => all.find((e) => e.id === id)).filter((e): e is (typeof all)[number] => Boolean(e));
   const size = (p: (typeof all)[number]['value']) => (p.cm.every((x) => x !== null) ? `${p.cm.map((x) => Math.round(x!)).join(' × ')} cm` : '—');
-  const does = (p: (typeof all)[number]['value']) => (p.kind === 'diningTable' ? (p.seats ? `Seats ${p.seats} At A Table` : '—') : p.seats ? `Seats ${p.seats}` : p.holdsL ? `Holds ${Math.round(p.holdsL)} Liters` : '—');
+  const does = (p: (typeof all)[number]['value']) => (p.kind === 'diningTable' ? (p.seats ? `Seats ${p.seats} At A Table` : '—') : p.seats ? `Seats ${p.seats}${p.seatsEstimated ? ', By Its Width' : ''}` : p.holdsL ? `Holds ${Math.round(p.holdsL)} Liters` : '—');
   const [count, setCount] = useState(1);
   const [built, setBuilt] = useState(false);
   if (all.length === 0) return null;
   const room = seatsAtHome(person);
   return (
     <div className="col gap-2">
-      <div className="strong small">From IKEA{(sim.player.ikeaCredit ?? 0) > 0 ? ` · ${formatMoney(sim.player.ikeaCredit!, saveCurrency(sim.universe), { cents: false })} Credit, Spent First` : ''}</div>
-      <CatalogControls id="ikea-catalog" entries={all} view={view} onChange={setView} facets={{ kind: 'Kind' }} lead={<>
+      <div className="strong small">From IKEA And Other Makers{(sim.player.ikeaCredit ?? 0) > 0 ? ` · ${formatMoney(sim.player.ikeaCredit!, saveCurrency(sim.universe), { cents: false })} Credit, Spent First` : ''}</div>
+      <CatalogControls id="ikea-catalog" entries={all} view={view} onChange={setView} facets={{ kind: 'Kind', brand: 'Maker' }} lead={<>
         <div className="field">
           <label htmlFor="ikea-count">How Many</label>
           <select id="ikea-count" value={count} onChange={(e) => setCount(Number(e.target.value))}>
@@ -742,7 +742,7 @@ function FromIkea() {
           </select>
         </div>
         <div className="field">
-          <label htmlFor="ikea-built">Put Together</label>
+          <label htmlFor="ikea-built">An IKEA Piece Put Together</label>
           <select id="ikea-built" value={built ? 'ikea' : 'you'} onChange={(e) => setBuilt(e.target.value === 'ikea')}>
             <option value="you">By You, At Taskrabbit’s Hours</option>
             <option value="ikea">By IKEA, At Its Price</option>
@@ -761,8 +761,8 @@ function FromIkea() {
                   <td>{e.label}</td>
                   <td className="small">{size(p)}</td>
                   <td className="small">{does(p)}</td>
-                  <td className="num mono">{formatMoney((e.price ?? 0) * count + (built ? assemblyFee(sim, p, count) ?? 0 : 0), cur, { cents: false })}</td>
-                  <td className="row gap-1"><FavoriteToggle list="ikea" id={e.id} /><CompareToggle on={compared.includes(e.id)} onToggle={() => toggleCompare(e.id)} /><Gated feature="home.buy_piece" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_piece', { pieceId: p.id, quantity: count, assembly: built }).ok) toast(built ? `${p.name}, delivered and put together.` : `${p.name}, delivered flat-packed: put it together from Belongings.`, 'positive'); }}>Buy From IKEA</Gated></td>
+                  <td className="num mono">{formatMoney((e.price ?? 0) * count + (built && p.brand === 'IKEA' ? assemblyFee(sim, p, count) ?? 0 : 0), cur, { cents: false })}</td>
+                  <td className="row gap-1"><FavoriteToggle list="ikea" id={e.id} /><CompareToggle on={compared.includes(e.id)} onToggle={() => toggleCompare(e.id)} /><Gated feature="home.buy_piece" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const ikea = p.brand === 'IKEA'; if (run('home.buy_piece', { pieceId: p.id, quantity: count, assembly: built && ikea }).ok) toast((built && ikea) || !p.flatPack ? `${p.name}, delivered and put together.` : `${p.name}, delivered flat-packed: put it together from Belongings.`, 'positive'); }}>{`Buy From ${p.retailer}`}</Gated></td>
                 </tr>
               );
             })}
@@ -774,11 +774,13 @@ function FromIkea() {
       <CompareTable heads={chosen.map((e) => e.label)} onClear={clearCompare} rows={[
         { label: 'Delivered, One', values: chosen.map((e) => formatMoney(e.price ?? 0, cur, { cents: false })) },
         { label: 'Kind', values: chosen.map((e) => e.facets?.kind ?? '—') },
+        { label: 'Maker', values: chosen.map((e) => e.value.brand) },
+        { label: 'Comes', values: chosen.map((e) => (e.value.flatPack ? 'Flat-Packed' : 'Built')) },
         { label: 'Size', values: chosen.map((e) => size(e.value)) },
         { label: 'Does', values: chosen.map((e) => does(e.value)) },
         { label: 'Put Together By IKEA, One', values: chosen.map((e) => { const fee = assemblyFee(sim, e.value, 1); return fee === undefined ? '—' : formatMoney(fee, cur, { cents: false }); }) },
       ]} />
-      <div className="xs dim">{`Seats for ${room.seats} and a table for ${room.table} at home now. Friends come over only to what there are seats for, and a dinner sits everyone at a table. A wardrobe, a frame, a chest or a bookcase holds its outside measure in liters, worked out from IKEA’s, and is filled from Belongings. It comes flat-packed and does nothing until it’s put together, by you or by IKEA’s service: from $52, C$45 or £33 a piece, Ireland’s €40 call-out, Mexico’s 2.5% of a sofa’s price and 9% of the rest. IKEA’s regular price, with the town’s sales tax where it’s added, delivered at its large-item rate.`}</div>
+      <div className="xs dim">{`Seats for ${room.seats} and a table for ${room.table} at home now. Friends come over only to what there are seats for, and a dinner sits everyone at a table. A wardrobe, a frame, a chest or a bookcase holds its outside measure in liters, worked out from IKEA’s, and is filled from Belongings. An IKEA piece comes flat-packed and does nothing until it’s put together, by you or by IKEA’s service: from $52, C$45 or £33 a piece, Ireland’s €40 call-out, Mexico’s 2.5% of a sofa’s price and 9% of the rest. Another maker’s comes as its maker sends it, built unless it says it’s flat-packed, which you put together; a sofa whose maker names no seat count seats as many as its width holds at IKEA’s own width a seat, SLATE’s estimate. Each at its regular price, with the town’s sales tax where it’s added: IKEA’s delivered at its large-item rate, another maker’s at its retailer’s own delivery fee.`}</div>
     </div>
   );
 }

@@ -1,0 +1,180 @@
+{
+  "read": "2026-10-05",
+  "method": "Searched and fetched each brand's or retailer's own Mexican site (dico.com.mx, mueblesplacencia.com, mobica.com.mx, homedepot.com.mx, walmart.com.mx, liverpool.com.mx, elpalaciodehierro.com, mueblestroncoso.com.mx, kessamuebles.com, amazon.com.mx, store.hermanmiller.com.mx) via WebFetch on product/category pages and WebSearch where WebFetch returned blocked, JS-rendered-empty, or 403/404/bot-check responses (Dico's own product pages render empty for a bare fetch, so its figures were read from the dico.com.mx URLs as surfaced in search snippets instead). Only the regular/normal (\"precio normal\"/\"antes\") list price was recorded, never a temporary discounted or quincenal-financing price; where a page showed only a sale price with no visible regular price, or showed dimensions only as an infographic image with no machine-readable text (this happened repeatedly on Gaia Design and some Placencia pages), the product was left out rather than guessed. For a marketplace listing (Home Depot México, Liverpool, Amazon México, Walmart México) the recorded \"brand\" is the maker's name printed on the listing itself (e.g. RAK, Capelli, Homemake, Ofik, Galo Furniture, PUFF MX, Sauder), not the marketplace's own name. Several candidate brands from the task list could not be confirmed on a real Mexican page within this session and were dropped rather than filled with invented data: Gaia Design (every sofa/librero page found only showed dimensions baked into an image, never as text), Coppel (product and category pages returned a bot/identity-verification page to the fetch tool), Elektra (no page could be reached that stated both a regular price and width/depth), Idea Interior, Muebles Concepto, Muebles Bendavid, Hogar Plus (no distinct Mexican official site or product page could be located, as opposed to foreign stores of similar name), and Muebles América (only a homepage with two sofas and no dimensions was reachable). Casa Palacio is El Palacio de Hierro's own in-house furniture line, read directly from an elpalaciodehierro.com product URL.",
+  "retailers": [
+    { "market": "MX", "retailer": "Home Depot México", "deliveryFee": 0, "currency": "MXN", "basis": "Free home delivery applies sitewide with a minimum purchase of $799 MXN within the metro delivery radius (30 km in Monterrey/Guadalajara/CDMX, 20 km elsewhere); outside that radius a foráneo freight charge is quoted by distance, from about $135 MXN in metro zones.", "url": "https://www.homedepot.com.mx/condiciones-envios-linea" },
+    { "market": "MX", "retailer": "Walmart México", "deliveryFee": 199, "currency": "MXN", "basis": "Large-dimension items (muebles) ship for $199 MXN to zone 1 (CDMX, Edomex, Jalisco, Nuevo León), $299 to zone 2, $399 to zone 3 and $449 to zone 4; small items ship for a flat $49; Walmart Pass gives unlimited free shipping on orders from $299 MXN on Walmart Pass-marked items.", "url": "https://www.walmart.com.mx/ayuda/articulo/costos-de-envio/b69196cdd6b3406f8e5a42a1c6772fb1" },
+    { "market": "MX", "retailer": "Amazon México", "deliveryFee": 0, "currency": "MXN", "basis": "Free shipping on orders from $299 MXN sitewide; Prime members get unlimited free shipping with no minimum.", "url": "https://www.amazon.com.mx/gp/help/customer/display.html?nodeId=GZXW7X6AKTHNUP6H" },
+    { "market": "MX", "retailer": "Liverpool", "deliveryFee": 0, "currency": "MXN", "basis": "Home delivery is included free on nearly all online/app purchases nationwide, with no minimum purchase stated; bulky items such as furniture use a scheduled-delivery slot.", "url": "https://assetsqa.liverpool.com.mx/assets/ayuda/preguntas-frecuentes.html" },
+    { "market": "MX", "retailer": "El Palacio de Hierro", "deliveryFee": 0, "currency": "MXN", "basis": "Free shipping on purchases from $1,600 MXN, with exceptions for large furniture (\"Big Ticket\") which can require direct freight payment; Big Ticket delivery runs up to 10 business days.", "url": "https://www.elpalaciodehierro.com/politicas.html" },
+    { "market": "MX", "retailer": "Mobica", "deliveryFee": 0, "currency": "MXN", "basis": "Free delivery within 25 km of a Mobica store (CDMX, Mérida, Querétaro, Puebla, Pachuca, Cuernavaca, Toluca); outside that area a fixed rate based on order value is charged; assembly service is an extra $600 MXN; delivery runs about 14 business days.", "url": "https://www.mobica.com.mx/preguntas-frecuentes" },
+    { "market": "MX", "retailer": "Muebles Placencia", "deliveryFee": null, "currency": "MXN", "basis": "Free shipping on specific routes (Guadalajara, León, Irapuato, Querétaro, Puebla, Aguascalientes capital, San Luis Potosí capital); CDMX/Edomex free only on promotion with a $25,000 MXN minimum; otherwise freight is quoted per order and covers ground-floor delivery only.", "url": "https://mueblesplacencia.com/politicas-de-envios" },
+    { "market": "MX", "retailer": "Muebles Troncoso", "deliveryFee": null, "currency": "MXN", "basis": "Page states delivery in 5-8 business days with a choice of home delivery, store pickup or CEDIS pickup; no shipping cost figure was stated.", "url": "https://www.mueblestroncoso.com.mx/" },
+    { "market": "MX", "retailer": "Kessa Muebles", "deliveryFee": 0, "currency": "MXN", "basis": "Free delivery to CDMX and Estado de México on all categories; other states are charged $150-$3,400 MXN depending on destination state and product category (A-F).", "url": "https://www.kessamuebles.com/pages/costos-de-envio-2" },
+    { "market": "MX", "retailer": "Muebles Dico", "deliveryFee": 399, "currency": "MXN", "basis": "Home delivery starts from a base of $399 MXN for furniture ($150 for accessories) in most serviceable locations; special zones are quoted separately, and some promotions waive the fee entirely.", "url": "https://www.dico.com.mx/df/politicas-de-compra" },
+    { "market": "MX", "retailer": "Herman Miller México", "deliveryFee": 0, "currency": "MXN", "basis": "\"Envío Gratis A Todo El País\" — free shipping nationwide, typically arriving in about 5-6 additional business days.", "url": "https://store.hermanmiller.com.mx/shipments-deliveries" }
+  ],
+  "products": [
+    {
+      "market": "MX", "brand": "Placencia", "retailer": "Muebles Placencia", "kind": "sofa",
+      "name": "Sofá Bariloche Cream", "type": "sofá 3-2-1", "variant": "Cream",
+      "price": 41990, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 240, "depthCm": 110, "heightCm": 78, "seats": 3, "flatPack": null,
+      "url": "https://mueblesplacencia.com/sofa-de-sala-3-2-1-bariloche-113737.html"
+    },
+    {
+      "market": "MX", "brand": "Mobica", "retailer": "Mobica", "kind": "sofa",
+      "name": "Sofá Luma 210", "type": "sofá", "variant": "Beige, 210 cm",
+      "price": 31990, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 210, "depthCm": 88, "heightCm": 85, "seats": null, "flatPack": null,
+      "url": "https://www.mobica.com.mx/sofa-luma-210.html"
+    },
+    {
+      "market": "MX", "brand": "RAK", "retailer": "Home Depot México", "kind": "sofa",
+      "name": "Sofá Cama RAK Tela 215 x 88 x 92 cm Gris con Cojines", "type": "sofá cama", "variant": "Gris",
+      "price": 21419, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 215, "depthCm": 92, "heightCm": 88, "seats": null, "flatPack": null,
+      "url": "https://www.homedepot.com.mx/p/tamarindo-sofa-cama-de-215-m-x-88-x-92-cm-sofa-cama-y-futones-207665"
+    },
+    {
+      "market": "MX", "brand": "Muebles Troncoso", "retailer": "Muebles Troncoso", "kind": "sofa",
+      "name": "Sofá Montecarlo Arena", "type": "sofá y love seat", "variant": "Arena",
+      "price": 43088.88, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 225, "depthCm": 100, "heightCm": 100, "seats": null, "flatPack": null,
+      "url": "https://www.mueblestroncoso.com.mx/products/sofa-y-love-seat-montecarlo-arena"
+    },
+    {
+      "market": "MX", "brand": "Galo Furniture", "retailer": "Liverpool", "kind": "sofa",
+      "name": "Sala 2 Piezas Lia", "type": "sofá y love seat de tela", "variant": "Oxford Gris",
+      "price": 31998, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 200, "depthCm": 87, "heightCm": 85, "seats": null, "flatPack": null,
+      "url": "https://www.liverpool.com.mx/tienda/pdp/sala-2-piezas-galo-furniture-lia-32-estilo-contempor%C3%A1neo-de-tela/1156903848"
+    },
+    {
+      "market": "MX", "brand": "Dico", "retailer": "Muebles Dico", "kind": "sofa",
+      "name": "Sofá Cama Sonia Plus", "type": "sofá cama", "variant": "Gris",
+      "price": 42000, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 213, "depthCm": 93, "heightCm": 94, "seats": 3, "flatPack": null,
+      "url": "https://dico.com.mx/df/sofa-cama-sonia-plus-gris.html"
+    },
+    {
+      "market": "MX", "brand": "Mainstays", "retailer": "Walmart México", "kind": "sofa",
+      "name": "Sofá Cama Mainstays Chocolate", "type": "sofá cama", "variant": "Chocolate",
+      "price": 4990, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 170, "depthCm": 85, "heightCm": 80, "seats": null, "flatPack": null,
+      "url": "https://www.walmart.com.mx/ip/destacados-muebles/sofa-cama-mainstays-chocolate/00489395600750"
+    },
+    {
+      "market": "MX", "brand": "Mobica", "retailer": "Mobica", "kind": "armchair",
+      "name": "Sillón Emilia", "type": "sillón", "variant": "Burdeos jaspeado",
+      "price": 46990, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 88, "depthCm": 110, "heightCm": 75, "seats": 1, "flatPack": null,
+      "url": "https://www.mobica.com.mx/sillon-emilia.html"
+    },
+    {
+      "market": "MX", "brand": "Homemake", "retailer": "Home Depot México", "kind": "armchair",
+      "name": "Sillón Fijo 1 Persona H1539", "type": "sillón", "variant": "Tela Beige",
+      "price": 4829, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 71, "depthCm": 69, "heightCm": 99, "seats": 1, "flatPack": true,
+      "url": "https://www.homedepot.com.mx/p/homemake-sillon-fijo-1-persona-h1539-tela-beige-h1539-220431"
+    },
+    {
+      "market": "MX", "brand": "PUFF MX", "retailer": "Amazon México", "kind": "armchair",
+      "name": "Sillón Individual Reposet", "type": "sillón reposet / puff", "variant": "Negro, gamuza",
+      "price": 1328, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 80, "depthCm": 80, "heightCm": 95, "seats": 1, "flatPack": false,
+      "url": "https://www.amazon.com.mx/Puff-Individual-Semicircular-95x80x80-Resistente/dp/B083X6MYJ4"
+    },
+    {
+      "market": "MX", "brand": "Mobica", "retailer": "Mobica", "kind": "diningChair",
+      "name": "Silla Tori", "type": "silla de comedor", "variant": "Gris",
+      "price": 13190, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 60, "depthCm": 64, "heightCm": 86, "seats": 1, "flatPack": null,
+      "url": "https://www.mobica.com.mx/silla-tori.html"
+    },
+    {
+      "market": "MX", "brand": "Casa Palacio", "retailer": "El Palacio de Hierro", "kind": "diningChair",
+      "name": "Silla para Comedor Sabatini", "type": "silla de comedor en aluminio", "variant": "Aluminio",
+      "price": 18990, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 55, "depthCm": 71, "heightCm": 74, "seats": 1, "flatPack": null,
+      "url": "https://www.elpalaciodehierro.com/casa-palacio-silla-para-comedor-sabatini-en-aluminio-44276086.html"
+    },
+    {
+      "market": "MX", "brand": "Ofik", "retailer": "Home Depot México", "kind": "officeChair",
+      "name": "Silla Ejecutiva 65 x 50 cm", "type": "silla ejecutiva", "variant": "Negro",
+      "price": 3305, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 65, "depthCm": 50, "heightCm": 65, "seats": 1, "flatPack": null,
+      "url": "https://www.homedepot.com.mx/p/ofik-silla-ejecutiva-65-x-50-cm-negro-308-ff03-203339"
+    },
+    {
+      "market": "MX", "brand": "Herman Miller", "retailer": "Herman Miller México", "kind": "officeChair",
+      "name": "Silla Embody", "type": "silla de oficina ergonómica", "variant": "Altura de asiento ajustable 40-52 cm",
+      "price": 50590, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 75, "depthCm": 38, "heightCm": 106, "seats": 1, "flatPack": null,
+      "url": "https://store.hermanmiller.com.mx/silla-embody/p"
+    },
+    {
+      "market": "MX", "brand": "Mobica", "retailer": "Mobica", "kind": "officeChair",
+      "name": "ErgoMesh", "type": "silla de oficina mesh", "variant": "Gris",
+      "price": 3320, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 66, "depthCm": 59, "heightCm": 104, "seats": 1, "flatPack": null,
+      "url": "https://www.mobica.com.mx/ergomesh-gris2.html"
+    },
+    {
+      "market": "MX", "brand": "Mobica", "retailer": "Mobica", "kind": "diningTable",
+      "name": "Mesa de Comedor Kioto", "type": "mesa de comedor", "variant": "Madera natural / patas negro poplar",
+      "price": 34990, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 210, "depthCm": 110, "heightCm": 77, "seats": null, "flatPack": null,
+      "url": "https://www.mobica.com.mx/mesa-de-comedor-kioto.html"
+    },
+    {
+      "market": "MX", "brand": "Kessa", "retailer": "Kessa Muebles", "kind": "diningTable",
+      "name": "Mesa de Comedor Askoy", "type": "mesa de comedor acero/cristal", "variant": "Dorado",
+      "price": 13709, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 120, "depthCm": 120, "heightCm": 75, "seats": null, "flatPack": null,
+      "url": "https://www.kessamuebles.com/collections/comedor/products/mesa-de-comedor-askoy-dorado"
+    },
+    {
+      "market": "MX", "brand": "Capelli", "retailer": "Home Depot México", "kind": "wardrobe",
+      "name": "Clóset Aglomerado Armable 180 x 220 x 39 cm", "type": "clóset armable 2 torres", "variant": "Blanco Nórdico, 4 cajones",
+      "price": 7249, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 220, "depthCm": 39, "heightCm": 180, "seats": null, "flatPack": true,
+      "url": "https://www.homedepot.com.mx/p/capelli-closet-2-torres-con-4-cajones-180-x-220-m-x-39-cm-blanco-nordico-tdc2t4cbn-170928"
+    },
+    {
+      "market": "MX", "brand": "Capelli", "retailer": "Home Depot México", "kind": "chestOfDrawers",
+      "name": "Cómoda de 3 Cajones con Puerta 101 x 1 M x 39 cm", "type": "cómoda", "variant": "Gris Claro",
+      "price": 5199, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 101, "depthCm": 39, "heightCm": 100, "seats": null, "flatPack": true,
+      "url": "https://www.homedepot.com.mx/p/capelli-comoda-de-3-cajones-con-puerta-101-x-1-m-x-39-cm-gris-claro-c3cpugc-194358"
+    },
+    {
+      "market": "MX", "brand": "Muebles Troncoso", "retailer": "Muebles Troncoso", "kind": "chestOfDrawers",
+      "name": "Cómoda con Luna Tzalam UV", "type": "cómoda con espejo", "variant": "Tzalam",
+      "price": 28866.67, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 140, "depthCm": 40, "heightCm": 91, "seats": null, "flatPack": null,
+      "url": "https://www.mueblestroncoso.com.mx/products/jgo-comoda-y-luna-tzalam-ii"
+    },
+    {
+      "market": "MX", "brand": "Sauder", "retailer": "Amazon México", "kind": "bookcase",
+      "name": "Sauder 414238 Librero 2 Repisas", "type": "librero", "variant": "2 repisas",
+      "price": 2966.77, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 89.6, "depthCm": 33.6, "heightCm": 76, "seats": null, "flatPack": true,
+      "url": "https://www.amazon.com.mx/Sauder-414238-Librero-2-Repisas/dp/B00AHPRMMW"
+    },
+    {
+      "market": "MX", "brand": "Sauder", "retailer": "Amazon México", "kind": "bookcase",
+      "name": "Sauder 414235 Librero 5 Repisas", "type": "librero", "variant": "5 repisas",
+      "price": 5499, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 89.6, "depthCm": 33.6, "heightCm": 177.2, "seats": null, "flatPack": true,
+      "url": "https://www.amazon.com.mx/Sauder-414235-Librero-5-Repisas/dp/B00AHPRM8G"
+    },
+    {
+      "market": "MX", "brand": "Sauder", "retailer": "Amazon México", "kind": "bookcase",
+      "name": "Sauder 102792 Librero con Puertas Heritage", "type": "librero con puertas", "variant": "Heritage",
+      "price": 7549, "currency": "MXN", "taxIncluded": true,
+      "widthCm": 75.7, "depthCm": 33, "heightCm": 181, "seats": null, "flatPack": true,
+      "url": "https://www.amazon.com.mx/Sauder-102792-Librero-Puertas-Heritage/dp/B00006IBB2"
+    }
+  ]
+}

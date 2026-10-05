@@ -35,6 +35,8 @@ import { cookRefusal, servingsRange } from '@/engine/systems/kitchen';
 import { ClubsPanel } from '@/ui/components/ClubsPanel';
 const COURT_LABEL = { tennis: 'Tennis', basketball: 'Basketball', pickleball: 'Pickleball', football: 'Football' } as const;
 import { HALL } from '@/engine/content/people';
+import { STAY_NIGHTS, stayRefusal } from '@/engine/systems/houseguests';
+import { foodOf } from '@/engine/systems/household';
 
 /** What somebody is to you: who you live with, your partner, who you're seeing, or how near by the hours. */
 const standing = (c: Contact, spouse?: string): string => (c.id === spouse ? 'Your Spouse' : c.livesWith !== undefined ? 'Your Partner, Living With You' : c.dating?.couple !== undefined ? 'Your Partner' : c.dating ? `Seeing Each Other, ${c.dating.dates} ${c.dating.dates === 1 ? 'Date' : 'Dates'}` : levelOf(c));
@@ -266,6 +268,7 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
           }}>{quote ? `Ask Them, Your Meal ${formatMoney(quote.total, cur, { cents: false })}` : 'Ask Them'}</button>
         </div>
         <Together contact={contact} />
+        {homeCity && homeCity !== contact.cityId && <ComeToStay contact={contact} homeCity={homeCity} />}
         {contact.memory.length > 0 && (
           <ul className="small muted" style={{ margin: 0, paddingLeft: '1.2em' }}>
             {contact.memory.slice(0, 6).map((m, i) => <li key={i}>{formatDate(m.at, zone)}: {m.what}</li>)}
@@ -273,6 +276,58 @@ function Invite({ contact, homeCity }: { contact: Contact; homeCity?: string }) 
         )}
       </div>
     </Panel>
+  );
+}
+
+/** A friend from another town asked to stay in the guest room, or their stay called off before they come (`systems/houseguests.ts`). */
+function ComeToStay({ contact, homeCity }: { contact: Contact; homeCity: string }) {
+  const { sim, run, toast } = useGame();
+  const ask = useFeature('social.ask_to_stay');
+  const cancel = useFeature('social.cancel_stay');
+  const zone = CITIES.require(homeCity).timeZone;
+  const [day, setDay] = useState(7);
+  const [hour, setHour] = useState(15);
+  const [nights, setNights] = useState(3);
+  const today = zonedParts(sim.now, zone);
+  const from = instantFromZoned({ year: today.year, month: today.month, day: today.day, hour, minute: 0 }, zone) + day * MS_DAY;
+  const first = contact.name.split(' ')[0];
+  const stay = contact.stay;
+  const cur = saveCurrency(sim.universe);
+  const food = foodOf(sim, { ...sim.player, currentLocationId: homeCity });
+  if (stay) {
+    const ends = stay.from + stay.nights * MS_DAY;
+    return (
+      <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+        <span className="small">{stay.from > sim.now ? `${first} comes to stay ${formatDate(stay.from, zone)}, ${stay.nights === 1 ? 'a night' : `${stay.nights} nights`}, to ${formatDate(ends, zone)}.` : `${first} is staying until ${formatDate(ends, zone)}.`}</span>
+        {stay.from > sim.now && <button type="button" className="btn btn-sm btn-ghost" disabled={!cancel.open} title={cancel.reason} onClick={() => { if (run('social.cancel_stay', { contactId: contact.id }).ok) toast(`${first}’s stay is called off.`, 'neutral'); }}>Call It Off</button>}
+      </div>
+    );
+  }
+  const no = stayRefusal(sim, sim.player, contact, from, nights);
+  return (
+    <div className="field-row">
+      <div className="field">
+        <label htmlFor="stay-day">Arriving</label>
+        <select id="stay-day" value={day} onChange={(e) => setDay(Number(e.target.value))}>
+          {Array.from({ length: 60 }, (_, i) => i + 1).map((d) => <option key={d} value={d}>{d === 1 ? 'Tomorrow' : formatDate(sim.now + d * MS_DAY, zone)}</option>)}
+        </select>
+      </div>
+      <div className="field">
+        <label htmlFor="stay-hour">At</label>
+        <select id="stay-hour" value={hour} onChange={(e) => setHour(Number(e.target.value))}>
+          {Array.from({ length: 12 }, (_, i) => i + 10).map((h) => <option key={h} value={h}>{`${String(h).padStart(2, '0')}:00`}</option>)}
+        </select>
+      </div>
+      <div className="field">
+        <label htmlFor="stay-nights">Nights</label>
+        <select id="stay-nights" value={nights} onChange={(e) => setNights(Number(e.target.value))}>
+          {Array.from({ length: STAY_NIGHTS }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}
+        </select>
+      </div>
+      <button type="button" className="btn btn-sm" disabled={!ask.open || Boolean(no)} title={no ?? ask.reason} onClick={() => {
+        if (run('social.ask_to_stay', { contactId: contact.id, from, nights }).ok) toast(`${first} is coming to stay.`, 'positive');
+      }}>{`Ask To Stay, Their Food About ${formatMoney(food * nights, cur, { cents: false })}`}</button>
+    </div>
   );
 }
 

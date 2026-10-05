@@ -1,0 +1,4562 @@
+{
+  "read": "2026-10-05",
+  "method": "Models and prices were gathered live in October 2026 by four parallel research passes (bicycles, e-bikes, and ATVs for Great Britain and the Republic of Ireland), each required to read a real maker or major-retailer web page for every record and to record nulls rather than invent any model name, price, spec, or URL. For bicycles and e-bikes the maker's own national site (e.g. brompton.com, trekbikes.com/gb, canyon.com/en-gb, specialized.com/ie) was tried first, with a major retailer (Halfords, Evans Cycles, Tredz, Sigma Sports, e-bikesdirect.co.uk) used only when the maker had no priced UK/IE listing; e-bikes were restricted to EAPC-legal pedelecs (continuous motor power at or near 250W, assistance cutting off at or near 25 km/h, no throttle-only or faster models) and ATVs to four-wheeled quad bikes only, excluding side-by-sides. Prices recorded are each page's regular/RRP price, not a sale price, and GB ATV prices follow the page's own stated VAT treatment (many agricultural/off-road listings are ex-VAT, flagged includesTax:false) rather than an assumed convention. Several requested makes were dropped outright and are not represented at all: Islabikes (ceased selling bikes in 2023), GT and Ribble's full bicycle range (no reliable, consistent non-sale GB price could be confirmed), Arctic Cat and Access Motor (no evidence of a current UK retail channel or published price), and Linhai (no verifiable UK dealer page). Within included makes, some models or fields are missing or null where a maker's page stated a price but not a motor wattage, assist speed, or kerb weight — those gaps were left null rather than estimated.",
+  "models": [
+    {
+      "market": "GB",
+      "make": "Brompton",
+      "model": "A Line",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.brompton.com/bikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Brompton",
+      "model": "C Line - 4-speed",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1509,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.brompton.com/p/1751/c-line-4-speed-uk",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Brompton",
+      "model": "C Line - 12-speed",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1819,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.brompton.com/p/1601/c-line-12-speed-uk",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Brompton",
+      "model": "P Line - 4-speed",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2087,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.brompton.com/p/827/p-line-urban-23",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Brompton",
+      "model": "T Line - 4-speed",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4769,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.brompton.com/p/830/t-line-urban-23",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Boardman",
+      "model": "SLR 8.6",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 650,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.boardmanbikes.com/gb_en/bikes/8-series/boardman-road/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Boardman",
+      "model": "SLR 8.8 Disc",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 875,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.boardmanbikes.com/gb_en/bikes/8-series/boardman-road/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Boardman",
+      "model": "ADV 8.6",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 825,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.boardmanbikes.com/gb_en/bikes/8-series/boardman-road/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Boardman",
+      "model": "ADV 8.9",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1200,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.boardmanbikes.com/gb_en/bikes/8-series/boardman-road/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Boardman",
+      "model": "MTR 9.0",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2400,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.boardmanbikes.com/gb_en/categories/off-road/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Boardman",
+      "model": "SLR 9.8 Carbon",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 5500,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.boardmanbikes.com/gb_en/products/2418-slr-9.8-carbon.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Carrera",
+      "model": "Parva",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 310,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/cycling/bikes/carrera/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Carrera",
+      "model": "Crossfire 2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 385,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/cycling/bikes/carrera/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Carrera",
+      "model": "Vulcan",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 435,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/cycling/bikes/carrera/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Carrera",
+      "model": "Vanquish",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 485,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/bikes/road-bikes/carrera-vanquish-road-bike---white---m-l-frames-641994.html",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Carrera",
+      "model": "Kraken",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 510,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/bikes/mountain-bikes/carrera-kraken-mens-mountain-bike-2020---blue---s-m-l-xl-frames-347662.html",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Genesis",
+      "model": "Flyer",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 699.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.genesisbikes.co.uk/bikes/utility/flyer",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Genesis",
+      "model": "Equilibrium",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1849.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.genesisbikes.co.uk/bikes/equilibrium",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Genesis",
+      "model": "Vagabond",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2199.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.genesisbikes.co.uk/bikes/vagabond",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Genesis",
+      "model": "Croix De Fer 20",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1699.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.genesisbikes.co.uk/bikes/croix-de-fer",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Genesis",
+      "model": "Croix De Fer 50",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 3299.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.genesisbikes.co.uk/bikes/croix-de-fer",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Genesis",
+      "model": "Croix De Fer Ti",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4999.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.genesisbikes.co.uk/bikes/croix-de-fer",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Dawes",
+      "model": "Cambridge Heritage",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 349.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tgc.bike/bikes-c10/heritage-bikes-c56/dawes-m2",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Dawes",
+      "model": "Discovery 1.0 Low Step",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 449.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tgc.bike/bikes-c10/hybrid-bikes-c53/dawes-discovery-1-0-low-step-hybrid-bike-2025-p1296",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Dawes",
+      "model": "Discovery 201 EQ",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 499.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tgc.bike/product/discovery-201eq",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Dawes",
+      "model": "Discovery 3.0",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 649.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tgc.bike/bikes-c10/hybrid-bikes-c53/dawes-discovery-3-0-hybrid-bike-2025-p1292",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pashley",
+      "model": "Penny",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 975,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.pashley.co.uk/collections/bicycles",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pashley",
+      "model": "Britannia",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 945,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.pashley.co.uk/collections/bicycles",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pashley",
+      "model": "Guv'nor",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1345,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.pashley.co.uk/collections/bicycles",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pashley",
+      "model": "Guv'nor GT",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1595,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.pashley.co.uk/collections/bicycles",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pashley",
+      "model": "Morgan 8",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1895,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.pashley.co.uk/collections/bicycles",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pashley",
+      "model": "Morgan 10",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1995,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.pashley.co.uk/collections/bicycles",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Claud Butler",
+      "model": "Explorer 1.0 EQ",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 399.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tgc.bike/bikes-c10/hybrid-bikes-c53/claud-butler-explorer-1-0-eq-hybrid-bike-p264",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Claud Butler",
+      "model": "Explorer 1.0",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 439.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tgc.bike/bikes-c10/hybrid-bikes-c53/claud-butler-explorer-1-0-p113",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Claud Butler",
+      "model": "Haste 2.0",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 499.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tgc.bike/bikes-c10/mountain-bikes-c57/claud-butler-haste-2-0-mountain-bike-p106",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Claud Butler",
+      "model": "Explorer 3.0",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 549.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tgc.bike/bikes-c10/hybrid-bikes-c53/claud-butler-explorer-3-0-hybrid-bike-p268",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Claud Butler",
+      "model": "Explorer 4.0",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 599.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tgc.bike/bikes-c10/hybrid-bikes-c53/claud-butler-explorer-4-0-hybrid-bike-p271",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Trek",
+      "model": "FX Sport AL Equipped Midstep",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 900,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.trekbikes.com/gb/en_GB/bikes/hybrid-bikes/c/B528/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Trek",
+      "model": "Marlin 5 Gen 3",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 625,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.trekbikes.com/gb/en_GB/bikes/mountain-bikes/entry-level-and-beginner-mountain-bikes/c/B518/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Trek",
+      "model": "Marlin 6 Gen 3",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 850,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.trekbikes.com/gb/en_GB/bikes/mountain-bikes/entry-level-and-beginner-mountain-bikes/c/B518/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Trek",
+      "model": "Roscoe 8",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2270,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.trekbikes.com/gb/en_GB/bikes/mountain-bikes/entry-level-and-beginner-mountain-bikes/c/B518/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Trek",
+      "model": "Domane SLR 7 Gen 5",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 6300,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.trekbikes.com/gb/en_GB/bikes/road-bikes/c/B200/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Trek",
+      "model": "Madone SLR 9 AXS Gen 8",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 10500,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.trekbikes.com/gb/en_GB/bikes/road-bikes/c/B200/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Specialized",
+      "model": "Rockhopper Sport",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 600,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.specialized.com/gb/en/rockhopper-sport/p/221600",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Specialized",
+      "model": "Allez",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1000,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://specialized.com/gb/en/allez/p/4221796",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Specialized",
+      "model": "Allez Comp - Shimano 105",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1699,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.specialized.com/gb/en/allez-comp-shimano-105/p/4221810",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Specialized",
+      "model": "Allez Sprint Comp",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2599,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.specialized.com/gb/en/allez-sprint-comp/p/189818",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Specialized",
+      "model": "Tarmac SL9 Expert - Shimano Ultegra Di2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 5999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.specialized.com/gb/en/tarmac-sl9-expert-shimano-ultegra-di2/p/4293531",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Specialized",
+      "model": "S-Works Tarmac SL9 - SRAM RED AXS",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 11999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.specialized.com/gb/en/s-works-tarmac-sl9-sram-red-axs/p/4293533",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Giant",
+      "model": "Contend",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 750,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.giant-bicycles.com/gb/bikes-contend-2025",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Giant",
+      "model": "XTC SLR",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1199,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.giant-bicycles.com/gb/bikes-xtc-slr",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Giant",
+      "model": "Stance",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.giant-bicycles.com/gb/bikes-stance",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Giant",
+      "model": "Faith",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.giant-bicycles.com/gb/bikes-faith-2027",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Giant",
+      "model": "Reign",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.giant-bicycles.com/gb/bikes-reign-2027",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Giant",
+      "model": "Glory Advanced",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 6999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.giant-bicycles.com/gb/bikes-glory-advanced-2027",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Liv",
+      "model": "Tempt 4 Mountain Bike",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 475,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Liv-Tempt-4-Mountain-Bike-2025-Hardtail-MTB_273419.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Liv",
+      "model": "Alight Disc 3",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Liv-Alight-Disc-3-2026-Hybrid-Sports-Bike_280397.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Liv",
+      "model": "Avail Advanced 4",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1799,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Liv-Avail-Advanced-4-2027-Road-Bike_287162.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Liv",
+      "model": "Avail Advanced 3",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Liv-Avail-Advanced-3-2027-Road-Bike_287161.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Liv",
+      "model": "Avail Advanced 2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Liv-Avail-Advanced-2-2027-Road-Bike_287160.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Liv",
+      "model": "Langma Advanced 1-PC",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2799,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Liv-Langma-Advanced-1-PC-2027-Road-Bike_287173.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cannondale",
+      "model": "Topstone 1",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2150,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Cannondale-Topstone-1-2026-Gravel-Bike_277665.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cannondale",
+      "model": "Synapse Carbon 5",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2300,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Cannondale-Synapse-Carbon-5-2026-Road-Bike_277514.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cannondale",
+      "model": "SuperSix EVO 2 Ultegra Di2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 3499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.sigmasports.com/item/Cannondale/SuperSix-EVO-2-Ultegra-Di2-Carbon-Aero-Road-Bike-2026/170L7",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cannondale",
+      "model": "Habit LT 2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 3500,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Cannondale-Habit-LT-2-Mountain-Bike-2026-Trail-Full-Suspension-MTB_258369.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cannondale",
+      "model": "SuperSix EVO 3 Force AXS",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 5700,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.sigmasports.com/item/Cannondale/SuperSix-EVO-3-Force-AXS-Carbon-Road-Bike-2026/170LQ",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cannondale",
+      "model": "SuperSix EVO LAB71 Dura Ace Di2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 10500,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/item/Cannondale/SuperSix-EVO-LAB71-Dura-Ace-Di2-Road-Bike-2026/170MT",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "AIM One",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Cube-AIM-One-Mountain-Bike-2027-Hardtail-MTB_286018.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "Reaction SLX",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Cube-Reaction-SLX-Mountain-Bike-2027-Hardtail-MTB_286024.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "Attain C:62 Race",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Cube-Attain-C-62-Race-2027-Road-Bike_285857.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "Nuroad C:62 Race",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 3699,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Cube-Nuroad-C-62-Race-2027-Gravel-Bike_286007.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "Agree C:62 SLT Di2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Cube-Cube-Agree-C-62-SLT-Di2-2027-Road-Bike_287181.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "Litening Air C:68X SLT",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 7999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Cube-Litening-Air-C-68X-SLT-2027-Road-Bike_285997.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Scott",
+      "model": "Speedster Gravel 30",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Scott-Speedster-Gravel-30-2026-Gravel-Bike_280432.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Scott",
+      "model": "Speedster Gravel 20",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1699,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Scott-Speedster-Gravel-20-2027-Gravel-Bike_286268.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Scott",
+      "model": "Speedster Gravel 10",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1899,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Scott-Speedster-Gravel-10-2027-Gravel-Bike_286267.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Scott",
+      "model": "Scale 10",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Scott-Scale-10-Mountain-Bike-2027-Hardtail-MTB_286231.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Scott",
+      "model": "Addict 30",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 3299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Scott-Addict-30-2027-Road-Bike_281922.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Scott",
+      "model": "Addict 20",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Scott-Addict-20-2027-Road-Bike_281921.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Canyon",
+      "model": "Endurace AllRoad",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1099,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.canyon.com/en-gb/road-bikes/endurance-bikes/endurace/allroad/endurace-allroad/4477.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Canyon",
+      "model": "Ultimate CF Young Hero",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1899,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.canyon.com/en-gb/road-bikes/race-bikes/ultimate/cf-sl/ultimate-cf-young-hero/4284.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Canyon",
+      "model": "Ultimate CF 7",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2699,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.canyon.com/en-gb/road-bikes/race-bikes/ultimate/cf-sl/ultimate-cf-7/4367.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Canyon",
+      "model": "Endurace CF SLX 7 Di2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 3799,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.canyon.com/en-gb/road-bikes/endurance-bikes/endurace/cf-slx/endurace-cf-slx-7-di2/4430.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Canyon",
+      "model": "Aeroad CF SLX 7 Di2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.canyon.com/en-gb/road-bikes/aero-bikes/aeroad/cf-slx/aeroad-cf-slx-7-di2/4531.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Canyon",
+      "model": "Aeroad CFR AXS",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 8500,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.canyon.com/en-gb/road-bikes/aero-bikes/aeroad/cfr/aeroad-cfr-axs/4478.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Orbea",
+      "model": "Onna 29 40",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 529,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Orbea-Onna-29-40-Mountain-Bike-2026-Hardtail-MTB_281743.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Orbea",
+      "model": "Alma H30",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 799,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Orbea-Alma-H30-Mountain-Bike-2026-Hardtail-MTB_281745.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Orbea",
+      "model": "Laufey H30",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1319,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Orbea-Laufey-H30-Mountain-Bike-2027-Hardtail-MTB_284372.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Orbea",
+      "model": "Terra H40",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1749,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Orbea-Terra-H40-2027-Gravel-Bike_284345.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Orbea",
+      "model": "OIZ H30",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2199,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Orbea-OIZ-H30-Mountain-Bike-2027-XC-Full-Suspension-MTB_284276.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Orbea",
+      "model": "Orca Aero M30i Ltd",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Orbea-Orca-Aero-M30i-Ltd-2027-Road-Bike_284334.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Bianchi",
+      "model": "Sprint Disc 105",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2350,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.northernride.com/Bianchi-Sprint-Disc-2024-Celeste-p/bianchi-sprint-disc-105-12s-si.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Bianchi",
+      "model": "Infinito 105 Mech",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2450,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.northernride.com/Bianchi-Infinito-105-Mech-8X-p/bianchi-infinito-105-8x.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Bianchi",
+      "model": "Oltre Race 105",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2490,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.northernride.com/Bianchi-Oltre-Race-105-RT-p/bianchi-oltre-race-105-rt.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Bianchi",
+      "model": "Specialissima 105 Di2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4550,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.northernride.com/Bianchi-Specialissima-105-Di2-Celeste-p/bianchi-spec-27-105di2-je.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Bianchi",
+      "model": "Oltre Comp Ultegra Di2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 5550,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.northernride.com/Bianchi-Oltre-Comp-Ultegra-Di2-OK-p/bianchi-oltre-comp-ult-oc.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pinarello",
+      "model": "F1 105 Disc",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.sigmasports.com/item/Pinarello/F1-105-Disc-Road-Bike/1484D",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pinarello",
+      "model": "X1 105",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 3000,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.sigmasports.com/item/Pinarello/X1-105-Road-Bike-2027/18102",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pinarello",
+      "model": "X3 105 Di2 Disc",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4000,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.sigmasports.com/item/Pinarello/X3-105-Di2-Disc-Road-Bike/16BNT",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pinarello",
+      "model": "F7 Ultegra Di2 Disc",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.sigmasports.com/item/Pinarello/F7-Ultegra-Di2-Disc-Road-Bike/10G3L",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pinarello",
+      "model": "Dogma F Dura-Ace Di2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 12600,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.sigmasports.com/item/Pinarello/Dogma-F-Dura-Ace-Di2-Road-Bike/131BI",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pinarello",
+      "model": "Dogma X Red AXS",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 13500,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.sigmasports.com/item/Pinarello/Dogma-X-Red-AXS-2x12-Road-Bike-2027/17W6G",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Merida",
+      "model": "Big Nine 80",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 650,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Merida-Big-Nine-80-Mountain-Bike-2026-Hardtail-MTB_279451.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Merida",
+      "model": "Crossway 100",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 750,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Merida-Crossway-100-2027-Hybrid-Sports-Bike_285639.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Merida",
+      "model": "Scultura Endurance 300",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1500,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Merida-Scultura-Endurance-300-2027-Road-Bike_285662.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Merida",
+      "model": "Silex 7000",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2199,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Merida-Silex-7000-2025-Gravel-Bike_272341.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Merida",
+      "model": "Reacto 4000",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2400,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Merida-Reacto-4000-2027-Road-Bike_282915.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Merida",
+      "model": "Reacto 9000",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4250,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Merida-Reacto-9000-2026-Road-Bike_279426.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Whyte",
+      "model": "Secta R",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 899,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/brand/whyte/whyte-secta-r-2026-mountain-bike-910821",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Whyte",
+      "model": "Secta S",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1099,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/brand/whyte/whyte-secta-s-2026-mountain-bike-910822",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Whyte",
+      "model": "Verro",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1799,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://whytebikes.com/products/verro-gravel-adventure-bike",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Whyte",
+      "model": "Syphon S",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2199,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/brand/whyte/syphon-s-2027-mountain-bike-910827",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Vitus",
+      "model": "Substance V",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 799.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://vitusbikes.com/collections/road-and-gravel-bikes/products/vitus-substance-v-gravel-bike-07e7",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Vitus",
+      "model": "Substance VR",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 899.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://vitusbikes.com/collections/road-and-gravel-bikes/products/vitus-substance-vr-gravel-bike-07e7",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Vitus",
+      "model": "Nucleus 27 VR",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 949,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://vitusbikes.com/products/vitus-nucleus-27-vr-mountain-bike-black-copy",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Vitus",
+      "model": "Venon EVO-RS 105 Di2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 3599.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://vitusbikes.com/collections/road-and-gravel-bikes/products/vitus-venon-evo-rs-105-di2-all-road-bike-07e7",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Vitus",
+      "model": "Venon EVO-RS Force AXS",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4399.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://vitusbikes.com/collections/road-and-gravel-bikes/products/vitus-venon-evo-rs-force-etap-axs-all-road-bike-07e7",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Vitus",
+      "model": "ZX-1 EVO Force AXS",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4499.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://vitusbikes.com/collections/road-and-gravel-bikes/products/vitus-zx-1-evo-force-axs-road-bike-2026",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Voodoo",
+      "model": "Soukri",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 580,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/bikes/mountain-bikes/voodoo-soukri-womens-mountain-bike---s-m-l-frames-453014.html",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Voodoo",
+      "model": "Bizango",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 750,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/bikes/mountain-bikes/voodoo-bizango-mens-mountain-bike---s-m-l-xl-frames-452670.html",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Voodoo",
+      "model": "Bizango Pro",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 950,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/bikes/mountain-bikes/voodoo-bizango-pro-mountain-bike---m-frame-273443.html",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Voodoo",
+      "model": "Loco",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1250,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/bikes/mountain-bikes/voodoo-loco-mountain-bike---m-l-frames-272459.html",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Apollo",
+      "model": "Envy",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 155,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/bikes/junior-bikes/apollo-envy-kids-hybrid-bike---20in-wheel-435326.html",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Apollo",
+      "model": "Phaze",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 199,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/bikes/mountain-bikes/apollo-phaze-mens-mountain-bike---blue---14in-17in-20in-frames-566189.html",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Apollo",
+      "model": "Jewel",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 199,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/bikes/mountain-bikes/apollo-jewel-womens-mountain-bike----blue---14in-17in-20in-frames-566387.html",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kona",
+      "model": "Lava Dome",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 699,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.cyclestore.co.uk/products/lava-dome-blue-mtb-bike",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kona",
+      "model": "Honzo DL",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 989,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.cyclestore.co.uk/products/kona-honzodl-mtbhardtail",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kona",
+      "model": "Unit",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.cyclestore.co.uk/products/unit-mtb-hardtail-bone",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kona",
+      "model": "Sutra",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1699,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.cyclestore.co.uk/products/sutra-road-gravel-green",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kona",
+      "model": "Process 153 CR G3",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.cyclestore.co.uk/products/kona-process-153-cr-g3-full-suspension",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kona",
+      "model": "Process X",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 5499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.cyclestore.co.uk/products/process-x-grey",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Marin",
+      "model": "Fairfax 1",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 449,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Marin-Fairfax-1-2027-Hybrid-Sports-Bike_286869.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Marin",
+      "model": "San Quentin 1 29",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 849,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Marin-San-Quentin-1-29-Mountain-Bike-2026-Hardtail-MTB_272280.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Marin",
+      "model": "Rift Zone 1 29",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Marin-Rift-Zone-1-29-Mountain-Bike-2026-Trail-Full-Suspension-MTB_278545.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Marin",
+      "model": "Alpine Trail 1",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2399,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Marin-Alpine-Trail-1-Mountain-Bike-2027-MTB_283934.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Marin",
+      "model": "Alpine Trail 2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 3999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Marin-Alpine-Trail-2-Mountain-Bike-2027-MTB_283935.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Marin",
+      "model": "Quake 29",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 4599,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.tredz.co.uk/.Marin-Quake-29-Mountain-Bike-2027-Downhill-Full-Suspension-MTB_283933.htm",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Frog",
+      "model": "Frog 53",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 339,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/brand/frog/53---20-inch-kids-bike-930930",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Frog",
+      "model": "Frog 44",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 359,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/brand/frog/44---16-inch-kids-bike-930879",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Frog",
+      "model": "Frog 67",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 399,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/brand/frog/67-bike-childrens-930944",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Frog",
+      "model": "Frog Road 61",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 519,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/brand/frog/road-61---24-inch-kids-bike-711101",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Tern",
+      "model": "Link B7",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 575,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.ternbicycles.com/uk/bikes/475/link-b7",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Tern",
+      "model": "Link C8",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 750,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.ternbicycles.com/uk/bikes/473/link-c8",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Tern",
+      "model": "Verge D9",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1150,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.ternbicycles.com/uk/bikes/472/verge-d9",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Tern",
+      "model": "Verge R10",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1600,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.ternbicycles.com/uk/bikes/471/verge-r10",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Tern",
+      "model": "BYB S11",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2300,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.ternbicycles.com/uk/bikes/471/byb-s11",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Tern",
+      "model": "Verge X11",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2900,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.ternbicycles.com/uk/bikes/471/verge-x11",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Planet X",
+      "model": "On-One Free Ranger SRAM Apex XPLR Carbon Gravel",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1599.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://planetx.co.uk/products/on-one-free-ranger-sram-apex-xplr-carbon-gravel-bike",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Planet X",
+      "model": "Tempest SRAM Apex XPLR Titanium Gravel",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1799.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://planetx.co.uk/products/planet-x-tempest-sram-apex-xplr-titanium-gravel-bike",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Planet X",
+      "model": "Tempest SRAM Apex AXS Titanium Gravel",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 1999.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://planetx.co.uk/products/planet-x-tempest-sram-apex-axs-titanium-gravel-bike",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Planet X",
+      "model": "Tempest Shimano GRX RX820 Titanium Gravel",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2199.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://planetx.co.uk/products/planet-x-tempest-shimano-grx-rx820-titanium-gravel-bike",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Planet X",
+      "model": "EC-130 SRAM Rival AXS E1",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 2599.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://planetx.co.uk/products/planet-x-ec-130-sram-rival-axs-road-bike",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Planet X",
+      "model": "EC-130 SRAM Force AXS E1",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 3999.99,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://planetx.co.uk/products/planet-x-ec-130-sram-force-axs-road-bike",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pinnacle",
+      "model": "Lithium",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 549,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/brand/pinnacle/pinnacle-lithium",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pinnacle",
+      "model": "Cobalt",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 579,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/brand/pinnacle/cobalt-hybrid-bike-930674",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pinnacle",
+      "model": "Lithium 2",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 600,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/brand/pinnacle/lithium-2-hybrid-bike-939172",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Pinnacle",
+      "model": "Neon",
+      "kind": "bicycle",
+      "basePrice": {
+        "amount": 749,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/brand/pinnacle/neon-hybrid-bike-930682",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Brompton Electric",
+      "model": "Electric C Line e-Motiq (4-speed)",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.brompton.com/p/1760/electric-c-line-e-motiq-system-4-speed-uk",
+        "sourceType": "primary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": 17.3
+    },
+    {
+      "market": "GB",
+      "make": "Brompton Electric",
+      "model": "Electric P Line with SuperRoll+ e-Motiq (4-speed)",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3879,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.brompton.com/p/1762/electric-p-line-with-superroll-e-motiq-system-4-speed-uk",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": 16
+    },
+    {
+      "market": "GB",
+      "make": "Raleigh",
+      "model": "Captus (Low Step)",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1899,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.raleigh.co.uk/gb/en/electric-bikes/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Raleigh",
+      "model": "Motus (Derailleur Gear)",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.raleigh.co.uk/gb/en/electric-bikes/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Raleigh",
+      "model": "Novus (Hub Gear)",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2899,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.raleigh.co.uk/gb/en/electric-bikes/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Raleigh",
+      "model": "Novus Plus (Derailleur Gear)",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.raleigh.co.uk/gb/en/electric-bikes/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Gazelle",
+      "model": "Curb",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.gazellebikes.com/en-gb/ebikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Gazelle",
+      "model": "Paris",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2199,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.gazellebikes.com/en-gb/ebikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Gazelle",
+      "model": "Grenoble",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2799,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.gazellebikes.com/en-gb/ebikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Gazelle",
+      "model": "Chamonix",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3399,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.gazellebikes.com/en-gb/ebikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Gazelle",
+      "model": "Ultimate",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.gazellebikes.com/en-gb/ebikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "IE",
+      "make": "Gazelle",
+      "model": "Orange C7+ HMB 26\"",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3000,
+        "currency": "EUR",
+        "includesTax": true,
+        "url": "https://bbikes.com/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Riese & Müller",
+      "model": "Culture",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3789,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.fullycharged.com/e-bikes/riese-and-muller/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Riese & Müller",
+      "model": "Nevo5 Silent Core",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3699,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.fullycharged.com/e-bikes/riese-and-muller/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Riese & Müller",
+      "model": "Charger5 Pinion HS",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 6999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.fullycharged.com/e-bikes/riese-and-muller/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Riese & Müller",
+      "model": "Delite5 GT Pinion",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 8079,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.fullycharged.com/e-bikes/riese-and-muller/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Tern",
+      "model": "Quick Haul D8",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2700,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://store.ternbicycles.com/collections/quick-haul-e-bike",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Tern",
+      "model": "Quick Haul Long D9",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3600,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.ternbicycles.com/en/news/releases/2024/06/tern-launches-quick-haul-long-next-evolution-compact-cargo-bike",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Tern",
+      "model": "GSD S10 (Gen 3)",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 5900,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.fullycharged.com/e-bikes/tern/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Tern",
+      "model": "GSD R14 Gen3",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 8900,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.fullycharged.com/e-bikes/tern/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "Editor Hybrid Pro 400X",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2300,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.e-bikesdirect.co.uk/brands/cube/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "Compact Hybrid Comfort 545",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.e-bikesdirect.co.uk/brands/cube/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "Reaction Hybrid Pro 800",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2899,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.e-bikesdirect.co.uk/brands/cube/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "Kathmandu Hybrid One 800",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.e-bikesdirect.co.uk/brands/cube/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "Stereo Hybrid One44 Pro 800",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3600,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.e-bikesdirect.co.uk/brands/cube/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Cube",
+      "model": "Longtail Hybrid Comfort 800 Mineral",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 4200,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.e-bikesdirect.co.uk/brands/cube/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Specialized Turbo",
+      "model": "Turbo Como 4.0",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2799,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.specialized.com/gb/en/shop/bikes/electric-bikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Specialized Turbo",
+      "model": "Turbo Tero 4.0 EQ",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.specialized.com/gb/en/shop/bikes/electric-bikes/electric-hybrid-bikes/turbo-tero",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Specialized Turbo",
+      "model": "Turbo Vado 3 4.0",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3599,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.specialized.com/gb/en/shop/bikes/electric-bikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Specialized Turbo",
+      "model": "Turbo Tero 5.0 EQ",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.specialized.com/gb/en/shop/bikes/electric-bikes/electric-hybrid-bikes/turbo-tero",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Specialized Turbo",
+      "model": "Turbo Vado 3 5.0",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 4499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.specialized.com/gb/en/shop/bikes/electric-bikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "IE",
+      "make": "Specialized Turbo",
+      "model": "Turbo Vado 2 4.0",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3299,
+        "currency": "EUR",
+        "includesTax": true,
+        "url": "https://www.specialized.com/ie/en/shop/bikes/active-bikes/turbo-vado/c/eturbovado",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "IE",
+      "make": "Specialized Turbo",
+      "model": "Turbo Vado 3 4.0",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 4199,
+        "currency": "EUR",
+        "includesTax": true,
+        "url": "https://www.specialized.com/ie/en/shop/bikes/active-bikes/turbo-vado/c/eturbovado",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Trek",
+      "model": "FX+ 2",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1799,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.evanscycles.com/electric-bikes/all-electric-bikes/trek",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Giant",
+      "model": "Talon E+",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.giant-bicycles.com/gb/bikes-talon-eplus-2022",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Giant",
+      "model": "Explore E+ 4",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.giant-bicycles.com/gb/bikes-explore-eplus",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Giant",
+      "model": "Explore E+ 2",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.giant-bicycles.com/gb/bikes-explore-eplus",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Giant",
+      "model": "Explore E+ 1",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 4199,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.giant-bicycles.com/gb/bikes-explore-eplus",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Giant",
+      "model": "Explore E+ 0",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 4999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.giant-bicycles.com/gb/bikes-explore-eplus",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Carrera",
+      "model": "Vengeance E 2.0",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1099,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/bikes/electric-bikes/carrera-vengeance-e-mens-electric-mountain-bike-2.0---18in-20in-frames-446118.html",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Carrera",
+      "model": "Crossfire-E 2026",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1679,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.halfords.com/bikes/electric-bikes/",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Boardman",
+      "model": "HYB 8.9e",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2349,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.boardmanbikes.com/gb_en/bikes/e-bikes/",
+        "sourceType": "primary"
+      },
+      "motorW": 250,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Boardman",
+      "model": "ADV 8.9e",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2799,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.boardmanbikes.com/gb_en/bikes/e-bikes/",
+        "sourceType": "primary"
+      },
+      "motorW": 250,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Ribble",
+      "model": "Endurance AL e",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2799,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.ribblecycles.co.uk/bikes/electric-bikes/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Ribble",
+      "model": "Endurance SL e Hero",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 6999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.ribblecycles.co.uk/bikes/electric-bikes/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": 13
+    },
+    {
+      "market": "GB",
+      "make": "Volt",
+      "model": "Metro",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1649,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://voltbikes.co.uk/e-bikes/folding/metro",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Volt",
+      "model": "Pulse",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1749,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://voltbikes.co.uk/e-bikes/hybrid/pulse",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": 21.5
+    },
+    {
+      "market": "GB",
+      "make": "Volt",
+      "model": "Regent",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2399,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://voltbikes.co.uk/electric-bikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Volt",
+      "model": "LITE",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2899,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://voltbikes.co.uk/electric-bikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Estarli",
+      "model": "e20.7",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1510,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.estarli.co.uk/products/e20",
+        "sourceType": "primary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Estarli",
+      "model": "e28.8 PRO",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1830,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://allensebikes.co.uk/products/e28-8-pro-by-estarli-250w-e-bike",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Estarli",
+      "model": "e20.8",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1895,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.estarli.co.uk/products/e20-play",
+        "sourceType": "primary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Estarli",
+      "model": "e28 X",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1899,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://allensebikes.co.uk/products/e28-x-by-estarli-250w-e-bike",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Gocycle",
+      "model": "G4",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 3299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.moveelectric.com/e-bikes/gocycle-cuts-price-g4-urban-e-bike-new-sales-model",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Gocycle",
+      "model": "G4i",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 4999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.e-bikeshop.co.uk/products/electric-bike-gocycle-g4i-folding-ebike",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Gocycle",
+      "model": "G4i+",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 5999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.fullycharged.com/gocycle-g4i/",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Gocycle",
+      "model": "CXi",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 5999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.fullycharged.com/e-bikes/gocycle/",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Eovolt",
+      "model": "Afternoon 20",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2099,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.e-bikesdirect.co.uk/brands/eovolt/eovolt-afternoon-20in-folding-ebike-black/",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": 21
+    },
+    {
+      "market": "GB",
+      "make": "Eovolt",
+      "model": "Afternoon 20 Pro",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.theelectricbikeshop.co.uk/shop/bikes/sub/electric-folding/2024-eovolt-afternoon-20-pro-folding-electric-bike-31356/option/",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "IE",
+      "make": "Fiido",
+      "model": "C11",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 899,
+        "currency": "EUR",
+        "includesTax": true,
+        "url": "https://eu.fiido.com/products/fiido-c11-electric-commuter-bike",
+        "sourceType": "primary"
+      },
+      "motorW": 250,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Fiido",
+      "model": "C21",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1399,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://chargeandglide.co.uk/products/fiido-c21-e-gravel-city-lightweight-electric-bike-250w",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "MiRider",
+      "model": "MiRider One (16-inch)",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1595,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://ecobikecompany.com/products/mirider-one-folding-electric-bike",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "MiRider",
+      "model": "MiRiDER 20 Compact",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1795,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://mirider.co.uk/product/mirider-20-compact-folding-electric-bike/",
+        "sourceType": "primary"
+      },
+      "motorW": 250,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": 20
+    },
+    {
+      "market": "GB",
+      "make": "MiRider",
+      "model": "MiRider 20 GB3",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 2795,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.cyclesuk.com/shop/bikes/sub/folding/mirider-20-gb3-folding-electric-bike-154424/option/",
+        "sourceType": "secondary"
+      },
+      "motorW": 250,
+      "assistKmh": 25,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Vanpowers",
+      "model": "City Vanture",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1427,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.vanpowers.com/products/city-vanture",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Batribike",
+      "model": "Route S",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://batribike.com/collections/electric-bikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Batribike",
+      "model": "Tour S",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1349,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://batribike.com/collections/electric-bikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Batribike",
+      "model": "Trail",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://batribike.com/collections/electric-bikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Batribike",
+      "model": "SUV S",
+      "kind": "ebike",
+      "basePrice": {
+        "amount": 1599,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://batribike.com/collections/electric-bikes",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": null,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Honda",
+      "model": "TRX420 Fourtrax",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 8150,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.honda.co.uk/atv.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 420,
+      "kerbKg": 278
+    },
+    {
+      "market": "GB",
+      "make": "Honda",
+      "model": "TRX520 Foreman",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 9730,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.honda.co.uk/atv.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 518,
+      "kerbKg": 331
+    },
+    {
+      "market": "GB",
+      "make": "Yamaha",
+      "model": "Kodiak 450 EPS",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 9960,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://hhvehicleservices.co.uk/product/yamaha-kodiak-450-eps/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 421,
+      "kerbKg": 295
+    },
+    {
+      "market": "GB",
+      "make": "Yamaha",
+      "model": "Kodiak 450 EPS SE",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 10320,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.drdmotorcycles.co.uk/new-yamaha-atvs/asset/2025-kodiak-450-eps-se/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 421,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Yamaha",
+      "model": "Grizzly 700 EPS SE",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 13560,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.mes-powersports.co.uk/new-yamaha-atvs/asset/2025-grizzly-700-eps-se/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 686,
+      "kerbKg": 294
+    },
+    {
+      "market": "GB",
+      "make": "Polaris",
+      "model": "Sportsman 600",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 8499,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.polarisbritain.com/sportsman/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 567,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Polaris",
+      "model": "Sportsman 600 EPS 2 UP",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 10699,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.polarisbritain.com/sportsman/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 567,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Polaris",
+      "model": "Sportsman Touring 600",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 12999,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.polarisbritain.com/sportsman/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 567,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Polaris",
+      "model": "Sportsman 6x6 600",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 15099,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.polarisbritain.com/sportsman/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 567,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Polaris",
+      "model": "Sportsman XP 1000 S",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 17399,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.polarisbritain.com/sportsman/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 952,
+      "kerbKg": 476
+    },
+    {
+      "market": "GB",
+      "make": "Can-Am",
+      "model": "Outlander PRO",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 8999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://can-am.brp.com/off-road/gb/en/models/all-terrain-vehicles/outlander-pro.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 570,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Can-Am",
+      "model": "Outlander 500/700",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 10499,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://can-am.brp.com/off-road/gb/en/models/atv.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 570,
+      "kerbKg": 327
+    },
+    {
+      "market": "GB",
+      "make": "Can-Am",
+      "model": "Outlander 1000/1000R",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 15299,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://can-am.brp.com/off-road/gb/en/models/all-terrain-vehicles/outlander.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 976,
+      "kerbKg": 371
+    },
+    {
+      "market": "GB",
+      "make": "Can-Am",
+      "model": "Outlander 6x6",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 17599,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://can-am.brp.com/off-road/gb/en/models/atv.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 976,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Can-Am",
+      "model": "Renegade",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 13699,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://can-am.brp.com/off-road/gb/en/models/atv.html",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 976,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kawasaki",
+      "model": "Brute Force 300",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 4329,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.kawasaki.co.uk/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 271,
+      "kerbKg": 242
+    },
+    {
+      "market": "GB",
+      "make": "Kawasaki",
+      "model": "Brute Force 450",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 5328,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.fwi.co.uk/machinery/atvs/on-test-kawasaki-back-with-keenly-priced-brute-force-450-atv",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 452,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kawasaki",
+      "model": "Brute Force 750",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 9828,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://buglers.co.uk/product/kawasaki-kvf750gpfnn-brute-force-750/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 749,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Suzuki",
+      "model": "KingQuad 500X",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 10679,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://atv.suzuki.co.uk/atv/utility/kingquad-500-flame-red/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 493,
+      "kerbKg": 324
+    },
+    {
+      "market": "GB",
+      "make": "Suzuki",
+      "model": "KingQuad 500XP",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 11975,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://atv.suzuki.co.uk/atv/utility-power-steering/kingquad-500-flame-red/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 493,
+      "kerbKg": 324
+    },
+    {
+      "market": "GB",
+      "make": "Suzuki",
+      "model": "KingQuad 750XP",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 12791,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://atv.suzuki.co.uk/atv/utility-power-steering/kingquad-750-terra-green/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 722,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "CFMoto",
+      "model": "CForce 450",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 5499.17,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.cfmoto.co.uk/atv/cforce-450/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 450,
+      "kerbKg": 336
+    },
+    {
+      "market": "GB",
+      "make": "CFMoto",
+      "model": "CForce 520",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 5999.17,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.cfmoto.co.uk/atv/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 495,
+      "kerbKg": 351
+    },
+    {
+      "market": "GB",
+      "make": "CFMoto",
+      "model": "CForce 625 Agri",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 6499.17,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.cfmoto.co.uk/farming-quad-bikes/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 600,
+      "kerbKg": 375
+    },
+    {
+      "market": "GB",
+      "make": "CFMoto",
+      "model": "CForce 625 Touring Overland",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 8333,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.cfmoto.co.uk/atv/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 600,
+      "kerbKg": 375
+    },
+    {
+      "market": "GB",
+      "make": "CFMoto",
+      "model": "CForce 850 Touring",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 8749.17,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.cfmoto.co.uk/atv/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 820,
+      "kerbKg": 465
+    },
+    {
+      "market": "GB",
+      "make": "CFMoto",
+      "model": "CForce 1000 Touring Premium",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 10665.83,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.cfmoto.co.uk/atv/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 963,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Segway Powersports",
+      "model": "Snarler ATV6 B",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 6999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.segwaypowersports.uk/snarler-atv/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 470,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Segway Powersports",
+      "model": "Snarler ATV6 L",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 7899,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.segwaypowersports.uk/snarler-atv/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 570,
+      "kerbKg": 384
+    },
+    {
+      "market": "GB",
+      "make": "Kymco",
+      "model": "MXU 150",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 3249,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.kymco.co.uk/atv-range",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 149,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kymco",
+      "model": "MXU 300 T3B",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 4299,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.kymco.co.uk/atv-range/atv/mxu-300-t3b",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 299,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kymco",
+      "model": "MXU 465",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 5349,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.kymco.co.uk/atv-range/atv/mxu-465",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 443,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kymco",
+      "model": "MXU 550i T3B EPS",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 6599,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.kymco.co.uk/atv-range/atv/mxu-550i-t3b-eps-4wd",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 535,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Kymco",
+      "model": "MXU 700i ABS EPS T3B",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 8249,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.kymco.co.uk/atv-range/atv/mxu-700i-t3b-abs-eps",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 695,
+      "kerbKg": 348
+    },
+    {
+      "market": "GB",
+      "make": "TGB",
+      "model": "Blade 520SL EPS",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 6999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://buntingsagri.co.uk/index.php?route=product/product&product_id=352",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 503,
+      "kerbKg": 330
+    },
+    {
+      "market": "GB",
+      "make": "TGB",
+      "model": "Target 600 EPS",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 8349,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://lowestpriceatv.com/tgb-target-600-eps/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 561,
+      "kerbKg": 420
+    },
+    {
+      "market": "GB",
+      "make": "TGB",
+      "model": "Blade 600LTX",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 8999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.funbikes.co.uk/p13225_tgb-blade-600ltx-560cc-4x4-black-road-legal-utility-quad-bike",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 561,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Quadzilla",
+      "model": "Loncin LX200",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 2249,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.ohgquads.co.uk/quadzilla/",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 200,
+      "kerbKg": null
+    },
+    {
+      "market": "GB",
+      "make": "Quadzilla",
+      "model": "QZ300",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 3999,
+        "currency": "GBP",
+        "includesTax": true,
+        "url": "https://www.oakgardenmachinery.co.uk/atv-quad-sales/quadzilla-qz300-efi-4x4-road-legal-quad",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 275,
+      "kerbKg": 324
+    },
+    {
+      "market": "GB",
+      "make": "Quadzilla",
+      "model": "Aeon Cobra 400",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 6350,
+        "currency": "GBP",
+        "includesTax": false,
+        "url": "https://www.ase-agricultural.co.uk/quadzilla",
+        "sourceType": "secondary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 400,
+      "kerbKg": null
+    },
+    {
+      "market": "IE",
+      "make": "Honda",
+      "model": "TRX420FM",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 11899,
+        "currency": "EUR",
+        "includesTax": false,
+        "url": "https://www.hondaireland.ie/product/trx420fm/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 420,
+      "kerbKg": 278
+    },
+    {
+      "market": "IE",
+      "make": "Honda",
+      "model": "TRX520FM6",
+      "kind": "atv",
+      "basePrice": {
+        "amount": 14099,
+        "currency": "EUR",
+        "includesTax": false,
+        "url": "https://www.hondaireland.ie/product-category/trx-520/",
+        "sourceType": "primary"
+      },
+      "motorW": null,
+      "assistKmh": null,
+      "cc": 518,
+      "kerbKg": 331
+    }
+  ]
+}

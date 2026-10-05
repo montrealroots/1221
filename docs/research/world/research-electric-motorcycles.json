@@ -1,0 +1,157 @@
+{
+  "read": "2026-10-05",
+  "rules": [
+    {
+      "place": "GB",
+      "topic": "tax",
+      "rule": "GB VED tax class 17 (motorcycles and tricycles, weighing no more than 450kg) lists 'Zero emission motorcycles' as a distinct line from the cc bands, but it is charged the same amount as the smallest cc band (not over 150cc): £27 for a single 12-month payment (rates applying on or after 1 April 2026, per DVLA form V149).",
+      "figure": 27,
+      "currency": "GBP",
+      "kwLimits": null,
+      "url": "https://assets.publishing.service.gov.uk/media/69a83810dcb774b435560510/v149-rates-of-vehicle-tax-for-cars-motorcycles-light-goods-vehicles-and-private-light-goods-vehicles-april-2026.pdf",
+      "quote": "Zero emission motorcycles £27 - £27 £28.35 - / Not over 150cc £27 - £27 £28.35 -"
+    },
+    {
+      "place": "GB",
+      "topic": "licence",
+      "rule": "GOV.UK driving licence category A1 is defined by engine size up to 125cc AND power output up to 11kW (no explicit '125cc equivalent' wording found on the page read); A2 by power output up to 35kW; A by power output more than 35kW or power-to-weight ratio more than 0.2kW/kg. Category AM (mopeds) is defined by design speed (over 25km/h but not more than 45km/h), not by a stated kW figure on this page.",
+      "figure": null,
+      "currency": null,
+      "kwLimits": { "AM": null, "A1": 11, "A2": 35 },
+      "url": "https://www.gov.uk/driving-licence-categories",
+      "quote": "Category A1 (Motorcycles): engine size up to 125cc; power output of up to 11kW; power to weight ratio not more than 0.1kW/kg. Category A2: power output up to 35kW, power to weight ratio not more than 0.2kW/kg. Category A: power output more than 35kW or a power to weight ratio more than 0.2kW/kg."
+    },
+    {
+      "place": "GB",
+      "topic": "licence",
+      "rule": "A category B (car) licence holder who passed their car test before 1 February 2001 may ride a moped (up to 50cc) without L-plates, without taking CBT or the full moped test; anything larger than a 50cc moped still requires CBT. A car licence passed on or after 1 February 2001 does not include moped entitlement until CBT (and/or the moped test) is completed.",
+      "figure": null,
+      "currency": null,
+      "kwLimits": null,
+      "url": "https://www.gov.uk/motorcycle-cbt/car-driving-licence",
+      "quote": "If you passed your test before 1 February 2001: You can ride a moped (up to 50cc) without L plates. You do not need to take a CBT course or take the full moped test. You must take CBT if you want to ride anything larger than a 50cc moped."
+    },
+    {
+      "place": "IE",
+      "topic": "licence",
+      "rule": "Ireland uses the same EU-derived AM/A1/A2/A structure as GB: AM for mopeds/light quadricycles (min age 16); A1 for motorcycles up to 125cc, power rating not exceeding 11kW, power-to-weight not exceeding 0.1kW/kg (motor tricycles up to 15kW), min age 16; A2 for motorcycles up to 35kW, power-to-weight not exceeding 0.2kW/kg, not derived from a vehicle of more than double its power, min age 18; A for all motorcycles, min age 24 (or 20 with progressive access via A2).",
+      "figure": null,
+      "currency": null,
+      "kwLimits": { "AM": null, "A1": 11, "A2": 35 },
+      "url": "https://www.citizensinformation.ie/en/travel-and-recreation/motoring/driver-licensing/categories-of-motor-vehicles-and-minimum-age-of-drivers-in-ireland/",
+      "quote": "A1: Motorcycles with an engine capacity not exceeding 125 cubic centimetres, with a power rating not exceeding 11 kilowatts and with a power to weight ratio not exceeding 0.1 kilowatt/kg. A2: Motorcycles with a power rating not exceeding 35 kilowatts, with a power to weight ratio not exceeding 0.2 kilowatt/kg and not derived from a vehicle of more than double its power."
+    },
+    {
+      "place": "CA-BC",
+      "topic": "insurance",
+      "rule": "ICBC's Basic Insurance Tariff rates motorcycles purely by engine displacement (cc), not by kW or a separate electric category: 110cc or less and Limited speed motorcycle = rate class 310; 111-400cc = 311; 401-750cc = 312; 751-1150cc = 313; over 1150cc = 314. The tariff text found contains no separate provision, kW table, or rate class specifically for electric motorcycles -- the cc-based table is the only motorcycle classification in the document (Schedule B, Table 4.14-A, effective Sept 1 2019, amended to Jan 6 2025).",
+      "figure": null,
+      "currency": null,
+      "kwLimits": null,
+      "url": "https://www.icbc.com/assets/pa/6PyY5DEcoIT7z2ujjlwb3d/basic-tariff.pdf",
+      "quote": "Table 4.14-A: Motorcycles. Vehicle Use: Limited speed motorcycle (any use) -- Rate Class 310. Motorcycle (any use) Engine displacement 110 cc or less, 111 to 400 cc, 401 to 750 cc, 751 to 1150 cc, Over 1150 cc -- Rate Class 310, 311, 312, 313, 314."
+    },
+    {
+      "place": "CA-BC",
+      "topic": "licence",
+      "rule": "BC defines a 'limited speed motorcycle' (LSM, covers mopeds/scooters) by: a gas motor of not more than 50cc, OR an electric power source producing a maximum of 1.5kW; no clutching/shifting after the drive system engages; max speed on level ground of 70km/h; max weight 95kg excluding fuel/batteries; wheel diameter 254mm or more. An LSM can be ridden on a full-privilege Class 5 or 7 licence (no motorcycle licence required), but must be registered, licensed, insured, and the rider must wear a helmet.",
+      "figure": 1.5,
+      "currency": null,
+      "kwLimits": null,
+      "url": "https://www.icbc.com/assets/pa/6PyY5DEcoIT7z2ujjlwb3d/basic-tariff.pdf",
+      "quote": "\"Limited speed motorcycle\" means a motorcycle that: a) is equipped with a motor having a piston displacement of not more than 50 cc or a power source that produces a maximum of 1.5 kW, b) has a power drive system that does not require clutching or shifting by the operator after the drive system is engaged, c) has a maximum attainable speed on level ground, with or without pedals, of 70 km/hour, d) has a maximum weight of 95 kg excluding fuel or batteries used to store energy for vehicle propulsion, and e) has wheels of a diameter of 254 mm or more."
+    },
+    {
+      "place": "CA-BC",
+      "topic": "licence",
+      "rule": "ICBC's own consumer page on mopeds/scooters confirms the same LSM test and states a full-privilege Class 5 or 7 passenger licence (not a motorcycle licence) is sufficient to operate one, with mandatory helmet use.",
+      "figure": null,
+      "currency": null,
+      "kwLimits": null,
+      "url": "https://icbc.com/vehicle-registration/specialty-vehicles/moped-moped-scooters",
+      "quote": "You can operate an LSM with a full-privilege Class 5 or 7 passenger vehicle licence -- a motorcycle licence is not required. However, the vehicle must be registered, licensed, and insured for road use, and you must always wear a helmet."
+    },
+    {
+      "place": "MX-CMX",
+      "topic": "tax",
+      "rule": "Under Mexico City's Código Fiscal de la Ciudad de México, new motorcycles are taxed (Impuesto sobre Tenencia o Uso de Vehículos) at 3% of total value (Art. 161 BIS 9), but electric motorcycles -- new or used -- are explicitly taxed at a 0% rate (Art. 161 BIS 10 for new vehicles in the year of acquisition; Art. 161 BIS 15 for used motorcycles of model year 2002+). Electric cars/motorcycles with an internal-combustion or hydrogen add-on (i.e. hybrids) also get the 0% rate under Art. 161 BIS 10. This tenencia exemption is separate from, and in addition to, a time-limited 2026 subsidy/exoneration program (Jan-Mar 2026) that also forgives the refrendo for motorcycles valued up to $250,000 MXN regardless of powertrain.",
+      "figure": 0,
+      "currency": null,
+      "kwLimits": null,
+      "url": "https://transparencia.finanzas.cdmx.gob.mx/repositorio/public/upload/repositorio/Tesoreria/123/b/Criterio_9/123_XV_Impuesto_sobre_tenencia_o_%20uso_de_vehiculos_2024.pdf",
+      "quote": "ARTICULO 161 BIS 10.- Tratandose de motocicletas electricas, automoviles electricos nuevos, asi como de aquellos electricos nuevos, que ademas cuenten con motor de combustion interna o con motor accionado por hidrogeno, el impuesto se pagara a la tasa de 0%. [...] ARTICULO 161 BIS 15 (used motorcycles, final paragraph): Tratandose de motocicletas electricas, el impuesto se pagara a la tasa de 0%."
+    },
+    {
+      "place": "MX-CMX",
+      "topic": "registration",
+      "rule": "The 2026 'control vehicular' notice from the Tesoreria de la Ciudad de Mexico describes the standard 3%-of-value tenencia calculation (with depreciation/updating factors by model year) for motorcycles generally, and instructs that the Derechos por Servicios de Control Vehicular (alta o refrendo -- the registration/renewal fee) must be added on top of whatever tenencia is owed; the document does not state a different alta/refrendo fee for electric motorcycles than for petrol ones -- only the tenencia tax itself differs (to 0%, per Art. 161 BIS 10/15 above).",
+      "figure": null,
+      "currency": "MXN",
+      "kwLimits": null,
+      "url": "https://cdmxassets.s3.us-east-1.amazonaws.com/media/files-pdf/control-vehicular/2026/MOTOS_2026.pdf",
+      "quote": "Al Impuesto sobre Tenencia debera adicionar los Derechos por Servicios de Control Vehicular (alta o refrendo)."
+    },
+    {
+      "place": "US-CA",
+      "topic": "registration",
+      "rule": "California DMV charges a Road Improvement Fee (RIF) on all model year 2020-and-later zero-emission vehicles (ZEVs) at original registration/renewal, currently $121 for 2026; it is not assessed on the very first registration of a newly purchased ZEV from a licensed dealer. The DMV fee page does not itself state whether this applies to motorcycles specifically (it is worded for ZEVs generally); no motorcycle-specific carve-out or exclusion was found on the page read.",
+      "figure": 121,
+      "currency": "USD",
+      "kwLimits": null,
+      "url": "https://www.dmv.ca.gov/portal/vehicle-registration/registration-fees/",
+      "quote": "The RIF is assessed on all model year 2020 and later zero emission vehicles (ZEV). RIF fees affect vehicle registration renewals unless exempted. [...] RIF is not assessed on the initial registration of a newly purchased ZEV from a licensed vehicle dealer."
+    },
+    {
+      "place": "US-NY",
+      "topic": "licence",
+      "rule": "New York classifies limited-use motorcycles (mopeds/scooters) into Class A, B, or C purely by top attainable speed, not by engine type: Class A (over 30-40 MPH) needs a Class M motorcycle licence, registration and insurance; Class B (over 20-30 MPH) needs a standard Class D licence, registration and insurance; Class C (20 MPH or less) needs a standard Class D licence and registration but is exempt from compulsory insurance. The same speed thresholds are applied regardless of whether the moped is gas or electric powered.",
+      "figure": null,
+      "currency": null,
+      "kwLimits": null,
+      "url": "https://dmv.ny.gov/registration/register-moped",
+      "quote": "Class A: over 30-40 MPH. Class B: over 20-30 MPH. Class C: 20 MPH or less."
+    },
+    {
+      "place": "US-CT",
+      "topic": "registration",
+      "rule": "Connecticut General Statutes section 14-49(b)(1) sets a flat triennial motorcycle registration fee of $63 (of which $6 is earmarked under (b)(2) for Department of Transportation motorcycle rider education) with no separate rate or distinction for electric vs. gasoline motorcycles; the statute's EV-specific fee language elsewhere in 14-49 applies only to passenger motor vehicles, not motorcycles.",
+      "figure": 63,
+      "currency": "USD",
+      "kwLimits": null,
+      "url": "https://codes.findlaw.com/ct/title-14-motor-vehicles-use-of-the-highway-by-vehicles-gasoline/ct-gen-st-sect-14-49/",
+      "quote": "For the registration of each motorcycle... the triennial fee shall be sixty-three dollars. [...] Six dollars of the total fee... shall... be deemed to be appropriated to the Department of Transportation [for motorcycle rider education]."
+    },
+    {
+      "place": "CA-ON",
+      "topic": "licence",
+      "rule": "Ontario's distinctions for power-assisted/motor-assisted two-wheelers are defined by motor power/speed, not fuel type: a 'power-assisted bicycle' (e-bike) must have a motor of 500W or less with assistance cutting off at 32km/h, needing no licence, registration, plate or insurance. A 'motor-assisted bicycle'/moped must keep working pedals, weigh 55kg or less, and (if internal combustion) not exceed 50cc, with a top speed of 50km/h within 2km from a standing start. A 'limited-speed motorcycle' can exceed 32km/h within 1.6km from a standing start up to a maximum attainable speed of 70km/h. Exceeding the e-bike's 500W/32km/h threshold makes a vehicle a motor vehicle requiring a Class M licence, registration and insurance -- this applies identically to electric and gas-powered machines that cross the thresholds.",
+      "figure": 500,
+      "currency": null,
+      "kwLimits": null,
+      "url": "https://windsorpolice.ca/Documents/services/traffic/bikes/MTO%20New%20and%20Alternative%20Vehicles.pdf",
+      "quote": "A power-assisted bicycle must have an electric motor with a power output rating of 500W or less, and motor assistance must cut off at 32 km/h."
+    }
+  ],
+  "notFound": [
+    {
+      "place": "IE",
+      "topic": "tax",
+      "why": "Secondary sources (kennco.ie, odo.ie, autoza.ie) consistently report an 'Electrical motorcycle' annual motor tax rate of EUR 35 alongside 0-75cc EUR49 / 76-200cc EUR67 / 201-9999cc EUR88, but the primary official sources (motortax.ie, citizensinformation.ie) returned HTTP 403 to automated fetch and could not be read directly. The only official gov.ie document retrieved (assets.gov.ie 'Annex E: Motor Tax', an archived 2008/2009 Budget document) shows a different, older schedule with 'Cycles and Tricycles: Electrical EUR31' rather than a dedicated electric-motorcycle line, so it could not be used to confirm the current EUR35 figure. No verbatim quote from an official 2026 source was obtained."
+    },
+    {
+      "place": "US-NY",
+      "topic": "registration",
+      "why": "Could not find an official NYS DMV page stating a motorcycle registration fee amount, or any fee differential between electric and gasoline motorcycles; the registration class code page (dmv.ny.gov/registration/registration-class-codes) confirmed electric and gas motorcycles share a single class code (MOT) but did not list fees, and no dedicated fee-schedule page was reached."
+    },
+    {
+      "place": "CA-ON",
+      "topic": "registration",
+      "why": "No official Ontario.ca or ServiceOntario page was reached stating a registration-fee amount or any difference between electric and gasoline motorcycle registration; only licensing/classification rules (by motor wattage and speed) were confirmed from an MTO-sourced document hosted by Windsor Police."
+    },
+    {
+      "place": "US-CT",
+      "topic": "insurance",
+      "why": "No official Connecticut Insurance Department or DMV source was found addressing whether electric motorcycles are insurance-rated any differently from gasoline motorcycles; research for this place was limited to the registration-fee statute (CGS 14-49)."
+    }
+  ]
+}
