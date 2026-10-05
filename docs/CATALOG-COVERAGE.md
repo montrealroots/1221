@@ -40,7 +40,7 @@ which never counts toward the target.
 | Home | Lighting | 72 | 100% | 160 | 1 / 2 / 11 | 0 | 205 | 160 | 0 | CA, GB, IE, MX, US | No |
 | Home | Kitchenware | 54 | 100% | 120 | 1 / 2 / 9 | 0 | 120 | 121 | 0 | CA, GB, IE, MX, US | No |
 | Personal Care | Toiletries And Grooming | 82 | 100% | 182 | 1 / 1 / 15 | 0 | 182 | 183 | 1 | CA, GB, IE, MX, US | No |
-| Personal Care | Cosmetics And Haircare | 52 | 100% | 101 | 1 / 1 / 10 | 0 | 101 | 103 | 0 | CA, GB, IE, MX, US | No |
+| Personal Care | Cosmetics And Haircare | 52 | 100% | 132 | 1 / 1 / 15 | 0 | 132 | 134 | 0 | CA, GB, IE, MX, US | No |
 | Household | Cleaning Products And Consumables | 64 | 100% | 263 | 1 / 3 / 15 | 0 | 263 | 268 | 0 | CA, GB, IE, MX, US | No |
 | Food | Groceries | 160 | 100% | 461 | 1 / 1 / 59 | 0 | 461 | 472 | 41 | CA, GB, IE, MX, US | No |
 | Food | Beverages | 74 | 100% | 145 | 1 / 1 / 9 | 0 | 145 | 148 | 1 | CA, GB, IE, MX, US | No |
