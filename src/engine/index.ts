@@ -29,7 +29,6 @@ import { registerAppliances, registerOwnUnits, registerPortables } from './syste
 import { registerLodgers } from './systems/lodgers';
 import { registerMattress } from './systems/furniture';
 import { registerFurniture } from './systems/furniture';
-import { registerTelevisions } from './systems/televisions';
 import { registerRentals } from './systems/rentals';
 import { registerAviation, registerOwnedAircraft } from './systems/aviation';
 import { registerBoats } from './systems/boats';
@@ -70,7 +69,6 @@ import { registerKitchen } from './systems/kitchen';
 import { registerRoutines } from './systems/routines';
 import { registerPartners, registerPeople } from './systems/people';
 import { registerHygiene, starterCleaning, starterSupplies } from './systems/hygiene';
-import { registerShoppingCart } from './systems/shoppingcart';
 import { registerFittings } from './systems/fittings';
 import { starterLuggage } from './systems/luggage';
 import { EVERY_SHORTCUT, registerAutomation } from './systems/automation';
@@ -224,7 +222,6 @@ export function registerAllSystems(sim: Simulation): void {
   registerLodgers(sim);
   registerMattress(sim);
   registerFurniture(sim);
-  registerTelevisions(sim);
   registerRentals(sim, { journeysOf: journeysFor, partnerOf: partnerFor });
   registerTravelInsurance(sim);
   registerLateCheckOut(sim);
@@ -285,7 +282,6 @@ export function registerAllSystems(sim: Simulation): void {
   registerDating(sim);
   registerTailoring(sim);
   registerHygiene(sim);
-  registerShoppingCart(sim);
   registerFittings(sim);
   registerAwards(sim);
   registerUtilities(sim);

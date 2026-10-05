@@ -32,8 +32,6 @@ export interface CatalogEntry<T = unknown> {
   basis: string;
   /** What it can be filtered by: a facet's name to its value. */
   facets?: Readonly<Record<string, string>>;
-  /** A facet's further values, where it is in several at once (from 2026-10-04): a legging cut regular, petite and tall is found under each. */
-  also?: Readonly<Record<string, readonly string[]>>;
   /** Words it's found by, beyond its label. */
   words?: string;
   value: T;
@@ -69,7 +67,7 @@ export function registerCatalog(sim: Simulation): void {
 export function arrange<T>(entries: readonly CatalogEntry<T>[], view: CatalogView = {}): CatalogEntry<T>[] {
   const words = (view.query ?? '').trim().toLowerCase().split(/\s+/).filter(Boolean);
   const kept = entries.filter((e) => {
-    for (const [facet, value] of Object.entries(view.filters ?? {})) if (value && e.facets?.[facet] !== value && !e.also?.[facet]?.includes(value)) return false;
+    for (const [facet, value] of Object.entries(view.filters ?? {})) if (value && e.facets?.[facet] !== value) return false;
     if (view.only && !view.only.includes(e.id)) return false;
     const text = `${e.label} ${e.words ?? ''}`.toLowerCase();
     return words.every((w) => text.includes(w));
@@ -84,5 +82,5 @@ export function arrange<T>(entries: readonly CatalogEntry<T>[], view: CatalogVie
 
 /** A facet's values across a list, for its filter. */
 export function facetValues(entries: readonly CatalogEntry[], facet: string): string[] {
-  return [...new Set(entries.flatMap((e) => [e.facets?.[facet], ...(e.also?.[facet] ?? [])]).filter((v): v is string => Boolean(v)))].sort();
+  return [...new Set(entries.map((e) => e.facets?.[facet]).filter((v): v is string => Boolean(v)))].sort();
 }

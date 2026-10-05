@@ -16,8 +16,7 @@ import { CARAVANS, CARAVAN_YEAR, HITCH_FIT, LB } from '@/engine/content/caravans
 import { CITIES } from '@/engine/content/geography';
 import { INSPECTION_RULES, nextInspection } from '@/engine/systems/inspections';
 import { useState } from 'react';
-import { CatalogControls, CompareTable, CompareToggle, catalogPrice, useCatalogView, useCompare } from '@/ui/components/Catalog';
-import type { CatalogEntry } from '@/engine/systems/catalog';
+import { CatalogControls, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
 import { arrange } from '@/engine/systems/catalog';
 import { modCatalog, vehicleCatalog } from '@/engine/systems/catalogs';
 import { useGame, useWorld } from '@/app/game-context';
@@ -30,7 +29,7 @@ import { inSaveMoney } from '@/engine/systems/banking';
 import { homeOf } from '@/engine/systems/earnings';
 import { buyRefusal, glazed, kindOf, registers, insuranceBasis, insuranceCurrency, jurisdictionOf, kept, liabilityOffered, loanRate, modelById, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
 import { DEPRECIATION_SOURCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehiclefees';
-import type { CarModel, VehicleKind } from '@/engine/content/vehiclecatalog';
+import type { VehicleKind } from '@/engine/content/vehiclecatalog';
 import { TIRE_LIFE_KM, odometerOf, tireSetCost, tiresFittedAt, tiresRefusal, tiresWorn } from '@/engine/systems/tires';
 import { tintRefusal } from '@/engine/systems/tint';
 import { MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
@@ -70,7 +69,6 @@ export function VehiclesWorkspace() {
   const [view, setView] = useCatalogView(`vehicles-${kind}`);
   const entries = vehicleCatalog(sim, person, home, kind, age);
   const models = arrange(entries, view).map((e) => e.value);
-  const [compared, toggleCompare, clearCompare] = useCompare(`vehicles-${kind}`);
   // Outright, a loan's months or a lease's: one choice, a lease's months negative.
   const [months, setMonths] = useState(0);
   const financed = months > 0;
@@ -237,8 +235,6 @@ export function VehiclesWorkspace() {
                 </div>
               )}
             </div>
-            {model && <div className="row gap-2" style={{ alignItems: 'center' }}><CompareToggle className="btn btn-sm" on={compared.includes(model.id)} onToggle={() => toggleCompare(model.id)} /><span className="xs dim">Up to three models side by side, each as its maker states it</span></div>}
-            <ModelsCompared ids={compared} entries={entries} money={(c) => formatMoney(c, cur, { cents: false })} onClear={clearCompare} />
             {offered.length > 0 && !leaseMonths && (
               <div className="col gap-2">
                 <div className="field-row field-row-tight">
@@ -368,35 +364,6 @@ function RoadsidePanel() {
         <Fine>A car that won’t go is towed: to the garage when its repair is booked, or on a journey the rest of the way. Without cover it’s the market’s tow; with it, free to the tier’s kilometers and the rest paid by the kilometer. Each club’s dues are its own page’s, or where it prices by ZIP the figure it publishes, as each row says.</Fine>
       </div>
     </Panel>
-  );
-}
-
-/**
- * Models set side by side (from 2026-10-04, the owner's expansion, §7): the
- * whole price new or used as chosen, and each one's own trim, year, powertrain,
- * economy, body, drivetrain, gearbox, seats, cargo, tank or battery and weight,
- * from its maker's page; a figure not read shows as a dash, never a guess.
- */
-function ModelsCompared({ ids, entries, money, onClear }: { ids: readonly string[]; entries: readonly CatalogEntry<CarModel>[]; money: (c: number) => string; onClear: () => void }) {
-  const chosen = ids.map((id) => entries.find((e) => e.id === id)).filter((e): e is CatalogEntry<CarModel> => Boolean(e));
-  const dash = (v: string | number | null | undefined) => (v === null || v === undefined || v === '' ? '—' : String(v));
-  const col = (f: (m: CarModel) => string | number | null | undefined) => chosen.map((e) => dash(f(e.value)));
-  return (
-    <CompareTable heads={chosen.map((e) => e.label)} onClear={onClear} rows={[
-      { label: 'Whole Price', values: chosen.map((e) => catalogPrice(e, money)) },
-      { label: 'Trim', values: col((m) => m.trim) },
-      { label: 'Model Year', values: col((m) => CAR_DETAILS[m.id]?.year) },
-      { label: 'Powertrain', values: col((m) => FUEL_WORD[m.fuel]) },
-      { label: 'Economy', values: col((m) => (m.kwhPer100km ? `${m.kwhPer100km} kWh Per 100 Km` : m.per100km ? `${m.per100km} L Per 100 Km` : null)) },
-      { label: 'Body', values: col((m) => CAR_DETAILS[m.id]?.body) },
-      { label: 'Drivetrain', values: col((m) => CAR_DETAILS[m.id]?.drivetrain) },
-      { label: 'Transmission', values: col((m) => CAR_DETAILS[m.id]?.transmission) },
-      { label: 'Seats', values: col((m) => specOf(m.id)?.seats) },
-      { label: 'Cargo', values: col((m) => { const s = specOf(m.id); return s?.cargoL ? `${Math.round(s.cargoL)} L` : s?.bedL ? `A ${Math.round(s.bedL)} L Bed` : null; }) },
-      { label: 'Tank Or Battery', values: col((m) => { const c = capacityOf(m); return c ? `${Math.round(c.size)} ${c.unit}${c.estimated ? ' (Estimate)' : ''}` : null; }) },
-      { label: 'Weight', values: col((m) => (m.kerbKg ? `${m.kerbKg.toLocaleString('en-US')} Kg` : null)) },
-      { label: 'CO2', values: col((m) => (m.co2 ? `${m.co2} G Per Km` : null)) },
-    ]} />
   );
 }
 

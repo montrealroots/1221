@@ -132,29 +132,6 @@ export const KIND_LABEL: Readonly<Record<string, string>> = {
  * The clothes on sale to them: the market where they are, each at its price
  * tax in, and each saying whether a store here sells it.
  */
-/**
- * Who a garment is cut for, and its fit line, as the retailer's own name or
- * page says it (from 2026-10-04): a filter, never a rule; anyone buys anything.
- */
-export function cutOf(p: ClothingProduct): string {
-  const n = `${p.name} ${p.url ?? ''}`.toLowerCase();
-  // A fit line first, then the retailer's own department where it was read, then the name's word for it.
-  // The lines a retailer files it under (`fitLines`, from 2026-10-04) are its `also`, from `fitsOf`: a filter finds it under each.
-  if (/maternity|\bmama\b/.test(n)) return 'Maternity';
-  if (/petite/.test(n)) return 'Petite';
-  if (/\btall\b/.test(n)) return 'Tall';
-  if (/plus[- ]size|\bplus\b|\bcurve\b/.test(n)) return 'Plus';
-  if (/\b(kids|girls|boys|baby|toddler)\b/.test(n)) return 'Children';
-  if (p.dept) return p.dept;
-  if (/women|womens|ladies/.test(n)) return 'Women';
-  if (/\bmen\b|\bmens\b|men's/.test(n)) return 'Men';
-  return 'Not Named';
-}
-
-const FIT_LABEL: Readonly<Record<string, string>> = { maternity: 'Maternity', petite: 'Petite', tall: 'Tall', plus: 'Plus' };
-/** Every cut a product is sold in, where its retailer files it under more than one: a legging in petite, tall and plus is all three. */
-export const fitsOf = (p: ClothingProduct): string[] => [...new Set([...(p.fitLines ?? []).map((l) => FIT_LABEL[l] ?? l), ...(p.dept ? [p.dept] : [])])];
-
 export function clothingCatalog(sim: Simulation, cityId: string): CatalogEntry<ClothingProduct>[] {
   const market = marketOf(cityId);
   if (!market) return [];
@@ -163,8 +140,7 @@ export function clothingCatalog(sim: Simulation, cityId: string): CatalogEntry<C
     return {
       id: p.id, label: p.name, value: p, basis: 'Price, Tax In', price: productPrice(sim, cityId, p), priceKind: 'advertised' as const,
       // The department and the retailer's own type of garment, as its site files it (from 2026-10-02).
-      facets: { retailer: r.name, kind: KIND_LABEL[p.kind] ?? 'Other', department: p.category, cut: cutOf(p), type: p.subcategory ?? p.category, special: p.subtype ? SUBTYPE_LABEL[p.subtype] ?? p.subtype : 'None', where: r.storesIn.includes(cityId) ? 'In Store' : r.delivers ? 'Online' : 'Elsewhere' },
-      also: { cut: fitsOf(p) },
+      facets: { retailer: r.name, kind: KIND_LABEL[p.kind] ?? 'Other', department: p.category, type: p.subcategory ?? p.category, special: p.subtype ? SUBTYPE_LABEL[p.subtype] ?? p.subtype : 'None', where: r.storesIn.includes(cityId) ? 'In Store' : r.delivers ? 'Online' : 'Elsewhere' },
       words: `${p.brand} ${p.category} ${p.subcategory ?? ''} ${p.material ?? ''} ${p.colors.join(' ')}`,
     };
   });
@@ -222,7 +198,7 @@ export function buyRefusal(person: Person, o: BuyOptions): string | undefined {
 }
 
 /** A maternity line, by its name as its retailer writes it. */
-export const isMaternity = (p: Pick<ClothingProduct, 'name'> & Partial<Pick<ClothingProduct, 'fitLines'>>): boolean => Boolean(p.fitLines?.includes('maternity')) || /\bmaternity\b|\bmaternidad\b/i.test(p.name);
+export const isMaternity = (p: Pick<ClothingProduct, 'name'>): boolean => /\bmaternity\b|\bmaternidad\b/i.test(p.name);
 
 /** A garment's wear and care, from a product. A wipe-clean garment is never in the wash, so its care doesn't come up. */
 

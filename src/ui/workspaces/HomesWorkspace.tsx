@@ -11,23 +11,21 @@
 import { useState } from 'react';
 import { harvestRefusal, plantRefusal, plantingIn, plotsOf, ripeAt } from '@/engine/systems/garden';
 import { CROPS, type Crop } from '@/engine/content/garden';
-import { CatalogControls, CompareTable, CompareToggle, FavoriteToggle, ShowMore, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
-import { arrange, type CatalogEntry } from '@/engine/systems/catalog';
+import { CatalogControls, useCatalogView } from '@/ui/components/Catalog';
+import { arrange } from '@/engine/systems/catalog';
 import { applianceCatalog, furnitureCatalog, homeCatalog } from '@/engine/systems/catalogs';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { centsFromTyped, formatMoney, saveCurrency } from '@/engine/core/money';
 import { APPLIANCE_LABEL, APPLIANCE_LIFE } from '@/engine/content/appliances';
-import { applianceCost, appliancesIn, fitCost, fitRefusal, hasAppliance, machineModels } from '@/engine/systems/appliances';
-import { isMachine, kwhPerCycle, machineName, machineProduct, usualDishwasherKwh, type MachineKind } from '@/engine/systems/machines';
+import { applianceCost, appliancesIn, fitRefusal, hasAppliance } from '@/engine/systems/appliances';
 import { fixturesOf } from '@/engine/systems/dwelling';
 import { PIECE_LABEL, type Piece } from '@/engine/content/furniture';
 import { bedAtHome, bedQuote, bedsIn, furnishRefusal, mattressCost, mattressRefusal, mattressWorn, owns, pieceCost } from '@/engine/systems/furniture';
 import { BED_MARKET, bedSize } from '@/engine/content/beds';
 import { RENTED_TRUCK } from '@/engine/content/furniture';
 import { assemblyFee, pieceRefusal, piecesCatalog, seatsAtHome } from '@/engine/systems/furnishings';
-import { GENERIC_TV_WATTS, buyTvRefusal, tvAtHome, tvCatalog, tvName } from '@/engine/systems/televisions';
 import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -150,9 +148,6 @@ function ForSalePane() {
   const [view, setView] = useCatalogView(`homes-${town}`);
   const homeEntries = useWorld((s) => homeCatalog(s, town), [town]);
   const shown = arrange(homeEntries, view).map((e) => e.value);
-  // Up to three set side by side (from 2026-10-04), kept for the town.
-  const [compared, toggleCompare, clearCompare] = useCompare(`homes-${town}`);
-  const side = compared.map((id) => homes.find((h) => h.id === id)).filter((h): h is (typeof homes)[number] => Boolean(h));
   const buying = useWorld((s) => s.player.buying);
   const counter = useWorld((s) => s.player.counter);
   const [chosen, setChosen] = useState<string | undefined>(undefined);
@@ -276,22 +271,12 @@ function ForSalePane() {
                     <td className="num mono">{one.built}</td>
                     <td className="num mono">{daysListed(sim, one)}</td>
                     <td className="num mono">{money(askingPrice(sim, one))}</td>
-                    <td className="row gap-1"><CompareToggle on={compared.includes(one.id)} onToggle={() => toggleCompare(one.id)} /><button type="button" className="btn btn-sm btn-ghost" onClick={() => choose(one)}>Look</button></td>
+                    <td><button type="button" className="btn btn-sm btn-ghost" onClick={() => choose(one)}>Look</button></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <CompareTable heads={side.map((h) => h.address)} onClear={clearCompare} rows={[
-            { label: 'Asking Price', values: side.map((h) => money(askingPrice(sim, h))) },
-            { label: 'Kind', values: side.map((h) => typeLabel(h.type, city.countryId)) },
-            { label: 'Bedrooms', values: side.map((h) => bedsText(h.beds)) },
-            { label: 'Bathrooms', values: side.map((h) => bathsText(h.baths)) },
-            { label: 'Size', values: side.map((h) => sizeText(h.size, city.countryId)) },
-            { label: 'Built', values: side.map((h) => String(h.built)) },
-            { label: 'Days Listed', values: side.map((h) => String(daysListed(sim, h))) },
-            { label: 'Has', values: side.map((h) => h.features.map((f) => FEATURE_LABEL[f]).join(', ') || '—') },
-          ]} />
           <Fine>
             {typical.kind === 'zillow'
               ? 'The town’s typical home is Zillow’s Home Value Index (Zillow Research, zillow.com/research/data), its middle third, and its five years’ growth. '
@@ -479,7 +464,6 @@ function HomeCard({ owned }: { owned: OwnedHome }) {
         <Furniture />
         <Garden owned={owned} />
         <FitOut owned={owned} />
-        <MachinesByModel owned={owned} />
         <Lodgers owned={owned} />
 
         <div className="col gap-2">
@@ -622,12 +606,6 @@ function FitOut({ owned }: { owned: OwnedHome }) {
   // The cheapest fitted first, an appliance without a published price last (`applianceCatalog`).
   const kinds = arrange(applianceCatalog(sim, owned.cityId)).map((e) => e.value);
   const table = appliancesIn(owned.cityId);
-  // A model chosen by make and model is named (from 2026-10-04).
-  const fittedLabel = (kind: string) => {
-    const id = isMachine(kind) ? owned.models?.[kind] : undefined;
-    const product = id ? machineProduct(id) : undefined;
-    return product ? `Yes: ${machineName(product)}` : 'Yes';
-  };
   return (
     <div className="col gap-2">
       <div className="strong small">Appliances</div>
@@ -643,7 +621,7 @@ function FitOut({ owned }: { owned: OwnedHome }) {
                 return (
                   <tr key={kind}>
                     <td>{APPLIANCE_LABEL[kind]}{cost === undefined ? <div className="xs dim">No price published here</div> : null}</td>
-                    <td className="small">{has ? fittedLabel(kind) : 'No'}</td>
+                    <td className="small">{has ? 'Yes' : 'No'}</td>
                     <td className="num mono">{cost === undefined ? '—' : formatMoney(cost, cur, { cents: false })}</td>
                     <td className="num mono">{APPLIANCE_LIFE[kind]} years</td>
                     <td>{!has && cost !== undefined && <Gated feature="home.fit" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.fit', { homeId: owned.id, kind }).ok) toast(`${APPLIANCE_LABEL[kind]} fitted.`, 'positive'); }}>Buy And Fit</Gated>}</td>
@@ -658,123 +636,43 @@ function FitOut({ owned }: { owned: OwnedHome }) {
   );
 }
 
-const MACHINE_LABEL: Readonly<Record<MachineKind, string>> = { washer: 'Washing Machine', dryer: 'Dryer', dishwasher: 'Dishwasher' };
-
-/**
- * Washing machines, dryers and dishwashers by make and model for a home owned (`systems/machines.ts`, from
- * 2026-10-04): searched, by kind and maker, cheapest fitted first, a page at a time, favorites kept and up to three
- * compared, each with the energy a cycle its label gives, which the month's bill reads once it's fitted.
- */
-function MachinesByModel({ owned }: { owned: OwnedHome }) {
-  const { sim, run, toast } = useGame();
-  const person = useWorld((s) => s.player);
-  const cur = saveCurrency(sim.universe);
-  const money = (c: number) => formatMoney(c, cur, { cents: false });
-  const all = machineModels(sim, owned.cityId);
-  const [view, setView] = useCatalogView('machines');
-  const [shownCount, more] = usePaged('machines');
-  const [compared, toggleCompare, clearCompare] = useCompare('machines');
-  if (all.length === 0) return null;
-  const entries: CatalogEntry<(typeof all)[number] & { fitted: number }>[] = all.map((x) => {
-    const kind = x.product.attrs.kind as MachineKind;
-    const fitted = fitCost(sim, owned.cityId, kind, x.offer.id) ?? x.price;
-    return {
-      id: x.offer.id, label: machineName(x.product, x.offer), price: fitted, priceKind: 'advertised', basis: 'Fitted, with the tax as the place shows it',
-      facets: { kind: MACHINE_LABEL[kind], brand: x.product.brand }, words: [x.product.family, x.product.model, x.offer.seller].filter(Boolean).join(' '), value: { ...x, fitted },
-    };
-  });
-  const arranged = arrange(entries, view);
-  const page = arranged.slice(0, shownCount);
-  const chosen = compared.map((id) => entries.find((e) => e.id === id)).filter((e): e is (typeof entries)[number] => Boolean(e));
-  const size = (p: (typeof all)[number]['product']) => {
-    const a = p.attrs;
-    return typeof a.placeSettings === 'number' ? `${a.placeSettings} place settings` : typeof a.capacityKg === 'number' ? `${a.capacityKg} kg` : typeof a.capacityCuFt === 'number' ? `${a.capacityCuFt} cu ft` : '—';
-  };
-  const energy = (p: (typeof all)[number]['product']) => { const k = kwhPerCycle(p); return k === undefined ? '—' : `${k.toFixed(2)} kWh`; };
-  const market = CITIES.get(owned.cityId)?.countryId as Parameters<typeof usualDishwasherKwh>[0];
-  const usual = usualDishwasherKwh(market);
-  return (
-    <div className="col gap-2">
-      <div className="strong small">By Make And Model</div>
-      <CatalogControls id="machines-catalog" entries={entries} view={view} onChange={setView} facets={{ kind: 'Kind', brand: 'Maker' }} />
-      <div className="table-scroll">
-        <table>
-          <thead><tr><th scope="col">Machine</th><th scope="col">Kind</th><th scope="col">Size</th><th scope="col" className="num">Energy A Cycle</th><th scope="col" className="num">Fitted</th><th scope="col"><span className="sr-only">Choose</span></th></tr></thead>
-          <tbody>
-            {page.map((e) => {
-              const { product, offer, fitted } = e.value;
-              const kind = product.attrs.kind as MachineKind;
-              const no = fitRefusal(sim, person, owned, kind, offer.id);
-              return (
-                <tr key={e.id}>
-                  <td>{e.label}<div className="xs dim">{[product.family, offer.seller].filter(Boolean).join(', ')}</div></td>
-                  <td className="small">{MACHINE_LABEL[kind]}</td>
-                  <td className="small">{size(product)}</td>
-                  <td className="num" title={String(product.attrs.energyBasis ?? 'No energy label read for it; it bills as the usual machine')}>{energy(product)}</td>
-                  <td className="num mono">{money(fitted)}</td>
-                  <td>
-                    <div className="row gap-1" style={{ flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                      <FavoriteToggle list="machines" id={offer.id} />
-                      <CompareToggle on={compared.includes(offer.id)} onToggle={() => toggleCompare(offer.id)} />
-                      <Gated feature="home.fit" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.fit', { homeId: owned.id, kind, offerId: offer.id }).ok) toast(`${e.label}, fitted.`, 'positive'); }}>Fit This One</Gated>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      {arranged.length === 0 && <div className="small">None on sale here matches that; clear the search or a filter.</div>}
-      <ShowMore shown={Math.min(shownCount, arranged.length)} total={arranged.length} onMore={more} />
-      <CompareTable heads={chosen.map((e) => e.label)} onClear={clearCompare} rows={[
-        { label: 'Fitted', values: chosen.map((e) => money(e.value.fitted)) },
-        { label: 'Kind', values: chosen.map((e) => MACHINE_LABEL[e.value.product.attrs.kind as MachineKind]) },
-        { label: 'Size', values: chosen.map((e) => size(e.value.product)) },
-        { label: 'Energy A Cycle', values: chosen.map((e) => energy(e.value.product)) },
-        { label: 'Sold By', values: chosen.map((e) => e.value.offer.seller) },
-      ]} />
-      <div className="xs dim">{`Each at its maker’s or a retailer’s own price on ${all[0]!.offer.read}, with the fitting this country’s table keeps. Its energy a cycle is its label’s: ENERGY STAR’s, the DOE test’s year over its cycles, or the EU’s per cycle of the eco program. Fitted, a washer’s and a dryer’s loads are billed at it in place of the usual machine’s; a dishwasher’s runs at what it takes past the usual labeled one here${usual !== undefined ? `, ${usual.toFixed(2)} kWh` : ''}, which a typical household’s electricity already runs.`}</div>
-    </div>
-  );
-}
-
-/** IKEA's seats, tables and storage where they live (`systems/furnishings.ts`), cheapest first: searched, by kind, a page at a time, favorites kept and up to three compared (from 2026-10-04). */
+/** IKEA's seats, tables and storage where they live (`systems/furnishings.ts`), cheapest first, by kind. */
 function FromIkea() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
   const all = piecesCatalog(sim, person);
-  const [view, setView] = useCatalogView('ikea');
-  const arranged = arrange(all, view);
-  const [shownCount, more] = usePaged('ikea');
-  const shown = arranged.slice(0, shownCount);
-  const [compared, toggleCompare, clearCompare] = useCompare('ikea');
-  const chosen = compared.map((id) => all.find((e) => e.id === id)).filter((e): e is (typeof all)[number] => Boolean(e));
-  const size = (p: (typeof all)[number]['value']) => (p.cm.every((x) => x !== null) ? `${p.cm.map((x) => Math.round(x!)).join(' × ')} cm` : '—');
-  const does = (p: (typeof all)[number]['value']) => (p.kind === 'diningTable' ? (p.seats ? `Seats ${p.seats} At A Table` : '—') : p.seats ? `Seats ${p.seats}` : p.holdsL ? `Holds ${Math.round(p.holdsL)} Liters` : '—');
+  const kinds = [...new Set(all.map((e) => e.facets!.kind!))];
+  const [kind, setKind] = useState('');
+  const shown = all.filter((e) => e.facets!.kind === (kind || kinds[0]));
   const [count, setCount] = useState(1);
   const [built, setBuilt] = useState(false);
   if (all.length === 0) return null;
   const room = seatsAtHome(person);
   return (
     <div className="col gap-2">
-      <div className="strong small">From IKEA{(sim.player.ikeaCredit ?? 0) > 0 ? ` · ${formatMoney(sim.player.ikeaCredit!, saveCurrency(sim.universe), { cents: false })} Credit, Spent First` : ''}</div>
-      <CatalogControls id="ikea-catalog" entries={all} view={view} onChange={setView} facets={{ kind: 'Kind' }} lead={<>
-        <div className="field">
+      <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+        <div className="strong small" style={{ marginRight: 'auto' }}>From IKEA{(sim.player.ikeaCredit ?? 0) > 0 ? ` · ${formatMoney(sim.player.ikeaCredit!, saveCurrency(sim.universe), { cents: false })} Credit, Spent First` : ''}</div>
+        <div className="field" style={{ margin: 0 }}>
+          <label htmlFor="ikea-kind">Kind</label>
+          <select id="ikea-kind" value={kind || kinds[0]} onChange={(e) => setKind(e.target.value)}>
+            {kinds.map((k) => <option key={k} value={k}>{k}</option>)}
+          </select>
+        </div>
+        <div className="field" style={{ margin: 0 }}>
           <label htmlFor="ikea-count">How Many</label>
           <select id="ikea-count" value={count} onChange={(e) => setCount(Number(e.target.value))}>
             {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n}</option>)}
           </select>
         </div>
-        <div className="field">
+        <div className="field" style={{ margin: 0 }}>
           <label htmlFor="ikea-built">Put Together</label>
           <select id="ikea-built" value={built ? 'ikea' : 'you'} onChange={(e) => setBuilt(e.target.value === 'ikea')}>
             <option value="you">By You, At Taskrabbit’s Hours</option>
             <option value="ikea">By IKEA, At Its Price</option>
           </select>
         </div>
-      </>} />
+      </div>
       <div className="table-scroll">
         <table>
           <thead><tr><th scope="col">Piece</th><th scope="col">Size</th><th scope="col">Does</th><th scope="col" className="num">Delivered</th><th scope="col"><span className="sr-only">Buy</span></th></tr></thead>
@@ -785,25 +683,16 @@ function FromIkea() {
               return (
                 <tr key={e.id}>
                   <td>{e.label}</td>
-                  <td className="small">{size(p)}</td>
-                  <td className="small">{does(p)}</td>
+                  <td className="small">{p.cm.every((x) => x !== null) ? `${p.cm.map((x) => Math.round(x!)).join(' × ')} cm` : '—'}</td>
+                  <td className="small">{p.kind === 'diningTable' ? (p.seats ? `Seats ${p.seats} At A Table` : '—') : p.seats ? `Seats ${p.seats}` : p.holdsL ? `Holds ${Math.round(p.holdsL)} Liters` : '—'}</td>
                   <td className="num mono">{formatMoney((e.price ?? 0) * count + (built ? assemblyFee(sim, p, count) ?? 0 : 0), cur, { cents: false })}</td>
-                  <td className="row gap-1"><FavoriteToggle list="ikea" id={e.id} /><CompareToggle on={compared.includes(e.id)} onToggle={() => toggleCompare(e.id)} /><Gated feature="home.buy_piece" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_piece', { pieceId: p.id, quantity: count, assembly: built }).ok) toast(built ? `${p.name}, delivered and put together.` : `${p.name}, delivered flat-packed: put it together from Belongings.`, 'positive'); }}>Buy From IKEA</Gated></td>
+                  <td><Gated feature="home.buy_piece" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.buy_piece', { pieceId: p.id, quantity: count, assembly: built }).ok) toast(built ? `${p.name}, delivered and put together.` : `${p.name}, delivered flat-packed: put it together from Belongings.`, 'positive'); }}>Buy From IKEA</Gated></td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
-      {arranged.length === 0 && <div className="small">None sold here matches that; clear the search or a filter.</div>}
-      <ShowMore shown={shown.length} total={arranged.length} onMore={more} />
-      <CompareTable heads={chosen.map((e) => e.label)} onClear={clearCompare} rows={[
-        { label: 'Delivered, One', values: chosen.map((e) => formatMoney(e.price ?? 0, cur, { cents: false })) },
-        { label: 'Kind', values: chosen.map((e) => e.facets?.kind ?? '—') },
-        { label: 'Size', values: chosen.map((e) => size(e.value)) },
-        { label: 'Does', values: chosen.map((e) => does(e.value)) },
-        { label: 'Put Together By IKEA, One', values: chosen.map((e) => { const fee = assemblyFee(sim, e.value, 1); return fee === undefined ? '—' : formatMoney(fee, cur, { cents: false }); }) },
-      ]} />
       <div className="xs dim">{`Seats for ${room.seats} and a table for ${room.table} at home now. Friends come over only to what there are seats for, and a dinner sits everyone at a table. A wardrobe, a frame, a chest or a bookcase holds its outside measure in liters, worked out from IKEA’s, and is filled from Belongings. It comes flat-packed and does nothing until it’s put together, by you or by IKEA’s service: from $52, C$45 or £33 a piece, Ireland’s €40 call-out, Mexico’s 2.5% of a sofa’s price and 9% of the rest. IKEA’s regular price, with the town’s sales tax where it’s added, delivered at its large-item rate.`}</div>
     </div>
   );
@@ -846,7 +735,6 @@ function Furniture() {
       </div>
       {!owns(person, 'bed') && <ChooseABed cityId={where} />}
       <FromIkea />
-      <Televisions />
       <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="move-by">When You Move</label>
@@ -857,83 +745,6 @@ function Furniture() {
         </div>
       </div>
       <div className="xs dim">{`U-Haul’s 15-foot truck, $${RENTED_TRUCK.perDay} a day and $${RENTED_TRUCK.perMile} a mile there and back, and its fuel: in America, within ${RENTED_TRUCK.withinMiles} miles, on a license you may drive on. Anywhere else, the movers come. A van of your own carries it first.`}</div>
-    </div>
-  );
-}
-
-/**
- * Televisions sold where they live (`systems/televisions.ts`, from 2026-10-04), by make and model: searched,
- * by maker and panel, cheapest first with the tax as the place shows it, a page at a time, favorites kept and up
- * to three compared, each with the power its energy label gives. Watching bills a set's power past the usual one's.
- */
-function Televisions() {
-  const { sim, run, toast } = useGame();
-  const person = useWorld((s) => s.player);
-  const buy = useFeature('tv.buy');
-  const cur = saveCurrency(sim.universe);
-  const money = (c: number) => formatMoney(c, cur, { cents: false });
-  const shop = tvCatalog(sim, person);
-  const [view, setView] = useCatalogView('tv');
-  const [shownCount, more] = usePaged('tv');
-  const [compared, toggleCompare, clearCompare] = useCompare('tv');
-  if (shop.length === 0) return null;
-  const entries: CatalogEntry<(typeof shop)[number]>[] = shop.map((x) => ({
-    // By the model number it's sold under here; the maker's other code still finds it.
-    id: x.offer.id, label: tvName(x.product, x.offer), price: x.price, priceKind: 'advertised', basis: 'Each, with the tax as the place shows it',
-    facets: { brand: x.product.brand, panel: String(x.product.attrs.panel ?? 'LED') },
-    words: [x.product.family, x.product.model, x.product.attrs.resolution, x.product.attrs.smartOs, x.offer.seller, `${x.product.attrs.sizeIn} inch`].filter(Boolean).join(' '), value: x,
-  }));
-  const arranged = arrange(entries, view);
-  const page = arranged.slice(0, shownCount);
-  const chosen = compared.map((id) => entries.find((e) => e.id === id)).filter((e): e is (typeof entries)[number] => Boolean(e));
-  const watts = (e: (typeof entries)[number]) => { const w = e.value.product.attrs.onModeWatts; return typeof w === 'number' ? `${Math.round(w)} W` : '—'; };
-  const wattsWhy = (e: (typeof entries)[number]) => (typeof e.value.product.attrs.onModeWatts === 'number' ? String(e.value.product.attrs.powerBasis ?? 'Its energy label') : `No energy label read for it; it draws the usual set’s${GENERIC_TV_WATTS !== undefined ? `, ${Math.round(GENERIC_TV_WATTS)} W` : ''}`);
-  const mine = tvAtHome(person);
-  return (
-    <div className="col gap-2">
-      <div className="strong small">Televisions</div>
-      {mine && <div className="small">{`Yours: ${mine.label}${mine.watts !== undefined ? `, ${Math.round(mine.watts)} W on` : ''}${mine.product ? '' : ' (the usual set’s power, SLATE’s estimate)'}.`}</div>}
-      <CatalogControls id="tv-catalog" entries={entries} view={view} onChange={setView} facets={{ brand: 'Maker', panel: 'Panel' }} />
-      <div className="table-scroll">
-        <table>
-          <thead><tr><th scope="col">Set</th><th scope="col" className="num">Size</th><th scope="col">Panel</th><th scope="col" className="num">Power On</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Choose</span></th></tr></thead>
-          <tbody>
-            {page.map((e) => {
-              const { product, offer, price } = e.value;
-              const no = buyTvRefusal(person, offer.id);
-              return (
-                <tr key={e.id}>
-                  <td>{e.label}<div className="xs dim">{[product.family, product.attrs.resolution, offer.seller].filter(Boolean).join(', ')}</div></td>
-                  <td className="num">{`${product.attrs.sizeIn}″`}</td>
-                  <td className="small">{String(product.attrs.panel ?? 'LED')}</td>
-                  <td className="num" title={wattsWhy(e)}>{watts(e)}</td>
-                  <td className="num mono">{money(price)}</td>
-                  <td>
-                    <div className="row gap-1" style={{ flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                      <FavoriteToggle list="tv" id={offer.id} />
-                      <CompareToggle on={compared.includes(offer.id)} onToggle={() => toggleCompare(offer.id)} />
-                      <button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('tv.buy', { offerId: offer.id }).ok) toast(`${e.label}, delivered.`, 'positive'); }}>Buy This TV</button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      {arranged.length === 0 && <div className="small">None on sale here matches that; clear the search or a filter.</div>}
-      <ShowMore shown={Math.min(shownCount, arranged.length)} total={arranged.length} onMore={more} />
-      <CompareTable heads={chosen.map((e) => e.label)} onClear={clearCompare} rows={[
-        { label: 'Price', values: chosen.map((e) => money(e.value.price)) },
-        { label: 'Size', values: chosen.map((e) => `${e.value.product.attrs.sizeIn}″`) },
-        { label: 'Panel', values: chosen.map((e) => String(e.value.product.attrs.panel ?? 'LED')) },
-        { label: 'Resolution', values: chosen.map((e) => String(e.value.product.attrs.resolution ?? '—')) },
-        { label: 'Refresh', values: chosen.map((e) => (typeof e.value.product.attrs.refreshHz === 'number' ? `${e.value.product.attrs.refreshHz} Hz` : '—')) },
-        { label: 'Power On', values: chosen.map((e) => watts(e)) },
-        { label: 'Smart TV', values: chosen.map((e) => String(e.value.product.attrs.smartOs ?? '—')) },
-        { label: 'Sold By', values: chosen.map((e) => e.value.offer.seller) },
-      ]} />
-      <div className="xs dim">{`Each set at its maker’s or a retailer’s own price on ${shop[0]!.offer.read}, delivered. Its power is the on-mode figure its energy label gives, the EU and UK label’s or ENERGY STAR’s under the federal test, or where no label was read, the figure its maker or a retailer publishes; a set with neither draws the usual one’s. A typical household’s electricity already has a usual set on${GENERIC_TV_WATTS !== undefined ? `, ${Math.round(GENERIC_TV_WATTS)} W` : ''}, so watching adds what yours draws past it, or takes off what it saves.`}</div>
     </div>
   );
 }

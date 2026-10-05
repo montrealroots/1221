@@ -51,7 +51,7 @@ import { laidUp } from './repairs';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
 import { cabinBagRefusal, moveTo, weighIn } from './luggage';
-import { arrivalFee, entryRefusal, hotelPetFee, petCareRefusal, petFlightFee, petsOf } from './pets';
+import { cabinFeeFor, hotelPetFee, petCareRefusal, petsOf } from './pets';
 import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking, freeCancelUntil, roomReadyAt } from './hotels';
 import { claimCancellation } from './travelinsurance';
 import { departureHours, fareOf, planTrain, railRouteById, railRoutes, trainFateOf } from './rail';
@@ -607,7 +607,7 @@ export function registerJourneys(sim: Simulation): void {
     const ownPark = named && by?.startsWith('car:') ? hotelParking(s, named.hotelId, nights) : undefined;
     const park = ownPark ? ownPark.price : room && cls !== 'campground' && cls !== 'street' && HOTEL_PARKING[toCity] && by?.startsWith('car:') ? inSave(s, HOTEL_PARKING[toCity]!.perNight * nights, HOTEL_PARKING[toCity]!.currency) : 0;
     const hotel = room ? { price: room.price + park, basis: `${room.basis}${ownPark ? ` ${ownPark.basis}.` : park ? ` Parking: ${HOTEL_PARKING[toCity]!.basis}.` : ''}` } : undefined;
-    // Pets at home need someone; along, a hotel that takes them and the carrier's own way for each, the cabin or the hold (`systems/pets.ts`, from 2026-10-03; by species and carrier from 2026-10-04).
+    // Pets at home need someone; along, a hotel that takes them and an airline's cabin fee (`systems/pets.ts`, from 2026-10-03).
     const withPets = Boolean(p?.withPets) && petsOf(person).length > 0;
     const until = back ? back[back.length - 1]!.arriveAt : arriveOut + Math.max(1, nights) * MS_DAY;
     const petNo = petCareRefusal(person, out[0]!.departAt, until, withPets);
@@ -617,17 +617,11 @@ export function registerJourneys(sim: Simulation): void {
       const stayFee = room && cls === 'hotel' ? hotelPetFee(s, person, named?.hotelId, nights) : 0;
       if (typeof stayFee === 'string') throw new CommandError(stayFee);
       const flights = (legs: JourneyLeg[] | undefined) => (legs ?? []).filter((l) => l.mode === 'flight').length;
-      const outFee = by ? 0 : petFlightFee(s, person, fromCity, toCity, flights(out), out[0]!.departAt);
-      const backFee = by || !back ? 0 : petFlightFee(s, person, toCity, fromCity, flights(back), back[0]!.departAt);
+      const outFee = by ? 0 : cabinFeeFor(s, person, fromCity, flights(out));
+      const backFee = by || !back ? 0 : cabinFeeFor(s, person, toCity, flights(back));
       if (typeof outFee === 'string') throw new CommandError(outFee);
       if (typeof backFee === 'string') throw new CommandError(backFee);
-      // Each country's papers, good on the day they arrive there, and on the day home (from 2026-10-04).
-      // The way home only on what lasts: a certificate or a tapeworm treatment is got near the day, at a vet there.
-      const inNo = entryRefusal(person, fromCity, toCity, out[out.length - 1]!.arriveAt) ?? (back ? entryRefusal(person, toCity, fromCity, back[back.length - 1]!.arriveAt, { lasting: true }) : undefined);
-      if (inNo) throw new CommandError(inNo);
-      // A fee on arriving with them, each way (Heathrow's, Canada's), paid with the way out.
-      const arrive = arrivalFee(s, person, fromCity, toCity) + (back ? arrivalFee(s, person, toCity, fromCity) : 0);
-      petFees = stayFee + outFee + backFee + arrive;
+      petFees = stayFee + outFee + backFee;
     }
     const outCost = total(out) + (hotel?.price ?? 0) + petFees;
     const cost = outCost + (back ? total(back) : 0);

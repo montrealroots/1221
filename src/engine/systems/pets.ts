@@ -46,27 +46,18 @@ import { spend } from './household';
 import { contactsOf } from './people';
 import { sitterThrough } from './away';
 import { HOTEL_AMENITIES } from '../content/hotelamenities';
-import { CABIN_MAX_KG, PET_FLIGHT, PET_KG, type PetFare } from '../content/petair';
-import { PAPER_LABEL, PET_ENTRY, type EntryRule, type Paper } from '../content/petentry';
-import { ARRIVAL_FEE, CERTIFICATE_FEE, CHIP_LAW, CHIP_PRICE, ENDORSEMENT } from '../content/petpapers';
 import { LITTERS, LITTER_KG_A_WEEK, PET_FOODS, RATION_G, VET_YEAR, WALK, type PetMarket } from '../content/petcare';
 import { homeKeyOf, itemsOf, type Item } from './items';
 import { placeOrder } from './orders';
-import { payFromBank, petArrives } from './household';
+import { payFromBank } from './household';
 import { exerts } from './body';
 import { isOn } from './automation';
-import { countWash } from './water';
-import { salesTaxRate } from '../content/tax';
 
 export type Species = 'dog' | 'cat';
 export interface Pet {
   id: string; species: Species; name: string; adoptedAt: Instant; from: string; licensedUntil?: Instant;
   /** The day it was last fed and, a dog, walked (from 2026-10-04); days running without; its vaccines good until; a walker booked. */
   fedOn?: string; walkedOn?: string; hungryDays?: number; unwalkedDays?: number; vetUntil?: Instant; walker?: true;
-  /** A dog's last bath (from 2026-10-04), at home or at a groomer; until one, since it came. */
-  groomedAt?: Instant;
-  /** Its papers for going abroad (from 2026-10-04, `content/petentry.ts`): when chipped and last vaccinated against rabies, its health certificate and for where, its tapeworm treatment, the CDC's form. */
-  chippedAt?: Instant; rabiesAt?: Instant; certificate?: { to: string; at: Instant; passport?: true }; tapewormAt?: Instant; importFormAt?: Instant;
 }
 export interface Shelter { id: string; cityId: string; name: string; species: Species; fee: number; currency: string; confirmed: boolean }
 
@@ -104,125 +95,14 @@ export const WALKER_30: Readonly<Record<string, { fee: number; currency: string 
   'uk-eng-london': { fee: 14.19, currency: 'GBP' }, 'ie-lei-dublin': { fee: 15, currency: 'EUR' },
 };
 
-
-/**
- * A dog's bath (from 2026-10-04): the ASPCA's at least once every three
- * months. A cat is brushed and bathed only when it needs it, so none is due.
- * Each town's named groomer, a medium dog's bath at its own list's price
- * (`research-pet-care.json`, read 2026-10-03; New Haven's secondhand from its
- * booking page's summary, Mexico City's the basic package). Toronto's is before
- * Ontario's HST, the others as listed. A bath at home is SLATE's estimate: half
- * an hour, and a bath's water.
- */
-export const GROOM_EVERY_DAYS = 90;
-export const HOME_BATH_MINUTES = 30;
-export const GROOMERS: Readonly<Record<string, { name: string; bath: number; currency: string; plusTax?: true }>> = {
-  'us-ny-newyork': { name: 'Urban Woof NYC', bath: 90, currency: 'USD' },
-  'us-ca-losangeles': { name: 'Mobile Dog Grooming LA', bath: 85, currency: 'USD' },
-  'us-ct-newhaven': { name: 'Pawtero', bath: 69, currency: 'USD' },
-  'uk-eng-london': { name: 'Dogtown', bath: 53, currency: 'GBP' },
-  'ie-lei-dublin': { name: 'Glamour Dogs', bath: 45, currency: 'EUR' },
-  'ca-on-toronto': { name: 'K9+', bath: 105, currency: 'CAD', plusTax: true },
-  'ca-bc-vancouver': { name: 'Woof & Meow Spa', bath: 95, currency: 'CAD' },
-  'mx-cmx-mexicocity': { name: 'Barbacan', bath: 295, currency: 'MXN' },
+/** A pet in the cabin, one way, by the country flown from; null where the airline takes none. */
+export const CABIN_FEE: Readonly<Record<string, { fee: number; currency: string } | null>> = {
+  us: { fee: 150, currency: 'USD' },
+  ca: { fee: 55, currency: 'CAD' },
+  mx: { fee: 1_520, currency: 'MXN' },
+  ie: null,
+  uk: null,
 };
-
-/** When a dog's next bath is due: three months from its last, or from when it came. */
-export const groomDue = (pet: Pet): Instant => (pet.groomedAt ?? pet.adoptedAt) + GROOM_EVERY_DAYS * MS_DAY;
-
-/** The groomer's bath where they live, in the save's money, or why there isn't one. */
-export function groomerPrice(sim: Simulation, person: Person): Money | string {
-  const g = GROOMERS[person.home?.cityId ?? ''];
-  if (!g) return 'SLATE keeps no groomer where you live.';
-  return Math.round(inSaveMoney(sim, Math.round(g.bath * 100), g.currency) * (g.plusTax ? 1 + salesTaxRate(person.home!.cityId, sim.now, 'goods') : 1));
-}
-
-/** Whether a shelter's animal comes chipped, where the law asks it of its species (`CHIP_LAW`). */
-const chippedByLaw = (shelter: Shelter): boolean => { const c = CITIES.get(shelter.cityId); return Boolean(c && (CHIP_LAW[c.parentId] ?? CHIP_LAW[c.countryId])?.includes(shelter.species)); };
-
-/** When it was last vaccinated against rabies: its own record, or a year before its vaccines run out (a shelter's and the yearly visit's include it). */
-export const rabiesOf = (pet: Pet): Instant | undefined => pet.rabiesAt ?? (pet.vetUntil !== undefined ? pet.vetUntil - 365 * MS_DAY : undefined);
-
-/** The rule a country holds a pet coming from another to: its own, its rule for that country, or nothing where it asks nothing. */
-export function entryRule(fromCountry: string, toCountry: string): Omit<EntryRule, 'from'> | undefined {
-  if (fromCountry === toCountry) return undefined;
-  const rule = PET_ENTRY[toCountry];
-  if (!rule || rule.freeFrom?.includes(fromCountry)) return undefined;
-  return rule.from?.[fromCountry] ?? rule;
-}
-
-/**
- * What a pet lacks to come into a country from another, arriving then: each
- * paper the place asks of its species, held and good on the day (from
- * 2026-10-04). Empty where it has them all, or nothing is asked.
- */
-export function entryMissing(pet: Pet, fromCountry: string, toCountry: string, arriveAt: Instant, opts: { lasting?: boolean } = {}): Paper[] {
-  const rule = entryRule(fromCountry, toCountry);
-  if (!rule) return [];
-  const rabies = rabiesOf(pet);
-  const good: Record<Paper, () => boolean> = {
-    microchip: () => pet.chippedAt !== undefined && pet.chippedAt <= arriveAt,
-    // Good a year from the dose, and only after the place's own wait; Britain's chip before it.
-    rabies: () => rabies !== undefined && rabies <= arriveAt - (rule.rabiesDays ?? 0) * MS_DAY && arriveAt < rabies + 365 * MS_DAY && (!rule.rabiesDays || (pet.chippedAt !== undefined && pet.chippedAt <= rabies)),
-    // An EU pet passport is good into Ireland and Britain as long as it's held; a certificate for its own country, its own days.
-    certificate: () => (pet.certificate?.passport === true && PASSPORT_GOOD_INTO.includes(toCountry)) || (pet.certificate?.to === toCountry && pet.certificate.at <= arriveAt && arriveAt - pet.certificate.at <= (rule.certificateDays ?? 10) * MS_DAY),
-    tapeworm: () => pet.tapewormAt !== undefined && arriveAt - pet.tapewormAt >= (rule.tapewormHours?.[0] ?? 0) * 3_600_000 && arriveAt - pet.tapewormAt <= (rule.tapewormHours?.[1] ?? 0) * 3_600_000,
-    importForm: () => pet.importFormAt !== undefined && pet.importFormAt <= arriveAt && arriveAt - pet.importFormAt <= (rule.formDays ?? 0) * MS_DAY,
-  };
-  // Looking ahead to a way home, only what lasts: a certificate or a tapeworm treatment is got near the day, at a vet where they are.
-  const near = (paper: Paper) => opts.lasting && (paper === 'tapeworm' || (paper === 'certificate' && pet.certificate?.passport !== true));
-  return rule.needs[pet.species].filter((paper) => !near(paper) && !good[paper]());
-}
-
-/** Where an EU pet passport, issued in Ireland, takes a pet in without another certificate. */
-const PASSPORT_GOOD_INTO: readonly string[] = ['ie', 'uk'];
-/** Where a vet issues an EU pet passport rather than a certificate for one trip. */
-const ISSUES_PASSPORTS: readonly string[] = ['ie'];
-
-/** Why the pets can't come into a country on a trip, naming each one's missing papers; nothing where they can. */
-export function entryRefusal(person: Person, fromCityId: string, toCityId: string, arriveAt: Instant, opts: { lasting?: boolean } = {}): string | undefined {
-  const from = CITIES.get(fromCityId)?.countryId ?? '';
-  const to = CITIES.get(toCityId);
-  const short = petsOf(person).map((pet) => ({ pet, missing: entryMissing(pet, from, to?.countryId ?? '', arriveAt, opts) })).filter((x) => x.missing.length > 0);
-  if (short.length === 0) return undefined;
-  return `${to?.name ?? 'There'} asks more of ${short.map((x) => `${x.pet.name} (${x.missing.map((m) => PAPER_LABEL[m]).join(', ')})`).join(' and ')} on arriving.`;
-}
-
-/** A microchip where they live, in the save's money, or why there's none (`content/petpapers.ts`). */
-export function chipPrice(sim: Simulation, person: Person): Money | string {
-  const c = CHIP_PRICE[person.currentLocationId];
-  if (!c) return 'SLATE keeps no microchip price here.';
-  return Math.round(inSaveMoney(sim, Math.round(c.price * 100), c.currency) * (c.plusTax ? 1 + salesTaxRate(person.currentLocationId, sim.now, 'goods') : 1));
-}
-
-/**
- * A health certificate for all the pets where they live: the vet's own, the
- * first and each more, or the town's vet visit a pet where no vet's is kept;
- * and the government's endorsement, once or a form each. Or why there's none.
- */
-export function certificatePrice(sim: Simulation, person: Person): Money | string {
-  const pets = petsOf(person);
-  if (pets.length === 0) return 'There are no pets of yours.';
-  const town = person.currentLocationId;
-  const own = CERTIFICATE_FEE[town];
-  let vet = 0;
-  if (own) vet = inSaveMoney(sim, Math.round((own.first + own.more * (pets.length - 1)) * 100), own.currency);
-  else for (const pet of pets) { const v = vetPrice(sim, person, pet); if (typeof v === 'string') return v; vet += v; }
-  const e = ENDORSEMENT[CITIES.get(town)?.countryId ?? ''];
-  const endorse = e ? inSaveMoney(sim, Math.round(e.fee * 100), e.currency) * (e.each ? pets.length : 1) : 0;
-  return vet + endorse;
-}
-
-/** A fee on arriving in a town with the pets, from another country: Heathrow's for pets in the hold, Canada's inspection but from America. Nothing elsewhere. */
-export function arrivalFee(sim: Simulation, person: Person, fromCityId: string, toCityId: string): Money {
-  const n = petsOf(person).length;
-  const from = CITIES.get(fromCityId)?.countryId ?? '';
-  const to = CITIES.get(toCityId);
-  if (n === 0 || !to || from === to.countryId) return 0;
-  const fee = ARRIVAL_FEE[toCityId] ?? ARRIVAL_FEE[to.countryId];
-  if (!fee || fee.notFrom?.includes(from)) return 0;
-  return inSaveMoney(sim, Math.round((fee.first + fee.more * (n - 1)) * 100), fee.currency);
-}
 
 export const PET_MONTH_KIND = 'pets.month';
 export const petsOf = (person: Person): Pet[] => (person.pets ??= []);
@@ -266,41 +146,15 @@ export function hotelPetFee(sim: Simulation, person: Person, hotelId: string | u
   return inSaveMoney(sim, Math.round(rule.fee * (rule.per === 'night' ? nights : 1) * 100), rule.currency) * pets.length;
 }
 
-/**
- * The pets' way on a flight out of a town, each way, by the departure
- * country's carrier (`content/petair.ts`, from 2026-10-04; until then one
- * cabin fee a country, charged for a 20 kg dog no cabin takes): a pet light
- * enough in the cabin where the carrier takes one there, otherwise the hold,
- * checked or as cargo, at its own fare, inside or outside the country; or why
- * it can't fly. Nothing where there are no pets or no flight.
- */
-export function petFlightFee(sim: Simulation, person: Person, fromCityId: string, toCityId: string, flights: number, at: Instant = sim.now): Money | string {
+/** The cabin fee for the pets on a flight out of a country, or why they can't fly; nothing where there are none. */
+export function cabinFeeFor(sim: Simulation, person: Person, fromCityId: string, flights: number): Money | string {
   const pets = petsOf(person);
   if (pets.length === 0 || flights === 0) return 0;
-  const from = CITIES.get(fromCityId);
-  const rule = PET_FLIGHT[from?.countryId ?? ''];
-  if (!rule) return 'SLATE keeps no airline’s pet rules here.';
-  const to = CITIES.get(toCityId)?.countryId ?? '';
-  const domestic = (rule.domesticTo ?? [from!.countryId]).includes(to);
-  const fare = (f: PetFare): Money => inSaveMoney(sim, Math.round((domestic ? f.domestic : f.abroad) * 100), domestic ? f.currency : f.abroadCurrency ?? f.currency);
-  let total = 0;
-  for (const pet of pets) {
-    // Britain takes no pet arriving in a cabin, so it comes in the hold (`content/petentry.ts`).
-    const cabinIn = !(entryRule(from!.countryId, to)?.noCabin);
-    if (rule.cabin && cabinIn && PET_KG[pet.species] <= CABIN_MAX_KG) { total += fare(rule.cabin); continue; }
-    const hold = rule.hold;
-    if ('refused' in hold) return `${pet.name}: ${hold.refused}`;
-    if (hold.closed && inClosed(at, from!.timeZone, hold.closed)) return `${rule.carrier} carries no pets in the hold from ${hold.closed.from[1]} December to ${hold.closed.to[1]} January.`;
-    total += fare(hold);
-  }
-  return total;
-}
-
-/** Whether a day falls in a closed stretch running from one month and day across the new year to another. */
-function inClosed(at: Instant, zone: string, closed: { from: [number, number]; to: [number, number] }): boolean {
-  const [, m, d] = new Date(at).toLocaleDateString('en-CA', { timeZone: zone }).split('-').map(Number) as [number, number, number];
-  const key = m * 100 + d;
-  return key >= closed.from[0] * 100 + closed.from[1] || key <= closed.to[0] * 100 + closed.to[1];
+  const country = CITIES.get(fromCityId)?.countryId ?? '';
+  const fee = CABIN_FEE[country];
+  if (fee === null) return 'Its airlines take no pet in the cabin.';
+  if (!fee) return 'SLATE keeps no airline’s pet fee here.';
+  return inSaveMoney(sim, Math.round(fee.fee * 100), fee.currency) * pets.length;
 }
 
 const dayKey = (sim: Simulation, at: Instant): string => new Date(at).toLocaleDateString('en-CA', { timeZone: sim.homeZone });
@@ -383,8 +237,6 @@ function petDay(sim: Simulation, person: Person): void {
         if (mine) sim.notify({ category: 'home', title: `${pet.name} Wasn’t Walked`, body: `${pet.name} had no walk yesterday; the PDSA asks an hour a day at the least.`, importance: 40, route: '/workspace/belongings' });
       } else pet.unwalkedDays = 0;
     }
-    // A dog's bath come due: said the day it is (from 2026-10-04).
-    if (pet.species === 'dog' && mine && dayKey(sim, groomDue(pet)) === yesterday) sim.notify({ category: 'home', title: `${pet.name} Is Due A Bath`, body: `Three months since ${pet.name}’s last bath, the ASPCA’s longest: bathe it at home or take it to the groomer, from Your Pets on Belongings.`, importance: 35, route: '/workspace/belongings' });
     if (pet.species === 'cat' && !away) {
       const before = litterLeftKg(person);
       let use = LITTER_KG_A_WEEK / 7;
@@ -449,69 +301,6 @@ export function registerPets(sim: Simulation): void {
     return { on: Boolean(p.on) };
   });
 
-  // A pet's papers for going abroad (from 2026-10-04): each at a vet where they are, an hour, as the vet's visit is.
-  sim.onCommand<{ petId: string }, { paid: Money }>('pets.chip', (p, { sim: s }) => {
-    const person = s.player;
-    const pet = petsOf(person).find((x) => x.id === p?.petId);
-    if (!pet) throw new CommandError('That isn’t a pet of yours.');
-    if (pet.chippedAt !== undefined) throw new CommandError(`${pet.name} is chipped already.`);
-    const price = chipPrice(s, person);
-    if (typeof price === 'string') throw new CommandError(price);
-    if (!spend(s, person, price, `${CHIP_PRICE[person.currentLocationId]!.clinic}, ${pet.name}’s microchip`, 'personal')) throw new CommandError('The payment didn’t go through.');
-    s.advanceTo(s.now + 60 * 60_000);
-    pet.chippedAt = s.now;
-    return { paid: price };
-  });
-  sim.onCommand<{ to: string }, { paid: Money }>('pets.certificate', (p, { sim: s }) => {
-    const person = s.player;
-    const to = String(p?.to ?? '');
-    if (!PET_ENTRY[to]) throw new CommandError('SLATE keeps no rules for taking a pet there.');
-    const price = certificatePrice(s, person);
-    if (typeof price === 'string') throw new CommandError(price);
-    if (!spend(s, person, price, 'A health certificate for the pets', 'personal')) throw new CommandError('The payment didn’t go through.');
-    s.advanceTo(s.now + 60 * 60_000);
-    // An Irish vet issues the EU pet passport, good into Ireland and Britain while it's held.
-    const passport = ISSUES_PASSPORTS.includes(CITIES.get(person.currentLocationId)?.countryId ?? '');
-    for (const pet of petsOf(person)) pet.certificate = { to, at: s.now, ...(passport ? { passport: true as const } : {}) };
-    return { paid: price };
-  });
-  sim.onCommand<{ petId: string }, { paid: Money }>('pets.tapeworm', (p, { sim: s }) => {
-    const person = s.player;
-    const pet = petsOf(person).find((x) => x.id === p?.petId);
-    if (!pet || pet.species !== 'dog') throw new CommandError('That isn’t a dog of yours.');
-    const price = vetPrice(s, person, pet);
-    if (typeof price === 'string') throw new CommandError(price);
-    if (!spend(s, person, price, `${pet.name}’s tapeworm treatment`, 'personal')) throw new CommandError('The payment didn’t go through.');
-    s.advanceTo(s.now + 60 * 60_000);
-    pet.tapewormAt = s.now;
-    return { paid: price };
-  });
-  sim.onCommand<{ petId: string }, { at: Instant }>('pets.import_form', (p, { sim: s }) => {
-    const pet = petsOf(s.player).find((x) => x.id === p?.petId);
-    if (!pet || pet.species !== 'dog') throw new CommandError('The CDC’s form is for a dog.');
-    pet.importFormAt = s.now;
-    return { at: s.now };
-  });
-
-  sim.onCommand<{ petId: string; at: 'home' | 'groomer' }, { paid: Money; due: Instant }>('pets.groom', (p, { sim: s }) => {
-    const person = s.player;
-    const pet = petsOf(person).find((x) => x.id === p?.petId);
-    if (!pet || pet.species !== 'dog') throw new CommandError('That isn’t a dog of yours.');
-    if (person.currentLocationId !== person.home?.cityId) throw new CommandError(p.at === 'groomer' ? 'Its groomer is where you live.' : 'It’s bathed at home.');
-    let paid = 0;
-    if (p.at === 'groomer') {
-      const price = groomerPrice(s, person);
-      if (typeof price === 'string') throw new CommandError(price);
-      if (!spend(s, person, price, `${GROOMERS[person.home!.cityId]!.name}, ${pet.name}’s bath`, 'personal')) throw new CommandError('The payment didn’t go through.');
-      paid = price;
-    } else {
-      countWash(person, true);
-      s.advanceTo(s.now + HOME_BATH_MINUTES * 60_000);
-    }
-    pet.groomedAt = s.now;
-    return { paid, due: groomDue(pet) };
-  });
-
   sim.onCommand<{ petId: string }, { paid: Money; until: Instant }>('pets.vet', (p, { sim: s }) => {
     const person = s.player;
     const pet = petsOf(person).find((x) => x.id === p?.petId);
@@ -523,8 +312,6 @@ export function registerPets(sim: Simulation): void {
     if (!spend(s, person, price, `${v.clinic}, ${pet.name}’s yearly visit and vaccines`, 'personal')) throw new CommandError('The payment didn’t go through.');
     s.advanceTo(s.now + 60 * 60_000);
     pet.vetUntil = s.now + 365 * MS_DAY;
-    // Its rabies vaccination with the rest, the day it's given (from 2026-10-04).
-    pet.rabiesAt = s.now;
     return { paid: price, until: pet.vetUntil };
   });
 
@@ -536,10 +323,8 @@ export function registerPets(sim: Simulation): void {
     const paid = inSaveMoney(s, Math.round(shelter.fee * 100), shelter.currency);
     if (paid > 0 && !spend(s, person, paid, `${shelter.name}, an adoption`, 'personal')) throw new CommandError(`It comes to ${formatMoney(paid, saveCurrency(s.universe))}, more than you can pay.`);
     // A shelter's animal comes vaccinated, for a year.
-    const pet: Pet = { id: s.nextId('pet'), species: shelter.species, name: String(p?.name ?? '').trim() || (shelter.species === 'dog' ? 'Your Dog' : 'Your Cat'), adoptedAt: s.now, from: shelter.id, vetUntil: s.now + 365 * MS_DAY, rabiesAt: s.now, ...(chippedByLaw(shelter) ? { chippedAt: s.now } : {}), fedOn: dayKey(s, s.now), ...(shelter.species === 'dog' ? { walkedOn: dayKey(s, s.now) } : {}) };
+    const pet: Pet = { id: s.nextId('pet'), species: shelter.species, name: String(p?.name ?? '').trim() || (shelter.species === 'dog' ? 'Your Dog' : 'Your Cat'), adoptedAt: s.now, from: shelter.id, vetUntil: s.now + 365 * MS_DAY, fedOn: dayKey(s, s.now), ...(shelter.species === 'dog' ? { walkedOn: dayKey(s, s.now) } : {}) };
     petsOf(person).push(pet);
-    // A rented home's pet deposit, where coming adds one (`petArrives`, from 2026-10-04).
-    petArrives(s, person);
     petMonth(s, person, pet);
     s.schedule({ at: s.now + 30 * MS_DAY, kind: PET_MONTH_KIND, label: `${pet.name}'s Month`, category: 'home', priority: 30, payload: { personId: person.id, petId: pet.id } });
     return { paid, petId: pet.id };

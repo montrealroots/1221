@@ -358,10 +358,6 @@ export interface Person {
   measures?: import('../systems/tailoring').Measures;
   /** The bag that goes away with them, where more than one is owned (`systems/luggage.ts`, from 2026-10-02). */
   luggageId?: string;
-  /** Groceries and toiletries in the basket, checked out a chain at a time (`systems/shoppingcart.ts`, from 2026-10-04). */
-  cart?: import('../systems/shoppingcart').CartLine[];
-  /** Packing lists kept to pack again, each a name and the things in it (`systems/luggage.ts`, from 2026-10-04). */
-  packingLists?: { id: string; name: string; itemIds: string[] }[];
   /** The town whose library card they hold (`systems/reading.ts`, from 2026-10-02). */
   libraryCard?: string;
   parkingPermit?: { cityId: string; at: number };

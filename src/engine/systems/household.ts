@@ -48,7 +48,6 @@ import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { CITIES } from '../content/geography';
-import { PET_TENANCY, type PetTenancy } from '../content/pettenancy';
 import { exchange } from '../content/currency';
 import { salesTaxRate } from '../content/tax';
 import { rentAt, type RentFigure } from '../content/rents';
@@ -216,24 +215,8 @@ const costsOf = (sim: Simulation, person: Person): LivingCosts | undefined =>
  * inside. A place of their own at a one-bedroom's rent is a one-bedroom.
  */
 export function rentOf(sim: Simulation, person: Person): Money {
-  const rent = costsOf(sim, person)?.rent ?? 0;
-  // Pet rent is rent, a pet a month, where the place's landlords ask it (`content/pettenancy.ts`, from 2026-10-04).
-  const pets = person.pets?.length ?? 0;
-  if (rent === 0 || pets === 0 || (person.home?.kind !== 'shared' && person.home?.kind !== 'own')) return rent;
-  const t = petTenancyAt(person.home.cityId);
-  return t && t.petRent > 0 ? rent + inSave(sim, t.petRent, t.currency) * pets : rent;
+  return costsOf(sim, person)?.rent ?? 0;
 }
-
-/** A tenant-with-a-pet's terms where a town is: its region's, or its country's; none where SLATE has read no rule. */
-export function petTenancyAt(cityId: string): PetTenancy | undefined {
-  const city = CITIES.get(cityId);
-  return city ? PET_TENANCY[city.parentId] ?? PET_TENANCY[city.countryId] : undefined;
-}
-const inSave = (sim: Simulation, amount: number, currency: string): Money => {
-  const cents = Math.round(amount * 100);
-  const into = saveCurrency(sim.universe);
-  return currency === into ? cents : exchange(cents, currency, into) ?? cents;
-};
 
 /**
  * The month's bills: power, heat, phone, internet and getting about, and from
@@ -679,34 +662,10 @@ function depositAccount(sim: Simulation, person: Person): Account | undefined {
  * The deposit a landlord asks here: a month's rent, or two for a record under
  * 620, never past what the place's law allows (`depositCapMonths`).
  */
-export function depositFor(sim: Simulation, person: Person, kind: Housing, where = person.currentLocationId, pets = person.pets?.length ?? 0): Money {
+export function depositFor(sim: Simulation, person: Person, kind: Housing, where = person.currentLocationId): Money {
   const rent = costsAt(where, kind, saveCurrency(sim.universe), sim.now).rent;
   const months = (person.credit?.score ?? 650) < POOR_RECORD ? 2 : 1;
-  const cap = Math.round(rent * depositCapMonths(where));
-  const base = Math.min(rent * months, cap);
-  // A pet's deposit, once however many (from 2026-10-04): inside the cap where the place's law counts it there (New York's
-  // and California's month), on top of it where it doesn't (Connecticut's), half the month's rent in British Columbia.
-  const t = pets > 0 ? petTenancyAt(where) : undefined;
-  if (!t) return base;
-  const pet = t.deposit === 'halfMonth' ? Math.round(rent / 2) : inSave(sim, t.deposit, t.currency);
-  return t.withinCap ? Math.min(base + pet, cap) : base + pet;
-}
-
-/**
- * A pet come to a rented home already lived in (from 2026-10-04): the part of
- * the deposit its coming adds, held with the rest and back with it on moving
- * out, as British Columbia's "when the pet arrives" has it. Nothing where the
- * home is owned, a sofa, or the place asks nothing more.
- */
-export function petArrives(sim: Simulation, person: Person): Money {
-  const home = person.home;
-  if (!home || (home.kind !== 'shared' && home.kind !== 'own')) return 0;
-  const n = person.pets?.length ?? 0;
-  const more = depositFor(sim, person, home.kind, home.cityId, n) - depositFor(sim, person, home.kind, home.cityId, n - 1);
-  const held = depositAccount(sim, person);
-  if (more <= 0 || !held) return 0;
-  sim.post({ memo: 'A pet deposit', category: 'rent', postings: [...drawFromBank(sim, person, more, false, true).postings, { accountId: held.id, amount: more }] });
-  return more;
+  return Math.min(rent * months, Math.round(rent * depositCapMonths(where)));
 }
 
 /**
@@ -721,16 +680,11 @@ export function petArrives(sim: Simulation, person: Person): Money {
  * South Wales; a month in Northern Ireland (the Private Tenancies Act (Northern
  * Ireland) 2022, from April 2023). Elsewhere no cap is on record, and a poor record's two months
  * stand. Until 2026-09-28 only Britain's was read, and a New York landlord
- * asked two months of a poor record, which the law forbids. A region is the
- * atlas's GeoNames first-level code: Canada's 08 is Ontario and 02 British
- * Columbia, Australia's 02 New South Wales and 07 Victoria. Until 2026-10-04
- * they were keyed 'ca-on', 'ca-bc', 'au-nsw' and 'au-vic', which no town's
- * region is, so Toronto, Vancouver, Sydney and Melbourne took no cap and a
- * poor record there was asked two months.
+ * asked two months of a poor record, which the law forbids.
  */
 const DEPOSIT_CAPS: Readonly<Record<string, number>> = {
   'us-ny': 1, 'us-ca': 1, 'us-ct': 2, 'uk-eng': 5 * 12 / 52, 'uk-nir': 1, 'uk-sct': 2, ie: 1, de: 3, fr: 1, is: 3,
-  'ca-08': 1, 'ca-02': 0.5, 'au-02': 4 * 12 / 52, 'au-07': 1,
+  'ca-on': 1, 'ca-bc': 0.5, 'au-nsw': 4 * 12 / 52, 'au-vic': 1,
 };
 export function depositCapMonths(cityId: string): number {
   const city = CITIES.get(cityId);

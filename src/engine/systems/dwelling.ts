@@ -52,9 +52,7 @@ import { BODY } from '../content/body';
 import { GARMENTS_PER_LOAD, cleanOutfits, swimsuitFor, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
 import { isOn } from './automation';
-import { DISHWASHER_CYCLES_A_DAY, detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
-import { kwhPerCycle, machineProduct, usualDishwasherKwh, type MachineKind } from './machines';
-import type { CatalogMarket, CatalogProduct } from '../content/products';
+import { detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
 import { amenitiesOf } from './hotels';
 import { machinesDay } from './appliancefaults';
 import { starterLuggage } from './luggage';
@@ -323,10 +321,7 @@ export function cleanerGetsIn(sim: Simulation, person: Person, dayStart: Instant
 export const WORN_CLOTHES = { hygiene: 55, morale: 1 };
 
 export interface Living {
-  /**
-   * The month's kilowatt-hours past the household's usual: a sauna's, and a TV's watching past the usual set's, which
-   * takes some off where the set draws less (both from 2026-10-04). Billed and cleared with the month's electricity.
-   */
+  /** The month's kilowatt-hours past the household's usual, a sauna's (from 2026-10-04): billed and cleared with the month's electricity. */
   extraKwh?: number;
   /**
    * Until 2026-10-01 clothes were a count of outfits, clean and dirty, and
@@ -344,8 +339,8 @@ export interface Living {
   rentersInsurance?: boolean;
   /** A renter's burglar alarm, monitored, which goes where they go (`systems/alarm.ts`, from 2026-09-30). */
   alarm?: boolean;
-  /** The month's loads in the home's own machines, for the bills, and from 2026-10-04 its dishwasher's runs. */
-  loads?: { washer: number; dryer: number; dishwasher?: number };
+  /** The month's loads in the home's own machines, for the bills. */
+  loads?: { washer: number; dryer: number };
   /** The month's days counted, and those at home, for the electricity used (`systems/electricity.ts`, from 2026-10-02). */
   billDays?: number;
   homeDays?: number;
@@ -424,31 +419,13 @@ export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant):
  * (EIA), at the town's cost of living. Until 2026-09-28 the hot water wasn't
  * counted. The water heated by gas is priced as if electric.
  */
-export const MACHINES = { usdKwh: 0.1819, washerUsd: (0.23 / 0.1) * 0.1819, dryerUsd: 2.4 * 0.1819 };
+export const MACHINES = { washerUsd: (0.23 / 0.1) * 0.1819, dryerUsd: 2.4 * 0.1819 };
 
-/** The model fitted at the home they own and live in, by kind, where one was chosen by make and model (`home.fit`). */
-export const fittedModel = (person: Person, kind: MachineKind): CatalogProduct | undefined => {
-  const id = livingIn(person)?.models?.[kind];
-  return id ? machineProduct(id) : undefined;
-};
-
-/**
- * The month's machine loads, in dollars, billed with the month's bills on the first, then counted again. From
- * 2026-10-04 a model fitted bills its own label's energy a cycle (`systems/machines.ts`): a washer's and a dryer's in
- * place of the usual machine's above, and a dishwasher's past the usual labeled one's where the home is, which a
- * typical household's electricity already runs. A model with no label read bills as the usual machine.
- */
+/** The month's machine loads, in dollars, billed with the month's bills on the first, then counted again. */
 export function machineUsd(person: Person): number {
   const l = person.living;
   if (!l?.loads) return 0;
-  const washer = kwhPerCycle(fittedModel(person, 'washer'));
-  const dryer = kwhPerCycle(fittedModel(person, 'dryer'));
-  const dish = kwhPerCycle(fittedModel(person, 'dishwasher'));
-  const market = CITIES.get(person.home?.cityId ?? '')?.countryId as CatalogMarket | undefined;
-  const usual = dish !== undefined && market ? usualDishwasherKwh(market) : undefined;
-  return l.loads.washer * (washer === undefined ? MACHINES.washerUsd : washer * MACHINES.usdKwh)
-    + l.loads.dryer * (dryer === undefined ? MACHINES.dryerUsd : dryer * MACHINES.usdKwh)
-    + (l.loads.dishwasher ?? 0) * (dish === undefined || usual === undefined ? 0 : (dish - usual) * MACHINES.usdKwh);
+  return l.loads.washer * MACHINES.washerUsd + l.loads.dryer * MACHINES.dryerUsd;
 }
 
 /**
@@ -517,8 +494,6 @@ export function livingDay(sim: Simulation, person: Person): void {
   const piled = !machine && (l.dishes ?? 0) > 0;
   l.tidy = clamp(l.tidy - TIDY.perDay * (piled ? 1 : TIDY.dishwasher), 0, 100);
   if (machine) delete l.dishes; else l.dishes = Math.min(WASH_UP.full, (l.dishes ?? 0) + 1);
-  // Its runs counted for the month's bill (from 2026-10-04), as the tablets are, a day's share of a year's.
-  if (machine) l.loads = { washer: l.loads?.washer ?? 0, dryer: l.loads?.dryer ?? 0, dishwasher: (l.loads?.dishwasher ?? 0) + DISHWASHER_CYCLES_A_DAY };
   if (free && isOn(person, 'washUp')) washUp(sim, person);
   if (free && isOn(person, 'tidy') && l.tidy < TIDY.messy + TIDY.perDay) l.tidy = Math.max(l.tidy, TIDY.tidiedUp);
   // A partner living there does their share of the housework, a cleaning when it adds up to one.
