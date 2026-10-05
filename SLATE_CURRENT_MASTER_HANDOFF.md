@@ -67,7 +67,8 @@ The owner paused the session on 2026-10-04 to carry on in another and asked that
 - `40d32435`: a checked bag the airline mishandles (`systems/baggage.ts`, decider `travel.bags`): delayed, damaged or lost at the DOT's and SITA's rates, and the claim on each, capped by Montreal or America's domestic limit.
 - `70bee39b`: a phone whose maker publishes no repair price is repaired at its share of its price (`REPAIR_SHARE`).
 - `ad60c507`: phones from 26 makers (`phones-a.json`).
-- A lives replay at `40d32435` was running: it is the first with the bag draw, so its lives may differ from the earlier replays. Merge to `main` from it if it is clean, by the method above.
+- The replay at `40d32435`, the first with the bag draw, was clean (New York 89, London 50, 0 errors and 0 anomalies), and `main` was merged from it as `2f7f2924`.
+- `4cee6df7`: clothing past 50 brands in nine categories (`research-clothing-swimsleep.json`, `research-clothing-shoesbags.json`): shoes 55, bags 50, watches 50, jewelry 50, swimwear 51, sleepwear 61, underwear 66, thermals 106; accessories 49.
 
 **Next, in order:**
 1. EU-label energy for the British and Irish appliance models, and a dishwasher's runs on the bill.
