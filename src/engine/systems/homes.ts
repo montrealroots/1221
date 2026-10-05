@@ -556,6 +556,8 @@ export interface OwnedHome {
   bare?: boolean;
   /** Appliances fitted, and when (`systems/appliances.ts`); the laundry it had before a washer was. */
   appliances?: Partial<Record<import('../content/appliances').ApplianceKind, Instant>>;
+  /** A fitted machine's make and model, where one was chosen (`content/appliancecatalog.ts`, from 2026-10-05): what its loads bill. */
+  applianceModels?: Partial<Record<import('../content/appliances').ApplianceKind, { product: string; offer: string; color?: string }>>;
   laundryBefore?: 'building' | 'none';
   /** A levy the builder was spared on the promise of living in it, owed if it's sold or let before `until` (`systems/construction.ts`). */
   clawback?: { until: Instant; amount: Money; memo: string };

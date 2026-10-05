@@ -19,7 +19,7 @@ import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { centsFromTyped, formatMoney, saveCurrency } from '@/engine/core/money';
 import { APPLIANCE_LABEL, APPLIANCE_LIFE } from '@/engine/content/appliances';
-import { applianceCost, appliancesIn, fitRefusal, hasAppliance } from '@/engine/systems/appliances';
+import { applianceCost, appliancesIn, fitRefusal, hasAppliance, applianceModels, fittedModel, modelFitCost } from '@/engine/systems/appliances';
 import { fixturesOf } from '@/engine/systems/dwelling';
 import { PIECE_LABEL, type Piece } from '@/engine/content/furniture';
 import { bedAtHome, bedQuote, bedsIn, furnishRefusal, mattressCost, mattressRefusal, mattressWorn, owns, pieceCost } from '@/engine/systems/furniture';
@@ -622,6 +622,8 @@ function FitOut({ owned }: { owned: OwnedHome }) {
   // The cheapest fitted first, an appliance without a published price last (`applianceCatalog`).
   const kinds = arrange(applianceCatalog(sim, owned.cityId)).map((e) => e.value);
   const table = appliancesIn(owned.cityId);
+  // A make and model where one's chosen (from 2026-10-05), by kind; the country's typical machine otherwise.
+  const [models, setModels] = useState<Record<string, string>>({});
   return (
     <div className="col gap-2">
       <div className="strong small">Appliances</div>
@@ -631,16 +633,20 @@ function FitOut({ owned }: { owned: OwnedHome }) {
             <thead><tr><th scope="col">Appliance</th><th scope="col">Has It</th><th scope="col" className="num">Fitted</th><th scope="col" className="num">Lasts</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
             <tbody>
               {kinds.map((kind) => {
-                const cost = applianceCost(sim, owned.cityId, kind);
+                const offered = applianceModels(sim, owned.cityId, kind);
+                const pick = offered.find((m) => m.offer.id === models[kind]);
+                const fit = pick ? modelFitCost(sim, owned, kind, pick.offer.id) : undefined;
+                const cost = typeof fit === 'number' ? fit : applianceCost(sim, owned.cityId, kind);
                 const no = fitRefusal(sim, person, owned, kind);
                 const has = hasAppliance(f, kind);
+                const fitted = fittedModel(owned, kind);
                 return (
                   <tr key={kind}>
-                    <td>{APPLIANCE_LABEL[kind]}{cost === undefined ? <div className="xs dim">No price published here</div> : null}</td>
+                    <td>{APPLIANCE_LABEL[kind]}{cost === undefined ? <div className="xs dim">No price published here</div> : null}{fitted ? <div className="xs dim">{`${fitted.brand} ${fitted.model}${typeof fitted.attrs.kwhPerCycle === 'number' ? `, ${fitted.attrs.kwhPerCycle} kWh A Cycle` : ''}`}</div> : null}{!has && offered.length > 0 ? <select aria-label={`Model Of ${APPLIANCE_LABEL[kind]}`} value={models[kind] ?? ''} onChange={(e) => setModels((x) => ({ ...x, [kind]: e.target.value }))}><option value="">The Typical Machine</option>{offered.map((m) => <option key={m.offer.id} value={m.offer.id}>{`${m.product.brand} ${m.offer.code ?? m.product.model}, ${formatMoney(m.price, cur, { cents: false })}${typeof m.product.attrs.kwhPerCycle === 'number' ? `, ${m.product.attrs.kwhPerCycle} kWh A Cycle` : ''}`}</option>)}</select> : null}</td>
                     <td className="small">{has ? 'Yes' : 'No'}</td>
                     <td className="num mono">{cost === undefined ? '—' : formatMoney(cost, cur, { cents: false })}</td>
                     <td className="num mono">{APPLIANCE_LIFE[kind]} years</td>
-                    <td>{!has && cost !== undefined && <Gated feature="home.fit" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.fit', { homeId: owned.id, kind }).ok) toast(`${APPLIANCE_LABEL[kind]} fitted.`, 'positive'); }}>Buy And Fit</Gated>}</td>
+                    <td>{!has && cost !== undefined && <Gated feature="home.fit" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.fit', { homeId: owned.id, kind, ...(pick ? { offerId: pick.offer.id } : {}) }).ok) toast(`${pick ? `${pick.product.brand} ${pick.product.model}` : APPLIANCE_LABEL[kind]} fitted.`, 'positive'); }}>Buy And Fit</Gated>}</td>
                   </tr>
                 );
               })}
