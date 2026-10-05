@@ -97,9 +97,10 @@ const MILE_KM = 1.609344;
 export const TEST_DRIVE_MINUTES: Readonly<Partial<Record<Jurisdiction, number>>> = { 'MX-CMX': 15 };
 const TEST_DRIVE_DEFAULT = 30;
 /** The transfer after a private sale: days allowed, whether it's done before driving, whether it's driven past the days, and a late penalty. */
-export const TRANSFER: Readonly<Partial<Record<Jurisdiction, { days: number; beforeDriving?: boolean; blocksAfter?: boolean; lateUsd?: number }>>> = {
+/** And from 2026-10-05 the transfer's own fee where read: British Columbia's 8 (B.C. Reg. 334/91), Ontario's  vehicle permit (ontario.ca). */
+export const TRANSFER: Readonly<Partial<Record<Jurisdiction, { days: number; beforeDriving?: boolean; blocksAfter?: boolean; lateUsd?: number; feeCad?: number }>>> = {
   GB: { days: 0, beforeDriving: true }, IE: { days: 0, beforeDriving: true },
-  'US-CA': { days: 10, lateUsd: 15 }, 'CA-BC': { days: 10, blocksAfter: true }, 'CA-ON': { days: 6, blocksAfter: true }, 'MX-CMX': { days: 21 },
+  'US-CA': { days: 10, lateUsd: 15 }, 'CA-BC': { days: 10, blocksAfter: true, feeCad: 28 }, 'CA-ON': { days: 6, blocksAfter: true, feeCad: 32 }, 'MX-CMX': { days: 21 },
 };
 
 export interface UsedListing { modelId: string; age: number; odometerKm: number; seller: 'dealer' | 'private' }
@@ -157,7 +158,7 @@ export function registerUsedCars(sim: Simulation, jurisdictionOf: (cityId: strin
     person.testDriven = driven;
     return driven;
   });
-  sim.onCommand<{ vehicleId: string }, { penalty: Money }>('vehicle.transfer', (p, { sim: s }) => {
+  sim.onCommand<{ vehicleId: string }, { penalty: Money; fee: Money }>('vehicle.transfer', (p, { sim: s }) => {
     const person = s.player;
     const v = (person.vehicles ?? []).find((x) => x.id === p?.vehicleId && x.soldAt === undefined);
     if (!v || v.transferBy === undefined) throw new CommandError('It’s in your name.');
@@ -166,8 +167,10 @@ export function registerUsedCars(sim: Simulation, jurisdictionOf: (cityId: strin
     const cur = saveCurrency(s.universe);
     const penalty = late ? (cur === 'USD' ? late : exchange(late, 'USD', cur) ?? late) : 0;
     if (penalty > 0 && !payFromBank(s, person, penalty, 'A late transfer’s penalty', 'vehicle')) throw new CommandError(`${formatMoney(penalty, cur)} is more than the bank can cover.`);
+    const fee = rule?.feeCad ? (cur === 'CAD' ? rule.feeCad * 100 : exchange(rule.feeCad * 100, 'CAD', cur) ?? rule.feeCad * 100) : 0;
+    if (fee > 0 && !payFromBank(s, person, fee, 'The transfer of ownership’s fee', 'vehicle')) throw new CommandError(`The fee, ${formatMoney(fee, cur)}, is more than the bank can cover.`);
     delete v.transferBy;
-    return { penalty };
+    return { penalty, fee };
   });
   sim.onCommand<{ modelId: string; age: number }, Inspected>('vehicle.inspect_used', (p, { sim: s }) => {
     const person = s.player;

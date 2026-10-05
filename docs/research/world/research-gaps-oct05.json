@@ -1,0 +1,270 @@
+{
+  "read": "2026-10-05",
+  "transfer": [
+    {
+      "place": "CA-BC",
+      "fee": 28,
+      "currency": "CAD",
+      "quote": "For transfer of title or licence under section 17 of the Act — $28",
+      "url": "https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/334_91"
+    },
+    {
+      "place": "CA-ON",
+      "fee": 32,
+      "currency": "CAD",
+      "quote": "Vehicle permit (all vehicles): $32",
+      "url": "https://www.ontario.ca/page/register-vehicle-permit-and-licence-plate"
+    }
+  ],
+  "clo": [
+    {
+      "item": "hat",
+      "clo": 0.01,
+      "row": "Hillside cap 3.0",
+      "source": "Validation of ISO 9920 clothing item insulation summation method based on an ambulance personnel clothing system (Industrial Health, peer-reviewed, measured on thermal manikin), Table 2",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7855677/"
+    }
+  ],
+  "alo": {
+    "tastingMenuCad": 185,
+    "cancellation": "Cancellations and/or party size decreases made less than 72 hours in advance of the reservation will be charged the price of the tasting menu per guest.",
+    "quote": "Cancellation policy (Dining Room / Kitchen Counter / Parlour Room), quoted verbatim from Alo's own reservations page: \"Cancellations and/or party size decreases made less than 72 hours in advance of the reservation will be charged the price of the tasting menu per guest.\" Private Dining Room: \"Cancellations made less than 5 days in advance will be charged for the price of the menu per guest to the credit card on file.\" Price: Alo's own site does not print tasting-menu dollar figures as static text (prices are shown only inside the Tock booking widget, which this tool could not load). The $185 CAD six-course tasting-menu price is confirmed by a third-party dated review quoting the figure directly: \"We reserved for the six-course tasting menu ($185 Canadian or roughly $133 U.S.)\" (foodgal.com, 2026). A ten-course tasting menu is separately listed at $245 CAD by tastingmenu.ca, sourced from Alo's own menu listing page; not independently verified against alorestaurant.com static text.",
+    "url": "https://alorestaurant.com/reservations/"
+  },
+  "swimwearIe": {
+    "retailers": [
+      {
+        "id": "dunnes-ie",
+        "name": "Dunnes Stores",
+        "market": "IE",
+        "kind": "mid",
+        "sizeSystem": "UK",
+        "storesIn": [],
+        "storesNote": null,
+        "online": {
+          "shippingFee": null,
+          "freeShippingThreshold": null,
+          "standardDeliveryDays": null,
+          "source": "not confirmed in this research pass"
+        },
+        "returns": {
+          "days": null,
+          "conditions": null,
+          "source": "not confirmed in this research pass"
+        }
+      },
+      {
+        "id": "penneys-ie",
+        "name": "Penneys",
+        "market": "IE",
+        "kind": "value",
+        "sizeSystem": "UK",
+        "storesIn": [],
+        "storesNote": "Trades online under the Primark name at primark.com/en-ie for the Irish market.",
+        "online": {
+          "shippingFee": null,
+          "freeShippingThreshold": null,
+          "standardDeliveryDays": null,
+          "source": "not confirmed in this research pass"
+        },
+        "returns": {
+          "days": null,
+          "conditions": null,
+          "source": "not confirmed in this research pass"
+        }
+      },
+      {
+        "id": "marks-spencer-ie",
+        "name": "Marks & Spencer",
+        "market": "IE",
+        "kind": "mid",
+        "sizeSystem": "UK",
+        "storesIn": [],
+        "storesNote": null,
+        "online": {
+          "shippingFee": null,
+          "freeShippingThreshold": 50,
+          "standardDeliveryDays": null,
+          "source": "marksandspencer.com/ie swimsuits listing page: \"free delivery is available when you spend over €50\""
+        },
+        "returns": {
+          "days": null,
+          "conditions": null,
+          "source": "not confirmed in this research pass"
+        }
+      },
+      {
+        "id": "next-ie",
+        "name": "Next",
+        "market": "IE",
+        "kind": "mid",
+        "sizeSystem": "UK",
+        "storesIn": [],
+        "storesNote": null,
+        "online": {
+          "shippingFee": null,
+          "freeShippingThreshold": null,
+          "standardDeliveryDays": null,
+          "source": "not confirmed in this research pass"
+        },
+        "returns": {
+          "days": null,
+          "conditions": null,
+          "source": "not confirmed in this research pass"
+        }
+      },
+      {
+        "id": "arnotts-ie",
+        "name": "Arnotts",
+        "market": "IE",
+        "kind": "premium",
+        "sizeSystem": "UK",
+        "storesIn": [],
+        "storesNote": null,
+        "online": {
+          "shippingFee": null,
+          "freeShippingThreshold": null,
+          "standardDeliveryDays": null,
+          "source": "not confirmed in this research pass"
+        },
+        "returns": {
+          "days": null,
+          "conditions": null,
+          "source": "not confirmed in this research pass"
+        }
+      }
+    ],
+    "products": [
+      {
+        "retailer": "dunnes-ie",
+        "market": "IE",
+        "brand": "Dunnes Stores",
+        "name": "Scuba Swimsuit",
+        "gender": "women",
+        "category": "swimwear",
+        "subcategory": "swimsuit",
+        "price": 25.0,
+        "salePrice": null,
+        "currency": "EUR",
+        "sizes": ["8", "10", "12", "14", "16", "18", "20", "22"],
+        "colors": [],
+        "material": "77% polyamide, 23% elastane; lining 92% polyester, 8% elastane",
+        "care": null,
+        "careText": null,
+        "url": "https://www.dunnesstores.com/scuba-swimsuit-1782329/p",
+        "date": "2026-10-05",
+        "confirmed": true,
+        "source": "dunnesstores.com product listing (price and material read directly; exact size run read from the adjoining women's swimsuit size filter, not confirmed on this specific product's own page)"
+      },
+      {
+        "retailer": "dunnes-ie",
+        "market": "IE",
+        "brand": "Dunnes Stores",
+        "name": "Plunge Swimsuit",
+        "gender": "women",
+        "category": "swimwear",
+        "subcategory": "swimsuit",
+        "price": 20.0,
+        "salePrice": null,
+        "currency": "EUR",
+        "sizes": [],
+        "colors": [],
+        "material": null,
+        "care": null,
+        "careText": null,
+        "url": "https://www.dunnesstores.com/plunge-swimsuit-1782310/p",
+        "date": "2026-10-05",
+        "confirmed": true,
+        "source": "dunnesstores.com product listing (price only; sizes/colors not confirmed on this product's own page in this pass)"
+      },
+      {
+        "retailer": "penneys-ie",
+        "market": "IE",
+        "brand": "Primark",
+        "name": "Triangle Bikini Top",
+        "gender": "women",
+        "category": "swimwear",
+        "subcategory": "bikini",
+        "price": 3.0,
+        "salePrice": null,
+        "currency": "EUR",
+        "sizes": [],
+        "colors": ["Black", "Yellow", "Red"],
+        "material": null,
+        "care": null,
+        "careText": null,
+        "url": "https://www.primark.com/en-ie/p/triangle-bikini-top-black-991120729804",
+        "date": "2026-10-05",
+        "confirmed": true,
+        "source": "primark.com/en-ie product listing, Irish (en-ie) locale; page itself returned a bot challenge on direct fetch, price and colour range taken from the indexed page content"
+      },
+      {
+        "retailer": "marks-spencer-ie",
+        "market": "IE",
+        "brand": "M&S",
+        "name": "Tummy Control Ruched Square Neck Swimsuit",
+        "gender": "women",
+        "category": "swimwear",
+        "subcategory": "swimsuit",
+        "price": 40.0,
+        "salePrice": null,
+        "currency": "EUR",
+        "sizes": ["6", "8", "10", "12", "14", "16", "18", "20", "22", "24"],
+        "colors": [],
+        "material": null,
+        "care": null,
+        "careText": null,
+        "url": "https://www.marksandspencer.com/ie/tummy-control-ruched-square-neck-swimsuit/p/clp60488140",
+        "date": "2026-10-05",
+        "confirmed": true,
+        "source": "marksandspencer.com/ie indexed product listing (direct fetch of this product URL returned the general swimsuits category page instead of this item; price and size range taken from the indexed product listing)"
+      },
+      {
+        "retailer": "next-ie",
+        "market": "IE",
+        "brand": "Next",
+        "name": "Navy Blue Essential Swim Shorts",
+        "gender": "men",
+        "category": "swimwear",
+        "subcategory": "swim-shorts",
+        "price": 19.5,
+        "salePrice": null,
+        "currency": "EUR",
+        "sizes": ["S", "M", "L", "XL", "2XL", "3XL"],
+        "colors": ["Navy Blue"],
+        "material": null,
+        "care": null,
+        "careText": null,
+        "url": "https://www.next.ie/en/style/st812532/n06960",
+        "date": "2026-10-05",
+        "confirmed": true,
+        "source": "next.ie indexed product listing (direct fetch of this product URL returned HTTP 403; price and colour taken from the indexed listing, sizes taken from the same style number's size run shown on related Next regional sites)"
+      },
+      {
+        "retailer": "arnotts-ie",
+        "market": "IE",
+        "brand": "Fantasie",
+        "name": "Ottawa Swimsuit",
+        "gender": "women",
+        "category": "swimwear",
+        "subcategory": "swimsuit",
+        "price": 112.0,
+        "salePrice": null,
+        "currency": "EUR",
+        "sizes": ["34D", "34DD", "34E", "34F", "34FF", "34G", "34GG", "36D", "36DD", "36E", "36F", "36FF", "36G", "36GG", "38D", "38DD", "38E", "38F", "38FF", "38G", "38GG", "40D", "40DD", "40E", "40F"],
+        "colors": ["Navy"],
+        "material": "86% Nylon/Polyamide, 14% Elastane",
+        "care": "Hand wash",
+        "careText": "Hand wash",
+        "url": "https://www.arnotts.ie/women/clothing/swimwear-beachwear/fantasie/ottawa-swimsuit/2000319454.html",
+        "date": "2026-10-05",
+        "confirmed": true,
+        "source": "arnotts.ie product page, read directly (listed as out of stock at time of reading, but the page still displays its regular, non-sale price)"
+      }
+    ]
+  },
+  "notFound": [
+    "clo: scarf — no hat/scarf-labelled entry with a stated clo value was found in an accessible copy of ISO 9920 Annex B (only the front matter/table of contents of the standard is available without purchase), in ASHRAE 55's own garment table (confirmed via the pythermalcomfort clo_individual_garments table, which states it is sourced from ISO 9920:2009, and contains no hat or scarf row), or in the McCullough/Havenith peer-reviewed databases reachable without a paywall. The only measured headwear item with a clo value found was a 'Hillside cap 3.0' (0.01 clo) and a 'Biwak cap' (0.03 clo) from a 2021 peer-reviewed ambulance-clothing validation study (PMC7855677); that study has no scarf entry.",
+    "alo tasting-menu price on Alo's own static site text — alorestaurant.com's menu and reservations pages describe the tasting menu but do not print its dollar price as static HTML; the price is rendered only inside the third-party Tock booking widget (exploretock.com/alorestaurant), which returned HTTP 403/timeout to this tool. The $185 CAD (6-course) figure used here is instead sourced from a dated third-party review (foodgal.com, 2026) that quotes the exact price Alo charged at booking."
+  ]
+}
