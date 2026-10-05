@@ -49,6 +49,7 @@ import { TIRE_PRODUCTS } from '../src/engine/content/tirecatalog.ts';
 import { GARDEN_PRODUCTS } from '../src/engine/content/gardencatalog.ts';
 import { COMPUTER_PRODUCTS } from '../src/engine/content/computercatalog.ts';
 import { CAR_AUDIO_PRODUCTS } from '../src/engine/content/caraudiocatalog.ts';
+import { PAINT_PRODUCTS } from '../src/engine/content/paintcatalog.ts';
 
 const OUT = 'docs/CATALOG-COVERAGE.md';
 const mode = process.argv.includes('--write') ? 'write' : 'check';
@@ -90,6 +91,8 @@ const READ = {
   // Tires and mowers by make and model (from 2026-10-05).
   tires: () => TIRE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, 1, o.market))),
   'car-audio': () => CAR_AUDIO_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, 1, o.market))),
+  // Interior paint, the first of building's finishes (from 2026-10-05).
+  building: () => PAINT_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, 1, o.market))),
   computers: () => COMPUTER_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, 1, o.market))),
   garden: () => GARDEN_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, 1, o.market))),
   lighting: () => LIGHTING_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),

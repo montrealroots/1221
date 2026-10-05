@@ -53,7 +53,7 @@ which never counts toward the target.
 | Vehicles | Factory Options | 63 | 100% | 976 | 1 / 7 / 136 | 1 | 976 | 976 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Tires And Wheels | 52 | 100% | 96 | 1 / 1 / 6 | 0 | 96 | 103 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Car Audio | 55 | 100% | 98 | 1 / 1 / 7 | 0 | 98 | 102 | 0 | CA, GB, IE, MX, US | No |
-| Building And Garden | Building Materials, Fixtures And Finishes | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
+| Building And Garden | Building Materials, Fixtures And Finishes | 60 | 100% | 83 | 1 / 1 / 4 | 0 | 83 | 84 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Garden Equipment | 52 | 100% | 117 | 1 / 2 / 6 | 0 | 117 | 118 | 0 | CA, GB, IE, MX, US | No |
 | Sport | Sports Equipment | 54 | 100% | 130 | 1 / 2 / 19 | 0 | 130 | 130 | 0 | CA, GB, IE, MX, US | No |
 | Pets | Pet Supplies | 57 | 100% | 85 | 1 / 1 / 3 | 0 | 85 | 88 | 11 | CA, GB, IE, MX, US | No |

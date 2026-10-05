@@ -57,6 +57,8 @@ const LOVED_IN: Record<LookAfter, readonly string[]> = {
   mow: ['nature'],
   // A sauna is an hour to yourself's kind of time; none of the interests kept is a sauna's own (from 2026-10-04).
   sauna: [],
+  // Painting a room is a home's decorating, a designer's pleasure (from 2026-10-05).
+  paint: ['design'],
   // An hour to yourself goes on what you'd spend an evening on.
   // Film History and Film Preservation are an evening with the old films.
   unwind: ['art', 'design', 'film', 'film_history', 'film_preservation', 'games', 'history', 'music', 'photography', 'reading', 'technology', 'television', 'theatre', 'writing'],
