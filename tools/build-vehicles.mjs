@@ -10,10 +10,28 @@
  * research's own notes; where the maker doesn't state it, nothing is added,
  * and the car says so.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 
 const r = JSON.parse(readFileSync('docs/research/world/research-vehicles.json', 'utf8'));
+// And from 2026-10-05 each market's other makes and models, a tranche a file (docs/research/catalog/cars-*.json, the same
+// shape): a model already in the catalog keeps its first reading, and one without a base price isn't sold.
+const TRANCHE_DIR = 'docs/research/catalog';
+// Ids the EV and pickup catalogs already hold, with their fuller readings: a tranche's same model isn't added again.
+const ELSEWHERE = new Set(['src/engine/content/evcatalog.ts', 'src/engine/content/pickups.ts'].flatMap((f) => [...readFileSync(f, 'utf8').matchAll(/id: ?['"]([a-z0-9-]+)['"]/g)].map((x) => x[1])));
+const idOf = (market, m) => `${market.toLowerCase()}-${slugOf(m.make)}-${slugOf(m.model)}`;
+const slugOf = (s) => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+for (const f of existsSync(TRANCHE_DIR) ? readdirSync(TRANCHE_DIR).filter((x) => /^cars-.*.json$/.test(x)).sort() : []) {
+  const t = JSON.parse(readFileSync(`${TRANCHE_DIR}/${f}`, 'utf8'));
+  for (const [market, list] of Object.entries(t.catalog ?? {})) {
+    const have = (r.catalog[market] ??= []);
+    for (const m of list ?? []) {
+      if (!m?.make || !m?.model || typeof m.basePrice?.amount !== 'number' || !(m.basePrice.amount > 0)) continue;
+      if (have.some((x) => x.make === m.make && x.model === m.model) || ELSEWHERE.has(idOf(market, m))) continue;
+      have.push({ ...m, rank: m.rank ?? null });
+    }
+  }
+}
 
 // The charges on top of a base price, as the research's notes state them, by market and model.
 const DELIVERY = {
@@ -94,7 +112,7 @@ export interface CarModel {
   id: string;
   /** A car where not given. */
   kind?: VehicleKind;
-  /** A pickup's body, from 2026-10-03 (`content/pickups.ts`): a car to drive, a goods vehicle to some taxes. */
+  /** A pickup's body, from 2026-10-03 (\`content/pickups.ts\`): a car to drive, a goods vehicle to some taxes. */
   body?: 'pickup';
   /** A motorcycle's or scooter's engine, cc: what taxes and insures it by size. */
   cc?: number;
@@ -102,7 +120,8 @@ export interface CarModel {
   make: string;
   model: string;
   trim: string;
-  rank: number;
+  /** Its place among the market's best-sellers of 2025, where it was one read; none for a model read from the rest of the lineup (from 2026-10-05). */
+  rank: number | null;
   /** The base price in cents of \`currency\`, and what's on top that the maker states. */
   price: number;
   currency: string;
@@ -112,7 +131,7 @@ export interface CarModel {
   fuel: 'petrol' | 'diesel' | 'hybrid' | 'phev' | 'ev';
   /** Liters per 100 km, or null where not yet rated. */
   per100km: number | null;
-  /** An electric car's consumption, kWh per 100 km (`content/evcatalog.ts`, from 2026-09-30). */
+  /** An electric car's consumption, kWh per 100 km (\`content/evcatalog.ts\`, from 2026-09-30). */
   kwhPer100km?: number;
   economyBasis: string;
   co2: number | null;
