@@ -2,7 +2,7 @@
 // (the master plan's household supplies, from 2026-10-02): cleaning products at the grocery chains, each
 // at its regular shelf price as the chain's own feed listed it, and what each town charges a household to
 // take its rubbish away.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 const OUT = 'src/engine/content/cleaning.ts';
 const j = JSON.parse(readFileSync('docs/research/world/research-household-supplies.json', 'utf8'));
@@ -14,14 +14,21 @@ const ML_A_LOAD = 32;
 const seen = new Set();
 // Each product's brand as its own name states it (`research-brands-cleaning.json`, read and corrected 2026-10-05).
 const BRANDS = new Map(JSON.parse(readFileSync('docs/research/world/research-brands-cleaning.json', 'utf8')).items.map((i) => [`${i.chain}|${i.name}`, i.brand ?? null]));
-const supplies = j.supplies.filter((p) => typeof p.price === 'number' && p.price > 0).map((p) => {
+// And from 2026-10-05 more brands at the same chains (`research-household-supplies-2.json`), each with its brand read.
+const MORE = 'docs/research/world/research-household-supplies-2.json';
+const all = [...j.supplies, ...(existsSync(MORE) ? JSON.parse(readFileSync(MORE, 'utf8')).supplies ?? [] : [])];
+// The second file's sizes in the first's units: fluid ounces and liters in milliliters, kilograms in grams. A powder
+// detergent with no washes printed is left out: its grams aren't loads.
+const UNIT = { 'fl oz': ['ml', 29.5735], l: ['ml', 1000], kg: ['g', 1000] };
+const norm = (p) => { const u = UNIT[String(p.sizeUnit).toLowerCase()]; return u ? { ...p, sizeQty: Math.round(p.sizeQty * u[1]), sizeUnit: u[0] } : p; };
+const supplies = all.map(norm).filter((p) => !(p.kind === 'laundry-detergent' && p.sizeUnit === 'g' && !p.loads)).filter((p) => typeof p.price === 'number' && p.price > 0).map((p) => {
   let id = `${p.chain}-${slug(p.name)}`.slice(0, 80);
   for (let n = 2; seen.has(id); n += 1) id = `${p.chain}-${slug(p.name)}`.slice(0, 76) + `-${n}`;
   seen.add(id);
   // Detergents are counted in washes and cycles.
   const counted = p.kind === 'laundry-detergent' || p.kind === 'dishwasher-detergent';
   const sizeQty = counted ? (p.loads ?? (p.sizeUnit === 'ct' ? p.sizeQty : Math.round(p.sizeQty / ML_A_LOAD))) : p.sizeQty;
-  return { id, chain: p.chain, market: p.market, name: p.name, brand: BRANDS.get(`${p.chain}|${p.name}`) ?? null, kind: p.kind, sizeQty, sizeUnit: counted ? 'ct' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.read ?? null, confirmed: p.confirmed === true };
+  return { id, chain: p.chain, market: p.market, name: p.name, brand: BRANDS.get(`${p.chain}|${p.name}`) ?? p.brand ?? null, kind: p.kind, sizeQty, sizeUnit: counted ? 'ct' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.read ?? null, confirmed: p.confirmed === true };
 });
 
 const waste = j.waste.map((w) => ({ cityId: w.cityId, collector: w.collector, currency: w.currency, basis: w.chargeBasis, source: w.source, confirmed: w.confirmed === true }));
