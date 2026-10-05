@@ -16,7 +16,7 @@ const PANELS = new Set(['LED', 'QLED', 'Mini-LED', 'OLED', 'QD-OLED', 'MicroLED'
 const num = (v) => (typeof v === 'number' && Number.isFinite(v) && v > 0 ? v : null);
 
 const dir = 'docs/research/catalog';
-const tranches = existsSync(dir) ? readdirSync(dir).filter((f) => /^tv-.*\.json$/.test(f) && f !== 'tv-power.json').sort() : [];
+const tranches = existsSync(dir) ? readdirSync(dir).filter((f) => /^tv-.*\.json$/.test(f) && f !== 'tv-power.json' && f !== 'tv-prices.json').sort() : [];
 const products = new Map();
 const offerIds = new Set();
 for (const f of tranches) {
@@ -52,6 +52,22 @@ for (const f of tranches) {
     }
   }
 }
+// Prices read afterwards for sets a tranche read without one (`tv-prices.json`, from 2026-10-05): each its own offer, on
+// the product of the same make and model.
+const PRICES = existsSync(`${dir}/tv-prices.json`) ? JSON.parse(readFileSync(`${dir}/tv-prices.json`, 'utf8')).offers ?? [] : [];
+let priced = 0;
+for (const o of PRICES) {
+  const market = String(o.market ?? '').toLowerCase();
+  const p = products.get(`${slug(o.brand)}|${slug(o.model)}`);
+  if (!p || !MARKETS.has(market) || !num(o.price) || !o.currency) continue;
+  if (p.offers.some((x) => x.market === market && x.seller === (o.seller ?? p.brand))) continue;
+  let id = `${market}-${p.id}`.slice(0, 90);
+  if (offerIds.has(id)) id = `${id.slice(0, 80)}-${slug(o.seller ?? 'seller')}`.slice(0, 100);
+  for (let n = 2; offerIds.has(id); n += 1) id = `${id.slice(0, 96)}-${n}`;
+  offerIds.add(id);
+  p.offers.push({ id, market, seller: o.seller ?? p.brand, channel: 'online', price: o.price, currency: o.currency, taxIncluded: o.taxIncluded === true, url: o.url ?? null, read: '2026-10-05', status: o.status === 'verified' ? 'verified' : 'secondhand' });
+  priced += 1;
+}
 const POWER = existsSync(`${dir}/tv-power.json`) ? JSON.parse(readFileSync(`${dir}/tv-power.json`, 'utf8')).models ?? [] : [];
 const norm = (s) => String(s ?? '').toUpperCase().replace(/[^A-Z0-9]/g, '');
 // A 16:9 screen's area, square inches, from its diagonal.
@@ -86,4 +102,4 @@ import type { CatalogProduct } from './products';
 export const TV_PRODUCTS: readonly CatalogProduct[] = JSON.parse(${JSON.stringify(JSON.stringify(list))});
 `;
 writeFileSync(OUT, body);
-console.log(`products ${list.length}, offers ${list.reduce((n, p) => n + p.offers.length, 0)}, brands ${new Set(list.map((p) => p.brand)).size}, with watts ${list.filter((p) => p.attrs.onModeWatts).length} (ENERGY STAR matched ${matched}, estimated ${estimated}), tranches ${tranches.length}`);
+console.log(`products ${list.length}, offers ${list.reduce((n, p) => n + p.offers.length, 0)}, brands ${new Set(list.map((p) => p.brand)).size}, with watts ${list.filter((p) => p.attrs.onModeWatts).length} (ENERGY STAR matched ${matched}, estimated ${estimated}), priced afterwards ${priced}, tranches ${tranches.length}`);
