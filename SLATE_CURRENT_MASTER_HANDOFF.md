@@ -70,12 +70,15 @@ The owner paused the session on 2026-10-04 to carry on in another and asked that
 - The replay at `40d32435`, the first with the bag draw, was clean (New York 89, London 50, 0 errors and 0 anomalies), and `main` was merged from it as `2f7f2924`.
 - `4cee6df7`: clothing past 50 brands in nine categories (`research-clothing-swimsleep.json`, `research-clothing-shoesbags.json`): shoes 55, bags 50, watches 50, jewelry 50, swimwear 51, sleepwear 61, underwear 66, thermals 106; accessories 49.
 - `20dc200e`: each market's whole new-car lineup, 816 models from 74 makes (`docs/research/catalog/cars-*.json`), beside the 40 best-sellers; a model the EV or pickup catalog already holds isn't added twice.
-- `229be4d5`: official economy for the lineup (`cars-economy.json`, the EPA's and the VCA's): 673 of 776 rated. A car still unrated takes the median of its fuel's rated cars, said to be SLATE's estimate. Mexico's lineup has no official economy read yet.
+- `229be4d5`: official economy for the lineup (`cars-economy.json`, the EPA's and the VCA's): 673 of 776 rated. A car still unrated takes the median of its fuel's rated cars, said to be SLATE's estimate. Mexico's best-sellers took their makers' NOM-163 figures on 2026-10-05 (`cars-economy-mx.json`, 43 of 48; CONUEE's own portal refused the read).
+- `388c6962`: a dishwasher's cycles on the electricity bill.
+- Next commit: motorcycles and scooters past 50 makers (`tools/build-motorcycles.mjs`, `content/motocatalog.ts`, 610 models from 54; petrol only, off-road models and any without a read engine size left out; an unrated one now holds a tank and burns the rated mean); a guest room and a friend from another town come to stay (`systems/houseguests.ts`, `social.ask_to_stay`, `social.cancel_stay`).
 
 **Next, in order:**
 1. EU-label energy for the British and Irish appliance models (EPREL needs an API key only the owner can request). A dishwasher's cycles have been on the electricity bill since 2026-10-05.
 2. More catalog breadth (`docs/CATALOG-COVERAGE.md`), each new category wired to something that reads it; Mexico's car economy.
-3. The open rows of `docs/REQUIREMENTS.md`.
+3. The open rows of `docs/REQUIREMENTS.md`: 41c's office use next.
+4. Electric motorcycles: licensed and taxed by power in kW (Britain's A1 to 11 kW, AM to 4 kW); the research has them (`moto-*.json`, fuel ev), the builder leaves them out until the rules read kW.
    - Rows a player can act on, with no published rate needed: 41c, a guest room and an office, each with something real that reads it.
    - 22f, garment repair, is held back for want of how much a repair restores; inventing that figure was avoided.
    - Stage 14 and deployment come last.

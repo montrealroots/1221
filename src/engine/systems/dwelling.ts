@@ -326,6 +326,8 @@ export interface Living {
   extraKwh?: number;
   /** The month's kilowatt-hours on a set of one's own, watched (from 2026-10-05): billed past the typical household's viewing, and cleared with the month's electricity. */
   tvKwh?: number;
+  /** The month's days a guest has stayed (`systems/houseguests.ts`, from 2026-10-05), each a person's water. */
+  guestDays?: number;
   /**
    * Until 2026-10-01 clothes were a count of outfits, clean and dirty, and
    * of loads drying. A save from before keeps them until its wardrobe of

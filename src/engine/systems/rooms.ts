@@ -59,6 +59,7 @@ import { BED_MARKET, DEFAULT_BED_SIZE, bedSize } from '../content/beds';
 import { fixturesOf, homePlace } from './dwelling';
 import { livingIn } from './homes';
 import { livesWithPartner } from './marriage';
+import { contactsOf } from './people';
 import { homeKeyOf, itemsOf, volumeOf, type Item, type Spot } from './items';
 import { pieceById } from './furnishings';
 import { bareHome } from './furniture';
@@ -77,11 +78,11 @@ export const MORNING = { fromMinute: 6 * 60 + 30, spanMinutes: 120, showerMinute
 export interface Rooms { floorM2: number; closetL: number; flatmates: number; /** Its bathrooms: an owned home's count, else one (from 2026-10-03). */ bathrooms: number }
 
 export type RoomKind = 'bedroom' | 'bathroom' | 'kitchen' | 'living';
-export type RoomUse = 'yours' | 'homeTheater' | 'danceStudio' | 'soundproofRoom' | 'library' | 'gym' | 'lodger' | 'storage' | 'spare';
+export type RoomUse = 'yours' | 'homeTheater' | 'danceStudio' | 'soundproofRoom' | 'library' | 'gym' | 'lodger' | 'storage' | 'guest' | 'spare';
 export interface Room { id: string; kind: RoomKind; label: string; use?: RoomUse; m2: number; access: 'yours' | 'shared'; fixtures: string[] }
 export const ROOM_USE_LABEL: Readonly<Record<RoomUse, string>> = {
   yours: 'Your Bedroom', homeTheater: 'A Home Theater', danceStudio: 'A Dance Studio', soundproofRoom: 'A Soundproofed Room', library: 'A Library',
-  gym: 'A Home Gym', lodger: 'A Lodger’s Room', storage: 'A Storage Room', spare: 'A Spare Room',
+  gym: 'A Home Gym', lodger: 'A Lodger’s Room', storage: 'A Storage Room', guest: 'A Guest Room', spare: 'A Spare Room',
 };
 /** The standard's single bedroom; a bathroom, SLATE's reading where the standard sets none; a storage room's usable share, SLATE's estimate. */
 export const SINGLE_M2 = 7.5;
@@ -108,10 +109,14 @@ export function roomList(sim: Simulation, person: Person): Room[] {
   const rooms: Room[] = [];
   // The spare bedrooms' uses: given over by works, then a home gym, then lodgers, then each as chosen.
   const uses: RoomUse[] = ['yours', ...GIVEN.filter((u) => f.includes(u as never)), ...(owned && fixturesOf(sim, person, owned.cityId, owned.facts, owned.id).gym === 'home' ? ['gym' as const] : []), ...(owned?.lodgers ?? []).map(() => 'lodger' as const)];
+  // A guest room keeps its bedroom while another is free for them (from 2026-10-05): they fill the others first.
+  const chosenOf = (n: number) => owned?.roomUses?.[`bedroom-${n + 1}`];
+  const order = [0, ...Array.from({ length: Math.max(0, beds - 1) }, (_, k) => k + 1).sort((a, b) => Number(chosenOf(a) === 'guest') - Number(chosenOf(b) === 'guest'))];
+  const auto = new Map(order.map((n, k) => [n, uses[k]] as const));
   for (let n = 0; n < beds; n += 1) {
     const id = `bedroom-${n + 1}`;
-    const chosen = owned?.roomUses?.[id];
-    const use: RoomUse = uses[n] ?? (chosen === 'storage' ? 'storage' : 'spare');
+    const chosen = chosenOf(n);
+    const use: RoomUse = auto.get(n) ?? (chosen === 'storage' || chosen === 'guest' ? chosen : 'spare');
     rooms.push({ id, kind: 'bedroom', label: n === 0 ? 'The Main Bedroom' : `Bedroom ${n + 1}`, use, m2: bedM2[n]! * scale, access: shared && n > 0 ? 'shared' : 'yours', fixtures: [] });
   }
   if (shared) for (const r of rooms.slice(1)) r.use = undefined;
@@ -121,8 +126,8 @@ export function roomList(sim: Simulation, person: Person): Room[] {
   return rooms;
 }
 
-/** Spare bedrooms free for something new: a lodger or a room given over. */
-export const spareRooms = (sim: Simulation, person: Person): Room[] => roomList(sim, person).filter((r) => r.kind === 'bedroom' && (r.use === 'spare' || r.use === 'storage'));
+/** Spare bedrooms free for something new: a lodger or a room given over; a guest room last of all, from 2026-10-05. */
+export const spareRooms = (sim: Simulation, person: Person): Room[] => roomList(sim, person).filter((r) => r.kind === 'bedroom' && (r.use === 'spare' || r.use === 'storage' || r.use === 'guest'));
 
 /** What a storage room adds to the built-in storage, liters. */
 export const storageRoomsL = (sim: Simulation, person: Person): number => roomList(sim, person).filter((r) => r.use === 'storage').reduce((n, r) => n + r.m2 * NDSS.ceilingM * STORAGE_ROOM_SHARE * 1_000, 0);
@@ -255,19 +260,21 @@ export function bathroomWait(sim: Simulation, person: Person, at: Instant, minut
 }
 
 export function registerRooms(sim: Simulation): void {
-  // A spare bedroom kept spare or used for storage (from 2026-10-04).
-  sim.onCommand<{ roomId: string; use: 'storage' | 'spare' }, { use: 'storage' | 'spare' }>('home.room_use', (p, { sim: s }) => {
+  // A spare bedroom kept spare or used for storage (from 2026-10-04), or made a guest room (from 2026-10-05).
+  sim.onCommand<{ roomId: string; use: 'storage' | 'spare' | 'guest' }, { use: 'storage' | 'spare' | 'guest' }>('home.room_use', (p, { sim: s }) => {
     const person = s.player;
     const owned = livingIn(person);
     if (!owned) throw new CommandError('A room’s use is chosen in a home you own and live in.');
     const room = roomList(s, person).find((r) => r.id === p?.roomId);
-    if (!room || room.kind !== 'bedroom' || (room.use !== 'spare' && room.use !== 'storage')) throw new CommandError('That isn’t a spare bedroom.');
-    const use = p.use === 'storage' ? 'storage' : 'spare';
+    if (!room || room.kind !== 'bedroom' || (room.use !== 'spare' && room.use !== 'storage' && room.use !== 'guest')) throw new CommandError('That isn’t a spare bedroom.');
+    const use = p.use === 'storage' || p.use === 'guest' ? p.use : 'spare';
+    // Not while a guest is staying in it or coming to (`systems/houseguests.ts`).
+    if (room.use === 'guest' && use !== 'guest' && contactsOf(person).some((c) => c.stay?.roomId === room.id)) throw new CommandError('A guest is staying in it, or coming to.');
     const before = owned.roomUses?.[room.id];
     owned.roomUses = { ...(owned.roomUses ?? {}), [room.id]: use };
     // Kept spare again only where what's stored still fits the closets without it.
     const rooms = roomsOf(s, person);
-    if (use === 'spare' && rooms && closetUsedL(person) > rooms.closetL + 1e-9) {
+    if (use !== 'storage' && rooms && closetUsedL(person) > rooms.closetL + 1e-9) {
       owned.roomUses = { ...owned.roomUses, [room.id]: before ?? 'storage' };
       throw new CommandError('What’s stored wouldn’t fit the closets without it: move some of it out first.');
     }
