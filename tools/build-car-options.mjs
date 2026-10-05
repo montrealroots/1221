@@ -8,13 +8,16 @@
  * times for a factory order are hand-kept above the line in the content file,
  * each with whose figure it is. Run: node tools/build-car-options.mjs
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 
 const r = JSON.parse(readFileSync('docs/research/world/research-car-options.json', 'utf8'));
 const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 const seen = new Set();
-const options = r.options.filter((o) => typeof o.price === 'number').map((o) => {
+// And from 2026-10-05 the other makes' options, a tranche a file (docs/research/catalog/car-options-*.json, the same shape).
+const DIR = 'docs/research/catalog';
+const more = existsSync(DIR) ? readdirSync(DIR).filter((f) => /^car-options-.*.json$/.test(f)).sort().flatMap((f) => JSON.parse(readFileSync(`${DIR}/${f}`, 'utf8')).options ?? []) : [];
+const options = [...r.options, ...more].filter((o) => typeof o.price === 'number').map((o) => {
   let key = `${o.id}:${o.category}:${slug(o.name)}`;
   for (let n = 2; seen.has(key); n += 1) key = `${o.id}:${o.category}:${slug(o.name)}-${n}`;
   seen.add(key);

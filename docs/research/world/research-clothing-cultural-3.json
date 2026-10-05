@@ -1,0 +1,256 @@
+{
+  "meta": {
+    "read": "2026-10-05",
+    "method": "Web search and direct fetch of brand/retailer product pages for cultural clothing brands not already in the catalog. Each price is the exact regular (non-sale) figure shown on the cited page on 2026-10-05, in the currency the page itself displayed; nothing was converted or estimated. Candidates dropped for lack of a readable page: Scotweb (now redirects to Clan.com, a different brand), Kyoto Kimono (individual one-of-a-kind product pages returned 404, likely sold through), Shop Zuri (no single brand found by that name; 'Zuri' is a dress-style name used by several unrelated boutiques), Aran Woollen Mills, Mokari Collective, Hanbok makers in the US other than Danha Seoul's own US-facing store."
+  },
+  "retailers": [
+    {
+      "id": "aran-sweater-market",
+      "name": "Aran Sweater Market",
+      "market": "US",
+      "kind": "mid",
+      "sizeSystem": "US alpha",
+      "storesIn": ["Ireland"],
+      "storesNote": "Irish retailer (Aran Islands / Galway); online store at aran.com displays prices in USD.",
+      "online": {
+        "shippingFee": null,
+        "freeShippingThreshold": null,
+        "standardDeliveryDays": null,
+        "source": "not confirmed in this research pass"
+      },
+      "returns": {
+        "days": null,
+        "conditions": null,
+        "source": "not confirmed in this research pass"
+      }
+    },
+    {
+      "id": "heritage-of-scotland",
+      "name": "The Heritage of Scotland",
+      "market": "GB",
+      "kind": "mid",
+      "sizeSystem": "UK alpha",
+      "storesIn": [],
+      "storesNote": null,
+      "online": {
+        "shippingFee": null,
+        "freeShippingThreshold": null,
+        "standardDeliveryDays": null,
+        "source": "not confirmed in this research pass"
+      },
+      "returns": {
+        "days": null,
+        "conditions": null,
+        "source": "not confirmed in this research pass"
+      }
+    },
+    {
+      "id": "lederhosen-store",
+      "name": "Lederhosen Store",
+      "market": "US",
+      "kind": "mid",
+      "sizeSystem": "US alpha",
+      "storesIn": [],
+      "storesNote": null,
+      "online": {
+        "shippingFee": null,
+        "freeShippingThreshold": 299,
+        "standardDeliveryDays": null,
+        "source": "lederhosenstore.com (free shipping on orders of $299 or more, as stated on site)"
+      },
+      "returns": {
+        "days": null,
+        "conditions": null,
+        "source": "not confirmed in this research pass"
+      }
+    },
+    {
+      "id": "japanese-style",
+      "name": "JapaneseStyle.com",
+      "market": "US",
+      "kind": "mid",
+      "sizeSystem": "US alpha",
+      "storesIn": [],
+      "storesNote": null,
+      "online": {
+        "shippingFee": null,
+        "freeShippingThreshold": null,
+        "standardDeliveryDays": null,
+        "source": "not confirmed in this research pass"
+      },
+      "returns": {
+        "days": null,
+        "conditions": null,
+        "source": "not confirmed in this research pass"
+      }
+    },
+    {
+      "id": "danha-seoul",
+      "name": "Danha Seoul",
+      "market": "US",
+      "kind": "designer",
+      "sizeSystem": "one size (Free)",
+      "storesIn": ["South Korea"],
+      "storesNote": "Korean hanbok design house; international/US-facing store at en.danhaseoul.com prices in USD.",
+      "online": {
+        "shippingFee": null,
+        "freeShippingThreshold": null,
+        "standardDeliveryDays": null,
+        "source": "not confirmed in this research pass"
+      },
+      "returns": {
+        "days": null,
+        "conditions": null,
+        "source": "not confirmed in this research pass"
+      }
+    },
+    {
+      "id": "ramon-puig",
+      "name": "Ramon Puig Guayaberas",
+      "market": "US",
+      "kind": "mid",
+      "sizeSystem": "US alpha",
+      "storesIn": [],
+      "storesNote": null,
+      "online": {
+        "shippingFee": null,
+        "freeShippingThreshold": null,
+        "standardDeliveryDays": null,
+        "source": "not confirmed in this research pass"
+      },
+      "returns": {
+        "days": null,
+        "conditions": null,
+        "source": "not confirmed in this research pass"
+      }
+    }
+  ],
+  "products": [
+    {
+      "retailer": "aran-sweater-market",
+      "market": "US",
+      "brand": "Aran Sweater Market",
+      "name": "Mens Heavyweight Traditional Aran Wool Sweater",
+      "gender": "men",
+      "category": "cultural",
+      "subcategory": "Aran sweater",
+      "price": 119.00,
+      "salePrice": null,
+      "currency": "USD",
+      "sizes": ["XS", "S", "M", "L", "XL", "2XL", "3XL"],
+      "colors": ["White with Natural Flecks", "White", "Moss Green", "Navy", "Damson", "Blackwatch", "Black", "Charcoal", "Skiddaw", "Caspian"],
+      "material": "100% new wool",
+      "care": null,
+      "careText": null,
+      "url": "https://www.aran.com/heavyweight-traditional-aran-wool-sweater-beige-with-natural-fleck",
+      "date": "2026-10-05",
+      "confirmed": true,
+      "source": "brand product page"
+    },
+    {
+      "retailer": "heritage-of-scotland",
+      "market": "GB",
+      "brand": "The Heritage of Scotland",
+      "name": "Women's Traditional Scottish Kilted Skirt - Black Watch Tartan",
+      "gender": "women",
+      "category": "cultural",
+      "subcategory": "tartan kilted skirt",
+      "price": 62.99,
+      "salePrice": null,
+      "currency": "GBP",
+      "sizes": [],
+      "colors": ["Black Watch Tartan"],
+      "material": null,
+      "care": null,
+      "careText": null,
+      "url": "https://www.theheritageofscotland.co.uk/kilts-14-c.asp",
+      "date": "2026-10-05",
+      "confirmed": true,
+      "source": "retailer product listing page"
+    },
+    {
+      "retailer": "lederhosen-store",
+      "market": "US",
+      "brand": "Lederhosen Store",
+      "name": "Forest Brown Bavarian Men's Lederhosen",
+      "gender": "men",
+      "category": "cultural",
+      "subcategory": "lederhosen",
+      "price": 209.95,
+      "salePrice": 159.95,
+      "currency": "USD",
+      "sizes": [],
+      "colors": ["Forest Brown"],
+      "material": "leather with hand embroidery",
+      "care": null,
+      "careText": null,
+      "url": "https://www.lederhosenstore.com/products/forest-brown-bavarian-mens-lederhosen-aol-21?variant=47241646702779",
+      "date": "2026-10-05",
+      "confirmed": true,
+      "source": "brand product page"
+    },
+    {
+      "retailer": "japanese-style",
+      "market": "US",
+      "brand": "JapaneseStyle.com",
+      "name": "Samurai Warrior Japanese Kimono Robe",
+      "gender": "unisex",
+      "category": "cultural",
+      "subcategory": "kimono robe",
+      "price": 99.95,
+      "salePrice": null,
+      "currency": "USD",
+      "sizes": [],
+      "colors": ["Very Dark Navy"],
+      "material": "100% sateen cotton",
+      "care": "machine washable",
+      "careText": "Machine washable.",
+      "url": "https://japanesestyle.com/product/kimono-samurai-warrior/",
+      "date": "2026-10-05",
+      "confirmed": true,
+      "source": "brand product page"
+    },
+    {
+      "retailer": "danha-seoul",
+      "market": "US",
+      "brand": "Danha",
+      "name": "Flower Ribbon Hanbok Skirt",
+      "gender": "women",
+      "category": "cultural",
+      "subcategory": "hanbok skirt",
+      "price": 339.00,
+      "salePrice": null,
+      "currency": "USD",
+      "sizes": ["Free"],
+      "colors": ["Mint"],
+      "material": "100% polyester",
+      "care": null,
+      "careText": null,
+      "url": "https://en.danhaseoul.com/product/DHSK20SS005MT_F",
+      "date": "2026-10-05",
+      "confirmed": true,
+      "source": "brand product page"
+    },
+    {
+      "retailer": "ramon-puig",
+      "market": "US",
+      "brand": "Ramon Puig",
+      "name": "The Original Guayabera - Long Sleeve",
+      "gender": "men",
+      "category": "cultural",
+      "subcategory": "guayabera",
+      "price": 59.99,
+      "salePrice": null,
+      "currency": "USD",
+      "sizes": ["S", "M", "L", "XL", "1XL", "2XL"],
+      "colors": ["White", "Beige", "Black", "Light Blue", "Light Pink", "Navy Blue"],
+      "material": null,
+      "care": null,
+      "careText": null,
+      "url": "https://ramonpuig.com/products/the-original-guayabera-long-sleeve",
+      "date": "2026-10-05",
+      "confirmed": true,
+      "source": "brand product page"
+    }
+  ]
+}

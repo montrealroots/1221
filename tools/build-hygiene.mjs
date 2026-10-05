@@ -14,6 +14,8 @@ const BRANDS = new Map(JSON.parse(readFileSync('docs/research/world/research-bra
 const brandOf = (p) => BRANDS.get(`${p.chain}|${p.name}`) ?? p.brand ?? null;
 // And from 2026-10-05 makeup and hair styling at the same chains, with the SCCS's grams a day for each (`research-cosmetics.json`).
 const COSMETICS = existsSync('docs/research/world/research-cosmetics.json') ? JSON.parse(readFileSync('docs/research/world/research-cosmetics.json', 'utf8')) : { products: [], usage: [] };
+// And more brands at the same chains (`research-cosmetics-2.json`), the amounts the first file's.
+if (existsSync('docs/research/world/research-cosmetics-2.json')) COSMETICS.products = [...(COSMETICS.products ?? []), ...(JSON.parse(readFileSync('docs/research/world/research-cosmetics-2.json', 'utf8')).products ?? [])];
 const COSMETIC_KINDS = ['foundation', 'lipstick', 'mascara', 'eye-shadow', 'eyeliner', 'hair-styling'];
 const cosmeticUse = Object.fromEntries((COSMETICS.usage ?? []).filter((u) => COSMETIC_KINDS.includes(u.kind) && u.gPerDay > 0).map((u) => [u.kind, u.gPerDay]));
 

@@ -20,14 +20,14 @@ which never counts toward the target.
 | Apparel | Sleepwear | 60 | 100% | 214 | 1 / 3 / 13 | 0 | 3098 | 233 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Swimwear | 53 | 100% | 201 | 1 / 3 / 11 | 0 | 611 | 206 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Thermals, Shapewear, Hosiery And Slips | 106 | 100% | 413 | 1 / 4 / 15 | 0 | 1141 | 415 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Cultural Clothing | 46 | 92% | 98 | 1 / 2 / 3 | 0 | 420 | 98 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Cultural Clothing | 52 | 100% | 104 | 1 / 2 / 3 | 0 | 530 | 104 | 0 | CA, GB, IE, MX, US | No |
 | Footwear | Shoes, Boots And Sandals | 52 | 100% | 161 | 1 / 2 / 15 | 0 | 1634 | 178 | 0 | CA, GB, IE, MX, US | No |
 | Footwear | Sneakers | 1 | 2% | 30 | 30 / 30 / 30 | 0 | 403 | 30 | 0 | — | No |
-| Accessories | Bags | 49 | 98% | 116 | 1 / 2 / 9 | 0 | 165 | 120 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Bags | 54 | 100% | 123 | 1 / 2 / 9 | 0 | 185 | 128 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Hats, Scarves, Belts And Small Accessories | 67 | 100% | 188 | 1 / 3 / 17 | 0 | 512 | 194 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Watches | 47 | 94% | 113 | 1 / 2 / 8 | 0 | 113 | 113 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Watches | 54 | 100% | 125 | 1 / 2 / 8 | 0 | 126 | 125 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Jewelry | 50 | 100% | 105 | 1 / 2 / 15 | 0 | 166 | 106 | 0 | CA, GB, IE, MX, US | No |
-| Accessories | Luggage | 47 | 94% | 1738 | 1 / 30 / 100 | 2 | 6018 | 3233 | 0 | CA, GB, IE, MX, US | No |
+| Accessories | Luggage | 53 | 100% | 1745 | 1 / 26 / 100 | 2 | 6041 | 3241 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Phones | 53 | 100% | 110 | 1 / 1 / 10 | 0 | 236 | 377 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 0 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
 | Electronics | Computers | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
@@ -40,17 +40,17 @@ which never counts toward the target.
 | Home | Lighting | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Home | Kitchenware | 54 | 100% | 84 | 1 / 1 / 6 | 0 | 84 | 85 | 0 | CA, GB, IE, MX, US | No |
 | Personal Care | Toiletries And Grooming | 82 | 100% | 182 | 1 / 1 / 15 | 0 | 182 | 183 | 1 | CA, GB, IE, MX, US | No |
-| Personal Care | Cosmetics And Haircare | 26 | 52% | 62 | 1 / 1 / 10 | 0 | 62 | 64 | 0 | CA, GB, IE, MX, US | No |
+| Personal Care | Cosmetics And Haircare | 38 | 76% | 77 | 1 / 1 / 10 | 0 | 77 | 79 | 0 | CA, GB, IE, MX, US | No |
 | Household | Cleaning Products And Consumables | 59 | 100% | 119 | 1 / 1 / 9 | 0 | 119 | 124 | 0 | CA, GB, IE, MX, US | No |
 | Food | Groceries | 160 | 100% | 461 | 1 / 1 / 59 | 0 | 461 | 472 | 41 | CA, GB, IE, MX, US | No |
 | Food | Beverages | 57 | 100% | 71 | 1 / 1 / 3 | 0 | 71 | 74 | 1 | CA, GB, IE, MX, US | No |
 | Vehicles | Cars, Pickups And Vans | 74 | 100% | 481 | 1 / 4 / 22 | 0 | 481 | 829 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Motorcycles And Scooters | 66 | 100% | 580 | 1 / 7 / 44 | 0 | 580 | 691 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Bicycles, E-Bikes And ATVs | 72 | 100% | 354 | 1 / 4 / 17 | 0 | 354 | 372 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Motorhomes And Campervans | 49 | 98% | 76 | 1 / 1 / 4 | 0 | 76 | 78 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Motorhomes And Campervans | 53 | 100% | 80 | 1 / 1 / 4 | 0 | 80 | 82 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Boats | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: recreational boat makers number in the dozens, few publishing prices |
 | Vehicles | Light Aircraft | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: a handful of makers build new light aircraft for private owners |
-| Vehicles | Factory Options | 16 | 32% | 643 | 5 / 34 / 136 | 1 | 643 | 643 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Factory Options | 63 | 100% | 976 | 1 / 7 / 136 | 1 | 976 | 976 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Tires And Wheels | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Vehicles | Car Audio | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Building And Garden | Building Materials, Fixtures And Finishes | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
@@ -70,6 +70,6 @@ Counted by their own structure: providers, branches or listings, and the towns t
 | Restaurants | 105 | 107 | 8 |
 | Clubs And Lessons | 30 | 31 | 8 |
 | Clinics, Dentists And Opticians | 35 | 35 | 8 |
-| Stores And Chains | 426 | 145 | 8 |
+| Stores And Chains | 446 | 145 | 8 |
 | Barbers And Salons | 36 | 37 | 8 |
 

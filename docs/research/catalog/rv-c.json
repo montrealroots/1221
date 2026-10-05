@@ -1,0 +1,82 @@
+{
+ "read": "2026-10-05",
+ "method": "Web search and direct fetch of manufacturer/dealer listing pages for new self-propelled motorhomes and campervans from makes not already in the catalog. Only models with a car-licence-qualifying gross weight as stated on the source page were kept (US GVWR under 26,000 lb; GB MTPLM at or under 3,500 kg). Prices are the exact figures shown on the cited page on 2026-10-05; nothing was estimated or converted except where noted. Several candidate makes (Scotweb-equivalent search misses aside) were dropped when no page could be found stating both a readable price and a qualifying gross weight: Vantage, Lunar, Elnagh, Etrusco, Campereve, Outside Van, Contravans, Pössl (no GB/IE-currency price page found), Remote Vans. Sportsmobile dropped 2026-10-05: its $50,000 reads as the conversion alone, without the van it is built on.",
+ "models": [
+  {
+   "market": "GB",
+   "make": "Frankia",
+   "model": "Now 7.0",
+   "kind": "motorhome",
+   "basePrice": {
+    "amount": 86995,
+    "currency": "GBP",
+    "includesTax": true,
+    "url": "https://www.smcmotorhomes.co.uk/vehicle/new-2026-frankia-now-70-motorhome-7932",
+    "sourceType": "primary"
+   },
+   "fuel": "diesel",
+   "grossKg": 3500,
+   "grossBasis": "MTPLM as stated on the dealer (sole UK Frankia dealer, SMC Motorhomes) listing page.",
+   "berths": 4,
+   "lengthM": 7.05,
+   "economy": null
+  },
+  {
+   "market": "GB",
+   "make": "Eura Mobil",
+   "model": "Terrestra A 570 HS",
+   "kind": "motorhome",
+   "basePrice": {
+    "amount": 60739,
+    "currency": "GBP",
+    "includesTax": true,
+    "url": "https://www.practicalmotorhome.com/reviews/eura-mobil-terrestra-a-570-hs",
+    "sourceType": "secondary"
+   },
+   "fuel": "diesel",
+   "grossKg": 3500,
+   "grossBasis": "MTPLM as stated in the Practical Motorhome review, which cites the UK dealer (Geoff Cox) price.",
+   "berths": 4,
+   "lengthM": 5.98,
+   "economy": null
+  },
+  {
+   "market": "GB",
+   "make": "Itineo",
+   "model": "Cozi PJ700",
+   "kind": "motorhome",
+   "basePrice": {
+    "amount": 69995,
+    "currency": "GBP",
+    "includesTax": true,
+    "url": "https://www.dicksonsofperth.co.uk/vehicle/124099",
+    "sourceType": "primary"
+   },
+   "fuel": "diesel",
+   "grossKg": 3500,
+   "grossBasis": "MTPLM of 3,500 kg stated on the manufacturer's own model spec page (itineo-wohnmobile.de) for the PJ700; the price above is from a UK dealer listing of the same model.",
+   "berths": 5,
+   "lengthM": 6.99,
+   "economy": null
+  },
+  {
+   "market": "GB",
+   "make": "Rimor",
+   "model": "Horus 54",
+   "kind": "motorhome",
+   "basePrice": {
+    "amount": 56995,
+    "currency": "GBP",
+    "includesTax": true,
+    "url": "https://motorhomesandcaravansltd.co.uk/product-category/new-motorhomes-for-sale/new-rimor-motorhomes/rimor-horus/",
+    "sourceType": "primary"
+   },
+   "fuel": "diesel",
+   "grossKg": 3500,
+   "grossBasis": "MTPLM of 3,500 kg stated for the Rimor Horus range on the manufacturer technical-data listing (promobil.de); the price above is from a UK dealer's new-stock listing for the Horus 54.",
+   "berths": 3,
+   "lengthM": null,
+   "economy": null
+  }
+ ]
+}
