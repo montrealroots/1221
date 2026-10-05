@@ -28,6 +28,7 @@ import { RENTED_TRUCK } from '@/engine/content/furniture';
 import { assemblyFee, pieceRefusal, piecesCatalog, seatsAtHome } from '@/engine/systems/furnishings';
 import { buyTvRefusal, tvAtHome, tvCatalog } from '@/engine/systems/televisions';
 import { buySpeakerRefusal, speakerCatalog } from '@/engine/systems/speakers';
+import { handMower, lawnM2, mowerCatalog, mowerRefusal, robotFor } from '@/engine/systems/mowers';
 import { bulbCatalog, bulbRefusal, darkSockets, fitRefusal as bulbFitRefusal, lampCatalog, lampRefusal, lightsOf, spareBulbs } from '@/engine/systems/lighting';
 import { DeviceShop, type DeviceRow } from '@/ui/components/DeviceShop';
 import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
@@ -714,6 +715,39 @@ function Speakers() {
       fine="Each at its maker’s or a retailer’s own page, America’s and Canada’s prices with the place’s sales tax added; its power is its maker’s stated amplifier power. The one bought is the home’s speaker, what a music lover unwinds with." />
   );
 }
+const MOWER_KIND: Readonly<Record<string, string>> = { reel: 'Push Reel', corded: 'Corded Electric', battery: 'Battery', petrol: 'Petrol', robot: 'Robot' };
+/** A lawn mower (`systems/mowers.ts`, from 2026-10-05), for a home of theirs with a lawn: pushed to mow it, or a robot that keeps it. */
+function Mowers() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const gate = useFeature('garden.buy_mower');
+  const home = livingIn(person);
+  if (!home || !home.facts.features.includes('yard')) return null;
+  const hand = handMower(person);
+  const robot = robotFor(person, home);
+  const lawn = lawnM2(home);
+  const area = (r: DeviceRow) => (r.product.attrs.kind === 'robot' ? `${Math.round(Number(r.product.attrs.robotM2)).toLocaleString('en-US')} m²` : r.product.attrs.widthCm ? `${r.product.attrs.widthCm} cm` : '—');
+  const power = (r: DeviceRow) => { const a = r.product.attrs; return a.kind === 'corded' && a.watts ? `${a.watts} W` : a.kind === 'battery' && a.volts ? `${a.volts} V${a.ampHours ? `, ${a.ampHours} Ah` : ''}` : a.kind === 'petrol' && a.engineCc ? `${a.engineCc} cc` : '—'; };
+  const yours = [hand ? `Yours: ${hand.item.label}` : 'No mower to push', robot ? `a robot keeping the lawn` : ''].filter(Boolean).join(', ');
+  return (
+    <DeviceShop list="mowers" title={`Lawn Mowers · ${yours}${lawn !== undefined ? ` · A Lawn Of About ${Math.round(lawn).toLocaleString('en-US')} m²` : ''}`} shop={mowerCatalog(sim, person)} refusal={(id) => mowerRefusal(person, id)} command="garden.buy_mower" gate={gate} bought={(label) => `${label}, bought and brought home.`}
+      facets={{ brand: 'Maker', kind: 'Kind' }}
+      facetsOf={(r) => ({ brand: r.product.brand, kind: MOWER_KIND[String(r.product.attrs.kind)] ?? 'Mower' })}
+      columns={[
+        { head: 'Kind', cell: (r) => MOWER_KIND[String(r.product.attrs.kind)] ?? '—' },
+        { head: 'Cuts', num: true, cell: area },
+        { head: 'Power', cell: power },
+      ]}
+      compare={[
+        { label: 'Kind', value: (r) => MOWER_KIND[String(r.product.attrs.kind)] ?? '—' },
+        { label: 'Width Or Lawn', value: area },
+        { label: 'Power', value: power },
+        { label: 'Battery Included', value: (r) => (r.product.attrs.kind === 'battery' ? (r.product.attrs.batteryIncluded ? 'Yes' : 'No') : '—') },
+      ]}
+      fine="Each at its seller’s own page, America’s and Canada’s prices with the place’s sales tax. Mowing by hand needs one to push; a corded one’s watts for the mowing’s 1.9 hours, or a battery’s full charge, go on the electricity. A robot keeps the lawn through the season where its rated lawn is at least yours, the lot less the house’s floor, SLATE’s reading." />
+  );
+}
+
 const SOCKET_LABEL: Readonly<Record<string, string>> = { edison: 'Screw (E26/E27)', bayonet: 'Bayonet (B22)', gu10: 'Spot (GU10)', e14: 'Small Screw (E14)', e12: 'Candle (E12)', led: 'Built-In LED' };
 const LAMP_KIND: Readonly<Record<string, string>> = { floor: 'Floor Lamp', table: 'Table Lamp', desk: 'Desk Lamp', pendant: 'Pendant', ceiling: 'Ceiling Light', wall: 'Wall Light' };
 /**
@@ -893,6 +927,7 @@ function Furniture() {
       <Televisions />
       <Speakers />
       <Lighting />
+      <Mowers />
       <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="move-by">When You Move</label>

@@ -45,6 +45,8 @@ import { CLOTHING_RETAILERS } from '../src/engine/content/clothingcatalog.ts';
 import { SALONS } from '../src/engine/content/hygiene.ts';
 import { CLEANING } from '../src/engine/content/cleaning.ts';
 import { LIGHTING_PRODUCTS } from '../src/engine/content/lightingcatalog.ts';
+import { TIRE_PRODUCTS } from '../src/engine/content/tirecatalog.ts';
+import { GARDEN_PRODUCTS } from '../src/engine/content/gardencatalog.ts';
 
 const OUT = 'docs/CATALOG-COVERAGE.md';
 const mode = process.argv.includes('--write') ? 'write' : 'check';
@@ -83,6 +85,9 @@ const READ = {
   televisions: () => TV_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   audio: () => AUDIO_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   // Bulbs and lamps (from 2026-10-05), each lamp's finishes its variants.
+  // Tires and mowers by make and model (from 2026-10-05).
+  tires: () => TIRE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, 1, o.market))),
+  garden: () => GARDEN_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, 1, o.market))),
   lighting: () => LIGHTING_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   // Mattresses and frames (from 2026-10-05): IKEA's by name, makers' own by model, each size a variant of its model.
   mattresses: () => [

@@ -55,6 +55,7 @@ import { trainedSession } from './trainers';
 import { roomGone } from './latecheckout';
 import { runInShoes } from './resale';
 import { MOWN_CM, MOW_MINUTES, lawnOf, mow } from './lawns';
+import { handMower, mowKwh } from './mowers';
 import { livingIn } from './homes';
 import {
   DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
@@ -503,7 +504,8 @@ export function registerLife(sim: Simulation): void {
       if (action === 'swim') wearForSwim(s, person);
       else if (action === 'exercise' || action === 'ride' || action === 'court' || action === 'dance') wearOutfit(s, person, true);
       // The lawn cut (`systems/lawns.ts`, from 2026-10-02).
-      if (action === 'mow') { const home = livingIn(person); if (home) mow(home, s.now); }
+      // With the mower's draw on the month's electricity (`systems/mowers.ts`, from 2026-10-05).
+      if (action === 'mow') { const home = livingIn(person); if (home) { mow(home, s.now); const m = handMower(person); if (m) { const l = livingOf(person); l.extraKwh = (l.extraKwh ?? 0) + mowKwh(m.product); } } }
       // The place's spray, where there's some (from 2026-10-03).
       if (action === 'tidy') sprayUsed(s, person);
       if (action === 'washup') washUp(s, person);
@@ -727,7 +729,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'washup' && !(atHome(person) && place?.keeps)) return 'It isn’t your sink.';
   if (action === 'washup' && !livingOf(person).dishes) return 'There’s nothing to wash up.';
   if (action === 'washup' && !dishSoapFor(sim, person, 1, false)) return 'There’s no dish soap at home.';
-  if (action === 'mow') { const lawn = atHome(person) ? homeLawn(person) : undefined; if (!lawn) return 'There’s no lawn of yours here.'; if (lawn.cm < MOWN_CM + 1) return 'It’s cut.'; }
+  if (action === 'mow') { const lawn = atHome(person) ? homeLawn(person) : undefined; if (!lawn) return 'There’s no lawn of yours here.'; if (lawn.cm < MOWN_CM + 1) return 'It’s cut.'; if (!handMower(person)) return 'You have no mower to push; one is sold on Homes.'; }
   const end = sim.now + minutesFor(sim, action) * 60_000;
   const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);
   if (clash) return `${clash.label} is at ${formatTime(clash.at, sim.zone)}, and there isn’t time.`;

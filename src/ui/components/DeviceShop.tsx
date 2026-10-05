@@ -16,12 +16,14 @@ import { CatalogControls, CompareTable, CompareToggle, FavoriteToggle, ShowMore,
 
 export interface DeviceRow { product: CatalogProduct; offer: CatalogOffer; price: Money }
 
-export function DeviceShop({ list, title, shop, refusal, command, gate, bought, facets, facetsOf, columns, compare, fine }: {
+export function DeviceShop({ list, title, shop, refusal, command, gate, bought, facets, facetsOf, columns, compare, fine, payload, buyLabel }: {
   /** The command buying runs, and its guide gate, opened by the panel with its own name so the guide and the interface read it. */
   list: string; title: string; shop: readonly DeviceRow[]; refusal: (offerId: string) => string | undefined; command: string; gate: ReturnType<typeof useFeature>; bought: (label: string) => string;
   facets: Readonly<Record<string, string>>; facetsOf: (r: DeviceRow) => Record<string, string>;
   columns: readonly { head: string; num?: boolean; cell: (r: DeviceRow) => ReactNode }[];
   compare: readonly { label: string; value: (r: DeviceRow) => string }[]; fine: ReactNode;
+  /** What else the command is sent, and the button's word (from 2026-10-05: a set of tires names its car, and is fitted). */
+  payload?: Readonly<Record<string, unknown>>; buyLabel?: string;
 }) {
   const { sim, run, toast } = useGame();
   const cur = saveCurrency(sim.universe);
@@ -61,7 +63,7 @@ export function DeviceShop({ list, title, shop, refusal, command, gate, bought, 
                       {offered.length > 1 && <select aria-label={`Color Of ${e.label}`} value={color} onChange={(ev) => setColors((x) => ({ ...x, [r.offer.id]: ev.target.value }))}>{offered.map((c) => <option key={c} value={c}>{c}</option>)}</select>}
                       <FavoriteToggle list={list} id={r.offer.id} />
                       <CompareToggle on={compared.includes(r.offer.id)} onToggle={() => toggleCompare(r.offer.id)} />
-                      <button type="button" className="btn btn-sm btn-ghost" disabled={!gate.open || Boolean(no)} title={no ?? gate.reason} onClick={() => { if (run(command, { offerId: r.offer.id, ...(offered.length > 1 && color ? { color } : {}) }).ok) toast(bought(`${e.label}${offered.length > 1 && color ? `, ${color}` : ''}`), 'positive'); }}>Buy</button>
+                      <button type="button" className="btn btn-sm btn-ghost" disabled={!gate.open || Boolean(no)} title={no ?? gate.reason} onClick={() => { if (run(command, { ...payload, offerId: r.offer.id, ...(offered.length > 1 && color ? { color } : {}) }).ok) toast(bought(`${e.label}${offered.length > 1 && color ? `, ${color}` : ''}`), 'positive'); }}>{buyLabel ?? 'Buy'}</button>
                     </div>
                   </td>
                 </tr>

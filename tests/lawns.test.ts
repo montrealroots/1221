@@ -5,6 +5,7 @@
  * city's cut.
  */
 import { describe, expect, it } from 'vitest';
+import { mowerCatalog } from '@/engine/systems/mowers';
 import { quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, instantFromZoned } from '@/engine/core/time';
@@ -84,7 +85,7 @@ describe('the gardener and the city', () => {
     expect(ny.lawn!.noticeAt).toBeUndefined();
   });
 
-  it('mown by hand only at a home of yours with a lawn, and not when it’s cut', () => {
+  it('mown by hand only at a home of yours with a lawn, with a mower to push, and not when it’s cut', () => {
     const sim = life('us-ct-newhaven', 'lawn-mow');
     expect(lookAfterRefusal(sim, 'mow')).toBe('There’s no lawn of yours here.');
     const h = yard('us-ct-newhaven');
@@ -92,6 +93,10 @@ describe('the gardener and the city', () => {
     sim.player.home = { kind: 'owned', cityId: 'us-ct-newhaven', homeId: 'h1' } as never;
     expect(lookAfterRefusal(sim, 'mow')).toBe('It’s cut.');
     lawnOf(h)!.cm = 12;
+    // A mower to push (`systems/mowers.ts`, from 2026-10-05).
+    expect(lookAfterRefusal(sim, 'mow')).toBe('You have no mower to push; one is sold on Homes.');
+    const pushed = mowerCatalog(sim, sim.player).find((r) => r.product.attrs.kind !== 'robot')!;
+    sim.must({ kind: 'garden.buy_mower', payload: { offerId: pushed.offer.id } });
     expect(lookAfterRefusal(sim, 'mow')).toBeUndefined();
     const r = sim.execute({ kind: 'life.look_after', payload: { action: 'mow' } });
     expect(r.ok, r.error).toBe(true);

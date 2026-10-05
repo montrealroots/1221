@@ -154,6 +154,8 @@ export interface OwnedVehicle {
   transferBy?: Instant;
   /** The odometer when its everyday tires were last fitted (`systems/tires.ts`, from 2026-10-03). */
   tiresAtKm?: number;
+  /** The everyday set's model and life, where one was chosen (`systems/tires.ts`, from 2026-10-05). */
+  tires?: import('./tires').TireSet;
   /** A roof rack fitted, and the liters of a roof box on it (`systems/roofbox.ts`, from 2026-10-03). */
   roofRack?: true;
   roofBoxL?: number;
