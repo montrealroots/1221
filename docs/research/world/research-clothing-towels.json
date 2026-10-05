@@ -1,0 +1,3466 @@
+{
+ "meta": {
+  "read": "2026-10-05",
+  "method": "Researched real bath towels and bath sheets (single-towel regular prices, excluding sets/bundles) across US, CA, MX, GB and IE retailers via web search and direct page fetches of brand and retailer sites in October 2026. Each product's name, price and attributes were taken from what a search result snippet or a fetched page actually stated; where only a set price or only a price range was found and no single confirmed per-towel price could be read, that item was left out rather than estimated. Prices reflect what was read at the time of research and may have changed since; several retailers (Target, Macy's, Pendleton, Lands' End, RH) were running sales in October 2026, so both a regular 'price' and, where stated, a discounted 'salePrice' are recorded. Shipping and returns details were not confirmed in this research pass and are marked accordingly. Hudson's Bay was excluded because thebay.com no longer operates as an independent retailer (HBC ceased Canadian retail operations in June 2025; the Hudson's Bay name now exists only as a Canadian Tire house brand), so no current bath-towel page could be read for it.",
+  "checked": "2026-10-05: 7 dropped by hand: those not confirmed on the seller’s page, and those priced in another market’s currency (M&S’s and The White Company’s read on their American storefronts)."
+ },
+ "retailers": [
+  {
+   "id": "parachute",
+   "name": "Parachute",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "bollandbranch",
+   "name": "Boll & Branch",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "coyuchi",
+   "name": "Coyuchi",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "snowe",
+   "name": "Snowe",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "weezie",
+   "name": "Weezie",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "cariloha",
+   "name": "Cariloha",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "matouk",
+   "name": "Matouk",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "frette",
+   "name": "Frette",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "sferra",
+   "name": "Sferra",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "kassatex",
+   "name": "Kassatex",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "potterybarn",
+   "name": "Pottery Barn",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "westelm",
+   "name": "West Elm",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "crateandbarrel",
+   "name": "Crate & Barrel",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "target",
+   "name": "Target (Threshold / Casaluna)",
+   "market": "US",
+   "kind": "budget",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "walmart",
+   "name": "Walmart (Mainstays / Better Homes & Gardens)",
+   "market": "US",
+   "kind": "budget",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "amazon",
+   "name": "Amazon (Amazon Basics)",
+   "market": "US",
+   "kind": "budget",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "macys",
+   "name": "Macy's (Martha Stewart / Lauren Ralph Lauren / Hotel Collection / Wamsutta)",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "ralphlauren",
+   "name": "Ralph Lauren Home",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "jcpenney",
+   "name": "JCPenney (Fieldcrest)",
+   "market": "US",
+   "kind": "budget",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "landsend",
+   "name": "Lands' End",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "llbean",
+   "name": "L.L.Bean",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "pendleton",
+   "name": "Pendleton",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "kohls",
+   "name": "Kohl's (Avanti / Simply Vera Vera Wang / Royal Velvet)",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "homedepot",
+   "name": "The Home Depot (Nautica / Tommy Hilfiger)",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "restorationhardware",
+   "name": "Restoration Hardware",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "costco",
+   "name": "Costco (Kirkland Signature)",
+   "market": "US",
+   "kind": "budget",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "yvesdelorme",
+   "name": "Yves Delorme",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "peacockalley",
+   "name": "Peacock Alley",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "chortexusa",
+   "name": "Chortex USA",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "linenchest",
+   "name": "Linen Chest",
+   "market": "CA",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "simons",
+   "name": "Simons",
+   "market": "CA",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "liverpool",
+   "name": "Liverpool",
+   "market": "MX",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "palaciodehierro",
+   "name": "El Palacio de Hierro",
+   "market": "MX",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "vianney",
+   "name": "Vianney",
+   "market": "MX",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "christy",
+   "name": "Christy",
+   "market": "GB",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "dunelm",
+   "name": "Dunelm",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "johnlewis",
+   "name": "John Lewis",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "habitat",
+   "name": "Habitat (Argos)",
+   "market": "GB",
+   "kind": "budget",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "marksandspencer",
+   "name": "M&S",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "next",
+   "name": "Next",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "sheridan",
+   "name": "Sheridan",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "catherinelansfield",
+   "name": "Catherine Lansfield",
+   "market": "GB",
+   "kind": "budget",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "bedeckhome",
+   "name": "Bedeck",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "thewhitecompany",
+   "name": "The White Company",
+   "market": "GB",
+   "kind": "premium",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "soakandsleep",
+   "name": "Soak & Sleep",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "deyongs",
+   "name": "Deyongs",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "primark-gb",
+   "name": "Primark",
+   "market": "GB",
+   "kind": "budget",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "asda",
+   "name": "Asda (George)",
+   "market": "GB",
+   "kind": "budget",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "penneys",
+   "name": "Penneys",
+   "market": "IE",
+   "kind": "budget",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "primark-ie",
+   "name": "Primark",
+   "market": "IE",
+   "kind": "budget",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "dunelm-ie",
+   "name": "Dunelm",
+   "market": "IE",
+   "kind": "mid",
+   "sizeSystem": "towel size",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  }
+ ],
+ "products": [
+  {
+   "retailer": "parachute",
+   "market": "US",
+   "brand": "Parachute",
+   "name": "Classic Turkish Cotton Towels Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 59,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "30 x 56 in"
+   ],
+   "colors": [
+    "White",
+    "Bone",
+    "Dusk",
+    "Thyme",
+    "Spa"
+   ],
+   "material": "100% long-staple Turkish cotton, 700 gsm",
+   "care": null,
+   "careText": null,
+   "url": "https://parachutehome.com/products/classic-turkish-cotton-towels-bone",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "brand product page (fetched)"
+  },
+  {
+   "retailer": "parachute",
+   "market": "US",
+   "brand": "Parachute",
+   "name": "Soft Rib Towels Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 59,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "White",
+    "Dusk"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.parachutehome.com/products/soft-rib-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site price range, bath towel size"
+  },
+  {
+   "retailer": "bollandbranch",
+   "market": "US",
+   "brand": "Boll & Branch",
+   "name": "Plush Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 49,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "organic cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.bollandbranch.com/products/plush-bath-towel/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand product page"
+  },
+  {
+   "retailer": "bollandbranch",
+   "market": "US",
+   "brand": "Boll & Branch",
+   "name": "Turkish Ribbed Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 59,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "White"
+   ],
+   "material": "Turkish cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.bollandbranch.com/products/turkish-ribbed-bath-towel/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand product page"
+  },
+  {
+   "retailer": "bollandbranch",
+   "market": "US",
+   "brand": "Boll & Branch",
+   "name": "Turkish Ultra Plush Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 79,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "White"
+   ],
+   "material": "Turkish cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.bollandbranch.com/products/turkish-ultra-plush-bath-towel/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand product page"
+  },
+  {
+   "retailer": "bollandbranch",
+   "market": "US",
+   "brand": "Boll & Branch",
+   "name": "Plush Bath Sheet",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 69,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath sheet"
+   ],
+   "colors": [],
+   "material": "organic cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.bollandbranch.com/products/plush-bath-sheet",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand product page"
+  },
+  {
+   "retailer": "coyuchi",
+   "market": "US",
+   "brand": "Coyuchi",
+   "name": "Air Weight Organic Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 48,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "100% organic cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.coyuchi.com/products/organic-cotton-air-weight-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "coyuchi",
+   "market": "US",
+   "brand": "Coyuchi",
+   "name": "Air Weight Organic Bath Sheet",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 68,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath sheet"
+   ],
+   "colors": [],
+   "material": "100% organic cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.coyuchi.com/products/organic-cotton-air-weight-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "snowe",
+   "market": "US",
+   "brand": "Snowe",
+   "name": "Classic Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 31,
+   "salePrice": 24.8,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://snowehome.com/products/bath-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "snowe",
+   "market": "US",
+   "brand": "Snowe",
+   "name": "Honeycomb Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 42,
+   "salePrice": 33.6,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://snowehome.com/products/honeycomb-bath-towel",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "weezie",
+   "market": "US",
+   "brand": "Weezie",
+   "name": "Weezie Basics Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 50,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://weezietowels.com/collections/weezie-basics",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "weezie",
+   "market": "US",
+   "brand": "Weezie",
+   "name": "Signature Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 78,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://weezietowels.com/collections/bath-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "weezie",
+   "market": "US",
+   "brand": "Weezie",
+   "name": "Scallop Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 88,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://weezietowels.com/collections/bath-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "cariloha",
+   "market": "US",
+   "brand": "Cariloha",
+   "name": "Bamboo Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 39,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "30 x 56 in"
+   ],
+   "colors": [
+    "Ocean Mist",
+    "Blush"
+   ],
+   "material": "42% viscose from bamboo, 58% Turkish-combed cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.cariloha.com/bamboo-bath-towel",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "matouk",
+   "market": "US",
+   "brand": "Matouk",
+   "name": "Milagro Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 65,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.matouk.com/styles/bath/milagro",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "frette",
+   "market": "US",
+   "brand": "Frette",
+   "name": "Classic Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 95,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.frette.com/en_US/hotel-classic-bath-towel.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "frette",
+   "market": "US",
+   "brand": "Frette",
+   "name": "Suite Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 70,
+   "salePrice": 42,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.frette.com/en_US/suite-bath-towel.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "sferra",
+   "market": "US",
+   "brand": "Sferra",
+   "name": "Oasi Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 57,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.sferra.com/collections/bath-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "sferra",
+   "market": "US",
+   "brand": "Sferra",
+   "name": "Bello Nuovo Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 84,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "30 x 60 in"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.sferra.com/collections/bath-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "kassatex",
+   "market": "US",
+   "brand": "Kassatex",
+   "name": "Fouta Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 34.9,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "30 x 55 in"
+   ],
+   "colors": [
+    "Almond Brown"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.walmart.com/c/brand/kassatex-bath-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing"
+  },
+  {
+   "retailer": "potterybarn",
+   "market": "US",
+   "brand": "Pottery Barn",
+   "name": "Hydrocotton Quick-Dry Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 29.5,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.potterybarn.com/shop/bath/bath-linens/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "potterybarn",
+   "market": "US",
+   "brand": "Pottery Barn",
+   "name": "Classic Organic Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 34.5,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "organic cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.potterybarn.com/shop/bath/bath-linens/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "westelm",
+   "market": "US",
+   "brand": "West Elm",
+   "name": "Elara Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 34.5,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "100% cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.westelm.com/products/elara-bath-towels-b4324/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "westelm",
+   "market": "US",
+   "brand": "West Elm",
+   "name": "Wavy Blocks Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 32.5,
+   "salePrice": 22.5,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.westelm.com/products/wavy-blocks-towel-b4287/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "crateandbarrel",
+   "market": "US",
+   "brand": "Crate & Barrel",
+   "name": "Classic Organic Turkish Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 44.95,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "organic Turkish cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.crateandbarrel.com/bath/bath-towels/1",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "crateandbarrel",
+   "market": "US",
+   "brand": "Crate & Barrel",
+   "name": "Quick-Dry Organic Cotton White Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 29.95,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "White"
+   ],
+   "material": "organic cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.crateandbarrel.com/quick-dry-organic-cotton-white-bath-towels-set-of-6/s269145",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site, individual price"
+  },
+  {
+   "retailer": "target",
+   "market": "US",
+   "brand": "Threshold",
+   "name": "Performance Plus Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 15,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Cream",
+    "Light Green",
+    "Aqua",
+    "White"
+   ],
+   "material": "heavyweight cotton, OEKO-TEX certified",
+   "care": null,
+   "careText": null,
+   "url": "https://www.target.com/p/performance-plus-bath-towel-threshold/-/A-89379100",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "target",
+   "market": "US",
+   "brand": "Casaluna",
+   "name": "Organic Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 24,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "30 x 56 in"
+   ],
+   "colors": [
+    "White",
+    "Warm Brown",
+    "Black"
+   ],
+   "material": "heavyweight organic cotton, 550-800 GSM, GOTS certified",
+   "care": null,
+   "careText": null,
+   "url": "https://www.target.com/p/organic-bath-towel-white-casaluna-8482/-/A-78461675",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "target",
+   "market": "US",
+   "brand": "Casaluna",
+   "name": "Waffle Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 16,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "waffle weave cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.target.com/p/waffle-bath-towel-casaluna/-/A-79225334",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "walmart",
+   "market": "US",
+   "brand": "Mainstays",
+   "name": "Basic Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 2.94,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "White"
+   ],
+   "material": "100% cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.walmart.com/ip/Mainstays-Solid-Bath-Towel-White/980653774",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "walmart",
+   "market": "US",
+   "brand": "Mainstays",
+   "name": "Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 3.97,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "27 x 52 in"
+   ],
+   "colors": [
+    "Tan"
+   ],
+   "material": "100% cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.walmart.com/ip/Mainstays-100-Cotton-Bath-Towel-Super-Soft-and-Highly-Absorbent-Basic-Solid-Premium-Bath-Towel-for-Bathroom-Hotels-Spa-and-Gym-Tan/153235807",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "walmart",
+   "market": "US",
+   "brand": "Better Homes & Gardens",
+   "name": "Signature Soft Solid Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 8.96,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "30 x 56 in"
+   ],
+   "colors": [
+    "Arctic White"
+   ],
+   "material": "US cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.walmart.com/ip/Better-Homes-Gardens-Signature-Soft-Solid-Bath-Towel-Arctic-White/894778897",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "walmart",
+   "market": "US",
+   "brand": "Better Homes & Gardens",
+   "name": "Signature Soft Solid Bath Sheet",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 12.96,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath sheet"
+   ],
+   "colors": [
+    "Soft Silver"
+   ],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.walmart.com/ip/Insignia-Blue-Bath-Towel-Better-Homes-Gardens-Thick-and-Plush-Towel-Collection/55556347",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "amazon",
+   "market": "US",
+   "brand": "Amazon Basics",
+   "name": "Premium Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 6.8,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "27 x 54 in"
+   ],
+   "colors": [
+    "White"
+   ],
+   "material": "100% ring spun cotton, 600 GSM",
+   "care": null,
+   "careText": null,
+   "url": "https://www.amazon.com/Amazon-Basics-Premium-Previously-AmazonCommercial/dp/B07GPMFZNF",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing, 6-pack price divided by 6"
+  },
+  {
+   "retailer": "macys",
+   "market": "US",
+   "brand": "Martha Stewart Collection",
+   "name": "Spa 100% Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 20,
+   "salePrice": 6.96,
+   "currency": "USD",
+   "sizes": [
+    "30 x 54 in"
+   ],
+   "colors": [],
+   "material": "100% cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.macys.com/shop/bed-bath/bath-towels/Brand,Pageindex/Martha%20Stewart%20Collection,1?id=16853",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer sale listing"
+  },
+  {
+   "retailer": "macys",
+   "market": "US",
+   "brand": "Lauren Ralph Lauren",
+   "name": "Sanders Solid Antimicrobial Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 38,
+   "salePrice": 18.62,
+   "currency": "USD",
+   "sizes": [
+    "30 x 56 in"
+   ],
+   "colors": [],
+   "material": "antimicrobial cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.macys.com/shop/product/lauren-ralph-lauren-sanders-solid-antimicrobial-cotton-bath-towels?ID=8158315",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "macys",
+   "market": "US",
+   "brand": "Hotel Collection",
+   "name": "Turkish Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 59.99,
+   "salePrice": 23.94,
+   "currency": "USD",
+   "sizes": [
+    "30 x 56 in"
+   ],
+   "colors": [],
+   "material": "Turkish cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.macys.com/shop/b/hotel-towels?id=74275",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer sale listing"
+  },
+  {
+   "retailer": "macys",
+   "market": "US",
+   "brand": "Wamsutta",
+   "name": "Hotel Micro-Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 19.99,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "micro-cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://wamsutta.com/collections/bath-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing"
+  },
+  {
+   "retailer": "ralphlauren",
+   "market": "US",
+   "brand": "Ralph Lauren Home",
+   "name": "Payton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 39,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.ralphlauren.com/home-bath-bath-towels/payton-bath-towels-and-mat/527816.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "ralphlauren",
+   "market": "US",
+   "brand": "Polo Ralph Lauren Home",
+   "name": "Polo Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 60,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.ralphlauren.com/home-bath-bath-towels/r/polo-ralph-lauren-home",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "jcpenney",
+   "market": "US",
+   "brand": "Fieldcrest",
+   "name": "Casual Solid Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 10,
+   "salePrice": 7,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Blue"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.jcpenney.com/p/fieldcrest-casual-solid-bath-towel/ppr5008063322?pTmplType=regular",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "walmart",
+   "market": "US",
+   "brand": "Cannon",
+   "name": "Shear Bliss Lightweight Quick Dry Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 15.99,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Gibralter Sea"
+   ],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.walmart.com/ip/Cannon-Shear-Bliss-Lightweight-Quick-Dry-Cotton-2-Pack-Bath-Towels-for-Adults-Gibralter-Sea/454429329",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing, 2-pack price divided by 2"
+  },
+  {
+   "retailer": "landsend",
+   "market": "US",
+   "brand": "Lands' End",
+   "name": "Cotton Jacquard Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 44.95,
+   "salePrice": 31.46,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "cotton jacquard",
+   "care": null,
+   "careText": null,
+   "url": "https://www.landsend.com/products/cotton-jacquard-towels/id_378440",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "landsend",
+   "market": "US",
+   "brand": "Lands' End",
+   "name": "Cotton Yarn-Dyed Stripe Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 44.95,
+   "salePrice": 31.46,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.landsend.com/products/cotton-yarn-dyed-stripe-bath-towels/id_386206",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "llbean",
+   "market": "US",
+   "brand": "L.L.Bean",
+   "name": "Bean's Organic Cotton Towel, Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 22.95,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "organic cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://global.llbean.com/llb/shop/1000127410.html?pla1=0",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "llbean",
+   "market": "US",
+   "brand": "L.L.Bean",
+   "name": "Premium Cotton Towel, Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 26.95,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.llbean.com/llb/shop/70748/?bvOffset=8",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "pendleton",
+   "market": "US",
+   "brand": "Pendleton",
+   "name": "White Sands Spa Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 65,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.pendleton-usa.com/product/white-sands-spa-towel/XB233-53555-1-SZ.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "pendleton",
+   "market": "US",
+   "brand": "Pendleton",
+   "name": "Canyonlands Spa Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 65,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.pendleton-usa.com/product/canyonlands-spa-towel/XB233-53606-1-SZ.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "kohls",
+   "market": "US",
+   "brand": "Avanti",
+   "name": "Avanti Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 27,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.kohls.com/catalog/avanti-bath-towels-bath-towels-rugs-bath.jsp",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing"
+  },
+  {
+   "retailer": "kohls",
+   "market": "US",
+   "brand": "Simply Vera Vera Wang",
+   "name": "Soft Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 24,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.kohls.com/catalog/simply-vera-vera-wang-bath-towels-bath-towels-rugs-bath.jsp",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing"
+  },
+  {
+   "retailer": "kohls",
+   "market": "US",
+   "brand": "Royal Velvet",
+   "name": "Regal Plush Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 14.99,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.boscovs.com/product/royal-velvet-bath-towel-collection/784549",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "homedepot",
+   "market": "US",
+   "brand": "Nautica",
+   "name": "Nautica Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 16.99,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.homedepot.com/b/Bath-Bath-Linens-Towels/Nautica/N-5yc1vZcfvaZo89",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing"
+  },
+  {
+   "retailer": "homedepot",
+   "market": "US",
+   "brand": "Tommy Hilfiger",
+   "name": "Modern American Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 17.22,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "White"
+   ],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.homedepot.com/p/Tommy-Hilfiger-Modern-American-2-Piece-White-Cotton-Bath-Towel-Set-A0003081/338980608",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing, 2-piece set price divided by 2"
+  },
+  {
+   "retailer": "restorationhardware",
+   "market": "US",
+   "brand": "Restoration Hardware",
+   "name": "802-Gram Turkish Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 16,
+   "salePrice": 9,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "Turkish cotton, 802 gsm",
+   "care": null,
+   "careText": null,
+   "url": "https://rh.com/us/en/catalog/product/product.jsp/prod2020027",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "yvesdelorme",
+   "market": "US",
+   "brand": "Yves Delorme",
+   "name": "Etoile Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 21,
+   "salePrice": 15.75,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Dune"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://usa.yvesdelorme.com/l/bath/bath-towels1.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "yvesdelorme",
+   "market": "US",
+   "brand": "Yves Delorme",
+   "name": "Legende Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 110,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://usa.yvesdelorme.com/l/bath/bath-towels1.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "peacockalley",
+   "market": "US",
+   "brand": "Peacock Alley",
+   "name": "Chelsea Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 55,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.peacockalley.com/collections/sale-bath-linens",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand/retailer listing"
+  },
+  {
+   "retailer": "peacockalley",
+   "market": "US",
+   "brand": "Peacock Alley",
+   "name": "Jubilee Textured Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 55,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.figlinensandhome.com/collections/peacock-alley-bath",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing"
+  },
+  {
+   "retailer": "chortexusa",
+   "market": "US",
+   "brand": "Chortex",
+   "name": "Ultimate Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 129,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.chortexusa.com/towels/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "chortexusa",
+   "market": "US",
+   "brand": "Chortex",
+   "name": "Oxford Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 124,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.chortexusa.com/towels/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "linenchest",
+   "market": "CA",
+   "brand": "Linen Chest",
+   "name": "Allure Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 24.95,
+   "salePrice": 17.95,
+   "currency": "CAD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.linenchest.com/en_ca/allure-bath-towel",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer site"
+  },
+  {
+   "retailer": "linenchest",
+   "market": "CA",
+   "brand": "Linen Chest",
+   "name": "Royal Plush Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 29.95,
+   "salePrice": 23.95,
+   "currency": "CAD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.linenchest.com/en_ca/royal-plush-bath-towel-rptwl-c1s3",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer site"
+  },
+  {
+   "retailer": "linenchest",
+   "market": "CA",
+   "brand": "Linen Chest",
+   "name": "Branches Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 29.95,
+   "salePrice": 11.95,
+   "currency": "CAD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.linenchest.com/en_ca/branches-bath-towel",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer site"
+  },
+  {
+   "retailer": "linenchest",
+   "market": "CA",
+   "brand": "Linen Chest",
+   "name": "Leaves Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 15.95,
+   "salePrice": null,
+   "currency": "CAD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.linenchest.com/en_ca/bath-towel-leato-c1s1",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer site"
+  },
+  {
+   "retailer": "linenchest",
+   "market": "CA",
+   "brand": "Linen Chest",
+   "name": "Euro Spa Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 24.95,
+   "salePrice": 19.96,
+   "currency": "CAD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.linenchest.com/en_ca/bath-towel-euros",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer site"
+  },
+  {
+   "retailer": "simons",
+   "market": "CA",
+   "brand": "Simons",
+   "name": "Egyptian Cotton Woven Stripes Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 10,
+   "salePrice": 4.99,
+   "currency": "CAD",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "Egyptian cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.simons.ca/en/bathroom/bath-towels/patterned/egyptian-cotton-woven-stripes-towels--7682-1152330",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer site"
+  },
+  {
+   "retailer": "liverpool",
+   "market": "MX",
+   "brand": "HAUS",
+   "name": "Toalla de Baño (Bath Towel)",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 119,
+   "salePrice": 71.4,
+   "currency": "MXN",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.liverpool.com.mx/tienda/toallas/catst8862916",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing"
+  },
+  {
+   "retailer": "liverpool",
+   "market": "MX",
+   "brand": "La Josefina",
+   "name": "Toalla de Baño (Bath Towel)",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 59,
+   "salePrice": 38.35,
+   "currency": "MXN",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.liverpool.com.mx/tienda/toallas/catst8862916",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing"
+  },
+  {
+   "retailer": "liverpool",
+   "market": "MX",
+   "brand": "Spring Air",
+   "name": "Toalla de Baño (Bath Towel)",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 159,
+   "salePrice": 103.35,
+   "currency": "MXN",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.liverpool.com.mx/tienda/toallas/catst8862916",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing"
+  },
+  {
+   "retailer": "palaciodehierro",
+   "market": "MX",
+   "brand": "Casa Palacio",
+   "name": "Toalla de Baño Sea Mist (Bath Towel)",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 2799,
+   "salePrice": 2099.25,
+   "currency": "MXN",
+   "sizes": [
+    "95 x 170 cm"
+   ],
+   "colors": [
+    "Sea Mist"
+   ],
+   "material": "100% algodon (cotton)",
+   "care": null,
+   "careText": null,
+   "url": "https://www.elpalaciodehierro.com/casa-palacio-toalla-de-bano-sea-mist-43801597.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "brand/retailer product page (fetched)"
+  },
+  {
+   "retailer": "palaciodehierro",
+   "market": "MX",
+   "brand": "Tassara",
+   "name": "Toalla de Baño gris (Bath Towel)",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 999,
+   "salePrice": 299.7,
+   "currency": "MXN",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Gris"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.elpalaciodehierro.com/tassara-toalla-de-bano-gris-41473314.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "palaciodehierro",
+   "market": "MX",
+   "brand": "Chester & Peck",
+   "name": "Toalla de Baño blanca (Bath Towel)",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 1199,
+   "salePrice": null,
+   "currency": "MXN",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Blanca"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.elpalaciodehierro.com/chester-peck-toalla-de-bano-blanca-40920255.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "vianney",
+   "market": "MX",
+   "brand": "Vianney",
+   "name": "Toalla Modal Azul (Bath Towel)",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 849,
+   "salePrice": null,
+   "currency": "MXN",
+   "sizes": [
+    "0.90 x 1.70 m"
+   ],
+   "colors": [
+    "Azul"
+   ],
+   "material": "50% modal, 50% algodon (cotton)",
+   "care": null,
+   "careText": null,
+   "url": "https://vianney.com.mx/products/toalla-modal-azul",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "brand product page (fetched)"
+  },
+  {
+   "retailer": "vianney",
+   "market": "MX",
+   "brand": "Vianney",
+   "name": "Toalla Mawi Franjas (Bath Towel)",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 389,
+   "salePrice": null,
+   "currency": "MXN",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://vianney.com.mx/products/toalla-mawi-franjas",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "vianney",
+   "market": "MX",
+   "brand": "Vianney",
+   "name": "Toalla Mawi Malva (Bath Towel)",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 309,
+   "salePrice": null,
+   "currency": "MXN",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Malva"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://vianney.com.mx/products/toalla-mawi-malva",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "christy",
+   "market": "GB",
+   "brand": "Christy",
+   "name": "Supreme Hygro Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 32,
+   "salePrice": 29.5,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.christy.co.uk/collections/bathroom-all-luxury-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing"
+  },
+  {
+   "retailer": "christy",
+   "market": "GB",
+   "brand": "Christy",
+   "name": "Luxe Turkish Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 8,
+   "salePrice": 6.8,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "Turkish cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.christy.co.uk/collections/towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "dunelm",
+   "market": "GB",
+   "brand": "Dunelm",
+   "name": "Luxury Heavyweight Egyptian Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 9,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "Egyptian cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.dunelm.com/category/home-and-furniture/bathroom/towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer site"
+  },
+  {
+   "retailer": "dunelm",
+   "market": "GB",
+   "brand": "Dorma",
+   "name": "Sumptuously Soft TENCEL Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 15,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Almond",
+    "Duck Egg"
+   ],
+   "material": "TENCEL/cotton blend",
+   "care": null,
+   "careText": null,
+   "url": "https://dunelm.com/product/dorma-tencel-sumptuously-soft-almond-towel-1000186083",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "dunelm",
+   "market": "GB",
+   "brand": "Catherine Lansfield",
+   "name": "Quick Dry Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 12,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.dunelm.com/category/home-and-furniture/bathroom/towels?brand=catherine-lansfield",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer site"
+  },
+  {
+   "retailer": "johnlewis",
+   "market": "GB",
+   "brand": "John Lewis",
+   "name": "Egyptian Cotton Signature Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 28,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "Egyptian cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.johnlewis.com/browse/home-garden/towels/john-lewis/_/N-cpwZ1z141il",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "johnlewis",
+   "market": "GB",
+   "brand": "John Lewis",
+   "name": "Organic Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 20,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "organic cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.johnlewis.com/browse/home-garden/towels/bathroom-towel/_/N-cpwZ1z0rnrh",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "habitat",
+   "market": "GB",
+   "brand": "Habitat",
+   "name": "Cotton Skinny Bright Stripe Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 13,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Multicoloured"
+   ],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.argos.co.uk/product/2010720",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer product page"
+  },
+  {
+   "retailer": "habitat",
+   "market": "GB",
+   "brand": "Habitat",
+   "name": "Supersoft Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 13,
+   "salePrice": 6.5,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Rustic Blue",
+    "Black"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.habitat.co.uk/browse/home-furnishings/bath-towels-and-mats/towels/c:809237/brands:habitat/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "next",
+   "market": "GB",
+   "brand": "Next",
+   "name": "White Luxury 100% Cotton Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 9,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "White"
+   ],
+   "material": "100% cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.next.co.uk/style/st350422/d27532",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "next",
+   "market": "GB",
+   "brand": "Next",
+   "name": "Natural Mink Egyptian Cotton Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 14,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Mink"
+   ],
+   "material": "Egyptian cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.next.co.uk/style/st276848/559757",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "sheridan",
+   "market": "GB",
+   "brand": "Sheridan",
+   "name": "Living Textures Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 6,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.houseoffraser.co.uk/home-and-furniture/towels/sheridan",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing UK retailer listing"
+  },
+  {
+   "retailer": "sheridan",
+   "market": "GB",
+   "brand": "Sheridan",
+   "name": "Luxury Egyptian Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 12,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "Egyptian cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.houseoffraser.co.uk/home-and-furniture/towels/sheridan",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing UK retailer listing"
+  },
+  {
+   "retailer": "catherinelansfield",
+   "market": "GB",
+   "brand": "Catherine Lansfield",
+   "name": "Zero Twist Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 9.17,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "zero twist cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://catherinelansfieldbedding.co.uk/catherine-lansfield-towels/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "bedeckhome",
+   "market": "GB",
+   "brand": "Bedeck",
+   "name": "Elara Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 15,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Sage Green"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.bedeckhome.com/bath/towels/bedeck-of-belfast-towels.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "bedeckhome",
+   "market": "GB",
+   "brand": "Bedeck",
+   "name": "Oscar Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 16,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Teal/Olive"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.bedeckhome.com/bath/towels/bedeck-of-belfast-towels.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "soakandsleep",
+   "market": "GB",
+   "brand": "Soak & Sleep",
+   "name": "White Egyptian Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 18,
+   "salePrice": 13.5,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "White"
+   ],
+   "material": "Egyptian cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.soakandsleep.com/collections/egyptian-cotton-bath-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "soakandsleep",
+   "market": "GB",
+   "brand": "Soak & Sleep",
+   "name": "White Supima Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 22,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "White"
+   ],
+   "material": "Supima cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.soakandsleep.com/collections/supima-cotton-bath-towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "deyongs",
+   "market": "GB",
+   "brand": "Deyongs",
+   "name": "Bliss Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 7,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": "Pima cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://deyongs.com/collections/bathroom",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing retailer listing"
+  },
+  {
+   "retailer": "primark-gb",
+   "market": "GB",
+   "brand": "Primark",
+   "name": "Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 7,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Light Green"
+   ],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.primark.com/en-gb/p/cotton-bath-towel-light-green-991142432413",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "primark-gb",
+   "market": "GB",
+   "brand": "Primark",
+   "name": "Value Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 3.5,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Charcoal",
+    "White"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.primark.com/en-gb/p/value-bath-towel-charcoal-999217071716",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "primark-gb",
+   "market": "GB",
+   "brand": "Primark",
+   "name": "Ultrasoft Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 7,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "White",
+    "Taupe"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.primark.com/en-gb/p/ultrasoft-bath-towel-white-991122469002",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "asda",
+   "market": "GB",
+   "brand": "George",
+   "name": "Medium Dark Grey Super Soft Cotton Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 6,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [
+    "Dark Grey"
+   ],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.asda.com/groceries/product/bath-towels/george-home-medium-dark-grey-super-soft-cotton-bath-towel/6659046",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "asda",
+   "market": "GB",
+   "brand": "George",
+   "name": "Large Blue Super Soft Cotton Bath Sheet",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 8,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "bath sheet"
+   ],
+   "colors": [
+    "Blue"
+   ],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.asda.com/groceries/product/bath-sheets/george-home-large-blue-super-soft-cotton-bath-sheet/6659080",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site"
+  },
+  {
+   "retailer": "penneys",
+   "market": "IE",
+   "brand": "Penneys",
+   "name": "Ribbed Border Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 7,
+   "salePrice": null,
+   "currency": "EUR",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.primark.com/en-ie/c/home/bathroom/towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site (Penneys is Primark's Irish name)"
+  },
+  {
+   "retailer": "penneys",
+   "market": "IE",
+   "brand": "Penneys",
+   "name": "Gingham Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 9,
+   "salePrice": null,
+   "currency": "EUR",
+   "sizes": [
+    "bath towel"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.primark.com/en-ie/c/home/bathroom/towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site (Penneys is Primark's Irish name)"
+  },
+  {
+   "retailer": "penneys",
+   "market": "IE",
+   "brand": "Penneys",
+   "name": "Extra Large Bath Towel",
+   "gender": "unisex",
+   "category": "towels",
+   "subcategory": "bath-towel",
+   "price": 12,
+   "salePrice": null,
+   "currency": "EUR",
+   "sizes": [
+    "bath towel, XL"
+   ],
+   "colors": [],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.primark.com/en-ie/c/home/bathroom/towels",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "search result citing brand site (Penneys is Primark's Irish name)"
+  }
+ ]
+}

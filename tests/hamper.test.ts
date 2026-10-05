@@ -35,5 +35,7 @@ describe('the laundry basket', () => {
     expect(toBasketRefusal(sim, p, { ...shirt, garment: { ...shirt.garment, care: 'dry-clean' } })).toBe('It goes to the dry cleaner, not in the wash.');
     expect(sim.execute({ kind: 'clothes.to_basket', payload: { itemIds: [] } }).error).toBe('Choose what goes in.');
     expect(keptIn('shoes')).toBe('wardrobe');
+    // A towel back in the bathroom (from 2026-10-05).
+    expect(keptIn('towel')).toBe('bathroom');
   });
 });

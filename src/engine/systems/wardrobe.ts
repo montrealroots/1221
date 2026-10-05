@@ -135,8 +135,8 @@ export function changeInto(sim: Simulation, person: Person, items: readonly (Ite
   person.wornNow = { itemIds: items.map((g) => g.id), since: sim.now };
 }
 
-/** Where a garment is put away at home: shoes and coats in the wardrobe, the rest in the drawers, as a life's first wardrobe is. */
-export const keptIn = (slot: Slot): Spot => (slot === 'shoes' || slot === 'outer' ? 'wardrobe' : 'drawers');
+/** Where a garment is put away at home: shoes and coats in the wardrobe, the rest in the drawers, as a life's first wardrobe is; a towel in the bathroom (until 2026-10-05 a washed one went to the drawers). */
+export const keptIn = (slot: Slot): Spot => (slot === 'shoes' || slot === 'outer' ? 'wardrobe' : slot === 'towel' ? 'bathroom' : 'drawers');
 
 /**
  * Taken off and put in the laundry basket, the master plan's §32e (from
