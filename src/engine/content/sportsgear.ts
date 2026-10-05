@@ -458,6 +458,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": false
   },
   {
+    "id": "mx-pirma-numero-4-claroshop",
+    "market": "mx",
+    "kind": "football",
+    "brand": "Pirma",
+    "name": "Balón Pirma Blanco Azul Número 4 Futbol",
+    "retailer": "Claroshop",
+    "price": 699,
+    "currency": "MXN",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://www.claroshop.com/producto/17403154/balon-pirma-blanco-azul-numero-4-futbol",
+    "confirmed": true
+  },
+  {
     "id": "mx-garcis-classic-shot-pro-garcis",
     "market": "mx",
     "kind": "football",
@@ -511,6 +525,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": true,
     "count": 1,
     "url": "https://www.decathlon.com.mx/descubre-mas-de-65-deportes/raqueta/pickleball",
+    "confirmed": true
+  },
+  {
+    "id": "mx-tourna-para-exterior-6-pz-tournamexico",
+    "market": "mx",
+    "kind": "pickleballs",
+    "brand": "Tourna",
+    "name": "Pelotas de Pickleball Tourna para Exterior 6 Pz",
+    "retailer": "Tournamexico",
+    "price": 279,
+    "currency": "MXN",
+    "taxIncluded": true,
+    "count": 6,
+    "url": "https://tournamexico.com/products/pelotas-de-pickleball-tourna-para-exterior-6-pz",
     "confirmed": true
   },
   {
@@ -640,6 +668,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": true
   },
   {
+    "id": "uk-uhlsport-team-classic-size-5-rjm-sports",
+    "market": "uk",
+    "kind": "football",
+    "brand": "Uhlsport",
+    "name": "Uhlsport Team Classic Football Size 5",
+    "retailer": "RJM Sports",
+    "price": 20,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://rjmsports.com/product/uhlsport-team-classic-football-size-5/",
+    "confirmed": true
+  },
+  {
     "id": "uk-kipsta-official-match-ball-pro-league-2023-2025-decathlon",
     "market": "uk",
     "kind": "football",
@@ -696,6 +738,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": false
   },
   {
+    "id": "uk-tretorn-micro-x-lobster-sports",
+    "market": "uk",
+    "kind": "tennis-balls",
+    "brand": "Tretorn",
+    "name": "Tretorn Micro X 4 Pack Tennis Balls",
+    "retailer": "Lobster Sports",
+    "price": 8.99,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 4,
+    "url": "https://www.lobstersports.com/products/tretorn-micro-x-tennis-balls",
+    "confirmed": false
+  },
+  {
     "id": "uk-slazenger-club-all-court-sports-direct",
     "market": "uk",
     "kind": "tennis-balls",
@@ -708,6 +764,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "count": 12,
     "url": "https://www.sportsdirect.com/slazenger-slazenger-shortex-outdoor-tennis-ball-12-balls-857783",
     "confirmed": false
+  },
+  {
+    "id": "uk-karakal-comp-27-karakal-official",
+    "market": "uk",
+    "kind": "tennis-racket",
+    "brand": "Karakal",
+    "name": "Karakal Comp 27 Tennis Racket",
+    "retailer": "Karakal (official)",
+    "price": 21,
+    "currency": "GBP",
+    "taxIncluded": true,
+    "count": 1,
+    "url": "https://karakal.com/products/karakal-comp-27-tennis-racket",
+    "confirmed": true
   },
   {
     "id": "uk-artengo-tr500-decathlon",
@@ -738,6 +808,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": false
   },
   {
+    "id": "us-tachikara-sgb6rc-walmart",
+    "market": "us",
+    "kind": "basketball",
+    "brand": "Tachikara",
+    "name": "Tachikara SGB6RC Basketball",
+    "retailer": "Walmart",
+    "price": 23,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.walmart.com/ip/Tachikara-SGB6RC-Basketball/17460452",
+    "confirmed": false
+  },
+  {
     "id": "us-adidas-all-court-3-0-adidas",
     "market": "us",
     "kind": "basketball",
@@ -763,6 +847,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": false,
     "count": 1,
     "url": "https://www.nike.com/t/elite-all-court-basketball-Gvslv6",
+    "confirmed": false
+  },
+  {
+    "id": "us-mikasa-bwl110-s-s-worldwide",
+    "market": "us",
+    "kind": "basketball",
+    "brand": "Mikasa",
+    "name": "Mikasa BWL110 Basketball",
+    "retailer": "S&S Worldwide",
+    "price": 42.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.ssww.com/item/mikasa-bwl110-basketball-W5624/",
     "confirmed": false
   },
   {
@@ -820,6 +918,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "count": 1,
     "url": "https://www.badensports.com/products/elite-game-basketball-non-nfhs",
     "confirmed": false
+  },
+  {
+    "id": "us-rawlings-contour-29-5-rawlings-official",
+    "market": "us",
+    "kind": "basketball",
+    "brand": "Rawlings",
+    "name": "Rawlings Contour 29.5 in Basketball",
+    "retailer": "Rawlings (official)",
+    "price": 74.95,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.rawlings.com/product/CONTOUR-B.html",
+    "confirmed": true
   },
   {
     "id": "us-nike-elite-championship-basketball-nike",
@@ -889,6 +1001,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": false,
     "count": 1,
     "url": "https://www.dickssportinggoods.com/f/wilson-basketballs",
+    "confirmed": false
+  },
+  {
+    "id": "us-joma-challenge-400851-206-burghardt-sporting-goods",
+    "market": "us",
+    "kind": "football",
+    "brand": "Joma",
+    "name": "Joma 400851.206 Challenge Soccer Ball",
+    "retailer": "Burghardt Sporting Goods",
+    "price": 10,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://burghardtsportinggoods.com/joma-400851-206-challenge-soccer-ball/",
     "confirmed": false
   },
   {
@@ -1018,6 +1144,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "confirmed": false
   },
   {
+    "id": "us-derbystar-bundesliga-pro-match-ball-25-26-pro-soccer",
+    "market": "us",
+    "kind": "football",
+    "brand": "Derbystar",
+    "name": "Select 2025-26 Derbystar Bundesliga Pro Match Soccer Ball",
+    "retailer": "Pro Soccer",
+    "price": 169.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://www.prosoccer.com/products/select-2025-26-derbystar-bundesliga-pro-match-soccer-ball",
+    "confirmed": false
+  },
+  {
     "id": "us-diadem-hero-diadem",
     "market": "us",
     "kind": "pickleball-paddle",
@@ -1029,6 +1169,34 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "taxIncluded": false,
     "count": 1,
     "url": "https://diademsports.com/products/diadem-hero-paddle",
+    "confirmed": true
+  },
+  {
+    "id": "us-niupipo-n-01-pro-explorer-niupipo-official",
+    "market": "us",
+    "kind": "pickleball-paddle",
+    "brand": "Niupipo",
+    "name": "Niupipo N-01 Pro Explorer Pro Graphite Pickleball Paddle for Pros",
+    "retailer": "Niupipo (official)",
+    "price": 59.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://niupipo.com/collections/professional",
+    "confirmed": true
+  },
+  {
+    "id": "us-vatic-pro-v-sol-pro-16mm-vatic-pro-official",
+    "market": "us",
+    "kind": "pickleball-paddle",
+    "brand": "Vatic Pro",
+    "name": "Vatic Pro V-Sol Pro (16mm) (Includes Paddle Cover)",
+    "retailer": "Vatic Pro (official)",
+    "price": 109.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 1,
+    "url": "https://vaticpro.com/products/v-sol-pro-16mm",
     "confirmed": true
   },
   {
@@ -1310,6 +1478,20 @@ export const SPORT_GEAR: readonly SportGear[] = [
     "count": 4,
     "url": "https://joola.com/collections/pickleball-balls",
     "confirmed": false
+  },
+  {
+    "id": "us-tourna-strike-indoor-12-pack-tourna-official",
+    "market": "us",
+    "kind": "pickleballs",
+    "brand": "Tourna",
+    "name": "Tourna Strike Indoor Pickleballs Lime Green 12 Pack",
+    "retailer": "Tourna (official)",
+    "price": 14.99,
+    "currency": "USD",
+    "taxIncluded": false,
+    "count": 12,
+    "url": "https://www.tourna.com/collections/indoor-pickleballs",
+    "confirmed": true
   },
   {
     "id": "us-onix-fuse-indoor-pickleball-central",

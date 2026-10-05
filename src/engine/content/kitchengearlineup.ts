@@ -10,6 +10,18 @@ import type { GearOffer } from './kitchengear';
 export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
   "us": [
     {
+      "id": "us-rival-scv401-tr-walmart",
+      "gear": "slow-cooker",
+      "brand": "Rival",
+      "name": "Rival Crock-Pot Slow Cooker SCV401-TR - 4 Quart Oval - Red",
+      "retailer": "Walmart",
+      "price": 33.32,
+      "currency": "USD",
+      "taxIncluded": false,
+      "confirmed": false,
+      "url": "https://www.walmart.com/ip/Rival-Crock-Pot-4-Quart-Oval-Slow-Cooker-SCV401-TR-Slow-cooker-4-8-qt-red/21190745"
+    },
+    {
       "id": "us-beautiful-by-drew-barrymore-personal-blender-set-240w-walmart",
       "gear": "blender",
       "brand": "Beautiful (by Drew Barrymore)",
@@ -22,6 +34,18 @@ export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
       "url": "https://www.walmart.com/ip/Beautiful-Personal-Blender-Set-with-12-Pieces-240-W-Rose-by-Drew-Barrymore/5040310472"
     },
     {
+      "id": "us-aroma-asc-335-walmart",
+      "gear": "slow-cooker",
+      "brand": "Aroma",
+      "name": "Aroma 5-Quart Multi-Function Electric Slow Cooker",
+      "retailer": "Walmart",
+      "price": 39,
+      "currency": "USD",
+      "taxIncluded": false,
+      "confirmed": false,
+      "url": "https://www.walmart.com/ip/Aroma-5-Quart-Multi-Function-Electric-Slow-Cooker/14321185"
+    },
+    {
       "id": "us-bella-6-qt-digital-programmable-walmart",
       "gear": "slow-cooker",
       "brand": "Bella",
@@ -32,6 +56,42 @@ export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
       "taxIncluded": false,
       "confirmed": false,
       "url": "https://www.walmart.com/ip/bella-6-Qt-Programmable-Slow-Cooker-Oatmilk/15103974948"
+    },
+    {
+      "id": "us-dash-portable-usb-blender-dash-bydash-com",
+      "gear": "blender",
+      "brand": "Dash",
+      "name": "Dash Portable Blender",
+      "retailer": "Dash (bydash.com)",
+      "price": 39.99,
+      "currency": "USD",
+      "taxIncluded": false,
+      "confirmed": true,
+      "url": "https://bydash.com/products/portable-usb-blender"
+    },
+    {
+      "id": "us-nesco-sc-150r-nesco-official",
+      "gear": "slow-cooker",
+      "brand": "Nesco",
+      "name": "NESCO 1.5 Quart Oval Slow Cooker, Metallic Red, Glass Lid, Removable Crock",
+      "retailer": "Nesco (official)",
+      "price": 39.99,
+      "currency": "USD",
+      "taxIncluded": false,
+      "confirmed": true,
+      "url": "https://www.nesco.com/product/1-5-qt-slow-cooker-metallic-red/"
+    },
+    {
+      "id": "us-cosori-b07rwpq9tm-amazon",
+      "gear": "blender",
+      "brand": "Cosori",
+      "name": "COSORI Blender for Shakes & Smoothies (50 Recipes), 1400W Heavy Duty Professional Blender for Crushing Ice, 64oz Pitcher & 20oz Travel Bottle",
+      "retailer": "Amazon",
+      "price": 47.49,
+      "currency": "USD",
+      "taxIncluded": false,
+      "confirmed": false,
+      "url": "https://www.amazon.com/COSORI-Blender-Smoothies-Professional-Compliant/dp/B07RWPQ9TM"
     },
     {
       "id": "us-hamilton-beach-50190f-walmart",
@@ -56,6 +116,18 @@ export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
       "taxIncluded": false,
       "confirmed": false,
       "url": "https://www.walmart.com/ip/GOURM-SLOW-COOKER-BK/16865519786"
+    },
+    {
+      "id": "us-magic-bullet-mbr-1101-walmart",
+      "gear": "blender",
+      "brand": "Magic Bullet",
+      "name": "Magic Bullet 11 Piece Set Multi-Function Blender",
+      "retailer": "Walmart",
+      "price": 54,
+      "currency": "USD",
+      "taxIncluded": false,
+      "confirmed": false,
+      "url": "https://www.walmart.com/ip/Magic-Bullet-11-Piece-Set-Multi-Function-Blender/46275738"
     },
     {
       "id": "us-west-bend-6-quart-manual-crockery-style-walmart",
@@ -142,6 +214,18 @@ export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
       "url": "https://www.walmart.com/ip/Proctor-Silex-6-Quart-Double-Dish-Slow-Cooker-Serves-7-Silver-33563/2023179479"
     },
     {
+      "id": "us-princess-house-10411-princess-house-official",
+      "gear": "blender",
+      "brand": "Princess House",
+      "name": "Princess House Portable Blender - Fuchsia",
+      "retailer": "Princess House (official)",
+      "price": 89.95,
+      "currency": "USD",
+      "taxIncluded": false,
+      "confirmed": false,
+      "url": "https://www.princesshouse.com/en-US/product/princess-house/portable-blender---fuchsia/p/10411"
+    },
+    {
       "id": "us-crock-pot-sccpvfc600-walmart",
       "gear": "slow-cooker",
       "brand": "Crock-Pot",
@@ -154,6 +238,18 @@ export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
       "url": "https://www.walmart.com/ip/Crockpot-6-0-Quart-Cook-Carry-Slow-Cooker-Programmable-Stainless-Steel/17219363"
     },
     {
+      "id": "us-krups-gpa30842-walmart",
+      "gear": "blender",
+      "brand": "Krups",
+      "name": "Krups Gpa30842 Immersion Blender W/ Beak",
+      "retailer": "Walmart",
+      "price": 99.95,
+      "currency": "USD",
+      "taxIncluded": false,
+      "confirmed": false,
+      "url": "https://www.walmart.com/ip/Krups-Gpa30842-Immersion-Blender-W-Beak/17653398"
+    },
+    {
       "id": "us-ninja-bl610-target",
       "gear": "blender",
       "brand": "Ninja",
@@ -164,6 +260,18 @@ export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
       "taxIncluded": false,
       "confirmed": false,
       "url": "https://intl.target.com/p/ninja-professional-blender-1000w-bl610/-/A-15124276"
+    },
+    {
+      "id": "us-presto-06019-the-home-depot",
+      "gear": "slow-cooker",
+      "brand": "Presto",
+      "name": "Presto GameDay 8-Quart Nomad Traveling Slow Cooker",
+      "retailer": "The Home Depot",
+      "price": 109.99,
+      "currency": "USD",
+      "taxIncluded": false,
+      "confirmed": false,
+      "url": "https://www.homedepot.com/p/Presto-GameDay-8-Quart-Nomad-Traveling-Slow-Cooker-Green-Yellow-06019/331796138"
     },
     {
       "id": "us-chefman-obliterator-1380w-walmart",
@@ -275,6 +383,30 @@ export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
     }
   ],
   "ca": [
+    {
+      "id": "ca-starfrit-electric-personal-blender-best-buy-canada",
+      "gear": "blender",
+      "brand": "Starfrit",
+      "name": "Starfrit Electric Personal Blender",
+      "retailer": "Best Buy Canada",
+      "price": 39.99,
+      "currency": "CAD",
+      "taxIncluded": false,
+      "confirmed": false,
+      "url": "https://www.bestbuy.ca/en-ca/product/starfrit-electric-personal-blender/15325514"
+    },
+    {
+      "id": "ca-salton-nordic-3-5l-salton-official",
+      "gear": "slow-cooker",
+      "brand": "Salton",
+      "name": "Salton Swan 3.5L Nordic Slow Cooker",
+      "retailer": "Salton (official)",
+      "price": 79.99,
+      "currency": "CAD",
+      "taxIncluded": false,
+      "confirmed": true,
+      "url": "https://www.salton.com/products/salton-swan-3-5l-nordic-slow-cooker"
+    },
     {
       "id": "ca-crock-pot-digital-programmable-4-quart-stainless-steel-canadian-tire",
       "gear": "slow-cooker",
@@ -398,6 +530,18 @@ export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
       "url": "https://www.walmart.com.mx/electrodomesticos/vaporeras-y-parrillas-electricas/vaporeras-y-arroceras/olla-hamilton-beach-olla-de-lenta-coccion-hamilton-beach-4-lb-33140v/00004009491463"
     },
     {
+      "id": "mx-koblenz-lkm-3910-pn-koblenz-official",
+      "gear": "blender",
+      "brand": "Koblenz",
+      "name": "Licuadora Koblenz LKM-3910 PN",
+      "retailer": "Koblenz (official)",
+      "price": 689,
+      "currency": "MXN",
+      "taxIncluded": true,
+      "confirmed": true,
+      "url": "https://www.koblenz.com.mx/products/licuadora-lkm-3910-pn"
+    },
+    {
       "id": "mx-bosstech-550w-vaso-de-plastico-2l-bosstech-com-mx",
       "gear": "blender",
       "brand": "Bosstech",
@@ -420,6 +564,18 @@ export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
       "taxIncluded": true,
       "confirmed": false,
       "url": "https://www.walmart.com.mx/ip/licuadoras-batidoras-y-procesadores-de-alimentos/licuadora-black-decker-crushmaster-pro-10-velocidades-roja/00005087581402"
+    },
+    {
+      "id": "mx-koblenz-lkm-5980-vn-koblenz-official",
+      "gear": "blender",
+      "brand": "Koblenz",
+      "name": "Licuadora Gourmet Koblenz LKM-5980 VN",
+      "retailer": "Koblenz (official)",
+      "price": 799,
+      "currency": "MXN",
+      "taxIncluded": true,
+      "confirmed": true,
+      "url": "https://www.koblenz.com.mx/products/licuadora-gourmet-lkm-5980-vn"
     },
     {
       "id": "mx-t-fal-infinyforce-xl-ln8225mx-walmart-mexico",
@@ -542,6 +698,30 @@ export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
       "taxIncluded": true,
       "confirmed": false,
       "url": "https://www.currys.co.uk/appliances/small-kitchen-appliances/food-processors/blenders"
+    },
+    {
+      "id": "uk-moulinex-lm422127-amazon-co-uk",
+      "gear": "blender",
+      "brand": "Moulinex",
+      "name": "MOULINEX Blendforce 2 Blender + Grinder, 600 Watts",
+      "retailer": "Amazon.co.uk",
+      "price": 49.99,
+      "currency": "GBP",
+      "taxIncluded": true,
+      "confirmed": false,
+      "url": "https://www.amazon.co.uk/MOULINEX-Blendforce-Blender-Grinder-LM422127/dp/B0856SSSMS"
+    },
+    {
+      "id": "uk-salter-ek5531mblk-argos",
+      "gear": "blender",
+      "brand": "Salter",
+      "name": "Salter Kuro 1.5L Glass Jug Blender",
+      "retailer": "Argos",
+      "price": 50,
+      "currency": "GBP",
+      "taxIncluded": true,
+      "confirmed": false,
+      "url": "https://www.argos.co.uk/product/3186969"
     },
     {
       "id": "uk-russell-hobbs-27720-argos",
@@ -676,6 +856,18 @@ export const GEAR_LINEUP: Readonly<Record<string, readonly GearOffer[]>> = {
       "taxIncluded": true,
       "confirmed": false,
       "url": "https://www.currys.ie/products/crockpot-csc063-slow-cooker-stainless-steel-10239498.html"
+    },
+    {
+      "id": "ie-severin-sm-3734-severin-official",
+      "gear": "blender",
+      "brand": "Severin",
+      "name": "SEVERIN Blender with Glass Container, 1 L, approx. 500 W, SM 3734",
+      "retailer": "Severin (official)",
+      "price": 69.99,
+      "currency": "EUR",
+      "taxIncluded": true,
+      "confirmed": true,
+      "url": "https://severin.com/en-en/nutrition-preparation/food-preparation/blenders/sm-3734-blender/"
     },
     {
       "id": "ie-kenwood-blp41-a0go-blend-x-compact-currys-ie",

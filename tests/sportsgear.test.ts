@@ -24,13 +24,13 @@ const home = () => {
 };
 
 describe('a game’s gear', () => {
-  it('is on sale for every game in every market, but Mexico’s pickleballs, whose price no page gave', () => {
+  it('is on sale for every game in every market', () => {
     for (const market of ['us', 'ca', 'mx', 'uk', 'ie']) for (const kinds of Object.values(GAME_GEAR)) for (const kind of kinds) {
-      expect(SPORT_GEAR.some((g) => g.market === market && g.kind === kind), `${market} ${kind}`).toBe(!(market === 'mx' && kind === 'pickleballs'));
+      expect(SPORT_GEAR.some((g) => g.market === market && g.kind === kind), `${market} ${kind}`).toBe(true);
     }
-    // There, it says so rather than asking for what can’t be bought.
-    const mx = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'mx-cmx-mexicocity', livesWhereBorn: true, wealth: 'wealthy' }, 'sport-mx');
-    expect(gearRefusal(mx.player, 'pickleball')).toBe('SLATE keeps no price for pickleballs where you live yet.');
+    // Where SLATE keeps no gear's price at all, it says so rather than asking for what can’t be bought.
+    const is = quickSave({ startLocationId: 'is-39-mosfellsbr', homeRegionId: 'is-39-mosfellsbr', livesWhereBorn: true, wealth: 'wealthy' }, 'sport-is');
+    expect(gearRefusal(is.player, 'pickleball')).toBe('SLATE keeps no price for a pickleball paddle where you live yet.');
   });
 
   it('is needed to play: tennis a racket and balls, bought at the retailer’s price with the tax', () => {

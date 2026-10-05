@@ -51,10 +51,10 @@ export function gearRefusal(person: Person, game: Game): string | undefined {
   const have = gearAtHome(person);
   const missing = GAME_GEAR[game].filter((k) => !have.has(k));
   if (missing.length === 0) return undefined;
-  // Where SLATE keeps no price for one here (Mexico's pickleballs, which no retailer's page could be read for), it says so.
+  // Where SLATE keeps no price for one here, it says so (Mexico's pickleballs had none until Tourna's own Mexican page was read).
   const sold = new Set(SPORT_GEAR.filter((g) => g.market === marketOf(person.home?.cityId ?? person.currentLocationId)).map((g) => g.kind));
   const unsold = missing.find((k) => !sold.has(k));
-  if (unsold) return `SLATE keeps no price for ${GEAR_WORD[unsold].replace(/^a /, '')} where you live yet.`;
+  if (unsold) return `SLATE keeps no price for ${GEAR_WORD[unsold]} where you live yet.`;
   const words = missing.map((k) => GEAR_WORD[k]);
   return `You need ${words.length === 2 ? `${words[0]} and ${words[1]}` : words[0]}.`;
 }
