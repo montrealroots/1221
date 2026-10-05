@@ -470,4 +470,68 @@ describe('what a garment is', () => {
     expect(worn('gb-marks-and-spencer-brushed-argyle-knitted-vest-with-mohair').slice(0, 2)).toEqual(['top', 'sweater']);
     expect(worn('ie-inis-meain-cashmere-breidin-vest').slice(0, 2)).toEqual(['top', 'sweater']);
   });
+
+  it('is a culture’s garment by its own name, worn as what it is', () => {
+    // From 2026-10-05, one garment each word alone decides: until then each named no garment the list knew and was a
+    // shirt, a kurta pajama was sleepwear and a camisa de chino a pair of chinos.
+    const decided: readonly [string, string, string][] = [
+      ['us-haute-hijab-bouquet-of-roses-hijab-set', 'accessory', 'accessory'],
+      ['us-haute-hijab-classic-underscarf-ivory-original-mesh-back', 'accessory', 'accessory'],
+      ['us-johnstons-of-elgin-caledonia-tartan-cashmere-stole', 'accessory', 'accessory'],
+      ['ie-inis-meain-fern-leaf-shawl', 'accessory', 'accessory'],
+      ['mx-pineda-covalin-mascada-caritas-sonrientes-veracruz-54-cm', 'accessory', 'accessory'],
+      ['mx-pineda-covalin-bufanda-diagonal-cactaceas-jardin-botanico', 'accessory', 'accessory'],
+      ['mx-liverpool-mx-chal-estampado-grafico', 'accessory', 'accessory'],
+      ['mx-pineda-covalin-gorra-bordada-30-aniversario', 'accessory', 'accessory'],
+      ['us-lemlem-dana-bandana', 'accessory', 'accessory'],
+      ['gb-campbells-of-beauly-brown-musquash-sporran', 'accessory', 'accessory'],
+      ['ie-the-sweater-shop-aran-cable-handwarmers-natural-white', 'accessory', 'accessory'],
+      ['us-manitobah-bear-mukluk', 'shoes', 'shoes'],
+      ['us-manitobah-cottager', 'shoes', 'shoes'],
+      ['us-barong-warehouse-camisa-de-chino-long-sleeve', 'top', 'shirt'],
+      ['us-libas-libas-amethyst-purple-floral-net-saree', 'dress', 'dress'],
+      ['us-kalki-fashion-beige-and-green-dual-dupatta-embroidered-bridal-lehenga-for-pheras', 'dress', 'dress'],
+      ['us-kalki-fashion-aqua-blue-chanderi-anarkali-set-with-brocade-detail', 'dress', 'dress'],
+      ['us-aab-a-line-abaya-nude', 'dress', 'dress'],
+      ['us-aab-jilbab-black-prayer-outfit', 'dress', 'dress'],
+      ['us-zuri-kikoi-kaftan-one-size', 'dress', 'dress'],
+      ['us-lemlem-gasira-v-neck-caftan', 'dress', 'dress'],
+      ['us-two-palms-2009c-muumuu-hibiscus-panel-white', 'dress', 'dress'],
+      ['mx-lydia-lavin-vestido-campesino-bordado-sin-mangas', 'dress', 'dress'],
+      ['us-kalki-fashion-mauve-embroidered-sharara-suit-set', 'dress', 'dress'],
+      ['us-kalki-fashion-black-kurta-set-with-zari-and-sequins-work', 'dress', 'dress'],
+      ['us-eastessence-aabid-modest-muslim-mens-embroidered-kurta-pajama-set', 'dress', 'dress'],
+      ['us-aab-coffee-skirt-top-co-ord-set', 'dress', 'dress'],
+      ['mx-lydia-lavin-falda-blondas', 'bottom', 'skirt'],
+      ['us-tori-richard-coral-bloom-pareo', 'bottom', 'skirt'],
+      ['us-kealopiko-iliahi-pareu-all-colors', 'bottom', 'skirt'],
+      ['us-lemlem-lema-sarong', 'bottom', 'skirt'],
+      ['gb-gulahmed-beige-lawn-embroidered-shalwar-iusttr-42011', 'bottom', 'trousers'],
+      ['mx-carla-fernandez-poncho-bang-bang', 'outer', 'coat'],
+      ['gb-melin-tregwynt-knot-garden-cape', 'outer', 'coat'],
+      ['us-diarrablu-awa-kimono-toya-teal', 'outer', 'coat'],
+      ['us-eastessence-contrast-detail-shrug', 'outer', 'coat'],
+      ['mx-carla-fernandez-abrigo-lazarus-calado', 'outer', 'coat'],
+      ['mx-carla-fernandez-saco-magma-mapa', 'outer', 'coat'],
+      ['mx-carla-fernandez-chamarra-diego-concreto', 'outer', 'coat'],
+      ['us-mestiza-new-york-bimini-ruffle-tie-cover-up', 'outer', 'coat'],
+    ];
+    for (const [id, slot, kind] of decided) expect([id, ...worn(id)]).toEqual([id, slot, kind, 'cultural']);
+    // A shawl collar is a coat's, not a shawl.
+    expect(worn('us-eloquii-shawl-collar-fringe-duster').slice(0, 2)).toEqual(['outer', 'coat']);
+  });
+
+  it('is named by the part of its name that names it: not its cloth, its color, nor what comes with it', () => {
+    // Denim is a cloth: each was a pair of jeans until 2026-10-05.
+    expect(worn('us-madewell-the-elena-midi-dress-in-airy-denim').slice(0, 2)).toEqual(['dress', 'dress']);
+    expect(worn('us-madewell-shirt-jacket-in-airy-denim').slice(0, 2)).toEqual(['outer', 'coat']);
+    // A name's first part with a garment in it, at a dash or a pipe: Saint James's cardigan was a cap for its color.
+    expect(worn('us-saint-james-barcares-quarter-zip-knit-cardigan-for-men-100-wool-dark-blue-multi-cap').slice(0, 2)).toEqual(['top', 'sweater']);
+    // What comes with a garment isn't it, a cloth after its "in" isn't either; a dress named after its "with" is the
+    // garment, and so is one named after its "in".
+    expect(worn('gb-zara-long-satin-dress-with-tie-detail').slice(0, 2)).toEqual(['dress', 'dress']);
+    expect(worn('us-motherhood-maternity-long-sleeve-bodycon-maxi-dress-in-lurex-knit').slice(0, 2)).toEqual(['dress', 'dress']);
+    expect(worn('gb-asos-arrange-curve-hybrid-knit-bodice-with-draped-satin-skirt-midaxi-dress-in-chocolate').slice(0, 2)).toEqual(['dress', 'dress']);
+    expect(worn('gb-new-look-maternity-dark-brown-brushed-knit-set-in-sleeve-t-shirt').slice(0, 2)).toEqual(['top', 't-shirt']);
+  });
 });

@@ -30,6 +30,19 @@ describe('the kinds the trade names apart', () => {
     expect(entries.find((e) => e.value.subtype === null)!.facets?.special).toBe('None');
   });
 
+  it('cultural clothing is fifty makers’ and more, in every market, each maker spelled one way', () => {
+    // From 2026-10-05, the makers' own stores: Aran knits, tweed, aloha shirts, huipiles, saris and kurtas, abayas
+    // and hijabs, barongs, mukluks. Until then 13 makers, at Liverpool, Arnotts and five stores, none in Britain or Canada.
+    const cultural = CLOTHING_PRODUCTS.filter((p) => p.subtype === 'cultural');
+    expect(new Set(cultural.map((p) => p.brand)).size).toBeGreaterThanOrEqual(50);
+    expect(new Set(cultural.map((p) => p.market))).toEqual(new Set(['US', 'GB', 'IE', 'CA', 'MX']));
+    // Liverpool's P COVALIN is Pineda Covalin, whose own store sells beside it.
+    expect(productById('mx-liverpool-mx-huipil-pineda-covalin-para-mujer')!.brand).toBe('Pineda Covalin');
+    expect(cultural.some((p) => p.retailer === 'mx-pineda-covalin' && p.brand === 'Pineda Covalin')).toBe(true);
+    // A T-shirt, a pin or a handbag a cultural maker sells beside its clothes isn't one of them.
+    expect(cultural.filter((p) => /t-?shirt|\btees?\b|\bpins?\b|handbag$/i.test(p.name)).map((p) => p.name)).toEqual([]);
+  });
+
   it('a product sold by several retailers lists the others, cheapest first, in its own market', () => {
     const sim = life('us-ny-newyork', 'sellers');
     const levis = productById('us-levis-501-original-fit-mens-jeans')!;

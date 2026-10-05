@@ -31,6 +31,10 @@ const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/
  * Skirt" is a skirt, a "Denim Shirt" a shirt, "Trainer Socks" socks. Until
  * 2026-10-01 the first rule to match anywhere in the category and name
  * decided, and filed those three as jeans, jeans and shoes.
+ *
+ * Denim is a cloth, not a garment (from 2026-10-05): until then a name's last "denim" made it jeans, and Aran Woollen
+ * Mills' Achill Island Cardigan - Denim, Sig Zane's Pullover Aloha Shirt- Windsor/Cloud/Denim and
+ * Madewell's Elena Midi Dress in Airy Denim were all jeans. A pair of jeans says so, or its retailer files it under jeans.
  */
 const WORDS = [
   [/\b(watch(es)?|necklaces?|earrings?|rings?|bracelets?|cufflinks?|jewell?ery|pendants?)\b/, 'accessory', 'accessory'],
@@ -51,8 +55,22 @@ const WORDS = [
   [/\b(sweaters?|jumpers?|cardigans?|hoodies?|sweatshirts?|fleeces?|pullovers?|knits?|crewnecks?)\b/, 'top', 'sweater'],
   [/\b(t-?shirts?|tees?|tanks?|tank tops?|camisoles?|camis?|vest tops?)\b/, 'top', 't-shirt'],
   [/\b(shirts?|blouses?|polos?|tops?|henleys?|button-?downs?|overshirts?|bodysuits?)\b/, 'top', 'shirt'],
-  [/\b(jeans?|denims?)\b/, 'bottom', 'jeans'],
+  [/\b(jeans?)\b/, 'bottom', 'jeans'],
   [/\b(trousers?|pants|chinos?|leggings?|shorts|joggers?|sweatpants|cargos?|slacks)\b/, 'bottom', 'trousers'],
+  // A culture's garments by their own names (from 2026-10-05, for the cultural makers' stores): until then a saree, a
+  // hijab, a poncho or a mukluk named no garment the list knew, and each was a shirt. A sharara or straight suit set,
+  // an anarkali and a kurta set are a whole outfit, as a dress is; a shalwar is trousers; a stole, a shawl or a chal
+  // is worn as a scarf is. A kurta pajama is a kurta set, not sleepwear, and a camisa de chino a Filipino shirt, not
+  // chinos. Only the words that decide a garment are here: a huipil, a kurta or a guayabera is the shirt it would be
+  // without one, and a kilt, a mitt or a moc is filed as one by its retailer (taking each word out changed nothing,
+  // 2026-10-05).
+  [/\b(hijabs?|underscar(?:f|ves)|stoles?|shawls?(?! collar)|mascadas?|bufandas?|chal(?:es)?|gorras?|bandanas?|sporrans?|hand ?warmers?)\b/, 'accessory', 'accessory'],
+  [/\b(mukluks?|moccasins?)\b/, 'shoes', 'shoes'],
+  [/\b(camisa de chino)\b/, 'top', 'shirt'],
+  [/\b(sarees?|lehengas?|anarkalis?|abayas?|jilbabs?|kaft[aá]ns?|caftans?|mu'?umu'?us?|vestidos?|(?:sharara|straight) suit sets?|kurta sets?|kurta pajamas?|co-?ord sets?)\b/, 'dress', 'dress'],
+  [/\b(faldas?|pareos?|pareus?|sarongs?)\b/, 'bottom', 'skirt'],
+  [/\b(shalwars?)\b/, 'bottom', 'trousers'],
+  [/\b(ponchos?|capes?|kimonos?|bishts?|abrigos?|sacos?|chamarras?|cover[- ]?ups?)\b/, 'outer', 'coat'],
 ];
 
 /** The head garment word in some text, as [slot, kind, the word], or nothing. */
@@ -66,8 +84,8 @@ function headOf(text, market) {
   }
   if (!best) return undefined;
   // "Pants" in Britain and Ireland are underwear; a "vest" is an undershirt there and outerwear in America.
-  if (best.word === 'pants' && (market === 'GB' || market === 'IE')) return ['underwear', 'underwear'];
-  return [best.slot, best.kind];
+  if (best.word === 'pants' && (market === 'GB' || market === 'IE')) return ['underwear', 'underwear', best.word];
+  return [best.slot, best.kind, best.word];
 }
 
 /** How the kinds the trade names apart are worn (from 2026-10-03 for the gaps' research, 2026-10-04 for any retailer's). */
@@ -77,12 +95,47 @@ const SUBTYPE_WORN = { swimwear: ['active', 'swimsuit'], shapewear: ['underwear'
 const thermalWorn = (name) => (/socks|calcet/i.test(name) ? ['socks', 'socks'] : /pijama/i.test(name) ? ['sleep', 'pajamas'] : /leggings|tights|pantal|bottoms?|trousers|pants|joggers|long johns/i.test(name) ? ['base', 'thermal-bottom'] : ['base', 'thermal-top']);
 
 /** The slot and care kind a product is: its name's head noun, else its subcategory's, its category's where that says more. */
+/**
+ * The head garment word in a name, from the part of it that names the garment (from 2026-10-05): its first part, at a
+ * dash or a pipe, with a garment word, and that part before its "with" or "in". Until then the whole name's last
+ * garment word decided, so Kalki's Kurta Set With Dupatta was a scarf, Jimmy Hourihan's Knee Length Cape in
+ * Cashmere/Wool with Convertible Hood a hood's, and lemlem's TERARA | Jacket and a name's color after its dash
+ * (Aran Woollen Mills' Merino Aran Cardigan - Denim) read past the garment.
+ */
+function nameHead(name, market) {
+  for (const part of name.split(/\s[-–|]\s*|[-–|]\s/)) {
+    const head = withHead(part, market);
+    if (head) return head;
+  }
+  return undefined;
+}
+/** A garment's head before its "with": what comes with it is a part or an extra (a dupatta, a scarf, a hood), but a
+ * dress named after it is the garment (ARRANGE's hybrid knit bodice with draped satin skirt midaxi dress). */
+function withHead(part, market) {
+  const at = part.search(/\s(?:with|w\/)\s/);
+  if (at < 0) return inHead(part, market);
+  const lead = inHead(part.slice(0, at), market);
+  const after = inHead(part.slice(at).replace(/^\s(?:with|w\/)\s/, ''), market);
+  if (lead && !(after?.[0] === 'dress' && lead[0] !== 'dress')) return lead;
+  return after ?? headOf(part, market);
+}
+/** A garment's head before its "in": a cloth or a color after it isn't the garment ("in Airy Denim", "in Lurex
+ * Knit"), but a garment named after it is (a knit set-in sleeve T-shirt). */
+function inHead(text, market) {
+  const at = text.search(/\s(?:in|en|con)\s/);
+  if (at < 0) return headOf(text, market);
+  const lead = headOf(text.slice(0, at), market);
+  const later = headOf(text.slice(at + 1), market);
+  if (lead && (!later || /^knits?$/.test(later[2]))) return lead;
+  return headOf(text, market);
+}
+
 function wornAs(p, market) {
   const name = String(p.name).toLowerCase();
   const vest = /\bvests?\b/.test(name) && !/vest tops?/.test(name);
   // A knitted vest is a sweater vest wherever it's sold: Inis Meáin's Cashmere Bréidín Vest isn't an Irish undershirt.
   const knitVest = vest && /knit|cashmere|wool|merino|cable|aran|sweater/.test(name);
-  const head = headOf(name, market) ?? (knitVest ? ['top', 'sweater'] : vest ? (market === 'GB' || market === 'IE' ? ['underwear', 'underwear'] : ['outer', 'coat']) : undefined)
+  const head = nameHead(name, market) ?? (knitVest ? ['top', 'sweater'] : vest ? (market === 'GB' || market === 'IE' ? ['underwear', 'underwear'] : ['outer', 'coat']) : undefined)
     // The subcategory's words last, so its noun is the head: until 2026-10-04 the category's came last, and Everlane's
     // Invisible Bikini, filed under underwear in "underwear and socks", was a pair of socks.
     ?? headOf(`${p.category ?? ''} ${p.subcategory ?? ''}`.toLowerCase(), market);
@@ -247,7 +300,8 @@ for (const file of FILES) {
 // only at a sale price, its regular price unread.
 const GAPS = 'docs/research/world/research-clothing-gaps.json';
 // Spanish garment words a Mexican listing names its garment by.
-const SPANISH = [[/\b(pijamas?)\b/i, 'sleep', 'pajamas'], [/\b(pantal[oó]n(es)?|mallas?)\b/i, 'bottom', 'trousers'], [/\b(camisetas?|playeras?)\b/i, 'top', 't-shirt'], [/\b(su[eé]ter|chamarra)\b/i, 'top', 'sweater']];
+// A chamarra is a jacket, and from 2026-10-05 a garment word of its own; until then it was read here, as a sweater.
+const SPANISH = [[/\b(pijamas?)\b/i, 'sleep', 'pajamas'], [/\b(pantal[oó]n(es)?|mallas?)\b/i, 'bottom', 'trousers'], [/\b(camisetas?|playeras?)\b/i, 'top', 't-shirt'], [/\b(su[eé]ter)\b/i, 'top', 'sweater']];
 function sellerOf(name, market) {
   let words = String(name ?? '');
   if (/marketplace/i.test(words)) return undefined;
@@ -327,7 +381,9 @@ const brandKey = (b) => String(b).normalize('NFKD').replace(/[\u0300-\u036f]/g, 
 // A retailer's name taken for a product's brand, where the research read none, carries its market: Uniqlo UK's and
 // UNIQLO Canada's thermals are Uniqlo's, Old Navy Canada's swimwear Old Navy's, and Marks & Spencer's thermals M&S's,
 // the name its labels and the rest of the catalog carry. Until 2026-10-04 each counted as a brand of its own.
-const ALIAS = new Map([['marks & spencer', 'M&S']]);
+// Liverpool's P COVALIN is Pineda Covalin, as its own listing's name says (Huipil Pineda Covalin para mujer), and the
+// maker's own store spells it (pinedacovalin.com, read 2026-10-05).
+const ALIAS = new Map([['marks & spencer', 'M&S'], ['p covalin', 'Pineda Covalin']]);
 const stems = new Set(products.map((p) => brandKey(p.brand)));
 for (const p of products) {
   const market = String(p.brand).match(/^(.*?)\s+(?:Canada|UK|US|USA|Ireland|M[eé]xico)$/i);
