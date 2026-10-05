@@ -1,0 +1,603 @@
+{
+  "meta": {
+    "dateRead": "2026-10-05",
+    "purpose": "Each paid club's and lesson's own refund, make-up and cancellation terms",
+    "method": "WebFetch of each provider's page; search summaries marked. WebFetch returns a model-written extract of a page, so every quote was requested character for character and re-fetched with a second prompt where the first answer paraphrased; the quotes here are what the page returned on that second look. Two PDFs (Trinity Sport's cancellation and refund policy and terms and conditions, and the New Haven YMCA Youth Center program guide) were downloaded by WebFetch and text-extracted locally with pypdf, so their quotes are exact (line breaks flattened). WebSearch was used to find the policy pages; no recorded quote rests on a search summary alone, and search-summary material appears only in notes, labelled. The WebSearch allowance (200 calls) ran out near the end, so the last checks were WebFetch only. vancouver.ca and some ymcanyc.org branch pages return HTTP 403 to WebFetch and were not worked around.",
+    "conventions": {
+      "readMethod": "'page' = every rule recorded was read on the provider's own page or document; 'secondhand' = read verbatim on a page that is not the provider's own but prints the provider's policy under its name; 'search-summary' = only a search engine's summary was seen; 'not-found' = no terms found. No club ended as search-summary or not-found.",
+      "nulls": "rule, makeUp or remedy null = the provider's text is silent on it (the pages were searched for it), not 'no'. makeUp 'none' = the provider's text says make-ups or rescheduling are not given; 'other' = the provider offers a substitute or another remedy instead of a make-up.",
+      "numbers": "beforeStartDays 0 = 'before the start', no minimum lead time stated. noticeHours converts days at 24 hours a day. Currencies are ISO codes; where a page prints a bare '$' the currency is that country's dollar.",
+      "quotes": "Quotes keep the provider's own spelling and punctuation; '...' marks a cut inside a quote. Text in notes inside single quotation marks is also verbatim from the page named; text without quotation marks is paraphrase."
+    }
+  },
+  "clubs": [
+    {
+      "clubId": "volo-ny-kickball",
+      "provider": "Volo Sports",
+      "termsUrl": "https://help.volosports.com/support/solutions/articles/29000049635-what-s-volo-s-refund-policy-",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "none",
+        "beforeStartDays": null,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "If you, or your group/team, decide not to participate after registering, refunds are not available.",
+        "notes": "Volo publishes one policy for every city (help-center article 'What Is Volo's Refund and Credit Policy?'); the New York and Los Angeles league pages carry no refund text of their own. Next sentence of the article: 'Depending on the timing and circumstances, a site credit may be available.' So a credit is discretionary, with no deadline or amount stated. Also: 'Refunds are not available for injuries, moving, changes in work schedules, or other personal circumstances that prevent you from participating.' (a doctor's note may be asked for) and 'All refund or credit requests must be submitted in writing to your local Volo team or info@volosports.com.' A league registration cannot be self-withdrawn online: 'For league registrations, events, series, or tournaments, please reach out to your local Volo team and we'll remove you from the program.' Volo's Terms of Service PDF (section 4) separately calls all fees non-refundable. A search-engine summary of an older version of the refund page described a full site credit up to 2 weeks before the registration deadline and partial credit inside that window; that wording is not on the live page (the older Freshdesk address now returns 404), so it is not recorded as a rule."
+      },
+      "missedSession": {
+        "makeUp": "none",
+        "limit": null,
+        "noticeHours": 24,
+        "quote": "No. Forfeited games are not rescheduled.",
+        "notes": "Forfeit-policy article (https://help.volosports.com/support/solutions/articles/29000049645-what-s-the-forfeit-policy-). Notice: 'A team representative, preferably the captain, should notify your local Volo team as soon as you know and at least 24 hours before the game whenever possible.' (weekend games: by Friday morning whenever possible). 'A forfeit also does not create eligibility for a refund or credit.' 'Teams with two or more forfeits may also be removed from the league without a refund or credit.' A team short of players can open Drop-In spots, invite a friend, use an eligible substitute or play short. Not attending a scheduled make-up for a weather postponement does not qualify for a refund either."
+      },
+      "providerCancellation": {
+        "remedy": "make-up",
+        "quote": "Volo guarantees up to two weather-related makeup games per season.",
+        "notes": "Weather Policy article (https://help.volosports.com/support/solutions/articles/29000049643): 'Weather delays, postponements, and cancellations do not qualify for a refund or credit simply because the game was affected by weather.' Make-ups beyond the two 'cannot be guaranteed'; weather decisions are made 'at least two hours before game time'. Refund article: 'Postponed games do not qualify for a refund. If Volo is ultimately unable to make up a postponed game, players will receive a prorated credit for that game.' Make-ups 'may happen at a different location, on another night, or as multiple games in one night'. If Volo cancels a league for registration or venue reasons it first offers alternate leagues, then 'you may be eligible for a full refund'; no reply by the deadline turns the fee into a league credit. A delayed start does not qualify for a refund."
+      }
+    },
+    {
+      "clubId": "volo-la-kickball",
+      "provider": "Volo Sports",
+      "termsUrl": "https://help.volosports.com/support/solutions/articles/29000049635-what-s-volo-s-refund-policy-",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "none",
+        "beforeStartDays": null,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "If you, or your group/team, decide not to participate after registering, refunds are not available.",
+        "notes": "The Los Angeles kickball page (https://www.volosports.com/los-angeles/kickball) has no refund text and points to a rules page; the single national help-center policy applies. Volo publishes one policy for every city (help-center article 'What Is Volo's Refund and Credit Policy?'); the New York and Los Angeles league pages carry no refund text of their own. Next sentence of the article: 'Depending on the timing and circumstances, a site credit may be available.' So a credit is discretionary, with no deadline or amount stated. Also: 'Refunds are not available for injuries, moving, changes in work schedules, or other personal circumstances that prevent you from participating.' (a doctor's note may be asked for) and 'All refund or credit requests must be submitted in writing to your local Volo team or info@volosports.com.' A league registration cannot be self-withdrawn online: 'For league registrations, events, series, or tournaments, please reach out to your local Volo team and we'll remove you from the program.' Volo's Terms of Service PDF (section 4) separately calls all fees non-refundable. A search-engine summary of an older version of the refund page described a full site credit up to 2 weeks before the registration deadline and partial credit inside that window; that wording is not on the live page (the older Freshdesk address now returns 404), so it is not recorded as a rule."
+      },
+      "missedSession": {
+        "makeUp": "none",
+        "limit": null,
+        "noticeHours": 24,
+        "quote": "No. Forfeited games are not rescheduled.",
+        "notes": "Forfeit-policy article (https://help.volosports.com/support/solutions/articles/29000049645-what-s-the-forfeit-policy-). Notice: 'A team representative, preferably the captain, should notify your local Volo team as soon as you know and at least 24 hours before the game whenever possible.' (weekend games: by Friday morning whenever possible). 'A forfeit also does not create eligibility for a refund or credit.' 'Teams with two or more forfeits may also be removed from the league without a refund or credit.' A team short of players can open Drop-In spots, invite a friend, use an eligible substitute or play short. Not attending a scheduled make-up for a weather postponement does not qualify for a refund either."
+      },
+      "providerCancellation": {
+        "remedy": "make-up",
+        "quote": "Volo guarantees up to two weather-related makeup games per season.",
+        "notes": "Weather Policy article (https://help.volosports.com/support/solutions/articles/29000049643): 'Weather delays, postponements, and cancellations do not qualify for a refund or credit simply because the game was affected by weather.' Make-ups beyond the two 'cannot be guaranteed'; weather decisions are made 'at least two hours before game time'. Refund article: 'Postponed games do not qualify for a refund. If Volo is ultimately unable to make up a postponed game, players will receive a prorated credit for that game.' Make-ups 'may happen at a different location, on another night, or as multiple games in one night'. If Volo cancels a league for registration or venue reasons it first offers alternate leagues, then 'you may be eligible for a full refund'; no reply by the deadline turns the fee into a league credit. A delayed start does not qualify for a refund."
+      }
+    },
+    {
+      "clubId": "go-mammoth-netball",
+      "provider": "GO Mammoth",
+      "termsUrl": "https://www.gomammoth.co.uk/terms-conditions/",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "fee-then-full",
+        "beforeStartDays": 5,
+        "beforeSession": null,
+        "adminFee": 15,
+        "feeCurrency": "GBP",
+        "quote": "No refunds within 5 days before the start date of the league or class (no matter the circumstances – which includes but is not limited to illness and injury). For ALL refunds processed before this time, there will be a £15 processing fee for Individuals and a £30 processing fee for Teams.",
+        "notes": "Refunds section of the terms. The £15 is the individual fee; a team pays £30 (feeCurrency GBP for both). The Help Centre (https://www.gomammoth.co.uk/need-help/) words the same deadline more generously and omits the fee: 'We offer a full refund or credit if you request it 5 days prior to the start date of the league.' and 'Unfortunately, after this point, refunds aren't possible as we're committed to the costs involved running the league.' The terms add: 'In the event of early withdrawal from, or removal from, a league, no refunds will be issued.' A player with no place in a league is refunded or moved: 'if you have paid for a league but there is no space for you, then we'll fully refund you or help you move into another league.' Leagues are paid in full up front ('all leagues are paid in full before the league begins'); weekly payment is not offered. The Hyde Park (Park Sports) league has no terms of its own; the site-wide GO Mammoth terms apply."
+      },
+      "missedSession": {
+        "makeUp": "other",
+        "limit": null,
+        "noticeHours": 4,
+        "quote": "Players are able to miss weeks but it is recommended you find a friend/substitute to play so your team has enough players.",
+        "notes": "Help Centre answer. No make-up for a player's missed week and no fee returned; the substitute is the remedy. Team level (terms, 'Forfeits and Ringers'): 'If a team does not show up OR is unable to field a full squad for any 2 games within a season, we reserve the right to eject this team from the remainder of the season with NO REFUND.' A team that does not tell GO Mammoth at least 4 hours before the fixture that it cannot attend may be charged the match cost (noticeHours 4). 'If you require ringers for a fixture, we can help you out with that.'"
+      },
+      "providerCancellation": {
+        "remedy": "make-up",
+        "quote": "If games are cancelled in advance during the day you will usually be informed by 5pm on the day by email/sms. If this happens, your missed games will be rescheduled (extra week added on to the season) – so you will not miss any games overall.",
+        "notes": "Bad Weather section of the terms and the Help Centre. Late-notice cancellation (the umpire cancels on arrival or mid-game): 'games not played will be rescheduled or credited.' If the umpire says it is playable and a team refuses to play, 'this will be treated as a forfeit and fixtures will not be rescheduled or credits offered.'"
+      }
+    },
+    {
+      "clubId": "go-mammoth-vauxhall-netball",
+      "provider": "GO Mammoth",
+      "termsUrl": "https://www.gomammoth.co.uk/terms-conditions/",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "fee-then-full",
+        "beforeStartDays": 5,
+        "beforeSession": null,
+        "adminFee": 15,
+        "feeCurrency": "GBP",
+        "quote": "No refunds within 5 days before the start date of the league or class (no matter the circumstances – which includes but is not limited to illness and injury). For ALL refunds processed before this time, there will be a £15 processing fee for Individuals and a £30 processing fee for Teams.",
+        "notes": "Refunds section of the terms. The £15 is the individual fee; a team pays £30 (feeCurrency GBP for both). The Help Centre (https://www.gomammoth.co.uk/need-help/) words the same deadline more generously and omits the fee: 'We offer a full refund or credit if you request it 5 days prior to the start date of the league.' and 'Unfortunately, after this point, refunds aren't possible as we're committed to the costs involved running the league.' The terms add: 'In the event of early withdrawal from, or removal from, a league, no refunds will be issued.' A player with no place in a league is refunded or moved: 'if you have paid for a league but there is no space for you, then we'll fully refund you or help you move into another league.' Leagues are paid in full up front ('all leagues are paid in full before the league begins'); weekly payment is not offered. The Vauxhall page (https://www.gomammoth.co.uk/netball/vauxhall/) carries no terms and links to the same site-wide terms."
+      },
+      "missedSession": {
+        "makeUp": "other",
+        "limit": null,
+        "noticeHours": 4,
+        "quote": "Players are able to miss weeks but it is recommended you find a friend/substitute to play so your team has enough players.",
+        "notes": "Help Centre answer. No make-up for a player's missed week and no fee returned; the substitute is the remedy. Team level (terms, 'Forfeits and Ringers'): 'If a team does not show up OR is unable to field a full squad for any 2 games within a season, we reserve the right to eject this team from the remainder of the season with NO REFUND.' A team that does not tell GO Mammoth at least 4 hours before the fixture that it cannot attend may be charged the match cost (noticeHours 4). 'If you require ringers for a fixture, we can help you out with that.'"
+      },
+      "providerCancellation": {
+        "remedy": "make-up",
+        "quote": "If games are cancelled in advance during the day you will usually be informed by 5pm on the day by email/sms. If this happens, your missed games will be rescheduled (extra week added on to the season) – so you will not miss any games overall.",
+        "notes": "Bad Weather section of the terms and the Help Centre. Late-notice cancellation (the umpire cancels on arrival or mid-game): 'games not played will be rescheduled or credited.' If the umpire says it is playable and a team refuses to play, 'this will be treated as a forfeit and fixtures will not be rescheduled or credits offered.'"
+      }
+    },
+    {
+      "clubId": "firmballs-spawell-fives",
+      "provider": "FirmBalls",
+      "termsUrl": "https://www.firmballs.com/terms-conditions/",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "other",
+        "beforeStartDays": null,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "7.4 Any team that leaves the league without the 3 weeks notice or before the end of a season, shall forfeit their team deposit.",
+        "notes": "FirmBalls takes a team deposit plus a per-game fee. Match fees are paid as you go ('The match fees are payable before the game commences or yearly in advance.', 5.1) and no clause refunds them. What comes back is the deposit: 7.1 'To withdraw from the league the team captain MUST give at least 3 weeks notice before the end of that current season.'; 7.2 the team must then play out the season; 7.6 'the deposit, (minus any match fee underpayments deducted, if applicable), shall be returned via a cheque.' Clause 4.1 puts the deposit at £75: 'A refundable team deposit of £75 is payable per team.' Caution for Dublin: these terms are written in pounds and are 'governed by English Law' (10.4); they never mention Dublin or euros. The Dublin Spawell page (Wednesday nights, 'Games are 54 minutes and cost only €60 per team!') links to this same terms page, so whether the £75 figure applies to the Dublin league is unconfirmed."
+      },
+      "missedSession": {
+        "makeUp": "none",
+        "limit": null,
+        "noticeHours": null,
+        "quote": "6.1 If a team is absent for a fixture without giving proper notice the opposition shall be awarded the game.",
+        "notes": "'proper notice' is not defined anywhere in the terms, so noticeHours is null. 6.3: an absent team pays 'compensation for breach of contract of this agreement. The sum will be the match fee plus a £10 administration fee, payable by noon the following day', else it comes off the deposit. 12.3: fixtures 'shall not be amended or re-arranged unless determined by FirmBalls', so no make-up fixture is offered."
+      },
+      "providerCancellation": {
+        "remedy": null,
+        "quote": null,
+        "notes": "No clause on a fixture cancelled by FirmBalls or the pitch (the terms were searched for postpone, reschedule, cancel, weather and pitch: none appear). 11.3 lets FirmBalls change the match night, times, venue or format 'at the sole discretion of FirmBalls'. 13.3 covers a game abandoned for an extreme cause beyond both teams' control: 'one point shall be awarded to each team'; no refund or credit is mentioned."
+      }
+    },
+    {
+      "clubId": "new-haven-pickleball",
+      "provider": "New Haven Pickleball League",
+      "termsUrl": "https://nhvpickleball.com/",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": null,
+        "beforeStartDays": null,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": null,
+        "notes": "No refund, withdrawal or credit text on the page (searched for refund, drop, withdraw, cancel, fee, pay, season). The only payment sentence is 'Registration for each session is $30 per player, and must be paid to secure your spot in the league.' The page links no FAQ, waiver or terms page; sign-ups run through Facebook and the TeamReach app. Fall 2026 session: starts September 8, ends early November."
+      },
+      "missedSession": {
+        "makeUp": "other",
+        "limit": null,
+        "noticeHours": null,
+        "quote": "If a member is absent, a teammate can play twice, or a substitute can be arranged with the coordinator.",
+        "notes": "FAQ 'What if I need to miss a night of league play?': 'Let your captain know as early as possible. Each team assumes some players will miss a week.' A sub or a teammate playing twice replaces the absent player; there is no make-up night and no notice period in hours."
+      },
+      "providerCancellation": {
+        "remedy": "make-up",
+        "quote": "If weather is poor, matches will be canceled and communicated via TeamReach and email. If more than two games are canceled, we'll add makeup games before playoffs.",
+        "notes": "Make-ups are promised only once more than two games are cancelled; nothing is said about a refund or a credit."
+      }
+    },
+    {
+      "clubId": "pumas7-futbol7",
+      "provider": "Pumas7",
+      "termsUrl": "https://pumas7.com/nuevos-jugadores",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "other",
+        "beforeStartDays": null,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "Los equipos deben de pagar una fianza de $1,000 pesos, la cual se devuelve al equipo cuando decida salirse del torneo.",
+        "notes": "Only the team deposit (fianza, MX$1,000) is covered: returned when the team decides to leave the tournament ('la cual se regresa al final' on the inscripciones page), but lost on one surprise default or two announced defaults ('La fianza se perderá en caso de que el equipo tenga UN default sorpresa, o DOS defaults avisados.'). Nothing says whether any of the MX$1,100-per-player registration ('cuota única, (cubre arbitraje, uso de cancha, registros, etc.)', 'Pago de la inscripción por adelantado' on https://pumas7.com/informaci%C3%B3n%2Finscripciones) comes back if a player or team leaves; no refund text was found for it on the home, inscripciones, nuevos-jugadores, liga-sábados or liga-domingos pages."
+      },
+      "missedSession": {
+        "makeUp": null,
+        "limit": null,
+        "noticeHours": 192,
+        "quote": "Default avisado: El equipo avisa 8 dias antes que no se van a presentar.",
+        "notes": "The nuevos-jugadores page defines two kinds of no-show: 'Default avisado' (8 days' notice, so noticeHours 192) and 'Default sorpresa: El equipo planta a su rival sin aviso previo, o avisando solo unos dias antes.' Three defaults of either kind end the team's season: 'Será causa de baja definitiva del torneo tener: 3 Defaults = baja del torneo'. A team without a match because it has not paid also takes a default: 'No tener partido por falta de pago se cuenta como default.' (liga-sábados and liga-domingos pages). The pages say nothing about rescheduling a defaulted match, so makeUp is left null."
+      },
+      "providerCancellation": {
+        "remedy": null,
+        "quote": null,
+        "notes": "No text on rain, field closure or cancelled rounds on any Pumas7 page read (the league plays 12 jornadas on natural grass, Saturday or Sunday mornings)."
+      }
+    },
+    {
+      "clubId": "urban-rec-ubc-soccer",
+      "provider": "Urban Rec",
+      "termsUrl": "https://vancouver.urbanrec.ca/member/faq",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "other",
+        "beforeStartDays": null,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "Urban Rec's withdrawal policy is a simple one: we only offer refunds if we are able to resell your team/individual spot to another team as there is limited space for all of our leagues/teams, and if you have registered for a spot, this prevents someone else from registering for it.",
+        "notes": "Refund only if the spot is re-sold: if re-sold before the league starts, 'the refund amount will be the full league price minus the admin fee'; if re-sold after it starts, 'the refund will be dependent on the pro-rated price that the spot is re-sold for, minus the admin fee'; 'If we cannot re-sell your spot then no refund will be offered.' The administrative fee is NOT settled across Urban Rec's own Vancouver pages, so adminFee is null: this FAQ says 'There is an administrative charge applied to spots that are able to be re-sold of 10% of the total fee paid or $50- whichever is greater.'; the individual-player FAQ (https://vancouver.urbanrec.ca/member/faq/individual-player-team-faqs) says 'minus a $25 administrative fee'; a search-engine summary of the Withdrawal Policy page itself (https://vancouver.urbanrec.ca/policies/withdrawal-policy, now a 301 redirect whose new address https://urbanrecsports.com/ca/about-us/policies?policy=withdrawal returned HTTP 500 on every try) gave $10 for an individual and $50 for a team. The Okanagan franchise's own page differs again ('10% of the registration cost, or $50 ($25 to an individual)- whichever is greater'). The current Canada-wide terms (https://urbanrecsports.com/ca/terms) say only: 'After registering for an URBAN REC program, the participant is committing to participate in said program. If a participant wishes to withdraw from an URBAN REC program, they may apply to do so as per the Urban Rec Withdrawal Policy.' The FAQ page footer reads '© 2026'."
+      },
+      "missedSession": {
+        "makeUp": "other",
+        "limit": null,
+        "noticeHours": null,
+        "quote": "Additional subs can only be used to replace a registered player that cannot make a game and are not meant to increase the size of your line-up.",
+        "notes": "Individual-player FAQ: 'If you will be away and cannot make a game, please try and give your team as much notice as possible.' (no hours stated). Team defaults (Vancouver soccer rules page, https://vancouver.urbanrec.ca/leagues/soccer/rules): a team that cannot field the minimum starting lineup after a 10-minute grace period 'defaults the game and is subject to the associated default compensation bond used to reimburse their opponent'; 'Any team defaulting more than 2 games in a season may be expelled from the league without refund.'; a team may borrow players from other teams in the league 'without penalty and the game result will count'. The pages read do not mention rescheduling a defaulted game."
+      },
+      "providerCancellation": {
+        "remedy": "make-up",
+        "quote": "Urban Rec will do its best to reschedule those games at a future date using facilities/locations and gametimes as close to the original times as possible in order to finish the league by the original end date.",
+        "notes": "Same FAQ answer: 'This may mean teams will need to play doubleheaders to make up these games.' and 'If games are not able to be made up, then teams will be compensated for any missed games.' The current Canada-wide terms (https://urbanrecsports.com/ca/terms, 'Game Cancellation Policy') are harsher: 'If cancelled games are unable to be made up due to circumstances outside of Urban Rec's control (e.g. weather, smoke, etc.), then no refunds may be issued.' Whole program cancelled (same terms): 'registrants will be refunded a minimum of 50% of the amount of their registration fees at the time of cancellation ... and the remainder as refundable credit towards URBAN REC programming through Dec 1st of the calendar year following the calendar year in which the original purchase was made.' (an administrative fee of up to 10% of the total registration fee may be deducted from the credit portion if it is not redeemed in time). The Vancouver cancellation-policy page (https://vancouver.urbanrec.ca/member/faq/cancellation-policy, possibly older text) instead offers, if a season is cancelled mid-season, 'credit for future play worth 100% of the prorated amount for any remaining games' or a 'cash refund worth 70% of the prorated amount'. Weather: 'Generally speaking, Urban Rec leagues play rain or shine unless conditions are unsafe or fields/courts are unplayable.'"
+      }
+    },
+    {
+      "clubId": "ymca-cross-island-swim",
+      "provider": "YMCA of Greater New York (Cross Island YMCA)",
+      "termsUrl": "https://ymcanyc.org/membership-policies",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "none",
+        "beforeStartDays": null,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "Credits, refunds and/or make-up classes will be issued if the YMCA cancels or postpones a class, otherwise programs are non-refundable and make up classes not available.",
+        "notes": "From the association-wide 'Program Credits and Refunds' section of the Membership Policies page. Medical exception: 'Requests for credit or refund for a medical reason will require documentation and approval by the department director.' Search summaries of other YMCA of Greater New York branch FAQs (Coney Island, Greenpoint, Long Island City, Northeast Bronx) add that medical credit or refund requests must be filed within one month of the class start; that is branch-FAQ text seen only through search summaries (the Cross Island FAQ pages return HTTP 403 to WebFetch), so it is not recorded as a rule. The registration page (https://register.ymcanyc.org/programs/J2) carries no refund text."
+      },
+      "missedSession": {
+        "makeUp": "none",
+        "limit": null,
+        "noticeHours": null,
+        "quote": "Credit will not be issued for classes not attended.",
+        "notes": "Same page: programs are non-refundable and 'make up classes not available' except when the YMCA cancels or postpones a class. A search summary of the Cross Island YMCA FAQ (page returns 403, wording not verbatim) says a make-up may be requested for a class missed for a medical reason by contacting the aquatics team, subject to availability in the lesson's level, and that membership staff cannot schedule make-ups."
+      },
+      "providerCancellation": {
+        "remedy": "other",
+        "quote": "Credits, refunds and/or make-up classes will be issued if the YMCA cancels or postpones a class",
+        "notes": "Same page: 'There will be no make-up classes for scheduled holidays, snow days, or other weather conditions beyond our control.' For programs cancelled for low enrollment or other changes: 'Participants will be issued a refund or credit for cancellations. All credits are good for 3 years.' A search summary of the Cross Island FAQ (not verbatim, page unreadable) says make-ups or credits are given if the Y cancels for weather or maintenance, which sits oddly with the snow-day sentence."
+      }
+    },
+    {
+      "clubId": "ymca-new-haven-swim",
+      "provider": "Central Connecticut Coast YMCA (New Haven YMCA Youth Center)",
+      "termsUrl": "https://cccymca.org/wp-content/uploads/New-Haven-Y-Youth-Center-2025-Winter-1-Program-Guide-Final-RP.pdf",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "fee-then-full",
+        "beforeStartDays": 0,
+        "beforeSession": null,
+        "adminFee": 10,
+        "feeCurrency": "USD",
+        "quote": "Credits and Refunds for program fees will only be approved in the following instances: ... 2. At the participant’s request, providing the Request Form is received prior to the start of the program session.* ... *A $10.00 administrative fee for each will be added for each credit or refund.",
+        "notes": "Read in the 'YMCA PROGRAM CREDIT/REFUND POLICY' box of the New Haven YMCA Youth Center's own Winter 1 program guide (session January 5-March 1; PDF downloaded and text-extracted, so the quote is exact). A request received before the session starts gets a credit or refund less the $10 fee, with no lead time in days stated (beforeStartDays 0 means any time before the start). After the start: '3. After the start of the program session, only for medically documented reasons.*' (same $10 fee). 'No credit or refund will be issued if the above conditions are not met. If a system credit is issued, it must immediately be applied to an outstanding balance, or a new program/service.' A search summary of the Bridgeport Summer 2026 guide shows the same $10 fee. The swim page (https://cccymca.org/locations/newhaven/swim/) has no policy text; it gives $210 for the seven-week program and registration by email or in person."
+      },
+      "missedSession": {
+        "makeUp": null,
+        "limit": null,
+        "noticeHours": null,
+        "quote": null,
+        "notes": "No make-up or missed-lesson wording in the policy box or anywhere else in the guide's extracted text (searched for make up, make-up, makeup, missed). The only rule is the one above: no credit or refund outside the three listed instances."
+      },
+      "providerCancellation": {
+        "remedy": "refund",
+        "quote": "Credits and Refunds for program fees will only be approved in the following instances: 1. The YMCA cancels a program.",
+        "notes": "The guide says 'Credits and Refunds' without choosing between them; a system credit 'must immediately be applied to an outstanding balance, or a new program/service'. The $10 fee asterisk is attached to instances 2 and 3 only, not to a YMCA cancellation. Nothing about a single lesson cancelled for weather or an instructor's absence."
+      }
+    },
+    {
+      "clubId": "trinity-sport-swim",
+      "provider": "Trinity Sport (Trinity College Dublin)",
+      "termsUrl": "https://www.tcd.ie/sport/about/terms-and-conditions/",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "other",
+        "beforeStartDays": 7,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "Bookings cancelled with less than the required notice periods will not be entitled to a transfer or a refund. ... iii. Courses / activity camps / school tours - minimum 7 days’ notice required.",
+        "notes": "Terms and Conditions (reviewed August 2026, https://www.tcd.ie/media/tcd/sport/pdfs/admin-/Terms-and-Conditions-August-2026.pdf), clause 6.8; the linked Cancellation and Refund Policy PDF (https://www.tcd.ie/media/tcd/sport/pdfs/admin-/trinitysport-cancellation-refund-policy18.pdf) repeats 'Course / Activity Camp Minimum 7 days’ notice required for cancellation.' What the 7 days are counted from is not stated; beforeStartDays 7 reads it as before the course start. That PDF also says 'Depending on the circumstances, an administration fee may be charged for processing a refund.' (no amount), 'Transfers to alternative dates or account credit may be offered as an alternative to a refund.', and 'Refunds may be facilitated outside of these terms on medical grounds – a valid medical certificate is required.' Neither document says the refund inside the window is a full one, so the rule is recorded as other. Course page: adult swimming, 6 weeks, €75 members / €90 non-members."
+      },
+      "missedSession": {
+        "makeUp": null,
+        "limit": null,
+        "noticeHours": null,
+        "quote": null,
+        "notes": "No make-up or missed-class wording for courses in the terms, the cancellation PDF or the course page."
+      },
+      "providerCancellation": {
+        "remedy": "other",
+        "quote": "if there are insufficient numbers of attendees for a class / course, we reserve the right to cancel or postpone the activity before its start date. As much notice as possible will be provided and a full refund will be offered if no suitable alternative arrangement is found.",
+        "notes": "Terms clause 6.7 (the quote above) also says 'Pending availability, course transfers may be possible'. Closures mid-course fall under clause 9.5: Trinity Sport may 'close, restrict, suspend, alter, relocate, or withdraw facilities, services, programmes, or activities where reasonably required for operational, safety, maintenance, legal, weather-related, public health, University, or other legitimate reasons' and then 'will endeavour to provide reasonable notice and, at its discretion, may offer an alternative arrangement, credit, or refund.' So a single cancelled class gets a discretionary remedy."
+      }
+    },
+    {
+      "clubId": "trinity-sport-tennis",
+      "provider": "Trinity Sport (Trinity College Dublin)",
+      "termsUrl": "https://www.tcd.ie/sport/about/terms-and-conditions/",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "other",
+        "beforeStartDays": 7,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "Bookings cancelled with less than the required notice periods will not be entitled to a transfer or a refund. ... iii. Courses / activity camps / school tours - minimum 7 days’ notice required.",
+        "notes": "Terms and Conditions (reviewed August 2026, https://www.tcd.ie/media/tcd/sport/pdfs/admin-/Terms-and-Conditions-August-2026.pdf), clause 6.8; the linked Cancellation and Refund Policy PDF (https://www.tcd.ie/media/tcd/sport/pdfs/admin-/trinitysport-cancellation-refund-policy18.pdf) repeats 'Course / Activity Camp Minimum 7 days’ notice required for cancellation.' What the 7 days are counted from is not stated; beforeStartDays 7 reads it as before the course start. That PDF also says 'Depending on the circumstances, an administration fee may be charged for processing a refund.' (no amount), 'Transfers to alternative dates or account credit may be offered as an alternative to a refund.', and 'Refunds may be facilitated outside of these terms on medical grounds – a valid medical certificate is required.' Neither document says the refund inside the window is a full one, so the rule is recorded as other. Course page: adult tennis, 6 weeks, €80 members / €100 non-members, outdoor courts at Botany Bay."
+      },
+      "missedSession": {
+        "makeUp": null,
+        "limit": null,
+        "noticeHours": null,
+        "quote": null,
+        "notes": "No make-up or missed-class wording for courses in the terms, the cancellation PDF or the course page."
+      },
+      "providerCancellation": {
+        "remedy": "other",
+        "quote": "if there are insufficient numbers of attendees for a class / course, we reserve the right to cancel or postpone the activity before its start date. As much notice as possible will be provided and a full refund will be offered if no suitable alternative arrangement is found.",
+        "notes": "Terms clause 6.7 (the quote above) also says 'Pending availability, course transfers may be possible'. Closures mid-course fall under clause 9.5: Trinity Sport may 'close, restrict, suspend, alter, relocate, or withdraw facilities, services, programmes, or activities where reasonably required for operational, safety, maintenance, legal, weather-related, public health, University, or other legitimate reasons' and then 'will endeavour to provide reasonable notice and, at its discretion, may offer an alternative arrangement, credit, or refund.' So a single cancelled class gets a discretionary remedy. Tennis course page (https://www.tcd.ie/sport/classes-and-courses/tennis-courses/): 'Please note: Dates can be subject to change dependant on weather or court conditions.' (no remedy stated)."
+      }
+    },
+    {
+      "clubId": "toronto-st-lawrence-swim",
+      "provider": "City of Toronto Parks, Forestry and Recreation",
+      "termsUrl": "https://www.toronto.ca/explore-enjoy/parks-recreation/how-to-use-our-services/how-to-register-for-recreation-programs",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "fee-then-prorated",
+        "beforeStartDays": null,
+        "beforeSession": 3,
+        "adminFee": 14.13,
+        "feeCurrency": "CAD",
+        "quote": "You can withdraw or request a refund up to the third class of a program. ... All withdrawal and refund requests will be charged a $14.13 administration fee per person, per activity. ... Refunds and credits are prorated based on the date the request is received, not based on program attendance.",
+        "notes": "City-wide policy ('Cancelling a Registration (Withdrawals & Refunds)'); nothing specific to this course was read. 'up to the third class': whether the third class itself is included is not stated (transfers are allowed 'before the start of the third class'). The pro-rating is on the date the request is received, not on attendance. Extended Care is exempt from the fee; After-school Recreation Care has its own process. The 'Prorating Program Fees' sentence ('Program fees are prorated based on the number of classes remaining.') is about registering after a program has started, not about withdrawing."
+      },
+      "missedSession": {
+        "makeUp": null,
+        "limit": null,
+        "noticeHours": null,
+        "quote": null,
+        "notes": "No general sentence about a participant's missed class. The only missed-class sentence ('Refunds will not be provided for missed classes or programs where 100 per cent attendance and active participation are mandatory.') sits under Aquatic Leadership Activities and does not cover recreational swim, guitar or cooking courses."
+      },
+      "providerCancellation": {
+        "remedy": "make-up",
+        "quote": "Every effort will be made to add a make-up class. If an additional class cannot be provided or a program is cancelled due to low registration, a credit will be applied to participants' accounts.",
+        "notes": "'A program class may be cancelled due to severe weather events or power outages.' 'Programs may also be cancelled before the start date of the first class due to low registration.' The remedy when no make-up can be added is a credit on the account, not a cash refund."
+      }
+    },
+    {
+      "clubId": "northwood-guitar",
+      "provider": "City of Toronto Parks, Forestry and Recreation",
+      "termsUrl": "https://www.toronto.ca/explore-enjoy/parks-recreation/how-to-use-our-services/how-to-register-for-recreation-programs",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "fee-then-prorated",
+        "beforeStartDays": null,
+        "beforeSession": 3,
+        "adminFee": 14.13,
+        "feeCurrency": "CAD",
+        "quote": "You can withdraw or request a refund up to the third class of a program. ... All withdrawal and refund requests will be charged a $14.13 administration fee per person, per activity. ... Refunds and credits are prorated based on the date the request is received, not based on program attendance.",
+        "notes": "City-wide policy ('Cancelling a Registration (Withdrawals & Refunds)'); nothing specific to this course was read. 'up to the third class': whether the third class itself is included is not stated (transfers are allowed 'before the start of the third class'). The pro-rating is on the date the request is received, not on attendance. Extended Care is exempt from the fee; After-school Recreation Care has its own process. The 'Prorating Program Fees' sentence ('Program fees are prorated based on the number of classes remaining.') is about registering after a program has started, not about withdrawing. Same City-wide policy applies to this guitar course; no course-specific terms were read."
+      },
+      "missedSession": {
+        "makeUp": null,
+        "limit": null,
+        "noticeHours": null,
+        "quote": null,
+        "notes": "No general sentence about a participant's missed class. The only missed-class sentence ('Refunds will not be provided for missed classes or programs where 100 per cent attendance and active participation are mandatory.') sits under Aquatic Leadership Activities and does not cover recreational swim, guitar or cooking courses."
+      },
+      "providerCancellation": {
+        "remedy": "make-up",
+        "quote": "Every effort will be made to add a make-up class. If an additional class cannot be provided or a program is cancelled due to low registration, a credit will be applied to participants' accounts.",
+        "notes": "'A program class may be cancelled due to severe weather events or power outages.' 'Programs may also be cancelled before the start date of the first class due to low registration.' The remedy when no make-up can be added is a credit on the account, not a cash refund."
+      }
+    },
+    {
+      "clubId": "rouge-valley-cooking",
+      "provider": "City of Toronto Parks, Forestry and Recreation",
+      "termsUrl": "https://www.toronto.ca/explore-enjoy/parks-recreation/how-to-use-our-services/how-to-register-for-recreation-programs",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "fee-then-prorated",
+        "beforeStartDays": null,
+        "beforeSession": 3,
+        "adminFee": 14.13,
+        "feeCurrency": "CAD",
+        "quote": "You can withdraw or request a refund up to the third class of a program. ... All withdrawal and refund requests will be charged a $14.13 administration fee per person, per activity. ... Refunds and credits are prorated based on the date the request is received, not based on program attendance.",
+        "notes": "City-wide policy ('Cancelling a Registration (Withdrawals & Refunds)'); nothing specific to this course was read. 'up to the third class': whether the third class itself is included is not stated (transfers are allowed 'before the start of the third class'). The pro-rating is on the date the request is received, not on attendance. Extended Care is exempt from the fee; After-school Recreation Care has its own process. The 'Prorating Program Fees' sentence ('Program fees are prorated based on the number of classes remaining.') is about registering after a program has started, not about withdrawing. Same City-wide policy applies to this cooking course; no course-specific terms were read."
+      },
+      "missedSession": {
+        "makeUp": null,
+        "limit": null,
+        "noticeHours": null,
+        "quote": null,
+        "notes": "No general sentence about a participant's missed class. The only missed-class sentence ('Refunds will not be provided for missed classes or programs where 100 per cent attendance and active participation are mandatory.') sits under Aquatic Leadership Activities and does not cover recreational swim, guitar or cooking courses."
+      },
+      "providerCancellation": {
+        "remedy": "make-up",
+        "quote": "Every effort will be made to add a make-up class. If an additional class cannot be provided or a program is cancelled due to low registration, a credit will be applied to participants' accounts.",
+        "notes": "'A program class may be cancelled due to severe weather events or power outages.' 'Programs may also be cancelled before the start date of the first class due to low registration.' The remedy when no make-up can be added is a credit on the account, not a cash refund."
+      }
+    },
+    {
+      "clubId": "vancouver-kensington-swim",
+      "provider": "Vancouver Board of Parks and Recreation (Kensington Community Centre)",
+      "termsUrl": "https://kerrisdalecc.com/programs-registration/policies-procedures/",
+      "readMethod": "secondhand",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "full-before-start",
+        "beforeStartDays": 5,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "Full refund will be given if cancellation notice is received five or more days before the start of the program.",
+        "notes": "SECONDHAND: read verbatim under the heading 'Vancouver Park Board Swimming Lesson Refund Policy' on Kerrisdale Community Centre's own site (another Vancouver community centre), not on the Park Board's or Kensington's pages: vancouver.ca, including Kensington's recreation-guide PDFs, returns HTTP 403 to WebFetch. Search summaries of the Kensington guides agree on the shape (full refund up to five days before the start, partial refund before the second class, none after it, transfers before the second class). Rest of the policy: 'If cancellation notice is received one to four days before the start of the program, participant can either transfer to a future lesson set, if available, or refund amount will be the activity fee minus the cost of one class.'; after the first class and five or more days before the second: 'refund amount will be the activity fee minus the cost of one class'; less than four days before the second class: 'refund amount will be the activity fee minus the cost of two classes'; 'No refunds are issued for requests received after the second scheduled date of the program.'; 'Fees for one or two-day programs (private lessons) are non-refundable.' The swim policy states no administration fee (Kerrisdale and West Point Grey charge $5 on ordinary programs), so adminFee is null."
+      },
+      "missedSession": {
+        "makeUp": null,
+        "limit": null,
+        "noticeHours": null,
+        "quote": null,
+        "notes": "No missed-lesson or make-up text found for Kensington or in the Park Board swim policy."
+      },
+      "providerCancellation": {
+        "remedy": null,
+        "quote": null,
+        "notes": "Not found in the Park Board swim policy. Search summaries of Kensington's recreation guides say participants should register early to avoid cancellation and that some programs are cancelled for insufficient advance registration; no remedy text was seen. (Kerrisdale's own policy, not Kensington's, says 'A full refund will be made if a class you registered in is cancelled.')"
+      }
+    },
+    {
+      "clubId": "west-point-grey-tennis",
+      "provider": "West Point Grey Community Centre (Vancouver)",
+      "termsUrl": "https://westpointgrey.org/registration/refund-cancelation-policy/",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "fee-then-prorated",
+        "beforeStartDays": null,
+        "beforeSession": 2,
+        "adminFee": 5,
+        "feeCurrency": "CAD",
+        "quote": "All refunds and transfers will be pro-rated with an administration fee of $5 applied to each person and program. ... Refunds and transfers for regular programs must be requested 48 hours prior to start of the scheduled second class. No refunds or transfers after the 2nd scheduled class.",
+        "notes": "The page does not define 'pro-rated'. The deadline is 48 hours before the second class starts, so beforeSession 2 with a 48-hour lead; whether adult beginner tennis counts as one of the 'regular programs' is assumed (it is not among the listed specialty programs). Specialty programs (special events, private music lessons, day trips, personal training, workshops) need 7 days before the 1st class; day camps 10 days before the 1st day with a $10 fee. The page prints '$5' with no currency; CAD assumed."
+      },
+      "missedSession": {
+        "makeUp": null,
+        "limit": null,
+        "noticeHours": null,
+        "quote": null,
+        "notes": "No make-up or missed-class wording on the page (also none on medical exceptions)."
+      },
+      "providerCancellation": {
+        "remedy": "refund",
+        "quote": "Full refunds will be issued for any program cancelled by the West Point Grey Community Centre.",
+        "notes": "Program-level only; nothing on a single class cancelled for weather or an instructor's absence."
+      }
+    },
+    {
+      "clubId": "bulldog-tennis-clinic",
+      "provider": "Bulldog Tennis Club",
+      "termsUrl": "https://bulldogtennisclub.com/adult-clinic",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "none",
+        "beforeStartDays": null,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "Payment is final, we do not offer any make-up classes or refunds for missed sessions.",
+        "notes": "The only terms on the page (the junior-program page repeats it as 'Payment is final, we do not offer any make-up classes or any refunds for missed sessions.'). Page facts: $200 per month (4-week months), Wednesday evenings 6 to 7:30 pm, first session Aug 26th, 'The clinic is now FULL for 2026'. The page gives the venue as Cullman-Heyman Tennis Center, 279 Derby Ave, West Haven CT. No withdrawal text beyond 'Payment is final'."
+      },
+      "missedSession": {
+        "makeUp": "none",
+        "limit": null,
+        "noticeHours": null,
+        "quote": "Payment is final, we do not offer any make-up classes or refunds for missed sessions.",
+        "notes": null
+      },
+      "providerCancellation": {
+        "remedy": null,
+        "quote": null,
+        "notes": "No weather, rain or club-cancellation text on the adult-clinic, junior-program or home pages."
+      }
+    },
+    {
+      "clubId": "better-islington-tennis",
+      "provider": "Better (GLL), Islington Tennis Centre",
+      "termsUrl": "https://www.better.org.uk/legal-policies/terms",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "other",
+        "beforeStartDays": null,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "All Fees paid in advance are non-refundable, unless the circumstances set out in the cancellation provisions within clause 5 apply.",
+        "notes": "Clause 2.3 of Better's Terms and Conditions, whose definition of 'Membership' includes Lessons and Courses. The Islington page (https://www.better.org.uk/leisure-centre/london/islington/islingtontc/tennis) lists Adult Tennis Beginners (level 1) at '£79.90 per month' by monthly Direct Debit, and 'Our courses run 50 weeks a year with a 2 week break over Christmas.' That is a rolling monthly debit, not a fixed 4-week course, so leaving means stopping future payments. Clause 5.9 (monthly memberships): 'You will need to provide a minimum of one calendar months' notice before Your next DD date to prevent further DD payment collection.'; clause 5.12 gives cut-off dates of 20 days or 1 month. The pages read give no separate notice period for tennis lessons; the lessons FAQ ('How do I cancel a lesson or course?', https://better.org.uk/faqs/articles/how-do-i-cancel-a-lesson-or-course) says only 'Please complete our cancellation request form'. 'Month In Hand' is 'an additional non-refundable payment taken from You when You take out some Lessons or Courses paid for by Direct Debit', equal to one monthly fee (clause 5.10: free use 'for the full month of cancellation'). Refunds Procedure (https://www.better.org.uk/legal-policies/refunds-procedure): refunds are considered for a written cancellation 'dated within 14 Days of Purchase' (amount not stated), medical proof, moving house with proof of the new address, or a lesson cancelled by GLL."
+      },
+      "missedSession": {
+        "makeUp": null,
+        "limit": null,
+        "noticeHours": null,
+        "quote": null,
+        "notes": "Clause 2.13: 'We do not refund a Membership, Lesson or Course for non-attendance.' Refunds Procedure: 'We do not refund lessons or courses for general, one-off non-attendance; this is because we cannot release the space in the class to be used by another pupil.' Make-up lessons for a participant's own absence are not mentioned in the terms or the FAQ titles read, so makeUp is left null."
+      },
+      "providerCancellation": {
+        "remedy": "credit",
+        "quote": "Where You have paid in advance and are due to attend a Lesson or Course which We cancel we will adjust your Membership with an equivalent amount of credit to be used by You to access an similar Lesson or Course at an alternative time, or day in the next 8 weeks.",
+        "notes": "Clause 3.8. Lessons FAQ 'What happens if my/my child's lesson is cancelled?' (https://better.org.uk/faqs/articles/what-happens-if-my-my-child-s-lesson-is-cancelled): 'If possible, we'll arrange replacement lessons for you to attend at a later date.' and 'If replacement lessons aren't feasible, we'll adjust your future payment collection accordingly.' The Refunds Procedure also lists 'Activity / Lesson Cancellation by GLL' as a refund circumstance, evidenced by the cancellation confirmation email."
+      }
+    },
+    {
+      "clubId": "waltons-guitar",
+      "provider": "Waltons New School of Music",
+      "termsUrl": "https://www.newschool.ie/about-us/new-school-regulations/",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "none",
+        "beforeStartDays": null,
+        "beforeSession": null,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "No refunds will be made for group courses and partner or small group lessons, although in exceptional circumstances deferral of a group course may be possible.",
+        "notes": "Private lessons are treated differently ('Tuition refunds for private lessons can be made up to the third scheduled lesson': full refund less €25 with a week's notice before the first lesson), but a group course such as Introducing Guitar for Adults gets none. Requests for refunds or deferrals 'must be made in writing, through our Contact Form, by email or brought/posted to the school office.'"
+      },
+      "missedSession": {
+        "makeUp": "none",
+        "limit": null,
+        "noticeHours": null,
+        "quote": "Payment must be made for all lessons/classes, whether taken or missed. Make-up lessons/classes will not be given in the case of student absence.",
+        "notes": "A teacher's absence is different: see providerCancellation."
+      },
+      "providerCancellation": {
+        "remedy": "make-up",
+        "quote": "If the teacher is unable to give a lesson or class, the student may be given the option of taking either a make-up or an online lesson or class with the student's own teacher or taking the lesson or class with a substitute teacher.",
+        "notes": "Group course cancelled for insufficient enrolment: 'enrolled students will be given the option of taking private lessons or partner lessons, of greater value and at no additional cost, or a full refund of the tuition fee.' No wording on closures or weather. The Enrolment FAQs page (https://www.newschool.ie/enrolment-fees/enrolment-faqs/) has nothing on refunds or missed classes."
+      }
+    },
+    {
+      "clubId": "barnsdall-painting",
+      "provider": "Barnsdall Arts Center (City of Los Angeles Department of Cultural Affairs)",
+      "termsUrl": "https://barnsdallarts.lacity.gov/bac/faq/",
+      "readMethod": "page",
+      "dateRead": "2026-10-05",
+      "withdrawal": {
+        "rule": "credit-only",
+        "beforeStartDays": null,
+        "beforeSession": 2,
+        "adminFee": null,
+        "feeCurrency": null,
+        "quote": "All fees are non-refundable except in the case of cancellation due to low enrollment. Class credit requests are available, but class credit request forms must be submitted with all required documentation before the second day of class.",
+        "notes": "Both sentences answer the FAQ 'Can I get a refund?' in this order. 'Class credits are good for one (1) year from the date issued.' Dropping: 'If you must drop a class, please give at least 48 hour notice prior to the first day of class.' (a courtesy notice; no refund is tied to it). The 'required documentation' is not specified on the page. This is the adult Arts Center (BAC) policy; the Junior Arts Center has its own."
+      },
+      "missedSession": {
+        "makeUp": "none",
+        "limit": null,
+        "noticeHours": null,
+        "quote": "The Teaching Artist is not obligated to catch students up for missed class.",
+        "notes": "The page never mentions make-up classes or transfers; makeUp none reads the 'not obligated' sentence as no make-up entitlement. 'Please communicate absences with the front office.' 'Due to the technical processes of certain classes, missing multiple classes will impact your learning experience.' 'Absenteeism may result in being dropped from the class.'"
+      },
+      "providerCancellation": {
+        "remedy": "refund",
+        "quote": "In case of a cancellation due to low enrollment, students will be notified immediately by email. The lab fees will be refunded.",
+        "notes": "'All classes are at risk of cancellation after the first class meeting if at least 50% of the class slots are not filled.' The FAQ answer names only the lab fees; the refund answer ('All fees are non-refundable except in the case of cancellation due to low enrollment') suggests the class fee too, but the page does not say so. Nothing about a single session cancelled for another reason."
+      }
+    }
+  ]
+}

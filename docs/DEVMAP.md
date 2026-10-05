@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-360 commands; 354 named by a test, 6 not.
+360 commands; 355 named by a test, 5 not.
 
 ## aircraft
 
@@ -190,9 +190,9 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `club.check_in` | `src/engine/systems/clubs.ts` | `RoutinesWorkspace.tsx` | `clubs-going.test.ts` | People |
-| `club.go` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `journeys.test.ts` | People |
-| `club.join` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `clubs.test.ts` `journeys.test.ts` | People |
-| `club.leave` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | **none** | People |
+| `club.go` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `club-terms.test.ts` `clubs-going.test.ts` `journeys.test.ts` | People |
+| `club.join` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `club-terms.test.ts` `clubs-going.test.ts` `clubs.test.ts` `journeys.test.ts` | People |
+| `club.leave` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `club-terms.test.ts` | People |
 | `club.renew` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` | People |
 | `club.rsvp` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` `journeys.test.ts` | People |
 | `club.set` | `src/engine/systems/clubs.ts` | `ClubsPanel.tsx` | `clubs-going.test.ts` | People |

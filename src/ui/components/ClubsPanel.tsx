@@ -13,9 +13,10 @@ import { formatDate, formatTime, instantFromZoned } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
 import { contactsOf } from '@/engine/systems/people';
+import { SKILLS } from '@/engine/content/school';
 import type { Club, ClubKind } from '@/engine/content/clubs';
 import {
-  SET_OUT_HOURS, SOCIAL_MINUTES, attendOf, canceledFor, clubById, clubsIn, goRefusal, joinClubRefusal, joinFee, legTo, meetingFor, openToAnyone,
+  BOOK_AHEAD_WEEKS, SET_OUT_HOURS, SOCIAL_MINUTES, aheadFor, attendOf, canceledFor, clubById, clubsIn, creditWith, goRefusal, joinClubRefusal, joinFee, leavingBack, legTo, meetingFor, openToAnyone,
   meetingsAhead, membershipsOf, perSession, type Membership,
 } from '@/engine/systems/clubs';
 import { transitFare, type TripMode } from '@/engine/systems/trips';
@@ -48,6 +49,8 @@ export function ClubsPanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const [kind, setKind] = useState<ClubKind | 'all'>('all');
+  // A season booked to start this week or up to four on (from 2026-10-05).
+  const [ahead, setAhead] = useState(0);
   const here = clubsIn(person.currentLocationId);
   const mine = membershipsOf(person);
   if (here.length === 0 && mine.length === 0) return null;
@@ -62,11 +65,15 @@ export function ClubsPanel() {
       {mine.map((m) => { const c = clubById(m.clubId); return c ? <Joined key={m.clubId} club={c} m={m} /> : null; })}
       {here.length > 0 && (
         <>
-          <div className="row" style={{ gap: 8, alignItems: 'center' }}>
+          <div className="row" style={{ gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
             <label className="xs dim" htmlFor="club-kind">Show</label>
             <select id="club-kind" className="input input-sm" value={kind} onChange={(e) => setKind(e.target.value as ClubKind | 'all')}>
               <option value="all">Every Kind</option>
               {kinds.map((k) => <option key={k} value={k}>{KIND_LABEL[k]}</option>)}
+            </select>
+            <label className="xs dim" htmlFor="club-ahead">A Season Starts</label>
+            <select id="club-ahead" className="input input-sm" value={ahead} onChange={(e) => setAhead(Number(e.target.value))}>
+              {Array.from({ length: BOOK_AHEAD_WEEKS + 1 }, (_, w) => <option key={w} value={w}>{w === 0 ? 'This Week' : w === 1 ? 'Next Week' : `In ${w} Weeks`}</option>)}
             </select>
           </div>
           {shown.length === 0 ? <div className="xs dim">None of that kind meets here.</div> : (
@@ -81,12 +88,12 @@ export function ClubsPanel() {
                     const fee = joinFee(sim, c);
                     return (
                       <tr key={c.id}>
-                        <td>{c.name}<div className="xs dim">{KIND_LABEL[c.kind]}{c.confirmed ? '' : ', read secondhand'}</div></td>
+                        <td>{c.name}<div className="xs dim">{KIND_LABEL[c.kind]}{c.trains ? `: ${SKILLS.find((k) => k.id === c.trains)?.label ?? c.trains}` : ''}{c.confirmed ? '' : ', read secondhand'}</div></td>
                         <td className="small">{c.place}{c.outdoor ? <div className="xs dim">Outdoors</div> : null}</td>
                         <td className="small">{`${WEEKDAY[c.weekday]} at ${hoursOf(c).usual}`}{c.summer ? <div className="xs dim">{hoursOf(c).summer}</div> : null}<div className="xs dim">{`${c.minutes} minutes; next ${formatDate(next.at, zone)}${next.off ? ', canceled' : ''}`}</div></td>
                         <td className="num small">{perSession(sim, c) === 0 ? 'Free' : <span className="mono">{money(perSession(sim, c))}</span>}</td>
-                        <td className="small">{termsOf(c, money, fee)}</td>
-                        <td><Gated feature="club.join" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('club.join', { clubId: c.id }).ok) toast(`Joined ${c.name}. Answer its meetings below, or set it to go on its own.`, 'positive'); }}>Join</Gated></td>
+                        <td className="small">{termsOf(c, money, fee)}{c.terms ? <div className="xs dim">{`Leaving: ${c.terms.leaveSaid}`}</div> : null}{c.terms?.calledOffSaid ? <div className="xs dim">{`Called off: ${c.terms.calledOffSaid}`}</div> : null}{creditWith(person, c.provider, sim.now) > 0 ? <div className="xs">{`Your credit with them: ${money(creditWith(person, c.provider, sim.now))}`}</div> : null}</td>
+                        <td><Gated feature="club.join" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const r = run<{ first: number }>('club.join', { clubId: c.id, ...(c.seasonWeeks && ahead ? { ahead } : {}) }); if (r.ok) toast(`Joined ${c.name}, from ${formatDate(r.value!.first, zone)}. Answer its meetings below, or set it to go on its own.`, 'positive'); }}>Join</Gated></td>
                       </tr>
                     );
                   })}
@@ -96,7 +103,7 @@ export function ClubsPanel() {
           )}
         </>
       )}
-      <div className="xs dim">A session’s price is a season’s fee over its weeks, or a week’s. Leaving gives nothing back; no club’s refund terms were read. An outdoor club doesn’t meet in a thunderstorm.</div>
+      <div className="xs dim">A session’s price is a season’s fee over its weeks, or a week’s. What leaving gives back, and what follows a meeting called off, are each club’s own terms as read. An outdoor club doesn’t meet in a thunderstorm. A weekly club starts the week it’s joined.</div>
     </Panel>
   );
 }
@@ -126,8 +133,9 @@ function Joined({ club, m }: { club: Club; m: Membership }) {
   const friends = contactsOf(person).filter((c) => c.cityId === club.cityId && !c.rival);
   const zone = CITIES.require(club.cityId).timeZone;
   const cur = saveCurrency(sim.universe);
-  const ahead = meetingsAhead(club, sim.now, 4, m.until);
+  const ahead = aheadFor(club, m, sim.now);
   const now = meetingFor(club, sim.now);
+  const leaving = leavingBack(sim, club, m);
   const goNo = goRefusal(sim, person, club.id, way, way === 'car' ? car : undefined, along);
   const leg = legTo(club, way);
   const fare = way === 'transit' ? transitFare(sim, club.cityId) : undefined;
@@ -218,7 +226,7 @@ function Joined({ club, m }: { club: Club; m: Membership }) {
             <Gated feature="club.renew" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ until: number }>('club.renew', { clubId: club.id }); if (r.ok) toast(`Renewed to ${formatDate(r.value!.until, zone)}.`, 'positive'); }}>Renew Now</Gated>
           </>
         )}
-        <Gated feature="club.leave" className="btn btn-sm btn-ghost" onClick={() => { if (run('club.leave', { clubId: club.id }).ok) toast(`Left ${club.name}.`, 'positive'); }}>Leave</Gated>
+        <Gated feature="club.leave" className="btn btn-sm btn-ghost" title={leaving.why} onClick={() => { const r = run<{ back: number; credit: number }>('club.leave', { clubId: club.id }); if (r.ok) toast(`Left ${club.name}${r.value!.back ? `; ${formatMoney(r.value!.back, cur)} back` : r.value!.credit ? `; your credit with them, ${formatMoney(r.value!.credit, cur)}` : ''}.`, 'positive'); }}>{leaving.back ? `Leave, ${formatMoney(leaving.back, cur)} Back` : leaving.credit ? `Leave For Credit, ${formatMoney(leaving.credit, cur)}` : 'Leave'}</Gated>
       </div>
       <div className="xs dim">{`${Math.round(leg.minutes)} minutes each way ${WAY_LABEL[way].toLowerCase()}${fare !== undefined ? `, ${formatMoney(fare, cur)} a ride` : ''}${way === 'car' ? ', its fuel and the meter while it’s parked' : ''}. Setting out opens ${SET_OUT_HOURS} hours before ${formatDate(now, zone)} at ${formatTime(now, zone)}; it can be joined until halfway. Staying after is ${SOCIAL_MINUTES} minutes more, and someone else from it met.${attendOf(m) === 'always' ? ` Each meeting not answered no is gone to on its own, ${WAY_LABEL[m.by ?? 'foot'].toLowerCase()}, its fares, fuel and meter paid, and missed where the way there can’t be taken.` : ''}`}</div>
 

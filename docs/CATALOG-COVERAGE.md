@@ -168,7 +168,7 @@ Counted by their own structure: providers, branches or listings, and the towns t
 |---|---|---|---|
 | Hotels | 23 | 28 | 8 |
 | Restaurants | 105 | 107 | 8 |
-| Clubs And Lessons | 30 | 31 | 8 |
+| Clubs And Lessons | 68 | 70 | 8 |
 | Gyms And Studios | 30 | 32 | 8 |
 | Clinics, Dentists And Opticians | 35 | 35 | 8 |
 | Vets | 8 | 8 | 8 |

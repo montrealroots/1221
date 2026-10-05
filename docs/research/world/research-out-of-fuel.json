@@ -1,0 +1,1123 @@
+{
+  "meta": {
+    "dateRead": "2026-10-05",
+    "purpose": "Running out of fuel or charge, and recovering: each club's fuel delivery, EV help, fuel cans and their legal limits, wait times",
+    "method": "WebSearch for discovery, then WebFetch of each club's own terms or benefit pages. Four PDFs (AAA Northeast terms, the Automobile Club of Southern California member guide, the AA terms booklet, the RAC policy booklet) were saved and their text extracted locally with pypdf, so those quotes are exact apart from line breaks and the PDF's stray spaces before punctuation. Ordinary web pages were read through WebFetch, which returns a model-written extract; a sentence it returned in quotation marks is marked readDetail 'fetch-quote' and was not compared with the raw HTML. Anything resting only on a search engine's summary is marked readMethod 'search-summary' (all of BCAA, because bcaa.com returned 403 to every fetch). Where a figure is computed here by arithmetic it is marked derived and the inputs are given. null means nothing was found; nothing was estimated. The session's WebSearch cap (200) was reached part-way through, so some items below were found by fetching pages directly and some were not found at all; those are listed in notFound.",
+    "readDetailKey": {
+      "pdf-text": "document downloaded, text extracted locally; quote exact apart from line breaks and PDF spacing",
+      "fetch-quote": "page fetched; the extractor returned the sentence in quotation marks",
+      "search-summary": "search engine's summary of the page; the page itself was not read",
+      "carried-over": "taken from an earlier file in this folder (research-roadside.json); not re-read today"
+    },
+    "countsAsCallRule": "countsAsCall is true or false only where a source says so about fuel delivery. Where a club lists fuel delivery among its services and caps 'service calls' without naming fuel, it is null and the reasoning is in countsAsCallNote."
+  },
+  "fuelDelivery": [
+    {
+      "club": "AAA Northeast",
+      "tier": "Basic",
+      "market": "New York and Connecticut",
+      "covered": true,
+      "amount": "A sufficient amount of fuel to reach the nearest open service station; the club's magazine says 'about 1 to 2 gallons'.",
+      "litres": null,
+      "litresRangeDerived": [
+        3.8,
+        7.6
+      ],
+      "litresRangeNote": "Derived: 1 to 2 US gallons x 3.785 L. The club publishes gallons, not litres.",
+      "fuelCharged": true,
+      "fuelPriceBasis": "Current pump prices as determined by AAA from time to time; the magazine says Basic members pay 'the pump price for the fuel directly to the technician who delivers it'.",
+      "countsAsCall": null,
+      "countsAsCallNote": "No sentence says fuel delivery uses one of the four calls. It is listed as a Road Service (section 2.C, 'Out of Fuel / Electric Vehicle Charge') and the terms cap 'Road Service calls' (2.(xix)); the club's fuel-delivery magazine article gives the four-call limit straight after describing the service, which implies but does not state it.",
+      "callsPerYear": "Primary members 4; new Associate members 2 (from 2025-04-30). Everyday members are not eligible for Roadside Assistance.",
+      "nonMemberPrice": null,
+      "nonMemberNote": "No non-member rate is published. 'Road Service is not available to non-Members driving a Member's car, even if that person resides in the same household.' A person who joins and needs road service the same day pays 'a non-refundable same-day service fee which must be paid in full prior to dispatching road service'; the amount is not in the terms (the join page was behind a bot wall on 2026-10-02 per research-roadside.json).",
+      "currency": "USD",
+      "quote": "If your vehicle runs out of fuel, we will deliver a sufficient amount of fuel to reach the nearest open service station. There will be no additional charge for fuel for Plus and Premier members; however Basic members will be charged for the fuel at current pump prices as determined by AAA from time to time. Specific brands or octane ratings cannot be promised.",
+      "quoteAlso": [
+        "Primary Members are permitted up to four (4) Road Service calls in a Membership year, including for Motorcycles and RVs, if applicable. Effective as of April 30, 2025, new Associate Members are permitted up to two (2) Road Service calls in a Membership year.",
+        "Roadside technicians deliver enough fuel — about 1 to 2 gallons — to get you to the nearest gas station.",
+        "Basic members are required to pay the pump price for the fuel directly to the technician who delivers it, while the cost is included in Plus and Premier memberships."
+      ],
+      "url": "https://northeast.aaa.com/content/dam/aaa-ne-web/pdf/AAA_Northeast_Membership_Terms_and_Conditions_09.03.2026.pdf",
+      "urlAlso": [
+        "https://magazine.northeast.aaa.com/?p=212654"
+      ],
+      "sourceDate": "Terms PDF filename ends 09.03.2026 (date as printed in the filename); magazine article 'Did You Know? You Can Request AAA Fuel Delivery' dated 9 April 2025",
+      "readMethod": "page",
+      "readDetail": "pdf-text (terms section 2.C and 2.(xix)); fetch-quote (magazine)"
+    },
+    {
+      "club": "AAA Northeast",
+      "tier": "Plus, Premier",
+      "market": "New York and Connecticut",
+      "covered": true,
+      "amount": "A sufficient amount of fuel to reach the nearest open service station (about 1 to 2 gallons per the magazine).",
+      "litres": null,
+      "litresRangeDerived": [
+        3.8,
+        7.6
+      ],
+      "litresRangeNote": "Derived: 1 to 2 US gallons x 3.785 L.",
+      "fuelCharged": false,
+      "fuelPriceBasis": "Not charged: 'There will be no additional charge for fuel for Plus and Premier members'.",
+      "countsAsCall": null,
+      "countsAsCallNote": "No sentence says fuel delivery uses one of the four calls. It is listed as a Road Service (section 2.C, 'Out of Fuel / Electric Vehicle Charge') and the terms cap 'Road Service calls' (2.(xix)); the club's fuel-delivery magazine article gives the four-call limit straight after describing the service, which implies but does not state it.",
+      "callsPerYear": "Primary members 4; new Associate members 2. Past the limit the terms say 'if Plus or Premier Members require more than the permitted number of Road Service calls in any single membership year, Road Service will be provided at the Basic membership level and the Member will be responsible for paying any fees for Service or mileage above the Basic membership level' (inference, not stated: Basic's pump-price charge for fuel then applies).",
+      "nonMemberPrice": null,
+      "nonMemberNote": "No non-member rate is published. 'Road Service is not available to non-Members driving a Member's car, even if that person resides in the same household.' A person who joins and needs road service the same day pays 'a non-refundable same-day service fee which must be paid in full prior to dispatching road service'; the amount is not in the terms (the join page was behind a bot wall on 2026-10-02 per research-roadside.json).",
+      "currency": "USD",
+      "quote": "If your vehicle runs out of fuel, we will deliver a sufficient amount of fuel to reach the nearest open service station. There will be no additional charge for fuel for Plus and Premier members; however Basic members will be charged for the fuel at current pump prices as determined by AAA from time to time. Specific brands or octane ratings cannot be promised.",
+      "url": "https://northeast.aaa.com/content/dam/aaa-ne-web/pdf/AAA_Northeast_Membership_Terms_and_Conditions_09.03.2026.pdf",
+      "urlAlso": [
+        "https://magazine.northeast.aaa.com/?p=212654"
+      ],
+      "sourceDate": "As above",
+      "readMethod": "page",
+      "readDetail": "pdf-text; fetch-quote (magazine)"
+    },
+    {
+      "club": "Automobile Club of Southern California",
+      "tier": "Classic",
+      "market": "California (Southern California)",
+      "covered": true,
+      "amount": "'a limited supply ... to enable you to reach the nearest service station'; no gallons or litres published. A tow is the stated fallback.",
+      "litres": null,
+      "fuelCharged": true,
+      "fuelPriceBasis": "The cost of emergency fuel is payable by the Member directly to the independent service provider at the time of service 'at such service provider's applicable rates' (no pump-price wording).",
+      "countsAsCall": null,
+      "countsAsCallNote": "Not stated for fuel. The guide says in terms that the battery test and replacement 'count as one (1) of the Member's four (4) allowable service calls' and that a reimbursement counts as a call, but has no such sentence for fuel delivery, which is listed under 'TYPES OF SERVICE' beside battery, tyre and tow.",
+      "callsPerYear": "4 per cardholder per membership year; RV/motorcycle upgrade adds 4 per household. 'There will be a service charge for each additional service call after the fourth (4th) service call or reimbursement' (amount not given). Motorcycles are eligible only for fuel delivery and locksmith service without the upgrade.",
+      "nonMemberPrice": null,
+      "nonMemberNote": "Not sold to non-members: 'membership service is not provided to non-members'. Without a valid card and matching photo ID 'you will be required to pay for the service provided at commercial rates' (no rate given). For a disablement that happened before joining, 'a non-refundable service fee will apply. See AAA.com/ServiceFee for fee amount'; that page redirects to a ZIP-code gate and the amount was not readable.",
+      "currency": "USD",
+      "quote": "If your vehicle runs out of fuel, a limited supply will be delivered, if available, in an emergency situation to enable you to reach the nearest service station. Classic members will be charged for the fuel. AAA Plus and AAA Premier members will not be charged for the limited supply of fuel. Diesel fuel must be requested when you request service and may not always be available. The provider may not be able to assist with priming if it is required after providing diesel fuel. In some cases, your vehicle may have to be towed if it runs out of fuel.",
+      "quoteAlso": [
+        "Additional charges for Roadside Assistance services beyond the “Classic” benefit level, such as towing beyond seven (7) miles, the cost of emergency fuel and excess vehicle locksmith services, will be payable by the Member directly to the independent service provider at the time of service at such service provider’s applicable rates.",
+        "Each Auto Club cardholder is entitled to four (4) Roadside Assistance service calls or reimbursements for personal, non-commercial use per membership year at no charge, subject to the service limitations and conditions in this guide."
+      ],
+      "url": "https://www.ace.aaa.com/content/dam/ace/pdf/CA-MemberGuide.pdf",
+      "sourceDate": "Guide edition code '68171 6/25 California', copyright 2025",
+      "readMethod": "page",
+      "readDetail": "pdf-text"
+    },
+    {
+      "club": "Automobile Club of Southern California",
+      "tier": "Plus, Premier",
+      "market": "California (Southern California)",
+      "covered": true,
+      "amount": "'a limited supply ... to enable you to reach the nearest service station'; no gallons or litres published.",
+      "litres": null,
+      "fuelCharged": false,
+      "fuelPriceBasis": "Not charged: 'AAA Plus and AAA Premier members will not be charged for the limited supply of fuel.'",
+      "countsAsCall": null,
+      "countsAsCallNote": "Not stated for fuel. The guide says in terms that the battery test and replacement 'count as one (1) of the Member's four (4) allowable service calls' and that a reimbursement counts as a call, but has no such sentence for fuel delivery, which is listed under 'TYPES OF SERVICE' beside battery, tyre and tow.",
+      "callsPerYear": "4 per cardholder per membership year; Plus and Premier raise tow distance but 'do not add extra allowable service calls'.",
+      "nonMemberPrice": null,
+      "nonMemberNote": "Not sold to non-members: 'membership service is not provided to non-members'. Without a valid card and matching photo ID 'you will be required to pay for the service provided at commercial rates' (no rate given). For a disablement that happened before joining, 'a non-refundable service fee will apply. See AAA.com/ServiceFee for fee amount'; that page redirects to a ZIP-code gate and the amount was not readable.",
+      "currency": "USD",
+      "quote": "If your vehicle runs out of fuel, a limited supply will be delivered, if available, in an emergency situation to enable you to reach the nearest service station. Classic members will be charged for the fuel. AAA Plus and AAA Premier members will not be charged for the limited supply of fuel. Diesel fuel must be requested when you request service and may not always be available. The provider may not be able to assist with priming if it is required after providing diesel fuel. In some cases, your vehicle may have to be towed if it runs out of fuel.",
+      "url": "https://www.ace.aaa.com/content/dam/ace/pdf/CA-MemberGuide.pdf",
+      "sourceDate": "Guide edition code '68171 6/25 California', copyright 2025",
+      "readMethod": "page",
+      "readDetail": "pdf-text"
+    },
+    {
+      "club": "CAA South Central Ontario",
+      "tier": "Basic",
+      "market": "Ontario",
+      "covered": true,
+      "amount": "'a limited supply of gasoline' to reach the nearest open service station, or a tow to a facility where fuel is available. Petrol only: 'We will deliver gas, but not diesel or propane.' No litres published.",
+      "litres": null,
+      "fuelCharged": true,
+      "fuelPriceBasis": "'the current pump price for gasoline'. The compare page words it 'Free emergency fuel delivery. Fuel costs extra.'",
+      "countsAsCall": true,
+      "countsAsCallNote": "Explicit: 'Emergency Gas Delivery counts as one (1) service call.'",
+      "callsPerYear": "Basic 4; Plus 4; Premier 5 (one tow to 320 km and four to 200 km). Everyday has no roadside.",
+      "nonMemberPrice": null,
+      "nonMemberNote": "No non-member price published on the pages read. The services guide says 'Roadside Service is provided when you present your valid membership card'; a member who followed the procedures and finds CAA service unavailable 'may obtain your own service, pay for it and submit the original invoice to CAA South Central Ontario within 30 days'.",
+      "currency": "CAD",
+      "quote": "When you run out of gas, a limited supply of gasoline will be delivered to your disabled vehicle to enable you to reach the nearest open service station, or in accordance with your roadside assistance towing service provisions, a tow will be provided to a facility where fuel is available. Specific brands or octane ratings cannot be promised. We will deliver gas, but not diesel or propane. Basic Members will be charged the current pump price for gasoline. For Plus, Corporate and Premier Members, there is no charge for the gas. Emergency Gas Delivery counts as one (1) service call.",
+      "quoteAlso": [
+        "Basic: “Free emergency fuel delivery. Fuel costs extra.” (compare-memberships page)"
+      ],
+      "url": "https://www.caasco.com/about-our-website/membership-terms-and-conditions",
+      "urlAlso": [
+        "https://www.caasco.com/membership/compare-memberships",
+        "https://www.caasco.com/auto/roadside-assistance/roadside-services-guide"
+      ],
+      "sourceDate": "Terms page header 'Updated: September 25, 2026'",
+      "readMethod": "page",
+      "readDetail": "fetch-quote (the paragraph came back as consecutive short quotes; the same words were returned on three separate fetches)"
+    },
+    {
+      "club": "CAA South Central Ontario",
+      "tier": "Plus, Corporate, Premier",
+      "market": "Ontario",
+      "covered": true,
+      "amount": "'a limited supply of gasoline' to reach the nearest open service station, or a tow to a facility where fuel is available. Petrol only. No litres published.",
+      "litres": null,
+      "fuelCharged": false,
+      "fuelPriceBasis": "Not charged: 'For Plus, Corporate and Premier Members, there is no charge for the gas.' Compare page: 'Free emergency fuel and delivery'.",
+      "countsAsCall": true,
+      "countsAsCallNote": "Explicit: 'Emergency Gas Delivery counts as one (1) service call.'",
+      "callsPerYear": "Plus 4; Premier 5.",
+      "nonMemberPrice": null,
+      "nonMemberNote": "No non-member price published on the pages read. The services guide says 'Roadside Service is provided when you present your valid membership card'; a member who followed the procedures and finds CAA service unavailable 'may obtain your own service, pay for it and submit the original invoice to CAA South Central Ontario within 30 days'.",
+      "currency": "CAD",
+      "quote": "When you run out of gas, a limited supply of gasoline will be delivered to your disabled vehicle to enable you to reach the nearest open service station, or in accordance with your roadside assistance towing service provisions, a tow will be provided to a facility where fuel is available. Specific brands or octane ratings cannot be promised. We will deliver gas, but not diesel or propane. Basic Members will be charged the current pump price for gasoline. For Plus, Corporate and Premier Members, there is no charge for the gas. Emergency Gas Delivery counts as one (1) service call.",
+      "url": "https://www.caasco.com/about-our-website/membership-terms-and-conditions",
+      "sourceDate": "Terms page header 'Updated: September 25, 2026'",
+      "readMethod": "page",
+      "readDetail": "fetch-quote"
+    },
+    {
+      "club": "BCAA",
+      "tier": "Basic",
+      "market": "British Columbia",
+      "covered": true,
+      "amount": "Up to 10 L of regular-grade fuel; towing under the tier's tow benefit if that is not enough.",
+      "litres": 10,
+      "fuelCharged": true,
+      "fuelPriceBasis": "'at cost' / 'responsible for the cost of fuel'; no pump-price wording found.",
+      "countsAsCall": null,
+      "countsAsCallNote": "Not stated for fuel. The summarised terms say 'A BCAA Membership comes with 4 tows or other roadside assistance calls each year'.",
+      "callsPerYear": "4 per year on Basic, Plus and Premier (search summary).",
+      "nonMemberPrice": null,
+      "nonMemberNote": "None found. The GO plan is described in research-roadside.json as roadside 'on demand for a fee'; that page was not readable here.",
+      "currency": "CAD",
+      "quote": "We'll deliver gas to you if you've run out, and depending on your Membership type, we'll deliver up to 10L of fuel for free.",
+      "quoteAlso": [
+        "Delivery of regular grade fuel is available for Members who have broken down due to running out of gas. Plus and Premier Members will receive up to 10 L of fuel free of charge to help them get to the nearest gas station to fill up. Basic Members are eligible for fuel delivery of up to 10 L but will be responsible for the cost of fuel. If the fuel provided is not sufficient to allow you to reach the nearest gas station, towing will be provided in accordance with your Membership tier towing benefits."
+      ],
+      "url": "https://www.bcaa.com/membership/plans",
+      "urlAlso": [
+        "https://www.bcaa.com/-/media/bcaa/pdfs/membership/bcaa-membership-terms-conditions.pdf?sc_lang=en&hash=88DC499EEC63CDA9D8EB35594BA4BB20"
+      ],
+      "readMethod": "search-summary",
+      "readDetail": "search-summary",
+      "note": "bcaa.com, faq.bcaa.com and the BCAA terms PDFs returned 403 or 503 to every fetch, so every BCAA line here rests on search-engine summaries of those pages (the marketing sentence below was returned in quotation marks; the terms sentences are the summary's wording of the June 2024 / October 2022 terms PDFs)."
+    },
+    {
+      "club": "BCAA",
+      "tier": "Plus, Premier",
+      "market": "British Columbia",
+      "covered": true,
+      "amount": "Up to 10 L of regular-grade fuel free of charge; towing under the tier's tow benefit if that is not enough.",
+      "litres": 10,
+      "fuelCharged": false,
+      "fuelPriceBasis": "Free up to 10 L.",
+      "countsAsCall": null,
+      "countsAsCallNote": "Not stated for fuel.",
+      "callsPerYear": "4 per year (search summary).",
+      "nonMemberPrice": null,
+      "currency": "CAD",
+      "quote": "We'll deliver gas to you if you've run out, and depending on your Membership type, we'll deliver up to 10L of fuel for free.",
+      "quoteAlso": [
+        "Delivery of regular grade fuel is available for Members who have broken down due to running out of gas. Plus and Premier Members will receive up to 10 L of fuel free of charge to help them get to the nearest gas station to fill up. Basic Members are eligible for fuel delivery of up to 10 L but will be responsible for the cost of fuel. If the fuel provided is not sufficient to allow you to reach the nearest gas station, towing will be provided in accordance with your Membership tier towing benefits."
+      ],
+      "url": "https://www.bcaa.com/membership/plans",
+      "readMethod": "search-summary",
+      "readDetail": "search-summary",
+      "note": "bcaa.com, faq.bcaa.com and the BCAA terms PDFs returned 403 or 503 to every fetch, so every BCAA line here rests on search-engine summaries of those pages (the marketing sentence below was returned in quotation marks; the terms sentences are the summary's wording of the June 2024 / October 2022 terms PDFs)."
+    },
+    {
+      "club": "The AA",
+      "tier": "Roadside Assistance (section 1 of the terms booklet, the base cover; add-ons such as At Home and National Recovery are separate)",
+      "market": "Britain",
+      "covered": true,
+      "amount": "No fuel quantity is promised. The car is 'taken to a local fuelling station, repairer or charge point'; the AA's guide page adds that 'Fuel or charge may be given'.",
+      "litres": null,
+      "fuelCharged": true,
+      "fuelPriceBasis": "Not covered: 'Fuel and parts (over and above what is specified in the ‘What is covered’ section of this table)'. For a non-member the AA said 'The fuel will be charged separately.'",
+      "countsAsCall": null,
+      "countsAsCallNote": "Not stated. Roadside call-outs are unlimited on the research-roadside.json reading, but the booklet says 'We won’t attend if You have a Breakdown that’s within 28 days of a Breakdown for the same or similar reasons, including running out of fuel.'",
+      "nonMemberPrice": null,
+      "nonMemberNote": "AA (20 Feb 2023): 'If you do run out and you're not a member of a breakdown organisation, the AA, will let you join on the spot but you will pay an additional 'will join' fee on top of the cost of breakdown cover. The fuel will be charged separately.' No amount for the 'will join' fee was found. The separate Fuel Assist service is for wrong fuel, not running out.",
+      "currency": "GBP",
+      "quote": "If Your Vehicle has run out of fuel or charge it will be taken to a local fuelling station, repairer or charge point.",
+      "quoteAlso": [
+        "What is not covered: Fuel and parts (over and above what is specified in the ‘What is covered’ section of this table), oil, keys and any other materials needed to repair Your Vehicle including any supplier delivery service or call-out charges.",
+        "Fuel or charge may be given or your vehicle towed to a petrol station or charging point. (theaa.com breakdown-cover-guide)",
+        "Last year, the AA attended more than 10,500 breakdowns where members had run out of fuel or electrical charge (AA newsroom, 20 Feb 2023, so 2022)."
+      ],
+      "url": "https://www.theaa.com/media/the-aa/pdf/breakdown-cover/terms-and-conditions-current.pdf",
+      "urlAlso": [
+        "https://www.theaa.com/breakdown-cover/breakdown-cover-guide",
+        "https://theaa.com/about-us/newsroom/aa-warns-drivers-of-low-fuel-gamble"
+      ],
+      "sourceDate": "Terms booklet dated September 2026 (page 1); newsroom 20 Feb 2023",
+      "readMethod": "page",
+      "readDetail": "pdf-text (booklet section 1(d) and 'What is not covered' (a)); fetch-quote (guide page, newsroom)"
+    },
+    {
+      "club": "RAC",
+      "tier": "UK breakdown policy, 'Additional services' clause (the booklet text read does not say which levels it applies to)",
+      "market": "Britain",
+      "covered": true,
+      "amount": "'enough fuel to you to get you to the nearest fuel station' (no litres published), or a mobile EV charge, or a tow to the nearest fuel station or charge point.",
+      "litres": null,
+      "fuelCharged": true,
+      "fuelPriceBasis": "'you will have to pay for the fuel' (no price basis given).",
+      "countsAsCall": null,
+      "countsAsCallNote": "Not stated for fuel. The policy defines 'breakdown' to include 'running out of fuel or charge', and the compare page gives Basic and Standard 5 call-outs and Extra and Complete unlimited; so a fuel call is by definition a breakdown call-out, but no sentence joins the two.",
+      "callsPerYear": "Basic 5, Standard 5, Extra unlimited, Complete unlimited (compare page).",
+      "nonMemberPrice": null,
+      "nonMemberNote": "Someone already broken down can buy cover by phone only: 'If you're already broken down, you can get immediate emergency breakdown cover by calling 0330 159 8743. You can't buy this online.' 'You'll be charged a one-off fee for emergency recovery' (amount not published) and 'You'll just have to pay for any fuel you need on top of your emergency cover fee.'",
+      "currency": "GBP",
+      "quote": "If you run out of fuel or charge, we will either: • Bring enough fuel to you to get you to the nearest fuel station (you will have to pay for the fuel); or • Send one of our mobile EV charging vehicles (which will give you enough charge to get to the nearest charge point); or • Send a patrol to tow you to the nearest fuel station or charge point.",
+      "quoteAlso": [
+        "breakdown: ... This also includes flat tyres and running out of fuel or charge. (policy definitions)",
+        "Yes, you're covered if you run out of fuel as part of your breakdown cover. We'll just charge you for any fuel you need to get going again. (rac.co.uk breakdown-cover-guide)",
+        "With emergency roadside assistance from the RAC, we'll help you if you run out of fuel. You'll just have to pay for any fuel you need on top of your emergency cover fee. (rac.co.uk broken-down)"
+      ],
+      "url": "https://docs.rac.co.uk/v3/assets/bltf298597f74081431/blt0a8141d520c61b77/Combined_CAKE_UK_EU_LEI_Terms.pdf",
+      "urlAlso": [
+        "https://www.rac.co.uk/breakdown-cover/breakdown-cover-guide",
+        "https://www.rac.co.uk/breakdown-cover/broken-down",
+        "https://www.rac.co.uk/breakdown-cover/compare-breakdown-cover"
+      ],
+      "sourceDate": "Policy PDF carries XMP date 2023-11-16 (no edition date in the extracted text); web pages undated, read 2026-10-05",
+      "readMethod": "page",
+      "readDetail": "pdf-text (policy); fetch-quote (web pages)"
+    },
+    {
+      "club": "The AA Ireland",
+      "tier": null,
+      "market": "Ireland",
+      "covered": null,
+      "amount": null,
+      "litres": null,
+      "fuelCharged": null,
+      "countsAsCall": null,
+      "countsAsCallNote": "Help centre: 'covered for 6 call outs per year as part of your yearly subscription'; Rescue Plus 'limited to a total of three call outs'. Nothing says whether a fuel call counts.",
+      "nonMemberPrice": 285,
+      "nonMemberNote": "AA Instant Breakdown Assistance is for non-members: 'Get Instant Breakdown Assistance for €285'. It buys 12 months' cover and membership ('When you join through AA Instant Breakdown Assistance, you automatically become a member like everyone else!'), so it is a join-on-the-spot price, not a per-incident price. Fuel is not mentioned.",
+      "currency": "EUR",
+      "quote": "Get Instant Breakdown Assistance for €285",
+      "url": "https://www.theaa.ie/aa-membership/emergency-instant-assistance/",
+      "urlAlso": [
+        "https://www.theaa.ie/aa-membership/",
+        "https://helpcentre.theaa.ie/support/solutions/articles/201000079041-will-you-charge-me-for-callouts-"
+      ],
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "No AA Ireland page, terms document or help-centre article stating its out-of-fuel policy was found (help-centre searches for fuel, run out of fuel, electric and callout returned nothing on the topic). The only Irish statement is third-party: odo.ie says running out of fuel is '3–5%' of AA Ireland callouts. Do not borrow the UK AA's wording for Ireland without checking."
+    },
+    {
+      "club": "Ángeles Verdes (Corporación de Servicios al Turista Ángeles Verdes, federal Secretaría de Turismo)",
+      "tier": null,
+      "market": "Mexico",
+      "covered": true,
+      "amount": "Out-of-fuel is a recorded service category: 'falta de combustible fue el 4%' of services in the 2024 summer operation. No litres published. Wikivoyage: 'Services and information are free; parts or gasoline if necessary must be paid for.'",
+      "litres": null,
+      "fuelCharged": true,
+      "fuelPriceBasis": "Not published by Sectur in anything read. Only the secondary Wikivoyage sentence says gasoline is paid for; whether it is sold at cost is not stated anywhere read.",
+      "countsAsCall": null,
+      "countsAsCallNote": "There is no membership and no published annual call allowance.",
+      "nonMemberPrice": 0,
+      "nonMemberNote": "There is no membership: Sectur says the service is given 'de forma gratuita' to everyone. The 0 is the price of the help itself, not of fuel or parts.",
+      "currency": "MXN",
+      "quote": "Desde hace 64 años, Ángeles Verdes brinda, de forma gratuita, auxilio carretero y orientación turística",
+      "quoteAlso": [
+        "la información sobre sitios turísticos significó el 5% y falta de combustible fue el 4%. (Sectur, 30 Jul 2024)",
+        "Services and information are free; parts or gasoline if necessary must be paid for. (Wikivoyage, Driving in Mexico; secondary)"
+      ],
+      "url": "https://www.gob.mx/sectur/prensa/sectur-fortalece-el-turismo-de-mexico-con-145-nuevas-unidades-de-angeles-verdes",
+      "urlAlso": [
+        "https://www.gob.mx/sectur/prensa/angeles-verdes-ha-auxiliado-a-mas-de-32-mil-turistas-en-el-operativo-vacacional-de-verano-2024",
+        "https://en.wikivoyage.org/wiki/Driving_in_Mexico"
+      ],
+      "sourceDate": "Sectur releases 24 Jun 2024 and 30 Jul 2024",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "See the angelesVerdes object for phone, hours and coverage."
+    },
+    {
+      "club": "Quálitas (car insurer; roadside is bundled with the policy)",
+      "tier": "Tradicional; Plus",
+      "market": "Mexico",
+      "covered": true,
+      "amount": "'la asistencia vial te lleva unos litros de gasolina para que alcances a llegar'. Table: 'Suministro de Gasolina: 2 eventos anuales (5 litros gratis)'; Plus '5 eventos anuales'.",
+      "litres": 5,
+      "fuelCharged": null,
+      "fuelPriceBasis": "The same page says both '5 litros gratis' and 'lo que tú pagas es el costo del combustible; el servicio de entrega va por cuenta de la aseguradora'. It does not reconcile them, so fuelCharged is left null.",
+      "countsAsCall": true,
+      "countsAsCallNote": "Fuel has its own annual cap on the table (2 events, Plus 5) alongside tows (5, Plus 10); it is a counted event, with a separate counter from tows.",
+      "nonMemberPrice": null,
+      "currency": "MXN",
+      "quote": "lo que tú pagas es el costo del combustible; el servicio de entrega va por cuenta de la aseguradora",
+      "url": "https://qualitasseguros.mx/qualitas/asistencia-vial-qualitas/",
+      "sourceDate": "Blog dated 6 July 2026",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "Not Quálitas's own site: the page says it is a blog 'operated by an Authorized Insurance Agent of Quálitas'. Treat as secondary."
+    },
+    {
+      "club": "A.N.A. Compañía de Seguros (car insurer; roadside is bundled with the policy)",
+      "tier": "Auxilio Vial Km \"0\"",
+      "market": "Mexico",
+      "covered": true,
+      "amount": "Fuel up to 10 litres, paid by the insured (carried over).",
+      "litres": 10,
+      "fuelCharged": true,
+      "countsAsCall": null,
+      "nonMemberPrice": null,
+      "currency": "MXN",
+      "quote": null,
+      "url": "https://anaseguros.com.mx/anaweb/downloads/CONDICIONES%20GENERALES%20AUTOS%201802%20V2.pdf",
+      "readMethod": "page",
+      "readDetail": "carried-over",
+      "note": "Taken from research-roadside.json (read 2026-10-02). The PDF returned HTTP 503 on three attempts today, so no quote could be re-checked."
+    },
+    {
+      "club": "Canadian Tire Roadside Assistance (a paid-plan provider, not a motoring club; included for its published non-member price)",
+      "tier": "Silver; Gold; on-demand (non-member)",
+      "market": "Canada (Ontario and British Columbia included)",
+      "covered": true,
+      "amount": "Silver: 'Delivery Only'. Gold: 'Delivery + up to $5 emergency fuel'. Non-member: emergency gas delivery arranged through 'a network of service providers'.",
+      "litres": null,
+      "fuelCharged": true,
+      "fuelPriceBasis": "Silver and on-demand: fuel is extra ('Delivery only, fuel cost extra'). Gold: up to $5 of fuel included.",
+      "countsAsCall": null,
+      "countsAsCallNote": "Plan comparison: calls per year Silver member/vehicle 3, Gold member/vehicle 5, Silver family 6, Gold family 10. Not stated whether fuel delivery uses one.",
+      "nonMemberPrice": 90,
+      "nonMemberNote": "On-demand page: Emergency Fuel Delivery '$90+tx' with the note '(Delivery only, fuel cost extra)'. Prices exclude tax. The same page lists towing to a Canadian Tire service centre up to 10 km $90+tx, up to 25 km $115+tx, up to 50 km $225+tx.",
+      "currency": "CAD",
+      "quote": "Even if you are not a member, Roadside Assistance will work with a network of service providers to help arrange an emergency gas delivery** to cover most vehicles.",
+      "url": "https://en.roadsideassistance.canadiantire.ca/pages/on-demand-roadside-assistance",
+      "urlAlso": [
+        "https://en.roadsideassistance.canadiantire.ca/pages/plan-comparison",
+        "https://en.roadsideassistance.canadiantire.ca/blogs/blog/what-to-do-when-your-car-runs-out-of-gas"
+      ],
+      "sourceDate": "Blog dated 24 May 2022; on-demand and comparison pages undated, read 2026-10-05",
+      "readMethod": "page",
+      "readDetail": "fetch-quote"
+    }
+  ],
+  "evOutOfCharge": [
+    {
+      "club": "AAA Northeast",
+      "market": "New York and Connecticut",
+      "service": "mobile-charge",
+      "limits": "'we will attempt to deliver a sufficient amount of charge'; Basic members pay $7.50 per mile of range provided (derived example: a 10-mile boost is $75), Plus and Premier pay nothing. The terms do not say what happens if charge cannot be delivered; the only other mechanism in them is the ordinary tow allowance (3 miles Basic; 100 miles Plus and Premier; one tow to 200 miles on Premier).",
+      "quote": "If your electric vehicle (“EV”) runs out of charge, we will attempt to deliver a sufficient amount of charge for you to reach the nearest charging station. There will be no additional charge for EV charging for Plus and Premier members; however, Basic members will be charged $7.50 per mile of range provided to the EV.",
+      "url": "https://northeast.aaa.com/content/dam/aaa-ne-web/pdf/AAA_Northeast_Membership_Terms_and_Conditions_09.03.2026.pdf",
+      "readMethod": "page",
+      "readDetail": "pdf-text (terms section 2.C)"
+    },
+    {
+      "club": "Automobile Club of Southern California",
+      "market": "California (Southern California)",
+      "service": null,
+      "limits": "The member guide has no EV wording at all (its only 'electrical' is the definition of a covered disablement). The ordinary tow allowance would apply: Classic 7 driving miles, Plus 100, Premier 100 with one tow a year up to 200. The club's roadside web page is script-rendered and gave no body text.",
+      "quote": null,
+      "url": "https://www.ace.aaa.com/content/dam/ace/pdf/CA-MemberGuide.pdf",
+      "readMethod": "page",
+      "readDetail": "pdf-text"
+    },
+    {
+      "club": "CAA South Central Ontario",
+      "market": "Ontario",
+      "service": null,
+      "limits": "The terms, the compare-memberships page, the roadside page and the Electric Vehicles page say nothing about running out of charge. Tow allowance that would apply: Basic 10 km per call, Plus 200 km, Premier one tow to 320 km and four to 200 km.",
+      "quote": null,
+      "url": "https://www.caasco.com/auto/electric-vehicles",
+      "urlAlso": [
+        "https://www.caasco.com/about-our-website/membership-terms-and-conditions",
+        "https://www.caasco.com/membership/compare-memberships"
+      ],
+      "readMethod": "page",
+      "readDetail": "fetch-quote"
+    },
+    {
+      "club": "CAA (Canada generally; CAA-Québec pilot)",
+      "market": "Ontario and British Columbia (generic statement); Quebec pilot",
+      "service": "tow-to-charger",
+      "limits": "Globe and Mail, 7 March 2021: CAA-Québec ran a mobile-charging pilot in Montreal, Laval and Quebec City (three Hyundai Ioniqs, up to 40 km of range in about 20 minutes, not for Teslas) and 'CAA doesn't have plans to launch the service in other provinces'. A 2021 newspaper article, not a CAA South Central Ontario or BCAA statement.",
+      "quote": "Most roadside assistance services, including CAA, will tow you to the nearest charger.",
+      "url": "https://www.theglobeandmail.com/drive/mobility/article-if-my-ev-battery-dies-on-the-road-can-i-get-a-boost",
+      "readMethod": "page",
+      "readDetail": "fetch-quote (secondary source)"
+    },
+    {
+      "club": "BCAA",
+      "market": "British Columbia",
+      "service": "both",
+      "limits": "Tow is limited to the plan's tow allowance (Basic 5 km, Plus 160 km, Premier one tow to 320 km per research-roadside.json). Mobile 'Roadside Charging' only 'where available'. Drive Tesla Canada (13 Sep 2023) reported BCAA 'exploring the possibility of using the Lightning trucks with its onboard power as mobile roadside chargers'.",
+      "quote": "If your electric vehicle battery is unexpectedly depleted and you are unable to make it to a charging station, BCAA will offer to tow you to the nearest charging station within your Membership towing allowance or provide Roadside Charging, where available.",
+      "url": "https://www.bcaa.com/membership/plans",
+      "urlAlso": [
+        "https://driveteslacanada.ca/?p=78097"
+      ],
+      "readMethod": "search-summary",
+      "readDetail": "search-summary (BCAA); fetch-quote (Drive Tesla Canada)"
+    },
+    {
+      "club": "The AA",
+      "market": "Britain",
+      "service": "tow-to-charger",
+      "limits": "No distance cap in the booklet ('a local fuelling station, repairer or charge point'). The AA's stated policy (23 Jul 2021) is to tow rather than top up at the roadside. The guide page also says 'Fuel or charge may be given'.",
+      "quote": "If your battery runs flat, we'll tow you to the nearest charging point so you can get back on the road as quickly as possible.",
+      "quoteAlso": [
+        "If Your Vehicle has run out of fuel or charge it will be taken to a local fuelling station, repairer or charge point. (terms booklet, September 2026)",
+        "Rather than trying to recharge EVs with 5-10 miles range where they breakdown, which may be dangerous, we will take the EV to a working charge point so that they can charge as much as they want in one session. (AA newsroom, 23 July 2021)"
+      ],
+      "url": "https://www.theaa.com/breakdown-cover/electric-cars",
+      "urlAlso": [
+        "https://www.theaa.com/media/the-aa/pdf/breakdown-cover/terms-and-conditions-current.pdf",
+        "https://www.theaa.com/about-us/newsroom/aa-gives-power-to-electric-drivers"
+      ],
+      "readMethod": "page",
+      "readDetail": "fetch-quote (web pages); pdf-text (booklet)"
+    },
+    {
+      "club": "RAC",
+      "market": "Britain",
+      "service": "both",
+      "limits": "EV Boost gives 'a 10-mile boost'; the alternative is a tow of '10 miles' to a charge point (guide page). The policy booklet's clause has no 10-mile figure ('enough charge to get to the nearest charge point' or a tow 'to the nearest fuel station or charge point'). The compare page lists 'EV cover' under Complete; the booklet clause sits in the general 'Additional services' and is not tied to a level in the text read.",
+      "quote": "If you have an electric car and you run out of charge, you're also covered. We'll either give you a 10-mile boost – or we'll tow you 10 miles to a charge point.",
+      "quoteAlso": [
+        "Out of charge? Our award-winning EV Boost vans can give you a 10-mile boost to get you to the nearest charge point. (rac.co.uk breakdown-cover)",
+        "Send one of our mobile EV charging vehicles (which will give you enough charge to get to the nearest charge point); or Send a patrol to tow you to the nearest fuel station or charge point. (policy booklet)"
+      ],
+      "url": "https://www.rac.co.uk/breakdown-cover/breakdown-cover-guide",
+      "urlAlso": [
+        "https://www.rac.co.uk/breakdown-cover",
+        "https://docs.rac.co.uk/v3/assets/bltf298597f74081431/blt0a8141d520c61b77/Combined_CAKE_UK_EU_LEI_Terms.pdf"
+      ],
+      "readMethod": "page",
+      "readDetail": "fetch-quote (web pages); pdf-text (policy)"
+    },
+    {
+      "club": "The AA Ireland",
+      "market": "Ireland",
+      "service": "tow-to-charger",
+      "limits": "No AA Ireland terms or help page on out-of-charge was found. AA Ireland's blog of 13 July 2018 announced a mobile charging unit giving 'approximately 15% of battery charge in just 20 minutes'. A third-party guide (odo.ie) says AA Rescue 'will attend and flatbed-tow the car to the nearest working fast charger' and 'Mobile emergency top-up charging is piloted but not yet a standard nationwide service'; it also warns that insurer policies may still carry 'running out of fuel' exclusions.",
+      "quote": "On average, the AA will be able to provide an electric vehicle with approximately 15% of battery charge in just 20 minutes",
+      "url": "https://www.theaa.ie/blog/aas-electric-vehicle-mobile-charging-unit-first-europe/",
+      "urlAlso": [
+        "https://www.odo.ie/guides/car-breakdown-ireland"
+      ],
+      "readMethod": "page",
+      "readDetail": "fetch-quote (AA Ireland blog, 2018; odo.ie is secondary)"
+    },
+    {
+      "club": "Ángeles Verdes and the Mexican insurers read (Quálitas blog)",
+      "market": "Mexico",
+      "service": null,
+      "limits": "No statement about electric vehicles or charging was found on the Sectur releases, the Wikivoyage section, the Government of Canada page or the Quálitas blog.",
+      "quote": null,
+      "url": "https://qualitasseguros.mx/qualitas/asistencia-vial-qualitas/",
+      "readMethod": "page",
+      "readDetail": "fetch-quote"
+    }
+  ],
+  "containerRules": [
+    {
+      "market": "Britain (England, Scotland, Wales)",
+      "rule": "Petrol may be dispensed at a petrol station into 'a suitable portable container' (reg 12(1)(b)). A container is suitable if it meets Schedule 3 or is an older design that met the 1929 or 1982 rules (Sch 2 para 6). Schedule 3: nominal capacity no greater than 10 litres if plastic, no greater than 20 litres if metal, marked 'PETROL' and 'HIGHLY FLAMMABLE'. Regulation 12 itself sets no number of containers; the keeping limit is 30 litres in total, and in a vehicle no more than two containers (Sch 2 para 1(a)). The Regulations are marked E+W+S (England, Wales, Scotland); Northern Ireland has its own.",
+      "maxLitresPlastic": 10,
+      "maxLitresMetal": 20,
+      "maxTotalLitresKept": 30,
+      "maxContainersInVehicle": 2,
+      "quote": "A portable petrol storage container must— (a) have a nominal capacity — (i) no greater than 10 litres if made of plastic; and (ii) no greater than 20 litres if made of metal;",
+      "quoteAlso": [
+        "12.—(1) No person is to dispense, or allow the dispensing of, petrol from a dispenser on dispensing premises except— (a) for use in a motor vehicle or motor boat; (b) to fill a suitable portable container or a demountable fuel tank; or (c) for the purpose of maintenance or calibration of the dispenser.",
+        "(iii) no more than 30 litres is kept in no more than two suitable portable containers in any motor vehicle, motor boat, hovercraft or aircraft; (Schedule 2 paragraph 1(a))"
+      ],
+      "url": "https://www.legislation.gov.uk/uksi/2014/1637/schedule/3",
+      "urlAlso": [
+        "https://www.legislation.gov.uk/uksi/2014/1637/regulation/12",
+        "https://www.legislation.gov.uk/uksi/2014/1637/schedule/2"
+      ],
+      "sourceDate": "The Petroleum (Consolidation) Regulations 2014, SI 2014/1637",
+      "readMethod": "page",
+      "readDetail": "fetch-quote (legislation.gov.uk text returned in full; Schedule 3 paragraph 1 fetched twice with the same wording)"
+    },
+    {
+      "market": "Ireland (Republic)",
+      "rule": null,
+      "maxLitresPlastic": null,
+      "maxLitresMetal": null,
+      "quote": null,
+      "url": null,
+      "readMethod": "not-found",
+      "readDetail": "not-found",
+      "note": "Not found. The Petroleum (Consolidation) Regulations 2014 are Great Britain's and do not apply in the Republic. irishstatutebook.ie (S.I. 311/1979, the Dangerous Substances (Retail and Private Petroleum Stores) Regulations) and citizensinformation.ie returned 403; the HSA site has no petrol-container page (its only fuel pages are ADR bowser guidance). No Irish limit in litres is stated here."
+    },
+    {
+      "market": "United States (federal)",
+      "rule": "Consumer portable fuel containers sold in the US must meet the CPSC rule: 16 CFR 1461.2 covers a container 'with a capacity of 5 gallons or less' (18.9 L, derived) and 1461.3 requires ASTM F3326-21 for empty containers (or a safety can meeting section 18 of ANSI/CAN/UL/ULC 30:2022). This is a standard for the can, not a limit on what a station will fill. EPA's definition (40 CFR 59.680) is 'a reusable container of any color that is designed and marketed or otherwise intended for use by consumers for receiving, transporting, storing, and dispensing gasoline, diesel fuel, or kerosene', and all red, yellow or blue utility jugs are deemed portable fuel containers.",
+      "maxLitresPlastic": null,
+      "maxLitresMetal": null,
+      "quote": "In accordance with the Portable Fuel Container Safety Act of 2020 (PFCSA), portable fuel containers must comply with the requirements specified in § 1461.3, which are considered to be consumer product safety rules.",
+      "quoteAlso": [
+        "Portable fuel containers sold empty to the consumer must meet the requirements of ASTM F3326-21 (16 CFR 1461.3)",
+        "a reusable container of any color that is designed and marketed or otherwise intended for use by consumers for receiving, transporting, storing, and dispensing gasoline, diesel fuel, or kerosene. (40 CFR 59.680)"
+      ],
+      "url": "https://www.law.cornell.edu/cfr/text/16/1461.1",
+      "urlAlso": [
+        "https://www.law.cornell.edu/cfr/text/16/1461.2",
+        "https://www.law.cornell.edu/cfr/text/16/1461.3",
+        "https://www.law.cornell.edu/cfr/text/40/59.680"
+      ],
+      "sourceDate": "16 CFR 1461 source note: 88 FR 74346, 31 Oct 2023",
+      "readMethod": "page",
+      "readDetail": "fetch-quote (Cornell LII; sections 1461.1 and 59.680 returned whole, 1461.2 and 1461.3 as quoted extracts)"
+    },
+    {
+      "market": "United States (workplaces, OSHA)",
+      "rule": "OSHA 29 CFR 1910.106 is an employer rule, not a consumer one, but it is the federal definition of an approved flammable-liquid container: 'Only approved containers and portable tanks shall be used', and a safety can is 'an approved container, of not more than 5 gallons capacity'.",
+      "maxLitresPlastic": null,
+      "maxLitresMetal": null,
+      "quote": "Safety can shall mean an approved container, of not more than 5 gallons capacity, having a spring-closing lid and spout cover and so designed that it will safely relieve internal pressure when subjected to fire exposure.",
+      "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.106",
+      "readMethod": "page",
+      "readDetail": "fetch-quote"
+    },
+    {
+      "market": "California",
+      "rule": "Sale rule for the can, enforced by the Air Resources Board: a portable fuel container is 'any container or vessel with a nominal capacity of ten gallons or less' (37.9 L, derived) and every portable fuel container system sold in California must be certified through the Air Resources Board; since 1 July 2018 manufacturers cannot sell containers unless certified to CP-501. No limit on what a station will fill was read.",
+      "maxLitresPlastic": null,
+      "maxLitresMetal": null,
+      "quote": "any container or vessel with a nominal capacity of ten gallons or less intended for reuse that is designed, used, sold, advertised, or offered for sale for receiving, transporting, storing, and dispensing fuel or kerosene",
+      "quoteAlso": [
+        "Every portable fuel container system manufactured for sale or introduced into California commerce must be 'certified for use and sale by the manufacturer through the Air Resources Board' (13 CCR 2467.2, as summarised by the fetch extractor)."
+      ],
+      "url": "https://www.law.cornell.edu/regulations/california/13-CCR-2467.1",
+      "urlAlso": [
+        "https://www.law.cornell.edu/regulations/california/13-CCR-2467.2"
+      ],
+      "sourceDate": "Cal. Code Regs. tit. 13, sections 2467.1 and 2467.2",
+      "readMethod": "page",
+      "readDetail": "fetch-quote (Cornell LII)"
+    },
+    {
+      "market": "New York State",
+      "rule": "Sale rule for the can, 6 NYCRR Part 239 'Portable Fuel Container Spillage Control': a portable fuel container is 'any container or vessel with a nominal capacity of 10 gallons or less' (37.9 L, derived), and since 1 September 2009 none may be sold or supplied in New York unless it complies with 40 CFR 59.653 (the spill-proof system). No New York limit on what a station will fill was read; the NYS and NYC fire codes were not reachable.",
+      "maxLitresPlastic": null,
+      "maxLitresMetal": null,
+      "quote": "no person shall import, sell, supply, advertise for sale, offer for sale, or manufacture for sale in the State of New York on or after September 1, 2009, any portable fuel container, spout, or both fuel container and spout which does not comply with 40 CFR section 59.653.",
+      "quoteAlso": [
+        "any container or vessel with a nominal capacity of 10 gallons or less intended for reuse that is designed, used, sold, advertised or offered for sale for receiving, transporting, storing, and dispensing fuel or kerosene. (6 NYCRR 239-2.1)"
+      ],
+      "url": "https://www.law.cornell.edu/regulations/new-york/6-NYCRR-239-3.1",
+      "urlAlso": [
+        "https://www.law.cornell.edu/regulations/new-york/6-NYCRR-239-1.1",
+        "https://www.law.cornell.edu/regulations/new-york/6-NYCRR-239-2.1"
+      ],
+      "sourceDate": "6 NYCRR 239-1.1, 239-2.1, 239-3.1",
+      "readMethod": "page",
+      "readDetail": "fetch-quote (Cornell LII)"
+    },
+    {
+      "market": "Ontario",
+      "rule": "The safety regulator's public guidance (TSSA, on safetyinfo.ca) says to use a certified container and gives handling rules, but no litre limit and no standard by name (CSA B376 and ULC were not mentioned on the page read).",
+      "maxLitresPlastic": null,
+      "maxLitresMetal": null,
+      "quote": "Only use a container that has been certified by an accredited certification organization to carry or store fuel.",
+      "quoteAlso": [
+        "When filling a portable container, keep it on the ground with the nozzle in full contact with it.",
+        "Fill your container to about 90 percent of its capacity to leave room for expansion."
+      ],
+      "url": "https://safetyinfo.ca/transportation-storage",
+      "readMethod": "page",
+      "readDetail": "fetch-quote"
+    },
+    {
+      "market": "British Columbia",
+      "rule": null,
+      "maxLitresPlastic": null,
+      "maxLitresMetal": null,
+      "quote": null,
+      "url": null,
+      "readMethod": "not-found",
+      "readDetail": "not-found",
+      "note": "Not found. technicalsafetybc.ca's front page had no gas-can link and no deeper page was reached."
+    },
+    {
+      "market": "Mexico",
+      "rule": null,
+      "maxLitresPlastic": null,
+      "maxLitresMetal": null,
+      "quote": null,
+      "url": null,
+      "readMethod": "not-found",
+      "readDetail": "not-found",
+      "note": "Not found. No PROFECO or ASEA page on selling fuel in garrafas or bidones was reached. ASEA's document list shows NOM-005-ASEA-2016 only as a list of approved third parties, not the standard's text, and no DOF copy was reachable. Nothing is asserted about garrafas."
+    }
+  ],
+  "containerPrices": [
+    {
+      "market": "Britain",
+      "retailer": "Wickes",
+      "product": "CarPlan Unleaded Petrol Fuel Can - 5L (plastic)",
+      "litres": 5,
+      "price": 7,
+      "currency": "GBP",
+      "url": "https://www.wickes.co.uk/carplan-unleaded-petrol-fuel-can-5l/p/287789",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "Page says it conforms to the Petroleum Spirit Regulations 1982 (SI 1982/630); those were consolidated into the 2014 Regulations, whose Sch 2 para 6 still accepts containers that met them. VAT status not stated on the page."
+    },
+    {
+      "market": "Britain",
+      "retailer": "Wickes",
+      "product": "The Handy Steel Jerry Can - 10L",
+      "litres": 10,
+      "price": 23,
+      "currency": "GBP",
+      "url": "https://www.wickes.co.uk/the-handy-steel-jerry-can-10l/p/185238",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "Price excludes delivery. The page says nothing about the petrol regulations or 'PETROL' marking."
+    },
+    {
+      "market": "Britain",
+      "retailer": "Wickes",
+      "product": "The Handy Steel Jerry Can - 20L",
+      "litres": 20,
+      "price": 30,
+      "currency": "GBP",
+      "url": "https://www.wickes.co.uk/the-handy-steel-jerry-can-20l/p/185235",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "Price excludes delivery. The page says nothing about the petrol regulations or 'PETROL' marking."
+    },
+    {
+      "market": "Britain",
+      "retailer": "Screwfix",
+      "product": "Hilka Pro-Craft Plastic Fuel Can Green 5Ltr",
+      "litres": 5,
+      "price": 8.99,
+      "currency": "GBP",
+      "url": "https://www.screwfix.com/p/hilka-pro-craft-plastic-fuel-can-green-5ltr/84785",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "priceIncludesVat": true,
+      "note": "Read from Screwfix's search listing (Black and Red 5 L are also 8.99). The Red 5 L product page was read separately and describes the red can as for 'red diesel', so colour is not a safe guide to fuel type."
+    },
+    {
+      "market": "Britain",
+      "retailer": "Screwfix",
+      "product": "Hilka Pro-Craft Plastic Fuel Can Black 10Ltr",
+      "litres": 10,
+      "price": 13.99,
+      "currency": "GBP",
+      "url": "https://www.screwfix.com/p/hilka-pro-craft-plastic-fuel-can-black-10ltr/844pa",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "priceIncludesVat": true,
+      "note": "From the search listing; Green and Red 10 L are also 13.99."
+    },
+    {
+      "market": "Britain",
+      "retailer": "Screwfix",
+      "product": "Faithfull Carbon Steel Jerry Can Green 20Ltr",
+      "litres": 20,
+      "price": 32.99,
+      "currency": "GBP",
+      "url": "https://www.screwfix.com/p/faithfull-carbon-steel-jerry-can-green-20ltr/745ea",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "priceIncludesVat": true,
+      "note": "From the search listing. Summit Steel Jerry Can Green 20Ltr is 33.99 (https://www.screwfix.com/p/summit-steel-jerry-can-green-20ltr/850ym)."
+    },
+    {
+      "market": "Britain",
+      "retailer": "Halfords",
+      "product": "Fuel cans (5 L, 10 L)",
+      "litres": null,
+      "price": null,
+      "currency": "GBP",
+      "url": "https://www.halfords.com/search?q=fuel%20can",
+      "readMethod": "not-read",
+      "readDetail": "not-read",
+      "note": "Not read: Halfords' search and category pages returned navigation only (product cards are script-rendered), and no product URL could be found without a search. Wickes and Screwfix stand in."
+    },
+    {
+      "market": "Ireland",
+      "retailer": "Screwfix Ireland",
+      "product": "Hilka Pro-Craft Plastic Fuel Can Green 5Ltr",
+      "litres": 5,
+      "price": 10.95,
+      "currency": "EUR",
+      "url": "https://www.screwfix.ie/p/hilka-pro-craft-plastic-fuel-can-green-5ltr/84785",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "priceIncludesVat": true,
+      "note": "Product page read. The page says 'Complies with S.I. 1982/630' (a UK instrument). Black 5 L is 10.95; Red 5 L is 12.25."
+    },
+    {
+      "market": "Ireland",
+      "retailer": "Screwfix Ireland",
+      "product": "Hilka Pro-Craft Plastic Fuel Can Black 10Ltr",
+      "litres": 10,
+      "price": 17.95,
+      "currency": "EUR",
+      "url": "https://www.screwfix.ie/p/hilka-pro-craft-plastic-fuel-can-black-10ltr/844pa",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "priceIncludesVat": true,
+      "note": "From the search listing; Red 10 L is 17.95 and Green 10 L is 20.15."
+    },
+    {
+      "market": "Ireland",
+      "retailer": "Screwfix Ireland",
+      "product": "Faithfull Carbon Steel Jerry Can Green 20Ltr",
+      "litres": 20,
+      "price": 41.95,
+      "currency": "EUR",
+      "url": "https://www.screwfix.ie/p/faithfull-carbon-steel-jerry-can-green-20ltr/745ea",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "priceIncludesVat": true,
+      "note": "From the search listing. Summit Steel Jerry Can Green 20Ltr is 42.95. A Silverline Steel Jerry Can Green 20Ltr was listed at 13.05, about a third of the others; it is not relied on."
+    },
+    {
+      "market": "Ireland",
+      "retailer": "Woodies; Halfords Ireland",
+      "product": "Fuel cans",
+      "litres": null,
+      "price": null,
+      "currency": "EUR",
+      "url": "https://www.halfords.ie/search?q=fuel%20can",
+      "readMethod": "not-read",
+      "readDetail": "not-read",
+      "note": "Not read: woodies.ie returned 404 on the search URL and Halfords Ireland's pages gave navigation only."
+    },
+    {
+      "market": "United States",
+      "retailer": "Target",
+      "product": "Midwest Can 2gal Gas Can Red",
+      "litres": 7.57,
+      "price": 15.69,
+      "currency": "USD",
+      "url": "https://www.target.com/p/midwest-can-2gal-gas-can-red-midwest-can/-/A-54164775",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "litresDerived": true,
+      "note": "Product page read: sold and shipped by Target; 'meets or exceeds CARB and EPA requirements'. Litres derived from 2 US gallons x 3.785."
+    },
+    {
+      "market": "United States",
+      "retailer": "Target",
+      "product": "Midwest Can 5gal Gas Can Red",
+      "litres": 18.93,
+      "price": 18.99,
+      "currency": "USD",
+      "url": "https://www.target.com/p/midwest-can-5gal-gas-can-red-midwest-can/-/A-54164702",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "litresDerived": true,
+      "note": "Product page read: sold by Target; 'meets or exceeds CARB and EPA requirements'; flame mitigation device said to comply with CPSC rules. Litres derived from 5 US gallons x 3.785."
+    },
+    {
+      "market": "United States",
+      "retailer": "Target",
+      "product": "Scepter SmartControl Plastic Dual Handle Gasoline Can, 5 Gallon/18.9 Liter, Red",
+      "litres": 18.9,
+      "price": 44.99,
+      "currency": "USD",
+      "url": "https://www.target.com/p/scepter-smartcontrol-plastic-dual-handle-gasoline-can-container-jug-w-controllable-flow-nozzle-spout-5-gallon-18-9-liter-red/-/A-1010684377",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "From Target's search listing only; the page was not opened and the seller was not checked."
+    },
+    {
+      "market": "United States",
+      "retailer": "Walmart; The Home Depot; Lowe's; Ace; Northern Tool",
+      "product": "2 gal and 5 gal gas cans",
+      "litres": null,
+      "price": null,
+      "currency": "USD",
+      "url": "https://www.walmart.com/search?q=gas+can",
+      "readMethod": "not-read",
+      "readDetail": "not-read",
+      "note": "Not read: Walmart showed a 'human verification' wall; Home Depot, Lowe's, Ace and Northern Tool returned 403. Target stands in."
+    },
+    {
+      "market": "Canada",
+      "retailer": "Canadian Tire; Walmart Canada; The Home Depot; Rona; Princess Auto; Home Hardware; BMR; NAPA",
+      "product": "Gas cans (20 L, 25 L)",
+      "litres": null,
+      "price": null,
+      "currency": "CAD",
+      "url": "https://www.canadiantire.ca/en/search-results.html?q=gas%20can",
+      "readMethod": "not-read",
+      "readDetail": "not-read",
+      "note": "Not read: Canadian Tire, Home Depot and Princess Auto serve script-rendered pages with no product data; Walmart Canada showed a verification wall; Rona, Home Hardware, BMR and NAPA returned 403; Peavey Mart and Kent had no gas cans in their results."
+    },
+    {
+      "market": "Mexico",
+      "retailer": "Home Depot México; Walmart México; Coppel; Soriana; Mercado Libre; Costco; Sam's Club",
+      "product": "Garrafas / bidones para gasolina",
+      "litres": null,
+      "price": null,
+      "currency": "MXN",
+      "url": "https://www.homedepot.com.mx/s/garrafa%20para%20gasolina",
+      "readMethod": "not-read",
+      "readDetail": "not-read",
+      "note": "Not read: Home Depot México and Costco returned a page template with no products; Walmart México and Sam's showed a robot check; Mercado Libre, Coppel, AutoZone and Liverpool returned 403; Soriana 503."
+    }
+  ],
+  "waitTimes": [
+    {
+      "club": "CAA South Central Ontario",
+      "scope": "Toronto, Light service (the page's term for 'a few simple things, that are quick and easy to fix')",
+      "minutes": 33,
+      "kind": "live estimate",
+      "quote": "Wait times as of 1:26 AM. While we try to be as accurate as possible, the wait times below are just an estimate.",
+      "url": "https://www.caasco.com/auto/roadside-assistance/estimated-wait-times",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "A live table that changes minute by minute and by time of day; both reads were in the small hours (first fetch 'Wait times as of 1:08 AM', second 'as of 1:26 AM'; the page does not print a date or time zone). Treat as a low-demand-hour sample, not an average. First read: Toronto 34 / 36 / 36, Peel 40 / 43 / 47, Durham 86 / 136 / 187 (Light / Tow / Specialty), all other regions 45 / 45 / 60."
+    },
+    {
+      "club": "CAA South Central Ontario",
+      "scope": "Toronto, Tow",
+      "minutes": 30,
+      "kind": "live estimate",
+      "quote": "Wait times as of 1:26 AM. While we try to be as accurate as possible, the wait times below are just an estimate.",
+      "url": "https://www.caasco.com/auto/roadside-assistance/estimated-wait-times",
+      "readMethod": "page",
+      "readDetail": "fetch-quote"
+    },
+    {
+      "club": "CAA South Central Ontario",
+      "scope": "Toronto, Specialty ('Need something extra? Our specialty technicians can help.')",
+      "minutes": 31,
+      "kind": "live estimate",
+      "quote": "Wait times as of 1:26 AM. While we try to be as accurate as possible, the wait times below are just an estimate.",
+      "url": "https://www.caasco.com/auto/roadside-assistance/estimated-wait-times",
+      "readMethod": "page",
+      "readDetail": "fetch-quote"
+    },
+    {
+      "club": "CAA South Central Ontario",
+      "scope": "Peel, Light",
+      "minutes": 37,
+      "kind": "live estimate",
+      "quote": "Wait times as of 1:26 AM. While we try to be as accurate as possible, the wait times below are just an estimate.",
+      "url": "https://www.caasco.com/auto/roadside-assistance/estimated-wait-times",
+      "readMethod": "page",
+      "readDetail": "fetch-quote"
+    },
+    {
+      "club": "CAA South Central Ontario",
+      "scope": "York and Halton, Light (the default band shown for most regions)",
+      "minutes": 45,
+      "kind": "live estimate",
+      "quote": "Wait times as of 1:26 AM. While we try to be as accurate as possible, the wait times below are just an estimate.",
+      "url": "https://www.caasco.com/auto/roadside-assistance/estimated-wait-times",
+      "readMethod": "page",
+      "readDetail": "fetch-quote"
+    },
+    {
+      "club": "CAA South Central Ontario",
+      "scope": "Durham, Light (one of the slowest regions in the table)",
+      "minutes": 67,
+      "kind": "live estimate",
+      "quote": "Wait times as of 1:26 AM. While we try to be as accurate as possible, the wait times below are just an estimate.",
+      "url": "https://www.caasco.com/auto/roadside-assistance/estimated-wait-times",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "Hamilton Light read 82 at 1:26 AM. Durham Specialty read 190 at 1:26 AM and 187 at 1:08 AM; Durham Tow read 92 then 136."
+    },
+    {
+      "club": "The AA",
+      "scope": "Britain, all breakdowns",
+      "minutes": 60,
+      "kind": "target ('aim'), not a measured average",
+      "quote": "We'll aim to get to you in around an hour.",
+      "url": "https://www.theaa.com/breakdown-cover",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "Under the heading 'Why choose The AA for UK breakdown cover?'. The AA's newsroom and policy pages gave no average arrival time."
+    },
+    {
+      "club": "The AA Ireland",
+      "scope": "Ireland, most breakdowns",
+      "minutes": 45,
+      "kind": "goal, not a measured average",
+      "quote": "Our goal is to reach most breakdowns within a 45-minute window, yet response times tend to fluctuate based on your geographic position and the current time of day.",
+      "url": "https://www.theaa.ie/aa-membership/emergency-instant-assistance/",
+      "readMethod": "page",
+      "readDetail": "fetch-quote"
+    },
+    {
+      "club": "RAC",
+      "scope": "Britain",
+      "minutes": null,
+      "kind": "no arrival-time figure published",
+      "quote": "Repairs done in just 30 minutes on average",
+      "url": "https://www.rac.co.uk/breakdown-cover/broken-down",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "The 30 minutes is how long a repair takes once the patrol is there, not the wait. Other RAC pages say 'On average, RAC repairs 3 vehicles every 2 minutes' and 'fix 4/5 breakdowns'; none gives an arrival time."
+    },
+    {
+      "club": "AAA Northeast",
+      "scope": "New York and Connecticut",
+      "minutes": null,
+      "kind": "none found",
+      "quote": null,
+      "url": "https://northeast.aaa.com/membership/benefits/roadside-assistance.html",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "The club's roadside page and terms contain no arrival or wait figure."
+    },
+    {
+      "club": "Automobile Club of Southern California",
+      "scope": "Southern California",
+      "minutes": null,
+      "kind": "none found",
+      "quote": null,
+      "url": "https://www.ace.aaa.com/automotive/roadside-assistance.html",
+      "readMethod": "page",
+      "readDetail": "fetch-quote",
+      "note": "The member guide and the roadside page text that could be read give no wait figure (the page body is script-rendered). The AAA newsroom's 2024 release gives call counts (27 million calls, 13 million tows, 7 million battery, 215,000 EV) but no response time."
+    },
+    {
+      "club": "BCAA",
+      "scope": "British Columbia",
+      "minutes": null,
+      "kind": "none found",
+      "quote": null,
+      "url": "https://www.bcaa.com/",
+      "readMethod": "search-summary",
+      "readDetail": "search-summary",
+      "note": "bcaa.com returned 403 to every fetch; a search for a published BCAA average found only Trustpilot anecdotes."
+    }
+  ],
+  "angelesVerdes": {
+    "service": "Federal roadside help and tourist information run by Sectur's Corporación de Servicios al Turista Ángeles Verdes: emergency mechanical help, tourist information, short-distance towing; no membership. Sectur: 'brinda, de forma gratuita, auxilio carretero y orientación turística'.",
+    "fuel": "Out-of-fuel ('falta de combustible') is a recorded call type: 4% in Sectur's 30 July 2024 release on the summer operation (the release gives the share, not a count). The service is free of charge, but Wikivoyage says 'parts or gasoline if necessary must be paid for'. Whether fuel is sold at cost and how many litres are brought are not published in anything read.",
+    "phone": "078 (Sectur: 'número gratuito 078'; callers 'podrán saber en cuánto tiempo llegará la ayuda'). Government of Canada also gives 800-006-8839 (toll-free in Mexico). A mobile app also exists.",
+    "hours": "Government of Canada travel advice: 'free assistance on all major toll highways from 8 am to 6 pm'. No Sectur page read states hours, and no source read confirms a 24-hour call centre. Sectur's 2024 summer release shows calls peaking 14:00 to 19:59.",
+    "where": "Federal highways, toll and libre, not state or local roads (Wikivoyage, secondary); the Government of Canada says 'all major toll highways'. Sectur, June 2024: all 32 states, 750 field staff, 347 units, 44 tow trucks, 240 routes over 'poco más de 35 mil kilómetros'; December 2024: 450 units and 580 field staff over more than 50,000 km on 271 routes for the winter holiday period.",
+    "quote": "Desde hace 64 años, Ángeles Verdes brinda, de forma gratuita, auxilio carretero y orientación turística",
+    "url": "https://www.gob.mx/sectur/prensa/sectur-fortalece-el-turismo-de-mexico-con-145-nuevas-unidades-de-angeles-verdes",
+    "readMethod": "page",
+    "readDetail": "fetch-quote",
+    "sources": [
+      {
+        "what": "out-of-fuel share and free 078 line",
+        "quote": "la información sobre sitios turísticos significó el 5% y falta de combustible fue el 4%.",
+        "url": "https://www.gob.mx/sectur/prensa/angeles-verdes-ha-auxiliado-a-mas-de-32-mil-turistas-en-el-operativo-vacacional-de-verano-2024",
+        "date": "30 July 2024",
+        "readDetail": "fetch-quote"
+      },
+      {
+        "what": "078 line gives an ETA",
+        "quote": "podrán marcar al número gratuito 078, y podrán saber en cuánto tiempo llegará la ayuda, así como el nombre del elemento que los auxiliará.",
+        "url": "https://www.gob.mx/sectur/prensa/angeles-verdes-ha-auxiliado-a-mas-de-32-mil-turistas-en-el-operativo-vacacional-de-verano-2024",
+        "date": "30 July 2024",
+        "readDetail": "fetch-quote"
+      },
+      {
+        "what": "fleet and routes, winter 2024-25",
+        "quote": "450 unidades, con la operación de 580 elementos en campo, en más de más de 50 mil kilómetros en 271 rutas carreteras en todo el país",
+        "url": "https://www.gob.mx/sectur/prensa/angeles-verdes-beneficiara-a-mas-de-43-mil-turistas-durante-el-periodo-vacacional-de-invierno-2024-2025-386298?idiom=es",
+        "date": "15 December 2024",
+        "readDetail": "fetch-quote"
+      },
+      {
+        "what": "hours, numbers (Government of Canada travel advice for Mexico)",
+        "quote": "The Angeles Verdes is a highway patrol service that provides free assistance on all major toll highways from 8 am to 6 pm. In case of an emergency, you can also dial 078 or 800-006-8839 (toll-free in Mexico) to reach them.",
+        "url": "https://travel.gc.ca/destinations/mexico",
+        "date": "page last updated 01 October 2026 15:06 ET",
+        "readDetail": "fetch-quote"
+      },
+      {
+        "what": "cost of parts and fuel; federal roads only (secondary)",
+        "quote": "Services and information are free; parts or gasoline if necessary must be paid for. ... The Green Angels operate only on federal highways (both toll and libre).",
+        "url": "https://en.wikivoyage.org/wiki/Driving_in_Mexico",
+        "date": "undated community guide",
+        "readDetail": "fetch-quote (secondary)"
+      }
+    ],
+    "note": "Sectur's own programme page could not be found: gob.mx/sectur/acciones-y-programas/angeles-verdes and about a dozen guessed variants returned 404, and angelesverdes.sectur.gob.mx is script-rendered and returned only its title."
+  },
+  "notFound": [
+    {
+      "what": "AA Ireland's out-of-fuel policy (bring fuel, tow, charge)",
+      "whereLooked": "theaa.ie membership, instant-assistance and help-centre pages; help-centre searches for fuel, run out of fuel, electric, callout; AA Ireland blog of 10 Apr 2026 on fuel-supply disruption; odo.ie guide",
+      "result": "No AA Ireland statement. Only the third-party '3–5% of AA Ireland callouts' figure."
+    },
+    {
+      "what": "BCAA primary pages (plans, terms PDFs, FAQ, blog)",
+      "whereLooked": "bcaa.com, bcaa.com media PDFs, faq.bcaa.com, evo.ca mirror",
+      "result": "403 or 503 to every fetch. BCAA lines rest on search summaries."
+    },
+    {
+      "what": "A litres figure for CAA South Central Ontario fuel delivery",
+      "whereLooked": "CAA South Central Ontario terms, compare page and roadside pages (all read)",
+      "result": "None: 'a limited supply of gasoline'. A search summary of some CAA site gave 'up to 10 litres' for Plus and Premier and 'Classic Members' paying the pump price, but it could not be tied to South Central Ontario (whose tiers are Basic, Plus, Premier) and no page for it was fetched. Do not use 10 L for Toronto."
+    },
+    {
+      "what": "Whether AAA Northeast, ACSC or BCAA count a fuel delivery as one of the year's calls",
+      "whereLooked": "AAA Northeast terms and magazine; ACSC member guide; BCAA summaries",
+      "result": "No explicit sentence. Only CAA South Central Ontario says so."
+    },
+    {
+      "what": "AAA same-day or pre-join service fee amount (AAA Northeast, ACSC)",
+      "whereLooked": "AAA Northeast terms; ACSC guide; aaa.com/ServiceFee",
+      "result": "Terms name the fee but not the amount; aaa.com/ServiceFee redirects to a ZIP gate."
+    },
+    {
+      "what": "EV out-of-charge wording for ACSC and CAA South Central Ontario",
+      "whereLooked": "ACSC member guide and roadside page; CAA SCO terms, compare page, roadside and Electric Vehicles pages",
+      "result": "Silent."
+    },
+    {
+      "what": "AAA mobile EV charging pilots (current)",
+      "whereLooked": "AAA newsroom tags (roadside assistance, electric vehicles), AAA Northeast and ACSC pages",
+      "result": "Nothing current beyond AAA Northeast's 'attempt to deliver a sufficient amount of charge' clause. A 2016 AAA truck fleet turned up only in a search summary and was not fetched."
+    },
+    {
+      "what": "Average or typical wait for AAA (Northeast, Southern California), BCAA and RAC",
+      "whereLooked": "club roadside pages, AAA newsroom, RAC pages",
+      "result": "None published. A Jerry.ai explainer on AAA wait times could not be fetched (404 after redirect)."
+    },
+    {
+      "what": "Ireland: legal limits for filling portable containers",
+      "whereLooked": "irishstatutebook.ie (403), citizensinformation.ie (403), hsa.ie, Circle K Ireland FAQ, Applegreen (429), Maxol (404)",
+      "result": "Nothing read."
+    },
+    {
+      "what": "Mexico: PROFECO or ASEA rules on selling fuel in garrafas / bidones",
+      "whereLooked": "gob.mx/asea, gob.mx/profeco, ASEA document listing",
+      "result": "Nothing read; NOM-005-ASEA-2016's text was not reachable."
+    },
+    {
+      "what": "British Columbia and Ontario litre limits (CSA B376, ULC) and New York or California limits on what a station will fill",
+      "whereLooked": "TSSA / safetyinfo.ca, Technical Safety BC, Ontario e-Laws, Transport Canada, ICC and UpCodes fire-code pages",
+      "result": "e-Laws and ICC were empty or 403; TSSA guidance has no litre figure."
+    },
+    {
+      "what": "Fuel-can prices in Canada and Mexico, and at Walmart, Home Depot (US) and Halfords",
+      "whereLooked": "Canadian Tire, Walmart, Home Depot, Rona, Princess Auto, Home Hardware, BMR, Halfords, Mercado Libre, Coppel, Soriana, Costco, Sam's",
+      "result": "Bot walls, 403s or script-only pages. See containerPrices notes."
+    },
+    {
+      "what": "Ángeles Verdes: whether fuel is sold at cost, litres brought, official hours",
+      "whereLooked": "gob.mx/sectur press releases (about a dozen read), Sectur programme pages (404), Government of Canada, Wikivoyage",
+      "result": "Only the secondary Wikivoyage sentence on paying for gasoline; hours only from the Government of Canada page."
+    },
+    {
+      "what": "Searches I would run if the WebSearch cap is raised",
+      "whereLooked": "n/a",
+      "result": "AA Ireland run out of fuel; NOM-005-ASEA-2016 recipientes portatiles garrafas; Irish S.I. 311 of 1979 portable containers; Canadian Tire and Walmart Canada gas can product pages; Home Depot México garrafa para gasolina; AAA average response time; Ángeles Verdes servicios costo combustible."
+    }
+  ],
+  "notes": [
+    "North America: in all four clubs read (AAA Northeast, ACSC, CAA South Central Ontario, BCAA) fuel delivery is a Basic-tier service where the member pays for the fuel and a Plus or Premier service where the fuel is free. The delivery itself uses the club's call allowance only where a source says so (CAA South Central Ontario).",
+    "Quantities: only AAA Northeast ('about 1 to 2 gallons', in its magazine, not its terms), BCAA ('up to 10 L', search summary) and Quálitas ('5 litros gratis', agent blog) give a quantity. The others say a 'limited supply' or 'sufficient' to reach the nearest station. ACSC, CAA South Central Ontario and BCAA all name a tow as the fallback, so a car can be towed instead of refuelled.",
+    "Price basis: AAA Northeast 'current pump prices'; CAA South Central Ontario 'the current pump price'; ACSC 'such service provider's applicable rates'; BCAA 'at cost'. Canadian Tire's non-member price is $90 plus tax for delivery with fuel extra.",
+    "Britain: the AA does not promise to bring fuel; its terms tow the car 'to a local fuelling station, repairer or charge point' and exclude fuel. The RAC's terms offer fuel brought to you (you pay for it), an EV charge, or a tow, whichever the patrol chooses.",
+    "EV: AAA Northeast is the only club whose terms price EV charge ($7.50 per mile of range for Basic, free for Plus and Premier). RAC gives a 10-mile boost or a 10-mile tow. The AA tows. BCAA tows within the tier's allowance or charges on the road where available. ACSC and CAA South Central Ontario say nothing.",
+    "Wait times: no club read publishes a measured average. Published figures are a target (AA 'around an hour'), a goal (AA Ireland '45-minute window') and a live estimate (CAA South Central Ontario: 30 to 47 minutes for Toronto and Peel across two small-hours reads, up to 190 for Durham specialty work).",
+    "Containers: Great Britain's Schedule 3 is the only litre limit read (10 L plastic, 20 L metal, 30 L in no more than two containers in a vehicle). The US, California and New York rules read govern the can, not the fill; they define what counts as an approved container."
+  ]
+}

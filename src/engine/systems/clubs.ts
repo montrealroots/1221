@@ -34,12 +34,24 @@
  *
  * **A meeting canceled**: an outdoor club doesn't meet in a thunderstorm on
  * its day (`systems/weather.ts`), as leagues' and parkrun's own safety rules
- * say; a season's week canceled isn't given back, SLATE's reading, no
- * provider's refund terms having been read.
+ * say. From 2026-10-05 its own terms say what follows (`ClubTerms` in
+ * `content/clubs.ts`): GO Mammoth and Urban Rec add a week on to the season,
+ * Volo up to two a season and a game's credit past them, New Haven's
+ * pickleball only past the second called off. Until then a week called off
+ * was gone, no provider's terms having been read.
  *
  * **Renewing**: a season ends with its last meeting; renewed by hand
  * (`club.renew`) or by the preference to renew, at the fee then, it runs
- * another season. Leaving gives nothing back, SLATE's reading.
+ * another season.
+ *
+ * **Leaving** (from 2026-10-05) gives back what the provider's own terms do
+ * of a season paid ahead (`leavingBack`): Trinity Sport's in full with a
+ * week's notice, the New Haven YMCA's less $10 before it starts, Toronto's
+ * pro-rated less C$14.13 up to the third class, Kensington's less a class
+ * or two, West Point Grey's pro-rated less $5, Barnsdall's as a year's
+ * credit; Volo, the YMCA in New York, Bulldog, Better and Waltons give none.
+ * A credit is held with the provider and paid toward its next club joined.
+ * Until then leaving gave nothing back anywhere, SLATE's reading.
  *
  * **Company** (from 2026-10-05): people you know can come along on the way
  * there, on a trip's rules. At parkrun or a free running club, open to
@@ -59,7 +71,8 @@ import { CITIES } from '../content/geography';
 import { CLUBS, type Club } from '../content/clubs';
 import { INJURY } from '../content/injury';
 import { inSaveMoney } from './banking';
-import { payFromBank, spend } from './household';
+import { payFromBank, refundToBank, spend } from './household';
+import { focusOf, grow } from './school';
 import { exerts } from './body';
 import { applyLookingAfter, occupiedAt } from './life';
 import { present } from './career';
@@ -93,12 +106,21 @@ export interface Membership {
   renew?: boolean;
   /** Others of the club met, staying after (the first met is `contactId`). */
   met?: string[];
+  /** The season paid ahead and its first meeting (from 2026-10-05), what leaving's terms count from. */
+  paid?: Money; seasonFrom?: Instant;
+  /** Meetings called off this season, which its terms make up past so many; and classes missed that were made up. */
+  calledOff?: number; madeUp?: number;
 }
+
+/** Money held with a club's provider, for the next of its clubs joined (from 2026-10-05): Barnsdall's class credit, Volo's for a game not made up. */
+export interface ClubCredit { provider: string; amount: Money; from: string; until?: Instant }
 
 export const CLUB_MEET_KIND = 'club.meet';
 export const CLUB_DUE_KIND = 'club.due';
 /** A meeting's end: whether it was gone to is settled then, and a season's last ends there. */
 export const CLUB_CLOSE_KIND = 'club.close';
+/** How many weeks ahead a season can be booked to start (from 2026-10-05): SLATE's reading of a term's registration opening a month out. */
+export const BOOK_AHEAD_WEEKS = 4;
 /** A meeting can be joined until this share of it has gone, for the rest of it: SLATE's reading. */
 export const LATE_SHARE = 0.5;
 /** Staying after, and the most of one club met that way: SLATE's estimates. */
@@ -144,6 +166,9 @@ export function meetingsAhead(club: Club, after: Instant, n = 4, until?: Instant
   return out;
 }
 
+/** A member's next meetings to answer: from their season's start where it hasn't come yet, to its end. */
+export const aheadFor = (club: Club, m: Membership, now: Instant, n = 4): Instant[] => meetingsAhead(club, Math.max(now, (m.seasonFrom ?? 0) - 1), n, m.until);
+
 /** The meeting under way that can still be joined, or the next one. */
 export const meetingFor = (club: Club, now: Instant): Instant => nextMeeting(club, now - lateMs(club));
 
@@ -155,6 +180,72 @@ export function perSession(sim: Simulation, club: Club): Money {
   if (!club.fee) return 0;
   const all = inSaveMoney(sim, Math.round(club.fee.amount * 100), club.fee.currency);
   return club.fee.per === 'week' ? all : Math.round(all / Math.max(1, club.seasonWeeks ?? 1));
+}
+
+/** The season's first meeting: kept from 2026-10-05, worked back from its last before. */
+const seasonStart = (club: Club, m: Membership): Instant =>
+  m.seasonFrom ?? (m.until !== undefined && club.seasonWeeks ? m.until - (club.seasonWeeks - 1) * 7 * MS_DAY : m.since);
+
+/** What leaving now gives back of the season paid ahead, by the provider's own steps (`ClubTerms`): money, a credit, or nothing. */
+/** A deadline so many days, or business days, ahead of a meeting, in its town's own days. */
+function aheadOf(club: Club, at: Instant, days: number, business: boolean): Instant {
+  if (!business) return at - days * MS_DAY;
+  const zone = CITIES.require(club.cityId).timeZone;
+  let t = at;
+  for (let left = days; left > 0;) {
+    t -= MS_DAY;
+    const p = zonedParts(t, zone);
+    const weekday = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
+    if (weekday !== 0 && weekday !== 6) left -= 1;
+  }
+  return t;
+}
+
+export function leavingBack(sim: Simulation, club: Club, m: Membership): { back: Money; credit: Money; why: string; creditMonths?: number } {
+  if (!club.fee) return { back: 0, credit: 0, why: 'It’s free.' };
+  if (club.fee.per === 'week') return { back: 0, credit: 0, why: 'Paid by the week, so nothing is paid ahead to come back.' };
+  if (!m.paid) return { back: 0, credit: 0, why: 'No season was paid ahead.' };
+  const season = meetingsAhead(club, seasonStart(club, m) - 1, club.seasonWeeks ?? 1);
+  for (const step of club.terms?.leave ?? []) {
+    const at = season[step.before - 1];
+    if (at === undefined || sim.now >= aheadOf(club, at, step.daysAhead ?? 0, step.business === true)) continue;
+    const fee = step.fee ? inSaveMoney(sim, Math.round(step.fee * 100), club.fee.currency) : 0;
+    const left = season.filter((x) => x > sim.now).length;
+    const gross = step.prorated ? Math.round((m.paid * left) / season.length)
+      : step.keepShare !== undefined ? Math.round(m.paid * (1 - step.keepShare))
+      : m.paid - (step.keepSessions ?? 0) * Math.round(m.paid / season.length);
+    const amount = Math.max(0, gross - fee);
+    const why = club.terms!.leaveSaid;
+    return step.credit ? { back: 0, credit: amount, why, ...(step.creditMonths ? { creditMonths: step.creditMonths } : {}) } : { back: amount, credit: 0, why };
+  }
+  return { back: 0, credit: 0, why: club.terms?.leaveSaid ?? 'No terms of its own were read: nothing comes back.' };
+}
+
+/** What credit the person holds with a provider now, unexpired. */
+export const creditWith = (person: Person, provider: string | undefined, at: Instant): Money =>
+  provider ? (person.clubCredits ?? []).filter((c) => c.provider === provider && (c.until === undefined || c.until > at)).reduce((n, c) => n + c.amount, 0) : 0;
+
+/** Takes up to an amount from a provider's credit, oldest first; what was taken. */
+function takeCredit(person: Person, provider: string | undefined, upTo: Money, at: Instant): Money {
+  if (!provider || upTo <= 0) return 0;
+  let used = 0;
+  for (const c of (person.clubCredits ?? []).filter((x) => x.provider === provider && (x.until === undefined || x.until > at))) {
+    const take = Math.min(c.amount, upTo - used);
+    c.amount -= take;
+    used += take;
+    if (used >= upTo) break;
+  }
+  person.clubCredits = (person.clubCredits ?? []).filter((c) => c.amount > 0 && (c.until === undefined || c.until > at));
+  return used;
+}
+
+/** A season's fee paid, a provider's credit first and the bank for the rest; false where the bank can't. */
+function paySeason(sim: Simulation, person: Person, club: Club, fee: Money, memo: string): boolean {
+  if (fee <= 0) return true;
+  const credit = Math.min(fee, creditWith(person, club.provider, sim.now));
+  if (fee - credit > 0 && !payFromBank(sim, person, fee - credit, memo, 'personal')) return false;
+  takeCredit(person, club.provider, credit, sim.now);
+  return true;
 }
 
 /** Why a meeting doesn't happen: an outdoor club in a thunderstorm on its day. */
@@ -193,6 +284,7 @@ export function goRefusal(sim: Simulation, person: Person, clubId: string, by: T
   const at = meetingFor(club, sim.now);
   const zone = CITIES.require(club.cityId).timeZone;
   if (m.until !== undefined && at > m.until) return 'Its season is over.';
+  if (m.seasonFrom !== undefined && at < m.seasonFrom) return `Its season starts ${formatDate(m.seasonFrom, zone)}.`;
   if (at - sim.now > SET_OUT_HOURS * 3_600_000) return `It meets ${formatDate(at, zone)} at ${formatTime(at, zone)}; you can set out within ${SET_OUT_HOURS} hours of it.`;
   if ((m.log ?? []).some((l) => l.at === at && l.what === 'went')) return 'That meeting’s been and gone.';
   const off = canceledFor(sim, club, at);
@@ -225,7 +317,7 @@ function scheduleNext(sim: Simulation, person: Person, club: Club, m: Membership
 
 function reschedule(sim: Simulation, person: Person, club: Club, m: Membership): void {
   cancelPending(sim, person, club.id);
-  scheduleNext(sim, person, club, m, sim.now);
+  scheduleNext(sim, person, club, m, Math.max(sim.now, (m.seasonFrom ?? 0) - 1));
 }
 
 function leave(sim: Simulation, person: Person, clubId: string): void {
@@ -237,6 +329,9 @@ function leave(sim: Simulation, person: Person, clubId: string): void {
 function takePart(sim: Simulation, person: Person, club: Club, m: Membership, at: Instant, minutes: number): boolean {
   if (club.fee?.per === 'week' && !spend(sim, person, inSaveMoney(sim, Math.round(club.fee.amount * 100), club.fee.currency), `${club.name}, the week`, 'personal')) return false;
   const hours = minutes / 60;
+  // A course in the actor's craft grows the skill it trains, a session at the readiness they come with, its share where
+  // they came late (from 2026-10-05): singing, voice-over, stage combat, accents, on camera.
+  if (club.trains && person.craft) grow(person.craft, club.trains, focusOf(person), Math.min(1, minutes / club.minutes));
   // A session's effort at its METs; under three, an hour unwinding rather than a workout (from 2026-10-03).
   if (club.met !== undefined) exerts(person, club.met, hours);
   applyLookingAfter(person, club.met !== undefined && club.met >= 3 ? 'exercise' : 'unwind', at);
@@ -287,14 +382,23 @@ function goOnItsOwn(sim: Simulation, person: Person, club: Club, m: Membership, 
     const model = modelById(v.modelId)!;
     const km = way.km * 2;
     if (capacityOf(model) !== undefined) { if (!burn(v, km)) return 'There wasn’t enough in the tank to get there and back.'; }
-    else if (!spend(sim, person, runningCost(sim, v, km), `Fuel, to ${club.name}`, 'vehicle', true)) return 'The fuel couldn’t be paid.';
+    else if (!spend(sim, person, runningCost(sim, v, km), `Fuel, to ${club.name}`, 'vehicle', true)) return 'Fuel couldn’t be paid for.';
     v.errandKm = (v.errandKm ?? 0) + km;
     v.km = (v.km ?? 0) + km;
     drive(sim, person, v.jurisdiction, km, at, `${v.id}-club-${at}`, kindOf(model), tireFactor(v, at));
     const meter = meterCost(sim, club.cityId, club.minutes, person, at);
-    if (meter > 0 && !spend(sim, person, meter, `Parking, ${club.place}`, 'vehicle')) return 'The meter couldn’t be paid.';
+    if (meter > 0 && !spend(sim, person, meter, `Parking, ${club.place}`, 'vehicle')) return 'Parking couldn’t be paid for.';
   }
   return takePart(sim, person, club, m, at, club.minutes) ? undefined : 'The week’s fee couldn’t be paid.';
+}
+
+/** Another season paid: its first meeting the week after the last one's, its own called-off count. */
+function newSeason(club: Club, m: Membership, fee: Money, at = m.until ?? 0): void {
+  m.seasonFrom = (m.until ?? at) + 7 * MS_DAY;
+  m.until = (m.until ?? at) + club.seasonWeeks! * 7 * MS_DAY;
+  if (fee > 0) m.paid = fee; else delete m.paid;
+  delete m.calledOff;
+  delete m.madeUp;
 }
 
 /** A season at its end: renewed where that's the preference and the fee's paid; over otherwise. */
@@ -302,8 +406,8 @@ function seasonEnds(sim: Simulation, person: Person, club: Club, m: Membership, 
   const mine = person.id === sim.universe.playerId;
   if (m.renew && club.seasonWeeks) {
     const fee = joinFee(sim, club);
-    if (fee === 0 || payFromBank(sim, person, fee, `${club.name}, a season renewed`, 'personal')) {
-      m.until = (m.until ?? at) + club.seasonWeeks * 7 * MS_DAY;
+    if (paySeason(sim, person, club, fee, `${club.name}, a season renewed`)) {
+      newSeason(club, m, fee, at);
       if (mine) sim.notify({ category: 'personal', title: 'Renewed', body: `${club.name} runs another ${club.seasonWeeks} weeks.`, importance: 25, route: '/workspace/people' });
       return true;
     }
@@ -316,20 +420,62 @@ function seasonEnds(sim: Simulation, person: Person, club: Club, m: Membership, 
   return false;
 }
 
+/** A credit's month, for how long one is good: Barnsdall's a year, NYC Stage & Screen Combat's two months. */
+const CREDIT_MONTH = (365.2425 / 12) * MS_DAY;
+
+/**
+ * A meeting called off by the club, by its own terms (from 2026-10-05; until
+ * then a week called off was simply gone): a week added on to the season past
+ * the first `after` called off and up to `most` a season, and past those a
+ * session's worth of credit where the terms give one. What it gave, or nothing.
+ */
+/** A class missed, made up by the course's own terms where they make one up, a week on: true where it was. */
+export function madeUpFor(club: Club, m: Membership): boolean {
+  const most = club.terms?.missedMakeUps ?? 0;
+  if (m.until === undefined || (m.madeUp ?? 0) >= most) return false;
+  m.madeUp = (m.madeUp ?? 0) + 1;
+  m.until += 7 * MS_DAY;
+  return true;
+}
+
+export function calledOff(person: Person, club: Club, m: Membership): string | undefined {
+  m.calledOff = (m.calledOff ?? 0) + 1;
+  const off = club.terms?.calledOff;
+  if (!off || m.until === undefined) return undefined;
+  const past = m.calledOff - (off.after ?? 0);
+  if (past <= 0) return undefined;
+  if (off.most === undefined || past <= off.most) {
+    m.until += 7 * MS_DAY;
+    return 'a week added on to the season';
+  }
+  if (off.creditPast && club.fee) {
+    const each = club.fee.per === 'week' ? 0 : Math.round((m.paid ?? 0) / Math.max(1, club.seasonWeeks ?? 1));
+    if (each > 0) {
+      (person.clubCredits ??= []).push({ provider: club.provider ?? club.id, amount: each, from: club.name });
+      return 'a game’s credit, past the make-ups it guarantees';
+    }
+  }
+  return undefined;
+}
+
 export function registerClubs(sim: Simulation): void {
-  sim.onCommand<{ clubId: string; attend?: Attend; by?: TripMode; vehicleId?: string; renew?: boolean }, { paid: Money; first: Instant }>('club.join', (p, { sim: s }) => {
+  sim.onCommand<{ clubId: string; attend?: Attend; by?: TripMode; vehicleId?: string; renew?: boolean; ahead?: number }, { paid: Money; first: Instant }>('club.join', (p, { sim: s }) => {
     const person = s.player;
     const no = joinClubRefusal(person, String(p?.clubId));
     if (no) throw new CommandError(no);
     const club = clubById(String(p.clubId))!;
+    // A season booked to start this week or up to four weeks on (from 2026-10-05); a weekly club starts this week.
+    const ahead = p.ahead === undefined ? 0 : Number(p.ahead);
+    if (!(Number.isInteger(ahead) && ahead >= 0 && ahead <= BOOK_AHEAD_WEEKS)) throw new CommandError(`From this week to ${BOOK_AHEAD_WEEKS} weeks on.`);
+    if (ahead > 0 && !club.seasonWeeks) throw new CommandError('It meets every week: it starts when you join.');
     const by: TripMode = p.by === 'car' || p.by === 'transit' ? p.by : 'foot';
     if (p.attend === 'always') { const way = tripRefusal(s, person, by, p.vehicleId); if (way) throw new CommandError(way); }
     const fee = joinFee(s, club);
-    if (fee > 0 && !payFromBank(s, person, fee, `${club.name}, a season`, 'personal')) throw new CommandError('The bank can’t pay the season’s fee.');
-    const first = nextMeeting(club, s.now);
-    const m: Membership = { clubId: club.id, since: s.now, went: 0, attend: p.attend === 'always' ? 'always' : 'ask', by, ...(by === 'car' && p.vehicleId ? { vehicleId: String(p.vehicleId) } : {}), ...(p.renew ? { renew: true } : {}), ...(club.seasonWeeks ? { until: first + (club.seasonWeeks - 1) * 7 * MS_DAY } : {}) };
+    if (!paySeason(s, person, club, fee, `${club.name}, a season`)) throw new CommandError('There isn’t enough in the bank for the season’s fee.');
+    const first = nextMeeting(club, s.now + ahead * 7 * MS_DAY);
+    const m: Membership = { clubId: club.id, since: s.now, went: 0, attend: p.attend === 'always' ? 'always' : 'ask', by, ...(by === 'car' && p.vehicleId ? { vehicleId: String(p.vehicleId) } : {}), ...(p.renew ? { renew: true } : {}), ...(club.seasonWeeks ? { until: first + (club.seasonWeeks - 1) * 7 * MS_DAY, seasonFrom: first } : {}), ...(fee > 0 ? { paid: fee } : {}) };
     membershipsOf(person).push(m);
-    scheduleNext(s, person, club, m, s.now);
+    scheduleNext(s, person, club, m, first - 1);
     return { paid: fee, first };
   });
 
@@ -358,7 +504,7 @@ export function registerClubs(sim: Simulation): void {
     const club = clubById(String(p?.clubId));
     if (!m || !club) throw new CommandError('You aren’t in it.');
     const at = Number(p.at);
-    if (!meetingsAhead(club, s.now, 4, m.until).includes(at)) throw new CommandError('That isn’t one of its next meetings.');
+    if (!aheadFor(club, m, s.now).includes(at)) throw new CommandError('That isn’t one of its next meetings.');
     m.rsvp = { ...(m.rsvp ?? {}), [String(at)]: p.going ? 'going' : 'not' };
     reschedule(s, person, club, m);
     return { at };
@@ -394,6 +540,7 @@ export function registerClubs(sim: Simulation): void {
     const at = meetingFor(club, s.now);
     if (at - s.now > SET_OUT_HOURS * 3_600_000) throw new CommandError('It isn’t meeting now.');
     if (m.until !== undefined && at > m.until) throw new CommandError('Its season is over.');
+    if (m.seasonFrom !== undefined && at < m.seasonFrom) throw new CommandError('Its season hasn’t started.');
     if ((m.log ?? []).some((l) => l.at === at && l.what === 'went')) throw new CommandError('That meeting’s been and gone.');
     const off = canceledFor(s, club, at);
     if (off) throw new CommandError(off);
@@ -429,15 +576,22 @@ export function registerClubs(sim: Simulation): void {
     if (!m || !club) throw new CommandError('You aren’t in it.');
     if (!club.seasonWeeks || m.until === undefined) throw new CommandError('It doesn’t run by the season.');
     const fee = joinFee(s, club);
-    if (fee > 0 && !payFromBank(s, person, fee, `${club.name}, a season renewed`, 'personal')) throw new CommandError('The bank can’t pay the season’s fee.');
-    m.until += club.seasonWeeks * 7 * MS_DAY;
-    return { paid: fee, until: m.until };
+    if (!paySeason(s, person, club, fee, `${club.name}, a season renewed`)) throw new CommandError('There isn’t enough in the bank for the season’s fee.');
+    newSeason(club, m, fee);
+    return { paid: fee, until: m.until! };
   });
 
-  sim.onCommand<{ clubId: string }, { left: true }>('club.leave', (p, { sim: s }) => {
-    if (!membershipsOf(s.player).some((m) => m.clubId === p?.clubId)) throw new CommandError('You aren’t in it.');
-    leave(s, s.player, String(p.clubId));
-    return { left: true };
+  // Leaving: what the provider's own terms give back of a season paid ahead, as money or a credit with it (from 2026-10-05).
+  sim.onCommand<{ clubId: string }, { left: true; back: Money; credit: Money }>('club.leave', (p, { sim: s }) => {
+    const person = s.player;
+    const m = membershipsOf(person).find((x) => x.clubId === p?.clubId);
+    const club = clubById(String(p?.clubId));
+    if (!m || !club) throw new CommandError('You aren’t in it.');
+    const { back, credit, creditMonths } = leavingBack(s, club, m);
+    if (back > 0) refundToBank(s, person, back, `${club.name}, back on leaving`, 'personal');
+    if (credit > 0) (person.clubCredits ??= []).push({ provider: club.provider ?? club.id, amount: credit, from: club.name, ...(creditMonths ? { until: s.now + creditMonths * CREDIT_MONTH } : {}) });
+    leave(s, person, club.id);
+    return { left: true, back, credit };
   });
 
   // The moment to set out only stops the clock; going is the player's (`club.go`).
@@ -457,8 +611,9 @@ export function registerClubs(sim: Simulation): void {
     if (m.attending === item.at) {
       // Checked in by hand: the trip carries the session.
     } else if (canceledFor(s, club, item.at)) {
-      note(m, { at: item.at, what: 'canceled', note: 'A thunderstorm' });
-      if (mine && answer !== 'not') s.notify({ category: 'personal', title: 'Canceled', body: `${club.name} doesn't meet today: a thunderstorm.`, importance: 25, route: '/workspace/people' });
+      const remedy = calledOff(person, club, m);
+      note(m, { at: item.at, what: 'canceled', note: `A thunderstorm${remedy ? `: ${remedy}` : ''}` });
+      if (mine && answer !== 'not') s.notify({ category: 'personal', title: 'Canceled', body: `${club.name} doesn't meet today: a thunderstorm.${remedy ? ` ${remedy[0]!.toUpperCase()}${remedy.slice(1)}.` : ''}`, importance: 25, route: '/workspace/people' });
     } else if (answer === 'not') {
       note(m, { at: item.at, what: 'declined' });
     } else if (attendOf(m) === 'always') {
@@ -479,8 +634,10 @@ export function registerClubs(sim: Simulation): void {
     if (m.rsvp) { const { [String(at)]: _gone, ...rest } = m.rsvp; m.rsvp = rest; }
     if (m.attending !== at && !(m.log ?? []).some((l) => l.at === at)) {
       m.missed = (m.missed ?? 0) + 1;
-      note(m, { at, what: 'missed' });
-      if (person.id === s.universe.playerId && answer === 'going') s.notify({ category: 'personal', title: 'Missed', body: `You said you'd go to ${club.name} and didn't.${club.kind === 'lesson' ? ' The session isn’t made up.' : ''}`, importance: 35, route: '/workspace/people' });
+      // Made up where its terms make one up (Voice Academy NYC's one a course), a week added on (from 2026-10-05).
+      const madeUp = madeUpFor(club, m);
+      note(m, { at, what: 'missed', ...(madeUp ? { note: 'A make-up class added on' } : {}) });
+      if (person.id === s.universe.playerId && answer === 'going') s.notify({ category: 'personal', title: 'Missed', body: `You said you'd go to ${club.name} and didn't.${madeUp ? ' A make-up class is added on to the course.' : club.kind === 'lesson' ? ' The session isn’t made up.' : ''}`, importance: 35, route: '/workspace/people' });
     }
     // A season's last meeting: renewed or over.
     if (m.until !== undefined && at >= m.until && !seasonEnds(s, person, club, m, at)) return;
