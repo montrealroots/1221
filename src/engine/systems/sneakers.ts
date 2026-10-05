@@ -25,7 +25,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, dayHasCome, formatDay } from '../core/time';
+import { MS_DAY } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { GOAT_ASKS, SNEAKERS, SNEAKER_RETAIL, type Sneaker } from '../content/sneakers';
 import { inSaveMoney } from './banking';
@@ -43,19 +43,10 @@ export const US_SIZES = ['7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11',
 
 export const sneakerById = (styleCode: string): Sneaker | undefined => SNEAKERS.find((s) => s.styleCode === styleCode);
 
-/**
- * Whether a pair is out by now: offered from its release date, at retail and on GOAT alike (from 2026-10-05). A life
- * begins on 5 January 2026, and until then 26 of the 30 pairs, released later that year, were offered from its first
- * day. One whose date wasn't read is taken as out.
- */
-export const sneakerOut = (sim: Simulation, s: Sneaker): boolean => !s.released || dayHasCome(s.released, sim.now, sim.homeZone);
-
 export interface Offer { key: string; seller: string; condition: 'new' | 'used'; price: Money; shipping: Money | null; total: Money; sizes: readonly string[]; soldOut: boolean; basis: string }
 
 /** The offers for a pair where a person lives, cheapest first. */
 export function sneakerOffers(sim: Simulation, person: Person, styleCode: string): Offer[] {
-  const s = sneakerById(styleCode);
-  if (s && !sneakerOut(sim, s)) return [];
   const cityId = person.home?.cityId ?? person.currentLocationId;
   const market = marketOf(cityId);
   const out: Offer[] = [];
@@ -80,9 +71,7 @@ export function sneakerOffers(sim: Simulation, person: Person, styleCode: string
 
 /** Why a pair can't be bought so, or nothing. */
 export function sneakerRefusal(sim: Simulation, person: Person, styleCode: string, key: string, size: string): string | undefined {
-  const s = sneakerById(styleCode);
-  if (!s) return 'That isn’t a sneaker SLATE keeps.';
-  if (!sneakerOut(sim, s)) return `The ${s.name} isn’t out until ${formatDay(s.released!)}.`;
+  if (!sneakerById(styleCode)) return 'That isn’t a sneaker SLATE keeps.';
   if (!person.home || person.home.kind === 'sofa') return 'A pair needs a home to be sent to.';
   const offer = sneakerOffers(sim, person, styleCode).find((o) => o.key === key);
   if (!offer) return 'That offer isn’t open where you live.';

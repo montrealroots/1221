@@ -23,7 +23,6 @@ import { RATES_NOTE } from '@/engine/content/currency';
 import { HOUSING, costsAt, type Housing } from '@/engine/systems/household';
 import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { formatMoney } from '@/engine/core/money';
-import { SHORTCUTS, type Shortcut } from '@/engine/systems/automation';
 import { banksFor, startingBank } from '@/engine/systems/banking';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
@@ -193,7 +192,7 @@ export function CharacterCreation({
         {step === STEP['Dispositions & Traits'] && <PersonalityStep config={config} setConfig={setConfig} />}
         {step === STEP['Interests & Background'] && <PersonalStep config={config} set={set} setConfig={setConfig} />}
         {step === STEP['Starting Point'] && <StartingPointStep config={config} set={set} setConfig={setConfig} />}
-        {step === STEP.Review && <ReviewStep config={config} setConfig={setConfig} />}
+        {step === STEP.Review && <ReviewStep config={config} />}
 
         {issues.length > 0 && (
           <div className="callout callout-warning" style={{ marginTop: 'var(--s5)' }}>
@@ -1097,7 +1096,7 @@ function MonthByMonth({ config, set, cur }: { config: NewSaveConfig; set: Setter
   );
 }
 
-function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setConfig: (c: NewSaveConfig) => void }) {
+function ReviewStep({ config }: { config: NewSaveConfig }) {
   const city = CITIES.get(config.startLocationId);
   const birthplace = CITIES.get(config.homeRegionId);
   const age = ageAtStart(config);
@@ -1203,44 +1202,9 @@ function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setConfig: (
         )}
       </div>
 
-      <ShortcutsChoice config={config} setConfig={setConfig} />
-
       <div className="callout callout-accent">
         Once this save begins, the world starts running. Time passes and the calendar fills,
         whether you’re watching or not.
-      </div>
-    </div>
-  );
-}
-
-/**
- * The shortcuts the life begins with, the player's own choice (from
- * 2026-10-05): none ticked, so nothing in a day is done for them unless they
- * say so here or later on Routines. Until then every night fed, washed and
- * dressed a new life, unasked.
- */
-function ShortcutsChoice({ config, setConfig }: { config: NewSaveConfig; setConfig: (c: NewSaveConfig) => void }) {
-  const chosen = new Set(config.shortcuts ?? []);
-  const toggle = (key: Shortcut, on: boolean) => setConfig({ ...config, shortcuts: (Object.keys(SHORTCUTS) as Shortcut[]).filter((k) => (k === key ? on : chosen.has(k))) });
-  return (
-    <div className="card">
-      <div className="row-between" style={{ marginBottom: 'var(--s3)' }}>
-        <div className="eyebrow">Your Shortcuts</div>
-        <button type="button" className="btn btn-sm btn-ghost" onClick={() => setConfig({ ...config, shortcuts: chosen.size === Object.keys(SHORTCUTS).length ? [] : (Object.keys(SHORTCUTS) as Shortcut[]) })}>
-          {chosen.size === Object.keys(SHORTCUTS).length ? 'None Of Them' : 'All Of Them'}
-        </button>
-      </div>
-      <p className="small muted" style={{ marginTop: 0 }}>
-        Nothing in a day is done for you unless you tick it here, or later on Routines: eating, washing, dressing and
-        the chores are yours to do by hand. Each one ticked does it on its own, on the same rules as doing it yourself.
-      </p>
-      <div className="col gap-2">
-        {(Object.keys(SHORTCUTS) as Shortcut[]).map((key) => (
-          <label key={key} className="row gap-2 small" style={{ alignItems: 'flex-start' }}>
-            <input type="checkbox" checked={chosen.has(key)} onChange={(e) => toggle(key, e.target.checked)} style={{ marginTop: 3 }} />
-            <span><span className="strong">{SHORTCUTS[key].label}</span><span className="xs dim">{` · ${SHORTCUTS[key].does}`}</span></span>
-          </label>
-        ))}
       </div>
     </div>
   );

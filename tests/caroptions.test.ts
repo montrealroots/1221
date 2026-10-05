@@ -9,7 +9,7 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { documentsOf } from '@/engine/systems/documents';
-import { VEHICLE_MONTH_KIND, modelById, quote, sellRefusal, vehiclesOf } from '@/engine/systems/vehicles';
+import { modelById, quote, vehiclesOf } from '@/engine/systems/vehicles';
 import { optionsFor, optionsRefusal, orderWeeksOf } from '@/engine/systems/caroptions';
 import { tripRefusal } from '@/engine/systems/trips';
 
@@ -40,19 +40,6 @@ describe('a new car’s options', () => {
     expect(optionsRefusal(m, ['nonsense'], 0)).toBe('That isn’t one of its options.');
   });
 
-  it('charge a package\'s own parts once: what it includes isn\'t chosen beside it (from 2026-10-05)', () => {
-    const m = modelById('us-chevrolet-silverado')!;
-    const of = (code: string) => optionsFor(m.id).find((o) => o.name.includes(`(${code})`))!.key;
-    // GM's WT Value Package (PEB) includes the Trailering Package (Z82): until 2026-10-05 both were paid for.
-    expect(optionsRefusal(m, [of('PEB'), of('Z82')], 0)).toMatch(/^The WT Value Package \(PEB\).* includes the Trailering Package \(Z82\) already\.$/);
-    expect(optionsRefusal(m, [of('PEB')], 0)).toBeUndefined();
-    expect(optionsRefusal(m, [of('Z82')], 0)).toBeUndefined();
-    // A "Requires" line is what a package needs, not what it holds.
-    const ca = modelById('ca-chevrolet-silverado')!;
-    const caOf = (code: string) => optionsFor(ca.id).find((o) => o.name.includes(`(${code})`))!.key;
-    expect(optionsRefusal(ca, [caOf('PQA'), caOf('PCV')], 0)).toBeUndefined();
-  });
-
   it('make a factory order, the buyer’s to drive only once it comes after the dealer’s published weeks', () => {
     const sim = life('us-ny-newyork', 'opts-order');
     const pack = optionsFor(F150).find((o) => o.category === 'package' && o.price > 0)!;
@@ -68,42 +55,6 @@ describe('a new car’s options', () => {
     expect(v.km ?? 0).toBe(0);
     sim.advanceTo(v.deliveredAt! + MS_DAY);
     expect(tripRefusal(sim, sim.player, 'car', v.id)).toBeUndefined();
-  });
-
-  it('on order, is billed from when it comes, and a car traded in for it is driven till then (from 2026-10-05)', () => {
-    const sim = life('us-ny-newyork', 'opts-trade');
-    const old = sim.must<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId: F150 } }).vehicleId;
-    const pack = optionsFor(F150).find((o) => o.category === 'package' && o.price > 0)!;
-    const r = sim.must<{ vehicleId: string; deliveredAt: number }>({ kind: 'vehicle.buy', payload: { modelId: F150, options: [pack.key], tradeIn: old } });
-    const mine = vehiclesOf(sim.player);
-    const was = mine.find((v) => v.id === old)!;
-    const ordered = mine.find((v) => v.id === r.vehicleId)!;
-    // Its first month a month after it comes, not after the order (until then a financed order paid from day 30).
-    const months = sim.universe.scheduled.filter((i) => i.status === 'pending' && i.kind === VEHICLE_MONTH_KIND && i.payload.vehicleId === ordered.id);
-    expect(months.map((i) => i.at)).toEqual([r.deliveredAt + 30 * MS_DAY]);
-    // And its registration's year from then, as a car from stock has its year from the day it's driven away.
-    expect(ordered.registrationDue - r.deliveredAt).toBe(was.registrationDue - was.boughtAt);
-    // The old car is still theirs to drive, promised to the dealer, and can't be sold or traded again meanwhile.
-    expect(was.soldAt).toBeUndefined();
-    expect(tripRefusal(sim, sim.player, 'car', was.id)).toBeUndefined();
-    expect(sellRefusal(sim, sim.player, was.id)).toBe('It’s promised to the dealer in trade for the car on order.');
-    expect(sellRefusal(sim, sim.player, ordered.id)).toBe('It hasn’t come yet: a car on order is sold once it’s yours.');
-    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: F150, tradeIn: was.id } }).error).toBe('That car is promised in trade already.');
-    // It comes: the new car theirs, the old one the dealer's.
-    sim.advanceTo(r.deliveredAt + MS_DAY);
-    expect(was.soldAt).toBe(r.deliveredAt);
-    expect(was.tradedFor).toBeUndefined();
-    expect(tripRefusal(sim, sim.player, 'car', ordered.id)).toBeUndefined();
-    expect(sim.universe.notifications.some((n) => n.title === 'Your New Car Has Come')).toBe(true);
-  });
-
-  it('is bought where they live, and a trade-in is driven to the dealer there (from 2026-10-05)', () => {
-    const sim = life('us-ny-newyork', 'opts-where');
-    const old = sim.must<{ vehicleId: string }>({ kind: 'vehicle.buy', payload: { modelId: F150 } }).vehicleId;
-    vehiclesOf(sim.player).find((v) => v.id === old)!.at = 'us-ct-newhaven';
-    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: F150, tradeIn: old } }).error).toBe('The car you’d trade is in New Haven: it’s traded in where the dealer is.');
-    sim.player.currentLocationId = 'uk-eng-london';
-    expect(sim.execute({ kind: 'vehicle.buy', payload: { modelId: F150 } }).error).toBe('A car is bought where you live: you’d need to be in New York.');
   });
 
   it('as it comes, or in a paint at no charge, is bought from stock and driven away', () => {

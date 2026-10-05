@@ -504,8 +504,8 @@ export interface Tenancy {
 
 export interface OwnedHome {
   id: string;
-  /** Each spare bedroom's use chosen: storage, kept for guests, or kept spare (`systems/rooms.ts`, from 2026-10-04). */
-  roomUses?: Record<string, 'storage' | 'spare' | 'guest'>;
+  /** Each spare bedroom's use chosen: storage, or kept spare (`systems/rooms.ts`, from 2026-10-04). */
+  roomUses?: Record<string, 'storage' | 'spare'>;
   /** What's growing in its bed and greenhouse (`systems/garden.ts`, from 2026-10-04). */
   garden?: Partial<Record<import('./garden').Plot, import('./garden').Planting>>;
   /** Its lawn, where it has a yard (`systems/lawns.ts`, from 2026-10-02). */
@@ -557,8 +557,6 @@ export interface OwnedHome {
   /** Appliances fitted, and when (`systems/appliances.ts`); the laundry it had before a washer was. */
   appliances?: Partial<Record<import('../content/appliances').ApplianceKind, Instant>>;
   laundryBefore?: 'building' | 'none';
-  /** The model fitted, by kind, where one was chosen by make and model (from 2026-10-04): its product's id (`systems/machines.ts`). */
-  models?: Partial<Record<import('./machines').MachineKind, string>>;
   /** A levy the builder was spared on the promise of living in it, owed if it's sold or let before `until` (`systems/construction.ts`). */
   clawback?: { until: Instant; amount: Money; memo: string };
   /** Listed for sale: the day it closes, and the rented home somebody living in it moves into. */

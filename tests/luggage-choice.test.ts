@@ -7,7 +7,7 @@
  * shortcuts it had.
  */
 import { describe, expect, it } from 'vitest';
-import { DAILY_SHORTCUTS, EVERY_SHORTCUT } from '@/engine/systems/automation';
+import { EVERY_SHORTCUT } from '@/engine/systems/automation';
 import { loadSave, quickSave } from '@/engine';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
@@ -19,10 +19,9 @@ import { garmentsOf } from '@/engine/systems/wardrobe';
 const life = (seed: string) => quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed);
 
 describe('packing by choice', () => {
-  it('a new life has no packing shortcut on, and an empty bag goes empty', () => {
+  it('a new life has no shortcut on, and an empty bag goes empty', () => {
     const sim = life('lc-empty');
-    // A test's life has the day's own four on and nothing else (from 2026-10-05); a life the game makes has none.
-    expect(Object.keys(sim.player.automation!).sort()).toEqual([...DAILY_SHORTCUTS].sort());
+    expect(sim.player.automation).toEqual({});
     moveTo(sim, sim.player, 'us-ca-losangeles');
     const bag = suitcaseOf(sim.player)!;
     expect(bag.at.kind).toBe('person');

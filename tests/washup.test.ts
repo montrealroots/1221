@@ -29,7 +29,7 @@ describe('the dishes', () => {
   it('go in the sink by the day without a dishwasher on a busy day, three at the most, and a free day washes them up', () => {
     const sim = life('us-ny-newyork', 'wash-pile');
     // A free day washes up only where that's the shortcut chosen (from 2026-10-03).
-    sim.player.automation = { ...sim.player.automation, washUp: true };
+    sim.player.automation = { washUp: true };
     handWash(sim);
     const l = livingOf(sim.player);
     for (let d = 0; d < 4; d += 1) { busy(sim, d); sim.advanceBy(MS_DAY); }

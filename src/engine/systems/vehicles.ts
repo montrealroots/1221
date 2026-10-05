@@ -71,8 +71,6 @@ export const VEHICLE_MONTH_KIND = 'vehicle.month';
  */
 export const VEHICLE_DAY_KIND = 'vehicle.day';
 export const VEHICLE_RENEWAL_KIND = 'vehicle.renewal';
-/** A factory order come: the car is the buyer's, and a car traded in for it goes to the dealer (from 2026-10-05). */
-export const VEHICLE_DELIVERED_KIND = 'vehicle.delivered';
 
 /** Liters per 100 km for a motorcycle or scooter whose maker publishes none: the mean of the catalog's that do (from 2026-09-30). */
 export const BIKE_UNRATED_PER100 = (() => { const rated = BIKE_MODELS.filter((m) => m.per100km !== null).map((m) => m.per100km!); return rated.reduce((a, x) => a + x, 0) / rated.length; })();
@@ -146,8 +144,6 @@ export interface OwnedVehicle {
   /** The factory options it was built with, and when a factory order comes; until then it isn't the buyer's to drive (`systems/caroptions.ts`, from 2026-10-02). */
   options?: string[];
   deliveredAt?: Instant;
-  /** The car on order it's promised to the dealer for, in trade, until that one comes (from 2026-10-05). */
-  tradedFor?: string;
   /** How full its tank or battery is, 0 to 1 (`systems/fueltank.ts`, from 2026-10-02); an older save's is full. */
   fuelLevel?: number;
   /** Who fills it as the month's driving goes (`systems/fueltank.ts`, from 2026-10-03); none kept before, filled as it went. */
@@ -548,9 +544,6 @@ export function sellRefusal(sim: Simulation, person: Person, vehicleId: string):
   if (v.repossessed) return 'The lender has it: redeem it, or it’s sold for the loan.';
   if (stolenNow(v, sim.now)) return 'It’s been stolen.';
   if (v.lease) return 'A leased car is the lessor’s to sell: at the lease’s end it’s returned or bought out.';
-  // A car on order isn't the buyer's to sell until it comes, and one promised in trade is the dealer's then (from 2026-10-05).
-  if (v.deliveredAt !== undefined && v.deliveredAt > sim.now) return 'It hasn’t come yet: a car on order is sold once it’s yours.';
-  if (v.tradedFor) return 'It’s promised to the dealer in trade for the car on order.';
   return undefined;
 }
 
@@ -690,8 +683,6 @@ export const glazed = (v: OwnedVehicle): boolean => { const m = modelById(v.mode
 export function buyRefusal(sim: Simulation, person: Person, modelId: string, opts: { age?: number; financed?: boolean; coverage?: OwnedVehicle['coverage']; options?: readonly string[] }): string | undefined {
   const model = modelById(modelId);
   if (!model) return 'SLATE doesn’t sell that car.';
-  // Bought from a dealer or seller where they live, and they're there (from 2026-10-05: until then one was bought from London for New York).
-  if (person.currentLocationId !== homeOf(person)) return `A car is bought where you live: you’d need to be in ${CITIES.get(homeOf(person))?.name ?? 'your town'}.`;
   const bad = optionsRefusal(model, opts.options ?? [], opts.age ?? 0);
   if (bad) return bad;
   const q = quote(model, homeOf(person), sim.now, { ...opts, person });
@@ -732,12 +723,6 @@ export function registerVehicles(sim: Simulation): void {
     if (p?.tradeIn && !old) throw new CommandError('That isn’t a car you own.');
     if (old?.repossessed) throw new CommandError('The lender has that car.');
     if (old?.lease) throw new CommandError('A leased car is the lessor’s: it’s returned or bought out at the lease’s end, not traded.');
-    // Driven to the dealer: in its town, not stolen or at the garage, and not promised already (from 2026-10-05: until then
-    // a car left in New Haven was traded in at a New York dealer).
-    if (old && (old.at ?? old.cityId) !== cityId) throw new CommandError(`The car you’d trade is in ${CITIES.get(old.at ?? old.cityId)?.name ?? 'another town'}: it’s traded in where the dealer is.`);
-    if (old && stolenNow(old, s.now)) throw new CommandError('That car’s been stolen.');
-    if (old && inShopNow(old, s.now)) throw new CommandError('That car is at the garage.');
-    if (old?.tradedFor) throw new CommandError('That car is promised in trade already.');
     const trade = old ? tradeInFor(s, cityId, old) : undefined;
     const listing = age > 0 ? listingFor(s, person, model.id, age) : undefined;
     const q = quote(model, cityId, s.now, { age, financed, person, options, ...(trade ? { tradeIn: trade } : {}), ...(listing?.seller === 'private' ? { privateSeller: true } : {}) }) as Quote;
@@ -759,11 +744,7 @@ export function registerVehicles(sim: Simulation): void {
     }
     // Built to order: its options kept, and the car the buyer's once it comes.
     if (options.length) v.options = options;
-    if (optionsQuote(model, options).factory) {
-      v.deliveredAt = s.now + orderWeeksOf(model)!.weeks * 7 * MS_DAY;
-      // Registered when it comes (from 2026-10-05: until then its year ran from the order).
-      v.registrationDue += v.deliveredAt - s.now;
-    }
+    if (optionsQuote(model, options).factory) v.deliveredAt = s.now + orderWeeksOf(model)!.weeks * 7 * MS_DAY;
     if (financed) {
       const months = Math.max(12, Math.min(84, Math.round(Number(p?.months ?? 60))));
       const apr = loanRate(j, person.credit?.score ?? 0, age > 0)!;
@@ -771,26 +752,19 @@ export function registerVehicles(sim: Simulation): void {
       s.post({ memo: `A car loan, ${model.make} ${model.model}`, category: 'vehicle', postings: [{ accountId: s.nominalAccount('expense', 'Vehicles').id, amount: lent }, { accountId: s.nominalAccount('liability_other', 'Car Loans').id, amount: -lent }] });
     }
     if (old && trade) {
-      // The old car to the dealer: its loan paid off, its value the credit spent on this one. On a factory order it's
-      // driven until the new one comes and handed over then (from 2026-10-05: until then it went at the order, and the
-      // buyer was left with neither for the order's weeks).
+      // The old car to the dealer: its loan paid off, its value the credit spent on this one.
       const value = inSave(s, trade.value, q.currency);
       const payoff = old.loan?.owed ?? 0;
       s.post({ memo: `Traded in the ${trade.label}`, category: 'vehicle', postings: [{ accountId: s.nominalAccount('liability_other', 'Car Loans').id, amount: payoff }, { accountId: s.nominalAccount('income', 'Car Sold').id, amount: -value }, { accountId: s.nominalAccount('expense', 'Vehicles').id, amount: value - payoff }] });
+      old.soldAt = s.now;
       delete old.loan;
-      if (v.deliveredAt !== undefined) old.tradedFor = id;
-      else {
-        old.soldAt = s.now;
-        for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.vehicleId === old.id) s.timeline.cancel(item.id, s.now);
-      }
+      for (const item of s.universe.scheduled) if (item.status === 'pending' && item.payload.vehicleId === old.id) s.timeline.cancel(item.id, s.now);
     }
     // A used car comes with the fault it has, at the AA's seven in ten (`usedFault`, from 2026-10-02).
     const hidden = usedFault(s, person, model.id, age, cityId, s.now);
     if (hidden) v.fault = hidden;
     vehiclesOf(person).push(v);
-    // Its months, insurance and loan payments from when it comes (from 2026-10-05: a financed order paid from day 30 of a 91-day wait).
-    s.schedule({ at: (v.deliveredAt ?? s.now) + 30 * MS_DAY, kind: VEHICLE_MONTH_KIND, label: 'The Car’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
-    if (v.deliveredAt !== undefined) s.schedule({ at: v.deliveredAt, kind: VEHICLE_DELIVERED_KIND, label: 'A New Car Comes', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id, ...(old && trade ? { tradeIn: old.id } : {}) } });
+    s.schedule({ at: s.now + 30 * MS_DAY, kind: VEHICLE_MONTH_KIND, label: 'The Car’s Month', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
     if (fillingOf(v) === 'self' && capacityOf(model)) startDays(s, person, v);
     if (registers(model, j)) s.schedule({ at: v.registrationDue, kind: VEHICLE_RENEWAL_KIND, label: 'Registration Renewal', category: 'home', priority: 30, payload: { personId: person.id, vehicleId: id } });
     return { vehicleId: id, paid: down, ...(v.loan ? { monthly: v.loan.monthly } : {}), ...(v.deliveredAt ? { deliveredAt: v.deliveredAt } : {}) };
@@ -829,21 +803,6 @@ export function registerVehicles(sim: Simulation): void {
   registerCarSale(sim);
 
   // A day's everyday driving from the tank, for a car you fill yourself: errands that day taken off it, low said once, dry said once.
-  // A factory order comes: the car the buyer's, said so, and a car promised in trade handed to the dealer.
-  sim.onSchedule(VEHICLE_DELIVERED_KIND, (item, s) => {
-    const person = s.universe.people[String(item.payload.personId)];
-    const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;
-    if (!person || !v || v.soldAt !== undefined) return;
-    const m = modelById(v.modelId)!;
-    const old = item.payload.tradeIn ? vehiclesOf(person).find((x) => x.id === item.payload.tradeIn && x.soldAt === undefined && x.tradedFor === v.id) : undefined;
-    if (old) {
-      old.soldAt = s.now;
-      delete old.tradedFor;
-      for (const one of s.universe.scheduled) if (one.status === 'pending' && one.payload.vehicleId === old.id) s.timeline.cancel(one.id, s.now);
-    }
-    const was = old ? modelById(old.modelId) : undefined;
-    if (person.id === s.universe.playerId) s.notify({ category: 'home', title: 'Your New Car Has Come', body: `The ${m.make} ${m.model} you ordered is yours to drive${v.seller ? `, from ${v.seller}` : ''}.${was ? ` The ${was.make} ${was.model} went to the dealer in trade.` : ''}`, importance: 50, route: '/workspace/vehicles' });
-  });
   sim.onSchedule(VEHICLE_DAY_KIND, (item, s) => {
     const person = s.universe.people[String(item.payload.personId)];
     const v = person ? vehiclesOf(person).find((x) => x.id === item.payload.vehicleId) : undefined;

@@ -97,8 +97,7 @@ export function toiletryCatalog(sim: Simulation, cityId: string): CatalogEntry<T
   const chains = chainsHere(cityId);
   return TOILETRIES.filter((t) => chains.has(t.chain)).map((t) => ({
     id: t.id, label: t.name, value: t, basis: 'Shelf Price, Tax In', price: toiletryPrice(sim, cityId, t), priceKind: 'advertised' as const,
-    // Its brand where its name states one (from 2026-10-04), found by it in the list's Brand filter.
-    facets: { kind: KIND_LABEL[t.kind] ?? 'Other', chain: GROCERY_CHAINS.find((c) => c.id === t.chain)?.name ?? t.chain, ...(t.brand ? { brand: t.brand } : {}) },
+    facets: { kind: KIND_LABEL[t.kind] ?? 'Other', chain: GROCERY_CHAINS.find((c) => c.id === t.chain)?.name ?? t.chain },
   }));
 }
 
@@ -227,17 +226,6 @@ export function dishSoapFor(sim: Simulation, person: Person, sinkfuls: number, u
   return take(sim, person, ['dish-soap'], sinkfuls * DISH_SOAP_ML);
 }
 
-/**
- * The tablets for so many days' dishes run by hand (from 2026-10-05): a day's
- * share of the machine's cycles a day of dishes, as its own daily run takes.
- * Only asked where `use` is false.
- */
-export function dishwasherTabletsFor(sim: Simulation, person: Person, days: number, use = true): boolean {
-  if (!keepsCleaning(person)) return true;
-  if (!use) return toHand(sim, person, 'dishwasher-detergent').reduce((n, i) => n + i.supply.left, 0) + 1e-9 >= days * DISHWASHER_CYCLES_A_DAY;
-  return take(sim, person, ['dishwasher-detergent'], days * DISHWASHER_CYCLES_A_DAY);
-}
-
 /** A day's share of a dishwasher's cycles, its tablets used; false where there are none, and the dishes are done by hand. */
 export function dishwasherRuns(sim: Simulation, person: Person): boolean {
   if (!keepsCleaning(person)) return true;
@@ -314,11 +302,10 @@ export function shortfallBuy(sim: Simulation, person: Person, kind: string): { t
  * tidying's spray, the washing-up's dish soap, the washing's detergent.
  */
 export const USED_BY: Readonly<Partial<Record<string, readonly (readonly string[])[]>>> = {
-  wash: [['body-wash', 'soap'], ['shampoo'], ['toothpaste'], ['deodorant']],
+  wash: [['body-wash', 'soap'], ['shampoo']],
   bathe: [['body-wash', 'soap'], ['shampoo']],
   tidy: [['all-purpose-cleaner']],
   washup: [['dish-soap']],
-  dishwasher: [['dishwasher-detergent']],
   laundry: [['laundry-detergent']],
 };
 

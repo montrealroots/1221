@@ -7,37 +7,22 @@
  * trade-in values ("up to", Apple's only figure); out-of-warranty screen and
  * battery prices; and the makers' protection plans. Mexico's Pixel prices
  * are launch prices from the press, Google's Mexican store having none, and
- * say so. From 2026-10-05 it reads research-phones2.json beside it: the other
- * makers' phones on their own stores. Run: node tools/build-phones.mjs
+ * say so. Run: node tools/build-phones.mjs
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 
 // Names one plain space apart: the sources mix in non-breaking spaces, which never match a plain one.
-const read = (f) => JSON.parse(readFileSync(f, 'utf8').replaceAll(String.fromCharCode(160), ' '));
-const r = read('docs/research/world/research-phones.json');
-// From 2026-10-05, the other makers' own stores (`research-phones2.json`): their phones only, no plans, trade-ins,
-// repairs or cover read for them, so those say the maker publishes none.
-const more = read('docs/research/world/research-phones2.json');
-// A "+" is a model of its own, read as "plus" (from 2026-10-05): until then the Galaxy S26+ and the S26 took one id,
-// the first read kept and the other dropped, so Mexico sold only the S26+ and Ireland only the S26.
-const slug = (s) => String(s).toLowerCase().replace(/\+/g, ' plus ').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const r = JSON.parse(readFileSync('docs/research/world/research-phones.json', 'utf8').replaceAll(String.fromCharCode(160), ' '));
+const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-const phones = [...r.devices, ...more.devices].filter((d) => typeof d.price === 'number').map((d) => ({
-  id: slug(`${d.market}-${d.maker}-${d.model}${d.storageGB === null ? '' : `-${d.storageGB}`}`), market: d.market, maker: d.maker, model: d.model, storageGB: d.storageGB,
+const phones = r.devices.filter((d) => typeof d.price === 'number').map((d) => ({
+  id: slug(`${d.market}-${d.maker}-${d.model}-${d.storageGB}`), market: d.market, maker: d.maker, model: d.model, storageGB: d.storageGB,
   colors: d.colors ?? [], price: d.price, currency: d.currency, taxIncluded: d.taxIncluded === true, released: d.releaseDate ?? null,
   press: /press|newspaper|launch/i.test(d.priceBasis ?? '') && d.maker === 'Google' && d.market === 'mx', source: d.source,
 }));
-// One phone read twice is one phone at its list price, the higher, in every color either read names: Samsung prices a
-// color on sale apart (Canada's Galaxy S26 at $1,249.99 in Silver Shadow, $1,399.99 in Pink Gold). Until 2026-10-05
-// the first read was kept, which there and in Mexico was the sale; and the Galaxy S26+ and S26 shared an id until "+"
-// was read, so one of the two was dropped in every market.
-const byId = new Map();
-for (const p of phones) {
-  const was = byId.get(p.id);
-  if (!was) { byId.set(p.id, p); continue; }
-  byId.set(p.id, { ...(p.price > was.price ? p : was), colors: [...new Set([...was.colors, ...p.colors])] });
-}
-const uniq = [...byId.values()];
+// The same id twice (a sale price listed beside the list price) keeps the first, the list price.
+const seen = new Set();
+const uniq = phones.filter((p) => (seen.has(p.id) ? false : (seen.add(p.id), true)));
 
 // True 0% plans only; a deferred-interest plan charges it all back if a month is missed, so it isn't one.
 const financing = r.makerFinancing.filter((f) => f.apr === 0 && !/deferred/i.test(`${f.name ?? ''} ${f.plan ?? ''}`)).map((f) => ({

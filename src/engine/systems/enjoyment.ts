@@ -52,7 +52,6 @@ const LOVED_IN: Record<LookAfter, readonly string[]> = {
   laundry: ['fashion'],
   tidy: ['design'],
   washup: [],
-  dishwasher: [],
   // A lawn is time outdoors, and a garden's (from 2026-10-02).
   mow: ['nature'],
   // A sauna is an hour to yourself's kind of time; none of the interests kept is a sauna's own (from 2026-10-04).

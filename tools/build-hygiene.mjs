@@ -3,14 +3,10 @@
 // chains, each at its shelf price as the chain's own feed listed it, and the
 // barbers and salons of the business's towns with their own price lists.
 import { readFileSync, writeFileSync } from 'node:fs';
-import { brandIndex } from './brands.mjs';
 
 const OUT = 'src/engine/content/hygiene.ts';
 const j = JSON.parse(readFileSync('docs/research/world/research-hygiene.json', 'utf8'));
 const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-
-// The brand each toiletry's own name states (`tools/brands.mjs`, from 2026-10-04), null where it names none.
-const BRANDS = brandIndex();
 
 const seen = new Set();
 const toiletries = j.products.filter((p) => typeof p.price === 'number' && p.price > 0).map((p) => {
@@ -19,7 +15,7 @@ const toiletries = j.products.filter((p) => typeof p.price === 'number' && p.pri
   seen.add(id);
   // Its stores are 'tesco-gb' and its research filed its toiletries as 'tesco': one chain, from 2026-10-02, until when
   // Tesco's toiletries were never in reach in London nor held to its hours. The ids keep 'tesco', as saves hold them.
-  return { id, chain: p.chain === 'tesco' ? 'tesco-gb' : p.chain, market: p.market, name: p.name, brand: BRANDS.get(`${p.chain}|${p.market}|${p.name}`) ?? null, kind: p.kind, sizeQty: p.sizeQty, sizeUnit: p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true };
+  return { id, chain: p.chain === 'tesco' ? 'tesco-gb' : p.chain, market: p.market, name: p.name, kind: p.kind, sizeQty: p.sizeQty, sizeUnit: p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true };
 });
 
 const CITY = {
@@ -45,10 +41,7 @@ const body = `/**
  */
 
 export interface Toiletry {
-  id: string; chain: string; market: string; name: string;
-  /** The brand its own name states (from 2026-10-04): a maker's, or the chain's own label; null where it names none. */
-  brand: string | null;
-  kind: string;
+  id: string; chain: string; market: string; name: string; kind: string;
   sizeQty: number; sizeUnit: 'g' | 'ml' | 'ct'; price: number; currency: string; taxIncluded: boolean;
   url: string | null; date: string | null; confirmed: boolean;
 }

@@ -21,7 +21,7 @@ import { CITIES } from '@/engine/content/geography';
 import { ENGRAVERS, JEWELERS, METAL_LABEL, PIECE_LABEL, commissionMoney, commissionRefusal, commissionsOf, jewelersFor, type Metal, type PieceKind } from '@/engine/systems/commissions';
 import { cheapestPlanFor, finished, placeIn, programmeRefusal, programmesHere } from '@/engine/systems/programmes';
 import { consolesHere, consolesOwned, gamesHere, gamesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
-import { activationCost, batteryQuote, claimQuote, phoneById, phoneLabel, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
+import { activationCost, batteryQuote, claimQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { orderStage, ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
 import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
@@ -32,7 +32,7 @@ import { contactsOf } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
-import { ROOM_USE_LABEL, guestBedCost, roomList } from '@/engine/systems/rooms';
+import { ROOM_USE_LABEL, roomList } from '@/engine/systems/rooms';
 import { GROOMERS, certificatePrice, chipPrice, foodLeftG, groomDue, groomerPrice, litterLeftKg, petShop, petsOf, vetPrice } from '@/engine/systems/pets';
 import { PET_ENTRY } from '@/engine/content/petentry';
 import { livingIn } from '@/engine/systems/homes';
@@ -134,8 +134,8 @@ function PetCare() {
 /**
  * The home room by room (`roomList`, from 2026-10-04): each room's use, size,
  * whose and what's fixed in it, the furniture standing in it, a piece on the
- * floor put in a room that can take it, and a spare bedroom kept spare,
- * used for storage, or kept for guests with a bed of its own.
+ * floor put in a room that can take it, and a spare bedroom kept spare or
+ * used for storage.
  */
 function YourRooms() {
   const { sim, run, toast } = useGame();
@@ -146,11 +146,6 @@ function YourRooms() {
   if (!rooms.length || !home || person.currentLocationId !== person.home?.cityId) return null;
   const floor = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor' && (i.bulky || i.kind.startsWith('ikea:')));
   const owns = Boolean(livingIn(person));
-  // What making a room up for guests takes: its own bed where none stands in it (`guestBedCost`).
-  const guestHint = (roomId: string) => {
-    const cost = guestBedCost(sim, person, roomId);
-    return cost === undefined ? 'SLATE keeps no price for a bed where you live yet.' : cost === 0 ? 'A bed stands in it; a friend from another town can come and stay.' : `A bed delivered for it, ${formatMoney(cost, saveCurrency(sim.universe), { cents: false })}; then a friend from another town can come and stay.`;
-  };
   return (
     <Panel title="Your Rooms" subtitle="Each room, what it’s used for and what stands in it">
       <div className="table-scroll">
@@ -168,12 +163,8 @@ function YourRooms() {
                   <td>{r.label}{r.access === 'shared' ? <div className="xs dim">Shared</div> : null}{r.fixtures.length ? <div className="xs dim">{r.fixtures.join(', ')}</div> : null}</td>
                   <td className="small">
                     {r.use ? ROOM_USE_LABEL[r.use] : r.kind === 'bedroom' ? 'A Flatmate’s Room' : '—'}
-                    {owns && (r.use === 'spare' || r.use === 'storage' || r.use === 'guest') && (
-                      <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
-                        {r.use !== 'storage' && <Gated feature="home.room_use" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.room_use', { roomId: r.id, use: 'storage' }).ok) toast('It’s a storage room now.', 'positive'); }}>Use It For Storage</Gated>}
-                        {r.use !== 'spare' && <Gated feature="home.room_use" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.room_use', { roomId: r.id, use: 'spare' }).ok) toast('It’s kept spare now.', 'positive'); }}>Keep It Spare</Gated>}
-                        {r.use !== 'guest' && <Gated feature="home.room_use" className="btn btn-sm btn-ghost" title={guestHint(r.id)} onClick={() => { if (run('home.room_use', { roomId: r.id, use: 'guest' }).ok) toast('It’s made up for guests.', 'positive'); }}>Keep It For Guests</Gated>}
-                      </div>
+                    {owns && (r.use === 'spare' || r.use === 'storage') && (
+                      <div><Gated feature="home.room_use" className="btn btn-sm btn-ghost" onClick={() => { if (run('home.room_use', { roomId: r.id, use: r.use === 'spare' ? 'storage' : 'spare' }).ok) toast(r.use === 'spare' ? 'It’s a storage room now.' : 'It’s kept spare now.', 'positive'); }}>{r.use === 'spare' ? 'Use It For Storage' : 'Keep It Spare'}</Gated></div>
                     )}
                   </td>
                   <td className="num small">{`${r.m2.toFixed(1)} m²`}</td>
@@ -823,16 +814,12 @@ function Phones() {
   const battery = useFeature('phone.battery');
   const protect = useFeature('phone.protect');
   const claim = useFeature('phone.claim');
-  const all = phonesOnSale(sim, person);
+  const list = phonesOnSale(sim, person);
   const owned = phonesOf(person);
-  const [maker, setMaker] = useState('');
   const [phoneId, setPhoneId] = useState('');
   const [color, setColor] = useState('');
   const [how, setHow] = useState('');
   const [tradeIn, setTradeIn] = useState('');
-  // One maker's phones at a time where there are several (from 2026-10-05, when the makers became 30 and more).
-  const makers = [...new Set(all.map((p) => p.maker))].sort((a, b) => a.localeCompare(b));
-  const list = maker ? all.filter((p) => p.maker === maker) : all;
   const chosen = phoneById(phoneId) ?? list[0];
   if (!chosen && owned.length === 0) return null;
   const plans = chosen ? plansFor(chosen).flatMap((x) => x.months.map((m) => ({ key: `${x.plan.name}|${m}`, name: x.plan.name, months: m }))) : [];
@@ -841,8 +828,9 @@ function Phones() {
   const q = order ? phoneQuote(sim, person, order) : undefined;
   const no = order ? phoneRefusal(sim, person, order) : 'Choose a phone.';
   const line = activationCost(sim, person);
+  const size = (gb: number) => (gb >= 1024 ? `${gb / 1024} TB` : `${gb} GB`);
   return (
-    <Panel title="Phones" subtitle={chosen ? `${all.length} from ${makers.length} makers’ own stores where you live, unlocked, cheapest first` : undefined}>
+    <Panel title="Phones" subtitle={chosen ? `${list.length} on their makers’ own stores where you live, unlocked, cheapest first` : undefined}>
       <div className="col gap-3">
         {owned.map((o) => {
           const p = phoneById(o.device.phoneId);
@@ -866,19 +854,10 @@ function Phones() {
         })}
         {chosen && order && (
           <div className="field-row field-row-tight">
-            {makers.length > 1 && (
-              <div className="field">
-                <label htmlFor="phone-maker">Maker</label>
-                <select id="phone-maker" value={maker} onChange={(e) => { setMaker(e.target.value); setPhoneId(''); setHow(''); }}>
-                  <option value="">Any</option>
-                  {makers.map((m) => <option key={m} value={m}>{m}</option>)}
-                </select>
-              </div>
-            )}
             <div className="field">
               <label htmlFor="phone-pick">Phone</label>
               <select id="phone-pick" value={chosen.id} onChange={(e) => { setPhoneId(e.target.value); setHow(''); }}>
-                {list.map((p) => <option key={p.id} value={p.id}>{`${phoneLabel(p)}, ${money(phonePrice(sim, person, p))}${p.press ? ', A Press Price' : ''}`}</option>)}
+                {list.map((p) => <option key={p.id} value={p.id}>{`${p.maker} ${p.model}, ${size(p.storageGB)}, ${money(phonePrice(sim, person, p))}${p.press ? ', A Press Price' : ''}`}</option>)}
               </select>
             </div>
             {chosen.colors.length > 1 && (

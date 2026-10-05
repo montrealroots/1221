@@ -1,39 +1,29 @@
 // Builds src/engine/content/groceries.ts from docs/research/world/research-groceries.json
-// (and research-groceries2.json and research-groceries3.json where they're there) and the recipes in
+// (and research-groceries2.json where it's there) and the recipes in
 // research-cooking-alcohol.json (Stage 4 of docs/BACKLOG.md, from 2026-10-01).
 //
 // Each product keeps its chain, exact name, size, regular price, where it's
 // kept and how long it keeps there (USDA FoodKeeper, from purchase). The food
 // it is, which a recipe's ingredient asks for, is read from its name: the last
-// food word in it, as a garment is read (tools/build-clothing.mjs), or in a
-// Spanish name the first (\`productKey\`). A recipe
+// food word in it, as a garment is read (tools/build-clothing.mjs). A recipe
 // keeps its source, servings, minutes and appliances, and each ingredient as
 // the food it is and how much; seasonings, spices, stock, water and the like
 // are taken as in the cupboard. An ingredient no shop here stocks is kept by
 // name, and the recipe isn't cooked where it can't be bought.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { brandIndex } from './brands.mjs';
 
 const OUT = 'src/engine/content/groceries.ts';
 const read = (f) => JSON.parse(readFileSync(`docs/research/world/${f}`, 'utf8'));
 const g = read('research-groceries.json');
 const more = existsSync('docs/research/world/research-groceries2.json') ? read('research-groceries2.json') : { products: [] };
-// The foods a town's recipes asked for that its grocer had none of in those two, read from the chains' own feeds on
-// 2026-10-04, each with the brand its name states.
-const third = existsSync('docs/research/world/research-groceries3.json') ? read('research-groceries3.json') : { products: [] };
-// Coffee, tea, juice, bottled water, beer and wine from the same feeds, a shelf's makers before its sizes (2026-10-04).
-const drinks = existsSync('docs/research/world/research-groceries-drinks.json') ? read('research-groceries-drinks.json') : { products: [] };
 const recipesIn = read('research-cooking-alcohol.json').recipes;
 
-/**
- * Food words, the key each names. Order doesn't matter: the last word in a name wins, the longer where two end together;
- * in a Spanish name the first, the longer where two start together.
- */
+/** Food words, the key each names. Order doesn't matter: the last word in a name wins, the longer where two end together. */
 const KEYS = [
   ['peanut-butter', /peanut butter|crema de cacahuate|crema mister cacahuate/],
-  ['pasta-sauce', /pasta sauce|marinara|bolognese sauce|passata|tomato sauce|salsa para pasta/],
+  ['pasta-sauce', /pasta sauce|marinara|bolognese sauce|passata|tomato sauce/],
   ['tomatoes-canned', /(canned|tinned|chopped|diced) tomato(es)?|tomato pur[eé]e|tomato paste|tomate molido|pur[eé] de tomate|tomates? (en lata|picad)/],
-  ['tortilla', /tortillas?|masa harina|harina de ma[ií]z|wraps?\b|maseca/],
+  ['tortilla', /tortillas?|masa harina|wraps?\b|maseca/],
   ['milk', /\bmilk\b|buttermilk|leche/],
   ['eggs', /\beggs?\b|huevos?/],
   ['bread', /\bbread\b|\bloaf\b|\bbap\b|bread rolls?|breadcrumbs|baguette|\bpan\b|bolillo/],
@@ -52,7 +42,7 @@ const KEYS = [
   ['sausage', /sausages?|salchichas?|chorizo/],
   ['fish', /fish|tilapia|\bcod\b|salmon|haddock|pescado|filete/],
   ['tuna', /tuna|at[uú]n/],
-  ['beans', /beans|chick ?peas|garbanzo|lentils|lentejas?|dhal|dal\b|frijol(es)?/],
+  ['beans', /beans|chickpeas|garbanzo|lentils|dhal|dal\b|frijol(es)?/],
   ['onion', /onions?|cebollas?/],
   ['garlic', /garlic|\bajo\b/],
   ['potato', /potato(es)?|\bpapas?\b/],
@@ -63,33 +53,31 @@ const KEYS = [
   ['orange', /\boranges?\b|naranjas?/],
   ['lemon', /\blemons?\b|\blimes?\b|lim[oó]n(es)?/],
   ['tomato', /tomato(es)?|jitomates?|tomates?/],
-  ['mushroom', /mushrooms?|champi[nñ][oó]n(es)?/],
+  ['mushroom', /mushrooms?|champi[nñ]on(es)?/],
   ['leek', /\bleeks?\b|poro/],
   ['celery', /celery|apio/],
-  ['courgette', /courgettes?|zucchini|calabacitas?|(?:green|italian) squash|calabaza italiana/],
-  ['pepper', /(bell|sweet|red|green|yellow|mixed) peppers?|peppers?\b(?! \()|pimientos?/],
-  ['chilli', /chill?i(es)?\b(?! powder)|jalape[nñ]o peppers?|jalape[nñ]os?|serrano/],
+  ['courgette', /courgettes?|zucchini|calabacitas?/],
+  ['pepper', /(bell|sweet|red|green|yellow) peppers?|peppers?\b(?! \()|pimientos?/],
+  ['chilli', /chill?i(es)?\b(?! powder)|jalape[nñ]os?|serrano/],
   ['spinach', /spinach|espinacas?/],
   ['broccoli', /broccoli|br[oó]coli/],
   ['cabbage', /cabbage|col\b|repollo/],
   ['cucumber', /cucumbers?|pepinos?/],
   ['squash', /squash|butternut|calabaza/],
-  ['chayote', /chayotes?(?: squash)?/],
-  ['swede', /\bswedes?\b|rutabagas?/],
+  ['chayote', /chayotes?/],
+  ['swede', /\bswede\b|rutabaga/],
   ['turnip', /turnips?|nabo/],
-  ['berries', /berries|berry (?:medley|blend|mix)|blueberr|raspberr|strawberr|cherries|summer fruits|frutos rojos|fresas?/],
-  ['dried-fruit', /sultanas|raisins|dried (cranberries|apricots)|ready to eat apricots|pasas/],
+  ['berries', /berries|blueberr|raspberr|strawberr|cherries|summer fruits|frutos rojos|fresas?/],
+  ['dried-fruit', /sultanas|raisins|dried (cranberries|apricots)|pasas/],
   ['frozen-veg', /\bpeas\b|mixed vegetables|sweetcorn|sweet corn|\bcorn\b(?! flakes)|green beans|frozen vegetables|vegetable blend|peas (&|and) carrots|verduras|elote|ma[ií]z/],
   ['oats', /\boats\b|porridge|oatmeal|avena/],
   ['cereal', /cereal|corn ?flakes/],
-  ['coffee', /coffee(?: whole)? beans?|coffee|caf[eé]/],
-  ['tea', /\btea\b|(?<![a-z])t[eé](?![a-z])/],
+  ['coffee', /coffee|caf[eé]/],
+  ['tea', /\btea\b/],
   ['juice', /juice|jugo/],
   ['water', /\bwater\b|\bagua\b/],
   ['beer', /\bbeer\b|lager|cerveza|\bale\b/],
   ['wine', /\bwine\b|merlot|cabernet|pinot|\bvino\b|shiraz|sauvignon/],
-  ['aubergine', /aubergines?|eggplants?|berenjenas?/],
-  ['pineapple', /pineapples?|\bpi[nñ]a\b/],
   ['pizza', /pizza/],
   ['ready-meal', /lasagn[ae]|cottage pie|macaroni (&|and) cheese|hot pockets|shepherd'?s pie|enchiladas/],
 ];
@@ -97,58 +85,19 @@ const KEYS = [
 /** Taken as in the cupboard: seasonings, spices, stock, water and the like. */
 const CUPBOARD = /^(salt|pepper)\b|\b(black|white|ground) pepper|salt and pepper|herbs?|oregano|cumin|chill?i powder|cayenne|turmeric|garam|paprika|cinnamon|\bginger\b|coriander|cilantro|parsley|chives|thyme|bay leaf|epazote|vanilla|stock|broth|bouillon|gravy|water\b|baking soda|mustard|soy sauce|curry paste|pesto|honey|mayonnaise|cornflour|wheat (germ|bran)|zest/;
 
-/**
- * A name without what it's packed or flavored with, or made without: "tuna in spring water" is tuna, "soft cheese
- * with garlic and herbs" cheese, Hunt's "Tomato Paste - No Salt Added" tomato paste (salt until 2026-10-04). A bag
- * to steam in is the pack: Price Rite's "Steam in Bag Mixed Vegetables" were a steam and no food until then.
- */
-const headOf = (text) => String(text).toLowerCase().replace(/\bno [a-z ]+ added\b/g, '').replace(/steam[- ]in[- ]bag/g, 'steam bag').split(/ (?:in|with|en|con) /)[0];
+/** A name without what it's packed or flavored with: "tuna in spring water" is tuna, "soft cheese with garlic and herbs" cheese. */
+const headOf = (text) => String(text).toLowerCase().split(/ (?:in|with|en|con) /)[0];
 
-function keyOf(text, first = false) {
+function keyOf(text) {
   const t = headOf(text);
   let best;
   for (const [key, re] of KEYS) {
     for (const m of t.matchAll(new RegExp(re.source, 'g'))) {
       const end = m.index + m[0].length;
-      const better = first ? !best || m.index < best.start || (m.index === best.start && m[0].length > best.len) : !best || end > best.end || (end === best.end && m[0].length > best.len);
-      if (better) best = { start: m.index, end, len: m[0].length, key };
+      if (!best || end > best.end || (end === best.end && m[0].length > best.len)) best = { end, len: m[0].length, key };
     }
   }
   return best?.key;
-}
-
-/** Made from a food, and not it: a stock, a bouillon, a soup. A recipe's stock is the cupboard's, so no recipe buys one. */
-const MADE = /stock|bouillon|broth|consom[eé]|\bsoups?\b|\bsopas?\b|\bcaldos?\b|gravy/;
-const SAUCE = new RegExp(KEYS.find(([key]) => key === 'pasta-sauce')[1].source);
-/** A juice is the juice, whatever fruit it's of: Smart & Final's "First Street Juice, Apple" isn't an apple. A Spanish name's first word already says so. */
-const JUICE = /\bjuice\b/;
-/** A fresh food off the pantry shelf is kept another way: a tomato there is canned, cranberries dried. */
-const PRESERVED = { tomato: 'tomatoes-canned', berries: 'dried-fruit' };
-
-/**
- * The food a product is (from 2026-10-04). A Mexican product's name is
- * Spanish, read from its first food word, as Chedraui names a product noun
- * first: "Jugo Jumex Naranja" is juice and "Naranja de Jugo" an orange,
- * "Tortilla de Maíz" a tortilla. A stock, a bouillon or a soup is no food a
- * recipe buys; what the shop sells as a ready meal is one; a sauce is the
- * sauce and a juice the juice whatever's in it; a fresh food off the pantry shelf is its canned or
- * dried kind. Until then every name was read from its last food word and none
- * of this held, and a recipe short of chicken bought stock cubes for it,
- * cheapest in five of the eight towns: Herb-Ox's, Knorr's, Tesco's, Chedraui's
- * consommé, and in Dublin Oxo's beef for the mince. Once the cubes were gone,
- * London's chicken was Tesco's Chicken Tikka Masala and Vancouver's a butter
- * chicken entrée. Los Angeles' garlic was First Street's pasta sauce, its bell
- * pepper a jalapeño and its blueberries Ocean Spray's dried cranberries;
- * Toronto's peppers were Prego's sauce, Vancouver's peas Italissima's chick
- * peas, Mexico City's beef mince Nissin's instant soup and its peas a pack of
- * tortillas.
- */
-function productKey(p) {
-  const head = headOf(p.name);
-  const key = MADE.test(head) ? undefined : SAUCE.test(head) ? 'pasta-sauce' : JUICE.test(head) ? 'juice' : keyOf(p.name, p.market === 'MX');
-  // Sold as a ready meal, it's eaten as one, a pizza pocket as a pizza: Tesco's Chicken Tikka Masala isn't the chicken.
-  if (p.category === 'ready-meal') return key === 'pizza' ? key : 'ready-meal';
-  return (p.category === 'pantry' && PRESERVED[key]) || key;
 }
 
 /** The FoodKeeper row for a food, by its key and category. */
@@ -179,24 +128,18 @@ function keepsFor(key, category, storage) {
   if (days !== undefined) return { keepsDays: days, keepsEstimated: false, keepsSource: row.source };
   // Sugar, salt, water, beer and wine keep: FoodKeeper gives them no limit.
   if (['sugar', 'salt', 'water', 'beer', 'wine'].includes(key)) return { keepsDays: null, keepsEstimated: false, keepsSource: 'Keeps indefinitely' };
-  // A ready meal kept in the cupboard is a dry one, a box of macaroni and cheese or an instant soup: a dry good's year,
-  // not a chilled meal's three days (until 2026-10-04 it went off in three).
-  const est = storage === 'freezer' ? ESTIMATE.frozen : storage === 'pantry' && category === 'ready-meal' ? ESTIMATE.pantry : ESTIMATE[category] ?? 7;
+  const est = storage === 'freezer' ? ESTIMATE.frozen : ESTIMATE[category] ?? 7;
   return { keepsDays: est, keepsEstimated: true, keepsSource: 'SLATE’s estimate' };
 }
 
 const storageOf = (p, key) => p.storage ?? (p.category === 'frozen' ? 'freezer' : ['dairy', 'meat', 'seafood', 'ready-meal'].includes(p.category) ? 'fridge' : 'pantry');
 const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 
-// The brand each product's own name states (`tools/brands.mjs`, from 2026-10-04), null where it names none: fresh
-// produce, mostly.
-const BRANDS = brandIndex();
-
 const seen = new Set();
 const products = [];
-for (const p of [...g.products, ...(more.products ?? []), ...(third.products ?? []), ...(drinks.products ?? [])]) {
+for (const p of [...g.products, ...(more.products ?? [])]) {
   if (typeof p.price !== 'number' || !(p.price > 0)) continue;
-  const key = productKey(p);
+  const key = keyOf(p.name) ?? (p.category === 'ready-meal' ? 'ready-meal' : undefined);
   if (!key) continue;
   let id = `${p.chain}-${slug(p.name)}`.slice(0, 80);
   for (let n = 2; seen.has(id); n += 1) id = `${p.chain}-${slug(p.name)}`.slice(0, 76) + `-${n}`;
@@ -205,7 +148,7 @@ for (const p of [...g.products, ...(more.products ?? []), ...(third.products ?? 
   // A dry pint of cherry or grape tomatoes is two cups, 298 g (USDA FoodData Central: 149 g a cup).
   const pint = p.sizeUnit === 'ct' && p.sizeQty === 1 && /\bpint\b/i.test(`${p.size} ${p.name}`) && p.category === 'produce';
   products.push({
-    id, chain: p.chain, market: p.market, name: p.name, brand: BRANDS.has(`${p.chain}|${p.market}|${p.name}`) ? BRANDS.get(`${p.chain}|${p.market}|${p.name}`) : p.brand ?? null, category: p.category, food: key,
+    id, chain: p.chain, market: p.market, name: p.name, category: p.category, food: key,
     sizeQty: pint ? 298 : p.sizeQty, sizeUnit: pint ? 'g' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true,
     storage, ...keepsFor(key, p.category, storage),
     url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true,
@@ -256,10 +199,7 @@ export type Storage = 'pantry' | 'fridge' | 'freezer';
 export interface GroceryChain { id: string; name: string; market: string; storesIn: readonly string[]; nearestTo: readonly string[] }
 
 export interface GroceryProduct {
-  id: string; chain: string; market: string; name: string;
-  /** The brand its own name states (from 2026-10-04): a maker's, or the chain's own label; null where it names none. */
-  brand: string | null;
-  category: string; food: string;
+  id: string; chain: string; market: string; name: string; category: string; food: string;
   sizeQty: number; sizeUnit: FoodUnit; price: number; currency: string; taxIncluded: boolean;
   storage: Storage; keepsDays: number | null; keepsEstimated: boolean; keepsSource: string;
   url: string | null; date: string | null; confirmed: boolean;

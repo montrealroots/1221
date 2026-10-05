@@ -237,19 +237,17 @@ describe('returns', () => {
 
 describe('the dry cleaner', () => {
   it('takes what’s dry-clean-only at its prices, keeps it its days, and it’s collected in the town', () => {
-    // In Toronto, where Simons sells a whole suit: America's stores sell theirs as a jacket and trousers apart, and until
-    // 2026-10-05 this bought a pair of New York's suit trousers that the catalog had filed as a whole suit.
-    const sim = life('dryclean', 'ca-on-toronto');
-    const suit = CLOTHING_PRODUCTS.find((p) => p.market === 'CA' && p.slot === 'suit' && p.sizes.length > 0 && retailerById(p.retailer)!.storesIn.includes('ca-on-toronto'))!;
+    const sim = life('dryclean');
+    const suit = CLOTHING_PRODUCTS.find((p) => p.market === 'US' && p.slot === 'suit' && retailerById(p.retailer)!.storesIn.includes('us-ny-newyork'))!;
     sim.must({ kind: 'clothes.buy', payload: { productId: suit.id, how: 'store', size: suit.sizes[0], color: suit.colors[0] } });
     const item = purchaseItems(sim.player, sim.player.clothesBought![0]!.id)[0]! as Parameters<typeof dryCleanPrice>[2];
     item.garment.care = 'dry-clean';
     item.garment.dirty = true;
-    // Exclusive Dry Cleaners, Toronto: C$12.99 a two-piece suit.
-    expect(dryCleanPrice(sim, 'ca-on-toronto', item)).toEqual({ price: 1299, estimate: false });
+    // Morris Cleaners, New York: $19 a two-piece suit.
+    expect(dryCleanPrice(sim, 'us-ny-newyork', item)).toEqual({ price: 1900, estimate: false });
     const before = bank(sim);
     sim.must({ kind: 'clothes.dry_clean', payload: {} });
-    expect(before - bank(sim)).toBe(1299);
+    expect(before - bank(sim)).toBe(1900);
     expect(reachable(sim, sim.player, item.at)).toBe(false);
     expect(sim.execute({ kind: 'clothes.collect', payload: {} }).ok).toBe(false);
     sim.advanceBy(2 * MS_DAY + 60_000);
@@ -345,13 +343,10 @@ describe('what each rule refuses', () => {
     sim.must({ kind: 'clothes.buy', payload: { productId: dressP.id, how: 'store', size: dressP.sizes[0], color: dressP.colors[0] } });
     const dress = purchaseItems(sim.player, sim.player.clothesBought!.at(-1)!.id)[0]!;
     expect(sim.execute({ kind: 'clothes.dress', payload: { itemIds: [dress.id, top.id] } }).error).toBe('A dress is worn on its own.');
-    // A whole suit is Toronto's (Simons'): New York's stores sell a suit's jacket and trousers apart.
-    const there = life('rule-outfit-suit', 'ca-on-toronto');
-    const shirt = garmentsOf(there.player).find((x) => x.garment.slot === 'top')!;
-    const suitP = CLOTHING_PRODUCTS.find((p) => p.market === 'CA' && p.slot === 'suit' && p.sizes.length > 0 && retailerById(p.retailer)!.storesIn.includes('ca-on-toronto'))!;
-    there.must({ kind: 'clothes.buy', payload: { productId: suitP.id, how: 'store', size: suitP.sizes[0], color: suitP.colors[0] } });
-    const whole = purchaseItems(there.player, there.player.clothesBought!.at(-1)!.id)[0]!;
-    expect(there.execute({ kind: 'clothes.dress', payload: { itemIds: [whole.id, shirt.id] } }).error).toBe('A suit is worn on its own, with what goes under it.');
+    const suitP = CLOTHING_PRODUCTS.find((p) => p.market === 'US' && p.slot === 'suit' && retailerById(p.retailer)!.storesIn.includes('us-ny-newyork'))!;
+    sim.must({ kind: 'clothes.buy', payload: { productId: suitP.id, how: 'store', size: suitP.sizes[0], color: suitP.colors[0] } });
+    const whole = purchaseItems(sim.player, sim.player.clothesBought!.at(-1)!.id)[0]!;
+    expect(sim.execute({ kind: 'clothes.dress', payload: { itemIds: [whole.id, top.id] } }).error).toBe('A suit is worn on its own, with what goes under it.');
   });
 });
 
@@ -369,7 +364,7 @@ describe('the day’s turn of the wardrobe', () => {
   it('does the washing on a free day when it’s down to the last outfit', () => {
     const sim = life('turn-wash');
     // The free day's washing is a shortcut a person chooses (from 2026-10-03).
-    sim.player.automation = { ...sim.player.automation, laundry: true };
+    sim.player.automation = { laundry: true };
     let worn = 0;
     while (cleanOutfits(sim, sim.player) > 1 && worn < 30) { wearTheDay(sim, sim.player); worn += 1; }
     expect(washableDirty(sim, sim.player).length).toBeGreaterThan(0);
@@ -429,114 +424,5 @@ describe('who it’s cut for', () => {
     const sim = life('cut-any');
     const womens = clothingCatalog(sim, 'us-ny-newyork').find((e) => e.facets?.cut === 'Women' && retailerById(e.value.retailer)?.storesIn.includes('us-ny-newyork'))!;
     expect(buyRefusal(sim.player, { productId: womens.value.id, how: 'store', size: womens.value.sizes[0], color: womens.value.colors[0] })).toBeUndefined();
-  });
-});
-
-describe('what a garment is', () => {
-  const worn = (id: string) => { const p = CLOTHING_PRODUCTS.find((x) => x.id === id)!; return [p.slot, p.kind, p.subtype]; };
-
-  it('is a swimsuit by any of its names, and the trade’s swimwear where its retailer files it so', () => {
-    // Until 2026-10-04 M&S's Tie Detail swimsuit was an accessory for its tie, and Old Navy's swim trunks underwear.
-    expect(worn('gb-marks-and-spencer-maternity-ruched-tie-detail-v-neck-swimsuit')).toEqual(['active', 'swimsuit', 'swimwear']);
-    expect(worn('us-old-navy-swim-trunks-7-inch-inseam')).toEqual(['active', 'swimsuit', 'swimwear']);
-    // A swim top filed with the bras is a swimsuit, if not the trade's swimwear there.
-    expect(worn('us-old-navy-ribbed-bra-bikini-swim-top')).toEqual(['active', 'swimsuit', null]);
-  });
-
-  it('takes its subcategory’s noun where its name has none, and a bikini alone is knickers', () => {
-    // Filed under underwear in "underwear and socks", it was a pair of socks.
-    expect(worn('us-everlane-the-invisible-bikini').slice(0, 2)).toEqual(['underwear', 'underwear']);
-    expect(worn('mx-cya-mx-bikini-calzon-estampado').slice(0, 2)).toEqual(['underwear', 'underwear']);
-    expect(worn('mx-cya-mx-brasier-color-negro').slice(0, 2)).toEqual(['underwear', 'bra']);
-    expect(worn('mx-zara-mx-pack-de-2-calcetines-rib-fruit-of-the-loomTM').slice(0, 2)).toEqual(['socks', 'socks']);
-  });
-
-  it('is worn as what its retailer files it under, whatever its name', () => {
-    // Swim shorts named without a swim word are a swimsuit, filed with the swimwear: Boardies' LUCKY DIP SHORTS were trousers.
-    expect(worn('us-boardies-lucky-dip-shorts')).toEqual(['active', 'swimsuit', 'swimwear']);
-    expect(worn('gb-orlebar-brown-bulldog-drawcord')).toEqual(['active', 'swimsuit', 'swimwear']);
-    // A shoe named a High Top was a top; sunglasses named a Feral Hula Hooper, an anklet, and a watch named for its Polo
-    // Club were shirts.
-    expect(worn('us-vessi-mens-alta-high-top').slice(0, 2)).toEqual(['shoes', 'shoes']);
-    expect(worn('us-goodr-feral-hula-hooper').slice(0, 2)).toEqual(['accessory', 'accessory']);
-    expect(worn('us-gorjana-capri-anklet').slice(0, 2)).toEqual(['accessory', 'accessory']);
-    expect(worn('mx-coppel-mx-reloj-york-team-polo-club-para-hombre-dnh-2110-con-1-accesorio').slice(0, 2)).toEqual(['accessory', 'accessory']);
-    // A shaper bodysuit filed as underwear is underwear, not a shirt.
-    expect(worn('us-knix-customizable-shaper-thong-bodysuit').slice(0, 2)).toEqual(['underwear', 'underwear']);
-    // The trade's own kinds, worn their way: shapewear under the rest, tights as hosiery, merino bottoms as a base layer.
-    expect(worn('us-commando-classic-control-short')).toEqual(['underwear', 'underwear', 'shapewear']);
-    expect(worn('us-sheertex-backseam-sheer-rip-resist-tights')).toEqual(['socks', 'socks', 'hosiery']);
-    expect(worn('us-minus33-heavyweight-wool-zip-off-bottoms-34-length-100-merino-wool')).toEqual(['base', 'thermal-bottom', 'thermals']);
-    // Thermal trousers are a bottom; they were worn as a top.
-    expect(worn('gb-heat-holders-mens-thermal-trousers').slice(0, 2)).toEqual(['base', 'thermal-bottom']);
-  });
-
-  it('is a sweater where it’s a knitted vest, an undershirt in Britain and Ireland, and a waistcoat in America', () => {
-    expect(worn('gb-marks-and-spencer-brushed-argyle-knitted-vest-with-mohair').slice(0, 2)).toEqual(['top', 'sweater']);
-    expect(worn('ie-inis-meain-cashmere-breidin-vest').slice(0, 2)).toEqual(['top', 'sweater']);
-  });
-
-  it('is a culture’s garment by its own name, worn as what it is', () => {
-    // From 2026-10-05, one garment each word alone decides: until then each named no garment the list knew and was a
-    // shirt, a kurta pajama was sleepwear and a camisa de chino a pair of chinos.
-    const decided: readonly [string, string, string][] = [
-      ['us-haute-hijab-bouquet-of-roses-hijab-set', 'accessory', 'accessory'],
-      ['us-haute-hijab-classic-underscarf-ivory-original-mesh-back', 'accessory', 'accessory'],
-      ['us-johnstons-of-elgin-caledonia-tartan-cashmere-stole', 'accessory', 'accessory'],
-      ['ie-inis-meain-fern-leaf-shawl', 'accessory', 'accessory'],
-      ['mx-pineda-covalin-mascada-caritas-sonrientes-veracruz-54-cm', 'accessory', 'accessory'],
-      ['mx-pineda-covalin-bufanda-diagonal-cactaceas-jardin-botanico', 'accessory', 'accessory'],
-      ['mx-liverpool-mx-chal-estampado-grafico', 'accessory', 'accessory'],
-      ['mx-pineda-covalin-gorra-bordada-30-aniversario', 'accessory', 'accessory'],
-      ['us-lemlem-dana-bandana', 'accessory', 'accessory'],
-      ['gb-campbells-of-beauly-brown-musquash-sporran', 'accessory', 'accessory'],
-      ['ie-the-sweater-shop-aran-cable-handwarmers-natural-white', 'accessory', 'accessory'],
-      ['us-manitobah-bear-mukluk', 'shoes', 'shoes'],
-      ['us-manitobah-cottager', 'shoes', 'shoes'],
-      ['us-barong-warehouse-camisa-de-chino-long-sleeve', 'top', 'shirt'],
-      ['us-libas-libas-amethyst-purple-floral-net-saree', 'dress', 'dress'],
-      ['us-kalki-fashion-beige-and-green-dual-dupatta-embroidered-bridal-lehenga-for-pheras', 'dress', 'dress'],
-      ['us-kalki-fashion-aqua-blue-chanderi-anarkali-set-with-brocade-detail', 'dress', 'dress'],
-      ['us-aab-a-line-abaya-nude', 'dress', 'dress'],
-      ['us-aab-jilbab-black-prayer-outfit', 'dress', 'dress'],
-      ['us-zuri-kikoi-kaftan-one-size', 'dress', 'dress'],
-      ['us-lemlem-gasira-v-neck-caftan', 'dress', 'dress'],
-      ['us-two-palms-2009c-muumuu-hibiscus-panel-white', 'dress', 'dress'],
-      ['mx-lydia-lavin-vestido-campesino-bordado-sin-mangas', 'dress', 'dress'],
-      ['us-kalki-fashion-mauve-embroidered-sharara-suit-set', 'dress', 'dress'],
-      ['us-kalki-fashion-black-kurta-set-with-zari-and-sequins-work', 'dress', 'dress'],
-      ['us-eastessence-aabid-modest-muslim-mens-embroidered-kurta-pajama-set', 'dress', 'dress'],
-      ['us-aab-coffee-skirt-top-co-ord-set', 'dress', 'dress'],
-      ['mx-lydia-lavin-falda-blondas', 'bottom', 'skirt'],
-      ['us-tori-richard-coral-bloom-pareo', 'bottom', 'skirt'],
-      ['us-kealopiko-iliahi-pareu-all-colors', 'bottom', 'skirt'],
-      ['us-lemlem-lema-sarong', 'bottom', 'skirt'],
-      ['gb-gulahmed-beige-lawn-embroidered-shalwar-iusttr-42011', 'bottom', 'trousers'],
-      ['mx-carla-fernandez-poncho-bang-bang', 'outer', 'coat'],
-      ['gb-melin-tregwynt-knot-garden-cape', 'outer', 'coat'],
-      ['us-diarrablu-awa-kimono-toya-teal', 'outer', 'coat'],
-      ['us-eastessence-contrast-detail-shrug', 'outer', 'coat'],
-      ['mx-carla-fernandez-abrigo-lazarus-calado', 'outer', 'coat'],
-      ['mx-carla-fernandez-saco-magma-mapa', 'outer', 'coat'],
-      ['mx-carla-fernandez-chamarra-diego-concreto', 'outer', 'coat'],
-      ['us-mestiza-new-york-bimini-ruffle-tie-cover-up', 'outer', 'coat'],
-    ];
-    for (const [id, slot, kind] of decided) expect([id, ...worn(id)]).toEqual([id, slot, kind, 'cultural']);
-    // A shawl collar is a coat's, not a shawl.
-    expect(worn('us-eloquii-shawl-collar-fringe-duster').slice(0, 2)).toEqual(['outer', 'coat']);
-  });
-
-  it('is named by the part of its name that names it: not its cloth, its color, nor what comes with it', () => {
-    // Denim is a cloth: each was a pair of jeans until 2026-10-05.
-    expect(worn('us-madewell-the-elena-midi-dress-in-airy-denim').slice(0, 2)).toEqual(['dress', 'dress']);
-    expect(worn('us-madewell-shirt-jacket-in-airy-denim').slice(0, 2)).toEqual(['outer', 'coat']);
-    // A name's first part with a garment in it, at a dash or a pipe: Saint James's cardigan was a cap for its color.
-    expect(worn('us-saint-james-barcares-quarter-zip-knit-cardigan-for-men-100-wool-dark-blue-multi-cap').slice(0, 2)).toEqual(['top', 'sweater']);
-    // What comes with a garment isn't it, a cloth after its "in" isn't either; a dress named after its "with" is the
-    // garment, and so is one named after its "in".
-    expect(worn('gb-zara-long-satin-dress-with-tie-detail').slice(0, 2)).toEqual(['dress', 'dress']);
-    expect(worn('us-motherhood-maternity-long-sleeve-bodycon-maxi-dress-in-lurex-knit').slice(0, 2)).toEqual(['dress', 'dress']);
-    expect(worn('gb-asos-arrange-curve-hybrid-knit-bodice-with-draped-satin-skirt-midaxi-dress-in-chocolate').slice(0, 2)).toEqual(['dress', 'dress']);
-    expect(worn('gb-new-look-maternity-dark-brown-brushed-knit-set-in-sleeve-t-shirt').slice(0, 2)).toEqual(['top', 't-shirt']);
   });
 });

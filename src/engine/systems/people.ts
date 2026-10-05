@@ -15,8 +15,7 @@
  * **An invitation** is to a meal at a restaurant in their town, each paying
  * their own, or a visit to your home. Asked, they say yes or no, and why:
  * - a rival would rather not;
- * - they live in another town, unless asked home where a guest room is
- *   made up, when they come and stay the night (from 2026-10-04);
+ * - they live in another town;
  * - they don't come to the home of somebody they've spent fewer than
  *   Hall's fifty hours with;
  * - the hour is before ten or after ten at night;
@@ -63,7 +62,6 @@ import { spend } from './household';
 import { personalityOf } from './personality';
 import { homeById } from './homes';
 import { bedSleepsOne } from './furniture';
-import { guestRoom } from './rooms';
 import { incomeOf } from './marriage';
 import { atWork, atWorkReason } from './availability';
 import { childrenStay } from './support';
@@ -164,9 +162,7 @@ export function declines(person: Person, c: Contact, inv: Invitation, sim?: Simu
   // What they care about (`caresFor` in `systems/enjoyment.ts`, from 2026-10-03).
   if (sim && !caresFor(sim, person, c, inv.what)) return `${first} doesn’t much care for ${inv.what === 'play' ? 'games' : 'classes like that'}.`;
   const where = inv.what === 'meal' ? restaurantById(inv.restaurantId ?? '')?.cityId : inv.what === 'class' ? DROP_INS.find((d) => d.id === inv.classId)?.cityId : person.home?.cityId;
-  // A friend from another town asked home comes and stays the night where a guest room is made up (`guestRoom`, from
-  // 2026-10-04): one friend, so a gathering of several (`systems/hosting.ts`, which asks without the simulation) isn't put up.
-  if (where !== c.cityId && !(inv.what === 'visit' && sim && guestRoom(sim, person))) return `${first} lives in ${CITIES.require(c.cityId).name}.`;
+  if (where !== c.cityId) return `${first} lives in ${CITIES.require(c.cityId).name}.`;
   if ((inv.what === 'visit' || inv.what === 'play') && c.hours < HALL.casual) return `${first} doesn’t know you well enough yet to come to your home.`;
   const hour = zonedParts(inv.at, CITIES.require(c.cityId).timeZone).hour;
   if (hour < SOCIAL.notBefore) return `That’s too early for ${first}.`;

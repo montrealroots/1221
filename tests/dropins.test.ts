@@ -8,7 +8,6 @@ import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import { DROP_INS, DROP_IN_MINUTES } from '@/engine/content/dropins';
 import { dropInPrice } from '@/engine/systems/life';
-import { ceilingOf, evenCraft, focusOf, sessionGain } from '@/engine/systems/school';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { salesTaxRate } from '@/engine/content/tax';
 import { BODY } from '@/engine/content/body';
@@ -47,26 +46,6 @@ describe('a drop-in class', () => {
     yoga.must({ kind: 'class.take', payload: { classId: 'new-york-yoga' } });
     expect(yoga.player.wellbeing.fitness).toBeLessThanOrEqual(30);
     expect(yoga.player.wellbeing.stress).toBeLessThan(60);
-  });
-
-  it('grows an actor’s Dance by a session, a dance class only: yoga trains none of the craft (from 2026-10-05)', () => {
-    const dance = life('us-ny-newyork', 'dropin-craft');
-    dance.advanceBy(MS_DAY);
-    dance.player.craft = evenCraft(40);
-    const craft = dance.player.craft;
-    const before = { ...craft };
-    const gain = sessionGain(craft.dance, focusOf(dance.player), 1, ceilingOf(craft, 'dance'));
-    dance.must({ kind: 'class.take', payload: { classId: 'bdc-open-class' } });
-    expect(gain).toBeGreaterThan(0);
-    expect(craft.dance - before.dance).toBeCloseTo(gain, 9);
-    // Nothing else of the craft moves.
-    for (const k of Object.keys(before) as (keyof typeof before)[]) if (k !== 'dance') expect(craft[k]).toBe(before[k]);
-    const yoga = life('us-ny-newyork', 'dropin-yoga-craft');
-    yoga.advanceBy(MS_DAY);
-    yoga.player.craft = evenCraft(40);
-    const still = { ...yoga.player.craft! };
-    yoga.must({ kind: 'class.take', payload: { classId: 'new-york-yoga' } });
-    expect(yoga.player.craft).toEqual(still);
   });
 
   it('is taken in the studio’s town', () => {

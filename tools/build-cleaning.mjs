@@ -2,8 +2,7 @@
 // (the master plan's household supplies, from 2026-10-02): cleaning products at the grocery chains, each
 // at its regular shelf price as the chain's own feed listed it, and what each town charges a household to
 // take its rubbish away.
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { brandIndex } from './brands.mjs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const OUT = 'src/engine/content/cleaning.ts';
 const j = JSON.parse(readFileSync('docs/research/world/research-household-supplies.json', 'utf8'));
@@ -12,25 +11,15 @@ const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/
 // load the printed packs come to.
 const ML_A_LOAD = 32;
 
-// The brand each product's own name states (`tools/brands.mjs`, from 2026-10-04).
-const BRANDS = brandIndex();
-// The same feeds read again (from 2026-10-04, `research-household-supplies-more.json`), for more of each kind a shelf
-// carries: each product's brand the feed's where its own name states it (tests/brands.test.ts holds each brand to one
-// spelling across the lists). A product read both times is the first read's.
-const MORE = 'docs/research/world/research-household-supplies-more.json';
-const more = existsSync(MORE) ? JSON.parse(readFileSync(MORE, 'utf8')).supplies : [];
-const first = new Set(j.supplies.map((p) => `${p.chain}|${p.name}`));
-const read = [...j.supplies.map((p) => ({ ...p, brand: BRANDS.get(`${p.chain}|${p.market}|${p.name}`) ?? null })), ...more.filter((p) => !first.has(`${p.chain}|${p.name}`)).map((p) => ({ ...p, brand: p.brand ?? null, read: '2026-10-04' }))];
-
 const seen = new Set();
-const supplies = read.filter((p) => typeof p.price === 'number' && p.price > 0).map((p) => {
+const supplies = j.supplies.filter((p) => typeof p.price === 'number' && p.price > 0).map((p) => {
   let id = `${p.chain}-${slug(p.name)}`.slice(0, 80);
   for (let n = 2; seen.has(id); n += 1) id = `${p.chain}-${slug(p.name)}`.slice(0, 76) + `-${n}`;
   seen.add(id);
   // Detergents are counted in washes and cycles.
   const counted = p.kind === 'laundry-detergent' || p.kind === 'dishwasher-detergent';
   const sizeQty = counted ? (p.loads ?? (p.sizeUnit === 'ct' ? p.sizeQty : Math.round(p.sizeQty / ML_A_LOAD))) : p.sizeQty;
-  return { id, chain: p.chain, market: p.market, name: p.name, brand: p.brand, kind: p.kind, sizeQty, sizeUnit: counted ? 'ct' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.read ?? null, confirmed: p.confirmed === true };
+  return { id, chain: p.chain, market: p.market, name: p.name, kind: p.kind, sizeQty, sizeUnit: counted ? 'ct' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.read ?? null, confirmed: p.confirmed === true };
 });
 
 const waste = j.waste.map((w) => ({ cityId: w.cityId, collector: w.collector, currency: w.currency, basis: w.chargeBasis, source: w.source, confirmed: w.confirmed === true }));
@@ -38,9 +27,8 @@ const waste = j.waste.map((w) => ({ cityId: w.cityId, collector: w.collector, cu
 const body = `/**
  * SLATE — cleaning products and the rubbish collection (the master plan's
  * household supplies, from 2026-10-02), built by \`tools/build-cleaning.mjs\`
- * from \`docs/research/world/research-household-supplies.json\` and, from
- * 2026-10-04, \`research-household-supplies-more.json\`. Don't edit by hand;
- * rebuild it.
+ * from \`docs/research/world/research-household-supplies.json\`. Don't edit by
+ * hand; rebuild it.
  *
  * A product is a grocery chain's at its regular shelf price as its own feed
  * listed it (\`confirmed\`), or a price tracker's for Tesco. Detergents are

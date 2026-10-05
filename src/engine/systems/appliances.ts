@@ -35,10 +35,6 @@ import { CITIES } from '../content/geography';
 import { APPLIANCES, APPLIANCE_LABEL, APPLIANCE_LIFE, type ApplianceKind } from '../content/appliances';
 import type { Fixtures } from '../content/homes';
 import { homeById, type OwnedHome } from './homes';
-import { APPLIANCE_PRODUCTS } from '../content/appliancecatalog';
-import type { CatalogOffer, CatalogProduct } from '../content/products';
-import { salesTaxRate } from '../content/tax';
-import { isMachine, machineName, machineOffer, type MachineKind } from './machines';
 
 /** Of central air's cost, what an American house's value gains (Cost vs. Value 2025). */
 export const CENTRAL_AIR_RECOVERED = 0.721;
@@ -61,32 +57,6 @@ export function applianceCost(sim: Simulation, cityId: string, kind: ApplianceKi
   return item ? inSave(sim, Math.round((item.price + item.install) * 100), table!.currency) : undefined;
 }
 
-/** A model's price where a town is: the place's sales tax on a price before it (from 2026-10-04). */
-export function machinePrice(sim: Simulation, cityId: string, offer: CatalogOffer): Money {
-  const tax = offer.taxIncluded ? 0 : salesTaxRate(cityId, sim.now, 'goods');
-  return inSave(sim, Math.round(offer.price * (1 + tax) * 100), offer.currency);
-}
-
-/** The washing machines, dryers or dishwashers sold where a town is, by make and model, an offer each, cheapest first. */
-export function machineModels(sim: Simulation, cityId: string, kind?: MachineKind): { product: CatalogProduct; offer: CatalogOffer; price: Money }[] {
-  const market = CITIES.get(cityId)?.countryId;
-  return APPLIANCE_PRODUCTS.filter((p) => !kind || p.attrs.kind === kind)
-    .flatMap((product) => product.offers.filter((o) => o.market === market).map((offer) => ({ product, offer, price: machinePrice(sim, cityId, offer) })))
-    .sort((a, b) => a.price - b.price || a.product.id.localeCompare(b.product.id) || a.offer.id.localeCompare(b.offer.id));
-}
-
-/**
- * What fitting one costs, in the save's money, cents: a model chosen at its own price, or the kept price, and the
- * kept fitting. A model where no fitting is kept, as a dryer in Mexico, is plugged in by the buyer.
- */
-export function fitCost(sim: Simulation, cityId: string, kind: ApplianceKind, offerId?: string): Money | undefined {
-  if (offerId === undefined) return applianceCost(sim, cityId, kind);
-  const found = machineOffer(offerId);
-  if (!found) return undefined;
-  const table = appliancesIn(cityId);
-  return machinePrice(sim, cityId, found.offer) + (table?.items[kind] ? inSave(sim, Math.round(table.items[kind]!.install * 100), table.currency) : 0);
-}
-
 /** Whether a home has one now, by its fixtures. */
 export function hasAppliance(f: Fixtures, kind: ApplianceKind): boolean {
   if (kind === 'dishwasher') return f.dishwasher;
@@ -97,22 +67,15 @@ export function hasAppliance(f: Fixtures, kind: ApplianceKind): boolean {
 }
 
 /** Why one can't be fitted, or nothing. */
-export function fitRefusal(sim: Simulation, person: Person, owned: OwnedHome, kind: ApplianceKind, offerId?: string): string | undefined {
-  if (offerId !== undefined) {
-    // A model chosen by make and model (from 2026-10-04): one of this kind, sold where the home is.
-    const found = machineOffer(offerId);
-    if (!found || found.product.attrs.kind !== kind) return 'That isn’t on sale.';
-    if (found.offer.market !== CITIES.get(owned.cityId)?.countryId) return 'It’s sold in another country.';
-  } else {
-    const table = appliancesIn(owned.cityId);
-    if (!table) return 'SLATE keeps no appliance prices in this country yet.';
-    if (!table.items[kind]) return `No one publishes a price for ${APPLIANCE_LABEL[kind].toLowerCase()} here.`;
-  }
+export function fitRefusal(sim: Simulation, person: Person, owned: OwnedHome, kind: ApplianceKind): string | undefined {
+  const table = appliancesIn(owned.cityId);
+  if (!table) return 'SLATE keeps no appliance prices in this country yet.';
+  if (!table.items[kind]) return `No one publishes a price for ${APPLIANCE_LABEL[kind].toLowerCase()} here.`;
   const f = fixturesOf(sim, person, owned.cityId, owned.facts, owned.id);
   if (hasAppliance(f, kind)) return 'It has one.';
   if (kind === 'dryer' && !hasAppliance(f, 'washer')) return 'A dryer goes beside a washing machine.';
   if (kind === 'central-air' && !HOUSES.has(owned.facts.type)) return 'Central air is fitted to a house.';
-  const cost = fitCost(sim, owned.cityId, kind, offerId)!;
+  const cost = applianceCost(sim, owned.cityId, kind)!;
   if (inTheBank(sim, person) < cost) return `It costs ${formatMoney(cost, saveCurrency(sim.universe), { cents: false })}, fitted.`;
   return undefined;
 }
@@ -127,25 +90,21 @@ function change(f: Fixtures, kind: ApplianceKind, fitted: boolean, before: Fixtu
 }
 
 export function registerAppliances(sim: Simulation): void {
-  sim.onCommand<{ homeId: string; kind: ApplianceKind; offerId?: string }, { cost: Money; lastsTo: Instant }>('home.fit', (p, { sim: s }) => {
+  sim.onCommand<{ homeId: string; kind: ApplianceKind }, { cost: Money; lastsTo: Instant }>('home.fit', (p, { sim: s }) => {
     const person = s.player;
     const owned = homeById(person, String(p?.homeId));
     if (!owned) throw new CommandError('You don’t own that home.');
     const kind = p.kind;
     if (!(kind in APPLIANCE_LABEL)) throw new CommandError('No such appliance.');
-    const offerId = p.offerId === undefined ? undefined : String(p.offerId);
-    const no = fitRefusal(s, person, owned, kind, offerId);
+    const no = fitRefusal(s, person, owned, kind);
     if (no) throw new CommandError(no);
-    const cost = fitCost(s, owned.cityId, kind, offerId)!;
-    const model = offerId === undefined ? undefined : machineOffer(offerId);
-    if (!payFromBank(s, person, cost, `${model ? machineName(model.product, model.offer) : APPLIANCE_LABEL[kind]}, bought and fitted, ${owned.facts.address}`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
+    const cost = applianceCost(s, owned.cityId, kind)!;
+    if (!payFromBank(s, person, cost, `${APPLIANCE_LABEL[kind]}, bought and fitted, ${owned.facts.address}`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
     const f = fixturesOf(s, person, owned.cityId, owned.facts, owned.id);
     // A washer given out leaves the laundry as it was before one was fitted: the building's machines, or none.
     if (kind === 'washer') owned.laundryBefore = f.laundry === 'building' ? 'building' : 'none';
     owned.facts.fixtures = change(f, kind, true);
     (owned.appliances ??= {})[kind] = s.now;
-    // The model, where one was chosen: the month's bill reads its label's energy (`machineUsd`).
-    if (model && isMachine(kind)) (owned.models ??= {})[kind] = model.product.id;
     // Central air is the house's, and an American buyer pays for some of it (from 2026-10-01).
     if (kind === 'central-air' && CITIES.get(owned.cityId)?.countryId === 'us') owned.improvements.push({ projectId: 'central-air', at: s.now, value: Math.round(cost * CENTRAL_AIR_RECOVERED), cost });
     const lastsTo = s.now + APPLIANCE_LIFE[kind] * YEAR_MS;
@@ -161,7 +120,6 @@ export function registerAppliances(sim: Simulation): void {
     if (!person || !owned) return;
     owned.facts.fixtures = change(fixturesOf(s, person, owned.cityId, owned.facts, owned.id), kind, false, owned.laundryBefore ?? 'none');
     if (owned.appliances) delete owned.appliances[kind];
-    if (owned.models && isMachine(kind)) delete owned.models[kind];
     // Given out, it's worth nothing to a buyer.
     if (kind === 'central-air') owned.improvements = owned.improvements.filter((one) => one.projectId !== 'central-air');
     if (person.id === s.universe.playerId) s.notify({ category: 'home', title: `The ${APPLIANCE_LABEL[kind]} Gave Out`, body: `After ${APPLIANCE_LIFE[kind]} years, its published life, at ${owned.facts.address}. Another can be fitted on the Homes screen.`, importance: 50, route: '/workspace/homes' });

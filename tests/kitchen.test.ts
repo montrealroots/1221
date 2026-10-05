@@ -9,8 +9,8 @@ import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
-import { GROCERY_PRODUCTS, RECIPES } from '@/engine/content/groceries';
-import { COUNTS, amountIn, cookRefusal, gramsEach, groceryCatalog, kitchenMeal, shortfall, groceryPrice, groceryRefusal, productById, unitPrice } from '@/engine/systems/kitchen';
+import { RECIPES } from '@/engine/content/groceries';
+import { amountIn, cookRefusal, groceryCatalog, kitchenMeal, shortfall, groceryPrice, groceryRefusal, productById, unitPrice } from '@/engine/systems/kitchen';
 import { foodOf, mealsFromStock, mealsReady, throwOutSpoiled } from '@/engine/systems/pantry';
 import { buyTheDaysFood, canPay, foodOf as daysFoodCost, mealOf } from '@/engine/systems/household';
 import { bacAt } from '@/engine/systems/alcohol';
@@ -79,26 +79,7 @@ describe('cooking', () => {
     expect(amountIn({ name: 'tomatoes', food: 'tomato', quantity: 8, unit: 'ct' }, 'g', 1)).toBe(8 * 123);
     expect(amountIn({ name: 'eggs', food: 'eggs', quantity: 2, unit: 'ct' }, 'ct', 1)).toBe(2);
     expect(amountIn({ name: 'yoghurt', food: 'yogurt', quantity: 120, unit: 'ml' }, 'g', 1)).toBe(120);
-    // 300 g of leeks is four of USDA's 89 g leeks (three of the 100 g taken for any count until 2026-10-04).
-    expect(amountIn({ name: 'leeks', food: 'leek', quantity: 300, unit: 'g' }, 'ct', 1)).toBe(4);
-  });
-
-  it('weighs a garlic clove, a spring onion and a slice as what they are, and a tin as a tin', () => {
-    // Four cloves were 400 g of garlic, five spring onions 550 g of onions.
-    expect(amountIn({ name: 'garlic clove', food: 'garlic', quantity: 4, unit: 'ct' }, 'g', 1)).toBe(12);
-    expect(amountIn({ name: 'spring onions', food: 'onion', quantity: 5, unit: 'ct' }, 'g', 1)).toBe(75);
-    expect(amountIn({ name: 'onion', food: 'onion', quantity: 1, unit: 'ct' }, 'g', 1)).toBe(110);
-    expect(amountIn({ name: 'white bread slice', food: 'bread', quantity: 4, unit: 'ct' }, 'g', 1)).toBe(116);
-    expect(amountIn({ name: 'wholemeal bread', food: 'bread', quantity: 4, unit: 'ct' }, 'g', 1)).toBe(128);
-    expect(amountIn({ name: 'wholemeal bread rolls', food: 'bread', quantity: 4, unit: 'ct' }, 'g', 1)).toBe(172);
-    expect(amountIn({ name: 'fruit bread', food: 'bread', quantity: 4, unit: 'ct' }, 'g', 1)).toBe(104);
-    expect(amountIn({ name: 'canned chopped tomatoes', food: 'tomatoes-canned', quantity: 1, unit: 'ct' }, 'g', 1)).toBe(400);
-    expect(amountIn({ name: 'jalapeño pepper', food: 'chilli', quantity: 1, unit: 'ct' }, 'g', 1)).toBe(14);
-    // A sausage FDC weighs only by the pack: SLATE's 100 g.
-    expect(amountIn({ name: 'reduced-fat sausage', food: 'sausage', quantity: 8, unit: 'ct' }, 'g', 1)).toBe(800);
-    // Every food a recipe counts has its portion but those FDC weighs only by the side or the pack.
-    const counted = RECIPES.flatMap((r) => r.ingredients).filter((i): i is Extract<(typeof i), { food: string | null }> => !i.cupboard && i.unit === 'ct' && i.food !== null);
-    expect([...new Set(counted.filter((i) => gramsEach(i) === COUNTS.countG).map((i) => i.name))].sort()).toEqual(['reduced-fat sausage', 'salmon fillet', 'white fish fillet']);
+    expect(amountIn({ name: 'leeks', food: 'leek', quantity: 300, unit: 'g' }, 'ct', 1)).toBe(3);
   });
 
   it('needs the ingredients in stock and a kitchen, and says what’s short', () => {
@@ -290,113 +271,6 @@ describe('the cheapest pack', () => {
     for (const p of here) {
       const quantity = Math.max(1, Math.ceil(amountIn(ing, p.sizeUnit, 1) / p.sizeQty - 1e-9));
       expect(groceryPrice(sim, 'uk-eng-london', p) * quantity).toBeGreaterThanOrEqual(oats.cost);
-    }
-  });
-});
-
-describe('the food a product is', () => {
-  it('is read from a Spanish name’s first food word, and a stock, a sauce or a ready meal isn’t what’s in it', () => {
-    const food = (id: string) => productById(id)?.food;
-    // Chedraui names a product noun first.
-    expect(food('chedraui-jugo-jumex-naranja-189-l')).toBe('juice');
-    expect(food('chedraui-naranja-de-jugo-por-kg')).toBe('orange');
-    expect(food('chedraui-tortilla-de-maiz-500g')).toBe('tortilla');
-    // Maseca is the masa harina a DIF recipe's tortillas are made from.
-    expect(food('chedraui-harina-de-maiz-maseca-1kg')).toBe('tortilla');
-    expect(food('chedraui-tomates-first-street-cubos-411g')).toBe('tomatoes-canned');
-    expect(food('chedraui-sopa-instantanea-nissin-res-64g')).toBe('ready-meal');
-    expect(food('smartfinal-first-street-pasta-sauce-tomato-basil-garlic-24-oz')).toBe('pasta-sauce');
-    expect(food('tesco-gb-tesco-chicken-tikka-masala-with-pilau-rice-400g')).toBe('ready-meal');
-    // No stock cube is on sale as the meat it's made from.
-    expect(GROCERY_PRODUCTS.filter((p) => /stock|bouillon|consom/i.test(p.name)).map((p) => p.id)).toEqual([]);
-  });
-
-  it('is a chilli for a jalapeño, beans for chick peas, and a fresh food’s canned or dried kind off the pantry shelf', () => {
-    const food = (id: string) => productById(id)?.food;
-    expect(food('smartfinal-jalapeno-peppers')).toBe('chilli');
-    expect(food('saveonfoods-jalapeno-peppers-hot-green')).toBe('chilli');
-    expect(RECIPES.find((r) => r.id === 'canada-turkey-chili')!.ingredients.find((i) => i.name === 'jalapeño pepper')).toMatchObject({ food: 'chilli' });
-    expect(food('saveonfoods-italissima-chick-peas')).toBe('beans');
-    expect(food('saveonfoods-hunts-tomato-paste-no-salt-added')).toBe('tomatoes-canned');
-    expect(food('smartfinal-ocean-spray-cranberries-dried')).toBe('dried-fruit');
-    expect(food('tesco-gb-tesco-perfectly-imperfect-frozen-mixed-berries-1kg')).toBe('berries');
-  });
-
-  it('is a courgette by its other names, a chayote squash a chayote, and the words the earlier reads missed', () => {
-    const food = (id: string) => productById(id)?.food;
-    expect(food('pricerite-fresh-green-squash')).toBe('courgette');
-    expect(food('chedraui-calabaza-italiana-por-kg')).toBe('courgette');
-    expect(food('pricerite-fresh-green-chayote-squash-each')).toBe('chayote');
-    expect(food('supervalu-ie-supervalu-swedes-3-piece')).toBe('swede');
-    expect(food('pricerite-bowl-basket-berry-medley-12-oz')).toBe('berries');
-    expect(food('pricerite-bowl-basket-steam-in-bag-mixed-vegetables-carrots-corn-green-beans-pea')).toBe('frozen-veg');
-    expect(food('chedraui-champinon-monteblanco-seleccion-225g')).toBe('mushroom');
-    expect(food('chedraui-lenteja-chedraui-450g')).toBe('beans');
-    expect(food('tesco-gb-tesco-ready-to-eat-apricots-250g')).toBe('dried-fruit');
-    expect(food('supervalu-ie-supervalu-mixed-peppers-3-piece')).toBe('pepper');
-    // An aubergine and canned pineapple are foods a shop sells now; no recipe's ingredient is one no shop stocks.
-    expect(food('supervalu-ie-supervalu-loose-aubergines-1-piece')).toBe('aubergine');
-    expect(food('pricerite-bowl-basket-pineapple-chunks-in-pineapple-juice-20-oz')).toBe('pineapple');
-    expect(RECIPES.flatMap((r) => r.ingredients).filter((i) => !i.cupboard && !i.food).map((i) => i.name)).toEqual([]);
-  });
-
-  it('is a juice whatever fruit it’s of, coffee in the bean, and tea in Spanish too', () => {
-    const food = (id: string) => productById(id)?.food;
-    // Smart & Final names it "First Street Juice, Apple": the last food word, an apple, until 2026-10-04.
-    expect(food('smartfinal-first-street-juice-apple')).toBe('juice');
-    expect(food('supervalu-ie-lavazza-qualita-rossa-coffee-beans-1-kg')).toBe('coffee');
-    expect(food('chedraui-te-doblett-jamaica-cte-verde-24g')).toBe('tea');
-    // A glass at home is drunk by the milliliter, so beer and wine are sold by it.
-    const alcohol = GROCERY_PRODUCTS.filter((p) => p.food === 'beer' || p.food === 'wine');
-    expect(alcohol.length).toBeGreaterThan(40);
-    expect(alcohol.every((p) => p.sizeUnit === 'ml')).toBe(true);
-    // A product is read once: SuperValu's Rio Alto Merlot came back under its feed's doubled space.
-    const names = GROCERY_PRODUCTS.map((p) => `${p.chain}|${p.name.replace(/\s+/g, ' ').toLowerCase()}`);
-    expect(names.length - new Set(names).size).toBe(0);
-  });
-
-  it('keeps a dry good’s year as a ready meal in the cupboard, and three days chilled', () => {
-    // SLATE's estimates: FoodKeeper has no row for a boxed or instant meal.
-    expect(productById('saveonfoods-kraft-dinner-original-macaroni-and-cheese-dinner-200-g')).toMatchObject({ storage: 'pantry', keepsDays: 365, keepsEstimated: true });
-    expect(productById('tesco-gb-tesco-chicken-tikka-masala-with-pilau-rice-400g')).toMatchObject({ storage: 'fridge', keepsDays: 3, keepsEstimated: true });
-  });
-
-  it('is meat from the meat counter where a recipe is short of meat, in every town with a grocer', () => {
-    const towns = ['us-ny-newyork', 'us-ca-losangeles', 'us-ct-newhaven', 'uk-eng-london', 'ie-lei-dublin', 'ca-on-toronto', 'ca-bc-vancouver', 'mx-cmx-mexicocity'];
-    const meaty = RECIPES.filter((r) => r.ingredients.some((i) => !i.cupboard && (i.food === 'chicken' || i.food === 'beef')));
-    expect(meaty.length).toBeGreaterThan(10);
-    for (const town of towns) {
-      const sim = life(town, `meat-${town}`);
-      sim.player.items = (sim.player.items ?? []).filter((i) => !i.food);
-      for (const r of meaty) {
-        for (const b of shortfall(sim, sim.player, r.id)!.buys) {
-          const p = productById(b.productId)!;
-          if (p.food === 'chicken' || p.food === 'beef') expect(p.category, `${town} ${r.id}: ${p.name}`).toBe('meat');
-        }
-      }
-    }
-  });
-});
-
-describe('a recipe’s foods', () => {
-  it('are on sale in every town with a grocer but for what its grocers weren’t read selling', () => {
-    // From the grocers' own feeds on 2026-10-04 (`research-groceries3.json`); until then New York couldn't buy
-    // everything for 39 of the 44 recipes, New Haven for 37, Los Angeles 27 and Toronto 25.
-    const lacking: Record<string, string[]> = {
-      'us-ny-newyork': ['aubergine', 'chayote', 'lemon', 'swede', 'turnip'],
-      'us-ct-newhaven': ['aubergine'],
-      'us-ca-losangeles': ['chayote', 'leek', 'swede'],
-      'ca-on-toronto': ['aubergine', 'broccoli', 'chayote', 'green chilli', 'jalapeño pepper', 'leek', 'red chilli', 'turnip'],
-      'ca-bc-vancouver': ['aubergine', 'canned pineapple pieces in juice', 'chayote', 'swede', 'turnip'],
-      'uk-eng-london': ['aubergine', 'canned pineapple pieces in juice', 'canned tomato sauce', 'chayote'],
-      'ie-lei-dublin': ['chayote'],
-      'mx-cmx-mexicocity': ['swede', 'turnip'],
-    };
-    for (const [town, foods] of Object.entries(lacking)) {
-      const sim = life(town, `lacking-${town}`);
-      sim.player.items = (sim.player.items ?? []).filter((i) => !i.food);
-      const unbuyable = new Set(RECIPES.flatMap((r) => shortfall(sim, sim.player, r.id)!.unbuyable));
-      expect([...unbuyable].sort(), town).toEqual(foods);
     }
   });
 });

@@ -115,13 +115,6 @@ describe('built-in storage', () => {
     sim.must({ kind: 'clothes.buy', payload: { productId: tee.id, how: 'store', size: 'M', color: tee.colors[0], quantity: 1 } });
     const bought = purchaseItems(sim.player, sim.player.clothesBought!.at(-1)!.id)[0]!;
     expect(bought.at).toEqual({ kind: 'home', home, spot: 'floor' });
-    // And so do clothes delivered (from 2026-10-05: until then a delivery went into the full wardrobe).
-    sim.must({ kind: 'clothes.buy', payload: { productId: tee.id, how: 'online', size: 'M', color: tee.colors[0], quantity: 1 } });
-    const sent = purchaseItems(sim.player, sim.player.clothesBought!.at(-1)!.id)[0]!;
-    expect(sent.at.kind).toBe('order');
-    sim.advanceBy(14 * MS_DAY);
-    expect(sent.at).toEqual({ kind: 'home', home, spot: 'floor' });
-    expect(closetUsedL(sim.player)).toBeLessThanOrEqual(roomsOf(sim, sim.player)!.closetL + 1e-9);
   });
 });
 

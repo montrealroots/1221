@@ -30,22 +30,6 @@ export function optionsQuote(m: CarModel, keys: readonly string[]): { cents: num
   return { cents: chosen.reduce((a, o) => a + Math.round(o.price * 100), 0), factory: chosen.some((o) => o.price > 0), chosen };
 }
 
-/** An option's code as its maker prints it in its name ("Trailering Package (Z82)"), where it has a letter: a paint's number names a trim's color too. */
-const codeOf = (name: string): string | undefined => name.match(/\(([A-Z0-9]*[A-Z][A-Z0-9]*)\)/)?.[1];
-
-/**
- * Whether a package's own list names another option as part of it: GM's WT
- * Value Package (PEB) includes its Trailering Package (Z82) and Convenience
- * Package (PCV), Ram's Trailer-Tow Group its trailer brake controller. A
- * "Requires" line is what it needs, not what it holds.
- */
-export function includedIn(pkg: CarOption, o: CarOption): boolean {
-  if (pkg === o || !pkg.includes) return false;
-  const code = codeOf(o.name);
-  const bare = o.name.replace(/\s*\(.*?\)/g, '').replace(/\s+[-—]\s.*$/, '').trim().toLowerCase();
-  return pkg.includes.some((t) => !/^requires\b/i.test(t) && ((code !== undefined && new RegExp(`\\b${code}\\b`).test(t)) || (bare.length > 8 && t.toLowerCase().includes(bare))));
-}
-
 /** Why these options can't go on this car bought so, or nothing. */
 export function optionsRefusal(m: CarModel, keys: readonly string[], age: number): string | undefined {
   if (keys.length === 0) return undefined;
@@ -54,8 +38,6 @@ export function optionsRefusal(m: CarModel, keys: readonly string[], age: number
   if (q.chosen.length !== keys.length) return 'That isn’t one of its options.';
   if (new Set(keys).size !== keys.length) return 'Each option once.';
   for (const cat of ONE_EACH) if (q.chosen.filter((o) => o.category === cat).length > 1) return `One ${cat === 'paint' ? 'paint' : cat === 'wheels' ? 'set of wheels' : 'interior'}.`;
-  // Charged once (from 2026-10-05: until then the Silverado's PEB and the Z82 it includes were both paid for).
-  for (const pkg of q.chosen) for (const o of q.chosen) if (includedIn(pkg, o)) return `The ${pkg.name} includes the ${o.name} already.`;
   if (q.factory && !orderWeeksOf(m)) return 'No lead time for a factory order of it is published: buy one from stock, as it comes.';
   return undefined;
 }

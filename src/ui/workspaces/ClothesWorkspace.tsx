@@ -630,7 +630,7 @@ function Bathroom() {
         )}
         {entries.length > 0 && (
           <>
-            <CatalogControls id="toiletries-catalog" entries={entries} view={view} onChange={setView} facets={{ kind: 'Kind', chain: 'Chain', brand: 'Brand' }} />
+            <CatalogControls id="toiletries-catalog" entries={entries} view={view} onChange={setView} facets={{ kind: 'Kind', chain: 'Chain' }} />
             <div className="table-scroll">
               <table>
                 <thead><tr><th scope="col">Product</th><th scope="col">Chain</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
@@ -753,7 +753,7 @@ function Fit() {
           </select>
         )}
         {off.map((g) => {
-          const no = t ? alterRefusal(sim, person, g.id, t.id) : 'SLATE keeps no tailor where you are.';
+          const no = t ? alterRefusal(person, g.id, t.id) : 'SLATE keeps no tailor where you are.';
           return (
             <div key={g.id} className="row-between small">
               <span><Open subject={at('garment', g.id)}>{g.label}</Open><span className="xs dim">{fitOf(person, g.garment) === 'big' ? ' · Too Big' : ' · Grown Out Of'}</span></span>

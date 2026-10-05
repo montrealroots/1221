@@ -29,7 +29,6 @@ import { registerAppliances, registerOwnUnits, registerPortables } from './syste
 import { registerLodgers } from './systems/lodgers';
 import { registerMattress } from './systems/furniture';
 import { registerFurniture } from './systems/furniture';
-import { registerTelevisions } from './systems/televisions';
 import { registerRentals } from './systems/rentals';
 import { registerAviation, registerOwnedAircraft } from './systems/aviation';
 import { registerBoats } from './systems/boats';
@@ -73,7 +72,7 @@ import { registerHygiene, starterCleaning, starterSupplies } from './systems/hyg
 import { registerShoppingCart } from './systems/shoppingcart';
 import { registerFittings } from './systems/fittings';
 import { starterLuggage } from './systems/luggage';
-import { DAILY_SHORTCUTS, EVERY_SHORTCUT, SHORTCUTS, SHORTCUTS_VERSION, registerAutomation } from './systems/automation';
+import { EVERY_SHORTCUT, registerAutomation } from './systems/automation';
 import { registerGarden } from './systems/garden';
 import { registerRooms } from './systems/rooms';
 import { registerAwards } from './systems/awards';
@@ -224,7 +223,6 @@ export function registerAllSystems(sim: Simulation): void {
   registerLodgers(sim);
   registerMattress(sim);
   registerFurniture(sim);
-  registerTelevisions(sim);
   registerRentals(sim, { journeysOf: journeysFor, partnerOf: partnerFor });
   registerTravelInsurance(sim);
   registerLateCheckOut(sim);
@@ -419,9 +417,8 @@ export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig)
   starterCleaning(sim, sim.player, homePlace(sim, sim.player)?.fixtures.dishwasher ?? false);
   // And a suitcase to pack them in (`systems/luggage.ts`).
   starterLuggage(sim, sim.player);
-  // No shortcut is on in a new life until it's chosen (from 2026-10-03): from 2026-10-05 the ones chosen at its creation.
-  sim.player.automation = Object.fromEntries((config.shortcuts ?? []).filter((k) => k in SHORTCUTS).map((k) => [k, true]));
-  sim.player.shortcutsVersion = SHORTCUTS_VERSION;
+  // No shortcut is on in a new life until it's chosen (from 2026-10-03).
+  sim.player.automation = {};
   return sim;
 }
 
@@ -442,11 +439,6 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId]) starterLuggage(sim, sim.player);
   // A save from before 2026-10-03 packed, unpacked and put the shopping away on its own: it keeps those, now as shortcuts it can turn off.
   if (universe.people[universe.playerId] && sim.player.automation === undefined) sim.player.automation = { ...EVERY_SHORTCUT };
-  // A save from before 2026-10-05 was fed, washed and dressed every day and its dishwasher run, unasked: it keeps those, now as shortcuts.
-  if (universe.people[universe.playerId] && (sim.player.shortcutsVersion ?? 1) < SHORTCUTS_VERSION) {
-    for (const k of DAILY_SHORTCUTS) sim.player.automation![k] = true;
-    sim.player.shortcutsVersion = SHORTCUTS_VERSION;
-  }
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
   if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);
   // A save from before the 21 skills takes each from the area it grew out of: the actor, the class and the term's starting marks.

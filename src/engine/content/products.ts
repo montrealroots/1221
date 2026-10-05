@@ -23,11 +23,6 @@ export interface CatalogOffer {
   /** Stable: an owned item's kind names it. */
   id: string; market: CatalogMarket; seller: string; channel: 'online' | 'store';
   price: number; currency: string; taxIncluded: boolean; url: string | null; read: string; status: ReadStatus;
-  /**
-   * The model number the seller lists it under, where its market's differs from the product's own (from 2026-10-04):
-   * Samsung's UE32F6000FKXXU in Britain for its American UN32F6000FFXZA. A shopper there sees this one.
-   */
-  model?: string;
 }
 export interface CatalogVariant { id: string; attrs: Readonly<Record<string, string>> }
 export interface CatalogProduct {

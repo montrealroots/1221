@@ -8,17 +8,11 @@
  * retailer’s own return window, counted from the day it was had: bought in
  * a store, or delivered (`receivedAt`), as a return is. Until
  * 2026-10-03 the purchase was a row on Clothes and nothing opened into it.
- *
- * An order’s receipt says what the order paid, the delivery or collection
- * with the goods, and the order itself: where it went, how far it has come,
- * the day it arrived. Until 2026-10-05 it said the goods alone, so an order
- * of $24.90 with its delivery read $24.90 against $32.89 out of the bank.
  */
 
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { MS_DAY, dateKey, formatDate } from '@/engine/core/time';
 import { productById, purchaseItems, receivedAt, retailerById, type ClothesPurchase } from '@/engine/systems/clothing';
-import { orderStage, ordersOf } from '@/engine/systems/orders';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, lookExists, type Way } from './registry';
 import { at } from './subject';
@@ -42,11 +36,7 @@ defineLook<ClothesPurchase[]>('receipt', {
     const money = (c: number) => formatMoney(c, cur);
     const first = lines[0]!;
     const r = retailerById(first.retailerId);
-    const goods = lines.reduce((a, b) => a + b.goods, 0);
-    // The order paid the goods and its delivery or collection together.
-    const order = first.orderId ? ordersOf(sim.player).find((o) => o.id === first.orderId) : undefined;
-    const total = order ? Math.max(order.paid, goods) : goods;
-    const carriage = total - goods;
+    const total = lines.reduce((a, b) => a + b.goods, 0);
     const back = lines.filter((b) => b.returnedAt !== undefined || b.canceledAt !== undefined);
     const had = receivedAt(sim.player, first);
     const until = r?.returnDays != null && had !== undefined ? had + r.returnDays * MS_DAY : undefined;
@@ -81,17 +71,10 @@ defineLook<ClothesPurchase[]>('receipt', {
             </table>
           </div>
           <div className="grid grid-3">
-            <Stat label="Total" value={<span className="mono">{money(total)}</span>} note={order ? `The goods, tax in, ${money(goods)}; ${first.how === 'collect' ? 'collecting' : 'delivery'}, ${carriage > 0 ? money(carriage) : 'free'}` : 'The goods, tax in'} />
+            <Stat label="Total" value={<span className="mono">{money(total)}</span>} note="The goods, tax in" />
             <Stat label="Paid With" value={paid.join(', ') || '—'} note="Where a return is refunded" />
             <Stat label="Returns Until" value={until !== undefined ? formatDate(until, sim.zone) : r?.returnDays != null ? 'Once It Arrives' : 'Not Known'} note={r?.returnDays != null ? `${r.name}’s ${r.returnDays} days from when you had it` : 'Its window wasn’t read'} />
           </div>
-          {order && (
-            <div className="grid grid-3">
-              <Stat label="Order" value={orderStage(sim.player, order, sim.now)} note={order.stolen ? 'Taken from the door when it was delivered' : `Order ${order.id}`} />
-              <Stat label="Sent To" value={order.to.kind === 'service' ? `${r?.name ?? 'The Store'}, To Collect` : order.to.kind === 'home' ? 'Your Home' : 'You'} note={first.how === 'collect' ? 'Collected in store' : 'Delivered'} />
-              <Stat label={order.deliveredAt !== undefined ? 'Arrived' : 'Due'} value={formatDate(order.deliveredAt ?? order.arrivesAt, sim.zone)} note={order.deliveredAt !== undefined ? 'The day it came' : 'The day it’s due'} />
-            </div>
-          )}
         </>
       ),
       ways,

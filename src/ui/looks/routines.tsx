@@ -5,8 +5,8 @@
  * plain text beside the buttons that act on them. Three kinds live here. A
  * `gym` is one in `content/gyms.ts`, yours or any other: its address, its
  * memberships at the town’s tax (`taxed`, `joiningCost`), whether it is open
- * now by its own hours (`shutAt`), and for a member what leaving would do by
- * its own terms (`leavingTerms`, from 2026-10-05; until then its cost alone). A `trainer` is one in `systems/trainers.ts`, at its session
+ * now by its own hours (`shutAt`), and for a member what leaving would cost
+ * (`leavingCost`). A `trainer` is one in `systems/trainers.ts`, at its session
  * price (`sessionPrice`). A `routine` is one of yours, its steps in the order
  * they run (`stepLabel`).
  *
@@ -19,7 +19,7 @@ import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { GYMS, gymById, type Gym } from '@/engine/content/gyms';
-import { joiningCost, leavingTerms, taxed } from '@/engine/systems/gyms';
+import { joiningCost, leavingCost, taxed } from '@/engine/systems/gyms';
 import { shutAt } from '@/engine/systems/errands';
 import { SUPERVISED, TRAINERS, sessionPrice, type Trainer } from '@/engine/systems/trainers';
 import { stepLabel, type Routine } from '@/engine/systems/routines';
@@ -59,20 +59,15 @@ defineLook<Gym>('gym', {
     const tier = member ? g.tiers.find((t) => t.name === member.tier) : undefined;
     const cheapest = [...g.tiers].sort((a, b) => a.monthly - b.monthly)[0];
     const shut = g.week ? shutAt(g.week, g.name, g.cityId, sim.now) : undefined;
-    const leaving = member && person ? leavingTerms(sim, person) : undefined;
-    const leavingSaid = !leaving ? ''
-      : leaving.back > 0 ? `Leaving now gives back the ${money(leaving.back)} joining paid.`
-      : leaving.endsAt > sim.now ? `Leaving takes notice: it would end ${formatDate(leaving.endsAt, CITIES.require(g.cityId).timeZone)}${leaving.pay ? `, and cost ${money(leaving.pay)}` : ''}.`
-      : leaving.pay > 0 ? `Leaving now would cost ${money(leaving.pay)}.`
-      : 'You can leave it whenever you like, for nothing.';
+    const leaving = member && person ? leavingCost(sim, person) : 0;
     const trainers = TRAINERS.filter((t) => t.cityId === g.cityId);
     const others = GYMS.filter((x) => x.cityId === g.cityId && x.id !== g.id);
 
-    const ways: Way[] = [...placeWay(g.cityId, 'Its town, and what living there costs')];
+    const ways: Way[] = [...placeWay(g.cityId, 'The town it’s in, and what living there costs')];
     if (member && person) {
       ways.push(...spendingWay(sim, person, 'Where the month is taken from, on the day you joined each month'));
-      ways.push({ to: at('day', dateKey(member.since, sim.homeZone)), label: formatDate(member.since, sim.homeZone), detail: 'When you joined' });
-      if (member.termEnds !== undefined && member.termEnds > sim.now) ways.push({ to: at('day', dateKey(member.termEnds, sim.homeZone)), label: formatDate(member.termEnds, sim.homeZone), detail: 'When its minimum term ends; after it, leaving costs nothing' });
+      ways.push({ to: at('day', dateKey(member.since, sim.homeZone)), label: formatDate(member.since, sim.homeZone), detail: 'The day you joined' });
+      if (member.termEnds !== undefined && member.termEnds > sim.now) ways.push({ to: at('day', dateKey(member.termEnds, sim.homeZone)), label: formatDate(member.termEnds, sim.homeZone), detail: 'The day its minimum term ends, after which leaving costs nothing' });
     }
     for (const t of trainers) ways.push({ to: at('trainer', t.id), label: t.name, detail: `A personal trainer in the same town, ${money(sessionPrice(sim, t))} a session` });
     for (const o of others) ways.push({ to: at('gym', o.id), label: o.name, detail: `Another gym in the same town, from ${money(taxed(sim, o, Math.min(...o.tiers.map((t) => t.monthly))))} a month` });
@@ -93,7 +88,7 @@ defineLook<Gym>('gym', {
             It’s at {g.address}, in {townName(g.cityId)}{g.pool ? ', with a pool' : ''}.{' '}
             {shut ? `${shut} ` : ''}
             {g.tiers.length > 1 ? `It sells ${spokenList(g.tiers.map((t) => t.name))}.` : ''}{' '}
-            {leavingSaid}{member && tier?.leave ? ` Its own terms: “${tier.leave.said}.”` : ''}
+            {member && leaving > 0 ? `Leaving inside the minimum term would cost ${money(leaving)}, the months left of it.` : member ? 'You can leave it whenever you like, for nothing.' : ''}
           </p>
           {(tier ?? cheapest) && (() => {
             const t = (tier ?? cheapest)!;
@@ -127,7 +122,7 @@ defineLook<Trainer>('trainer', {
     const person = playerIn(sim);
     const plan = person?.training?.trainerId === t.id ? person.training : undefined;
     const gyms = GYMS.filter((g) => g.cityId === t.cityId);
-    const ways: Way[] = [...placeWay(t.cityId, 'Where the sessions are')];
+    const ways: Way[] = [...placeWay(t.cityId, 'The town the sessions are in')];
     if (plan && person) ways.push(...spendingWay(sim, person, 'Where each session is paid from, as it’s worked'));
     for (const g of gyms) ways.push({ to: at('gym', g.id), label: g.name, detail: 'A gym in the same town' });
     return {

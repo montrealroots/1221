@@ -40,7 +40,7 @@ import { inSaveMoney } from './banking';
 import { atTown } from './homes';
 import { expenseFor, payWith, payWithRefusal, spend, type PayWith } from './household';
 import { addItem, homeKeyOf, itemById, itemsOf, reachable, type Item, type Place } from './items';
-import { cancelOrder, ordersOf, placeOrder, refundShares, type PaidShare } from './orders';
+import { cancelOrder, ordersOf, placeOrder } from './orders';
 import { CLICK_COLLECT, type CollectTerms } from '../content/clickcollect';
 import { stow } from './trips';
 import { fitOf, fitKgFor, measuresRefusal, shoeRow, sizeFor, type Measures } from './tailoring';
@@ -62,7 +62,7 @@ export interface ClothesPurchase {
   /** How many garments it brought: a pack's each. */
   count: number;
   /** What paid for it, each account's share, from 2026-10-02: what a return refunds to. */
-  paidFrom?: PaidShare[];
+  paidFrom?: { accountId: string; share: number }[];
   /** The size and color chosen, from 2026-10-02: what Buy Again puts in the basket. */
   size?: string;
   color?: string;
@@ -397,9 +397,12 @@ export function returnClothes(sim: Simulation, person: Person, purchaseId: strin
 /** A purchase's money back, to what paid, in its shares, and its garments gone; its order ended once all of it is back. */
 function refundPurchase(sim: Simulation, person: Person, purchase: ClothesPurchase, back: Money, memo: string): void {
   const purchaseId = purchase.id;
+  const account = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.nominal && !a.closedAt && a.kind === 'checking');
   // Back to what paid, in its shares, an account since closed to checking; checking where nothing was kept (from 2026-10-02; until then always checking).
-  const parts = refundShares(sim, person, back, purchase.paidFrom);
-  if (parts.length === 0) throw new CommandError('There’s no account to refund to.');
+  const to = (purchase.paidFrom ?? []).map((x) => ({ accountId: sim.universe.accounts[x.accountId] && !sim.universe.accounts[x.accountId]!.closedAt ? x.accountId : account?.id, share: x.share })).filter((x): x is { accountId: string; share: number } => Boolean(x.accountId));
+  const shares = to.length ? to : account ? [{ accountId: account.id, share: 1 }] : [];
+  if (shares.length === 0) throw new CommandError('There’s no account to refund to.');
+  const parts = shares.map((x, n) => ({ accountId: x.accountId, amount: n === shares.length - 1 ? back - shares.slice(0, -1).reduce((t, y) => t + Math.round(back * y.share), 0) : Math.round(back * x.share) }));
   sim.post({ memo, category: 'clothing', postings: [...parts, { accountId: sim.nominalAccount('expense', expenseFor('clothing')).id, amount: -back }] });
   const gone = new Set(purchaseItems(person, purchaseId).map((i) => i.id));
   person.items = itemsOf(person).filter((i) => !gone.has(i.id));
@@ -453,7 +456,7 @@ export function cancelClothes(sim: Simulation, person: Person, purchaseId: strin
   if (no) throw new CommandError(no);
   const purchase = person.clothesBought!.find((x) => x.id === purchaseId)!;
   const r = retailerById(purchase.retailerId)!;
-  const back = cancelOrder(sim, person, purchase.orderId!, `${r.name}: an order canceled, refunded`, 'clothing', purchase.paidFrom);
+  const back = cancelOrder(sim, person, purchase.orderId!, `${r.name}: an order canceled, refunded`, 'clothing');
   // The order goes whole: every purchase on it.
   for (const x of person.clothesBought ?? []) if (x.orderId === purchase.orderId) x.canceledAt = sim.now;
   return back;
@@ -744,7 +747,7 @@ export function registerClothing(sim: Simulation): void {
     const ids = new Set((person.clothesBought ?? []).filter((b) => b.orderId === p.orderId).map((b) => b.id));
     const home = homeKeyOf(person.home);
     const waiting = itemsOf(person).filter((i) => i.at.kind === 'service' && i.at.serviceId.startsWith('collect:') && ids.has(String(i.spec?.purchase)));
-    for (const i of waiting) stow(person, overflow(s, person, Object.assign(i, { at: home && person.home!.cityId === person.currentLocationId ? { kind: 'home', home, spot: 'wardrobe' } : { kind: 'person' } }) as Item), s.now);
+    for (const i of waiting) stow(person, Object.assign(i, { at: home && person.home!.cityId === person.currentLocationId ? { kind: 'home', home, spot: 'wardrobe' } : { kind: 'person' } }) as Item, s.now);
     return { collected: waiting.length };
   });
   // Uncollected past its hold, it goes back, and the goods are refunded.

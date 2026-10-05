@@ -201,8 +201,6 @@ describe('what looking after yourself refuses', () => {
   const refusals: [string, LookAfter, (sim: ReturnType<typeof quickSave>) => void, RegExp][] = [
     ['eating on a full stomach', 'eat', (s) => { s.player.wellbeing.nourishment = 95; }, /hungry/],
     ['showering clean', 'wash', (s) => { s.player.wellbeing.hygiene = 99; }, /clean/],
-    // In another town with no stay there, there's no shower of theirs (from 2026-10-05).
-    ['showering away with nowhere to stay', 'wash', (s) => { s.player.wellbeing.hygiene = 40; s.player.currentLocationId = s.player.home!.cityId === 'us-ca-losangeles' ? 'us-ny-newyork' : 'us-ca-losangeles'; delete s.player.stay; }, /nowhere of yours to wash/],
     ['training spent', 'exercise', (s) => { s.player.wellbeing.energy = 20; }, /tired/],
     ['running into a plan', 'unwind', (s) => {
       expect(s.execute({ kind: 'calendar.schedule', payload: { title: 'Call', at: s.now + 30 * MS_MINUTE } }).ok).toBe(true);

@@ -11,9 +11,8 @@ import { LOOKING_AFTER, type LookAfter } from '@/engine/systems/life';
 import { RECIPES } from '@/engine/content/groceries';
 import { MAX_STEPS, routineRefusal, routineTimeRefusal, runRoutine, stepLabel, type Routine, type RoutineStep } from '@/engine/systems/routines';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
-import { formatDate } from '@/engine/core/time';
 import { gymById } from '@/engine/content/gyms';
-import { gymsIn, joinRefusal, joiningCost, leavingTerms, taxed } from '@/engine/systems/gyms';
+import { gymsIn, joinRefusal, joiningCost, leavingCost, taxed } from '@/engine/systems/gyms';
 import { arrange } from '@/engine/systems/catalog';
 import { groceryCatalog } from '@/engine/systems/kitchen';
 import { salonsIn, toiletryCatalog } from '@/engine/systems/hygiene';
@@ -199,29 +198,18 @@ function GymPanel() {
   const cur = saveCurrency(sim.universe);
   const money = (c: number) => formatMoney(c, cur, { cents: false });
   const mine = person.gym ? gymById(person.gym.gymId) : undefined;
-  const mineTier = mine?.tiers.find((t) => t.name === person.gym?.tier);
-  const leaving = person.gym ? leavingTerms(sim, person) : undefined;
-  const leavingLabel = !leaving ? 'Leave The Gym'
-    : leaving.back ? `Leave The Gym, ${money(leaving.back)} Back`
-    : leaving.endsAt > sim.now ? (leaving.pay ? `Give Notice, ${money(leaving.pay)}` : 'Give Notice')
-    : leaving.pay ? `Leave The Gym, ${money(leaving.pay)}` : 'Leave The Gym';
   const offers = gymsIn(person.currentLocationId).flatMap((g) => g.tiers.map((t) => ({ g, t, month: taxed(sim, g, t.monthly) }))).sort((a, b) => a.month - b.month);
   return (
     <Panel title="Your Gym" look={mine ? at('gym', mine.id) : undefined} subtitle={mine ? `${mine.name}, ${person.gym!.tier}` : 'The gyms where you are, by the month, cheapest first'}>
       {mine ? (
-        <div className="col gap-2">
-          <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-            <span className="small">{mine.address}{mine.pool ? ', with a pool' : ''}</span>
-            {person.gym!.endsAt !== undefined
-              ? <span className="small strong">{`Notice given: it ends ${formatDate(person.gym!.endsAt, sim.zone)}`}</span>
-              : <button type="button" className="btn btn-sm btn-ghost" disabled={!leave.open} title={leave.reason ?? leaving?.why} onClick={() => { const a = run<{ paid: number; back: number; endsAt: number }>('gym.leave', {}); if (a.ok) toast(a.value!.back ? `You left, and ${money(a.value!.back)} came back.` : a.value!.endsAt > sim.now ? `Notice given: it ends ${formatDate(a.value!.endsAt, sim.zone)}.` : a.value!.paid ? `You left, paying ${money(a.value!.paid)}.` : 'You left the gym.', 'neutral'); }}>{leavingLabel}</button>}
-          </div>
-          <span className="xs dim">{`Leaving: ${mineTier?.leave?.said ?? 'its terms weren’t published; inside a term, its months left are paid'}.`}</span>
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
+          <span className="small">{mine.address}{mine.pool ? ', with a pool' : ''}</span>
+          <button type="button" className="btn btn-sm btn-ghost" disabled={!leave.open} title={leave.reason} onClick={() => { const a = run<{ paid: number }>('gym.leave', {}); if (a.ok) toast(a.value!.paid ? `You left, paying the rest of the term, ${money(a.value!.paid)}.` : 'You left the gym.', 'neutral'); }}>{leavingCost(sim, person) ? `Leave The Gym, ${money(leavingCost(sim, person))}` : 'Leave The Gym'}</button>
         </div>
       ) : offers.length === 0 ? <p className="small muted" style={{ margin: 0 }}>SLATE keeps no gyms where you are.</p> : (
         <LookRegion className="table-scroll">
           <table>
-            <thead><tr><th scope="col">Gym</th><th scope="col">Membership</th><th scope="col" className="num">A Month</th><th scope="col" className="num">To Join</th><th scope="col">Term</th><th scope="col">Leaving</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
+            <thead><tr><th scope="col">Gym</th><th scope="col">Membership</th><th scope="col" className="num">A Month</th><th scope="col" className="num">To Join</th><th scope="col">Term</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
             <tbody>
               {offers.map(({ g, t, month }) => {
                 const no = joinRefusal(sim, person, g.id, t.name);
@@ -232,7 +220,6 @@ function GymPanel() {
                     <td className="num mono">{money(month)}</td>
                     <td className="num mono">{t.joining === null ? 'Not Published' : money(joiningCost(sim, g, t))}</td>
                     <td className="small">{t.termMonths ? `${t.termMonths} Months` : 'None'}</td>
-                    <td className="xs">{t.leave?.said ?? 'Not Published'}</td>
                     <td><button type="button" className="btn btn-sm btn-ghost" disabled={!join.open || Boolean(no)} title={no ?? join.reason} onClick={() => { const a = run<{ paid: number }>('gym.join', { gymId: g.id, tier: t.name }); if (a.ok) toast(`You joined ${g.name}, for ${money(a.value!.paid)}.`, 'positive'); }}>Join</button></td>
                   </tr>
                 );

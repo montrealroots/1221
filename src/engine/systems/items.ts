@@ -34,7 +34,6 @@ import { BUILT_IN, closetRefusal, fitRefusal, footprintOf, roomFitRefusal } from
 import { COLD_STORE } from '../content/coldstorage';
 import { LIBRARY_BOOKS } from '../content/specialrooms';
 import { CITIES } from '../content/geography';
-import { specOf } from './caroptions';
 
 /** Where a thing is. */
 export type Place =
@@ -184,21 +183,6 @@ export function coldRoomL(person: Person, spot: 'fridge' | 'freezer'): number | 
 /** What's in the fridge or freezer at a home now, liters. */
 export const coldUsedL = (person: Person, home: string, spot: 'fridge' | 'freezer'): number => itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && i.at.spot === spot).reduce((sum, i) => sum + volumeOf(i) * i.quantity, 0);
 
-/**
- * What a car holds, liters: its maker's cargo with the seats up, or a pickup's
- * bed (`content/caroptions.ts`), and a roof box's on top where one's on; not
- * known where the maker's page wasn't read.
- */
-export function carHoldsL(person: Person, vehicleId: string): number | null | undefined {
-  const v = (person.vehicles ?? []).find((x) => x.id === vehicleId);
-  const spec = v ? specOf(v.modelId) : undefined;
-  const own = spec?.cargoL ?? spec?.bedL;
-  return own === null || own === undefined ? own : own + (v?.roofBoxL ?? 0);
-}
-
-/** What's in a car now, liters. */
-export const carUsedL = (person: Person, vehicleId: string): number => itemsOf(person).filter((i) => i.at.kind === 'vehicle' && i.at.vehicleId === vehicleId).reduce((a, i) => a + volumeOf(i) * i.quantity, 0);
-
 /** Why a thing can't go to a place now, or nothing where it can. */
 export function moveRefusal(sim: Simulation, person: Person, item: Item, to: Place): string | undefined {
   if (!reachable(sim, person, item.at)) return `The ${item.label} isn’t to hand: ${whereWords(person, item.at)}.`;
@@ -229,13 +213,6 @@ export function moveRefusal(sim: Simulation, person: Person, item: Item, to: Pla
         if (volumeOf(item) * item.quantity > left + 1e-9) return `${SPOT_LABEL[spot]} is full: ${Math.max(0, Math.floor(left))} liters of its ${Math.round(holds!)} are free, and the ${item.label} needs ${Math.ceil(volumeOf(item) * item.quantity)}.`;
       }
     }
-  }
-  // Into a car, within what it holds, as shopping bought on a trip is (from 2026-10-05: until then anything moved into a
-  // car by hand went in, a 50,000-liter crate into a Camry).
-  if (to.kind === 'vehicle' && !(item.at.kind === 'vehicle' && item.at.vehicleId === to.vehicleId)) {
-    const holds = carHoldsL(person, to.vehicleId);
-    const left = holds === null || holds === undefined ? Infinity : holds - carUsedL(person, to.vehicleId);
-    if (volumeOf(item) * item.quantity > left + 1e-9) return `The car has ${Math.max(0, Math.floor(left))} liters of its ${holds} left; the ${item.label} needs ${Math.ceil(volumeOf(item) * item.quantity)}.`;
   }
   if (to.kind === 'inside') {
     if (to.itemId === item.id) return 'A thing can’t go inside itself.';

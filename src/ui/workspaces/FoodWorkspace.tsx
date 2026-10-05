@@ -14,7 +14,7 @@ import type { PayWith } from '@/engine/systems/household';
 import { livingIn } from '@/engine/systems/homes';
 import { atHome } from '@/engine/systems/dwelling';
 import { Panel, Fine } from '@/ui/components/primitives';
-import { CatalogControls, catalogPrice, CompareTable, CompareToggle, FavoriteToggle, ShowMore, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
+import { CatalogControls, catalogPrice, CompareTable, CompareToggle, FavoriteToggle, useCatalogView, useCompare } from '@/ui/components/Catalog';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { titleCaseLabel } from '@/engine/core/text';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -284,9 +284,6 @@ function Recipes() {
   const cookable = useFeature('food.cook');
   const shopFor = useFeature('food.buy_short');
   const [serves, setServes] = useState<Record<string, number>>({});
-  // A page at a time (from 2026-10-05): until then the first 12 were all the screen showed, and 32 of the 44 recipes
-  // couldn't be chosen, scaled or shopped for here.
-  const [count, more] = usePaged('food-recipes', 12);
   const rows = RECIPES.map((r) => ({ r, n: serves[r.id] ?? r.servings, no: cookRefusal(sim, person, r.id, serves[r.id] ?? r.servings) ?? cookingClash(sim, r.id) })).sort((a, b) => Number(Boolean(a.no)) - Number(Boolean(b.no)) || a.r.name.localeCompare(b.r.name));
   const ready = rows.filter((x) => !x.no).length;
   // An outdoor kitchen of their own, where they are (from 2026-10-04).
@@ -297,12 +294,12 @@ function Recipes() {
         <table>
           <thead><tr><th scope="col">Recipe</th><th scope="col" className="num">Serves</th><th scope="col" className="num">Minutes</th><th scope="col">Source</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
           <tbody>
-            {rows.slice(0, count).map(({ r, n, no }) => (
+            {rows.slice(0, 12).map(({ r, n, no }) => (
               <tr key={r.id}>
                 <td>{r.name}{no ? <div className="xs dim">{no}</div> : null}{no && /short of/.test(no) ? (() => { const need = shortfall(sim, person, r.id, n); if (!need || need.unbuyable.length || need.buys.length === 0) return need?.unbuyable.length ? <div className="xs dim">{`No store here sells ${need.unbuyable.join(', ')}.`}</div> : null; const cost = need.buys.reduce((a, b) => a + b.cost, 0); return <div><button type="button" className="btn btn-sm btn-ghost" disabled={!shopFor.open} title={shopFor.reason} onClick={() => { if (run('food.buy_short', { recipeId: r.id, servings: n }).ok) toast('Bought what was short; it can be cooked now.', 'positive'); }}>{`Buy What’s Short, ${formatMoney(cost, saveCurrency(sim.universe), { cents: false })}`}</button></div>; })() : null}</td>
                 <td className="num mono">
                   <label className="sr-only" htmlFor={`serves-${r.id}`}>Servings</label>
-                  <select id={`serves-${r.id}`} value={n} style={{ width: '5em' }} onChange={(e) => setServes({ ...serves, [r.id]: Number(e.target.value) })}>
+                  <select id={`serves-${r.id}`} value={n} onChange={(e) => setServes({ ...serves, [r.id]: Number(e.target.value) })}>
                     {Array.from({ length: servingsRange(r).most }, (_, i) => i + 1).map((k) => <option key={k} value={k}>{k}</option>)}
                   </select>
                 </td>
@@ -314,8 +311,7 @@ function Recipes() {
           </tbody>
         </table>
       </div>
-      <ShowMore shown={Math.min(count, rows.length)} total={rows.length} onMore={more} />
-      <Fine>The recipes are their sources’ own. A recipe is cooked for the servings chosen, its ingredients scaled to them, from one to three times what it makes: one eaten, the rest in the fridge for its own days or FoodSafety.gov’s three. Seasonings, spices, stock and water are taken as in the cupboard; a count is weighed by USDA’s medium portion. A starred time is SLATE’s 30 minutes where the source gave none. A home’s kitchen has a stove, an oven, a grill, a fridge-freezer and a microwave; a blender and a slow cooker are bought for it, above.</Fine>
+      <Fine>The recipes are their sources’ own. A recipe is cooked for the servings chosen, its ingredients scaled to them, from one to three times what it makes: one eaten, the rest in the fridge for its own days or FoodSafety.gov’s three. Seasonings, spices, stock and water are taken as in the cupboard; a count is weighed by USDA’s medium portion. A starred time is SLATE’s 30 minutes where the source gave none. A home’s kitchen has a stove, an oven, a grill, a fridge-freezer and a microwave; a blender or a slow cooker isn’t kept yet.</Fine>
     </Panel>
   );
 }
@@ -386,7 +382,7 @@ function Groceries() {
   return (
     <Panel title="Groceries" subtitle={`${entries.length} things from ${new Set(entries.map((e) => e.value.chain)).size === 1 ? 'one chain' : `${new Set(entries.map((e) => e.value.chain)).size} chains`}`}>
       <div className="col gap-3">
-        <CatalogControls id="groceries-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ aisle: 'Aisle', chain: 'Chain', brand: 'Brand' }} lead={<PayWithField id="groceries-pay" way={way} onChange={setWay} />} />
+        <CatalogControls id="groceries-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ aisle: 'Aisle', chain: 'Chain' }} lead={<PayWithField id="groceries-pay" way={way} onChange={setWay} />} />
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Product</th><th scope="col">Chain</th><th scope="col" className="num">Unit Price</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>

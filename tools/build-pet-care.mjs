@@ -2,45 +2,22 @@
  * Builds `src/engine/content/petcare.ts` from
  * `docs/research/world/research-pet-care.json` (read 2026-10-04): each
  * market's dry dog and cat foods and cat litters at a named retailer's own
- * price, and each town's vet's yearly visit and vaccines; and the grocers'
- * dry foods read later that day from their own feeds
- * (`research-pet-foods-grocers.json`, the same shape).
+ * price, and each town's vet's yearly visit and vaccines.
  *
  * Run: node tools/build-pet-care.mjs
  */
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const R = JSON.parse(readFileSync('docs/research/world/research-pet-care.json', 'utf8'));
-const GROCERS = existsSync('docs/research/world/research-pet-foods-grocers.json') ? JSON.parse(readFileSync('docs/research/world/research-pet-foods-grocers.json', 'utf8')).products : [];
 const OUT = 'src/engine/content/petcare.ts';
 const market = (m) => (/^US/.test(m) ? 'us' : /^UK/.test(m) ? 'uk' : /^Ireland/.test(m) ? 'ie' : /^Canada/.test(m) ? 'ca' : /^Mexico/.test(m) ? 'mx' : undefined);
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
 
 // Dry food only: the daily ration is a dry food's grams. Wet foods wait for their energy per gram.
-// Each its own id: a second bag of the same food is told by its weight. Until 2026-10-04 Walmart's 9.07 and 1.43 kg
-// bags of Cat Chow shared one, and buying either bought the first.
-const ids = new Set();
-const foods = [...R.feeding.products, ...GROCERS].filter((x) => /^dry /.test(x.type) && x.kg).map((x) => {
-  let id = `${market(x.market)}-${slug(`${x.brand} ${x.product}`)}`;
-  if (ids.has(id)) id = `${id.slice(0, 54).replace(/-+$/, '')}-${String(x.kg).replace('.', '-')}kg`;
-  for (let n = 2; ids.has(id); n += 1) id = `${id.replace(/-\d+$/, '')}-${n}`;
-  ids.add(id);
-  return {
-    id, market: market(x.market), species: /dog/.test(x.type) ? 'dog' : 'cat',
-    brand: x.brand, product: x.product, kg: x.kg, price: x.price, currency: x.currency, retailer: x.retailer.replace(/ \(.*\)$/, ''), url: x.url, status: x.status === 'verified' ? 'verified' : 'secondhand',
-  };
-});
-// One spelling a maker: small letters before capitals (Purina ONE, though the earlier read wrote PURINA ONE), and a
-// Purina line written without Purina is Purina's where the lists have it with (Pro Plan, Friskies).
-const plain = (s) => s.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
-const spellings = new Map();
-for (const f of foods) spellings.set(plain(f.brand), [...(spellings.get(plain(f.brand)) ?? []), f.brand]);
-const ordinary = (b) => /[a-z]/.test(b);
-const spelled = (b) => [...spellings.get(plain(b))].sort((a, z) => Number(ordinary(z)) - Number(ordinary(a)))[0];
-for (const f of foods) {
-  f.brand = spelled(f.brand);
-  if (spellings.has(plain(`Purina ${f.brand}`))) f.brand = spelled(`Purina ${f.brand}`);
-}
+const foods = R.feeding.products.filter((x) => /^dry /.test(x.type) && x.kg).map((x) => ({
+  id: `${market(x.market)}-${slug(`${x.brand} ${x.product}`)}`, market: market(x.market), species: /dog/.test(x.type) ? 'dog' : 'cat',
+  brand: x.brand, product: x.product, kg: x.kg, price: x.price, currency: x.currency, retailer: x.retailer.replace(/ \(.*\)$/, ''), url: x.url, status: x.status === 'verified' ? 'verified' : 'secondhand',
+}));
 // A litter's kilograms where it's sold by the liter: Cat's Best's 20 liters to 8.6 kilograms, 0.43 a liter, SLATE's reading for the rest.
 const KG_PER_L = 8.6 / 20;
 const litters = R.supplies.litterProducts.map((x) => {
@@ -72,10 +49,7 @@ const head = `/**
  * - **Food**: each market's dry dog and cat foods at a named retailer's own
  *   price (Walmart.com and Chewy in America, zooplus and Pets at Home in
  *   Britain, zooplus and Maxi Zoo in Ireland, PetSmart in Canada, Petco in
- *   Mexico), and from 2026-10-04 the grocers' own, read from their feeds
- *   (Price Rite, The Fresh Grocer, Smart & Final, SuperValu, Giant Tiger's
- *   Ontario listings, Chedraui). Each its own id, a maker spelled one way.
- *   A day's ration is Royal Canin's own: 273 grams for a 20 kg dog
+ *   Mexico). A day's ration is Royal Canin's own: 273 grams for a 20 kg dog
  *   at normal activity, 56 for a 4 kg cat. Wet foods are read but not sold:
  *   a day's ration is a dry food's grams, and their energy per gram wasn't.
  * - **Litter**: 1.9 kg a week for one cat, the middle of the 15 to 20 pounds
@@ -95,10 +69,8 @@ export interface VetYear { clinic: string; dog: number; cat: number; currency: s
 export const RATION_G = { dog: 273, cat: 56 } as const;
 export const LITTER_KG_A_WEEK = 1.9;
 export const WALK = { minutes: 60, met: 3.0 } as const;
-// Parsed from strings, as the grocery, toiletry and cleaning catalogs are: their names are the retailers', not SLATE's
-// prose (from 2026-10-04, when the grocers' foods brought fourteen of Chedraui's opening on "Alimento").
-export const PET_FOODS: readonly PetFood[] = JSON.parse(${JSON.stringify(JSON.stringify(foods))});
-export const LITTERS: readonly Litter[] = JSON.parse(${JSON.stringify(JSON.stringify(litters))});
+export const PET_FOODS: readonly PetFood[] = ${JSON.stringify(foods)};
+export const LITTERS: readonly Litter[] = ${JSON.stringify(litters)};
 export const VET_YEAR: Readonly<Record<string, VetYear>> = ${JSON.stringify(vets)};
 `;
 writeFileSync(OUT, head + body);
