@@ -55,6 +55,7 @@ const clothing = (cat) => CLOTHING_PRODUCTS.filter((p) => (CLOTHING_GROUP[p.cate
   .map((p) => row(p.brand, p.sameAs ?? `${p.brand}|${p.name}`, Math.max(1, p.sizes.length) * Math.max(1, p.colors.length), p.market));
 const cars = (list) => list.map((m) => row(m.make, `${m.make}|${m.model}`, 1, m.market));
 
+const COSMETIC = new Set(['foundation', 'lipstick', 'mascara', 'eye-shadow', 'eyeliner', 'hair-styling']);
 const DRINK = new Set(['beverage', 'alcohol']);
 /** What each category's rows are, where a catalog holds it. */
 const READ = {
@@ -81,7 +82,7 @@ const READ = {
   phones: () => PHONES.map((p) => row(p.maker, `${p.maker}|${p.model}`, Math.max(1, p.colors.length), p.market)),
   consoles: () => CONSOLES.map((c) => row(c.maker, `${c.maker}|${c.model}`, 1, c.market)),
   furniture: () => FURNITURE_CATALOG.map((p) => row(p.brand, `${p.brand}|${p.name}|${p.type ?? ''}`, 1, p.country)),
-  toiletries: () => TOILETRIES.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
+  toiletries: () => TOILETRIES.filter((t) => !COSMETIC.has(t.kind)).map((t) => row(t.brand ?? null, t.name, 1, t.market)),
   cleaning: () => CLEANING.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
   // Drinks the grocers sell (coffee, tea, juice, water, beer, wine) count as beverages, from 2026-10-05; until then as groceries.
   groceries: () => GROCERY_PRODUCTS.filter((g) => !DRINK.has(g.category)).map((g) => row(g.brand ?? null, g.name, 1, g.market)),
@@ -92,6 +93,8 @@ const READ = {
   'pet-supplies': () => [...PET_FOODS.map((p) => row(p.brand, `${p.brand}|${p.product}`, 1, p.market.toUpperCase())), ...LITTERS.map((l) => row(null, l.product, 1, l.market.toUpperCase()))],
   // Blenders and slow cookers, the cheapest first read and from 2026-10-05 each market's makes.
   kitchenware: () => [...Object.entries(KITCHEN_GEAR).flatMap(([m, list]) => list.map((g) => row(g.brand ?? null, g.name, 1, m.toUpperCase()))), ...Object.entries(GEAR_LINEUP).flatMap(([m, list]) => list.map((g) => row(g.brand ?? null, g.name, 1, m.toUpperCase())))],
+  // Makeup and hair styling at the chains, from 2026-10-05.
+  cosmetics: () => TOILETRIES.filter((t) => COSMETIC.has(t.kind)).map((t) => row(t.brand ?? null, t.name, 1, t.market)),
   bicycles: () => cars([...RIDE_MODELS, ...RIDE_LINEUP]),
   rvs: () => cars([...RV_MODELS, ...RV_LINEUP]),
   'car-options': () => { const make = new Map([...CAR_MODELS, ...EV_MODELS, ...PICKUP_MODELS].map((m) => [m.id, m.make])); return CAR_OPTIONS.map((o) => row(make.get(o.carId) ?? null, o.key, 1, o.carId.slice(0, 2))); },

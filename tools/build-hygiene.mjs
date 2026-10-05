@@ -2,7 +2,7 @@
 // (Stage 5 of docs/BACKLOG.md, from 2026-10-01): toiletries at the grocery
 // chains, each at its shelf price as the chain's own feed listed it, and the
 // barbers and salons of the business's towns with their own price lists.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 const OUT = 'src/engine/content/hygiene.ts';
 const j = JSON.parse(readFileSync('docs/research/world/research-hygiene.json', 'utf8'));
@@ -11,10 +11,14 @@ const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/
 // Each product's brand as its own name states it (`research-brands-from-names.json`, read 2026-10-04); null where the
 // name names none, as fresh produce mostly doesn't.
 const BRANDS = new Map(JSON.parse(readFileSync('docs/research/world/research-brands-from-names.json', 'utf8')).items.map((i) => [`${i.chain}|${i.name}`, i.brand ?? null]));
-const brandOf = (p) => BRANDS.get(`${p.chain}|${p.name}`) ?? null;
+const brandOf = (p) => BRANDS.get(`${p.chain}|${p.name}`) ?? p.brand ?? null;
+// And from 2026-10-05 makeup and hair styling at the same chains, with the SCCS's grams a day for each (`research-cosmetics.json`).
+const COSMETICS = existsSync('docs/research/world/research-cosmetics.json') ? JSON.parse(readFileSync('docs/research/world/research-cosmetics.json', 'utf8')) : { products: [], usage: [] };
+const COSMETIC_KINDS = ['foundation', 'lipstick', 'mascara', 'eye-shadow', 'eyeliner', 'hair-styling'];
+const cosmeticUse = Object.fromEntries((COSMETICS.usage ?? []).filter((u) => COSMETIC_KINDS.includes(u.kind) && u.gPerDay > 0).map((u) => [u.kind, u.gPerDay]));
 
 const seen = new Set();
-const toiletries = j.products.filter((p) => typeof p.price === 'number' && p.price > 0).map((p) => {
+const toiletries = [...j.products, ...(COSMETICS.products ?? []).filter((p) => COSMETIC_KINDS.includes(p.kind) && cosmeticUse[p.kind] && p.sizeQty > 0 && (p.sizeUnit === 'g' || p.sizeUnit === 'ml'))].filter((p) => typeof p.price === 'number' && p.price > 0).map((p) => {
   let id = `${p.chain}-${slug(p.name)}`.slice(0, 80);
   for (let n = 2; seen.has(id); n += 1) id = `${p.chain}-${slug(p.name)}`.slice(0, 76) + `-${n}`;
   seen.add(id);
@@ -63,6 +67,9 @@ export interface Salon {
 export const TOILETRIES: readonly Toiletry[] = JSON.parse(${JSON.stringify(JSON.stringify(toiletries))});
 
 export const SALONS: readonly Salon[] = JSON.parse(${JSON.stringify(JSON.stringify(salons))});
+
+/** Makeup's and hair styling's grams a day where worn, the SCCS's Notes of Guidance (from 2026-10-05): Table 3A's foundation, lipstick and hair styling as applied, Table 3B's mascara, eye shadow and eyeliner; a milliliter taken as a gram. */
+export const COSMETIC_G_A_DAY: Readonly<Record<string, number>> = ${JSON.stringify(cosmeticUse)};
 `;
 writeFileSync(OUT, body);
 console.log('toiletries', toiletries.length, 'salons', salons.length, [...new Set(salons.map((s) => s.cityId))].join(' '));

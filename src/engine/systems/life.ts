@@ -48,7 +48,7 @@ import { SITTING_MET } from './coldstress';
 import { countWash } from './water';
 import { bookInHand, readFor } from './reading';
 import { cutNow } from './utilities';
-import { SHAVE, shave, shaveReady, sprayUsed } from './hygiene';
+import { SHAVE, makeUp, shave, shaveReady, sprayUsed } from './hygiene';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { trainedSession } from './trainers';
@@ -526,6 +526,8 @@ export function registerLife(sim: Simulation): void {
       if ((action === 'wash' || action === 'bathe') && atHome(person)) countWash(person, action === 'bathe');
       // A shave with it on its day, where the razor and cream are to hand (from 2026-10-03).
       if (action === 'wash') shave(s, person);
+      // Makeup and hair styling with the morning's wash on their days, where chosen (from 2026-10-05).
+      if (action === 'wash' && atHome(person)) makeUp(s, person);
       // Dried on one of their own towels at home, a use toward its wash; a hotel, a let or a gym gives its own (`useTowel`, from 2026-10-02).
       if ((action === 'wash' || action === 'bathe') && atHome(person) && !useTowel(s, person) && person.id === s.universe.playerId) s.notify({ category: 'home', title: 'No Clean Towel', body: 'Every towel to hand is in the wash or still drying: put a load on.', importance: 25, route: '/workspace/clothes' });
       // An hour of it, at its injury rate (`content/injury.ts`).
