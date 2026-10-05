@@ -1,0 +1,3730 @@
+{
+ "_about": [
+  "Phones from makers' own online stores other than Apple's, Samsung's and Google's (research-phones.json), read on 2026-10-05: up to 6 models a maker a market read from each store's pages, its catalog or the API its pages call, and the Shopify stores' catalogs (/products.json) read mechanically, up to 12 models a maker a market in the store's own order. Each read row's price was found again before it was kept, where it was read: on its page, in the store's API or catalog response, in a Shopify product's JSON, or after the store's own country form or store-view switch (Fairphone's, Mudita's). Unlocked phones only, at their regular price there; America's and Canada's before tax, Britain's, Ireland's and Mexico's with it.",
+  "Their plans, trade-ins, repairs and cover were not read: SLATE says the maker publishes none. A feature phone keeps the storage its maker states (HMD 110 4G, 128 MB as 0.128); a maker that states none (Doro) keeps none."
+ ],
+ "devices": [
+  {
+   "market": "us",
+   "maker": "Motorola",
+   "model": "razr ultra (2026)",
+   "storageGB": 512,
+   "colors": [
+    "Orient Blue",
+    "Cocoa"
+   ],
+   "price": 1499.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/us/en/p/phones/razr/razr-ultra-2026/pmipmjk44m3",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/us/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=7508080f-0497-4d39-a3b2-fe0bf4ff2b18&params=%257B%2522pageFilterId%2522%253A%25227508080f-0497-4d39-a3b2-fe0bf4ff2b18%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522100%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "us",
+   "maker": "Motorola",
+   "model": "razr (2026)",
+   "storageGB": 256,
+   "colors": [
+    "Violet Ice",
+    "Hematite",
+    "Bright White",
+    "Sporting Green"
+   ],
+   "price": 799.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/us/en/p/phones/razr/razr-2026/pmipmjl44m7",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/us/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=7508080f-0497-4d39-a3b2-fe0bf4ff2b18&params=%257B%2522pageFilterId%2522%253A%25227508080f-0497-4d39-a3b2-fe0bf4ff2b18%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522100%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "us",
+   "maker": "Motorola",
+   "model": "edge (2026)",
+   "storageGB": 128,
+   "colors": [
+    "Martini Olive"
+   ],
+   "price": 599.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/us/en/p/phones/motorola-edge/edge-2026/pmipmjr44mu",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/us/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=7508080f-0497-4d39-a3b2-fe0bf4ff2b18&params=%257B%2522pageFilterId%2522%253A%25227508080f-0497-4d39-a3b2-fe0bf4ff2b18%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522100%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "us",
+   "maker": "Motorola",
+   "model": "moto g stylus (2026)",
+   "storageGB": 128,
+   "colors": [
+    "Lavender Mist",
+    "Coal Smoke"
+   ],
+   "price": 499.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/us/en/p/phones/moto-g/g-stylus-2026/pmipmjg43mp",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/us/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=7508080f-0497-4d39-a3b2-fe0bf4ff2b18&params=%257B%2522pageFilterId%2522%253A%25227508080f-0497-4d39-a3b2-fe0bf4ff2b18%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522100%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "us",
+   "maker": "Motorola",
+   "model": "moto g stylus (2026)",
+   "storageGB": 256,
+   "colors": [
+    "Coal Smoke",
+    "Lavender Mist"
+   ],
+   "price": 599.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/us/en/p/phones/moto-g/g-stylus-2026/pmipmjg43mp",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/us/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=7508080f-0497-4d39-a3b2-fe0bf4ff2b18&params=%257B%2522pageFilterId%2522%253A%25227508080f-0497-4d39-a3b2-fe0bf4ff2b18%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522100%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "us",
+   "maker": "Motorola",
+   "model": "moto g power (2026)",
+   "storageGB": 128,
+   "colors": [
+    "Pure Cashmere",
+    "Evening Blue"
+   ],
+   "price": 399.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/us/en/p/phones/moto-g/moto-g-power-2026/pmipmjb42mv",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/us/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=7508080f-0497-4d39-a3b2-fe0bf4ff2b18&params=%257B%2522pageFilterId%2522%253A%25227508080f-0497-4d39-a3b2-fe0bf4ff2b18%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522100%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "us",
+   "maker": "Motorola",
+   "model": "moto g play (2026)",
+   "storageGB": 64,
+   "colors": [
+    "Tapestry"
+   ],
+   "price": 249.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/us/en/p/phones/moto-g/moto-g-play-2026/pmipmja42mq",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/us/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=7508080f-0497-4d39-a3b2-fe0bf4ff2b18&params=%257B%2522pageFilterId%2522%253A%25227508080f-0497-4d39-a3b2-fe0bf4ff2b18%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522100%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ca",
+   "maker": "Motorola",
+   "model": "razr fold",
+   "storageGB": 512,
+   "colors": [
+    "Blackened Blue"
+   ],
+   "price": 2699.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ca/en/p/phones/razr/motorola-razr-fold/pmipmjj43my",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ca/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=88569fb4-16d1-497f-92a8-0fa2fde84646&params=%257B%2522pageFilterId%2522%253A%252288569fb4-16d1-497f-92a8-0fa2fde84646%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%252220%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ca",
+   "maker": "Motorola",
+   "model": "razr ultra (2025)",
+   "storageGB": 512,
+   "colors": [
+    "Scarab"
+   ],
+   "price": 1899.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ca/en/p/phones/razr/razr-ultra/pmipmhn40ms",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ca/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=88569fb4-16d1-497f-92a8-0fa2fde84646&params=%257B%2522pageFilterId%2522%253A%252288569fb4-16d1-497f-92a8-0fa2fde84646%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%252220%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ca",
+   "maker": "Motorola",
+   "model": "edge (2026)",
+   "storageGB": 128,
+   "colors": [
+    "Martini Olive"
+   ],
+   "price": 849.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ca/en/p/phones/motorola-edge/edge-2026/pmipmjr44mu",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ca/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=88569fb4-16d1-497f-92a8-0fa2fde84646&params=%257B%2522pageFilterId%2522%253A%252288569fb4-16d1-497f-92a8-0fa2fde84646%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%252220%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ca",
+   "maker": "Motorola",
+   "model": "moto g stylus (2026)",
+   "storageGB": 128,
+   "colors": [
+    "Coal Smoke"
+   ],
+   "price": 699.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ca/en/p/phones/moto-g/g-stylus-2026/pmipmjg43mp",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ca/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=88569fb4-16d1-497f-92a8-0fa2fde84646&params=%257B%2522pageFilterId%2522%253A%252288569fb4-16d1-497f-92a8-0fa2fde84646%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%252220%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ca",
+   "maker": "Motorola",
+   "model": "moto g power (2026)",
+   "storageGB": 128,
+   "colors": [
+    "Evening Blue"
+   ],
+   "price": 549.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ca/en/p/phones/moto-g/moto-g-power-2026/pmipmjb42mv",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ca/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=88569fb4-16d1-497f-92a8-0fa2fde84646&params=%257B%2522pageFilterId%2522%253A%252288569fb4-16d1-497f-92a8-0fa2fde84646%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%252220%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ca",
+   "maker": "Motorola",
+   "model": "moto g play (2026)",
+   "storageGB": 64,
+   "colors": [
+    "Tapestry"
+   ],
+   "price": 349.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ca/en/p/phones/moto-g/moto-g-play-2026/pmipmja42mq",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ca/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=88569fb4-16d1-497f-92a8-0fa2fde84646&params=%257B%2522pageFilterId%2522%253A%252288569fb4-16d1-497f-92a8-0fa2fde84646%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%252220%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "uk",
+   "maker": "Motorola",
+   "model": "razr 70 ultra",
+   "storageGB": 512,
+   "colors": [
+    "Cocoa",
+    "Orient Blue"
+   ],
+   "price": 1199,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/gb/en/p/phones/razr/razr-70-ultra/pmipmjk44m2",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/gb/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "uk",
+   "maker": "Motorola",
+   "model": "signature",
+   "storageGB": 512,
+   "colors": [
+    "Carbon",
+    "Martini Olive"
+   ],
+   "price": 899.99,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/gb/en/p/phones/motorola-signature/signature/pmipmje43mf",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/gb/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "uk",
+   "maker": "Motorola",
+   "model": "edge 70 plus",
+   "storageGB": 256,
+   "colors": [
+    "Mountain View",
+    "Gray Lilac",
+    "Milky Blue"
+   ],
+   "price": 529.99,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/gb/en/p/phones/motorola-edge/motorola-edge-70-plus/pmipmju45ml",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/gb/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "uk",
+   "maker": "Motorola",
+   "model": "moto g87",
+   "storageGB": 256,
+   "colors": [
+    "Blue Atoll",
+    "Overture"
+   ],
+   "price": 349,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/gb/en/p/phones/moto-g/87/pmipmjh44mo",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/gb/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "uk",
+   "maker": "Motorola",
+   "model": "moto g67",
+   "storageGB": 128,
+   "colors": [
+    "Nile",
+    "Arctic Seal"
+   ],
+   "price": 199,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/gb/en/p/phones/moto-g/67/pmipmjh43mu",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/gb/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "uk",
+   "maker": "Motorola",
+   "model": "moto g17",
+   "storageGB": 128,
+   "colors": [
+    "Bordeaux",
+    "Alaskan Blue"
+   ],
+   "price": 149,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/gb/en/p/phones/moto-g/17/pmipmjn44mj",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/gb/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ie",
+   "maker": "Motorola",
+   "model": "razr 70 ultra",
+   "storageGB": 512,
+   "colors": [
+    "Cocoa",
+    "Orient Blue"
+   ],
+   "price": 1399,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ie/en/p/phones/razr/razr-70-ultra/pmipmjk44m2",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ie/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ie",
+   "maker": "Motorola",
+   "model": "signature",
+   "storageGB": 512,
+   "colors": [
+    "Carbon",
+    "Martini Olive"
+   ],
+   "price": 999.99,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ie/en/p/phones/motorola-signature/signature/pmipmje43mf",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ie/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ie",
+   "maker": "Motorola",
+   "model": "edge 70 plus",
+   "storageGB": 256,
+   "colors": [
+    "Mountain View",
+    "Gray Lilac",
+    "Milky Blue"
+   ],
+   "price": 599.99,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ie/en/p/phones/motorola-edge/motorola-edge-70-plus/pmipmju45ml",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ie/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ie",
+   "maker": "Motorola",
+   "model": "moto g87",
+   "storageGB": 256,
+   "colors": [
+    "Blue Atoll",
+    "Overture"
+   ],
+   "price": 399,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ie/en/p/phones/moto-g/87/pmipmjh44mo",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ie/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ie",
+   "maker": "Motorola",
+   "model": "moto g67",
+   "storageGB": 128,
+   "colors": [
+    "Arctic Seal",
+    "Nile"
+   ],
+   "price": 229,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ie/en/p/phones/moto-g/67/pmipmjh43mu",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ie/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "ie",
+   "maker": "Motorola",
+   "model": "moto g17",
+   "storageGB": 128,
+   "colors": [
+    "Bordeaux",
+    "Alaskan Blue"
+   ],
+   "price": 189,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.motorola.com/ie/en/p/phones/moto-g/17/pmipmjn44mj",
+   "read": "2026-10-05",
+   "readFrom": "https://api.motorola.com/ie/en/ofp/search/dlp/product/query/get/_tsc?callback=cb&pageFilterId=a4022b65-6157-47be-9111-c99203704fec&params=%257B%2522pageFilterId%2522%253A%2522a4022b65-6157-47be-9111-c99203704fec%2522%252C%2522classificationGroupIds%2522%253A%25229999999%2522%252C%2522facets%2522%253A%255B%255D%252C%2522page%2522%253A1%252C%2522pageSize%2522%253A%2522150%2522%252C%2522init%2522%253Atrue%252C%2522sorts%2522%253A%255B%2522newest%2522%255D%252C%2522version%2522%253A%2522v2%2522%252C%2522feature%2522%253Anull%257D"
+  },
+  {
+   "market": "mx",
+   "maker": "Motorola",
+   "model": "razr 70 ultra",
+   "storageGB": 512,
+   "colors": [
+    "Cocoa",
+    "Azul"
+   ],
+   "price": 29999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.motorola.com.mx/motorola-razr-70-ultra/p",
+   "read": "2026-10-05",
+   "readFrom": "https://www.motorola.com.mx/api/catalog_system/pub/products/search/smartphones?_from=0&_to=49"
+  },
+  {
+   "market": "mx",
+   "maker": "Motorola",
+   "model": "signature",
+   "storageGB": 1024,
+   "colors": [
+    "Negro",
+    "Olivo"
+   ],
+   "price": 29999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.motorola.com.mx/motorola-signature/p",
+   "read": "2026-10-05",
+   "readFrom": "https://www.motorola.com.mx/api/catalog_system/pub/products/search/smartphones?_from=0&_to=49"
+  },
+  {
+   "market": "mx",
+   "maker": "Motorola",
+   "model": "edge 70 pro",
+   "storageGB": 512,
+   "colors": [
+    "Azul",
+    "Vino",
+    "Café",
+    "Blanco"
+   ],
+   "price": 18999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.motorola.com.mx/motorola-edge-70-pro/p",
+   "read": "2026-10-05",
+   "readFrom": "https://www.motorola.com.mx/api/catalog_system/pub/products/search/smartphones?_from=0&_to=49"
+  },
+  {
+   "market": "mx",
+   "maker": "Motorola",
+   "model": "edge 70 fusion",
+   "storageGB": 256,
+   "colors": [
+    "Celeste",
+    "Azul",
+    "Verde",
+    "Morado"
+   ],
+   "price": 10999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.motorola.com.mx/motorola-edge-70-fusion/p",
+   "read": "2026-10-05",
+   "readFrom": "https://www.motorola.com.mx/api/catalog_system/pub/products/search/smartphones?_from=0&_to=49"
+  },
+  {
+   "market": "mx",
+   "maker": "Motorola",
+   "model": "moto g67 5G",
+   "storageGB": 256,
+   "colors": [
+    "Lima",
+    "Gris"
+   ],
+   "price": 6999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.motorola.com.mx/moto-g67-5g/p",
+   "read": "2026-10-05",
+   "readFrom": "https://www.motorola.com.mx/api/catalog_system/pub/products/search/smartphones?_from=0&_to=49"
+  },
+  {
+   "market": "mx",
+   "maker": "Motorola",
+   "model": "moto g17",
+   "storageGB": 256,
+   "colors": [
+    "Celeste",
+    "Arandano",
+    "Rosa"
+   ],
+   "price": 5499,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.motorola.com.mx/moto-g17/p",
+   "read": "2026-10-05",
+   "readFrom": "https://www.motorola.com.mx/api/catalog_system/pub/products/search/smartphones?_from=0&_to=49"
+  },
+  {
+   "market": "us",
+   "maker": "OnePlus",
+   "model": "15",
+   "storageGB": 512,
+   "colors": [
+    "Infinite Black",
+    "Sand Storm"
+   ],
+   "price": 999.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/us/oneplus-15",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=us&productCode=P1120058"
+  },
+  {
+   "market": "us",
+   "maker": "OnePlus",
+   "model": "15R",
+   "storageGB": 256,
+   "colors": [
+    "Mint Breeze",
+    "Charcoal Black"
+   ],
+   "price": 699.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/us/oneplus-15r",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=us&productCode=P1120062"
+  },
+  {
+   "market": "us",
+   "maker": "OnePlus",
+   "model": "15R",
+   "storageGB": 512,
+   "colors": [
+    "Charcoal Black"
+   ],
+   "price": 799.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/us/oneplus-15r",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=us&productCode=P1120062"
+  },
+  {
+   "market": "us",
+   "maker": "OnePlus",
+   "model": "13",
+   "storageGB": 256,
+   "colors": [
+    "Black Eclipse"
+   ],
+   "price": 899.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/us/oneplus-13",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=us&productCode=P1120032"
+  },
+  {
+   "market": "us",
+   "maker": "OnePlus",
+   "model": "13",
+   "storageGB": 512,
+   "colors": [
+    "Midnight Ocean"
+   ],
+   "price": 999.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/us/oneplus-13",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=us&productCode=P1120032"
+  },
+  {
+   "market": "us",
+   "maker": "OnePlus",
+   "model": "Nord N30 5G",
+   "storageGB": 128,
+   "colors": [
+    "Chromatic Gray"
+   ],
+   "price": 299.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/us/oneplus-n30-5g",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=us&productCode=P1136054"
+  },
+  {
+   "market": "ca",
+   "maker": "OnePlus",
+   "model": "15",
+   "storageGB": 256,
+   "colors": [
+    "Infinite Black"
+   ],
+   "price": 1299.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/ca_en/oneplus-15",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=ca_en&productCode=P1120058"
+  },
+  {
+   "market": "ca",
+   "maker": "OnePlus",
+   "model": "15",
+   "storageGB": 512,
+   "colors": [
+    "Infinite Black",
+    "Sand Storm"
+   ],
+   "price": 1399.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/ca_en/oneplus-15",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=ca_en&productCode=P1120058"
+  },
+  {
+   "market": "ca",
+   "maker": "OnePlus",
+   "model": "15R",
+   "storageGB": 256,
+   "colors": [
+    "Mint Breeze",
+    "Charcoal Black"
+   ],
+   "price": 999.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/ca_en/oneplus-15r",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=ca_en&productCode=P1120062"
+  },
+  {
+   "market": "ca",
+   "maker": "OnePlus",
+   "model": "15R",
+   "storageGB": 512,
+   "colors": [
+    "Charcoal Black"
+   ],
+   "price": 1149.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/ca_en/oneplus-15r",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=ca_en&productCode=P1120062"
+  },
+  {
+   "market": "ca",
+   "maker": "OnePlus",
+   "model": "13",
+   "storageGB": 256,
+   "colors": [
+    "Black Eclipse"
+   ],
+   "price": 1249.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/ca_en/oneplus-13",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=ca_en&productCode=P1120032"
+  },
+  {
+   "market": "ca",
+   "maker": "OnePlus",
+   "model": "13",
+   "storageGB": 512,
+   "colors": [
+    "Midnight Ocean",
+    "Black Eclipse"
+   ],
+   "price": 1399.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/ca_en/oneplus-13",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=ca_en&productCode=P1120032"
+  },
+  {
+   "market": "ca",
+   "maker": "OnePlus",
+   "model": "Nord N30 5G",
+   "storageGB": 128,
+   "colors": [
+    "Chromatic Gray"
+   ],
+   "price": 379.99,
+   "currency": "CAD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oneplus.com/ca_en/oneplus-n30-5g",
+   "read": "2026-10-05",
+   "readFrom": "https://mallapi-na.oneplus.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=ca_en&productCode=P1136054"
+  },
+  {
+   "market": "us",
+   "maker": "Nothing",
+   "model": "Phone (4a) Pro",
+   "storageGB": 128,
+   "colors": [
+    "Silver",
+    "Black"
+   ],
+   "price": 499,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://us.nothing.tech/products/phone-4a-pro",
+   "read": "2026-10-05",
+   "readFrom": "https://us.nothing.tech/collections/phones"
+  },
+  {
+   "market": "us",
+   "maker": "Nothing",
+   "model": "Phone (4a) Pro",
+   "storageGB": 256,
+   "colors": [
+    "Silver",
+    "Black",
+    "Pink"
+   ],
+   "price": 599,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://us.nothing.tech/products/phone-4a-pro",
+   "read": "2026-10-05",
+   "readFrom": "https://us.nothing.tech/collections/phones"
+  },
+  {
+   "market": "us",
+   "maker": "Nothing",
+   "model": "Phone (3)",
+   "storageGB": 256,
+   "colors": [
+    "White",
+    "Black"
+   ],
+   "price": 799,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://us.nothing.tech/products/phone-3",
+   "read": "2026-10-05",
+   "readFrom": "https://us.nothing.tech/collections/phones"
+  },
+  {
+   "market": "us",
+   "maker": "Nothing",
+   "model": "Phone (3)",
+   "storageGB": 512,
+   "colors": [
+    "White",
+    "Black"
+   ],
+   "price": 899,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://us.nothing.tech/products/phone-3",
+   "read": "2026-10-05",
+   "readFrom": "https://us.nothing.tech/collections/phones"
+  },
+  {
+   "market": "ie",
+   "maker": "Nothing",
+   "model": "Phone (4a)",
+   "storageGB": 128,
+   "colors": [
+    "White",
+    "Black"
+   ],
+   "price": 399,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://ie.nothing.tech/products/phone-4a",
+   "read": "2026-10-05",
+   "readFrom": "https://ie.nothing.tech/collections/phones"
+  },
+  {
+   "market": "ie",
+   "maker": "Nothing",
+   "model": "Phone (4a)",
+   "storageGB": 256,
+   "colors": [
+    "White",
+    "Black"
+   ],
+   "price": 449,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://ie.nothing.tech/products/phone-4a",
+   "read": "2026-10-05",
+   "readFrom": "https://ie.nothing.tech/collections/phones"
+  },
+  {
+   "market": "ie",
+   "maker": "Nothing",
+   "model": "Phone (4a) Pro",
+   "storageGB": 128,
+   "colors": [
+    "Silver",
+    "Black"
+   ],
+   "price": 549,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://ie.nothing.tech/products/phone-4a-pro",
+   "read": "2026-10-05",
+   "readFrom": "https://ie.nothing.tech/collections/phones"
+  },
+  {
+   "market": "ie",
+   "maker": "Nothing",
+   "model": "Phone (4a) Pro",
+   "storageGB": 256,
+   "colors": [
+    "Silver",
+    "Black",
+    "Pink"
+   ],
+   "price": 649,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://ie.nothing.tech/products/phone-4a-pro",
+   "read": "2026-10-05",
+   "readFrom": "https://ie.nothing.tech/collections/phones"
+  },
+  {
+   "market": "ie",
+   "maker": "Nothing",
+   "model": "Phone (4b)",
+   "storageGB": 128,
+   "colors": [
+    "White",
+    "Black",
+    "Blue"
+   ],
+   "price": 329,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://ie.nothing.tech/products/phone-4b",
+   "read": "2026-10-05",
+   "readFrom": "https://ie.nothing.tech/collections/phones"
+  },
+  {
+   "market": "ie",
+   "maker": "Nothing",
+   "model": "Phone (3)",
+   "storageGB": 256,
+   "colors": [
+    "White",
+    "Black"
+   ],
+   "price": 849,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://ie.nothing.tech/products/phone-3",
+   "read": "2026-10-05",
+   "readFrom": "https://ie.nothing.tech/collections/phones"
+  },
+  {
+   "market": "ie",
+   "maker": "Nothing",
+   "model": "Phone (3)",
+   "storageGB": 512,
+   "colors": [
+    "White",
+    "Black"
+   ],
+   "price": 949,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://ie.nothing.tech/products/phone-3",
+   "read": "2026-10-05",
+   "readFrom": "https://ie.nothing.tech/collections/phones"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "17 Ultra",
+   "storageGB": 512,
+   "colors": [
+    "Black",
+    "Starlit Green",
+    "White"
+   ],
+   "price": 1299,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/xiaomi-17-ultra/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/xiaomi/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "17 Ultra",
+   "storageGB": 1024,
+   "colors": [
+    "Black",
+    "White",
+    "Starlit Green"
+   ],
+   "price": 1499,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/xiaomi-17-ultra/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/xiaomi/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "17T Pro",
+   "storageGB": 256,
+   "colors": [
+    "Deep Blue",
+    "Black",
+    "Deep Violet"
+   ],
+   "price": 799,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/xiaomi-17t-pro/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/xiaomi/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "17T Pro",
+   "storageGB": 512,
+   "colors": [
+    "Deep Blue",
+    "Deep Violet",
+    "Black"
+   ],
+   "price": 849,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/xiaomi-17t-pro/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/xiaomi/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "17T Pro",
+   "storageGB": 1024,
+   "colors": [
+    "Deep Blue",
+    "Deep Violet",
+    "Black"
+   ],
+   "price": 949,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/xiaomi-17t-pro/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/xiaomi/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "17T",
+   "storageGB": 256,
+   "colors": [
+    "Blue",
+    "Opal White",
+    "Black",
+    "Violet"
+   ],
+   "price": 649,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/xiaomi-17t/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/xiaomi/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "17T",
+   "storageGB": 512,
+   "colors": [
+    "Black",
+    "Blue",
+    "Violet"
+   ],
+   "price": 699,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/xiaomi-17t/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/xiaomi/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "REDMI Note 17 Pro 5G",
+   "storageGB": 256,
+   "colors": [
+    "Sky Blue",
+    "Black",
+    "Purple"
+   ],
+   "price": 429,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/redmi-note-17-pro-5g/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/redmi/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "REDMI Note 17 Pro 5G",
+   "storageGB": 512,
+   "colors": [
+    "Sky Blue",
+    "Black",
+    "Purple"
+   ],
+   "price": 469,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/redmi-note-17-pro-5g/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/redmi/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "REDMI Note 17 5G",
+   "storageGB": 128,
+   "colors": [
+    "Sky Teal",
+    "Celestial Purple",
+    "Black"
+   ],
+   "price": 299,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/redmi-note-17-5g/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/redmi/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "REDMI Note 17 5G",
+   "storageGB": 256,
+   "colors": [
+    "Sky Teal",
+    "Celestial Purple",
+    "Black"
+   ],
+   "price": 329,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/redmi-note-17-5g/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/redmi/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "POCO M8 5G",
+   "storageGB": 256,
+   "colors": [
+    "Green",
+    "Silver",
+    "Black"
+   ],
+   "price": 229,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/poco-m8-5g/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/poco/"
+  },
+  {
+   "market": "uk",
+   "maker": "Xiaomi",
+   "model": "POCO M8 5G",
+   "storageGB": 512,
+   "colors": [
+    "Green",
+    "Silver",
+    "Black"
+   ],
+   "price": 259,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/uk/product/poco-m8-5g/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/uk/product-list/phone/poco/"
+  },
+  {
+   "market": "mx",
+   "maker": "Xiaomi",
+   "model": "17 Ultra",
+   "storageGB": 512,
+   "colors": [
+    "Blanco",
+    "Negro",
+    "Verde Estelar"
+   ],
+   "price": 35999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.mi.com/mx/product/xiaomi-17-ultra/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/mx/product-list/phone/xiaomi/"
+  },
+  {
+   "market": "mx",
+   "maker": "Xiaomi",
+   "model": "17",
+   "storageGB": 512,
+   "colors": [
+    "Negro",
+    "Verde Aventura",
+    "Azul Hielo"
+   ],
+   "price": 24999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.mi.com/mx/product/xiaomi-17/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/mx/product-list/phone/xiaomi/"
+  },
+  {
+   "market": "mx",
+   "maker": "Xiaomi",
+   "model": "15T Pro",
+   "storageGB": 512,
+   "colors": [
+    "Oro moca",
+    "Negro",
+    "Gris"
+   ],
+   "price": 18999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.mi.com/mx/product/xiaomi-15t-pro/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/mx/product-list/phone/xiaomi/"
+  },
+  {
+   "market": "mx",
+   "maker": "Xiaomi",
+   "model": "15T Pro",
+   "storageGB": 1024,
+   "colors": [
+    "Negro",
+    "Gris"
+   ],
+   "price": 20999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.mi.com/mx/product/xiaomi-15t-pro/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/mx/product-list/phone/xiaomi/"
+  },
+  {
+   "market": "mx",
+   "maker": "Xiaomi",
+   "model": "REDMI Note 15 Pro+ 5G",
+   "storageGB": 512,
+   "colors": [
+    "Café moca",
+    "Azul glaciar",
+    "Negro"
+   ],
+   "price": 11999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/mx/product/redmi-note-15-pro-plus-5g/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/mx/product-list/phone/redmi/"
+  },
+  {
+   "market": "mx",
+   "maker": "Xiaomi",
+   "model": "REDMI Note 15 Pro 5G",
+   "storageGB": 512,
+   "colors": [
+    "Gris titanio",
+    "Morado neblina",
+    "Negro"
+   ],
+   "price": 9999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/mx/product/redmi-note-15-pro-5g/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/mx/product-list/phone/redmi/"
+  },
+  {
+   "market": "mx",
+   "maker": "Xiaomi",
+   "model": "REDMI 15C",
+   "storageGB": 128,
+   "colors": [
+    "Verde Menta",
+    "Negro Ocaso",
+    "Azul Lunar"
+   ],
+   "price": 2999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.mi.com/mx/product/redmi-15c/",
+   "read": "2026-10-05",
+   "readFrom": "https://www.mi.com/mx/product-list/phone/redmi/"
+  },
+  {
+   "market": "uk",
+   "maker": "OPPO",
+   "model": "Find X9 Ultra",
+   "storageGB": 512,
+   "colors": [
+    "Tundra Umber",
+    "Canyon Orange"
+   ],
+   "price": 1449,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/uk/product/oppo-find-x9-ultra.P.P1100323",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-eu.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=uk&productCode=P1100323"
+  },
+  {
+   "market": "uk",
+   "maker": "OPPO",
+   "model": "Find X9 Pro",
+   "storageGB": 512,
+   "colors": [
+    "Titanium Charcoal",
+    "Silk White"
+   ],
+   "price": 1099,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/uk/product/oppo-find-x9-pro.P.P1100241",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-eu.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=uk&productCode=P1100241"
+  },
+  {
+   "market": "uk",
+   "maker": "OPPO",
+   "model": "Reno16 Pro 5G",
+   "storageGB": 512,
+   "colors": [
+    "Pop White",
+    "Starlight Black"
+   ],
+   "price": 899,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/uk/product/oppo-reno16-pro-5g.P.P1100365",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-eu.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=uk&productCode=P1100365"
+  },
+  {
+   "market": "uk",
+   "maker": "OPPO",
+   "model": "Reno16 5G",
+   "storageGB": 512,
+   "colors": [
+    "Pop White",
+    "Purple Black"
+   ],
+   "price": 699,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/uk/product/oppo-reno16-5g.P.P1100366",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-eu.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=uk&productCode=P1100366"
+  },
+  {
+   "market": "uk",
+   "maker": "OPPO",
+   "model": "Reno16 F 5G",
+   "storageGB": 256,
+   "colors": [
+    "Pop White",
+    "Purple Black"
+   ],
+   "price": 479,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/uk/product/oppo-reno16-f-5g.P.P1100368",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-eu.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=uk&productCode=P1100368"
+  },
+  {
+   "market": "uk",
+   "maker": "OPPO",
+   "model": "Reno13 F 5G",
+   "storageGB": 256,
+   "colors": [
+    "Graphite Grey",
+    "Luminous Blue"
+   ],
+   "price": 329,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/uk/product/oppo-reno13-f-5g.P.P1100189",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-eu.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=uk&productCode=P1100189"
+  },
+  {
+   "market": "mx",
+   "maker": "OPPO",
+   "model": "Find X9 Pro",
+   "storageGB": 512,
+   "colors": [
+    "Pearl White",
+    "Titanium Gray"
+   ],
+   "price": 27999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/mx/product/oppo-findx9-pro.P.P1100543",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-sg.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=mx&productCode=P1100543"
+  },
+  {
+   "market": "mx",
+   "maker": "OPPO",
+   "model": "Reno16 Pro 5G",
+   "storageGB": 256,
+   "colors": [
+    "Blanco Cósmico",
+    "Negro Estelar"
+   ],
+   "price": 21999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/mx/product/oppo-reno-16pro-5g",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-sg.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=mx&productCode=P1100928"
+  },
+  {
+   "market": "mx",
+   "maker": "OPPO",
+   "model": "Reno16 5G",
+   "storageGB": 256,
+   "colors": [
+    "Blanco Cósmico",
+    "Violeta Crepúsculo"
+   ],
+   "price": 18999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/mx/product/oppo-reno-16-5g",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-sg.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=mx&productCode=P1100912"
+  },
+  {
+   "market": "mx",
+   "maker": "OPPO",
+   "model": "Reno16F 5G",
+   "storageGB": 128,
+   "colors": [
+    "Blanco Cósmico",
+    "Violeta Crepúsculo"
+   ],
+   "price": 15999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/mx/product/oppo-reno-16f-5g",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-sg.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=mx&productCode=P1100911"
+  },
+  {
+   "market": "mx",
+   "maker": "OPPO",
+   "model": "Reno16F 5G",
+   "storageGB": 256,
+   "colors": [
+    "Blanco Cósmico",
+    "Violeta Crepúsculo"
+   ],
+   "price": 15999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/mx/product/oppo-reno-16f-5g",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-sg.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=mx&productCode=P1100911"
+  },
+  {
+   "market": "mx",
+   "maker": "OPPO",
+   "model": "A6",
+   "storageGB": 256,
+   "colors": [
+    "Sapphire Blue",
+    "Sakura pink"
+   ],
+   "price": 9999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/mx/product/oppo-a6.P.P1100984",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-sg.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=mx&productCode=P1100984"
+  },
+  {
+   "market": "mx",
+   "maker": "OPPO",
+   "model": "A6T",
+   "storageGB": 128,
+   "colors": [
+    "Blanco",
+    "Oliva"
+   ],
+   "price": 6999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oppo.com/mx/product/oppo-a6t.P.P1100815",
+   "read": "2026-10-05",
+   "readFrom": "https://opsg-gateway-sg.oppo.com/v2/api/rest/mall/product/detail/fetch?settleChannel=3&storeViewCode=mx&productCode=P1100815"
+  },
+  {
+   "market": "mx",
+   "maker": "Huawei",
+   "model": "Pura 90s Pro Max",
+   "storageGB": 256,
+   "colors": [
+    "Naranja Celeste",
+    "Dorado Solar",
+    "Negro Grafito"
+   ],
+   "price": 28499,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://consumer.huawei.com/mx/offer/telefonos/pura90s-pro-buy/?productId=10052119644151",
+   "read": "2026-10-05",
+   "readFrom": "https://itrinity-sg.c.huawei.com/convert/queryPrdDisplayInfos?productIds=10052119644151,10052537077116,10052685388417,10052871398415,10052841726026,10052689312056,10052380026799,10052374881542,10052617315158,10052866308894&siteCode=mx&loginFrom=1&groupFlag=false"
+  },
+  {
+   "market": "mx",
+   "maker": "Huawei",
+   "model": "Pura 90s Pro Max",
+   "storageGB": 512,
+   "colors": [
+    "Naranja Celeste",
+    "Uva Tornasol",
+    "Dorado Solar",
+    "Negro Grafito"
+   ],
+   "price": 32999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://consumer.huawei.com/mx/offer/telefonos/pura90s-pro-buy/?productId=10052119644151",
+   "read": "2026-10-05",
+   "readFrom": "https://itrinity-sg.c.huawei.com/convert/queryPrdDisplayInfos?productIds=10052119644151,10052537077116,10052685388417,10052871398415,10052841726026,10052689312056,10052380026799,10052374881542,10052617315158,10052866308894&siteCode=mx&loginFrom=1&groupFlag=false"
+  },
+  {
+   "market": "mx",
+   "maker": "Huawei",
+   "model": "Pura 90s Pro",
+   "storageGB": 256,
+   "colors": [
+    "Guayaba Fizz",
+    "Naranja Spritz",
+    "Blanco Frapé",
+    "Soda Mora"
+   ],
+   "price": 22999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://consumer.huawei.com/mx/offer/telefonos/pura90s-pro-buy/?productId=10052537077116",
+   "read": "2026-10-05",
+   "readFrom": "https://itrinity-sg.c.huawei.com/convert/queryPrdDisplayInfos?productIds=10052119644151,10052537077116,10052685388417,10052871398415,10052841726026,10052689312056,10052380026799,10052374881542,10052617315158,10052866308894&siteCode=mx&loginFrom=1&groupFlag=false"
+  },
+  {
+   "market": "mx",
+   "maker": "Huawei",
+   "model": "Pura 90s Pro",
+   "storageGB": 512,
+   "colors": [
+    "Guayaba Fizz",
+    "Naranja Spritz",
+    "Blanco Frapé",
+    "Soda Mora"
+   ],
+   "price": 27999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://consumer.huawei.com/mx/offer/telefonos/pura90s-pro-buy/?productId=10052537077116",
+   "read": "2026-10-05",
+   "readFrom": "https://itrinity-sg.c.huawei.com/convert/queryPrdDisplayInfos?productIds=10052119644151,10052537077116,10052685388417,10052871398415,10052841726026,10052689312056,10052380026799,10052374881542,10052617315158,10052866308894&siteCode=mx&loginFrom=1&groupFlag=false"
+  },
+  {
+   "market": "mx",
+   "maker": "Huawei",
+   "model": "Mate 80 Pro",
+   "storageGB": 512,
+   "colors": [
+    "Dorado",
+    "Verde",
+    "Negro"
+   ],
+   "price": 29999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://consumer.huawei.com/mx/offer/telefonos/mate80-pro-buy/",
+   "read": "2026-10-05",
+   "readFrom": "https://itrinity-sg.c.huawei.com/convert/queryPrdDisplayInfos?productIds=10052119644151,10052537077116,10052685388417,10052871398415,10052841726026,10052689312056,10052380026799,10052374881542,10052617315158,10052866308894&siteCode=mx&loginFrom=1&groupFlag=false"
+  },
+  {
+   "market": "mx",
+   "maker": "Huawei",
+   "model": "Mate X7",
+   "storageGB": 512,
+   "colors": [
+    "Negro",
+    "Rojo Nébula"
+   ],
+   "price": 48999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://consumer.huawei.com/mx/offer/telefonos/mate-x7-buy/?productId=10052689312056",
+   "read": "2026-10-05",
+   "readFrom": "https://itrinity-sg.c.huawei.com/convert/queryPrdDisplayInfos?productIds=10052119644151,10052537077116,10052685388417,10052871398415,10052841726026,10052689312056,10052380026799,10052374881542,10052617315158,10052866308894&siteCode=mx&loginFrom=1&groupFlag=false"
+  },
+  {
+   "market": "mx",
+   "maker": "Huawei",
+   "model": "nova 15 Max",
+   "storageGB": 256,
+   "colors": [
+    "Negro",
+    "Verde",
+    "Dorado"
+   ],
+   "price": 9999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://consumer.huawei.com/mx/offer/telefonos/nova15-max-buy/",
+   "read": "2026-10-05",
+   "readFrom": "https://itrinity-sg.c.huawei.com/convert/queryPrdDisplayInfos?productIds=10052119644151,10052537077116,10052685388417,10052871398415,10052841726026,10052689312056,10052380026799,10052374881542,10052617315158,10052866308894&siteCode=mx&loginFrom=1&groupFlag=false"
+  },
+  {
+   "market": "mx",
+   "maker": "Huawei",
+   "model": "nova Y74",
+   "storageGB": 256,
+   "colors": [
+    "Azul",
+    "Negro"
+   ],
+   "price": 5999,
+   "currency": "MXN",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://consumer.huawei.com/mx/offer/telefonos/nova-y74-buy/",
+   "read": "2026-10-05",
+   "readFrom": "https://itrinity-sg.c.huawei.com/convert/queryPrdDisplayInfos?productIds=10052119644151,10052537077116,10052685388417,10052871398415,10052841726026,10052689312056,10052380026799,10052374881542,10052617315158,10052866308894&siteCode=mx&loginFrom=1&groupFlag=false"
+  },
+  {
+   "market": "uk",
+   "maker": "nubia",
+   "model": "Z80 Ultra",
+   "storageGB": 256,
+   "colors": [
+    "Black"
+   ],
+   "price": 579,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://uk.nubia.com/products/nubia-z80-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "nubia",
+   "model": "Z80 Ultra",
+   "storageGB": 512,
+   "colors": [
+    "Black",
+    "White"
+   ],
+   "price": 709,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://uk.nubia.com/products/nubia-z80-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "nubia",
+   "model": "Z80 Ultra",
+   "storageGB": 1024,
+   "colors": [
+    "Black"
+   ],
+   "price": 799,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://uk.nubia.com/products/nubia-z80-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "nubia",
+   "model": "Z70S Ultra",
+   "storageGB": 256,
+   "colors": [
+    "Classic Black"
+   ],
+   "price": 659,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://uk.nubia.com/products/nubia-z70s-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "nubia",
+   "model": "Z70S Ultra",
+   "storageGB": 512,
+   "colors": [
+    "Classic Black",
+    "Antique Brown"
+   ],
+   "price": 769,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://uk.nubia.com/products/nubia-z70s-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "nubia",
+   "model": "Z70 Ultra",
+   "storageGB": 256,
+   "colors": [
+    "Black",
+    "Yellow"
+   ],
+   "price": 649,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://uk.nubia.com/products/nubia-z70-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "nubia",
+   "model": "Z70 Ultra",
+   "storageGB": 512,
+   "colors": [
+    "Black",
+    "Yellow"
+   ],
+   "price": 749,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://uk.nubia.com/products/nubia-z70-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "nubia",
+   "model": "Z70 Ultra",
+   "storageGB": 1024,
+   "colors": [
+    "Black"
+   ],
+   "price": 899,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://uk.nubia.com/products/nubia-z70-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "us",
+   "maker": "nubia",
+   "model": "Z80 Ultra",
+   "storageGB": 256,
+   "colors": [
+    "Black"
+   ],
+   "price": 649,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://intl.nubia.com/products/nubia-z80-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://intl.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "us",
+   "maker": "nubia",
+   "model": "Z80 Ultra",
+   "storageGB": 512,
+   "colors": [
+    "Black",
+    "White"
+   ],
+   "price": 799,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://intl.nubia.com/products/nubia-z80-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://intl.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "us",
+   "maker": "nubia",
+   "model": "Z80 Ultra",
+   "storageGB": 1024,
+   "colors": [
+    "Black"
+   ],
+   "price": 899,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://intl.nubia.com/products/nubia-z80-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://intl.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "us",
+   "maker": "nubia",
+   "model": "Z70S Ultra",
+   "storageGB": 256,
+   "colors": [
+    "Classic Black"
+   ],
+   "price": 749,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://intl.nubia.com/products/nubia-z70s-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://intl.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "us",
+   "maker": "nubia",
+   "model": "Z70S Ultra",
+   "storageGB": 512,
+   "colors": [
+    "Classic Black",
+    "Antique Brown"
+   ],
+   "price": 849,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://intl.nubia.com/products/nubia-z70s-ultra",
+   "read": "2026-10-05",
+   "readFrom": "https://intl.nubia.com/products.json?limit=250"
+  },
+  {
+   "market": "us",
+   "maker": "TCL",
+   "model": "NXTPAPER 70 Pro",
+   "storageGB": 128,
+   "colors": [
+    "Blue",
+    "Gold"
+   ],
+   "price": 329.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://us.tcl.com/products/nxtpaper-70-pro",
+   "read": "2026-10-05",
+   "readFrom": "https://us.tcl.com/products.json?limit=250"
+  },
+  {
+   "market": "us",
+   "maker": "TCL",
+   "model": "NXTPAPER 70 Pro",
+   "storageGB": 256,
+   "colors": [
+    "Blue",
+    "Gold"
+   ],
+   "price": 379.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://us.tcl.com/products/nxtpaper-70-pro-256g",
+   "read": "2026-10-05",
+   "readFrom": "https://us.tcl.com/products.json?limit=250"
+  },
+  {
+   "market": "us",
+   "maker": "TCL",
+   "model": "NXTPAPER 70 Pro",
+   "storageGB": 512,
+   "colors": [
+    "Blue"
+   ],
+   "price": 429.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://us.tcl.com/products/nxtpaper-70-pro-512g",
+   "read": "2026-10-05",
+   "readFrom": "https://us.tcl.com/products.json?limit=250"
+  },
+  {
+   "market": "us",
+   "maker": "TCL",
+   "model": "60 XE NXTPAPER 5G",
+   "storageGB": 128,
+   "colors": [
+    "Space Blue"
+   ],
+   "price": 249.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://us.tcl.com/products/60-xe-nxtpaper-5g-128g",
+   "read": "2026-10-05",
+   "readFrom": "https://us.tcl.com/products.json?limit=250"
+  },
+  {
+   "market": "us",
+   "maker": "TCL",
+   "model": "60 XE NXTPAPER 5G",
+   "storageGB": 256,
+   "colors": [
+    "Space Blue"
+   ],
+   "price": 284.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://us.tcl.com/products/60-xe-nxtpaper-5g-256g",
+   "read": "2026-10-05",
+   "readFrom": "https://us.tcl.com/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "Fairphone",
+   "model": "(Gen. 6+)",
+   "storageGB": 256,
+   "colors": [
+    "Cobalt Blue",
+    "Forest Green",
+    "Horizon Black"
+   ],
+   "price": 569,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.fairphone.com/the-fairphone-gen-6-plus",
+   "read": "2026-10-05",
+   "readFrom": null,
+   "readFromNote": "Not a plain GET: the price appears only after a country switch made in one cookie jar. (1) GET https://www.fairphone.com/the-fairphone-gen-6 and take the hidden csrf_token of the form.f_js_language_form; (2) POST https://www.fairphone.com/language-submit?previous_url=%2Fthe-fairphone-gen-6 as application/x-www-form-urlencoded (Referer https://www.fairphone.com/the-fairphone-gen-6) with fields csrf_token=<token>, country_id=GB, pricelist_id=4, which sets the cookies country_code=GB and website_sale_current_pl=4; (3) GET https://www.fairphone.com/the-fairphone-gen-6-plus with the same cookies and read the ld+json ProductGroup hasVariant offers: price 569.0, priceCurrency GBP."
+  },
+  {
+   "market": "ie",
+   "maker": "Fairphone",
+   "model": "(Gen. 6+)",
+   "storageGB": 256,
+   "colors": [
+    "Cobalt Blue",
+    "Forest Green",
+    "Horizon Black"
+   ],
+   "price": 649,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.fairphone.com/the-fairphone-gen-6-plus",
+   "read": "2026-10-05",
+   "readFrom": null,
+   "readFromNote": "Not a plain GET: the price appears only after a country switch made in one cookie jar. (1) GET https://www.fairphone.com/the-fairphone-gen-6-plus and take the hidden csrf_token of the form.f_js_language_form; (2) POST https://www.fairphone.com/language-submit?previous_url=%2Fthe-fairphone-gen-6-plus as application/x-www-form-urlencoded (Referer https://www.fairphone.com/the-fairphone-gen-6-plus) with fields csrf_token=<token>, country_id=IE, pricelist_id=1, which sets the cookies country_code=IE and website_sale_current_pl=1; (3) GET https://www.fairphone.com/the-fairphone-gen-6-plus with the same cookies and read the ld+json ProductGroup hasVariant offers: price 649.0, priceCurrency EUR."
+  },
+  {
+   "market": "uk",
+   "maker": "HMD",
+   "model": "Fusion X1",
+   "storageGB": 128,
+   "colors": [
+    "Noir"
+   ],
+   "price": 209.99,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.hmd.com/en_gb/hmd-fusion-x1",
+   "read": "2026-10-05",
+   "readFrom": "https://www.hmd.com/en_gb/hmd-fusion-x1"
+  },
+  {
+   "market": "uk",
+   "maker": "HMD",
+   "model": "2660 Flip 4G",
+   "storageGB": 0.128,
+   "colors": [
+    "Raspberry Red",
+    "Cosy Black",
+    "Violet"
+   ],
+   "price": 79.99,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.hmd.com/en_gb/hmd-2660-flip",
+   "read": "2026-10-05",
+   "readFrom": "https://www.hmd.com/en_gb/hmd-2660-flip"
+  },
+  {
+   "market": "uk",
+   "maker": "HMD",
+   "model": "105 4G",
+   "storageGB": 0.128,
+   "colors": [
+    "Black"
+   ],
+   "price": 39.99,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.hmd.com/en_gb/hmd-105-4g",
+   "read": "2026-10-05",
+   "readFrom": "https://www.hmd.com/en_gb/hmd-105-4g"
+  },
+  {
+   "market": "uk",
+   "maker": "HMD",
+   "model": "110 4G",
+   "storageGB": 0.128,
+   "colors": [
+    "Titanium"
+   ],
+   "price": 44.99,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.hmd.com/en_gb/hmd-110-4g",
+   "read": "2026-10-05",
+   "readFrom": "https://www.hmd.com/en_gb/hmd-110-4g"
+  },
+  {
+   "market": "ie",
+   "maker": "HMD",
+   "model": "2660 Flip 4G",
+   "storageGB": 0.128,
+   "colors": [
+    "Cosy Black"
+   ],
+   "price": 79.99,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.hmd.com/en_ie/hmd-2660-flip",
+   "read": "2026-10-05",
+   "readFrom": "https://www.hmd.com/en_ie/hmd-2660-flip"
+  },
+  {
+   "market": "ie",
+   "maker": "HMD",
+   "model": "110 4G",
+   "storageGB": 0.128,
+   "colors": [
+    "Titanium"
+   ],
+   "price": 49.99,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.hmd.com/en_ie/hmd-110-4g",
+   "read": "2026-10-05",
+   "readFrom": "https://www.hmd.com/en_ie/hmd-110-4g"
+  },
+  {
+   "market": "uk",
+   "maker": "Doro",
+   "model": "Aurora A30",
+   "storageGB": null,
+   "colors": [
+    "Graphite",
+    "White"
+   ],
+   "price": 290,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://uk.doro.com/en-gb/products/doro-aurora-a30",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "Doro",
+   "model": "Aurora A20",
+   "storageGB": null,
+   "colors": [
+    "Graphite",
+    "White"
+   ],
+   "price": 250,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "Doro",
+   "model": "Aurora A10",
+   "storageGB": null,
+   "colors": [
+    "Graphite",
+    "White"
+   ],
+   "price": 220,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "Doro",
+   "model": "Leva L30",
+   "storageGB": null,
+   "colors": [
+    "Red/White",
+    "Black/White"
+   ],
+   "price": 114.99,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "Doro",
+   "model": "Leva E22",
+   "storageGB": null,
+   "colors": [
+    "Red",
+    "Black"
+   ],
+   "price": 80,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250"
+  },
+  {
+   "market": "uk",
+   "maker": "Doro",
+   "model": "Leva E10",
+   "storageGB": null,
+   "colors": [
+    "Red",
+    "Black"
+   ],
+   "price": 65,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250",
+   "read": "2026-10-05",
+   "readFrom": "https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250"
+  },
+  {
+   "market": "ie",
+   "maker": "Doro",
+   "model": "Aurora A30",
+   "storageGB": null,
+   "colors": [
+    "White",
+    "Graphite"
+   ],
+   "price": 350,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.doro.com/en-ie/shop/mobile-devices/smart-phones/doro-aurora-a30-2ddab871/?variationCode=37300",
+   "read": "2026-10-05",
+   "readFrom": "https://www.doro.com/en-ie/shop/mobile-devices/smart-phones/doro-aurora-a30-2ddab871/?variationCode=37300"
+  },
+  {
+   "market": "ie",
+   "maker": "Doro",
+   "model": "Aurora A20",
+   "storageGB": null,
+   "colors": [
+    "Graphite",
+    "White"
+   ],
+   "price": 300,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.doro.com/en-ie/shop/mobile-devices/smart-phones/doro-aurora-a20-4ae9171c/?variationCode=37298",
+   "read": "2026-10-05",
+   "readFrom": "https://www.doro.com/en-ie/shop/mobile-devices/smart-phones/doro-aurora-a20-4ae9171c/?variationCode=37298"
+  },
+  {
+   "market": "ie",
+   "maker": "Doro",
+   "model": "Aurora A10",
+   "storageGB": null,
+   "colors": [
+    "White",
+    "Graphite"
+   ],
+   "price": 270,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.doro.com/en-ie/shop/mobile-devices/smart-phones/doro-aurora-a10-9e72c811/?variationCode=37294",
+   "read": "2026-10-05",
+   "readFrom": "https://www.doro.com/en-ie/shop/mobile-devices/smart-phones/doro-aurora-a10-9e72c811/?variationCode=37294"
+  },
+  {
+   "market": "ie",
+   "maker": "Doro",
+   "model": "Leva L20",
+   "storageGB": null,
+   "colors": [
+    "Red/White",
+    "Black/White"
+   ],
+   "price": 109.99,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.doro.com/en-ie/shop/mobile-devices/easy-phones/doro-leva-l20-f61cd918/?variationCode=36312",
+   "read": "2026-10-05",
+   "readFrom": "https://www.doro.com/en-ie/shop/mobile-devices/easy-phones/doro-leva-l20-f61cd918/?variationCode=36312"
+  },
+  {
+   "market": "ie",
+   "maker": "Doro",
+   "model": "Leva L10",
+   "storageGB": null,
+   "colors": [
+    "Red",
+    "Black"
+   ],
+   "price": 99.99,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.doro.com/en-ie/shop/mobile-devices/easy-phones/doro-leva-l10-79e83731/?variationCode=36310",
+   "read": "2026-10-05",
+   "readFrom": "https://www.doro.com/en-ie/shop/mobile-devices/easy-phones/doro-leva-l10-79e83731/?variationCode=36310"
+  },
+  {
+   "market": "us",
+   "maker": "Mudita",
+   "model": "Kompakt",
+   "storageGB": 32,
+   "colors": [],
+   "price": 399,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://store.mudita.com/store/mudita-kompakt-global",
+   "read": "2026-10-05",
+   "readFrom": "https://store.mudita.com/store/mudita-kompakt-global"
+  },
+  {
+   "market": "uk",
+   "maker": "Mudita",
+   "model": "Kompakt",
+   "storageGB": 32,
+   "colors": [],
+   "price": 339,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://store.mudita.com/mudita-kompakt-global",
+   "read": "2026-10-05",
+   "readFromNote": "Needs the store view switched to GBP, so a plain GET of the product page shows the USD view (a ?___store=engbp query string does not switch it). Method: GET https://store.mudita.com/stores/store/redirect/___store/engbp/___from_store/en/uenc/aHR0cHM6Ly9zdG9yZS5tdWRpdGEuY29tL3N0b3JlL211ZGl0YS1rb21wYWt0LWdsb2JhbD9fX19zdG9yZT1lbmdicA~~/ following redirects with a cookie jar (curl -L -c jar -b jar, browser User-Agent); the redirects set the store=engbp cookie and end on https://store.mudita.com/mudita-kompakt-global, whose price block reads 339.00 GBP."
+  },
+  {
+   "market": "ie",
+   "maker": "Mudita",
+   "model": "Kompakt",
+   "storageGB": 32,
+   "colors": [],
+   "price": 399,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://store.mudita.com/store/mudita-kompakt-global",
+   "read": "2026-10-05",
+   "readFromNote": "Needs the store view switched to EUR, so a plain GET of the product page shows the USD view (a ?___store=eneur query string does not switch it). Method: GET https://store.mudita.com/stores/store/redirect/___store/eneur/___from_store/en/uenc/aHR0cHM6Ly9zdG9yZS5tdWRpdGEuY29tL3N0b3JlL211ZGl0YS1rb21wYWt0LWdsb2JhbD9fX19zdG9yZT1lbmV1cg~~/ following redirects with a cookie jar (curl -L -c jar -b jar, browser User-Agent); the redirects set the store-view cookie and end on https://store.mudita.com/store/mudita-kompakt-global, whose price block reads 399.00 EUR."
+  },
+  {
+   "market": "uk",
+   "maker": "Punkt.",
+   "model": "MC03 Sovereign Smartphone",
+   "storageGB": 256,
+   "colors": [
+    "Black"
+   ],
+   "price": 680,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.punkt.ch/products/mc03-premium-secure-smartphone",
+   "read": "2026-10-05",
+   "readFrom": "https://www.punkt.ch/products/mc03-premium-secure-smartphone.json?country=GB"
+  },
+  {
+   "market": "uk",
+   "maker": "Punkt.",
+   "model": "MC02 5G Secure Phone",
+   "storageGB": 128,
+   "colors": [
+    "Black"
+   ],
+   "price": 455,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.punkt.ch/products/mc02-5g-secure-phone",
+   "read": "2026-10-05",
+   "readFrom": "https://www.punkt.ch/products/mc02-5g-secure-phone.json?country=GB"
+  },
+  {
+   "market": "us",
+   "maker": "Techless",
+   "model": "Wisephone II",
+   "storageGB": 128,
+   "colors": [
+    "Black"
+   ],
+   "price": 438,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store ($399) and its one-time $39 activation fee",
+   "releaseDate": null,
+   "source": "https://wisephone.com/products/wisephone-ii",
+   "read": "2026-10-05",
+   "readFrom": "https://wisephone.com/products.json?limit=250"
+  },
+  {
+   "market": "us",
+   "maker": "Blackview",
+   "model": "ROCK 5",
+   "storageGB": 256,
+   "colors": [
+    "Black"
+   ],
+   "price": 499.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://store.blackview.hk/products/rock-5-price",
+   "read": "2026-10-05",
+   "readFrom": "https://store.blackview.hk/products.json?limit=250&country=US"
+  },
+  {
+   "market": "us",
+   "maker": "Blackview",
+   "model": "ROCK 3",
+   "storageGB": 256,
+   "colors": [
+    "Orange",
+    "Black"
+   ],
+   "price": 499.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://store.blackview.hk/products/rock-3-price",
+   "read": "2026-10-05",
+   "readFrom": "https://store.blackview.hk/products.json?limit=250&country=US"
+  },
+  {
+   "market": "us",
+   "maker": "Blackview",
+   "model": "FORT 5",
+   "storageGB": 256,
+   "colors": [
+    "Yellow",
+    "Black"
+   ],
+   "price": 489.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://store.blackview.hk/products/fort-5-price",
+   "read": "2026-10-05",
+   "readFrom": "https://store.blackview.hk/products.json?limit=250&country=US"
+  },
+  {
+   "market": "us",
+   "maker": "Blackview",
+   "model": "ROCK 2 Pro",
+   "storageGB": 256,
+   "colors": [
+    "Yellow",
+    "Black"
+   ],
+   "price": 399.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://store.blackview.hk/products/rock-2-pro-price",
+   "read": "2026-10-05",
+   "readFrom": "https://store.blackview.hk/products.json?limit=250&country=US"
+  },
+  {
+   "market": "us",
+   "maker": "Blackview",
+   "model": "XPLORE X1",
+   "storageGB": 256,
+   "colors": [
+    "Black",
+    "Orange"
+   ],
+   "price": 489.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://store.blackview.hk/products/xplore-x1-price",
+   "read": "2026-10-05",
+   "readFrom": "https://store.blackview.hk/products.json?limit=250&country=US"
+  },
+  {
+   "market": "us",
+   "maker": "Blackview",
+   "model": "ROCK 1",
+   "storageGB": 256,
+   "colors": [
+    "Black"
+   ],
+   "price": 399.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store; a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://store.blackview.hk/products/rock-1-price",
+   "read": "2026-10-05",
+   "readFrom": "https://store.blackview.hk/products.json?limit=250&country=US"
+  },
+  {
+   "market": "us",
+   "maker": "Kyocera",
+   "model": "DuraXA Equip",
+   "storageGB": 16,
+   "colors": [
+    "Black"
+   ],
+   "price": 215.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://solutions.kyoceramobile.com/shop/e4831wc-1110",
+   "read": "2026-10-05",
+   "readFrom": "https://solutions.kyoceramobile.com/shop/e4831wc-1110"
+  },
+  {
+   "market": "us",
+   "maker": "Ulefone",
+   "model": "Armor 21",
+   "storageGB": 256,
+   "colors": [
+    "Black"
+   ],
+   "price": 319.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.ulefone.com/products/armor-21",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "Note56 X",
+   "storageGB": 64,
+   "colors": [
+    "Black",
+    "Gold"
+   ],
+   "price": 119,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/doogee-note56-x-90hz-display-smartphone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "S cyber",
+   "storageGB": 256,
+   "colors": [
+    "Plain",
+    "Red"
+   ],
+   "price": 237,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/s-cyber",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "Blade10 Max",
+   "storageGB": 256,
+   "colors": [
+    "Black"
+   ],
+   "price": 237,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/blade10-max",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "V40 Pro",
+   "storageGB": 512,
+   "colors": [
+    "Silver",
+    "Blue"
+   ],
+   "price": 664,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/v40-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "Fire 7 Ultra",
+   "storageGB": 256,
+   "colors": [
+    "Gold",
+    "Gray"
+   ],
+   "price": 379,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/fire-7-ultra",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "Blade20 Pro",
+   "storageGB": 256,
+   "colors": [
+    "Silver",
+    "Red"
+   ],
+   "price": 229,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/blade20-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "Blade 10 Pro",
+   "storageGB": 256,
+   "colors": [
+    "Black",
+    "Silver"
+   ],
+   "price": 179,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/blade10-pro-energy",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "Blade 10",
+   "storageGB": 128,
+   "colors": [
+    "Red",
+    "Green"
+   ],
+   "price": 199,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/blade-10-energy",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "Blade GT Pro",
+   "storageGB": 512,
+   "colors": [
+    "Black",
+    "Silver"
+   ],
+   "price": 341,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/blade-gt-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "Blade GT Play",
+   "storageGB": 256,
+   "colors": [
+    "Black"
+   ],
+   "price": 313,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/blade-gt-play",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "Blade20 Ultra",
+   "storageGB": 512,
+   "colors": [
+    "Red"
+   ],
+   "price": 284,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/blade20-ultra",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "Note59 Pro+",
+   "storageGB": 512,
+   "colors": [
+    "White"
+   ],
+   "price": 237,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/doogee-note59-pro-plus",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "DOOGEE",
+   "model": "Blade 10",
+   "storageGB": 256,
+   "colors": [
+    "Plain",
+    "Black"
+   ],
+   "price": 169,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.doogeemall.com/products/doogee-blade-10-power",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "C17 Mini",
+   "storageGB": 32,
+   "colors": [
+    "Orange",
+    "Blue",
+    "Silver"
+   ],
+   "price": 143.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-c17-mini-smartphone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "P2 Plus",
+   "storageGB": 256,
+   "colors": [
+    "Orange",
+    "Black",
+    "Grey"
+   ],
+   "price": 356.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-p2-plus-smartphone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "C67-EV",
+   "storageGB": 128,
+   "colors": [
+    "Orange",
+    "Black",
+    "Grey",
+    "Gold"
+   ],
+   "price": 242.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-c67-smartphone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "C67-EV",
+   "storageGB": 256,
+   "colors": [
+    "Orange",
+    "Black",
+    "Grey",
+    "Gold"
+   ],
+   "price": 285.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-c67-smartphone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "WP68 Air",
+   "storageGB": 512,
+   "colors": [
+    "Orange",
+    "Black",
+    "Green"
+   ],
+   "price": 599.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-wp68-air-rugged-phone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "WP23PLUS",
+   "storageGB": 256,
+   "colors": [
+    "Black",
+    "Green",
+    "Orange"
+   ],
+   "price": 239.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-wp23plus-4g-rugged-phone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "WP500 Ultra",
+   "storageGB": 1024,
+   "colors": [
+    "Black"
+   ],
+   "price": 1099.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-wp500-ultra-rugged-phone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "WP500",
+   "storageGB": 1024,
+   "colors": [
+    "Orange",
+    "Black"
+   ],
+   "price": 869.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-wp500-rugged-phone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "C26",
+   "storageGB": 128,
+   "colors": [
+    "Orange",
+    "Gold",
+    "Blue",
+    "Purple"
+   ],
+   "price": 189.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-c26-smartphone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "C17",
+   "storageGB": 64,
+   "colors": [
+    "Orange",
+    "Blue"
+   ],
+   "price": 199.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-c17-smartphone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "C3-EV",
+   "storageGB": 256,
+   "colors": [
+    "Gold",
+    "Pink",
+    "Black",
+    "Blue"
+   ],
+   "price": 235.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-c3-smartphone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "C2-EV",
+   "storageGB": 128,
+   "colors": [
+    "Black",
+    "Gold",
+    "Blue",
+    "Pink"
+   ],
+   "price": 119.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-c2-ev-6-52-inch-5000mah-battery-9-3mm-ultra-thin-body-smartphone4gb-128gb-1",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "OUKITEL",
+   "model": "C6",
+   "storageGB": 512,
+   "colors": [
+    "Black",
+    "Gold",
+    "Green",
+    "Purple"
+   ],
+   "price": 369.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.oukitel.com/products/oukitel-c6-smartphone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "AGM",
+   "model": "X7 Pro",
+   "storageGB": 256,
+   "colors": [],
+   "price": 599,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.agmmobile.com/products/agm-x7-pro-thermal-imaging-rugged-smartphone",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "AGM",
+   "model": "Glory Pro",
+   "storageGB": 256,
+   "colors": [],
+   "price": 799,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.agmmobile.com/products/us-agm-glory-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "AGM",
+   "model": "H Max",
+   "storageGB": 256,
+   "colors": [],
+   "price": 199,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.agmmobile.com/products/agm-h-max",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "AGM",
+   "model": "H6 LITE",
+   "storageGB": 128,
+   "colors": [],
+   "price": 179,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.agmmobile.com/products/agm-h6-lite-ultra-thin-rugged-6-56-inch-90hz-display-8gb-ram-4-4-128gb-rom-android-13",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "AGM",
+   "model": "H6",
+   "storageGB": 256,
+   "colors": [],
+   "price": 249,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.agmmobile.com/products/agm-h6",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "Unihertz",
+   "model": "Titan 2 Elite",
+   "storageGB": 256,
+   "colors": [
+    "Black",
+    "Orange"
+   ],
+   "price": 489.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.unihertz.com/products/titan-2-elite",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "Unihertz",
+   "model": "Titan 2 Elite Pro",
+   "storageGB": 256,
+   "colors": [
+    "Black",
+    "Orange"
+   ],
+   "price": 579.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.unihertz.com/products/titan-2-elite-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "Unihertz",
+   "model": "Tank 4 Pro",
+   "storageGB": 512,
+   "colors": [],
+   "price": 929.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.unihertz.com/products/tank-4-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "Unihertz",
+   "model": "Jelly Max",
+   "storageGB": 256,
+   "colors": [],
+   "price": 339.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.unihertz.com/products/jelly-max",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "Unihertz",
+   "model": "Tank 3 Pro",
+   "storageGB": 512,
+   "colors": [],
+   "price": 749.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.unihertz.com/products/tank-3-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "Unihertz",
+   "model": "Tank Mini",
+   "storageGB": 256,
+   "colors": [],
+   "price": 339.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.unihertz.com/products/tank-mini",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "C17",
+   "storageGB": 128,
+   "colors": [
+    "Blue",
+    "Sliver"
+   ],
+   "price": 199.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-c17",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "F116 Pro",
+   "storageGB": 256,
+   "colors": [
+    "Orange",
+    "Gray"
+   ],
+   "price": 499.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-f116-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "S5",
+   "storageGB": 128,
+   "colors": [
+    "Blue",
+    "Glacier"
+   ],
+   "price": 159.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-s5",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "F110L",
+   "storageGB": 128,
+   "colors": [
+    "Orange",
+    "Black"
+   ],
+   "price": 199.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-f110l",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "F110 Pro",
+   "storageGB": 128,
+   "colors": [
+    "Orange"
+   ],
+   "price": 329.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-f110-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "F114",
+   "storageGB": 128,
+   "colors": [
+    "Black"
+   ],
+   "price": 219.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-f114",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "F109S",
+   "storageGB": 256,
+   "colors": [
+    "Gray"
+   ],
+   "price": 279.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-f109s",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "F107 Pro",
+   "storageGB": 512,
+   "colors": [
+    "Gray"
+   ],
+   "price": 549,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-f107-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "F112 Pro",
+   "storageGB": 256,
+   "colors": [
+    "Red",
+    "Blue",
+    "Green"
+   ],
+   "price": 399.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-f112-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "S2",
+   "storageGB": 256,
+   "colors": [
+    "Blue",
+    "Gray"
+   ],
+   "price": 169.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-s2",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "S3 Pro",
+   "storageGB": 128,
+   "colors": [
+    "Gray",
+    "Green"
+   ],
+   "price": 249.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-s3-pro",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "FOSSiBOT",
+   "model": "F109",
+   "storageGB": 256,
+   "colors": [
+    "Gray"
+   ],
+   "price": 359.99,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.fossibot.com/products/fossibot-f109",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "Minimal Company",
+   "model": "Minimal Phone 2",
+   "storageGB": 256,
+   "colors": [
+    "pearl",
+    "onyx"
+   ],
+   "price": 699,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.minimalcompany.com/products/minimal-phone-2",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "us",
+   "maker": "Minimal Company",
+   "model": "Minimal Phone 2",
+   "storageGB": 512,
+   "colors": [
+    "pearl",
+    "onyx"
+   ],
+   "price": 799,
+   "currency": "USD",
+   "taxIncluded": false,
+   "priceBasis": "Regular price on the maker's own store (its catalog's compare-at price); a sale price was also shown",
+   "releaseDate": null,
+   "source": "https://www.minimalcompany.com/products/minimal-phone-2",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "uk",
+   "maker": "emporia",
+   "model": "SMART.7mini",
+   "storageGB": 128,
+   "colors": [],
+   "price": 269.99,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.emporiamobile.com/en-gb/products/smart-7mini",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "uk",
+   "maker": "emporia",
+   "model": "SMART.ME7 2026",
+   "storageGB": 128,
+   "colors": [],
+   "price": 249.99,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.emporiamobile.com/en-gb/products/smart-me7",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "uk",
+   "maker": "emporia",
+   "model": "SMART.7lite 2026",
+   "storageGB": 128,
+   "colors": [],
+   "price": 299.99,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.emporiamobile.com/en-gb/products/smart-7lite",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "ie",
+   "maker": "emporia",
+   "model": "SMART.7mini",
+   "storageGB": 128,
+   "colors": [],
+   "price": 269.99,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.emporiamobile.com/en-ie/products/smart-7mini",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "ie",
+   "maker": "emporia",
+   "model": "SMART.ME7 2026",
+   "storageGB": 128,
+   "colors": [],
+   "price": 249.99,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.emporiamobile.com/en-ie/products/smart-me7",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "ie",
+   "maker": "emporia",
+   "model": "SMART.7lite 2026",
+   "storageGB": 128,
+   "colors": [],
+   "price": 299.99,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "Regular price on the maker's own store (its catalog JSON)",
+   "releaseDate": null,
+   "source": "https://www.emporiamobile.com/en-ie/products/smart-7lite",
+   "read": "2026-10-05"
+  },
+  {
+   "market": "uk",
+   "maker": "Fairphone",
+   "model": "(Gen. 6)",
+   "storageGB": 256,
+   "colors": [
+    "Forest Green",
+    "Horizon Black"
+   ],
+   "price": 519,
+   "currency": "GBP",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.fairphone.com/the-fairphone-gen-6",
+   "read": "2026-10-05",
+   "readFrom": null,
+   "readFromNote": "Not a plain GET: the price appears only after a country switch made in one cookie jar. (1) GET https://www.fairphone.com/the-fairphone-gen-6 and take the hidden csrf_token of the form.f_js_language_form; (2) POST https://www.fairphone.com/language-submit?previous_url=%2Fthe-fairphone-gen-6 as application/x-www-form-urlencoded (Referer https://www.fairphone.com/the-fairphone-gen-6) with fields csrf_token=<token>, country_id=GB, pricelist_id=4, which sets the cookies country_code=GB and website_sale_current_pl=4; (3) GET https://www.fairphone.com/the-fairphone-gen-6 with the same cookies and read the ld+json ProductGroup hasVariant offers: price 519.0, priceCurrency GBP. A GET with only a country_code=GB cookie and no POST still returned EUR 599 for Gen. 6."
+  },
+  {
+   "market": "ie",
+   "maker": "Fairphone",
+   "model": "(Gen. 6)",
+   "storageGB": 256,
+   "colors": [
+    "Forest Green",
+    "Horizon Black"
+   ],
+   "price": 599,
+   "currency": "EUR",
+   "taxIncluded": true,
+   "priceBasis": "List price on the maker's own store",
+   "releaseDate": null,
+   "source": "https://www.fairphone.com/the-fairphone-gen-6",
+   "read": "2026-10-05",
+   "readFrom": null,
+   "readFromNote": "Not a plain GET: the price appears only after a country switch made in one cookie jar. (1) GET https://www.fairphone.com/the-fairphone-gen-6-plus and take the hidden csrf_token of the form.f_js_language_form; (2) POST https://www.fairphone.com/language-submit?previous_url=%2Fthe-fairphone-gen-6-plus as application/x-www-form-urlencoded (Referer https://www.fairphone.com/the-fairphone-gen-6-plus) with fields csrf_token=<token>, country_id=IE, pricelist_id=1, which sets the cookies country_code=IE and website_sale_current_pl=1; (3) GET https://www.fairphone.com/the-fairphone-gen-6 with the same cookies and read the ld+json ProductGroup hasVariant offers: price 599.0, priceCurrency EUR."
+  }
+ ],
+ "notFound": [
+  "Motorola us: motorola razr (2026) in Meteorite (the 'with Crystals by Swarovski' edition, listed at $899.99 on the store's listing) was left out of the razr (2026) 256GB row: the model page https://www.motorola.com/us/en/p/phones/razr/razr-2026/pmipmjl44m7 excludes that SKU, which is a separately priced edition.",
+  "Motorola uk: 'motorola signature + moto buds 2 plus' (PANTONE Violet Indigo, bundle priced differently) left out of the motorola signature row; motorola razr fold is listed only bundled with moto pen ultra (colour labels 'Lily White + moto pen ultra'), so it was not recorded.",
+  "Motorola ie: 'motorola signature + moto buds 2 plus' (bundle priced differently) left out of the motorola signature row; motorola razr fold is listed only bundled with moto pen ultra, so it was not recorded.",
+  "OnePlus us: https://www.oneplus.com/us/oneplus-15 12GB+256GB Infinite Black (store API price $899.99) not recorded: the store's product API marks that SKU skuStatus 0 / saleStatus 2 (not on sale) while the 16GB+512GB SKUs are skuStatus 1. OnePlus 13R, OnePlus Open and OnePlus 12 are named on https://www.oneplus.com/us/store/phone but the product API returned no data for them, so nothing was kept.",
+  "OnePlus ca: OnePlus 13R, OnePlus Open and OnePlus 12 are named on https://www.oneplus.com/ca_en/store/phone but the store's product API returned no data for them, so nothing was kept.",
+  "OnePlus uk: https://www.oneplus.com/uk/store/phone names OnePlus 15, 13, 15R, Nord 5 and Nord CE5; their pages carry no price (no Product offer JSON, no price text) and the store's product API (mallapi-eu.oneplus.com, store view 'uk') answered 200 with data null for all five product codes on mall/product/detail/fetch (and for the OnePlus 15 on mallapp/product/page/fetch), so no price, storage tier or colour was kept.",
+  "OnePlus ie: https://www.oneplus.com/ie/store/phone names the same five phones as the uk store; pages carry no price and the store's product API (mallapi-eu.oneplus.com, store view 'ie') answered 200 with data null for all five product codes on mall/product/detail/fetch, so nothing was kept.",
+  "Nothing uk: https://uk.nothing.tech/collections/phones (and /products.json) could not be read: the sandbox egress proxy refused the connection twice (CONNECT tunnel failed, 502), so no page was fetched and nothing was kept.",
+  "Nothing ca: https://ca.nothing.tech/collections/phones (and /products.json) could not be read: the sandbox egress proxy refused the connection twice (CONNECT tunnel failed, 502), so no page was fetched and nothing was kept.",
+  "Nothing ie: Phone (4a) 12+256GB at EUR 499 (White, Black, Pink, Blue; Blue shown unavailable) not recorded because the 256GB tier is already recorded from the 8+256GB variant at EUR 449 (one row per storage tier). Phone (3a), (3a) Pro, (3a) Lite, (2a) Plus and CMF Phone 2 Pro on https://ie.nothing.tech/collections/phones show every variant as unavailable and were skipped.",
+  "Xiaomi ie: https://www.mi.com/ie/ answered 301 to /ie and then Xiaomi's 404 error page (http://err.www.mi.com/04.html); there is no Ireland store at that address, nothing kept",
+  "Honor uk: https://www.honor.com/uk/phones/ and https://www.honor.com/uk/phones/honor-600-pro/buy/ answered 200 but carry no prices in the HTML; the buy page's Product JSON-LD lists SKU codes with prices and stock but no storage or color labels, and the store API that supplies the labels (selfservice-de.hihonor.com ...queryPrdDisplayDetailInfo) answered HTTP 500, then 400 Bad Request, to plain requests; nothing kept",
+  "Honor ie: https://www.honor.com/ie/phones/ answered 200 but the page declares isECommerceSite = None and has no prices or buy links, so Honor Ireland has no store of its own; nothing kept",
+  "Honor mx: https://www.honor.com/mx/phones/ answered 200 (a Self-eCommerce site priced in MXN) but carries no prices in the HTML; they come from the store API (selfservice-sg.hihonor.com), which I could not use (the same API on the UK site answered 400 Bad Request, so I did not call it for mx); nothing kept",
+  "OPPO mx: OPPO Find X9 Ultra (https://www.oppo.com/mx/product/oppo-find-x9-ultra.P.P1100762) left out: the store data gives a regular price of MXN 38,999 and the colors Ocre Tundra and Ambar Canon, but names no storage tier, and the store's specs endpoint answered 'api is not deployed'",
+  "Vivo mx: https://www.vivo.com/mx/products and https://www.vivo.com/mx/products/v70-fe answered 200 but show no price (marketPrice and promotionPrice are empty); the v.shop store linked from vivo.com/mx (https://vivoshop.mx/products.json and https://vivoshop.mx/products/vivo-t5-pro-5g) answered HTTP 429 'Verifying your connection' twice; nothing kept",
+  "Realme mx: https://www.realme.com/mx/ and https://www.realme.com/mx/realme-16-pro-5g answered 200 but show no phone prices (only tablets carry a price in the menu) and their buy buttons go to Mercado Libre, a third-party marketplace; https://buy.realme.com/mx/ answered 404; nothing kept",
+  "Realme uk: https://www.realme.com/uk/ answered 200 but lists only 2020-2022 models (realme 9, GT 2 Pro, GT Neo 3) with no current phone or price; https://buy.realme.com/uk/ answered 403 'Page not found'; nothing kept",
+  "Huawei mx: six models kept from https://consumer.huawei.com/mx/phones/ (storage and colours from the store's own product API, itrinity-sg.c.huawei.com/convert/queryPrdDisplayInfos with siteCode=mx; each regular price is the StrikethroughPrice in the JSON-LD of its buy page, where the lower sale price is the offer price); bundle ('Paquete') SKUs skipped; the Pura 90s Pro Guayaba Fizz 12GB+256GB reads OutOfStock but is kept as a listed colour; nova 16s Pro and nova 16s are listed with no store buy link (enableEc=false) and no price, and Mate X6 (product id 10052374881542) returned nothing from the store API, so those three were not kept; Pura 80 Pro, Pura 80 Ultra and Mate XT ULTIMATE DESIGN are on sale there but were left out by the six-model cap",
+  "Huawei uk: https://consumer.huawei.com/uk/phones/ answered 200 but lists only Mate XT ULTIMATE DESIGN and Mate X6, both with the store buy link disabled (enableEc=false) and no price; the UK store API (itrinity-de.c.huawei.com/convert/queryPrdDisplayInfos, siteCode=uk) returned 0 products for both product ids, so nothing kept",
+  "Huawei ie: https://consumer.huawei.com/ie/phones/ redirected to https://consumer.huawei.com/ie/ (HUAWEI Ireland home), which has no phone list and no store, currency or API host configured, so nothing kept",
+  "ZTE us: https://www.ztedevices.com/en-us/ redirected to the global site https://www.ztedevices.com/en/ (no prices; its Blade phone entries have empty shopLink and buyLink). The only ZTE store, https://global.ztedevices.com (Shopify, USD), ships only to AE, AU, HK, ID, IL, JP, KR, KW, LA, MO, MY, PH, SA, SG, TH, VN and ZA (meta.json), and every phone in its products.json is sold out (available:false: Axon 60 Ultra 5G, Axon 40 Pro, Axon 40 Ultra, Axon 30, Axon 30 Ultra, Axon 20 5G, Blade V41 Vita 5G), so nothing kept",
+  "ZTE uk: no UK store found; the ztedevices.com/en pages carry no shop link for phones and the only store, https://global.ztedevices.com, does not ship to GB (meta.json) and has every phone sold out, so nothing kept",
+  "ZTE mx: no Mexico store found; the ztedevices.com/en pages carry no shop link for phones and the only store, https://global.ztedevices.com, does not ship to MX (meta.json) and has every phone sold out, so nothing kept",
+  "nubia us: no US-specific nubia store; rows come from the nubia Global Store https://intl.nubia.com (Shopify, USD, 'taxes are not included'), whose meta.json lists US in ships_to_countries although its FAQ names other countries; read from products.json plus the Z80 Ultra page; left out because every variant is sold out: Z70 Ultra, Z60 Ultra, Z60 Ultra Leading Version, Z60S Pro, Z50S Pro, Z50, Flip 5G; Z80 Ultra 512GB Starry Night ($829, sold out) is priced differently and is not in that row's colours; the Z80 Ultra 256GB row is sold out at read time but kept because the store still lists it with a price",
+  "nubia uk: https://uk.nubia.com (Shopify, GBP, 'tax is included in the price' per the Z80 Ultra page) read from products.json; left out because every variant is sold out: Z60 Ultra, Z60 Ultra Leading Version, Z60S Pro, Flip 5G; Z80 Ultra 512GB Starry Night (£729) and Z70 Ultra 512GB Blue (Starry Night) (£769 regular) are priced differently and are not in those rows' colours; configurations sold out at read time are kept for models still orderable because the store still lists them with a price (Z80 Ultra 256GB and 1TB; every Z70 Ultra configuration except Yellow 16GB+512GB)",
+  "TCL us: https://us.tcl.com (Shopify, USD, 'taxes ... calculated at checkout') read from products.json pages 1 and 2 plus the 60 XE 128GB page; K70 5G, 50 XL NXTPAPER 5G, FLIP 3, FLIP 4 5G and TCL FLIP Pro are listed with price 0.00 and sold out, so not kept",
+  "TCL ca: https://ca-en.tcl.com/products.json answered 429 'Verifying your connection...' twice; through WebFetch the /collections/mobile JSON lists every phone as available:false (60 XE NXTPAPER 5G 128GB price 0.00, compare-at 249.99), the K70 NXTPAPER page says Sold out with no price, the 60 XE page on ca-fr.tcl.com says Sold out with $229.99/$284.99 whose currency showed as USD, and the store reported Shopify.country US and USD to this client, so no CAD phone price could be read and nothing was kept",
+  "TCL uk: https://www.tcl.com/uk/en/mobile lists the TCL 40, 50, 60, K70, NXTPAPER and P80 phones with only a 'Where to buy' button and no price; the only store it links to, https://storesp.tcl.com/eu/uk/, is a spare-parts and accessories shop, so nothing kept",
+  "TCL mx: https://www.tcl.com/mx/es/mobile answered 404 and the Mexico site's navigation covers only tvs, air conditioners, refrigerators, soundbars and tablets (plus mobile support), with no phone range or price, so nothing kept",
+  "Alcatel uk: https://www.alcatelmobile.com/gb/ answered 404; the global site https://www.alcatelmobile.com/ lists only older models (Alcatel 3, 3L, A11, A31 PRIME, A62, 1023, 3023) with no price and no store link, so nothing kept",
+  "Alcatel mx: https://www.alcatelmobile.com/mx/ answered 404; the global site https://www.alcatelmobile.com/ lists only older models (Alcatel 3, 3L, A11, A31 PRIME, A62, 1023, 3023) with no price and no store link, so nothing kept",
+  "Sony uk: https://store.sony.co.uk/ answered 'connection reset by peer' on two tries (Python and curl) and https://www.sony.co.uk/ answered HTTP 403 (a 184-byte denial page); no Xperia page could be read, nothing kept",
+  "Sony ie: https://store.sony.ie/ answered 'connection reset by peer' on two tries (Python and curl) and https://www.sony.ie/ answered HTTP 403 (a 184-byte denial page); no Xperia page could be read, nothing kept",
+  "HMD us: https://www.hmd.com/en_us answered HTTP 301 to https://www.hmd.com/en_int (header x-redirect-key: www.hmd.com/en_us) and https://www.hmd.com/en_us/smartphones answered 301 to https://www.hmd.com/en_int/smartphones; there is no US store page to read, nothing kept",
+  "ASUS us: https://shop.asus.com/us/ redirected to https://www.asus.com/us/store/; the store's Mobile & Handhelds tab feed (https://odinapi.asus.com/recent-data/apiv2/ShopAPI/ShopFilterResult?ProductLevel1Code=mobile-handhelds&WebsiteCode=us, TotalCount 11) lists only ROG Xbox Ally handhelds, cases and VivoWatch wearables, no phone, nothing kept",
+  "ASUS uk: the same ShopFilterResult feed with WebsiteCode=uk (TotalCount 10) lists only ROG Xbox Ally handhelds, a case and VivoWatch wearables, no Zenfone or ROG Phone, nothing kept",
+  "ASUS ca: https://shop.asus.com/ca-en/ redirected to https://www.asus.com/ca-en/store/; the same ShopFilterResult feed with WebsiteCode=ca-en (TotalCount 6) lists only ROG Xbox Ally handhelds and cases, no phone, nothing kept",
+  "HMD uk: https://www.hmd.com/en_gb/smartphones and /feature-phones carry no price for HMD Fuse, Barça Fusion, Key, Fusion, Skyline, XR21, Pulse, Pulse+, Pulse Pro, 215 4G 2nd Edition, 235 4G 2nd Edition, 3210, 105 4G School Edition and Barça 3210 4G (the Skyline page, read, shows only retailer buy-now links), so nothing was kept for them; HMD Barbie Phone 4G (GBP 59.99, OutOfStock) is priced but its page was not read",
+  "HMD uk: kept row HMD Aura² is marked OutOfStock in the page data (GBP 84.99); the other kept UK rows are InStock",
+  "HMD ie: https://www.hmd.com/en_ie/hmd-aura-2 (EUR 89.99 on https://www.hmd.com/en_ie/smartphones) has no offers, storage or variant data in its page, so no row was kept; Nokia 3210 4G, Nokia 235 4G, Nokia 225 4G (2024), HMD Barça 3210 4G and HMD Barbie Phone 4G are priced on the listing but OutOfStock and their pages were not read; HMD Fusion X1, Fusion and the other Nokia feature phones show no price",
+  "HMD ie: kept row HMD 105 4G is OutOfStock in the page data (EUR 44.99), and the Raspberry Red colour of HMD 2660 Flip 4G is OutOfStock (Cosy Black is InStock)",
+  "Fairphone uk: prices read from https://www.fairphone.com/the-fairphone-gen-6 and /the-fairphone-gen-6-plus after setting the shop country to United Kingdom through the page's own language-submit form (pricelist 4, GBP); https://shop.fairphone.com/en-gb answered 404 at www.fairphone.com/en-gb; the Cloud White colour of Gen. 6 is flagged Discontinued and left out",
+  "Fairphone ie: same pages read with the shop country set to Ireland (pricelist 1, EUR); the /e/OS pages (https://www.fairphone.com/the-fairphone-gen-6-e-operating-system and https://www.fairphone.com/the-fairphone-gen-6-plus-e-operating-system) were not read for uk or ie, so no rows for them",
+  "Doro ie: https://www.doro.com/en-ie/shop/mobile-devices/easy-phones/doro-leva-l30-be229d53/?variationCode=36314 redirected to https://uk.doro.com/en-gb/collections/feature-phone, so no Leva L30 row for Ireland; Leva X10 is linked on https://www.doro.com/en-ie but its page was not read",
+  "Doro uk and ie: storageGB is null on every Doro row; the UK Aurora A30 page and the descriptions in the UK collection feed state no storage, and the IE spec tables print unlabeled values (A30 6GB/128GB/110GB/1024GB; A20 and A10 4GB/64GB/40GB/1024GB; L20 and L10 64MB/128MB/15MB/128GB); UK rows other than Aurora A30 were read from the store's collection feed https://uk.doro.com/en-gb/collections/all-doro-phones/products.json?limit=250 (Doro PhoneEasy 311c and 100w, home phones, were skipped)",
+  "Doro ie: the Leva L20 page labels its colours 'redwhite' and 'Blackwhite' (swatch files redwhite.png and blackwhite.png); recorded as Red/White and Black/White",
+  "Light us: thelightphone.com is a client-rendered app (https://www.thelightphone.com/ and /products.json both answered 200 with an empty shell, no prices), so the two Light rows were read from the store's Shopify Storefront API (goinglight.myshopify.com, the public token the page's own script uses), not from page HTML. That data holds no storage tier and no Light Phone III color, so storageGB is null for both rows and Light Phone III colors are empty. A read of the site's Contentful content (specs) with a token taken from the page script was refused by the permission system and not retried. Light Phone III ($899, 'Pre order' variant) says 'reserve now for delivery in Late December'; Light Flip ($349) says 'reserve now', batches ship April to May 2027.",
+  "Light us: The Light Phone II ($299, North America and International) is still listed (handles light-phone-ii-black and light-phone-ii-light-gray) but both report not available for sale, and no storage or color label was read, so it was left out.",
+  "Mudita us/uk/ie: store.mudita.com answers in USD, GBP and EUR store views (read through the store's own view switcher); the Kompakt is $399.00, GBP 339.00 and EUR 399.00 with no struck-through price, and its spec line reads '3GB RAM, 32GB Storage'. The page names no color for the phone, so colors are empty. The ie row is the store's English/EUR view. Mudita Pure is linked in the site menu but is not in the store's phones listing (https://store.mudita.com/store/phones), so no row.",
+  "BLU us: https://www.bluproducts.com/android-phones/ answered 200 but shows no prices; its Shop link goes to amazon.com/blu and its BUY NOW buttons point to Amazon and Best Buy; https://bluproducts.com/products.json redirected to /home/. No maker-store price kept.",
+  "BLU mx: https://www.bluproducts.com/mx/ answered 301 to /home/ (the desktop footer's BLU Mexico link is commented out in the page, the mobile footer's points to the same /mx/); no Mexican store found, nothing kept.",
+  "Sonim us/ca: https://store.sonimtech.com/products.json answered 200 with 57 products, all accessories (batteries, holsters, headsets, chargers), no phones; the one phone page opened, https://www.sonimtech.com/products/phones/xp3plus-5g, answered 200 with no price and sends buyers to AT&T, T-Mobile, Verizon, Bell and Telus (quantity sales via sales@sonimtech.com). Nothing kept for either market.",
+  "Punkt uk: Punkt. MP02 4G Minimalist Phone (16 GB; UK view: Black GBP 273, Light Grey GBP 211, Light Blue GBP 211, no struck-through prices) had all three colors out of stock when read (https://www.punkt.ch/products/mp02-4g-minimalist-phone), so it was left out rather than given one price for three colors. The two rows kept were read through the store's UK/GBP view: MC03 colour variant 'Black' (spec line 'Black (Splatter Paint finish)'), MC02 'Black'; MC02's compare-at price equals its price, so no sale.",
+  "Gabb us: https://gabb.com/product/gabb-phone-4/ answered 200 and shows '$249.99 + Gabb Cellular Plan' (the page says a Gabb Phone 4 bought on gabb.com comes pre-activated; structured data lists it OutOfStock); https://gabb.com/gabb-phone-4/ and /gabb-phone-4-pro/ both redirect to /gabb-phone/. Sold with its service plan, so no outright phone price kept.",
+  "Troomi us: https://shop.troomi.com/products.json and https://shop.troomi.com/ both answered 403 (https://troomi.com/products.json answered 404; troomi.com is a WordPress marketing site that links to shop.troomi.com); no price read.",
+  "Bark us: https://www.bark.us/phone/ and https://www.bark.us/phone both answered 404 'Not Found'; no phone page or price read.",
+  "Pinwheel us: the three prices are the phone-only prices on pinwheel.com/phones/<model> with no struck-through price. No color is named on those pages (their Buy Now links end in -black, -blue and -black but are not color labels), so colors are empty. Caregiver Portal ($17.99/mo) and Pinwheel Wireless ($29.99/mo) are shown as separate plans; whether checkout at shop.pinwheel.com (a hash-routed app) requires one could not be read.",
+  "Techless us: Wisephone II kept at $399.00 (New). https://wisephone.com/products/wisephone-ii shows '$399.00 + $39 Activation Fee' (one-time WiseOS software fee, a separate item), spec lines 'Color Black' and 'Memory 128GB w/ 4GB Ram' for the Samsung A17 hardware; the A15/A16/A17 'Model' variants are all $399.00 and the page states only the A17 spec. Open-Box variants ($359 to $399) skipped.",
+  "Hisense mx: https://www.hisense.com.mx/ (also hisense.com.mx, /celulares and a VTEX search path) - the connection was reset before any page came back on 6 tries, and WebFetch got HTTP 503; nothing kept.",
+  "Lanix mx: https://lanix.com/smartphones/ (and /alpha-6/, /alpha-2/) answered 200 but show specs only, with no price, cart or store link; /wp-json/wc/store/v1/products answered 404 (no shop); nothing kept.",
+  "Infinix mx: https://www.infinixmobiles.com/mx now lands on a GoDaddy for-sale page; the maker's current Mexico site https://mx.infinixmobility.com/ answered 200 but its catalog API (/api/V1/xpark-app/app-products) returns price 0 for every model and its config (/js/pc_mx_config.json) has cart_enabled=false with cart_out_url /onlineshop, so it shows no prices and sells nothing itself; nothing kept.",
+  "TECNO mx: https://www.tecno-mobile.com/mx/ answered 200 but its phone list and product page (checked /mx/telefonos/product-detail/product/pova-8-pro-5g/) show no prices, and /mx/online-store/ only links to retailers (Mercado Libre, Coppel, Elektra); nothing kept.",
+  "Cubot us: https://cubot.net/ (and /phone/smartphones, /phone/smartphones/P90) answered 200 but show specs only (its Shop Now links are commented out); its Store menu lists only a Europe store (https://shop.cubot.net/, priced in EUR, /meta.json lists no US shipping) and a Mexico store (https://cubot.mx/), neither a US store; nothing kept.",
+  "UMIDIGI us: https://www.umidigi.com/ and /page-store.html answered 200 but show no prices; the Online Store page only lists marketplace storefronts (Amazon, AliExpress, eBay, Mercado Libre and others), and store.umidigi.com could not be reached; nothing kept.",
+  "Kyocera ca: https://www.kyoceramobile.ca/ and https://kyoceramobile.ca/ could not be reached (the proxy's CONNECT was refused with 502); the US shop's unlocked phone page also says the device is not for use outside the U.S.; nothing kept.",
+  "Kyocera us (1 row kept): https://solutions.kyoceramobile.com/shop/category/devices-phones-99 lists 8 phones; only the E4831 DuraXA Equip Unlocked is new, the other 7 are remanufactured (most also Verizon versions), so skipped. Its page also shows an expired banner '$179.98 SALE PRICE until 8/31/26' while the price block shows only $215.99.",
+  "Blackview us (6 models kept): https://store.blackview.hk/ is a Shopify store whose product pages gave curl a 429 'Verifying your connection' challenge, so prices were read from its product feed localized to the US (https://store.blackview.hk/products.json?limit=250&country=US, USD, USA Plug variants) and spot-checked against the rendered pages for FORT 200 and ROCK 5. Skipped XPLORE 6 (pre-order listing) and models with no in-stock variant in that feed. ROCK 5 comes in 6GB+256GB ($407.99) and 12GB+256GB ($448.99) at the same $499.99 regular price, so it is one 256 GB row.",
+  "emporia (https://www.emporia.eu): its base store prices in EUR, no American storefront.",
+  "REDMAGIC: not on sale (none available, or no price): 27 listings left out.",
+  "REDMAGIC: a bundle, a refurbished one or a service: 3 listings left out.",
+  "Ulefone: not on sale (none available, or no price): 9 listings left out.",
+  "Ulefone: no storage stated: 46 listings left out.",
+  "DOOGEE: not on sale (none available, or no price): 33 listings left out.",
+  "DOOGEE: no storage stated: 7 listings left out.",
+  "DOOGEE: past the 12 models a market: 26 listings left out.",
+  "DOOGEE: no US version: 1 listings left out.",
+  "DOOGEE: a bundle, a refurbished one or a service: 1 listings left out.",
+  "OUKITEL: no storage stated: 1 listings left out.",
+  "OUKITEL: past the 12 models a market: 37 listings left out.",
+  "OUKITEL: not on sale (none available, or no price): 13 listings left out.",
+  "OUKITEL: no US version: 1 listings left out.",
+  "AGM: no storage stated: 13 listings left out.",
+  "AGM: not on sale (none available, or no price): 4 listings left out.",
+  "AGM: a bundle, a refurbished one or a service: 3 listings left out.",
+  "Unihertz: no storage stated: 5 listings left out.",
+  "Unihertz: no US version: 3 listings left out.",
+  "Unihertz: a bundle, a refurbished one or a service: 1 listings left out.",
+  "Unihertz: not on sale (none available, or no price): 5 listings left out.",
+  "Teracube: no storage stated: 3 listings left out.",
+  "Teracube: not on sale (none available, or no price): 3 listings left out.",
+  "Teracube: no US version: 1 listings left out.",
+  "FOSSiBOT: no US version: 6 listings left out.",
+  "FOSSiBOT: not on sale (none available, or no price): 3 listings left out.",
+  "FOSSiBOT: past the 12 models a market: 3 listings left out.",
+  "Minimal Company: a bundle, a refurbished one or a service: 1 listings left out.",
+  "emporia: no storage stated: 22 listings left out.",
+  "emporia: a bundle, a refurbished one or a service: 4 listings left out.",
+  "emporia: not on sale (none available, or no price): 4 listings left out.",
+  "Crosscall: not on sale (none available, or no price): 32 listings left out.",
+  "Left out: HMD HMD Aura² (uk): out of stock when read",
+  "Left out: HMD HMD 105 4G (ie): out of stock when read",
+  "Left out: Light Light Phone III (us): its phones are reservations, the Light Phone III delivered from late 2026 and the Light Flip in 2027",
+  "Left out: Light Light Flip (us): its phones are reservations, the Light Phone III delivered from late 2026 and the Light Flip in 2027",
+  "Left out: Pinwheel Genesis 4 (us): each phone comes with Pinwheel’s own service, and whether one is sold without it wasn’t read",
+  "Left out: Pinwheel Slim 6 (us): each phone comes with Pinwheel’s own service, and whether one is sold without it wasn’t read",
+  "Left out: Pinwheel Plus 6 (us): each phone comes with Pinwheel’s own service, and whether one is sold without it wasn’t read"
+ ]
+}

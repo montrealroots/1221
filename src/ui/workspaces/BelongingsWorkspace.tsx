@@ -21,7 +21,7 @@ import { CITIES } from '@/engine/content/geography';
 import { ENGRAVERS, JEWELERS, METAL_LABEL, PIECE_LABEL, commissionMoney, commissionRefusal, commissionsOf, jewelersFor, type Metal, type PieceKind } from '@/engine/systems/commissions';
 import { cheapestPlanFor, finished, placeIn, programmeRefusal, programmesHere } from '@/engine/systems/programmes';
 import { consolesHere, consolesOwned, gamesHere, gamesOwned, licenceHere, licensed, planById, planPrice, plansHere, subscriptionsOf, watchRefusal } from '@/engine/systems/homelife';
-import { activationCost, batteryQuote, claimQuote, phoneById, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
+import { activationCost, batteryQuote, claimQuote, phoneById, phoneLabel, phonePrice, phoneQuote, phoneRefusal, phonesOf, phonesOnSale, plansFor, protectionFor } from '@/engine/systems/phones';
 import { orderStage, ordersOf } from '@/engine/systems/orders';
 import { giveRefusal } from '@/engine/systems/gifts';
 import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/engine/systems/reading';
@@ -823,12 +823,16 @@ function Phones() {
   const battery = useFeature('phone.battery');
   const protect = useFeature('phone.protect');
   const claim = useFeature('phone.claim');
-  const list = phonesOnSale(sim, person);
+  const all = phonesOnSale(sim, person);
   const owned = phonesOf(person);
+  const [maker, setMaker] = useState('');
   const [phoneId, setPhoneId] = useState('');
   const [color, setColor] = useState('');
   const [how, setHow] = useState('');
   const [tradeIn, setTradeIn] = useState('');
+  // One maker's phones at a time where there are several (from 2026-10-05, when the makers became 30 and more).
+  const makers = [...new Set(all.map((p) => p.maker))].sort((a, b) => a.localeCompare(b));
+  const list = maker ? all.filter((p) => p.maker === maker) : all;
   const chosen = phoneById(phoneId) ?? list[0];
   if (!chosen && owned.length === 0) return null;
   const plans = chosen ? plansFor(chosen).flatMap((x) => x.months.map((m) => ({ key: `${x.plan.name}|${m}`, name: x.plan.name, months: m }))) : [];
@@ -837,9 +841,8 @@ function Phones() {
   const q = order ? phoneQuote(sim, person, order) : undefined;
   const no = order ? phoneRefusal(sim, person, order) : 'Choose a phone.';
   const line = activationCost(sim, person);
-  const size = (gb: number) => (gb >= 1024 ? `${gb / 1024} TB` : `${gb} GB`);
   return (
-    <Panel title="Phones" subtitle={chosen ? `${list.length} on their makers’ own stores where you live, unlocked, cheapest first` : undefined}>
+    <Panel title="Phones" subtitle={chosen ? `${all.length} from ${makers.length} makers’ own stores where you live, unlocked, cheapest first` : undefined}>
       <div className="col gap-3">
         {owned.map((o) => {
           const p = phoneById(o.device.phoneId);
@@ -863,10 +866,19 @@ function Phones() {
         })}
         {chosen && order && (
           <div className="field-row field-row-tight">
+            {makers.length > 1 && (
+              <div className="field">
+                <label htmlFor="phone-maker">Maker</label>
+                <select id="phone-maker" value={maker} onChange={(e) => { setMaker(e.target.value); setPhoneId(''); setHow(''); }}>
+                  <option value="">Any</option>
+                  {makers.map((m) => <option key={m} value={m}>{m}</option>)}
+                </select>
+              </div>
+            )}
             <div className="field">
               <label htmlFor="phone-pick">Phone</label>
               <select id="phone-pick" value={chosen.id} onChange={(e) => { setPhoneId(e.target.value); setHow(''); }}>
-                {list.map((p) => <option key={p.id} value={p.id}>{`${p.maker} ${p.model}, ${size(p.storageGB)}, ${money(phonePrice(sim, person, p))}${p.press ? ', A Press Price' : ''}`}</option>)}
+                {list.map((p) => <option key={p.id} value={p.id}>{`${phoneLabel(p)}, ${money(phonePrice(sim, person, p))}${p.press ? ', A Press Price' : ''}`}</option>)}
               </select>
             </div>
             {chosen.colors.length > 1 && (

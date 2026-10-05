@@ -77,6 +77,11 @@ export interface Device {
 export type Owned = Item & { device: Device };
 
 export const phoneById = (id: string): Phone | undefined => PHONES.find((p) => p.id === id);
+
+/** Its storage as the phone shop says it: 256 GB, 1 TB, a feature phone's 128 MB; nothing where its maker states none. */
+export const storageLabel = (gb: number | null): string => (gb === null ? '' : gb >= 1024 ? `${gb / 1024} TB` : gb < 1 ? `${Math.round(gb * 1000)} MB` : `${gb} GB`);
+/** A phone's name with its storage: Apple iPhone 17, 256 GB. */
+export const phoneLabel = (p: Phone): string => [`${p.maker} ${p.model}`, storageLabel(p.storageGB)].filter(Boolean).join(', ');
 export const phonesOf = (person: Person): Owned[] => itemsOf(person).filter((i): i is Owned => i.device !== undefined);
 /** The market a person buys a phone in: the country they live in, where SLATE keeps its phones. */
 export const phoneMarketOf = (person: Person): string | undefined => CITIES.get(person.home?.cityId ?? person.currentLocationId)?.countryId;
@@ -154,7 +159,7 @@ export function buyPhone(sim: Simulation, person: Person, o: PhoneBuy): string {
   if (no) throw new CommandError(no);
   const p = phoneById(o.phoneId)!;
   const q = phoneQuote(sim, person, o)!;
-  const label = `${p.maker} ${p.model}, ${p.storageGB} GB`;
+  const label = phoneLabel(p);
   // A plan is credit: the application is an inquiry, and a record short of a card's is refused.
   if (o.plan) {
     const credit = person.credit!;
