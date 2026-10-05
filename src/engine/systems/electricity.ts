@@ -50,6 +50,7 @@
 
 import type { Simulation } from '../core/simulation';
 import { showerKwhDelta } from './hotwater';
+import { typicalTvKwh } from '../content/tvuse';
 import type { Person } from '../domain/model';
 import { saveCurrency, type Money } from '../core/money';
 import { atHome } from './dwelling';
@@ -115,7 +116,13 @@ export function electricityAdjustment(sim: Simulation, person: Person, month: nu
   if (!t || base === undefined) return 0;
   // An electric heater's showers past the average, or short of it (`systems/hotwater.ts`, from 2026-10-03).
   // And what a sauna's heater used (from 2026-10-04).
-  const used = base + showerKwhDelta(sim, person, month) + (person.living?.extraKwh ?? 0);
+  // And from 2026-10-05 television watched on a set of one's own (`tvKwh`), past the typical household's viewing the
+  // typical month already holds, on the days at home (`content/tvuse.ts`). Watching less earns nothing back: SLATE
+  // doesn't see all of a life's viewing (an evening unwinding with the TV is some), so it never claims less than typical.
+  const l = person.living;
+  const homeDays = l?.billDays ? l.homeDays ?? 0 : DAYS[month - 1]!;
+  const tv = Math.max(0, (l?.tvKwh ?? 0) - typicalTvKwh(homeDays));
+  const used = base + showerKwhDelta(sim, person, month) + (l?.extraKwh ?? 0) + tv;
   const days = DAYS[month - 1]!;
   const typical = t.typicalKwh * KIND_SHARE[person.home!.kind]!;
   return inSave(sim, t.bill(used, month, days) - t.bill(typical, month, days), t.currency);

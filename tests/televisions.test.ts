@@ -13,6 +13,9 @@ import { owns } from '@/engine/systems/furniture';
 import { GENERIC_TV_WATTS, buyTvRefusal, tvAtHome, tvCatalog, watchPower } from '@/engine/systems/televisions';
 import { itemsOf } from '@/engine/systems/items';
 import { SERVICES } from '@/engine/content/homelife';
+import { TV_HOURS_A_DAY, typicalTvKwh } from '@/engine/content/tvuse';
+import { electricityAdjustment } from '@/engine/systems/electricity';
+import { livingOf } from '@/engine/systems/dwelling';
 
 const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
 
@@ -45,9 +48,9 @@ describe('a television', () => {
     const watts = typeof labeled.product.attrs.onModeWatts === 'number' ? labeled.product.attrs.onModeWatts : GENERIC_TV_WATTS!;
     expect(tvAtHome(sim.player)!.watts).toBe(watts);
     // Two hours on it.
-    const was = sim.player.living?.extraKwh ?? 0;
+    const was = sim.player.living?.tvKwh ?? 0;
     expect(watchPower(sim.player, 120)).toBeCloseTo((watts * 2) / 1000, 9);
-    expect((sim.player.living?.extraKwh ?? 0) - was).toBeCloseTo((watts * 2) / 1000, 9);
+    expect((sim.player.living?.tvKwh ?? 0) - was).toBeCloseTo((watts * 2) / 1000, 9);
   });
 
   it('draws the catalog’s middle where the set has no model, and nothing without a set', () => {
@@ -84,8 +87,22 @@ describe('a television', () => {
     const one = tvCatalog(sim, sim.player)[0]!;
     sim.must({ kind: 'tv.buy', payload: { offerId: one.offer.id } });
     sim.must({ kind: 'home.subscribe', payload: { id: SERVICES.find((x) => x.market === 'us' && x.service === 'Amazon Prime')!.id } });
-    const was = sim.player.living?.extraKwh ?? 0;
+    const was = sim.player.living?.tvKwh ?? 0;
     const r = sim.must<{ watched: number }>({ kind: 'tv.watch', payload: { programmeId: 'us-reacher', to: 'hour' } });
-    expect((sim.player.living?.extraKwh ?? 0) - was).toBeCloseTo((tvAtHome(sim.player)!.watts! * r.watched) / 60 / 1000, 9);
+    expect((sim.player.living?.tvKwh ?? 0) - was).toBeCloseTo((tvAtHome(sim.player)!.watts! * r.watched) / 60 / 1000, 9);
+  });
+
+  it('bills watching past the typical household’s 2.6 hours a day, and none or less than it as the typical bill', () => {
+    const sim = life('us-ny-newyork', 'tv-typical');
+    expect(TV_HOURS_A_DAY).toBe(2.6);
+    expect(typicalTvKwh(30)).toBeCloseTo((2.6 * 30 * GENERIC_TV_WATTS!) / 1000, 9);
+    const l = livingOf(sim.player);
+    delete l.billDays;
+    l.tvKwh = typicalTvKwh(31);
+    expect(electricityAdjustment(sim, sim.player, 1)).toBe(0);
+    l.tvKwh = 0;
+    expect(electricityAdjustment(sim, sim.player, 1)).toBe(0);
+    l.tvKwh = 2 * typicalTvKwh(31);
+    expect(electricityAdjustment(sim, sim.player, 1)).toBeGreaterThan(0);
   });
 });

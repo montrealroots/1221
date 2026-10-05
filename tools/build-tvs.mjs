@@ -16,7 +16,7 @@ const PANELS = new Set(['LED', 'QLED', 'Mini-LED', 'OLED', 'QD-OLED', 'MicroLED'
 const num = (v) => (typeof v === 'number' && Number.isFinite(v) && v > 0 ? v : null);
 
 const dir = 'docs/research/catalog';
-const tranches = existsSync(dir) ? readdirSync(dir).filter((f) => /^tv-.*\.json$/.test(f) && f !== 'tv-power.json' && f !== 'tv-prices.json').sort() : [];
+const tranches = existsSync(dir) ? readdirSync(dir).filter((f) => /^tv-.*\.json$/.test(f) && f !== 'tv-power.json' && !f.startsWith('tv-prices')).sort() : [];
 const products = new Map();
 const offerIds = new Set();
 for (const f of tranches) {
@@ -48,13 +48,13 @@ for (const f of tranches) {
       if (offerIds.has(id)) id = `${id.slice(0, 80)}-${slug(o.seller ?? 'seller')}`.slice(0, 100);
       for (let n = 2; offerIds.has(id); n += 1) id = `${id.slice(0, 96)}-${n}`;
       offerIds.add(id);
-      p.offers.push({ id, market, seller: o.seller ?? p.brand, channel: 'online', price: o.price, currency: o.currency, taxIncluded: o.taxIncluded === true, url: o.url ?? null, read: j.read ?? '2026-10-04', status: o.status === 'verified' ? 'verified' : 'secondhand' });
+      p.offers.push({ id, market, seller: o.seller ?? p.brand, channel: 'online', price: o.price, currency: o.currency, taxIncluded: o.taxIncluded === true, url: o.url ?? null, read: j.read ?? '2026-10-04', status: o.status === 'verified' ? 'verified' : 'secondhand', ...(o.code && slug(o.code) !== slug(p.model) ? { code: String(o.code) } : {}) });
     }
   }
 }
-// Prices read afterwards for sets a tranche read without one (`tv-prices.json`, from 2026-10-05): each its own offer, on
+// Prices read afterwards for sets a tranche read without one, or in other markets (`tv-prices*.json`, from 2026-10-05): each its own offer, on
 // the product of the same make and model.
-const PRICES = existsSync(`${dir}/tv-prices.json`) ? JSON.parse(readFileSync(`${dir}/tv-prices.json`, 'utf8')).offers ?? [] : [];
+const PRICES = (existsSync(dir) ? readdirSync(dir).filter((f) => /^tv-prices.*.json$/.test(f)).sort() : []).flatMap((f) => JSON.parse(readFileSync(`${dir}/${f}`, 'utf8')).offers ?? []);
 let priced = 0;
 for (const o of PRICES) {
   const market = String(o.market ?? '').toLowerCase();
@@ -65,7 +65,7 @@ for (const o of PRICES) {
   if (offerIds.has(id)) id = `${id.slice(0, 80)}-${slug(o.seller ?? 'seller')}`.slice(0, 100);
   for (let n = 2; offerIds.has(id); n += 1) id = `${id.slice(0, 96)}-${n}`;
   offerIds.add(id);
-  p.offers.push({ id, market, seller: o.seller ?? p.brand, channel: 'online', price: o.price, currency: o.currency, taxIncluded: o.taxIncluded === true, url: o.url ?? null, read: '2026-10-05', status: o.status === 'verified' ? 'verified' : 'secondhand' });
+  p.offers.push({ id, market, seller: o.seller ?? p.brand, channel: 'online', price: o.price, currency: o.currency, taxIncluded: o.taxIncluded === true, url: o.url ?? null, read: '2026-10-05', status: o.status === 'verified' ? 'verified' : 'secondhand', ...(o.code && slug(o.code) !== slug(p.model) ? { code: String(o.code) } : {}) });
   priced += 1;
 }
 const POWER = existsSync(`${dir}/tv-power.json`) ? JSON.parse(readFileSync(`${dir}/tv-power.json`, 'utf8')).models ?? [] : [];

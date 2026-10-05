@@ -1004,7 +1004,7 @@ export function registerHousehold(sim: Simulation): void {
     for (const one of monthOrder(s, person, rent, bills)) if (one === 'rent') payRent(s, person, rent); else payBills(s, person, bills);
     // The internet and the phone, each by its provider, the internet shared as the bills are (`systems/telecom.ts`).
     for (const line of telecomLines(s, person, item.at)) payBills(s, person, line.shared ? Math.round(line.amount * share) : line.amount, line.memo);
-    if (person.living) { delete person.living.loads; delete person.living.billDays; delete person.living.homeDays; delete person.living.showers; delete person.living.baths; delete person.living.extraKwh; }
+    if (person.living) { delete person.living.loads; delete person.living.billDays; delete person.living.homeDays; delete person.living.showers; delete person.living.baths; delete person.living.extraKwh; delete person.living.tvKwh; }
     const owed = arrearsOf(s, person) - before;
     if (owed > 0) {
       s.notify({

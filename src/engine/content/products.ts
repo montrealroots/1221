@@ -23,6 +23,8 @@ export interface CatalogOffer {
   /** Stable: an owned item's kind names it. */
   id: string; market: CatalogMarket; seller: string; channel: 'online' | 'store';
   price: number; currency: string; taxIncluded: boolean; url: string | null; read: string; status: ReadStatus;
+  /** The model code this market sells it under, where it isn't the product's own (from 2026-10-05: a British QE65QN90F for an American QN65QN90F). */
+  code?: string;
 }
 export interface CatalogVariant { id: string; attrs: Readonly<Record<string, string>> }
 export interface CatalogProduct {

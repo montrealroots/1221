@@ -670,9 +670,9 @@ function Televisions() {
   if (shop.length === 0) return null;
   const band = (inches: number) => (inches < 40 ? 'Under 40 Inches' : inches < 55 ? '40 To 54 Inches' : inches < 70 ? '55 To 69 Inches' : '70 Inches And Over');
   const entries: CatalogEntry<(typeof shop)[number]>[] = shop.map((x) => ({
-    id: x.offer.id, label: `${x.product.brand} ${x.product.model}`, price: x.price, priceKind: 'advertised', basis: 'Each, with the tax as the place shows it',
+    id: x.offer.id, label: `${x.product.brand} ${x.offer.code ?? x.product.model}`, price: x.price, priceKind: 'advertised', basis: 'Each, with the tax as the place shows it',
     facets: { brand: x.product.brand, panel: String(x.product.attrs.panel ?? 'LED'), resolution: String(x.product.attrs.resolution ?? 'Not Read'), size: band(Number(x.product.attrs.sizeIn)) },
-    words: [x.product.family, x.product.attrs.smartOs, x.offer.seller].filter(Boolean).join(' '), value: x,
+    words: [x.product.family, x.product.model, x.product.attrs.smartOs, x.offer.seller].filter(Boolean).join(' '), value: x,
   }));
   const arranged = arrange(entries, view);
   const page = arranged.slice(0, shownCount);
