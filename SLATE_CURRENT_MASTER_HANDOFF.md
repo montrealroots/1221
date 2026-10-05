@@ -78,11 +78,11 @@ The owner paused the session on 2026-10-04 to carry on in another and asked that
 - `17644e46`: cleaning (59 brands) and accessories (67) past 50, one spelling a brand, Pay With on the bathroom's Buy.
 - `2fc8cff7`: electric motorcycles, 45 where their use was read; not sold in Ireland or British Columbia (`EV_BIKE_UNKEPT`). `ebcc5e38`: a pet fed by energy, wet foods sold. `7960bbcc`: dryer and central air faults.
 - `fe3b890a`: phones (45 makers), appliances (59), mattresses (53); E10 done (`tests/journeys-edges.test.ts`). `d23adc99`: motorhomes (46 more, within a car licence by gross weight) and televisions (38). `a8a198ad`: a cup of coffee, tea, juice or water at home (`cupOf`); drinks counted as Beverages.
-- Working on: drinks from more brands with each beer's and wine's own ABV (`research-groceries3.json`; the builder and `drinkAtHome` already read `abv`). A replay at `7960bbcc` is running for the next merge.
+- The replay at `7960bbcc` was clean (New York 89, London 50, 0 errors and 0 anomalies); `main` merged from it as `ac50320d`. `b0dd0655`: pet foods (57 brands, each at its own energy), a kitchen appliance chosen by model, a drink's own ABV. `5cb897b4`: speakers (68 makers), blenders and slow cookers (39), drinks (57 brands), cultural clothing (38). A replay at `5cb897b4` is running for the next merge.
 
 **Next, in order:**
 1. EU-label energy for the British and Irish appliance models (EPREL needs an API key only the owner can request). A dishwasher's cycles have been on the electricity bill since 2026-10-05.
-2. More catalog breadth (`docs/CATALOG-COVERAGE.md`), each new category wired to something that reads it. Under 50: phones 45, televisions 38, motorhomes 38, audio 35, beverages 28, factory options 16, cultural clothing 8; no catalog yet: computers, lighting, kitchenware, cosmetics, tires, car audio, building, garden, sports, pet supplies (each needs a reader first).
+2. More catalog breadth (`docs/CATALOG-COVERAGE.md`), each new category wired to something that reads it. Under 50: phones 45, kitchenware 39, televisions 38, motorhomes 38, cultural clothing 38, factory options 16; no catalog yet: computers, lighting, cosmetics, tires, car audio, building, garden, sports (each needs a reader first).
 3. The open rows of `docs/REQUIREMENTS.md`. 41c's office use has no reader yet: an employed actor can't claim a home office, and an invented bonus isn't wanted.
 4. Electric motorcycles in Ireland and British Columbia: Ireland's motor tax for one and an ICBC rate class for one, neither read yet (`EV_BIKE_UNKEPT`).
    - Rows a player can act on, with no published rate needed: 41c, a guest room and an office, each with something real that reads it.
