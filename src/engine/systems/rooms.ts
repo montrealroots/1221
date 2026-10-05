@@ -177,7 +177,7 @@ export function footprintOf(item: Item): number {
     return s ? (s.widthCm * s.lengthCm) / 10_000 : 0;
   }
   if (item.kind === 'furniture:sofa') return KIVIK_M2;
-  if (item.kind.startsWith('ikea:')) {
+  if (item.kind.startsWith('ikea:') || item.kind.startsWith('furn:')) {
     const [w, d] = pieceById(item.kind.slice(5))?.cm ?? [];
     return w && d ? ((w * d) / 10_000) * item.quantity : 0;
   }

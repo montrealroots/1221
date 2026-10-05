@@ -145,7 +145,7 @@ function YourRooms() {
   const rooms = roomList(sim, person);
   const home = homeKeyOf(person.home);
   if (!rooms.length || !home || person.currentLocationId !== person.home?.cityId) return null;
-  const floor = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor' && (i.bulky || i.kind.startsWith('ikea:')));
+  const floor = itemsOf(person).filter((i) => i.at.kind === 'home' && i.at.home === home && (i.at.spot ?? 'floor') === 'floor' && (i.bulky || i.kind.startsWith('ikea:') || i.kind.startsWith('furn:')));
   const owns = Boolean(livingIn(person));
   return (
     <Panel title="Your Rooms" subtitle="Each room, what it’s used for and what stands in it">

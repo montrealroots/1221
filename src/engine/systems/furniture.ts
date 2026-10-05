@@ -129,7 +129,7 @@ export function mattressFeeUsd(cityId: string, at: number): number {
  */
 export function moversCost(sim: Simulation, person: Person, fromCity: string, toCity: string, fromHome = homeKeyOf(person.home)): Money {
   // Furniture of one's own to move: a bed, a sofa, or from 2026-10-02 any piece bought for the home.
-  if (!hadAt(person, fromHome, 'bed') && !hadAt(person, fromHome, 'sofa') && !itemsOf(person).some((i) => i.kind.startsWith('ikea:') && i.at.kind === 'home' && i.at.home === fromHome)) return 0;
+  if (!hadAt(person, fromHome, 'bed') && !hadAt(person, fromHome, 'sofa') && !itemsOf(person).some((i) => (i.kind.startsWith('ikea:') || i.kind.startsWith('furn:')) && i.at.kind === 'home' && i.at.home === fromHome)) return 0;
   const from = CITIES.get(fromCity);
   const to = CITIES.get(toCity);
   if (!from || !to) return 0;
