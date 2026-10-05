@@ -53,10 +53,19 @@ The owner paused the session on 2026-10-04 to carry on in another and asked that
 
 **Since, on 2026-10-05.** The owner scratched the Account 1 session that took this box up: the branch and `main` were restored to this box's state by fast-forward commits whose files are `18527d25`'s and `ebf76bb5`'s (no force-push), and that session's work is kept on `backup/account1-branch-2026-10-05` and `backup/account1-main-2026-10-05`, not to be brought back unless the owner asks. Then televisions were finished (`systems/televisions.ts`, `content/tvcatalog.ts`, Televisions on Homes, `tests/televisions.test.ts`): 106 sets from 23 makers on sale of 333 read, each set's power from ENERGY STAR (`tv-power.json`) or its area at ENERGY STAR's median, billed for each hour watched; and groceries' and toiletries' brands wired (183 and 82). The EU's EPREL needs a registered API key, which only the owner can get.
 
+**Then, later on 2026-10-05** (each gated and pushed):
+- `28b34f92`: the spelling pass had renamed real names in generated catalogs (Storm Grey, Blanchardstown Centre, Beovision Theatre). Generated catalogs are now on its list of files whose strings are somebody else's.
+- `61f5a52f`: cleaning products' brands, 24 of a smaller model's readings corrected by hand.
+- `b3cb2b32` and `d06b9756`: televisions priced in a second and third pass, 220 sets in all five markets, each named by its market's code. Watching is billed only past a typical household's 2.6 hours a day (ATUS 2025, `content/tvuse.ts`). The first billing had counted the typical viewing twice.
+- `e082d12a`: speakers, 156 from 35 makers, and `systems/devices.ts` with `ui/components/DeviceShop.tsx`, shared by TVs and speakers.
+- `b23ef24e`: shopping carried by hand stops at NIOSH's 23 kg.
+- `d3a13a6e`: makers' own mattresses beside IKEA's; a bed is chosen frame first.
+- A lives replay at `e1f1a34f` was clean (New York 89 on 2091-11-06, London 50 on 2052-09-08, 0 errors and 0 anomalies). One at `e082d12a` was running.
+
 **Next, in order:**
-1. Prices for the televisions read without one (Best Buy US and Canada, Currys, Harvey Norman, Liverpool), so more of the 333 are sold.
-2. A brand for cleaning products (`research-household-supplies.json`, not in the brands pass).
-3. Run a lives replay and merge to `main`.
+1. Appliances by make and model: `appliance-a.json` and `appliance-power.json` were being read. Fit a model through `home.fit` with an `offerId`, keep it on the owned home, and bill each load at its rated kWh in `machineUsd` (`systems/dwelling.ts`) in place of the typical machine.
+2. Merge to `main` once a replay at the head is clean.
+3. More catalog breadth (`docs/CATALOG-COVERAGE.md`), then the open rows of `docs/REQUIREMENTS.md`.
 4. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`, 0 of 45 met), then the open rows in `docs/REQUIREMENTS.md`.
    - Rows a player can act on, with no published rate needed: 41c, a guest room and an office, each with something real that reads it.
    - 22f, garment repair, is held back for want of how much a repair restores; inventing that figure was avoided.
