@@ -12,9 +12,10 @@ import { Gated } from '@/ui/guide/Guide';
 import { formatDate, formatTime, instantFromZoned } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { CITIES } from '@/engine/content/geography';
+import { contactsOf } from '@/engine/systems/people';
 import type { Club, ClubKind } from '@/engine/content/clubs';
 import {
-  SET_OUT_HOURS, SOCIAL_MINUTES, attendOf, canceledFor, clubById, clubsIn, goRefusal, joinClubRefusal, joinFee, legTo, meetingFor,
+  SET_OUT_HOURS, SOCIAL_MINUTES, attendOf, canceledFor, clubById, clubsIn, goRefusal, joinClubRefusal, joinFee, legTo, meetingFor, openToAnyone,
   meetingsAhead, membershipsOf, perSession, type Membership,
 } from '@/engine/systems/clubs';
 import { transitFare, type TripMode } from '@/engine/systems/trips';
@@ -120,11 +121,14 @@ function Joined({ club, m }: { club: Club; m: Membership }) {
   const [way, setWay] = useState<TripMode>(m.by && modes.includes(m.by) ? m.by : 'foot');
   const [car, setCar] = useState<string>(m.vehicleId ?? cars[0]?.id ?? '');
   const [stay, setStay] = useState(false);
+  // Somebody along (from 2026-10-05): the people you know in its town, a rival not asked.
+  const [along, setAlong] = useState<string[]>([]);
+  const friends = contactsOf(person).filter((c) => c.cityId === club.cityId && !c.rival);
   const zone = CITIES.require(club.cityId).timeZone;
   const cur = saveCurrency(sim.universe);
   const ahead = meetingsAhead(club, sim.now, 4, m.until);
   const now = meetingFor(club, sim.now);
-  const goNo = goRefusal(sim, person, club.id, way, way === 'car' ? car : undefined);
+  const goNo = goRefusal(sim, person, club.id, way, way === 'car' ? car : undefined, along);
   const leg = legTo(club, way);
   const fare = way === 'transit' ? transitFare(sim, club.cityId) : undefined;
   const set = (patch: Record<string, unknown>) => { if (run('club.set', { clubId: club.id, ...patch }).ok) toast('Saved.', 'positive'); };
@@ -189,10 +193,22 @@ function Joined({ club, m }: { club: Club; m: Membership }) {
           </select>
         </div>
       </div>
+      {friends.length > 0 && (
+        <div className="field">
+          <span className="small">{openToAnyone(club) ? 'With (They Run It Too)' : 'With (Along For The Ride)'}</span>
+          <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+            {friends.map((c) => (
+              <label key={c.id} className="small row gap-1" style={{ alignItems: 'center' }}>
+                <input type="checkbox" checked={along.includes(c.id)} onChange={() => setAlong((a) => (a.includes(c.id) ? a.filter((x) => x !== c.id) : [...a, c.id]))} />{c.name}
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
         <label className="small row gap-1" style={{ alignItems: 'center' }}><input type="checkbox" checked={stay} onChange={(e) => setStay(e.target.checked)} />Stay After</label>
         <Gated feature="club.go" className="btn btn-sm btn-primary" disabled={Boolean(goNo)} title={goNo} onClick={() => {
-          const r = run<{ minutes: number; met?: string }>('club.go', { clubId: club.id, by: way, ...(way === 'car' ? { vehicleId: car } : {}), ...(stay ? { stayAfter: true } : {}) });
+          const r = run<{ minutes: number; met?: string }>('club.go', { clubId: club.id, by: way, ...(way === 'car' ? { vehicleId: car } : {}), ...(stay ? { stayAfter: true } : {}), ...(along.length ? { passengerIds: along } : {}) });
           if (r.ok) toast(`Back from ${club.name}${r.value?.met ? `; you met ${r.value.met}` : ''}.`, 'positive');
         }}>Set Out Now</Gated>
         {attendOf(m) === 'always' && m.by !== way && <Gated feature="club.set" className="btn btn-sm btn-ghost" onClick={() => set({ by: way, ...(way === 'car' ? { vehicleId: car } : {}) })}>Go {WAY_LABEL[way]}</Gated>}

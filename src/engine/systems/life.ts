@@ -52,6 +52,7 @@ import { SHAVE, shave, shaveReady, sprayUsed } from './hygiene';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
 import { dailyCare, detergentFor, dishSoapFor, dishwasherTabletsFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
 import { doneFor, isOn } from './automation';
+import { focusOf, grow } from './school';
 import { trainedSession } from './trainers';
 import { roomGone } from './latecheckout';
 import { runInShoes } from './resale';
@@ -454,10 +455,16 @@ export function registerLife(sim: Simulation): void {
     if (busy) throw new CommandError(`You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.`);
     const paid = dropInPrice(s, c);
     if (!spend(s, person, paid, `${c.studio}, ${c.label.toLowerCase()}`, 'personal')) throw new CommandError('The payment didn’t go through.');
+    // How ready they come to it, before the hour takes its share.
+    const focus = focusOf(person);
     s.advanceTo(s.now + DROP_IN_MINUTES * 60_000);
     exerts(person, c.met, DROP_IN_MINUTES / 60);
     // Under three METs it's an hour unwinding, not a workout, as a lesson is (`systems/clubs.ts`).
     applyLookingAfter(person, c.met >= 3 ? 'exercise' : 'unwind', s.now);
+    // A dance class is a session of the actor's Dance, as a course's day at school is one of each skill it trains (from
+    // 2026-10-05; until then it grew nothing of it). Yoga trains none of an actor's craft: Yale's movement courses are
+    // Alexander Technique, The Body As Source and Movement Invention, not yoga, so it's left an hour unwinding.
+    if (c.kind === 'dance' && person.craft) grow(person.craft, 'dance', focus);
     return { doneAt: s.now, paid };
   });
 
@@ -493,6 +500,8 @@ export function registerLife(sim: Simulation): void {
         }
         return { doneAt: s.now, changed };
       }
+      // How ready they come to the hour, before it takes its share: what a session grows by (`systems/school.ts`).
+      const focus = focusOf(s.player);
       s.advanceTo(s.now + minutesFor(s, action) * 60_000);
       const person = s.player;
       // A meal is bought as it's cooked (`systems/household.ts`), and a delivered one at delivery's price.
@@ -556,6 +565,8 @@ export function registerLife(sim: Simulation): void {
       const court = action === 'court' ? courtAt(person) : undefined;
       if (court) exerts(person, COURT_MET[court.court], 1);
       if (action === 'dance') exerts(person, DANCE_MET, 1);
+      // Practice alone in the studio grows the actor's Dance by half a class's session (from 2026-10-05).
+      if (action === 'dance' && person.craft) grow(person.craft, 'dance', focus, DANCE_ALONE);
       // The heater's hour to heat and the session on the month's bill, where it's billed by the kilowatt-hour (`systems/electricity.ts`).
       if (action === 'sauna') { const l = livingOf(person); l.extraKwh = (l.extraKwh ?? 0) + (SAUNA.heaterKw * (SAUNA.preheatMinutes + SAUNA.sessionMinutes)) / 60; }
       // A ride's effort and a cyclist's risk on the road; the trail's effort (`systems/outings.ts`).
@@ -628,6 +639,8 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
 
 /** The 2024 Adult Compendium's ballet, modern or jazz class (03010), the dance studios' own class (`content/dropins.ts`). */
 export const DANCE_MET = 5.0;
+/** What an hour practicing alone grows of the actor's Dance, against a taught class's session: SLATE's estimate, none published. */
+export const DANCE_ALONE = 0.5;
 
 /** What a bath's soak takes off stress beyond a shower's: SLATE's estimate. */
 const BATH_RELIEF = 8;

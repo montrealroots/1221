@@ -200,8 +200,19 @@ describe('a dance studio at home', () => {
     sim.player.currentLocationId = 'us-ny-newyork';
     expect(lookAfterRefusal(sim, 'dance')).toBeUndefined();
     const t0 = sim.now;
+    const { evenCraft } = await import('@/engine/systems/school');
+    sim.player.craft = evenCraft(40);
+    const craft = sim.player.craft;
+    const dance = craft.dance;
+    const { DANCE_ALONE } = await import('@/engine/systems/life');
+    const { ceilingOf, focusOf, sessionGain } = await import('@/engine/systems/school');
+    // Grown at the readiness the hour starts with: half a taught class's session (from 2026-10-05).
+    const gain = sessionGain(dance, focusOf(sim.player), DANCE_ALONE, ceilingOf(craft, 'dance'));
     sim.must({ kind: 'life.look_after', payload: { action: 'dance' } });
     expect(sim.now - t0).toBe(60 * 60_000);
     expect(DANCE_MET).toBe(5);
+    expect(DANCE_ALONE).toBe(0.5);
+    expect(gain).toBeGreaterThan(0);
+    expect(craft.dance - dance).toBeCloseTo(gain, 9);
   });
 });

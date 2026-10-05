@@ -41,6 +41,11 @@
  * (`club.renew`) or by the preference to renew, at the fee then, it runs
  * another season. Leaving gives nothing back, SLATE's reading.
  *
+ * **Company** (from 2026-10-05): people you know can come along on the way
+ * there, on a trip's rules. At parkrun or a free running club, open to
+ * anybody, they run it with you, and it's time together; to a league's game
+ * or a lesson, which they aren't signed up for, they come for the ride.
+ *
  * Not kept: a lesson's discipline as an ability anything reads (a swimmer's
  * stage, a guitarist's grade), which nothing in SLATE asks for yet.
  */
@@ -169,8 +174,16 @@ export function joinClubRefusal(person: Person, clubId: string): string | undefi
 /** The way there's leg, each way. */
 export const legTo = (club: Club, by: TripMode): { km: number; minutes: number } => leg(club.cityId, by, 'errand');
 
-/** Why setting out for a club's meeting now, this way, can't happen, or nothing. */
-export function goRefusal(sim: Simulation, person: Person, clubId: string, by: TripMode, vehicleId?: string): string | undefined {
+/**
+ * A club anybody can turn up to and take part in: parkrun, free to all once
+ * registered, and the free running clubs (from 2026-10-05). Somebody along
+ * runs it with you there; to a league's game or a lesson they come for the
+ * ride, the time on the way together, as an errand's company is.
+ */
+export const openToAnyone = (club: Club): boolean => club.kind === 'parkrun' || (club.kind === 'running' && !club.fee);
+
+/** Why setting out for a club's meeting now, this way, with whoever's along, can't happen, or nothing. */
+export function goRefusal(sim: Simulation, person: Person, clubId: string, by: TripMode, vehicleId?: string, passengerIds: readonly string[] = []): string | undefined {
   const club = clubById(clubId);
   const m = membershipsOf(person).find((x) => x.clubId === clubId);
   if (!club || !m) return 'You aren’t in it.';
@@ -186,7 +199,7 @@ export function goRefusal(sim: Simulation, person: Person, clubId: string, by: T
   if (off) return off;
   const there = sim.now + legTo(club, by).minutes * 60_000;
   if (there > at + lateMs(club)) return `Getting there takes ${Math.round(legTo(club, by).minutes)} minutes, past halfway through it.`;
-  return tripRefusal(sim, person, by, vehicleId);
+  return tripRefusal(sim, person, by, vehicleId, passengerIds);
 }
 
 function note(m: Membership, entry: ClubLog): void {
@@ -352,15 +365,17 @@ export function registerClubs(sim: Simulation): void {
   });
 
   // Going by hand: a trip there, checked in, the session, staying after if chosen, and home.
-  sim.onCommand<{ clubId: string; by?: TripMode; vehicleId?: string; stayAfter?: boolean }, { at: Instant; met?: string; minutes: number }>('club.go', (p, { sim: s }) => {
+  sim.onCommand<{ clubId: string; by?: TripMode; vehicleId?: string; stayAfter?: boolean; passengerIds?: string[] }, { at: Instant; met?: string; minutes: number }>('club.go', (p, { sim: s }) => {
     const person = s.player;
     const by: TripMode = p?.by === 'car' || p?.by === 'transit' ? p.by : 'foot';
-    const no = goRefusal(s, person, String(p?.clubId), by, p?.vehicleId);
+    // Somebody along (from 2026-10-05), on a trip's rules: a seat in the car, known, in town and free.
+    const along = Array.isArray(p?.passengerIds) ? p.passengerIds.map(String) : [];
+    const no = goRefusal(s, person, String(p?.clubId), by, p?.vehicleId, along);
     if (no) throw new CommandError(no);
     const club = clubById(String(p.clubId))!;
     const at = meetingFor(club, s.now);
     let out: { at: Instant; met?: string; minutes: number } | undefined;
-    runErrands(s, { by, ...(p.vehicleId ? { vehicleId: String(p.vehicleId) } : {}), stops: [{ kind: 'club.check_in', payload: { clubId: club.id, ...(p.stayAfter ? { stayAfter: true } : {}) }, leg: 'errand' }] }, (kind, payload) => {
+    runErrands(s, { by, ...(p.vehicleId ? { vehicleId: String(p.vehicleId) } : {}), ...(along.length ? { passengerIds: along } : {}), stops: [{ kind: 'club.check_in', payload: { clubId: club.id, ...(p.stayAfter ? { stayAfter: true } : {}) }, leg: 'errand' }] }, (kind, payload) => {
       const r = s.execute<{ at: Instant; met?: string; minutes: number }>({ kind, payload });
       if (kind === 'club.check_in' && r.ok) out = r.value;
       return r;
@@ -389,6 +404,16 @@ export function registerClubs(sim: Simulation): void {
     const end = at + club.minutes * 60_000;
     const minutes = Math.max(0, (end - s.now) / 60_000);
     if (!takePart(s, person, club, m, s.now, minutes)) throw new CommandError('The week’s fee can’t be paid.');
+    // Whoever came along takes part where anybody can, and it's time together (from 2026-10-05).
+    if (openToAnyone(club)) {
+      for (const id of person.trip.passengerIds ?? (person.trip.passengerId ? [person.trip.passengerId] : [])) {
+        const c = contactsOf(person).find((x) => x.id === id);
+        if (!c) continue;
+        c.hours += minutes / 60;
+        c.lastSeen = end;
+        c.memory.unshift({ at: end, what: `Ran ${club.name} with you` });
+      }
+    }
     s.advanceTo(end);
     let met: string | undefined;
     if (p.stayAfter) { met = stayAfter(s, person, club, m, s.now); s.advanceTo(s.now + SOCIAL_MINUTES * 60_000); }

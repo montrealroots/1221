@@ -8,7 +8,7 @@
 import { describe, expect, it } from 'vitest';
 import { loadSave, quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { CLUB_CLOSE_KIND, CLUB_DUE_KIND, canceledFor, clubById, legTo, meetingsAhead, membershipsOf, nextMeeting } from '@/engine/systems/clubs';
+import { CLUB_CLOSE_KIND, CLUB_DUE_KIND, canceledFor, clubById, goRefusal, legTo, meetingsAhead, membershipsOf, nextMeeting } from '@/engine/systems/clubs';
 import { contactsOf } from '@/engine/systems/people';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { runErrands, transitFare } from '@/engine/systems/trips';
@@ -227,5 +227,46 @@ describe('going to a club by hand', () => {
     expect(r).toEqual({ done: 1 });
     expect(membershipsOf(sim.player)[0]!.went).toBe(1);
     expect(sim.player.trip).toBeUndefined();
+  });
+});
+
+describe('somebody along to a club (from 2026-10-05)', () => {
+  it('runs parkrun with you, time together; to a league’s game they come for the ride', async () => {
+    const { newContact } = await import('@/engine/systems/people');
+    const { atWork } = await import('@/engine/systems/availability');
+    /** A friend in town who isn't at work when they'd set out. */
+    const freeFriend = (sim: ReturnType<typeof life>, key: string) => {
+      for (let n = 0; n < 40; n += 1) {
+        const c = newContact(sim, sim.player, 'us-ny-newyork', `${key}-${n}`, { at: sim.now, how: 'club', what: 'A friend' });
+        if (!atWork(sim, c, sim.now, 60)) { contactsOf(sim.player).push(c); return c; }
+      }
+      throw new Error('nobody free');
+    };
+    const sim = life('us-ny-newyork', 'club-along');
+    sim.must({ kind: 'club.join', payload: { clubId: 'parkrun-brooklyn-bridge' } });
+    const club = clubById('parkrun-brooklyn-bridge')!;
+    const meeting = nextMeeting(club, sim.now);
+    sim.advanceTo(meeting + MS_DAY, { stopOnPlayerRequired: true });
+    const friend = freeFriend(sim, 'club-along-friend');
+    // The screen's refusal names somebody you don't know, before setting out.
+    expect(goRefusal(sim, sim.player, club.id, 'foot', undefined, ['nobody'])).toBe('You don’t know them.');
+    expect(goRefusal(sim, sim.player, club.id, 'foot', undefined, [friend.id])).toBeUndefined();
+    const before = friend.hours;
+    sim.must({ kind: 'club.go', payload: { clubId: club.id, by: 'foot', passengerIds: [friend.id] } });
+    // The walk there and back together, and the run.
+    const walk = legTo(club, 'foot').minutes / 60;
+    expect(friend.hours - before).toBeCloseTo(2 * walk + 31 / 60, 6);
+    expect(friend.memory.some((x) => x.what === 'Ran Brooklyn Bridge parkrun with you')).toBe(true);
+
+    const league = life('us-ny-newyork', 'club-along-league');
+    league.must({ kind: 'club.join', payload: { clubId: 'volo-ny-kickball' } });
+    const volo = clubById('volo-ny-kickball')!;
+    const game = nextMeeting(volo, league.now);
+    league.advanceTo(game + MS_DAY, { stopOnPlayerRequired: true });
+    const mate = freeFriend(league, 'club-along-mate');
+    const was = mate.hours;
+    league.must({ kind: 'club.go', payload: { clubId: volo.id, by: 'foot', passengerIds: [mate.id] } });
+    expect(mate.hours - was).toBeCloseTo(2 * legTo(volo, 'foot').minutes / 60, 6);
+    expect(mate.memory.some((x) => x.what.startsWith('Ran '))).toBe(false);
   });
 });

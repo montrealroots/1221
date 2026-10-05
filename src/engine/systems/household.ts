@@ -309,6 +309,14 @@ function checkingOf(sim: Simulation, person: Person): Account | undefined {
   return person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
 }
 
+/** Money given back into the current account, against the spending it was paid as (from 2026-10-05, a gym's money-back). */
+export function refundToBank(sim: Simulation, person: Person, amount: Money, memo: string, category: string): boolean {
+  const to = checkingOf(sim, person);
+  if (amount <= 0 || !to || to.closedAt) return false;
+  sim.post({ memo, category, postings: [{ accountId: sim.nominalAccount('expense', expenseFor(category)).id, amount: -amount }, { accountId: to.id, amount }] });
+  return true;
+}
+
 /** The everyday card, where the day's spending goes. */
 function cardOf(sim: Simulation, person: Person): Account | undefined {
   return everydayCard(sim, person);
