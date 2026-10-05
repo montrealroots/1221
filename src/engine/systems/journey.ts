@@ -50,7 +50,7 @@ import { stolenNow } from './theft';
 import { laidUp } from './repairs';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
-import { cabinBagRefusal, moveTo, cabinCheck, weighIn } from './luggage';
+import { cabinBagRefusal, moveTo, cabinCheck, securityCheck, weighIn } from './luggage';
 import { landBags } from './baggage';
 import { arrivalFee, entryRefusal, hotelPetFee, petCareRefusal, petFlightFee, petsOf } from './pets';
 import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking, freeCancelUntil, roomReadyAt } from './hotels';
@@ -796,6 +796,9 @@ export function registerJourneys(sim: Simulation): void {
     }
     // The bag carried on weighed at the gate against the carrier's cabin limit (from 2026-10-05).
     if (!j.by) {
+      // Liquids at security first (from 2026-10-05).
+      const surrendered = securityCheck(person, j.fromCity, j.bags);
+      if (surrendered.length) tell('Surrendered At Security', `Over the liquids rule leaving ${CITIES.require(j.fromCity).name}: ${surrendered.map((i) => i.label).slice(0, 3).join(', ')}${surrendered.length > 3 ? ' and more' : ''}, given up at the checkpoint. Pack such things in a checked bag.`);
       const c = cabinCheck(s, person, j.fromCity, j.toCity, j.bags);
       if (c.taken.length) tell('Taken Out At The Gate', `${c.rule!.carrier} takes no cabin bag over ${c.rule!.cabinKg} kg: ${c.taken.map((i) => i.label).slice(0, 3).join(', ')}${c.taken.length > 3 ? ' and more' : ''} came out, and the airport holds ${c.taken.length === 1 ? 'it' : 'them'} for you.`);
     }

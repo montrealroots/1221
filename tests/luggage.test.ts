@@ -6,9 +6,9 @@
  */
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
-import { moveTo, packedIn, suitcaseOf } from '@/engine/systems/luggage';
+import { containerMl, moveTo, packedIn, suitcaseOf } from '@/engine/systems/luggage';
 import { cleanOutfits, garmentsOf } from '@/engine/systems/wardrobe';
-import { dailyCare, showerUses } from '@/engine/systems/hygiene';
+import { dailyCare, restock, showerUses } from '@/engine/systems/hygiene';
 import { reachable, usedL, volumeOf } from '@/engine/systems/items';
 import { GARMENT_L } from '@/engine/content/garmentcare';
 
@@ -34,6 +34,10 @@ describe('a suitcase', () => {
     expect(packed.filter((g) => g.garment.slot === 'bottom')).toHaveLength(3);
     expect(packed.every((g) => reachable(sim, sim.player, g.at))).toBe(true);
     expect(cleanOutfits(sim, sim.player)).toBeGreaterThan(0);
+    // A carry-on takes no liquid over security's 100 ml (from 2026-10-05): the full-size bottles stay home, and what's
+    // needed is bought there and carried.
+    expect(sim.player.items!.filter((i) => i.at.kind === 'inside' && i.supply).every((i) => (containerMl(i) ?? 0) <= 100)).toBe(true);
+    restock(sim, sim.player);
     expect(showerUses(sim, sim.player)).toBe(100);
     expect(dailyCare(sim, sim.player)).toBe(0);
     // What stayed home is out of reach.
@@ -51,7 +55,7 @@ describe('a suitcase', () => {
     expect(garmentsOf(sim.player).every((g) => g.at.kind === 'home')).toBe(true);
   });
 
-  it('leaves dirty clothes at home, takes one of each toiletry, and puts them back in the bathroom', () => {
+  it('leaves dirty clothes at home, takes one of each toiletry a cabin bag may carry, and puts them back in the bathroom', () => {
     const sim = life('bag-dirty');
     for (const g of garmentsOf(sim.player)) if (g.garment.kind === 't-shirt') g.garment.dirty = true;
     const paste = sim.player.items!.find((i) => i.supply?.kind === 'toothpaste')!;
@@ -59,7 +63,9 @@ describe('a suitcase', () => {
     moveTo(sim, sim.player, 'us-ca-losangeles');
     const packed = sim.player.items!.filter((i) => i.at.kind === 'inside');
     expect(packed.some((i) => i.garment?.kind === 't-shirt')).toBe(false);
-    expect(packed.filter((i) => i.supply?.kind === 'toothpaste')).toHaveLength(1);
+    // A full tube is over security's 100 ml: a carry-on leaves it (from 2026-10-05); one of a kind that isn't a liquid goes.
+    expect(packed.filter((i) => i.supply?.kind === 'toothpaste')).toHaveLength((containerMl(paste) ?? 0) > 100 ? 0 : 1);
+    expect(packed.filter((i) => i.supply && containerMl(i) === undefined).length).toBeGreaterThan(0);
     moveTo(sim, sim.player, 'us-ny-newyork');
     expect(sim.player.items!.filter((i) => i.supply).every((i) => i.at.kind === 'home' && i.at.spot === 'bathroom')).toBe(true);
   });
