@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-367 commands; 361 named by a test, 6 not.
+370 commands; 364 named by a test, 6 not.
 
 ## aircraft
 
@@ -403,6 +403,14 @@ Each command the player can run: the engine file that handles it, the screens th
 | `life.look_after` | `src/engine/systems/life.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `afford-meal.test.ts` `assistant.test.ts` `boats.test.ts` `carried.test.ts` `checkin.test.ts` `cleaning.test.ts` `clothingkinds.test.ts` `connected-day.test.ts` `courts.test.ts` `dwelling.test.ts` `gaswater.test.ts` `hamper.test.ts` `homelife.test.ts` `household.test.ts` `hygiene.test.ts` `kitchen.test.ts` `lawns.test.ts` `looking-after.test.ts` `looks.test.ts` `outings.test.ts` `partway.test.ts` `reading.test.ts` `resale.test.ts` `routines.test.ts` `routinetime.test.ts` `shaving.test.ts` `special-rooms.test.ts` `trainers.test.ts` `wardrobe.test.ts` `washup.test.ts` `wellbeing-bites.test.ts` | Looking After Yourself |
 | `life.set_automation` | `src/engine/systems/automation.ts` | `BelongingsWorkspace.tsx` `RoutinesWorkspace.tsx` | `pet-care.test.ts` `trips.test.ts` | Rent And A Roof |
 | `life.sleep` | `src/engine/systems/life.ts` | `TimeControls.tsx` | `aviation.test.ts` `carried.test.ts` `connected-day.test.ts` `extend.test.ts` `integrity.test.ts` `journey.test.ts` `lets.test.ts` `licensing.test.ts` `looking-after.test.ts` `looks.test.ts` `personality.test.ts` `rentals.test.ts` `simulation.test.ts` `tutorial.test.ts` `wellbeing-bites.test.ts` | Sleep |
+
+## lighting
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `lighting.buy_bulbs` | `src/engine/systems/lighting.ts` | `HomesWorkspace.tsx` | `lighting.test.ts` | Rent And A Roof |
+| `lighting.buy_lamp` | `src/engine/systems/lighting.ts` | `HomesWorkspace.tsx` | `lighting.test.ts` | Rent And A Roof |
+| `lighting.fit` | `src/engine/systems/lighting.ts` | `HomesWorkspace.tsx` | `lighting.test.ts` | Rent And A Roof |
 
 ## luggage
 

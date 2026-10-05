@@ -21,8 +21,8 @@ which never counts toward the target.
 | Apparel | Swimwear | 53 | 100% | 201 | 1 / 3 / 11 | 0 | 611 | 206 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Thermals, Shapewear, Hosiery And Slips | 106 | 100% | 413 | 1 / 4 / 15 | 0 | 1141 | 415 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Cultural Clothing | 52 | 100% | 104 | 1 / 2 / 3 | 0 | 530 | 104 | 0 | CA, GB, IE, MX, US | No |
-| Footwear | Shoes, Boots And Sandals | 52 | 100% | 161 | 1 / 2 / 15 | 0 | 1634 | 178 | 0 | CA, GB, IE, MX, US | No |
-| Footwear | Sneakers | 1 | 2% | 30 | 30 / 30 / 30 | 0 | 403 | 30 | 0 | — | No |
+| Footwear | Shoes, Boots And Sandals | 61 | 100% | 148 | 1 / 2 / 12 | 0 | 1535 | 155 | 0 | CA, GB, IE, MX, US | No |
+| Footwear | Sneakers | 60 | 100% | 198 | 1 / 2 / 32 | 0 | 1110 | 219 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Bags | 54 | 100% | 123 | 1 / 2 / 9 | 0 | 185 | 128 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Hats, Scarves, Belts And Small Accessories | 67 | 100% | 188 | 1 / 3 / 17 | 0 | 512 | 194 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Watches | 54 | 100% | 125 | 1 / 2 / 8 | 0 | 126 | 125 | 0 | CA, GB, IE, MX, US | No |
@@ -37,10 +37,10 @@ which never counts toward the target.
 | Home | Mattresses And Beds | 53 | 100% | 88 | 1 / 1 / 29 | 0 | 88 | 249 | 0 | CA, GB, IE, MX, US | No |
 | Home | Bedding And Towels | 61 | 100% | 102 | 1 / 2 / 5 | 0 | 117 | 102 | 0 | CA, GB, IE, MX, US | No |
 | Home | Appliances | 59 | 100% | 110 | 1 / 2 / 5 | 0 | 112 | 110 | 0 | CA, GB, IE, MX, US | No |
-| Home | Lighting | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
+| Home | Lighting | 72 | 100% | 160 | 1 / 2 / 11 | 0 | 205 | 160 | 0 | CA, GB, IE, MX, US | No |
 | Home | Kitchenware | 54 | 100% | 84 | 1 / 1 / 6 | 0 | 84 | 85 | 0 | CA, GB, IE, MX, US | No |
 | Personal Care | Toiletries And Grooming | 82 | 100% | 182 | 1 / 1 / 15 | 0 | 182 | 183 | 1 | CA, GB, IE, MX, US | No |
-| Personal Care | Cosmetics And Haircare | 38 | 76% | 77 | 1 / 1 / 10 | 0 | 77 | 79 | 0 | CA, GB, IE, MX, US | No |
+| Personal Care | Cosmetics And Haircare | 52 | 100% | 101 | 1 / 1 / 10 | 0 | 101 | 103 | 0 | CA, GB, IE, MX, US | No |
 | Household | Cleaning Products And Consumables | 59 | 100% | 119 | 1 / 1 / 9 | 0 | 119 | 124 | 0 | CA, GB, IE, MX, US | No |
 | Food | Groceries | 160 | 100% | 461 | 1 / 1 / 59 | 0 | 461 | 472 | 41 | CA, GB, IE, MX, US | No |
 | Food | Beverages | 57 | 100% | 71 | 1 / 1 / 3 | 0 | 71 | 74 | 1 | CA, GB, IE, MX, US | No |
@@ -70,6 +70,6 @@ Counted by their own structure: providers, branches or listings, and the towns t
 | Restaurants | 105 | 107 | 8 |
 | Clubs And Lessons | 30 | 31 | 8 |
 | Clinics, Dentists And Opticians | 35 | 35 | 8 |
-| Stores And Chains | 446 | 145 | 8 |
+| Stores And Chains | 534 | 145 | 8 |
 | Barbers And Salons | 36 | 37 | 8 |
 

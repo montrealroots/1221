@@ -28,6 +28,7 @@ import { RENTED_TRUCK } from '@/engine/content/furniture';
 import { assemblyFee, pieceRefusal, piecesCatalog, seatsAtHome } from '@/engine/systems/furnishings';
 import { buyTvRefusal, tvAtHome, tvCatalog } from '@/engine/systems/televisions';
 import { buySpeakerRefusal, speakerCatalog } from '@/engine/systems/speakers';
+import { bulbCatalog, bulbRefusal, darkSockets, fitRefusal as bulbFitRefusal, lampCatalog, lampRefusal, lightsOf, spareBulbs } from '@/engine/systems/lighting';
 import { DeviceShop, type DeviceRow } from '@/ui/components/DeviceShop';
 import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { formatDate } from '@/engine/core/time';
@@ -713,6 +714,73 @@ function Speakers() {
       fine="Each at its maker’s or a retailer’s own page, America’s and Canada’s prices with the place’s sales tax added; its power is its maker’s stated amplifier power. The one bought is the home’s speaker, what a music lover unwinds with." />
   );
 }
+const SOCKET_LABEL: Readonly<Record<string, string>> = { edison: 'Screw (E26/E27)', bayonet: 'Bayonet (B22)', gu10: 'Spot (GU10)', e14: 'Small Screw (E14)', e12: 'Candle (E12)', led: 'Built-In LED' };
+const LAMP_KIND: Readonly<Record<string, string>> = { floor: 'Floor Lamp', table: 'Table Lamp', desk: 'Desk Lamp', pendant: 'Pendant', ceiling: 'Ceiling Light', wall: 'Wall Light' };
+/**
+ * The home's lights (`systems/lighting.ts`, from 2026-10-05): its sockets and
+ * the bulbs in them, those gone out, the spares to fit, and bulbs and lamps
+ * where they live on the shared device shop.
+ */
+function Lighting() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const fit = useFeature('lighting.fit');
+  const bulbGate = useFeature('lighting.buy_bulbs');
+  const lampGate = useFeature('lighting.buy_lamp');
+  const lights = lightsOf(person);
+  if (!lights) return null;
+  const dark = darkSockets(person).length;
+  const bySocket = new Map<string, { lit: number; watts: number }>();
+  for (const s of lights.sockets) { const x = bySocket.get(s.socket) ?? { lit: 0, watts: 0 }; if (s.watts !== undefined) { x.lit += 1; x.watts += s.watts; } bySocket.set(s.socket, x); }
+  const spares = spareBulbs(person);
+  const watts = (r: DeviceRow) => `${r.product.attrs.wattsBasis === 'estimate' ? '≈' : ''}${r.product.attrs.watts} W`;
+  return (
+    <div className="col gap-2">
+      <div className="strong small">Lighting</div>
+      <div className="small">{lights.sockets.length} sockets, {dark === 0 ? 'every one lit' : `${dark} dark for want of a bulb`}: {[...bySocket.entries()].map(([s, x]) => `${SOCKET_LABEL[s] ?? s} ${x.lit} lit, ${Math.round(x.watts)} W`).join(' · ')}.</div>
+      {spares.length > 0 && (
+        <div className="row gap-1" style={{ flexWrap: 'wrap' }}>
+          {spares.map(({ item, product }) => {
+            const no = bulbFitRefusal(person, product.id);
+            return <button key={item.id} type="button" className="btn btn-sm btn-ghost" disabled={!fit.open || Boolean(no)} title={no ?? fit.reason} onClick={() => { const r = run<{ fitted: number }>('lighting.fit', { productId: product.id }); if (r.ok) toast(`${r.value?.fitted ?? 0} fitted.`, 'positive'); }}>Fit {item.label} ({item.quantity} Spare)</button>;
+          })}
+        </div>
+      )}
+      <DeviceShop list="bulbs" title="Light Bulbs" shop={bulbCatalog(sim, person)} refusal={(id) => bulbRefusal(person, id)} command="lighting.buy_bulbs" gate={bulbGate} bought={(label) => `${label}, bought and put away.`}
+        facets={{ brand: 'Maker', socket: 'Socket', smart: 'Smart' }}
+        facetsOf={(r) => ({ brand: r.product.brand, socket: SOCKET_LABEL[String(r.product.attrs.socket)] ?? 'Other', smart: r.product.attrs.smart ? 'Smart' : 'Plain' })}
+        columns={[
+          { head: 'Socket', cell: (r) => SOCKET_LABEL[String(r.product.attrs.socket)] ?? '—' },
+          { head: 'Draw', num: true, cell: watts },
+          { head: 'Light', num: true, cell: (r) => (r.product.attrs.lumens ? `${r.product.attrs.lumens} lm` : '—') },
+          { head: 'In A Pack', num: true, cell: (r) => String(r.product.attrs.pack) },
+        ]}
+        compare={[
+          { label: 'Draw', value: watts },
+          { label: 'Light', value: (r) => (r.product.attrs.lumens ? `${r.product.attrs.lumens} lm` : '—') },
+          { label: 'Rated Life', value: (r) => `${r.product.attrs.lifeBasis === 'estimate' ? '≈' : ''}${Number(r.product.attrs.lifeHours).toLocaleString()} Hours` },
+          { label: 'Color Temperature', value: (r) => (r.product.attrs.kelvin ? `${r.product.attrs.kelvin} K` : '—') },
+          { label: 'In A Pack', value: (r) => String(r.product.attrs.pack) },
+        ]}
+        fine="Each at a retailer’s own page, America’s and Canada’s prices with the place’s sales tax added. A draw marked ≈ is the median of the rated LEDs giving the same light, and a life marked ≈ ENERGY STAR’s least, 15,000 hours: SLATE’s estimates. Bought bulbs are kept as spares until fitted." />
+      <DeviceShop list="lamps" title="Lamps" shop={lampCatalog(sim, person)} refusal={(id) => lampRefusal(person, id)} command="lighting.buy_lamp" gate={lampGate} bought={(label) => `${label}, bought and brought home.`}
+        facets={{ brand: 'Maker', kind: 'Kind' }}
+        facetsOf={(r) => ({ brand: r.product.brand, kind: LAMP_KIND[String(r.product.attrs.type)] ?? 'Lamp' })}
+        columns={[
+          { head: 'Kind', cell: (r) => LAMP_KIND[String(r.product.attrs.type)] ?? '—' },
+          { head: 'Bulbs', cell: (r) => (r.product.attrs.integrated ? 'Built-In LED' : `${r.product.attrs.bulbs} ${SOCKET_LABEL[String(r.product.attrs.socket)] ?? ''}${r.product.attrs.bulbIncluded ? ', Included' : ''}`) },
+        ]}
+        compare={[
+          { label: 'Kind', value: (r) => LAMP_KIND[String(r.product.attrs.type)] ?? '—' },
+          { label: 'Bulbs', value: (r) => (r.product.attrs.integrated ? 'Built-In LED' : String(r.product.attrs.bulbs)) },
+          { label: 'Most Watts', value: (r) => (r.product.attrs.maxWatts ? `${r.product.attrs.maxWatts} W` : '—') },
+          { label: 'Height', value: (r) => (r.product.attrs.heightCm ? `${r.product.attrs.heightCm} cm` : '—') },
+        ]}
+        fine="Each at its maker’s or a retailer’s own page. A lamp brings its sockets, empty unless its bulbs come with it, and takes no bulb over its stated watts; what it burns goes on the electricity with the rest." />
+    </div>
+  );
+}
+
 /** Seats, tables and storage where they live, IKEA's and from 2026-10-05 other makers' (`systems/furnishings.ts`), cheapest first: searched, by kind and maker, a page at a time, favorites kept and up to three compared (from 2026-10-04). */
 function FromIkea() {
   const { sim, run, toast } = useGame();
@@ -824,6 +892,7 @@ function Furniture() {
       <FromIkea />
       <Televisions />
       <Speakers />
+      <Lighting />
       <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="move-by">When You Move</label>

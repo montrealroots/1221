@@ -51,6 +51,7 @@
 import type { Simulation } from '../core/simulation';
 import { showerKwhDelta } from './hotwater';
 import { typicalTvKwh } from '../content/tvuse';
+import { typicalLightKwh } from './lighting';
 import type { Person } from '../domain/model';
 import { saveCurrency, type Money } from '../core/money';
 import { atHome } from './dwelling';
@@ -122,7 +123,10 @@ export function electricityAdjustment(sim: Simulation, person: Person, month: nu
   const l = person.living;
   const homeDays = l?.billDays ? l.homeDays ?? 0 : DAYS[month - 1]!;
   const tv = Math.max(0, (l?.tvKwh ?? 0) - typicalTvKwh(homeDays));
-  const used = base + showerKwhDelta(sim, person, month) + (l?.extraKwh ?? 0) + tv;
+  // And from 2026-10-05 the home's lights (`systems/lighting.ts`), against the typical household's: every socket is
+  // SLATE's, so bulbs drawing less than the typical home's, or a life seldom home after dark, bill less, and lamps more.
+  const light = l?.lightKwh !== undefined ? l.lightKwh - typicalLightKwh(person, homeDays) : 0;
+  const used = Math.max(0, base + showerKwhDelta(sim, person, month) + (l?.extraKwh ?? 0) + tv + light);
   const days = DAYS[month - 1]!;
   const typical = t.typicalKwh * KIND_SHARE[person.home!.kind]!;
   return inSave(sim, t.bill(used, month, days) - t.bill(typical, month, days), t.currency);
