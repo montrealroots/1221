@@ -1,0 +1,397 @@
+{
+  "read": "2026-10-05",
+  "dropped": [
+    "Graham Paint: no current gallon retail price found in US search results (brand appears to be a historical/regional line with no live e-commerce pricing turned up); skipped rather than guess."
+  ],
+  "retailers": [
+    { "id": "benjaminmoore-us", "name": "Benjamin Moore (official store)", "market": "US", "url": "https://www.benjaminmoore.com/" },
+    { "id": "sherwin-williams-us", "name": "Sherwin-Williams (official store)", "market": "US", "url": "https://www.sherwin-williams.com/" },
+    { "id": "homedepot-us", "name": "The Home Depot", "market": "US", "url": "https://www.homedepot.com/" },
+    { "id": "lowes-us", "name": "Lowe's", "market": "US", "url": "https://www.lowes.com/" },
+    { "id": "walmart-us", "name": "Walmart", "market": "US", "url": "https://www.walmart.com/" },
+    { "id": "menards-us", "name": "Menards", "market": "US", "url": "https://www.menards.com/" },
+    { "id": "clare-us", "name": "Clare (official store)", "market": "US", "url": "https://www.clare.com/" },
+    { "id": "backdrop-us", "name": "Backdrop Home (official store)", "market": "US", "url": "https://www.backdrophome.com/" },
+    { "id": "andriots-us", "name": "Andriots Paint", "market": "US", "url": "https://andriots.com/" },
+    { "id": "dunnedwards-us", "name": "Dunn-Edwards (official store)", "market": "US", "url": "https://shop.dunnedwards.com/" },
+    { "id": "kellymoore-us", "name": "Kelly-Moore (official store)", "market": "US", "url": "https://kellymooreshop.com/" },
+    { "id": "hemlockhardware-us", "name": "Hemlock Hardware", "market": "US", "url": "https://hemlockhardware.com/" },
+    { "id": "magnolia-us", "name": "Magnolia Home / KILZ (official store)", "market": "US", "url": "https://www.kilz.com/magnolia/" },
+    { "id": "diamondvogel-us", "name": "Diamond Vogel (official site)", "market": "US", "url": "https://www.diamondvogel.com/" },
+    { "id": "finepaintsofeurope-us", "name": "Fine Paints of Europe (official store)", "market": "US", "url": "https://finepaintsofeurope.com/" },
+
+    { "id": "homedepot-ca", "name": "The Home Depot Canada", "market": "CA", "url": "https://www.homedepot.ca/" },
+    { "id": "rona-ca", "name": "Rona", "market": "CA", "url": "https://www.rona.ca/" },
+    { "id": "homehardware-ca", "name": "Home Hardware", "market": "CA", "url": "https://www.homehardware.ca/" },
+    { "id": "dulux-ca", "name": "Dulux Canada (official store)", "market": "CA", "url": "https://www.dulux.ca/" },
+    { "id": "kleinpaint-ca", "name": "Klein Paint", "market": "CA", "url": "https://kleinpaint.ca/" },
+    { "id": "painttalk-generalpaint-ca", "name": "General Paint (via retailer listing)", "market": "CA", "url": "https://www.generalpaint.com/" },
+    { "id": "cloverdalepaint-ca", "name": "Cloverdale Paint (official store)", "market": "CA", "url": "https://www.cloverdalepaint.com/" },
+
+    { "id": "comex-mx", "name": "Comex (official store)", "market": "MX", "url": "https://www.comex.com.mx/" },
+    { "id": "homedepot-mx", "name": "The Home Depot México", "market": "MX", "url": "https://www.homedepot.com.mx/" },
+    { "id": "mercadolibre-mx", "name": "Mercado Libre México", "market": "MX", "url": "https://www.mercadolibre.com.mx/" },
+    { "id": "pintop-mx", "name": "Pintop", "market": "MX", "url": "https://pintop.mx/" }
+  ],
+  "paints": [
+    {
+      "retailer": "benjaminmoore-us", "market": "US", "brand": "Benjamin Moore", "line": "Regal Select Waterborne Interior Paint",
+      "finish": "eggshell", "liters": 3.785, "coverage": 400, "coverageUnit": "sqft-per-gallon", "primer": false,
+      "price": 84.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.benjaminmoore.com/en-us/product/regal-select-waterborne-interior-paint-eggshell-1-gallon-swiss-coffee-oc-45/N549/ZWB100000002146772",
+      "date": "2026-10-05", "confirmed": true,
+      "source": "benjaminmoore.com official product page, 1-gallon Regal Select Eggshell"
+    },
+    {
+      "retailer": "sherwin-williams-us", "market": "US", "brand": "Sherwin-Williams", "line": "SuperPaint Interior Acrylic Latex",
+      "finish": "satin", "liters": 3.785, "coverage": 400, "coverageUnit": "sqft-per-gallon", "primer": false,
+      "price": 60.49, "salePrice": null, "currency": "USD",
+      "url": "https://www.sherwin-williams.com/homeowners/products/superpaint-interior-acrylic-latex",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search-aggregated pricing guide quoting Sherwin-Williams list price for SuperPaint 1-gallon ($60.49); Sherwin-Williams' own product page loads price dynamically per store/zip and did not render a price in the fetched search snippet"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Behr", "line": "Premium Plus Interior Paint & Primer",
+      "finish": "semi-gloss", "liters": 3.785, "coverage": 400, "coverageUnit": "sqft-per-gallon", "primer": true,
+      "price": 43.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/BEHR-PREMIUM-PLUS-1-gal-Ultra-Pure-White-Semi-Gloss-Enamel-Low-Odor-Interior-Paint-Primer-305001/202761530",
+      "date": "2026-10-05", "confirmed": true,
+      "source": "Home Depot product page, BEHR PREMIUM PLUS 1 gal. Ultra Pure White Semi-Gloss Enamel Low Odor Interior Paint & Primer, item 305001"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Behr", "line": "Premium Plus Interior Paint & Primer",
+      "finish": "flat", "liters": 3.785, "coverage": 400, "coverageUnit": "sqft-per-gallon", "primer": true,
+      "price": 34.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/b/Paint-Paint-Colors/BEHR-PREMIUM-PLUS/1-Gallon/N-5yc1vZcaw8ZgaoZ1z1dquo",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Home Depot Behr Premium Plus 1-gallon Swiss Coffee Flat listing"
+    },
+    {
+      "retailer": "lowes-us", "market": "US", "brand": "Valspar", "line": "Signature Interior Paint + Primer",
+      "finish": "satin", "liters": 3.666, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 50.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.lowes.com/pd/Valspar-Signature-Ultra-White-Base-A-Satin-Tintable-Interior-Paint-Actual-Net-Contents-124-fl-oz/1000381067",
+      "date": "2026-10-05", "confirmed": true,
+      "source": "Lowe's product page, Valspar Signature Satin Ultra White Tintable Interior Paint + Primer, net contents 124 fl oz (1-gallon can), item 007.0773957.007"
+    },
+    {
+      "retailer": "lowes-us", "market": "US", "brand": "Valspar", "line": "Signature Interior Paint + Primer",
+      "finish": "flat", "liters": 3.666, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 42.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.lowes.com/pd/Valspar-Signature-Ultra-White-Base-A-Flat-Tintable-Interior-Paint-Actual-Net-Contents-124-fl-oz/1000381055",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Lowe's Valspar Signature Flat Ultra White Tintable Interior Paint + Primer listing"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "PPG", "line": "Timeless Interior Paint + Primer",
+      "finish": "semi-gloss", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 41.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/PPG-TIMELESS-1-gal-PPG1019-7-Intrigue-Semi-Gloss-Interior-One-Coat-Paint-with-Primer-PPG1019-7T-01SG/310121797",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Home Depot PPG Timeless 1-gallon Intrigue Semi-Gloss Interior One-Coat Paint with Primer listing"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Glidden", "line": "Premium Interior Paint",
+      "finish": "flat", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 28.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/Glidden-Premium-1-gal-Base-1-Flat-Interior-Paint-GLN9011N-01/206755817",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Home Depot Glidden Premium 1 gal. Pure White Base 1 Flat Interior Paint listing (GLN9011N-01)"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Glidden", "line": "Premium Interior Paint",
+      "finish": "semi-gloss", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 34.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/p/Glidden-Premium-5-gal-Pure-White-Base-1-Semi-Gloss-Interior-Paint-GLN6411N-05/206755810",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Home Depot Glidden Premium 1-gallon Pure White Base 1 Semi-Gloss Interior Paint listing"
+    },
+    {
+      "retailer": "lowes-us", "market": "US", "brand": "HGTV Home by Sherwin-Williams", "line": "Showcase Interior Paint + Primer",
+      "finish": "satin", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 53.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.lowes.com/pl/interior-paint/hgtv-home-by-sherwin-williams/1-gallon/4294729373-4294518369-4294408743",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Lowe's HGTV HOME by Sherwin-Williams Showcase Satin Base C Tintable Interior Paint + Primer 1-gallon starting price"
+    },
+    {
+      "retailer": "clare-us", "market": "US", "brand": "Clare", "line": "Wall Paint",
+      "finish": "eggshell", "liters": 3.785, "coverage": 400, "coverageUnit": "sqft-per-gallon", "primer": false,
+      "price": 77, "salePrice": null, "currency": "USD",
+      "url": "https://www.clare.com/products/paint-motor-city",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet citing Clare's own site current gallon price ($77) for Clare interior wall paint"
+    },
+    {
+      "retailer": "backdrop-us", "market": "US", "brand": "Backdrop", "line": "Standard Interior Paint",
+      "finish": "eggshell", "liters": 3.785, "coverage": 400, "coverageUnit": "sqft-per-gallon", "primer": true,
+      "price": 89, "salePrice": null, "currency": "USD",
+      "url": "https://www.backdrophome.com/products/supermoon-interior-standard/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet citing Backdrop's own site price ($89/gallon) for Standard Interior Paint, self-priming"
+    },
+    {
+      "retailer": "andriots-us", "market": "US", "brand": "Farrow & Ball", "line": "Estate Emulsion",
+      "finish": "matte", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 125.00, "salePrice": null, "currency": "USD",
+      "url": "https://andriots.com/product/estate-emulsion-1-gallon/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet citing Andriots Paint's listed price for Farrow & Ball Estate Emulsion, 1 gallon"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Kilz", "line": "2 ALL PURPOSE Primer",
+      "finish": "flat", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 23.98, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/b/Paint-Primers/KILZ/N-5yc1vZbt0tZ3my",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Home Depot KILZ 2 ALL PURPOSE 1 gal. White Interior/Exterior Multi-Surface Primer listing"
+    },
+    {
+      "retailer": "walmart-us", "market": "US", "brand": "Rust-Oleum", "line": "Sure Color Interior Wall Paint",
+      "finish": "eggshell", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 41.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.walmart.com/c/kp/gallon-rustoleum",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Rust-Oleum Sure Color Interior Wall Paint 1-gallon pricing ($41.99) across Eggshell Black/Linen White listings"
+    },
+    {
+      "retailer": "homedepot-us", "market": "US", "brand": "Zinsser", "line": "Bulls Eye 1-2-3 Primer",
+      "finish": "flat", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 31.97, "salePrice": null, "currency": "USD",
+      "url": "https://www.homedepot.com/b/Paint-Primers/Zinsser/N-5yc1vZbt0tZ3mz",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Zinsser Bulls Eye 1-2-3 Water-Based Primer 1-gallon price ($31.97)"
+    },
+    {
+      "retailer": "dunnedwards-us", "market": "US", "brand": "Dunn-Edwards", "line": "EVEREST Ultra Premium Zero VOC Interior Paint",
+      "finish": "eggshell", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 79.50, "salePrice": null, "currency": "USD",
+      "url": "https://shop.dunnedwards.com/products/everest%C2%AE-ultra-premium-interior-paint",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet citing shop.dunnedwards.com price for EVEREST Ultra Premium Zero VOC Interior Paint, 1 gallon"
+    },
+    {
+      "retailer": "kellymoore-us", "market": "US", "brand": "Kelly-Moore", "line": "Inspire Interior",
+      "finish": "flat", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 37.00, "salePrice": null, "currency": "USD",
+      "url": "https://kellymooreshop.com/collections/interior-paints",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing kellymooreshop.com Inspire Interior gallon starting price"
+    },
+    {
+      "retailer": "hemlockhardware-us", "market": "US", "brand": "Pratt & Lambert", "line": "Pro-Hide Gold Ultra Latex Eggshell Interior Wall Paint",
+      "finish": "eggshell", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 35.99, "salePrice": null, "currency": "USD",
+      "url": "https://hemlockhardware.com/products/771547-pratt-lambert-pro-hide-gold-ultra-latex-eggshell-interior-wall-paint-pastel-base-1-gal",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Hemlock Hardware Pratt & Lambert Pro-Hide Gold Ultra Eggshell Interior Wall Paint, Pastel Base, 1 gal listing"
+    },
+    {
+      "retailer": "walmart-us", "market": "US", "brand": "Color Place", "line": "ColorPlace Ultra Premium Interior Paint & Primer",
+      "finish": "satin", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 12.47, "salePrice": null, "currency": "USD",
+      "url": "https://www.walmart.com/ip/ColorPlace-Ultra-Premium-Interior-Paint-Primer-Satin-White-Base-1-Gallon/125479505",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Walmart ColorPlace Ultra Premium Interior Paint & Primer, Satin, White Base, 1-gallon price"
+    },
+    {
+      "retailer": "magnolia-us", "market": "US", "brand": "Magnolia Home", "line": "Premium Interior Paint (by KILZ)",
+      "finish": "eggshell", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 57.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.kilz.com/magnolia/paint/premium-interior",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing kilz.com Magnolia Home Premium Interior Paint eggshell gallon price"
+    },
+    {
+      "retailer": "menards-us", "market": "US", "brand": "Dutch Boy", "line": "Forever Interior 100% Acrylic Paint + Primer",
+      "finish": "flat", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 36.96, "salePrice": null, "currency": "USD",
+      "url": "https://www.menards.com/main/paint/interior-paint-stain/wall-trim-paint/forever-trade-interior-paint-primer-brown-color-family/forevint-413-3db-f/p-11060051207647699-c-8025.htm",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Menards Dutch Boy Forever Interior Flat Paint + Primer 1-gallon price (before rebate)"
+    },
+    {
+      "retailer": "diamondvogel-us", "market": "US", "brand": "Diamond Vogel", "line": "At Home Collection",
+      "finish": "eggshell", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 42, "salePrice": null, "currency": "USD",
+      "url": "https://www.diamondvogel.com/athome/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing diamondvogel.com At Home Collection Eggshell 1-gallon price; brand notes it no longer publishes list pricing itself since its 2025 retail exit to Spectrum Paint/Hirshfield's"
+    },
+    {
+      "retailer": "finepaintsofeurope-us", "market": "US", "brand": "Fine Paints of Europe", "line": "EUROLUX Interior Matte",
+      "finish": "matte", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 75.00, "salePrice": null, "currency": "USD",
+      "url": "http://finepaintsofeurope.com/shop/eurolux-interior-matte/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing finepaintsofeurope.com EUROLUX Interior Matte starting (Eurogallon) price"
+    },
+
+    {
+      "retailer": "homedepot-ca", "market": "CA", "brand": "Behr", "line": "Premium Plus Interior Paint",
+      "finish": "satin", "liters": 3.79, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 51.47, "salePrice": null, "currency": "CAD",
+      "url": "https://www.homedepot.ca/en/home/categories/decor/paint/interior-paints/f/behr-premium-plus/a0j-xbf",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Home Depot Canada BEHR PREMIUM PLUS Interior Paints (3.79 L) price range, upper bound used"
+    },
+    {
+      "retailer": "kleinpaint-ca", "market": "CA", "brand": "Benjamin Moore", "line": "Regal Select Waterborne Interior Paint",
+      "finish": "flat", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 94.99, "salePrice": null, "currency": "CAD",
+      "url": "https://kleinpaint.ca/products/regal-paint",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Klein Paint (Canadian Benjamin Moore dealer) Regal Select Waterborne Interior Paint Flat, 1-gallon price"
+    },
+    {
+      "retailer": "homedepot-ca", "market": "CA", "brand": "CIL", "line": "Premium Interior Paint + Primer",
+      "finish": "eggshell", "liters": 3.7, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": null, "salePrice": null, "currency": "CAD",
+      "url": "https://www.homedepot.ca/product/cil-premium-premium-white-base-eggshell-interior-paint-primer-3-7l/1000737057",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Home Depot Canada product listing found (CIL Premium White Base Eggshell Interior Paint + Primer, 3.7 L) but no price rendered in the fetched search snippet; price left null rather than guessed"
+    },
+    {
+      "retailer": "rona-ca", "market": "CA", "brand": "Sico", "line": "Endurance Premium Paint and Primer",
+      "finish": "eggshell", "liters": 3.78, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 67.99, "salePrice": 50.99, "currency": "CAD",
+      "url": "https://www.rona.ca/en/paint/interior-paint-16524/sico--104-d06",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Rona SICO Endurance Premium Paint and Primer, White Eggshell Finish, 3.78 L, showing sale price struck through regular"
+    },
+    {
+      "retailer": "dulux-ca", "market": "CA", "brand": "Dulux Canada", "line": "Diamond Interior Paint",
+      "finish": "flat", "liters": 3.78, "coverage": null, "coverageUnit": null, "primer": true,
+      "price": 110.99, "salePrice": 55.50, "currency": "CAD",
+      "url": "https://www.dulux.ca/product/99cbab15-f3d1-4652-9011-e58ab01afff6",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet citing dulux.ca official listing for DULUX Diamond Interior Paint, regular price $110.99 CAD with a Buy-One-Get-One promotional price of $55.50 shown as the sale price"
+    },
+    {
+      "retailer": "homehardware-ca", "market": "CA", "brand": "Beauti-Tone", "line": "Signature Interior Acrylic Latex",
+      "finish": "pearl", "liters": 3.4, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 46.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.homehardware.ca/en/brands/beautitone-signature/10276",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Home Hardware BEAUTITONE SIGNATURE Interior Acrylic Latex Pearl Paint, 3.4 L price"
+    },
+    {
+      "retailer": "painttalk-generalpaint-ca", "market": "CA", "brand": "General Paint", "line": "Breeze Interior",
+      "finish": "flat", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 23, "salePrice": null, "currency": "CAD",
+      "url": "https://www.generalpaint.com/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search-aggregated pricing reference for General Paint Breeze interior paint, approx. $23/gallon; not read directly off a retailer product page"
+    },
+    {
+      "retailer": "cloverdalepaint-ca", "market": "CA", "brand": "Cloverdale", "line": "Canada Builder Interior",
+      "finish": "eggshell", "liters": 3.785, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 48.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.cloverdalepaint.com/for-your-home/product-paint/interior-paints",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet citing Cloverdale Paint's Canada Builder Eggshell White interior paint price, CA$48.99/gallon"
+    },
+
+    {
+      "retailer": "comex-mx", "market": "MX", "brand": "Comex", "line": "Vinimex TOTAL Ultralavable",
+      "finish": "matte", "liters": 4, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 1159.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.comex.com.mx/vinilicas/vinimex-total-ultralavable-4-litros",
+      "date": "2026-10-05", "confirmed": true,
+      "source": "comex.com.mx official product page, Vinimex TOTAL Ultralavable, 4 litros"
+    },
+    {
+      "retailer": "comex-mx", "market": "MX", "brand": "Comex", "line": "Vinimex TOTAL Ultralavable",
+      "finish": "matte", "liters": 19, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 4896.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.comex.com.mx/vinilicas/vinimex-total-ultralavable-4-litros",
+      "date": "2026-10-05", "confirmed": true,
+      "source": "comex.com.mx official product listing, Vinimex TOTAL Ultralavable, 19 litros cubeta"
+    },
+    {
+      "retailer": "homedepot-mx", "market": "MX", "brand": "Berel", "line": "Berelinte Vinil Acrílica Interior/Exterior",
+      "finish": "mate", "liters": 19, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 2595.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.homedepot.com.mx/p/berelinte-pintura-berel-berelinte-vinil-acrilica-interior-exterior-19l-base-tint-mate-berelinte-526608",
+      "date": "2026-10-05", "confirmed": true,
+      "source": "Home Depot México product page, Pintura Berel Berelinte Vinil Acrílica Interior/Exterior 19L Base Tint Mate"
+    },
+    {
+      "retailer": "homedepot-mx", "market": "MX", "brand": "Berel", "line": "Berelinte Vinil Acrílica Interior/Exterior",
+      "finish": "mate", "liters": 4, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 609.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.homedepot.com.mx/p/berelinte-pintura-berel-berelinte-vinil-acrilica-interior-exterior-4l-base-deep-mate-berelinte-519786",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet summarizing Home Depot México Berel Berelinte Vinil Acrílica Interior/Exterior 4L Base Pastel Mate price"
+    },
+    {
+      "retailer": "mercadolibre-mx", "market": "MX", "brand": "Sherwin-Williams", "line": "Kem Tone Mate",
+      "finish": "mate", "liters": 4, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 1479.00, "salePrice": null, "currency": "MXN",
+      "url": "https://listado.mercadolibre.com.mx/pintura-sherwin-williams-4-litros",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Mercado Libre México search-result snippet quoting one seller's listed price for Sherwin-Williams Kem Tone Mate, 4 litros (galón)"
+    },
+    {
+      "retailer": "pintop-mx", "market": "MX", "brand": "Osel", "line": "Osel Oro Máxima (100% Acrílica)",
+      "finish": "mate", "liters": 19, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 5031.00, "salePrice": null, "currency": "MXN",
+      "url": "https://pintop.mx/product/osel-plata/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search-aggregated pricing reference for Osel Oro Máxima 100% Acrílica, mate finish, 19-liter cubeta, from pintordecasas.com price listing citing Pintop/retailer figures"
+    },
+    {
+      "retailer": "mercadolibre-mx", "market": "MX", "brand": "Prisa", "line": "Poliprisa Premium (Acrílica)",
+      "finish": "mate", "liters": 19, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 4050.00, "salePrice": null, "currency": "MXN",
+      "url": "https://listado.mercadolibre.com.mx/cubetas-de-19-litros-pintura-prisa",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Mercado Libre México search-result snippet quoting one seller's listed price for Pintura Acrílica Poliprisa Premium Prisa, 19-liter cubeta"
+    },
+    {
+      "retailer": "mercadolibre-mx", "market": "MX", "brand": "Doal", "line": "Rolux Vinílica-Acrílica",
+      "finish": "mate", "liters": 19, "coverage": null, "coverageUnit": null, "primer": false,
+      "price": 1669.67, "salePrice": null, "currency": "MXN",
+      "url": "https://ferrefama.com/products/vinilica-acrilica-blanco-19-litros-521-rolux-doal",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Search snippet quoting Ferretera la Fama's listed price for Doal Rolux 521 Vinílica-Acrílica Blanco, 19-liter cubeta"
+    }
+  ],
+  "rules": [
+    {
+      "measure": "coverage-per-gallon",
+      "value": "350-400",
+      "unit": "sqft-per-gallon-per-coat",
+      "source": "Benjamin Moore paint coverage guidance, as summarized by Bob Vila ('How Much Paint Do I Need?', bobvila.com) and multiple paint calculators referencing Benjamin Moore's own figure",
+      "note": "This is the maker-stated coverage for a single coat under normal application; Benjamin Moore's own calculator is cited as using approximately 350 sq ft/gallon."
+    },
+    {
+      "measure": "recommended-coats",
+      "value": 2,
+      "unit": "coats",
+      "source": "Bob Vila, 'How Much Paint Do I Need?', bobvila.com; general paint-industry guidance repeated across coverage calculators",
+      "note": "Two coats is the standard recommendation for an even, durable interior finish, meaning the effective covered area per gallon is roughly half the single-coat figure (about 175-200 sq ft/gallon of finished wall)."
+    },
+    {
+      "measure": "wall-area-from-floor-area",
+      "value": "perimeter x ceiling height",
+      "unit": "formula",
+      "source": "Hunker, 'How To Calculate Wall Area If You Know Floor Area', hunker.com; same formula repeated by illustrarch.com Paint Coverage Calculator and calculatesquarefeet.com",
+      "note": "Worked example given: a 10 ft x 15 ft room has a perimeter of 50 ft; at an 8 ft ceiling height, gross wall area is 50 x 8 = 400 sq ft. Guidance then subtracts approximately 21 sq ft per door and 15 sq ft per window to get net paintable area."
+    },
+    {
+      "measure": "diy-time-per-room",
+      "value": "2-8",
+      "unit": "hours",
+      "source": "Angi, 'How Long Does It Take to Paint a Room?', angi.com; HomeAdvisor, 'Cost to Paint Interior of House', homeadvisor.com",
+      "note": "Angi's range (2-8 hours) covers prep and multiple coats of application but excludes drying time (an additional 2-24 hours between coats). HomeAdvisor separately states 6-10 hours total under typical conditions including prep, application and drying intervals. A roughly 430 sq ft bedroom is given as a 5-6 hour example."
+    },
+    {
+      "measure": "professional-painter-production-rate",
+      "value": "200-350",
+      "unit": "sqft-per-hour (smooth interior walls, brush and roll)",
+      "source": "paintpricing.com, 'Painting Production Rates: Square Feet Per Hour'; cypaint.com, 'Daily Painter Productivity: Square Footage Covered In A Day'",
+      "note": "Published range for smooth interior walls is 200-350 sq ft/hour by brush and roll; textured walls drop to 75-150 sq ft/hour. A separate figure of 75 sq ft/hour is given specifically for cutting-in plus rolling two coats on one-story textured walls. Over an 8-hour day this works out to roughly 1,200-2,800 sq ft of wall covered, with prep work consuming an estimated 20-40% of the day before any paint is applied."
+    }
+  ]
+}

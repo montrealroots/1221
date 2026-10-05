@@ -47,8 +47,8 @@ describe('looking after yourself', () => {
       // A bath, a pool, a court, a terrace and fine weather are the home's and the day's to give (`systems/dwelling.ts`).
       // A boat is its owner's (`systems/boats.ts`, tested in `tests/boats.test.ts`).
       // A bicycle and an ATV are their owner's (`systems/outings.ts`, tested in `tests/outings.test.ts`).
-      // A lawn is a home's with a yard (`systems/lawns.ts`, tested in `tests/lawns.test.ts`); a dance studio a home's made one (tested in `tests/courts.test.ts`); a sauna a home's with one (`tests/special-rooms.test.ts`).
-      if (lookAfterRefusal(sim, action) && ['bathe', 'swim', 'court', 'dance', 'outside', 'boat', 'charter', 'ride', 'trail', 'mow', 'sauna'].includes(action)) return;
+      // A lawn is a home's with a yard (`systems/lawns.ts`, tested in `tests/lawns.test.ts`); a dance studio a home's made one (tested in `tests/courts.test.ts`); a sauna a home's with one (`tests/special-rooms.test.ts`); painting a home owned with its paint bought (`tests/paint.test.ts`).
+      if (lookAfterRefusal(sim, action) && ['bathe', 'swim', 'court', 'dance', 'outside', 'boat', 'charter', 'ride', 'trail', 'mow', 'sauna', 'paint'].includes(action)) return;
       const minutes = minutesFor(sim, action);
       const before = sim.now;
       const result = doIt(sim, action);

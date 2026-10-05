@@ -33,6 +33,7 @@ import { DEPRECIATION_SOURCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehi
 import type { CarModel, VehicleKind } from '@/engine/content/vehiclecatalog';
 import { lifeOfTire, odometerOf, tireCatalog, tireLifeOf, tireOfferRefusal, tireSetCost, tiresFittedAt, tiresRefusal, tiresWorn } from '@/engine/systems/tires';
 import { DeviceShop, type DeviceRow } from '@/ui/components/DeviceShop';
+import { carAudioCatalog, chosenRefusal, fittingFor } from '@/engine/systems/caraudio';
 import { tintRefusal } from '@/engine/systems/tint';
 import { MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
 import { faultCost, inShopNow, laidUp, repairRefusal, shopsFor } from '@/engine/systems/repairs';
@@ -181,6 +182,8 @@ export function VehiclesWorkspace() {
         <InteriorWork />
 
         <TireShop />
+
+        <CarAudioShop />
 
         <Panel title="Buy One" subtitle={j ? `Where you live: ${PLACE_NAME[j]}` : 'Where you live, SLATE sells no cars yet'}>
           <div className="col gap-3">
@@ -933,6 +936,49 @@ function TireShop() {
             ]}
             fine="Four tires at the seller’s own price, America’s and Canada’s with the place’s sales tax, at 215/55 R17 or the nearest size the maker sells, the size SLATE prices every car’s set at. America’s sets add BJ’s $80 to fit; elsewhere a price not fitted has no fitting read, and none is added. A set lasts its warranty, or, marked ≈, the CrossClimate 2’s 60,000 miles (a winter tire the X-Ice Snow’s 40,000)." />
         )}
+      </div>
+    </Panel>
+  );
+}
+
+const AUDIO_PART: Readonly<Record<string, string>> = { 'head-unit': 'Stereo', speakers: 'Speakers', amplifier: 'Amplifier' };
+/**
+ * Car audio by make and model (`systems/caraudio.ts`, from 2026-10-05): a
+ * stereo, speakers or an amplifier sold where the car is, fitted at the
+ * market's published price or by the owner where none is published.
+ */
+function CarAudioShop() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const gate = useFeature('vehicle.audio');
+  const cars = vehiclesOf(person).filter((v) => v.soldAt === undefined && !v.repossessed && kindOf(modelById(v.modelId)!) === 'car');
+  const [vehicleId, setVehicleId] = useState('');
+  if (cars.length === 0) return null;
+  const v = cars.find((x) => x.id === vehicleId) ?? cars[0]!;
+  const shop = carAudioCatalog(sim, v);
+  if (shop.length === 0) return null;
+  const spec = (r: DeviceRow) => { const a = r.product.attrs; return a.part === 'head-unit' ? [a.screenIn ? `${a.screenIn}" Screen` : 'No Screen', a.carplay && a.carplay !== 'none' ? `CarPlay (${a.carplay})` : ''].filter(Boolean).join(', ') : a.part === 'speakers' ? [a.sizeIn ? `${a.sizeIn}"` : '', a.kind ?? '', a.rmsWatts ? `${a.rmsWatts} W RMS` : ''].filter(Boolean).join(', ') : [a.channels ? `${a.channels} Channels` : '', a.rmsWatts ? `${a.rmsWatts} W RMS` : ''].filter(Boolean).join(', ') || '—'; };
+  const fitting = (r: DeviceRow) => { const f = fittingFor(r.offer.market, r.product); return f ? `By ${f.by}` : 'By You'; };
+  return (
+    <Panel title="Car Audio" subtitle="A stereo, speakers or an amplifier, by make and model">
+      <div className="col gap-2">
+        {cars.length > 1 && <div className="field" style={{ margin: 0 }}><label htmlFor="audio-car">For</label><select id="audio-car" value={v.id} onChange={(e) => setVehicleId(e.target.value)}>{cars.map((c) => <option key={c.id} value={c.id}>{modelById(c.modelId)!.make} {modelById(c.modelId)!.model}</option>)}</select></div>}
+        <DeviceShop list="car-audio" title="Sold Where The Car Is" shop={shop} refusal={(id) => chosenRefusal(v, id)} command="vehicle.audio" gate={gate}
+          payload={{ vehicleId: v.id }} buyLabel="Fit It" bought={(label) => `${label}, fitted.`}
+          facets={{ brand: 'Maker', part: 'Part' }}
+          facetsOf={(r) => ({ brand: r.product.brand, part: AUDIO_PART[String(r.product.attrs.part)] ?? 'Part' })}
+          columns={[
+            { head: 'Part', cell: (r) => AUDIO_PART[String(r.product.attrs.part)] ?? '—' },
+            { head: 'What It Is', cell: spec },
+            { head: 'Fitted', cell: fitting },
+          ]}
+          compare={[
+            { label: 'Part', value: (r) => AUDIO_PART[String(r.product.attrs.part)] ?? '—' },
+            { label: 'What It Is', value: spec },
+            { label: 'Android Auto', value: (r) => String(r.product.attrs.androidAuto ?? '—') },
+            { label: 'Fitted', value: fitting },
+          ]}
+          fine="Each at its seller’s own page, America’s and Canada’s prices with the place’s sales tax, and fitted at the market’s published price for the work: Geek Squad’s in America, Halfords’ least in Britain and Ireland. Where none is published it’s fitted by you, at nothing. Full cover pays toward what it cost when the car is lost, to the insurer’s cap." />
       </div>
     </Panel>
   );

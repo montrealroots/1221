@@ -1,0 +1,467 @@
+{
+  "read": "2026-10-05",
+  "dropped": [
+    "Weatherglaze: no UK/IE retail product found under this name — likely not a real paint brand, dropped",
+    "Kelly's: no UK/IE interior emulsion brand found under this name sold at Irish retailers, dropped",
+    "Rust-Oleum: UK/IE range is specialty (floor, metal, chalk furniture) paint, not interior wall/ceiling emulsion, dropped from this list"
+  ],
+  "retailers": [
+    { "id": "diy-bq-gb", "name": "B&Q (diy.com)", "market": "GB", "url": "https://www.diy.com/" },
+    { "id": "wickes-gb", "name": "Wickes", "market": "GB", "url": "https://www.wickes.co.uk/" },
+    { "id": "toolstation-gb", "name": "Toolstation", "market": "GB", "url": "https://www.toolstation.com/" },
+    { "id": "brewers-gb", "name": "Brewers Decorator Centres", "market": "GB", "url": "https://www.brewers.co.uk/" },
+    { "id": "johnlewis-gb", "name": "John Lewis", "market": "GB", "url": "https://www.johnlewis.com/" },
+    { "id": "farrowball-gb", "name": "Farrow & Ball (own store, GB)", "market": "GB", "url": "https://www.farrow-ball.com/" },
+    { "id": "anniesloan-gb", "name": "Annie Sloan (own store)", "market": "GB", "url": "https://www.anniesloan.com/" },
+    { "id": "frenchic-gb", "name": "Frenchic Paint (own store)", "market": "GB", "url": "https://frenchicpaint.co.uk/" },
+    { "id": "lickpaint-gb", "name": "Lick (own store)", "market": "GB", "url": "https://www.lick.com/" },
+    { "id": "homebase-gb", "name": "Homebase", "market": "GB", "url": "https://www.homebase.co.uk/" },
+    { "id": "woodfinishesdirect-gb", "name": "Wood Finishes Direct", "market": "GB", "url": "https://www.wood-finishes-direct.com/" },
+    { "id": "paintdirect-gb", "name": "Paint Direct", "market": "GB", "url": "https://www.paint-direct.co.uk/" },
+    { "id": "sandersondesign-gb", "name": "Sanderson Design (own store)", "market": "GB", "url": "https://www.sanderson.design/" },
+    { "id": "graysdecorating-gb", "name": "Grays Decorating Supplies", "market": "GB", "url": "https://www.graysdecoratingsupplies.co.uk/" },
+    { "id": "designerpaintshop-gb", "name": "The Designer Paint Shop", "market": "GB", "url": "https://www.designerpaintshop.co.uk/" },
+    { "id": "woodies-ie", "name": "Woodie's", "market": "IE", "url": "https://www.woodies.ie/" },
+    { "id": "chadwicks-ie", "name": "Chadwicks", "market": "IE", "url": "https://www.chadwicks.ie/" },
+    { "id": "hardwareireland-ie", "name": "Hardware Ireland", "market": "IE", "url": "https://www.hardwareireland.ie/" },
+    { "id": "stillorgandecor-ie", "name": "Stillorgan Decor", "market": "IE", "url": "https://stillorgandecor.ie/" },
+    { "id": "mdoshea-ie", "name": "M.D. O'Shea & Sons", "market": "IE", "url": "https://www.mdoshea.ie/" },
+    { "id": "decorwarehouse-ie", "name": "Decor Warehouse", "market": "IE", "url": "https://www.decorwarehouse.ie/" },
+    { "id": "corebuild-ie", "name": "Corebuild", "market": "IE", "url": "https://corebuild.ie/" }
+  ],
+  "paints": [
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "Dulux", "line": "Trade White Matt Wall & Ceiling Emulsion",
+      "finish": "matt", "liters": 2.5, "coverage": 17, "coverageUnit": "m2-per-liter", "primer": null,
+      "price": 30, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/departments/dulux-trade-white-matt-wall-ceiling-emulsion-paint-2-5l/331015_BQ.prd",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) listing for Dulux Trade White Matt Wall & Ceiling Emulsion 2.5L at £30"
+    },
+    {
+      "retailer": "wickes-gb", "market": "GB", "brand": "Dulux", "line": "Silk Emulsion (Timeless)",
+      "finish": "silk", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 25, "salePrice": null, "currency": "GBP",
+      "url": "https://www.wickes.co.uk/Dulux-Silk-Emulsion-Paint---Timeless---2-5L/p/106985",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Wickes listing for Dulux Silk Emulsion Paint - Timeless - 2.5L at £25"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "Dulux Trade", "line": "Vinyl Matt (Magnolia)",
+      "finish": "matt", "liters": 2.5, "coverage": 17, "coverageUnit": "m2-per-liter", "primer": null,
+      "price": 30, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/departments/dulux-trade-magnolia-vinyl-matt-emulsion-paint-2-5l/330311_BQ.prd",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) listing for Dulux Trade Magnolia Vinyl Matt Emulsion Paint 2.5L at £30"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "Crown", "line": "Walls & Ceilings Matt Emulsion (Milk White)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 19.20, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/painting-decorating/paint.cat?Brand=Crown&Finish+group=Matt&Navigation+type=Emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) Crown Walls & Ceilings Matt Emulsion range, Milk White 2.5L at £19.20"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "Crown Trade", "line": "Vinyl Matt (White, Premium Base)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 23.51, "salePrice": null, "currency": "GBP",
+      "url": "https://www.gibbsanddandy.com/p/crown-trade-vinyl-matt-2-5-litres-premium-base-LCTGN067",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Gibbs & Dandy listing for Crown Trade Premium Base Matt Vinyl Emulsion Paint 2.5L White at £23.51 inc VAT"
+    },
+    {
+      "retailer": "farrowball-gb", "market": "GB", "brand": "Farrow & Ball", "line": "Estate Emulsion",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 61.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.brewers.co.uk/product/AK0501J",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Brewers Decorator Centres listing for Farrow & Ball Estate Emulsion 2.5L at £61.00 inc VAT"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "Farrow & Ball", "line": "Modern Emulsion (Elephant's Breath No.229)",
+      "finish": "soft sheen", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 66, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) listing for Farrow & Ball Modern Elephant's Breath No.229 Matt Wall & Ceiling Emulsion 2.5L at £66"
+    },
+    {
+      "retailer": "stillorgandecor-ie", "market": "IE", "brand": "Farrow & Ball", "line": "Estate Emulsion",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 64.80, "salePrice": null, "currency": "EUR",
+      "url": "https://stillorgandecor.ie/product/farrow-ball-estate-emulsion/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Stillorgan Decor (Ireland) listing for Farrow & Ball Estate Emulsion 2.5L at €64.80"
+    },
+    {
+      "retailer": "johnlewis-gb", "market": "GB", "brand": "Little Greene", "line": "Intelligent Matt Emulsion (Heat 24)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 73.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.johnlewis.com/the-little-greene-paint-company-intelligent-matt-emulsion-reds/heat-24/p1492460",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting John Lewis listing for Little Greene Intelligent Matt Emulsion, Heat 24, 2.5L at £73.00"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "Johnstone's Trade", "line": "Covaplus Matt (Magnolia)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 18.30, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/departments/johnstones-trade-covaplus-matt-magnolia-2-5l/5010426720319_BQ.prd",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) listing for Johnstone's Trade Covaplus Matt Magnolia 2.5L at £18.30"
+    },
+    {
+      "retailer": "woodies-ie", "market": "IE", "brand": "Johnstone's", "line": "Washable Paint (Brilliant White)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 23.00, "salePrice": null, "currency": "EUR",
+      "url": "https://www.woodies.ie/johnstones-washable-paint-brilliant-white-2-5-litre-1157539",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Woodie's (Ireland) listing for Johnstone's Washable Paint Brilliant White 2.5 Litre at €23.00"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "Leyland Trade", "line": "Vinyl Matt (Brilliant White)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 39, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/departments/leyland-trade-brilliant-white-matt-emulsion-paint-2-5l/5010426809779_BQ.prd",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) listing for Leyland Trade Brilliant White Matt Emulsion Paint 2.5L at £39"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "Valspar", "line": "Simplicity Walls & Ceilings Matt (Pure Brilliant White)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 14, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) listing for Valspar Simplicity Walls & Ceilings Pure Brilliant White Matt Emulsion 2.5L at £14"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "Valspar", "line": "Premium Kitchen & Bathroom Matt (Pure Brilliant White)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 28, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/departments/valspar-premium-kitchen-bathroom-pure-brilliant-white-matt-wall-ceiling-emulsion-paint-2-5l/5055018187712_BQ.prd",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) listing for Valspar Premium Kitchen & Bathroom Pure Brilliant White Matt Wall & Ceiling Emulsion 2.5L at £28"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "GoodHome", "line": "Walls & Ceilings Matt Emulsion (Hamptons)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 12, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/departments/goodhome-walls-ceilings-hamptons-matt-emulsion-paint-2-5l/3663602596141_BQ.prd",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) GoodHome Walls & Ceilings Matt Emulsion 2.5L range (e.g. Hamptons) at £12"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "GoodHome", "line": "Tough & Durable Matt (Clontarf)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 18, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/departments/goodhome-tough-durable-clontarf-matt-wall-ceiling-emulsion-paint-2-5l/3663602407898_BQ.prd",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) GoodHome Tough & Durable Matt Wall & Ceiling Emulsion 2.5L (Clontarf) at £18"
+    },
+    {
+      "retailer": "wickes-gb", "market": "GB", "brand": "Wickes", "line": "Matt Emulsion (Pure Brilliant White NO.0)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 13, "salePrice": null, "currency": "GBP",
+      "url": "https://www.wickes.co.uk/Wickes-Matt-Emulsion-Paint---Pure-Brilliant-White-NO-0---2-5L/p/122428",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Wickes listing for Wickes Matt Emulsion Paint - Pure Brilliant White NO.0 - 2.5L at £13"
+    },
+    {
+      "retailer": "wickes-gb", "market": "GB", "brand": "Wickes", "line": "Tough & Washable Matt Emulsion (Pure Brilliant White No.0)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 17, "salePrice": null, "currency": "GBP",
+      "url": "https://www.wickes.co.uk/Wickes-Tough+Washable-Matt-Emulsion-Paint---Pure-Brilliant-White-No-0---2-5L/p/121882",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Wickes listing for Wickes Tough & Washable Matt Emulsion Paint - Pure Brilliant White No.0 - 2.5L at £17"
+    },
+    {
+      "retailer": "homebase-gb", "market": "GB", "brand": "Homebase", "line": "Your Home Walls & Ceilings Matt Emulsion (Cotton Bud)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 9.99, "salePrice": null, "currency": "GBP",
+      "url": "https://www.homebase.co.uk/en-uk/your-home-walls-ceilings-cotton-bud-matt-emulsion-paint-25l/p/8058890",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Homebase listing for Your Home Walls & Ceilings Cotton Bud Matt Emulsion Paint 2.5L at £9.99"
+    },
+    {
+      "retailer": "lickpaint-gb", "market": "GB", "brand": "Lick", "line": "Matt Emulsion (White 02)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 41, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/painting-decorating/paint.cat?Brand=Lick&Navigation+type=Emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) listing for Lick Matt Emulsion Paint 2.5L range at £41"
+    },
+    {
+      "retailer": "designerpaintshop-gb", "market": "GB", "brand": "Graham & Brown", "line": "Matt Emulsion (Epoch)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 33.60, "salePrice": null, "currency": "GBP",
+      "url": "https://www.nctilesandbathrooms.com/graham-brown-matt-emulsion-epoch-25-ltr/p/21093",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting NC Tiles & Bathrooms listing for Graham & Brown Matt Emulsion 2.5 Ltr (Epoch and other colours) at £33.60"
+    },
+    {
+      "retailer": "woodfinishesdirect-gb", "market": "GB", "brand": "Mylands", "line": "Marble Matt Emulsion",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 59.19, "salePrice": null, "currency": "GBP",
+      "url": "https://www.wood-finishes-direct.com/product/mylands-marble-matt-emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Wood Finishes Direct listing for Mylands Marble Matt Emulsion 2.5L (various colours) at £59.19"
+    },
+    {
+      "retailer": "brewers-gb", "market": "GB", "brand": "Earthborn", "line": "Claypaint",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 61.50, "salePrice": null, "currency": "GBP",
+      "url": "https://www.brewers.co.uk/product/AV053530J",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Brewers Decorator Centres listing for Earthborn Claypaint (Ready Mixed) 2.5L at £61.50 inc VAT"
+    },
+    {
+      "retailer": "woodfinishesdirect-gb", "market": "GB", "brand": "Edward Bulmer", "line": "Natural Paint Emulsion",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 41.92, "salePrice": null, "currency": "GBP",
+      "url": "https://www.ebay.co.uk/itm/178162250713",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting an eBay listing for Edward Bulmer Natural Paint Emulsion 2.5L at £41.92; no direct brand-site 2.5L price was found to confirm"
+    },
+    {
+      "retailer": "brewers-gb", "market": "GB", "brand": "Paint & Paper Library", "line": "Pure Flat Emulsion (tinted)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 62.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.brewers.co.uk/product/AV171502J",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Brewers Decorator Centres listing for Paint & Paper Library Pure Flat Emulsion (Tinted) 2.5L at £62.00 inc VAT"
+    },
+    {
+      "retailer": "paintdirect-gb", "market": "GB", "brand": "Sanderson", "line": "Active Emulsion Colours",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 49.00, "salePrice": 40.18, "currency": "GBP",
+      "url": "https://www.paint-direct.co.uk/p/sanderson-paint-active-emulsion-colours",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Paint Direct listing for Sanderson Active Emulsion Colours 2.5L, regular £49.00 struck through, sale £40.18 inc VAT"
+    },
+    {
+      "retailer": "johnlewis-gb", "market": "GB", "brand": "Laura Ashley", "line": "Matt Emulsion (Naturals)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 44.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.johnlewis.com/laura-ashley-matt-emulsion-paint-naturals/p111839283",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting John Lewis listing for Laura Ashley Matt Emulsion Paint, Naturals, 2.5L at £44.00"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "Ronseal", "line": "One Coat Everywhere Emulsion (Pure Brilliant White)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 25, "salePrice": null, "currency": "GBP",
+      "url": "https://www.diy.com/painting-decorating/paint.cat?Brand=Ronseal&Navigation+type=Emulsion",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) listing for Ronseal One Coat Everywhere Pure Brilliant White Matt Multi-surface Emulsion 2.5L at £25"
+    },
+    {
+      "retailer": "toolstation-gb", "market": "GB", "brand": "Zinsser", "line": "Perma-White Interior Satin",
+      "finish": "soft sheen", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 40.99, "salePrice": null, "currency": "GBP",
+      "url": "https://www.toolstation.com/zinsser-perma-white-self-priming-interior-paint/p67474",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Toolstation listing for Zinsser Perma-White Self-Priming Interior Paint Satin White 2.5L at £40.99 ex. VAT"
+    },
+    {
+      "retailer": "brewers-gb", "market": "GB", "brand": "Teknos", "line": "Teknowall 05",
+      "finish": "matt", "liters": 2.7, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 27.48, "salePrice": null, "currency": "GBP",
+      "url": "https://www.promain.co.uk/teknos-teknowall-05.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Promain/ProMain decorating supplies listing for Teknos Teknowall 05 full-matt interior wall paint, 2.7L (nearest standard size to 2.5L), at £27.48 inc VAT"
+    },
+    {
+      "retailer": "graysdecorating-gb", "market": "GB", "brand": "Tikkurila", "line": "Joker Matt",
+      "finish": "matt", "liters": 2.7, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 41.33, "salePrice": null, "currency": "GBP",
+      "url": "https://www.graysdecoratingsupplies.co.uk/home/Tikkurila-Joker-2-7L-White-p732574625",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Grays Decorating Supplies listing for Tikkurila Joker Matt 2.7L (White, nearest standard size to 2.5L) at £41.33"
+    },
+    {
+      "retailer": "designerpaintshop-gb", "market": "GB", "brand": "Benjamin Moore", "line": "Regal Select Matte",
+      "finish": "matt", "liters": 3.79, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 88.50, "salePrice": null, "currency": "GBP",
+      "url": "https://www.designerpaintshop.co.uk/webshop/benjamin-moore/regal-select-matte/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting a UK Benjamin Moore stockist listing Regal Select Matte in a 1 US gallon (3.79L) tin — UK stockists sell this US-sized tin, not a 2.5L or 5L tin — at £88.50; no 2.5L/5L size was found for this brand in the UK"
+    },
+    {
+      "retailer": "diy-bq-gb", "market": "GB", "brand": "Fired Earth", "line": "Nordic Light Matt Emulsion",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 18.99, "salePrice": 6, "currency": "GBP",
+      "url": "https://www.diy.com/departments/fired-earth-nordic-light-matt-emulsion-paint-25l/256121_BQ.prd",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting B&Q (diy.com) listing for Fired Earth Nordic Light Matt Emulsion Paint 2.5L, regular £18.99 struck through, clearance sale £6"
+    },
+    {
+      "retailer": "anniesloan-gb", "market": "GB", "brand": "Annie Sloan", "line": "Wall Paint",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 55.95, "salePrice": null, "currency": "GBP",
+      "url": "https://www.anniesloan.com/product/wall-paint/original-wp/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting the Annie Sloan brand site for Annie Sloan Wall Paint 2.5L at £55.95"
+    },
+    {
+      "retailer": "frenchic-gb", "market": "GB", "brand": "Frenchic", "line": "Wall Paint (matt)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 46.95, "salePrice": null, "currency": "GBP",
+      "url": "https://pavia-lee.co.uk/shop/frenchic-paint/wall-paint/frenchic-wall-paint/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Pavia-Lee (Frenchic stockist) listing for Frenchic Wall Paint 2.5 Litres at £46.95"
+    },
+    {
+      "retailer": "brewers-gb", "market": "GB", "brand": "Albany", "line": "Durable Matt (Brilliant White)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 38.48, "salePrice": null, "currency": "GBP",
+      "url": "https://www.brewers.co.uk/product/AA0119001J",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Brewers Decorator Centres listing for Albany Durable Matt Brilliant White 2.5L at £38.48 inc VAT"
+    },
+    {
+      "retailer": "woodies-ie", "market": "IE", "brand": "Woodie's", "line": "Washable Matt (Pure Brilliant White)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 23.00, "salePrice": 18.40, "currency": "EUR",
+      "url": "https://www.woodies.ie/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Woodie's (Ireland) listing for Woodie's Washable Matt Pure Brilliant White 2.5Ltr, regular €23.00 struck through, sale €18.40"
+    },
+    {
+      "retailer": "woodies-ie", "market": "IE", "brand": "Woodie's", "line": "Vinyl Matt (Magnolia)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 21.00, "salePrice": null, "currency": "EUR",
+      "url": "https://www.woodies.ie/woodies-vinyl-matt-magnolia-2-5ltr-1135565",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Woodie's (Ireland) listing for Woodie's Vinyl Matt Magnolia 2.5Ltr at €21.00"
+    },
+    {
+      "retailer": "woodies-ie", "market": "IE", "brand": "Fleetwood", "line": "Easyclean Matt Emulsion (Winding Step)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 43, "salePrice": null, "currency": "EUR",
+      "url": "https://www.diy.ie/departments/fleetwood-easyclean-winding-step-matt-emulsion-paint-2-5l/5013862063781_BQ.prd",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting diy.ie (B&Q Ireland) listing for Fleetwood Easyclean Winding Step Matt Emulsion Paint 2.5L at €43"
+    },
+    {
+      "retailer": "corebuild-ie", "market": "IE", "brand": "Fleetwood", "line": "Extra Plus Matt (White)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 22.95, "salePrice": null, "currency": "EUR",
+      "url": "https://corebuild.ie/fleetwood-white-paint",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Corebuild (Ireland) listing for Fleetwood Extra Plus Matt White 2.5L at €22.95"
+    },
+    {
+      "retailer": "hardwareireland-ie", "market": "IE", "brand": "Crown", "line": "Matt Emulsion (Brilliant White)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 24.99, "salePrice": null, "currency": "EUR",
+      "url": "https://www.hardwareireland.ie/product/crown-matt-emulsion-brilliant-white-2-5l5l-or-10l-1836/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Hardware Ireland listing for Crown Matt Emulsion Brilliant White, 2.5L option, at €24.99"
+    },
+    {
+      "retailer": "hardwareireland-ie", "market": "IE", "brand": "Crown", "line": "Matt Emulsion (Assorted Colours)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 25.99, "salePrice": null, "currency": "EUR",
+      "url": "https://www.hardwareireland.ie/product/crown-matt-emulsion-assorted-colours-1l-2-5l-or-5l-1832/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Hardware Ireland listing for Crown Matt Emulsion Assorted Colours, 2.5L option, at €25.99"
+    },
+    {
+      "retailer": "decorwarehouse-ie", "market": "IE", "brand": "Crown", "line": "Easyclean Durable Matt Emulsion (Snowfall)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 34.99, "salePrice": null, "currency": "EUR",
+      "url": "https://www.decorwarehouse.ie/products/crown-easyclean-durable-matt-emulsion-snowfall-2-5l",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Decor Warehouse (Ireland) listing for Crown Easyclean Durable Matt Emulsion Snowfall 2.5L at €34.99"
+    },
+    {
+      "retailer": "woodies-ie", "market": "IE", "brand": "Dulux", "line": "Easycare Washable & Tough Matt (Femme)",
+      "finish": "matt", "liters": 2.5, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 57.99, "salePrice": null, "currency": "EUR",
+      "url": "https://www.woodies.ie/dulux-easycare-matt-femme-2-5l-1157271",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Woodie's (Ireland) listing for Dulux Easycare Washable & Tough Matt Femme 2.5L at €57.99; shown with a Buy-1-Get-1-Half-Price promotion on the interior colour range, excluded here as a non-standard multi-buy deal rather than the single-tin regular price"
+    },
+    {
+      "retailer": "chadwicks-ie", "market": "IE", "brand": "Chadwicks", "line": "Vinyl Matt (Brilliant White, own brand)",
+      "finish": "matt", "liters": 10, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 19.99, "salePrice": null, "currency": "EUR",
+      "url": "https://www.chadwicks.ie/chadwicks-vinyl-matt-brilliant-white-10lt-72697.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Chadwicks (Ireland) listing for Chadwicks Vinyl Matt Brilliant White (own brand), 10L (nearest standard size found; no 2.5L or 5L own-brand listing was found), at €19.99"
+    },
+    {
+      "retailer": "mdoshea-ie", "market": "IE", "brand": "Colourtrend", "line": "Ceramic Matt (Brilliant White)",
+      "finish": "matt", "liters": 3, "coverage": null, "coverageUnit": null, "primer": null,
+      "price": 82.00, "salePrice": null, "currency": "EUR",
+      "url": "https://www.mdoshea.ie/colourtrend-ceramic-matt-paint-brilliant-white",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting an Irish Colourtrend stockist for Colourtrend Ceramic Matt, 3L tin (nearest standard size; Colourtrend sells 1L/3L/5L/10L, no 2.5L), at €82.00"
+    }
+  ],
+  "rules": [
+    {
+      "measure": "interior emulsion coverage",
+      "value": "12-17",
+      "unit": "m2 per liter",
+      "source": "Dulux Trade Paint Expert (duluxtradepaintexpert.co.uk), product coverage pages; Dulux Trade Vinyl Matt technical data sheet",
+      "note": "Dulux's own stated coverage varies by product line: standard trade matt/vinyl matt lines are commonly quoted at up to 12-13 m2/litre, while Dulux Trade Vinyl Matt's technical data sheet states up to 17 m2/litre (one coat, on a sound, previously painted surface). There is no single figure true across the brand; the figure printed on the specific tin or technical data sheet governs."
+    },
+    {
+      "measure": "recommended coats for a full repaint",
+      "value": 2,
+      "unit": "coats",
+      "source": "Dulux UK, 'How Much Paint Do I Need?' (dulux.co.uk/en/expert-help/how-much-paint-do-you-need)",
+      "note": "Dulux states two coats for its EasyCare range on bare or significantly different-coloured walls; its one-coat 'Simply Refresh' line is the stated exception, needing only one coat over a similar existing colour."
+    },
+    {
+      "measure": "room wall area calculation method",
+      "value": "sum each wall's (height x width), then subtract door and window areas calculated the same way",
+      "unit": "m2",
+      "source": "Dulux UK, 'How Much Paint Do I Need?' (dulux.co.uk/en/expert-help/how-much-paint-do-you-need)",
+      "note": "Dulux UK's published method is per-wall (height x width) summed, minus openings, rather than a single perimeter x height shortcut. Litres needed = total paintable area / coverage rate per litre (as stated on the specific tin), x number of coats."
+    },
+    {
+      "measure": "generic wall-area shortcut formula (not Dulux-specific)",
+      "value": "2 x (length + width) x height, minus ~21 sq ft per door and ~15 sq ft per window",
+      "unit": "sq ft",
+      "source": "Aggregated DIY paint-calculator sites (e.g. calcshed.com, turn2engineering.com) rather than a UK paint maker; imperial units as published",
+      "note": "This perimeter-based shortcut is the common generic DIY-calculator form, not a figure published by Dulux, Crown or another UK/IE paint maker by name; included because the brief asked for 'a paint calculator method (perimeter x height)' and no UK/IE brand's own calculator was found using exactly that shortcut — Dulux's own method (above) is the wall-by-wall one."
+    },
+    {
+      "measure": "time for a DIY decorator to paint a small-to-medium room, including prep and clean-up",
+      "value": "1-2",
+      "unit": "days",
+      "source": "Checkatrade, 'Painting and Decorating: Cost Breakdown' (checkatrade.com/blog/cost-guides/painter-decorator-prices/)",
+      "note": "Checkatrade's published estimate for a small-to-medium room, covering preparation and clean-up as well as painting."
+    },
+    {
+      "measure": "professional painter/decorator day rate (UK)",
+      "value": 325,
+      "unit": "GBP per day",
+      "source": "Checkatrade, 'Painting and Decorating: Cost Breakdown' (checkatrade.com/blog/cost-guides/painter-decorator-prices/)",
+      "note": "Checkatrade's published average day rate for a painter/decorator in the UK."
+    },
+    {
+      "measure": "professional painter/decorator day rate (UK), alternate published range",
+      "value": "127-271",
+      "unit": "GBP per day",
+      "source": "MyBuilder, 'How Much Does a Painter and Decorator Cost?' (mybuilder.com/painting-decorating/price-guides/painter-decorator-cost)",
+      "note": "MyBuilder's published day-rate range, built from its stated hourly rate of £16-£38 over a full day; MyBuilder separately states £150-£250/day as a round-number average. Checkatrade's £325/day (above) and MyBuilder's figures are both genuinely published but disagree, reflecting the two sites' different survey methods; both are kept rather than reconciled into one invented number."
+    },
+    {
+      "measure": "professional decorator productivity",
+      "value": 40,
+      "unit": "m2 of wall surface per day",
+      "source": "MyBuilder, 'Cost to Paint a Room' (mybuilder.com/painting-decorating/price-guides/painting-a-room-cost)",
+      "note": "MyBuilder's published figure for typical professional decorator output."
+    },
+    {
+      "measure": "professional cost to paint a room, by room size",
+      "value": "350 (small, e.g. bathroom); 450 (medium, e.g. bedroom); 1000 (large, e.g. living room)",
+      "unit": "GBP per room, labour and materials",
+      "source": "MyBuilder, 'Cost to Paint a Room' (mybuilder.com/painting-decorating/price-guides/painting-a-room-cost)",
+      "note": "MyBuilder's published per-room cost bands by room type/size."
+    }
+  ]
+}

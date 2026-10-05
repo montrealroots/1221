@@ -156,6 +156,9 @@ export interface OwnedVehicle {
   tiresAtKm?: number;
   /** The everyday set's model and life, where one was chosen (`systems/tires.ts`, from 2026-10-05). */
   tires?: import('./tires').TireSet;
+  /** What each sound part chosen by model cost fitted, and its model (`systems/caraudio.ts`, from 2026-10-05). */
+  audioPaid?: Partial<Record<import('./caraudio').AudioSlot, number>>;
+  audioModels?: Partial<Record<import('./caraudio').AudioSlot, string>>;
   /** A roof rack fitted, and the liters of a roof box on it (`systems/roofbox.ts`, from 2026-10-03). */
   roofRack?: true;
   roofBoxL?: number;

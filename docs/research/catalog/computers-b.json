@@ -1,0 +1,416 @@
+{
+  "read": "2026-10-05",
+  "dropped": [
+    "Xiaomi: no personal-computer product (laptop/desktop/tablet/mini-PC/all-in-one) found for sale in GB, IE or MX in the time available; Xiaomi's current UK/EU lineup is phones, wearables and smart-home, not laptops.",
+    "Honor (MagicBook): no GB, IE or MX retail listing with a page-shown regular price found; Honor's laptop line is sold mainly in other markets.",
+    "Chuwi: UK/EU availability is limited to small marketplace listings without a stable retailer page quoting a non-configurator regular price; excluded for lack of an honest citation.",
+    "Toshiba (as a current brand): Toshiba's PC business is now Dynabook; Dynabook is included instead and covers this slot.",
+    "Tuxedo: German/EU-direct manufacturer; no GB, IE or MX retailer or local store price found (ships from Germany with de-facto EUR-only checkout not localized to IE).",
+    "Fujitsu: UK consumer retail presence for Fujitsu-branded laptops/desktops could not be confirmed with a retailer-quoted regular price in the time available.",
+    "Zoostorm: UK system builder found in directory listings only; no live product page with a current regular price located.",
+    "Alurin: Spain-focused budget brand; no GB, IE or MX retailer listing found."
+  ],
+  "retailers": [
+    { "id": "currys-gb", "name": "Currys", "market": "GB", "url": "https://www.currys.co.uk" },
+    { "id": "argos-gb", "name": "Argos", "market": "GB", "url": "https://www.argos.co.uk" },
+    { "id": "johnlewis-gb", "name": "John Lewis", "market": "GB", "url": "https://www.johnlewis.com" },
+    { "id": "box-gb", "name": "Box", "market": "GB", "url": "https://www.box.co.uk" },
+    { "id": "scan-gb", "name": "Scan", "market": "GB", "url": "https://www.scan.co.uk" },
+    { "id": "overclockers-gb", "name": "Overclockers UK", "market": "GB", "url": "https://www.overclockers.co.uk" },
+    { "id": "dell-gb", "name": "Dell UK Store", "market": "GB", "url": "https://www.dell.com/en-uk" },
+    { "id": "chillblast-gb", "name": "Chillblast", "market": "GB", "url": "https://www.chillblast.com" },
+    { "id": "pcspecialist-gb", "name": "PCSpecialist", "market": "GB", "url": "https://www.pcspecialist.co.uk" },
+    { "id": "laptopoutlet-gb", "name": "Laptop Outlet", "market": "GB", "url": "https://www.laptopoutlet.co.uk" },
+    { "id": "huawei-gb", "name": "Huawei UK Store", "market": "GB", "url": "https://consumer.huawei.com/uk" },
+    { "id": "minisforum-gb", "name": "Minisforum UK Store", "market": "GB", "url": "https://www.minisforum.uk" },
+    { "id": "amazon-gb", "name": "Amazon UK", "market": "GB", "url": "https://www.amazon.co.uk" },
+    { "id": "frame-gb", "name": "Framework Store (UK)", "market": "GB", "url": "https://frame.work" },
+    { "id": "pricespy-gb", "name": "PriceSpy UK (price-comparison, retailer price as shown)", "market": "GB", "url": "https://pricespy.co.uk" },
+    { "id": "cyberpowersystem-gb", "name": "CyberPowerPC UK", "market": "GB", "url": "https://www.cyberpowersystem.co.uk" },
+    { "id": "stormforcegaming-gb", "name": "Stormforce Gaming", "market": "GB", "url": "https://www.stormforcegaming.co.uk" },
+    { "id": "fiercepc-gb", "name": "Fierce PC", "market": "GB", "url": "https://www.fiercepc.co.uk" },
+    { "id": "laptopsdirect-gb", "name": "Laptops Direct", "market": "GB", "url": "https://www.laptopsdirect.co.uk" },
+
+    { "id": "currys-ie", "name": "Currys Ireland", "market": "IE", "url": "https://www.currys.ie" },
+    { "id": "harveynorman-ie", "name": "Harvey Norman Ireland", "market": "IE", "url": "https://www.harveynorman.ie" },
+
+    { "id": "liverpool-mx", "name": "Liverpool", "market": "MX", "url": "https://www.liverpool.com.mx" },
+    { "id": "walmart-mx", "name": "Walmart México", "market": "MX", "url": "https://www.walmart.com.mx" },
+    { "id": "officedepot-mx", "name": "Office Depot México", "market": "MX", "url": "https://www.officedepot.com.mx" },
+    { "id": "cyberpuerta-mx", "name": "Cyberpuerta", "market": "MX", "url": "https://www.cyberpuerta.mx" },
+    { "id": "mipc-mx", "name": "Mi PC (Vorago authorised store)", "market": "MX", "url": "https://mipc.com.mx" },
+    { "id": "ghia-mx", "name": "Ghia Tienda Oficial", "market": "MX", "url": "https://tienda.ghia.com.mx" }
+  ],
+  "products": [
+    {
+      "retailer": "currys-gb", "market": "GB", "brand": "Apple", "model": "MacBook Air 13.6\" (2025) M4 512GB/16GB",
+      "kind": "laptop", "cpu": "Apple M4", "ramGb": 16, "storageGb": 512, "gpu": "Apple M4 10-core GPU", "discreteGpu": false,
+      "screenIn": 13.6, "os": "macOS", "weightKg": null, "price": 999.00, "salePrice": 799.00, "currency": "GBP",
+      "url": "https://www.currys.co.uk/products/apple-macbook-air-13.6-2025-m4-512-gb-ssd-ram-16-gb-midnight-10276805.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Currys product listing quoting regular £999.00 struck through with sale price £799.00 for this exact 13.6in M4/512GB/16GB configuration; page not directly fetched."
+    },
+    {
+      "retailer": "currys-gb", "market": "GB", "brand": "Dell", "model": "XPS 13 DX13260 13.4\" (Intel Core 5, 512GB)",
+      "kind": "laptop", "cpu": "Intel Core 5", "ramGb": null, "storageGb": 512, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": 13.4, "os": "Windows 11", "weightKg": null, "price": 1099.00, "salePrice": 749.00, "currency": "GBP",
+      "url": "https://www.currys.co.uk/products/dell-xps-13-dx13260-13.4-laptop-intel-core-5-512-gb-ssd-silver-10306179.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Currys product listing quoting regular £1,099.00 struck through, sale £749.00, for this exact model/storage; page not directly fetched. RAM not stated in the snippet."
+    },
+    {
+      "retailer": "dell-gb", "market": "GB", "brand": "Alienware", "model": "Aurora R16 (Core i9-14900F / RTX 4080 SUPER build)",
+      "kind": "desktop", "cpu": "Intel Core i9-14900F", "ramGb": null, "storageGb": null, "gpu": "NVIDIA GeForce RTX 4080 SUPER", "discreteGpu": true,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 2578.99, "salePrice": null, "currency": "GBP",
+      "url": "https://www.dell.com/en-uk/shop/desktop-computers/alienware-aurora-r16-gaming-desktop/spd/alienware-aurora-r16-desktop/dawr1604nkm",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Dell UK configurator page quoting £2,578.99 for the Core i9-14900F / RTX 4080 SUPER build; RAM/storage for that exact build not stated in the snippet."
+    },
+    {
+      "retailer": "currys-gb", "market": "GB", "brand": "HP", "model": "Pavilion SE 14-ep0532sa (Intel Core i7, 512GB)",
+      "kind": "laptop", "cpu": "Intel Core i7", "ramGb": null, "storageGb": 512, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": 14, "os": "Windows 11", "weightKg": null, "price": 699.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.currys.co.uk/products/hp-pavilion-se-14ep0532sa-14-laptop-intel-core-i7-512-gb-ssd-silver-10282674.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Currys product listing quoting £699.00 for this exact model; page not directly fetched. RAM not stated in the snippet."
+    },
+    {
+      "retailer": "argos-gb", "market": "GB", "brand": "Lenovo", "model": "IdeaPad Pro 5 14in (Ryzen 7, 24GB/1TB OLED)",
+      "kind": "laptop", "cpu": "AMD Ryzen 7", "ramGb": 24, "storageGb": 1000, "gpu": "AMD Radeon Graphics", "discreteGpu": false,
+      "screenIn": 14, "os": "Windows 11", "weightKg": null, "price": 1349.00, "salePrice": 1149.00, "currency": "GBP",
+      "url": "https://www.argos.co.uk/sd/lenovo-ideapad/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Argos listing \"Lenovo Ideapad Pro 5 14in R7 24GB 1TB Laptop: £1,149.00 (was £1,349.00)\"; exact product URL not captured, category URL given instead."
+    },
+    {
+      "retailer": "box-gb", "market": "GB", "brand": "Asus", "model": "Zenbook 14 OLED (Intel Core Ultra 5, 512GB)",
+      "kind": "laptop", "cpu": "Intel Core Ultra 5", "ramGb": null, "storageGb": 512, "gpu": "Intel Arc Graphics", "discreteGpu": false,
+      "screenIn": 14, "os": "Windows 11", "weightKg": null, "price": 799.99, "salePrice": null, "currency": "GBP",
+      "url": "https://box.co.uk/asus-zenbook-laptops",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Box.co.uk listing \"ASUS Zenbook 14\" OLED (Intel Core Ultra 5, 512 GB SSD) - £799.99\"; exact product URL not captured, category URL given instead."
+    },
+    {
+      "retailer": "currys-gb", "market": "GB", "brand": "Acer", "model": "Aspire 3 15.6\" (Intel Core i5, 512GB)",
+      "kind": "laptop", "cpu": "Intel Core i5", "ramGb": null, "storageGb": 512, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": 15.6, "os": "Windows 11", "weightKg": null, "price": 413.97, "salePrice": null, "currency": "GBP",
+      "url": "https://www.currys.co.uk/products/acer-aspire-3-15.6-laptop-intel-core-i5-512-gb-ssd-silver-10254475.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Currys product listing quoting £413.97 for this exact model; page not directly fetched. RAM not stated in the snippet."
+    },
+    {
+      "retailer": "scan-gb", "market": "GB", "brand": "MSI", "model": "Katana 15 HX B14WFK-010UK",
+      "kind": "laptop", "cpu": "Intel Core i7-14650HX", "ramGb": 16, "storageGb": 512, "gpu": "NVIDIA GeForce RTX 5060", "discreteGpu": true,
+      "screenIn": 15.6, "os": "Windows 11", "weightKg": null, "price": 1399.99, "salePrice": 1249.99, "currency": "GBP",
+      "url": "https://www.scan.co.uk/products/156-msi-katana-15-hx-laptop-qhd-165hz-core-i7-14650hx-16gb-ddr5-512gb-nvme-ssd-8gb-geforce-rtx-5060",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Scan.co.uk listing for this exact SKU quoting regular £1,399.99 struck through with sale £1,249.99; snippet noted the SKU is now marked end-of-life."
+    },
+    {
+      "retailer": "johnlewis-gb", "market": "GB", "brand": "Microsoft Surface", "model": "Surface Laptop 13\" (Snapdragon X Plus, 16GB/512GB)",
+      "kind": "laptop", "cpu": "Qualcomm Snapdragon X Plus", "ramGb": 16, "storageGb": 512, "gpu": "Qualcomm Adreno GPU", "discreteGpu": false,
+      "screenIn": 13, "os": "Windows 11 (Copilot+ PC)", "weightKg": null, "price": 849.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.johnlewis.com/microsoft-surface-laptop-13-copilot-pc-qualcomm-c8-snapdragon-x-plus-processor-16gb-ram-512gb-ssd-13-pixelsense-display-platinum/p113576213",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of John Lewis product listing quoting £849.00 for this exact configuration; page not directly fetched."
+    },
+    {
+      "retailer": "currys-gb", "market": "GB", "brand": "Samsung", "model": "Galaxy Book6 14\" (Intel Core Ultra 5, 256GB)",
+      "kind": "laptop", "cpu": "Intel Core Ultra 5", "ramGb": null, "storageGb": 256, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": 14, "os": "Windows 11", "weightKg": null, "price": 899.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.currys.co.uk/computing/laptops/laptops/samsung",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet summarising Currys' Samsung laptop range quoting £899.00 for the Galaxy Book6 14\" Core Ultra 5/256GB; exact product URL not captured, category URL given instead."
+    },
+    {
+      "retailer": "laptopoutlet-gb", "market": "GB", "brand": "Razer", "model": "Blade 14 (2025) RZ09-05306WS3-R3W1",
+      "kind": "laptop", "cpu": "AMD Ryzen AI 9 365", "ramGb": 32, "storageGb": 1000, "gpu": "NVIDIA GeForce RTX 5070", "discreteGpu": true,
+      "screenIn": 14, "os": "Windows 11", "weightKg": null, "price": 2399.99, "salePrice": 2149.99, "currency": "GBP",
+      "url": "https://www.laptopoutlet.co.uk/razer-blade-14-9-rz09-05306ws3-r3w1.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Laptop Outlet listing for this exact SKU quoting regular £2,399.99 struck through with sale £2,149.99; page not directly fetched."
+    },
+    {
+      "retailer": "currys-gb", "market": "GB", "brand": "LG", "model": "gram 16 16Z90TL-G.AU75A1 (Intel Core Ultra 7, 512GB)",
+      "kind": "laptop", "cpu": "Intel Core Ultra 7", "ramGb": null, "storageGb": 512, "gpu": "Intel Arc Graphics", "discreteGpu": false,
+      "screenIn": 16, "os": "Windows 11 (Copilot+ PC)", "weightKg": null, "price": 1039.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.currys.co.uk/products/lg-gram-16-16z90tlg.au75a1-16-laptop-copilot-pc-intel-core-ultra-7-512-gb-ssd-black-10282760.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Currys product listing quoting £1,039.00 for this exact model; page not directly fetched. RAM not stated in the snippet."
+    },
+    {
+      "retailer": "overclockers-gb", "market": "GB", "brand": "Gigabyte", "model": "AORUS Elite 16 (RTX 5070 / Core Ultra 9 275HX)",
+      "kind": "laptop", "cpu": "Intel Core Ultra 9 275HX", "ramGb": 32, "storageGb": 2000, "gpu": "NVIDIA GeForce RTX 5070", "discreteGpu": true,
+      "screenIn": 16, "os": "Windows 11", "weightKg": null, "price": 2099.99, "salePrice": null, "currency": "GBP",
+      "url": "https://www.overclockers.co.uk/laptops/gaming-laptops/gigabyte-gaming-laptops/gigabyte-aorus-laptops",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Overclockers UK listing \"Gigabyte AORUS Elite 16 - £2,099.99 (incl. VAT)\" with full spec stated in the snippet; exact product URL not captured, category URL given instead."
+    },
+    {
+      "retailer": "chillblast-gb", "market": "GB", "brand": "Chillblast", "model": "Ryzen 5 RTX 5060 Pre-built Gaming PC",
+      "kind": "desktop", "cpu": "AMD Ryzen 5", "ramGb": null, "storageGb": null, "gpu": "NVIDIA GeForce RTX 5060", "discreteGpu": true,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 1099.99, "salePrice": null, "currency": "GBP",
+      "url": "https://www.chillblast.com/pcs/gaming-pcs/all-gaming-pcs",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Chillblast's \"Ryzen 5 RTX 5060 Pre-built Gaming PC\" at £1,099.99; exact product URL not captured, category URL given instead. RAM/storage not stated in the snippet."
+    },
+    {
+      "retailer": "pcspecialist-gb", "market": "GB", "brand": "PCSpecialist", "model": "Cruiser Spark (Ryzen 5 9500F / RX 9060 XT)",
+      "kind": "desktop", "cpu": "AMD Ryzen 5 9500F", "ramGb": 16, "storageGb": 1000, "gpu": "AMD Radeon RX 9060 XT", "discreteGpu": true,
+      "screenIn": null, "os": "Windows 11 Home", "weightKg": null, "price": 1700.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.pcspecialist.co.uk/desktop-pc/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of PCSpecialist's Cruiser Spark default configuration stating \"starts from £1,700 inc VAT and delivery\" with the quoted spec (Ryzen 5 9500F, 16GB RAM, RX 9060 XT, 1TB SSD); exact model page URL not captured."
+    },
+    {
+      "retailer": "frame-gb", "market": "GB", "brand": "Framework", "model": "Laptop 13 (Ryzen 7 AI 350, 32GB/1TB, 2.8K matte)",
+      "kind": "laptop", "cpu": "AMD Ryzen 7 AI 350", "ramGb": 32, "storageGb": 1000, "gpu": "AMD Radeon 860M", "discreteGpu": false,
+      "screenIn": 13.5, "os": "Windows 11", "weightKg": null, "price": 1843.00, "salePrice": null, "currency": "GBP",
+      "url": "https://frame.work/laptop13?tab=specs",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"£1,843 with Windows 11 Home license\" for this exact configured build on Framework's own configurator; configurator price for the stated config, not a from-price."
+    },
+    {
+      "retailer": "huawei-gb", "market": "GB", "brand": "Huawei", "model": "MateBook 14 (Core Ultra 7, 16GB/1TB)",
+      "kind": "laptop", "cpu": "Intel Core Ultra 7", "ramGb": 16, "storageGb": 1000, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": 14, "os": "Windows 11", "weightKg": null, "price": 1199.99, "salePrice": 999.99, "currency": "GBP",
+      "url": "https://consumer.huawei.com/uk/laptops/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"The MateBook 14 is available at Huawei UK for £999.99 (reduced from £1,199.99) for the Ultra 7, 16GB, 1TB model\"; exact product URL not captured, laptops hub URL given instead."
+    },
+    {
+      "retailer": "minisforum-gb", "market": "GB", "brand": "Minisforum", "model": "UM890 Pro",
+      "kind": "mini-pc", "cpu": "AMD Ryzen 9 8945HS", "ramGb": null, "storageGb": null, "gpu": "AMD Radeon 780M", "discreteGpu": false,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 529.00, "salePrice": 419.00, "currency": "GBP",
+      "url": "https://www.minisforum.uk/collections/home-mini-pc-series",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Minisforum UM890 Pro is £419.00 (sale price) from £529.00 regular price\" on Minisforum's own UK store; exact product URL not captured, collection URL given instead. RAM/storage for the quoted SKU not stated in the snippet; CPU/GPU are this model's published spec."
+    },
+    {
+      "retailer": "amazon-gb", "market": "GB", "brand": "Geekom", "model": "A5 2027",
+      "kind": "mini-pc", "cpu": "AMD Ryzen", "ramGb": null, "storageGb": null, "gpu": "AMD Radeon Graphics", "discreteGpu": false,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 399.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.amazon.co.uk/Computers-Accessories-GEEKOM/s?rh=n%3A340831031%2Cp_89%3AGEEKOM",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"GEEKOM A5 2027 Mini PC at £399.00\" on Amazon UK; exact product URL not captured, brand search URL given instead. Exact CPU model number not stated in the snippet."
+    },
+    {
+      "retailer": "currys-gb", "market": "GB", "brand": "Google", "model": "Pixel Tablet 11\" (256GB)",
+      "kind": "tablet", "cpu": "Google Tensor G3", "ramGb": 8, "storageGb": 256, "gpu": "Integrated (Tensor G3)", "discreteGpu": false,
+      "screenIn": 11, "os": "Android", "weightKg": null, "price": 243.97, "salePrice": null, "currency": "GBP",
+      "url": "https://www.currys.co.uk/products/google-pixel-11-tablet-256-gb-porcelain-10266277.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Currys product listing quoting £243.97 for this exact 256GB model; page not directly fetched."
+    },
+    {
+      "retailer": "pricespy-gb", "market": "GB", "brand": "Beelink", "model": "SER9 MAX",
+      "kind": "mini-pc", "cpu": "AMD Ryzen 7 H255", "ramGb": 64, "storageGb": 1000, "gpu": "AMD Radeon 890M", "discreteGpu": false,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 869.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.amazon.co.uk/Desktop-PCs-Beelink-Computers-Accessories/s?rh=n:428651031,p_89:Beelink",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Beelink Mini PC SER9 MAX with AMD Ryzen 7 H255, 64GB DDR5 RAM, and 1TB SSD is listed at £869.00\" on Amazon UK; exact product URL not captured, brand search URL given instead."
+    },
+    {
+      "retailer": "pricespy-gb", "market": "GB", "brand": "Dynabook", "model": "Tecra A40-J-101 (Core i5-1135G7, 8GB/256GB)",
+      "kind": "laptop", "cpu": "Intel Core i5-1135G7", "ramGb": 8, "storageGb": 256, "gpu": "Intel Iris Xe Graphics", "discreteGpu": false,
+      "screenIn": 14, "os": "Windows 11", "weightKg": null, "price": 906.99, "salePrice": null, "currency": "GBP",
+      "url": "https://pricespy.co.uk/c/laptops?brand=58432",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Tecra A40-J-101 (14\" with i5-1135G7, 8GB RAM, 256GB SSD) at £906.99\" on PriceSpy UK, a price-comparison engine showing a specific retailer's price; underlying retailer page not captured."
+    },
+    {
+      "retailer": "amazon-gb", "market": "GB", "brand": "OnePlus", "model": "Pad 3 (12GB/256GB)",
+      "kind": "tablet", "cpu": "Qualcomm Snapdragon 8 Gen 3", "ramGb": 12, "storageGb": 256, "gpu": "Qualcomm Adreno 750", "discreteGpu": false,
+      "screenIn": 13.2, "os": "Android (OxygenOS)", "weightKg": null, "price": 469.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.amazon.co.uk/Tablets-OnePlus-Computers-Accessories/s?rh=n:429892031,p_89:OnePlus",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"OnePlus Pad 3 13.2\" with 12GB RAM and 256GB storage is priced at £469.00\" on Amazon UK; exact product URL not captured, brand search URL given instead."
+    },
+    {
+      "retailer": "amazon-gb", "market": "GB", "brand": "Amazon", "model": "Fire Max 11 (64GB)",
+      "kind": "tablet", "cpu": "MediaTek octa-core (model not stated on cited page)", "ramGb": 4, "storageGb": 64, "gpu": "Integrated", "discreteGpu": false,
+      "screenIn": 11, "os": "Fire OS", "weightKg": null, "price": 249.99, "salePrice": null, "currency": "GBP",
+      "url": "https://www.amazon.co.uk/dp/B0B2SDTSJ8",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting Amazon's own list price of £249.99 for the Fire Max 11 64GB (tracked via camelcamelcamel at uk.camelcamelcamel.com/product/B0B2SDTSJ8); Amazon product page URL inferred from the ASIN, not directly fetched."
+    },
+    {
+      "retailer": "overclockers-gb", "market": "GB", "brand": "Overclockers UK", "model": "Titan Gladius (Gaming Titan, Ryzen 7 2700X / Vega 7, refurbished)",
+      "kind": "desktop", "cpu": "AMD Ryzen 7 2700X", "ramGb": null, "storageGb": null, "gpu": "AMD Radeon Vega 7 (integrated)", "discreteGpu": false,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 949.99, "salePrice": null, "currency": "GBP",
+      "url": "https://www.overclockers.co.uk/brands/titan",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"OcUK Gaming Titan - Ryzen 2700X - Vega 7 Refurbished Gaming PC priced at £949.99\" on Overclockers UK's own Titan brand page; exact product URL not captured, brand page URL given instead. Marked refurbished in the listing."
+    },
+    {
+      "retailer": "cyberpowersystem-gb", "market": "GB", "brand": "CyberPower", "model": "AO22233 (Ryzen 5 5500 / RTX 5060)",
+      "kind": "desktop", "cpu": "AMD Ryzen 5 5500", "ramGb": 16, "storageGb": 1000, "gpu": "NVIDIA GeForce RTX 5060", "discreteGpu": true,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 979.00, "salePrice": null, "currency": "GBP",
+      "url": "https://www.cyberpowersystem.co.uk/category/gaming-pcs/nvidia/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"The CyberPowerPC AO22233 with Ryzen 5 5500, 16GB RAM, 1TB SSD, and RTX 5060 is £979.00\" on CyberPowerPC's own UK store; exact product URL not captured, category URL given instead."
+    },
+    {
+      "retailer": "stormforcegaming-gb", "market": "GB", "brand": "Stormforce", "model": "Recon Core AMD (Ryzen 5 5500 / RTX 5050)",
+      "kind": "desktop", "cpu": "AMD Ryzen 5 5500", "ramGb": 16, "storageGb": 1000, "gpu": "NVIDIA GeForce RTX 5050", "discreteGpu": true,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 949.99, "salePrice": null, "currency": "GBP",
+      "url": "https://www.stormforcegaming.co.uk/product/recon-core-amd/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Recon Core AMD - CPU: AMD Ryzen 5 5500, Graphics: NVIDIA RTX 5050 8GB, RAM: 16GB DDR4 3200, Storage: 1TB M.2 NVMe SSD - Price: £949.99–£1,449.99\" on Stormforce Gaming's own site; low end of the quoted range used as the base-config price."
+    },
+    {
+      "retailer": "fiercepc-gb", "market": "GB", "brand": "Fierce PC", "model": "Reaver (Ryzen 5 5500 / RTX 3050 6GB)",
+      "kind": "desktop", "cpu": "AMD Ryzen 5 5500", "ramGb": null, "storageGb": null, "gpu": "NVIDIA GeForce RTX 3050 6GB", "discreteGpu": true,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 899.95, "salePrice": null, "currency": "GBP",
+      "url": "https://www.fiercepc.co.uk/gaming-pcs/gaming-pcs-under-1000",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"The Fierce Reaver Gaming PC with AMD Ryzen 5 5500 and NVIDIA RTX 3050 6GB is priced at £899.95\" on Fierce PC's own site; exact product URL not captured, category URL given instead. RAM/storage not stated in the snippet."
+    },
+
+    {
+      "retailer": "harveynorman-ie", "market": "IE", "brand": "Apple", "model": "MacBook Air 13.6\" M4 (10-core CPU, 16GB/256GB)",
+      "kind": "laptop", "cpu": "Apple M4", "ramGb": 16, "storageGb": 256, "gpu": "Apple M4 8-core GPU", "discreteGpu": false,
+      "screenIn": 13.6, "os": "macOS", "weightKg": null, "price": 1099.00, "salePrice": null, "currency": "EUR",
+      "url": "https://www.harveynorman.ie/computing/apple/macbook/macbook-air-15.3-m4-10-core-cpu-16gb-256gb-midnight-2025.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Harvey Norman Ireland product listing quoting €1,099 for the 13.6\" MacBook Air M4 10-core CPU/16GB/256GB; page not directly fetched."
+    },
+    {
+      "retailer": "dell-gb", "market": "IE", "brand": "Dell", "model": "XPS 13 (base configured)",
+      "kind": "laptop", "cpu": "Not stated on cited page", "ramGb": null, "storageGb": null, "gpu": "Integrated graphics (model not stated)", "discreteGpu": false,
+      "screenIn": 13.4, "os": "Windows 11", "weightKg": null, "price": 1086.35, "salePrice": null, "currency": "EUR",
+      "url": "https://www.dell.com/en-ie/shop/laptop-computers/scr/laptop",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"XPS 13 Laptop: €1,086.35\" from Dell's Irish store configurator summary; exact configuration detail (CPU/RAM/storage) not stated in the snippet."
+    },
+    {
+      "retailer": "harveynorman-ie", "market": "IE", "brand": "Lenovo", "model": "Entry Intel Core i5 (8GB/512GB)",
+      "kind": "laptop", "cpu": "Intel Core i5", "ramGb": 8, "storageGb": 512, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 499.00, "salePrice": null, "currency": "EUR",
+      "url": "https://www.harveynorman.ie/lenovo/?items_per_page=20&layout=products_without_options&sort_by=timestamp&sort_order=desc",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet listing a Harvey Norman Ireland Lenovo model at \"€499 EUR (Intel Core i5, 8GB RAM, 512GB Storage)\"; exact product name/URL not captured, brand hub URL given instead."
+    },
+    {
+      "retailer": "currys-ie", "market": "IE", "brand": "HP", "model": "Pavilion SE 14-ep0529sa (Intel Core i5, 256GB)",
+      "kind": "laptop", "cpu": "Intel Core i5", "ramGb": null, "storageGb": 256, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": 14, "os": "Windows 11", "weightKg": null, "price": 599.00, "salePrice": null, "currency": "EUR",
+      "url": "https://www.currys.ie/products/hp-pavilion-se-14-laptop-intel-core-i5-512-gb-ssd-silver-10250731.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet of Currys Ireland listing quoting €599.00 for the HP Pavilion SE 14-ep0529sa Core i5/256GB; page not directly fetched (cited URL is for a related 512GB SKU in the same series)."
+    },
+    {
+      "retailer": "harveynorman-ie", "market": "IE", "brand": "Asus", "model": "V16 16\" (Intel Core 5, 16GB/512GB, RTX 5050)",
+      "kind": "laptop", "cpu": "Intel Core 5", "ramGb": 16, "storageGb": 512, "gpu": "NVIDIA GeForce RTX 5050", "discreteGpu": true,
+      "screenIn": 16, "os": "Windows 11", "weightKg": null, "price": 1199.00, "salePrice": 999.00, "currency": "EUR",
+      "url": "https://www.harveynorman.ie/collections/gaming-laptops",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"ASUS V16 16\" Intel Core 5 | 16GB | 512GB | Black | GeForce RTX 5050 priced at €999 (RRP €1,199)\" on Harvey Norman Ireland; exact product URL not captured, collection URL given instead."
+    },
+    {
+      "retailer": "harveynorman-ie", "market": "IE", "brand": "Acer", "model": "Swift 3 14\" (Ryzen 7, 8GB/1TB)",
+      "kind": "laptop", "cpu": "AMD Ryzen 7", "ramGb": 8, "storageGb": 1000, "gpu": "AMD Radeon Graphics", "discreteGpu": false,
+      "screenIn": 14, "os": "Windows 11", "weightKg": null, "price": 999.00, "salePrice": null, "currency": "EUR",
+      "url": "https://www.harveynorman.ie/computing/laptops/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Acer Swift 3 14\" (AMD Ryzen 7 | 8GB | 1TB): €999\" on Harvey Norman Ireland; exact product URL not captured, laptops hub URL given instead."
+    },
+    {
+      "retailer": "currys-ie", "market": "IE", "brand": "Microsoft Surface", "model": "Surface Laptop 13\" (Snapdragon X Plus, 256GB)",
+      "kind": "laptop", "cpu": "Qualcomm Snapdragon X Plus", "ramGb": null, "storageGb": 256, "gpu": "Qualcomm Adreno GPU", "discreteGpu": false,
+      "screenIn": 13, "os": "Windows 11 (Copilot+ PC)", "weightKg": null, "price": 959.00, "salePrice": null, "currency": "EUR",
+      "url": "https://www.currys.ie/computing/laptops/laptops/microsoft",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Surface Laptop 13\" with Snapdragon X Plus and 256 GB SSD (Platinum) is €959.00\" on Currys Ireland; exact product URL not captured, category URL given instead. RAM not stated in the snippet."
+    },
+    {
+      "retailer": "currys-ie", "market": "IE", "brand": "Samsung", "model": "Galaxy Book4 15.6\" (Intel Core i5, 512GB)",
+      "kind": "laptop", "cpu": "Intel Core i5", "ramGb": null, "storageGb": 512, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": 15.6, "os": "Windows 11", "weightKg": null, "price": 749.00, "salePrice": null, "currency": "EUR",
+      "url": "https://www.currys.ie/products/samsung-galaxy-book4-15.6-laptop-intel-core-i5-256-gb-ssd-grey-10263962.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Samsung Galaxy Book4 15.6\" (Intel Core i5, 512GB): €749.00\" on Currys Ireland; the cited URL is for a related 256GB SKU in the same series, exact 512GB SKU page not captured."
+    },
+
+    {
+      "retailer": "liverpool-mx", "market": "MX", "brand": "HP", "model": "255R 15.6\" (AMD Ryzen 5)",
+      "kind": "laptop", "cpu": "AMD Ryzen 5", "ramGb": null, "storageGb": null, "gpu": "AMD Radeon Graphics", "discreteGpu": false,
+      "screenIn": 15.6, "os": "Windows 11", "weightKg": null, "price": 19149.00, "salePrice": 12399.20, "currency": "MXN",
+      "url": "https://www.liverpool.com.mx/tienda?s=laptop+hp",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Laptop 255R 15.6 pulgadas HD AMD Ryzen 5: $12,399.20 MXN (reduced from $19,149.00)\" on Liverpool.com.mx; exact product URL not captured, search results URL given instead. RAM/storage not stated in the snippet."
+    },
+    {
+      "retailer": "walmart-mx", "market": "MX", "brand": "Lenovo", "model": "IdeaPad Slim3 (Intel Core i5, 8GB/512GB)",
+      "kind": "laptop", "cpu": "Intel Core i5", "ramGb": 8, "storageGb": 512, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 10499.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.walmart.com.mx/c/ftp/lenovo-todas-las-laptops",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Lenovo IdeaPad Slim3 with Intel Core i5, 8GB RAM, 512GB SSD for $10,499 MXN\" on Walmart México; exact product URL not captured, brand category URL given instead."
+    },
+    {
+      "retailer": "cyberpuerta-mx", "market": "MX", "brand": "Dell", "model": "Inspiron 15 (AMD Ryzen 7)",
+      "kind": "laptop", "cpu": "AMD Ryzen 7", "ramGb": null, "storageGb": null, "gpu": "AMD Radeon Graphics", "discreteGpu": false,
+      "screenIn": 15.6, "os": "Windows 11", "weightKg": null, "price": 11199.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.cyberpuerta.mx/Laptop-Dell-Inspiron/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Dell Inspiron 15 with AMD Ryzen 7 at $11,199.00 MXN\" on Cyberpuerta; exact product URL not captured, category URL given instead. RAM/storage not stated in the snippet."
+    },
+    {
+      "retailer": "officedepot-mx", "market": "MX", "brand": "Asus", "model": "Vivobook 15 (Intel Core i5, 8GB/512GB)",
+      "kind": "laptop", "cpu": "Intel Core i5", "ramGb": 8, "storageGb": 512, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": 15.6, "os": "Windows 11", "weightKg": null, "price": 13299.00, "salePrice": 9999.00, "currency": "MXN",
+      "url": "https://www.officedepot.com.mx/officedepot/en/Categor%C3%ADa/Todas/computo/laptops-y-macbook/laptops/c/04-039-902-0?q=%3Arelevance%3Abrand%3AASUS",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Laptop Asus Vivobook 15 Intel Core i5 8GB RAM 512GB SSD: $9,999.00 MXN (original $13,299.00)\" on Office Depot México; exact product URL not captured, category URL given instead."
+    },
+    {
+      "retailer": "liverpool-mx", "market": "MX", "brand": "Apple", "model": "MacBook Air 13\" M5 (16GB/512GB)",
+      "kind": "laptop", "cpu": "Apple M5", "ramGb": 16, "storageGb": 512, "gpu": "Apple M5 integrated GPU", "discreteGpu": false,
+      "screenIn": 13, "os": "macOS", "weightKg": null, "price": 29999.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.liverpool.com.mx/tienda?s=macbook+air",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"MacBook Air 13 pulgadas Chip M5 16 GB RAM 512 GB SSD: $29,999.00 MXN\" on Liverpool.com.mx; exact product URL not captured, search results URL given instead."
+    },
+    {
+      "retailer": "walmart-mx", "market": "MX", "brand": "Acer", "model": "Aspire 3 (AMD Ryzen 7, 16GB/512GB)",
+      "kind": "laptop", "cpu": "AMD Ryzen 7", "ramGb": 16, "storageGb": 512, "gpu": "AMD Radeon Graphics", "discreteGpu": false,
+      "screenIn": null, "os": "Windows 11", "weightKg": null, "price": 12919.00, "salePrice": 10386.00, "currency": "MXN",
+      "url": "https://www.walmart.com.mx/c/ftp/acer-todas-las-laptops",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Laptop Acer Aspire 3 AMD Ryzen 7 16GB RAM 512GB SSD at MXN $10,386.00 (on sale from MXN $12,919.00)\" on Walmart México; exact product URL not captured, brand category URL given instead."
+    },
+    {
+      "retailer": "walmart-mx", "market": "MX", "brand": "Lanix", "model": "Xbook B15 (Intel Core i7-13620H)",
+      "kind": "laptop", "cpu": "Intel Core i7-13620H", "ramGb": null, "storageGb": null, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": 15.6, "os": "Windows 11", "weightKg": null, "price": 22400.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.walmart.com.mx/c/ftp/lanix-todas-las-laptops",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Walmart Mexico offers various Lanix models, including the Xbook B15 with Intel Core i7 13620H at $22,400 MXN\" on Walmart México; exact product URL not captured, brand category URL given instead. RAM/storage not stated in the snippet."
+    },
+    {
+      "retailer": "walmart-mx", "market": "MX", "brand": "Samsung", "model": "Galaxy Book4 15.6\" (Intel Core 7, 16GB/512GB)",
+      "kind": "laptop", "cpu": "Intel Core 7", "ramGb": 16, "storageGb": 512, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": 15.6, "os": "Windows 11", "weightKg": null, "price": 12299.00, "salePrice": null, "currency": "MXN",
+      "url": "https://www.walmart.com.mx/ip/samsung-laptop-galaxy-book4-15-6-fhd-intel-core-7-memoria-de-16-gb-ssd-de-512-gb-plateada/00088727683467",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Samsung Galaxy Book4 15.6\" FHD with Intel Core 7, 16 GB RAM, and 512 GB SSD is priced at $12,299.00 MXN\" on Walmart México, noted in the snippet as currently out of stock there."
+    },
+    {
+      "retailer": "mipc-mx", "market": "MX", "brand": "Vorago", "model": "Alpha Plus V3 14\" (Celeron N4020, 8GB/500GB+64GB)",
+      "kind": "laptop", "cpu": "Intel Celeron N4020", "ramGb": 8, "storageGb": 564, "gpu": "Intel UHD Graphics 600", "discreteGpu": false,
+      "screenIn": 14, "os": "Windows 10 Pro", "weightKg": null, "price": 6134.49, "salePrice": null, "currency": "MXN",
+      "url": "https://mipc.com.mx/laptop-vorago-alpha-plus-2-14-cel-n4020-4gb-64gb-500gb-w10pro-plata.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Laptop Vorago Alpha Plus V3 14 Pulgadas HD Intel Celeron N4020 8GB 500GB Hdd + 64GB Emmc Windows 10 Pro\" at $6,134.49 MXN (digitalife.com.mx listing); cited URL is Mi PC's listing for the closely related Alpha Plus V2 model, as the exact V3 product page was not captured."
+    },
+    {
+      "retailer": "ghia-mx", "market": "MX", "brand": "Ghia", "model": "Libero 14.1\" (Celeron, 8GB/512GB)",
+      "kind": "laptop", "cpu": "Intel Celeron", "ramGb": 8, "storageGb": 512, "gpu": "Intel Graphics", "discreteGpu": false,
+      "screenIn": 14.1, "os": "Windows 11", "weightKg": null, "price": 5499.00, "salePrice": 4499.00, "currency": "MXN",
+      "url": "https://www.sears.com.mx/producto/3302344/laptop-ghia-libero-14-1-intel-celeron-8-gb-ram-512-gb",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "Web search snippet quoting \"Laptop Ghia Libero 14.1\" with Intel Celeron, 8GB RAM, and 512GB: $4,499.00 MXN (on sale from $5,499.00 MXN)\"; this is Sears México's listing of the Ghia product, cited since it names the exact regular/sale pair."
+    }
+  ]
+}

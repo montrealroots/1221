@@ -510,6 +510,8 @@ export interface OwnedHome {
   garden?: Partial<Record<import('./garden').Plot, import('./garden').Planting>>;
   /** Its lawn, where it has a yard (`systems/lawns.ts`, from 2026-10-02). */
   lawn?: import('./lawns').Lawn;
+  /** A repaint by hand under way: the paint in hand and the rooms done (`systems/paint.ts`, from 2026-10-05). */
+  painting?: import('./paint').Painting;
   /** The letting agent managing it, where one is hired (`systems/propertymanagers.ts`, from 2026-10-01). */
   manager?: string;
   /** A house just built, not to be lived in before its certificate of occupancy (`systems/construction.ts`, from 2026-09-30). */

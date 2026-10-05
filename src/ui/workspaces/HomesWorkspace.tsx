@@ -28,6 +28,8 @@ import { RENTED_TRUCK } from '@/engine/content/furniture';
 import { assemblyFee, pieceRefusal, piecesCatalog, seatsAtHome } from '@/engine/systems/furnishings';
 import { buyTvRefusal, tvAtHome, tvCatalog } from '@/engine/systems/televisions';
 import { buySpeakerRefusal, speakerCatalog } from '@/engine/systems/speakers';
+import { litersFor, nextRoom, paintCatalog, paintRefusal } from '@/engine/systems/paint';
+import { computerCatalog, computerRefusal, gamingComputer } from '@/engine/systems/computers';
 import { handMower, lawnM2, mowerCatalog, mowerRefusal, robotFor } from '@/engine/systems/mowers';
 import { bulbCatalog, bulbRefusal, darkSockets, fitRefusal as bulbFitRefusal, lampCatalog, lampRefusal, lightsOf, spareBulbs } from '@/engine/systems/lighting';
 import { DeviceShop, type DeviceRow } from '@/ui/components/DeviceShop';
@@ -715,6 +717,65 @@ function Speakers() {
       fine="Each at its maker’s or a retailer’s own page, America’s and Canada’s prices with the place’s sales tax added; its power is its maker’s stated amplifier power. The one bought is the home’s speaker, what a music lover unwinds with." />
   );
 }
+/** Paint for a repaint by hand (`systems/paint.ts`, from 2026-10-05): bought by the can, then Paint A Room on Looking After, a room a session. */
+function PaintShop() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const gate = useFeature('home.buy_paint');
+  const home = livingIn(person);
+  if (!home || person.home?.cityId !== person.currentLocationId) return null;
+  const next = nextRoom(sim, person);
+  const p = home.painting;
+  const status = next ? `Next: ${next.label}, about ${Math.ceil(litersFor(next, p?.coverage) * 10) / 10} L; ${Math.floor((p?.liters ?? 0) * 10) / 10} L in hand${p?.done.length ? `, ${p.done.length} done` : ''}` : 'Every room is done';
+  const cover = (r: DeviceRow) => (typeof r.product.attrs.coverage === 'number' ? `${r.product.attrs.coverage} m²/L` : '≈9.2 m²/L');
+  return (
+    <DeviceShop list="paint" title={`Paint · ${status}`} shop={paintCatalog(sim, person)} refusal={(id) => paintRefusal(person, id)} command="home.buy_paint" gate={gate} bought={(label) => `${label}, bought for the repaint.`}
+      facets={{ brand: 'Maker', finish: 'Finish' }}
+      facetsOf={(r) => ({ brand: r.product.brand, finish: String(r.product.attrs.finish ?? 'Not Read').replace(/^./, (c) => c.toUpperCase()) })}
+      columns={[
+        { head: 'Can', num: true, cell: (r) => `${r.product.attrs.liters} L` },
+        { head: 'Finish', cell: (r) => String(r.product.attrs.finish ?? '—') },
+        { head: 'Covers', num: true, cell: cover },
+      ]}
+      compare={[
+        { label: 'Can', value: (r) => `${r.product.attrs.liters} L` },
+        { label: 'Finish', value: (r) => String(r.product.attrs.finish ?? '—') },
+        { label: 'Covers', value: cover },
+        { label: 'Paint And Primer', value: (r) => (r.product.attrs.primer ? 'Yes' : 'No') },
+      ]}
+      fine="Each can at its seller’s own page, America’s and Canada’s prices with the place’s sales tax. A room takes two coats on its walls, its floor taken as square under a 2.4 m ceiling less a door, at the paint’s own coverage or, marked ≈, Benjamin Moore’s 375 sq ft a gallon. Paint A Room on Looking After does one room in five hours; when every room is done the home’s paint is new." />
+  );
+}
+
+const PC_KIND: Readonly<Record<string, string>> = { laptop: 'Laptop', desktop: 'Desktop', 'mini-pc': 'Mini PC', 'all-in-one': 'All-In-One', tablet: 'Tablet' };
+/** A computer (`systems/computers.ts`, from 2026-10-05): one with a graphics card of its own plays a games lover's games at home. */
+function Computers() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const gate = useFeature('computer.buy');
+  const gpu = (r: DeviceRow) => `${r.product.attrs.discrete ? 'Its Own Card' : 'Built In'}${r.product.attrs.gpu ? `: ${r.product.attrs.gpu}` : ''}`;
+  return (
+    <DeviceShop list="computers" title={`Computers${gamingComputer(person) ? ' · Yours Plays Games' : ''}`} shop={computerCatalog(sim, person)} refusal={(id) => computerRefusal(person, id)} command="computer.buy" gate={gate} bought={(label) => `${label}, bought and brought home.`}
+      facets={{ brand: 'Maker', kind: 'Kind', graphics: 'Graphics' }}
+      facetsOf={(r) => ({ brand: r.product.brand, kind: PC_KIND[String(r.product.attrs.kind)] ?? 'Computer', graphics: r.product.attrs.discrete ? 'Its Own Card' : 'Built In' })}
+      columns={[
+        { head: 'Kind', cell: (r) => PC_KIND[String(r.product.attrs.kind)] ?? '—' },
+        { head: 'Memory', num: true, cell: (r) => (r.product.attrs.ramGb ? `${r.product.attrs.ramGb} GB` : '—') },
+        { head: 'Storage', num: true, cell: (r) => (r.product.attrs.storageGb ? `${r.product.attrs.storageGb} GB` : '—') },
+      ]}
+      compare={[
+        { label: 'Kind', value: (r) => PC_KIND[String(r.product.attrs.kind)] ?? '—' },
+        { label: 'Processor', value: (r) => String(r.product.attrs.cpu ?? '—') },
+        { label: 'Memory', value: (r) => (r.product.attrs.ramGb ? `${r.product.attrs.ramGb} GB` : '—') },
+        { label: 'Storage', value: (r) => (r.product.attrs.storageGb ? `${r.product.attrs.storageGb} GB` : '—') },
+        { label: 'Graphics', value: gpu },
+        { label: 'Screen', value: (r) => (r.product.attrs.screenIn ? `${r.product.attrs.screenIn}"` : '—') },
+        { label: 'System', value: (r) => String(r.product.attrs.os ?? '—') },
+      ]}
+      fine="Each at its seller’s own page in the configuration read, America’s and Canada’s prices with the place’s sales tax added. One whose graphics are a card of their own plays a games lover’s games at home, as a console does." />
+  );
+}
+
 const MOWER_KIND: Readonly<Record<string, string>> = { reel: 'Push Reel', corded: 'Corded Electric', battery: 'Battery', petrol: 'Petrol', robot: 'Robot' };
 /** A lawn mower (`systems/mowers.ts`, from 2026-10-05), for a home of theirs with a lawn: pushed to mow it, or a robot that keeps it. */
 function Mowers() {
@@ -928,6 +989,8 @@ function Furniture() {
       <Speakers />
       <Lighting />
       <Mowers />
+      <Computers />
+      <PaintShop />
       <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="move-by">When You Move</label>

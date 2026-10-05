@@ -22,7 +22,9 @@ const kcalOf = (x) => { if (x.kcalPerKg > 0) return x.kcalPerKg; if (x.kcalPerUn
 const kgOf = (x) => { if (x.kg) return x.kg; const m = String(x.size).match(/(?:(\d+)\s*x\s*)?([\d.]+)\s*(oz|g)\b/i); if (!m) return undefined; const each = Number(m[2]) * (m[3].toLowerCase() === 'oz' ? 28.349523125 : 1); return Math.round(((Number(m[1] ?? 1) * each) / 1000) * 10000) / 10000; };
 // And from 2026-10-05 more brands, each read with its own calories (`research-pet-food-2.json`).
 const MORE_FOOD = 'docs/research/world/research-pet-food-2.json';
-const allFoods = [...R.feeding.products, ...(existsSync(MORE_FOOD) ? JSON.parse(readFileSync(MORE_FOOD, 'utf8')).products ?? [] : [])];
+// And more products from the same brands (`research-pet-food-3.json`, from 2026-10-05).
+const DEEPER_FOOD = 'docs/research/world/research-pet-food-3.json';
+const allFoods = [...R.feeding.products, ...[MORE_FOOD, DEEPER_FOOD].flatMap((f) => (existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')).products ?? [] : []))];
 const foods = allFoods.filter((x) => (/^dry /.test(x.type) || (/^wet /.test(x.type) && kcalOf(x))) && kgOf(x)).map((x) => ({
   id: `${market(x.market)}-${slug(`${x.brand} ${x.product}`)}`, market: market(x.market), species: /dog/.test(x.type) ? 'dog' : 'cat',
   brand: x.brand, product: x.product, kg: kgOf(x), wet: /^wet /.test(x.type), kcalPerKg: kcalOf(x), price: x.price, currency: x.currency, retailer: x.retailer.replace(/ \(.*\)$/, ''), url: x.url, status: x.status === 'verified' ? 'verified' : 'secondhand',

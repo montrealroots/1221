@@ -56,6 +56,7 @@ import { roomGone } from './latecheckout';
 import { runInShoes } from './resale';
 import { MOWN_CM, MOW_MINUTES, lawnOf, mow } from './lawns';
 import { handMower, mowKwh } from './mowers';
+import { PAINT_SESSION_MINUTES, paintRoom, paintSessionRefusal } from './paint';
 import { livingIn } from './homes';
 import {
   DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
@@ -505,6 +506,7 @@ export function registerLife(sim: Simulation): void {
       else if (action === 'exercise' || action === 'ride' || action === 'court' || action === 'dance') wearOutfit(s, person, true);
       // The lawn cut (`systems/lawns.ts`, from 2026-10-02).
       // With the mower's draw on the month's electricity (`systems/mowers.ts`, from 2026-10-05).
+      if (action === 'paint') paintRoom(s, person);
       if (action === 'mow') { const home = livingIn(person); if (home) { mow(home, s.now); const m = handMower(person); if (m) { const l = livingOf(person); l.extraKwh = (l.extraKwh ?? 0) + mowKwh(m.product); } } }
       // The place's spray, where there's some (from 2026-10-03).
       if (action === 'tidy') sprayUsed(s, person);
@@ -577,7 +579,7 @@ export function registerLife(sim: Simulation): void {
  * Each takes real time off the clock, and the clock charges that time as
  * waking before the action pays out.
  */
-export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'dance' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'washup' | 'mow' | 'sauna';
+export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'dance' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'washup' | 'mow' | 'sauna' | 'paint';
 
 export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
   eat: { label: 'Eat A Meal', minutes: 40, does: 'Cooked at home, or a meal out: feeds you, and lifts the mood by as much as you needed it' },
@@ -602,6 +604,8 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   washup: { label: 'Wash Up', minutes: 38, does: 'The dishes in the sink washed by hand, so the kitchen can be cooked in and they don’t add to the mess' },
   // From 2026-10-02 (`systems/lawns.ts`): the 1.9 hours ATUS finds a day of lawn and garden care takes.
   mow: { label: 'Mow The Lawn', minutes: MOW_MINUTES, does: 'Cuts the grass at the home you live in to 5 cm, ahead of any notice from the city' },
+  // From 2026-10-05 (`systems/paint.ts`): five hours, the middle of Angi's two to eight a room.
+  paint: { label: 'Paint A Room', minutes: PAINT_SESSION_MINUTES, does: 'Two coats on the next room’s walls, with the paint you’ve bought; once every room is done the home’s paint is new' },
 };
 
 /** The 2024 Adult Compendium's ballet, modern or jazz class (03010), the dance studios' own class (`content/dropins.ts`). */
@@ -729,6 +733,7 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'washup' && !(atHome(person) && place?.keeps)) return 'It isn’t your sink.';
   if (action === 'washup' && !livingOf(person).dishes) return 'There’s nothing to wash up.';
   if (action === 'washup' && !dishSoapFor(sim, person, 1, false)) return 'There’s no dish soap at home.';
+  if (action === 'paint') return paintSessionRefusal(sim, sim.player);
   if (action === 'mow') { const lawn = atHome(person) ? homeLawn(person) : undefined; if (!lawn) return 'There’s no lawn of yours here.'; if (lawn.cm < MOWN_CM + 1) return 'It’s cut.'; if (!handMower(person)) return 'You have no mower to push; one is sold on Homes.'; }
   const end = sim.now + minutesFor(sim, action) * 60_000;
   const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);
