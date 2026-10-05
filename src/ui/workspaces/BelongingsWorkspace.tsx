@@ -33,6 +33,7 @@ import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets'
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
 import { ROOM_USE_LABEL, roomList } from '@/engine/systems/rooms';
+import { claimAmount, claimRefusal } from '@/engine/systems/baggage';
 import { GROOMERS, certificatePrice, chipPrice, foodLeftG, groomDue, groomerPrice, litterLeftKg, petShop, petsOf, vetPrice } from '@/engine/systems/pets';
 import { PET_ENTRY } from '@/engine/content/petentry';
 import { livingIn } from '@/engine/systems/homes';
@@ -298,6 +299,7 @@ export function BelongingsWorkspace() {
         </Panel>
         <Suitcase />
         <LeftBehind />
+        <MishandledBags />
         <Luggage />
         <Phones />
         <WatchingAndPlaying />
@@ -777,6 +779,36 @@ function PackingLists() {
         </>
       )}
     </div>
+  );
+}
+
+/** Checked bags the airline mishandled (`systems/baggage.ts`, from 2026-10-05): each one's state, and its claim when it can be made. */
+function MishandledBags() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const claims = person.bagClaims ?? [];
+  if (claims.length === 0) return null;
+  const cur = saveCurrency(sim.universe);
+  const state = (c: (typeof claims)[number]) => c.paid !== undefined ? `Claimed, ${formatMoney(c.paid, cur, { cents: false })} paid` : c.kind === 'delayed' ? (c.backAt !== undefined && sim.now >= c.backAt ? 'Back' : `With ${c.carrier}, back by ${formatDate(c.backAt ?? c.at, sim.zone)}`) : c.kind === 'damaged' ? 'Damaged' : c.lostAt !== undefined && sim.now >= c.lostAt ? 'Declared lost' : `Being traced until ${formatDate(c.lostAt ?? c.at, sim.zone)}`;
+  return (
+    <Panel title="Mishandled Bags" subtitle="Checked bags the airline delayed, damaged or lost, and the claims on them">
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Bag</th><th scope="col">What Happened</th><th scope="col" className="num">Claimable</th><th scope="col"><span className="sr-only">Claim</span></th></tr></thead>
+          <tbody>{claims.map((c) => {
+            const no = claimRefusal(sim, person, c);
+            return (
+              <tr key={c.id}>
+                <td>{c.bagLabel}<div className="xs dim">{`${c.carrier}, ${formatDate(c.at, sim.zone)}`}</div></td>
+                <td className="small">{state(c)}</td>
+                <td className="num mono">{c.paid === undefined ? formatMoney(claimAmount(person, c), cur, { cents: false }) : '—'}</td>
+                <td><Gated feature="travel.bag_claim" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { const r = run<{ paid: number }>('travel.bag_claim', { claimId: c.id }); if (r.ok) toast(`${c.carrier} paid ${formatMoney(r.value!.paid, cur, { cents: false })}.`, 'positive'); }}>Make The Claim</Gated></td>
+              </tr>
+            );
+          })}</tbody>
+        </table>
+      </div>
+    </Panel>
   );
 }
 

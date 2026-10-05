@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-361 commands; 355 named by a test, 6 not.
+362 commands; 356 named by a test, 6 not.
 
 ## aircraft
 
@@ -406,10 +406,10 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `luggage.buy` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `luggagebuy.test.ts` `packing-lists.test.ts` `travelchange.test.ts` | Rent And A Roof |
-| `luggage.choose` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `luggagebuy.test.ts` `travelchange.test.ts` | Rent And A Roof |
+| `luggage.buy` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `luggagebuy.test.ts` `packing-lists.test.ts` `travelchange.test.ts` | Rent And A Roof |
+| `luggage.choose` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `luggagebuy.test.ts` `travelchange.test.ts` | Rent And A Roof |
 | `luggage.delete_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `packing-lists.test.ts` | Rent And A Roof |
-| `luggage.pack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
+| `luggage.pack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` `journeys.test.ts` `luggage-choice.test.ts` `luggage.test.ts` `packing-lists.test.ts` | Rent And A Roof |
 | `luggage.pack_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `packing-lists.test.ts` | Rent And A Roof |
 | `luggage.repack` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `journeys.test.ts` `luggage-choice.test.ts` | Rent And A Roof |
 | `luggage.save_list` | `src/engine/systems/luggage.ts` | `BelongingsWorkspace.tsx` | `packing-lists.test.ts` | Rent And A Roof |
@@ -538,7 +538,8 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `travel.book` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `airportparking.test.ts` `aviation.test.ts` `boardingid.test.ts` `caravans.test.ts` `checkin.test.ts` `childtravel.test.ts` `companions.test.ts` `compensation.test.ts` `deposits.test.ts` `driving.test.ts` `extend.test.ts` `ferries.test.ts` `hotelid.test.ts` `hotelrooms.test.ts` `hotels.test.ts` `identity.test.ts` `journey.test.ts` `journeys.test.ts` `latecheckout.test.ts` `lets.test.ts` `luggage-choice.test.ts` `motorhomes.test.ts` `paratransit.test.ts` `pet-papers.test.ts` `pets.test.ts` `rail.test.ts` `rentals.test.ts` `staytypes.test.ts` `stepfree.test.ts` `travelchange.test.ts` `travelinsurance.test.ts` | Getting Around |
+| `travel.bag_claim` | `src/engine/systems/baggage.ts` | `BelongingsWorkspace.tsx` | `baggage.test.ts` | Rent And A Roof |
+| `travel.book` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `airportparking.test.ts` `aviation.test.ts` `baggage.test.ts` `boardingid.test.ts` `caravans.test.ts` `checkin.test.ts` `childtravel.test.ts` `companions.test.ts` `compensation.test.ts` `deposits.test.ts` `driving.test.ts` `extend.test.ts` `ferries.test.ts` `hotelid.test.ts` `hotelrooms.test.ts` `hotels.test.ts` `identity.test.ts` `journey.test.ts` `journeys.test.ts` `latecheckout.test.ts` `lets.test.ts` `luggage-choice.test.ts` `motorhomes.test.ts` `paratransit.test.ts` `pet-papers.test.ts` `pets.test.ts` `rail.test.ts` `rentals.test.ts` `staytypes.test.ts` `stepfree.test.ts` `travelchange.test.ts` `travelinsurance.test.ts` | Getting Around |
 | `travel.cancel` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `airportground.test.ts` `caravans.test.ts` `companions.test.ts` `journey.test.ts` `rail.test.ts` `rentals.test.ts` `travelinsurance.test.ts` | Getting Around |
 | `travel.change` | `src/engine/systems/journey.ts` | `TravelWorkspace.tsx` | `travelchange.test.ts` | Getting Around |
 | `travel.child` | `src/engine/systems/companions.ts` | `TravelWorkspace.tsx` | `childtravel.test.ts` | Getting Around |
