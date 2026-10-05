@@ -334,6 +334,18 @@ export function formatDate(instant: Instant, zone: TimeZone): string {
   return `${MONTH_NAMES[p.month - 1]} ${p.day}, ${p.year}`;
 }
 
+/** Whether a calendar day (YYYY-MM-DD, as a release date is kept) has come by an instant, where a zone keeps the calendar. */
+export function dayHasCome(day: string, instant: Instant, zone: TimeZone): boolean {
+  const p = zonedParts(instant, zone);
+  return day <= `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`;
+}
+
+/** A calendar day (YYYY-MM-DD) as the rest of SLATE writes a date: September 18, 2026. */
+export function formatDay(day: string): string {
+  const [y, m, d] = day.split('-').map(Number) as [number, number, number];
+  return `${MONTH_NAMES[m - 1]} ${d}, ${y}`;
+}
+
 export function formatWeekdayDate(instant: Instant, zone: TimeZone): string {
   const p = zonedParts(instant, zone);
   return `${WEEKDAY_NAMES[p.weekday]}, ${MONTH_NAMES[p.month - 1]} ${p.day}, ${p.year}`;

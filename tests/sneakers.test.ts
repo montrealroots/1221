@@ -14,12 +14,31 @@ import { GOAT_ASKS, SNEAKERS, SNEAKER_RETAIL } from '@/engine/content/sneakers';
 import { GOAT, goatPayout, sneakerOffers } from '@/engine/systems/sneakers';
 import { garmentsOf } from '@/engine/systems/wardrobe';
 
-const life = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+// A life begun once the pairs read are out, the last on October 25, 2026: until its release a pair isn't offered.
+const life = (city: string, seed: string, start = { startYear: 2026, startMonth: 11, startDay: 2 }) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy', ...start }, seed);
 const usd = (sim: Simulation, dollars: number) => { const c = Math.round(dollars * 100); const cur = saveCurrency(sim.universe); return cur === 'USD' ? c : exchange(c, 'USD', cur)!; };
 // A pair Nike US sells, not sold out, that GOAT also asks for new and used.
 const pick = () => SNEAKERS.find((s) => SNEAKER_RETAIL.some((o) => o.styleCode === s.styleCode && o.market === 'US' && !o.soldOut) && GOAT_ASKS.some((a) => a.styleCode === s.styleCode && a.newAsk !== null && a.usedAsk !== null))!;
 
 describe('a pair of Jordans', () => {
+  it('is offered from its release date, at retail and on GOAT, and not before', () => {
+    // A life begins on January 5, 2026; until 2026-10-05 a pair released that July was offered from its first day.
+    const s = pick();
+    expect(s.released! > '2026-01-05').toBe(true);
+    const early = life('us-ny-newyork', 'jordans-early', { startYear: 2026, startMonth: 1, startDay: 5 });
+    expect(sneakerOffers(early, early.player, s.styleCode)).toEqual([]);
+    // A pair whose release date wasn't read is offered throughout.
+    expect(SNEAKERS.find((x) => x.styleCode === '553558-303')!.released).toBeNull();
+    expect(sneakerOffers(early, early.player, '553558-303').length).toBeGreaterThan(0);
+    const [y, m, d] = s.released!.split('-').map(Number) as [number, number, number];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    expect(early.execute({ kind: 'sneakers.buy', payload: { styleCode: s.styleCode, offer: 'goat:new', size: '10' } }).error).toBe(`The ${s.name} isn’t out until ${months[m - 1]} ${d}, ${y}.`);
+    // On the day it's out, both.
+    const day = life('us-ny-newyork', 'jordans-day', { startYear: y, startMonth: m, startDay: d });
+    const offers = sneakerOffers(day, day.player, s.styleCode);
+    expect(offers.some((o) => o.seller === 'GOAT') && offers.some((o) => o.seller !== 'GOAT')).toBe(true);
+  });
+
   it('has each offer where you live, cheapest first: the retailer’s with New York’s tax, and GOAT’s new and used with its shipping', () => {
     const sim = life('us-ny-newyork', 'jordans-offers');
     const s = pick();

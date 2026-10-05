@@ -40,7 +40,7 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { MS_DAY, type Instant } from '../core/time';
+import { MS_DAY, dayHasCome, formatDay, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { CITIES } from '../content/geography';
 import { salesTaxRate } from '../content/tax';
@@ -89,8 +89,15 @@ export function phonePrice(sim: Simulation, person: Person, p: Phone): Money {
   return inSaveMoney(sim, Math.round(p.price * (1 + tax) * 100), p.currency);
 }
 
+/**
+ * Whether a phone is out by now: on sale from its release date, where one was read (from 2026-10-05). A life begins on
+ * 5 January 2026, and until then the iPhone 18 Pro, out on 18 September 2026, was on sale from its first day, as were
+ * 188 of the 273 phones read. One whose date wasn't read is taken as out.
+ */
+export const isOut = (sim: Simulation, p: Phone): boolean => !p.released || dayHasCome(p.released, sim.now, sim.homeZone);
+
 /** The phones on sale where you live, cheapest first. */
-export const phonesOnSale = (sim: Simulation, person: Person): Phone[] => PHONES.filter((p) => p.market === phoneMarketOf(person)).sort((a, b) => phonePrice(sim, person, a) - phonePrice(sim, person, b) || a.id.localeCompare(b.id));
+export const phonesOnSale = (sim: Simulation, person: Person): Phone[] => PHONES.filter((p) => p.market === phoneMarketOf(person) && isOut(sim, p)).sort((a, b) => phonePrice(sim, person, a) - phonePrice(sim, person, b) || a.id.localeCompare(b.id));
 
 /** What the maker gives for a phone you own, traded in: its published "up to", in the save's money; or nothing where none is published. */
 export function tradeInValue(sim: Simulation, owned: Owned, buying: Phone): Money | undefined {
@@ -122,6 +129,7 @@ export function phoneQuote(sim: Simulation, person: Person, o: PhoneBuy): { pric
 export function phoneRefusal(sim: Simulation, person: Person, o: PhoneBuy): string | undefined {
   const p = phoneById(o.phoneId);
   if (!p || p.market !== phoneMarketOf(person)) return 'That phone isn’t on sale where you live.';
+  if (!isOut(sim, p)) return `The ${p.maker} ${p.model} isn’t out until ${formatDay(p.released!)}.`;
   if (!person.home || person.home.kind === 'sofa') return 'A phone needs a home to be sent to.';
   if (p.colors.length > 0 && !p.colors.includes(o.color)) return 'Choose one of its colors.';
   if (o.tradeInItemId) {
