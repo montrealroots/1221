@@ -414,7 +414,7 @@ function bikeLines(model: CarModel, j: Jurisdiction, cityId: string, at: Instant
       out.push({ label: 'GST, 5%', amount: Math.round(sold * BC.gst) }, { label: `PST, ${Math.round(pst * 100)}%`, amount: Math.round(sold * pst) }, { label: 'Registration, Plate And The Year’s License', amount: c(BC.registration + BC.plate) + r.amount });
       break;
     }
-    case 'MX-CMX': out.push({ label: 'Alta, Plate And Circulation Card', amount: c(BIKE_FEES.CMX.alta) }, { label: 'Tenencia, The Year', amount: bikeTenencia(sold) }); break;
+    case 'MX-CMX': out.push({ label: 'Alta, Plate And Circulation Card', amount: c(BIKE_FEES.CMX.alta) }, { label: 'Tenencia, The Year', amount: bikeTenencia(sold, model) }); break;
   }
   return out;
 }
@@ -441,8 +441,21 @@ function outingLines(model: CarModel, j: Jurisdiction, cityId: string, at: Insta
   return out;
 }
 
-/** Mexico City's tenencia on a motorcycle's value, cents: 3% before IVA, subsidized whole to MXN 250,000. */
-function bikeTenencia(value: Money): Money {
+/**
+ * Electric motorcycles and scooters (from 2026-10-05, `research-electric-motorcycles.json`). A moped's motor is 4 kW
+ * or less, the EU's and Ireland's category AM. Where what taxes or insures one wasn't read, one isn't sold: Ireland's
+ * motor tax for an electric motorcycle (its rates page refused the read), and ICBC's, whose tariff classes
+ * motorcycles by cc alone and says nothing of an electric one.
+ */
+export const EV_MOPED_KW = 4;
+export const EV_BIKE_UNKEPT: Readonly<Record<string, string>> = {
+  IE: 'Ireland’s motor tax for an electric motorcycle isn’t kept yet, so SLATE doesn’t sell one here.',
+  'CA-BC': 'ICBC’s tariff classes motorcycles by engine size and has none for an electric one, so SLATE doesn’t sell one here.',
+};
+
+/** Mexico City's tenencia on a motorcycle's value, cents: 3% before IVA, subsidized whole to MXN 250,000; an electric one's 0% (the Código Fiscal's article 161 BIS 15, from 2026-10-05). */
+function bikeTenencia(value: Money, m?: CarModel): Money {
+  if (m?.fuel === 'ev') return 0;
   return value / 100 <= BIKE_FEES.CMX.subsidizedTo ? 0 : Math.round((value / 1.16) * BIKE_FEES.CMX.tenencia);
 }
 
@@ -613,11 +626,12 @@ export function renewal(v: OwnedVehicle, at: Instant): { amount: Money; next: In
       case 'US-NY': return { amount: c(BIKE_FEES.NY.registration), next: year(1), memo: 'Motorcycle registration, the year' };
       case 'US-CT': return { amount: c(BIKE_FEES.CT.registration + BIKE_FEES.CT.cleanAir + BIKE_FEES.CT.parks), next: year(1), memo: 'Motorcycle registration, the year' };
       case 'US-CA': return { amount: caYear(m, valueOf(v, at)) + c(BIKE_FEES.CA.safety), next: year(1), memo: 'Motorcycle registration, the year' };
-      case 'GB': return { amount: c(bracket(BIKE_FEES.GB.ved, cc)), next: year(1), memo: 'Vehicle tax, the year' };
+      // A zero-emission motorcycle is its own class to the DVLA, at the 150cc band's rate (V149, from 1 April 2026).
+      case 'GB': return m.fuel === 'ev' ? { amount: c(BIKE_FEES.GB.ved[0]![1]), next: year(1), memo: 'Vehicle tax, the year, a zero-emission motorcycle' } : { amount: c(bracket(BIKE_FEES.GB.ved, cc)), next: year(1), memo: 'Vehicle tax, the year' };
       case 'IE': return { amount: c(bracket(BIKE_FEES.IE.motorTax, cc)), next: year(1), memo: 'Motor tax, the year' };
       case 'CA-ON': return { amount: 0, next: year(1), memo: 'Plate renewed, the year (free since 2022)' };
       case 'CA-BC': return { amount: c(BIKE_FEES.BC.licence), next: year(1), memo: 'License renewed, the year' };
-      case 'MX-CMX': return { amount: c(BIKE_FEES.CMX.refrendo) + bikeTenencia(valueOf(v, at)), next: year(1), memo: 'Refrendo and tenencia, the year' };
+      case 'MX-CMX': return { amount: c(BIKE_FEES.CMX.refrendo) + bikeTenencia(valueOf(v, at), m), next: year(1), memo: 'Refrendo and tenencia, the year' };
     }
   }
   switch (v.jurisdiction) {
@@ -669,7 +683,8 @@ export function monthlyInsurance(j: Jurisdiction, coverage: OwnedVehicle['covera
   if (rv) return Math.round((rv.year * 100) / 12);
   if (model && onTwoWheels(model)) {
     const b = BIKE_INSURANCE[j];
-    const cc = model.cc ?? 125;
+    // An electric one has no cc: a moped's where its motor is a moped's 4 kW or less (from 2026-10-05).
+    const cc = model.cc ?? (model.fuel === 'ev' && model.kw !== undefined && model.kw <= EV_MOPED_KW ? 50 : 125);
     const scooter = kindOf(model) === 'scooter';
     const year = scooter && coverage === 'liability' && b.scooterLiability ? b.scooterLiability
       : scooter && cc <= 50 && b.moped ? b.moped
@@ -706,6 +721,8 @@ export const glazed = (v: OwnedVehicle): boolean => { const m = modelById(v.mode
 export function buyRefusal(sim: Simulation, person: Person, modelId: string, opts: { age?: number; financed?: boolean; coverage?: OwnedVehicle['coverage']; options?: readonly string[] }): string | undefined {
   const model = modelById(modelId);
   if (!model) return 'SLATE doesn’t sell that car.';
+  const unkept = onTwoWheels(model) && model.fuel === 'ev' ? EV_BIKE_UNKEPT[jurisdictionOf(homeOf(person)) ?? ''] : undefined;
+  if (unkept) return unkept;
   const bad = optionsRefusal(model, opts.options ?? [], opts.age ?? 0);
   if (bad) return bad;
   const q = quote(model, homeOf(person), sim.now, { ...opts, person });

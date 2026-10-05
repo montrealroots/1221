@@ -49,7 +49,7 @@ import { HOTEL_AMENITIES } from '../content/hotelamenities';
 import { CABIN_MAX_KG, PET_FLIGHT, PET_KG, type PetFare } from '../content/petair';
 import { PAPER_LABEL, PET_ENTRY, type EntryRule, type Paper } from '../content/petentry';
 import { ARRIVAL_FEE, CERTIFICATE_FEE, CHIP_LAW, CHIP_PRICE, ENDORSEMENT } from '../content/petpapers';
-import { LITTERS, LITTER_KG_A_WEEK, PET_FOODS, RATION_G, VET_YEAR, WALK, type PetMarket } from '../content/petcare';
+import { KCAL_A_DAY, LITTERS, LITTER_KG_A_WEEK, PET_FOODS, RATION_KCAL_PER_KG, VET_YEAR, WALK, type PetMarket } from '../content/petcare';
 import { homeKeyOf, itemsOf, type Item } from './items';
 import { placeOrder } from './orders';
 import { payFromBank, petArrives } from './household';
@@ -307,10 +307,10 @@ const dayKey = (sim: Simulation, at: Instant): string => new Date(at).toLocaleDa
 const marketOf = (person: Person): PetMarket | undefined => { const c = CITIES.get(person.home?.cityId ?? '')?.countryId; return c === 'us' || c === 'uk' || c === 'ie' || c === 'ca' || c === 'mx' ? c : undefined; };
 
 /** Food and litter on sale where they live: dry foods for the species they keep, and litter where there's a cat, cheapest first a kilogram. */
-export function petShop(sim: Simulation, person: Person): { id: string; label: string; kind: 'food' | 'litter'; species?: Species; kg: number; price: Money; retailer: string }[] {
+export function petShop(sim: Simulation, person: Person): { id: string; label: string; kind: 'food' | 'litter'; species?: Species; kg: number; kcalPerKg?: number; price: Money; retailer: string }[] {
   const m = marketOf(person);
   if (!m) return [];
-  const foods = PET_FOODS.filter((f) => f.market === m).map((f) => ({ id: f.id, label: `${f.brand} ${f.product}, ${f.kg} Kilograms`, kind: 'food' as const, species: f.species, kg: f.kg, price: inSaveMoney(sim, Math.round(f.price * 100), f.currency), retailer: f.retailer }));
+  const foods = PET_FOODS.filter((f) => f.market === m).map((f) => ({ id: f.id, label: `${f.brand} ${f.product}, ${f.kg} Kilograms`, kind: 'food' as const, species: f.species, kg: f.kg, kcalPerKg: f.kcalPerKg ?? undefined, price: inSaveMoney(sim, Math.round(f.price * 100), f.currency), retailer: f.retailer }));
   const litters = LITTERS.filter((l) => l.market === m).map((l) => ({ id: l.id, label: `${l.product}, ${l.kg} Kilograms`, kind: 'litter' as const, kg: l.kg, price: inSaveMoney(sim, Math.round(l.price * 100), l.currency), retailer: l.retailer }));
   return [...foods, ...litters].sort((a, b) => a.price / a.kg - b.price / b.kg);
 }
@@ -319,21 +319,26 @@ export function petShop(sim: Simulation, person: Person): { id: string; label: s
 const foodFor = (person: Person, species: Species): Item[] => itemsOf(person).filter((i) => i.petFood?.species === species && i.petFood.leftG > 0 && i.at.kind === 'home' && i.at.home === homeKeyOf(person.home)).sort((a, b) => a.petFood!.leftG - b.petFood!.leftG);
 const litterAtHome = (person: Person): Item[] => itemsOf(person).filter((i) => (i.litterKg ?? 0) > 0 && i.at.kind === 'home' && i.at.home === homeKeyOf(person.home));
 export const foodLeftG = (person: Person, species: Species): number => foodFor(person, species).reduce((n, i) => n + i.petFood!.leftG, 0);
+/** A bag's energy, kcal a kilogram: its label's, or Royal Canin's where its own wasn't read. */
+export const kcalPerKgOf = (i: Item): number => i.petFood!.kcalPerKg ?? RATION_KCAL_PER_KG[i.petFood!.species];
+/** The kcal of food at home for a species. */
+export const foodLeftKcal = (person: Person, species: Species): number => foodFor(person, species).reduce((n, i) => n + (i.petFood!.leftG * kcalPerKgOf(i)) / 1000, 0);
 export const litterLeftKg = (person: Person): number => litterAtHome(person).reduce((n, i) => n + (i.litterKg ?? 0), 0);
 
-/** Feeds each pet not yet fed today a day's ration from what's at home; the names fed, and those there wasn't enough for. */
+/** Feeds each pet not yet fed today a day's energy from what's at home, each bag at its own kcal (from 2026-10-05; until then by Royal Canin's grams whatever the food); the names fed, and those there wasn't enough for. */
 export function feedPets(sim: Simulation, person: Person): { fed: string[]; short: string[] } {
   const today = dayKey(sim, sim.now);
   const fed: string[] = [];
   const short: string[] = [];
   for (const pet of petsOf(person)) {
     if (pet.fedOn === today) continue;
-    let need = RATION_G[pet.species];
-    if (foodLeftG(person, pet.species) < need) { short.push(pet.name); continue; }
+    let need = KCAL_A_DAY[pet.species];
+    if (foodLeftKcal(person, pet.species) < need - 1e-6) { short.push(pet.name); continue; }
     for (const bag of foodFor(person, pet.species)) {
-      const take = Math.min(need, bag.petFood!.leftG);
+      const kcal = kcalPerKgOf(bag);
+      const take = Math.min((need / kcal) * 1000, bag.petFood!.leftG);
       bag.petFood!.leftG -= take;
-      need -= take;
+      need -= (take * kcal) / 1000;
       if (bag.petFood!.leftG <= 1e-6) person.items = itemsOf(person).filter((i) => i.id !== bag.id);
       if (need <= 1e-6) break;
     }
@@ -370,7 +375,7 @@ function petDay(sim: Simulation, person: Person): void {
     if (sat) { pet.fedOn = yesterday; if (pet.species === 'dog') pet.walkedOn = yesterday; }
     if (pet.fedOn !== yesterday && pet.fedOn !== dayKey(sim, sim.now)) {
       pet.hungryDays = (pet.hungryDays ?? 0) + 1;
-      if (mine) sim.notify({ category: 'home', title: `${pet.name} Went Unfed`, body: `${pet.name} wasn’t fed yesterday${(pet.hungryDays ?? 0) > 1 ? `, ${pet.hungryDays} days running` : ''}.${foodLeftG(person, pet.species) < RATION_G[pet.species] ? ' There’s no food for it at home.' : ''}`, importance: 55, route: '/workspace/belongings' });
+      if (mine) sim.notify({ category: 'home', title: `${pet.name} Went Unfed`, body: `${pet.name} wasn’t fed yesterday${(pet.hungryDays ?? 0) > 1 ? `, ${pet.hungryDays} days running` : ''}.${foodLeftKcal(person, pet.species) < KCAL_A_DAY[pet.species] ? ' There’s no food for it at home.' : ''}`, importance: 55, route: '/workspace/belongings' });
     }
     if (pet.species === 'dog') {
       // A walker booked walks it, at the town's rate, while they're home; a sitter while they're away.
@@ -413,7 +418,7 @@ export function registerPets(sim: Simulation): void {
     if (!payFromBank(s, person, paid, `${item.label}, from ${item.retailer}`, 'personal')) throw new CommandError('The bank couldn’t pay for it.');
     const order = placeOrder(s, person, { from: item.retailer, arrivesAt: s.now + 2 * MS_DAY, to: { kind: 'home', home, spot: item.kind === 'food' ? 'pantry' : 'storage' }, paid }, Array.from({ length: n }, () => ({
       kind: `pet:${item.id}`, label: item.label, quantity: 1, condition: 1,
-      ...(item.kind === 'food' ? { petFood: { species: item.species!, leftG: item.kg * 1_000 } } : { litterKg: item.kg }),
+      ...(item.kind === 'food' ? { petFood: { species: item.species!, leftG: item.kg * 1_000, ...(item.kcalPerKg ? { kcalPerKg: item.kcalPerKg } : {}) } } : { litterKg: item.kg }),
     })));
     return { paid, orderId: order.id };
   });

@@ -9,6 +9,7 @@
 import { SNEAKERS } from '@/engine/content/sneakers';
 import { goatPayout, sneakerOffers, sneakerRefusal } from '@/engine/systems/sneakers';
 import { Fragment, useState } from 'react';
+import { PayWithField } from '@/ui/workspaces/FoodWorkspace';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { CatalogControls, CompareTable, CompareToggle, FavoriteToggle, ShowMore, catalogPrice, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
@@ -605,6 +606,8 @@ function Bathroom() {
   const [count, more] = usePaged(`toiletries-${here}`, PAGE);
   const shown = arranged.slice(0, count);
   const buy = useFeature('hygiene.buy');
+  // Paid at the till the way chosen, as the basket is (from 2026-10-05; until then always by debit card here).
+  const [way, setWay] = useState<PayWith>('debit');
   const useFirst = useFeature('hygiene.use_first');
   const shaveEvery = useFeature('hygiene.shave_every');
   return (
@@ -630,7 +633,7 @@ function Bathroom() {
         )}
         {entries.length > 0 && (
           <>
-            <CatalogControls id="toiletries-catalog" entries={entries} view={view} onChange={setView} facets={{ kind: 'Kind', chain: 'Chain' }} />
+            <CatalogControls id="toiletries-catalog" entries={entries} view={view} onChange={setView} facets={{ kind: 'Kind', chain: 'Chain' }} lead={<PayWithField id="toiletries-pay" way={way} onChange={setWay} />} />
             <div className="table-scroll">
               <table>
                 <thead><tr><th scope="col">Product</th><th scope="col">Chain</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
@@ -642,7 +645,7 @@ function Bathroom() {
                         <td>{e.label}</td>
                         <td className="small">{e.facets?.chain}</td>
                         <td className="num mono">{catalogPrice(e, money)}</td>
-                        <td className="row gap-1"><FavoriteToggle list="toiletries" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('hygiene.buy', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button><Gated feature="cart.add" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('cart.add', { kind: 'toiletry', productId: e.id }).ok) toast(`${e.label}, in the basket on Food.`, 'positive'); }}>Add To Basket</Gated></td>
+                        <td className="row gap-1"><FavoriteToggle list="toiletries" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('hygiene.buy', { productId: e.id, quantity: 1, payWith: way }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button><Gated feature="cart.add" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('cart.add', { kind: 'toiletry', productId: e.id }).ok) toast(`${e.label}, in the basket on Food.`, 'positive'); }}>Add To Basket</Gated></td>
                       </tr>
                     );
                   })}

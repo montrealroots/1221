@@ -1,0 +1,275 @@
+{
+ "read": "2026-10-05",
+ "energy": [
+  {
+   "brand": "Purina Dog Chow",
+   "product": "Complete Adult Dry Dog Food, Real Chicken",
+   "market": "US (NY, LA, New Haven)",
+   "kcalPerKg": 3469,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.walmart.com/ip/1446707820",
+   "note": "purina.com returned 403 on direct fetch; figure (3469 kcal ME/kg, 405 kcal/cup) is as printed on the Purina guaranteed-analysis label for Dog Chow Complete Adult Chicken Flavor, found via search-engine indexing of purina.com, not read live."
+  },
+  {
+   "brand": "Purina Dog Chow",
+   "product": "Complete Adult Dry Dog Food, Lamb",
+   "market": "US",
+   "kcalPerKg": 3463,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.walmart.com/ip/647391544",
+   "note": "purina.com 403 on direct fetch; figure (3463 kcal ME/kg, 405 kcal/cup) from the Dog Chow Complete Adult Lamb Flavor guaranteed-analysis label, via search-engine indexing of purina.com, not read live."
+  },
+  {
+   "brand": "Purina Pro Plan",
+   "product": "Complete Essentials Adult Shredded Blend Chicken & Rice",
+   "market": "US",
+   "kcalPerKg": 3790,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.chewy.com/purina-pro-plan-high-protein-shredded/dp/52448",
+   "note": "Chewy returned 429 and purina.com 403 on direct fetch; 3790 kcal ME/kg (369 kcal/cup) is the figure consistently indexed from the Chewy/PetSmart nutrition tab for this exact 35 lb bag, not read live."
+  },
+  {
+   "brand": "Purina Cat Chow",
+   "product": "Complete High Protein Dry Cat Food, Real Chicken",
+   "market": "US",
+   "kcalPerKg": 3688,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.walmart.com/ip/328931073",
+   "note": "walmart.com blocked direct fetch (bot check); 3688 kcal ME/kg (411 kcal/cup) is the Cat Chow Complete High Protein label figure, via search-engine indexing of purina.com/retailer pages, not read live."
+  },
+  {
+   "brand": "Purina Cat Chow",
+   "product": "Complete High Protein Dry Cat Food, Real Chicken",
+   "market": "US",
+   "kcalPerKg": 3688,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.walmart.com/ip/21570159",
+   "note": "Same recipe, smaller bag, as the 20 lb row above: 3688 kcal ME/kg (411 kcal/cup). walmart.com blocked direct fetch; figure via search-engine indexing, not read live."
+  },
+  {
+   "brand": "Purina Friskies",
+   "product": "Prime Filets Chicken in Gravy wet cat food",
+   "market": "US",
+   "kcalPerKg": 810,
+   "kcalPerUnit": 126,
+   "unitG": 156,
+   "url": "https://www.walmart.com/ip/10535014",
+   "note": "walmart.com blocked direct fetch; 810 kcal ME/kg and 126 kcal/can (5.5 oz = 156 g can) from the Purina guaranteed-analysis label for Friskies Prime Filets with Chicken in Gravy, via search-engine indexing, not read live."
+  },
+  {
+   "brand": "Purina Friskies",
+   "product": "Poultry Favorites Pate variety pack",
+   "market": "US",
+   "kcalPerKg": 1134,
+   "kcalPerUnit": 176,
+   "unitG": 156,
+   "url": "https://www.walmart.com/ip/39263624",
+   "note": "This is a 4-flavour variety pack (Turkey & Giblets, Mixed Grill, Liver & Chicken, Poultry Platter); the four labels state 1100-1163 kcal/kg and 171-181 kcal per 5.5 oz (156 g) can. Figure given is the mean of the four; walmart.com blocked direct fetch so this is via search-engine indexing of the Purina/Chewy/PetSmart labels, not read live."
+  },
+  {
+   "brand": "Royal Canin",
+   "product": "Medium Adult",
+   "market": "UK (London)",
+   "kcalPerKg": 3616,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.zooplus.co.uk/shop/dogs/dry_dog_food/royal_canin_size/medium/13567",
+   "note": "zooplus.co.uk's own product page gives the feeding-gram table but no calorie statement. Figure (3616 kcal ME/kg, 340 kcal/cup) is Royal Canin's own US-site statement for the same Medium Adult retail recipe (royalcanin.com/us), used because no UK-page calorie statement for this exact retail SKU was found; a search hit for royalcanin.com/uk/dogs/products/vet-products/adult-3705 gave 3922 kcal/kg but that URL is the Veterinary Diet 'Adult Medium Dog' line, a different product, so it was not used."
+  },
+  {
+   "brand": "Harringtons",
+   "product": "Complete Natural Adult Turkey & Vegetables",
+   "market": "UK",
+   "kcalPerKg": 3620,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.petsathome.com/",
+   "note": "Pets at Home product pages render client-side and could not be read live today. Figure (362 kcal/100g = 3620 kcal/kg ME) is from the Harringtons/petsathome.com label, via search-engine indexing."
+  },
+  {
+   "brand": "PURINA ONE",
+   "product": "Adult Chicken & Whole Grains",
+   "market": "UK",
+   "kcalPerKg": 3870,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.zooplus.co.uk/shop/cats/dry_cat_food/purina_one/purina_one_adult/195928",
+   "note": "zooplus.co.uk page did not render the calorie line on today's read. Figure (387 kcal/100g = 3870 kcal/kg ME) is from the purina.co.uk label for Purina ONE Rich in Chicken, via search-engine indexing."
+  },
+  {
+   "brand": "IAMS",
+   "product": "Advanced Nutrition Adult Cat with Chicken",
+   "market": "UK",
+   "kcalPerKg": 3930,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.zooplus.co.uk/shop/cats/dry_cat_food/iams/adult/13433",
+   "note": "zooplus.co.uk page did not render the calorie line on today's read. Figure (393 kcal/100g = 3930 kcal/kg ME) is from the Pets at Home listing for the same IAMS Adult Chicken recipe, via search-engine indexing."
+  },
+  {
+   "brand": "Sheba",
+   "product": "Pouches Sauce Collection, Fish Selection in Gravy",
+   "market": "UK",
+   "kcalPerKg": 729,
+   "kcalPerUnit": 62,
+   "unitG": 85,
+   "url": "https://www.zooplus.co.uk/shop/cats/canned_cat_food_pouches/sheba/sheba_pouches_cat_food/1980478",
+   "note": "zooplus.co.uk page did not render the calorie line on today's read. 62 kcal per 85 g pouch (629 kcal/kg before rounding note: 62/0.085=729 kcal/kg) from Morrisons/Ocado/Pets at Home listings of this exact Sheba Sauce Collection Fish Selection pack, via search-engine indexing."
+  },
+  {
+   "brand": "Royal Canin",
+   "product": "Medium Adult",
+   "market": "Ireland (Dublin)",
+   "kcalPerKg": 3616,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.zooplus.ie/shop/dogs/dry_dog_food/royal_canin_size/medium/128332",
+   "note": "Same recipe as the UK row above; zooplus.ie gives no calorie statement, so Royal Canin's US-site figure for Medium Adult (3616 kcal ME/kg, 340 kcal/cup) is reused for this market, since no Irish-page statement was found for this exact retail SKU."
+  },
+  {
+   "brand": "SELECT GOLD",
+   "product": "Complete Senior Maxi Chicken",
+   "market": "Ireland",
+   "kcalPerKg": 3628,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.maxizoo.ie/",
+   "note": "maxizoo.ie category pages returned 404 on today's read. Figure (3628 kcal/kg ME) is from the manufacturer's own select-gold.com product page for 'Complete Maxi Senior Chicken', via search-engine indexing."
+  },
+  {
+   "brand": "PURINA ONE",
+   "product": "Adult Chicken",
+   "market": "Ireland",
+   "kcalPerKg": 3870,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.zooplus.ie/shop/cats/dry_cat_food/purina_one/1582937",
+   "note": "zooplus.ie page did not render the calorie line on today's read. This is the same Purina ONE Adult Chicken (& Whole Grains) recipe as the UK row above (387 kcal/100g = 3870 kcal/kg ME, from purina.co.uk), reused because no Irish-page statement for this exact SKU was found."
+  },
+  {
+   "brand": "Royal Canin",
+   "product": "Indoor 27",
+   "market": "Ireland",
+   "kcalPerKg": 3534,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.zooplus.ie/shop/cats/dry_cat_food/royal_canin/adult/126953",
+   "note": "zooplus.ie gives no calorie statement for this SKU. 'Indoor 27' is Royal Canin's non-US name for the Indoor Adult recipe; figure (3534 kcal ME/kg, 325 kcal/cup) is Royal Canin's own stated figure for Indoor Adult, confirmed on both the US and Mexico royalcanin.com product pages, reused here since no Irish-page statement was found."
+  },
+  {
+   "brand": "Whiskas",
+   "product": "1+ Adult Pouches (Poultry Dishes in Jelly)",
+   "market": "Ireland",
+   "kcalPerKg": 729,
+   "kcalPerUnit": 62,
+   "unitG": 85,
+   "url": "https://www.zooplus.ie/shop/cats/canned_cat_food_pouches/whiskas/whiskas_adult/2522797",
+   "note": "zooplus.ie page did not render the calorie line on today's read. 62 kcal per 85 g pouch (71 kcal/100g) from Waitrose/Ocado/Morrisons listings of Whiskas 1+ Poultry Feasts in Jelly (the UK retail name for the same poultry-in-jelly pouch range), via search-engine indexing."
+  },
+  {
+   "brand": "Purina Dog Chow",
+   "product": "Complete Adult with Real Chicken",
+   "market": "Canada (Toronto, Vancouver)",
+   "kcalPerKg": 3559,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.petsmart.ca/dog/food/dry-food/purina-dog-chow-complete-adult-with-real-chicken-dry-dog-food-76941.html",
+   "note": "petsmart.ca page did not render the calorie line on today's read. Figure (3559 kcal ME/kg, 416 kcal/cup) is as stated on purina.ca for this exact Canadian recipe, which differs from the US Dog Chow Real Chicken figure (3469 kcal/kg) above, via search-engine indexing of purina.ca, not read live."
+  },
+  {
+   "brand": "Purina Cat Chow",
+   "product": "Advanced Nutrition Adult",
+   "market": "Canada",
+   "kcalPerKg": null,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.petsmart.ca/cat/food-and-treats/dry-food/purina-cat-chow-advanced-nutrition-adult-cat-food-2304.html",
+   "note": "No calorie statement found for a Purina Cat Chow product named 'Advanced Nutrition Adult' on petsmart.ca, purina.ca or in search results; petsmart.ca's own Cat Chow lines are named Complete, Indoor, Naturals and Senior, none matching this exact name, so no figure is given."
+  },
+  {
+   "brand": "Fancy Feast",
+   "product": "Pate wet cat food variety pack",
+   "market": "Canada",
+   "kcalPerKg": 1189,
+   "kcalPerUnit": 101,
+   "unitG": 85,
+   "url": "https://www.petsmart.ca/cat/food-and-treats/wet-food/fancy-feast-pt-wet-cat-food-variety-pack-1339.html",
+   "note": "petsmart.ca did not render the calorie line on today's read. No Canada-specific figure was found; value is the mean of the US Fancy Feast Classic Pate labels for the Poultry & Beef and Seafood variety-pack flavours (per-can figures 82-99 kcal for the 3 oz = 85 g can), reused for the same recipes sold in this Canadian 24 x 85 g pack, via search-engine indexing, not read live."
+  },
+  {
+   "brand": "Friskies",
+   "product": "Greatest Hits wet cat food variety pack",
+   "market": "Canada",
+   "kcalPerKg": null,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.petsmart.ca/cat/food-and-treats/wet-food/friskies-greatest-hits-wet-cat-food---assorted-variety-pack-156-g-x-32-58907.html",
+   "note": "petsmart.ca, purina.ca and Chewy Canada pages did not surface a calorie-content figure for this pack's flavours (Pate Chef's Dinner, Seafood Supreme, Turkey & Giblets Dinner) in search results; no figure is given."
+  },
+  {
+   "brand": "Pro Plan",
+   "product": "Optihealth Adulto Raza Mediana, Pollo y Arroz",
+   "market": "Mexico (Mexico City)",
+   "kcalPerKg": 3980,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.petco.com.mx/petco/en/search/?text=perro+adulto+raza+mediana+seco",
+   "note": "petco.com.mx search-result page carries no calorie statement. Figure (3980 kcal EM/kg) is Purina's own stated metabolizable energy for Pro Plan Optihealth Adulto Raza Mediana Pollo y Arroz, via search-engine indexing of purina.com.mx/retailer pages, not read live."
+  },
+  {
+   "brand": "FullTrust",
+   "product": "Perro Adulto Raza Mediana/Grande Pollo y Res",
+   "market": "Mexico",
+   "kcalPerKg": 3415,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.petco.com.mx/petco/en/search/?text=perro+adulto+raza+mediana+seco",
+   "note": "petco.com.mx search-result page carries no calorie statement. Figure (3415 kcal EM/kg) is for the standard FullTrust Adulto Mediana/Grande Pollo y Res recipe, sold in the same 2/8/15/20 kg sizes as this 20 kg bag, via search-engine indexing, not read live. (FullTrust's separate 'Peso Ideal' weight-control line is 2745 kcal/kg and is not this product.)"
+  },
+  {
+   "brand": "Royal Canin",
+   "product": "Gato Adulto de Interior, Pollo",
+   "market": "Mexico",
+   "kcalPerKg": 3534,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.petco.com.mx/petco/en/search/?text=alimento+seco+gato+adulto",
+   "note": "petco.com.mx search-result page carries no calorie statement. Figure (3534 kcal EM/kg) is as confirmed on Royal Canin's own royalcanin.com.mx page for Indoor Adult (the same recipe called Indoor 27 in Ireland and the UK and Indoor Adult in the US), via search-engine indexing, not read live."
+  },
+  {
+   "brand": "Hill's Science Diet",
+   "product": "Indoor Gato Adulto, Pollo",
+   "market": "Mexico",
+   "kcalPerKg": null,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.petco.com.mx/petco/en/search/?text=alimento+seco+gato+adulto",
+   "note": "petco.com.mx search-result page carries no calorie statement. Two figures are indexed for Hill's Science Diet Adult Indoor Chicken dry cat food, 3492 and 3732 kcal/kg ME; 3492 kcal/kg (hillspet.com) is given here as the lower, more consistently cited value, but this was not confirmed by reading the live page, so treat as unconfirmed. Dropped 2026-10-05: two conflicting figures, so neither is used."
+  },
+  {
+   "brand": "Pro Plan",
+   "product": "Optiprebio Gato Adulto Pollo en Salsa",
+   "market": "Mexico",
+   "kcalPerKg": null,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.petco.com.mx/petco/en/search/?text=alimento+humedo+gato",
+   "note": "No calorie statement was found for this wet 85 g sachet specifically; purina.com.mx and petco.com.mx pages for it give only guaranteed analysis percentages (protein, fat, fibre, moisture), not an energy statement, and the 4200 kcal/kg figure found in search results is for Pro Plan's dry adult cat food, a different product, so no figure is given."
+  },
+  {
+   "brand": "Fancy Feast",
+   "product": "Gourmet Naturals Mousse Gato Adulto, Carne",
+   "market": "Mexico",
+   "kcalPerKg": null,
+   "kcalPerUnit": null,
+   "unitG": null,
+   "url": "https://www.petco.com.mx/petco/en/search/?text=transportadora",
+   "note": "No calorie statement was found for the 'Mousse' Carne (beef) variant specifically. US Fancy Feast Gourmet Naturals Beef recipes found in search are Pate (1165 kcal/kg, 99 kcal/3oz can) and in-Gravy (755 kcal/kg, 64 kcal/3oz can), neither labelled Mousse, so no figure is given rather than guess which, if any, matches this Mexican SKU."
+  }
+ ]
+}

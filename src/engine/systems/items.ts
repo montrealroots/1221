@@ -102,7 +102,7 @@ export interface Item {
   /** Where it keeps, bought on a trip and not yet put away (from 2026-10-03): the fridge, the pantry, the wardrobe. */
   storeIn?: Spot;
   /** A bag of pet food, by species, grams left; cat litter, kilograms left (`systems/pets.ts`, from 2026-10-04). */
-  petFood?: { species: 'dog' | 'cat'; leftG: number };
+  petFood?: { species: 'dog' | 'cat'; leftG: number; /** Its label's energy (from 2026-10-05); Royal Canin's where none. */ kcalPerKg?: number };
   litterKg?: number;
   /** A bed's market and size (`content/beds.ts`, from 2026-10-01); an older bed is its country's usual double. */
   bed?: { country: string; size: string };

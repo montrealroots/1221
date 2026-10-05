@@ -7,7 +7,7 @@
 // product whose page gave no care label takes its kind's usual care, said so.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
-const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json', 'research-clothing-fit.json', 'research-clothing-swimsleep.json', 'research-clothing-shoesbags.json', 'research-clothing-towels.json'].map((f) => `docs/research/world/${f}`);
+const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json', 'research-clothing-fit.json', 'research-clothing-swimsleep.json', 'research-clothing-shoesbags.json', 'research-clothing-towels.json', 'research-clothing-accessories.json'].map((f) => `docs/research/world/${f}`);
 const OUT = 'src/engine/content/clothingcatalog.ts';
 
 /** A retailer's department, as read: women's, men's or unisex, in English or Spanish; none where none was read. */
@@ -276,6 +276,13 @@ if (existsSync(GAPS)) {
   }
 }
 
+// A brand spelled two ways by its sellers ("UNIQLO", "Uniqlo") is one brand, written as most of its products are
+// (from 2026-10-05; until then it counted twice).
+{
+  const forms = new Map();
+  for (const p of products) { const k = String(p.brand).toLowerCase(); const m = forms.get(k) ?? new Map(); m.set(p.brand, (m.get(p.brand) ?? 0) + 1); forms.set(k, m); }
+  for (const p of products) { const m = forms.get(String(p.brand).toLowerCase()); p.brand = [...m.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0][0]; }
+}
 // A retailer with nothing on sale is left out: Hudson's Bay closed its stores on 2025-06-01, and some blocked every read.
 for (let i = retailers.length - 1; i >= 0; i -= 1) if (!products.some((p) => p.retailer === retailers[i].id)) retailers.splice(i, 1);
 for (const r of retailers) delete r.key;
