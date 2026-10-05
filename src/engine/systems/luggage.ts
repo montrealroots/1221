@@ -368,6 +368,30 @@ export function weighIn(sim: Simulation, person: Person, fromCity: string, toCit
   return { fees: fees > 0 ? inSaveMoney(sim, Math.round(fees * 100), rule.currency) : 0, taken, rule };
 }
 
+/**
+ * At the gate, from 2026-10-05: the bags carried on, those going beyond the ones checked, weighed against the carrier's
+ * cabin limit as its own page states it (British Airways' 23 kg, Aer Lingus's and Aeroméxico's 10; Delta and Air Canada
+ * set none). One over has its heaviest things taken out until it's under, held by the airport as an overweight checked
+ * bag's are. What came out. Aer Lingus includes its 10 kg bag only with its Plus and Advantage fares; SLATE's fare
+ * carries one, and doesn't yet charge a Saver fare's bag.
+ */
+export function cabinCheck(sim: Simulation, person: Person, fromCity: string, toCity: string, checked: number): { taken: Item[]; rule?: BagRule } {
+  const rule = bagRuleFor(fromCity, toCity);
+  if (!rule?.cabinKg) return { taken: [] };
+  const carried = bagsGoing(person).sort((a, b) => Number(checkedSize(b)) - Number(checkedSize(a)) || bagKg(person, b) - bagKg(person, a)).slice(Math.max(0, checked));
+  const taken: Item[] = [];
+  for (const bag of carried) {
+    while (bagKg(person, bag) > rule.cabinKg + 1e-9) {
+      const heaviest = packedIn(person, bag).sort((a, b) => weightG(b) - weightG(a))[0];
+      if (!heaviest) break;
+      heaviest.at = { kind: 'held', cityId: fromCity, by: 'the airport', until: sim.now + HELD_DAYS * MS_DAY };
+      taken.push(heaviest);
+    }
+  }
+  if (taken.length) sim.schedule({ at: sim.now + HELD_DAYS * MS_DAY, kind: HELD_KIND, label: 'What Was Left Behind', category: 'system', priority: 20, payload: { personId: person.id, cityId: fromCity, until: sim.now + HELD_DAYS * MS_DAY } });
+  return { taken, rule };
+}
+
 /** What's held for them in a town: what isn't collected is gone on its day (`HELD_KIND`). */
 export const heldIn = (person: Person, cityId: string): Item[] => itemsOf(person).filter((i) => i.at.kind === 'held' && i.at.cityId === cityId);
 
