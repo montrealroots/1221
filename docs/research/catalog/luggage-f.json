@@ -1,0 +1,288 @@
+{
+ "read": "2026-10-05",
+ "brands": [
+  {
+   "name": "Paravel",
+   "url": "https://www.paravel.com",
+   "status": "verified"
+  },
+  {
+   "name": "Roam Luggage",
+   "url": "https://www.roamluggage.com",
+   "status": "verified"
+  },
+  {
+   "name": "Floyd",
+   "url": "https://floyd.one",
+   "status": "verified"
+  },
+  {
+   "name": "Arlo Skye",
+   "url": "https://arloskye.com",
+   "status": "verified"
+  },
+  {
+   "name": "Horizn Studios",
+   "url": "https://horizn-studios.com",
+   "status": "verified"
+  },
+  {
+   "name": "Globe-Trotter",
+   "url": "https://www.globe-trotter.com",
+   "status": "verified"
+  }
+ ],
+ "products": [
+  {
+   "brand": "Paravel",
+   "family": "Aviator",
+   "model": "Paravel Aviator Carry-On",
+   "type": "carry-on",
+   "liters": null,
+   "outsideCm": [55, 33, 22],
+   "kg": 3.7,
+   "material": "Recycled polycarbonate hardshell with faux leather trim",
+   "wheels": 4,
+   "expandable": false,
+   "warrantyYears": null,
+   "variants": [
+    { "color": "Domino Black" },
+    { "color": "Safari Green" }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Shopbop",
+     "channel": "online",
+     "price": 425,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.shopbop.com/aviator-carry-paravel/vp/v=1/1593940962.htm",
+     "status": "verified"
+    }
+   ]
+  },
+  {
+   "brand": "Roam Luggage",
+   "family": "Carry-On",
+   "model": "Roam Carry-On",
+   "type": "carry-on",
+   "liters": 37,
+   "outsideCm": [56, 36, 23],
+   "kg": 3.2,
+   "material": "50% recycled polycarbonate, three bonded layers",
+   "wheels": 4,
+   "expandable": false,
+   "warrantyYears": null,
+   "variants": [
+    { "color": "Monza (red gloss)" },
+    { "color": "Manhattan (matte black)" },
+    { "color": "Newport (navy gloss)" },
+    { "color": "Aspen (slate gloss)" },
+    { "color": "Brooklyn (matte steel)" },
+    { "color": "London (black gloss)" }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Roam Luggage (roamluggage.com)",
+     "channel": "online",
+     "price": 595,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.roamluggage.com/products/carry-on",
+     "status": "verified"
+    }
+   ]
+  },
+  {
+   "brand": "Roam Luggage",
+   "family": "Carry-On",
+   "model": "Roam Carry-On Expandable",
+   "type": "carry-on",
+   "liters": null,
+   "outsideCm": [56, 36, 23],
+   "kg": null,
+   "material": "50% recycled polycarbonate, three bonded layers",
+   "wheels": 4,
+   "expandable": true,
+   "warrantyYears": null,
+   "variants": [
+    { "color": "Manhattan (matte black)" },
+    { "color": "Newport (navy gloss)" }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Roam Luggage (roamluggage.com)",
+     "channel": "online",
+     "price": 650,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://www.roamluggage.com/products/carry-on-expandable",
+     "status": "verified"
+    }
+   ]
+  },
+  {
+   "brand": "Floyd",
+   "family": "Cabin",
+   "model": "Floyd Cabin",
+   "type": "carry-on",
+   "liters": 41,
+   "outsideCm": [56, 39, 23],
+   "kg": 4.6,
+   "material": "100% polycarbonate Makrolon shell, recycled poly satin lining",
+   "wheels": 8,
+   "expandable": false,
+   "warrantyYears": null,
+   "variants": [
+    { "color": "Galaxy Night" },
+    { "color": "Tarmac Grey" },
+    { "color": "Vegas Green" }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Floyd (floyd.one)",
+     "channel": "online",
+     "price": 745,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://floyd.one/en-us/products/floyd-cabin",
+     "status": "verified"
+    }
+   ]
+  },
+  {
+   "brand": "Arlo Skye",
+   "family": "The Zipper",
+   "model": "Arlo Skye Expandable Carry-On Max",
+   "type": "carry-on",
+   "liters": 48,
+   "outsideCm": [58, 38, 24],
+   "kg": 3.2,
+   "material": "German Makrolon polycarbonate shell, antimicrobial-lined interior",
+   "wheels": 4,
+   "expandable": true,
+   "warrantyYears": null,
+   "variants": [
+    { "color": "Black" },
+    { "color": "Rose" }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Arlo Skye (arloskye.com)",
+     "channel": "online",
+     "price": 350,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://arloskye.com/products/the-zipper-carry-on-max-expandable",
+     "status": "verified"
+    }
+   ]
+  },
+  {
+   "brand": "Horizn Studios",
+   "family": "Essential",
+   "model": "Horizn Studios H5 Essential",
+   "type": "carry-on",
+   "liters": 36,
+   "outsideCm": [55, 40, 20],
+   "kg": 2.9,
+   "material": "German polycarbonate hard shell, polyester lining",
+   "wheels": 4,
+   "expandable": false,
+   "warrantyYears": null,
+   "variants": [
+    { "color": "All Black" },
+    { "color": "Sand Grey" },
+    { "color": "Night Blue" },
+    { "color": "Pine Green" },
+    { "color": "Dark Olive" }
+   ],
+   "offers": [
+    {
+     "market": "ie",
+     "seller": "Horizn Studios (horizn-studios.com)",
+     "channel": "online",
+     "price": 370,
+     "currency": "EUR",
+     "taxIncluded": true,
+     "url": "https://horizn-studios.com/products/h5-all-black-high-performance-hard-shell-cabin-size-essential",
+     "status": "verified"
+    },
+    {
+     "market": "uk",
+     "seller": "Horizn Studios (horizn-studios.co.uk)",
+     "channel": "online",
+     "price": 370,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://horizn-studios.co.uk/products/h5-glossy-all-black-essential",
+     "status": "verified"
+    }
+   ]
+  },
+  {
+   "brand": "Globe-Trotter",
+   "family": "Original",
+   "model": "Globe-Trotter Original Large Suitcase (2 wheels)",
+   "type": "large",
+   "liters": 66,
+   "outsideCm": [82, 48, 20],
+   "kg": 4.5,
+   "material": "Vulcanised fibreboard, vegetable-tanned leather handles and corners, chrome fittings",
+   "wheels": 2,
+   "expandable": false,
+   "warrantyYears": 5,
+   "variants": [
+    { "color": "Black" },
+    { "color": "Brown" },
+    { "color": "Navy" }
+   ],
+   "offers": [
+    {
+     "market": "us",
+     "seller": "Globe-Trotter (us.globe-trotter.com)",
+     "channel": "online",
+     "price": 2095,
+     "currency": "USD",
+     "taxIncluded": false,
+     "url": "https://us.globe-trotter.com/products/original-2-wheels-large-suitcase-black-black",
+     "status": "verified"
+    }
+   ]
+  },
+  {
+   "brand": "Globe-Trotter",
+   "family": "Original",
+   "model": "Globe-Trotter Original Carry-On (4 wheels)",
+   "type": "carry-on",
+   "liters": null,
+   "outsideCm": null,
+   "kg": null,
+   "material": "Vulcanised fibreboard with leather trims",
+   "wheels": 4,
+   "expandable": false,
+   "warrantyYears": 5,
+   "variants": [
+    { "color": "Black" }
+   ],
+   "offers": [
+    {
+     "market": "uk",
+     "seller": "Globe-Trotter (globe-trotter.com)",
+     "channel": "online",
+     "price": 1395,
+     "currency": "GBP",
+     "taxIncluded": true,
+     "url": "https://www.globe-trotter.com/products/original-4-wheels-carry-on-black-black",
+     "status": "verified"
+    }
+   ]
+  }
+ ],
+ "notFound": []
+}

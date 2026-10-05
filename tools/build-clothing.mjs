@@ -7,7 +7,7 @@
 // product whose page gave no care label takes its kind's usual care, said so.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
-const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json', 'research-clothing-fit.json', 'research-clothing-swimsleep.json', 'research-clothing-shoesbags.json', 'research-clothing-towels.json', 'research-clothing-accessories.json', 'research-clothing-cultural.json', 'research-clothing-cultural-2.json', 'research-clothing-swim-ie.json', 'research-clothing-cultural-3.json'].map((f) => `docs/research/world/${f}`);
+const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json', 'research-clothing-fit.json', 'research-clothing-swimsleep.json', 'research-clothing-shoesbags.json', 'research-clothing-towels.json', 'research-clothing-accessories.json', 'research-clothing-cultural.json', 'research-clothing-cultural-2.json', 'research-clothing-swim-ie.json', 'research-clothing-cultural-3.json', 'research-clothing-bagswatches.json'].map((f) => `docs/research/world/${f}`);
 const OUT = 'src/engine/content/clothingcatalog.ts';
 
 /** A retailer's department, as read: women's, men's or unisex, in English or Spanish; none where none was read. */
