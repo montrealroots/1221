@@ -32,6 +32,18 @@ for (const f of existsSync(TRANCHE_DIR) ? readdirSync(TRANCHE_DIR).filter((x) =>
     }
   }
 }
+// Official economy read afterwards for those tranche models (`cars-economy.json`, from 2026-10-05): the EPA's for America
+// and Canada, the VCA's WLTP figures for Britain and Ireland, and CO2 where given. A model read with its own keeps it.
+const ECONOMY = existsSync(`${TRANCHE_DIR}/cars-economy.json`) ? JSON.parse(readFileSync(`${TRANCHE_DIR}/cars-economy.json`, 'utf8')).economy ?? [] : [];
+for (const e of ECONOMY) {
+  if (typeof e.value !== 'number' || !(e.value > 0)) continue;
+  for (const market of e.market === 'GB' ? ['GB', 'IE'] : [e.market]) {
+    const m = (r.catalog[market] ?? []).find((x) => x.make === e.make && x.model === e.model && x.rank === null);
+    if (!m) continue;
+    if (m.economy?.value == null) m.economy = { value: e.value, unit: e.unit, url: e.url, sourceType: 'primary', config: e.config };
+    if (m.co2gkm?.value == null && typeof e.co2gkm === 'number') m.co2gkm = { value: e.co2gkm };
+  }
+}
 
 // The charges on top of a base price, as the research's notes state them, by market and model.
 const DELIVERY = {
@@ -49,6 +61,15 @@ const DELIVERY = {
   'IE|Toyota Corolla': [1_000, 'delivery, €1,000, from Toyota Ireland’s finance example'],
   'IE|Volkswagen Tiguan': [2_080, 'delivery and service, €2,080, from Volkswagen Ireland'],
 };
+
+/** An EV's kWh a 100 km from what was published, a hundred miles' converted; nothing where none. */
+function kwh100(econ) {
+  if (!econ || econ.value == null) return undefined;
+  const u = String(econ.unit ?? '').toLowerCase();
+  if (u.includes('kwh/100mi')) return Math.round((econ.value / 1.609344) * 100) / 100;
+  if (u.includes('kwh/100km')) return econ.value;
+  return undefined;
+}
 
 /** Liters per 100 km from what was published. */
 function per100(econ) {
@@ -81,7 +102,9 @@ for (const market of ['US', 'CA', 'MX', 'GB', 'IE']) {
       deliveryBasis: d ? d[1] : (m.basePrice.includesTax ? 'what the price includes, as the maker states it' : 'no destination or freight charge the maker states; SLATE adds none'),
       // A diesel mild hybrid burns diesel: it's filed as a diesel, at the diesel pump.
       fuel: fuel.includes('phev') || fuel.includes('plug') ? 'phev' : fuel.includes('diesel') ? 'diesel' : fuel.includes('hybrid') ? 'hybrid' : fuel.includes('electric') || fuel === 'ev' ? 'ev' : 'petrol',
-      per100km: per100(m.economy),
+      per100km: fuel.includes('electric') || fuel === 'ev' ? null : per100(m.economy),
+      // An EV's own consumption where read, kWh a 100 km (from 2026-10-05).
+      ...(kwh100(m.economy) ? { kwhPer100km: kwh100(m.economy) } : {}),
       economyBasis: m.economy?.value != null ? `${m.economy.value} ${m.economy.unit}` : 'not yet rated',
       co2: m.co2gkm?.value ?? null,
       kerbKg: m.kerbWeightKg?.value ?? null,
