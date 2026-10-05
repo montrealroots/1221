@@ -359,7 +359,7 @@ Each command the player can run: the engine file that handles it, the screens th
 
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
-| `hygiene.buy` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `hygiene.test.ts` `shortfalls.test.ts` `usefirst.test.ts` | Rent And A Roof |
+| `hygiene.buy` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `cabin-bags.test.ts` `hygiene.test.ts` `shortfalls.test.ts` `usefirst.test.ts` | Rent And A Roof |
 | `hygiene.groom` | `src/engine/systems/life.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` | `hygiene.test.ts` `trips.test.ts` | Rent And A Roof |
 | `hygiene.makeup_every` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `makeup.test.ts` | Rent And A Roof |
 | `hygiene.shave_every` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `shaving.test.ts` | Rent And A Roof |

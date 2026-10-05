@@ -254,7 +254,7 @@ function Shop() {
     return <Panel title={`Shops In ${town}`}><p className="small muted" style={{ margin: 0 }}>SLATE doesn’t keep the clothes sold in this country yet: America, Britain, Ireland, Canada and Mexico so far.</p></Panel>;
   }
   return (
-    <Panel title={`Shops In ${town}`} subtitle={`${entries.length} products from ${new Set(entries.map((e) => (e.value as ClothingProduct).retailer)).size} retailers`}>
+    <Panel title={`Shops In ${town}`} subtitle={`${shown.length < entries.length ? `${shown.length} of ` : ''}${entries.length} products from ${new Set(entries.map((e) => (e.value as ClothingProduct).retailer)).size} retailers`}>
       <div className="col gap-3">
         <CatalogControls id="clothes-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ department: 'Department', cut: 'Cut And Fit', type: 'Type', kind: 'Kind', special: 'Special Kinds', retailer: 'Retailer', where: 'Where' }} />
         <div className="table-scroll">
