@@ -12,7 +12,7 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { MS_DAY } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { CLOTHING_PRODUCTS } from '@/engine/content/clothingcatalog';
-import { againOptions, buyRefusal, cancelRefusal, checkoutQuote, checkoutRefusal, clothingCatalog, clothingTax, dryCleanPrice, productPrice, purchaseItems, purchaseQuote, retailerById, STARTER, starterWardrobe } from '@/engine/systems/clothing';
+import { againOptions, buyRefusal, cancelRefusal, cutOf, checkoutQuote, checkoutRefusal, clothingCatalog, clothingTax, dryCleanPrice, productPrice, purchaseItems, purchaseQuote, retailerById, STARTER, starterWardrobe } from '@/engine/systems/clothing';
 import { arrange } from '@/engine/systems/catalog';
 import { cleanOutfits, garmentsOf, outfitFor, washableDirty, wearTheDay } from '@/engine/systems/wardrobe';
 import { sizeFor } from '@/engine/systems/tailoring';
@@ -412,5 +412,17 @@ describe('buy again', () => {
     expect(againOptions(b)).toEqual({ productId: t.id, how: 'store', size: 'M', color: t.colors[0], quantity: 1 });
     sim.must({ kind: 'clothes.basket_add', payload: { ...againOptions(b) } });
     expect(p.basket!.at(-1)).toMatchObject({ productId: t.id, size: 'M', color: t.colors[0] });
+  });
+});
+
+describe('who it’s cut for', () => {
+  it('is read from the retailer’s own name, a filter and never a rule: anyone buys anything', () => {
+    expect(cutOf({ name: "Women's Tall Straight Jeans", url: null } as never)).toBe('Tall');
+    expect(cutOf({ name: 'Maternity Skinny Jeans', url: null } as never)).toBe('Maternity');
+    expect(cutOf({ name: 'Mens Oxford Shirt', url: null } as never)).toBe('Men');
+    expect(cutOf({ name: 'Installment Plan Tee', url: null } as never)).toBe('Not Named');
+    const sim = life('cut-any');
+    const womens = clothingCatalog(sim, 'us-ny-newyork').find((e) => e.facets?.cut === 'Women' && retailerById(e.value.retailer)?.storesIn.includes('us-ny-newyork'))!;
+    expect(buyRefusal(sim.player, { productId: womens.value.id, how: 'store', size: womens.value.sizes[0], color: womens.value.colors[0] })).toBeUndefined();
   });
 });

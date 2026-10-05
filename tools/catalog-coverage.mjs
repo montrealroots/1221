@@ -14,7 +14,9 @@ import { CLOTHING_PRODUCTS } from '../src/engine/content/clothingcatalog.ts';
 import { SNEAKERS, SNEAKER_RETAIL } from '../src/engine/content/sneakers.ts';
 import { PHONES } from '../src/engine/content/phones.ts';
 import { FURNITURE_CATALOG } from '../src/engine/content/furniturecatalog.ts';
-import { LUGGAGE } from '../src/engine/content/luggagecatalog.ts';
+import { LUGGAGE_PRODUCTS } from '../src/engine/content/luggagecatalog.ts';
+import { TV_PRODUCTS } from '../src/engine/content/tvcatalog.ts';
+import { AUDIO_PRODUCTS } from '../src/engine/content/audiocatalog.ts';
 import { TOILETRIES } from '../src/engine/content/hygiene.ts';
 import { GROCERY_PRODUCTS, GROCERY_CHAINS } from '../src/engine/content/groceries.ts';
 import { CONSOLES } from '../src/engine/content/homelife.ts';
@@ -52,13 +54,17 @@ const READ = {
   footwear: () => clothing('footwear'), bags: () => clothing('bags'), accessories: () => clothing('accessories'),
   watches: () => clothing('watches'), jewelry: () => clothing('jewelry'),
   sneakers: () => SNEAKERS.map((s) => row(null, s.styleCode, Math.max(1, ...SNEAKER_RETAIL.filter((o) => o.styleCode === s.styleCode).map((o) => o.sizes?.length ?? 1)), null)),
-  luggage: () => LUGGAGE.map((l) => row(l.brand, `${l.brand}|${l.model}`, 1, l.country)),
+  // As products from 2026-10-04: a row an offer, the product its own, its colors its variants.
+  luggage: () => LUGGAGE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
+  // As products from 2026-10-05: a row an offer, each screen size its own product.
+  televisions: () => TV_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
+  audio: () => AUDIO_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   phones: () => PHONES.map((p) => row(p.maker, `${p.maker}|${p.model}`, Math.max(1, p.colors.length), p.market)),
   consoles: () => CONSOLES.map((c) => row(c.maker, `${c.maker}|${c.model}`, 1, c.market)),
   furniture: () => FURNITURE_CATALOG.map((p) => row('IKEA', `IKEA|${p.name}|${p.type ?? ''}`, 1, p.country)),
-  toiletries: () => TOILETRIES.map((t) => row(null, t.name, 1, t.market)),
-  cleaning: () => CLEANING.map((t) => row(null, t.name, 1, t.market)),
-  groceries: () => GROCERY_PRODUCTS.map((g) => row(null, g.name, 1, g.market)),
+  toiletries: () => TOILETRIES.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
+  cleaning: () => CLEANING.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
+  groceries: () => GROCERY_PRODUCTS.map((g) => row(g.brand ?? null, g.name, 1, g.market)),
   cars: () => cars([...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS]),
   motorcycles: () => cars(BIKE_MODELS),
   bicycles: () => cars(RIDE_MODELS),

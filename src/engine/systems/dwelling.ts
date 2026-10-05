@@ -323,6 +323,8 @@ export const WORN_CLOTHES = { hygiene: 55, morale: 1 };
 export interface Living {
   /** The month's kilowatt-hours past the household's usual, a sauna's (from 2026-10-04): billed and cleared with the month's electricity. */
   extraKwh?: number;
+  /** The month's kilowatt-hours on a set of one's own, watched (from 2026-10-05): billed past the typical household's viewing, and cleared with the month's electricity. */
+  tvKwh?: number;
   /**
    * Until 2026-10-01 clothes were a count of outfits, clean and dirty, and
    * of loads drying. A save from before keeps them until its wardrobe of

@@ -137,6 +137,10 @@ const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/
 
 const seen = new Set();
 const products = [];
+// Each product's brand as its own name states it (`research-brands-from-names.json`, read 2026-10-04); null where the
+// name names none, as fresh produce mostly doesn't.
+const BRANDS = new Map(JSON.parse(readFileSync('docs/research/world/research-brands-from-names.json', 'utf8')).items.map((i) => [`${i.chain}|${i.name}`, i.brand ?? null]));
+const brandOf = (p) => BRANDS.get(`${p.chain}|${p.name}`) ?? null;
 for (const p of [...g.products, ...(more.products ?? [])]) {
   if (typeof p.price !== 'number' || !(p.price > 0)) continue;
   const key = keyOf(p.name) ?? (p.category === 'ready-meal' ? 'ready-meal' : undefined);
@@ -148,7 +152,7 @@ for (const p of [...g.products, ...(more.products ?? [])]) {
   // A dry pint of cherry or grape tomatoes is two cups, 298 g (USDA FoodData Central: 149 g a cup).
   const pint = p.sizeUnit === 'ct' && p.sizeQty === 1 && /\bpint\b/i.test(`${p.size} ${p.name}`) && p.category === 'produce';
   products.push({
-    id, chain: p.chain, market: p.market, name: p.name, category: p.category, food: key,
+    id, chain: p.chain, market: p.market, name: p.name, brand: brandOf(p), category: p.category, food: key,
     sizeQty: pint ? 298 : p.sizeQty, sizeUnit: pint ? 'g' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true,
     storage, ...keepsFor(key, p.category, storage),
     url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true,
@@ -199,7 +203,10 @@ export type Storage = 'pantry' | 'fridge' | 'freezer';
 export interface GroceryChain { id: string; name: string; market: string; storesIn: readonly string[]; nearestTo: readonly string[] }
 
 export interface GroceryProduct {
-  id: string; chain: string; market: string; name: string; category: string; food: string;
+  id: string; chain: string; market: string; name: string;
+  /** The brand its name states, a store's own label too; null where it names none (from 2026-10-05). */
+  brand: string | null;
+  category: string; food: string;
   sizeQty: number; sizeUnit: FoodUnit; price: number; currency: string; taxIncluded: boolean;
   storage: Storage; keepsDays: number | null; keepsEstimated: boolean; keepsSource: string;
   url: string | null; date: string | null; confirmed: boolean;

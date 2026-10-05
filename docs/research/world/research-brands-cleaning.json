@@ -1,0 +1,667 @@
+{
+  "method": "brand read from each product's own name as researched; null where the name names none",
+  "items": [
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Paperbird",
+      "name": "Paperbird Original Dish Soap, 24 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Dawn",
+      "name": "Dawn Ultra Dish Soap, Dishwashing Liquid, Original Scent, 18 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Paperbird",
+      "name": "Paperbird Fresh Scent Dishwasher Detergent Pacs, 43 count, 15.9 oz"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Paperbird",
+      "name": "Paperbird Vanilla Lavender Laundry Detergent, 64 loads, 100 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Tide",
+      "name": "Tide Liquid Laundry Detergent, Original Scent, 34 fl oz, 25 Loads"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Mistolin",
+      "name": "Mistolin Floral All Purpose Cleaner, 28 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Paperbird",
+      "name": "Paperbird Concentrated Bleach, 81 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Clorox",
+      "name": "Clorox Disinfecting Bleach, 121 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Paperbird",
+      "name": "Paperbird Double Roll Strong Paper Towels, 110 sheets per roll, 6 count"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Bounty",
+      "name": "Bounty Paper Towels Essentials Select-A-Size, 8 Double Rolls, White, 108 Sheets Per Roll"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Paperbird",
+      "name": "Paperbird 13 Gallon Drawstring Tall Kitchen Bags, 45 count"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Glad",
+      "name": "Glad ForceFlex Tall Kitchen Drawstring Trash Bags, 13 Gal, Gain Original with Febreze, 40 Ct"
+    },
+    {
+      "market": "US",
+      "chain": "pricerite",
+      "brand": "Paperbird",
+      "name": "Paperbird Heavy Duty Scrubbers & Sponges, 6 count"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Paperbird",
+      "name": "Paperbird Original Dish Soap, 24 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Dawn",
+      "name": "Dawn Ultra Dish Soap, Dishwashing Liquid, Original Scent, 18 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Finish",
+      "name": "Finish Powerball Power Dishwasher Detergent Tabs, 18 count, 7.3 oz"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Paperbird",
+      "name": "Paperbird Fresh Scent Dishwasher Detergent Pacs, 43 count, 15.9 oz"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Tide",
+      "name": "Tide PODS laundry detergent pacs 57 Count, Spring Meadow Scent"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Seventh Generation",
+      "name": "Seventh Generation Free & Clear Laundry Detergent, 30 loads, 45 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Lysol",
+      "name": "Lysol Lemon Breeze Scent All Purpose Cleaner, 32 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Method",
+      "name": "Method Pink Grapefruit All-Purpose Cleaner, 28 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Clorox",
+      "name": "Clorox Disinfecting Bleach, 81 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Paperbird",
+      "name": "Paperbird Linen Low-Splash Concentrated Bleach, 81 fl oz"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Bounty",
+      "name": "Bounty Paper Towels Select-A-Size White, 6 Double Rolls, 82 Sheets Per Roll"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Sparkle",
+      "name": "Sparkle Pick-a-Size Paper Towels, 6 Double Rolls"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Paperbird",
+      "name": "Paperbird 13 Gallon Drawstring Tall Kitchen Bags, 45 count"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Glad",
+      "name": "Glad ForceFlex Tall Kitchen Drawstring Trash Bags, 13 Gal, Gain Original with Febreze, 40 Ct"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Paperbird",
+      "name": "Paperbird Natural Cellulose Handy Sponges, 4 count"
+    },
+    {
+      "market": "US",
+      "chain": "thefreshgrocer",
+      "brand": "Scotch",
+      "name": "Scotch-Brite® Heavy Duty Scrub Sponge, 3/Pack"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Palmolive",
+      "name": "Palmolive Dishwashing Liquid Dish Soap"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Dawn",
+      "name": "Dawn Ultra Liquid Dish Soap, Original"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Cascade",
+      "name": "Cascade Complete Dishwasher Pods, Fresh"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Tide",
+      "name": "Tide Liquid Detergent, Original 64 lds"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Arm & Hammer",
+      "name": "Arm & Hammer Ultra Stain Fighters Fresh Scent Detergent"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Lysol",
+      "name": "Lysol Lemon Breeze Scent All Purpose Cleaner"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Formula 409",
+      "name": "Formula 409 Lemon Fresh Multi-Surface Cleaner"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Simply Value",
+      "name": "Simply Value Bleach"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Clorox",
+      "name": "Clorox 5 in 1 Disinfecting Bleach"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Simply Value",
+      "name": "Simply Value Paper Towels, Multi Sheet Size, 2 Ply"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "First Street",
+      "name": "First Street Paper Towels, Super Absorbent, Double Rolls, Two-Ply"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Simply Value",
+      "name": "Simply Value Trash Bags, Twist Ties, Large, 33 Gallon"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Hefty",
+      "name": "Hefty 30 Gallon Multipurpose Drawstring Large Trash Bags Mega Pack"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "First Street",
+      "name": "First Street Scrubbing Sponges, Heavy Duty"
+    },
+    {
+      "market": "US",
+      "chain": "smartfinal",
+      "brand": "Scotch",
+      "name": "Scotch-Brite Heavy Duty Scrub Sponges"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Western Family",
+      "name": "Western Family - Ultra Liquid Dish Soap - Original"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Palmolive",
+      "name": "Palmolive - Essential Clean Liquid Dish Soap, Original Scent"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Cascade",
+      "name": "Cascade - Platinum ActionPacs Dishwasher Detergent Pods, Fresh Scent"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Cascade",
+      "name": "Cascade - Complete ActionPacs"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Western Family",
+      "name": "Western Family - Liquid Laundry Detergent Original Scent, 59 Loads"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Tide",
+      "name": "Tide - Liquid Laundry Detergent - Original 64 Loads"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Western Family",
+      "name": "Western Family - Orange All Purpose Cleaner"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Lysol",
+      "name": "Lysol - All Purpose Cleaner - Apple Blossoms"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Blue Label",
+      "name": "Blue Label - Bleach Concentrated"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Clorox",
+      "name": "CLOROX - Original Liquid Bleach"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Bounty",
+      "name": "Bounty - Paper Towels 6 Double Rolls = 12 Regular"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Bonterra",
+      "name": "Bonterra - Paper Towel, Choose-a-Size 3 Mega Rolls"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Western Family",
+      "name": "Western Family - Strong Regular Garbage Bags"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Glad",
+      "name": "Glad - White Garbage Bags, Unscented"
+    },
+    {
+      "market": "CA",
+      "chain": "saveonfoods",
+      "brand": "Scotch",
+      "name": "Scotch-Brite - Heavy Duty Scrub Sponge"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "SuperValu",
+      "name": "SuperValu Original Washing Up Liquid (500 ml)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "Fairy",
+      "name": "Fairy Original Washing Up Liquid (654 ml)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "SuperValu",
+      "name": "SuperValu 5 in 1 Regular Dishwasher Tablets (30 Piece)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "Finish",
+      "name": "Finish Quantum All In One Lemon Dishwasher Tablets (64 Piece)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "Persil",
+      "name": "Persil Non Bio Liquid Laundry Detergent XXXL 95 Washes (2.56 L)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "Persil",
+      "name": "Persil Non Bio 4 in 1 Laundry Detergent Capsules 34 Wash Large Pack (34 Piece)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "SuperValu",
+      "name": "SuperValu Antibacterial Surface Cleanser Spray (750 ml)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "Dettol",
+      "name": "Dettol Antibacterial Surface Cleanser (750 ml)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "SuperValu",
+      "name": "SuperValu Thick Bleach (750 ml)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "Domestos",
+      "name": "Domestos Thick Toilet Bleach (2 L)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "SuperValu",
+      "name": "SuperValu Kitchen Towel (4 Roll)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "Plenty",
+      "name": "Plenty Everyday Kitchen Towel (2 Roll)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "SuperValu",
+      "name": "SuperValu 70l Drawstring Refuse Sacks (10 Piece)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "SuperValu",
+      "name": "SuperValu 50ltr Drawstring Swing Bin Liners (30 Piece)"
+    },
+    {
+      "market": "IE",
+      "chain": "supervalu-ie",
+      "brand": "SuperValu",
+      "name": "SuperValu Sponge Scourers (6 Piece)"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Giant Value",
+      "name": "Giant Value Original Dish Soap, 828 ml"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Dawn",
+      "name": "Dawn Ultra Dish Soap, 502 ml"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Sunlight",
+      "name": "Sunlight Advanced Dishwasher Detergent Tabs, 48-Pack"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Finish",
+      "name": "Finish All-in-1 Max Powerball Dishwasher Detergent, 971-g, 55-Pack"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Tide",
+      "name": "Tide Original Scent Liquid Laundry Detergent, 1.86 L"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Purex",
+      "name": "Purex Free & Clear Liquid Laundry Detergent, 3.85 L"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Mr. Clean",
+      "name": "Mr. Clean Multi-Purpose Cleaner, Summer Citrus, 1.21 L"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Giant Value",
+      "name": "Giant Value Liquid Bleach, 3.6-L"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Cascades",
+      "name": "Cascades Tuff Econo 2-Ply Paper Towel, 6-Pack"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Bounty",
+      "name": "Bounty Double 2-Ply Paper Towel Rolls, 4-Pack"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Giant Value",
+      "name": "Giant Value Garbage Bags, 75 L, 40-Pack"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Giant Value",
+      "name": "Giant Value Kitchen Garbage Bags, 34 L, 40-Pack"
+    },
+    {
+      "market": "CA",
+      "chain": "gianttiger",
+      "brand": "Vileda",
+      "name": "Vileda Soft Scrub Sponge, 3-Pack"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Salvo",
+      "name": "Lavatrastes Líquido Salvo Pasión Verde 900ml"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Citrex",
+      "name": "Lavatrastes Líquido Citrex Limón 740ml"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Finish",
+      "name": "Detergente Lavavajillas Finish Powerball Quantum All in 1 26 Tabletas"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Cascade",
+      "name": "Detergente En Cápsulas Para Lavavajillas Cascade Platinum, 12 Cápsulas"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Chedraui",
+      "name": "Detergente líquido Chedraui para ropa de color 4L"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Ariel",
+      "name": "Detergente Líquido Ariel Paraíso Floral Explosión de Aroma en tu Ropa 4.8L"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Flash",
+      "name": "Limpiador Multiusos Flash Lavanda 1.8L"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Pinol",
+      "name": "Limpiador Multiusos Pinol Floral 3.785L"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Clorox",
+      "name": "Cloro Blanqueador Desinfectante Clorox Original 3.8L"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Clorox",
+      "name": "Cloro Blanqueador Desinfectante Clorox Original 930ml"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Elite",
+      "name": "Toallas de Papel Elite Megaroll 1 Rollo"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Regio",
+      "name": "Toallas De Papel Regio Expert 2 Rollos"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Chedraui",
+      "name": "Bolsas Para Basura Chedraui Grandes15 Piezas"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Costalitos",
+      "name": "Bolsas para Basura Costalitos Medianas 18 Bolsas"
+    },
+    {
+      "market": "MX",
+      "chain": "chedraui",
+      "brand": "Virutex",
+      "name": "Esponja Virutex No Raya"
+    },
+    {
+      "market": "GB",
+      "chain": "tesco-gb",
+      "brand": "Tesco",
+      "name": "Tesco Original Washing Up Liquid 500ml"
+    },
+    {
+      "market": "GB",
+      "chain": "tesco-gb",
+      "brand": "Tesco",
+      "name": "Tesco All-in-One Dishwasher Tablets Lemon (40 x 680g)"
+    },
+    {
+      "market": "GB",
+      "chain": "tesco-gb",
+      "brand": "Tesco",
+      "name": "Tesco Non Bio Laundry Gel 25 Washes (750ml)"
+    },
+    {
+      "market": "GB",
+      "chain": "tesco-gb",
+      "brand": "Tesco",
+      "name": "Tesco Antibacterial Multi Purpose Cleanser Spray (750ml)"
+    },
+    {
+      "market": "GB",
+      "chain": "tesco-gb",
+      "brand": "Tesco",
+      "name": "Tesco Thick Bleach 24Hr Citrus (750ml)"
+    },
+    {
+      "market": "GB",
+      "chain": "tesco-gb",
+      "brand": "Tesco",
+      "name": "Tesco Kitchen Towel 4 Roll"
+    },
+    {
+      "market": "GB",
+      "chain": "tesco-gb",
+      "brand": "Tesco",
+      "name": "Tesco 30 Tie Handle Bin Liners (50 Litre)"
+    },
+    {
+      "market": "GB",
+      "chain": "tesco-gb",
+      "brand": "Tesco",
+      "name": "Tesco Sponge Pan Cleaners (6)"
+    }
+  ],
+  "read": "2026-10-05",
+  "corrected": "2026-10-05: 24 brands corrected by hand where the first pass took product words for part of the brand (Persil Non Bio, Arm Hammer) or a Spanish product word for one (Cápsulas, Cloro, Toallas); each corrected brand is the one the name states."
+}

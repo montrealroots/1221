@@ -12,6 +12,58 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ---
 
+## Resume here: paused 2026-10-04, mid-module, at the owner's request
+
+The owner paused the session on 2026-10-04 to carry on in another and asked that the next one "pick up exactly where we left off". Run the four checks of CLAUDE.md's rules 2 and 3 first; the tree wins over this box.
+
+**Where things stand.** The working branch `claude/slate-cleanup-e4apmx` is pushed. Its last code commits, each gated, are:
+- `79c46fe6`: clothes by fit line (maternity, petite, tall, plus), a garment read twice kept once, and comparison for clothes, IKEA's pieces and cars;
+- `9865329d`: homes, land, groceries and dishes compared;
+- `5dbcf056`: a pet's rules on a rented home and on a flight, and Canada's and Australia's deposit caps found keyed by region codes no town has;
+- `916810cb`: a dog's bath, and a pet's water on the bill;
+- `953c833d`: a pet's papers abroad, checked the day it arrives;
+- `75150470`: packing lists;
+- `ba2e32c7`: groceries and toiletries in a basket, and the card chosen at the till (gate 3,082 tests, exit 0).
+`main` was last merged at `ebf76bb5` (`fcbe73c2`) after a clean lives replay. Nothing since is on `main`: merge after a lives replay at the branch's head (0 errors, 0 anomalies), as the owner authorized.
+
+**The module that was under way: televisions as a real catalog.** It had no data, screen or tests yet, so it isn't in the compiled tree:
+- `wip/televisions.ts.wip` is the engine, written but not compiled. Move it back to `src/engine/systems/televisions.ts` once `content/tvcatalog.ts` exists. Use the spot `'floor'` with `bulky: true`, as `systems/furniture.ts` does; the WIP's `'living'` isn't a `Spot`.
+  - `tv.buy` keeps the model as the home's `furniture:tv`, with `spec: {product, offer, color}`.
+  - `tvAtHome` reads its watts.
+  - `watchPower` adds the on-mode watts times the minutes watched to `living.extraKwh`, which the electricity bill reads.
+  - A TV with no model draws the catalog's median, `GENERIC_TV_WATTS`, SLATE's estimate.
+- `tools/build-tvs.mjs` builds `content/tvcatalog.ts` from `docs/research/catalog/tv-*.json`.
+- Still to do:
+  - call `watchPower(person, watched)` after `s.advanceTo` in `tv.watch` (`systems/programmes.ts`);
+  - register `registerTelevisions` in `src/engine/index.ts`;
+  - a shop panel on the shared catalog controls, with paging and `CompareToggle`;
+  - the tutorial's `opens` and `names`, and the COVERAGE-MATRIX "| 19 | Rent And A Roof |" row;
+  - `READ.televisions` in `tools/catalog-coverage.mjs`;
+  - tests, mutations, the gate.
+- Three research agents on the Sonnet model were writing `docs/research/catalog/tv-a.json` (Samsung, LG, Sony, TCL, Hisense), `tv-b.json` (Vizio, Panasonic, Philips, Sharp, Toshiba, Insignia, Roku, Amazon, Onn and other American labels) and `tv-c.json` (British, Irish, Mexican and European labels) when the session paused. `tv-b.json` (70 products, American labels, no watts read) and `tv-c.json` (97 products, British and European labels, watts for 3) landed and are committed; `tv-a.json` was still being written: if it is missing or unparseable, rerun group A. Most offers are American or British only, and most on-mode watts are missing, so a dedicated energy-label pass (ENERGY STAR, EPREL) comes before the bill can read them. Check `git status`: validate any that are there (each parses, `products` with `offers`), and rerun the research for any missing group with the same brief.
+
+**Research done, not yet wired.** `docs/research/world/research-brands-from-names.json` holds the brand each grocery and toiletry product's own name states: 730 products, 678 branded, 52 with none named (mostly fresh produce). Wire it into `tools/build-groceries.mjs` and the hygiene builder as a `brand` on each product, then count brands for groceries, toiletries and cleaning in `tools/catalog-coverage.mjs`, where they read zero now for want of a recorded brand.
+
+**Working notes for the next session.**
+- The machine runs short of memory: the system killed background gates twice. Run `npm run gate` in the foreground (it takes about six to ten minutes) and read its exit from the file, as CLAUDE.md says. 36 idle Node processes from earlier days were stopped on 2026-10-04 at the owner's go-ahead; that freed little, so the pressure comes from elsewhere.
+- Use the cheaper models for research agents: Sonnet for reading product pages, Haiku for mechanical passes. The owner asked how far $250 of credits goes; research agents are the costliest part of the catalog work.
+- Edit scripts go in the scratchpad, written with the Write tool. The bash shell eats backticks in `node -e` strings and turns `\b` into a backspace.
+- New commands need the tutorial's `opens` and `names` and the COVERAGE-MATRIX row 19, or `tests/tutorial.test.ts` fails.
+- The gate's tics check limits sentences opening "Nothing", and title-case reads `label:` fields as labels.
+
+**Since, on 2026-10-05.** The owner scratched the Account 1 session that took this box up: the branch and `main` were restored to this box's state by fast-forward commits whose files are `18527d25`'s and `ebf76bb5`'s (no force-push), and that session's work is kept on `backup/account1-branch-2026-10-05` and `backup/account1-main-2026-10-05`, not to be brought back unless the owner asks. Then televisions were finished (`systems/televisions.ts`, `content/tvcatalog.ts`, Televisions on Homes, `tests/televisions.test.ts`): 106 sets from 23 makers on sale of 333 read, each set's power from ENERGY STAR (`tv-power.json`) or its area at ENERGY STAR's median, billed for each hour watched; and groceries' and toiletries' brands wired (183 and 82). The EU's EPREL needs a registered API key, which only the owner can get.
+
+**Next, in order:**
+1. Prices for the televisions read without one (Best Buy US and Canada, Currys, Harvey Norman, Liverpool), so more of the 333 are sold.
+2. A brand for cleaning products (`research-household-supplies.json`, not in the brands pass).
+3. Run a lives replay and merge to `main`.
+4. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`, 0 of 45 met), then the open rows in `docs/REQUIREMENTS.md`.
+   - Rows a player can act on, with no published rate needed: 41c, a guest room and an office, each with something real that reads it.
+   - 22f, garment repair, is held back for want of how much a repair restores; inventing that figure was avoided.
+   - Stage 14 and deployment come last.
+
+---
+
 ## Start here: the transfer to Claude Account 2 (2026-09-23), and its first session (2026-09-24)
 
 > **Newest of all: "give it downstream effects" (`31d0d98` to `78ee590`).** Midway through, the owner overruled the house rule's use as a reason to leave things out: "If it doesn't have any downstream effects, give it some and that goes for everything that doesn't because engines can be built for these things while also being implemented to run cohesively and logically." So "not kept, by design, because it changes nothing" is no longer an answer. Build the engine that makes it bite, from research. Earlier "not kept" items with only that reason are open again. Research committed: `research-customization.json`, `research-custom-effects.json`, `research-home-contents.json`, `research-home-effects.json`, `research-land-2.json`, `research-travel-2.json`, `research-travel-3.json`, `research-victoria.json`.
@@ -316,8 +368,15 @@ Done and gated so far:
     - **Special rooms used** (`6d8bf842`, `b1cf54f3`, `content/specialrooms.ts`, `content/garden.ts`, `systems/garden.ts`): a film night in the theater, the library's shelves, the walk-in's hanging, Take A Sauna (its heater on the electricity bill), and a voice audition on tape needing the soundproofed room or a town's booth. Outdoors: an outdoor kitchen cooked in, a raised bed and a greenhouse planted and picked into the kitchen by real frost dates, and a pitch drilled on alone and lit.
     - **Journeys** (`e0323ff0`, `tests/journeys.test.ts`): seven journeys, each saved and loaded midway. A modification now keeps the car at the fitter's for its hours (`MOD_HOURS`, SLATE's estimates).
     - **Merged to `main`** as `0f627c41` (at `3c016d57`), after a lives replay with 0 errors and 0 anomalies. Both lives came out exactly as at `e63899a4`: New York 89, London 50 and worth £49,567. London's early death is the life table's draw on a career that went another way from 2034. It predates this stretch, but is worth a look.
-    - **Research waiting**: `research-pet-care.json` (itemized feeding, supplies, the vet, grooming, housing rules, sitters, each airline's pet policy) is being gathered for the pets module.
-    - **Next, in the owner's order:** pets' whole care (from the research); individual rooms (identity, size, placement, purpose); the product, variant and offer model; catalog research in tranches; navigation at scale. Stage 14 and deployment come last.
+    - **Rooms one by one** (`1c212d94`, `systems/rooms.ts`, Your Rooms on Belongings, `tests/room-list.test.ts`): each bedroom is given one use (bedroom, a lodger's, storage and the rest, `home.room_use`), and furniture is put in a room. Lodgers count the rooms given over to them.
+    - **Pets thing by thing** (`fcbe73c2`, `content/petcare.ts` from `tools/build-pet-care.mjs`, PetCare on Belongings, `tests/pet-care.test.ts`): the monthly KEEPING figure is gone. A pet eats its ration in grams from food bought by the bag (`pets.buy`, delivered in two days), a cat's litter is used by the kilogram, a dog is walked or a walker is paid, and the vet is a visit at the town's price. A pet unfed or unwalked goes hungry or restless day by day. Feeding is a shortcut (`feedPets`).
+    - **The product model** (`4925bf58`, `content/products.ts`): brand, product, variant and offer kept apart, and the owned item points back to all three (`spec: {product, offer, color}`). Luggage is the first category on it. `Catalog.tsx` gained `usePaged` and `ShowMore`, `useCompare` and `CompareTable`.
+    - **Luggage tranches** (`18946b7b`, `09392bbb`): five tranches in `docs/research/catalog/luggage-*.json`, read 2026-10-04. Luggage now has 47 brands, 1,738 products and 3,233 offers; Tumi and Delsey Paris have 100 products each. A bag whose maker gives only its outside measure holds an estimate, marked `litersEstimated` and shown with ≈. The estimate is its kind's median inside-to-outside share across every bag with both figures (carry-ons 0.85 to duffels 0.96). 361 bags hold one; 177 with neither figure aren't sold. A sixth agent (Tumi, Rimowa, Delsey) was still reading when this was written. Its file would overlap tranche A's, and the builder merges by brand and model, but "Delsey" against "Delsey Paris" needs checking first.
+    - **Clothes by cut** (`56890329`, `7dd0fec9`, and the fit-line commit): the retailer's department is kept (`dept`). 2,062 listings from 19 retailers' maternity, petite, tall and plus departments (`research-clothing-fit.json`) carry `fitLines`. A style sold in petite and tall variants is cut in each, so the sizing that already read J.Crew's "PETITE 4" sizes a short woman in the petite. A garment filed under maternity is one whatever its name. A catalog facet can hold several values (`also`), so a legging is found under each cut. A garment read twice is kept once (`mergeInto` in the builder): same retailer, name, regular price and department. Clothing has 3,334 products.
+    - **Comparison everywhere long** (the fit-line commit): clothes, IKEA's pieces and cars side by side (`CompareToggle`, `ModelsCompared`). IKEA's list has the shared search, filters, favorites, sort and paging. The bathroom's toiletries are paged; before, only the first page could be reached. Checked in the built app with `probe/cat-shot.mjs` and `probe/car-cmp-shot.mjs`, which found two misalignments, both fixed.
+    - **Merged to `main`** as `ebf76bb5` (at `fcbe73c2`), after a lives replay with 0 errors and 0 anomalies. New York died at 89 on 2091-11-06, the same day as before, on a different path: a home in Vancouver, 623 credits, worth $3.85M against $4.56M. London died at 50 on 2052-09-08 as before, worth £46,306.
+    - **Windows note:** writes to the large built catalogs sometimes fail with `UNKNOWN` (-4094), most likely a watcher or a scan holding the file. A dev server from 2026-10-02 is still on port 5179. Rerun the write; `node <scratchpad>/retry.mjs <script>` retries up to 20 times.
+    - **After that, on 2026-10-04:** homes, land, groceries and dishes compared; a pet's rented-home rules, flights, grooming, water and papers abroad; packing lists; the groceries and toiletries basket. The box "Resume here" at the top of this file has the commits and what's next.
   - A tooling note: bash heredocs here collapse `\b` into a backspace byte. Write edit scripts with the Write tool, and `grep -rlP '\x08' src tests tools` after a regex edit.
 - **Lives replayed at `1bd7dbf8`** (after Stages 8, 10 and 12 began, with living alone in the table): New York died at 76 worth $1,146,069 (before: 76, $1.13M); London at 83 worth £1,350,498 (before: 83, £2.77M), 0 errors and 0 anomalies each. London's fall was traced: by 60 it earned $342k less from a different run of bookings from about 2035 on (more, lower-paid jobs); its spending by category matches the old run's but for $21,655 at the laundromat, its later home having no machines. No new system drains it. Each life now knows 300 to 360 castmates by its end, one a job; nothing caps the list.
 - **Stage 14** needs the owner's API key.

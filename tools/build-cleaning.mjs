@@ -12,6 +12,8 @@ const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/
 const ML_A_LOAD = 32;
 
 const seen = new Set();
+// Each product's brand as its own name states it (`research-brands-cleaning.json`, read and corrected 2026-10-05).
+const BRANDS = new Map(JSON.parse(readFileSync('docs/research/world/research-brands-cleaning.json', 'utf8')).items.map((i) => [`${i.chain}|${i.name}`, i.brand ?? null]));
 const supplies = j.supplies.filter((p) => typeof p.price === 'number' && p.price > 0).map((p) => {
   let id = `${p.chain}-${slug(p.name)}`.slice(0, 80);
   for (let n = 2; seen.has(id); n += 1) id = `${p.chain}-${slug(p.name)}`.slice(0, 76) + `-${n}`;
@@ -19,7 +21,7 @@ const supplies = j.supplies.filter((p) => typeof p.price === 'number' && p.price
   // Detergents are counted in washes and cycles.
   const counted = p.kind === 'laundry-detergent' || p.kind === 'dishwasher-detergent';
   const sizeQty = counted ? (p.loads ?? (p.sizeUnit === 'ct' ? p.sizeQty : Math.round(p.sizeQty / ML_A_LOAD))) : p.sizeQty;
-  return { id, chain: p.chain, market: p.market, name: p.name, kind: p.kind, sizeQty, sizeUnit: counted ? 'ct' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.read ?? null, confirmed: p.confirmed === true };
+  return { id, chain: p.chain, market: p.market, name: p.name, brand: BRANDS.get(`${p.chain}|${p.name}`) ?? null, kind: p.kind, sizeQty, sizeUnit: counted ? 'ct' : p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.read ?? null, confirmed: p.confirmed === true };
 });
 
 const waste = j.waste.map((w) => ({ cityId: w.cityId, collector: w.collector, currency: w.currency, basis: w.chargeBasis, source: w.source, confirmed: w.confirmed === true }));

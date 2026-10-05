@@ -84,3 +84,60 @@ export function catalogPrice(entry: CatalogEntry, money: (c: number) => string):
   if (entry.price === null) return entry.priceKind === 'quote' ? 'By Quote' : 'Not Known';
   return `${money(entry.price)}${entry.priceKind === 'estimate' ? ' (Estimate)' : ''}`;
 }
+
+/**
+ * A long list shown a page at a time (from 2026-10-04, the owner's expansion,
+ * §7): how many are shown, kept for the session under the list's key, so a
+ * list come back to is as far down as it was left.
+ */
+export function usePaged(key: string, page = 24): [number, () => void, () => void] {
+  const storageKey = `slate.paged.${key}`;
+  const [count, setCount] = useState<number>(() => {
+    try { const n = Number(sessionStorage.getItem(storageKey)); return n > 0 ? n : page; } catch { return page; }
+  });
+  const set = (n: number) => { setCount(n); try { sessionStorage.setItem(storageKey, String(n)); } catch { /* the list works without it */ } };
+  return [count, () => set(count + page), () => set(page)];
+}
+
+/** The rest of a list, a page more at a time, and how many there are. */
+export function ShowMore({ shown, total, onMore }: { shown: number; total: number; onMore: () => void }) {
+  if (total <= shown) return total > 0 ? <div className="xs dim">{`All ${total} shown.`}</div> : null;
+  return (
+    <div className="row gap-2" style={{ alignItems: 'center' }}>
+      <button type="button" className="btn btn-sm btn-ghost" onClick={onMore}>Show More</button>
+      <span className="xs dim">{`${shown} of ${total} shown`}</span>
+    </div>
+  );
+}
+
+/** Up to three of a list set side by side (from 2026-10-04): which are chosen, kept for the session. */
+export function useCompare(key: string, most = 3): [readonly string[], (id: string) => void, () => void] {
+  const storageKey = `slate.compare.${key}`;
+  const [ids, setIds] = useState<string[]>(() => {
+    try { const raw = sessionStorage.getItem(storageKey); return raw ? (JSON.parse(raw) as string[]) : []; } catch { return []; }
+  });
+  const set = (next: string[]) => { setIds(next); try { sessionStorage.setItem(storageKey, JSON.stringify(next)); } catch { /* the list works without it */ } };
+  const toggle = (id: string) => set(ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id].slice(-most));
+  return [ids, toggle, () => set([])];
+}
+
+/** One thing set beside the others, or taken out; as wide either way, so a row's buttons don't shift when it's chosen. */
+export function CompareToggle({ on, onToggle, className = 'btn btn-sm btn-ghost' }: { on: boolean; onToggle: () => void; className?: string }) {
+  return <button type="button" className={className} style={{ minWidth: '6.5rem', justifyContent: 'center' }} aria-pressed={on} onClick={onToggle}>{on ? 'Comparing' : 'Compare'}</button>;
+}
+
+/** The chosen side by side: a row for each thing compared, a column for each chosen. */
+export function CompareTable({ heads, rows, onClear }: { heads: readonly string[]; rows: readonly { label: string; values: readonly ReactNode[] }[]; onClear: () => void }) {
+  if (heads.length < 2) return heads.length === 1 ? <div className="xs dim">Choose one more to compare.</div> : null;
+  return (
+    <div className="col gap-1">
+      <div className="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Compared</th>{heads.map((h) => <th key={h} scope="col">{h}</th>)}</tr></thead>
+          <tbody>{rows.map((r) => <tr key={r.label}><th scope="row" className="small">{r.label}</th>{r.values.map((v, i) => <td key={i} className="small">{v}</td>)}</tr>)}</tbody>
+        </table>
+      </div>
+      <div><button type="button" className="btn btn-sm btn-ghost" onClick={onClear}>Clear The Comparison</button></div>
+    </div>
+  );
+}

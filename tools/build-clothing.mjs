@@ -7,9 +7,22 @@
 // product whose page gave no care label takes its kind's usual care, said so.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
-const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json'].map((f) => `docs/research/world/${f}`);
+const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json', 'research-clothing-fit.json'].map((f) => `docs/research/world/${f}`);
 const OUT = 'src/engine/content/clothingcatalog.ts';
 
+/** A retailer's department, as read: women's, men's or unisex, in English or Spanish; none where none was read. */
+const FIT_LINES = new Set(['maternity', 'petite', 'tall', 'plus']);
+// A style its retailer sells in petite and tall fit variants of the same sizes (Gap Inc.'s, Reitmans'): each of its
+// regular sizes again as "PETITE M" and "TALL M", as J.Crew lists them, which is what the size chosen reads. A plus
+// size (1X to 4X) isn't cut petite or tall unless listed so.
+function sizesOf(p) {
+  const sizes = Array.isArray(p.sizes) ? p.sizes.map(String) : [];
+  const variants = Array.isArray(p.fitVariants) ? p.fitVariants.map((v) => String(v).toUpperCase()) : [];
+  const regular = sizes.filter((s) => !/^(PETITE|TALL)\s/i.test(s) && !/^\d?X+$|^[1-4]X$/i.test(s));
+  const cut = ['PETITE', 'TALL'].filter((c) => variants.includes(c)).flatMap((c) => regular.map((s) => `${c} ${s}`));
+  return [...sizes, ...cut.filter((s) => !sizes.includes(s))];
+}
+const deptOf = (g) => { const x = String(g ?? '').toLowerCase(); return x === 'women' || x === 'mujer' ? 'Women' : x === 'men' || x === 'hombre' ? 'Men' : x === 'unisex' ? 'Unisex' : null; };
 const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 
 /**
@@ -143,6 +156,26 @@ function terms(r, market) {
 const retailers = [];
 const products = [];
 const seen = new Set();
+let merged = 0;
+/**
+ * The same garment read again (from 2026-10-04: the fit lines' research and the special kinds' each reread ones
+ * already held): one product, its fit lines, sizes and colors together, under the id it had first, so a save's garment
+ * still finds it. The same garment is the same retailer's, by the same name, at the same regular price, in the same
+ * department or one not read. Two a retailer gives one name at different prices (Liverpool's pantimedias, Macy's
+ * two Levi's 501s) or in different departments stay two.
+ */
+function mergeInto(p, retailer, price) {
+  const dept = deptOf(p.gender);
+  const again = products.find((x) => x.retailer === retailer.id && x.name.toLowerCase() === String(p.name).toLowerCase() && x.price === price && (!x.dept || !dept || x.dept === dept));
+  if (!again) return undefined;
+  const lines = Array.isArray(p.fitLines) ? p.fitLines.filter((l) => FIT_LINES.has(l)) : [];
+  again.fitLines = [...new Set([...(again.fitLines ?? []), ...lines])];
+  again.sizes = [...new Set([...again.sizes, ...sizesOf(p)])];
+  again.colors = [...new Set([...again.colors, ...(Array.isArray(p.colors) ? p.colors.map(String) : [])])];
+  again.dept ??= dept;
+  merged += 1;
+  return again;
+}
 for (const file of FILES) {
   if (!existsSync(file)) { console.log('skipped (not written yet):', file); continue; }
   const j = JSON.parse(readFileSync(file, 'utf8'));
@@ -163,6 +196,7 @@ for (const file of FILES) {
     if (!market) continue;
     const retailer = retailers.find((r) => r.market === market && (r.key === p.retailer || slug(r.name) === slug(p.retailer)));
     if (!retailer) continue;
+    if (mergeInto(p, retailer, p.price)) continue;
     const [slot, kind] = wornAs(p, market);
     let id = `${retailer.id}-${slug(p.name)}`.slice(0, 90);
     for (let n = 2; seen.has(id); n += 1) id = `${retailer.id}-${slug(p.name)}`.slice(0, 86) + `-${n}`;
@@ -170,8 +204,12 @@ for (const file of FILES) {
     products.push({
       id, retailer: retailer.id, market, brand: p.brand ?? retailer.name, name: p.name, category: p.category, subcategory: p.subcategory ?? null,
       slot, kind, ...careOf(p, kind), pack: packOf(p.name), price: p.price, currency: p.currency, taxIncluded: market === 'GB' || market === 'IE' || market === 'MX',
-      sizes: Array.isArray(p.sizes) ? p.sizes.map(String) : [], colors: Array.isArray(p.colors) ? p.colors.map(String) : [],
+      sizes: sizesOf(p), colors: Array.isArray(p.colors) ? p.colors.map(String) : [],
       material: p.material ?? null, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true, subtype: null, sameAs: null,
+      // The department the retailer files it under, where the research read one (from 2026-10-04).
+      dept: deptOf(p.gender),
+      // The fit lines it's filed under (maternity, petite, tall, plus; `research-clothing-fit.json`, from 2026-10-04).
+      fitLines: Array.isArray(p.fitLines) ? p.fitLines.filter((l) => FIT_LINES.has(l)) : [],
     });
   }
 }
@@ -196,6 +234,8 @@ function sellerOf(name, market) {
 function addGap(p, market, retailer, extra) {
   const price = p.price ?? p.regularPrice ?? p.listPrice;
   if (typeof price !== 'number' || !(price > 0) || !retailer) return;
+  const again = mergeInto(p, retailer, price);
+  if (again) { again.subtype ??= extra.subtype ?? null; again.sameAs ??= extra.sameAs ?? null; return; }
   let id = `${retailer.id}-${slug(p.name)}`.slice(0, 90);
   for (let n = 2; seen.has(id); n += 1) id = `${retailer.id}-${slug(p.name)}`.slice(0, 86) + `-${n}`;
   seen.add(id);
@@ -206,7 +246,7 @@ function addGap(p, market, retailer, extra) {
     id, retailer: retailer.id, market, brand: p.brand ?? retailer.name, name: p.name, category: extra.category, subcategory: extra.subcategory ?? null,
     slot, kind, ...careOf(p, kind), pack: p.pack ?? packOf(p.name), price, currency: { US: 'USD', GB: 'GBP', IE: 'EUR', CA: 'CAD', MX: 'MXN' }[market],
     taxIncluded: market === 'GB' || market === 'IE' || market === 'MX', sizes, colors: [], material: null, url: p.url ?? null, date: '2026-10-03',
-    confirmed: extra.confirmed !== false, subtype: extra.subtype ?? null, sameAs: extra.sameAs ?? null,
+    confirmed: extra.confirmed !== false, subtype: extra.subtype ?? null, sameAs: extra.sameAs ?? null, dept: deptOf(p.gender),
   });
 }
 if (existsSync(GAPS)) {
@@ -296,6 +336,10 @@ export interface ClothingProduct {
   subtype: string | null;
   /** The same product as other sellers' listings with this key, from 2026-10-03. */
   sameAs: string | null;
+  /** The department the retailer files it under, where one was read: Women, Men or Unisex (from 2026-10-04). */
+  dept: string | null;
+  /** The fit lines it's filed under: maternity, petite, tall, plus (from 2026-10-04). */
+  fitLines?: readonly string[];
 }
 
 export const CLOTHING_RETAILERS: readonly ClothingRetailer[] = ${JSON.stringify(retailers, null, 0)};
@@ -306,4 +350,4 @@ export const CLOTHING_PRODUCTS: readonly ClothingProduct[] = JSON.parse(${JSON.s
 writeFileSync(OUT, body);
 const by = {};
 for (const p of products) by[p.market] = (by[p.market] ?? 0) + 1;
-console.log('retailers', retailers.length, 'products', products.length, by);
+console.log('retailers', retailers.length, 'products', products.length, 'merged', merged, by);

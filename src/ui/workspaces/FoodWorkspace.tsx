@@ -9,10 +9,12 @@ import { useState } from 'react';
 import { GEAR_LABEL } from '@/engine/content/kitchengear';
 import { TABLE_POLICIES, lateFee, reservationsOf, reserveRefusal } from '@/engine/systems/reservations';
 import { useGame, useWorld } from '@/app/game-context';
+import { cartByChain } from '@/engine/systems/shoppingcart';
+import type { PayWith } from '@/engine/systems/household';
 import { livingIn } from '@/engine/systems/homes';
 import { atHome } from '@/engine/systems/dwelling';
 import { Panel, Fine } from '@/ui/components/primitives';
-import { CatalogControls, FavoriteToggle, catalogPrice, useCatalogView } from '@/ui/components/Catalog';
+import { CatalogControls, catalogPrice, CompareTable, CompareToggle, FavoriteToggle, useCatalogView, useCompare } from '@/ui/components/Catalog';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { titleCaseLabel } from '@/engine/core/text';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -43,6 +45,9 @@ export function FoodWorkspace() {
   const shown = arrange(entries, view);
   const [count, setCount] = useState(PAGE);
   const [basket, setBasket] = useState<{ restaurantId: string; items: string[] } | undefined>(undefined);
+  // Up to three dishes side by side (from 2026-10-04), across restaurants: each one's price and how it can be had.
+  const [compared, toggleCompare, clearCompare] = useCompare(`menus-${here}`);
+  const side = compared.map((id) => entries.find((e) => e.id === id)).filter((e): e is (typeof entries)[number] => Boolean(e));
   const add = (restaurantId: string, item: string) => setBasket(basket && basket.restaurantId === restaurantId ? { restaurantId, items: [...basket.items, item].slice(0, 6) } : { restaurantId, items: [item] });
   return (
     <>
@@ -55,6 +60,7 @@ export function FoodWorkspace() {
         <Kitchen />
         <Recipes />
         <Groceries />
+        <YourBasket />
         {basket && <Meal basket={basket} onChange={setBasket} />}
         <Bar />
         <BookATable />
@@ -75,7 +81,7 @@ export function FoodWorkspace() {
                         <td className="small"><Open subject={at('restaurant', e.value.restaurant.id)}>{e.value.restaurant.name}</Open></td>
                         <td className="small">{e.facets?.tier}</td>
                         <td className="num mono">{catalogPrice(e, money)}</td>
-                        <td className="row gap-1"><FavoriteToggle list="menus" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" disabled={e.price === null} onClick={() => add(e.value.restaurant.id, e.value.item)}>Add</button></td>
+                        <td className="row gap-1"><FavoriteToggle list="menus" id={e.id} /><CompareToggle on={compared.includes(e.id)} onToggle={() => toggleCompare(e.id)} /><button type="button" className="btn btn-sm btn-ghost" disabled={e.price === null} onClick={() => add(e.value.restaurant.id, e.value.item)}>Add</button></td>
                       </tr>
                     ))}
                   </tbody>
@@ -83,6 +89,16 @@ export function FoodWorkspace() {
               </div>
               </LookRegion>
               {shown.length > count && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCount(count + PAGE)}>{shown.length - count <= PAGE ? `Show The Last ${shown.length - count}` : `Show ${PAGE} More Of ${shown.length - count}`}</button>}
+              <CompareTable heads={side.map((e) => e.label)} onClear={clearCompare} rows={[
+                { label: 'Price', values: side.map((e) => catalogPrice(e, money)) },
+                { label: 'Restaurant', values: side.map((e) => e.value.restaurant.name) },
+                { label: 'Kind', values: side.map((e) => e.facets?.tier ?? '—') },
+                { label: 'Cuisine', values: side.map((e) => e.value.restaurant.cuisine ?? '—') },
+                { label: 'Neighborhood', values: side.map((e) => e.value.restaurant.neighborhood ?? '—') },
+                { label: 'Taken Away', values: side.map((e) => (e.value.restaurant.takeout ? 'Yes' : 'No')) },
+                { label: 'Delivered', values: side.map((e) => (e.value.restaurant.delivery ? 'Yes' : 'No')) },
+                { label: 'On The Menu', values: side.map((e) => e.value.restaurant.menu.find((m) => m.item === e.value.item)?.note ?? '—') },
+              ]} />
             </div>
           </Panel>
         )}
@@ -300,6 +316,52 @@ function Recipes() {
   );
 }
 
+const STORAGE_WORD: Readonly<Record<string, string>> = { pantry: 'The Cupboard', fridge: 'The Fridge', freezer: 'The Freezer' };
+
+/** The till's ways to pay: cash in a store, the credit card, the debit card (`payWith`). */
+export function PayWithField({ id, way, onChange }: { id: string; way: PayWith; onChange: (w: PayWith) => void }) {
+  return (
+    <div className="field">
+      <label htmlFor={id}>Pay With</label>
+      <select id={id} value={way} onChange={(e) => onChange(e.target.value as PayWith)}>
+        <option value="cash">Cash, In Store</option>
+        <option value="credit">The Credit Card</option>
+        <option value="debit">The Debit Card</option>
+      </select>
+    </div>
+  );
+}
+
+/** Groceries and toiletries in the basket (`systems/shoppingcart.ts`, from 2026-10-04): a chain at a time, its total here now, checked out at its till the way chosen. */
+function YourBasket() {
+  const { sim, run, toast } = useGame();
+  const cur = saveCurrency(sim.universe);
+  const groups = useWorld((s) => cartByChain(s, s.player));
+  const [way, setWay] = useState<PayWith>('debit');
+  if (groups.length === 0) return null;
+  return (
+    <Panel title="Your Basket" subtitle="Groceries and toiletries, checked out a chain at a time, at its till">
+      <div className="col gap-3">
+        <div className="field-row field-row-tight"><PayWithField id="cart-pay" way={way} onChange={setWay} /></div>
+        {groups.map((g) => (
+          <div key={g.chain} className="col gap-1">
+            <div className="row-between"><strong className="small">{g.name}</strong><span className="mono small">{formatMoney(g.total, cur)}</span></div>
+            <div className="table-scroll">
+              <table>
+                <thead><tr><th scope="col">Thing</th><th scope="col" className="num">How Many</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Take Out</span></th></tr></thead>
+                <tbody>{g.lines.map((l) => (
+                  <tr key={l.id}><td>{l.label}</td><td className="num">{l.quantity}</td><td className="num mono">{formatMoney(l.price, cur)}</td><td><Gated feature="cart.remove" className="btn btn-sm btn-ghost" onClick={() => run('cart.remove', { lineId: l.id })}>Take It Out</Gated></td></tr>
+                ))}</tbody>
+              </table>
+            </div>
+            <div><Gated feature="cart.checkout" className="btn btn-sm" onClick={() => { const r = run<{ paid: number }>('cart.checkout', { chain: g.chain, payWith: way }); if (r.ok) toast(`${g.name}: ${formatMoney(r.value!.paid, cur)} paid.`, 'positive'); }}>{`Check Out At ${g.name}`}</Gated></div>
+          </div>
+        ))}
+      </div>
+    </Panel>
+  );
+}
+
 /** The town's groceries, cheapest first, each with its price a kilo, a liter or each. */
 function Groceries() {
   const { sim, run, toast } = useGame();
@@ -311,12 +373,16 @@ function Groceries() {
   const [view, setView] = useCatalogView(`groceries-${here}`);
   const shown = arrange(entries, view);
   const [count, setCount] = useState(PAGE);
+  // Up to three side by side (from 2026-10-04): what a kilo, a liter or one costs, and how long each keeps where it's kept.
+  const [compared, toggleCompare, clearCompare] = useCompare(`groceries-${here}`);
+  const side = compared.map((id) => entries.find((e) => e.id === id)).filter((e): e is (typeof entries)[number] => Boolean(e));
   const buy = useFeature('food.buy_groceries');
+  const [way, setWay] = useState<PayWith>('debit');
   if (entries.length === 0) return <Panel title="Groceries"><p className="small muted" style={{ margin: 0 }}>SLATE doesn’t keep a grocery chain’s prices in this town yet.</p></Panel>;
   return (
     <Panel title="Groceries" subtitle={`${entries.length} things from ${new Set(entries.map((e) => e.value.chain)).size === 1 ? 'one chain' : `${new Set(entries.map((e) => e.value.chain)).size} chains`}`}>
       <div className="col gap-3">
-        <CatalogControls id="groceries-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ aisle: 'Aisle', chain: 'Chain' }} />
+        <CatalogControls id="groceries-catalog" entries={entries} view={view} onChange={(v) => { setView(v); setCount(PAGE); }} facets={{ aisle: 'Aisle', chain: 'Chain' }} lead={<PayWithField id="groceries-pay" way={way} onChange={setWay} />} />
         <div className="table-scroll">
           <table>
             <thead><tr><th scope="col">Product</th><th scope="col">Chain</th><th scope="col" className="num">Unit Price</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
@@ -330,7 +396,7 @@ function Groceries() {
                     <td className="small">{e.facets?.chain}</td>
                     <td className="num mono small">{`${money(unit.price)} / ${unit.per}`}</td>
                     <td className="num mono">{catalogPrice(e, money)}</td>
-                    <td className="row gap-1"><FavoriteToggle list="groceries" id={e.id} /><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('food.buy_groceries', { productId: e.id, quantity: 1 }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button></td>
+                    <td className="row gap-1"><FavoriteToggle list="groceries" id={e.id} /><CompareToggle on={compared.includes(e.id)} onToggle={() => toggleCompare(e.id)} /><button type="button" className="btn btn-sm btn-ghost" disabled={!buy.open || Boolean(no)} title={no ?? buy.reason} onClick={() => { if (run('food.buy_groceries', { productId: e.id, quantity: 1, payWith: way }).ok) toast(`${e.label}, bought.`, 'positive'); }}>Buy</button><Gated feature="cart.add" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('cart.add', { kind: 'grocery', productId: e.id }).ok) toast(`${e.label}, in the basket.`, 'positive'); }}>Add To Basket</Gated></td>
                   </tr>
                 );
               })}
@@ -338,6 +404,14 @@ function Groceries() {
           </table>
         </div>
         {shown.length > count && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCount(count + PAGE)}>{shown.length - count <= PAGE ? `Show The Last ${shown.length - count}` : `Show ${PAGE} More Of ${shown.length - count}`}</button>}
+        <CompareTable heads={side.map((e) => e.label)} onClear={clearCompare} rows={[
+          { label: 'Price', values: side.map((e) => catalogPrice(e, money)) },
+          { label: 'Unit Price', values: side.map((e) => { const u = unitPrice(sim, here, e.value); return `${money(u.price)} / ${u.per}`; }) },
+          { label: 'Chain', values: side.map((e) => e.facets?.chain ?? '—') },
+          { label: 'Size', values: side.map((e) => (e.value.sizeUnit === 'ct' ? `${e.value.sizeQty} in the pack` : `${e.value.sizeQty} ${e.value.sizeUnit}`)) },
+          { label: 'Keeps', values: side.map((e) => (e.value.keepsDays === null ? '—' : `${e.value.keepsDays} ${e.value.keepsDays === 1 ? 'Day' : 'Days'}${e.value.keepsEstimated ? ' (Estimate)' : ''}`)) },
+          { label: 'Kept In', values: side.map((e) => STORAGE_WORD[e.value.storage] ?? e.value.storage) },
+        ]} />
         <Fine>Each product is its chain’s regular shelf price as its own data listed it, or a price tracker’s where the chain blocked the read, with the town’s sales tax where groceries carry one. How long each keeps where it’s kept is USDA FoodKeeper’s, from purchase, or SLATE’s estimate where FoodKeeper gives none. Groceries are bought in a store and go home.</Fine>
       </div>
     </Panel>
