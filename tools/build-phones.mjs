@@ -9,13 +9,15 @@
  * are launch prices from the press, Google's Mexican store having none, and
  * say so. Run: node tools/build-phones.mjs
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 
 // Names one plain space apart: the sources mix in non-breaking spaces, which never match a plain one.
 const r = JSON.parse(readFileSync('docs/research/world/research-phones.json', 'utf8').replaceAll(String.fromCharCode(160), ' '));
 const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-const phones = r.devices.filter((d) => typeof d.price === 'number').map((d) => ({
+// And from 2026-10-05 the other makers' phones, a tranche a file (docs/research/catalog/phones-*.json), in the same shape.
+const TRANCHES = existsSync('docs/research/catalog') ? readdirSync('docs/research/catalog').filter((f) => /^phones-.*.json$/.test(f)).sort().flatMap((f) => JSON.parse(readFileSync(`docs/research/catalog/${f}`, 'utf8').replaceAll(String.fromCharCode(160), ' ')).devices ?? []) : [];
+const phones = [...r.devices, ...TRANCHES].filter((d) => typeof d.price === 'number' && d.price > 0 && d.maker && d.model && typeof d.storageGB === 'number').map((d) => ({
   id: slug(`${d.market}-${d.maker}-${d.model}-${d.storageGB}`), market: d.market, maker: d.maker, model: d.model, storageGB: d.storageGB,
   colors: d.colors ?? [], price: d.price, currency: d.currency, taxIncluded: d.taxIncluded === true, released: d.releaseDate ?? null,
   press: /press|newspaper|launch/i.test(d.priceBasis ?? '') && d.maker === 'Google' && d.market === 'mx', source: d.source,

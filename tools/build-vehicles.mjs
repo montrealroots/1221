@@ -10,10 +10,40 @@
  * research's own notes; where the maker doesn't state it, nothing is added,
  * and the car says so.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 
 const r = JSON.parse(readFileSync('docs/research/world/research-vehicles.json', 'utf8'));
+// And from 2026-10-05 each market's other makes and models, a tranche a file (docs/research/catalog/cars-*.json, the same
+// shape): a model already in the catalog keeps its first reading, and one without a base price isn't sold.
+const TRANCHE_DIR = 'docs/research/catalog';
+// Ids the EV and pickup catalogs already hold, with their fuller readings: a tranche's same model isn't added again.
+const ELSEWHERE = new Set(['src/engine/content/evcatalog.ts', 'src/engine/content/pickups.ts'].flatMap((f) => [...readFileSync(f, 'utf8').matchAll(/id: ?['"]([a-z0-9-]+)['"]/g)].map((x) => x[1])));
+const idOf = (market, m) => `${market.toLowerCase()}-${slugOf(m.make)}-${slugOf(m.model)}`;
+const slugOf = (s) => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+for (const f of existsSync(TRANCHE_DIR) ? readdirSync(TRANCHE_DIR).filter((x) => /^cars-.*.json$/.test(x)).sort() : []) {
+  const t = JSON.parse(readFileSync(`${TRANCHE_DIR}/${f}`, 'utf8'));
+  for (const [market, list] of Object.entries(t.catalog ?? {})) {
+    const have = (r.catalog[market] ??= []);
+    for (const m of list ?? []) {
+      if (!m?.make || !m?.model || typeof m.basePrice?.amount !== 'number' || !(m.basePrice.amount > 0)) continue;
+      if (have.some((x) => x.make === m.make && x.model === m.model) || ELSEWHERE.has(idOf(market, m))) continue;
+      have.push({ ...m, rank: m.rank ?? null });
+    }
+  }
+}
+// Official economy read afterwards for those tranche models (`cars-economy.json`, from 2026-10-05): the EPA's for America
+// and Canada, the VCA's WLTP figures for Britain and Ireland, and CO2 where given. A model read with its own keeps it.
+const ECONOMY = existsSync(`${TRANCHE_DIR}/cars-economy.json`) ? JSON.parse(readFileSync(`${TRANCHE_DIR}/cars-economy.json`, 'utf8')).economy ?? [] : [];
+for (const e of ECONOMY) {
+  if (typeof e.value !== 'number' || !(e.value > 0)) continue;
+  for (const market of e.market === 'GB' ? ['GB', 'IE'] : [e.market]) {
+    const m = (r.catalog[market] ?? []).find((x) => x.make === e.make && x.model === e.model && x.rank === null);
+    if (!m) continue;
+    if (m.economy?.value == null) m.economy = { value: e.value, unit: e.unit, url: e.url, sourceType: 'primary', config: e.config };
+    if (m.co2gkm?.value == null && typeof e.co2gkm === 'number') m.co2gkm = { value: e.co2gkm };
+  }
+}
 
 // The charges on top of a base price, as the research's notes state them, by market and model.
 const DELIVERY = {
@@ -31,6 +61,15 @@ const DELIVERY = {
   'IE|Toyota Corolla': [1_000, 'delivery, €1,000, from Toyota Ireland’s finance example'],
   'IE|Volkswagen Tiguan': [2_080, 'delivery and service, €2,080, from Volkswagen Ireland'],
 };
+
+/** An EV's kWh a 100 km from what was published, a hundred miles' converted; nothing where none. */
+function kwh100(econ) {
+  if (!econ || econ.value == null) return undefined;
+  const u = String(econ.unit ?? '').toLowerCase();
+  if (u.includes('kwh/100mi')) return Math.round((econ.value / 1.609344) * 100) / 100;
+  if (u.includes('kwh/100km')) return econ.value;
+  return undefined;
+}
 
 /** Liters per 100 km from what was published. */
 function per100(econ) {
@@ -63,7 +102,9 @@ for (const market of ['US', 'CA', 'MX', 'GB', 'IE']) {
       deliveryBasis: d ? d[1] : (m.basePrice.includesTax ? 'what the price includes, as the maker states it' : 'no destination or freight charge the maker states; SLATE adds none'),
       // A diesel mild hybrid burns diesel: it's filed as a diesel, at the diesel pump.
       fuel: fuel.includes('phev') || fuel.includes('plug') ? 'phev' : fuel.includes('diesel') ? 'diesel' : fuel.includes('hybrid') ? 'hybrid' : fuel.includes('electric') || fuel === 'ev' ? 'ev' : 'petrol',
-      per100km: per100(m.economy),
+      per100km: fuel.includes('electric') || fuel === 'ev' ? null : per100(m.economy),
+      // An EV's own consumption where read, kWh a 100 km (from 2026-10-05).
+      ...(kwh100(m.economy) ? { kwhPer100km: kwh100(m.economy) } : {}),
       economyBasis: m.economy?.value != null ? `${m.economy.value} ${m.economy.unit}` : 'not yet rated',
       co2: m.co2gkm?.value ?? null,
       kerbKg: m.kerbWeightKg?.value ?? null,
@@ -94,7 +135,7 @@ export interface CarModel {
   id: string;
   /** A car where not given. */
   kind?: VehicleKind;
-  /** A pickup's body, from 2026-10-03 (`content/pickups.ts`): a car to drive, a goods vehicle to some taxes. */
+  /** A pickup's body, from 2026-10-03 (\`content/pickups.ts\`): a car to drive, a goods vehicle to some taxes. */
   body?: 'pickup';
   /** A motorcycle's or scooter's engine, cc: what taxes and insures it by size. */
   cc?: number;
@@ -102,7 +143,8 @@ export interface CarModel {
   make: string;
   model: string;
   trim: string;
-  rank: number;
+  /** Its place among the market's best-sellers of 2025, where it was one read; none for a model read from the rest of the lineup (from 2026-10-05). */
+  rank: number | null;
   /** The base price in cents of \`currency\`, and what's on top that the maker states. */
   price: number;
   currency: string;
@@ -112,7 +154,7 @@ export interface CarModel {
   fuel: 'petrol' | 'diesel' | 'hybrid' | 'phev' | 'ev';
   /** Liters per 100 km, or null where not yet rated. */
   per100km: number | null;
-  /** An electric car's consumption, kWh per 100 km (`content/evcatalog.ts`, from 2026-09-30). */
+  /** An electric car's consumption, kWh per 100 km (\`content/evcatalog.ts\`, from 2026-09-30). */
   kwhPer100km?: number;
   economyBasis: string;
   co2: number | null;

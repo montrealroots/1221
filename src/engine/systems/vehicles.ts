@@ -25,17 +25,33 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { CAR_MODELS as CATALOG, type CarModel, type VehicleKind } from '../content/vehiclecatalog';
 import { CA_WEIGHT_FEE, GB_PICKUP_TAX, PICKUP_BODIES, PICKUP_MODELS } from '../content/pickups';
+import { CHARGING, EV_MODELS, evIncentives } from '../content/evcatalog';
+
+/**
+ * A car read without its official economy (from 2026-10-05: most of each
+ * market's lineup beyond its best-sellers, whose makers' pages refused the
+ * read) takes the median of SLATE's rated cars of its fuel, kept as its
+ * economy and said to be SLATE's estimate, so it can be filled, charged and
+ * driven on: an EV's from the EV catalog's, any other's from the catalog's.
+ */
+const medianOf = (xs: readonly (number | null | undefined)[]): number | undefined => { const s = xs.filter((x): x is number => typeof x === 'number' && x > 0).sort((a, b) => a - b); return s.length ? s[s.length >> 1] : undefined; };
+const RATED_PER100 = Object.fromEntries((['petrol', 'diesel', 'hybrid', 'phev'] as const).map((f) => [f, medianOf(CATALOG.filter((m) => m.fuel === f).map((m) => m.per100km))]));
+const RATED_KWH = medianOf(EV_MODELS.map((m) => m.kwhPer100km));
+function rated(m: CarModel): CarModel {
+  if (m.fuel === 'ev') return m.kwhPer100km || RATED_KWH === undefined ? m : { ...m, kwhPer100km: RATED_KWH, economyBasis: `SLATE’s estimate: the middle of its rated EVs, ${RATED_KWH} kWh a 100 km` };
+  const est = RATED_PER100[m.fuel];
+  return m.per100km !== null || est === undefined ? m : { ...m, per100km: est, economyBasis: `SLATE’s estimate: the middle of its rated ${m.fuel === 'phev' ? 'plug-in hybrid' : m.fuel} cars, ${est} L a 100 km` };
+}
 
 /** The catalog's cars with its pickups marked and weighed, and the pickups added (`content/pickups.ts`). */
 export const CAR_MODELS: readonly CarModel[] = [
-  ...CATALOG.map((m) => { const p = PICKUP_BODIES[m.id]; return p ? { ...m, body: 'pickup' as const, kerbKg: m.kerbKg ?? p.kerbKg ?? null } : m; }),
+  ...CATALOG.map((m) => { const p = PICKUP_BODIES[m.id]; return rated(p ? { ...m, body: 'pickup' as const, kerbKg: m.kerbKg ?? p.kerbKg ?? null } : m); }),
   ...PICKUP_MODELS,
 ];
 export const isPickup = (m: CarModel): boolean => m.body === 'pickup';
 import { BIKE_MODELS } from '../content/bikecatalog';
 import { RV_MODELS } from '../content/rvcatalog';
 import { RIDE_MODELS } from '../content/ridecatalog';
-import { CHARGING, EV_MODELS, evIncentives } from '../content/evcatalog';
 import { chargingRewards, homeShareOf, kwhPrice } from './charging';
 import { registerTint, tintAtInspection, tintFuelFactor, tintOnTheRoad, type TintKind } from './tint';
 import { burn, capacityOf, everydayFuel, fillingOf, levelOf, lowAt, rangeKm } from './fueltank';

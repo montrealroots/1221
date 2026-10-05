@@ -64,9 +64,16 @@ The owner paused the session on 2026-10-04 to carry on in another and asked that
 - `2302f566` and `a4591f36`: washers, dryers and dishwashers by make and model (55 from 28 makers), fitted through `home.fit` with an `offerId`, each load billed at its ENERGY STAR energy a cycle where its model is certified (12 of 55; ENERGY STAR writes a family with `*` for a color letter).
 - `main` was merged as `fa2094d5`, with `e082d12a`'s files. **Merging from now on:** `git merge-tree` against `main` reports conflicts that aren't real, because the scratched Account 1 merges left that session's branch head as the common ancestor. Check instead that `main`'s tree is an ancestor state of the commit being merged (it was exactly `fcbe73c2`'s, and is now `e082d12a`'s), then `git commit-tree <commit>^{tree} -p origin/main -p <commit>` and push as a fast-forward.
 
+- `40d32435`: a checked bag the airline mishandles (`systems/baggage.ts`, decider `travel.bags`): delayed, damaged or lost at the DOT's and SITA's rates, and the claim on each, capped by Montreal or America's domestic limit.
+- `70bee39b`: a phone whose maker publishes no repair price is repaired at its share of its price (`REPAIR_SHARE`).
+- `ad60c507`: phones from 26 makers (`phones-a.json`).
+- The replay at `40d32435`, the first with the bag draw, was clean (New York 89, London 50, 0 errors and 0 anomalies), and `main` was merged from it as `2f7f2924`.
+- `4cee6df7`: clothing past 50 brands in nine categories (`research-clothing-swimsleep.json`, `research-clothing-shoesbags.json`): shoes 55, bags 50, watches 50, jewelry 50, swimwear 51, sleepwear 61, underwear 66, thermals 106; accessories 49.
+
 **Next, in order:**
-1. A checked bag mishandled by the airline (row 27e): `research-lost-baggage.json` was being read (DOT and SITA rates, delayed against lost, tracing days, the Montreal and DOT limits, interim expenses).
-2. EU-label energy for the British and Irish appliance models, and a dishwasher's runs on the bill.
+1. EU-label energy for the British and Irish appliance models, and a dishwasher's runs on the bill.
+2. More catalog breadth (`docs/CATALOG-COVERAGE.md`), each new category wired to something that reads it.
+3. The open rows of `docs/REQUIREMENTS.md`.
 3. More catalog breadth (`docs/CATALOG-COVERAGE.md`), then the open rows of `docs/REQUIREMENTS.md`.
 4. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`, 0 of 45 met), then the open rows in `docs/REQUIREMENTS.md`.
    - Rows a player can act on, with no published rate needed: 41c, a guest room and an office, each with something real that reads it.
