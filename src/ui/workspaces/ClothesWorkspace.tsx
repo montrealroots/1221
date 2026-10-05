@@ -610,6 +610,9 @@ function Bathroom() {
   const [way, setWay] = useState<PayWith>('debit');
   const useFirst = useFeature('hygiene.use_first');
   const shaveEvery = useFeature('hygiene.shave_every');
+  const makeupEvery = useFeature('hygiene.makeup_every');
+  const styleEvery = useFeature('hygiene.style_every');
+  const [kinds, setKinds] = useState<string[]>(person.makeup?.kinds ?? ['mascara', 'lipstick']);
   return (
     <Panel title="Your Bathroom" subtitle="Each shower uses its soap and shampoo, each day its toothpaste and deodorant; what runs out is bought again on a free day">
       <LookRegion className="col gap-3">
@@ -622,6 +625,36 @@ function Bathroom() {
             <option value="alternate">Every Other Day</option>
             <option value="daily">Daily</option>
           </select>
+        </div>
+        <div className="field-row">
+          <div className="field" style={{ maxWidth: '18rem' }}>
+            <label htmlFor="makeup-every">Wear Makeup</label>
+            <select id="makeup-every" disabled={!makeupEvery.open || kinds.length === 0} title={makeupEvery.reason} value={person.makeup?.every ?? ''} onChange={(e) => { if (run('hygiene.makeup_every', { every: e.target.value || null, kinds }).ok) toast(e.target.value ? 'With the morning wash on its days, each at the SCCS’s grams a day, bought again as it runs out.' : 'No makeup at home.', 'positive'); }}>
+              <option value="">Not At Home</option>
+              <option value="weekly">Weekly</option>
+              <option value="twice-weekly">Twice A Week</option>
+              <option value="alternate">Every Other Day</option>
+              <option value="daily">Daily</option>
+            </select>
+          </div>
+          <fieldset className="field">
+            <legend>What You Wear</legend>
+            <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+              {([['foundation', 'Foundation'], ['mascara', 'Mascara'], ['lipstick', 'Lipstick'], ['eye-shadow', 'Eye Shadow'], ['eyeliner', 'Eyeliner']] as const).map(([k, label]) => (
+                <label key={k} className="small row gap-1"><input type="checkbox" checked={kinds.includes(k)} onChange={(e) => { const next = e.target.checked ? [...kinds, k] : kinds.filter((x) => x !== k); setKinds(next); if (person.makeup && next.length) run('hygiene.makeup_every', { every: person.makeup.every, kinds: next }); }} />{label}</label>
+              ))}
+            </div>
+          </fieldset>
+          <div className="field" style={{ maxWidth: '18rem' }}>
+            <label htmlFor="style-every">Style Hair At Home</label>
+            <select id="style-every" disabled={!styleEvery.open} title={styleEvery.reason} value={person.styles ?? ''} onChange={(e) => { if (run('hygiene.style_every', { every: e.target.value || null }).ok) toast(e.target.value ? 'With the morning wash on its days: the SCCS’s grams a day of gel, wax or spray.' : 'No styling at home.', 'positive'); }}>
+              <option value="">Not At Home</option>
+              <option value="weekly">Weekly</option>
+              <option value="twice-weekly">Twice A Week</option>
+              <option value="alternate">Every Other Day</option>
+              <option value="daily">Daily</option>
+            </select>
+          </div>
         </div>
         {kept.length === 0 ? <p className="small muted" style={{ margin: 0 }}>SLATE doesn’t count toiletries where you live.</p> : (
           <div className="col gap-1 small">{kept.map((i) => (

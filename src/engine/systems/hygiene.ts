@@ -33,7 +33,7 @@ import { MS_DAY, type Instant } from '../core/time';
 import type { Money } from '../core/money';
 import { salesTaxRate } from '../content/tax';
 import { GROCERY_CHAINS } from '../content/groceries';
-import { SALONS, TOILETRIES as BATHROOM, type Salon, type Toiletry } from '../content/hygiene';
+import { COSMETIC_G_A_DAY, SALONS, TOILETRIES as BATHROOM, type Salon, type Toiletry } from '../content/hygiene';
 import { CLEANING } from '../content/cleaning';
 import type { CatalogEntry } from './catalog';
 import { inSaveMoney } from './banking';
@@ -191,6 +191,32 @@ export function shave(sim: Simulation, person: Person): boolean {
   return true;
 }
 
+/**
+ * Makeup and hair styling at home (the master plan's §31h, from 2026-10-05; `research-cosmetics.json`), as often as
+ * chosen: with the morning's wash on its days, each kind worn uses the SCCS's grams a day for it (its Notes of Guidance,
+ * Tables 3A and 3B: foundation 0.51, lipstick 0.057, hair styling 4.00 applied, mascara 0.025, eye shadow 0.02,
+ * eyeliner 0.005), a milliliter taken as a gram, from what's to hand; bought again as the rest are. It changes how much of
+ * each is used and bought, and nothing else: SLATE invents no effect of a face's makeup.
+ */
+export type MakeupKind = 'foundation' | 'lipstick' | 'mascara' | 'eye-shadow' | 'eyeliner';
+export const MAKEUP_KINDS: readonly MakeupKind[] = ['foundation', 'lipstick', 'mascara', 'eye-shadow', 'eyeliner'];
+const due = (last: number | undefined, every: ShaveEvery | undefined, at: Instant): boolean => every !== undefined && (last === undefined || at - last >= SHAVE_DAYS[every] * MS_DAY - 6 * 3_600_000);
+/** Makeup and hair styling with the wash, where due: the kinds used, each its grams a day, from what's to hand. */
+export function makeUp(sim: Simulation, person: Person): string[] {
+  if (!keepsSupplies(person)) return [];
+  const used: string[] = [];
+  if (person.makeup && due(person.lastMakeup, person.makeup.every, sim.now)) {
+    for (const kind of person.makeup.kinds) { const g = COSMETIC_G_A_DAY[kind]; if (g && take(sim, person, [kind], g)) used.push(kind); }
+    person.lastMakeup = sim.now;
+  }
+  const styling = COSMETIC_G_A_DAY['hair-styling'];
+  if (person.styles && styling && due(person.lastStyle, person.styles, sim.now)) {
+    if (take(sim, person, ['hair-styling'], styling)) used.push('hair-styling');
+    person.lastStyle = sim.now;
+  }
+  return used;
+}
+
 /** A day's teeth and deodorant: the freshness lost for what's missing. A toothbrush wears a day's share of its three months. */
 export function dailyCare(sim: Simulation, person: Person): number {
   if (!keepsSupplies(person)) return 0;
@@ -335,6 +361,23 @@ export function starterCleaning(sim: Simulation, person: Person, dishwasher: boo
 
 /** What's run out bought again on a free day, the cheapest of each in a store here; a worn toothbrush thrown out. How many bought. */
 export function registerShaving(sim: Simulation): void {
+  // Makeup worn at home, how often and which; hair styled, how often (from 2026-10-05).
+  sim.onCommand<{ every?: ShaveEvery | null; kinds?: string[] }, { every?: ShaveEvery; kinds?: MakeupKind[] }>('hygiene.makeup_every', (p, { sim: s }) => {
+    const every = p?.every;
+    if (every === null || every === undefined) { delete s.player.makeup; return {}; }
+    if (!(every in SHAVE_DAYS)) throw new CommandError('Choose how often.');
+    const kinds = MAKEUP_KINDS.filter((k) => (p.kinds ?? []).includes(k));
+    if (kinds.length === 0) throw new CommandError('Choose what you wear.');
+    s.player.makeup = { every, kinds };
+    return { every, kinds };
+  });
+  sim.onCommand<{ every?: ShaveEvery | null }, { styles?: ShaveEvery }>('hygiene.style_every', (p, { sim: s }) => {
+    const every = p?.every;
+    if (every === null || every === undefined) { delete s.player.styles; return {}; }
+    if (!(every in SHAVE_DAYS)) throw new CommandError('Choose how often.');
+    s.player.styles = every;
+    return { styles: every };
+  });
   sim.onCommand<{ every?: ShaveEvery | null }, { shaves?: ShaveEvery }>('hygiene.shave_every', (p, { sim: s }) => {
     const every = p?.every;
     if (every === null || every === undefined) { delete s.player.shaves; return {}; }
@@ -352,7 +395,9 @@ export function restock(sim: Simulation, person: Person, dishwasher = false): nu
   const cleaning = keepsCleaning(person) ? CLEANING_KEPT.filter((k) => dishwasher || k !== 'dishwasher-detergent') : [];
   // Razors and cream for someone who shaves (from 2026-10-03).
   const shaving = person.shaves ? (['razor', 'shaving-cream'] as const) : [];
-  for (const kind of [...KEPT, ...cleaning, ...shaving]) {
+  // The makeup worn and the hair styling, for someone who uses them (from 2026-10-05).
+  const cosmetics = [...(person.makeup?.kinds ?? []), ...(person.styles ? ['hair-styling'] : [])];
+  for (const kind of [...KEPT, ...cleaning, ...shaving, ...cosmetics]) {
     const have = toHand(sim, person, kind).filter((i) => kind !== 'toothbrush' || i.condition > 0);
     // A detergent is bought again with a week's use left, as people buy it before it's out: until 2026-10-02 only once it
     // was, and a working life went weeks without washing between free days (the lives replayed at ce72adf3: 1,048 refused).

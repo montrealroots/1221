@@ -4,7 +4,7 @@ Built by `tools/devmap.mjs --write` from the code, and checked by the gate (`--c
 
 Each command the player can run: the engine file that handles it, the screens that run it, the tests that run it, and the guide’s chapter that opens it. A test counts where it names the command; a command a test reaches only through another isn’t counted.
 
-364 commands; 358 named by a test, 6 not.
+367 commands; 361 named by a test, 6 not.
 
 ## aircraft
 
@@ -361,7 +361,9 @@ Each command the player can run: the engine file that handles it, the screens th
 |---|---|---|---|---|
 | `hygiene.buy` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` `TimeControls.tsx` | `hygiene.test.ts` `shortfalls.test.ts` `usefirst.test.ts` | Rent And A Roof |
 | `hygiene.groom` | `src/engine/systems/life.ts` | `ClothesWorkspace.tsx` `RoutinesWorkspace.tsx` | `hygiene.test.ts` `trips.test.ts` | Rent And A Roof |
+| `hygiene.makeup_every` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `makeup.test.ts` | Rent And A Roof |
 | `hygiene.shave_every` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `shaving.test.ts` | Rent And A Roof |
+| `hygiene.style_every` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `makeup.test.ts` | Rent And A Roof |
 | `hygiene.use_first` | `src/engine/systems/hygiene.ts` | `ClothesWorkspace.tsx` | `usefirst.test.ts` | Rent And A Roof |
 
 ## items
@@ -528,6 +530,12 @@ Each command the player can run: the engine file that handles it, the screens th
 | Command | Handled In | Screens | Tests | Guide Chapter |
 |---|---|---|---|---|
 | `speaker.buy` | `src/engine/systems/speakers.ts` | `HomesWorkspace.tsx` | `speakers.test.ts` | Rent And A Roof |
+
+## sport
+
+| Command | Handled In | Screens | Tests | Guide Chapter |
+|---|---|---|---|---|
+| `sport.buy` | `src/engine/systems/sportsgear.ts` | `BelongingsWorkspace.tsx` | `sportsgear.test.ts` | Rent And A Roof |
 
 ## tax
 

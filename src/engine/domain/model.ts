@@ -324,6 +324,11 @@ export interface Person {
   /** How often they shave at home, chosen (`systems/hygiene.ts`, from 2026-10-03); not at all where unset. */
   shaves?: import('../systems/hygiene').ShaveEvery;
   lastShave?: number;
+  /** Makeup worn at home, how often and which (from 2026-10-05); hair styled, how often. Neither where unset. */
+  makeup?: { every: import('../systems/hygiene').ShaveEvery; kinds: import('../systems/hygiene').MakeupKind[] };
+  lastMakeup?: number;
+  styles?: import('../systems/hygiene').ShaveEvery;
+  lastStyle?: number;
   /** Jewelry and watches pledged at a pawnbroker (`systems/pawn.ts`, from 2026-10-02). */
   pawns?: import('../systems/pawn').Pawn[];
   /** This month's test drive of a used car (`systems/usedcars.ts`, from 2026-10-03). */

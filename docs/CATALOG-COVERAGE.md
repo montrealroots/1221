@@ -40,7 +40,7 @@ which never counts toward the target.
 | Home | Lighting | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Home | Kitchenware | 39 | 78% | 68 | 1 / 1 / 6 | 0 | 68 | 69 | 0 | CA, GB, IE, MX, US | No |
 | Personal Care | Toiletries And Grooming | 82 | 100% | 182 | 1 / 1 / 15 | 0 | 182 | 183 | 1 | CA, GB, IE, MX, US | No |
-| Personal Care | Cosmetics And Haircare | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
+| Personal Care | Cosmetics And Haircare | 26 | 52% | 62 | 1 / 1 / 10 | 0 | 62 | 64 | 0 | CA, GB, IE, MX, US | No |
 | Household | Cleaning Products And Consumables | 59 | 100% | 119 | 1 / 1 / 9 | 0 | 119 | 124 | 0 | CA, GB, IE, MX, US | No |
 | Food | Groceries | 160 | 100% | 461 | 1 / 1 / 59 | 0 | 461 | 472 | 41 | CA, GB, IE, MX, US | No |
 | Food | Beverages | 57 | 100% | 71 | 1 / 1 / 3 | 0 | 71 | 74 | 1 | CA, GB, IE, MX, US | No |
@@ -55,7 +55,7 @@ which never counts toward the target.
 | Vehicles | Car Audio | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Building And Garden | Building Materials, Fixtures And Finishes | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Building And Garden | Garden Equipment | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
-| Sport | Sports Equipment | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
+| Sport | Sports Equipment | 42 | 84% | 117 | 1 / 2 / 19 | 0 | 117 | 117 | 0 | CA, GB, IE, MX, US | No |
 | Pets | Pet Supplies | 57 | 100% | 85 | 1 / 1 / 3 | 0 | 85 | 88 | 11 | CA, GB, IE, MX, US | No |
 
 0 of 45 brand and narrow categories meet the target.

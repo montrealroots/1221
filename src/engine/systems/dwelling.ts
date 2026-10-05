@@ -62,6 +62,7 @@ import { gymHere } from './gyms';
 import { personalityOf } from './personality';
 import { burgleValuables, scheduledMonth } from './valuables';
 import { homeKeyOf } from './items';
+import { gearRefusal, type Game } from './sportsgear';
 import { someoneHome } from './away';
 
 // ---------------------------------------------------------------------------
@@ -669,7 +670,8 @@ export function courtRefusal(sim: Simulation, person: Person, court: { court: st
     const dark = sun.polar === 'night' || (sun.polar !== 'day' && (sun.sunrise === undefined || sun.sunset === undefined || sim.now < sun.sunrise || sim.now >= sun.sunset));
     if (dark) return 'It’s dark, and the court has no lights.';
   }
-  return undefined;
+  // What the game is played with, owned and at home, once the court can be played on (`systems/sportsgear.ts`, from 2026-10-05).
+  return gearRefusal(person, court.court as Game);
 }
 
 /**

@@ -18,6 +18,7 @@ import { contactsOf, newContact } from '@/engine/systems/people';
 import { atWork } from '@/engine/systems/availability';
 import { billsOf } from '@/engine/systems/household';
 import { lookAfterRefusal } from '@/engine/systems/life';
+import { addItem, homeKeyOf } from '@/engine/systems/items';
 
 const bare: Fixtures = { bathtub: false, dishwasher: false, laundry: 'none', cooling: 'none', outdoor: 'none', gym: 'none' };
 const LA = 'us-ca-losangeles';
@@ -26,6 +27,8 @@ const home = (features: Feature[], seed = 'courts') => {
   const facts: HomeFacts = { type: 'house', address: 'Test Home', beds: 3, baths: 2, size: 1_800, built: 2000, features: ['yard', ...features], parts: {}, hoaUsd: 0, fixtures: bare, lot: 12_000 } as HomeFacts;
   moveIntoOwned(sim, sim.player, ownBuilt(sim, sim.player, { cityId: LA, facts, price: 900_000_00, closing: 0 }));
   sim.player.currentLocationId = LA;
+  // What each game is played with, at home (from 2026-10-05).
+  for (const kind of ['tennis-racket', 'tennis-balls', 'pickleball-paddle', 'pickleballs', 'basketball', 'football'] as const) addItem(sim, sim.player, { kind: `sport:${kind}`, label: kind, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(sim.player.home)!, spot: 'storage' }, acquiredAt: sim.now, sportGear: { kind } });
   return sim;
 };
 /** The next hour, from now, that's fine to play in, in daylight or after dark. */
