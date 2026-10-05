@@ -31,7 +31,7 @@ which never counts toward the target.
 | Electronics | Phones | 45 | 90% | 102 | 1 / 2 / 10 | 0 | 226 | 369 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 0 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
 | Electronics | Computers | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
-| Electronics | Televisions | 24 | 48% | 220 | 1 / 5 / 40 | 0 | 222 | 261 | 0 | CA, GB, IE, MX, US | No |
+| Electronics | Televisions | 38 | 76% | 251 | 1 / 3 / 40 | 0 | 253 | 294 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Audio Equipment | 35 | 70% | 156 | 1 / 3 / 13 | 0 | 188 | 161 | 0 | GB, US | No |
 | Home | Furniture | 65 | 100% | 221 | 1 / 2 / 90 | 0 | 221 | 294 | 0 | CA, GB, IE, MX, US | No |
 | Home | Mattresses And Beds | 53 | 100% | 88 | 1 / 1 / 29 | 0 | 88 | 249 | 0 | CA, GB, IE, MX, US | No |
@@ -47,7 +47,7 @@ which never counts toward the target.
 | Vehicles | Cars, Pickups And Vans | 74 | 100% | 481 | 1 / 4 / 22 | 0 | 481 | 829 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Motorcycles And Scooters | 66 | 100% | 580 | 1 / 7 / 44 | 0 | 580 | 691 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Bicycles, E-Bikes And ATVs | 72 | 100% | 354 | 1 / 4 / 17 | 0 | 354 | 372 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Motorhomes And Campervans | 10 | 20% | 19 | 1 / 2 / 4 | 0 | 19 | 21 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Motorhomes And Campervans | 38 | 76% | 65 | 1 / 2 / 4 | 0 | 65 | 67 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Boats | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: recreational boat makers number in the dozens, few publishing prices |
 | Vehicles | Light Aircraft | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: a handful of makers build new light aircraft for private owners |
 | Vehicles | Factory Options | 16 | 32% | 643 | 5 / 34 / 136 | 1 | 643 | 643 | 0 | CA, GB, IE, MX, US | No |

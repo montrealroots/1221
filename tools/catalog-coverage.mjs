@@ -31,6 +31,7 @@ import { MOTO_MODELS } from '../src/engine/content/motocatalog.ts';
 import { RIDE_LINEUP } from '../src/engine/content/ridelineup.ts';
 import { RIDE_MODELS } from '../src/engine/content/ridecatalog.ts';
 import { RV_MODELS } from '../src/engine/content/rvcatalog.ts';
+import { RV_LINEUP } from '../src/engine/content/rvlineup.ts';
 import { CAR_OPTIONS } from '../src/engine/content/caroptions.ts';
 import { HOTELS } from '../src/engine/content/hotels.ts';
 import { RESTAURANTS } from '../src/engine/content/restaurants.ts';
@@ -81,7 +82,7 @@ const READ = {
   cars: () => cars([...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS]),
   motorcycles: () => cars([...BIKE_MODELS, ...MOTO_MODELS]),
   bicycles: () => cars([...RIDE_MODELS, ...RIDE_LINEUP]),
-  rvs: () => cars(RV_MODELS),
+  rvs: () => cars([...RV_MODELS, ...RV_LINEUP]),
   'car-options': () => { const make = new Map([...CAR_MODELS, ...EV_MODELS, ...PICKUP_MODELS].map((m) => [m.id, m.make])); return CAR_OPTIONS.map((o) => row(make.get(o.carId) ?? null, o.key, 1, o.carId.slice(0, 2))); },
 };
 
