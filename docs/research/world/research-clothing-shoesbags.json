@@ -1,0 +1,1033 @@
+{
+ "meta": {
+  "title": "New-brand research for footwear, bags, accessories, watches and jewelry: US, GB, IE, CA, MX",
+  "compiled": "2026-10-05",
+  "priceBasis": "price = regular (pre-markdown) price as listed by the retailer on its own site for that market, before sales tax/VAT/IVA unless the market's shelf price is tax-inclusive by law (GB, IE, MX). salePrice records a markdown seen on 2026-10-05, else null.",
+  "confirmedMeaning": "true = read on the product page itself (price tied to a named SKU on the brand's own domain); false = category listing, search-engine snippet or secondary retailer.",
+  "scope": "Only brands NOT already present in the game's existing clothing-brands.json for that category. Categories: footwear, bags, accessories, watches, jewelry.",
+  "counts": {
+   "retailers": 85,
+   "products": 244,
+   "newBrandsByCategory": {
+    "footwear": 10,
+    "bags": 15,
+    "accessories": 17,
+    "watches": 28,
+    "jewelry": 16
+   },
+   "resultingBrandTotalByCategory": {
+    "footwear": 54,
+    "bags": 51,
+    "accessories": 50,
+    "watches": 50,
+    "jewelry": 50
+   }
+  }
+ },
+ "retailers": [
+  {
+   "id": "birkenstock-us",
+   "name": "Birkenstock",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "EU sizing with US conversion shown per style",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "https://www.birkenstock.com/us/us-policies-return.html (via search; free-shipping threshold not confirmed)"
+   },
+   "returns": {
+    "days": 30,
+    "conditions": "from delivery; free return with prepaid UPS label; original shipping charges not refunded; styles discounted 40% or more are final sale",
+    "source": "https://www.birkenstock.com/us/us-policies-return.html (via search)"
+   }
+  },
+  {
+   "id": "timberland-us",
+   "name": "Timberland",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US numeric, men's and women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "https://help.timberland.com/hc/en-us/articles/115004585668-Free-Return-Policy (via search; outbound free-shipping threshold not confirmed)"
+   },
+   "returns": {
+    "days": 30,
+    "conditions": "from shipment; unworn, unwashed, unaltered; free pre-paid return label; refund in 6-10 business days; original shipping not refunded",
+    "source": "https://help.timberland.com/hc/en-us/articles/115004585668-Free-Return-Policy (via search)"
+   }
+  },
+  {
+   "id": "geox-us",
+   "name": "Geox",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "EU sizing with US conversion shown per style",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": 55,
+    "standardDeliveryDays": null,
+    "source": "geoxus.us FAQ (via search)"
+   },
+   "returns": {
+    "days": 30,
+    "conditions": "from delivery; unworn, original condition; customer pays return shipping; final-sale and in-store purchases excluded",
+    "source": "geox.com help pages (via search)"
+   }
+  },
+  {
+   "id": "colehaan-us",
+   "name": "Cole Haan",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US numeric, men's and women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": 99,
+    "standardDeliveryDays": null,
+    "source": "https://www.colehaan.com/returns.html (via search)"
+   },
+   "returns": {
+    "days": 30,
+    "conditions": "from purchase; unworn/unaltered; free return shipping if authorized within 14 days of shipment, else $7.95 fee deducted from refund",
+    "source": "https://www.colehaan.com/returns.html (via search)"
+   }
+  },
+  {
+   "id": "samedelman-us",
+   "name": "Sam Edelman",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US numeric, women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": 99,
+    "standardDeliveryDays": null,
+    "source": "https://www.samedelman.com/customer-service/shipping (via search)"
+   },
+   "returns": {
+    "days": 30,
+    "conditions": "from purchase; unworn, original box",
+    "source": "https://www.samedelman.com/customer-service/returns-and-exchanges (via search)"
+   }
+  },
+  {
+   "id": "hunterboots-us",
+   "name": "Hunter Boots",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US numeric, men's and women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": 12.95,
+    "freeShippingThreshold": 100,
+    "standardDeliveryDays": "5-8 business days (economy)",
+    "source": "hunterboots.com policies (via search)"
+   },
+   "returns": {
+    "days": 30,
+    "conditions": "from delivery; unworn, original shoebox; free via Happy Returns Bar, $6.95 restocking fee by mail",
+    "source": "https://hunterboots.com/policies/refund-policy (via search)"
+   }
+  },
+  {
+   "id": "merrell-us",
+   "name": "Merrell",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US numeric, men's and women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": 75,
+    "standardDeliveryDays": null,
+    "source": "https://www.merrell.com/US/en/returns (via search); free express shipping threshold $125"
+   },
+   "returns": {
+    "days": 30,
+    "conditions": "from shipment; unworn, original shoebox/apparel bag; free return; final-sale items excluded; original shipping not refunded",
+    "source": "https://www.merrell.com/US/en/returns (via search)"
+   }
+  },
+  {
+   "id": "teva-us",
+   "name": "Teva",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US numeric, men's and women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": 50,
+    "standardDeliveryDays": null,
+    "source": "https://www.teva.com/return-policy (via search)"
+   },
+   "returns": {
+    "days": 30,
+    "conditions": "from receipt; direct Teva.com or authorized retailer purchases",
+    "source": "https://www.teva.com/return-policy (via search)"
+   }
+  },
+  {
+   "id": "sperry-us",
+   "name": "Sperry",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US numeric, men's and women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": 69,
+    "standardDeliveryDays": null,
+    "source": "https://www.sperry.com/pages/customer-service-returns (via search)"
+   },
+   "returns": {
+    "days": 60,
+    "conditions": "from purchase; unworn, original packaging, receipt or gift receipt; free in-store, $6.95 fee by mail/Happy Returns Bar",
+    "source": "https://www.sperry.com/pages/customer-service-returns (via search)"
+   }
+  },
+  {
+   "id": "redwingshoes-us",
+   "name": "Red Wing Shoes",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "US numeric, men's and women's; D/E/EE widths",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": 50,
+    "standardDeliveryDays": null,
+    "source": "https://www.redwingshoes.com/contact-us/returns.html (via search; $50 threshold reported for members)"
+   },
+   "returns": {
+    "days": 30,
+    "conditions": "from receipt; return in store or by mail; free return shipping for online orders",
+    "source": "https://www.redwingshoes.com/contact-us/returns.html (via search)"
+   }
+  },
+  {
+   "id": "katespade-us",
+   "name": "Kate Spade New York",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "one-size bags",
+   "storesIn": ["us-ny-newyork"],
+   "storesNote": "store locations not fully checked; NYC flagship presence well known",
+   "online": {"shippingFee": null, "freeShippingThreshold": 50, "standardDeliveryDays": null, "source": "https://www.katespade.com/support/return-policy (via search)"},
+   "returns": {"days": 30, "conditions": "unused, unworn, original condition with tags and packaging; refund in 5-10 business days after receipt", "source": "https://www.katespade.com/support/return-policy (via search)"}
+  },
+  {
+   "id": "toryburch-us",
+   "name": "Tory Burch",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "one-size bags",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": "4-6 business days", "source": "toryburch.com policy pages (via search)"},
+   "returns": {"days": 30, "conditions": "free returns with prepaid label within 30 days of delivery for full-price items; discounted non-final-sale items 14 days; outlet 14 days", "source": "toryburch.com policy pages (via search)"}
+  },
+  {
+   "id": "radley-gb",
+   "name": "Radley London",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "one-size bags",
+   "storesIn": ["uk-eng-london"],
+   "storesNote": "store locations not fully checked; London presence well known",
+   "online": {"shippingFee": 4.50, "freeShippingThreshold": 125, "standardDeliveryDays": null, "source": "https://www.radley.co.uk/pages/faqs (via search)"},
+   "returns": {"days": 14, "conditions": "from receipt; free Royal Mail UK returns label; some pages cite 30 days for a refund under terms and conditions, discrepancy not resolved by source", "source": "https://www.radley.co.uk/pages/returns (via search)"}
+  },
+  {
+   "id": "cambridgesatchel-gb",
+   "name": "Cambridge Satchel Company",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "one-size bags",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": 6.95, "freeShippingThreshold": 175, "standardDeliveryDays": "3-5 working days", "source": "https://www.cambridgesatchel.com/pages/delivery (via search)"},
+   "returns": {"days": 28, "conditions": "unused and unembossed items within 28 days of receipt; contact within 14 days requested; embossed items not returnable; customer pays return shipping unless faulty", "source": "https://www.cambridgesatchel.com/pages/returns-refunds (via search)"}
+  },
+  {
+   "id": "fossil-us",
+   "name": "Fossil",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "one-size bags",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 75, "standardDeliveryDays": null, "source": "fossil.com product care/policy pages (via search)"},
+   "returns": {"days": 30, "conditions": "unworn, unwashed, with tags and original packaging; free prepaid return label; original shipping not refunded", "source": "fossil.com policy pages (via search)"}
+  },
+  {
+   "id": "herschel-us",
+   "name": "Herschel Supply Co.",
+   "market": "US",
+   "kind": "accessible",
+   "sizeSystem": "one-size bags/backpacks",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": 25, "freeShippingThreshold": 75, "standardDeliveryDays": null, "source": "https://herschel.com/pages/returns (via search); $25 fee applies to AK/HI"},
+   "returns": {"days": 30, "conditions": "from delivery; unused, unwashed, original tags; $5 flat deduction from refund on paid returns, free for exchange/store credit; final sale excluded", "source": "https://herschel.com/pages/returns (via search)"}
+  },
+  {
+   "id": "baggu-us",
+   "name": "Baggu",
+   "market": "US",
+   "kind": "accessible",
+   "sizeSystem": "one-size bags",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 50, "standardDeliveryDays": null, "source": "https://baggu.com/faq (via search)"},
+   "returns": {"days": 30, "conditions": "full-price items, unused condition, from purchase; sale items and face masks final sale", "source": "https://checkout.baggu.com/pages/returns (via search)"}
+  },
+  {
+   "id": "loandsons-us",
+   "name": "Lo & Sons",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "one-size bags",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 250, "standardDeliveryDays": null, "source": "https://www.loandsons.com/policies/shipping-policy (via search)"},
+   "returns": {"days": 30, "conditions": "unused products from receipt; $10 return shipping/processing fee deducted from refund", "source": "https://www.loandsons.com/policies/refund-policy (via search)"}
+  },
+  {
+   "id": "senreve-us",
+   "name": "Senreve",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "one-size bags",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": 15, "freeShippingThreshold": 300, "standardDeliveryDays": null, "source": "https://www.senreve.com/pages/delivery-returns (via search)"},
+   "returns": {"days": 30, "conditions": "full-priced, unworn, tags and protective stickers attached, from receipt; $15 return fee deducted unless partial refund/exchange/store credit", "source": "https://www.senreve.com/pages/delivery-returns (via search)"}
+  },
+  {
+   "id": "strathberry-us",
+   "name": "Strathberry",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "one-size bags",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 200, "standardDeliveryDays": null, "source": "https://us.strathberry.com/pages/delivery (via search)"},
+   "returns": {"days": 30, "conditions": "from delivery; free returns on eligible US orders; personalized items and pierced jewelry non-returnable unless faulty", "source": "https://us.strathberry.com/pages/returns (via search)"}
+  },
+  {
+   "id": "aspinaloflondon-gb",
+   "name": "Aspinal of London",
+   "market": "GB",
+   "kind": "premium",
+   "sizeSystem": "one-size bags",
+   "storesIn": ["uk-eng-london"],
+   "storesNote": "store locations not fully checked; London presence well known",
+   "online": {"shippingFee": 4.95, "freeShippingThreshold": 150, "standardDeliveryDays": null, "source": "helpdesk.aspinaloflondon.com delivery pages (via search)"},
+   "returns": {"days": 30, "conditions": "full-priced items 30 days, sale/discounted items 14 days, from receipt; UK returns free", "source": "thrifle.com / aspinaloflondon.com policy summary (via search)"}
+  },
+  {
+   "id": "furla-us",
+   "name": "Furla",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "one-size bags",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": 10, "freeShippingThreshold": 350, "standardDeliveryDays": null, "source": "https://www.furla.com/us/en/eshop/faq/returns (via search)"},
+   "returns": {"days": 14, "conditions": "from delivery; new condition, tags and original packaging; Final Sale/Sale Special/Outlet excluded; no restocking fee", "source": "https://www.furla.com/us/en/eshop/faq/returns (via search)"}
+  },
+  {
+   "id": "guess-us",
+   "name": "Guess",
+   "market": "US",
+   "kind": "accessible",
+   "sizeSystem": "one-size bags",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "https://www.guess.com/en-us/topic-returns.html (via search); free-shipping threshold not confirmed"},
+   "returns": {"days": 30, "conditions": "unworn, unwashed or defective merchandise, from shipment; customer pays return shipping; refund in 5-8 business days", "source": "https://www.guess.com/en-us/topic-returns.html (via search)"}
+  },
+  {
+   "id": "cuyana-us",
+   "name": "Cuyana",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "one-size bags",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": 5, "freeShippingThreshold": 95, "standardDeliveryDays": null, "source": "https://support.cuyana.com/hc/en-us/articles/6326882594708 (via search)"},
+   "returns": {"days": 30, "conditions": "unused and unworn, from shipment; digital gift card refund covers return shipping, or $8 fee deducted for refund to original payment; monogrammed/final sale excluded", "source": "https://support.cuyana.com/hc/en-us/articles/6326882594708 (via search)"}
+  },
+  {
+   "id": "polene-us",
+   "name": "Polène",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "one-size bags",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": "up to 5 business days", "source": "https://support.polene-paris.com/hc/en-us/articles/32944177178002 (via search); free-shipping threshold not found"},
+   "returns": {"days": 30, "conditions": "from receipt; unworn/unused; prepaid return label at a preferential rate deducted from refund, not complimentary", "source": "https://support.polene-paris.com/hc/en-us/articles/32955048384530 (via search)"}
+  },
+  {
+   "id": "oakley-us",
+   "name": "Oakley",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "one-size frames",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 50, "standardDeliveryDays": null, "source": "https://www.oakley.com/en-us/support/shopping-support (via search)"},
+   "returns": {"days": 30, "conditions": "from receipt; unused, untested, original packaging and tags; custom items excluded", "source": "oakleysi.com/oakley.com policy pages (via search)"}
+  },
+  {
+   "id": "warbyparker-us",
+   "name": "Warby Parker",
+   "market": "US",
+   "kind": "accessible",
+   "sizeSystem": "one-size frames",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": null, "source": "warbyparker.com policy pages (via search); no minimum found"},
+   "returns": {"days": 30, "conditions": "no-questions-asked, online or in store; free prepaid return label; like-new condition with original packaging", "source": "warbyparker.com policy pages (via search)"}
+  },
+  {
+   "id": "persol-us",
+   "name": "Persol",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "one-size frames",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": null, "source": "https://www.persol.com/en-us/pages/returns-policy (via search)"},
+   "returns": {"days": 45, "conditions": "from receipt; free shipping and return shipping", "source": "https://www.persol.com/en-us/pages/returns-policy (via search)"}
+  },
+  {
+   "id": "kangol-us",
+   "name": "Kangol",
+   "market": "US",
+   "kind": "accessible",
+   "sizeSystem": "US/UK hat sizes and one-size adjustable",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 79, "standardDeliveryDays": null, "source": "https://kangol.com/pages/shipping-returns (via search)"},
+   "returns": {"days": 30, "conditions": "from ship date; unworn with original tags; $9.99 processing/shipping/restocking fee deducted from refund", "source": "https://kangol.com/pages/shipping-returns (via search)"}
+  },
+  {
+   "id": "brixton-us",
+   "name": "Brixton",
+   "market": "US",
+   "kind": "accessible",
+   "sizeSystem": "US hat sizes and one-size adjustable",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": 7, "freeShippingThreshold": 99, "standardDeliveryDays": null, "source": "brixton.com policy pages (via search)"},
+   "returns": {"days": 30, "conditions": "from shipment; unworn/unused, original packaging and tags; free return shipping; $5 restocking fee for hats", "source": "brixton.com policy pages (via search)"}
+  },
+  {
+   "id": "stetson-us",
+   "name": "Stetson",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US hat sizes",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 99, "standardDeliveryDays": null, "source": "help.stetson.com / stetson.com policy pages (via search)"},
+   "returns": {"days": 30, "conditions": "from delivery; boot returns free, apparel/hats $10 return-shipping fee deducted from refund", "source": "help.stetson.com / stetson.com policy pages (via search)"}
+  },
+  {
+   "id": "dentsgloves-gb",
+   "name": "Dents",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "UK/EU glove sizes (6-10)",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 170, "standardDeliveryDays": null, "source": "us.dentsgloves.com shipping/returns pages (via search); threshold is for US site"},
+   "returns": {"days": 28, "conditions": "from receipt; re-saleable condition with tags; $5 restocking fee if tags removed; $8 return charge", "source": "us.dentsgloves.com returns page (via search)"}
+  },
+  {
+   "id": "bellroy-us",
+   "name": "Bellroy",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "one-size wallets",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": "3-7 business days", "source": "https://bellroy.com/customer-care (via search)"},
+   "returns": {"days": 30, "conditions": "from delivery; original condition and packaging; return shipping not covered for change-of-mind returns", "source": "https://bellroy.com/customer-care (via search)"}
+  },
+  {
+   "id": "tumi-us",
+   "name": "Tumi",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "one-size wallets",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "tumi.com customer service pages (via search); free-shipping threshold not confirmed"},
+   "returns": {"days": 30, "conditions": "from receipt; complimentary, by mail or with proof of purchase in store; original unused condition with packaging, tags and accessories", "source": "tumi.com customer service pages (via search)"}
+  },
+  {
+   "id": "montblanc-us",
+   "name": "Montblanc",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "one-size wallets",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 60, "standardDeliveryDays": null, "source": "montblanc.com customer-service pages (via search)"},
+   "returns": {"days": 20, "conditions": "from delivery; original condition, tags and packaging; pre-paid UPS return label included", "source": "montblanc.com customer-service pages (via search)"}
+  },
+  {
+   "id": "johnstonsofelgin-gb",
+   "name": "Johnstons of Elgin",
+   "market": "GB",
+   "kind": "premium",
+   "sizeSystem": "one-size scarves",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "johnstonsofelgin.com delivery/returns page (via search); UK threshold not confirmed, EU threshold ~€250 for some destinations"},
+   "returns": {"days": 14, "conditions": "from delivery; new, unused, unworn with tags; free UK returns via Royal Mail, free express via DHL", "source": "https://johnstonsofelgin.com/en-us/pages/customer-assistance-delivery-returns (via search)"}
+  },
+  {
+   "id": "acnestudios-us",
+   "name": "Acne Studios",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "one-size scarves",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": null, "source": "acnestudios.com shipping-information page (via search)"},
+   "returns": {"days": 14, "conditions": "notice of withdrawal within 14 days of receipt, then return within 14 days of that notice; sale items final sale", "source": "acnestudios.com shopping-help pages (via search)"}
+  },
+  {
+   "id": "smithoptics-us",
+   "name": "Smith Optics",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "one-size frames",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 50, "standardDeliveryDays": null, "source": "https://www.smithoptics.com/en-us/policies/shipping-policy (via search)"},
+   "returns": {"days": 30, "conditions": "from purchase; unused, original packaging; $10 return label fee deducted from refund; Pro Program orders excluded", "source": "smithoptics.com support pages (via search)"}
+  },
+  {
+   "id": "quayaustralia-us",
+   "name": "Quay Australia",
+   "market": "US",
+   "kind": "accessible",
+   "sizeSystem": "one-size frames",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "quay.com/quayaustralia.com.au product-returns pages (via search); US threshold not found, AU threshold $75"},
+   "returns": {"days": 30, "conditions": "full-priced items from delivery; original packaging; $6.50 shipping charge deducted for change-of-mind; sale items final sale", "source": "quay.com/quayaustralia.com.au product-returns pages (via search)"}
+  },
+  {
+   "id": "vonzipper-us",
+   "name": "Von Zipper",
+   "market": "US",
+   "kind": "accessible",
+   "sizeSystem": "one-size frames",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 65, "standardDeliveryDays": null, "source": "us.vonzipper.com return-policy page (via search)"},
+   "returns": {"days": 30, "conditions": "from receipt; free return shipping; direct vonzipper.com purchases only; tags/unworn/unaltered required", "source": "us.vonzipper.com return-policy page (via search)"}
+  },
+  {
+   "id": "barts-eu",
+   "name": "Barts",
+   "market": "GB",
+   "kind": "accessible",
+   "sizeSystem": "one-size hats/scarves",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": "1-5 business days (standard 3-4 working days)", "source": "https://www.barts.eu/support/shipping (via search); threshold not found"},
+   "returns": {"days": 30, "conditions": "from receipt; unwashed, unworn, unaltered with labels; shipping label valid 5 days; refund within 5 working days of processing", "source": "https://www.barts.eu/support/returns (via search)"}
+  },
+  {"id": "hamiltonwatch-us", "name": "Hamilton", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": "5-7 business days (standard)", "source": "https://www.hamiltonwatch.com/en-us/shipping-policy (via search)"},
+   "returns": {"days": 14, "conditions": "from delivery; unworn, undamaged; shipping/handling fees non-refundable except defective/wrong item", "source": "https://www.hamiltonwatch.com/en-us/return-and-exchange-policy (via search)"}},
+  {"id": "swatch-us", "name": "Swatch", "market": "US", "kind": "accessible", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 10, "freeShippingThreshold": 60, "standardDeliveryDays": null, "source": "https://www.swatch.com/en-us/swatch-returns.html (via search)"},
+   "returns": {"days": 14, "conditions": "from delivery; non-personalized, unworn, undamaged, original packaging; refund minus shipping; extended through Jan 31 for Nov 25-Dec 31 purchases", "source": "https://www.swatch.com/en-us/swatch-returns.html (via search)"}},
+  {"id": "omegawatches-us", "name": "Omega", "market": "US", "kind": "luxury", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "https://www.omegawatches.com/en-us/delivery-and-returns (via search); outbound shipping terms not confirmed"},
+   "returns": {"days": 14, "conditions": "from delivery; unworn, undamaged, original condition with box and all included articles; free return label within USA", "source": "https://www.omegawatches.com/en-us/delivery-and-returns (via search)"}},
+  {"id": "tagheuer-us", "name": "Tag Heuer", "market": "US", "kind": "luxury", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "tagheuer.com legal/terms pages (via search); free-shipping threshold not found"},
+   "returns": {"days": 14, "conditions": "from receipt; free return; original receipt, unused, brand-new condition with all packaging and tags", "source": "tagheuer.com policy summary (via search)"}},
+  {"id": "rolex-us", "name": "Rolex", "market": "US", "kind": "luxury", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "sold only through authorized dealers; no direct-to-consumer online store; store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "no official rolex.com e-commerce checkout; prices read from rolex.com product pages (via search)"},
+   "returns": {"days": null, "conditions": "Rolex has no direct online store; return terms set by the authorized dealer, typically 14-30 days unworn in original condition; official warranty covers manufacturing defects only, not returns", "source": "rolexforums.com / authorized-dealer policy summaries (via search)"}},
+  {"id": "tudorwatch-us", "name": "Tudor", "market": "US", "kind": "luxury", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "sold through authorized dealers/boutiques; store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "authorized-dealer policy summaries (via search); no uniform direct Tudor e-commerce policy found"},
+   "returns": {"days": null, "conditions": "varies by authorized dealer; typically 10-30 days unworn with receipt, or exchange-only within 15 days at some boutiques", "source": "authorized-dealer policy summaries (via search)"}},
+  {"id": "bulova-us", "name": "Bulova", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": null, "source": "https://www.bulova.com/us/en/returns.html (via search)"},
+   "returns": {"days": 30, "conditions": "from delivery; original condition, unworn, with packaging/inserts and removed links included; free UPS return", "source": "https://www.bulova.com/us/en/returns.html (via search)"}},
+  {"id": "orientwatchusa-us", "name": "Orient", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "https://www.orientwatchusa.com/pages/return-policy (via search); free-shipping is advertised but threshold not confirmed"},
+   "returns": {"days": 30, "conditions": "from delivery; new, unworn, unaltered; customer pays return shipping unless defective; holiday orders extended", "source": "https://www.orientwatchusa.com/pages/return-policy (via search)"}},
+  {"id": "garmin-us", "name": "Garmin", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": null, "source": "garminsmartwatches.com / garmin policy summary (via search); $199 threshold for free 2nd-day"},
+   "returns": {"days": 30, "conditions": "from delivery; original condition; opened software/downloads/custom excluded; customer pays return shipping", "source": "garmin policy summary (via search)"}},
+  {"id": "apple-us", "name": "Apple", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases, S/M and M/L bands", "storesIn": ["us-ny-newyork", "us-ca-losangeles"], "storesNote": "store locations not fully checked; major-city Apple Store presence well known",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": null, "source": "apple.com policy summary (via search)"},
+   "returns": {"days": 14, "conditions": "from delivery (online) or purchase (store); free prepaid return label; original shipping not refunded; no restocking fee; opened items accepted", "source": "apple.com policy summary (via search)"}},
+  {"id": "danielwellington-us", "name": "Daniel Wellington", "market": "US", "kind": "accessible", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": null, "source": "us.danielwellington.com/policies/refund-policy (via search)"},
+   "returns": {"days": 30, "conditions": "from purchase; new condition, no signs of use; free returns except earrings; refund minus shipping", "source": "us.danielwellington.com/policies/refund-policy (via search)"}},
+  {"id": "mvmt-us", "name": "MVMT", "market": "US", "kind": "accessible", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 75, "standardDeliveryDays": null, "source": "mvmt.com FAQ returns page (via search)"},
+   "returns": {"days": 60, "conditions": "from delivery; brand new; free pre-paid return label emailed within 24 hours; expedited shipping non-refundable", "source": "mvmt.com FAQ returns page (via search)"}},
+  {"id": "sekonda-gb", "name": "Sekonda", "market": "GB", "kind": "accessible", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 20, "standardDeliveryDays": "3-5 days", "source": "support.sekonda.com (via search); some sources cite £40/£50 thresholds, discrepancy not resolved"},
+   "returns": {"days": 28, "conditions": "from receipt; may be tried on/lightly worn, clean and resalable condition; free returns", "source": "support.sekonda.com (via search)"}},
+  {"id": "rotarywatches-gb", "name": "Rotary", "market": "GB", "kind": "accessible", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": "48-hour tracked", "source": "rotarywatches.com/pages/delivery-returns (via search)"},
+   "returns": {"days": 30, "conditions": "from receipt; same pristine condition with tags and packaging; free return shipping; refund within 10 business days", "source": "rotarywatches.com/pages/delivery-returns (via search)"}},
+  {"id": "accurist-gb", "name": "Accurist", "market": "GB", "kind": "accessible", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 75, "standardDeliveryDays": null, "source": "support.accurist.com (via search)"},
+   "returns": {"days": 28, "conditions": "from receipt; may be tried on/lightly worn, clean and resalable condition; free returns; refund up to 14 working days", "source": "support.accurist.com (via search)"}},
+  {"id": "nixon-us", "name": "Nixon", "market": "US", "kind": "accessible", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 50, "standardDeliveryDays": null, "source": "nixon.com/pages/shipping-policy (via search); GB threshold £30, EU threshold €75"},
+   "returns": {"days": 30, "conditions": "from delivery; unused, unworn, original packaging with tags; free returns; custom/engraved excluded; refund in 7-10 business days", "source": "nixon.com/pages/return-policy.html (via search)"}},
+  {"id": "skagen-us", "name": "Skagen", "market": "US", "kind": "accessible", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 50, "standardDeliveryDays": null, "source": "https://www.skagen.com/en-us/customer-care/returns/ (via search)"},
+   "returns": {"days": 90, "conditions": "from purchase; not 100% satisfied online purchase guarantee; free return shipping", "source": "https://www.skagen.com/en-us/customer-care/returns/ (via search)"}},
+  {"id": "diesel-us", "name": "Diesel", "market": "US", "kind": "accessible", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "diesel.com/en-us/legal/return-policy.html (via search); threshold varies $60-$99 by source, not resolved"},
+   "returns": {"days": 30, "conditions": "from receipt of package; free returns/exchange", "source": "diesel.com/en-us/legal/return-policy.html (via search)"}},
+  {"id": "guesswatches-us", "name": "Guess", "market": "US", "kind": "accessible", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "guesswatches.com/pages/returns (via search); threshold not confirmed"},
+   "returns": {"days": 30, "conditions": "from purchase date; new condition, no signs of use; return shipping customer-paid; ship within 7 days of label issue", "source": "guesswatches.com/pages/returns (via search)"}},
+  {"id": "invictastores-us", "name": "Invicta", "market": "US", "kind": "accessible", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 99, "standardDeliveryDays": null, "source": "invictastores.com policy summary (via search)"},
+   "returns": {"days": 14, "conditions": "from delivery; not worn or altered; 10% restocking fee may apply; customer pays return shipping", "source": "invictastores.com policy summary (via search)"}},
+  {"id": "movado-us", "name": "Movado", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": "2-5 business days", "source": "movado.com/us/en/ca-returns (via search)"},
+   "returns": {"days": 30, "conditions": "from delivery; original condition; free year-round return shipping; engraved styles excluded", "source": "movado.com/us/en/ca-returns (via search)"}},
+  {"id": "fitbit-us", "name": "Fitbit", "market": "US", "kind": "mid", "sizeSystem": "S/L bands", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 50, "standardDeliveryDays": null, "source": "fitbit return-policy summary (via search)"},
+   "returns": {"days": 45, "conditions": "from purchase; good physical condition with all accessories; customer prepays return shipping; extended for Nov/Dec purchases to Jan 31", "source": "fitbit return-policy summary (via search)"}},
+  {"id": "victorinox-us", "name": "Victorinox Swiss Army", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 50, "standardDeliveryDays": null, "source": "https://www.victorinox.com/en-US/Questions-about-Returns/cms/service-faq-returns/ (via search)"},
+   "returns": {"days": 30, "conditions": "from delivery; 100% resalable condition with packaging and proof of purchase; free return; personalized items excluded", "source": "https://www.victorinox.com/en-US/Questions-about-Returns/cms/service-faq-returns/ (via search)"}},
+  {"id": "luminox-us", "name": "Luminox", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": null, "source": "https://luminox.com/pages/shipping-policy (via search)"},
+   "returns": {"days": 15, "conditions": "from delivery; perfect/sellable condition with original packaging; refund minus shipping-label cost; holiday orders extended to Jan 10", "source": "https://luminox.com/pages/returns (via search)"}},
+  {"id": "certina-us", "name": "Certina", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked; sold mainly through authorized retailers; no uniform direct Certina US e-commerce",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "certina.com sales-conditions page cites 14-day cancellation right; thresholds vary by authorized retailer (via search)"},
+   "returns": {"days": 14, "conditions": "from cancellation notice; new, unworn, warranty card, original packaging and unbroken seals", "source": "certina.com/ch-en/sales-conditions (via search)"}},
+  {"id": "mido-us", "name": "Mido", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": null, "source": "us.shopmido.com/faq (via search)"},
+   "returns": {"days": 30, "conditions": "from delivery; new, unworn, with warranty card and original packaging; free returns on watches; strap-only purchases excluded", "source": "us.shopmido.com/faq (via search)"}},
+  {"id": "armaniexchange-us", "name": "Armani Exchange", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "armani.com/en-us/legal/return-policy (via search); threshold not found"},
+   "returns": {"days": 20, "conditions": "from delivery; same condition as received with tags attached; original shipping not refunded", "source": "armani.com/en-us/legal/return-policy (via search)"}},
+  {"id": "emporioarmani-us", "name": "Emporio Armani", "market": "US", "kind": "mid", "sizeSystem": "one-size watch cases", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "armani.com/en-us/legal/return-policy (via search); threshold not found"},
+   "returns": {"days": 20, "conditions": "from delivery; unused products with tags attached; online return form required", "source": "armani.com/en-us/legal/return-policy (via search)"}},
+  {"id": "swarovski-us", "name": "Swarovski", "market": "US", "kind": "mid", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 150, "standardDeliveryDays": null, "source": "https://www.swarovski.com/en-US/s-faq-return (via search)"},
+   "returns": {"days": 14, "conditions": "from receipt (30 days for Created Diamonds); customer pays return shipping; refund in 5-10 business days after warehouse receipt", "source": "https://www.swarovski.com/en-US/s-faq-return (via search)"}},
+  {"id": "mejuri-us", "name": "Mejuri", "market": "US", "kind": "mid", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 75, "standardDeliveryDays": null, "source": "mejuri.com FAQ (via search)"},
+   "returns": {"days": 30, "conditions": "from delivery/pickup; free prepaid US return label; original condition with tags, box and pouch; engraved/monogrammed/piercing earrings/final sale excluded", "source": "mejuri.com returns-terms (via search)"}},
+  {"id": "kendrascott-us", "name": "Kendra Scott", "market": "US", "kind": "mid", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 85, "standardDeliveryDays": null, "source": "https://www.kendrascott.com/shipping-returns.html (via search); fine jewelry auto-qualifies for free 2-day shipping"},
+   "returns": {"days": 30, "conditions": "from receipt; unworn, unused, original packaging with tags; free return shipping", "source": "https://www.kendrascott.com/shipping-returns.html (via search)"}},
+  {"id": "cartier-us", "name": "Cartier", "market": "US", "kind": "luxury", "sizeSystem": "one-size jewelry, standard ring/bracelet sizing", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "https://www.cartier.com/en-us/delivery-return-exchange-policy.html (via search); purchase-shipping threshold not found"},
+   "returns": {"days": 30, "conditions": "from delivery; free prepaid FedEx return label, including AK/HI", "source": "https://www.cartier.com/en-us/faq/exchanges-returns/ (via search)"}},
+  {"id": "linksoflondon-gb", "name": "Links of London", "market": "GB", "kind": "mid", "sizeSystem": "one-size jewelry", "storesIn": ["uk-eng-london"], "storesNote": "store locations not fully checked; London presence well known",
+   "online": {"shippingFee": null, "freeShippingThreshold": 120, "standardDeliveryDays": null, "source": "lndr.com/linksoflondon.com shipping-returns summary (via search)"},
+   "returns": {"days": 15, "conditions": "from delivery; unworn, original packaging; sale items 7-day window; final sale/custom/special orders excluded; free returns in UK/EU/CH", "source": "linksoflondon.com shipping-returns summary (via search)"}},
+  {"id": "thomassabo-us", "name": "Thomas Sabo", "market": "US", "kind": "mid", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 50, "standardDeliveryDays": null, "source": "https://www.thomassabo.com/US/en_US/customer-service/returns/cancellation.html (via search)"},
+   "returns": {"days": 30, "conditions": "from receipt; unused, original packaging; customer pays return shipping; shipping charges non-refundable", "source": "https://www.thomassabo.com/US/en_US/customer-service/returns/cancellation.html (via search)"}},
+  {"id": "astridandmiyu-us", "name": "Astrid & Miyu", "market": "US", "kind": "mid", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": null, "source": "us.astridandmiyu.com delivery-and-returns (via search); express $15 or free over $175"},
+   "returns": {"days": 28, "conditions": "from purchase; unworn, original condition; socks/aftercare/personalized items excluded", "source": "help.astridandmiyu.com (via search)"}},
+  {"id": "catbirdnyc-us", "name": "Catbird", "market": "US", "kind": "mid", "sizeSystem": "one-size jewelry", "storesIn": ["us-ny-newyork"], "storesNote": "Brooklyn, NY based retailer with store locations not fully verified beyond NYC presence",
+   "online": {"shippingFee": 5, "freeShippingThreshold": null, "standardDeliveryDays": null, "source": "catbirdnyc.com shipping/faq pages (via search); promotional free-shipping thresholds ($100 tote, $300 express) not a standing policy"},
+   "returns": {"days": 20, "conditions": "from delivery; unused, original packaging; $9 return-shipping charge deducted from refund; engraved/special orders/Forever jewelry/piercing earrings final sale", "source": "https://www.catbirdnyc.com/returns (via search)"}},
+  {"id": "gorjana-us", "name": "Gorjana", "market": "US", "kind": "mid", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 150, "standardDeliveryDays": null, "source": "gorjana.com FAQ (via search)"},
+   "returns": {"days": 30, "conditions": "from purchase; unworn; free returns", "source": "gorjana.com FAQ (via search)"}},
+  {"id": "alexandani-us", "name": "Alex and Ani", "market": "US", "kind": "accessible", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 75, "standardDeliveryDays": null, "source": "https://www.alexandani.com/pages/returns (via search)"},
+   "returns": {"days": 30, "conditions": "from delivery; unworn with UPC tag/packaging; refund minus shipping, discounts and a $6.95 handling fee; final sale/clearance/engraved excluded", "source": "https://www.alexandani.com/pages/returns (via search)"}},
+  {"id": "analuisa-us", "name": "Ana Luisa", "market": "US", "kind": "accessible", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 6, "freeShippingThreshold": 150, "standardDeliveryDays": null, "source": "help.analuisa.com exchanges-and-returns (via search); free USPS First-Class on all orders, Priority Mail free over $150"},
+   "returns": {"days": 30, "conditions": "from delivery (60 days during holidays); original tags and packaging; return shipping fee deducted from refund", "source": "help.analuisa.com exchanges-and-returns (via search)"}},
+  {"id": "edgeofember-us", "name": "Edge of Ember", "market": "US", "kind": "mid", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 150, "standardDeliveryDays": null, "source": "edgeofember.com pages/returns (via search)"},
+   "returns": {"days": 30, "conditions": "from receipt; new, unworn, original undamaged packaging; UK returns free; engraved/made-to-order/sample-sale excluded", "source": "https://edgeofember.com/pages/returns (via search)"}},
+  {"id": "abbottlyon-gb", "name": "Abbott Lyon", "market": "GB", "kind": "accessible", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 3.99, "freeShippingThreshold": 70, "standardDeliveryDays": "2-4 working days", "source": "us.abbottlyon.com/pages/returns-policy (via search); GBP threshold shown, applies to UK site"},
+   "returns": {"days": 100, "conditions": "from delivery; original condition and packaging; personalized products and earrings excluded", "source": "us.abbottlyon.com/pages/returns-policy (via search)"}},
+  {"id": "daisylondon-gb", "name": "Daisy London", "market": "GB", "kind": "mid", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": null, "freeShippingThreshold": 100, "standardDeliveryDays": null, "source": "daisyjewellery.com pages/returns (via search); US threshold $150"},
+   "returns": {"days": 30, "conditions": "from receipt; unworn, original packaging with proof of purchase; earrings/personalized/engraved excluded; UK free with prepaid label", "source": "daisyjewellery.com pages/returns (via search)"}},
+  {"id": "monicarichkosann-us", "name": "Monica Rich Kosann", "market": "US", "kind": "luxury", "sizeSystem": "one-size jewelry", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 0, "freeShippingThreshold": 0, "standardDeliveryDays": null, "source": "https://www.monicarichkosann.com/pages/shipping-returns (via search); complimentary ground shipping on all orders"},
+   "returns": {"days": 30, "conditions": "from purchase (order date); unworn, original condition", "source": "https://www.monicarichkosann.com/pages/shipping-returns (via search)"}},
+  {"id": "vrai-us", "name": "Vrai", "market": "US", "kind": "luxury", "sizeSystem": "one-size jewelry, standard ring sizing", "storesIn": [], "storesNote": "store locations not checked",
+   "online": {"shippingFee": 10, "freeShippingThreshold": null, "standardDeliveryDays": "2-day FedEx", "source": "vrai.com/returns-exchanges (via search); no free-shipping threshold found"},
+   "returns": {"days": 30, "conditions": "from delivery; items under $15,000 refundable minus recycling fee or full store credit; items over $15,000 store credit only; free US return shipping", "source": "https://www.vrai.com/returns-exchanges (via search)"}}
+ ],
+ "products": [
+  {"retailer":"birkenstock-us","market":"US","brand":"Birkenstock","name":"Arizona Soft Footbed Birko-Flor Sandal","gender":"unisex","category":"footwear","subcategory":"sandals","price":123.95,"salePrice":null,"currency":"USD","sizes":"EU 35-48","colors":["Black"],"material":"Birko-Flor upper, EVA sole","care":"wipe clean","careText":"Wipe with a damp cloth; do not machine wash.","url":"https://www.birkenstock.com/us/arizona-soft-footbed-birko-flor/arizona-core-birkoflor-softfootbed-eva-u_79.html","date":"2026-10-05","confirmed":true,"source":"birkenstock.com product page title (via search)"},
+  {"retailer":"birkenstock-us","market":"US","brand":"Birkenstock","name":"Arizona Suede Leather Taupe Sandal","gender":"unisex","category":"footwear","subcategory":"sandals","price":139.95,"salePrice":null,"currency":"USD","sizes":"EU 35-48","colors":["Taupe"],"material":"suede leather upper, EVA sole","care":"brush suede, avoid water","careText":"Brush suede regularly; avoid prolonged water exposure.","url":"https://www.birkenstock.com/us/arizona-suede-leather-taupe/arizona-core-suedeleather-0-eva-u_46.html","date":"2026-10-05","confirmed":true,"source":"birkenstock.com product page title (via search)"},
+  {"retailer":"birkenstock-us","market":"US","brand":"Birkenstock","name":"Arizona Natural Leather Oiled Sandal","gender":"unisex","category":"footwear","subcategory":"sandals","price":139.95,"salePrice":null,"currency":"USD","sizes":"EU 35-48","colors":["Natural"],"material":"oiled leather upper, EVA sole","care":"condition leather periodically","careText":"Treat with leather conditioner; avoid prolonged water exposure.","url":"https://www.birkenstock.com/us/arizona-natural-leather-oiled/arizona-core-oiledleather-0-eva-u_449.html","date":"2026-10-05","confirmed":true,"source":"birkenstock.com product page title (via search)"},
+  {"retailer":"birkenstock-us","market":"US","brand":"Birkenstock","name":"Arizona Soft Footbed Suede Leather Sandal","gender":"unisex","category":"footwear","subcategory":"sandals","price":154.95,"salePrice":null,"currency":"USD","sizes":"EU 35-48","colors":["Taupe"],"material":"suede leather upper, soft EVA footbed","care":"brush suede, avoid water","careText":"Brush suede regularly; avoid prolonged water exposure.","url":"https://www.birkenstock.com/us/arizona-soft-footbed-suede-leather/arizona-core-suedeleather-softfootbed-eva-u_491.html","date":"2026-10-05","confirmed":true,"source":"birkenstock.com product page title (via search)"},
+  {"retailer":"birkenstock-us","market":"US","brand":"Birkenstock","name":"Arizona Suede Leather Premium Sandal","gender":"unisex","category":"footwear","subcategory":"sandals","price":210.00,"salePrice":null,"currency":"USD","sizes":"EU 35-48","colors":["Brown"],"material":"premium suede leather upper","care":"brush suede, avoid water","careText":"Brush suede regularly; avoid prolonged water exposure.","url":"https://www.birkenstock.com/us/arizona-suede-leather/arizonabs-234713-suedeleather-0-eva-u_1.html","date":"2026-10-05","confirmed":true,"source":"birkenstock.com product page title (via search)"},
+  {"retailer":"birkenstock-us","market":"GB","brand":"Birkenstock","name":"Arizona Birko-Flor Sandal","gender":"unisex","category":"footwear","subcategory":"sandals","price":85.00,"salePrice":null,"currency":"GBP","sizes":"EU 35-48","colors":["Black"],"material":"Birko-Flor upper, EVA sole","care":"wipe clean","careText":"Wipe with a damp cloth; do not machine wash.","url":"https://www.birkenstock.com/gb/models/arizona/","date":"2026-10-05","confirmed":false,"source":"search snippet of birkenstock.com GB collection page"},
+
+  {"retailer":"timberland-us","market":"US","brand":"Timberland","name":"Women's Premium 6-Inch Waterproof Boot","gender":"women","category":"footwear","subcategory":"boots","price":180.00,"salePrice":104.99,"currency":"USD","sizes":"US 5-11","colors":["Wheat Nubuck"],"material":"waterproof full-grain leather upper","care":"nubuck protector spray","careText":"Treat with nubuck protector; re-waterproof seams periodically.","url":"https://www.timberland.com/en-us/p/women/footwear-10096/womens-timberland-premium-6-inch-waterproof-boot-TB08658A001","date":"2026-10-05","confirmed":true,"source":"timberland.com product page (via search)"},
+  {"retailer":"timberland-us","market":"US","brand":"Timberland","name":"Women's Premium 6-Inch Boot","gender":"women","category":"footwear","subcategory":"boots","price":180.00,"salePrice":null,"currency":"USD","sizes":"US 5-11","colors":["Dark Blue"],"material":"premium leather upper","care":"leather conditioner","careText":"Condition leather periodically; re-waterproof seams.","url":"https://www.timberland.com/en-us/p/footwear-0100/womens-timberland-premium-6-inch-lace-up-boot-TB0A2PJ6EP4","date":"2026-10-05","confirmed":false,"source":"search snippet of timberland.com product listing"},
+  {"retailer":"timberland-us","market":"US","brand":"Timberland","name":"The Original 6-Inch Boot (Women's, GB)","gender":"women","category":"footwear","subcategory":"boots","price":200.00,"salePrice":null,"currency":"GBP","sizes":"UK 3-9","colors":["Wheat"],"material":"premium leather upper","care":"nubuck protector spray","careText":"Treat with nubuck protector; re-waterproof seams periodically.","url":"https://www.timberland.com/en-gb/c/women/footwear/the-original-6-inch-boot-376507","date":"2026-10-05","confirmed":false,"source":"search snippet of timberland.com en-gb collection page; price estimated from US-to-GB historical ratio, not read on page"},
+
+  {"retailer":"geox-us","market":"US","brand":"Geox","name":"U Spherica Men's Sneaker","gender":"men","category":"footwear","subcategory":"shoes","price":140.00,"salePrice":89.99,"currency":"USD","sizes":"EU 40-46","colors":["Grey/White"],"material":"fabric and leather upper, breathable rubber sole","care":"wipe clean","careText":"Wipe upper with a damp cloth; air dry.","url":"https://www.geox.com/en-GR/fabric_sneakers-black-spherica_man-U15BYA0006KC9997.html","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating geox.com and reseller listings"},
+  {"retailer":"geox-us","market":"GB","brand":"Geox","name":"Men's Dress Shoes (Derby/Oxford range)","gender":"men","category":"footwear","subcategory":"dress shoes","price":119.90,"salePrice":null,"currency":"GBP","sizes":"EU 40-46","colors":["Black","Brown"],"material":"leather upper","care":"leather conditioner","careText":"Condition leather periodically; use shoe trees.","url":"https://www.geox.com/en-GB/man/our_ranges/respira/","date":"2026-10-05","confirmed":false,"source":"search snippet of geox.com en-GB range page"},
+
+  {"retailer":"colehaan-us","market":"US","brand":"Cole Haan","name":"Men's Grand Crosscourt Modern Tennis Sneaker","gender":"men","category":"footwear","subcategory":"shoes","price":187.00,"salePrice":74.95,"currency":"USD","sizes":"US 7-13","colors":["Brown"],"material":"leather upper, rubber sole","care":"wipe clean","careText":"Wipe leather with a damp cloth; condition periodically.","url":"https://www.colehaan.com/mens-grand-crosscourt-modern-tennis-sneakers/C41326.html","date":"2026-10-05","confirmed":true,"source":"colehaan.com product page (via search)"},
+  {"retailer":"colehaan-us","market":"US","brand":"Cole Haan","name":"Men's Grand Crosscourt Daily Court Sneaker","gender":"men","category":"footwear","subcategory":"shoes","price":165.00,"salePrice":109.95,"currency":"USD","sizes":"US 7-13","colors":["Black"],"material":"leather upper, rubber sole","care":"wipe clean","careText":"Wipe leather with a damp cloth; condition periodically.","url":"https://www.colehaan.com/products/mens-grand-crosscourt-daily-court-sneakers-c40596","date":"2026-10-05","confirmed":true,"source":"colehaan.com product page (via search)"},
+  {"retailer":"colehaan-us","market":"US","brand":"Cole Haan","name":"Men's Grand Crosscourt Premier Sneaker","gender":"men","category":"footwear","subcategory":"shoes","price":200.00,"salePrice":139.95,"currency":"USD","sizes":"US 7-13","colors":["Blue"],"material":"leather upper, rubber sole","care":"wipe clean","careText":"Wipe leather with a damp cloth; condition periodically.","url":"https://www.colehaan.com/mens-grand-crosscourt-premier-sneakers/C39026.html","date":"2026-10-05","confirmed":true,"source":"colehaan.com product page (via search)"},
+  {"retailer":"colehaan-us","market":"US","brand":"Cole Haan","name":"Women's Grand Crosscourt Sneaker","gender":"women","category":"footwear","subcategory":"shoes","price":180.00,"salePrice":89.95,"currency":"USD","sizes":"US 5-11","colors":["Black"],"material":"leather upper, rubber sole","care":"wipe clean","careText":"Wipe leather with a damp cloth; condition periodically.","url":"https://www.colehaan.com/products/womens-grand-crosscourt-sneakers-w11175","date":"2026-10-05","confirmed":true,"source":"colehaan.com product page (via search)"},
+  {"retailer":"colehaan-us","market":"US","brand":"Cole Haan","name":"Women's Grand Crosscourt Arlowe Sneaker","gender":"women","category":"footwear","subcategory":"shoes","price":180.00,"salePrice":89.95,"currency":"USD","sizes":"US 5-11","colors":["Beige"],"material":"leather upper, rubber sole","care":"wipe clean","careText":"Wipe leather with a damp cloth; condition periodically.","url":"https://www.colehaan.com/womens-grand-crosscourt-arlowe-sneakers/W33613.html","date":"2026-10-05","confirmed":true,"source":"colehaan.com product page (via search)"},
+
+  {"retailer":"samedelman-us","market":"US","brand":"Sam Edelman","name":"Hazel Pointed Toe Pump","gender":"women","category":"footwear","subcategory":"dress shoes","price":150.00,"salePrice":null,"currency":"USD","sizes":"US 5-12","colors":["Black"],"material":"leather upper","care":"wipe clean","careText":"Wipe leather with a damp cloth; use shoe trees.","url":"https://www.samedelman.com/product/womens-hazel-mesh-pointed-toe-pump-3030293","date":"2026-10-05","confirmed":true,"source":"samedelman.com product page (via search)"},
+  {"retailer":"samedelman-us","market":"US","brand":"Sam Edelman","name":"Hazel Mesh Pointed Toe Pump","gender":"women","category":"footwear","subcategory":"dress shoes","price":150.00,"salePrice":104.99,"currency":"USD","sizes":"US 5-12","colors":["Soft Silver"],"material":"mesh upper","care":"spot clean","careText":"Spot clean mesh with a damp cloth; air dry.","url":"https://www.samedelman.com/product/womens-hazel-mesh-pointed-toe-pump-3030293","date":"2026-10-05","confirmed":true,"source":"samedelman.com product page (via search)"},
+
+  {"retailer":"hunterboots-us","market":"US","brand":"Hunter Boots","name":"Women's Original Tall Rain Boot","gender":"women","category":"footwear","subcategory":"boots","price":190.00,"salePrice":null,"currency":"USD","sizes":"US 5-11","colors":["Black","Light Blue","Medium Blue","Military Red"],"material":"natural rubber","care":"wipe clean","careText":"Wipe with a damp cloth; do not machine wash.","url":"https://hunterboots.com/collections/original-tall-rain-boots","date":"2026-10-05","confirmed":true,"source":"hunterboots.com collection page (via search)"},
+  {"retailer":"hunterboots-us","market":"US","brand":"Hunter Boots","name":"Men's Original Tall Rain Boot","gender":"men","category":"footwear","subcategory":"boots","price":225.00,"salePrice":null,"currency":"USD","sizes":"US 7-13","colors":["Blue","Green"],"material":"natural rubber","care":"wipe clean","careText":"Wipe with a damp cloth; do not machine wash.","url":"https://hunterboots.com/products/mens-original-tall-rain-boots-in-blue-mft9000rma-hbu77","date":"2026-10-05","confirmed":true,"source":"hunterboots.com product page (via search)"},
+  {"retailer":"hunterboots-us","market":"US","brand":"Hunter Boots","name":"Women's Original Insulated Tall Rain Boot","gender":"women","category":"footwear","subcategory":"boots","price":215.00,"salePrice":null,"currency":"USD","sizes":"US 5-11","colors":["Black"],"material":"natural rubber, insulated lining","care":"wipe clean","careText":"Wipe with a damp cloth; do not machine wash.","url":"https://hunterboots.com/products/women-s-original-insulated-tall-rain-boots-in-black-fhl-w-t2041rma-blk01","date":"2026-10-05","confirmed":true,"source":"hunterboots.com product page (via search)"},
+
+  {"retailer":"merrell-us","market":"US","brand":"Merrell","name":"Women's Moab 3 Hiking Shoe","gender":"women","category":"footwear","subcategory":"shoes","price":145.00,"salePrice":null,"currency":"USD","sizes":"US 5-11","colors":["Granite"],"material":"mesh and leather upper, Vibram sole","care":"brush off debris","careText":"Brush off trail debris; air dry away from direct heat.","url":"https://www.merrell.com/US/en/moab-3/51004W.html","date":"2026-10-05","confirmed":true,"source":"merrell.com product page (via search)"},
+  {"retailer":"merrell-us","market":"US","brand":"Merrell","name":"Men's Moab 3 Hiking Shoe","gender":"men","category":"footwear","subcategory":"shoes","price":145.00,"salePrice":null,"currency":"USD","sizes":"US 7-15","colors":["Walnut"],"material":"mesh and leather upper, Vibram sole","care":"brush off debris","careText":"Brush off trail debris; air dry away from direct heat.","url":"https://www.merrell.com/US/en/moab-3/52481M.html","date":"2026-10-05","confirmed":true,"source":"merrell.com product page (via search)"},
+  {"retailer":"merrell-us","market":"US","brand":"Merrell","name":"Men's Moab 3 Mid Waterproof Hiking Boot","gender":"men","category":"footwear","subcategory":"boots","price":175.00,"salePrice":null,"currency":"USD","sizes":"US 7-15","colors":["Earth"],"material":"waterproof leather and mesh upper","care":"re-waterproof seams","careText":"Re-waterproof seams periodically; brush off debris.","url":"https://www.merrell.com/US/en/moab-3-mid-waterproof/52470M.html","date":"2026-10-05","confirmed":true,"source":"merrell.com product page (via search)"},
+  {"retailer":"merrell-us","market":"US","brand":"Merrell","name":"Men's Moab 3 GORE-TEX Hiking Shoe","gender":"men","category":"footwear","subcategory":"shoes","price":185.00,"salePrice":null,"currency":"USD","sizes":"US 7-15","colors":["Black"],"material":"GORE-TEX membrane, leather and mesh upper","care":"re-waterproof seams","careText":"Re-waterproof seams periodically; brush off debris.","url":"https://www.merrell.com/US/en/moab-3-gore-tex/52978M.html","date":"2026-10-05","confirmed":true,"source":"merrell.com product page (via search)"},
+
+  {"retailer":"teva-us","market":"US","brand":"Teva","name":"Men's Original Universal Sandal","gender":"men","category":"footwear","subcategory":"sandals","price":65.00,"salePrice":null,"currency":"USD","sizes":"US 7-14","colors":["Black"],"material":"polyester webbing, rubber sole","care":"rinse and air dry","careText":"Rinse webbing after wear; air dry away from direct heat.","url":"https://www.teva.com/p/men-sandals/original-universal-sandal/1004006","date":"2026-10-05","confirmed":true,"source":"teva.com product page (via search)"},
+  {"retailer":"teva-us","market":"US","brand":"Teva","name":"Women's Original Universal Sandal","gender":"women","category":"footwear","subcategory":"sandals","price":65.00,"salePrice":null,"currency":"USD","sizes":"US 5-11","colors":["Black"],"material":"polyester webbing, rubber sole","care":"rinse and air dry","careText":"Rinse webbing after wear; air dry away from direct heat.","url":"https://www.teva.com/women-sandals/original-universal-sandal/194715408555.html","date":"2026-10-05","confirmed":true,"source":"teva.com product page (via search)"},
+  {"retailer":"teva-us","market":"US","brand":"Teva","name":"Women's Original Universal Slim Sandal","gender":"women","category":"footwear","subcategory":"sandals","price":65.00,"salePrice":null,"currency":"USD","sizes":"US 5-11","colors":["Taupe"],"material":"webbing, rubber sole","care":"rinse and air dry","careText":"Rinse webbing after wear; air dry away from direct heat.","url":"https://www.teva.com/p/women-sandals/original-universal-slim-sandal/1150110","date":"2026-10-05","confirmed":true,"source":"teva.com product page (via search)"},
+
+  {"retailer":"sperry-us","market":"US","brand":"Sperry","name":"Authentic Original 2-Eye Boat Shoe","gender":"unisex","category":"footwear","subcategory":"shoes","price":110.00,"salePrice":null,"currency":"USD","sizes":"US men's 7-13, women's 5-11","colors":["Black","Tan"],"material":"leather upper, non-marking rubber sole","care":"leather conditioner","careText":"Condition leather periodically; avoid prolonged water exposure.","url":"https://www.sperry.com/products/authentic-original-2-eye-boat-shoe-black-13934362","date":"2026-10-05","confirmed":true,"source":"sperry.com product page (via search)"},
+  {"retailer":"sperry-us","market":"US","brand":"Sperry","name":"Authentic Original 3-Eye Boat Shoe","gender":"unisex","category":"footwear","subcategory":"shoes","price":120.00,"salePrice":null,"currency":"USD","sizes":"US men's 7-13, women's 5-11","colors":["Oak"],"material":"leather upper, non-marking rubber sole","care":"leather conditioner","careText":"Condition leather periodically; avoid prolonged water exposure.","url":"https://www.sperry.com/products/authentic-original-3-eye-boat-shoe-oak","date":"2026-10-05","confirmed":true,"source":"sperry.com product page (via search)"},
+  {"retailer":"sperry-us","market":"US","brand":"Sperry","name":"Authentic Original 1-Eye Boat Shoe","gender":"unisex","category":"footwear","subcategory":"shoes","price":120.00,"salePrice":null,"currency":"USD","sizes":"US men's 7-13, women's 5-11","colors":["Dark Brown"],"material":"leather upper, non-marking rubber sole","care":"leather conditioner","careText":"Condition leather periodically; avoid prolonged water exposure.","url":"https://www.sperry.com/products/authentic-original-1-eye-boat-shoe-dark-brown","date":"2026-10-05","confirmed":true,"source":"sperry.com product page (via search)"},
+
+  {"retailer":"redwingshoes-us","market":"US","brand":"Red Wing Shoes","name":"Men's Iron Ranger 6-Inch Boot (Amber Harness)","gender":"men","category":"footwear","subcategory":"boots","price":349.99,"salePrice":null,"currency":"USD","sizes":"US 7-14, D/E/EE widths","colors":["Amber"],"material":"full-grain leather upper, Vibram sole","care":"leather conditioner, mink oil","careText":"Condition with leather oil periodically; resole at authorized shops.","url":"https://www.redwingshoes.com/mens/heritage/iron-ranger/","date":"2026-10-05","confirmed":true,"source":"redwingshoes.com product listing (via search)"},
+  {"retailer":"redwingshoes-us","market":"US","brand":"Red Wing Shoes","name":"Men's Iron Ranger 6-Inch Boot (Dark Brown)","gender":"men","category":"footwear","subcategory":"boots","price":349.99,"salePrice":null,"currency":"USD","sizes":"US 7-14, D/E/EE widths","colors":["Dark Brown"],"material":"full-grain leather upper, Vibram sole","care":"leather conditioner, mink oil","careText":"Condition with leather oil periodically; resole at authorized shops.","url":"https://www.redwingshoes.com/mens/heritage/iron-ranger/iron-ranger-08111.html","date":"2026-10-05","confirmed":true,"source":"redwingshoes.com product page (via search)"},
+  {"retailer":"redwingshoes-us","market":"US","brand":"Red Wing Shoes","name":"Men's Iron Ranger 6-Inch Boot (Alpine Portage)","gender":"men","category":"footwear","subcategory":"boots","price":369.99,"salePrice":null,"currency":"USD","sizes":"US 7-14, D/E/EE widths","colors":["Alpine Portage"],"material":"full-grain leather upper, Vibram sole","care":"leather conditioner, mink oil","careText":"Condition with leather oil periodically; resole at authorized shops.","url":"https://www.redwingshoes.com/mens/heritage/iron-ranger/iron-ranger--08078.html","date":"2026-10-05","confirmed":true,"source":"redwingshoes.com product page (via search)"},
+  {"retailer":"redwingshoes-us","market":"US","brand":"Red Wing Shoes","name":"Women's Iron Ranger Short Boot (Black)","gender":"women","category":"footwear","subcategory":"boots","price":349.99,"salePrice":null,"currency":"USD","sizes":"US 5-11, B/D widths","colors":["Black"],"material":"full-grain leather upper, Vibram sole","care":"leather conditioner, mink oil","careText":"Condition with leather oil periodically; resole at authorized shops.","url":"https://www.redwingshoes.com/heritage/womens/iron-ranger/Iron-Ranger-03366.html","date":"2026-10-05","confirmed":true,"source":"redwingshoes.com product page (via search)"},
+
+  {"retailer":"katespade-us","market":"US","brand":"Kate Spade New York","name":"Hudson Striped Medium Convertible Crossbody","gender":"women","category":"bags","subcategory":"handbags","price":248.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Striped"],"material":"saffiano leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water exposure.","url":"https://www.katespade.com/content/duo-crossbody-bag","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating katespade.com listings"},
+  {"retailer":"katespade-us","market":"US","brand":"Kate Spade New York","name":"Knott North South Phone Crossbody","gender":"women","category":"bags","subcategory":"handbags","price":168.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"pebbled leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water exposure.","url":"https://performance.katespade.com/shop/handbags/crossbody-bags","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating katespade.com listings"},
+  {"retailer":"katespade-us","market":"US","brand":"Kate Spade New York","name":"Loop Suede Crossbody Bag","gender":"women","category":"bags","subcategory":"handbags","price":198.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Taupe"],"material":"suede","care":"brush suede","careText":"Brush suede regularly; avoid water exposure.","url":"https://www.katespade.com/shop/handbags/crossbody-bags/view-all","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating katespade.com listings"},
+  {"retailer":"katespade-us","market":"US","brand":"Kate Spade New York","name":"Duo Woven Crossbody Bag","gender":"women","category":"bags","subcategory":"handbags","price":378.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Natural"],"material":"woven leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water exposure.","url":"https://www.katespade.com/content/duo-crossbody-bag","date":"2026-10-05","confirmed":true,"source":"katespade.com content page (via search)"},
+
+  {"retailer":"toryburch-us","market":"US","brand":"Tory Burch","name":"Large Fleming Tote","gender":"women","category":"bags","subcategory":"totes","price":795.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"quilted leather","care":"leather conditioner","careText":"Condition leather periodically; store stuffed to retain shape.","url":"https://www.toryburch.com/en-us/handbags/tote-bags/large-fleming-tote/182890.html","date":"2026-10-05","confirmed":true,"source":"toryburch.com product page (via search)"},
+  {"retailer":"toryburch-us","market":"US","brand":"Tory Burch","name":"Large Fleming Suede Tote","gender":"women","category":"bags","subcategory":"totes","price":795.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Taupe"],"material":"suede","care":"brush suede","careText":"Brush suede regularly; avoid water exposure.","url":"https://www.toryburch.com/en-us/handbags/tote-bags/large-fleming-suede-tote/182926.html","date":"2026-10-05","confirmed":true,"source":"toryburch.com product page (via search)"},
+  {"retailer":"toryburch-us","market":"US","brand":"Tory Burch","name":"Fleming Soft Chain Tote","gender":"women","category":"bags","subcategory":"totes","price":698.00,"salePrice":519.00,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"soft quilted leather","care":"leather conditioner","careText":"Condition leather periodically; store stuffed to retain shape.","url":"https://www.toryburch.com/en-us/handbags/tote-bags/fleming-soft-chain-tote/152337.html","date":"2026-10-05","confirmed":true,"source":"toryburch.com product page (via search)"},
+  {"retailer":"toryburch-us","market":"US","brand":"Tory Burch","name":"Fleming East-West Tote","gender":"women","category":"bags","subcategory":"totes","price":600.00,"salePrice":379.00,"currency":"USD","sizes":"one-size","colors":["Navy"],"material":"quilted leather","care":"leather conditioner","careText":"Condition leather periodically; store stuffed to retain shape.","url":"https://www.toryburch.com/en-us/handbags/satchels/fleming-east-west-tote/164763.html","date":"2026-10-05","confirmed":true,"source":"toryburch.com product page (via search)"},
+  {"retailer":"toryburch-us","market":"US","brand":"Tory Burch","name":"Mini Fleming Soft Tweed Chain Tote","gender":"women","category":"bags","subcategory":"handbags","price":548.00,"salePrice":349.00,"currency":"USD","sizes":"one-size","colors":["Tweed"],"material":"tweed and leather","care":"spot clean","careText":"Spot clean tweed; avoid water exposure.","url":"https://www.toryburch.com/en-us/handbags/crossbody-bags/mini-fleming-soft-tweed-chain-tote/152336.html","date":"2026-10-05","confirmed":true,"source":"toryburch.com product page (via search)"},
+
+  {"retailer":"radley-gb","market":"GB","brand":"Radley London","name":"Small Ziptop Cross Body Bag","gender":"women","category":"bags","subcategory":"handbags","price":239.00,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.radley.co.uk/collections/handbags","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating radley.co.uk listings"},
+  {"retailer":"radley-gb","market":"GB","brand":"Radley London","name":"Medium Ziptop Crossbody Bag","gender":"women","category":"bags","subcategory":"handbags","price":179.00,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Tan"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.radley.co.uk/collections/handbags","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating radley.co.uk listings"},
+  {"retailer":"radley-gb","market":"GB","brand":"Radley London","name":"Large Ziptop Tote Bag","gender":"women","category":"bags","subcategory":"totes","price":279.00,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Grey"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.radley.co.uk/collections/handbags","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating radley.co.uk listings"},
+
+  {"retailer":"cambridgesatchel-gb","market":"US","brand":"Cambridge Satchel Company","name":"The Tiny Satchel","gender":"women","category":"bags","subcategory":"handbags","price":115.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Tan"],"material":"leather","care":"leather conditioner","careText":"Condition leather periodically; avoid water exposure.","url":"https://us.cambridgesatchel.com/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating cambridgesatchel.com US listings"},
+  {"retailer":"cambridgesatchel-gb","market":"US","brand":"Cambridge Satchel Company","name":"The 13 Inch Batchel","gender":"unisex","category":"bags","subcategory":"backpacks","price":280.00,"salePrice":null,"currency":"USD","sizes":"13 inch","colors":["Black"],"material":"leather","care":"leather conditioner","careText":"Condition leather periodically; avoid water exposure.","url":"https://us.cambridgesatchel.com/collections/womens-all-womens-bags","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating cambridgesatchel.com US listings"},
+  {"retailer":"cambridgesatchel-gb","market":"US","brand":"Cambridge Satchel Company","name":"The Messenger Backpack","gender":"unisex","category":"bags","subcategory":"backpacks","price":410.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Brown"],"material":"leather","care":"leather conditioner","careText":"Condition leather periodically; avoid water exposure.","url":"https://us.cambridgesatchel.com/collections/mens-sale","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating cambridgesatchel.com US listings"},
+  {"retailer":"cambridgesatchel-gb","market":"GB","brand":"Cambridge Satchel Company","name":"The Mini Satchel","gender":"women","category":"bags","subcategory":"handbags","price":185.00,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Red"],"material":"leather","care":"leather conditioner","careText":"Condition leather periodically; avoid water exposure.","url":"https://www.cambridgesatchel.com/collections/sale-handbags","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating cambridgesatchel.com GB listings"},
+
+  {"retailer":"fossil-us","market":"US","brand":"Fossil","name":"Jolie Leather Crossbody Bag","gender":"women","category":"bags","subcategory":"handbags","price":195.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.fossil.com/en-us/products/jolie-leather-crossbody-bag/ZB11112249.html","date":"2026-10-05","confirmed":true,"source":"fossil.com product page (via search)"},
+  {"retailer":"fossil-us","market":"US","brand":"Fossil","name":"Danni Leather Crossbody Bag","gender":"women","category":"bags","subcategory":"handbags","price":180.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Tan"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.fossil.com/en-us/products/danni-leather-crossbody-bag/ZB11121001.html","date":"2026-10-05","confirmed":true,"source":"fossil.com product page (via search)"},
+  {"retailer":"fossil-us","market":"US","brand":"Fossil","name":"Explorer Crossbody","gender":"women","category":"bags","subcategory":"handbags","price":198.00,"salePrice":69.00,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.fossil.com/en-us/products/explorer-crossbody/SHB1522206.html","date":"2026-10-05","confirmed":true,"source":"fossil.com product page (via search)"},
+  {"retailer":"fossil-us","market":"US","brand":"Fossil","name":"Fiona Leather Small Crossbody Bag","gender":"women","category":"bags","subcategory":"handbags","price":108.00,"salePrice":54.00,"currency":"USD","sizes":"one-size","colors":["Brown"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.fossil.com/en-us/products/fiona-leather-small-crossbody-bag/ZB7881043.html","date":"2026-10-05","confirmed":true,"source":"fossil.com product page (via search)"},
+
+  {"retailer":"herschel-us","market":"US","brand":"Herschel Supply Co.","name":"Classic Backpack 26L","gender":"unisex","category":"bags","subcategory":"backpacks","price":60.00,"salePrice":null,"currency":"USD","sizes":"26L","colors":["Black"],"material":"polyester","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://herschel.com/products/herschel-classic%E2%84%A2-backpack-2","date":"2026-10-05","confirmed":true,"source":"herschel.com product page (via search)"},
+  {"retailer":"herschel-us","market":"US","brand":"Herschel Supply Co.","name":"Classic Backpack XL 30L","gender":"unisex","category":"bags","subcategory":"backpacks","price":70.00,"salePrice":null,"currency":"USD","sizes":"30L","colors":["Navy"],"material":"polyester","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://herschel.com/products/classic-backpack-xl","date":"2026-10-05","confirmed":true,"source":"herschel.com product page (via search)"},
+  {"retailer":"herschel-us","market":"US","brand":"Herschel Supply Co.","name":"Retreat Backpack 23L","gender":"unisex","category":"bags","subcategory":"backpacks","price":120.00,"salePrice":null,"currency":"USD","sizes":"23L","colors":["Grey"],"material":"polyester","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://herschel.com/shop/backpacks/retreat-backpack","date":"2026-10-05","confirmed":true,"source":"herschel.com product page (via search)"},
+  {"retailer":"herschel-us","market":"US","brand":"Herschel Supply Co.","name":"Kingston Backpack 30L","gender":"unisex","category":"bags","subcategory":"backpacks","price":85.00,"salePrice":null,"currency":"USD","sizes":"30L","colors":["Black"],"material":"polyester","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://herschel.com/shop","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating herschel.com listings"},
+
+  {"retailer":"baggu-us","market":"US","brand":"Baggu","name":"Standard Baggu","gender":"unisex","category":"bags","subcategory":"totes","price":16.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"ripstop nylon","care":"machine washable","careText":"Machine wash cold, hang to dry.","url":"https://baggu.com/products/standard-baggu-black","date":"2026-10-05","confirmed":true,"source":"baggu.com product page (via search)"},
+  {"retailer":"baggu-us","market":"US","brand":"Baggu","name":"Big Baggu","gender":"unisex","category":"bags","subcategory":"totes","price":20.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Natural"],"material":"ripstop nylon","care":"machine washable","careText":"Machine wash cold, hang to dry.","url":"https://baggu.com/collections/all","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating baggu.com listings"},
+  {"retailer":"baggu-us","market":"US","brand":"Baggu","name":"Cloud Bag","gender":"unisex","category":"bags","subcategory":"handbags","price":62.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"nylon","care":"spot clean","careText":"Spot clean with mild soap and water.","url":"https://baggu.com/collections/all","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating baggu.com listings"},
+  {"retailer":"baggu-us","market":"US","brand":"Baggu","name":"Fanny Pack","gender":"unisex","category":"bags","subcategory":"handbags","price":56.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Red"],"material":"nylon","care":"spot clean","careText":"Spot clean with mild soap and water.","url":"https://baggu.com/collections/all","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating baggu.com listings"},
+
+  {"retailer":"loandsons-us","market":"US","brand":"Lo & Sons","name":"Aoyama Nylon Crossbody Bag","gender":"women","category":"bags","subcategory":"handbags","price":178.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black/Gold/Lavender"],"material":"nylon","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://www.loandsons.com/products/aoyama-nylon-black-gold-lavender","date":"2026-10-05","confirmed":true,"source":"loandsons.com product page (via search)"},
+  {"retailer":"loandsons-us","market":"US","brand":"Lo & Sons","name":"Trinity Recycled Saffiano Leather Laptop Tote","gender":"women","category":"bags","subcategory":"totes","price":350.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Deep Navy/Gold/Camel"],"material":"recycled saffiano leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.loandsons.com/products/trinity-recycled-saffiano-leather-deep-navy-gold-camel","date":"2026-10-05","confirmed":true,"source":"loandsons.com product page (via search)"},
+  {"retailer":"loandsons-us","market":"US","brand":"Lo & Sons","name":"Sherborn Recycled Nylon Work Bag","gender":"unisex","category":"bags","subcategory":"backpacks","price":298.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"recycled nylon","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://www.loandsons.com/collections/work-bags","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating loandsons.com listings"},
+
+  {"retailer":"senreve-us","market":"US","brand":"Senreve","name":"Maestra Bag (Pebbled)","gender":"women","category":"bags","subcategory":"handbags","price":945.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"pebbled Italian leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.senreve.com/products/maestra-bag-pebbled","date":"2026-10-05","confirmed":true,"source":"senreve.com product page (via search)"},
+  {"retailer":"senreve-us","market":"US","brand":"Senreve","name":"Midi Maestra Bag (Pebbled)","gender":"women","category":"bags","subcategory":"handbags","price":845.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Taupe"],"material":"pebbled Italian leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.senreve.com/products/midi-maestra-pebbled","date":"2026-10-05","confirmed":true,"source":"senreve.com product page (via search)"},
+
+  {"retailer":"strathberry-us","market":"US","brand":"Strathberry","name":"Mosaic Nano Bag","gender":"women","category":"bags","subcategory":"handbags","price":595.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://us.strathberry.com/collections/mosaic-bag","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating strathberry.com listings"},
+  {"retailer":"strathberry-us","market":"US","brand":"Strathberry","name":"Nano Tote","gender":"women","category":"bags","subcategory":"totes","price":565.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Tan"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://us.strathberry.com/collections/bestsellers","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating strathberry.com listings"},
+  {"retailer":"strathberry-us","market":"US","brand":"Strathberry","name":"Kite Hobo Bag","gender":"women","category":"bags","subcategory":"handbags","price":745.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Burgundy"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://us.strathberry.com/collections/bestsellers","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating strathberry.com listings"},
+  {"retailer":"strathberry-us","market":"US","brand":"Strathberry","name":"Osette Midi Pouch","gender":"women","category":"bags","subcategory":"handbags","price":295.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://us.strathberry.com/collections/the-strathberry-designer-collection","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating strathberry.com listings"},
+
+  {"retailer":"aspinaloflondon-gb","market":"US","brand":"Aspinal of London","name":"Mini Mayfair Bag","gender":"women","category":"bags","subcategory":"handbags","price":1135.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.aspinaloflondon.com/design-icons/mayfair","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating aspinaloflondon.com US listings"},
+  {"retailer":"aspinaloflondon-gb","market":"US","brand":"Aspinal of London","name":"Soho Mini Crescent Bag","gender":"women","category":"bags","subcategory":"handbags","price":755.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Tan"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.aspinaloflondon.com/whats-new","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating aspinaloflondon.com US listings"},
+
+  {"retailer":"furla-us","market":"US","brand":"Furla","name":"Furla 1927 Mini Bag","gender":"women","category":"bags","subcategory":"handbags","price":288.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.furla.com/us/en/eshop/collections/furla-1927/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating furla.com US listings"},
+  {"retailer":"furla-us","market":"US","brand":"Furla","name":"Furla Dora Tote L","gender":"women","category":"bags","subcategory":"totes","price":548.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Tan"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.furla.com/us/en/eshop/women/bags/totes/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating furla.com US listings"},
+  {"retailer":"furla-us","market":"US","brand":"Furla","name":"Furla Amelia Tote L","gender":"women","category":"bags","subcategory":"totes","price":478.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.furla.com/us/en/eshop/women/bags/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating furla.com US listings"},
+
+  {"retailer":"guess-us","market":"US","brand":"Guess","name":"Cheryl Handbag","gender":"women","category":"bags","subcategory":"handbags","price":138.00,"salePrice":65.92,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"faux leather","care":"wipe clean","careText":"Wipe with a soft dry cloth.","url":"https://www.guess.com/en-us/guess/women/bags/handbags/cheryl-handbag-black/TQ972006-BLA.html","date":"2026-10-05","confirmed":true,"source":"guess.com product page (via search)"},
+  {"retailer":"guess-us","market":"US","brand":"Guess","name":"Allegra Faux Leather Handbag","gender":"women","category":"bags","subcategory":"handbags","price":138.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"faux leather","care":"wipe clean","careText":"Wipe with a soft dry cloth.","url":"https://www.guess.com/en-us/guess/women/bags/handbags/allegra-faux-leather-handbag-black/BG223706-BLA.html","date":"2026-10-05","confirmed":true,"source":"guess.com product page (via search)"},
+  {"retailer":"guess-us","market":"US","brand":"Guess","name":"Iris Leather Top Handle Bag","gender":"women","category":"bags","subcategory":"handbags","price":460.00,"salePrice":458.91,"currency":"USD","sizes":"one-size","colors":["Beige"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://guess.com/us/en/handbags/all-handbags/satchels/iris-leather-top-handle-bag-beige/HWALPSL4119-DSL.html","date":"2026-10-05","confirmed":true,"source":"guess.com product page (via search)"},
+
+  {"retailer":"cuyana-us","market":"US","brand":"Cuyana","name":"Classic Easy Tote","gender":"women","category":"bags","subcategory":"totes","price":298.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://cuyana.com/products/classic-easy-tote","date":"2026-10-05","confirmed":true,"source":"cuyana.com product page (via search)"},
+  {"retailer":"cuyana-us","market":"US","brand":"Cuyana","name":"System Tote 16-inch","gender":"women","category":"bags","subcategory":"totes","price":378.00,"salePrice":null,"currency":"USD","sizes":"16 inch","colors":["Tan"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://cuyana.com/products/system-tote-16-inch-v2","date":"2026-10-05","confirmed":true,"source":"cuyana.com product page (via search)"},
+  {"retailer":"cuyana-us","market":"US","brand":"Cuyana","name":"Mini Easy Zipper Tote","gender":"women","category":"bags","subcategory":"totes","price":258.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://cuyana.com/products/mini-easy-zipper-tote","date":"2026-10-05","confirmed":true,"source":"cuyana.com product page (via search)"},
+  {"retailer":"cuyana-us","market":"US","brand":"Cuyana","name":"Forma Tote","gender":"women","category":"bags","subcategory":"totes","price":698.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Brown"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://cuyana.com/products/forma-tote","date":"2026-10-05","confirmed":true,"source":"cuyana.com product page (via search)"},
+
+  {"retailer":"polene-us","market":"US","brand":"Polène","name":"Numéro Un Micro Bag","gender":"women","category":"bags","subcategory":"handbags","price":220.00,"salePrice":null,"currency":"USD","sizes":"micro","colors":["Taupe"],"material":"textured leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://eng.polene-paris.com/collections/micro","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating polene-paris.com listings"},
+  {"retailer":"polene-us","market":"US","brand":"Polène","name":"Cyme Bag","gender":"women","category":"bags","subcategory":"handbags","price":620.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"textured leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://eng.polene-paris.com/collections/cyme","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating polene-paris.com listings"},
+  {"retailer":"polene-us","market":"US","brand":"Polène","name":"Cyme Mini Bag","gender":"women","category":"bags","subcategory":"handbags","price":550.00,"salePrice":null,"currency":"USD","sizes":"mini","colors":["Camel"],"material":"textured leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://eng.polene-paris.com/collections/cyme","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating polene-paris.com listings"},
+
+  {"retailer":"oakley-us","market":"US","brand":"Oakley","name":"Holbrook R Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":88.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black Ink"],"material":"O Matter frame, Prizm lens","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.oakley.com/en-us/product/W0OO9377","date":"2026-10-05","confirmed":true,"source":"oakley.com product page (via search)"},
+  {"retailer":"oakley-us","market":"US","brand":"Oakley","name":"Holbrook Sunglasses (Matte Black, Prizm Black Polarized)","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":237.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Matte Black"],"material":"O Matter frame, Prizm polarized lens","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.oakley.com/en-us/product/W0OO9102?variant=888392260109","date":"2026-10-05","confirmed":true,"source":"oakley.com product page (via search)"},
+  {"retailer":"oakley-us","market":"US","brand":"Oakley","name":"Holbrook S Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":174.00,"salePrice":null,"currency":"USD","sizes":"small","colors":["Matte Black"],"material":"O Matter frame, Prizm lens","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.oakley.com/en-us/product/W0OO9509","date":"2026-10-05","confirmed":true,"source":"oakley.com product page (via search)"},
+  {"retailer":"oakley-us","market":"US","brand":"Oakley","name":"Holbrook Metal Sunglasses (Prizm Sapphire Polarized)","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":355.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Matte Gunmetal"],"material":"metal frame, Prizm polarized lens","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.oakley.com/en-ca/product/W0OO4123","date":"2026-10-05","confirmed":true,"source":"oakley.com product page (via search)"},
+
+  {"retailer":"warbyparker-us","market":"US","brand":"Warby Parker","name":"Prescription Eyeglasses (base)","gender":"unisex","category":"accessories","subcategory":"eyewear","price":95.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Assorted"],"material":"acetate frame","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.warbyparker.com/eyeglasses","date":"2026-10-05","confirmed":true,"source":"warbyparker.com pricing page (via search)"},
+  {"retailer":"warbyparker-us","market":"US","brand":"Warby Parker","name":"Sunglasses (base)","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":95.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Assorted"],"material":"acetate frame","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.warbyparker.com/sunglasses/men","date":"2026-10-05","confirmed":true,"source":"warbyparker.com pricing page (via search)"},
+  {"retailer":"warbyparker-us","market":"US","brand":"Warby Parker","name":"Progressive Prescription Eyeglasses (base)","gender":"unisex","category":"accessories","subcategory":"eyewear","price":295.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Assorted"],"material":"acetate frame, progressive lens","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.warbyparker.com/learn/how-much-do-glasses-cost","date":"2026-10-05","confirmed":true,"source":"warbyparker.com pricing page (via search)"},
+
+  {"retailer":"persol-us","market":"US","brand":"Persol","name":"PO3269S Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":333.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"acetate frame","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.persol.com/usa/0PO3269S--95-31","date":"2026-10-05","confirmed":true,"source":"persol.com product page (via search)"},
+  {"retailer":"persol-us","market":"US","brand":"Persol","name":"649 Original Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":363.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Havana"],"material":"acetate frame","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.persol.com/usa/sun-most-popular","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating persol.com listings"},
+  {"retailer":"persol-us","market":"US","brand":"Persol","name":"714 Original Sunglasses (Black, Green Lenses)","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":516.00,"salePrice":null,"currency":"USD","sizes":"folding","colors":["Black"],"material":"acetate frame","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.persol.com/usa/0PO0714--95-58","date":"2026-10-05","confirmed":true,"source":"persol.com product page (via search)"},
+
+  {"retailer":"kangol-us","market":"US","brand":"Kangol","name":"Tropic 504 Ventair Cap","gender":"unisex","category":"accessories","subcategory":"hats","price":50.00,"salePrice":null,"currency":"USD","sizes":"S-XXL","colors":["Black"],"material":"tropic fabric","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://www.kangol.com/hats-by-style","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating kangol.com listings"},
+  {"retailer":"kangol-us","market":"US","brand":"Kangol","name":"Cotton Twill Army Cap","gender":"unisex","category":"accessories","subcategory":"hats","price":40.00,"salePrice":null,"currency":"USD","sizes":"S-XXL","colors":["Olive"],"material":"cotton twill","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://kangol.com/collections/cotton","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating kangol.com listings"},
+  {"retailer":"kangol-us","market":"US","brand":"Kangol","name":"Washed Bucket Hat","gender":"unisex","category":"accessories","subcategory":"hats","price":50.00,"salePrice":null,"currency":"USD","sizes":"S-XXL","colors":["Khaki"],"material":"washed cotton","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://kangol.com/products/washed-cap","date":"2026-10-05","confirmed":true,"source":"kangol.com product page (via search)"},
+  {"retailer":"kangol-us","market":"US","brand":"Kangol","name":"Seamless Wool 507 Cap","gender":"unisex","category":"accessories","subcategory":"hats","price":70.00,"salePrice":null,"currency":"USD","sizes":"S-XXL","colors":["Grey"],"material":"wool","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://kangol.com/collections/hats","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating kangol.com listings"},
+
+  {"retailer":"brixton-us","market":"US","brand":"Brixton","name":"Oath Trucker Hat","gender":"unisex","category":"accessories","subcategory":"hats","price":30.00,"salePrice":null,"currency":"USD","sizes":"one-size adjustable","colors":["Black"],"material":"cotton, mesh back","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://www.brixton.com/collections/adjustable-hats","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating brixton.com listings"},
+  {"retailer":"brixton-us","market":"US","brand":"Brixton","name":"Beta Journey Adjustable Hat","gender":"unisex","category":"accessories","subcategory":"hats","price":39.00,"salePrice":null,"currency":"USD","sizes":"one-size adjustable","colors":["Navy"],"material":"cotton","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://www.brixton.com/collections/adjustable-hats","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating brixton.com listings"},
+  {"retailer":"brixton-us","market":"US","brand":"Brixton","name":"Hooligan Flat Cap","gender":"unisex","category":"accessories","subcategory":"hats","price":59.00,"salePrice":null,"currency":"USD","sizes":"S/M, L/XL","colors":["Grey"],"material":"wool blend","care":"spot clean","careText":"Spot clean with mild soap and water; air dry.","url":"https://www.brixton.com/collections/mens-headwear","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating brixton.com listings"},
+  {"retailer":"brixton-us","market":"US","brand":"Brixton","name":"Gain Fedora","gender":"unisex","category":"accessories","subcategory":"hats","price":69.00,"salePrice":null,"currency":"USD","sizes":"S/M, L/XL","colors":["Brown"],"material":"wool felt","care":"spot clean","careText":"Spot clean with mild soap and water; reshape brim by hand.","url":"https://www.brixton.com/collections/felt-hats","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating brixton.com listings"},
+  {"retailer":"brixton-us","market":"US","brand":"Brixton","name":"Cohen Cowboy Hat","gender":"unisex","category":"accessories","subcategory":"hats","price":109.00,"salePrice":null,"currency":"USD","sizes":"S/M, L/XL","colors":["Tan"],"material":"wool felt","care":"spot clean","careText":"Spot clean with mild soap and water; reshape brim by hand.","url":"https://www.brixton.com/collections/felt-hats","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating brixton.com listings"},
+
+  {"retailer":"stetson-us","market":"US","brand":"Stetson","name":"Troubadour Hat","gender":"men","category":"accessories","subcategory":"hats","price":125.00,"salePrice":null,"currency":"USD","sizes":"6 7/8-7 3/4","colors":["Brown"],"material":"wool felt","care":"spot clean","careText":"Spot clean with mild soap and water; reshape brim by hand; store on a hat form.","url":"https://stetson.com/collections/hats","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating stetson.com listings"},
+  {"retailer":"stetson-us","market":"US","brand":"Stetson","name":"Medalist Cowboy Hat","gender":"men","category":"accessories","subcategory":"hats","price":260.00,"salePrice":null,"currency":"USD","sizes":"6 7/8-7 3/4","colors":["Silverbelly"],"material":"wool felt","care":"spot clean","careText":"Spot clean with mild soap and water; reshape brim by hand; store on a hat form.","url":"https://stetson.com/collections/hats","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating stetson.com listings"},
+  {"retailer":"stetson-us","market":"US","brand":"Stetson","name":"Lariat Cowboy Hat","gender":"men","category":"accessories","subcategory":"hats","price":320.00,"salePrice":null,"currency":"USD","sizes":"6 7/8-7 3/4","colors":["Black"],"material":"wool felt","care":"spot clean","careText":"Spot clean with mild soap and water; reshape brim by hand; store on a hat form.","url":"https://stetson.com/collections/hats","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating stetson.com listings"},
+
+  {"retailer":"dentsgloves-gb","market":"GB","brand":"Dents","name":"Classic Leather Driving Gloves","gender":"men","category":"accessories","subcategory":"gloves","price":115.00,"salePrice":86.25,"currency":"USD","sizes":"7-11","colors":["Tan"],"material":"leather","care":"leather conditioner","careText":"Condition leather periodically; avoid water exposure.","url":"https://www.dentsgloves.com/collections/sale-mens-gloves-50-and-under","date":"2026-10-05","confirmed":true,"source":"dentsgloves.com listing (via search); price shown in USD from US site search result"},
+  {"retailer":"dentsgloves-gb","market":"GB","brand":"Dents","name":"Handsewn Three-Point Lined Leather Gloves","gender":"men","category":"accessories","subcategory":"gloves","price":95.00,"salePrice":null,"currency":"USD","sizes":"7-11","colors":["Black"],"material":"leather, lined","care":"leather conditioner","careText":"Condition leather periodically; avoid water exposure.","url":"https://row.dentsgloves.com/collections/mens-gloves","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating dentsgloves.com listings"},
+  {"retailer":"dentsgloves-gb","market":"GB","brand":"Dents","name":"Men's Three-Point Cashmere-Lined Leather Gloves","gender":"men","category":"accessories","subcategory":"gloves","price":182.00,"salePrice":null,"currency":"USD","sizes":"7-11","colors":["Brown"],"material":"leather, cashmere lining","care":"leather conditioner","careText":"Condition leather periodically; avoid water exposure.","url":"https://us.dentsgloves.com/collections/mens-heritage-collection","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating dentsgloves.com listings"},
+
+  {"retailer":"fossil-us","market":"US","brand":"Fossil","name":"Men's Leather Bifold Wallet","gender":"men","category":"accessories","subcategory":"wallets","price":55.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Brown"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.fossil.com/en-us/product-care.html","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating fossil.com listings"},
+
+  {"retailer":"bellroy-us","market":"US","brand":"Bellroy","name":"Note Sleeve Wallet","gender":"unisex","category":"accessories","subcategory":"wallets","price":119.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://bellroy.com/products/note-sleeve-wallet","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating bellroy.com listings; exact price not read on page"},
+  {"retailer":"bellroy-us","market":"US","brand":"Bellroy","name":"Slim Sleeve Wallet","gender":"unisex","category":"accessories","subcategory":"wallets","price":99.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Navy"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://bellroy.com/products/slim-sleeve-wallet","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating bellroy.com listings; exact price not read on page"},
+  {"retailer":"bellroy-us","market":"US","brand":"Bellroy","name":"Card Pocket","gender":"unisex","category":"accessories","subcategory":"wallets","price":59.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://bellroy.com/products/card-pocket","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating bellroy.com listings; exact price not read on page"},
+
+  {"retailer":"tumi-us","market":"US","brand":"Tumi","name":"Bifold Wallet","gender":"men","category":"accessories","subcategory":"wallets","price":150.00,"salePrice":119.00,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.tumi.com/p/bifold-wallet-01565552693/","date":"2026-10-05","confirmed":true,"source":"tumi.com product page (via search)"},
+  {"retailer":"tumi-us","market":"US","brand":"Tumi","name":"Trifold Zip-Around Wallet","gender":"men","category":"accessories","subcategory":"wallets","price":225.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.tumi.com/p/trifold-zip-around-wallet-0156541T522/","date":"2026-10-05","confirmed":true,"source":"tumi.com product page (via search)"},
+  {"retailer":"tumi-us","market":"US","brand":"Tumi","name":"Double Billfold","gender":"men","category":"accessories","subcategory":"wallets","price":350.00,"salePrice":279.00,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.tumi.com/p/double-billfold-0152875A533/","date":"2026-10-05","confirmed":true,"source":"tumi.com product page (via search)"},
+  {"retailer":"tumi-us","market":"US","brand":"Tumi","name":"L-Fold Wallet","gender":"men","category":"accessories","subcategory":"wallets","price":150.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Navy"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.tumi.com/p/l-fold-01356231041/","date":"2026-10-05","confirmed":true,"source":"tumi.com product page (via search)"},
+
+  {"retailer":"montblanc-us","market":"US","brand":"Montblanc","name":"Sartorial Mini Wallet 4cc","gender":"men","category":"accessories","subcategory":"wallets","price":350.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.montblanc.com/en-us/sartorial-mini-wallet-4cc-MB130321.html","date":"2026-10-05","confirmed":true,"source":"montblanc.com product page (via search)"},
+  {"retailer":"montblanc-us","market":"US","brand":"Montblanc","name":"Sartorial Wallet 6cc","gender":"men","category":"accessories","subcategory":"wallets","price":460.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.montblanc.com/en-us/sartorial-wallet-6cc-MB131721.html","date":"2026-10-05","confirmed":true,"source":"montblanc.com product page (via search)"},
+  {"retailer":"montblanc-us","market":"US","brand":"Montblanc","name":"Extreme 3.0 Compact Wallet 6cc","gender":"men","category":"accessories","subcategory":"wallets","price":430.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.montblanc.com/en-us/extreme-3.0-compact-wallet-6cc-MB129975.html","date":"2026-10-05","confirmed":true,"source":"montblanc.com product page (via search)"},
+  {"retailer":"montblanc-us","market":"US","brand":"Montblanc","name":"Extreme 3.0 Wallet 6cc","gender":"men","category":"accessories","subcategory":"wallets","price":490.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"leather","care":"wipe clean","careText":"Wipe with a soft dry cloth; condition leather periodically.","url":"https://www.montblanc.com/en-us/extreme-3.0-wallet-6cc-MB131762.html","date":"2026-10-05","confirmed":true,"source":"montblanc.com product page (via search)"},
+
+  {"retailer":"johnstonsofelgin-gb","market":"US","brand":"Johnstons of Elgin","name":"Natural Cashmere Scarf","gender":"unisex","category":"accessories","subcategory":"scarves","price":295.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Natural"],"material":"100% cashmere","care":"dry clean","careText":"Dry clean only; store folded away from direct sunlight.","url":"https://johnstonsofelgin.com/en-us/products/natural-cashmere-scarf","date":"2026-10-05","confirmed":true,"source":"johnstonsofelgin.com product page (via search)"},
+  {"retailer":"johnstonsofelgin-gb","market":"US","brand":"Johnstons of Elgin","name":"Blue Cashmere Scarf","gender":"unisex","category":"accessories","subcategory":"scarves","price":295.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Blue"],"material":"100% cashmere","care":"dry clean","careText":"Dry clean only; store folded away from direct sunlight.","url":"https://johnstonsofelgin.com/en-us/products/blue-cashmere-scarf","date":"2026-10-05","confirmed":true,"source":"johnstonsofelgin.com product page (via search)"},
+  {"retailer":"johnstonsofelgin-gb","market":"US","brand":"Johnstons of Elgin","name":"Wide Black Cashmere Scarf","gender":"unisex","category":"accessories","subcategory":"scarves","price":510.00,"salePrice":null,"currency":"USD","sizes":"wide","colors":["Black"],"material":"100% cashmere","care":"dry clean","careText":"Dry clean only; store folded away from direct sunlight.","url":"https://johnstonsofelgin.com/en-us/products/wide-black-cashmere-scarf","date":"2026-10-05","confirmed":true,"source":"johnstonsofelgin.com product page (via search)"},
+  {"retailer":"johnstonsofelgin-gb","market":"US","brand":"Johnstons of Elgin","name":"Black Ribbed Cashmere Scarf","gender":"unisex","category":"accessories","subcategory":"scarves","price":399.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"100% cashmere","care":"dry clean","careText":"Dry clean only; store folded away from direct sunlight.","url":"https://johnstonsofelgin.com/en-us/products/black-ribbed-cashmere-scarf","date":"2026-10-05","confirmed":true,"source":"johnstonsofelgin.com product page (via search)"},
+
+  {"retailer":"acnestudios-us","market":"US","brand":"Acne Studios","name":"Fringe Wool Scarf (Oversized)","gender":"unisex","category":"accessories","subcategory":"scarves","price":270.00,"salePrice":null,"currency":"USD","sizes":"oversized","colors":["Grey Melange"],"material":"wool","care":"dry clean","careText":"Dry clean only; store folded away from direct sunlight.","url":"https://www.acnestudios.com/us/en/fringe-wool-scarf---oversized-grey-melange/CA0209-990.html","date":"2026-10-05","confirmed":true,"source":"acnestudios.com product page (via search)"},
+  {"retailer":"acnestudios-us","market":"US","brand":"Acne Studios","name":"Wool Fringe Scarf","gender":"unisex","category":"accessories","subcategory":"scarves","price":340.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Light Beige"],"material":"wool","care":"dry clean","careText":"Dry clean only; store folded away from direct sunlight.","url":"https://www.acnestudios.com/us/en/wool-fringe-scarf-light-beige/CA0378-AGU.html","date":"2026-10-05","confirmed":true,"source":"acnestudios.com product page (via search)"},
+  {"retailer":"acnestudios-us","market":"US","brand":"Acne Studios","name":"Mohair Checked Scarf","gender":"unisex","category":"accessories","subcategory":"scarves","price":390.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Chestnut Brown/Yellow/Green"],"material":"mohair blend","care":"dry clean","careText":"Dry clean only; store folded away from direct sunlight.","url":"https://www.acnestudios.com/us/en/mohair-checked-scarf-chestnut-brown-yellow-green/CA0084-BO9.html","date":"2026-10-05","confirmed":true,"source":"acnestudios.com product page (via search)"},
+  {"retailer":"acnestudios-us","market":"US","brand":"Acne Studios","name":"Mohair Logo Scarf","gender":"unisex","category":"accessories","subcategory":"scarves","price":730.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"mohair blend","care":"dry clean","careText":"Dry clean only; store folded away from direct sunlight.","url":"https://www.acnestudios.com/us/en/mohair-logo-scarf-black/CA0397-900.html","date":"2026-10-05","confirmed":true,"source":"acnestudios.com product page (via search)"},
+
+  {"retailer":"smithoptics-us","market":"US","brand":"Smith Optics","name":"Shoal Performance Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":117.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"nylon frame, ChromaPop lens","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.smithoptics.com/en_US/p/sunglass/shoal-performance-sunglass/SHOAL-SUNGLASSES.html","date":"2026-10-05","confirmed":true,"source":"smithoptics.com product page (via search)"},
+  {"retailer":"smithoptics-us","market":"US","brand":"Smith Optics","name":"Embark Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":225.00,"salePrice":135.00,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"nylon frame, ChromaPop lens","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.smithoptics.com/en-us/collections/sunglasses","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating smithoptics.com listings"},
+  {"retailer":"smithoptics-us","market":"US","brand":"Smith Optics","name":"Wildcat Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":287.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Tortoise"],"material":"nylon frame, ChromaPop lens","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.smithoptics.com/en-us/collections/sunglasses","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating smithoptics.com listings"},
+
+  {"retailer":"quayaustralia-us","market":"US","brand":"Quay Australia","name":"On The Fly Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":75.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"acetate frame","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://quayaustralia.com/collections/bestseller-sunglasses","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating quayaustralia.com listings"},
+  {"retailer":"quayaustralia-us","market":"US","brand":"Quay Australia","name":"Level Up Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":80.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Tortoise"],"material":"acetate frame","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://quayaustralia.com/collections/bestseller-sunglasses","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating quayaustralia.com listings"},
+  {"retailer":"quayaustralia-us","market":"US","brand":"Quay Australia","name":"Soundcheck Polarized Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":105.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"acetate frame, polarized lens","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://www.quayaustralia.com/collections/women-sunglasses/prescription","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating quayaustralia.com listings"},
+
+  {"retailer":"vonzipper-us","market":"US","brand":"Von Zipper","name":"Stax Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":150.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"acetate frame","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://vonzipper.com/products/stax","date":"2026-10-05","confirmed":true,"source":"vonzipper.com product page (via search)"},
+  {"retailer":"vonzipper-us","market":"US","brand":"Von Zipper","name":"Gabba Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":130.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Tortoise"],"material":"acetate frame","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://vonzipper.com/products/gabba","date":"2026-10-05","confirmed":true,"source":"vonzipper.com product page (via search)"},
+  {"retailer":"vonzipper-us","market":"US","brand":"Von Zipper","name":"Super Rad Sunglasses","gender":"unisex","category":"accessories","subcategory":"sunglasses","price":180.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"acetate frame","care":"wipe with microfiber cloth","careText":"Clean lenses with a microfiber cloth; store in case.","url":"https://vonzipper.com/products/super-rad","date":"2026-10-05","confirmed":true,"source":"vonzipper.com product page (via search)"},
+
+  {"retailer":"barts-eu","market":"GB","brand":"Barts","name":"Soho Scarf","gender":"unisex","category":"accessories","subcategory":"scarves","price":34.99,"salePrice":null,"currency":"EUR","sizes":"one-size","colors":["Black"],"material":"knit","care":"machine wash cold","careText":"Machine wash cold on gentle cycle; lay flat to dry.","url":"https://www.barts.eu/soho-scarf-black-0592","date":"2026-10-05","confirmed":true,"source":"barts.eu product page (via search)"},
+  {"retailer":"barts-eu","market":"GB","brand":"Barts","name":"James Scarf","gender":"unisex","category":"accessories","subcategory":"scarves","price":39.99,"salePrice":null,"currency":"EUR","sizes":"one-size","colors":["Black"],"material":"knit","care":"machine wash cold","careText":"Machine wash cold on gentle cycle; lay flat to dry.","url":"https://www.barts.eu/james-scarf-black","date":"2026-10-05","confirmed":true,"source":"barts.eu product page (via search)"},
+  {"retailer":"barts-eu","market":"GB","brand":"Barts","name":"Kegalle Hat","gender":"unisex","category":"accessories","subcategory":"hats","price":49.99,"salePrice":null,"currency":"EUR","sizes":"one-size","colors":["Grey"],"material":"knit","care":"machine wash cold","careText":"Machine wash cold on gentle cycle; lay flat to dry.","url":"https://www.barts.eu/women-winter","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating barts.eu listings"},
+  {"retailer":"barts-eu","market":"GB","brand":"Barts","name":"Haputale Beanie","gender":"unisex","category":"accessories","subcategory":"hats","price":34.99,"salePrice":null,"currency":"EUR","sizes":"one-size","colors":["Navy"],"material":"knit","care":"machine wash cold","careText":"Machine wash cold on gentle cycle; lay flat to dry.","url":"https://www.barts.eu/women-winter","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating barts.eu listings"},
+
+  {"retailer":"hamiltonwatch-us","market":"US","brand":"Hamilton","name":"Khaki Field Mechanical 38mm","gender":"unisex","category":"watches","subcategory":"watches","price":675.00,"salePrice":null,"currency":"USD","sizes":"38mm","colors":["White dial"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case and strap with a soft dry cloth; avoid water exposure on leather strap.","url":"https://www.hamiltonwatch.com/en-us/h69439411-khaki-field.html","date":"2026-10-05","confirmed":true,"source":"hamiltonwatch.com product page (via search)"},
+  {"retailer":"hamiltonwatch-us","market":"US","brand":"Hamilton","name":"Khaki Field Auto 42mm","gender":"unisex","category":"watches","subcategory":"watches","price":795.00,"salePrice":null,"currency":"USD","sizes":"42mm","colors":["Blue dial"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case and strap with a soft dry cloth; avoid water exposure on leather strap.","url":"https://www.hamiltonwatch.com/en-us/h70605540-khaki-field-auto.html","date":"2026-10-05","confirmed":true,"source":"hamiltonwatch.com product page (via search)"},
+  {"retailer":"hamiltonwatch-us","market":"US","brand":"Hamilton","name":"Khaki Field Quartz 38mm","gender":"unisex","category":"watches","subcategory":"watches","price":445.00,"salePrice":null,"currency":"USD","sizes":"38mm","colors":["Black dial"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case and strap with a soft dry cloth; avoid water exposure on leather strap.","url":"https://www.hamiltonwatch.com/en-us/khaki-field-mechanical-watches","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating hamiltonwatch.com listings"},
+
+  {"retailer":"swatch-us","market":"US","brand":"Swatch","name":"Moonswatch","gender":"unisex","category":"watches","subcategory":"watches","price":300.00,"salePrice":null,"currency":"USD","sizes":"42mm","colors":["Assorted"],"material":"Bioceramic case, Velcro strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; avoid water exposure beyond rated depth.","url":"https://www.swatch.com/en-us/watches/best-selling-watches/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating swatch.com listings"},
+  {"retailer":"swatch-us","market":"US","brand":"Swatch","name":"Always on Time","gender":"unisex","category":"watches","subcategory":"watches","price":130.00,"salePrice":null,"currency":"USD","sizes":"34mm","colors":["Black"],"material":"plastic case, silicone strap","care":"wipe clean","careText":"Wipe case and strap with a soft dry cloth.","url":"https://www.swatch.com/en-us/watches/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating swatch.com listings"},
+  {"retailer":"swatch-us","market":"US","brand":"Swatch","name":"Blue Rebel","gender":"unisex","category":"watches","subcategory":"watches","price":95.00,"salePrice":null,"currency":"USD","sizes":"34mm","colors":["Blue"],"material":"plastic case, silicone strap","care":"wipe clean","careText":"Wipe case and strap with a soft dry cloth.","url":"https://www.swatch.com/en-us/watches/originals/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating swatch.com listings"},
+
+  {"retailer":"omegawatches-us","market":"US","brand":"Omega","name":"Seamaster Diver 300M 42mm (steel on rubber strap)","gender":"men","category":"watches","subcategory":"watches","price":6300.00,"salePrice":null,"currency":"USD","sizes":"42mm","colors":["Black"],"material":"stainless steel case, rubber strap","care":"professional servicing","careText":"Have serviced by an authorized Omega service center; wipe case with a soft dry cloth.","url":"https://www.omegawatches.com/en-us/watches/seamaster/diver-300-m/gents-collection/catalog","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating omegawatches.com listings"},
+  {"retailer":"omegawatches-us","market":"US","brand":"Omega","name":"Seamaster Aqua Terra 150M 41mm (steel)","gender":"men","category":"watches","subcategory":"watches","price":6800.00,"salePrice":null,"currency":"USD","sizes":"41mm","colors":["Blue"],"material":"stainless steel case and bracelet","care":"professional servicing","careText":"Have serviced by an authorized Omega service center; wipe case with a soft dry cloth.","url":"https://www.omegawatches.com/en-us/watches/seamaster/aqua-terra-150m/catalog","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating omegawatches.com listings"},
+  {"retailer":"omegawatches-us","market":"US","brand":"Omega","name":"Seamaster 300 41mm (steel on steel)","gender":"men","category":"watches","subcategory":"watches","price":8300.00,"salePrice":null,"currency":"USD","sizes":"41mm","colors":["Black"],"material":"stainless steel case and bracelet","care":"professional servicing","careText":"Have serviced by an authorized Omega service center; wipe case with a soft dry cloth.","url":"https://www.omegawatches.com/en-us/watches/seamaster/heritage-models/seamaster-300/catalog","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating omegawatches.com listings"},
+
+  {"retailer":"tagheuer-us","market":"US","brand":"Tag Heuer","name":"Carrera Date Automatic 39mm (steel)","gender":"men","category":"watches","subcategory":"watches","price":3700.00,"salePrice":null,"currency":"USD","sizes":"39mm","colors":["Black"],"material":"stainless steel case and bracelet","care":"professional servicing","careText":"Have serviced by an authorized Tag Heuer service center; wipe case with a soft dry cloth.","url":"https://www.tagheuer.com/us/en/timepieces/collections/tag-heuer-carrera/tag-heuer-carrera-date/","date":"2026-10-05","confirmed":true,"source":"tagheuer.com collection page (via search)"},
+  {"retailer":"tagheuer-us","market":"US","brand":"Tag Heuer","name":"Carrera Chronograph Automatic 44mm (steel)","gender":"men","category":"watches","subcategory":"watches","price":5600.00,"salePrice":null,"currency":"USD","sizes":"44mm","colors":["Black"],"material":"stainless steel case and bracelet","care":"professional servicing","careText":"Have serviced by an authorized Tag Heuer service center; wipe case with a soft dry cloth.","url":"https://www.tagheuer.com/us/en/timepieces/collections/tag-heuer-carrera/44-mm-th20-00/CBN2A1B.BA0643.html","date":"2026-10-05","confirmed":true,"source":"tagheuer.com product page (via search)"},
+
+  {"retailer":"rolex-us","market":"US","brand":"Rolex","name":"Submariner Date (Oystersteel, 41mm)","gender":"men","category":"watches","subcategory":"watches","price":11350.00,"salePrice":null,"currency":"USD","sizes":"41mm","colors":["Black"],"material":"Oystersteel case and bracelet","care":"professional servicing","careText":"Have serviced by an authorized Rolex service center; wipe case with a soft dry cloth.","url":"https://www.rolex.com/en-us/watches/submariner/m126610ln-0001","date":"2026-10-05","confirmed":true,"source":"rolex.com product page (via search)"},
+  {"retailer":"rolex-us","market":"US","brand":"Rolex","name":"Datejust 41 (Oystersteel)","gender":"men","category":"watches","subcategory":"watches","price":8950.00,"salePrice":null,"currency":"USD","sizes":"41mm","colors":["Silver"],"material":"Oystersteel case and bracelet","care":"professional servicing","careText":"Have serviced by an authorized Rolex service center; wipe case with a soft dry cloth.","url":"https://www.rolex.com/en-us/watches/datejust/all-models","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating rolex.com listings"},
+
+  {"retailer":"tudorwatch-us","market":"US","brand":"Tudor","name":"Black Bay 58 39mm (steel on bracelet)","gender":"men","category":"watches","subcategory":"watches","price":5350.00,"salePrice":null,"currency":"USD","sizes":"39mm","colors":["Black"],"material":"stainless steel case and bracelet","care":"professional servicing","careText":"Have serviced by an authorized Tudor service center; wipe case with a soft dry cloth.","url":"https://www.tudorwatch.com/en/watches/black-bay-58/m7939a1a0ru-0001","date":"2026-10-05","confirmed":true,"source":"tudorwatch.com product page (via search)"},
+  {"retailer":"tudorwatch-us","market":"US","brand":"Tudor","name":"Black Bay 41mm (steel on rubber strap)","gender":"men","category":"watches","subcategory":"watches","price":5075.00,"salePrice":null,"currency":"USD","sizes":"41mm","colors":["Black"],"material":"stainless steel case, rubber strap","care":"professional servicing","careText":"Have serviced by an authorized Tudor service center; wipe case with a soft dry cloth.","url":"https://www.tudorwatch.com/en/watches/black-bay","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating tudorwatch.com listings"},
+
+  {"retailer":"bulova-us","market":"US","brand":"Bulova","name":"Super Seville","gender":"men","category":"watches","subcategory":"watches","price":695.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.bulova.com/us/en/collection/super-seville/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating bulova.com listings"},
+  {"retailer":"bulova-us","market":"US","brand":"Bulova","name":"Maquina Gold Black Automatic","gender":"men","category":"watches","subcategory":"watches","price":595.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold/Black"],"material":"stainless steel case","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.bulova.com/us/en/product/98A178.html","date":"2026-10-05","confirmed":true,"source":"bulova.com product page (via search)"},
+  {"retailer":"bulova-us","market":"US","brand":"Bulova","name":"Caravelle Vintage Classic (Women's)","gender":"women","category":"watches","subcategory":"watches","price":156.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.bulova.com/us/en/collection/womens-watches","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating bulova.com listings"},
+
+  {"retailer":"orientwatchusa-us","market":"US","brand":"Orient","name":"Bambino Version 2 Small Seconds","gender":"men","category":"watches","subcategory":"watches","price":425.00,"salePrice":310.00,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; avoid water exposure on leather strap.","url":"https://www.orientwatchusa.com/collections/orient-bambino","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating orientwatchusa.com listings"},
+  {"retailer":"orientwatchusa-us","market":"US","brand":"Orient","name":"Kamasu","gender":"men","category":"watches","subcategory":"watches","price":580.00,"salePrice":375.00,"currency":"USD","sizes":"one-size","colors":["Blue"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.orientwatchusa.com/collections/sport","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating orientwatchusa.com listings"},
+
+  {"retailer":"garmin-us","market":"US","brand":"Garmin","name":"Venu 3S","gender":"unisex","category":"watches","subcategory":"smartwatches","price":449.99,"salePrice":288.00,"currency":"USD","sizes":"41mm","colors":["Black"],"material":"fiber-reinforced polymer case, silicone band","care":"wipe clean","careText":"Wipe case and band with a soft damp cloth; charge via proprietary cable.","url":"https://us.smartprix.com/smartwatches/garmin-venu-3s-smartwatch-ppd1pwl2kpne","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating third-party listings; MSRP not read on garmin.com"},
+  {"retailer":"garmin-us","market":"US","brand":"Garmin","name":"Venu 4","gender":"unisex","category":"watches","subcategory":"smartwatches","price":549.99,"salePrice":null,"currency":"USD","sizes":"45mm","colors":["Slate"],"material":"stainless steel bezel, silicone band","care":"wipe clean","careText":"Wipe case and band with a soft damp cloth; charge via proprietary cable.","url":"https://www.garmin.com/en-US/newsroom/press-release/sports-fitness/take-steps-towards-a-healthier-lifestyle-with-the-venu-4-from-garmin/","date":"2026-10-05","confirmed":true,"source":"garmin.com newsroom press release (via search)"},
+
+  {"retailer":"apple-us","market":"US","brand":"Apple Watch","name":"Apple Watch Series 12 (46mm, aluminum)","gender":"unisex","category":"watches","subcategory":"smartwatches","price":399.00,"salePrice":null,"currency":"USD","sizes":"42mm, 46mm","colors":["Midnight"],"material":"aluminum case, silicone band","care":"wipe clean","careText":"Wipe case and band with a soft damp cloth; avoid harsh chemicals.","url":"https://www.apple.com/shop/buy-watch/apple-watch","date":"2026-10-05","confirmed":true,"source":"apple.com buy page (via search)"},
+  {"retailer":"apple-us","market":"US","brand":"Apple Watch","name":"Apple Watch SE 3 (44mm, aluminum)","gender":"unisex","category":"watches","subcategory":"smartwatches","price":249.00,"salePrice":null,"currency":"USD","sizes":"40mm, 44mm","colors":["Starlight"],"material":"aluminum case, silicone band","care":"wipe clean","careText":"Wipe case and band with a soft damp cloth; avoid harsh chemicals.","url":"https://www.apple.com/apple-watch-se-3/","date":"2026-10-05","confirmed":true,"source":"apple.com product page (via search)"},
+  {"retailer":"apple-us","market":"US","brand":"Apple Watch","name":"Apple Watch Ultra 4 (49mm, titanium)","gender":"unisex","category":"watches","subcategory":"smartwatches","price":799.00,"salePrice":null,"currency":"USD","sizes":"49mm","colors":["Natural Titanium"],"material":"titanium case, rubber band","care":"wipe clean","careText":"Wipe case and band with a soft damp cloth; avoid harsh chemicals.","url":"https://www.apple.com/shop/buy-watch/apple-watch","date":"2026-10-05","confirmed":true,"source":"apple.com buy page (via search)"},
+
+  {"retailer":"danielwellington-us","market":"US","brand":"Daniel Wellington","name":"Classic St Mawes Rose Gold (Men's)","gender":"men","category":"watches","subcategory":"watches","price":219.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Rose Gold"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; avoid water exposure on leather strap.","url":"https://us.danielwellington.com/products/classic-st-mawes-eggshell-white-rose-gold","date":"2026-10-05","confirmed":true,"source":"danielwellington.com product page (via search)"},
+  {"retailer":"danielwellington-us","market":"US","brand":"Daniel Wellington","name":"Petite Emerald (Women's)","gender":"women","category":"watches","subcategory":"watches","price":189.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Green"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; avoid water exposure on leather strap.","url":"https://us.danielwellington.com/collections/popular-watches","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating danielwellington.com listings"},
+  {"retailer":"danielwellington-us","market":"US","brand":"Daniel Wellington","name":"Iconic Link Automatic Silver","gender":"unisex","category":"watches","subcategory":"watches","price":459.00,"salePrice":322.00,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://us.danielwellington.com/pages/iconic-link-automatic","date":"2026-10-05","confirmed":true,"source":"danielwellington.com product page (via search)"},
+
+  {"retailer":"mvmt-us","market":"US","brand":"MVMT","name":"Legacy Slim (Men's)","gender":"men","category":"watches","subcategory":"watches","price":168.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; avoid water exposure on leather strap.","url":"https://www.mvmt.com/mens-watches/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating mvmt.com listings"},
+  {"retailer":"mvmt-us","market":"US","brand":"MVMT","name":"Odyssey II (Men's)","gender":"men","category":"watches","subcategory":"watches","price":188.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Blue"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.mvmt.com/watches-1/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating mvmt.com listings"},
+  {"retailer":"mvmt-us","market":"US","brand":"MVMT","name":"Avenue II (Women's)","gender":"women","category":"watches","subcategory":"watches","price":148.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Rose Gold"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.mvmt.com/womens-watches/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating mvmt.com listings"},
+
+  {"retailer":"sekonda-gb","market":"GB","brand":"Sekonda","name":"King Men's Watch","gender":"men","category":"watches","subcategory":"watches","price":54.99,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Black"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; avoid water exposure on leather strap.","url":"https://www.sekonda.com/mens-watches/classic","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating sekonda.com listings"},
+  {"retailer":"sekonda-gb","market":"GB","brand":"Sekonda","name":"Active Pro Smart Watch","gender":"unisex","category":"watches","subcategory":"smartwatches","price":119.99,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Black"],"material":"polymer case, silicone band","care":"wipe clean","careText":"Wipe case and band with a soft damp cloth.","url":"https://www.sekonda.com/smart-watches-products","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating sekonda.com listings"},
+
+  {"retailer":"rotarywatches-gb","market":"GB","brand":"Rotary","name":"Seamatic 300 Automatic","gender":"men","category":"watches","subcategory":"watches","price":299.00,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Black"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://rotarywatches.com/collections/automatic-watches","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating rotarywatches.com listings"},
+  {"retailer":"rotarywatches-gb","market":"GB","brand":"Rotary","name":"Pilot Chronograph","gender":"men","category":"watches","subcategory":"watches","price":229.00,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Black"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; avoid water exposure on leather strap.","url":"https://rotarywatches.com/collections/best-sellers","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating rotarywatches.com listings"},
+
+  {"retailer":"accurist-gb","market":"GB","brand":"Accurist","name":"Men's Classic Watch 7262","gender":"men","category":"watches","subcategory":"watches","price":79.99,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Silver"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://accurist.co.uk/watch/7262/","date":"2026-10-05","confirmed":true,"source":"accurist.co.uk product page (via search)"},
+  {"retailer":"accurist-gb","market":"GB","brand":"Accurist","name":"Women's Classic Watch 8301","gender":"women","category":"watches","subcategory":"watches","price":79.99,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Rose Gold"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://accurist.co.uk/watch/8301/","date":"2026-10-05","confirmed":true,"source":"accurist.co.uk product page (via search)"},
+
+  {"retailer":"nixon-us","market":"US","brand":"Nixon","name":"Time Teller","gender":"unisex","category":"watches","subcategory":"watches","price":150.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.nixon.com/collections/silver-watches","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating nixon.com listings"},
+  {"retailer":"nixon-us","market":"US","brand":"Nixon","name":"Sentry Stainless Steel","gender":"unisex","category":"watches","subcategory":"watches","price":300.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.nixon.com/collections/black-watches","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating nixon.com listings"},
+
+  {"retailer":"skagen-us","market":"US","brand":"Skagen","name":"Signatur Three-Hand Stainless Steel Watch","gender":"unisex","category":"watches","subcategory":"watches","price":160.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"stainless steel case and mesh bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.skagen.com/en-us/men/watch-collections/signatur/","date":"2026-10-05","confirmed":true,"source":"skagen.com collection page (via search)"},
+  {"retailer":"skagen-us","market":"US","brand":"Skagen","name":"Signatur Multifunction Brown Leather Watch","gender":"unisex","category":"watches","subcategory":"watches","price":180.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Brown"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; avoid water exposure on leather strap.","url":"https://www.skagen.com/en-us/men/watch-collections/signatur/","date":"2026-10-05","confirmed":true,"source":"skagen.com collection page (via search)"},
+
+  {"retailer":"diesel-us","market":"US","brand":"Diesel","name":"Mercurial Chronograph Stainless Steel Watch","gender":"men","category":"watches","subcategory":"watches","price":350.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://diesel.com/en-us/man/watches/","date":"2026-10-05","confirmed":true,"source":"diesel.com collection page (via search)"},
+  {"retailer":"diesel-us","market":"US","brand":"Diesel","name":"D-Era Two-Hand Stainless Steel Watch (Women's)","gender":"women","category":"watches","subcategory":"watches","price":220.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://diesel.com/en-us/woman/watches/","date":"2026-10-05","confirmed":true,"source":"diesel.com collection page (via search)"},
+
+  {"retailer":"guesswatches-us","market":"US","brand":"Guess","name":"Men's Silver Tone Multi-function Watch","gender":"men","category":"watches","subcategory":"watches","price":225.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://shop.guesswatches.com/guess-mens-watches","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating guesswatches.com listings"},
+  {"retailer":"guesswatches-us","market":"US","brand":"Guess","name":"Ladies Rose Gold Tone Multi-function Watch","gender":"women","category":"watches","subcategory":"watches","price":215.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Rose Gold"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://guesswatches.com/collections/womens-watches-new-arrivals","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating guesswatches.com listings"},
+
+  {"retailer":"invictastores-us","market":"US","brand":"Invicta","name":"Pro Diver Model 0076","gender":"men","category":"watches","subcategory":"watches","price":895.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Blue"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.invictawatch.com/watches/detail/0076-pro-diver-scuba-men","date":"2026-10-05","confirmed":true,"source":"invictawatch.com product page (via search)"},
+  {"retailer":"invictastores-us","market":"US","brand":"Invicta","name":"Pro Diver Model 26973","gender":"men","category":"watches","subcategory":"watches","price":495.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.invictawatch.com/watches/detail/26973-pro-diver-men","date":"2026-10-05","confirmed":true,"source":"invictawatch.com product page (via search)"},
+
+  {"retailer":"movado-us","market":"US","brand":"Movado","name":"BOLD Watch","gender":"unisex","category":"watches","subcategory":"watches","price":595.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.movado.com/us/en/collections/movado-bold","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating movado.com listings"},
+  {"retailer":"movado-us","market":"US","brand":"Movado","name":"Face Watch","gender":"unisex","category":"watches","subcategory":"watches","price":395.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; avoid water exposure on leather strap.","url":"https://www.movado.com/us/en/collections/movado-face","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating movado.com listings"},
+
+  {"retailer":"fitbit-us","market":"US","brand":"Fitbit","name":"Sense 2","gender":"unisex","category":"watches","subcategory":"smartwatches","price":299.95,"salePrice":249.95,"currency":"USD","sizes":"S, L band","colors":["Graphite"],"material":"aluminum case, silicone band","care":"wipe clean","careText":"Wipe case and band with a soft damp cloth.","url":"https://www.heartratemonitorsusa.com/products/fitbit-sense-2-smartwatch","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating third-party listings; price not read on fitbit.com"},
+  {"retailer":"fitbit-us","market":"US","brand":"Fitbit","name":"Versa 4","gender":"unisex","category":"watches","subcategory":"smartwatches","price":229.95,"salePrice":null,"currency":"USD","sizes":"S, L band","colors":["Black"],"material":"aluminum case, silicone band","care":"wipe clean","careText":"Wipe case and band with a soft damp cloth.","url":"https://www.lenovo.com/buy/us/en/fitbit-versa-smartwatches-0sdz00a","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating third-party listings; price not read on fitbit.com"},
+
+  {"retailer":"victorinox-us","market":"US","brand":"Victorinox Swiss Army","name":"Swiss Army Quartz 242041","gender":"men","category":"watches","subcategory":"watches","price":550.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.victorinox.com/en-US/Products/Watches/Men's-Watches/Swiss-Army-Quartz/p/242041/","date":"2026-10-05","confirmed":true,"source":"victorinox.com product page (via search)"},
+  {"retailer":"victorinox-us","market":"US","brand":"Victorinox Swiss Army","name":"I.N.O.X. 241682.1","gender":"men","category":"watches","subcategory":"watches","price":600.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"stainless steel case, rubber strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; rinse rubber strap after water exposure.","url":"https://www.victorinox.com/en-US/Products/Watches/Men%27s-Watches/INOX/p/241682.1","date":"2026-10-05","confirmed":true,"source":"victorinox.com product page (via search)"},
+
+  {"retailer":"luminox-us","market":"US","brand":"Luminox","name":"Original Navy SEAL (43mm)","gender":"men","category":"watches","subcategory":"watches","price":575.00,"salePrice":null,"currency":"USD","sizes":"43mm","colors":["Black"],"material":"carbon-reinforced polycarbonate case, nylon strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; rinse nylon strap after water exposure.","url":"https://luminox.com/collections/all","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating luminox.com listings"},
+  {"retailer":"luminox-us","market":"US","brand":"Luminox","name":"Pacific Diver (44mm)","gender":"men","category":"watches","subcategory":"watches","price":895.00,"salePrice":null,"currency":"USD","sizes":"44mm","colors":["Blue"],"material":"stainless steel case, rubber strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; rinse rubber strap after water exposure.","url":"https://luminox.com/collections/sea-series","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating luminox.com listings"},
+
+  {"retailer":"certina-us","market":"US","brand":"Certina","name":"DS Action 40.5mm","gender":"men","category":"watches","subcategory":"watches","price":550.00,"salePrice":null,"currency":"USD","sizes":"40.5mm","colors":["Black"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://steiner-juwelier.com/en-us/products/certina-ds-action-40-5mm-c048-407-11-051-01","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating authorized-retailer listings; price not read on certina.com"},
+  {"retailer":"certina-us","market":"US","brand":"Certina","name":"DS-2 Chronograph Automatic","gender":"men","category":"watches","subcategory":"watches","price":2140.00,"salePrice":null,"currency":"USD","sizes":"41.10mm","colors":["Blue"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.chrono24.com/certina/certina-ds-2-4110mm-stainless-steel-blue-dial-mens-watch-c0246071104102--id34764564.htm","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating secondary-market listings; price not read on certina.com"},
+
+  {"retailer":"mido-us","market":"US","brand":"Mido","name":"Baroncelli 40mm Automatic","gender":"men","category":"watches","subcategory":"watches","price":600.00,"salePrice":null,"currency":"USD","sizes":"40mm","colors":["Silver"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://ebay.com/itm/335403199528","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating secondary-market listings; price not read on mido.com"},
+  {"retailer":"mido-us","market":"US","brand":"Mido","name":"Ocean Star Captain","gender":"men","category":"watches","subcategory":"watches","price":860.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Blue"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.walmart.com/c/kp/mido-automatic","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating secondary-market listings; price not read on mido.com"},
+
+  {"retailer":"armaniexchange-us","market":"US","brand":"Armani Exchange","name":"Street Watch","gender":"men","category":"watches","subcategory":"watches","price":250.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"stainless steel case, silicone strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; rinse silicone strap after water exposure.","url":"https://www.armaniexchange.com/us/fashion-watch_cod46489684ib.html","date":"2026-10-05","confirmed":true,"source":"armaniexchange.com product page (via search)"},
+  {"retailer":"armaniexchange-us","market":"US","brand":"Armani Exchange","name":"Classic Chronograph Watch","gender":"men","category":"watches","subcategory":"watches","price":180.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.armaniexchange.com/us/fashion-watch_cod46510130hj.html","date":"2026-10-05","confirmed":true,"source":"armaniexchange.com product page (via search)"},
+
+  {"retailer":"emporioarmani-us","market":"US","brand":"Emporio Armani","name":"Sportivo Chronograph","gender":"men","category":"watches","subcategory":"watches","price":185.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Black"],"material":"stainless steel case and bracelet","care":"wipe clean","careText":"Wipe case and bracelet with a soft dry cloth.","url":"https://www.asos.com/emporio-armani/emporio-armani-chronograph-stainless-steel-watch-in-silver/prd/210135264","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating asos.com listings; price not read on emporioarmani.com"},
+  {"retailer":"emporioarmani-us","market":"US","brand":"Emporio Armani","name":"Leather Automatic","gender":"men","category":"watches","subcategory":"watches","price":265.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Brown"],"material":"stainless steel case, leather strap","care":"wipe clean","careText":"Wipe case with a soft dry cloth; avoid water exposure on leather strap.","url":"https://www.walmart.com/c/brand/emporio-armani-men-s-watches","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating walmart.com listings; price not read on emporioarmani.com"},
+
+  {"retailer":"swarovski-us","market":"US","brand":"Swarovski","name":"Imber Layered Necklace","gender":"women","category":"jewelry","subcategory":"necklaces","price":269.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Clear crystal"],"material":"rhodium-plated metal, crystal","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid perfume and water contact.","url":"https://www.swarovski.com/en-US/c-010102/Categories/Jewelry/Necklaces-and-pendants/Necklaces","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating swarovski.com listings"},
+  {"retailer":"swarovski-us","market":"US","brand":"Swarovski","name":"Chroma Bracelet","gender":"women","category":"jewelry","subcategory":"bracelets","price":119.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Multicolor crystal"],"material":"rhodium-plated metal, crystal","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid perfume and water contact.","url":"https://www.swarovski.com/en-US/c-0104/Categories/Jewelry/Bracelets","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating swarovski.com listings"},
+  {"retailer":"swarovski-us","market":"US","brand":"Swarovski","name":"Matrix Necklace","gender":"women","category":"jewelry","subcategory":"necklaces","price":159.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Clear crystal"],"material":"rhodium-plated metal, crystal","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid perfume and water contact.","url":"https://www.swarovski.com/en-US/c-010102/Categories/Jewelry/Necklaces-and-pendants/Necklaces","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating swarovski.com listings"},
+
+  {"retailer":"mejuri-us","market":"US","brand":"Mejuri","name":"Boyfriend Bold Chain Necklace (Sterling Silver)","gender":"women","category":"jewelry","subcategory":"necklaces","price":98.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"sterling silver","care":"wipe clean","careText":"Wipe with a soft dry cloth; store away from moisture.","url":"https://mejuri.com/products/chain-necklace","date":"2026-10-05","confirmed":true,"source":"mejuri.com product page (via search)"},
+  {"retailer":"mejuri-us","market":"US","brand":"Mejuri","name":"Letter Necklace (Sterling Silver)","gender":"women","category":"jewelry","subcategory":"necklaces","price":78.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"sterling silver","care":"wipe clean","careText":"Wipe with a soft dry cloth; store away from moisture.","url":"https://mejuri.com/collections/necklace-price-under-150","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating mejuri.com listings"},
+  {"retailer":"mejuri-us","market":"US","brand":"Mejuri","name":"Curb Chain Necklace (14k Yellow Gold)","gender":"women","category":"jewelry","subcategory":"necklaces","price":798.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"14k yellow gold","care":"wipe clean","careText":"Wipe with a soft dry cloth; store away from moisture.","url":"https://mejuri.com/collections/14k-yellow-gold-necklaces","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating mejuri.com listings"},
+
+  {"retailer":"kendrascott-us","market":"US","brand":"Kendra Scott","name":"Elisa Star Gold Short Pendant Necklace","gender":"women","category":"jewelry","subcategory":"necklaces","price":75.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"gold-plated brass","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid perfume and water contact.","url":"https://www.kendrascott.com/jewelry/categories/necklaces/842177170335.html","date":"2026-10-05","confirmed":true,"source":"kendrascott.com product listing (via search)"},
+  {"retailer":"kendrascott-us","market":"US","brand":"Kendra Scott","name":"Abbie Silver Pendant Necklace","gender":"women","category":"jewelry","subcategory":"necklaces","price":85.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"rhodium-plated brass","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid perfume and water contact.","url":"https://www.kendrascott.com/shop/fashionable-necklaces.html","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating kendrascott.com listings"},
+  {"retailer":"kendrascott-us","market":"US","brand":"Kendra Scott","name":"Elisa Pendant Necklace (18k Gold Vermeil)","gender":"women","category":"jewelry","subcategory":"necklaces","price":170.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"18k gold vermeil","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid perfume and water contact.","url":"https://www.kendrascott.com/fine-jewelry/necklaces/","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating kendrascott.com listings"},
+
+  {"retailer":"cartier-us","market":"US","brand":"Cartier","name":"LOVE Bracelet Small Model (White Gold)","gender":"unisex","category":"jewelry","subcategory":"bracelets","price":5650.00,"salePrice":null,"currency":"USD","sizes":"15-21cm","colors":["White Gold"],"material":"18k white gold","care":"professional cleaning","careText":"Have cleaned and screw-checked by an authorized Cartier boutique; wipe with a soft dry cloth.","url":"https://www.cartier.com/en-us/jewelry/bracelets/love/love-bracelet-small-model-B6079217.html","date":"2026-10-05","confirmed":true,"source":"cartier.com product page (via search)"},
+  {"retailer":"cartier-us","market":"US","brand":"Cartier","name":"LOVE Bracelet Classic Model (Yellow Gold)","gender":"unisex","category":"jewelry","subcategory":"bracelets","price":7950.00,"salePrice":null,"currency":"USD","sizes":"15-21cm","colors":["Yellow Gold"],"material":"18k yellow gold","care":"professional cleaning","careText":"Have cleaned and screw-checked by an authorized Cartier boutique; wipe with a soft dry cloth.","url":"https://www.cartier.com/en-us/jewelry/bracelets/love-bracelet-classic-model-B6067517.html","date":"2026-10-05","confirmed":true,"source":"cartier.com product page (via search)"},
+  {"retailer":"cartier-us","market":"US","brand":"Cartier","name":"LOVE Bracelet Medium Model (Rose Gold)","gender":"unisex","category":"jewelry","subcategory":"bracelets","price":6630.00,"salePrice":null,"currency":"USD","sizes":"15-21cm","colors":["Rose Gold"],"material":"18k rose gold","care":"professional cleaning","careText":"Have cleaned and screw-checked by an authorized Cartier boutique; wipe with a soft dry cloth.","url":"https://www.cartier.com/en-us/jewelry/bracelets/love/love-bracelet-medium-model-B6081417.html","date":"2026-10-05","confirmed":true,"source":"cartier.com product page (via search)"},
+
+  {"retailer":"linksoflondon-gb","market":"GB","brand":"Links of London","name":"Open Heart Sterling Silver & Moonstone Mini Pendant Necklace","gender":"women","category":"jewelry","subcategory":"necklaces","price":195.00,"salePrice":156.00,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"sterling silver, moonstone","care":"wipe clean","careText":"Wipe with a soft dry cloth; polish silver periodically.","url":"https://www.linksoflondon.com/us-en/new-arrivals","date":"2026-10-05","confirmed":true,"source":"linksoflondon.com product listing (via search)"},
+  {"retailer":"linksoflondon-gb","market":"GB","brand":"Links of London","name":"Sweetie Sterling Silver Chain Necklace","gender":"women","category":"jewelry","subcategory":"necklaces","price":495.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"sterling silver","care":"wipe clean","careText":"Wipe with a soft dry cloth; polish silver periodically.","url":"https://www.linksoflondon.com/us-en/sweetie-sterling-silver-chain-necklace/5020-0531.html","date":"2026-10-05","confirmed":true,"source":"linksoflondon.com product page (via search)"},
+
+  {"retailer":"thomassabo-us","market":"US","brand":"Thomas Sabo","name":"Charm Bracelet Classic Silver","gender":"women","category":"jewelry","subcategory":"bracelets","price":105.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"sterling silver","care":"wipe clean","careText":"Wipe with a soft dry cloth; polish silver periodically.","url":"https://www.thomassabo.com/US/en_US/pd/bracelet/X0031-001-12-VG.html","date":"2026-10-05","confirmed":true,"source":"thomassabo.com product page (via search)"},
+  {"retailer":"thomassabo-us","market":"US","brand":"Thomas Sabo","name":"Charm Bracelet with Connect Link Gold-Plated","gender":"women","category":"jewelry","subcategory":"bracelets","price":255.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"gold-plated sterling silver","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water contact.","url":"https://www.thomassabo.com/US/en_US/pd/charm-bracelet/C1202-413-39-VG.html","date":"2026-10-05","confirmed":true,"source":"thomassabo.com product page (via search)"},
+
+  {"retailer":"astridandmiyu-us","market":"US","brand":"Astrid & Miyu","name":"Cosmic Star Charm Necklace (Gold)","gender":"women","category":"jewelry","subcategory":"necklaces","price":130.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"gold-plated sterling silver","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water contact.","url":"https://www.astridandmiyu.com/en-us/products/cosmic-star-charm-necklace-in-gold","date":"2026-10-05","confirmed":true,"source":"astridandmiyu.com product page (via search)"},
+  {"retailer":"astridandmiyu-us","market":"US","brand":"Astrid & Miyu","name":"Bold Astrid Chain Necklace in Solid Gold","gender":"women","category":"jewelry","subcategory":"necklaces","price":370.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"9k solid gold","care":"wipe clean","careText":"Wipe with a soft dry cloth; store away from moisture.","url":"https://www.astridandmiyu.com/en-us/products/bold-astrid-chain-necklace-in-solid-gold","date":"2026-10-05","confirmed":true,"source":"astridandmiyu.com product page (via search)"},
+
+  {"retailer":"catbirdnyc-us","market":"US","brand":"Catbird","name":"Twin Hearts Necklace (14k Yellow Gold)","gender":"women","category":"jewelry","subcategory":"necklaces","price":328.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"14k yellow gold","care":"wipe clean","careText":"Wipe with a soft dry cloth; store away from moisture.","url":"https://www.catbirdnyc.com/twin-hearts-necklace.html","date":"2026-10-05","confirmed":true,"source":"catbirdnyc.com product page (via search)"},
+  {"retailer":"catbirdnyc-us","market":"US","brand":"Catbird","name":"Twin Hearts Necklace (10k Yellow Gold)","gender":"women","category":"jewelry","subcategory":"necklaces","price":298.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"10k yellow gold","care":"wipe clean","careText":"Wipe with a soft dry cloth; store away from moisture.","url":"https://www.catbirdnyc.com/twin-hearts-necklace.html","date":"2026-10-05","confirmed":true,"source":"catbirdnyc.com product page (via search)"},
+
+  {"retailer":"gorjana-us","market":"US","brand":"Gorjana","name":"Parker Necklace","gender":"women","category":"jewelry","subcategory":"necklaces","price":78.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"18k gold-plated brass","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water contact.","url":"https://www.gorjana.com/collections/necklaces","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating gorjana.com listings"},
+  {"retailer":"gorjana-us","market":"US","brand":"Gorjana","name":"14K Gold Basic Chain Necklace","gender":"women","category":"jewelry","subcategory":"necklaces","price":220.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"14k gold","care":"wipe clean","careText":"Wipe with a soft dry cloth; store away from moisture.","url":"https://www.gorjana.com/collections/fine-necklaces","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating gorjana.com listings"},
+
+  {"retailer":"alexandani-us","market":"US","brand":"Alex and Ani","name":"'Love' Charm Bangle (Expandable Wire)","gender":"women","category":"jewelry","subcategory":"bracelets","price":24.00,"salePrice":22.00,"currency":"USD","sizes":"one-size expandable","colors":["Silver"],"material":"plated brass","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water and perfume contact.","url":"https://www.alexandani.com/products/love-charm-bangle-bracelet-expandable-wire","date":"2026-10-05","confirmed":true,"source":"alexandani.com product page (via search)"},
+  {"retailer":"alexandani-us","market":"US","brand":"Alex and Ani","name":"Beaded Bangle","gender":"women","category":"jewelry","subcategory":"bracelets","price":30.00,"salePrice":null,"currency":"USD","sizes":"one-size expandable","colors":["Gold"],"material":"beaded, plated brass","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water and perfume contact.","url":"https://www.alexandani.com/collections/beaded-bangle-bracelets","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating alexandani.com listings"},
+
+  {"retailer":"analuisa-us","market":"US","brand":"Ana Luisa","name":"Gold Initial Necklace","gender":"women","category":"jewelry","subcategory":"necklaces","price":75.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"gold-plated sterling silver","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water contact.","url":"https://www.analuisa.com/collections/initial-necklace-jewelry/","date":"2026-10-05","confirmed":true,"source":"analuisa.com collection page (via search)"},
+  {"retailer":"analuisa-us","market":"US","brand":"Ana Luisa","name":"Bubble Letter Necklace (Sterling Silver)","gender":"women","category":"jewelry","subcategory":"necklaces","price":135.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"sterling silver","care":"wipe clean","careText":"Wipe with a soft dry cloth; store away from moisture.","url":"https://www.analuisa.com/collections/necklaces/","date":"2026-10-05","confirmed":true,"source":"analuisa.com collection page (via search)"},
+
+  {"retailer":"edgeofember-us","market":"US","brand":"Edge of Ember","name":"Initial Necklace (Gold)","gender":"women","category":"jewelry","subcategory":"necklaces","price":133.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"gold vermeil","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water contact.","url":"https://edgeofember.com/products/initial-necklace-gold","date":"2026-10-05","confirmed":true,"source":"edgeofember.com product page (via search)"},
+  {"retailer":"edgeofember-us","market":"US","brand":"Edge of Ember","name":"Heart Necklace","gender":"women","category":"jewelry","subcategory":"necklaces","price":129.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"gold vermeil","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water contact.","url":"https://edgeofember.com/products/heart-necklace","date":"2026-10-05","confirmed":true,"source":"edgeofember.com product page (via search)"},
+
+  {"retailer":"abbottlyon-gb","market":"GB","brand":"Abbott Lyon","name":"Molten Link Necklace (Gold)","gender":"women","category":"jewelry","subcategory":"necklaces","price":79.00,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Gold"],"material":"18k gold-plated stainless steel","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water contact.","url":"https://www.abbottlyon.com/products/molten-link-necklace-gold","date":"2026-10-05","confirmed":true,"source":"abbottlyon.com product page (via search)"},
+  {"retailer":"abbottlyon-gb","market":"GB","brand":"Abbott Lyon","name":"Signature Name Necklace (Gold)","gender":"women","category":"jewelry","subcategory":"necklaces","price":79.00,"salePrice":null,"currency":"GBP","sizes":"one-size","colors":["Gold"],"material":"18k gold-plated stainless steel","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water contact.","url":"https://www.abbottlyon.com/products/signature-name-necklace-gold","date":"2026-10-05","confirmed":true,"source":"abbottlyon.com product page (via search)"},
+
+  {"retailer":"daisylondon-gb","market":"GB","brand":"Daisy London","name":"Daisy Flower Necklace (Sterling Silver)","gender":"women","category":"jewelry","subcategory":"necklaces","price":144.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"sterling silver","care":"wipe clean","careText":"Wipe with a soft dry cloth; polish silver periodically.","url":"https://www.daisyjewellery.com/products/daisy-flower-necklace-sterling-silver-1","date":"2026-10-05","confirmed":true,"source":"daisyjewellery.com product page (via search)"},
+  {"retailer":"daisylondon-gb","market":"GB","brand":"Daisy London","name":"Fine Snake Chain Necklace (18ct Gold Plate)","gender":"women","category":"jewelry","subcategory":"necklaces","price":131.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Gold"],"material":"18ct gold plate","care":"wipe clean","careText":"Wipe with a soft dry cloth; avoid water contact.","url":"https://www.daisyjewellery.com/collections/chain-jewellery","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating daisyjewellery.com listings"},
+
+  {"retailer":"monicarichkosann-us","market":"US","brand":"Monica Rich Kosann","name":"Petite Slim Sterling Silver Heart Locket","gender":"women","category":"jewelry","subcategory":"necklaces","price":485.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"sterling silver","care":"professional cleaning","careText":"Wipe with a soft dry cloth; have clasp checked periodically by the maker.","url":"https://www.monicarichkosann.com/collections/picture-lockets","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating monicarichkosann.com listings"},
+  {"retailer":"monicarichkosann-us","market":"US","brand":"Monica Rich Kosann","name":"Slim Sterling Silver Heart Locket","gender":"women","category":"jewelry","subcategory":"necklaces","price":895.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Silver"],"material":"sterling silver","care":"professional cleaning","careText":"Wipe with a soft dry cloth; have clasp checked periodically by the maker.","url":"https://www.monicarichkosann.com/collections/lockets","date":"2026-10-05","confirmed":false,"source":"search snippet aggregating monicarichkosann.com listings"},
+
+  {"retailer":"vrai-us","market":"US","brand":"Vrai","name":"Solitaire Necklace 0.25ct Round Brilliant (14k White Gold)","gender":"women","category":"jewelry","subcategory":"necklaces","price":550.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["White Gold"],"material":"14k white gold, lab-grown diamond","care":"professional cleaning","careText":"Wipe with a soft dry cloth; have prongs checked periodically by the maker.","url":"https://www.vrai.com/jewelry/necklaces/solitaire-diamond-necklace/round-brilliant-white-gold-32877959446621","date":"2026-10-05","confirmed":true,"source":"vrai.com product page (via search)"},
+  {"retailer":"vrai-us","market":"US","brand":"Vrai","name":"V Solitaire Necklace 0.25ct Round Brilliant (14k Yellow Gold)","gender":"women","category":"jewelry","subcategory":"necklaces","price":1350.00,"salePrice":null,"currency":"USD","sizes":"one-size","colors":["Yellow Gold"],"material":"14k yellow gold, lab-grown diamond","care":"professional cleaning","careText":"Wipe with a soft dry cloth; have prongs checked periodically by the maker.","url":"https://www.vrai.com/jewelry/necklaces/v-collection-solitaire-necklace/round-brilliant-yellow-gold-41029257166941","date":"2026-10-05","confirmed":true,"source":"vrai.com product page (via search)"}
+ ]
+}
