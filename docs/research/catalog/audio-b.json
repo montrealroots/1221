@@ -1,0 +1,219 @@
+{
+  "read": "2026-10-05",
+  "category": "audio",
+  "products": [
+    { "brand": "Sonos", "family": "Era", "model": "Era 100", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black", "White"],
+      "offers": [ { "market": "ca", "seller": "Sonos", "price": 289, "currency": "CAD", "taxIncluded": false, "url": "https://www.sonos.com/en-ca/shop/era-100", "status": "verified" } ],
+      "url": "https://www.sonos.com/en-ca/shop/era-100", "status": "verified" },
+
+    { "brand": "Bose", "family": "SoundLink", "model": "SoundLink Flex (2nd Gen)", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ie", "seller": "Harvey Norman", "price": 169, "currency": "EUR", "taxIncluded": true, "url": "https://www.harveynorman.ie/tvs-headphones/audio/bluetooth-speakers/bose-soundlink-flex-2nd-gen-portable-bluetooth-speaker-black.html", "status": "verified" } ],
+      "url": "https://www.bose.com/p/speakers/bose-soundlink-flex-portable-speaker-2nd-gen/SLFLXII-SPEAKERWIRELESS.html", "status": "verified" },
+
+    { "brand": "JBL", "family": "Flip", "model": "Flip 6", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "mx", "seller": "Office Depot México", "price": 2599, "currency": "MXN", "taxIncluded": true, "url": "https://www.officedepot.com.mx/officedepot/en/Categor%C3%ADa/Todas/Electr%C3%B3nica/Audio-y-Video/Bocinas-Bluetooth/Bocina-Port%C3%A1til-Bluetooth-JBL-Flip-6-Azul/p/100264708", "status": "verified" } ],
+      "url": "https://www.jbl.com/speakers/FLIP6.html", "status": "verified" },
+
+    { "brand": "Sony", "family": "SRS-XB", "model": "SRS-XB100", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Best Buy", "price": 79.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.bestbuy.ca/en-ca/product/sony-srs-xb100-waterproof-bluetooth-wireless-speaker-black/17090098", "status": "verified" } ],
+      "url": "https://www.sony.ca/audio/speakers/all-speakers/p/srsxb100-d", "status": "verified" },
+
+    { "brand": "Marshall", "family": "Emberton", "model": "Emberton II", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black and Steel"],
+      "offers": [ { "market": "ie", "seller": "Marshall", "price": 149, "currency": "EUR", "taxIncluded": true, "url": "https://www.marshall.com/ie/en/product/emberton-ii?pid=1006788", "status": "verified" } ],
+      "url": "https://www.marshall.com/us/en/product/emberton-ii?pid=1006786", "status": "verified" },
+
+    { "brand": "Ultimate Ears", "family": "Boom", "model": "Boom 4", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Active Black"],
+      "offers": [ { "market": "ca", "seller": "Best Buy", "price": 199.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.bestbuy.ca/en-ca/product/ultimate-ears-boom-4-waterproof-bluetooth-wireless-speaker-active-black/17956296", "status": "verified" } ],
+      "url": "https://www.ultimateears.com/en-us/wireless-speakers/boom-4.html", "status": "verified" },
+
+    { "brand": "Bang & Olufsen", "family": "Beosound", "model": "Beosound A1 (3rd Gen)", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Warm Granite", "Natural Aluminium", "Honey Tone", "Lavender Purple", "Rustic Red", "Eucalyptus Green"],
+      "offers": [ { "market": "ca", "seller": "Bang & Olufsen", "price": 529, "currency": "CAD", "taxIncluded": false, "url": "https://www.bang-olufsen.com/en/ca/speakers/beosound-a1", "status": "verified" } ],
+      "url": "https://www.bang-olufsen.com/en/us/speakers/beosound-a1", "status": "verified" },
+
+    { "brand": "Apple", "family": "HomePod", "model": "HomePod mini", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["White", "Midnight", "Blue", "Yellow", "Orange"],
+      "offers": [ { "market": "ie", "seller": "Apple", "price": 139, "currency": "EUR", "taxIncluded": true, "url": "https://www.apple.com/ie/shop/buy-homepod/homepod-mini", "status": "verified" } ],
+      "url": "https://www.apple.com/shop/buy-homepod/homepod-mini", "status": "verified" },
+
+    { "brand": "Amazon Echo", "family": "Echo Dot", "model": "Echo Dot (5th Gen)", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "mx", "seller": "Office Depot México", "price": 1299, "currency": "MXN", "taxIncluded": true, "url": "https://www.officedepot.com.mx/officedepot/en/Categor%C3%ADa/Todas/Electr%C3%B3nica/Hogar-Inteligente/Asistentes/Amazon-Alexa-Echo-Dot-5ta-Generaci%C3%B3n-Negro/p/100112384", "status": "verified" } ],
+      "url": "https://www.amazon.com.mx/Nuevo-generaci%C3%B3n-modelo-Bocina-inteligente/dp/B09B8V1LZ3", "status": "verified" },
+
+    { "brand": "Google Nest", "family": "Nest Audio", "model": "Nest Audio", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Charcoal"],
+      "offers": [ { "market": "mx", "seller": "RadioShack México", "price": 2499, "currency": "MXN", "taxIncluded": true, "url": "https://www.radioshack.com.mx/store/radioshack/en/Categor%C3%ADa/Todas/Hogar/Hogar-inteligente/Asistentes-de-voz/Google-Nest-Audio-Negro/p/100027500", "status": "verified" } ],
+      "url": "https://store.google.com/product/nest_audio", "status": "verified" },
+
+    { "brand": "Samsung", "family": "Q-Series", "model": "HW-Q600C", "type": "soundbar", "pair": false, "watts": 360, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Samsung", "price": 449.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.samsung.com/ca/audio-devices/soundbar/q600c-q-series-soundbar-black-hw-q600c-zc/", "status": "verified" } ],
+      "url": "https://www.samsung.com/ca/audio-devices/soundbar/q600c-q-series-soundbar-black-hw-q600c-zc/", "status": "verified" },
+
+    { "brand": "LG", "family": "S-Series", "model": "S80QY", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Canex", "price": 799.95, "currency": "CAD", "taxIncluded": false, "url": "https://www.canex.ca/en/lg-soundbar-s80qy-black-195174032565", "status": "verified" } ],
+      "url": "https://www.lg.com/ca_en/tv-soundbars/soundbars/s80qy/", "status": "verified" },
+
+    { "brand": "Anker Soundcore", "family": "Motion", "model": "Motion Boom Plus", "type": "portable", "pair": false, "watts": 80, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Best Buy", "price": 229.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.bestbuy.ca/en-ca/product/soundcore-motion-boom-plus-ip67-portable-speaker-80w-stereo-sound-custom-eq-bassup-usb-c-bluetooth-built-in-power-bank-for-camping-pool-beach-and-backyard-black/19599356", "status": "verified" } ],
+      "url": "https://www.soundcore.com/products/motion-boom-plus", "status": "verified" },
+
+    { "brand": "Klipsch", "family": "Reference", "model": "R-51PM", "type": "bookshelf", "pair": true, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "mx", "seller": "Amazon México", "price": 11426, "currency": "MXN", "taxIncluded": true, "url": "https://www.amazon.com.mx/Klipsch-R-51PM-Altavoces-Bluetooth-Unidades/dp/B07FKCP7PZ", "status": "verified" } ],
+      "url": "https://www.klipsch.com/products/r-51pm-powered-speakers", "status": "verified" },
+
+    { "brand": "Polk Audio", "family": "Signa", "model": "Signa S4", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Polk Audio", "price": 599, "currency": "CAD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-ca/product/sound-bars/signa-s4/300443-new.html", "status": "verified" } ],
+      "url": "https://www.polkaudio.com/en-ca/product/sound-bars/signa-s4/300443-new.html", "status": "verified" },
+
+    { "brand": "Yamaha", "family": "SR", "model": "SR-C20A", "type": "soundbar", "pair": false, "watts": 100, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "mx", "seller": "Amazon México", "price": 7500, "currency": "MXN", "taxIncluded": true, "url": "https://www.amazon.com.mx/Yamaha-compacta-subwoofer-Incorporado-Bluetooth/dp/B08DZX69CY", "status": "verified" } ],
+      "url": "https://mx.yamaha.com/es/products/audio_visual/sound_bar/sr-c20a/index.html", "status": "verified" },
+
+    { "brand": "Edifier", "family": "R1280", "model": "R1280DB", "type": "bookshelf", "pair": true, "watts": 42, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "ca", "seller": "Best Buy", "price": 164.99, "currency": "CAD", "taxIncluded": false, "url": "https://www.bestbuy.ca/en-ca/product/edifier-r1280db-powered-bluetooth-bookshelf-speakers-optical-input-black/10757970", "status": "verified" } ],
+      "url": "https://ca.edifier.com/products/r1280db", "status": "verified" },
+
+    { "brand": "Sennheiser", "family": "Ambeo", "model": "Ambeo Soundbar Plus", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "us", "seller": "Crutchfield", "price": 1499.95, "currency": "USD", "taxIncluded": false, "url": "https://www.crutchfield.com/S-yPJFSGFR9NS/p_143AMSBRPL/Sennheiser-AMBEO-Soundbar-Plus.html", "status": "verified" } ],
+      "url": "https://www.crutchfield.com/S-yPJFSGFR9NS/p_143AMSBRPL/Sennheiser-AMBEO-Soundbar-Plus.html", "status": "verified" },
+
+    { "brand": "Bluesound", "family": "Pulse", "model": "Pulse M", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["White", "Black"],
+      "offers": [ { "market": "us", "seller": "Crutchfield", "price": 499, "currency": "USD", "taxIncluded": false, "url": "https://www.crutchfield.com/p_813PULSEMW/Bluesound-PULSE-M-White.html", "status": "verified" } ],
+      "url": "https://www.bluesound.com/products/pulse-m", "status": "verified" },
+
+    { "brand": "Naim", "family": "Mu-so", "model": "Mu-so 2nd Generation", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Dark Grey"],
+      "offers": [ { "market": "uk", "seller": "Sevenoaks Sound and Vision", "price": 899, "currency": "GBP", "taxIncluded": true, "url": "https://www.sevenoakssoundandvision.co.uk/p-45428-naim-mu-so-2nd-generation-wireless-speaker.aspx", "status": "verified" } ],
+      "url": "https://www.naimaudio.com/mu-so", "status": "verified" },
+
+    { "brand": "Ruark Audio", "family": "R", "model": "R3S", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Rich Walnut", "Satin Charcoal", "Soft Grey"],
+      "offers": [ { "market": "uk", "seller": "Ruark Audio", "price": 649, "currency": "GBP", "taxIncluded": true, "url": "https://shop.ruarkaudio.com/products/r3s-compact-music-system", "status": "verified" } ],
+      "url": "https://www.ruarkaudio.com/products/r3s-compact-music-system", "status": "verified" },
+
+    { "brand": "Pro-Ject", "family": "Speaker Box", "model": "Speaker Box 5", "type": "bookshelf", "pair": true, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "us", "seller": "Audio Advice", "price": 349, "currency": "USD", "taxIncluded": false, "url": "https://www.audioadvice.com/products/pro-ject-speaker-box-5-monitor-speakers-pair-black", "status": "verified" } ],
+      "url": "https://pro-jectusa.com/product/speaker-box-5/", "status": "verified" },
+
+    { "brand": "Fluance", "family": "Ai", "model": "Ai41", "type": "bookshelf", "pair": true, "watts": 90, "standbyWatts": null, "colors": ["Black Ash", "White & Walnut", "White & Bamboo", "Black & Walnut"],
+      "offers": [ { "market": "us", "seller": "Fluance", "price": 299.99, "currency": "USD", "taxIncluded": false, "url": "https://www.fluance.com/powered-5-inch-stereo-bookshelf-speakers", "status": "verified" } ],
+      "url": "https://www.fluance.com/powered-5-inch-stereo-bookshelf-speakers", "status": "verified" },
+
+    { "brand": "Teufel", "family": "Rockster", "model": "Fender x Teufel Rockster Cross", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "us", "seller": "Teufel", "price": 249.99, "currency": "USD", "taxIncluded": false, "url": "https://us.teufelaudio.com/fender-x-teufel-rockster-cross-107001535", "status": "verified" } ],
+      "url": "https://us.teufelaudio.com/fender-x-teufel-rockster-cross-107001535", "status": "verified" },
+
+    { "brand": "Canton", "family": "Smart Soundbar", "model": "Smart Soundbar 10", "type": "soundbar", "pair": false, "watts": 300, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "uk", "seller": "Audio Affair", "price": 999, "currency": "GBP", "taxIncluded": true, "url": "https://www.audioaffair.co.uk/canton-smart-soundbar-10", "status": "verified" } ],
+      "url": "https://www.canton.de/en/products/type/soundbar/", "status": "verified" },
+
+    { "brand": "Jamo", "family": "Torsten", "model": "Torsten Soundbar with 10\" Wireless Subwoofer", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "us", "seller": "Best Buy", "price": 799.98, "currency": "USD", "taxIncluded": false, "url": "https://www.bestbuy.com/site/jamo-torsten-soundbar-with-10-wireless-subwoofer-black/1871099.p?skuId=1871099", "status": "verified" } ],
+      "url": "https://www.jamo.com/", "status": "verified" },
+
+    { "brand": "Tannoy", "family": "Mercury", "model": "Mercury 7.2", "type": "bookshelf", "pair": true, "watts": null, "standbyWatts": null, "colors": ["Black Oak"],
+      "offers": [],
+      "url": "https://www.whathifi.com/tannoy/mercury-72/review", "status": "secondhand" },
+
+    { "brand": "PSB", "family": "Alpha", "model": "Alpha AM5", "type": "bookshelf", "pair": true, "watts": 50, "standbyWatts": null, "colors": ["White", "Black"],
+      "offers": [ { "market": "us", "seller": "Crutchfield", "price": 599, "currency": "USD", "taxIncluded": false, "url": "https://www.crutchfield.com/S-xX97mIB4JAd/p_760ALPAM5B/PSB-Alpha-AM5-Black.html", "status": "verified" } ],
+      "url": "https://www.psbspeakers.com/products/alpha-am5-powered-bookshelf-speakers", "status": "verified" },
+
+    { "brand": "Paradigm", "family": "Premier", "model": "Premier 200B", "type": "bookshelf", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Espresso", "Gloss White", "Gloss Black"],
+      "offers": [ { "market": "us", "seller": "Crutchfield", "price": 499.99, "currency": "USD", "taxIncluded": false, "url": "https://crutchfield.com/S-ScwSLVI4Ft1/p_819P200BGW/Paradigm-Premier-200B-Gloss-White.html", "status": "verified" } ],
+      "url": "https://www.paradigm.com/en/passive/premier-200b", "status": "verified" },
+
+    { "brand": "MartinLogan", "family": "Motion", "model": "Motion 40i", "type": "floorstanding", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Gloss Black"],
+      "offers": [ { "market": "us", "seller": "Safe and Sound HQ", "price": 1299.99, "currency": "USD", "taxIncluded": false, "url": "https://www.safeandsoundhq.com/products/martin-logan-motion-40i-floorstanding-speaker-each", "status": "verified" } ],
+      "url": "https://www.martinlogan.com/en/product/motion-40i", "status": "verified" },
+
+    { "brand": "SVS", "family": "Prime Wireless", "model": "Prime Wireless Pro", "type": "bookshelf", "pair": true, "watts": null, "standbyWatts": null, "colors": ["Black Ash", "White Gloss"],
+      "offers": [ { "market": "us", "seller": "SVS", "price": 899.99, "currency": "USD", "taxIncluded": false, "url": "https://www.svsound.com/products/prime-wireless-pro-powered-speakers", "status": "verified" } ],
+      "url": "https://www.svsound.com/products/prime-wireless-pro-powered-speakers", "status": "verified" },
+
+    { "brand": "Triangle", "family": "AIO", "model": "AIO 3", "type": "wireless", "pair": false, "watts": 90, "standbyWatts": null, "colors": ["Granite"],
+      "offers": [ { "market": "uk", "seller": "Audio T", "price": 419, "currency": "GBP", "taxIncluded": true, "url": "https://audiot.co.uk/p-30774-triangle-aio3-active-speaker-triangle-audio-t.aspx", "status": "verified" } ],
+      "url": "https://www.triangle-fr.com/produit/aio-3/", "status": "verified" },
+
+    { "brand": "Cabasse", "family": "Pearl", "model": "The Pearl Akoya", "type": "wireless", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "uk", "seller": "Audio Emotion", "price": 1499, "currency": "GBP", "taxIncluded": true, "url": "https://www.audioemotion.co.uk/cabasse-the-pearl-akoya-active-loudspeaker-27406-p.asp", "status": "verified" } ],
+      "url": "https://www.cabasse.com/the-pearl-akoya/", "status": "verified" },
+
+    { "brand": "Altec Lansing", "family": "HydraMotion", "model": "HydraMotion 2.0", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black", "Blue", "Purple White", "Aqua White"],
+      "offers": [ { "market": "us", "seller": "Walmart", "price": 49.99, "currency": "USD", "taxIncluded": false, "url": "https://www.walmart.com/ip/Altec-Lansing-HydraMotion-2-0-EverythingProof-Wireless-Portable-Bluetooth-Speaker-Purple-White-IMW1102-PURWT/13482601167", "status": "verified" } ],
+      "url": "https://www.altec-lansing.com/", "status": "verified" },
+
+    { "brand": "Creative", "family": "Pebble", "model": "Pebble V3", "type": "bookshelf", "pair": true, "watts": 8, "standbyWatts": null, "colors": ["Black", "White"],
+      "offers": [ { "market": "us", "seller": "Creative Labs", "price": 37.99, "currency": "USD", "taxIncluded": false, "url": "https://us.creative.com/p/speakers/creative-pebble-v3", "status": "verified" } ],
+      "url": "https://us.creative.com/p/speakers/creative-pebble-v3", "status": "verified" },
+
+    { "brand": "Logitech", "family": "Z", "model": "Z407", "type": "bookshelf", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "us", "seller": "Walmart", "price": 119.99, "currency": "USD", "taxIncluded": false, "url": "https://www.bestbuy.com/product/logitech-z407-2-1-bluetooth-computer-speaker-system-with-wireless-control-3-piece-black/J7H7ZY3Y9G", "status": "verified" } ],
+      "url": "https://www.logitechg.com/en-us/products/speakers/z407-bluetooth-computer-speakers.html", "status": "verified" },
+
+    { "brand": "Philips", "family": "TAB", "model": "TAB8967/37", "type": "soundbar", "pair": false, "watts": 390, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "us", "seller": "Walmart", "price": 599, "currency": "USD", "taxIncluded": false, "url": "https://www.walmart.com/ip/Philips-TAB8967-37-390W-5-1-2-Channel-Dolby-Atmos-Soundbar-System-Black/1555610214", "status": "verified" } ],
+      "url": "https://www.philips.co.in/c-p/TAB8967_94/soundbar-5.1.2-with-wireless-subwoofer", "status": "verified" },
+
+    { "brand": "Panasonic", "family": "SC-HTB", "model": "SC-HTB600", "type": "soundbar", "pair": false, "watts": 360, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "uk", "seller": "Richer Sounds", "price": 349, "currency": "GBP", "taxIncluded": true, "url": "https://www.richersounds.com/panasonic-sc-htb600-black/", "status": "verified" } ],
+      "url": "https://www.richersounds.com/panasonic-sc-htb600-black/", "status": "verified" },
+
+    { "brand": "TCL", "family": "Alto", "model": "Alto 6+", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "us", "seller": "TCL", "price": 99.99, "currency": "USD", "taxIncluded": false, "url": "https://us.tcl.com/products/tcl-alto-6-plus", "status": "verified" } ],
+      "url": "https://us.tcl.com/products/tcl-alto-6-plus", "status": "verified" },
+
+    { "brand": "Hisense", "family": "HS", "model": "HS214", "type": "soundbar", "pair": false, "watts": 108, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "us", "seller": "Best Buy", "price": 99.99, "currency": "USD", "taxIncluded": false, "url": "https://www.bestbuy.com/site/hisense-2-1-channel-soundbar-with-built-in-subwoofer-black/6438554.p?skuId=6438554", "status": "verified" } ],
+      "url": "https://www.hisense-usa.com/", "status": "verified" },
+
+    { "brand": "Roku", "family": "Streambar", "model": "Streambar SE", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "us", "seller": "Best Buy", "price": 99.99, "currency": "USD", "taxIncluded": false, "url": "https://www.bestbuy.com/product/roku-streambar-se--2-in-1-tv-soundbar-and-4k-hdr-streaming-device-premium-speakers-enhanced-speech-clarity-black/J3PFCJQLJY", "status": "verified" } ],
+      "url": "https://www.roku.com/products/streambar-se", "status": "verified" },
+
+    { "brand": "Majority", "family": "Bowfell", "model": "Bowfell Halo 5.1", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "uk", "seller": "Amazon UK", "price": 119.95, "currency": "GBP", "taxIncluded": true, "url": "https://www.amazon.co.uk/MAJORITY-Soundbar-Subwoofer-Bluetooth-Wall-Mountable/dp/B0GF9Q8VWB", "status": "verified" } ],
+      "url": "https://www.majority.co.uk/", "status": "verified" },
+
+    { "brand": "Lenco", "family": "BTP", "model": "BTP-400", "type": "portable", "pair": false, "watts": 20, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "uk", "seller": "Amazon UK", "price": 111.48, "currency": "GBP", "taxIncluded": true, "url": "https://www.amazon.co.uk/Lenco-BTP-400-Bluetooth-Speaker-Waterproof/dp/B0B4WDFZ2B", "status": "verified" } ],
+      "url": "https://www.lenco.com/en/products/lenco-btp-400bk-stereo-bluetooth-speaker", "status": "verified" },
+
+    { "brand": "Steljes Audio", "family": "NS", "model": "NS3", "type": "bookshelf", "pair": true, "watts": 45, "standbyWatts": null, "colors": ["Frost White", "Gun Metal Grey"],
+      "offers": [ { "market": "uk", "seller": "Amazon UK", "price": 299, "currency": "GBP", "taxIncluded": true, "url": "https://www.amazon.co.uk/steljes-audio-ns3/s?k=steljes+audio+ns3", "status": "verified" } ],
+      "url": "https://www.whathifi.com/steljesaudio/ns3/review", "status": "verified" },
+
+    { "brand": "Rega", "family": "Kyte", "model": "Kyte", "type": "bookshelf", "pair": true, "watts": null, "standbyWatts": null, "colors": ["Black", "White"],
+      "offers": [ { "market": "uk", "seller": "Sevenoaks Sound and Vision", "price": 399, "currency": "GBP", "taxIncluded": true, "url": "https://www.sevenoakssoundandvision.co.uk/p-51724-rega-kyte-bookshelf-speakers.aspx", "status": "verified" } ],
+      "url": "https://www.rega.co.uk/kyte.html", "status": "verified" },
+
+    { "brand": "Mission", "family": "LX", "model": "LX-2 MKII", "type": "bookshelf", "pair": true, "watts": null, "standbyWatts": null, "colors": ["Walnut", "White", "Black"],
+      "offers": [ { "market": "uk", "seller": "Richer Sounds", "price": 219, "currency": "GBP", "taxIncluded": true, "url": "https://www.richersounds.com/mission-lx-2-mkii-black/", "status": "verified" } ],
+      "url": "https://www.mission.co.uk/", "status": "verified" },
+
+    { "brand": "Acoustic Energy", "family": "AE100", "model": "AE100 MK2", "type": "bookshelf", "pair": true, "watts": null, "standbyWatts": null, "colors": ["Black", "Satin White", "Walnut"],
+      "offers": [ { "market": "uk", "seller": "Richer Sounds", "price": 279, "currency": "GBP", "taxIncluded": true, "url": "http://www.richersounds.ie/p-15307-acoustic-energy-ae100-mk2-black-satin-pair-bookshelf-speakers-per-pair.aspx", "status": "verified" } ],
+      "url": "https://www.acoustic-energy.co.uk/", "status": "verified" },
+
+    { "brand": "Sharp", "family": "HT-SB", "model": "HT-SB147", "type": "soundbar", "pair": false, "watts": 150, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "uk", "seller": "Currys", "price": 49.99, "currency": "GBP", "taxIncluded": true, "url": "https://www.currys.co.uk/products/sharp-htsb147-2.0-sound-bar-10237529.html", "status": "verified" } ],
+      "url": "https://shop.sharpconsumer.uk/", "status": "verified" },
+
+    { "brand": "Steren", "family": "Bocina", "model": "Bocina Bluetooth TWS Boom Box Xbass", "type": "portable", "pair": false, "watts": 400, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "mx", "seller": "Steren", "price": 2390, "currency": "MXN", "taxIncluded": true, "url": "https://www.steren.com.mx/bocina-bluetooth-tws-boom-box-xbass-400-wpmpo.html", "status": "verified" } ],
+      "url": "https://www.steren.com.mx/bocinas-bluetooth-multimedia.html", "status": "verified" },
+
+    { "brand": "Steren", "family": "Bocina", "model": "Bocina Bluetooth Splash Bass TWS Mediana", "type": "portable", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "mx", "seller": "Steren", "price": 795, "currency": "MXN", "taxIncluded": true, "url": "https://www.steren.com.mx/bocinas-bluetooth-multimedia.html", "status": "verified" } ],
+      "url": "https://www.steren.com.mx/bocinas-bluetooth-multimedia.html", "status": "verified" },
+
+    { "brand": "ProAc", "family": "Tablette", "model": "Tablette 10", "type": "bookshelf", "pair": true, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "uk", "seller": "Various UK retailers", "price": 1315, "currency": "GBP", "taxIncluded": true, "url": "https://pricespy.co.uk/audio-video/speakers-headphones/surround-bookshelf-speakers/proac-tablette-10--p4463976", "status": "verified" } ],
+      "url": "https://www.proac-loudspeakers.com/", "status": "verified" },
+
+    { "brand": "Definitive Technology", "family": "Dymension", "model": "Dymension DM60", "type": "soundbar", "pair": false, "watts": null, "standbyWatts": null, "colors": ["Black"],
+      "offers": [ { "market": "us", "seller": "Crutchfield", "price": 1299, "currency": "USD", "taxIncluded": false, "url": "https://www.crutchfield.com/S-s4hkfZMWjED/shopsearch/definitive_technology.html", "status": "verified" } ],
+      "url": "https://www.definitivetechnology.com/", "status": "verified" }
+  ],
+  "notFound": [
+    "Naim: covered via Mu-so 2nd Generation (uk) — no additional model with a readable regular price in a second market within effort budget",
+    "LG: S65Q and S75Q discontinued/out of stock at Irish retailers searched (Currys.ie, Harvey Norman.ie); used S80QY via Canadian retailer instead",
+    "Tannoy: Mercury 7.2 has no clean current regular-price listing from a first-party retailer in us/ca/mx/uk/ie — only secondhand/used listings and a historic magazine test price were found; included as secondhand with no offer rather than invented",
+    "Audio-Technica: brand makes no home speakers (headphones/turntables/microphones only) — excluded per brief"
+  ]
+}

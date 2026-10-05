@@ -1,0 +1,300 @@
+{
+ "meta": {
+  "title": "SLATE grocery research, part three: drinks from more brands",
+  "compiled": "2026-10-05",
+  "supplements": "research-groceries.json (same product schema)",
+  "markets": ["US", "GB", "IE", "MX"],
+  "chainsCovered": ["pricerite", "thefreshgrocer", "smartfinal", "supervalu-ie", "chedraui", "tesco-gb", "sainsburys"],
+  "chainsSought": ["pricerite", "stopandshop", "thefreshgrocer", "fairway", "smartfinal", "tesco-gb", "sainsburys", "aldi-gb", "lidl-gb", "supervalu-ie", "tesco-ie", "dunnes", "lidl-ie", "saveonfoods", "gianttiger", "voila", "nofrills", "chedraui", "bodegaaurrera", "soriana"],
+  "method": "Beer, wine, coffee, tea, juice and bottled-water products were read on 2026-10-05, product by product, by searching each brand on the chain's own storefront. Price Rite, The Fresh Grocer and Smart & Final (Wynshop/Mi9 storefronts, store ids 301/197/371) answered search pages at www.<chain>.com/sm/.../rsid/<id>/results?q=<brand> with real prices and UPCs; those rows are confirmed:true. SuperValu Ireland answered the same way at shop.supervalu.ie/sm/delivery/rsid/5550/results?q=<brand>; confirmed:true. Chedraui (Mexico) answered its own VTEX catalog API directly, https://www.chedraui.com.mx/api/catalog_system/pub/products/search/<brand>?map=ft, which returns product name, EAN and price as JSON; confirmed:true. Stop & Shop, Fairway, Save-On-Foods (blocked this session with HTTP 403 after earlier research had read it; not reused here), Giant Tiger's own search, and the Mexican and Irish/GB discounters and Canadian chains either blocked automated reads outright or returned no matching brand search within the time available, so no rows for stopandshop, fairway, saveonfoods, gianttiger, voila, nofrills, tesco-ie, dunnes, lidl-ie, aldi-gb, lidl-gb, bodegaaurrera or soriana are included; nothing was invented to fill them in. Tesco and Sainsbury's rows come from Trolley.co.uk, a UK price-comparison tracker, read per product (not from its search-aggregate page, which does not label retailers): confirmed:false, with the product's Trolley.co.uk URL as the source and the retailer named in the note. Where a product was on promotion the regular (non-promotional) price is recorded and the promotional price is given in the note.",
+  "fieldNotes": {
+   "sizeQty": "Converted to g or ml (1 oz = 28.3495 g, 1 US fl oz = 29.5735 ml), rounded to the nearest unit. For tea bags, sizeQty is the bag count and sizeUnit is 'ct'. For multipacks of cans/bottles, sizeQty is the total ml across the pack.",
+   "pricedBy": "'each' = price for the stated pack.",
+   "taxIncluded": "false for US (sales tax, where it applies to alcohol/soft drinks, is added at the register); true for GB, IE and MX, where shelf prices include VAT/IVA. Ireland's alcohol prices are also subject to minimum unit pricing. No specific tax rates are asserted.",
+   "abv": "Recorded only where the chain's own listing or the tracker's product page stated it; null everywhere it was not stated — none was looked up from an outside source or estimated."
+  },
+  "newBrandsAdded": [
+   "Twinings", "Bigelow", "Ocean Spray", "Dasani", "Maxwell House", "Minute Maid",
+   "Corona", "Coors", "Modelo", "Stella Artois", "Snapple", "Lavazza", "Starbucks",
+   "Dunkin'", "Miller", "Yellow Tail", "Gallo (E&J Gallo Family Vineyards)", "Barefoot",
+   "Smithwick's", "Ballygowan", "Kronenbourg", "Casillero del Diablo",
+   "Tecate", "Pacifico", "Indio", "Ciel", "Bonafont", "Del Valle",
+   "Peroni (Nastro Azzurro)", "Carlsberg"
+  ],
+  "gaps": "No new drinks were confirmed for stopandshop, fairway, aldi-gb, lidl-gb, tesco-ie, dunnes, lidl-ie, saveonfoods, gianttiger, nofrills, voila, bodegaaurrera or soriana this pass: Stop & Shop and Fairway's own sites returned no usable search results in the time available; Save-On-Foods, which an earlier research pass had read successfully, returned HTTP 403 this session; Giant Tiger's own search returned no results for the brands tried; Aldi, Lidl, Tesco Ireland, Dunnes, Lidl Ireland, No Frills, Voilà, Bodega Aurrera and Soriana either block automated reads or were not found on Trolley.co.uk/item.ie, the trackers checked. This is a gap to close in a later research pass, not a claim that these chains lack new-brand drinks."
+ },
+ "products": [
+  {
+   "chain": "pricerite", "market": "US", "name": "Twinings Pure Green Tea Bags, 20 ct, 1.41 oz",
+   "brand": "Twinings", "category": "beverage", "size": "20 ct, 1.41 oz", "sizeQty": 20, "sizeUnit": "ct",
+   "price": 2.49, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Twinings%20Pure%20Green%20Tea",
+   "sourceId": "00070177176365", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT). Shelf price before sales tax."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Bigelow Classic Green Tea Bags, 20 ct, .91 oz",
+   "brand": "Bigelow", "category": "beverage", "size": "20 ct, 0.91 oz", "sizeQty": 20, "sizeUnit": "ct",
+   "price": 2.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Bigelow%20Classic%20Green%20Tea",
+   "sourceId": "00072310008472", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT). Price Rite also carries 16 other Bigelow tea flavors at $2.49-$2.99; this is one representative SKU."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Ocean Spray The Original Cranberry Juice Cocktail, 64 fl oz",
+   "brand": "Ocean Spray", "category": "beverage", "size": "64 fl oz", "sizeQty": 1893, "sizeUnit": "ml",
+   "price": 2.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Ocean%20Spray%20Original%20Cranberry",
+   "sourceId": "00031200200075", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT). Shelf price before sales tax."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Dasani Purified Water, 20 fl oz",
+   "brand": "Dasani", "category": "beverage", "size": "20 fl oz", "sizeQty": 591, "sizeUnit": "ml",
+   "price": 2.50, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Dasani",
+   "sourceId": "00049000009774", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT). Marked down to $2.00 the week of Oct 2; $2.50 is the regular shelf price shown on the same listing."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Dasani Purified Water, 16.9 fl oz, 24 count",
+   "brand": "Dasani", "category": "beverage", "size": "16.9 fl oz x 24", "sizeQty": 12000, "sizeUnit": "ml",
+   "price": 5.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Dasani",
+   "sourceId": "00049000031652", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT)."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Maxwell House Wake Up Roast Medium Ground Coffee, 10.6 oz",
+   "brand": "Maxwell House", "category": "beverage", "size": "10.6 oz", "sizeQty": 300, "sizeUnit": "g",
+   "price": 4.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Maxwell%20House",
+   "sourceId": "00043000094266", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT). Price Rite also lists Maxwell House Original Roast Instant Coffee, 8 oz, $8.99, UPC 00043000794609."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Minute Maid Fruit Punch Juice, 59 fl oz",
+   "brand": "Minute Maid", "category": "beverage", "size": "59 fl oz", "sizeQty": 1745, "sizeUnit": "ml",
+   "price": 1.79, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "fridge", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Minute%20Maid%20Lemonade%2059",
+   "sourceId": "00025000047480", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT), in the Minute Maid 59 fl oz bottle line alongside Lemonade, Tropical Punch, Berry Punch and Mango Punch, all at the same regular price. On sale at $1.50 for the week of Oct 2 (limit 4); $1.79 is the regular shelf price shown on the same listing. Price Rite also carries a Minute Maid Lemonade/Fruit Punch/Pink Lemonade 12x12 fl oz multipack ($8.39) and a 10x7.5 fl oz Lemonade mini multipack ($6.99)."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Corona Extra Imported Beer, 12-pack, 12 fl oz bottles",
+   "brand": "Corona", "category": "alcohol", "size": "12 fl oz x 12", "sizeQty": 4259, "sizeUnit": "ml",
+   "price": 16.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "fridge", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Corona",
+   "sourceId": "00080660956152", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT), pickup only. ABV not stated on the listing. Price Rite also carries Corona Extra 18-pack ($23.99), Corona Premier 12-pack ($16.99) and Corona Familiar 12-pack ($16.99)."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Coors Light Beer, 12 fl oz, 12 count",
+   "brand": "Coors", "category": "alcohol", "size": "12 fl oz x 12", "sizeQty": 4259, "sizeUnit": "ml",
+   "price": 12.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "fridge", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Coors",
+   "sourceId": "00071990300692", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT), pickup only. ABV not stated on the listing. Price Rite also carries Coors Banquet 12-pack ($12.99), Coors Light 18-pack ($17.99) and Coors Light 30-pack ($28.99)."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Modelo Especial Beer, 12 fl oz, 12 count",
+   "brand": "Modelo", "category": "alcohol", "size": "12 fl oz x 12", "sizeQty": 4259, "sizeUnit": "ml",
+   "price": 16.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "fridge", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Modelo",
+   "sourceId": "00080660957579", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT), pickup only. ABV not stated on the listing. Price Rite also carries Modelo Negra 12-pack ($16.99)."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Stella Artois Classic Lager Beer, 11.2 fl oz, 12 count",
+   "brand": "Stella Artois", "category": "alcohol", "size": "11.2 fl oz x 12", "sizeQty": 3975, "sizeUnit": "ml",
+   "price": 16.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "fridge", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Stella%20Artois",
+   "sourceId": "00786150000144", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT), pickup only. ABV not stated on the listing."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Snapple Lemon Tea, 64 fl oz",
+   "brand": "Snapple", "category": "beverage", "size": "64 fl oz", "sizeQty": 1893, "sizeUnit": "ml",
+   "price": 2.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "fridge", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Snapple",
+   "sourceId": "00076183643747", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT). Price Rite also carries Snapple Peach Tea at the same size/price, and both flavors in 16 fl oz 6-count ($6.99) and 12-count ($11.99) multipacks, plus Snapple Apple and Kiwi Strawberry juice drinks at the same sizes/prices."
+  },
+  {
+   "chain": "pricerite", "market": "US", "name": "Lavazza Dolcevita Classico Medium Roast Ground Coffee, 12 oz",
+   "brand": "Lavazza", "category": "beverage", "size": "12 oz", "sizeQty": 340, "sizeUnit": "g",
+   "price": 8.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": null,
+   "url": "https://www.priceritemarketplace.com/sm/planning/rsid/301/results?q=Lavazza%20Dolcevita",
+   "sourceId": "00041953075066", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Price Rite's own storefront (store 301, Hamden CT). UPC appears in the product's page URL. Price Rite also carries Lavazza House Blend Perfetto Medium Roast, 12 oz, at the same price."
+  },
+  {
+   "chain": "thefreshgrocer", "market": "US", "name": "Starbucks Breakfast Blend Medium Roast Ground Coffee, 12 oz",
+   "brand": "Starbucks", "category": "beverage", "size": "12 oz", "sizeQty": 340, "sizeUnit": "g",
+   "price": 12.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": null,
+   "url": "https://www.thefreshgrocer.com/sm/planning/rsid/197/results?q=Starbucks",
+   "sourceId": "00762111206251", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from The Fresh Grocer's own storefront (store 197). On sale at $7.99 the week of Oct 2 (limit 4); $12.99 is the regular shelf price shown on the same listing. The Fresh Grocer also carries Starbucks House Blend and Veranda Blend Blonde Roast, 12 oz, at the same regular/sale prices."
+  },
+  {
+   "chain": "smartfinal", "market": "US", "name": "Dunkin' Ground Medium Roast Original Blend Coffee, 30 oz",
+   "brand": "Dunkin'", "category": "beverage", "size": "30 oz", "sizeQty": 850, "sizeUnit": "g",
+   "price": 26.49, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": null,
+   "url": "https://www.smartandfinal.com/sm/delivery/rsid/371/results?q=Dunkin",
+   "sourceId": "00881334011029", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Smart & Final's own storefront (store 371). Smart & Final also carries Dunkin' Ground Vanilla and Medium Roast 12 oz ($9.99, sale from $11.99), and K-Cup/coffee pods in 10- and 32-count."
+  },
+  {
+   "chain": "smartfinal", "market": "US", "name": "Miller Beer, 12 fl oz, 12 count",
+   "brand": "Miller", "category": "alcohol", "size": "12 fl oz x 12", "sizeQty": 4259, "sizeUnit": "ml",
+   "price": 12.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "fridge", "abv": null,
+   "url": "https://www.smartandfinal.com/sm/delivery/rsid/371/results?q=Miller",
+   "sourceId": "00034100015091", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Smart & Final's own storefront (store 371); low stock. ABV not stated for this listing. Smart & Final also carries Miller Lite 18-pack ($21.99, 3.8% ABV stated), Miller Lite 30-pack ($20.99), Miller High Life 30-pack ($21.99) and Miller Genuine Draft 30-pack ($20.99)."
+  },
+  {
+   "chain": "smartfinal", "market": "US", "name": "Yellow Tail Cabernet Sauvignon Australia Red Wine, 750 ml",
+   "brand": "Yellow Tail", "category": "alcohol", "size": "750 ml", "sizeQty": 750, "sizeUnit": "ml",
+   "price": 5.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": 0.13,
+   "url": "https://www.smartandfinal.com/sm/delivery/rsid/371/results?q=Yellow%20Tail",
+   "sourceId": "00031259009452", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Smart & Final's own storefront (store 371). ABV as stated on the listing. Smart & Final also carries Yellow Tail Big Bold Red, Chardonnay, Shiraz and Merlot at 750 ml and 1.5 L."
+  },
+  {
+   "chain": "smartfinal", "market": "US", "name": "Gallo Family Vineyards Chardonnay White Wine, 1.5 L",
+   "brand": "Gallo Family Vineyards", "category": "alcohol", "size": "1.5 L", "sizeQty": 1500, "sizeUnit": "ml",
+   "price": 6.49, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": null,
+   "url": "https://www.smartandfinal.com/sm/delivery/rsid/371/results?q=Gallo%20Family",
+   "sourceId": "00085000005064", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Smart & Final's own storefront (store 371). The listing states $6.49 is a promotional price valid Sept 30-Oct 28 for every Gallo Family Vineyards 1.5 L bottle searched (Pinot Grigio, Sauvignon Blanc, Chardonnay, Pinot Noir, Merlot, Cabernet Sauvignon, Pink Moscato, Hearty Burgundy, Moscato, White Zinfandel), all at the same price; no separate non-promotional price was shown. ABV not stated."
+  },
+  {
+   "chain": "smartfinal", "market": "US", "name": "Barefoot Cellars Cabernet Sauvignon Red Wine, 1.5 Litre",
+   "brand": "Barefoot", "category": "alcohol", "size": "1.5 L", "sizeQty": 1500, "sizeUnit": "ml",
+   "price": 10.99, "currency": "USD", "pricedBy": "each", "taxIncluded": false, "storage": "pantry", "abv": 0.135,
+   "url": "https://www.smartandfinal.com/sm/delivery/rsid/371/results?q=Barefoot%20Cellars%20Cabernet",
+   "sourceId": "00018341151015", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Smart & Final's own storefront (store 371); low stock. On sale at $9.99; $10.99 is the regular shelf price shown on the same listing. Smart & Final also carries Barefoot Cellars Chardonnay, Pinot Grigio, Sauvignon Blanc, Pinot Noir, Merlot, Moscato, Pink Moscato and Riesling at 750 ml ($6.49) and most at 1.5 L, plus Barefoot Bubbly Brut Cuvee (187 ml $11.99, 750 ml $9.49) and a 500 ml To-Go Chardonnay Tetra ($4.79)."
+  },
+  {
+   "chain": "supervalu-ie", "market": "IE", "name": "Smithwick's Beer Can 4 Pack", "brand": "Smithwick's",
+   "category": "alcohol", "size": "500 ml x 4", "sizeQty": 2000, "sizeUnit": "ml",
+   "price": 8.80, "currency": "EUR", "pricedBy": "each", "taxIncluded": true, "storage": "fridge", "abv": 0.038,
+   "url": "https://shop.supervalu.ie/sm/delivery/rsid/5550/results?q=Smithwick%27s",
+   "sourceId": "1020064003", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from SuperValu's own storefront (storefrontgateway.supervalu.ie, store 5550). €0.60 can deposit is extra, per Ireland's deposit return scheme. SuperValu also carries Smithwick's Red Ale 8x500ml for €16.00 (€14.25 at the loyalty Rewards price)."
+  },
+  {
+   "chain": "supervalu-ie", "market": "IE", "name": "Ballygowan Still Water Bottle, 1 L", "brand": "Ballygowan",
+   "category": "beverage", "size": "1 L", "sizeQty": 1000, "sizeUnit": "ml",
+   "price": 2.35, "currency": "EUR", "pricedBy": "each", "taxIncluded": true, "storage": "pantry", "abv": null,
+   "url": "https://shop.supervalu.ie/sm/delivery/rsid/5550/results?q=Ballygowan",
+   "sourceId": "1019740001", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from SuperValu's own storefront (store 5550). SuperValu also carries Ballygowan Sparkling 500 ml (€1.35), Still 750 ml (€1.85), flavoured 'Hint of Fruit' 750 ml/1.5 L (€1.85) and 4-/6-packs of 1.5 L still (€5.50) and 500 ml sparkling (€5.25)."
+  },
+  {
+   "chain": "supervalu-ie", "market": "IE", "name": "Kronenbourg 1664 Blanc Beer Bottle, 600 ml", "brand": "Kronenbourg",
+   "category": "alcohol", "size": "600 ml", "sizeQty": 600, "sizeUnit": "ml",
+   "price": 4.00, "currency": "EUR", "pricedBy": "each", "taxIncluded": true, "storage": "fridge", "abv": null,
+   "url": "https://shop.supervalu.ie/sm/delivery/rsid/5550/results?q=Kronenbourg",
+   "sourceId": "1964525000", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from SuperValu's own storefront (store 5550). €3.50 at the loyalty Rewards price. ABV not stated on the listing. SuperValu also carries a Kronenbourg Blanc 12x330ml bottle pack for €20.00."
+  },
+  {
+   "chain": "supervalu-ie", "market": "IE", "name": "Casillero Del Diablo Merlot Wine, 75 cl", "brand": "Casillero del Diablo",
+   "category": "alcohol", "size": "75 cl", "sizeQty": 750, "sizeUnit": "ml",
+   "price": 10.00, "currency": "EUR", "pricedBy": "each", "taxIncluded": true, "storage": "pantry", "abv": null,
+   "url": "https://shop.supervalu.ie/sm/delivery/rsid/5550/results?q=Casillero%20del%20Diablo",
+   "sourceId": "1016944000", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from SuperValu's own storefront (store 5550). €9.00 at the loyalty Rewards price. ABV not stated on the listing. SuperValu also carries Casillero Del Diablo Chardonnay, Rose, Sauvignon Blanc, Cabernet Sauvignon, Pinot Grigio and Malbec at 75 cl (same prices), a 0% alcohol-free sparkling at 75 cl (€8.00), and Cabernet Sauvignon/Sauvignon Blanc minis at 18.7 cl (€3.30, €2.50 Rewards)."
+  },
+  {
+   "chain": "chedraui", "market": "MX", "name": "Cerveza Clara Tecate Original Lata de 473ml", "brand": "Tecate",
+   "category": "alcohol", "size": "473 ml", "sizeQty": 473, "sizeUnit": "ml",
+   "price": 19, "currency": "MXN", "pricedBy": "each", "taxIncluded": true, "storage": "fridge", "abv": null,
+   "url": "https://www.chedraui.com.mx/cerveza-clara-tecate-original-lata-de-473ml-3062915/p",
+   "sourceId": "0089826001415", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Chedraui's own VTEX catalog API (api/catalog_system/pub/products/search). ABV not stated in the feed. Chedraui also carries Tecate Light the same way, Tecate Titanium 355 ml, Tecate Quitapón 300 ml, and 6x355ml and 9x207ml multipacks."
+  },
+  {
+   "chain": "chedraui", "market": "MX", "name": "Cerveza Pacifico Clara Lata 473ml", "brand": "Pacifico",
+   "category": "alcohol", "size": "473 ml", "sizeQty": 473, "sizeUnit": "ml",
+   "price": 25.5, "currency": "MXN", "pricedBy": "each", "taxIncluded": true, "storage": "fridge", "abv": null,
+   "url": "https://www.chedraui.com.mx/cerveza-pacifico-clara-lata-473ml-3847221/p",
+   "sourceId": "17503044233859", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Chedraui's own VTEX catalog API. ABV not stated in the feed. Chedraui also carries Pacifico Suave the same way, both in 473 ml and 710 ml cans and 6x355ml multipacks."
+  },
+  {
+   "chain": "chedraui", "market": "MX", "name": "Cerveza Indio Obscura 710ml", "brand": "Indio",
+   "category": "alcohol", "size": "710 ml", "sizeQty": 710, "sizeUnit": "ml",
+   "price": 29, "currency": "MXN", "pricedBy": "each", "taxIncluded": true, "storage": "fridge", "abv": null,
+   "url": "https://www.chedraui.com.mx/cerveza-indio-obscura-710ml-3805955/p",
+   "sourceId": "750303227280", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Chedraui's own VTEX catalog API. ABV not stated in the feed. Chedraui also carries Indio Obscura 940 ml, Indio Agave 940 ml, a 473 ml can and a 12x355ml multipack."
+  },
+  {
+   "chain": "chedraui", "market": "MX", "name": "Agua Natural Purificada Ciel 2L", "brand": "Ciel",
+   "category": "beverage", "size": "2 L", "sizeQty": 2000, "sizeUnit": "ml",
+   "price": 19, "currency": "MXN", "pricedBy": "each", "taxIncluded": true, "storage": "pantry", "abv": null,
+   "url": "https://www.chedraui.com.mx/agua-natural-purificada-ciel-2l-3719905/p",
+   "sourceId": "27501055337037", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Chedraui's own VTEX catalog API. Chedraui also carries Ciel 1L, 1.75L mineral, 600ml and 235ml mineral, 3.785L and 10L jugs, and the flavoured Ciel Exprim line."
+  },
+  {
+   "chain": "chedraui", "market": "MX", "name": "Agua Natural Bonafont 2L", "brand": "Bonafont",
+   "category": "beverage", "size": "2 L", "sizeQty": 2000, "sizeUnit": "ml",
+   "price": 18, "currency": "MXN", "pricedBy": "each", "taxIncluded": true, "storage": "pantry", "abv": null,
+   "url": "https://www.chedraui.com.mx/agua-natural-bonafont-2l-3120849/p",
+   "sourceId": "758104001859", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Chedraui's own VTEX catalog API. Chedraui also carries Bonafont 330ml, 1.2L, 1.5L, 6L and 10L, plus the flavoured Bonafont Aguas Frescas line (naranja, uva) at 1L and 1.4L."
+  },
+  {
+   "chain": "chedraui", "market": "MX", "name": "Jugo Del Valle Piña 1L", "brand": "Del Valle",
+   "category": "beverage", "size": "1 L", "sizeQty": 1000, "sizeUnit": "ml",
+   "price": 24, "currency": "MXN", "pricedBy": "each", "taxIncluded": true, "storage": "fridge", "abv": null,
+   "url": "https://www.chedraui.com.mx/jugo-del-valle-pina-1l-3329571/p",
+   "sourceId": "7501055349043", "date": "2026-10-05", "confirmed": true,
+   "note": "Read from Chedraui's own VTEX catalog API. Chedraui also carries Jugo Del Valle Piña 946ml, 100% Naranja 200ml, Junior (uva, fresa) 200ml, Néctar Del Valle durazno/mango at 125ml and 413ml, and a 2L Frut Cítricos bebida."
+  },
+  {
+   "chain": "tesco-gb", "market": "GB", "name": "Peroni Nastro Azzurro Lager Beer Multipack Bottles, 4 x 330ml",
+   "brand": "Peroni", "category": "alcohol", "size": "330 ml x 4", "sizeQty": 1320, "sizeUnit": "ml",
+   "price": 7.25, "currency": "GBP", "pricedBy": "each", "taxIncluded": true, "storage": "fridge", "abv": 0.05,
+   "url": "https://www.trolley.co.uk/product/peroni-nastro-azzurro-lager-beer-bottle/FMF754",
+   "sourceId": "FMF754", "date": "2026-10-05", "confirmed": false,
+   "note": "Tesco blocks automated reads; this price was read from Trolley.co.uk, a third-party UK price tracker, which lists Tesco at £7.25 for this product (alongside Morrisons £4.50, Asda £7.30 and Sainsbury's £7.50), ABV 5.0% as stated by the tracker."
+  },
+  {
+   "chain": "sainsburys", "market": "GB", "name": "Peroni Nastro Azzurro Lager Beer Multipack Bottles, 4 x 330ml",
+   "brand": "Peroni", "category": "alcohol", "size": "330 ml x 4", "sizeQty": 1320, "sizeUnit": "ml",
+   "price": 7.50, "currency": "GBP", "pricedBy": "each", "taxIncluded": true, "storage": "fridge", "abv": 0.05,
+   "url": "https://www.trolley.co.uk/product/peroni-nastro-azzurro-lager-beer-bottle/FMF754",
+   "sourceId": "FMF754", "date": "2026-10-05", "confirmed": false,
+   "note": "Sainsbury's blocks automated reads; this price was read from Trolley.co.uk, a third-party UK price tracker, which lists Sainsbury's at £7.50 for this product, ABV 5.0% as stated by the tracker."
+  },
+  {
+   "chain": "tesco-gb", "market": "GB", "name": "Carlsberg Pilsner Lager Beer Cans, 18 x 440ml",
+   "brand": "Carlsberg", "category": "alcohol", "size": "440 ml x 18", "sizeQty": 7920, "sizeUnit": "ml",
+   "price": 11.99, "currency": "GBP", "pricedBy": "each", "taxIncluded": true, "storage": "fridge", "abv": null,
+   "url": "https://www.trolley.co.uk/product/carlsberg-danish-pilsner-lager-beer-can/WOV141",
+   "sourceId": "WOV141", "date": "2026-10-05", "confirmed": false,
+   "note": "Tesco blocks automated reads; this price was read from Trolley.co.uk, a third-party UK price tracker, which lists Tesco at £11.99 for this product (alongside Amazon £9.72, Asda £13.00, Morrisons £13.00, Sainsbury's £13.00, Co-op £15.00). ABV not stated by the tracker."
+  },
+  {
+   "chain": "sainsburys", "market": "GB", "name": "Carlsberg Pilsner Lager Beer Cans, 18 x 440ml",
+   "brand": "Carlsberg", "category": "alcohol", "size": "440 ml x 18", "sizeQty": 7920, "sizeUnit": "ml",
+   "price": 13.00, "currency": "GBP", "pricedBy": "each", "taxIncluded": true, "storage": "fridge", "abv": null,
+   "url": "https://www.trolley.co.uk/product/carlsberg-danish-pilsner-lager-beer-can/WOV141",
+   "sourceId": "WOV141", "date": "2026-10-05", "confirmed": false,
+   "note": "Sainsbury's blocks automated reads; this price was read from Trolley.co.uk, a third-party UK price tracker, which lists Sainsbury's at £13.00 for this product. ABV not stated by the tracker."
+  },
+  {
+   "chain": "tesco-gb", "market": "GB", "name": "Barefoot Pinot Grigio White Wine, 75cl",
+   "brand": "Barefoot", "category": "alcohol", "size": "75 cl", "sizeQty": 750, "sizeUnit": "ml",
+   "price": 8.25, "currency": "GBP", "pricedBy": "each", "taxIncluded": true, "storage": "pantry", "abv": null,
+   "url": "https://www.trolley.co.uk/product/barefoot-pinot-grigio/WLJ462",
+   "sourceId": "WLJ462", "date": "2026-10-05", "confirmed": false,
+   "note": "Tesco blocks automated reads; this price was read from Trolley.co.uk, a third-party UK price tracker, which lists Tesco at £8.25 for this product (alongside Asda £7.25, Iceland £8.00, Morrisons £8.50, Sainsbury's £7.25-with-Nectar, Waitrose £8.75, Co-op £9.95). Sainsbury's price is omitted here because the tracker showed it only as a loyalty-card ('Nectar') price, not a regular shelf price. ABV not stated by the tracker."
+  }
+ ]
+}

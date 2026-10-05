@@ -47,3 +47,19 @@ describe('a cup at home', () => {
     expect(sim.execute({ kind: 'food.drink_home', payload: { itemId: oranges.id } }).error).toBe('That isn’t a drink here.');
   });
 });
+
+describe('a drink of its own strength', () => {
+  it('raises the blood alcohol by its label’s ABV where read, the glass’s 12% where not', () => {
+    const glass = (abv?: number) => {
+      const sim = life();
+      sim.player.alcohol = undefined;
+      const wine = stock(sim, 'v', 'Barefoot Cabernet Sauvignon', 'wine', 'ml', 750);
+      if (abv !== undefined) (wine.food as { abv?: number }).abv = abv;
+      sim.must({ kind: 'food.drink_home', payload: { itemId: wine.id } });
+      return sim.player.alcohol!.peak;
+    };
+    const standard = glass();
+    expect(glass(0.12)).toBeCloseTo(standard, 9);
+    expect(glass(0.18) / standard).toBeCloseTo(0.18 / 0.12, 6);
+  });
+});

@@ -53,6 +53,9 @@ const WORDS = [
   // trousers; a sari, kimono, yukata, hanbok, abaya, qipao, dirndl, anarkali or salwar kameez worn whole, as a dress
   // is; a kurta or dashiki as a shirt; a sherwani as a coat; a hijab as an accessory.
   [/\b(kilts?|lehengas?)\b/, 'bottom', 'skirt'],
+  [/\b(mukluks?|moccasins?)\b/, 'shoes', 'shoes'],
+  [/\b(shawls?(?! (collar|lapel))|rebozos?|chal(es)?)\b/, 'accessory', 'accessory'],
+  [/\btraje charro\b/, 'suit', 'suit'],
   [/\blederhosen\b/, 'bottom', 'trousers'],
   [/\b(saris?|sarees?|kimonos?|yukatas?|hanboks?|abayas?|qipaos?|cheongsams?|dirndls?|anarkalis?|salwar kameez|shalwar kameez)\b/, 'dress', 'dress'],
   [/\b(kurtas?|dashikis?)\b/, 'top', 'shirt'],
