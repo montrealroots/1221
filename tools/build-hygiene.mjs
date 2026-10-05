@@ -8,6 +8,11 @@ const OUT = 'src/engine/content/hygiene.ts';
 const j = JSON.parse(readFileSync('docs/research/world/research-hygiene.json', 'utf8'));
 const slug = (s) => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').replace(/[\s_]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
 
+// Each product's brand as its own name states it (`research-brands-from-names.json`, read 2026-10-04); null where the
+// name names none, as fresh produce mostly doesn't.
+const BRANDS = new Map(JSON.parse(readFileSync('docs/research/world/research-brands-from-names.json', 'utf8')).items.map((i) => [`${i.chain}|${i.name}`, i.brand ?? null]));
+const brandOf = (p) => BRANDS.get(`${p.chain}|${p.name}`) ?? null;
+
 const seen = new Set();
 const toiletries = j.products.filter((p) => typeof p.price === 'number' && p.price > 0).map((p) => {
   let id = `${p.chain}-${slug(p.name)}`.slice(0, 80);
@@ -15,7 +20,7 @@ const toiletries = j.products.filter((p) => typeof p.price === 'number' && p.pri
   seen.add(id);
   // Its stores are 'tesco-gb' and its research filed its toiletries as 'tesco': one chain, from 2026-10-02, until when
   // Tesco's toiletries were never in reach in London nor held to its hours. The ids keep 'tesco', as saves hold them.
-  return { id, chain: p.chain === 'tesco' ? 'tesco-gb' : p.chain, market: p.market, name: p.name, kind: p.kind, sizeQty: p.sizeQty, sizeUnit: p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true };
+  return { id, chain: p.chain === 'tesco' ? 'tesco-gb' : p.chain, market: p.market, name: p.name, brand: brandOf(p), kind: p.kind, sizeQty: p.sizeQty, sizeUnit: p.sizeUnit, price: p.price, currency: p.currency, taxIncluded: p.taxIncluded === true, url: p.url ?? null, date: p.date ?? null, confirmed: p.confirmed === true };
 });
 
 const CITY = {
@@ -41,7 +46,10 @@ const body = `/**
  */
 
 export interface Toiletry {
-  id: string; chain: string; market: string; name: string; kind: string;
+  id: string; chain: string; market: string; name: string;
+  /** The brand its name states; null where it names none (from 2026-10-05). */
+  brand: string | null;
+  kind: string;
   sizeQty: number; sizeUnit: 'g' | 'ml' | 'ct'; price: number; currency: string; taxIncluded: boolean;
   url: string | null; date: string | null; confirmed: boolean;
 }

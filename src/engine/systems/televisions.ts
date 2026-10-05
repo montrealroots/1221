@@ -24,9 +24,9 @@ import { livingOf } from './dwelling';
 
 const MARKET: Readonly<Record<string, string>> = { us: 'us', ca: 'ca', uk: 'uk', ie: 'ie', mx: 'mx' };
 
-/** The middle on-mode power of every labeled set in the catalog, watts: what a TV with no model draws. */
+/** The middle on-mode power of every labeled set in the catalog, watts, its estimates left out: what a TV with no model draws. */
 export const GENERIC_TV_WATTS: number | undefined = (() => {
-  const w = TV_PRODUCTS.map((p) => p.attrs.onModeWatts).filter((x): x is number => typeof x === 'number').sort((a, b) => a - b);
+  const w = TV_PRODUCTS.filter((p) => p.attrs.powerBasis !== 'estimate').map((p) => p.attrs.onModeWatts).filter((x): x is number => typeof x === 'number').sort((a, b) => a - b);
   return w.length ? w[w.length >> 1] : undefined;
 })();
 
@@ -93,7 +93,7 @@ export function registerTelevisions(sim: Simulation): void {
     const label = `${product.brand} ${product.model}, ${product.attrs.sizeIn}-Inch`;
     if (!payFromBank(s, person, paid, `${offer.seller}: ${label}`, 'personal')) throw new CommandError('The bank couldn’t pay for it.');
     // Kept as the home's TV, what a film or television lover unwinds with (`GEAR_FOR`), its model kept.
-    const item = addItem(s, person, { kind: 'furniture:tv', label, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'living' }, acquiredAt: s.now, paid, spec: { product: product.id, offer: offer.id, ...(color ? { color } : {}) } });
+    const item = addItem(s, person, { kind: 'furniture:tv', label, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid, bulky: true, spec: { product: product.id, offer: offer.id, ...(color ? { color } : {}) } });
     return { paid, itemId: item.id };
   });
 }

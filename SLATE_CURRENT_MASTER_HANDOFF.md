@@ -51,9 +51,11 @@ The owner paused the session on 2026-10-04 to carry on in another and asked that
 - New commands need the tutorial's `opens` and `names` and the COVERAGE-MATRIX row 19, or `tests/tutorial.test.ts` fails.
 - The gate's tics check limits sentences opening "Nothing", and title-case reads `label:` fields as labels.
 
+**Since, on 2026-10-05.** The owner scratched the Account 1 session that took this box up: the branch and `main` were restored to this box's state by fast-forward commits whose files are `18527d25`'s and `ebf76bb5`'s (no force-push), and that session's work is kept on `backup/account1-branch-2026-10-05` and `backup/account1-main-2026-10-05`, not to be brought back unless the owner asks. Then televisions were finished (`systems/televisions.ts`, `content/tvcatalog.ts`, Televisions on Homes, `tests/televisions.test.ts`): 106 sets from 23 makers on sale of 333 read, each set's power from ENERGY STAR (`tv-power.json`) or its area at ENERGY STAR's median, billed for each hour watched; and groceries' and toiletries' brands wired (183 and 82). The EU's EPREL needs a registered API key, which only the owner can get.
+
 **Next, in order:**
-1. Finish televisions as above.
-2. Wire the brands for groceries and toiletries.
+1. Prices for the televisions read without one (Best Buy US and Canada, Currys, Harvey Norman, Liverpool), so more of the 333 are sold.
+2. A brand for cleaning products (`research-household-supplies.json`, not in the brands pass).
 3. Run a lives replay and merge to `main`.
 4. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`, 0 of 45 met), then the open rows in `docs/REQUIREMENTS.md`.
    - Rows a player can act on, with no published rate needed: 41c, a guest room and an office, each with something real that reads it.

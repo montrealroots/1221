@@ -1,0 +1,1529 @@
+{
+  "read": "2026-10-05",
+  "sources": [
+    {
+      "name": "ENERGY STAR Certified Televisions (Active Specifications, data.energystar.gov resource pd96-rr3d)",
+      "url": "https://data.energystar.gov/resource/pd96-rr3d.json"
+    },
+    {
+      "name": "ENERGY STAR Certified Televisions dataset landing page",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "name": "EU EPREL public API (electronic displays) — attempted, blocked",
+      "url": "https://eprel.ec.europa.eu/api/products/electronicdisplays"
+    }
+  ],
+  "models": [
+    {
+      "brand": "Insignia",
+      "model": "NS-32F202NA27",
+      "sizeIn": 31.51,
+      "onModeWatts": 31.91,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "RCA",
+      "model": "65D1",
+      "sizeIn": 64.5,
+      "onModeWatts": 117.69,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-24T1",
+      "sizeIn": 23.53,
+      "onModeWatts": 23.65,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-24VA1",
+      "sizeIn": 23.6,
+      "onModeWatts": 23.84,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-32KA1",
+      "sizeIn": 31.37,
+      "onModeWatts": 27.24,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-32T1",
+      "sizeIn": 31.5,
+      "onModeWatts": 28.4,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-32VA1",
+      "sizeIn": 31.47,
+      "onModeWatts": 35.64,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-40TA1",
+      "sizeIn": 39.46,
+      "onModeWatts": 54.85,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-40VA1",
+      "sizeIn": 49.61,
+      "onModeWatts": 68.37,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-43KA1",
+      "sizeIn": 42.5,
+      "onModeWatts": 45.14,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-43V1",
+      "sizeIn": 42.45,
+      "onModeWatts": 64.06,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-43VA1",
+      "sizeIn": 42.5,
+      "onModeWatts": 53.32,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-50KA1",
+      "sizeIn": 49.5,
+      "onModeWatts": 67.97,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-50TA1",
+      "sizeIn": 49.31,
+      "onModeWatts": 70.02,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-50V1",
+      "sizeIn": 49.5,
+      "onModeWatts": 61.72,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-50VA1",
+      "sizeIn": 49.61,
+      "onModeWatts": 68.37,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-55TA1",
+      "sizeIn": 54.7,
+      "onModeWatts": 79.5,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-55V4",
+      "sizeIn": 55,
+      "onModeWatts": 72.52,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-55VO",
+      "sizeIn": 54.6,
+      "onModeWatts": 86.67,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-65KA1",
+      "sizeIn": 64.6,
+      "onModeWatts": 102.25,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-65V1",
+      "sizeIn": 64.4,
+      "onModeWatts": 127.87,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-75VA1",
+      "sizeIn": 74.37,
+      "onModeWatts": 148.56,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-75VH5",
+      "sizeIn": 74.3,
+      "onModeWatts": 119.51,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "S32KAHT",
+      "sizeIn": 31.5,
+      "onModeWatts": 30.15,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "S40KAFT",
+      "sizeIn": 39.5,
+      "onModeWatts": 46.63,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "S50KAUT",
+      "sizeIn": 49.5,
+      "onModeWatts": 61.27,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "SMX32KAHV",
+      "sizeIn": 31.5,
+      "onModeWatts": 30.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui",
+      "model": "LE-85TE1",
+      "sizeIn": 84.6,
+      "onModeWatts": 188.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui, AMZFAST",
+      "model": "LE-24TA1",
+      "sizeIn": 23.48,
+      "onModeWatts": 24.32,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sansui, AMZFAST",
+      "model": "LE-32V1",
+      "sizeIn": 31.43,
+      "onModeWatts": 34.76,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "43QNED80AU*",
+      "sizeIn": 42.5,
+      "onModeWatts": 54.2,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "43QNED82AU*",
+      "sizeIn": 42.5,
+      "onModeWatts": 60.2,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "50QNED80AU*",
+      "sizeIn": 49.5,
+      "onModeWatts": 62.5,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "50QNED82AU*",
+      "sizeIn": 49.5,
+      "onModeWatts": 65.4,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "50QNED85AU*",
+      "sizeIn": 49.5,
+      "onModeWatts": 63.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "50QNED85TU*",
+      "sizeIn": 49.5,
+      "onModeWatts": 73.2,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "55LX1TPU*",
+      "sizeIn": 54.6,
+      "onModeWatts": 105.7,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "55QNED80AU*",
+      "sizeIn": 54.6,
+      "onModeWatts": 70.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "55QNED82AU*",
+      "sizeIn": 54.6,
+      "onModeWatts": 73.1,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "55QNED85AU*",
+      "sizeIn": 54.6,
+      "onModeWatts": 79.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "55QNED85TU*",
+      "sizeIn": 54.6,
+      "onModeWatts": 76.9,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "65QNED80AU*",
+      "sizeIn": 64.5,
+      "onModeWatts": 96.4,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "65QNED82AU*",
+      "sizeIn": 64.5,
+      "onModeWatts": 92.2,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "65QNED85AU*",
+      "sizeIn": 64.5,
+      "onModeWatts": 92.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "65QNED85TU*",
+      "sizeIn": 64.5,
+      "onModeWatts": 112,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "65QNED90TU*",
+      "sizeIn": 64.5,
+      "onModeWatts": 117,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "75QNED80AU*",
+      "sizeIn": 74.5,
+      "onModeWatts": 95.9,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "75QNED82AU*",
+      "sizeIn": 74.5,
+      "onModeWatts": 102.2,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "75QNED85AU*",
+      "sizeIn": 74.5,
+      "onModeWatts": 113.5,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "75QNED85TU*",
+      "sizeIn": 74.5,
+      "onModeWatts": 140.7,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "75QNED90TU*",
+      "sizeIn": 74.5,
+      "onModeWatts": 138.9,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "86QNED80AU*",
+      "sizeIn": 85.6,
+      "onModeWatts": 128.4,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "86QNED82AU*",
+      "sizeIn": 85.6,
+      "onModeWatts": 143.7,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "86QNED85AU*",
+      "sizeIn": 85.6,
+      "onModeWatts": 143.2,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "86QNED85TU*",
+      "sizeIn": 85.6,
+      "onModeWatts": 166.2,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "86QNED90TU*",
+      "sizeIn": 85.6,
+      "onModeWatts": 184.6,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED42C4PU*",
+      "sizeIn": 41.6,
+      "onModeWatts": 72.7,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED42C5***",
+      "sizeIn": 41.5,
+      "onModeWatts": 77.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED42C6PU*",
+      "sizeIn": 41.5,
+      "onModeWatts": 62.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED48B4PU*",
+      "sizeIn": 47.5,
+      "onModeWatts": 81.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED48B5***",
+      "sizeIn": 47.5,
+      "onModeWatts": 85.1,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED48C4PU*",
+      "sizeIn": 47.5,
+      "onModeWatts": 83.1,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED48C5***",
+      "sizeIn": 47.5,
+      "onModeWatts": 87,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED48C6PU*",
+      "sizeIn": 47.5,
+      "onModeWatts": 66.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED48G5SU*",
+      "sizeIn": 47.5,
+      "onModeWatts": 73.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED55B4PU*",
+      "sizeIn": 54.6,
+      "onModeWatts": 95.5,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED55B5***",
+      "sizeIn": 54.6,
+      "onModeWatts": 100.2,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED55C4PU*",
+      "sizeIn": 54.6,
+      "onModeWatts": 103.1,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED55C5***",
+      "sizeIn": 54.6,
+      "onModeWatts": 123.6,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED55C6PU*",
+      "sizeIn": 54.6,
+      "onModeWatts": 108.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED55G5***",
+      "sizeIn": 54.6,
+      "onModeWatts": 118.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED55G6WU*",
+      "sizeIn": 54.6,
+      "onModeWatts": 101.6,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED65B4PU*",
+      "sizeIn": 64.5,
+      "onModeWatts": 114,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED65B5***",
+      "sizeIn": 64.5,
+      "onModeWatts": 126.9,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED65C4PU*",
+      "sizeIn": 64.5,
+      "onModeWatts": 131.9,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED65C5***",
+      "sizeIn": 64.5,
+      "onModeWatts": 149,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED65C6PU*",
+      "sizeIn": 64.5,
+      "onModeWatts": 141.6,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED65G5***",
+      "sizeIn": 64.5,
+      "onModeWatts": 135.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED65G6WU*",
+      "sizeIn": 64.5,
+      "onModeWatts": 127.6,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED77B4PU*",
+      "sizeIn": 76.7,
+      "onModeWatts": 142.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED77B5***",
+      "sizeIn": 76.7,
+      "onModeWatts": 176.4,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED77C4PU*",
+      "sizeIn": 76.7,
+      "onModeWatts": 164.9,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED77C5***",
+      "sizeIn": 76.7,
+      "onModeWatts": 187,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED77C6HU*",
+      "sizeIn": 76.7,
+      "onModeWatts": 135.1,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED77G5***",
+      "sizeIn": 76.7,
+      "onModeWatts": 189.1,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED77G6WU*",
+      "sizeIn": 76.7,
+      "onModeWatts": 156.5,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED83B4PU*",
+      "sizeIn": 82.5,
+      "onModeWatts": 170.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED83B5PU*",
+      "sizeIn": 82.5,
+      "onModeWatts": 177.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED83C4PU*",
+      "sizeIn": 82.5,
+      "onModeWatts": 196.9,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED83C5P**",
+      "sizeIn": 82.5,
+      "onModeWatts": 206.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED83C6HU*",
+      "sizeIn": 82.5,
+      "onModeWatts": 164.7,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED83G5***",
+      "sizeIn": 82.5,
+      "onModeWatts": 204.2,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "LG",
+      "model": "OLED83G6WU*",
+      "sizeIn": 82.5,
+      "onModeWatts": 201.5,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Loewe",
+      "model": "stellar 42",
+      "sizeIn": 41.54,
+      "onModeWatts": 57.23,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Loewe",
+      "model": "stellar 48",
+      "sizeIn": 47.53,
+      "onModeWatts": 73.81,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Loewe",
+      "model": "stellar 55",
+      "sizeIn": 54.64,
+      "onModeWatts": 64.42,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Loewe",
+      "model": "stellar 65",
+      "sizeIn": 64.53,
+      "onModeWatts": 84.55,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Clear Tunes",
+      "model": "ATSC-PM81331",
+      "sizeIn": 13.23,
+      "onModeWatts": 9.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Clear Tunes",
+      "model": "CT-1385S",
+      "sizeIn": 13.25,
+      "onModeWatts": 10.7,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Clear Tunes",
+      "model": "CT-1514S",
+      "sizeIn": 15.55,
+      "onModeWatts": 9.5,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Clear Tunes",
+      "model": "PDVA-PM31561",
+      "sizeIn": 15.47,
+      "onModeWatts": 12.55,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Emerson",
+      "model": "ATSC-PM81331",
+      "sizeIn": 13.23,
+      "onModeWatts": 9.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Emerson",
+      "model": "ETC-1900S",
+      "sizeIn": 18.5,
+      "onModeWatts": 17.19,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Emerson",
+      "model": "PDVA-PM31561",
+      "sizeIn": 15.47,
+      "onModeWatts": 12.55,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Emerson",
+      "model": "PDVA-PM81851",
+      "sizeIn": 18.49,
+      "onModeWatts": 17.15,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN115QN90FF",
+      "sizeIn": 114.4,
+      "onModeWatts": 343.5,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN42S90DAE",
+      "sizeIn": 41.5,
+      "onModeWatts": 71.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN42S90FAE",
+      "sizeIn": 41.5,
+      "onModeWatts": 71.93,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN42S90HAE",
+      "sizeIn": 41.5,
+      "onModeWatts": 67.65,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN43QN90DAF",
+      "sizeIn": 42.5,
+      "onModeWatts": 63.4,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN43QN90FAF",
+      "sizeIn": 42.5,
+      "onModeWatts": 62.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN48S85HAE",
+      "sizeIn": 47.5,
+      "onModeWatts": 83.78,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN48S90DAE",
+      "sizeIn": 47.5,
+      "onModeWatts": 81.6,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN48S90FAE",
+      "sizeIn": 47.5,
+      "onModeWatts": 84.9,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN48S90HAE",
+      "sizeIn": 47.5,
+      "onModeWatts": 76.19,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN50QN90DAF",
+      "sizeIn": 49.5,
+      "onModeWatts": 74.27,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN50QN90FAF",
+      "sizeIn": 49.5,
+      "onModeWatts": 75.76,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55QN90DAF",
+      "sizeIn": 54.6,
+      "onModeWatts": 102.15,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55QN90FAF",
+      "sizeIn": 54.6,
+      "onModeWatts": 102.38,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55S84FAF",
+      "sizeIn": 54.6,
+      "onModeWatts": 86.03,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55S85DAE",
+      "sizeIn": 54.6,
+      "onModeWatts": 89.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55S85FAF",
+      "sizeIn": 54.6,
+      "onModeWatts": 96.48,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55S85HAE",
+      "sizeIn": 54.6,
+      "onModeWatts": 94.18,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55S90DAF",
+      "sizeIn": 54.6,
+      "onModeWatts": 98.58,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55S90FAF",
+      "sizeIn": 54.6,
+      "onModeWatts": 98.73,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55S90HAE",
+      "sizeIn": 54.6,
+      "onModeWatts": 106.65,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55S95DAF",
+      "sizeIn": 54.6,
+      "onModeWatts": 112.43,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55S95FAF",
+      "sizeIn": 54.6,
+      "onModeWatts": 113.6,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN55S95HAF",
+      "sizeIn": 54.6,
+      "onModeWatts": 107.58,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65QN90DAF",
+      "sizeIn": 64.5,
+      "onModeWatts": 121.96,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65QN90FAF",
+      "sizeIn": 64.5,
+      "onModeWatts": 125.93,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65QN95DAF",
+      "sizeIn": 64.5,
+      "onModeWatts": 125.73,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65S84FAE",
+      "sizeIn": 64.5,
+      "onModeWatts": 118.6,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65S84HAE",
+      "sizeIn": 64.5,
+      "onModeWatts": 118.6,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65S85DAE",
+      "sizeIn": 64.5,
+      "onModeWatts": 112.3,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65S85FAF",
+      "sizeIn": 64.5,
+      "onModeWatts": 114.17,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65S85HAE",
+      "sizeIn": 64.5,
+      "onModeWatts": 118.91,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65S90DAF",
+      "sizeIn": 64.5,
+      "onModeWatts": 134.53,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65S90FAF",
+      "sizeIn": 64.5,
+      "onModeWatts": 131.59,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65S90HAE",
+      "sizeIn": 64.5,
+      "onModeWatts": 118.67,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65S95DAF",
+      "sizeIn": 64.5,
+      "onModeWatts": 127.39,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65S95FAF",
+      "sizeIn": 64.5,
+      "onModeWatts": 126.78,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN65S95HAF",
+      "sizeIn": 64.5,
+      "onModeWatts": 125.24,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN75QN90CAF",
+      "sizeIn": 74.5,
+      "onModeWatts": 138.97,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN75QN90DAF",
+      "sizeIn": 74.6,
+      "onModeWatts": 141.39,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN75QN90FAF",
+      "sizeIn": 74.5,
+      "onModeWatts": 144.02,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN75QN95DAF",
+      "sizeIn": 74.6,
+      "onModeWatts": 148.2,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN77S85DAE",
+      "sizeIn": 76.6,
+      "onModeWatts": 154,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN77S85FAE",
+      "sizeIn": 76.6,
+      "onModeWatts": 146.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN77S85HAE",
+      "sizeIn": 76.6,
+      "onModeWatts": 146.52,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN77S90DAF",
+      "sizeIn": 76.7,
+      "onModeWatts": 160.93,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN77S90FAF",
+      "sizeIn": 76.8,
+      "onModeWatts": 154.71,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN77S90HAE",
+      "sizeIn": 76.6,
+      "onModeWatts": 158.14,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN77S95DAF",
+      "sizeIn": 76.7,
+      "onModeWatts": 167.33,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN77S95FAF",
+      "sizeIn": 76.8,
+      "onModeWatts": 169.04,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN77S95HAF",
+      "sizeIn": 76.8,
+      "onModeWatts": 170.33,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN83S85FAE",
+      "sizeIn": 82.5,
+      "onModeWatts": 167.65,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN83S85HAE",
+      "sizeIn": 82.5,
+      "onModeWatts": 165.72,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN83S95FAE",
+      "sizeIn": 83.5,
+      "onModeWatts": 215.22,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN83S95HAE",
+      "sizeIn": 82.5,
+      "onModeWatts": 200.68,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN85QN90DAF",
+      "sizeIn": 84.6,
+      "onModeWatts": 181.05,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN85QN90FAF",
+      "sizeIn": 84.5,
+      "onModeWatts": 186.31,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN85QN95DAF",
+      "sizeIn": 84.6,
+      "onModeWatts": 192.53,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Samsung",
+      "model": "QN98QN90FAF",
+      "sizeIn": 97.5,
+      "onModeWatts": 193.08,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Sceptre",
+      "model": "X322BV-SRDD",
+      "sizeIn": 31.51,
+      "onModeWatts": 31.07,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "43BFL2214/27",
+      "sizeIn": 42.5,
+      "onModeWatts": 76.09,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "43HFL4518U/27",
+      "sizeIn": 42.5,
+      "onModeWatts": 60.1,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "43HFL6214U/27",
+      "sizeIn": 42.5,
+      "onModeWatts": 77.7,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "50HFL4518U/27",
+      "sizeIn": 49.5,
+      "onModeWatts": 66.9,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "50HFL5214U/27",
+      "sizeIn": 49.5,
+      "onModeWatts": 81.5,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "50HFL6214U/27",
+      "sizeIn": 49.5,
+      "onModeWatts": 89.65,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "55HFL4518U/27",
+      "sizeIn": 54.6,
+      "onModeWatts": 93.2,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "55HFL5214U/27",
+      "sizeIn": 54.5,
+      "onModeWatts": 83.23,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "58HFL6214U/27",
+      "sizeIn": 57.5,
+      "onModeWatts": 104.25,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "65HFL5214U/27",
+      "sizeIn": 64.5,
+      "onModeWatts": 126.8,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "65HFL6214U/27",
+      "sizeIn": 64.5,
+      "onModeWatts": 116.4,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "Philips",
+      "model": "75HFL6214U/27",
+      "sizeIn": 74.5,
+      "onModeWatts": 154.31,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "XITRIX",
+      "model": "XPN-DSA3250",
+      "sizeIn": 32,
+      "onModeWatts": 34.4,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "XITRIX",
+      "model": "XPN-DSA5550",
+      "sizeIn": 54.64,
+      "onModeWatts": 83.92,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "XITRIX",
+      "model": "XPN-DSA5850",
+      "sizeIn": 58,
+      "onModeWatts": 100.9,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "XITRIX",
+      "model": "XPN-DSA6550",
+      "sizeIn": 65,
+      "onModeWatts": 102.78,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "XITRIX",
+      "model": "XPN-DSA6560",
+      "sizeIn": 65.18,
+      "onModeWatts": 87.12,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    },
+    {
+      "brand": "XITRIX",
+      "model": "XPN-DSA8650",
+      "sizeIn": 85.6,
+      "onModeWatts": 166.52,
+      "basis": "ENERGY STAR on mode",
+      "url": "https://data.energystar.gov/Active-Specifications/ENERGY-STAR-Certified-Televisions/pd96-rr3d"
+    }
+  ],
+  "notFound": [
+    {
+      "brand": "Sony",
+      "reason": "No rows for this brand in ENERGY STAR Certified Televisions (pd96-rr3d) as of 2026-10-05; not currently EPA-certified or not submitted under this brand name."
+    },
+    {
+      "brand": "TCL",
+      "reason": "No rows for this brand in ENERGY STAR Certified Televisions (pd96-rr3d) as of 2026-10-05; not currently EPA-certified or not submitted under this brand name."
+    },
+    {
+      "brand": "Hisense",
+      "reason": "No rows for this brand in ENERGY STAR Certified Televisions (pd96-rr3d) as of 2026-10-05; not currently EPA-certified or not submitted under this brand name."
+    },
+    {
+      "brand": "Vizio",
+      "reason": "No rows for this brand in ENERGY STAR Certified Televisions (pd96-rr3d) as of 2026-10-05; not currently EPA-certified or not submitted under this brand name."
+    },
+    {
+      "brand": "Toshiba",
+      "reason": "No rows for this brand in ENERGY STAR Certified Televisions (pd96-rr3d) as of 2026-10-05; not currently EPA-certified or not submitted under this brand name."
+    },
+    {
+      "brand": "Roku",
+      "reason": "No rows for this brand in ENERGY STAR Certified Televisions (pd96-rr3d) as of 2026-10-05; not currently EPA-certified or not submitted under this brand name."
+    },
+    {
+      "brand": "Amazon",
+      "reason": "No rows for this brand in ENERGY STAR Certified Televisions (pd96-rr3d) as of 2026-10-05; not currently EPA-certified or not submitted under this brand name."
+    },
+    {
+      "brand": "Onn",
+      "reason": "No rows for this brand in ENERGY STAR Certified Televisions (pd96-rr3d) as of 2026-10-05; not currently EPA-certified or not submitted under this brand name."
+    },
+    {
+      "brand": "Panasonic",
+      "reason": "No rows for this brand in ENERGY STAR Certified Televisions (pd96-rr3d) as of 2026-10-05; not currently EPA-certified or not submitted under this brand name."
+    },
+    {
+      "brand": "Sharp",
+      "reason": "No rows for this brand in ENERGY STAR Certified Televisions (pd96-rr3d) as of 2026-10-05; not currently EPA-certified or not submitted under this brand name."
+    },
+    {
+      "source": "EU EPREL electronicdisplays",
+      "reason": "eprel.ec.europa.eu/api/products/electronicdisplays returns HTTP 403 Forbidden/MissingAuthenticationTokenException for unauthenticated requests; the public API requires a registered API key (api.eprel.ec.europa.eu) that was not available in this environment. The public search website (eprel.ec.europa.eu/screen/...) is a client-side SPA that calls the same key-gated API, so no permitted unauthenticated alternative was found. No EU label (SDR on-mode power) rows could be retrieved for any brand/model."
+    }
+  ]
+}

@@ -57,6 +57,7 @@ import { registerClubs } from './systems/clubs';
 import { registerAway } from './systems/away';
 import { registerPets } from './systems/pets';
 import { registerProgrammes } from './systems/programmes';
+import { registerTelevisions } from './systems/televisions';
 import { registerCatalog } from './systems/catalog';
 import { registerCommissions } from './systems/commissions';
 import { registerTherapy } from './systems/therapy';
@@ -257,6 +258,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerAway(sim);
   registerPets(sim);
   registerProgrammes(sim);
+  registerTelevisions(sim);
   registerCatalog(sim);
   registerCommissions(sim);
   registerTherapy(sim);
