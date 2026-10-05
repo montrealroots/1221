@@ -158,10 +158,13 @@ describe('what a home has inside', () => {
     const sim = save('machines');
     sim.player.home!.unit!.fixtures = { ...sim.player.home!.unit!.fixtures, laundry: 'in-unit' };
     // Everything washable in the wash: two loads of twenty-three garments.
-    sim.player.living = { tidy: 80 };
+    // The month's dishwasher cycles so far are kept through a wash (from 2026-10-05).
+    sim.player.living = { tidy: 80, loads: { washer: 0, dryer: 0, dishwasher: 3 } };
     for (const g of garmentsOf(sim.player)) if (g.garment.slot !== 'shoes') g.garment.dirty = true;
     expect(Math.ceil(washableDirty(sim, sim.player).length / GARMENTS_PER_LOAD)).toBe(2);
     doLaundry(sim, sim.player, sim.now);
+    expect(sim.player.living.loads!.dishwasher).toBe(3);
+    sim.player.living.loads!.dishwasher = 0;
     expect(machineUsd(sim.player)).toBeCloseTo(2 * (MACHINES.washerUsd + MACHINES.dryerUsd), 6);
     // A wash is its motor and the hot water it draws, ten times the motor’s 0.23 kWh (ENERGY STAR’s 90%), at 18.19 cents.
     expect(MACHINES.washerUsd).toBeCloseTo(2.3 * 0.1819, 6);
