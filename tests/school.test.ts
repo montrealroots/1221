@@ -9,6 +9,7 @@ import { describe, expect, it } from 'vitest';
 import { SUMMER_PLAYS } from '@/engine/content/plays';
 import { createSave, quickSave } from '@/engine';
 import { atSchool, defaultConfig, newLifeConfig } from '@/engine/world/bootstrap';
+import { DAILY_SHORTCUTS } from '@/engine/systems/automation';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { rentAt } from '@/engine/content/rents';
 import { COST_2026_27, COURSES, LABS, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA } from '@/engine/content/school';
@@ -25,8 +26,9 @@ import { CARE } from '@/engine/content/safetynet';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9, minute = 0) => instantFromZoned({ year, month, day, hour, minute }, zone);
+/** Years played with nothing done by hand: fed, washed and dressed by the day's shortcuts (from 2026-10-05). */
 const life = (seed = 'school', extra: Record<string, unknown> = {}) =>
-  createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
+  createSave(1, seed, { ...newLifeConfig(), shortcuts: DAILY_SHORTCUTS, homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
 /** A life whose family's means leave need, which Yale's aid meets. */
 const inNeed = (seed: string) => life(seed, { family: undefined, wealth: 'scraping' });
 /** Played to a moment, six hours at a time. */

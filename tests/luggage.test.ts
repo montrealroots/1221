@@ -13,7 +13,7 @@ import { reachable, usedL, volumeOf } from '@/engine/systems/items';
 import { GARMENT_L } from '@/engine/content/garmentcare';
 
 /** A life that chose Pack For Me: packing, unpacking and repacking on its own (from 2026-10-03, a shortcut it sets). */
-const life = (seed: string, packForMe = true) => { const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed); if (packForMe) sim.player.automation = { packForMe: true }; return sim; };
+const life = (seed: string, packForMe = true) => { const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true, wealth: 'wealthy' }, seed); if (packForMe) sim.player.automation = { ...sim.player.automation, packForMe: true }; return sim; };
 
 describe('a suitcase', () => {
   it('a life starts with a carry-on in storage', () => {

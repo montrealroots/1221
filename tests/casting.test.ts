@@ -7,6 +7,7 @@
 import { describe, expect, it } from 'vitest';
 import { createSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
+import { DAILY_SHORTCUTS } from '@/engine/systems/automation';
 import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import type { Simulation } from '@/engine/core/simulation';
 import { NEW_PLAYS_READ, REP_PLAYS, SHAKESPEARE_PLAYS, THESIS_PLAYS, type Part } from '@/engine/content/plays';
@@ -14,7 +15,8 @@ import { COURSES } from '@/engine/content/school';
 import { CALL_KIND, COMPANY_KIND, ESTIMATE, BONDS, bondWord, castScore, evaluate, repPlayOf, teachersNotes, directorsNote, evenCraft, mateOf, nightOf, nightsMean, partsFor, playNight, playOf, schoolProduction, type Craft } from '@/engine/systems/school';
 
 const NY = 'America/New_York';
-const life = (seed: string, pronouns = 'she/her') => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns });
+// A year played with nothing done by hand: fed, washed and dressed by the day's shortcuts (from 2026-10-05).
+const life = (seed: string, pronouns = 'she/her') => createSave(1, seed, { ...newLifeConfig(), shortcuts: DAILY_SHORTCUTS, homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns });
 const play = (sim: Simulation, until: number) => { while (sim.now < until) sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR), { stopOnPlayerRequired: true }); };
 const on = (y: number, m: number, d: number) => instantFromZoned({ year: y, month: m, day: d, hour: 10 }, NY);
 const student = (i: number, level: number, title: 'actor' | 'actress', last?: { size: 'lead' | 'supporting' | 'featured'; nights?: number }) => ({ i, name: `S${i}`, craft: evenCraft(level), title, ...(last ? { last } : {}) });

@@ -27,7 +27,7 @@ import { salesTaxRate } from '../content/tax';
 import { CommandError } from '../core/simulation';
 import type { Person, Wellbeing } from '../domain/model';
 import { clamp, remap } from '../core/rng';
-import { formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
+import { dateKey, formatTime, instantFromZoned, startOfDay, startOfNextDay, zonedParts, MS_HOUR, MS_DAY, type Instant } from '../core/time';
 import type { ScheduledItem } from '../core/scheduler';
 import { ceilingAt, recoveryFactorAt } from '../content/lifespan';
 import { personalityOf } from './personality';
@@ -43,14 +43,15 @@ import { SINK_FULL, cook, kitchenMeal, sinkFull } from './kitchen';
 import { bathroomWait } from './rooms';
 import { watchRefusal } from './homelife';
 import { takePortion } from './pantry';
-import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty, wearForSwim } from './wardrobe';
+import { GARMENTS_PER_LOAD, cleanOutfits, useTowel, washableDirty, wearForSleep, wearForSwim } from './wardrobe';
 import { SITTING_MET } from './coldstress';
 import { countWash } from './water';
 import { bookInHand, readFor } from './reading';
 import { cutNow } from './utilities';
 import { SHAVE, shave, shaveReady, sprayUsed } from './hygiene';
 import { diningQuote, diningRefusal, restaurantById, type DineHow } from './dining';
-import { dailyCare, detergentFor, dishSoapFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
+import { dailyCare, detergentFor, dishSoapFor, dishwasherTabletsFor, groomingLift, groomingQuote, groomingRefusal, salonById, showerUses } from './hygiene';
+import { doneFor, isOn } from './automation';
 import { trainedSession } from './trainers';
 import { roomGone } from './latecheckout';
 import { runInShoes } from './resale';
@@ -58,7 +59,7 @@ import { MOWN_CM, MOW_MINUTES, lawnOf, mow } from './lawns';
 import { livingIn } from './homes';
 import {
   DELIVERY, EAT_OUT, LAUNDRY, TRAINING, WORN_CLOTHES, atHome, cleaningMinutes, cooks, doLaundry, heatLoss, laundryCost, laundryWay, livingOf, outsideRefusal, fineWeatherRefusal, placeOf,
-  swimRefusal, trainingAt, wearOutfit, courtAt, courtRefusal, COURT_MET, WASH_UP, washUp,
+  swimRefusal, trainingAt, wearOutfit, courtAt, courtRefusal, COURT_MET, WASH_UP, washUp, runDishwasher,
 } from './dwelling';
 
 // ---------------------------------------------------------------------------
@@ -292,12 +293,15 @@ export function readinessParts(person: Person): { key: ReadinessDial; factor: nu
   ];
 }
 
+/** Below it, hunger shows: the summary says so, and the player feeding themselves is told each morning (from 2026-10-05). */
+export const HUNGER_SHOWS = 25;
+
 export function wellbeingSummary(person: Person): string {
   const w = person.wellbeing;
   if (w.energy < 15) return 'Running on empty. You need sleep before anything else.';
   if (w.sleepDebt > 20) return 'Badly short on sleep. Everything is harder than it should be.';
   if (w.stress > 78) return 'Stretched very thin. Something is going to give.';
-  if (w.nourishment < 25) return 'Hungry, and it’s starting to show.';
+  if (w.nourishment < HUNGER_SHOWS) return 'Hungry, and it’s starting to show.';
   if (w.energy > 75 && w.stress < 30) return 'Rested, steady and ready for a real day.';
   if (w.morale < 30) return 'Flat. The work is fine, the feeling isn’t.';
   return 'Holding up, and no dial is far enough out to be worth naming.';
@@ -371,6 +375,10 @@ export function registerLife(sim: Simulation): void {
       // booked, so a night booked at eight for one in the morning was slept at
       // the stress and the hour of eight.
       if (start > s.now) s.advanceTo(start);
+      // To bed at home in their own sleepwear, a clean pair a wear toward its wash (from 2026-10-05). With the Dress Me
+      // shortcut on, the night's rollover puts it on (`systems/dwelling.ts`), as every night did until then, so it's
+      // left to it here: once a night either way.
+      if (atHome(person) && !isOn(person, 'dress')) wearForSleep(s, person);
       const quality = sleepQuality(s, person);
       const before = { ...person.wellbeing };
 
@@ -507,6 +515,7 @@ export function registerLife(sim: Simulation): void {
       // The place's spray, where there's some (from 2026-10-03).
       if (action === 'tidy') sprayUsed(s, person);
       if (action === 'washup') washUp(s, person);
+      if (action === 'dishwasher') runDishwasher(s, person);
       const before = { ...person.wellbeing };
       // Eaten out where there's no kitchen: a restaurant's meal too.
       if (action === 'eat' && !cooks(s, person)) eatsOut(person);
@@ -526,6 +535,12 @@ export function registerLife(sim: Simulation): void {
       if ((action === 'wash' || action === 'bathe') && atHome(person)) countWash(person, action === 'bathe');
       // A shave with it on its day, where the razor and cream are to hand (from 2026-10-03).
       if (action === 'wash') shave(s, person);
+      // And the day's teeth and deodorant with the day's first shower, as the morning's own wash does them (from
+      // 2026-10-05: until then only the night's did, so a player who washed by hand never brushed their teeth).
+      if (action === 'wash' && person.caredOn !== dateKey(s.now, s.homeZone)) {
+        person.wellbeing.hygiene = clamp((person.wellbeing.hygiene ?? 100) - dailyCare(s, person), 0, 100);
+        person.caredOn = dateKey(s.now, s.homeZone);
+      }
       // Dried on one of their own towels at home, a use toward its wash; a hotel, a let or a gym gives its own (`useTowel`, from 2026-10-02).
       if ((action === 'wash' || action === 'bathe') && atHome(person) && !useTowel(s, person) && person.id === s.universe.playerId) s.notify({ category: 'home', title: 'No Clean Towel', body: 'Every towel to hand is in the wash or still drying: put a load on.', importance: 25, route: '/workspace/clothes' });
       // An hour of it, at its injury rate (`content/injury.ts`).
@@ -573,7 +588,16 @@ export function registerLife(sim: Simulation): void {
  * Each takes real time off the clock, and the clock charges that time as
  * waking before the action pays out.
  */
-export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'dance' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'washup' | 'mow' | 'sauna';
+/**
+ * Minutes to load the sink's dishes into the dishwasher, start it and put
+ * them away after: SLATE's estimate, none published. Here and not beside the
+ * dishwasher's run in `systems/dwelling.ts`, which imports this file: across
+ * that cycle the table below read it before it was set, and the action's
+ * minutes came out undefined.
+ */
+export const DISHWASHER_LOAD_MINUTES = 10;
+
+export type LookAfter = 'eat' | 'order' | 'wash' | 'bathe' | 'exercise' | 'swim' | 'court' | 'dance' | 'ride' | 'outside' | 'boat' | 'trail' | 'charter' | 'unwind' | 'laundry' | 'tidy' | 'washup' | 'dishwasher' | 'mow' | 'sauna';
 
 export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; does: string }> = {
   eat: { label: 'Eat A Meal', minutes: 40, does: 'Cooked at home, or a meal out: feeds you, and lifts the mood by as much as you needed it' },
@@ -596,6 +620,8 @@ export const LOOKING_AFTER: Record<LookAfter, { label: string; minutes: number; 
   laundry: { label: 'Do The Laundry', minutes: 20, does: 'Washes what you’ve worn: in your own machines, the building’s, or at the laundromat' },
   tidy: { label: 'Clean The Place', minutes: 60, does: 'A clean home, which stops a mess weighing on you' },
   washup: { label: 'Wash Up', minutes: 38, does: 'The dishes in the sink washed by hand, so the kitchen can be cooked in and they don’t add to the mess' },
+  // From 2026-10-05, for a home with a dishwasher whose shortcut isn't set: the sink's dishes loaded and run by hand.
+  dishwasher: { label: 'Run The Dishwasher', minutes: DISHWASHER_LOAD_MINUTES, does: 'The sink’s dishes loaded into the dishwasher and run with its tablets: none washed by hand' },
   // From 2026-10-02 (`systems/lawns.ts`): the 1.9 hours ATUS finds a day of lawn and garden care takes.
   mow: { label: 'Mow The Lawn', minutes: MOW_MINUTES, does: 'Cuts the grass at the home you live in to 5 cm, ahead of any notice from the city' },
 };
@@ -728,6 +754,10 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
   if (action === 'washup' && !(atHome(person) && place?.keeps)) return 'It isn’t your sink.';
   if (action === 'washup' && !livingOf(person).dishes) return 'There’s nothing to wash up.';
   if (action === 'washup' && !dishSoapFor(sim, person, 1, false)) return 'There’s no dish soap at home.';
+  if (action === 'dishwasher' && !(atHome(person) && place?.keeps)) return 'It isn’t your kitchen.';
+  if (action === 'dishwasher' && !place?.fixtures.dishwasher) return 'There’s no dishwasher at home.';
+  if (action === 'dishwasher' && !livingOf(person).dishes) return 'There’s nothing to wash up.';
+  if (action === 'dishwasher' && !dishwasherTabletsFor(sim, person, livingOf(person).dishes ?? 0, false)) return 'There aren’t the dishwasher tablets at home for it.';
   if (action === 'mow') { const lawn = atHome(person) ? homeLawn(person) : undefined; if (!lawn) return 'There’s no lawn of yours here.'; if (lawn.cm < MOWN_CM + 1) return 'It’s cut.'; }
   const end = sim.now + minutesFor(sim, action) * 60_000;
   const clash = sim.timeline.between(sim.now, end).find((i) => i.requiresPlayer === true);
@@ -776,7 +806,7 @@ export function applyLookingAfter(person: Person, action: LookAfter, at?: number
     const washed = 100 - (w.hygiene ?? 80);
     w.hygiene = 100;
     w.stress = clamp(w.stress - washed * 0.1 - (action === 'bathe' ? BATH_RELIEF * personalityOf(person, 'stressRecovery') * relief : 0), 0, 100);
-  } else if (action === 'laundry' || action === 'washup') {
+  } else if (action === 'laundry' || action === 'washup' || action === 'dishwasher') {
     // The clothes are the wardrobe's (`doLaundry`); the chore itself does nothing to the dials.
   } else if (action === 'tidy') {
     livingOf(person).tidy = 100;
@@ -1035,18 +1065,27 @@ function liveTheUnattendedNight(sim: Simulation): void {
     // (`creditNightAlone`): paid after them, it ate 1.6 an hour of them.
     sleepAlone(sim, person, sim.now);
 
-    // Meals, and a shower, before the day rather than after it. The meals are
-    // bought first (`systems/household.ts`), and a day nobody can pay for is
-    // eaten thin (`eatWhatThereIs`).
-    if (buyTheDaysFood(sim, person)) eatBeforeTheDay(w);
-    // A short day eats more where a soup kitchen or a pantry gave some of its meals (`systems/foodhelp.ts`):
-    // their share of the day's three on top of what a broke day scrapes together, SLATE's reading.
-    else { eatWhatThereIs(w); eatsShort(person, Math.min(1, BODY.shortDay + (person.foodHelp?.today ?? 0) / 3)); }
-    // Out of clean clothes, the morning starts less fresh (`systems/dwelling.ts`).
-    // The morning's shower uses its soap and shampoo, and the day its toothpaste and deodorant (`systems/hygiene.ts`):
-    // without them it starts less fresh.
-    const fresh = Math.min(cleanOutfits(sim, person) <= 0 ? WORN_CLOTHES.hygiene : 82, showerUses(sim, person)) - dailyCare(sim, person);
-    w.hygiene = clamp(Math.max(w.hygiene ?? 80, fresh), 0, 100);
+    // Meals, and a shower, before the day rather than after it, where they're done for this person: the player's
+    // by the Feed Me and Wash Me shortcuts (from 2026-10-05; until then every night fed and washed the player
+    // unasked), the life's other people as before. The meals are bought first (`systems/household.ts`), and a day
+    // nobody can pay for is eaten thin (`eatWhatThereIs`).
+    if (doneFor(person, sim.universe.playerId, 'meals')) {
+      if (buyTheDaysFood(sim, person)) eatBeforeTheDay(w);
+      // A short day eats more where a soup kitchen or a pantry gave some of its meals (`systems/foodhelp.ts`):
+      // their share of the day's three on top of what a broke day scrapes together, SLATE's reading.
+      else { eatWhatThereIs(w); eatsShort(person, Math.min(1, BODY.shortDay + (person.foodHelp?.today ?? 0) / 3)); }
+    } else if (w.nourishment < HUNGER_SHOWS) {
+      // Feeding themselves, the player is told when it's showing, once a morning, as a pet gone unfed is (`systems/pets.ts`).
+      sim.notify({ category: 'health', title: 'You’re Hungry', body: `Nourishment is at ${Math.round(w.nourishment)}/100. Eat on Food or Look After Yourself, or turn on Feed Me Each Day on Routines.`, importance: 60, route: '/workspace/food' });
+    }
+    if (doneFor(person, sim.universe.playerId, 'morningWash')) {
+      // Out of clean clothes, the morning starts less fresh (`systems/dwelling.ts`).
+      // The morning's shower uses its soap and shampoo, and the day its toothpaste and deodorant (`systems/hygiene.ts`):
+      // without them it starts less fresh.
+      const fresh = Math.min(cleanOutfits(sim, person) <= 0 ? WORN_CLOTHES.hygiene : 82, showerUses(sim, person)) - dailyCare(sim, person);
+      w.hygiene = clamp(Math.max(w.hygiene ?? 80, fresh), 0, 100);
+      person.caredOn = dateKey(sim.now, sim.homeZone);
+    }
   }
 }
 
@@ -1288,8 +1327,11 @@ function creditNightAlone(sim: Simulation, person: Person, bedtime: number): voi
   person.lastSleptAt = bedtime;
   // A night from midnight is the one the day's meals come after, when it is
   // paid late as well.
-  // Only a day whose food was bought, though (`systems/household.ts`).
-  if (bedtime === startOfLocalDay(sim, bedtime)) {
+  // Only a day whose food was bought, though (`systems/household.ts`), and,
+  // for the player, only by the Feed Me shortcut, as the rollover's own meals
+  // (from 2026-10-05: until then a night paid late fed a player who fed
+  // themselves, 40 a morning out of nothing).
+  if (bedtime === startOfLocalDay(sim, bedtime) && doneFor(person, sim.universe.playerId, 'meals')) {
     if (fedOn(person, bedtime)) eatBeforeTheDay(w);
     else eatWhatThereIs(w);
   }

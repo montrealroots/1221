@@ -343,6 +343,10 @@ export interface Person {
    * set. None is on unless chosen.
    */
   automation?: Partial<Record<import('../systems/automation').Shortcut, true>>;
+  /** The shortcuts this save has been offered (`SHORTCUTS_VERSION`): 2 from 2026-10-05, when the day's own care joined them. */
+  shortcutsVersion?: number;
+  /** The day, at home's date, their teeth and deodorant were last seen to, with a shower or the morning's wash (from 2026-10-05). */
+  caredOn?: string;
   /** The bags that go away with them (from 2026-10-03); none chosen, the one suitcase. */
   goingBags?: string[];
   /** Garments in a parcel taken from the door, to buy again (`systems/orders.ts`, from 2026-10-02). */

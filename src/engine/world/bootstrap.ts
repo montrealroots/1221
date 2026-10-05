@@ -7,6 +7,7 @@
  * arrived.
  */
 
+import { DAILY_SHORTCUTS, type Shortcut } from '../systems/automation';
 import type { Person, Personality, SaveMeta, SaveUniverse } from '../domain/model';
 import { SAVE_SCHEMA_VERSION } from '../domain/model';
 import { CITIES, COUNTRIES } from '../content/geography';
@@ -121,6 +122,12 @@ export interface NewSaveConfig {
    * saves do; a save made for a test or a tool doesn't unless it asks.
    */
   tutorial?: boolean;
+
+  /**
+   * The shortcuts chosen for the life (`systems/automation.ts`, from
+   * 2026-10-05): the player's own choice at creation, none chosen for them.
+   */
+  shortcuts?: readonly Shortcut[];
 }
 
 /**
@@ -147,6 +154,9 @@ export function defaultConfig(): NewSaveConfig {
     wealth: 'scraping',
     // Monday 5 January 2026, the first working Monday of the year.
     startYear: 2026, startMonth: 1, startDay: 5,
+    // A save made for a test or a tool lives as the game's lives did until 2026-10-05: fed, washed and dressed each
+    // day, as a player who chose those shortcuts is. The game's own new life chooses at its creation (`newLifeConfig`).
+    shortcuts: DAILY_SHORTCUTS,
   };
 }
 
@@ -174,7 +184,8 @@ export function atSchool(config: NewSaveConfig): NewSaveConfig {
  * made by tests and tools, which choose their own town and day.
  */
 export function newLifeConfig(): NewSaveConfig {
-  return atSchool({ ...defaultConfig(), homeRegionId: '', livesWhereBorn: false, birthYear: 2002, wealth: 'wealthy', family: 'wealthy' });
+  // No shortcut chosen for the player (from 2026-10-05): creation asks.
+  return atSchool({ ...defaultConfig(), homeRegionId: '', livesWhereBorn: false, birthYear: 2002, wealth: 'wealthy', family: 'wealthy', shortcuts: [] });
 }
 
 /**

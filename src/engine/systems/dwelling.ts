@@ -49,10 +49,10 @@ import { alarmMonth, renterAlarmFactor } from './alarm';
 import { securityFactor } from './homesecurity';
 import { SITTING_MET, coldRefusal } from './coldstress';
 import { BODY } from '../content/body';
-import { GARMENTS_PER_LOAD, cleanOutfits, swimsuitFor, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
+import { GARMENTS_PER_LOAD, anotherDayIn, cleanOutfits, swimsuitFor, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
-import { isOn } from './automation';
-import { DISHWASHER_CYCLES_A_DAY, detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
+import { doneFor, isOn } from './automation';
+import { DISHWASHER_CYCLES_A_DAY, detergentFor, dishSoapFor, dishwasherRuns, dishwasherTabletsFor, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
 import { kwhPerCycle, machineProduct, usualDishwasherKwh, type MachineKind } from './machines';
 import type { CatalogMarket, CatalogProduct } from '../content/products';
 import { amenitiesOf } from './hotels';
@@ -273,6 +273,20 @@ export const PARTNER_HOUSEWORK_HOURS = 0.56;
  * nothing more is cooked, SLATE's estimate of a home's crockery.
  */
 export const WASH_UP = { minutesADay: (230 * 60) / 365, full: 3 } as const;
+
+/**
+ * The sink's dishes run through the dishwasher by hand (from 2026-10-05): its
+ * tablets a day's share of its cycles a day of dishes, and those cycles on the
+ * month's bill, as its own daily run counts them.
+ */
+export function runDishwasher(sim: Simulation, person: Person): boolean {
+  const l = livingOf(person);
+  const days = l.dishes ?? 0;
+  if (days <= 0 || !dishwasherTabletsFor(sim, person, days)) return false;
+  delete l.dishes;
+  l.loads = { washer: l.loads?.washer ?? 0, dryer: l.loads?.dryer ?? 0, dishwasher: (l.loads?.dishwasher ?? 0) + days * DISHWASHER_CYCLES_A_DAY };
+  return true;
+}
 
 /** The dishes washed by hand: all of them, a sinkful a day's, where there's dish soap. */
 export function washUp(sim: Simulation, person: Person): boolean {
@@ -503,17 +517,22 @@ export function livingDay(sim: Simulation, person: Person): void {
   if (free && isOn(person, 'replaceClothes')) replaceWornOut(sim, person);
   // And toiletries run out (`systems/hygiene.ts`).
   if (free && isOn(person, 'restock')) restock(sim, person, place.fixtures.dishwasher);
-  if (!wearOutfit(sim, person)) {
-    w.morale = clamp(w.morale - WORN_CLOTHES.morale * personalityOf(person, 'moraleSwing'), 0, 100);
-  }
-  // The night in their own sleepwear, where they keep it (`wearForSleep`).
-  if (atHome(person)) wearForSleep(sim, person);
+  // Dressed for the day and for bed where that's done for them: the player only by the Dress Me shortcut (from
+  // 2026-10-05; until then every night dressed them, unasked). Dressing themselves, a day not changed out of is a
+  // day more in what they have on, and it weighs as having nothing clean did.
+  if (doneFor(person, sim.universe.playerId, 'dress')) {
+    if (!wearOutfit(sim, person)) w.morale = clamp(w.morale - WORN_CLOTHES.morale * personalityOf(person, 'moraleSwing'), 0, 100);
+    // The night in their own sleepwear, where they keep it (`wearForSleep`).
+    if (atHome(person)) wearForSleep(sim, person);
+  } else if (!anotherDayIn(person)) w.morale = clamp(w.morale - WORN_CLOTHES.morale * personalityOf(person, 'moraleSwing'), 0, 100);
   // Away, the place stands as they left it: no mess made, and none cleared.
   if (!place.keeps || !atHome(person)) return;
   // A dishwasher saves the mess only with its tablets in (from 2026-10-02); without, the dishes are done by hand. Until
   // 2026-10-03 that was a quarter more mess every day; from then the day's dishes go in the sink, and the quarter more is
   // made only on a day that finds yesterday's still there (`WASH_UP`). A free day washes them up with the tidying.
-  const machine = place.fixtures.dishwasher && dishwasherRuns(sim, person);
+  // The player's dishwasher runs on its own only by the shortcut (from 2026-10-05); else the dishes wait in the sink for
+  // Run The Dishwasher or a wash by hand.
+  const machine = place.fixtures.dishwasher && doneFor(person, sim.universe.playerId, 'dishwasher') && dishwasherRuns(sim, person);
   const piled = !machine && (l.dishes ?? 0) > 0;
   l.tidy = clamp(l.tidy - TIDY.perDay * (piled ? 1 : TIDY.dishwasher), 0, 100);
   if (machine) delete l.dishes; else l.dishes = Math.min(WASH_UP.full, (l.dishes ?? 0) + 1);

@@ -158,6 +158,18 @@ export function toBasket(person: Person, item: Item & { garment: Garment }): voi
   item.at = { kind: 'home', home, spot: 'hamper' };
 }
 
+/**
+ * Another day in what they have on, for somebody who dresses themselves (the
+ * player without the Dress Me shortcut, from 2026-10-05): each piece a wear
+ * more, as the day's dressing counts one. True while all of it is still clean;
+ * false where a piece is past its wash, or nothing's on.
+ */
+export function anotherDayIn(person: Person): boolean {
+  const on = wornNow(person);
+  for (const g of on) wearOnce(g);
+  return on.length > 0 && on.every((g) => !g.garment.dirty);
+}
+
 /** A wear: counted toward its wash, and in the wash at its kind's count. */
 function wearOnce(item: Item & { garment: Garment }): void {
   item.garment.wears += 1;

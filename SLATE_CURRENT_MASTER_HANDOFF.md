@@ -21,9 +21,11 @@ Run the four checks of CLAUDE.md's rules 2 and 3 first; the tree wins over this 
 **Done so far in this stretch** (each gated and pushed):
 - `085f0865`: phones from 27 makers' own stores.
 - `3e82f937`: the hierarchy as the owner names it (68 brand and narrow categories, 14 service directories) and the report's functional table, checked against the engine and the screens.
-- The audit (the commit after `3e82f937`): four readers checked the 66 rows still marked Done or Complete; 44 were reopened with what's missing (`docs/REQUIREMENTS.md`, "The 2026-10-05 audit").
+- The audit (`012f71f1`): four readers checked the 66 rows still marked Done or Complete; 44 were reopened with what's missing (`docs/REQUIREMENTS.md`, "The 2026-10-05 audit").
+- `eff270cb`: the faults the audit found, below.
+- The commit after `eff270cb`: the midnight fallback as shortcuts (requirement E2), below.
 
-**What the audit found that was a fault, not a missing feature,** all fixed in the commit after the audit's, each with a test and its mutation killed (17 of 17):
+**What the audit found that was a fault, not a missing feature,** all fixed in `eff270cb`, each with a test and its mutation killed (17 of 17):
 - The Food screen listed 12 of the 44 recipes; it pages them now, and the Serves picker no longer clips 10 (checked in the built app).
 - A garment still on order, or at home in another town, was altered and charged.
 - A delivered or collected order went into a full wardrobe; it spills to the floor as a store's purchase does.
@@ -33,15 +35,18 @@ Run the four checks of CLAUDE.md's rules 2 and 3 first; the tree wins over this 
 - Belongings moved into a car by hand weren't held to its cargo (`carHoldsL`, `carUsedL` in `systems/items.ts`, shared with a trip's shopping).
 - A car package and an option it includes were both charged (`includedIn`, 17 such pairs, "Requires" lines left out); a car on order could be sold; a factory order's months, loan, insurance and registration ran from the order; a trade-in went at the order, leaving the buyer with no car for the wait (`vehicle.delivered`, a new scheduled kind); a car was bought from abroad, and a trade-in taken from another town.
 
-**The midnight fallback (requirement E2).** Every night, with no preference behind it, the day's rollover buys groceries with the player's money, eats the fridge's ready meals, showers and brushes teeth, dresses for the day and for bed, and runs the dishwasher. The owner's rule makes each of these an explicit shortcut on the manual action's rules. Follow the pattern of `systems/automation.ts`: none on for a new life, every one on for a save from before, and the tests that play a hands-off year choosing them.
+**The midnight fallback (requirement E2), as shortcuts.** Until 2026-10-05 every night, with no preference behind it, the day's rollover bought groceries with the player's money and ate them, showered and brushed teeth, dressed for the day and for bed, and ran the dishwasher. Each is now a shortcut on Your Shortcuts (`systems/automation.ts`), and only the player's are chosen (`doneFor`); the life's other people live as before.
+- Feed Me Each Day, Wash Me Each Morning, Dress Me For The Day And For Bed, and Run The Dishwasher Each Day.
+- A new life chooses them on creation's Review, none ticked (checked in the built app: the two ticked were the two the save held). A save from before has all four (`shortcutsVersion`). A test's or a tool's life has them (`defaultConfig`), and so do the tests that play a hands-off year (`tests/casting.test.ts`).
+- By hand: a day not changed out of is a wear more on what's on, and weighs on the mood once a piece is due a wash (`anotherDayIn`); the day's first shower does its teeth and deodorant (`caredOn`); a night slept at home is in the sleepwear; Run The Dishwasher is on Look After Yourself.
+- A night nobody chose that was paid late, at the clock's next stop (`creditNightAlone`), fed the player 40 a morning outside any preference; it feeds them only by Feed Me now. A player feeding themselves is told each morning they've gone hungry, under 25 (`HUNGER_SHOWS`), as a pet gone unfed is.
+- Gated: 317 files, 3,158 tests, exit 0. 29 mutations, 29 killed (`tests/daily-shortcuts.test.ts`). Still short: Feed Me buys the household's day of food at midnight rather than meals by the manual action's rules.
 
 **Next, in order:**
-1. The faults above: fixed, the commit after the audit’s.
-2. E2: the midnight fallback as shortcuts.
-3. The owner's six modules, each against its reopened rows: clubs and lessons (a lesson's skill something reads; leaving a club), fuel (running dry and its recovery, never a secret refill), shopping (what a person can carry by weight; a full fridge), packing and hotels (a cabin bag's weight, liquids at security), rooms (the guesthouse's guests, a theater's own screen and seats, a library read in), pets (each flight's own carrier's rules, not the flag carrier's).
-4. The catalogs out of the main bundle (15.7 MB of JavaScript), loaded when a screen needs them, then the mechanical readers raised from 12 a category to 100 a brand, category by category (`docs/CATALOG-COVERAGE.md`).
-5. The journeys of the owner's §8, saved and loaded partway, with low money, full storage, a closed business and a changed town.
-6. Stage 14 and deployment, last.
+1. The owner's six modules, each against its reopened rows: clubs and lessons (a lesson's skill something reads; leaving a club), fuel (running dry and its recovery, never a secret refill), shopping (what a person can carry by weight; a full fridge), packing and hotels (a cabin bag's weight, liquids at security), rooms (the guesthouse's guests, a theater's own screen and seats, a library read in), pets (each flight's own carrier's rules, not the flag carrier's).
+2. The catalogs out of the main bundle (15.7 MB of JavaScript), loaded when a screen needs them, then the mechanical readers raised from 12 a category to 100 a brand, category by category (`docs/CATALOG-COVERAGE.md`).
+3. The journeys of the owner's §8, saved and loaded partway, with low money, full storage, a closed business and a changed town.
+4. Stage 14 and deployment, last.
 
 ---
 
