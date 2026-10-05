@@ -34,9 +34,9 @@ which never counts toward the target.
 | Electronics | Televisions | 24 | 48% | 220 | 1 / 5 / 40 | 0 | 222 | 261 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Audio Equipment | 35 | 70% | 156 | 1 / 3 / 13 | 0 | 188 | 161 | 0 | GB, US | No |
 | Home | Furniture | 1 | 2% | 90 | 90 / 90 / 90 | 0 | 90 | 163 | 0 | CA, GB, IE, MX, US | No |
-| Home | Mattresses And Beds | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
+| Home | Mattresses And Beds | 28 | 56% | 56 | 1 / 1 / 29 | 0 | 56 | 142 | 0 | CA, GB, IE, MX, US | No |
 | Home | Bedding And Towels | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
-| Home | Appliances | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
+| Home | Appliances | 28 | 56% | 55 | 1 / 2 / 5 | 0 | 57 | 55 | 0 | CA, GB, IE, MX, US | No |
 | Home | Lighting | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Home | Kitchenware | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Personal Care | Toiletries And Grooming | 82 | 100% | 182 | 1 / 1 / 15 | 0 | 182 | 183 | 1 | CA, GB, IE, MX, US | No |

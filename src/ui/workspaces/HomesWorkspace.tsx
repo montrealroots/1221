@@ -19,7 +19,7 @@ import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { centsFromTyped, formatMoney, saveCurrency } from '@/engine/core/money';
 import { APPLIANCE_LABEL, APPLIANCE_LIFE } from '@/engine/content/appliances';
-import { applianceCost, appliancesIn, fitRefusal, hasAppliance } from '@/engine/systems/appliances';
+import { applianceCost, appliancesIn, fitRefusal, hasAppliance, applianceModels, fittedModel, modelFitCost } from '@/engine/systems/appliances';
 import { fixturesOf } from '@/engine/systems/dwelling';
 import { PIECE_LABEL, type Piece } from '@/engine/content/furniture';
 import { bedAtHome, bedQuote, bedsIn, furnishRefusal, mattressCost, mattressRefusal, mattressWorn, owns, pieceCost } from '@/engine/systems/furniture';
@@ -622,6 +622,8 @@ function FitOut({ owned }: { owned: OwnedHome }) {
   // The cheapest fitted first, an appliance without a published price last (`applianceCatalog`).
   const kinds = arrange(applianceCatalog(sim, owned.cityId)).map((e) => e.value);
   const table = appliancesIn(owned.cityId);
+  // A make and model where one's chosen (from 2026-10-05), by kind; the country's typical machine otherwise.
+  const [models, setModels] = useState<Record<string, string>>({});
   return (
     <div className="col gap-2">
       <div className="strong small">Appliances</div>
@@ -631,16 +633,20 @@ function FitOut({ owned }: { owned: OwnedHome }) {
             <thead><tr><th scope="col">Appliance</th><th scope="col">Has It</th><th scope="col" className="num">Fitted</th><th scope="col" className="num">Lasts</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
             <tbody>
               {kinds.map((kind) => {
-                const cost = applianceCost(sim, owned.cityId, kind);
+                const offered = applianceModels(sim, owned.cityId, kind);
+                const pick = offered.find((m) => m.offer.id === models[kind]);
+                const fit = pick ? modelFitCost(sim, owned, kind, pick.offer.id) : undefined;
+                const cost = typeof fit === 'number' ? fit : applianceCost(sim, owned.cityId, kind);
                 const no = fitRefusal(sim, person, owned, kind);
                 const has = hasAppliance(f, kind);
+                const fitted = fittedModel(owned, kind);
                 return (
                   <tr key={kind}>
-                    <td>{APPLIANCE_LABEL[kind]}{cost === undefined ? <div className="xs dim">No price published here</div> : null}</td>
+                    <td>{APPLIANCE_LABEL[kind]}{cost === undefined ? <div className="xs dim">No price published here</div> : null}{fitted ? <div className="xs dim">{`${fitted.brand} ${fitted.model}${typeof fitted.attrs.kwhPerCycle === 'number' ? `, ${fitted.attrs.kwhPerCycle} kWh A Cycle` : ''}`}</div> : null}{!has && offered.length > 0 ? <select aria-label={`Model Of ${APPLIANCE_LABEL[kind]}`} value={models[kind] ?? ''} onChange={(e) => setModels((x) => ({ ...x, [kind]: e.target.value }))}><option value="">The Typical Machine</option>{offered.map((m) => <option key={m.offer.id} value={m.offer.id}>{`${m.product.brand} ${m.offer.code ?? m.product.model}, ${formatMoney(m.price, cur, { cents: false })}${typeof m.product.attrs.kwhPerCycle === 'number' ? `, ${m.product.attrs.kwhPerCycle} kWh A Cycle` : ''}`}</option>)}</select> : null}</td>
                     <td className="small">{has ? 'Yes' : 'No'}</td>
                     <td className="num mono">{cost === undefined ? '—' : formatMoney(cost, cur, { cents: false })}</td>
                     <td className="num mono">{APPLIANCE_LIFE[kind]} years</td>
-                    <td>{!has && cost !== undefined && <Gated feature="home.fit" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.fit', { homeId: owned.id, kind }).ok) toast(`${APPLIANCE_LABEL[kind]} fitted.`, 'positive'); }}>Buy And Fit</Gated>}</td>
+                    <td>{!has && cost !== undefined && <Gated feature="home.fit" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.fit', { homeId: owned.id, kind, ...(pick ? { offerId: pick.offer.id } : {}) }).ok) toast(`${pick ? `${pick.product.brand} ${pick.product.model}` : APPLIANCE_LABEL[kind]} fitted.`, 'positive'); }}>Buy And Fit</Gated>}</td>
                   </tr>
                 );
               })}
@@ -830,31 +836,49 @@ function Furniture() {
   );
 }
 
-/** A bed of your choosing: each frame sold here with each mattress of its size, cheapest first (`content/beds.ts`). */
+/**
+ * A bed of your choosing (`content/beds.ts`, makers' mattresses from 2026-10-05,
+ * `content/mattresscatalog.ts`): a frame sold here, then a mattress of its size,
+ * IKEA's or a maker's own, each cheapest first, the whole delivered quoted.
+ * Until then one list crossed every frame with every mattress.
+ */
 function ChooseABed({ cityId }: { cityId: string }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const cur = saveCurrency(sim.universe);
   const market = BED_MARKET[CITIES.get(cityId)?.countryId ?? ''];
-  const beds = bedsIn(cityId).map((b) => ({ ...b, quote: bedQuote(sim, cityId, b.frame.id, b.mattress.id) }))
-    .filter((b): b is typeof b & { quote: Exclude<typeof b.quote, string> } => typeof b.quote !== 'string').sort((a, b) => a.quote.amount - b.quote.amount);
-  const [pick, setPick] = useState('');
-  if (!market || beds.length === 0) return null;
-  const chosen = beds.find((b) => `${b.frame.id}|${b.mattress.id}` === pick) ?? beds[0]!;
+  const all = bedsIn(cityId).map((b) => ({ ...b, quote: bedQuote(sim, cityId, b.frame.id, b.mattress.id) }))
+    .filter((b): b is typeof b & { quote: Exclude<typeof b.quote, string> } => typeof b.quote !== 'string');
+  const frames = [...new Map(all.map((b) => [b.frame.id, b.frame])).values()].sort((x, y) => x.price - y.price);
+  const [frameId, setFrame] = useState('');
+  const [mattressId, setMattress] = useState('');
+  if (!market || frames.length === 0) return null;
+  const frame = frames.find((f) => f.id === frameId) ?? frames[0]!;
+  const fits = all.filter((b) => b.frame.id === frame.id).sort((x, y) => x.quote.amount - y.quote.amount);
+  const chosen = fits.find((b) => b.mattress.id === mattressId) ?? fits[0]!;
   const no = furnishRefusal(sim, person, 'bed');
+  const m = chosen.mattress as typeof chosen.mattress & { brand?: string; delivery?: number | null; trialNights?: number | null };
   return (
-    <div className="field-row">
-      <div className="field">
-        <label htmlFor="bed-pick">A Bed Of Your Choosing</label>
-        <select id="bed-pick" value={`${chosen.frame.id}|${chosen.mattress.id}`} onChange={(e) => setPick(e.target.value)}>
-          {beds.map((b) => <option key={`${b.frame.id}|${b.mattress.id}`} value={`${b.frame.id}|${b.mattress.id}`}>{`${bedSize(market, b.frame.size)!.label}: ${b.frame.name} Frame, ${b.mattress.name} Mattress, ${formatMoney(b.quote.amount, cur, { cents: false })}`}</option>)}
-        </select>
+    <div className="col gap-1">
+      <div className="field-row">
+        <div className="field">
+          <label htmlFor="bed-frame">A Frame</label>
+          <select id="bed-frame" value={frame.id} onChange={(e) => { setFrame(e.target.value); setMattress(''); }}>
+            {frames.map((f) => <option key={f.id} value={f.id}>{`${bedSize(market, f.size)!.label}: ${f.name}`}</option>)}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="bed-mattress">A Mattress That Fits It</label>
+          <select id="bed-mattress" value={chosen.mattress.id} onChange={(e) => setMattress(e.target.value)}>
+            {fits.map((b) => <option key={b.mattress.id} value={b.mattress.id}>{`${b.mattress.name}, ${formatMoney(b.quote.amount, cur, { cents: false })} With The Frame`}</option>)}
+          </select>
+        </div>
+        <Gated feature="home.furnish" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.furnish', { piece: 'bed', frameId: frame.id, mattressId: chosen.mattress.id }).ok) toast('Your bed, delivered.', 'positive'); }}>Buy This Bed</Gated>
       </div>
-      <Gated feature="home.furnish" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => { if (run('home.furnish', { piece: 'bed', frameId: chosen.frame.id, mattressId: chosen.mattress.id }).ok) toast('Your bed, delivered.', 'positive'); }}>Buy This Bed</Gated>
+      <div className="xs dim">{m.brand ? `${m.brand}’s own mattress on IKEA’s frame: ${m.delivery === 0 ? 'its maker delivers it free' : m.delivery ? 'its maker’s own delivery fee, in the price' : 'its maker’s delivery not stated, IKEA’s bed delivery stands in, SLATE’s estimate'}${m.trialNights ? `, ${m.trialNights} nights’ trial` : ''}.` : 'IKEA’s frame and mattress, by IKEA’s delivery.'}</div>
     </div>
   );
 }
-
 /** Lodgers in its spare bedrooms (`systems/lodgers.ts`): taken at the town's room rent, paid monthly. */
 function Lodgers({ owned }: { owned: OwnedHome }) {
   const { sim, run, toast } = useGame();

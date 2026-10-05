@@ -52,6 +52,7 @@ import { BODY } from '../content/body';
 import { GARMENTS_PER_LOAD, cleanOutfits, swimsuitFor, washGarments, washableDirty, wearForExercise, wearForSleep, wearTheDay } from './wardrobe';
 import { replaceWornOut, starterTowels, starterWardrobe } from './clothing';
 import { isOn } from './automation';
+import { fittedModel } from './appliances';
 import { detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
 import { amenitiesOf } from './hotels';
 import { machinesDay } from './appliancefaults';
@@ -421,13 +422,22 @@ export function doLaundry(sim: Simulation, person: Person, finishedAt: Instant):
  * (EIA), at the town's cost of living. Until 2026-09-28 the hot water wasn't
  * counted. The water heated by gas is priced as if electric.
  */
-export const MACHINES = { washerUsd: (0.23 / 0.1) * 0.1819, dryerUsd: 2.4 * 0.1819 };
+export const MACHINE_KWH = { washer: 0.23 / 0.1, dryer: 2.4 } as const;
+export const KWH_USD = 0.1819;
+export const MACHINES = { washerUsd: MACHINE_KWH.washer * KWH_USD, dryerUsd: MACHINE_KWH.dryer * KWH_USD };
 
-/** The month's machine loads, in dollars, billed with the month's bills on the first, then counted again. */
+/**
+ * The month's machine loads, in dollars, billed with the month's bills on the
+ * first, then counted again. From 2026-10-05 a home of one's own's washer or
+ * dryer fitted as a make and model bills its own energy a cycle
+ * (`fittedModel`), the typical machine's figure where it has none.
+ */
 export function machineUsd(person: Person): number {
   const l = person.living;
   if (!l?.loads) return 0;
-  return l.loads.washer * MACHINES.washerUsd + l.loads.dryer * MACHINES.dryerUsd;
+  const owned = person.home?.kind === 'owned' ? (person.homes ?? []).find((h) => h.id === person.home!.homeId) : undefined;
+  const kwh = (kind: 'washer' | 'dryer') => { const m = fittedModel(owned, kind)?.attrs.kwhPerCycle; return typeof m === 'number' ? m : MACHINE_KWH[kind]; };
+  return (l.loads.washer * kwh('washer') + l.loads.dryer * kwh('dryer')) * KWH_USD;
 }
 
 /**

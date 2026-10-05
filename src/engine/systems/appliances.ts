@@ -23,6 +23,12 @@
  * and a gas dryer's or a heat pump's hookups. Appliances in a rented home were among them until
  * 2026-09-29; a tenant's own air conditioning units are kept now (below), and
  * from 2026-09-30 a tenant's own countertop and portable machines.
+ *
+ * From 2026-10-05 a washer, dryer or dishwasher may be a make and model
+ * (`content/appliancecatalog.ts`): its seller's price with the place's tax and
+ * the country's fitting, kept on the home, and a washer's or dryer's loads
+ * billed at its own energy a cycle (`machineUsd`). One with no model is the
+ * country's typical machine at its typical figures, as before.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -39,6 +45,9 @@ import { homeById, type OwnedHome } from './homes';
 /** Of central air's cost, what an American house's value gains (Cost vs. Value 2025). */
 export const CENTRAL_AIR_RECOVERED = 0.721;
 import { fixturesOf, homePlace } from './dwelling';
+import { APPLIANCE_PRODUCTS } from '../content/appliancecatalog';
+import type { CatalogOffer, CatalogProduct } from '../content/products';
+import { colorsOfProduct, devicePrice, marketWhere, offerIn } from './devices';
 import { inTheBank, payFromBank } from './household';
 
 export const APPLIANCE_OUT_KIND = 'home.appliance_out';
@@ -89,8 +98,31 @@ function change(f: Fixtures, kind: ApplianceKind, fitted: boolean, before: Fixtu
   return { ...f, cooling: fitted ? 'central' : 'none' };
 }
 
+/** The models of a kind sold where a home is, an offer each, cheapest first, with the place's tax. */
+export function applianceModels(sim: Simulation, cityId: string, kind: ApplianceKind): { product: CatalogProduct; offer: CatalogOffer; price: Money }[] {
+  const market = marketWhere(cityId);
+  return APPLIANCE_PRODUCTS.filter((p) => p.attrs.kind === kind).flatMap((product) => product.offers.filter((o) => o.market === market).map((offer) => ({ product, offer, price: devicePrice(sim, cityId, offer) })))
+    .sort((a, b) => a.price - b.price || a.product.id.localeCompare(b.product.id));
+}
+
+/** What fitting a model costs: its price with the tax, and the country's fitting; or why it can't be. */
+export function modelFitCost(sim: Simulation, owned: OwnedHome, kind: ApplianceKind, offerId: string): Money | string {
+  const found = offerIn(APPLIANCE_PRODUCTS, offerId);
+  if (!found || found.product.attrs.kind !== kind) return `That isn’t a ${APPLIANCE_LABEL[kind].toLowerCase()} on sale.`;
+  if (found.offer.market !== marketWhere(owned.cityId)) return 'It’s sold in another country.';
+  const table = appliancesIn(owned.cityId);
+  const install = table?.items[kind]?.install ?? 0;
+  return devicePrice(sim, owned.cityId, found.offer) + inSave(sim, Math.round(install * 100), table?.currency ?? found.offer.currency);
+}
+
+/** A fitted machine's model, by the home it's fitted to. */
+export const fittedModel = (owned: OwnedHome | undefined, kind: ApplianceKind): CatalogProduct | undefined => {
+  const m = owned?.applianceModels?.[kind];
+  return m ? APPLIANCE_PRODUCTS.find((p) => p.id === m.product) : undefined;
+};
+
 export function registerAppliances(sim: Simulation): void {
-  sim.onCommand<{ homeId: string; kind: ApplianceKind }, { cost: Money; lastsTo: Instant }>('home.fit', (p, { sim: s }) => {
+  sim.onCommand<{ homeId: string; kind: ApplianceKind; offerId?: string; color?: string }, { cost: Money; lastsTo: Instant }>('home.fit', (p, { sim: s }) => {
     const person = s.player;
     const owned = homeById(person, String(p?.homeId));
     if (!owned) throw new CommandError('You don’t own that home.');
@@ -98,8 +130,18 @@ export function registerAppliances(sim: Simulation): void {
     if (!(kind in APPLIANCE_LABEL)) throw new CommandError('No such appliance.');
     const no = fitRefusal(s, person, owned, kind);
     if (no) throw new CommandError(no);
-    const cost = applianceCost(s, owned.cityId, kind)!;
-    if (!payFromBank(s, person, cost, `${APPLIANCE_LABEL[kind]}, bought and fitted, ${owned.facts.address}`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
+    // A make and model where one is chosen (from 2026-10-05): its own price, kept on the home.
+    const model = p?.offerId ? offerIn(APPLIANCE_PRODUCTS, String(p.offerId)) : undefined;
+    const modelCost = p?.offerId ? modelFitCost(s, owned, kind, String(p.offerId)) : undefined;
+    if (typeof modelCost === 'string') throw new CommandError(modelCost);
+    const colors = model ? colorsOfProduct(model.product) : [];
+    if (model && p.color !== undefined && !colors.includes(String(p.color))) throw new CommandError('It isn’t offered in that color.');
+    const color = p.color !== undefined ? String(p.color) : colors.length === 1 ? colors[0] : undefined;
+    if (modelCost !== undefined && inTheBank(s, person) < modelCost) throw new CommandError(`It costs ${formatMoney(modelCost, saveCurrency(s.universe), { cents: false })}, fitted.`);
+    const cost = modelCost ?? applianceCost(s, owned.cityId, kind)!;
+    const what = model ? `${model.product.brand} ${model.offer.code ?? model.product.model}${color ? `, ${color}` : ''}` : APPLIANCE_LABEL[kind];
+    if (!payFromBank(s, person, cost, `${what}, bought and fitted, ${owned.facts.address}`, 'home')) throw new CommandError('The bank couldn’t pay for it.');
+    if (model) (owned.applianceModels ??= {})[kind] = { product: model.product.id, offer: model.offer.id, ...(color ? { color } : {}) };
     const f = fixturesOf(s, person, owned.cityId, owned.facts, owned.id);
     // A washer given out leaves the laundry as it was before one was fitted: the building's machines, or none.
     if (kind === 'washer') owned.laundryBefore = f.laundry === 'building' ? 'building' : 'none';
@@ -120,6 +162,7 @@ export function registerAppliances(sim: Simulation): void {
     if (!person || !owned) return;
     owned.facts.fixtures = change(fixturesOf(s, person, owned.cityId, owned.facts, owned.id), kind, false, owned.laundryBefore ?? 'none');
     if (owned.appliances) delete owned.appliances[kind];
+    if (owned.applianceModels) delete owned.applianceModels[kind];
     // Given out, it's worth nothing to a buyer.
     if (kind === 'central-air') owned.improvements = owned.improvements.filter((one) => one.projectId !== 'central-air');
     if (person.id === s.universe.playerId) s.notify({ category: 'home', title: `The ${APPLIANCE_LABEL[kind]} Gave Out`, body: `After ${APPLIANCE_LIFE[kind]} years, its published life, at ${owned.facts.address}. Another can be fitted on the Homes screen.`, importance: 50, route: '/workspace/homes' });

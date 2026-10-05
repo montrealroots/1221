@@ -28,6 +28,7 @@ import { salesTaxRate } from '../content/tax';
 import { FURNITURE, MATTRESS, MATTRESS_FEE_USD, MATTRESS_YEARS, MOVERS, MOVERS_ABROAD, PIECE_LABEL, RENTED_TRUCK, WITHOUT, type Piece } from '../content/furniture';
 import { FUEL } from '../content/vehiclefees';
 import { BED_MARKET, BED_PARTS, DEFAULT_BED_SIZE, SLEEPS_TWO_CM, bedSize, type BedPart } from '../content/beds';
+import { BRANDED_MATTRESSES, type BrandedMattress } from '../content/mattresscatalog';
 import { MS_DAY } from '../core/time';
 import { inTheBank, owe, payFromBank } from './household';
 import { jurisdictionOf, isPickup, kindOf, modelById, runningCost, vehiclesOf, type OwnedVehicle } from './vehicles';
@@ -207,12 +208,19 @@ export function mattressWorn(person: Person, at: number): boolean {
   return since !== undefined && at - since >= MATTRESS_YEARS * 365.2425 * MS_DAY;
 }
 
+/**
+ * The mattresses a country sells (from 2026-10-05): IKEA's, and makers' own
+ * beside them (`content/mattresscatalog.ts`), each a size its frames take.
+ */
+export const mattressesIn = (countryId: string): (BedPart | BrandedMattress)[] => [...(BED_PARTS[countryId]?.mattresses ?? []), ...(BRANDED_MATTRESSES[countryId] ?? [])];
+const branded = (m: BedPart | BrandedMattress): m is BrandedMattress => 'brand' in m;
+
 /** What a new mattress costs where they live, the old one taken away, in the save's money; or nothing where none is priced. */
 export function mattressCost(sim: Simulation, cityId: string, size?: string): Money | undefined {
   const countryId = CITIES.get(cityId)?.countryId ?? '';
   const country = FURNITURE[countryId];
   // A bed of the country's usual double takes its mattress; another size the cheapest of its size sold there (`content/beds.ts`, from 2026-10-01).
-  const other = size && size !== DEFAULT_BED_SIZE[countryId] ? [...(BED_PARTS[countryId]?.mattresses ?? [])].filter((x) => x.size === size).sort((a, b) => a.price - b.price)[0] : undefined;
+  const other = size && size !== DEFAULT_BED_SIZE[countryId] ? mattressesIn(countryId).filter((x) => x.size === size).sort((a, b) => a.price - b.price)[0] : undefined;
   if (size && size !== DEFAULT_BED_SIZE[countryId] && !other) return undefined;
   const m = other ? { price: other.price, removal: MATTRESS[countryId]?.removal } : MATTRESS[countryId];
   if (!country || !m) return undefined;
@@ -227,7 +235,9 @@ export function mattressCost(sim: Simulation, cityId: string, size?: string): Mo
  * Beds by market (from 2026-10-01, `content/beds.ts`): a frame and a
  * mattress of the same size, the country's own, at IKEA's prices with the
  * country's delivery, tax and fee. A frame with no mattress of its size
- * sold there isn't offered.
+ * sold there isn't offered. From 2026-10-05 a maker's own mattress may go on
+ * IKEA's frame: it comes by its maker's delivery, or, where that's not
+ * stated, at IKEA's bed delivery again, SLATE's stand-in.
  */
 export function bedQuote(sim: Simulation, cityId: string, frameId: string, mattressId: string): { amount: Money; tax: Money; frame: BedPart; mattress: BedPart } | string {
   const countryId = CITIES.get(cityId)?.countryId ?? '';
@@ -235,19 +245,21 @@ export function bedQuote(sim: Simulation, cityId: string, frameId: string, mattr
   const country = FURNITURE[countryId];
   if (!parts || !country) return 'SLATE keeps no beds where you live yet.';
   const frame = parts.frames.find((f) => f.id === frameId);
-  const mattress = parts.mattresses.find((m) => m.id === mattressId);
+  const mattress = mattressesIn(countryId).find((m) => m.id === mattressId);
   if (!frame || !mattress) return 'Choose a frame and a mattress sold here.';
   if (frame.size !== mattress.size) return `A ${bedSize(BED_MARKET[countryId]!, mattress.size)!.label} mattress doesn’t fit a ${bedSize(BED_MARKET[countryId]!, frame.size)!.label} frame.`;
   const units = frame.price + mattress.price;
   const tax = Math.round(units * 100 * (country.taxAdded ? salesTaxRate(cityId, sim.now, 'furniture') : 0));
   const fee = inSave(sim, Math.round(mattressFeeUsd(cityId, sim.now) * 100), 'USD');
-  return { amount: inSave(sim, Math.round((units + country.items.bed!.delivery) * 100) + tax, country.currency) + fee, tax: inSave(sim, tax, country.currency), frame, mattress };
+  const delivery = country.items.bed!.delivery + (branded(mattress) ? mattress.delivery ?? country.items.bed!.delivery : 0);
+  return { amount: inSave(sim, Math.round((units + delivery) * 100) + tax, country.currency) + fee, tax: inSave(sim, tax, country.currency), frame, mattress };
 }
 
 /** The beds a town sells, frame and mattress of a size, each frame with each mattress that fits it. */
 export function bedsIn(cityId: string): { frame: BedPart; mattress: BedPart }[] {
   const parts = BED_PARTS[CITIES.get(cityId)?.countryId ?? ''];
-  return parts ? parts.frames.flatMap((frame) => parts.mattresses.filter((m) => m.size === frame.size).map((mattress) => ({ frame, mattress }))) : [];
+  const countryId = CITIES.get(cityId)?.countryId ?? '';
+  return parts ? parts.frames.flatMap((frame) => mattressesIn(countryId).filter((m) => m.size === frame.size).map((mattress) => ({ frame, mattress }))) : [];
 }
 
 /** The bed they sleep in at home: its country and size, an older bed its country's usual double. */
@@ -270,7 +282,7 @@ export function mattressRefusal(person: Person, cityId: string): string | undefi
   const here = CITIES.get(cityId)?.countryId ?? '';
   const market = BED_MARKET[bed.country];
   const label = market ? bedSize(market, bed.size)?.label : undefined;
-  const sold = bed.size === DEFAULT_BED_SIZE[here] || BED_PARTS[here]?.mattresses.some((m) => m.size === bed.size);
+  const sold = bed.size === DEFAULT_BED_SIZE[here] || mattressesIn(here).some((m) => m.size === bed.size);
   if (market !== BED_MARKET[here] || !sold) return `No mattress sold here fits your ${label ?? ''} bed.`.replace('  ', ' ');
   return undefined;
 }

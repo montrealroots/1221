@@ -62,6 +62,7 @@ import { formatDate, type Instant , zonedParts } from '../core/time';
 import { tireFactor } from './tires';
 import { homeKeyOf, itemById, itemsOf, moveRefusal, volumeOf, type Item, type Place, type Spot } from './items';
 import { specOf } from './caroptions';
+import { weightG } from './luggage';
 import { burn, capacityOf, levelOf, rangeKm } from './fueltank';
 import { TRANSIT } from '../content/transit';
 import { rateOn } from '../content/career';
@@ -189,6 +190,18 @@ export const COLD_CHAIN_HOURS = 2;
  * the trip is home, then put away where it keeps (from 2026-10-02; until then
  * it was home the moment it was paid for). Bought with no trip, it's home now.
  */
+/**
+ * The most shopping carried home by hand (from 2026-10-05): NIOSH's load
+ * constant, 23 kg (51 lb), the most its lifting equation recommends in ideal
+ * conditions, read as the most a person carries home in one trip on foot or
+ * by transit. SLATE's reading of it, the same for everyone: no body's sex is
+ * kept, and Britain's HSE gives 25 kg for men and 16 for women.
+ */
+export const CARRY_KG = 23;
+
+/** What the trip's shopping carried by hand weighs, kilograms. */
+export const carriedKg = (person: Person): number => (person.trip?.shopping ?? []).map((s) => itemById(person, s.itemId)).filter((i): i is Item => Boolean(i)).reduce((kg, i) => kg + weightG(i) / 1000, 0);
+
 export function stow(person: Person, item: Item, at: Instant): void {
   const trip = person.trip;
   if (!trip || item.at.kind !== 'home') return;
@@ -204,6 +217,11 @@ export function stow(person: Person, item: Item, at: Instant): void {
       const used = itemsOf(person).filter((i) => i.at.kind === 'vehicle' && i.at.vehicleId === trip.vehicleId).reduce((a, i) => a + volumeOf(i) * i.quantity, 0);
       if (used + volumeOf(item) * item.quantity > holds + 1e-9) throw new CommandError(`It won’t fit in the car: ${Math.max(0, Math.floor(holds - used))} liters of its ${holds} are left.`);
     }
+  }
+  // Carried by hand, up to what a person carries home (`CARRY_KG`); a car's cargo is its own.
+  if (!inCar) {
+    const kg = carriedKg(person);
+    if (kg + weightG(item) / 1000 > CARRY_KG + 1e-9) throw new CommandError(`That’s more than you can carry home: ${Math.round(kg * 10) / 10} kg in hand already, of about ${CARRY_KG}.`);
   }
   (trip.shopping ??= []).push({ itemId: item.id, ...(item.at.spot ? { spot: item.at.spot } : {}), at });
   if (item.at.spot) item.storeIn = item.at.spot;

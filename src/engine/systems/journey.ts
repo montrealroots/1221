@@ -51,6 +51,7 @@ import { laidUp } from './repairs';
 import { inWinterSeason, tireFactor } from './tires';
 import { CAR_FERRY } from '../content/rail';
 import { cabinBagRefusal, moveTo, weighIn } from './luggage';
+import { landBags } from './baggage';
 import { arrivalFee, entryRefusal, hotelPetFee, petCareRefusal, petFlightFee, petsOf } from './pets';
 import { hotelById, namedStayQuote, namedStayRefusal , checkOutHourOf, depositFor, hotelParking, freeCancelUntil, roomReadyAt } from './hotels';
 import { claimCancellation } from './travelinsurance';
@@ -903,6 +904,8 @@ export function registerJourneys(sim: Simulation): void {
     const flown = j.legs.find((l) => l.mode === 'fly' && l.routeId === 'own');
     if (flown) ownFlown(person, j.fromCity, j.toCity, (flown.arriveAt - flown.departAt) / 3_600_000);
     moveTo(s, person, j.toCity);
+    // Checked bags off a flight: each as the airline handled it (`systems/baggage.ts`, from 2026-10-05).
+    if (!j.by && j.bags > 0 && j.legs.some((l) => l.mode === 'flight')) landBags(s, person, j.id, j.fromCity, j.toCity, j.bags);
     if (person.id === s.universe.playerId) s.universe.currentZone = CITIES.require(j.toCity).timeZone;
     if (person.home?.cityId === j.toCity) delete person.stay;
     else if (j.onArrival) person.stay = j.onArrival;

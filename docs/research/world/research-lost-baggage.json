@@ -1,0 +1,329 @@
+{
+  "read": "2026-10-05",
+  "scope": "US DOT and SITA mishandled-baggage rates, the delayed/damaged/lost split, how long delayed bags take to come back, when a delayed bag is declared lost, Montreal Convention and US domestic compensation limits, interim-expense reimbursement while a bag is delayed, and claim deadlines, for Delta, British Airways, Aer Lingus, Air Canada and Aeromexico (SLATE's markets).",
+  "statusKey": {
+    "verified": "read on the official/primary page itself on 2026-10-05",
+    "secondhand": "from a third-party summary (search result synthesis or guide site) because the primary page blocked the fetch (DOT/BTS pages returned HTTP 403 to automated fetch throughout this session) or the primary PDF could not be parsed; cross-checked against a second summary where noted"
+  },
+  "rates": [
+    {
+      "scope": "US marketing carriers combined, full year 2025",
+      "value": 0.52,
+      "unit": "mishandled bags per 100 bags enplaned",
+      "note": "DOT began reporting this metric per 100 bags enplaned (not per 1,000) starting January 2022. Figure reported as 2,431,940 mishandled of 471,047,484 enplaned.",
+      "url": "https://www.transportation.gov/sites/dot.gov/files/2025-09/August%202025%20ATCR%20-%20June%202025%20and%20Jan-Jun%20Data.pdf",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "US marketing carriers combined, January-June 2025 (H1)",
+      "value": 0.52,
+      "unit": "mishandled bags per 100 bags enplaned",
+      "url": "https://www.travelmarketreport.com/air/articles/department-of-transportation-data-reveals-which-airlines-are-worst-for-baggage-mishandling",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "US marketing carriers combined, January-June 2026 (H1)",
+      "value": 0.49,
+      "unit": "mishandled bags per 100 bags enplaned",
+      "url": "https://www.travelmarketreport.com/air/articles/department-of-transportation-data-reveals-which-airlines-are-worst-for-baggage-mishandling",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Delta Air Lines, January-June 2026 (H1)",
+      "value": 0.38,
+      "unit": "mishandled bags per 100 bags enplaned",
+      "note": "153,022 of 40,560,183 bags mishandled; Delta ranked 10th among reporting US carriers for this period. For comparison in the same table: American 0.73, Southwest 0.32, JetBlue 0.31.",
+      "url": "https://www.travelmarketreport.com/air/articles/department-of-transportation-data-reveals-which-airlines-are-worst-for-baggage-mishandling",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Global, all airlines, 2024 (SITA Baggage IT Insights 2025 edition)",
+      "value": 6.3,
+      "unit": "mishandled bags per 1,000 passengers",
+      "note": "Down from 6.9 per 1,000 in 2023, despite an 8.2% rise in global air traffic.",
+      "url": "https://www.sita.aero/about-us/pressroom/news-releases/more-air-passengers-than-ever-with-one-of-the-lowest-rates-of-mishandled-baggage-thanks-to-tech-investments/",
+      "status": "verified",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Global, all airlines, 2025 (SITA Baggage IT Insights 2026 edition, published June 2026)",
+      "value": 4.9,
+      "unit": "mishandled bags per 1,000 passengers",
+      "note": "A 23% year-on-year improvement from the 2024 rate; about 24 million bags mishandled worldwide in 2025 against roughly 5 billion passengers. Primary SITA page for this specific edition could not be reached directly (only secondary coverage of it was fetched).",
+      "url": "https://aerospaceglobalnews.com/news/airlines-lose-6-3-billion-to-mishandled-baggage-sita/",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Global, international routes only, 2025",
+      "value": 9.12,
+      "unit": "mishandled bags per 1,000 passengers",
+      "url": "https://www.airport-suppliers.com/tag/sita-2026-baggage-it-insights-report/",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Global, domestic routes only, 2025",
+      "value": 1.65,
+      "unit": "mishandled bags per 1,000 passengers",
+      "url": "https://www.airport-suppliers.com/tag/sita-2026-baggage-it-insights-report/",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Europe, 2024",
+      "value": 12.3,
+      "unit": "mishandled bags per 1,000 passengers",
+      "note": "A 26% improvement compared with 2007, per the same report family.",
+      "url": "https://www.passengerterminaltoday.com/news/baggage/baggage-mishandling-rate-improves-by-26-in-europes-airports.html",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    }
+  ],
+  "split": {
+    "scope": "Global mishandled bags by type, 2024 (SITA Baggage IT Insights 2025 edition)",
+    "delayedPct": 74,
+    "damagedOrPilferedPct": 18,
+    "lostOrStolenPct": 8,
+    "totalMishandled": 33400000,
+    "note": "2023's damaged-or-pilfered share was 15% and delayed was 80%, per secondhand coverage; the exact split for 2025's 24 million mishandled bags was not found in any source reached in this session (see notFound).",
+    "url": "https://www.sita.aero/about-us/pressroom/news-releases/more-air-passengers-than-ever-with-one-of-the-lowest-rates-of-mishandled-baggage-thanks-to-tech-investments/",
+    "status": "verified",
+    "read": "2026-10-05"
+  },
+  "returnTimes": [
+    {
+      "scope": "Global, 2024 (SITA WorldTracer resolution data)",
+      "value": 66,
+      "unit": "percent of mishandled bags (of 33.4 million) resolved and closed within 48 hours",
+      "note": "Breakdown given on the same primary page: 25% resolved within 12 hours, 38% within 24 hours, 37% within 48 hours (bands as published; they do not sum cleanly to 66%/100%, which may reflect rounding or overlapping cumulative/discrete reporting in the source).",
+      "url": "https://www.sita.aero/about-us/pressroom/news-releases/more-air-passengers-than-ever-with-one-of-the-lowest-rates-of-mishandled-baggage-thanks-to-tech-investments/",
+      "status": "verified",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Delta Air Lines checked-bag-fee refund trigger (not a return-time statistic, but Delta's own operational threshold for 'late')",
+      "value": "12 hours domestic; 15-30 hours international depending on flight duration",
+      "unit": "hours after which Delta refunds the checked-bag fee if the bag was not delivered",
+      "url": "https://www.delta.com/us/en/baggage/delayed-lost-damaged-baggage",
+      "status": "verified",
+      "read": "2026-10-05"
+    }
+  ],
+  "declaredLost": [
+    {
+      "scope": "Delta Air Lines",
+      "days": 21,
+      "note": "\"If your checked bag isn't found within 21 days of your arrival, it is likely lost.\"",
+      "url": "https://www.delta.com/us/en/baggage/delayed-lost-damaged-baggage",
+      "status": "verified",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Aer Lingus",
+      "days": 21,
+      "note": "Aer Lingus treats a bag as lost once delayed beyond 21 days and applies Montreal Convention liability; essential-expense reimbursements made during the 21 days are deducted from the final lost-bag settlement if the bag is never located.",
+      "url": "https://www.aerlingus.com/support/customer-care/missing-baggage/",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Air Canada",
+      "days": 21,
+      "note": "Secondhand sources describe an earlier baggage-tracing form requirement (around day 3-5) but agree the bag is \"automatically deemed lost\" at day 21.",
+      "url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/delayed-damaged-baggage.html",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Aeromexico",
+      "days": 21,
+      "note": "Secondhand only; Aeromexico's own baggage page was not reached in this session.",
+      "url": "https://airadvisor.com/en/delayed-damaged-lost-baggage-compensation/aeromexico",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Montreal Convention, general tracing norm cited across carriers",
+      "days": 21,
+      "note": "21 days is the period consistently cited by Delta, Aer Lingus, Air Canada and Aeromexico alike as both the point a bag is deemed lost and the Article 31 written-complaint deadline for delay; British Airways' own page was not reached to confirm its specific day-count, but third-party coverage of BA describes the same 21-day Montreal norm.",
+      "url": "https://www.delta.com/us/en/baggage/delayed-lost-damaged-baggage",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    }
+  ],
+  "limits": [
+    {
+      "scope": "Montreal Convention, international carriage of baggage (Article 22(2)), effective 28 December 2024",
+      "value": 1519,
+      "unit": "SDR per passenger",
+      "note": "Up from 1,288 SDR (in force since 19/28 December 2019); approximately US$2,000 or roughly EUR1,900/GBP at the time of the revision. Covers destruction, loss, damage or delay of baggage; also the ceiling for essential-expense reimbursement during a delay. Applies to UK carriers too (Montreal Convention retained in UK law post-Brexit).",
+      "url": "https://www.icao.int/news/international-air-travel-liability-limits-set-increase-enhancing-customer-compensation-0",
+      "status": "verified",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "US domestic baggage liability, 14 CFR 254.4, effective 22 January 2025",
+      "value": 4700,
+      "unit": "USD per passenger",
+      "note": "Up from $3,800. Computed from the CPI ratio between the December 1999 base month and July 2024 (yielding $4,672.25), rounded to the nearest $100 per 14 CFR 254.6. Reviewed every two years using CPI as of July of the review year. Applies to large-aircraft domestic flight segments.",
+      "url": "https://www.federalregister.gov/documents/2024/10/24/2024-23588/periodic-revisions-to-denied-boarding-compensation-and-domestic-baggage-liability-limits",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "EU261/2004",
+      "value": null,
+      "unit": null,
+      "note": "EU261 does not cover delayed, damaged or lost baggage at all; it only addresses denied boarding, cancellation and long delay to the flight itself. Baggage claims on EU carriers/EU flights are instead governed by the Montreal Convention limit above (EU Regulation 2027/97, as amended by Regulation 889/2002, applies Montreal Convention liability rules to EU carriers including on domestic routes).",
+      "url": "https://airadvisor.com/en-us/eu-261-compensation",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "UK (post-Brexit, CAA guidance)",
+      "value": 1519,
+      "unit": "SDR per passenger (CAA phrases it informally as \"around £1,000\")",
+      "note": "CAA's own consumer page does not name the Montreal Convention explicitly or state the SDR figure; it gives a rough sterling approximation instead. The underlying rule is the same Montreal Convention limit as above, retained in UK law.",
+      "url": "https://www.caa.co.uk/air-passengers/about-your-trip/baggage/lost-delayed-or-damaged-baggage/",
+      "status": "verified",
+      "read": "2026-10-05"
+    }
+  ],
+  "interimExpenses": [
+    {
+      "scope": "Delta Air Lines",
+      "note": "Reimburses reasonable out-of-pocket costs for essential clothing, toiletries and personal-care items purchased while a bag is delayed, against itemized receipts (merchant, date, items, total, payment method). No fixed daily dollar cap stated on Delta's own page.",
+      "url": "https://www.delta.com/us/en/baggage/delayed-lost-damaged-baggage",
+      "status": "verified",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "British Airways",
+      "note": "Reimburses reasonable and necessary items bought for immediate need while away from bags (underwear/basic clothing, toiletries, essential items); secondhand sources describe a 30-day window to submit the claim with file reference, ticket/baggage receipts and original itemized receipts. BA's own page could not be reached directly in this session (not fetched successfully).",
+      "url": "https://www.britishairways.com/jba/aa/en_US/travel-info/baggage/delayed-or-damaged-baggage.html",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Aer Lingus",
+      "note": "Reimburses reasonable replacement-item purchases made during a delay of up to 21 days; any such reimbursement is deducted from the final settlement if the bag is ultimately declared lost and a loss claim is paid.",
+      "url": "https://www.aerlingus.com/support/customer-care/missing-baggage/",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Montreal Convention ceiling on interim/essential expenses",
+      "value": 1519,
+      "unit": "SDR per passenger",
+      "note": "Interim expense reimbursement is not a separate pot; it counts toward (and is capped by) the same Article 22(2) 1,519 SDR per-passenger limit that covers delay, loss and damage overall.",
+      "url": "https://www.icao.int/news/international-air-travel-liability-limits-set-increase-enhancing-customer-compensation-0",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "US DOT / 14 CFR, daily-cap practice",
+      "note": "Secondhand guide sources state DOT does not permit a carrier to impose an arbitrary fixed daily dollar cap on interim-expense reimbursement for a domestic delay; DOT's own consumer page on this (airconsumer) returned HTTP 403 to automated fetch and could not be read directly to confirm the exact wording.",
+      "url": "https://www.airhelp.com/en/airlines/british-airways/baggage/",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    }
+  ],
+  "claimDeadlines": [
+    {
+      "scope": "Montreal Convention, Article 31, damage",
+      "days": 7,
+      "note": "Written complaint required within 7 days of receipt of checked baggage, or no action lies against the carrier (fraud excepted). Calendar days, not working days.",
+      "url": "https://www.rumberger.com/insights/baggage-claims-under-the-montreal-and-warsaw-conventions/",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Montreal Convention, Article 31, delay",
+      "days": 21,
+      "note": "Written complaint required within 21 days of the baggage being placed at the passenger's disposal.",
+      "url": "https://www.rumberger.com/insights/baggage-claims-under-the-montreal-and-warsaw-conventions/",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Delta Air Lines, damaged bags, domestic, tickets issued after 8 October 2025",
+      "days": 0.25,
+      "note": "6 hours of arrival (24 hours for tickets issued before that date); exceptions for mobility devices, non-apparent damage, delayed bags and unaccompanied minors.",
+      "url": "https://www.delta.com/us/en/baggage/delayed-lost-damaged-baggage",
+      "status": "verified",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Delta Air Lines, damaged bags, international",
+      "days": 7,
+      "url": "https://www.delta.com/us/en/baggage/delayed-lost-damaged-baggage",
+      "status": "verified",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Delta Air Lines, delayed/missing items, domestic",
+      "days": 1,
+      "note": "24 hours of arrival.",
+      "url": "https://www.delta.com/us/en/baggage/delayed-lost-damaged-baggage",
+      "status": "verified",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Delta Air Lines, delayed/missing items, international",
+      "days": 7,
+      "url": "https://www.delta.com/us/en/baggage/delayed-lost-damaged-baggage",
+      "status": "verified",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "British Airways, interim-expense claim submission",
+      "days": 30,
+      "url": "https://www.airhelp.com/en/airlines/british-airways/baggage/",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Air Canada, delayed/lost baggage",
+      "days": 21,
+      "url": "https://airadvisor.com/en/delayed-damaged-lost-baggage-compensation/air-canada",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "Air Canada, damaged baggage",
+      "days": 7,
+      "url": "https://airadvisor.com/en/delayed-damaged-lost-baggage-compensation/air-canada",
+      "status": "secondhand",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "UK CAA guidance, lost/stolen/damaged baggage",
+      "days": 7,
+      "url": "https://www.caa.co.uk/air-passengers/about-your-trip/baggage/lost-delayed-or-damaged-baggage/",
+      "status": "verified",
+      "read": "2026-10-05"
+    },
+    {
+      "scope": "UK CAA guidance, delayed baggage",
+      "days": 21,
+      "note": "CAA phrases this as 21 days \"from receiving the delayed bag,\" i.e. once it is finally delivered, rather than from the date it was declared lost.",
+      "url": "https://www.caa.co.uk/air-passengers/about-your-trip/baggage/lost-delayed-or-damaged-baggage/",
+      "status": "verified",
+      "read": "2026-10-05"
+    }
+  ],
+  "notFound": [
+    "Delta's own published annual (full-year 2025) mishandled-baggage rate specifically (only H1 2025/H1 2026 aggregate figures were found via DOT ATCR coverage); DOT/BTS primary pages (transportation.gov/airconsumer, bts.gov) returned HTTP 403 to every automated fetch attempt in this session, so all DOT/ATCR figures above are secondhand, read via search-engine summaries of the official PDFs rather than the PDFs themselves.",
+    "The delayed/damaged/lost-stolen percentage split specifically for 2025 data (SITA's 2026-published edition) -- only the 2024 split (74/18/8) was found in any source reached.",
+    "British Airways' own baggage policy page (britishairways.com/jba/...) could not be fetched directly (request did not return usable content in this session); its interim-expense and tracing details above rely on secondhand aggregator pages (AirHelp, Flightright-style guides).",
+    "A specific British Airways day-count for 'declared lost' (distinct from the general 21-day Montreal norm) -- not found stated in BA's own words in any source reached.",
+    "US DOT's own airconsumer page wording on the 'no arbitrary daily cap' rule for domestic interim expenses -- transportation.gov/individuals/aviation-consumer-protection/lost-delayed-or-damaged-baggage returned HTTP 403 and could not be read directly.",
+    "A current, detailed UK CAA-published mishandled-baggage rate or damaged-bag rate statistic (CAA's own site did not surface baggage-rate statistics on the page reached; a 2018-2022 FOI-based complaints count exists in secondhand coverage but was not independently verified on a CAA primary page).",
+    "Aeromexico's own baggage policy page -- not reached directly; its 21-day figure above is secondhand only."
+  ]
+}

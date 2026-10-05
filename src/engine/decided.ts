@@ -39,6 +39,7 @@ import { newLifeConfig } from './world/bootstrap';
 import { startingDocuments } from './systems/documents';
 import { passesTest } from './systems/licensing';
 import { flightFate } from './systems/journey';
+import { bagFate } from './systems/baggage';
 import { airlineAtFault } from './systems/compensation';
 import { mayBeBrokenInto, mayBeStolen } from './systems/theft';
 import { mayBreak } from './systems/repairs';
@@ -410,6 +411,21 @@ defineDecider<{ sim: Simulation; flight: number }, string>({
   },
   sample: (seed) => ({ sim: atYale(seed), flight: seed }),
   decide: ({ sim, flight }) => { const f = flightFate(sim, sim.player, `j-${flight}`); return f === null ? 'canceled' : f === 0 ? 'on time' : f > 60 ? 'late an hour' : 'late'; },
+});
+
+defineDecider<{ sim: Simulation; bag: number; international: boolean }, string>({
+  id: 'travel.bags',
+  decides: 'Whether a checked bag comes off the carousel, or is delayed, damaged or lost, at the DOT’s 2025 rate, an international flight’s raised by SITA’s ratio, and SITA’s 2024 split (BAGGAGE).',
+  drawnIn: 'src/engine/systems/baggage.ts',
+  reads: {
+    // Each bag on each flight is drawn on its own.
+    bag: (o, t) => ({ ...o, bag: Math.round(t * 4000) }),
+    international: (o, t) => ({ ...o, international: t > 0.5 }),
+    world: (o, t) => ({ ...o, sim: atYale(Math.round(t * 20)) }),
+  },
+  sample: (seed) => ({ sim: atYale(seed), bag: seed, international: seed % 2 === 0 }),
+  // A bag in two hundred is mishandled, so one bag's fate barely moves: the count among five hundred checked from it does.
+  decide: ({ sim, bag, international }) => { let n = 0; for (let i = 0; i < 500; i += 1) if (bagFate(sim, sim.player, `b-${bag}-${i}`, international).kind !== 'ok') n += 1; return `${n} of 500 mishandled`; },
 });
 
 defineDecider<{ sim: Simulation; flight: number }, string>({
