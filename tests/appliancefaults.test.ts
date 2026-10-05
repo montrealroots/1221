@@ -22,6 +22,9 @@ describe('how often', () => {
     expect(FAULTS_A_YEAR.washer).toBeCloseTo(1 - Math.pow(0.87, 0.25), 12);
     expect(FAULTS_A_YEAR.dishwasher).toBeCloseTo(1 - Math.pow(0.8, 1 / 6), 12);
     expect(FAULTS_A_YEAR.fridge).toBeCloseTo(1 - Math.pow(0.7, 0.2), 12);
+    // From 2026-10-05: a dryer, the middle of 8% and 19% in five years; central air, 36% in eight.
+    expect(FAULTS_A_YEAR.dryer).toBeCloseTo(1 - Math.pow(1 - 0.135, 0.2), 12);
+    expect(FAULTS_A_YEAR.centralAir).toBeCloseTo(1 - Math.pow(0.64, 1 / 8), 12);
     // At the real odds, a year of days breaks a machine about as often as the rate says.
     const sim = life('us-ny-newyork', 'af-rate');
     let fridges = 0;
@@ -31,6 +34,27 @@ describe('how often', () => {
       if (machinesDay(sim, sim.player).includes('fridge')) fridges += 1;
     }
     expect(fridges).toBeLessThan(40);
+  });
+});
+
+describe('a dryer or central air broken', () => {
+  it('leaves the washing to dry on a line and the home uncooled, and is mended at the market’s price', () => {
+    const sim = life('us-ny-newyork', 'af-dryer');
+    const p = sim.player;
+    const unit = p.home!.unit!;
+    unit.fixtures = { ...unit.fixtures, laundry: 'in-unit', cooling: 'central' };
+    expect(machinesAt(sim, p)).toEqual(expect.arrayContaining(['washer', 'dryer', 'centralAir']));
+    p.applianceFaults = { dryer: { at: sim.now }, centralAir: { at: sim.now } };
+    const place = homePlace(sim, p)!;
+    expect(place.fixtures.laundry).toBe('washer-only');
+    expect(place.fixtures.cooling).toBe('none');
+    expect(repairBill(sim, p, 'dryer')).toBe(inSaveMoney(sim, REPAIRS.us!.items.dryer * 100, 'USD'));
+    expect(repairBill(sim, p, 'centralAir')).toBe(inSaveMoney(sim, REPAIRS.us!.items.centralAir * 100, 'USD'));
+    // A washer only, no dryer to break; room units, none either.
+    unit.fixtures = { ...unit.fixtures, laundry: 'washer-only', cooling: 'units' };
+    p.applianceFaults = undefined;
+    expect(machinesAt(sim, p)).not.toContain('dryer');
+    expect(machinesAt(sim, p)).not.toContain('centralAir');
   });
 });
 

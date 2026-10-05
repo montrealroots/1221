@@ -213,7 +213,8 @@ export function workingFixtures(sim: Simulation, person: Person): Fixtures | und
 
 /**
  * A broken washer or dishwasher, until it's repaired (`systems/appliancefaults.ts`, from 2026-10-02): the washing goes to
- * the laundromat, and the dishes are done by hand.
+ * the laundromat, and the dishes are done by hand; from 2026-10-05 a broken dryer leaves the washer, and the washing dries
+ * on a line, and broken central air leaves the home uncooled.
  */
 const withFaults = (person: Person, f: Fixtures): Fixtures => {
   const broken = person.applianceFaults;
@@ -221,6 +222,8 @@ const withFaults = (person: Person, f: Fixtures): Fixtures => {
   let out = f;
   if (broken.washer && (out.laundry === 'in-unit' || out.laundry === 'washer-only')) out = { ...out, laundry: 'none' };
   if (broken.dishwasher && out.dishwasher) out = { ...out, dishwasher: false };
+  if (broken.dryer && out.laundry === 'in-unit') out = { ...out, laundry: 'washer-only' };
+  if (broken.centralAir && out.cooling === 'central') out = { ...out, cooling: 'none' };
   return out;
 };
 

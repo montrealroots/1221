@@ -1,0 +1,171 @@
+{
+  "read": "2026-10-05",
+  "rates": [
+    {
+      "appliance": "dryer",
+      "share": 0.08,
+      "years": 5,
+      "scope": "best brand (electric dryers, low end of range)",
+      "source": "Consumer Reports (via Yahoo republication)",
+      "url": "https://www.yahoo.com/news/clothes-dryer-repair-rates-major-brands-175746737.html",
+      "quote": "estimated the odds these machines will break by the fifth year of ownership... Estimated breakage rates range from 8 to 19 percent"
+    },
+    {
+      "appliance": "dryer",
+      "share": 0.19,
+      "years": 5,
+      "scope": "worst brand (electric dryers, high end of range)",
+      "source": "Consumer Reports (via Yahoo republication)",
+      "url": "https://www.yahoo.com/news/clothes-dryer-repair-rates-major-brands-175746737.html",
+      "quote": "estimated the odds these machines will break by the fifth year of ownership... Estimated breakage rates range from 8 to 19 percent"
+    },
+    {
+      "appliance": "dryer",
+      "share": 0.09,
+      "years": 5,
+      "scope": "best brand (gas dryers, low end of range)",
+      "source": "Consumer Reports (via Yahoo republication)",
+      "url": "https://www.yahoo.com/news/clothes-dryer-repair-rates-major-brands-175746737.html",
+      "quote": "Estimated breakage rates range from 9 to 20 percent"
+    },
+    {
+      "appliance": "dryer",
+      "share": 0.20,
+      "years": 5,
+      "scope": "worst brand (gas dryers, high end of range)",
+      "source": "Consumer Reports (via Yahoo republication)",
+      "url": "https://www.yahoo.com/news/clothes-dryer-repair-rates-major-brands-175746737.html",
+      "quote": "Estimated breakage rates range from 9 to 20 percent"
+    },
+    {
+      "appliance": "centralAC",
+      "share": 0.36,
+      "years": 8,
+      "scope": "all (survey-wide prediction, not a single brand)",
+      "source": "Consumer Reports (via Yahoo republication of central AC reliability survey)",
+      "url": "https://www.yahoo.com/news/most-reliable-central-air-conditioning-162816052.html",
+      "quote": "Of the central AC systems covered in our survey, we predict that 36 percent will break or experience problems by the end of the eighth year of ownership."
+    },
+    {
+      "appliance": "centralAC",
+      "share": 0.20,
+      "years": 6,
+      "scope": "all (older CR survey of 40,000+ subscribers, different survey wave)",
+      "source": "Consumer Reports (via KATU republication)",
+      "url": "https://katu.com/news/problem-solvers/consumer-reports-central-ac-you-can-count-on",
+      "quote": "In the past six years, close to one in five of those systems needed repairs."
+    }
+  ],
+  "repairs": [
+    {
+      "appliance": "dryer",
+      "market": "us",
+      "amount": 180,
+      "currency": "USD",
+      "basis": "average (range $100-$430)",
+      "source": "HomeAdvisor",
+      "url": "https://www.homeadvisor.com/cost/kitchens/dryer-repair/"
+    },
+    {
+      "appliance": "dryer",
+      "market": "uk",
+      "amount": 205,
+      "currency": "GBP",
+      "basis": "range middle (range £60-£350 inc VAT)",
+      "source": "Housekeep",
+      "url": "https://housekeep.com/cost-guide/appliance-engineer/tumble-dryer-repair/"
+    },
+    {
+      "appliance": "dryer",
+      "market": "ie",
+      "amount": 80,
+      "currency": "EUR",
+      "basis": "standard call-out fee (freestanding tumble dryer; many faults fixed for this fee alone)",
+      "source": "The Appliance Man (Dublin)",
+      "url": "https://theapplianceman.ie/pricing/"
+    },
+    {
+      "appliance": "dryer",
+      "market": "ca",
+      "amount": 130,
+      "currency": "CAD",
+      "basis": "average (range $130-$500, per search-engine summary of page; direct fetch of homestars.com returned HTTP 403 so not independently re-verified)",
+      "source": "HomeStars",
+      "url": "https://www.homestars.com/electricity/price-guides/appliance-repair-cost"
+    },
+    {
+      "appliance": "dryer",
+      "market": "mx",
+      "amount": 1250,
+      "currency": "MXN",
+      "basis": "range middle, simple repairs (range 500-2000 MXN, CDMX)",
+      "source": "reparacionrefrigeradorescdmx.com (per search-engine summary; not independently re-verified by direct fetch)",
+      "url": "https://reparacionrefrigeradorescdmx.com/cuanto-cuesta-arreglar-una-secadora-de-ropa/"
+    },
+    {
+      "appliance": "centralAC",
+      "market": "us",
+      "amount": 375,
+      "currency": "USD",
+      "basis": "average (range $250-$700 overall; central AC specifically $150-$2,000)",
+      "source": "Fixr",
+      "url": "https://www.fixr.com/costs/air-conditioner-repair",
+      "quote": "Central AC: $150 - $2,000"
+    },
+    {
+      "appliance": "roomAC",
+      "market": "us",
+      "amount": 212,
+      "currency": "USD",
+      "basis": "range middle for window AC (range $75-$350)",
+      "source": "Fixr",
+      "url": "https://www.fixr.com/costs/air-conditioner-repair",
+      "quote": "Window AC: $75 - $350"
+    },
+    {
+      "appliance": "centralAC",
+      "market": "uk",
+      "amount": 247,
+      "currency": "GBP",
+      "basis": "average (range £158-£393, per search-engine summary of Checkatrade page; direct fetch of checkatrade.com returned HTTP 403 so not independently re-verified)",
+      "source": "Checkatrade",
+      "url": "https://www.checkatrade.com/blog/cost-guides/hvac-cost/"
+    },
+    {
+      "appliance": "centralAC",
+      "market": "ie",
+      "amount": 175,
+      "currency": "EUR",
+      "basis": "range middle (range €50-€300, per search-engine summary; not independently re-verified by direct fetch)",
+      "source": "Aercon",
+      "url": "https://www.aercon.ie/air-conditioning-service-cost-ireland"
+    },
+    {
+      "appliance": "centralAC",
+      "market": "ca",
+      "amount": 225,
+      "currency": "CAD",
+      "basis": "HVAC capacitor repair average (range $150-$300; a common AC repair), per search-engine summary of HomeStars page; not independently re-verified by direct fetch",
+      "source": "HomeStars",
+      "url": "https://www.homestars.com/air-conditioning/price-guides/hvac-capacitor-cost"
+    },
+    {
+      "appliance": "centralAC",
+      "market": "mx",
+      "amount": 3100,
+      "currency": "MXN",
+      "basis": "range middle (range 700-5,500 MXN, most common range)",
+      "source": "Cronoshare",
+      "url": "https://www.cronoshare.com.mx/cuanto-cuesta/reparar-aire-acondicionado",
+      "quote": "El precio de reparar un aire acondicionado puede encontrarse entre $700 y $7,000 MXN. Sin embargo, el precio más habitual de este tipo de servicio se encuentra dentro del rango de $700 a $5,500 MXN."
+    }
+  ],
+  "notFound": [
+    "Which? tumble dryer reliability survey percent-by-year figures: article page (https://www.which.co.uk/reviews/tumble-dryers/article/top-tumble-dryer-brands-aX2br0Q54SlG) has its brand fault-rate tables behind a paywall; only unordered top-level fault-type percentages (broke down unexpectedly 12%, sensor problems 7%, drum problems 7%) were readable, with no year-of-ownership breakdown or best/worst brand figures.",
+    "Published reliability-survey share (percent needing repair in a stated period) specifically for window/portable room air conditioners: searches returned only central AC survey figures (Consumer Reports); no equivalent published room-AC breakdown rate was found.",
+    "UK room/window AC-specific repair price (as distinct from general 'air conditioning' repair, which in UK sources mostly describes split/ducted systems): not found separately.",
+    "Canada dryer and AC repair cost pages on homestars.com could not be directly fetched (HTTP 403 on repeated attempts); figures in this file for Canada are from search-engine-provided summaries of those pages, not a verbatim-verified direct read.",
+    "UK dryer (Checkatrade) and UK AC (Checkatrade, MyBuilder) pages could not be directly fetched (HTTP 403); the UK centralAC figure here is from a search-engine summary of the Checkatrade page, not a verbatim-verified direct read. The UK dryer figure instead uses Housekeep, which was directly fetched and verified.",
+    "Mexico dryer repair cost source (reparacionrefrigeradorescdmx.com) was not independently re-fetched directly; figure is from a search-engine summary only."
+  ]
+}

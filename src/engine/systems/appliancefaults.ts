@@ -12,12 +12,18 @@
  *   faulty in six years, so 20% in six;
  * - a fridge, Consumer Reports' 30% of fridges with icemakers needing a
  *   repair by their fifth year.
- * No rate with a period was found for a dryer or air conditioning, so they
- * don't break here; they still wear out at their published lives.
+ * - from 2026-10-05 a dryer, the middle of Consumer Reports' 8% to 19% of
+ *   electric dryers broken by their fifth year, so 13.5% in five;
+ * - and central air, Consumer Reports' 36% broken or with a problem by the
+ *   end of its eighth year (`research-appliance-faults-2.json`).
+ * Until then no rate with a period had been found for either, and they didn't
+ * break. Room units still don't: none is published for them. All still wear
+ * out at their published lives.
  *
  * **What it does.** A broken washer sends the washing to the laundromat, and
- * a broken dishwasher leaves the dishes to be done by hand (`withFaults` in
- * `systems/dwelling.ts`). A fridge that stops spoils what's in it, as a power
+ * a broken dishwasher leaves the dishes to be done by hand, a broken dryer the
+ * washing to dry on a line, and broken central air the home uncooled
+ * (`withFaults` in `systems/dwelling.ts`). A fridge that stops spoils what's in it, as a power
  * cut of more than four hours does, and whatever is put in before it's mended.
  *
  * **The repair.** In a rented home the landlord's machines are the
@@ -45,38 +51,44 @@ import { owe, spend } from './household';
 import { homeKeyOf, itemsOf } from './items';
 import { workingFixtures } from './dwelling';
 
-export type Machine = 'washer' | 'dishwasher' | 'fridge';
+export type Machine = 'washer' | 'dishwasher' | 'fridge' | 'dryer' | 'centralAir';
 export interface MachineFault { at: Instant; /** When the technician comes and it's mended; unset until a repair of one's own is booked. */ fixAt?: Instant; landlord?: boolean }
 
-export const MACHINE_LABEL: Readonly<Record<Machine, string>> = { washer: 'Washing Machine', dishwasher: 'Dishwasher', fridge: 'Fridge' };
+export const MACHINE_LABEL: Readonly<Record<Machine, string>> = { washer: 'Washing Machine', dishwasher: 'Dishwasher', fridge: 'Fridge', dryer: 'Dryer', centralAir: 'Central Air' };
 
 /** The chance a year each breaks. */
 export const FAULTS_A_YEAR: Readonly<Record<Machine, number>> = {
   washer: 1 - Math.pow(1 - 0.13, 1 / 4),
   dishwasher: 1 - Math.pow(1 - (0.07 + 0.33) / 2, 1 / 6),
   fridge: 1 - Math.pow(1 - 0.3, 1 / 5),
+  dryer: 1 - Math.pow(1 - (0.08 + 0.19) / 2, 1 / 5),
+  centralAir: 1 - Math.pow(1 - 0.36, 1 / 8),
 };
 
 /** A repair's bill by country, in its money: a call-out and the repair. */
 export const REPAIRS: Readonly<Record<string, { currency: string; callout: number; items: Record<Machine, number> }>> = {
-  us: { currency: 'USD', callout: 0, items: { washer: 220, dishwasher: 225, fridge: 275 } },
-  uk: { currency: 'GBP', callout: 105, items: { washer: 125, dishwasher: 200, fridge: 150 } },
-  ie: { currency: 'EUR', callout: 80, items: { washer: 210, dishwasher: 210, fridge: 210 } },
-  ca: { currency: 'CAD', callout: 0, items: { washer: (155 + 600) / 2, dishwasher: (130 + 260) / 2, fridge: (260 + 520) / 2 } },
-  mx: { currency: 'MXN', callout: 0, items: { washer: (800 + 3000) / 2, dishwasher: (800 + 2500) / 2, fridge: (1000 + 3500) / 2 } },
+  // From 2026-10-05 a dryer's and central air's: HomeAdvisor's $180 and Fixr's $375 in America; Housekeep's middle of
+  // £60 to £350 and Checkatrade's £247 in Britain; Ireland's common repair, and the middle of a Dublin firm's €50 to €300
+  // for air conditioning; HomeStars' $130 and middle of $150 to $300 in Canada; middles of 500 to 2,000 and Cronoshare's
+  // 700 to 5,500 pesos in Mexico.
+  us: { currency: 'USD', callout: 0, items: { washer: 220, dishwasher: 225, fridge: 275, dryer: 180, centralAir: 375 } },
+  uk: { currency: 'GBP', callout: 105, items: { washer: 125, dishwasher: 200, fridge: 150, dryer: (60 + 350) / 2, centralAir: 247 } },
+  ie: { currency: 'EUR', callout: 80, items: { washer: 210, dishwasher: 210, fridge: 210, dryer: 210, centralAir: (50 + 300) / 2 } },
+  ca: { currency: 'CAD', callout: 0, items: { washer: (155 + 600) / 2, dishwasher: (130 + 260) / 2, fridge: (260 + 520) / 2, dryer: 130, centralAir: (150 + 300) / 2 } },
+  mx: { currency: 'MXN', callout: 0, items: { washer: (800 + 3000) / 2, dishwasher: (800 + 2500) / 2, fridge: (1000 + 3500) / 2, dryer: (500 + 2000) / 2, centralAir: (700 + 5500) / 2 } },
 };
 
 export const faultsOf = (person: Person): Partial<Record<Machine, MachineFault>> => person.applianceFaults ?? {};
 
-/** The machines the home they live in has working now: a washer, a dishwasher, and a fridge in any kitchen of one's own. */
+/** The machines the home they live in has working now: a washer, a dryer beside it, a dishwasher, central air, and a fridge in any kitchen of one's own. */
 export function machinesAt(sim: Simulation, person: Person): Machine[] {
   const f = workingFixtures(sim, person);
   if (!f) return [];
-  return [...(f.laundry === 'in-unit' || f.laundry === 'washer-only' ? ['washer' as const] : []), ...(f.dishwasher ? ['dishwasher' as const] : []), 'fridge'];
+  return [...(f.laundry === 'in-unit' || f.laundry === 'washer-only' ? ['washer' as const] : []), ...(f.laundry === 'in-unit' ? ['dryer' as const] : []), ...(f.dishwasher ? ['dishwasher' as const] : []), ...(f.cooling === 'central' ? ['centralAir' as const] : []), 'fridge'];
 }
 
 /** Whose machine it is to mend: the landlord's in a rented home, unless it's the tenant's own portable. */
-const landlords = (person: Person, m: Machine): boolean => person.home?.kind !== 'owned' && !(m !== 'fridge' && person.portables?.[m] !== undefined);
+const landlords = (person: Person, m: Machine): boolean => person.home?.kind !== 'owned' && !((m === 'washer' || m === 'dishwasher' || m === 'dryer') && person.portables?.[m] !== undefined);
 
 /** A repair's bill here, in the save's money; nothing where no price is kept. */
 export function repairBill(sim: Simulation, person: Person, m: Machine): Money | undefined {
@@ -123,7 +135,7 @@ export function machinesDay(sim: Simulation, person: Person, odds?: number): Mac
     const spoiled = m === 'fridge' ? spoilFridge(person, sim.now) : 0;
     if (person.id === sim.universe.playerId) {
       const bill = repairBill(sim, person, m);
-      sim.notify({ category: 'home', title: `The ${MACHINE_LABEL[m]} Broke`, body: `${landlord ? 'The landlord’s technician comes tomorrow.' : `Book The Repair on Home${bill !== undefined ? `, about ${formatMoney(bill, saveCurrency(sim.universe), { cents: false })}` : ''}.`}${m === 'washer' ? ' Until then the washing goes to the laundromat.' : m === 'dishwasher' ? ' Until then the dishes are done by hand.' : spoiled ? ' What was in it has spoiled.' : ''}`, importance: 55, route: '/home' });
+      sim.notify({ category: 'home', title: `The ${MACHINE_LABEL[m]} Broke`, body: `${landlord ? 'The landlord’s technician comes tomorrow.' : `Book The Repair on Home${bill !== undefined ? `, about ${formatMoney(bill, saveCurrency(sim.universe), { cents: false })}` : ''}.`}${m === 'washer' ? ' Until then the washing goes to the laundromat.' : m === 'dishwasher' ? ' Until then the dishes are done by hand.' : m === 'dryer' ? ' Until then the washing dries on a line.' : m === 'centralAir' ? ' Until then the home isn’t cooled.' : spoiled ? ' What was in it has spoiled.' : ''}`, importance: 55, route: '/home' });
     }
   }
   if (Object.keys(faults).length === 0) delete person.applianceFaults;
