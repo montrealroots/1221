@@ -1,0 +1,2360 @@
+{
+  "read": "2026-10-05",
+  "category": "audio",
+  "products": [
+    {
+      "brand": "Sonos",
+      "family": "Era",
+      "model": "Era 100",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 219, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/era-100", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/era-100",
+      "status": "verified"
+    },
+    {
+      "brand": "Sonos",
+      "family": "Era",
+      "model": "Era 100 SL",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 189, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/era-100-sl", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/era-100-sl",
+      "status": "verified"
+    },
+    {
+      "brand": "Sonos",
+      "family": "Era",
+      "model": "Era 300",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 499, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/era-300", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/era-300",
+      "status": "verified"
+    },
+    {
+      "brand": "Sonos",
+      "family": "Five",
+      "model": "Five",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 599, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/five", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/five",
+      "status": "verified"
+    },
+    {
+      "brand": "Sonos",
+      "family": "Move",
+      "model": "Move 2",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White", "Olive"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 499, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/move-2", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/move-2",
+      "status": "verified"
+    },
+    {
+      "brand": "Sonos",
+      "family": "Roam",
+      "model": "Roam 2",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White", "Sunset", "Wave", "Olive"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 179, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/roam-2", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/roam-2",
+      "status": "verified"
+    },
+    {
+      "brand": "Sonos",
+      "family": "Play",
+      "model": "Sonos Play",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White", "Sand"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 299, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/play", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/play",
+      "status": "verified"
+    },
+    {
+      "brand": "Sonos",
+      "family": "Ray",
+      "model": "Ray",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 219, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/ray", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/ray",
+      "status": "verified"
+    },
+    {
+      "brand": "Sonos",
+      "family": "Beam",
+      "model": "Beam (Gen 2)",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 499, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/beam", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/beam",
+      "status": "verified"
+    },
+    {
+      "brand": "Sonos",
+      "family": "Beam",
+      "model": "Beam Ultra",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 699, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/beam-ultra", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/beam-ultra",
+      "status": "verified"
+    },
+    {
+      "brand": "Sonos",
+      "family": "Arc",
+      "model": "Arc Ultra",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 1099, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/arc-ultra", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/arc-ultra",
+      "status": "verified"
+    },
+    {
+      "brand": "Sonos",
+      "family": "Sub",
+      "model": "Sub 4",
+      "type": "powered",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Sonos", "price": 899, "currency": "USD", "taxIncluded": false, "url": "https://www.sonos.com/en-us/shop/sub-4", "status": "verified" }
+      ],
+      "url": "https://www.sonos.com/en-us/shop/sub-4",
+      "status": "verified"
+    },
+    {
+      "brand": "Bose",
+      "family": "SoundLink",
+      "model": "SoundLink Home",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bose", "price": 179, "currency": "USD", "taxIncluded": false, "url": "https://www.bose.com/p/speakers/soundlink-home-bluetooth-speaker/SLHM-SPEAKERWIRELESS.html", "status": "verified" }
+      ],
+      "url": "https://www.bose.com/p/speakers/soundlink-home-bluetooth-speaker/SLHM-SPEAKERWIRELESS.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Bose",
+      "family": "SoundLink",
+      "model": "SoundLink Max",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bose", "price": 399, "currency": "USD", "taxIncluded": false, "url": "https://www.bose.com/p/speakers/bose-soundlink-max-portable-speaker/SLMAX-SPEAKERWIRELESS.html", "status": "verified" }
+      ],
+      "url": "https://www.bose.com/p/speakers/bose-soundlink-max-portable-speaker/SLMAX-SPEAKERWIRELESS.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Bose",
+      "family": "SoundLink",
+      "model": "SoundLink Plus",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bose", "price": 269, "currency": "USD", "taxIncluded": false, "url": "https://www.bose.com/soundlink-portable-speakers", "status": "verified" }
+      ],
+      "url": "https://www.bose.com/soundlink-portable-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Bose",
+      "family": "SoundLink",
+      "model": "SoundLink Flex (2nd Gen)",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bose", "price": 159, "currency": "USD", "taxIncluded": false, "url": "https://www.bose.com/soundlink-portable-speakers", "status": "verified" }
+      ],
+      "url": "https://www.bose.com/soundlink-portable-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Bose",
+      "family": "SoundLink",
+      "model": "SoundLink Micro (2nd Gen)",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bose", "price": 129, "currency": "USD", "taxIncluded": false, "url": "https://www.bose.com/soundlink-portable-speakers", "status": "verified" }
+      ],
+      "url": "https://www.bose.com/soundlink-portable-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Bose",
+      "family": "Portable Smart Speaker",
+      "model": "Bose Portable Smart Speaker",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bose", "price": 399, "currency": "USD", "taxIncluded": false, "url": "https://www.bose.com/c/speakers/home-speakers", "status": "verified" }
+      ],
+      "url": "https://www.bose.com/c/speakers/home-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Bose",
+      "family": "Smart Soundbar",
+      "model": "Bose Smart Soundbar",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Bose", "price": 549, "currency": "USD", "taxIncluded": false, "url": "https://www.bose.com/p/home-theater/bose-smart-soundbar/SSB-SOUNDBAR.html", "status": "verified" }
+      ],
+      "url": "https://www.bose.com/p/home-theater/bose-smart-soundbar/SSB-SOUNDBAR.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Bose",
+      "family": "Smart Ultra Soundbar",
+      "model": "Bose Smart Ultra Soundbar",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Bose", "price": 999, "currency": "USD", "taxIncluded": false, "url": "https://www.bose.com/p/home-theater/bose-smart-ultra-soundbar/SUSB-SOUNDBAR.html", "status": "verified" }
+      ],
+      "url": "https://www.bose.com/p/home-theater/bose-smart-ultra-soundbar/SUSB-SOUNDBAR.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Bose",
+      "family": "Bass Module",
+      "model": "Bass Module 500",
+      "type": "powered",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Bose", "price": 549, "currency": "USD", "taxIncluded": false, "url": "https://www.bose.com/p/sets/SET-SSB-BM500.html", "status": "verified" }
+      ],
+      "url": "https://www.bose.com/p/sets/SET-SSB-BM500.html",
+      "status": "verified"
+    },
+    {
+      "brand": "JBL",
+      "family": "Flip",
+      "model": "Flip 7",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "JBL", "price": 149.95, "currency": "USD", "taxIncluded": false, "url": "https://www.jbl.com/bluetooth-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.jbl.com/bluetooth-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "JBL",
+      "family": "Charge",
+      "model": "Charge 6",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "JBL", "price": 199.95, "currency": "USD", "taxIncluded": false, "url": "https://www.jbl.com/bluetooth-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.jbl.com/bluetooth-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "JBL",
+      "family": "Xtreme",
+      "model": "Xtreme 4",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "JBL", "price": 379.95, "currency": "USD", "taxIncluded": false, "url": "https://www.jbl.com/bluetooth-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.jbl.com/bluetooth-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "JBL",
+      "family": "Pulse",
+      "model": "Pulse 5",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "JBL", "price": 199.95, "currency": "USD", "taxIncluded": false, "url": "https://www.jbl.com/bluetooth-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.jbl.com/bluetooth-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "JBL",
+      "family": "Authentics",
+      "model": "Authentics 300",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "JBL", "price": 349.95, "currency": "USD", "taxIncluded": false, "url": "https://www.jbl.com/bluetooth-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.jbl.com/bluetooth-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "JBL",
+      "family": "PartyBox",
+      "model": "PartyBox 110",
+      "type": "powered",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "JBL", "price": 349.95, "currency": "USD", "taxIncluded": false, "url": "https://www.jbl.com/party-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.jbl.com/party-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "JBL",
+      "family": "PartyBox",
+      "model": "PartyBox Club 120",
+      "type": "powered",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "JBL", "price": 449.95, "currency": "USD", "taxIncluded": false, "url": "https://www.jbl.com/party-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.jbl.com/party-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "JBL",
+      "family": "PartyBox",
+      "model": "PartyBox 310",
+      "type": "powered",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "JBL", "price": 499.95, "currency": "USD", "taxIncluded": false, "url": "https://www.jbl.com/party-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.jbl.com/party-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "JBL",
+      "family": "Bar",
+      "model": "Bar 300",
+      "type": "soundbar",
+      "pair": false,
+      "watts": 260,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "JBL", "price": 449.95, "currency": "USD", "taxIncluded": false, "url": "https://www.jbl.com/soundbars/BAR-300-.html", "status": "verified" }
+      ],
+      "url": "https://www.jbl.com/soundbars/BAR-300-.html",
+      "status": "verified"
+    },
+    {
+      "brand": "JBL",
+      "family": "Bar",
+      "model": "Bar 1000",
+      "type": "soundbar",
+      "pair": false,
+      "watts": 880,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "JBL", "price": 1199.95, "currency": "USD", "taxIncluded": false, "url": "https://global.jbl.com/soundbars/BAR-1000-.html", "status": "verified" }
+      ],
+      "url": "https://global.jbl.com/soundbars/BAR-1000-.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Sony",
+      "family": "SRS-XB",
+      "model": "SRS-XB100",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Sony", "price": 65, "currency": "USD", "taxIncluded": false, "url": "https://electronics.sony.com/audio/speakers", "status": "verified" }
+      ],
+      "url": "https://electronics.sony.com/audio/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Sony",
+      "family": "ULT",
+      "model": "ULT FIELD 1",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Sony", "price": 148, "currency": "USD", "taxIncluded": false, "url": "https://electronics.sony.com/audio/speakers", "status": "verified" }
+      ],
+      "url": "https://electronics.sony.com/audio/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Sony",
+      "family": "Bravia Theatre",
+      "model": "Bravia Theatre Bar 6",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Sony", "price": 348, "currency": "USD", "taxIncluded": false, "url": "https://electronics.sony.com/audio/speakers", "status": "verified" }
+      ],
+      "url": "https://electronics.sony.com/audio/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Sony",
+      "family": "Bravia Theatre",
+      "model": "Bravia Theatre Bar 9",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Sony", "price": 1499, "currency": "USD", "taxIncluded": false, "url": "https://www.abt.com/Sony-BRAVIA-Theater-Bar-9-with-13-Speakers-Dolby-Atmos-and-DTS-X-HTA9000/p/207337.html", "status": "verified" }
+      ],
+      "url": "https://www.abt.com/Sony-BRAVIA-Theater-Bar-9-with-13-Speakers-Dolby-Atmos-and-DTS-X-HTA9000/p/207337.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Marshall",
+      "family": "Emberton",
+      "model": "Emberton III",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Marshall", "price": 179.99, "currency": "USD", "taxIncluded": false, "url": "https://www.marshall.com/us/en/speakers/bluetooth", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/us/en/speakers/bluetooth",
+      "status": "verified"
+    },
+    {
+      "brand": "Marshall",
+      "family": "Kilburn",
+      "model": "Kilburn II",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "uk", "seller": "Marshall", "price": 249, "currency": "GBP", "taxIncluded": true, "url": "https://www.marshall.com/uk/en/speakers/bluetooth", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/uk/en/speakers/bluetooth",
+      "status": "verified"
+    },
+    {
+      "brand": "Marshall",
+      "family": "Woburn",
+      "model": "Woburn III",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "uk", "seller": "Marshall", "price": 519, "currency": "GBP", "taxIncluded": true, "url": "https://www.marshall.com/uk/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/uk/en/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Marshall",
+      "family": "Acton",
+      "model": "Acton IV",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Marshall", "price": 329.99, "currency": "USD", "taxIncluded": false, "url": "https://www.marshall.com/us/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/us/en/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Marshall",
+      "family": "Stanmore",
+      "model": "Stanmore IV",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Marshall", "price": 429.99, "currency": "USD", "taxIncluded": false, "url": "https://www.marshall.com/us/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/us/en/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Marshall",
+      "family": "Middleton",
+      "model": "Middleton II",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Marshall", "price": 329.99, "currency": "USD", "taxIncluded": false, "url": "https://www.marshall.com/us/en/speakers/bluetooth", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/us/en/speakers/bluetooth",
+      "status": "verified"
+    },
+    {
+      "brand": "Marshall",
+      "family": "Heston",
+      "model": "Heston 60",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Marshall", "price": 549.99, "currency": "USD", "taxIncluded": false, "url": "https://www.marshall.com/us/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/us/en/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Marshall",
+      "family": "Heston",
+      "model": "Heston 120",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Marshall", "price": 999.99, "currency": "USD", "taxIncluded": false, "url": "https://www.marshall.com/us/en/speakers", "status": "verified" }
+      ],
+      "url": "https://www.marshall.com/us/en/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Bang & Olufsen",
+      "family": "Beosound",
+      "model": "Beosound A1 (3rd Gen)",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bang & Olufsen", "price": 399, "currency": "USD", "taxIncluded": false, "url": "https://www.bang-olufsen.com/en/us/speakers/beosound-a1", "status": "verified" }
+      ],
+      "url": "https://www.bang-olufsen.com/en/us/speakers/beosound-a1",
+      "status": "verified"
+    },
+    {
+      "brand": "Bang & Olufsen",
+      "family": "Beosound",
+      "model": "Beosound A5",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bang & Olufsen", "price": 1650, "currency": "USD", "taxIncluded": false, "url": "https://www.bang-olufsen.com/en/us/speakers/beosound-a5", "status": "verified" }
+      ],
+      "url": "https://www.bang-olufsen.com/en/us/speakers/beosound-a5",
+      "status": "verified"
+    },
+    {
+      "brand": "Bang & Olufsen",
+      "family": "Beosound",
+      "model": "Beosound Balance",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Natural Oak", "Black Oak"],
+      "offers": [
+        { "market": "us", "seller": "Bang & Olufsen", "price": 3650, "currency": "USD", "taxIncluded": false, "url": "https://www.bang-olufsen.com/en/int/speakers/beosound-balance", "status": "verified" }
+      ],
+      "url": "https://www.bang-olufsen.com/en/int/speakers/beosound-balance",
+      "status": "verified"
+    },
+    {
+      "brand": "Bang & Olufsen",
+      "family": "Beolab",
+      "model": "BeoLab 8",
+      "type": "powered",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "uk", "seller": "Bang & Olufsen", "price": 6500, "currency": "EUR", "taxIncluded": true, "url": "https://www.bang-olufsen.com/en/int/speakers", "status": "verified" }
+      ],
+      "url": "https://www.bang-olufsen.com/en/int/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Bowers & Wilkins",
+      "family": "Zeppelin",
+      "model": "Zeppelin",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bowers & Wilkins", "price": 799, "currency": "USD", "taxIncluded": false, "url": "https://www.bowerswilkins.com/en-us/product/wireless-speakers/zeppelin/150242.html", "status": "verified" }
+      ],
+      "url": "https://www.bowerswilkins.com/en-us/product/wireless-speakers/zeppelin/150242.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Bowers & Wilkins",
+      "family": "600 Series",
+      "model": "607 S3",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bowers & Wilkins", "price": 1000, "currency": "USD", "taxIncluded": false, "url": "https://www.bowerswilkins.com/en-us/category/loudspeakers/600-series/", "status": "verified" }
+      ],
+      "url": "https://www.bowerswilkins.com/en-us/category/loudspeakers/600-series/",
+      "status": "verified"
+    },
+    {
+      "brand": "Bowers & Wilkins",
+      "family": "600 Series",
+      "model": "606 S3",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bowers & Wilkins", "price": 1200, "currency": "USD", "taxIncluded": false, "url": "https://www.bowerswilkins.com/en-us/category/loudspeakers/600-series/", "status": "verified" }
+      ],
+      "url": "https://www.bowerswilkins.com/en-us/category/loudspeakers/600-series/",
+      "status": "verified"
+    },
+    {
+      "brand": "Bowers & Wilkins",
+      "family": "700 Series",
+      "model": "707 S3",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bowers & Wilkins", "price": 2000, "currency": "USD", "taxIncluded": false, "url": "https://www.bowerswilkins.com/en-us/category/loudspeakers/700-series/", "status": "verified" }
+      ],
+      "url": "https://www.bowerswilkins.com/en-us/category/loudspeakers/700-series/",
+      "status": "verified"
+    },
+    {
+      "brand": "Bowers & Wilkins",
+      "family": "700 Series",
+      "model": "706 S3",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bowers & Wilkins", "price": 3800, "currency": "USD", "taxIncluded": false, "url": "https://www.bowerswilkins.com/en-us/category/loudspeakers/700-series/", "status": "verified" }
+      ],
+      "url": "https://www.bowerswilkins.com/en-us/category/loudspeakers/700-series/",
+      "status": "verified"
+    },
+    {
+      "brand": "Bowers & Wilkins",
+      "family": "Formation",
+      "model": "Formation Duo",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": 250,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Bowers & Wilkins", "price": 3899, "currency": "USD", "taxIncluded": false, "url": "https://www.bowerswilkins.com/en-us/", "status": "verified" }
+      ],
+      "url": "https://www.bowerswilkins.com/en-us/",
+      "status": "verified"
+    },
+    {
+      "brand": "KEF",
+      "family": "LS50",
+      "model": "LS50 Wireless II",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "KEF", "price": 2999, "currency": "USD", "taxIncluded": false, "url": "https://us.kef.com/products/ls50-wireless-2", "status": "verified" }
+      ],
+      "url": "https://us.kef.com/products/ls50-wireless-2",
+      "status": "verified"
+    },
+    {
+      "brand": "KEF",
+      "family": "LSX",
+      "model": "LSX II",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "KEF", "price": 1499.99, "currency": "USD", "taxIncluded": false, "url": "https://us.kef.com/products/lsx-2", "status": "verified" }
+      ],
+      "url": "https://us.kef.com/products/lsx-2",
+      "status": "verified"
+    },
+    {
+      "brand": "KEF",
+      "family": "LS50",
+      "model": "LS50 Meta",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "KEF", "price": 1599.99, "currency": "USD", "taxIncluded": false, "url": "https://us.kef.com/products/ls50-meta", "status": "verified" }
+      ],
+      "url": "https://us.kef.com/products/ls50-meta",
+      "status": "verified"
+    },
+    {
+      "brand": "KEF",
+      "family": "LS60",
+      "model": "LS60 Wireless",
+      "type": "floorstanding",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "uk", "seller": "KEF", "price": 4999, "currency": "GBP", "taxIncluded": true, "url": "https://www.kef.com/products/ls60-wireless", "status": "verified" }
+      ],
+      "url": "https://www.kef.com/products/ls60-wireless",
+      "status": "verified"
+    },
+    {
+      "brand": "KEF",
+      "family": "Q Series",
+      "model": "Q3 Meta",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "uk", "seller": "KEF", "price": 649, "currency": "GBP", "taxIncluded": true, "url": "https://www.kef.com/collections/q-series", "status": "verified" }
+      ],
+      "url": "https://www.kef.com/collections/q-series",
+      "status": "verified"
+    },
+    {
+      "brand": "Ultimate Ears",
+      "family": "Wonderboom",
+      "model": "Wonderboom 4",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Ultimate Ears", "price": 79.99, "currency": "USD", "taxIncluded": false, "url": "https://www.ultimateears.com/en-us/shop/c/wireless-speakers", "status": "verified" }
+      ],
+      "url": "https://www.ultimateears.com/en-us/shop/c/wireless-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Ultimate Ears",
+      "family": "Boom",
+      "model": "Boom 4",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Ultimate Ears", "price": 149.99, "currency": "USD", "taxIncluded": false, "url": "https://www.ultimateears.com/en-us/shop/c/wireless-speakers", "status": "verified" }
+      ],
+      "url": "https://www.ultimateears.com/en-us/shop/c/wireless-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Ultimate Ears",
+      "family": "Megaboom",
+      "model": "Megaboom 4",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Ultimate Ears", "price": 199.99, "currency": "USD", "taxIncluded": false, "url": "https://www.ultimateears.com/en-us/shop/p/megaboom-4", "status": "verified" }
+      ],
+      "url": "https://www.ultimateears.com/en-us/shop/p/megaboom-4",
+      "status": "verified"
+    },
+    {
+      "brand": "Ultimate Ears",
+      "family": "Everboom",
+      "model": "Everboom",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Ultimate Ears", "price": 179.99, "currency": "USD", "taxIncluded": false, "url": "https://www.ultimateears.com/en-us/shop/c/wireless-speakers", "status": "verified" }
+      ],
+      "url": "https://www.ultimateears.com/en-us/shop/c/wireless-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Ultimate Ears",
+      "family": "Epicboom",
+      "model": "Epicboom",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Ultimate Ears", "price": 239.99, "currency": "USD", "taxIncluded": false, "url": "https://www.ultimateears.com/en-us/shop/p/epicboom-bluetooth", "status": "verified" }
+      ],
+      "url": "https://www.ultimateears.com/en-us/shop/p/epicboom-bluetooth",
+      "status": "verified"
+    },
+    {
+      "brand": "Ultimate Ears",
+      "family": "Hyperboom",
+      "model": "Hyperboom",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Ultimate Ears", "price": 399.99, "currency": "USD", "taxIncluded": false, "url": "https://www.ultimateears.com/en-us/shop/p/hyperboom", "status": "verified" }
+      ],
+      "url": "https://www.ultimateears.com/en-us/shop/p/hyperboom",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "Motion",
+      "model": "Motion X600",
+      "type": "portable",
+      "pair": false,
+      "watts": 50,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 199.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/products/motion-x600-a3130011", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/products/motion-x600-a3130011",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "Boom",
+      "model": "Boom 2",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 139.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "Boom",
+      "model": "Boom 2 Plus",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 249.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "Boom",
+      "model": "Boom 3i",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 129.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "Boom",
+      "model": "Boom Go 3i",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 79.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "Select",
+      "model": "Select 4 Go",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 34.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "Rave",
+      "model": "Rave 3S",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 349.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "Motion",
+      "model": "Motion Boom Plus",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 179.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "Motion",
+      "model": "Motion+",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 119.98, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "soundcore",
+      "model": "soundcore 1",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 35.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "soundcore",
+      "model": "soundcore 2",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 45.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "soundcore",
+      "model": "soundcore 3",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 59.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Anker Soundcore",
+      "family": "soundcore",
+      "model": "soundcore Mini",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Soundcore", "price": 39.99, "currency": "USD", "taxIncluded": false, "url": "https://www.soundcore.com/collections/speakers", "status": "verified" }
+      ],
+      "url": "https://www.soundcore.com/collections/speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Yamaha",
+      "family": "True X",
+      "model": "True X Bar 40A",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Yamaha", "price": 399.95, "currency": "USD", "taxIncluded": false, "url": "https://shop.usa.yamaha.com/en/audio-home-theater/sound-bars/true-x-series/true-x-bar-40a-dolby-atmos-sound-bar-with-built-in-subwoofers", "status": "verified" }
+      ],
+      "url": "https://shop.usa.yamaha.com/en/audio-home-theater/sound-bars/true-x-series/true-x-bar-40a-dolby-atmos-sound-bar-with-built-in-subwoofers",
+      "status": "verified"
+    },
+    {
+      "brand": "Yamaha",
+      "family": "True X",
+      "model": "True X Speaker 1A",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Best Buy", "price": 149.95, "currency": "USD", "taxIncluded": false, "url": "https://bestbuy.com/site/yamaha-true-x-speaker-1a-surround-rear-channel-speaker-wireless-and-portable-black/6563188.p?skuId=6563188", "status": "verified" }
+      ],
+      "url": "https://bestbuy.com/site/yamaha-true-x-speaker-1a-surround-rear-channel-speaker-wireless-and-portable-black/6563188.p?skuId=6563188",
+      "status": "verified"
+    },
+    {
+      "brand": "Yamaha",
+      "family": "True X",
+      "model": "True X Surround 90A",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Yamaha", "price": 3499, "currency": "USD", "taxIncluded": false, "url": "https://shop.usa.yamaha.com/en/p/audio-home-theater/sound-bars/true-x-surround-90a", "status": "verified" },
+        { "market": "uk", "seller": "Yamaha", "price": 2199, "currency": "GBP", "taxIncluded": true, "url": "https://au.yamaha.com/en/audio/home-audio/products/sound-bar", "status": "verified" }
+      ],
+      "url": "https://shop.usa.yamaha.com/en/p/audio-home-theater/sound-bars/true-x-surround-90a",
+      "status": "verified"
+    },
+    {
+      "brand": "Denon",
+      "family": "Home",
+      "model": "Denon Home 150",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Denon", "price": 249, "currency": "USD", "taxIncluded": false, "url": "https://www.denon.com/en-us/product/wireless-speakers/denon-home-150/137284-new.html", "status": "verified" }
+      ],
+      "url": "https://www.denon.com/en-us/product/wireless-speakers/denon-home-150/137284-new.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Denon",
+      "family": "Home",
+      "model": "Denon Home 150 NV",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Denon", "price": 219, "currency": "USD", "taxIncluded": false, "url": "https://www.denon.com/en-us/product/wireless-speakers/denon-home-150-nv/301006.html", "status": "verified" }
+      ],
+      "url": "https://www.denon.com/en-us/product/wireless-speakers/denon-home-150-nv/301006.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Denon",
+      "family": "Home",
+      "model": "Denon Home 250",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Denon", "price": 549, "currency": "USD", "taxIncluded": false, "url": "https://www.denon.com/en-us/product/wireless-speakers/denon-home-250/137285-new.html", "status": "verified" }
+      ],
+      "url": "https://www.denon.com/en-us/product/wireless-speakers/denon-home-250/137285-new.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Denon",
+      "family": "Home",
+      "model": "Denon Home 350",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black", "White"],
+      "offers": [
+        { "market": "us", "seller": "Denon", "price": 749, "currency": "USD", "taxIncluded": false, "url": "https://www.denon.com/en-us/category/shop-all-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.denon.com/en-us/category/shop-all-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "Denon",
+      "family": "DHT-S",
+      "model": "DHT-S716H",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Denon", "price": 899, "currency": "USD", "taxIncluded": false, "url": "https://www.denon.com/en-us/category/shop-all-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.denon.com/en-us/category/shop-all-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "Klipsch",
+      "family": "Reference",
+      "model": "R-50M",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": 340,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Klipsch", "price": 424.99, "currency": "USD", "taxIncluded": false, "url": "https://www.bestbuy.com/product/klipsch-r-50m-reference-series-5-1-4-340-watt-passive-2-way-bookshelf-speakers-pair-black/JX44FCKV22", "status": "verified" }
+      ],
+      "url": "https://www.bestbuy.com/product/klipsch-r-50m-reference-series-5-1-4-340-watt-passive-2-way-bookshelf-speakers-pair-black/JX44FCKV22",
+      "status": "verified"
+    },
+    {
+      "brand": "Klipsch",
+      "family": "Flexus",
+      "model": "Flexus Core 100",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Sweetwater", "price": 349.99, "currency": "USD", "taxIncluded": false, "url": "https://www.sweetwater.com/store/detail/FlexusCore100--klipsch-flexus-core-100-active-soundbar", "status": "verified" }
+      ],
+      "url": "https://www.sweetwater.com/store/detail/FlexusCore100--klipsch-flexus-core-100-active-soundbar",
+      "status": "verified"
+    },
+    {
+      "brand": "Klipsch",
+      "family": "Flexus",
+      "model": "Flexus Core 200",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Sweetwater", "price": 574.99, "currency": "USD", "taxIncluded": false, "url": "https://www.sweetwater.com/store/detail/FlexusCore200--klipsch-flexus-core-200-active-soundbar", "status": "verified" }
+      ],
+      "url": "https://www.sweetwater.com/store/detail/FlexusCore200--klipsch-flexus-core-200-active-soundbar",
+      "status": "verified"
+    },
+    {
+      "brand": "Klipsch",
+      "family": "Flexus",
+      "model": "Flexus Core 300",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Amazon", "price": 1199.99, "currency": "USD", "taxIncluded": false, "url": "https://www.amazon.com/Klipsch-Channel-Powered-Bluetooth-Correction/dp/B0DHF1C4QY", "status": "verified" }
+      ],
+      "url": "https://www.amazon.com/Klipsch-Channel-Powered-Bluetooth-Correction/dp/B0DHF1C4QY",
+      "status": "verified"
+    },
+    {
+      "brand": "Polk Audio",
+      "family": "React",
+      "model": "React Sound Bar",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Polk Audio", "price": 269, "currency": "USD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-us/product/sound-bars/react-sound-bar/300045.html", "status": "verified" }
+      ],
+      "url": "https://www.polkaudio.com/en-us/product/sound-bars/react-sound-bar/300045.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Polk Audio",
+      "family": "Signa",
+      "model": "Signa S2",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Polk Audio", "price": 249, "currency": "USD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-us/category/sound-bars/", "status": "verified" }
+      ],
+      "url": "https://www.polkaudio.com/en-us/category/sound-bars/",
+      "status": "verified"
+    },
+    {
+      "brand": "Polk Audio",
+      "family": "Signa",
+      "model": "Signa S4",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Polk Audio", "price": 449, "currency": "USD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-us/category/sound-bars/", "status": "verified" }
+      ],
+      "url": "https://www.polkaudio.com/en-us/category/sound-bars/",
+      "status": "verified"
+    },
+    {
+      "brand": "Polk Audio",
+      "family": "Monitor XT",
+      "model": "Monitor XT15",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Polk Audio", "price": 179, "currency": "USD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-us/category/monitor-xt-series/", "status": "verified" }
+      ],
+      "url": "https://www.polkaudio.com/en-us/category/monitor-xt-series/",
+      "status": "verified"
+    },
+    {
+      "brand": "Polk Audio",
+      "family": "Monitor XT",
+      "model": "Monitor XT20",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Polk Audio", "price": 279, "currency": "USD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-us/category/monitor-xt-series/", "status": "verified" }
+      ],
+      "url": "https://www.polkaudio.com/en-us/category/monitor-xt-series/",
+      "status": "verified"
+    },
+    {
+      "brand": "Polk Audio",
+      "family": "Monitor XT",
+      "model": "Monitor XT60",
+      "type": "floorstanding",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Polk Audio", "price": 229, "currency": "USD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-us/category/monitor-xt-series/", "status": "verified" }
+      ],
+      "url": "https://www.polkaudio.com/en-us/category/monitor-xt-series/",
+      "status": "verified"
+    },
+    {
+      "brand": "Polk Audio",
+      "family": "Monitor XT",
+      "model": "Monitor XT70",
+      "type": "floorstanding",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Polk Audio", "price": 349, "currency": "USD", "taxIncluded": false, "url": "https://www.polkaudio.com/en-us/category/monitor-xt-series/", "status": "verified" }
+      ],
+      "url": "https://www.polkaudio.com/en-us/category/monitor-xt-series/",
+      "status": "verified"
+    },
+    {
+      "brand": "Edifier",
+      "family": "R1280",
+      "model": "R1280T",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": 42,
+      "standbyWatts": null,
+      "colors": ["Black", "Wood"],
+      "offers": [
+        { "market": "us", "seller": "Edifier", "price": 149.99, "currency": "USD", "taxIncluded": false, "url": "https://us.edifier.com/products/r1280t", "status": "verified" }
+      ],
+      "url": "https://us.edifier.com/products/r1280t",
+      "status": "verified"
+    },
+    {
+      "brand": "Edifier",
+      "family": "MR",
+      "model": "MR4",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Edifier", "price": 169.99, "currency": "USD", "taxIncluded": false, "url": "https://www.speakerranking.com/compare/edifier-mr4-vs-edifier-r1280t/", "status": "verified" }
+      ],
+      "url": "https://www.speakerranking.com/compare/edifier-mr4-vs-edifier-r1280t/",
+      "status": "verified"
+    },
+    {
+      "brand": "Edifier",
+      "family": "S880",
+      "model": "S880DB MKII",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Edifier", "price": 449, "currency": "USD", "taxIncluded": false, "url": "https://www.tomsguide.com/audio/speakers/edifier-s880db-mkii-review", "status": "verified" }
+      ],
+      "url": "https://www.tomsguide.com/audio/speakers/edifier-s880db-mkii-review",
+      "status": "verified"
+    },
+    {
+      "brand": "Harman Kardon",
+      "family": "Onyx Studio",
+      "model": "Onyx Studio 9",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Amazon", "price": 299.95, "currency": "USD", "taxIncluded": false, "url": "https://www.amazon.com/Harman-Kardon-Onyx-Studio-Built/dp/B0DMHLTDBX", "status": "verified" }
+      ],
+      "url": "https://www.amazon.com/Harman-Kardon-Onyx-Studio-Built/dp/B0DMHLTDBX",
+      "status": "verified"
+    },
+    {
+      "brand": "Harman Kardon",
+      "family": "Onyx Studio",
+      "model": "Onyx Studio 8",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Harman Kardon", "price": 149.99, "currency": "USD", "taxIncluded": false, "url": "https://www.harmankardon.com/bluetooth-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.harmankardon.com/bluetooth-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "Harman Kardon",
+      "family": "Luna",
+      "model": "Luna 2",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Harman Kardon", "price": 199.95, "currency": "USD", "taxIncluded": false, "url": "https://www.harmankardon.com/bluetooth-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.harmankardon.com/bluetooth-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "Harman Kardon",
+      "family": "Aura Studio",
+      "model": "Aura Studio 4",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Walmart", "price": 295.90, "currency": "USD", "taxIncluded": false, "url": "https://www.walmart.com/ip/Harman-Kardon-Aura-Studio-3-Bluetooth-Speaker-Black/757112307", "status": "verified" }
+      ],
+      "url": "https://www.harmankardon.com/bluetooth-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "Audio Pro",
+      "family": "C",
+      "model": "C5 MkII",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Audio Pro", "price": 360, "currency": "USD", "taxIncluded": false, "url": "https://us.audiopro.com/products/c5-mkii", "status": "verified" },
+        { "market": "uk", "seller": "Audio Pro", "price": 299, "currency": "GBP", "taxIncluded": true, "url": "https://uk.audiopro.com/", "status": "verified" }
+      ],
+      "url": "https://us.audiopro.com/products/c5-mkii",
+      "status": "verified"
+    },
+    {
+      "brand": "Audio Pro",
+      "family": "A",
+      "model": "A10 MkII",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Audio Pro", "price": 300, "currency": "USD", "taxIncluded": false, "url": "https://us.audiopro.com/products/a10-mkii", "status": "verified" },
+        { "market": "uk", "seller": "Audio Pro", "price": 259, "currency": "GBP", "taxIncluded": true, "url": "https://uk.audiopro.com/", "status": "verified" }
+      ],
+      "url": "https://us.audiopro.com/products/a10-mkii",
+      "status": "verified"
+    },
+    {
+      "brand": "Audio Pro",
+      "family": "A",
+      "model": "A15",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Audio Pro", "price": 480, "currency": "USD", "taxIncluded": false, "url": "https://audiopro.com/products/a10", "status": "verified" },
+        { "market": "uk", "seller": "Audio Pro", "price": 350, "currency": "GBP", "taxIncluded": true, "url": "https://uk.audiopro.com/", "status": "verified" }
+      ],
+      "url": "https://audiopro.com/products/a10",
+      "status": "verified"
+    },
+    {
+      "brand": "Audioengine",
+      "family": "A",
+      "model": "A2+ Gen 3",
+      "type": "powered",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Audioengine", "price": 299, "currency": "USD", "taxIncluded": false, "url": "https://www.ecoustics.com/products/audioengine-a2-plus-gen-3/", "status": "verified" }
+      ],
+      "url": "https://www.ecoustics.com/products/audioengine-a2-plus-gen-3/",
+      "status": "verified"
+    },
+    {
+      "brand": "Audioengine",
+      "family": "A",
+      "model": "A5+",
+      "type": "powered",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Audioengine", "price": 499, "currency": "USD", "taxIncluded": false, "url": "https://audioengine.com/shop/wirelessspeakers/a5-wireless/", "status": "verified" }
+      ],
+      "url": "https://audioengine.com/shop/wirelessspeakers/a5-wireless/",
+      "status": "verified"
+    },
+    {
+      "brand": "Audioengine",
+      "family": "HD",
+      "model": "HD6",
+      "type": "powered",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Audioengine", "price": 749, "currency": "USD", "taxIncluded": false, "url": "https://www.soundstagexperience.com/index.php/equipment-menu/721-audioengine-hd6-powered-loudspeakers", "status": "verified" }
+      ],
+      "url": "https://www.soundstagexperience.com/index.php/equipment-menu/721-audioengine-hd6-powered-loudspeakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Audioengine",
+      "family": "HDP6",
+      "model": "HDP6",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Audioengine", "price": 399, "currency": "USD", "taxIncluded": false, "url": "https://audioengine.com/shop/passivespeakers/hdp6-passive-speakers/", "status": "verified" }
+      ],
+      "url": "https://audioengine.com/shop/passivespeakers/hdp6-passive-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "Audioengine",
+      "family": "B",
+      "model": "B2",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Audioengine", "price": 199, "currency": "USD", "taxIncluded": false, "url": "https://audioengine.com/shop/", "status": "verified" }
+      ],
+      "url": "https://audioengine.com/shop/",
+      "status": "verified"
+    },
+    {
+      "brand": "Q Acoustics",
+      "family": "3000i",
+      "model": "3020i",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Q Acoustics", "price": 479, "currency": "USD", "taxIncluded": false, "url": "https://www.qacoustics.com/products/3020i-bookshelf-speaker-pair", "status": "verified" }
+      ],
+      "url": "https://www.qacoustics.com/products/3020i-bookshelf-speaker-pair",
+      "status": "verified"
+    },
+    {
+      "brand": "Q Acoustics",
+      "family": "5000",
+      "model": "5040",
+      "type": "floorstanding",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Q Acoustics", "price": 1999, "currency": "USD", "taxIncluded": false, "url": "https://www.qacoustics.com/collections/all", "status": "verified" }
+      ],
+      "url": "https://www.qacoustics.com/collections/all",
+      "status": "verified"
+    },
+    {
+      "brand": "Q Acoustics",
+      "family": "M",
+      "model": "M40",
+      "type": "powered",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Q Acoustics", "price": 1699, "currency": "USD", "taxIncluded": false, "url": "https://www.qacoustics.com/collections/all", "status": "verified" }
+      ],
+      "url": "https://www.qacoustics.com/collections/all",
+      "status": "verified"
+    },
+    {
+      "brand": "Wharfedale",
+      "family": "Diamond 12",
+      "model": "Diamond 12.1",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["White", "Black"],
+      "offers": [
+        { "market": "us", "seller": "Wharfedale USA", "price": 499, "currency": "USD", "taxIncluded": false, "url": "https://www.wharfedaleusa.com/products/diamond-12-1-bookshelf-speakers", "status": "verified" }
+      ],
+      "url": "https://www.wharfedaleusa.com/products/diamond-12-1-bookshelf-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Wharfedale",
+      "family": "Diamond 12",
+      "model": "Diamond 12.1i",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Wharfedale USA", "price": 499, "currency": "USD", "taxIncluded": false, "url": "https://www.wharfedaleusa.com/products/diamond-12-1i-bookshelf-speakers-pair-1", "status": "verified" }
+      ],
+      "url": "https://www.wharfedaleusa.com/products/diamond-12-1i-bookshelf-speakers-pair-1",
+      "status": "verified"
+    },
+    {
+      "brand": "Dali",
+      "family": "Oberon",
+      "model": "Oberon 1",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Best Buy", "price": 750, "currency": "USD", "taxIncluded": false, "url": "https://www.bestbuy.com/site/dali-oberon-1-bookshelf-speakers-pair-black/6450893.p?skuId=6450893", "status": "verified" }
+      ],
+      "url": "https://www.bestbuy.com/site/dali-oberon-1-bookshelf-speakers-pair-black/6450893.p?skuId=6450893",
+      "status": "verified"
+    },
+    {
+      "brand": "Dali",
+      "family": "Oberon",
+      "model": "Oberon 9",
+      "type": "floorstanding",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Dali", "price": 4000, "currency": "USD", "taxIncluded": false, "url": "https://www.whathifi.com/best-buys/hi-fi/best-budget-hi-fi-speakers", "status": "verified" }
+      ],
+      "url": "https://www.whathifi.com/best-buys/hi-fi/best-budget-hi-fi-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Dali",
+      "family": "Spektor",
+      "model": "Spektor 2",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Audio Advisor", "price": 499, "currency": "USD", "taxIncluded": false, "url": "https://theaudiofactory.com/products/dali-spektor-2", "status": "verified" }
+      ],
+      "url": "https://theaudiofactory.com/products/dali-spektor-2",
+      "status": "verified"
+    },
+    {
+      "brand": "Focal",
+      "family": "Chora",
+      "model": "Chora 806",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Focal", "price": 600, "currency": "USD", "taxIncluded": false, "url": "https://futureaudiophile.com/focal-chora-806-loudspeakers-reviewed/", "status": "verified" }
+      ],
+      "url": "https://futureaudiophile.com/focal-chora-806-loudspeakers-reviewed/",
+      "status": "verified"
+    },
+    {
+      "brand": "Focal",
+      "family": "Theva",
+      "model": "Theva No.1",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Focal", "price": 1000, "currency": "USD", "taxIncluded": false, "url": "https://www.audioadvice.com/blogs/expert-advice/focal-theva-series-overview", "status": "verified" }
+      ],
+      "url": "https://www.audioadvice.com/blogs/expert-advice/focal-theva-series-overview",
+      "status": "verified"
+    },
+    {
+      "brand": "Focal",
+      "family": "Sopra",
+      "model": "Sopra No 2",
+      "type": "floorstanding",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Focal", "price": 13649, "currency": "USD", "taxIncluded": false, "url": "https://www.usaudiomart.com/brands/505-focal/", "status": "verified" }
+      ],
+      "url": "https://www.usaudiomart.com/brands/505-focal/",
+      "status": "verified"
+    },
+    {
+      "brand": "Devialet",
+      "family": "Phantom",
+      "model": "Phantom I 103dB",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Devialet", "price": 2399, "currency": "USD", "taxIncluded": false, "url": "https://www.devialet.com/en-us/", "status": "verified" }
+      ],
+      "url": "https://www.devialet.com/en-us/",
+      "status": "verified"
+    },
+    {
+      "brand": "Devialet",
+      "family": "Phantom",
+      "model": "Phantom I 108dB",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Devialet", "price": 3399, "currency": "USD", "taxIncluded": false, "url": "https://www.devialet.com/en-us/", "status": "verified" }
+      ],
+      "url": "https://www.devialet.com/en-us/",
+      "status": "verified"
+    },
+    {
+      "brand": "Devialet",
+      "family": "Mania",
+      "model": "Devialet Mania",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Deep Black", "Light Grey", "Sunset Rose", "Sandstorm"],
+      "offers": [
+        { "market": "us", "seller": "Devialet", "price": 900, "currency": "USD", "taxIncluded": false, "url": "https://www.devialet.com/en-us/portable-speakers/devialet-mania-deep-black/", "status": "verified" }
+      ],
+      "url": "https://www.devialet.com/en-us/portable-speakers/devialet-mania-deep-black/",
+      "status": "verified"
+    },
+    {
+      "brand": "Samsung",
+      "family": "Q-Series",
+      "model": "HW-Q990H",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Samsung", "price": 1999.99, "currency": "USD", "taxIncluded": false, "url": "https://www.ecoustics.com/products/samsung-q-series-soundbars-2026/", "status": "verified" }
+      ],
+      "url": "https://www.ecoustics.com/products/samsung-q-series-soundbars-2026/",
+      "status": "verified"
+    },
+    {
+      "brand": "Samsung",
+      "family": "Q-Series",
+      "model": "HW-Q900H",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Samsung", "price": 1499.99, "currency": "USD", "taxIncluded": false, "url": "https://www.ecoustics.com/products/samsung-q-series-soundbars-2026/", "status": "verified" }
+      ],
+      "url": "https://www.ecoustics.com/products/samsung-q-series-soundbars-2026/",
+      "status": "verified"
+    },
+    {
+      "brand": "Samsung",
+      "family": "Q-Series",
+      "model": "HW-Q800H",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Samsung", "price": 1099.99, "currency": "USD", "taxIncluded": false, "url": "https://www.androidheadlines.com/2026/04/samsung-hw-q990h-q800h-2026-soundbar-us-price-availability.html", "status": "verified" }
+      ],
+      "url": "https://www.androidheadlines.com/2026/04/samsung-hw-q990h-q800h-2026-soundbar-us-price-availability.html",
+      "status": "verified"
+    },
+    {
+      "brand": "Samsung",
+      "family": "Q-Series",
+      "model": "HW-QS90H",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Samsung", "price": 999.99, "currency": "USD", "taxIncluded": false, "url": "https://techstevehd.com/reviews/samsung-hw-qs90h-hw-qs90h", "status": "verified" }
+      ],
+      "url": "https://techstevehd.com/reviews/samsung-hw-qs90h-hw-qs90h",
+      "status": "verified"
+    },
+    {
+      "brand": "LG",
+      "family": "S-Series",
+      "model": "S95AR",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Amazon", "price": 1699, "currency": "USD", "taxIncluded": false, "url": "https://www.ecoustics.com/products/lg-s95ar-soundbar/", "status": "verified" }
+      ],
+      "url": "https://www.ecoustics.com/products/lg-s95ar-soundbar/",
+      "status": "verified"
+    },
+    {
+      "brand": "LG",
+      "family": "S-Series",
+      "model": "S55TR",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "LG", "price": 219.99, "currency": "USD", "taxIncluded": false, "url": "https://www.lg.com/us/soundbars", "status": "verified" }
+      ],
+      "url": "https://www.lg.com/us/soundbars",
+      "status": "verified"
+    },
+    {
+      "brand": "Vizio",
+      "family": "M-Series",
+      "model": "M-Series All-In-One",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Vizio", "price": 149, "currency": "USD", "taxIncluded": false, "url": "https://www.vizio.com/en/sound-bar/m-series/5-1", "status": "verified" }
+      ],
+      "url": "https://www.vizio.com/en/sound-bar/m-series/5-1",
+      "status": "verified"
+    },
+    {
+      "brand": "Vizio",
+      "family": "M-Series",
+      "model": "M-Series 5.1",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Vizio", "price": 329, "currency": "USD", "taxIncluded": false, "url": "https://www.vizio.com/en/sound-bar/m-series/5-1", "status": "verified" }
+      ],
+      "url": "https://www.vizio.com/en/sound-bar/m-series/5-1",
+      "status": "verified"
+    },
+    {
+      "brand": "Vizio",
+      "family": "M-Series",
+      "model": "M-Series 5.1.2",
+      "type": "soundbar",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Black"],
+      "offers": [
+        { "market": "us", "seller": "Vizio", "price": 499, "currency": "USD", "taxIncluded": false, "url": "https://www.vizio.com/en/sound-bar/m-series/5-1-2", "status": "verified" }
+      ],
+      "url": "https://www.vizio.com/en/sound-bar/m-series/5-1-2",
+      "status": "verified"
+    },
+    {
+      "brand": "Amazon Echo",
+      "family": "Echo",
+      "model": "Echo Pop",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Amazon", "price": 39.99, "currency": "USD", "taxIncluded": false, "url": "https://www.phonearena.com/news/amazon-echo-pop-new-echo-show-5-kids-variants-official-prices-release-date_id147583", "status": "verified" }
+      ],
+      "url": "https://www.phonearena.com/news/amazon-echo-pop-new-echo-show-5-kids-variants-official-prices-release-date_id147583",
+      "status": "verified"
+    },
+    {
+      "brand": "Amazon Echo",
+      "family": "Echo",
+      "model": "Echo Dot",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Amazon", "price": 49.99, "currency": "USD", "taxIncluded": false, "url": "https://www.reviewed.com/smarthome/best-right-now/the-best-amazon-echo-smart-speakers", "status": "verified" }
+      ],
+      "url": "https://www.reviewed.com/smarthome/best-right-now/the-best-amazon-echo-smart-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Amazon Echo",
+      "family": "Echo",
+      "model": "Echo Studio",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Amazon", "price": 219.99, "currency": "USD", "taxIncluded": false, "url": "https://www.reviewed.com/smarthome/best-right-now/the-best-amazon-echo-smart-speakers", "status": "verified" }
+      ],
+      "url": "https://www.reviewed.com/smarthome/best-right-now/the-best-amazon-echo-smart-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Google Nest",
+      "family": "Home",
+      "model": "Google Home Speaker",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Google", "price": 99.99, "currency": "USD", "taxIncluded": false, "url": "https://www.androidcentral.com/accessories/smart-home/google-home-speaker-2026-vs-nest-mini", "status": "verified" }
+      ],
+      "url": "https://www.androidcentral.com/accessories/smart-home/google-home-speaker-2026-vs-nest-mini",
+      "status": "verified"
+    },
+    {
+      "brand": "Google Nest",
+      "family": "Nest Hub",
+      "model": "Nest Hub (2nd Gen)",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Google", "price": 99, "currency": "USD", "taxIncluded": false, "url": "https://store.google.com/", "status": "verified" }
+      ],
+      "url": "https://store.google.com/",
+      "status": "verified"
+    },
+    {
+      "brand": "Apple",
+      "family": "HomePod",
+      "model": "HomePod",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Apple", "price": 349, "currency": "USD", "taxIncluded": false, "url": "https://www.macrumors.com/2026/06/25/apple-tv-and-homepod-price-increases/", "status": "verified" }
+      ],
+      "url": "https://www.macrumors.com/2026/06/25/apple-tv-and-homepod-price-increases/",
+      "status": "verified"
+    },
+    {
+      "brand": "Apple",
+      "family": "HomePod",
+      "model": "HomePod mini",
+      "type": "smart",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Apple", "price": 129, "currency": "USD", "taxIncluded": false, "url": "https://www.macrumors.com/2026/06/25/apple-tv-and-homepod-price-increases/", "status": "verified" }
+      ],
+      "url": "https://www.macrumors.com/2026/06/25/apple-tv-and-homepod-price-increases/",
+      "status": "verified"
+    },
+    {
+      "brand": "Cambridge Audio",
+      "family": "Minx Air",
+      "model": "Minx Air 100",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Cambridge Audio", "price": 449, "currency": "USD", "taxIncluded": false, "url": "https://www.ecoustics.com/products/cambridge-audio-minx-air-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.ecoustics.com/products/cambridge-audio-minx-air-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "Cambridge Audio",
+      "family": "Minx Air",
+      "model": "Minx Air 200",
+      "type": "wireless",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Cambridge Audio", "price": 599, "currency": "USD", "taxIncluded": false, "url": "https://www.ecoustics.com/products/cambridge-audio-minx-air-speakers/", "status": "verified" }
+      ],
+      "url": "https://www.ecoustics.com/products/cambridge-audio-minx-air-speakers/",
+      "status": "verified"
+    },
+    {
+      "brand": "Cambridge Audio",
+      "family": "MSX",
+      "model": "MSX10",
+      "type": "bookshelf",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Cambridge Audio", "price": 99, "currency": "USD", "taxIncluded": false, "url": "https://www.ecoustics.com/products/cambridge-audio-msx/", "status": "verified" }
+      ],
+      "url": "https://www.ecoustics.com/products/cambridge-audio-msx/",
+      "status": "verified"
+    },
+    {
+      "brand": "Cambridge Audio",
+      "family": "MSX",
+      "model": "MSX20",
+      "type": "bookshelf",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Cambridge Audio", "price": 129, "currency": "USD", "taxIncluded": false, "url": "https://www.ecoustics.com/products/cambridge-audio-msx/", "status": "verified" }
+      ],
+      "url": "https://www.ecoustics.com/products/cambridge-audio-msx/",
+      "status": "verified"
+    },
+    {
+      "brand": "Cambridge Audio",
+      "family": "L/R",
+      "model": "L/R S",
+      "type": "powered",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Cambridge Audio", "price": 549, "currency": "USD", "taxIncluded": false, "url": "https://www.cambridgeaudio.com/usa/en/products/speakers/minx", "status": "verified" }
+      ],
+      "url": "https://www.cambridgeaudio.com/usa/en/products/speakers/minx",
+      "status": "verified"
+    },
+    {
+      "brand": "Kanto",
+      "family": "YU",
+      "model": "YU4",
+      "type": "powered",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Kanto", "price": 450, "currency": "USD", "taxIncluded": false, "url": "https://soundapproach.com/kanto", "status": "verified" }
+      ],
+      "url": "https://soundapproach.com/kanto",
+      "status": "verified"
+    },
+    {
+      "brand": "Kanto",
+      "family": "YU",
+      "model": "YU6",
+      "type": "powered",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Kanto", "price": 550, "currency": "USD", "taxIncluded": false, "url": "https://headphones.com/products/kanto-yu6-powered-bookshelf-speakers", "status": "verified" }
+      ],
+      "url": "https://headphones.com/products/kanto-yu6-powered-bookshelf-speakers",
+      "status": "verified"
+    },
+    {
+      "brand": "Kanto",
+      "family": "Tuk",
+      "model": "Tuk",
+      "type": "powered",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Kanto", "price": 900, "currency": "USD", "taxIncluded": false, "url": "https://www.gearpatrol.com/audio/kanto-tuk-yu-speakers-upgrades-2026/", "status": "verified" }
+      ],
+      "url": "https://www.gearpatrol.com/audio/kanto-tuk-yu-speakers-upgrades-2026/",
+      "status": "verified"
+    },
+    {
+      "brand": "Monitor Audio",
+      "family": "Silver",
+      "model": "Silver 50 7G",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Gloss Black", "Ash", "Black Oak", "Natural Walnut", "Satin White"],
+      "offers": [
+        { "market": "us", "seller": "Audio Advisor", "price": 1249, "currency": "USD", "taxIncluded": false, "url": "https://www.audioadvisor.com/mrs507g-glsblk", "status": "verified" },
+        { "market": "uk", "seller": "Richer Sounds", "price": 700, "currency": "GBP", "taxIncluded": true, "url": "https://www.richersounds.com/monitor-audio-silver-50-7g-satin-white/", "status": "verified" }
+      ],
+      "url": "https://www.audioadvisor.com/mrs507g-glsblk",
+      "status": "verified"
+    },
+    {
+      "brand": "Elac",
+      "family": "Debut",
+      "model": "Debut B6.2",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": ["Walnut"],
+      "offers": [
+        { "market": "us", "seller": "Elac", "price": 239, "currency": "USD", "taxIncluded": false, "url": "https://slickdeals.net/f/16198591-elac-debut-2-0-b6-2-walnut-pair-239", "status": "verified" }
+      ],
+      "url": "https://slickdeals.net/f/16198591-elac-debut-2-0-b6-2-walnut-pair-239",
+      "status": "verified"
+    },
+    {
+      "brand": "Elac",
+      "family": "Debut",
+      "model": "Debut B5.2",
+      "type": "bookshelf",
+      "pair": true,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Crutchfield", "price": 269, "currency": "USD", "taxIncluded": false, "url": "https://www.whathifi.com/best-buys/best-elac-speakers-budget-to-premium", "status": "verified" }
+      ],
+      "url": "https://www.whathifi.com/best-buys/best-elac-speakers-budget-to-premium",
+      "status": "verified"
+    },
+    {
+      "brand": "Tribit",
+      "family": "StormBox",
+      "model": "StormBox Micro 3",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Tribit", "price": 65, "currency": "USD", "taxIncluded": false, "url": "https://9to5toys.com/2026/05/12/tribit-stormbox-micro-3-bluetooth-6-speaker/", "status": "verified" }
+      ],
+      "url": "https://9to5toys.com/2026/05/12/tribit-stormbox-micro-3-bluetooth-6-speaker/",
+      "status": "verified"
+    },
+    {
+      "brand": "Tribit",
+      "family": "StormBox",
+      "model": "StormBox Flow",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Tribit", "price": 79.99, "currency": "USD", "taxIncluded": false, "url": "https://tribit.com/products/tribit-stormbox-flow-portable-speaker", "status": "verified" }
+      ],
+      "url": "https://tribit.com/products/tribit-stormbox-flow-portable-speaker",
+      "status": "verified"
+    },
+    {
+      "brand": "Tribit",
+      "family": "StormBox",
+      "model": "StormBox Blast",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Tribit", "price": 199.99, "currency": "USD", "taxIncluded": false, "url": "https://tribit.com/products/tribit-stormbox-blast-portable-bluetooth-speaker", "status": "verified" }
+      ],
+      "url": "https://tribit.com/products/tribit-stormbox-blast-portable-bluetooth-speaker",
+      "status": "verified"
+    },
+    {
+      "brand": "Beats",
+      "family": "Pill",
+      "model": "Beats Pill",
+      "type": "portable",
+      "pair": false,
+      "watts": null,
+      "standbyWatts": null,
+      "colors": null,
+      "offers": [
+        { "market": "us", "seller": "Apple", "price": 149.95, "currency": "USD", "taxIncluded": false, "url": "https://us.smartprix.com/mobile_speakers/beats-pill-bluetooth-smart-speaker-ppd1ikx7lfnw", "status": "verified" }
+      ],
+      "url": "https://us.smartprix.com/mobile_speakers/beats-pill-bluetooth-smart-speaker-ppd1ikx7lfnw",
+      "status": "verified"
+    }
+  ],
+  "notFound": [
+    "ca/mx market offers not independently verified for most products; us/uk prices used as primary coverage within fetch budget",
+    "LG S80TR, S90TR soundbar current regular US price not confirmed from a single verified source",
+    "Cambridge Audio Yoyo portable speaker current new-model listing not found (only secondhand listings seen)",
+    "Beats full lineup beyond Pill (no other current home speaker from Beats found; brand is earbuds/headphones focused)",
+    "Monitor Audio further models (Silver 100/200/300, Bronze series, Studio series) not fetched within budget",
+    "Elac further models (Debut 2.0 F5.2, Uni-Fi series) not fetched within budget",
+    "Additional markets (ca, ie, mx) for KEF, Denon, Klipsch, Polk, Edifier, Harman Kardon, Q Acoustics, Wharfedale, Focal, Devialet, Samsung, LG, Vizio, Cambridge Audio, Kanto, Monitor Audio, Elac, Tribit not fetched within ~150-fetch budget; US/UK prices stand as primary verified offers"
+  ]
+}

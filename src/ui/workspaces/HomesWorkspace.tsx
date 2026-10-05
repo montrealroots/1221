@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { harvestRefusal, plantRefusal, plantingIn, plotsOf, ripeAt } from '@/engine/systems/garden';
 import { CROPS, type Crop } from '@/engine/content/garden';
 import { CatalogControls, CompareTable, CompareToggle, FavoriteToggle, ShowMore, useCatalogView, useCompare, usePaged } from '@/ui/components/Catalog';
-import { arrange, type CatalogEntry } from '@/engine/systems/catalog';
+import { arrange } from '@/engine/systems/catalog';
 import { applianceCatalog, furnitureCatalog, homeCatalog } from '@/engine/systems/catalogs';
 import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
@@ -27,6 +27,8 @@ import { BED_MARKET, bedSize } from '@/engine/content/beds';
 import { RENTED_TRUCK } from '@/engine/content/furniture';
 import { assemblyFee, pieceRefusal, piecesCatalog, seatsAtHome } from '@/engine/systems/furnishings';
 import { buyTvRefusal, tvAtHome, tvCatalog } from '@/engine/systems/televisions';
+import { buySpeakerRefusal, speakerCatalog } from '@/engine/systems/speakers';
+import { DeviceShop, type DeviceRow } from '@/ui/components/DeviceShop';
 import { ROOM_RENT, lodgerRefusal, lodgersIn, roomRent } from '@/engine/systems/lodgers';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
@@ -651,85 +653,60 @@ function FitOut({ owned }: { owned: OwnedHome }) {
 }
 
 /**
- * A television of one's own (`systems/televisions.ts`, from 2026-10-05): the
- * models sold where they live, cheapest first with the place's tax, searched and
- * filtered by maker, panel, resolution and size, a page at a time, compared and
- * marked favorite; bought in a color where it comes in more than one, kept as the
- * home's TV, and its on-mode power billed for each hour watched.
+ * A television of one's own (`systems/televisions.ts`, from 2026-10-05) and a
+ * speaker (`systems/speakers.ts`): the models sold where they live, on the
+ * shared device shop (`DeviceShop`), each kept as the home's TV or speaker.
  */
 function Televisions() {
-  const { sim, run, toast } = useGame();
+  const { sim } = useGame();
   const person = useWorld((s) => s.player);
-  const cur = saveCurrency(sim.universe);
-  const money = (c: number) => formatMoney(c, cur, { cents: false });
-  const shop = tvCatalog(sim, person);
-  const [view, setView] = useCatalogView('tvs');
-  const [shownCount, more] = usePaged('tvs');
-  const [compared, toggleCompare, clearCompare] = useCompare('tvs');
-  const [colors, setColors] = useState<Record<string, string>>({});
-  if (shop.length === 0) return null;
-  const band = (inches: number) => (inches < 40 ? 'Under 40 Inches' : inches < 55 ? '40 To 54 Inches' : inches < 70 ? '55 To 69 Inches' : '70 Inches And Over');
-  const entries: CatalogEntry<(typeof shop)[number]>[] = shop.map((x) => ({
-    id: x.offer.id, label: `${x.product.brand} ${x.offer.code ?? x.product.model}`, price: x.price, priceKind: 'advertised', basis: 'Each, with the tax as the place shows it',
-    facets: { brand: x.product.brand, panel: String(x.product.attrs.panel ?? 'LED'), resolution: String(x.product.attrs.resolution ?? 'Not Read'), size: band(Number(x.product.attrs.sizeIn)) },
-    words: [x.product.family, x.product.model, x.product.attrs.smartOs, x.offer.seller].filter(Boolean).join(' '), value: x,
-  }));
-  const arranged = arrange(entries, view);
-  const page = arranged.slice(0, shownCount);
-  const chosen = compared.map((id) => entries.find((e) => e.id === id)).filter((e): e is (typeof entries)[number] => Boolean(e));
-  const watts = (e: (typeof entries)[number]) => (typeof e.value.product.attrs.onModeWatts === 'number' ? `${e.value.product.attrs.powerBasis === 'estimate' ? '≈' : ''}${e.value.product.attrs.onModeWatts} W` : 'Not Read');
   const owned = tvAtHome(person);
+  const gate = useFeature('tv.buy');
+  const band = (inches: number) => (inches < 40 ? 'Under 40 Inches' : inches < 55 ? '40 To 54 Inches' : inches < 70 ? '55 To 69 Inches' : '70 Inches And Over');
+  const watts = (r: DeviceRow) => (typeof r.product.attrs.onModeWatts === 'number' ? `${r.product.attrs.powerBasis === 'estimate' ? '≈' : ''}${r.product.attrs.onModeWatts} W` : 'Not Read');
   return (
-    <div className="col gap-2">
-      <div className="strong small">{`Televisions${owned ? ` · Yours: ${owned.label}` : ''}`}</div>
-      <CatalogControls id="tvs-catalog" entries={entries} view={view} onChange={setView} facets={{ brand: 'Maker', panel: 'Panel', resolution: 'Resolution', size: 'Size' }} />
-      <div className="table-scroll">
-        <table>
-          <thead><tr><th scope="col">Set</th><th scope="col" className="num">Size</th><th scope="col">Panel</th><th scope="col" className="num">On</th><th scope="col" className="num">Price</th><th scope="col"><span className="sr-only">Choose</span></th></tr></thead>
-          <tbody>
-            {page.map((e) => {
-              const { product, offer, price } = e.value;
-              const no = buyTvRefusal(person, offer.id);
-              const offered = product.variants.map((v) => v.attrs.color).filter((c): c is string => Boolean(c));
-              const color = colors[offer.id] ?? offered[0];
-              return (
-                <tr key={offer.id}>
-                  <td>{e.label}<div className="xs dim">{[product.family, product.attrs.resolution, product.attrs.smartOs, offer.seller].filter(Boolean).join(' · ')}</div></td>
-                  <td className="num">{`${product.attrs.sizeIn}"`}</td>
-                  <td className="small">{String(product.attrs.panel ?? '—')}</td>
-                  <td className="num small">{watts(e)}</td>
-                  <td className="num mono">{money(price)}</td>
-                  <td>
-                    <div className="row gap-1" style={{ flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                      {offered.length > 1 && <select aria-label={`Color Of ${e.label}`} value={color} onChange={(ev) => setColors((x) => ({ ...x, [offer.id]: ev.target.value }))}>{offered.map((c) => <option key={c} value={c}>{c}</option>)}</select>}
-                      <FavoriteToggle list="tvs" id={offer.id} />
-                      <CompareToggle on={compared.includes(offer.id)} onToggle={() => toggleCompare(offer.id)} />
-                      <Gated feature="tv.buy" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no} onClick={() => { if (run('tv.buy', { offerId: offer.id, ...(offered.length > 1 && color ? { color } : {}) }).ok) toast(`${e.label}, bought and brought home.`, 'positive'); }}>Buy</Gated>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-      {arranged.length === 0 && <div className="small">None sold here matches that; clear the search or a filter.</div>}
-      <ShowMore shown={page.length} total={arranged.length} onMore={more} />
-      <CompareTable heads={chosen.map((e) => e.label)} onClear={clearCompare} rows={[
-        { label: 'Price', values: chosen.map((e) => money(e.value.price)) },
-        { label: 'Size', values: chosen.map((e) => `${e.value.product.attrs.sizeIn} Inches`) },
-        { label: 'Panel', values: chosen.map((e) => String(e.value.product.attrs.panel ?? '—')) },
-        { label: 'Resolution', values: chosen.map((e) => String(e.value.product.attrs.resolution ?? '—')) },
-        { label: 'Refresh', values: chosen.map((e) => (e.value.product.attrs.refreshHz ? `${e.value.product.attrs.refreshHz} Hz` : '—')) },
-        { label: 'Smart Platform', values: chosen.map((e) => String(e.value.product.attrs.smartOs ?? '—')) },
-        { label: 'On-Mode Power', values: chosen.map((e) => watts(e)) },
-        { label: 'Model Year', values: chosen.map((e) => String(e.value.product.attrs.year ?? '—')) },
-      ]} />
-      <div className="xs dim">Each set at its maker’s or a retailer’s own page, America’s and Canada’s prices with the place’s sales tax added. Its on-mode power is its energy label’s where one was read, or, marked ≈, its screen’s area at ENERGY STAR’s median watts a square inch, SLATE’s estimate; it’s billed for each hour watched. A set with no model draws the middle of the labeled sets.</div>
-    </div>
+    <DeviceShop list="tvs" title={`Televisions${owned ? ` · Yours: ${owned.label}` : ''}`} shop={tvCatalog(sim, person)} refusal={(id) => buyTvRefusal(person, id)} command="tv.buy" gate={gate} bought={(label) => `${label}, bought and brought home.`}
+      facets={{ brand: 'Maker', panel: 'Panel', resolution: 'Resolution', size: 'Size' }}
+      facetsOf={(r) => ({ brand: r.product.brand, panel: String(r.product.attrs.panel ?? 'LED'), resolution: String(r.product.attrs.resolution ?? 'Not Read'), size: band(Number(r.product.attrs.sizeIn)) })}
+      columns={[
+        { head: 'Size', num: true, cell: (r) => `${r.product.attrs.sizeIn}"` },
+        { head: 'Panel', cell: (r) => String(r.product.attrs.panel ?? '—') },
+        { head: 'On', num: true, cell: watts },
+      ]}
+      compare={[
+        { label: 'Size', value: (r) => `${r.product.attrs.sizeIn} Inches` },
+        { label: 'Panel', value: (r) => String(r.product.attrs.panel ?? '—') },
+        { label: 'Resolution', value: (r) => String(r.product.attrs.resolution ?? '—') },
+        { label: 'Refresh', value: (r) => (r.product.attrs.refreshHz ? `${r.product.attrs.refreshHz} Hz` : '—') },
+        { label: 'Smart Platform', value: (r) => String(r.product.attrs.smartOs ?? '—') },
+        { label: 'On-Mode Power', value: watts },
+        { label: 'Model Year', value: (r) => String(r.product.attrs.year ?? '—') },
+      ]}
+      fine="Each set at its maker’s or a retailer’s own page, America’s and Canada’s prices with the place’s sales tax added, named by the code its market sells it under. Its on-mode power is its energy label’s where one was read, or, marked ≈, its screen’s area at ENERGY STAR’s median watts a square inch, SLATE’s estimate; watching past a typical household’s 2.6 hours a day is billed." />
   );
 }
 
+const SPEAKER_KIND: Readonly<Record<string, string>> = { wireless: 'Wireless', smart: 'Smart', bookshelf: 'Bookshelf', floorstanding: 'Floor-Standing', soundbar: 'Soundbar', powered: 'Powered', portable: 'Portable' };
+function Speakers() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const gate = useFeature('speaker.buy');
+  return (
+    <DeviceShop list="speakers" title="Speakers" shop={speakerCatalog(sim, person)} refusal={(id) => buySpeakerRefusal(person, id)} command="speaker.buy" gate={gate} bought={(label) => `${label}, bought and brought home.`}
+      facets={{ brand: 'Maker', kind: 'Kind' }}
+      facetsOf={(r) => ({ brand: r.product.brand, kind: SPEAKER_KIND[String(r.product.attrs.type)] ?? 'Wireless' })}
+      columns={[
+        { head: 'Kind', cell: (r) => `${SPEAKER_KIND[String(r.product.attrs.type)] ?? '—'}${r.product.attrs.pair ? ', A Pair' : ''}` },
+        { head: 'Power', num: true, cell: (r) => (r.product.attrs.watts ? `${r.product.attrs.watts} W` : '—') },
+      ]}
+      compare={[
+        { label: 'Kind', value: (r) => SPEAKER_KIND[String(r.product.attrs.type)] ?? '—' },
+        { label: 'A Pair', value: (r) => (r.product.attrs.pair ? 'Yes' : 'No') },
+        { label: 'Power', value: (r) => (r.product.attrs.watts ? `${r.product.attrs.watts} W` : '—') },
+      ]}
+      fine="Each at its maker’s or a retailer’s own page, America’s and Canada’s prices with the place’s sales tax added; its power is its maker’s stated amplifier power. The one bought is the home’s speaker, what a music lover unwinds with." />
+  );
+}
 /** IKEA's seats, tables and storage where they live (`systems/furnishings.ts`), cheapest first: searched, by kind, a page at a time, favorites kept and up to three compared (from 2026-10-04). */
 function FromIkea() {
   const { sim, run, toast } = useGame();
@@ -838,6 +815,7 @@ function Furniture() {
       {!owns(person, 'bed') && <ChooseABed cityId={where} />}
       <FromIkea />
       <Televisions />
+      <Speakers />
       <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <div className="field" style={{ margin: 0 }}>
           <label htmlFor="move-by">When You Move</label>

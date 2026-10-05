@@ -11,52 +11,24 @@
  */
 
 import type { Simulation } from '../core/simulation';
-import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Money } from '../core/money';
-import { CITIES } from '../content/geography';
-import { salesTaxRate } from '../content/tax';
 import { TV_PRODUCTS } from '../content/tvcatalog';
 import { GENERIC_TV_WATTS } from '../content/tvuse';
 import type { CatalogOffer, CatalogProduct } from '../content/products';
-import { inSaveMoney } from './banking';
-import { payFromBank } from './household';
-import { addItem, homeKeyOf, itemsOf } from './items';
+import { homeKeyOf, itemsOf } from './items';
+import { buyDevice, deviceCatalog, devicePrice, deviceRefusal } from './devices';
 import { livingOf } from './dwelling';
-
-const MARKET: Readonly<Record<string, string>> = { us: 'us', ca: 'ca', uk: 'uk', ie: 'ie', mx: 'mx' };
 
 /** The typical set's draw (`content/tvuse.ts`): what a TV with no model draws. */
 export { GENERIC_TV_WATTS };
 
 export const tvProduct = (id: string): CatalogProduct | undefined => TV_PRODUCTS.find((p) => p.id === id);
-const offerById = (id: string): { product: CatalogProduct; offer: CatalogOffer } | undefined => {
-  for (const product of TV_PRODUCTS) { const offer = product.offers.find((o) => o.id === id); if (offer) return { product, offer }; }
-  return undefined;
-};
-
-/** An offer's price where a town is: the place's sales tax on a price before it. */
-export function tvPrice(sim: Simulation, cityId: string, offer: CatalogOffer): Money {
-  const tax = offer.taxIncluded ? 0 : salesTaxRate(cityId, sim.now, 'goods');
-  return inSaveMoney(sim, Math.round(offer.price * (1 + tax) * 100), offer.currency);
-}
-
+/** An offer's price where a town is (`devicePrice`). */
+export const tvPrice = devicePrice;
 /** The sets on sale where they live, an offer each, cheapest first. */
-export function tvCatalog(sim: Simulation, person: Person): { product: CatalogProduct; offer: CatalogOffer; price: Money }[] {
-  const cityId = person.home?.cityId ?? person.currentLocationId;
-  const market = MARKET[CITIES.get(cityId)?.countryId ?? ''];
-  if (!market) return [];
-  return TV_PRODUCTS.flatMap((product) => product.offers.filter((o) => o.market === market).map((offer) => ({ product, offer, price: tvPrice(sim, cityId, offer) })))
-    .sort((a, b) => a.price - b.price || a.product.id.localeCompare(b.product.id));
-}
-
-export function buyTvRefusal(person: Person, offerId: string): string | undefined {
-  const found = offerById(offerId);
-  if (!found) return 'That isn’t on sale.';
-  if (!person.home || person.home.kind === 'sofa' || person.home.cityId !== person.currentLocationId) return 'A television is bought where you live, for a home of your own.';
-  if (MARKET[CITIES.get(person.home.cityId)?.countryId ?? ''] !== found.offer.market) return 'It’s sold in another country.';
-  return undefined;
-}
+export const tvCatalog = (sim: Simulation, person: Person): { product: CatalogProduct; offer: CatalogOffer; price: Money }[] => deviceCatalog(sim, person, TV_PRODUCTS);
+export const buyTvRefusal = (person: Person, offerId: string): string | undefined => deviceRefusal(person, TV_PRODUCTS, offerId, 'A television');
 
 /** The TV at home: its product where it's a model, and the watts it draws on. */
 export function tvAtHome(person: Person): { label: string; watts: number | undefined; product?: CatalogProduct } | undefined {
@@ -80,20 +52,8 @@ export function watchPower(person: Person, minutes: number): number {
 
 export function registerTelevisions(sim: Simulation): void {
   sim.onCommand<{ offerId: string; color?: string }, { paid: Money; itemId: string }>('tv.buy', (p, { sim: s }) => {
-    const person = s.player;
-    const id = String(p?.offerId ?? '');
-    const no = buyTvRefusal(person, id);
-    if (no) throw new CommandError(no);
-    const { product, offer } = offerById(id)!;
-    const colors = product.variants.map((v) => v.attrs.color).filter((c): c is string => Boolean(c));
-    if (p.color !== undefined && !colors.includes(String(p.color))) throw new CommandError('It isn’t offered in that color.');
-    const color = p.color !== undefined ? String(p.color) : colors.length === 1 ? colors[0] : undefined;
-    const paid = tvPrice(s, person.home!.cityId, offer);
-    // Named as this market sells it.
-    const label = `${product.brand} ${offer.code ?? product.model}, ${product.attrs.sizeIn}-Inch`;
-    if (!payFromBank(s, person, paid, `${offer.seller}: ${label}`, 'personal')) throw new CommandError('The bank couldn’t pay for it.');
-    // Kept as the home's TV, what a film or television lover unwinds with (`GEAR_FOR`), its model kept.
-    const item = addItem(s, person, { kind: 'furniture:tv', label, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: 'floor' }, acquiredAt: s.now, paid, bulky: true, spec: { product: product.id, offer: offer.id, ...(color ? { color } : {}) } });
+    // Kept as the home's TV, what a film or television lover unwinds with (`GEAR_FOR`), named as this market sells it.
+    const { paid, item } = buyDevice(s, s.player, TV_PRODUCTS, String(p?.offerId ?? ''), p?.color, 'tv', 'A television', (product, offer) => `${product.brand} ${offer.code ?? product.model}, ${product.attrs.sizeIn}-Inch`);
     return { paid, itemId: item.id };
   });
 }

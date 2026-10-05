@@ -32,7 +32,7 @@ which never counts toward the target.
 | Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 0 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
 | Electronics | Computers | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Electronics | Televisions | 24 | 48% | 220 | 1 / 5 / 40 | 0 | 222 | 261 | 0 | CA, GB, IE, MX, US | No |
-| Electronics | Audio Equipment | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
+| Electronics | Audio Equipment | 35 | 70% | 156 | 1 / 3 / 13 | 0 | 188 | 161 | 0 | GB, US | No |
 | Home | Furniture | 1 | 2% | 90 | 90 / 90 / 90 | 0 | 90 | 163 | 0 | CA, GB, IE, MX, US | No |
 | Home | Mattresses And Beds | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Home | Bedding And Towels | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
