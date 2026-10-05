@@ -30,7 +30,7 @@ which never counts toward the target.
 | Accessories | Luggage | 53 | 100% | 1745 | 1 / 26 / 100 | 2 | 6041 | 3241 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Phones | 53 | 100% | 110 | 1 / 1 / 10 | 0 | 236 | 377 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 0 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
-| Electronics | Computers | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
+| Electronics | Computers | 56 | 100% | 106 | 1 / 1 / 6 | 0 | 106 | 107 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Televisions | 50 | 100% | 263 | 1 / 2 / 40 | 0 | 265 | 307 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Audio Equipment | 68 | 100% | 199 | 1 / 2 / 13 | 0 | 260 | 212 | 0 | CA, GB, IE, MX, US | No |
 | Home | Furniture | 65 | 100% | 221 | 1 / 2 / 90 | 0 | 221 | 294 | 0 | CA, GB, IE, MX, US | No |
@@ -52,7 +52,7 @@ which never counts toward the target.
 | Vehicles | Light Aircraft | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: a handful of makers build new light aircraft for private owners |
 | Vehicles | Factory Options | 63 | 100% | 976 | 1 / 7 / 136 | 1 | 976 | 976 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Tires And Wheels | 52 | 100% | 96 | 1 / 1 / 6 | 0 | 96 | 103 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Car Audio | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
+| Vehicles | Car Audio | 55 | 100% | 98 | 1 / 1 / 7 | 0 | 98 | 102 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Building Materials, Fixtures And Finishes | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Building And Garden | Garden Equipment | 52 | 100% | 117 | 1 / 2 / 6 | 0 | 117 | 118 | 0 | CA, GB, IE, MX, US | No |
 | Sport | Sports Equipment | 54 | 100% | 130 | 1 / 2 / 19 | 0 | 130 | 130 | 0 | CA, GB, IE, MX, US | No |

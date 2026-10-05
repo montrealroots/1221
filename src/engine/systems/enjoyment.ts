@@ -31,6 +31,7 @@ import type { LookAfter } from './life';
 import { personalityOf } from './personality';
 import type { Piece } from '../content/furniture';
 import { homeKeyOf } from './items';
+import { gamingComputer } from './computers';
 import { hasSomethingToRead } from './reading';
 import { PRODUCT_INTEREST } from '../content/career';
 
@@ -69,6 +70,8 @@ export const LOVED_RELIEF = 1.25;
  * What an interest needs at home to be enjoyed there (from 2026-09-30): a
  * screen for film and television, a console for games, a speaker for music
  * (`content/furniture.ts`). Away from home, a hotel's or a sublet's TV does.
+ * From 2026-10-05 games are played on a computer with a graphics card of its
+ * own too (`gamingComputer` in `systems/computers.ts`).
  */
 export const GEAR_FOR: Readonly<Record<string, Piece>> = { film: 'tv', film_history: 'tv', film_preservation: 'tv', television: 'tv', games: 'console', music: 'speaker' };
 
@@ -77,7 +80,7 @@ export function lovedIn(person: Pick<Person, 'interests'> & Partial<Pick<Person,
   const theirs = person.interests ?? [];
   const atHome = person.home !== undefined && person.home.kind !== 'sofa' && person.currentLocationId === person.home.cityId;
   // A reader's gear is something to read: a library card of the town, a book or an e-reader (`systems/reading.ts`, from 2026-10-02).
-  return LOVED_IN[action].filter((id) => theirs.includes(id) && (!atHome || (id === 'reading' ? hasSomethingToRead(person as Person) : !GEAR_FOR[id] || hasGear(person, GEAR_FOR[id]!))));
+  return LOVED_IN[action].filter((id) => theirs.includes(id) && (!atHome || (id === 'reading' ? hasSomethingToRead(person as Person) : !GEAR_FOR[id] || hasGear(person, GEAR_FOR[id]!) || (id === 'games' && gamingComputer(person)))));
 }
 
 /** Their gear at the home they live in: an item there (`systems/items.ts`), or a save's piece from before items. */

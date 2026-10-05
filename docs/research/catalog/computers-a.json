@@ -1,0 +1,442 @@
+{
+  "read": "2026-10-05",
+  "dropped": [
+    "Dynabook: only series 'starting at' prices found for a specific config; no single-SKU exact price located within research time",
+    "Panasonic Toughbook: only 'starting at'/configurator base prices found; no single confirmed-configuration retail price located",
+    "Purism: no US/CA retail listing with an exact personal-computer price found (direct-sale configurator only, 'starting at')",
+    "Tuxedo: German/EU-only direct seller; no US or Canadian retail price found",
+    "ROG (as distinct from Asus): folded into Asus entries since ROG is Asus's own sub-brand, not a separate maker",
+    "Predator (as distinct from Acer): folded into Acer entries since Predator is Acer's own sub-brand, not a separate maker",
+    "Origin PC: no exact single-configuration price located within research time (configurator-only pricing)",
+    "Thermaltake: no current prebuilt PC retail listing with an exact price found; Thermaltake sells components/cases, not an active prebuilt PC line confirmed",
+    "Velztorm: no retail listing found at the researched retailers within the time available"
+  ],
+  "retailers": [
+    { "id": "bestbuy-us", "name": "Best Buy", "market": "US", "url": "https://www.bestbuy.com" },
+    { "id": "walmart-us", "name": "Walmart", "market": "US", "url": "https://www.walmart.com" },
+    { "id": "amazon-us", "name": "Amazon", "market": "US", "url": "https://www.amazon.com" },
+    { "id": "newegg-us", "name": "Newegg", "market": "US", "url": "https://www.newegg.com" },
+    { "id": "dell-us", "name": "Dell (maker store)", "market": "US", "url": "https://www.dell.com/en-us" },
+    { "id": "razer-us", "name": "Razer (maker store)", "market": "US", "url": "https://www.razer.com" },
+    { "id": "system76-us", "name": "System76 (maker store)", "market": "US", "url": "https://system76.com" },
+    { "id": "nzxt-us", "name": "NZXT (maker store)", "market": "US", "url": "https://nzxt.com" },
+    { "id": "corsair-us", "name": "Corsair (maker store)", "market": "US", "url": "https://www.corsair.com" },
+    { "id": "maingear-us", "name": "Maingear (maker store)", "market": "US", "url": "https://maingear.com" },
+    { "id": "minisforum-us", "name": "Minisforum (maker store)", "market": "US", "url": "https://www.minisforum.com" },
+    { "id": "gmktec-us", "name": "GMKtec (maker store)", "market": "US", "url": "https://www.gmktec.com" },
+    { "id": "chuwi-us", "name": "Chuwi (maker store)", "market": "US", "url": "https://us.chuwi.com" },
+    { "id": "zotac-us", "name": "Zotac Store", "market": "US", "url": "https://zotacstore.com/us" },
+    { "id": "framework-us", "name": "Framework (maker store)", "market": "US", "url": "https://frame.work" },
+    { "id": "geekom-us", "name": "GEEKOM (maker store)", "market": "US", "url": "https://www.geekompc.com" },
+    { "id": "bestbuy-ca", "name": "Best Buy Canada", "market": "CA", "url": "https://www.bestbuy.ca" },
+    { "id": "canadacomputers-ca", "name": "Canada Computers & Electronics", "market": "CA", "url": "https://www.canadacomputers.com" },
+    { "id": "memoryexpress-ca", "name": "Memory Express", "market": "CA", "url": "https://www.memoryexpress.com" }
+  ],
+  "products": [
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "Apple", "model": "MacBook Air 13-inch (M4, 2025)",
+      "kind": "laptop", "cpu": "Apple M4", "ramGb": 16, "storageGb": 256,
+      "gpu": "Apple M4 10-core GPU (integrated)", "discreteGpu": false, "screenIn": 13.6,
+      "os": "macOS", "weightKg": 1.24, "price": 999.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/product/apple-macbook-air-13-inch-laptop-apple-m4-chip-built-for-apple-intelligence-16gb-memory-256gb-ssd-sky-blue/JJGCQ8TVPP/sku/6534644",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting the Best Buy SKU page (MC6T4LL/A, Sky Blue, 16GB/256GB) at $999.00"
+    },
+    {
+      "retailer": "bestbuy-ca", "market": "CA", "brand": "Apple", "model": "MacBook Air 13.6-inch (M4, 2025)",
+      "kind": "laptop", "cpu": "Apple M4", "ramGb": 16, "storageGb": 256,
+      "gpu": "Apple M4 10-core GPU (integrated)", "discreteGpu": false, "screenIn": 13.6,
+      "os": "macOS", "weightKg": 1.24, "price": 1199.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.bestbuy.ca/en-ca/shop/computers-tablets/apple-macbook-air-13-m4",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy Canada listing for the 13.6-inch M4 MacBook Air, 16GB RAM/256GB SSD, at $1,199.99 CAD"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "Apple", "model": "iMac 24-inch (M4, 10-core GPU)",
+      "kind": "all-in-one", "cpu": "Apple M4 (10-core CPU)", "ramGb": 16, "storageGb": 256,
+      "gpu": "Apple M4 10-core GPU (integrated)", "discreteGpu": false, "screenIn": 24,
+      "os": "macOS", "weightKg": null, "price": 1699.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat378600050012&id=pcat17071&qp=processormodelsv_facet%3DProcessor+Model%7EApple+M4&st=pcmcat378600050012_categoryid%24pcmcat143400050013",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet summarizing Best Buy's iMac 24-inch M4 configurations: 10-core CPU/10-core GPU, 16GB/256GB at $1,699"
+    },
+    {
+      "retailer": "dell-us", "market": "US", "brand": "Dell", "model": "XPS 13 9350, Intel Core Ultra 7 Series 2 256V",
+      "kind": "laptop", "cpu": "Intel Core Ultra 7 Series 2 256V (2024)", "ramGb": 16, "storageGb": 512,
+      "gpu": "Intel Arc Graphics 130V (integrated)", "discreteGpu": false, "screenIn": 13.4,
+      "os": "Windows 11 Home", "weightKg": 1.2, "price": 1179.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/product/dell-xps-13-13-4-2k-laptop-intel-core-ultra-7-series-2-256v-2024-16gb-memory-512-gb-storage-copilot-pc-graphite/J3K4L6J96Q",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy's listing for this exact XPS 13 configuration (Core Ultra 7 Series 2 256V, 16GB/512GB, Graphite) at $1,179.99"
+    },
+    {
+      "retailer": "bestbuy-ca", "market": "CA", "brand": "Dell", "model": "XPS 13, Intel Core Ultra 7 Series 2",
+      "kind": "laptop", "cpu": "Intel Core Ultra 7 Series 2", "ramGb": 16, "storageGb": 512,
+      "gpu": "Intel Arc Graphics (integrated)", "discreteGpu": false, "screenIn": 13.4,
+      "os": "Windows 11 Home", "weightKg": 1.2, "price": 1719.97, "salePrice": null, "currency": "CAD",
+      "url": "https://www.bestbuy.ca/en-ca/shop/computers-tablets/xps-13-laptops",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy Canada listing: 'Dell XPS 13.4\" 120Hz Laptop - Intel Core Ultra 7 Series 2 - 16GB LPDDR5X - 512GB SSD - Windows 11 Home - Graphite for $1,719.97 CAD'"
+    },
+    {
+      "retailer": "dell-us", "market": "US", "brand": "Alienware", "model": "Alienware 16 Aurora (base config)",
+      "kind": "laptop", "cpu": "Intel Core 7 240H Series 2 (10-core)", "ramGb": 16, "storageGb": 512,
+      "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU", "discreteGpu": true, "screenIn": 16,
+      "os": "Windows 11", "weightKg": null, "price": 1749.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.dell.com/en-us/shop/dell-laptops/alienware-16-aurora-gaming-laptop/spd/alienware-aurora-ac16250-gaming-laptop",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Dell.com's base configuration price for the Alienware 16 Aurora (Core 7-240H, RTX 5060, 16GB/512GB, 16\" WQXGA) at $1,749.99"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "HP", "model": "Omen 16, AMD Ryzen 9 8940HX",
+      "kind": "laptop", "cpu": "AMD Ryzen 9 8940HX (2025)", "ramGb": 32, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU", "discreteGpu": true, "screenIn": 16,
+      "os": "Windows 11", "weightKg": null, "price": 2219.99, "salePrice": 1549.99, "currency": "USD",
+      "url": "https://www.bestbuy.com/product/hp-omen-16-2k-144hz-gaming-laptop-amd-ryzen-9-8940hx-2025-32gb-ddr5-memory-nvidia-geforce-rtx-5060-1tb-ssd-shadow-black/JJGH2L954G",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy SKU page: 'currently priced at $1,549.99 (down from $2,219.99)' for this exact 2K 144Hz config"
+    },
+    {
+      "retailer": "canadacomputers-ca", "market": "CA", "brand": "HP", "model": "Omen 16, Intel Core 7-240H",
+      "kind": "laptop", "cpu": "Intel Core 7-240H", "ramGb": 32, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5070 Laptop GPU", "discreteGpu": true, "screenIn": 16,
+      "os": "Windows 11 Home", "weightKg": null, "price": 1999.88, "salePrice": null, "currency": "CAD",
+      "url": "https://www.canadacomputers.com/en/gaming-laptops/271158/hp-omen-16-16-intel-core-7-240h-geforce-rtx-5070-32gb-1tb-win11h-b81jyuaabl.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Canada Computers listing/forum repost: HP OMEN 16 (Core 7-240H, RTX 5070, 32GB/1TB) at $1,999.88 CAD (also referenced as $1,499 in an older RedFlagDeals thread, which is treated as a past sale, not this listing's current price)"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "Lenovo", "model": "Legion 5 15.1\" OLED, AMD Ryzen 7 260",
+      "kind": "laptop", "cpu": "AMD Ryzen 7 260", "ramGb": 16, "storageGb": 512,
+      "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU", "discreteGpu": true, "screenIn": 15.1,
+      "os": "Windows 11", "weightKg": null, "price": 1399.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/product/lenovo-legion-5-15-1-oled-wqxga-165hz-gaming-notebook-amd-ryzen-7-260-16gb-ram-512gb-ssd-nvidia-geforce-rtx-5060-black/JJGSH3YTSJ",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy SKU page for this exact Legion 5 15.1\" OLED WQXGA 165Hz config at $1,399.99"
+    },
+    {
+      "retailer": "bestbuy-ca", "market": "CA", "brand": "Lenovo", "model": "Legion 5i 15.1\", Intel Core i7-14700HX",
+      "kind": "laptop", "cpu": "Intel Core i7-14700HX", "ramGb": 16, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU", "discreteGpu": true, "screenIn": 15.1,
+      "os": "Windows 11", "weightKg": null, "price": 1999.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.bestbuy.ca/en-ca/shop/computers-tablets/lenovo-legion-5i",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy Canada: 'Lenovo Legion 5i 15.1\" Gaming Laptop - Eclipse Black (Intel Core i7-14700HX/16GB RAM/1TB SSD/RTX 5060) is priced at $1,999.99 CAD'"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "Asus", "model": "Zenbook 14, AMD Ryzen AI 9 465",
+      "kind": "laptop", "cpu": "AMD Ryzen AI 9 465 (2026)", "ramGb": 16, "storageGb": 512,
+      "gpu": "AMD Radeon integrated graphics", "discreteGpu": false, "screenIn": 14,
+      "os": "Windows 11 (Copilot+ PC)", "weightKg": null, "price": 1199.99, "salePrice": 999.99, "currency": "USD",
+      "url": "https://www.bestbuy.com/product/asus-zenbook-14-14-2k-oled-touchscreen-laptop-amd-ryzen-ai-9-465-2026-16gb-memory-512gb-storage-copilot-pc-jasper-gray/JJGHGSC4GZ/sku/6671016",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy SKU page: 'priced at $999.99 (on sale from $1,199.99)' for this exact 14\" 2K OLED touchscreen config"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "Asus", "model": "ROG Strix G16, AMD Ryzen 9 8940HX, RTX 5070 Ti",
+      "kind": "laptop", "cpu": "AMD Ryzen 9 8940HX", "ramGb": 16, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5070 Ti Laptop GPU", "discreteGpu": true, "screenIn": 16,
+      "os": "Windows 11", "weightKg": null, "price": 1599.99, "salePrice": 1199.99, "currency": "USD",
+      "url": "https://www.bestbuy.com/product/asus-rog-strix-g16-16-fhd-165hz-gaming-laptop-amd-ryzen-9-8940hx-16gb-memory-geforce-rtx-5070-ti-1tb-storage-eclipse-gray/JJGGLHJLTS",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy SKU page for this exact config (RTX 5070 Ti, Ryzen 9 8940HX, 16GB/1TB) at $1,199.99, was $1,599.99"
+    },
+    {
+      "retailer": "memoryexpress-ca", "market": "CA", "brand": "Asus", "model": "ROG Strix G16 G615LR-DS96-CA",
+      "kind": "laptop", "cpu": "Intel Core Ultra 7 275HX", "ramGb": 32, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5070 Ti Laptop GPU", "discreteGpu": true, "screenIn": 16,
+      "os": "Windows 11", "weightKg": null, "price": 2299.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.memoryexpress.com/Search/Products?Search=asus+strix",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Memory Express: 'Asus ROG Strix G16 G615LR-DS96-CA with GeForce RTX 5070 Ti, Core Ultra 7 275HX, 32GB, and 1TB SSD is priced at $2,299.99'"
+    },
+    {
+      "retailer": "walmart-us", "market": "US", "brand": "Acer", "model": "Aspire Go 15, AMD Ryzen 5 7520U",
+      "kind": "laptop", "cpu": "AMD Ryzen 5 7520U", "ramGb": 8, "storageGb": 512,
+      "gpu": "AMD Radeon integrated graphics", "discreteGpu": false, "screenIn": 15.6,
+      "os": "Windows 11", "weightKg": null, "price": 450.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.walmart.com/c/kp/acer-aspire-ryzen",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Walmart listing: 'Acer Aspire Go 15.6\" FHD IPS Touch Screen Laptop with AMD Ryzen 5-7520U, 8GB RAM, 512GB SSD is listed at $450.00'"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "Acer", "model": "Predator Helios Neo 16, Intel Core Ultra 9 275HX",
+      "kind": "laptop", "cpu": "Intel Core Ultra 9 275HX", "ramGb": 16, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU", "discreteGpu": true, "screenIn": 16,
+      "os": "Windows 11", "weightKg": null, "price": 1799.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/product/acer-predator-helios-neo-16-gaming-laptopultra-9-275hx16gb-ram1tb-ssd-1tb-dock-setgeforce-rtx-5060win-11-black/JJ8V8HWCS8/sku/12499140",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy SKU page: 'Acer Predator Helios Neo 16\" Gaming Laptop with Ultra 9 275HX, 16GB RAM, 1TB SSD plus 1TB Dock Set, GeForce RTX 5060 for $1,799.00'"
+    },
+    {
+      "retailer": "bestbuy-ca", "market": "CA", "brand": "Acer", "model": "Predator Helios Neo 16, Intel Core Ultra 9 275HX",
+      "kind": "laptop", "cpu": "Intel Core Ultra 9 275HX", "ramGb": 16, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU", "discreteGpu": true, "screenIn": 16,
+      "os": "Windows 11", "weightKg": null, "price": 1999.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.bestbuy.ca/en-ca/product/acer-predator-helios-neo-16-gaming-laptop-black-intel-core-ultra-9-275hx-16gb-ram-1tb-ssd-rtx-5060/19274602",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy Canada SKU page title/price for this exact config at $1,999.99 CAD"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "MSI", "model": "Stealth 16 AI, Intel Core Ultra 9 386H",
+      "kind": "laptop", "cpu": "Intel Core Ultra 9 386H", "ramGb": 32, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU", "discreteGpu": true, "screenIn": 16,
+      "os": "Windows 11", "weightKg": null, "price": 2699.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/site/searchpage.jsp?browsedCategory=pcmcat287600050003&id=pcat17071&qp=modelfamily_facet%3DModel+Family%7EMSI+Stealth&st=categoryid%24pcmcat287600050003",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'A base model priced at $2,699.99 featuring an Intel Core Ultra 9 386H processor with 32GB of RAM, a 1TB SSD, Nvidia GeForce RTX 5060 GPU... 16-inch OLED 240Hz' (Best Buy)"
+    },
+    {
+      "retailer": "canadacomputers-ca", "market": "CA", "brand": "MSI", "model": "Stealth 16 AI Studio A1VFG, Intel Core Ultra 9 185H",
+      "kind": "laptop", "cpu": "Intel Core Ultra 9 185H", "ramGb": 32, "storageGb": 2000,
+      "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU", "discreteGpu": true, "screenIn": 16,
+      "os": "Windows 11 Home", "weightKg": null, "price": 2849.00, "salePrice": null, "currency": "CAD",
+      "url": "https://www.canadacomputers.com/en/gaming-laptops/259773/msi-stealth-16-ai-16-ultra9-185h-rtx-4060-32gb-2tb-win11home-stealth-16-ai-studio-a1vfg-267ca.html",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Canada Computers SKU page for 'MSI Stealth 16 AI 16\" Ultra9-185H RTX 4060 32GB 2TB WIN11Home' at $2,849 CAD"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "Microsoft", "model": "Surface Laptop 7, Snapdragon X Plus",
+      "kind": "laptop", "cpu": "Qualcomm Snapdragon X Plus", "ramGb": 16, "storageGb": 512,
+      "gpu": "Qualcomm Adreno (integrated)", "discreteGpu": false, "screenIn": 13,
+      "os": "Windows 11 (Copilot+ PC)", "weightKg": null, "price": 1149.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/site/searchpage.jsp?id=pcat17071&st=surface+laptop+7",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'A popular configuration with 13\" 2K touchscreen, Snapdragon X Plus, 16GB RAM, and 512GB storage is priced at $1,149.99' (Best Buy)"
+    },
+    {
+      "retailer": "bestbuy-ca", "market": "CA", "brand": "Microsoft", "model": "Surface Laptop 7, Intel Core Ultra 5 236V",
+      "kind": "laptop", "cpu": "Intel Core Ultra 5 236V", "ramGb": 16, "storageGb": 256,
+      "gpu": "Intel Arc Graphics (integrated)", "discreteGpu": false, "screenIn": 13.8,
+      "os": "Windows 11 Pro (Copilot+ PC)", "weightKg": null, "price": 1489.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.bestbuy.ca/en-ca/product/microsoft-surface-laptop-7-13-8-intel-core-ultra-5-236v-16gb-ram-256gb-ssd-copilotpc-windows-11-pro-black/19429842",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy Canada SKU page for this exact 13.8\" config at $1,489.99 CAD"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "Samsung", "model": "Galaxy Book5 Pro 16\", Intel Core Ultra 7",
+      "kind": "laptop", "cpu": "Intel Core Ultra 7 (Series 2)", "ramGb": 16, "storageGb": 512,
+      "gpu": "Intel Arc Graphics (integrated)", "discreteGpu": false, "screenIn": 16,
+      "os": "Windows 11", "weightKg": null, "price": 1749.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/site/samsung-galaxy-book5-pro-16-touch-screen-laptop-intel-core-ultra-7-with-16gb-memory-512gb-ssd-gray/6625290.p",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'The 16\" Galaxy Book5 Pro with Intel Core Ultra 7, 16GB Memory, and 512GB SSD is priced at $1,749.00' (Best Buy)"
+    },
+    {
+      "retailer": "bestbuy-ca", "market": "CA", "brand": "Samsung", "model": "Galaxy Book5 Pro 16\", Intel Core Ultra 7 258V",
+      "kind": "laptop", "cpu": "Intel Core Ultra 7 258V", "ramGb": 16, "storageGb": 1000,
+      "gpu": "Intel Arc Graphics 140V (integrated)", "discreteGpu": false, "screenIn": 16,
+      "os": "Windows 11 (Copilot+ PC)", "weightKg": null, "price": 1889.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.bestbuy.ca/en-ca/product/samsung-galaxy-book5-pro-16-touchscreen-copilot-pc-laptop-intel-core-ultra-7-258v-1tb-ssd-16gb-ram/18933654",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy Canada SKU page for this exact 16\" Core Ultra 7 258V/1TB/16GB config at $1,889.99 CAD"
+    },
+    {
+      "retailer": "razer-us", "market": "US", "brand": "Razer", "model": "Blade 16 (2026), RTX 5070 Ti",
+      "kind": "laptop", "cpu": "Intel Core Ultra 9 386H", "ramGb": 32, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5070 Ti Laptop GPU", "discreteGpu": true, "screenIn": 16,
+      "os": "Windows 11", "weightKg": 2.14, "price": 3499.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.razer.com/gaming-laptops/razer-blade-16/RZ09-05285EN3-R3U1",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'Prices start at $3,499 US for the base spec, with a Core Ultra 9 386H and RTX 5070 Ti configuration priced at $3,499.99' (razer.com), weight from reviewed specs (4.71 lbs)"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "LG", "model": "gram Pro 2-in-1 16\" OLED Touch, Intel Core Ultra 7 255H",
+      "kind": "laptop", "cpu": "Intel Core Ultra 7 255H", "ramGb": 16, "storageGb": 1000,
+      "gpu": "Intel Arc Graphics (integrated)", "discreteGpu": false, "screenIn": 16,
+      "os": "Windows 11", "weightKg": null, "price": 2099.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/site/lg-computing/lg-laptops/pcmcat1531506580106.c?id=pcmcat1531506580106",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'LG gram Pro 2-in-1: 16\" OLED touch screen laptop with Intel Core Ultra 7 255H, 16GB RAM, and 1TB SSD priced at $2,099.99' (Best Buy)"
+    },
+    {
+      "retailer": "bestbuy-ca", "market": "CA", "brand": "LG", "model": "gram 14, Intel Core Ultra 7 255H",
+      "kind": "laptop", "cpu": "Intel Core Ultra 7 255H", "ramGb": 16, "storageGb": 512,
+      "gpu": "Intel Arc Graphics (integrated)", "discreteGpu": false, "screenIn": 14,
+      "os": "Windows 11", "weightKg": null, "price": 1699.99, "salePrice": null, "currency": "CAD",
+      "url": "https://www.bestbuy.ca/en-ca/product/lg-gram-14-laptop-obsidian-black-intel-core-ultra-7-255h-16gb-ram-512gb-ssd-windows-11/19215305",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy Canada SKU page for 'LG Gram 14\" Laptop - Obsidian Black (Intel Core Ultra 7 255H/16GB RAM/512GB SSD/Windows 11)' at $1,699.99 CAD"
+    },
+    {
+      "retailer": "newegg-us", "market": "US", "brand": "Gigabyte", "model": "Aorus Master 16, RTX 5090",
+      "kind": "laptop", "cpu": "Intel Core Ultra 9 275HX", "ramGb": 32, "storageGb": 2000,
+      "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU", "discreteGpu": true, "screenIn": 16,
+      "os": "Windows 11 Home", "weightKg": null, "price": 3449.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.newegg.com/aorus-16-geforce-rtx-5090-laptop-gpu-intel-core-ultra-9-275hx-wqxga-32gb-memory-2-tb-ssd/p/N82E16834233610",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet matching this Newegg SKU title (RTX 5090, Core Ultra 9 275HX, 32GB, 2TB SSD, 240Hz WQXGA OLED) to a quoted price of $3,449"
+    },
+    {
+      "retailer": "framework-us", "market": "US", "brand": "Framework", "model": "Laptop 13, Ryzen AI 7 350 (DIY Edition)",
+      "kind": "laptop", "cpu": "AMD Ryzen AI 7 350", "ramGb": null, "storageGb": null,
+      "gpu": "AMD Radeon 860M (integrated)", "discreteGpu": false, "screenIn": 13.5,
+      "os": "none (DIY Edition ships without an OS)", "weightKg": 1.36, "price": 1349.00, "salePrice": null, "currency": "USD",
+      "url": "https://frame.work/blog/introducing-the-framework-laptop-13-powered-by-amd-ryzen-ai-300-series",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'The Framework Laptop 13 starts at... $1,349 for the Ryzen AI 7 350' (frame.work); DIY Edition is sold without RAM/storage/OS installed, so those fields are left null rather than guessed"
+    },
+    {
+      "retailer": "system76-us", "market": "US", "brand": "System76", "model": "Lemur Pro, Intel Core Ultra 5 325",
+      "kind": "laptop", "cpu": "Intel Core Ultra 5 325", "ramGb": 32, "storageGb": 1000,
+      "gpu": "Intel Graphics (integrated)", "discreteGpu": false, "screenIn": 14,
+      "os": "Linux (Pop!_OS / Ubuntu)", "weightKg": 1.15, "price": 1923.00, "salePrice": null, "currency": "USD",
+      "url": "https://system76.com",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'The latest version starts from $1,923 USD for the 14-inch model with the Intel Core Ultra 5 325 CPU, 32 GB RAM, and 1 TB PCIe4 SSD storage'"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "CyberPowerPC", "model": "Gaming Desktop, AMD Ryzen 7 9700F, RTX 5070",
+      "kind": "desktop", "cpu": "AMD Ryzen 7 9700F", "ramGb": 32, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5070 12GB", "discreteGpu": true, "screenIn": null,
+      "os": "Windows 11", "weightKg": null, "price": 1749.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/site/shop/cyber-power-pc",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'A CyberPowerPC Gaming Desktop with AMD Ryzen 7 9700F, NVIDIA GeForce RTX 5070 12GB, 32GB DDR5 Memory, and 1TB SSD Storage is priced at $1,749.99' (Best Buy)"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "iBUYPOWER", "model": "Y40 PRO, AMD Ryzen 7 7800X3D, RTX 5070 Ti",
+      "kind": "desktop", "cpu": "AMD Ryzen 7 7800X3D", "ramGb": 32, "storageGb": 2000,
+      "gpu": "NVIDIA GeForce RTX 5070 Ti 16GB", "discreteGpu": true, "screenIn": null,
+      "os": "Windows 11", "weightKg": null, "price": 1999.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/site/searchpage.jsp?id=pcat17071&st=ibuypower+gaming+desktop+pc",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'The iBUYPOWER-Y40 PRO with AMD Ryzen 7 7800X3D and NVIDIA GeForce RTX 5070Ti 16GB is priced at $1,999.99, featuring 32GB DDR5 RGB RAM and 2TB NVMe SSD' (Best Buy)"
+    },
+    {
+      "retailer": "nzxt-us", "market": "US", "brand": "NZXT", "model": "Player One",
+      "kind": "desktop", "cpu": "Intel Core i5-14400F", "ramGb": 16, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5060 8GB", "discreteGpu": true, "screenIn": null,
+      "os": "Windows 11 Home", "weightKg": null, "price": 1489.00, "salePrice": null, "currency": "USD",
+      "url": "https://nzxt.com/products/player-one",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'Player One - $1,489.00 - Intel Core i5-14400F CPU, NVIDIA GeForce RTX 5060 (8GB), 16GB DDR5 RAM, 1TB NVMe SSD, Windows 11 Home' (nzxt.com)"
+    },
+    {
+      "retailer": "corsair-us", "market": "US", "brand": "Corsair", "model": "Vengeance i7600, Intel Core Ultra 5 250K Plus",
+      "kind": "desktop", "cpu": "Intel Core Ultra 5 250K Plus", "ramGb": 16, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5060 Ti", "discreteGpu": true, "screenIn": null,
+      "os": "Windows 11", "weightKg": null, "price": 2199.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.corsair.com/us/en/c/gaming-computers/vengeance",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'VENGEANCE i7600: Intel Core Ultra 5 250K PLUS, GeForce RTX 5060 Ti, 16GB DDR5, 1TB SSD for $2,199.99' (corsair.com)"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "Skytech", "model": "KING95, Intel Core Ultra 7 U7 265F",
+      "kind": "desktop", "cpu": "Intel Core Ultra 7 U7 265F (2025)", "ramGb": 16, "storageGb": 1000,
+      "gpu": "NVIDIA GeForce RTX 5060", "discreteGpu": true, "screenIn": null,
+      "os": "Windows 11", "weightKg": null, "price": 1649.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/product/skytech-gaming-king95-gaming-pc-intel-core-ultra-7-u7-265f-2025-16gb-memory-nvidia-geforce-rtx-5060-1tb-nvme-storage-white/J3GWRTRZ7F",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy SKU page for this exact Skytech KING95 config at $1,649.99"
+    },
+    {
+      "retailer": "maingear-us", "market": "US", "brand": "Maingear", "model": "MG-1 Ruby, Intel Core Ultra 5 225F",
+      "kind": "desktop", "cpu": "Intel Core Ultra 5 225F", "ramGb": 32, "storageGb": 2000,
+      "gpu": "NVIDIA GeForce RTX 5060 Ti", "discreteGpu": true, "screenIn": null,
+      "os": "Windows 11", "weightKg": null, "price": 2499.00, "salePrice": null, "currency": "USD",
+      "url": "https://maingear.com/collections/zero",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'The MG-1 Ruby starts at $2,499 with an RTX 5060 Ti, Intel Core Ultra 5 225F, 32GB DDR5, and 2TB SSD' (maingear.com)"
+    },
+    {
+      "retailer": "amazon-us", "market": "US", "brand": "Beelink", "model": "SER9 Pro, AMD Ryzen 7 H 255",
+      "kind": "mini-pc", "cpu": "AMD Ryzen 7 H 255", "ramGb": 32, "storageGb": 1000,
+      "gpu": "AMD Radeon 780M (integrated)", "discreteGpu": false, "screenIn": null,
+      "os": "Windows 11", "weightKg": null, "price": 699.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.amazon.com/s?k=Beelink+SER9+Pro",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'The Beelink SER9 Pro features an AMD Ryzen 7 H 255 processor, AMD Radeon 780M GPU, 32GB LPDDR5x RAM, and 1TB SSD, priced at $699 on Amazon'"
+    },
+    {
+      "retailer": "minisforum-us", "market": "US", "brand": "Minisforum", "model": "M2 Mini PC, Intel Core Ultra 7 356H",
+      "kind": "mini-pc", "cpu": "Intel Core Ultra 7 356H", "ramGb": 32, "storageGb": 1000,
+      "gpu": "Intel Arc integrated graphics", "discreteGpu": false, "screenIn": null,
+      "os": "Windows 11", "weightKg": null, "price": 1039.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.minisforum.com/collections/mini-pc",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'a pre-configured version with 32GB of RAM and a 1TB SSD costs $1,039' for the Minisforum M2 Mini PC (Intel Core Ultra 7 356H)"
+    },
+    {
+      "retailer": "gmktec-us", "market": "US", "brand": "GMKtec", "model": "K12, AMD Ryzen 7 H 255",
+      "kind": "mini-pc", "cpu": "AMD Ryzen 7 H 255", "ramGb": 32, "storageGb": 1000,
+      "gpu": "AMD Radeon integrated graphics", "discreteGpu": false, "screenIn": null,
+      "os": "Windows 11", "weightKg": null, "price": 559.99, "salePrice": 359.99, "currency": "USD",
+      "url": "https://www.gmktec.com/products/gmktec-k12-amd-ryzen%E2%84%A2-7-h-255-mini-pc",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'The K12 is powered by AMD Ryzen 7 H 255 with 32GB DDR5 and 1TB SSD... currently on sale from $359.99 (regular price $559.99)'"
+    },
+    {
+      "retailer": "geekom-us", "market": "US", "brand": "GEEKOM", "model": "IT13 Max AI, Intel Core Ultra 9 185H",
+      "kind": "mini-pc", "cpu": "Intel Core Ultra 9 185H", "ramGb": 24, "storageGb": 500,
+      "gpu": "Intel Arc integrated graphics", "discreteGpu": false, "screenIn": null,
+      "os": "Windows 11", "weightKg": null, "price": 759.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.geekompc.com/geekom-mini-it13-mini-pc/",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'GEEKOM IT13 Max AI... featuring Intel Core Ultra 9 with 24 GB LPDDR5 memory and 500 GB SSD for $759'"
+    },
+    {
+      "retailer": "zotac-us", "market": "US", "brand": "Zotac", "model": "ZBOX CI337 NANO",
+      "kind": "mini-pc", "cpu": "Intel Processor N100", "ramGb": null, "storageGb": null,
+      "gpu": "Intel UHD Graphics (integrated)", "discreteGpu": false, "screenIn": null,
+      "os": "none (barebone)", "weightKg": null, "price": 199.99, "salePrice": null, "currency": "USD",
+      "url": "https://zotacstore.com/us/mini-pcs/zbox-series",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'The ZOTAC ZBOX CI337 NANO is a fanless silent mini PC with Intel Processor N100 and Intel UHD Graphics, priced at $199.99'; sold as a barebone unit without RAM/storage installed, so those fields are left null rather than guessed"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "Google", "model": "Pixel Tablet (with Charging Speaker Dock)",
+      "kind": "tablet", "cpu": "Google Tensor G2", "ramGb": 8, "storageGb": 128,
+      "gpu": "Google Tensor G2 integrated GPU", "discreteGpu": false, "screenIn": 10.95,
+      "os": "Android 14", "weightKg": 0.49, "price": 499.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.bestbuy.com/site/google-pixel-tablet-with-charging-speaker-dock-11-android-tablet-128gb-wi-fi-porcelain/6543724.p?skuId=6543724",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet quoting Best Buy SKU page for Pixel Tablet with Charging Speaker Dock, 128GB, Porcelain, at $499"
+    },
+    {
+      "retailer": "amazon-us", "market": "US", "brand": "Amazon", "model": "Fire Max 11 (128GB, no ads)",
+      "kind": "tablet", "cpu": "MediaTek octa-core (2.2GHz)", "ramGb": 4, "storageGb": 128,
+      "gpu": "integrated (MediaTek SoC)", "discreteGpu": false, "screenIn": 11,
+      "os": "Fire OS", "weightKg": 0.49, "price": 279.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.amazon.com/s?k=Fire+Max+11",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'An upgraded model with 128GB of storage and no ads costs $279'; base spec (4GB RAM, octa-core 2.2GHz MediaTek, 11-inch 2K) from the same summary"
+    },
+    {
+      "retailer": "amazon-us", "market": "US", "brand": "OnePlus", "model": "Pad 2",
+      "kind": "tablet", "cpu": "Qualcomm Snapdragon 8 Gen 3", "ramGb": 12, "storageGb": 256,
+      "gpu": "Qualcomm Adreno (integrated)", "discreteGpu": false, "screenIn": 12.1,
+      "os": "Android 14 (OxygenOS 14.1)", "weightKg": 0.584, "price": 549.99, "salePrice": null, "currency": "USD",
+      "url": "https://www.oneplus.com/us/oneplus-pad-2/specs",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'The OnePlus Pad 2 is priced at $549.99 USD'; 12GB RAM/256GB storage, Snapdragon 8 Gen 3, from oneplus.com specs listing"
+    },
+    {
+      "retailer": "amazon-us", "market": "US", "brand": "Xiaomi", "model": "Pad 7 (8GB/128GB)",
+      "kind": "tablet", "cpu": "Qualcomm Snapdragon 7+ Gen 3", "ramGb": 8, "storageGb": 128,
+      "gpu": "Qualcomm Adreno (integrated)", "discreteGpu": false, "screenIn": 11.2,
+      "os": "Android 15", "weightKg": 0.5, "price": 280.00, "salePrice": null, "currency": "USD",
+      "url": "https://www.amazon.com/s?k=Xiaomi+Pad+7",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'pricing varies by configuration, with the 8GB + 128GB model at $280' for the Xiaomi Pad 7"
+    },
+    {
+      "retailer": "amazon-us", "market": "US", "brand": "Chuwi", "model": "MiniBook X, Intel N100",
+      "kind": "laptop", "cpu": "Intel N100", "ramGb": 12, "storageGb": 512,
+      "gpu": "Intel UHD Graphics (integrated)", "discreteGpu": false, "screenIn": 10.51,
+      "os": "Windows 11", "weightKg": null, "price": 349.00, "salePrice": null, "currency": "USD",
+      "url": "https://us.chuwi.com/products/minibook-x",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'The MiniBook X with Intel N100 processor, 10.51\" FHD IPS screen, 12GB LPDDR5, and 512GB SSD starts from $349'"
+    },
+    {
+      "retailer": "bestbuy-us", "market": "US", "brand": "HP", "model": "All-in-One 24, AMD Ryzen AI 5 340",
+      "kind": "all-in-one", "cpu": "AMD Ryzen AI 5 340 (2025)", "ramGb": 16, "storageGb": 512,
+      "gpu": "AMD Radeon integrated graphics", "discreteGpu": false, "screenIn": 24,
+      "os": "Windows 11 (Copilot+ PC)", "weightKg": null, "price": 999.99, "salePrice": 749.99, "currency": "USD",
+      "url": "https://www.bestbuy.com/site/searchpage.jsp?st=HP+24+All-in-One+desktop",
+      "date": "2026-10-05", "confirmed": false,
+      "source": "WebSearch snippet: 'The HP Copilot+ PC 24\" Full HD Touch-Screen All-in-One with AMD Ryzen AI 5 340 2025, 16GB DDR5, and 512GB SSD is priced at $749.99 (reduced from $999.99)' (Best Buy)"
+    }
+  ]
+}
