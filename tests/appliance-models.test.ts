@@ -58,4 +58,11 @@ describe('an appliance by make and model', () => {
     livingOf(sim.player).loads = { washer: 3, dryer: 3 };
     expect(machineUsd(sim.player)).toBeCloseTo((3 * MACHINE_KWH.washer + 3 * MACHINE_KWH.dryer) * KWH_USD, 9);
   });
+
+  it('takes its energy from ENERGY STAR’s family, an asterisk a color letter, over the test’s 295 washes a year', () => {
+    const samsung = APPLIANCE_PRODUCTS.find((p) => p.model === 'WF45T6000AW');
+    expect(samsung?.attrs.powerBasis).toBe('ENERGY STAR');
+    expect(samsung!.attrs.kwhPerCycle).toBeGreaterThan(0);
+    expect(samsung!.attrs.kwhPerCycle).toBeLessThan(MACHINE_KWH.washer);
+  });
 });

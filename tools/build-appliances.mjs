@@ -23,6 +23,9 @@ const tranches = existsSync(dir) ? readdirSync(dir).filter((f) => /^appliance-.*
 const POWER = existsSync(`${dir}/appliance-power.json`) ? JSON.parse(readFileSync(`${dir}/appliance-power.json`, 'utf8')).models ?? [] : [];
 const products = new Map();
 const offerIds = new Set();
+// ENERGY STAR names a family with an asterisk where a color or variant letter goes (WF45T60**A*, WM3400C*): each matches one
+// letter or digit, and a retail code may run on past the family's (WM3400CW for WM3400C*).
+const matches = (family, code) => { const f = String(family ?? '').toUpperCase().replace(/[^A-Z0-9*]/g, ''); if (f.replaceAll('*', '').length < 5) return false; const re = new RegExp('^' + f.split('').map((ch) => (ch === '*' ? '[A-Z0-9]' : ch)).join('')); return re.test(code) || (code.length < f.length && re.test(code.padEnd(f.length, 'X'))); };
 let star = 0;
 let label = 0;
 for (const f of tranches) {
@@ -33,7 +36,7 @@ for (const f of tranches) {
     let p = products.get(key);
     if (!p) {
       const code = norm(x.model);
-      const hit = code.length >= 6 && POWER.find((m) => m.kind === x.kind && num(m.kwhPerYear) && norm(m.brand).slice(0, 3) === norm(x.brand).slice(0, 3) && (norm(m.model).startsWith(code) || code.startsWith(norm(m.model))));
+      const hit = code.length >= 6 && POWER.find((m) => m.kind === x.kind && num(m.kwhPerYear) && norm(m.brand).slice(0, 3) === norm(x.brand).slice(0, 3) && matches(m.model, code));
       const fromLabel = num(x.kwhPer100Cycles) ? x.kwhPer100Cycles / 100 : null;
       const kwhPerCycle = hit ? Math.round((hit.kwhPerYear / CYCLES[x.kind]) * 1000) / 1000 : fromLabel;
       if (hit) star += 1; else if (fromLabel) label += 1;
