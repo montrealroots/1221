@@ -33,6 +33,15 @@
  * £58.99 a tire, in Britain; Discount Tires' €145 a tire fitted in Ireland
  * (secondhand); The Wheel Shop's C$282.03 a tire in Canada, its fitting not
  * read; Costco México's MX$2,599 a tire.
+ *
+ * **A set chosen by make and model** (from 2026-10-05, `content/tirecatalog.ts`):
+ * four of a tire on sale where the car is, at its seller's price with the
+ * place's tax, and in America BJ's $80 to fit a set where the price isn't
+ * fitted (elsewhere a fitting's price isn't read, and none is charged). It
+ * lasts its treadwear warranty where its maker or seller states one, and
+ * otherwise the CrossClimate 2's 60,000 miles, or for a winter tire the
+ * X-Ice Snow's 40,000. Fitted with no model chosen, a set is the market's
+ * price above, as before.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -45,6 +54,9 @@ import { CITIES } from '../content/geography';
 import { payFromBank, owe } from './household';
 import { forOutings, kindOf, modelById, onTwoWheels, vehiclesOf, type OwnedVehicle } from './vehicles';
 import { KM_A_YEAR, type Jurisdiction } from '../content/vehiclefees';
+import { TIRE_PRODUCTS } from '../content/tirecatalog';
+import type { CatalogOffer, CatalogProduct } from '../content/products';
+import { devicePrice, marketWhere, offerIn } from './devices';
 
 export const TIRE_LIFE_KM = Math.round(60_000 * 1.609344);
 const USD_SET = { price: 899.96 + 80, currency: 'USD' };
@@ -54,12 +66,16 @@ export const TIRE_SET: Readonly<Partial<Record<Jurisdiction, { price: number; cu
   'CA-ON': { price: 282.03 * 4, currency: 'CAD' }, 'CA-BC': { price: 282.03 * 4, currency: 'CAD' },
   'MX-CMX': { price: 2_599 * 4, currency: 'MXN' },
 };
-type Odo = { ageAtPurchase: number; jurisdiction: Jurisdiction; km?: number; odometerAtPurchase?: number; tiresAtKm?: number };
+/** The set on a car, chosen by model: its product and the km it lasts. */
+export interface TireSet { product: string; lifeKm: number }
+type Odo = { ageAtPurchase: number; jurisdiction: Jurisdiction; km?: number; odometerAtPurchase?: number; tiresAtKm?: number; tires?: TireSet };
 /** The car's odometer, km (as `odometer` in `systems/carcare.ts`). */
 export const odometerOf = (v: Odo): number => (v.odometerAtPurchase ?? v.ageAtPurchase * KM_A_YEAR[v.jurisdiction]) + (v.km ?? 0);
 /** The odometer when its everyday tires were last fitted. */
 export const tiresFittedAt = (v: Odo): number => v.tiresAtKm ?? (() => { const at = v.odometerAtPurchase ?? v.ageAtPurchase * KM_A_YEAR[v.jurisdiction]; return at - (at % TIRE_LIFE_KM); })();
-export const tiresWorn = (v: Odo): boolean => odometerOf(v) - tiresFittedAt(v) >= TIRE_LIFE_KM;
+/** The km its everyday set lasts: its model's, or the CrossClimate 2's. */
+export const tireLifeOf = (v: Odo): number => v.tires?.lifeKm ?? TIRE_LIFE_KM;
+export const tiresWorn = (v: Odo): boolean => odometerOf(v) - tiresFittedAt(v) >= tireLifeOf(v);
 /** A set of four fitted, in the save's money, where a price is read. */
 export function tireSetCost(sim: Simulation, v: OwnedVehicle): Money | undefined {
   const t = TIRE_SET[v.jurisdiction];
@@ -77,7 +93,36 @@ export const WINTER_TIRES = {
   wearKm: 40_000 * 1.609344,
 } as const;
 
-export interface WinterTires { boughtAt: Instant; km: number }
+export interface WinterTires { boughtAt: Instant; km: number; /** Its model and the km it lasts, where chosen (from 2026-10-05). */ product?: string; wearKm?: number }
+
+/** The km a tire lasts: its warranty, or the CrossClimate 2's 60,000 miles, a winter tire the X-Ice Snow's 40,000. */
+export const lifeOfTire = (p: CatalogProduct): number => (typeof p.attrs.warrantyKm === 'number' ? p.attrs.warrantyKm : p.attrs.season === 'winter' ? WINTER_TIRES.wearKm : TIRE_LIFE_KM);
+
+/** BJ's $80 to fit a set in America, where a price isn't fitted; elsewhere none read. */
+export const FIT_SET = { us: { price: 80, currency: 'USD' } } as Readonly<Record<string, { price: number; currency: string }>>;
+
+/** The tires on sale where the car is, a set's price each, cheapest first: winter tires, or the rest. */
+export function tireCatalog(sim: Simulation, v: OwnedVehicle, winter: boolean): { product: CatalogProduct; offer: CatalogOffer; price: Money }[] {
+  const city = v.at ?? v.cityId;
+  const market = marketWhere(city);
+  return TIRE_PRODUCTS.filter((p) => (p.attrs.season === 'winter') === winter).flatMap((product) => product.offers.filter((o) => o.market === market).map((offer) => ({ product, offer, price: setPrice(sim, city, offer) })))
+    .sort((a, b) => a.price - b.price || a.product.id.localeCompare(b.product.id));
+}
+
+/** Four of an offer, with the place's tax, and the fitting where the price isn't fitted. */
+export function setPrice(sim: Simulation, cityId: string, offer: CatalogOffer): Money {
+  const fit = offer.code === 'fitted' ? undefined : FIT_SET[offer.market];
+  return devicePrice(sim, cityId, offer) * 4 + (fit ? inSave(sim, Math.round(fit.price * 100), fit.currency) : 0);
+}
+
+/** Why a model can't go on a car: not on sale where it is, or a winter tire for every day, or the other way. */
+export function tireOfferRefusal(v: OwnedVehicle, offerId: string, winter: boolean): string | undefined {
+  const found = offerIn(TIRE_PRODUCTS, offerId);
+  if (!found) return 'That tire isn’t on sale.';
+  if (found.offer.market !== marketWhere(v.at ?? v.cityId)) return 'It’s sold in another country.';
+  if ((found.product.attrs.season === 'winter') !== winter) return winter ? 'That isn’t a winter tire.' : 'That’s a winter tire; fit it as one.';
+  return undefined;
+}
 
 /** Whether a day falls in Quebec's winter-tire season, 15 December to 15 March, where the car is. */
 export function inWinterSeason(at: Instant, cityId: string): boolean {
@@ -113,31 +158,41 @@ export function tiresMonth(sim: Simulation, person: Person, v: OwnedVehicle, km:
     const fee = inSave(sim, WINTER_TIRES.switchoverCad * 100, 'CAD');
     if (!payFromBank(sim, person, fee, 'Winter tires swapped, Formula Tire', 'vehicle')) owe(sim, person, fee, 'Winter tires swapped', 'vehicle');
   }
-  if (v.winterTires.km >= WINTER_TIRES.wearKm) {
+  const wear = v.winterTires.wearKm ?? WINTER_TIRES.wearKm;
+  if (v.winterTires.km >= wear) {
     delete v.winterTires;
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Winter Tires Worn Out', body: `The ${modelById(v.modelId)!.make} ${modelById(v.modelId)!.model}’s winter tires have done their 40,000 miles.`, importance: 40, route: '/workspace/vehicles' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'home', title: 'Winter Tires Worn Out', body: `The ${modelById(v.modelId)!.make} ${modelById(v.modelId)!.model}’s winter tires have done their ${Math.round(wear / 1000).toLocaleString('en-US')} thousand km.`, importance: 40, route: '/workspace/vehicles' });
   }
 }
 
 export function registerTires(sim: Simulation): void {
-  sim.onCommand<{ vehicleId: string }, { paid: Money }>('vehicle.replace_tires', (p, { sim: s }) => {
+  sim.onCommand<{ vehicleId: string; offerId?: string }, { paid: Money }>('vehicle.replace_tires', (p, { sim: s }) => {
     const person = s.player;
     const v = vehiclesOf(person).find((x) => x.id === p?.vehicleId && x.soldAt === undefined);
     if (!v) throw new CommandError('That isn’t a car you own.');
-    const cost = tireSetCost(s, v);
-    if (cost === undefined || kindOf(modelById(v.modelId)!) !== 'car') throw new CommandError('No set’s price is kept for it.');
-    if (!payFromBank(s, person, cost, 'Four tires, fitted', 'vehicle')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
+    if (kindOf(modelById(v.modelId)!) !== 'car') throw new CommandError('No set’s price is kept for it.');
+    // A model chosen (from 2026-10-05): its set's price and its life.
+    const chosen = p?.offerId !== undefined ? String(p.offerId) : undefined;
+    if (chosen) { const no = tireOfferRefusal(v, chosen, false); if (no) throw new CommandError(no); }
+    const found = chosen ? offerIn(TIRE_PRODUCTS, chosen) : undefined;
+    const cost = found ? setPrice(s, v.at ?? v.cityId, found.offer) : tireSetCost(s, v);
+    if (cost === undefined) throw new CommandError('No set’s price is kept for it.');
+    if (!payFromBank(s, person, cost, found ? `Four ${found.product.brand} ${found.product.model} tires, ${found.offer.seller}` : 'Four tires, fitted', 'vehicle')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
     v.tiresAtKm = odometerOf(v);
+    if (found) v.tires = { product: found.product.id, lifeKm: lifeOfTire(found.product) }; else delete v.tires;
     return { paid: cost };
   });
-  sim.onCommand<{ vehicleId: string }, { paid: Money }>('vehicle.winter_tires', (p, { sim: s }) => {
+  sim.onCommand<{ vehicleId: string; offerId?: string }, { paid: Money }>('vehicle.winter_tires', (p, { sim: s }) => {
     const person = s.player;
     const v = vehiclesOf(person).find((x) => x.id === p?.vehicleId);
     const no = tiresRefusal(v);
     if (no) throw new CommandError(no);
-    const cost = inSave(s, WINTER_TIRES.setUsd * 100, 'USD');
-    if (!payFromBank(s, person, cost, 'Winter tires, a set of four', 'vehicle')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
-    v!.winterTires = { boughtAt: s.now, km: 0 };
+    const chosen = p?.offerId !== undefined ? String(p.offerId) : undefined;
+    if (chosen) { const bad = tireOfferRefusal(v!, chosen, true); if (bad) throw new CommandError(bad); }
+    const found = chosen ? offerIn(TIRE_PRODUCTS, chosen) : undefined;
+    const cost = found ? setPrice(s, v!.at ?? v!.cityId, found.offer) : inSave(s, WINTER_TIRES.setUsd * 100, 'USD');
+    if (!payFromBank(s, person, cost, found ? `Four ${found.product.brand} ${found.product.model} winter tires, ${found.offer.seller}` : 'Winter tires, a set of four', 'vehicle')) throw new CommandError(`${formatMoney(cost, saveCurrency(s.universe))} is more than the bank can cover.`);
+    v!.winterTires = { boughtAt: s.now, km: 0, ...(found ? { product: found.product.id, wearKm: lifeOfTire(found.product) } : {}) };
     return { paid: cost };
   });
 }

@@ -1,0 +1,1274 @@
+{
+ "meta": {
+  "read": "2026-10-05",
+  "method": "Web search (WebSearch) against brand/retailer domains, with direct page reads (WebFetch) where the retailer's page was not JS-rendered or blocked. Prices are the exact regular (and, where shown, sale) price on the cited page or search snippet at time of read, in the page's own currency, never converted. Several retailers (Rockport, Vionic, Loake, Hotter, FitFlop, Russell & Bromley, Sorel, Nine West, Aldo) returned HTTP 403/404 to direct fetch or served JS-only shells, so those prices are taken from a search-result snippet that clearly quoted the page's price; this is marked in each product's 'source' field. Price Shoes (MX) could not be read even via snippet with a verifiable per-product price and was dropped.",
+  "dropped": [
+   "Price Shoes (MX): priceshoes.com serves a JS-only shell to both fetch and snippet; search results gave a scatter of category-level prices (e.g. 'Zapatilla Tacon Alto', 'Sandalia Sueco') with no single page confirming one product's exact regular price, so no honest per-product entry could be built this pass."
+  ],
+  "corrections": [
+   "2026-10-05, on review: the women's Keen Newport H2 at USD 78 was dropped, its price read two ways and below the men's USD 130 for the same sandal; every price read from a search engine's snippet or an aggregator is marked unconfirmed (18)."
+  ]
+ },
+ "retailers": [
+  {
+   "id": "crocs-us",
+   "name": "Crocs",
+   "market": "US",
+   "kind": "accessible",
+   "sizeSystem": "US unisex",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "frye-us",
+   "name": "The Frye Company",
+   "market": "US",
+   "kind": "premium",
+   "sizeSystem": "US women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": 0,
+    "freeShippingThreshold": 275,
+    "standardDeliveryDays": null,
+    "source": "https://www.thefryecompany.com/products/campus-14l-garnet"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "dansko-us",
+   "name": "Dansko",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "EU (women's professional/healthcare line)",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "toms-us",
+   "name": "Toms",
+   "market": "US",
+   "kind": "accessible",
+   "sizeSystem": "US unisex",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": 0,
+    "freeShippingThreshold": 75,
+    "standardDeliveryDays": null,
+    "source": "https://www.toms.com/products/alpargata-black-heritage-canvas"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "keen-us",
+   "name": "Keen Footwear",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US unisex",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "rockport-us",
+   "name": "Rockport",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US men's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "vionic-us",
+   "name": "Vionic",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US women's, medium width",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "sorel-ca",
+   "name": "Sorel",
+   "market": "CA",
+   "kind": "mid",
+   "sizeSystem": "US women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "blundstone-ca",
+   "name": "Blundstone",
+   "market": "CA",
+   "kind": "mid",
+   "sizeSystem": "AUS (Blundstone's own sizing)",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "aldo-ca",
+   "name": "ALDO",
+   "market": "CA",
+   "kind": "accessible",
+   "sizeSystem": "US women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "ninewest-ca",
+   "name": "Nine West",
+   "market": "CA",
+   "kind": "mid",
+   "sizeSystem": "US women's, medium width",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "loake-gb",
+   "name": "Loake Shoemakers",
+   "market": "GB",
+   "kind": "premium",
+   "sizeSystem": "UK men's, G fit",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "grenson-gb",
+   "name": "Grenson",
+   "market": "GB",
+   "kind": "premium",
+   "sizeSystem": "UK men's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "https://www.grenson.com/declan-chelsea-boots-for-men-in-black-calf"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "hotter-gb",
+   "name": "Hotter",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "UK men's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "fitflop-gb",
+   "name": "FitFlop",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "UK women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "russellandbromley-gb",
+   "name": "Russell & Bromley",
+   "market": "GB",
+   "kind": "luxury",
+   "sizeSystem": "UK women's",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "havaianas-ie",
+   "name": "Havaianas",
+   "market": "IE",
+   "kind": "accessible",
+   "sizeSystem": "Brazilian/EU unisex (numeric pairs, e.g. 39/40)",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "https://www.havaianas-store.com/eur/en/flip-flops"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "cklass-mx",
+   "name": "Cklass",
+   "market": "MX",
+   "kind": "accessible",
+   "sizeSystem": "MX women's numeric (22-27)",
+   "storesIn": [],
+   "storesNote": "store locations not checked",
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "https://cklass.com/collections/sandalias-para-mujer"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  }
+ ],
+ "products": [
+  {
+   "retailer": "crocs-us",
+   "market": "US",
+   "brand": "Crocs",
+   "name": "Classic Clog",
+   "gender": "unisex",
+   "category": "footwear",
+   "subcategory": "clogs",
+   "price": 49.99,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12"
+   ],
+   "colors": [
+    "Black",
+    "White",
+    "Navy",
+    "Varsity Red",
+    "Blue Frost",
+    "Mystic Purple",
+    "Pink Milk",
+    "Espresso",
+    "Slate Grey",
+    "Mint Tint",
+    "Field Green",
+    "Taupe"
+   ],
+   "material": "25% bio-circular material (ISCC PLUS mass balance), Croslite foam",
+   "care": null,
+   "careText": null,
+   "url": "https://www.crocs.com/p/classic-clog/10001.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "direct page read, crocs.com"
+  },
+  {
+   "retailer": "frye-us",
+   "market": "US",
+   "brand": "Frye",
+   "name": "Women's Garnet Campus 14L Boot",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "boots",
+   "price": 498,
+   "salePrice": 397.98,
+   "currency": "USD",
+   "sizes": [
+    "5.5",
+    "6",
+    "6.5",
+    "7",
+    "7.5",
+    "8",
+    "8.5",
+    "9",
+    "9.5",
+    "10",
+    "11",
+    "12"
+   ],
+   "colors": [
+    "Garnet"
+   ],
+   "material": "Waxy full grain leather, leather lining, leather outsole, Goodyear welt construction",
+   "care": null,
+   "careText": null,
+   "url": "https://www.thefryecompany.com/products/campus-14l-garnet",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "direct page read, thefryecompany.com"
+  },
+  {
+   "retailer": "dansko-us",
+   "market": "US",
+   "brand": "Dansko",
+   "name": "Professional Black Cabrio Clog",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "clogs",
+   "price": 145,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "EU 35",
+    "EU 36",
+    "EU 37",
+    "EU 38",
+    "EU 39",
+    "EU 40",
+    "EU 41",
+    "EU 42"
+   ],
+   "colors": [
+    "Black Cabrio",
+    "Honey Distressed",
+    "Cordovan Cabrio",
+    "Navy Suede",
+    "Chocolate Leather"
+   ],
+   "material": "Leather upper, padded instep collar, leather socklining, PU foam footbed",
+   "care": null,
+   "careText": null,
+   "url": "https://dansko.com/products/professional-black-cabrio",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "direct page read, dansko.com"
+  },
+  {
+   "retailer": "dansko-us",
+   "market": "US",
+   "brand": "Dansko",
+   "name": "XP 2.0 Black Waterproof Pull Up Clog",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "clogs",
+   "price": 165,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "EU 35",
+    "EU 36",
+    "EU 37",
+    "EU 38",
+    "EU 39",
+    "EU 40",
+    "EU 41",
+    "EU 42",
+    "EU 43"
+   ],
+   "colors": [
+    "Black Waterproof Pull Up",
+    "Black Floral Tooled",
+    "Black/Black Patent",
+    "Brown Waterproof Pull Up"
+   ],
+   "material": "Waterproof leather upper, removable dual-density PU and memory foam footbed",
+   "care": null,
+   "careText": null,
+   "url": "https://dansko.com/products/xp-2-0-black-waterproof-pull-up",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "direct page read, dansko.com"
+  },
+  {
+   "retailer": "toms-us",
+   "market": "US",
+   "brand": "Toms",
+   "name": "Men's Alpargata Black Heritage Canvas Espadrille",
+   "gender": "men",
+   "category": "footwear",
+   "subcategory": "shoes",
+   "price": 50,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "7",
+    "7.5",
+    "8",
+    "8.5",
+    "9",
+    "9.5",
+    "10",
+    "10.5",
+    "11",
+    "11.5",
+    "12",
+    "13",
+    "14"
+   ],
+   "colors": [
+    "Black Heritage Canvas",
+    "All Black Heritage Canvas",
+    "Grey Heritage Canvas",
+    "Navy Heritage Canvas"
+   ],
+   "material": "Heritage Canvas upper (made primarily with jute), recycled cotton footbed and lining (at least 50% recycled cotton)",
+   "care": null,
+   "careText": null,
+   "url": "https://www.toms.com/products/alpargata-black-heritage-canvas",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "direct page read, toms.com"
+  },
+  {
+   "retailer": "toms-us",
+   "market": "US",
+   "brand": "Toms",
+   "name": "Women's Alpargata Plus Natural Metallic Suede Espadrille",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "shoes",
+   "price": 70,
+   "salePrice": 39,
+   "currency": "USD",
+   "sizes": null,
+   "colors": [
+    "Natural Metallic Suede"
+   ],
+   "material": "Metallic suede upper",
+   "care": null,
+   "careText": null,
+   "url": "https://www.toms.com/products/womens-alpargata-plus-natural-metallic-suede-espadrille",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting toms.com price"
+  },
+  {
+   "retailer": "keen-us",
+   "market": "US",
+   "brand": "Keen",
+   "name": "Men's Newport H2 Sandal, Raven/Aluminum",
+   "gender": "men",
+   "category": "footwear",
+   "subcategory": "sandals",
+   "price": 130,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": null,
+   "colors": [
+    "Raven/Aluminum"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.keenfootwear.com/products/mens-newport-h2-raven-aluminum",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting keenfootwear.com price"
+  },
+  {
+   "retailer": "rockport-us",
+   "market": "US",
+   "brand": "Rockport",
+   "name": "Men's Total Motion City Plain Toe Oxford, Black",
+   "gender": "men",
+   "category": "footwear",
+   "subcategory": "dress shoes",
+   "price": 140,
+   "salePrice": 74.99,
+   "currency": "USD",
+   "sizes": [
+    "6.5",
+    "7",
+    "7.5",
+    "8",
+    "8.5",
+    "9",
+    "9.5",
+    "10",
+    "10.5",
+    "11",
+    "11.5",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16"
+   ],
+   "colors": [
+    "Black"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://rockport.com/products/rockport-mens-total-motion-city-plain-toe-oxford-black",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting rockport.com price and sizes"
+  },
+  {
+   "retailer": "rockport-us",
+   "market": "US",
+   "brand": "Rockport",
+   "name": "Men's Total Motion Next Gen Cap Toe Oxford, Black",
+   "gender": "men",
+   "category": "footwear",
+   "subcategory": "dress shoes",
+   "price": 125,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": null,
+   "colors": [
+    "Black"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.rockport.com/products/rockport-men-s-total-motion-next-gen-cap-toe-oxford-black-ml06596-jbl61",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting rockport.com price"
+  },
+  {
+   "retailer": "vionic-us",
+   "market": "US",
+   "brand": "Vionic",
+   "name": "Raquel Heeled Sandal",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "sandals",
+   "price": 165,
+   "salePrice": 54.99,
+   "currency": "USD",
+   "sizes": [
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13"
+   ],
+   "colors": [
+    "Black Leather",
+    "Ivory Leather",
+    "Pewter Leather",
+    "Desert Sand Suede"
+   ],
+   "material": "Leather or suede upper, Meta Dome technology footbed",
+   "care": null,
+   "careText": null,
+   "url": "https://www.vionicshoes.com/raquel-heeled-sandal.html",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting vionicshoes.com price, sizes and colors"
+  },
+  {
+   "retailer": "sorel-ca",
+   "market": "CA",
+   "brand": "Sorel",
+   "name": "Caribou Women's Waterproof Boot",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "boots",
+   "price": 250,
+   "salePrice": null,
+   "currency": "CAD",
+   "sizes": null,
+   "colors": [
+    "Shale",
+    "Stone Black",
+    "Stone",
+    "Buff"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.sorelfootwear.ca/en/p/caribou-womens-waterproof-boot-1003812.html",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting sorelfootwear.ca price and colors"
+  },
+  {
+   "retailer": "sorel-ca",
+   "market": "CA",
+   "brand": "Sorel",
+   "name": "Women's Kinetic Caribou Boot",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "boots",
+   "price": 170,
+   "salePrice": 127.9,
+   "currency": "CAD",
+   "sizes": null,
+   "colors": [
+    "Black",
+    "Camel Brown"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.sorelfootwear.ca/en/womens-kinetic-caribou-boot-1876871.html",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting sorelfootwear.ca price and colors"
+  },
+  {
+   "retailer": "blundstone-ca",
+   "market": "CA",
+   "brand": "Blundstone",
+   "name": "Classics #2640, Copper",
+   "gender": "unisex",
+   "category": "footwear",
+   "subcategory": "boots",
+   "price": 274.95,
+   "salePrice": null,
+   "currency": "CAD",
+   "sizes": null,
+   "colors": [
+    "Copper"
+   ],
+   "material": "Premium leather, Chelsea boot construction",
+   "care": null,
+   "careText": null,
+   "url": "https://www.blundstone.ca/products/blundstone-2640-classics-copper",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "direct page read of blundstone.ca listing confirmed by search snippet of the product page"
+  },
+  {
+   "retailer": "blundstone-ca",
+   "market": "CA",
+   "brand": "Blundstone",
+   "name": "550 - Classics, Walnut",
+   "gender": "unisex",
+   "category": "footwear",
+   "subcategory": "boots",
+   "price": 249.95,
+   "salePrice": null,
+   "currency": "CAD",
+   "sizes": null,
+   "colors": [
+    "Walnut"
+   ],
+   "material": "Premium leather, Chelsea boot construction",
+   "care": null,
+   "careText": null,
+   "url": "https://www.blundstone.ca/products/550-in-walnut",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting blundstone.ca price"
+  },
+  {
+   "retailer": "aldo-ca",
+   "market": "CA",
+   "brand": "ALDO",
+   "name": "Lededanten Loafer, Black",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "shoes",
+   "price": 120,
+   "salePrice": null,
+   "currency": "CAD",
+   "sizes": null,
+   "colors": [
+    "Black"
+   ],
+   "material": "Smooth leather upper, rubber sole, block heel",
+   "care": null,
+   "careText": null,
+   "url": "https://www.aldoshoes.com/ca/en/women/lededanten-black/p/13838726",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting aldoshoes.com price"
+  },
+  {
+   "retailer": "aldo-ca",
+   "market": "CA",
+   "brand": "ALDO",
+   "name": "Daphia Loafer, Black",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "shoes",
+   "price": 98,
+   "salePrice": null,
+   "currency": "CAD",
+   "sizes": null,
+   "colors": [
+    "Black",
+    "White",
+    "Medium Brown"
+   ],
+   "material": "Cup sole construction",
+   "care": null,
+   "careText": null,
+   "url": "https://www.aldoshoes.com/products/daphia-black",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting aldoshoes.com price"
+  },
+  {
+   "retailer": "ninewest-ca",
+   "market": "CA",
+   "brand": "Nine West",
+   "name": "Maribu Black/Zigy Nappa Boot",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "boots",
+   "price": 225,
+   "salePrice": 149.99,
+   "currency": "CAD",
+   "sizes": [
+    "6",
+    "6.5",
+    "7",
+    "7.5",
+    "8",
+    "8.5",
+    "9",
+    "9.5",
+    "10"
+   ],
+   "colors": [
+    "Black/Zigy Nappa"
+   ],
+   "material": "Nappa leather, pointed toe, block heel (45mm)",
+   "care": null,
+   "careText": null,
+   "url": "https://ninewest.ca/products/nine-west-maribu-black-zigy-nappa-boot-gr",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting ninewest.ca price and sizes"
+  },
+  {
+   "retailer": "loake-gb",
+   "market": "GB",
+   "brand": "Loake",
+   "name": "Aldwych Polo Suede",
+   "gender": "men",
+   "category": "footwear",
+   "subcategory": "dress shoes",
+   "price": 220,
+   "salePrice": 154,
+   "currency": "GBP",
+   "sizes": null,
+   "colors": [
+    "Polo Suede"
+   ],
+   "material": "Suede upper, rubber studded Dainite sole, G fit (wide)",
+   "care": null,
+   "careText": null,
+   "url": "https://www.loake.co.uk/product/aldwych-polo-suede/",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting loake.co.uk price"
+  },
+  {
+   "retailer": "grenson-gb",
+   "market": "GB",
+   "brand": "Grenson",
+   "name": "Declan Chelsea Boots, Black Calf",
+   "gender": "men",
+   "category": "footwear",
+   "subcategory": "boots",
+   "price": 295,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "6",
+    "6.5",
+    "7",
+    "7.5",
+    "8",
+    "8.5",
+    "9",
+    "9.5",
+    "10",
+    "10.5",
+    "11",
+    "11.5",
+    "12"
+   ],
+   "colors": [
+    "Black"
+   ],
+   "material": "Black calf leather with tonal welt and sole, split studded rubber sole, Goodyear welted, 204 last",
+   "care": null,
+   "careText": null,
+   "url": "https://www.grenson.com/declan-chelsea-boots-for-men-in-black-calf",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "direct page read, grenson.com"
+  },
+  {
+   "retailer": "hotter-gb",
+   "market": "GB",
+   "brand": "Hotter",
+   "name": "Rowan Shoes, Sand",
+   "gender": "men",
+   "category": "footwear",
+   "subcategory": "shoes",
+   "price": 79,
+   "salePrice": 49,
+   "currency": "GBP",
+   "sizes": [
+    "6",
+    "7",
+    "7.5",
+    "8",
+    "8.5",
+    "9",
+    "9.5",
+    "10",
+    "11",
+    "12"
+   ],
+   "colors": [
+    "Sand",
+    "Dark Denim",
+    "Washed Charcoal Grey"
+   ],
+   "material": "Canvas-leather upper, leather sock, PU sole, textile-leather lining, removable insole, 30mm heel",
+   "care": null,
+   "careText": null,
+   "url": "https://www.hotter.com/rowan-shoes-beige-2260",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting hotter.com price, sizes and colors"
+  },
+  {
+   "retailer": "fitflop-gb",
+   "market": "GB",
+   "brand": "FitFlop",
+   "name": "Women's Gen-FF Buckle Two-Bar Leather Slides",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "slippers",
+   "price": 85,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "UK 3",
+    "UK 4",
+    "UK 5",
+    "UK 6",
+    "UK 7",
+    "UK 8",
+    "UK 9"
+   ],
+   "colors": [
+    "Black",
+    "Urban White"
+   ],
+   "material": "Leather upper",
+   "care": null,
+   "careText": null,
+   "url": "https://www.fitflop.com/uk/en/shop/gen-ff-buckle-two-bar-leather-slides-p-HE8",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting fitflop.com price, sizes and colors"
+  },
+  {
+   "retailer": "fitflop-gb",
+   "market": "GB",
+   "brand": "FitFlop",
+   "name": "Women's Gen-FF Buckle Two-Bar Suede Slides",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "slippers",
+   "price": 125,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": null,
+   "colors": [
+    "Cappuccino",
+    "Rust Rose"
+   ],
+   "material": "Suede upper",
+   "care": null,
+   "careText": null,
+   "url": "https://www.fitflop.com/uk/en/shop/gen-ff-buckle-two-bar-suede-slides-p-A2U",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting fitflop.com price and colors"
+  },
+  {
+   "retailer": "russellandbromley-gb",
+   "market": "GB",
+   "brand": "Russell & Bromley",
+   "name": "Park Way Flatform Chelsea Boot, Black Grained Leather",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "boots",
+   "price": 250,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "UK 3",
+    "UK 4",
+    "UK 4.5",
+    "UK 5",
+    "UK 5.5",
+    "UK 6",
+    "UK 6.5",
+    "UK 7",
+    "UK 8",
+    "UK 9"
+   ],
+   "colors": [
+    "Black"
+   ],
+   "material": "Grained leather, elasticated panels, flatform height 6cm, made in Portugal",
+   "care": null,
+   "careText": null,
+   "url": "https://www.russellandbromley.co.uk/park-way/105148",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting russellandbromley.co.uk price and sizes"
+  },
+  {
+   "retailer": "russellandbromley-gb",
+   "market": "GB",
+   "brand": "Russell & Bromley",
+   "name": "Chester Tassel Loafer",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "shoes",
+   "price": 245,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": null,
+   "colors": [
+    "Tan/Brown",
+    "Black",
+    "Black Patent",
+    "Oxblood",
+    "Tortoiseshell Brown"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.endource.com/product/russell-and-bromley-chester-tassel-loafer/YYFy0kbg-wABURX_",
+   "date": "2026-10-05",
+   "confirmed": false,
+   "source": "search snippet clearly quoting the Russell & Bromley price and colors (from an aggregator mirroring the russellandbromley.co.uk listing)"
+  },
+  {
+   "retailer": "havaianas-ie",
+   "market": "IE",
+   "brand": "Havaianas",
+   "name": "Havaianas Top, Black",
+   "gender": "unisex",
+   "category": "footwear",
+   "subcategory": "sandals",
+   "price": 22,
+   "salePrice": null,
+   "currency": "EUR",
+   "sizes": [
+    "23/24",
+    "25/26",
+    "27/28",
+    "29/30",
+    "31/32",
+    "33/34",
+    "35/36",
+    "37/38",
+    "39/40",
+    "41/42",
+    "43/44",
+    "45/46",
+    "47/48"
+   ],
+   "colors": [
+    "Black"
+   ],
+   "material": "Rubber",
+   "care": null,
+   "careText": null,
+   "url": "https://www.havaianas-store.com/eur/en/havaianas-top/4000029-BLACK.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "direct page read, havaianas-store.com (EUR region)"
+  },
+  {
+   "retailer": "havaianas-ie",
+   "market": "IE",
+   "brand": "Havaianas",
+   "name": "Havaianas Square, Dark Brown",
+   "gender": "unisex",
+   "category": "footwear",
+   "subcategory": "sandals",
+   "price": 30,
+   "salePrice": null,
+   "currency": "EUR",
+   "sizes": [
+    "33/34",
+    "35/36",
+    "37/38",
+    "39/40",
+    "41/42"
+   ],
+   "colors": [
+    "Dark Brown"
+   ],
+   "material": "Rubber",
+   "care": null,
+   "careText": null,
+   "url": "https://www.havaianas-store.com/eur/en/havaianas-square/4148301-DARK_BROWN.html",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "direct page read, havaianas-store.com (EUR region)"
+  },
+  {
+   "retailer": "cklass-mx",
+   "market": "MX",
+   "brand": "Cklass",
+   "name": "Sandalia Horcapollo Tacón 4 cm, Rosa",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "sandals",
+   "price": 449,
+   "salePrice": null,
+   "currency": "MXN",
+   "sizes": [
+    "22",
+    "22.5",
+    "23",
+    "23.5",
+    "24",
+    "24.5",
+    "25",
+    "25.5",
+    "26",
+    "26.5",
+    "27"
+   ],
+   "colors": [
+    "Rosa"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://cklass.com/collections/sandalias-para-mujer/products/sandalia-horcapollo-tacon-4-cm-rosa-27826",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "direct page read, cklass.com"
+  },
+  {
+   "retailer": "cklass-mx",
+   "market": "MX",
+   "brand": "Cklass",
+   "name": "Sandalia Tiras Tacón 6 cm, Dorado",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "sandals",
+   "price": 469,
+   "salePrice": null,
+   "currency": "MXN",
+   "sizes": [
+    "22",
+    "22.5",
+    "23",
+    "23.5",
+    "24",
+    "24.5",
+    "25",
+    "25.5",
+    "26",
+    "26.5",
+    "27"
+   ],
+   "colors": [
+    "Dorado"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://cklass.com/collections/sandalias-para-mujer/products/sandalia-tiras-tacon-6-cm-dorado-27825",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "direct page read, cklass.com"
+  },
+  {
+   "retailer": "cklass-mx",
+   "market": "MX",
+   "brand": "Cklass",
+   "name": "Zapatilla de Tacón Puntal, Rosa",
+   "gender": "women",
+   "category": "footwear",
+   "subcategory": "shoes",
+   "price": 569,
+   "salePrice": null,
+   "currency": "MXN",
+   "sizes": [
+    "22",
+    "22.5",
+    "23",
+    "23.5",
+    "24",
+    "24.5",
+    "25",
+    "25.5",
+    "26",
+    "26.5",
+    "27"
+   ],
+   "colors": [
+    "Rosa"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://cklass.com/collections/zapatos-de-tacon/products/zapatilla-de-tacon-puntal-rosa-67463",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "direct page read, cklass.com"
+  }
+ ]
+}

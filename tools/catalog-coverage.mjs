@@ -44,6 +44,9 @@ import { CLINICS } from '../src/engine/content/clinics.ts';
 import { CLOTHING_RETAILERS } from '../src/engine/content/clothingcatalog.ts';
 import { SALONS } from '../src/engine/content/hygiene.ts';
 import { CLEANING } from '../src/engine/content/cleaning.ts';
+import { LIGHTING_PRODUCTS } from '../src/engine/content/lightingcatalog.ts';
+import { TIRE_PRODUCTS } from '../src/engine/content/tirecatalog.ts';
+import { GARDEN_PRODUCTS } from '../src/engine/content/gardencatalog.ts';
 
 const OUT = 'docs/CATALOG-COVERAGE.md';
 const mode = process.argv.includes('--write') ? 'write' : 'check';
@@ -52,7 +55,10 @@ const mode = process.argv.includes('--write') ? 'write' : 'check';
 const row = (brand, product, variants, market) => ({ brand, product, variants, market });
 
 const CLOTHING_GROUP = { 'underwear and socks': 'underwear', shapewear: 'thermals', hosiery: 'thermals', slips: 'thermals' };
-const clothing = (cat) => CLOTHING_PRODUCTS.filter((p) => (CLOTHING_GROUP[p.category] ?? p.category) === cat)
+/** A trainer the shops sell as clothes: filed as sneakers or trainers, or named so, and not a slide, sandal, mule or boot (from 2026-10-05). */
+const isSneaker = (p) => p.category === 'footwear' && !/\b(slides?|sandals?|chanclas|mules?|boots?|botas?)\b/i.test(p.name)
+  && (/sneaker|trainer/i.test(p.subcategory ?? '') || /\b(sneakers?|trainers?|tenis|runners?|running shoes?|chuck 70|samba|air force 1)\b/i.test(p.name));
+const clothing = (cat) => CLOTHING_PRODUCTS.filter((p) => (CLOTHING_GROUP[p.category] ?? p.category) === cat && !(cat === 'footwear' && isSneaker(p)))
   .map((p) => row(p.brand, p.sameAs ?? `${p.brand}|${p.name}`, Math.max(1, p.sizes.length) * Math.max(1, p.colors.length), p.market));
 const cars = (list) => list.map((m) => row(m.make, `${m.make}|${m.model}`, 1, m.market));
 
@@ -68,12 +74,21 @@ const READ = {
   footwear: () => clothing('footwear'), bags: () => clothing('bags'), accessories: () => clothing('accessories'),
   watches: () => clothing('watches'), jewelry: () => clothing('jewelry'),
   // Every one is Nike's Jordan Brand's, an Air Jordan or a Jordan signature shoe (from 2026-10-05 counted as its brand, not unbranded).
-  sneakers: () => SNEAKERS.map((s) => row(/Jordan/.test(`${s.name} ${s.line}`) ? 'Jordan' : null, s.styleCode, Math.max(1, ...SNEAKER_RETAIL.filter((o) => o.styleCode === s.styleCode).map((o) => o.sizes?.length ?? 1)), null)),
+  // And from 2026-10-05 the trainers the clothes shops sell, counted here and not among the shoes.
+  sneakers: () => [
+    ...SNEAKERS.map((s) => row(/Jordan/.test(`${s.name} ${s.line}`) ? 'Jordan' : null, s.styleCode, Math.max(1, ...SNEAKER_RETAIL.filter((o) => o.styleCode === s.styleCode).map((o) => o.sizes?.length ?? 1)), null)),
+    ...CLOTHING_PRODUCTS.filter(isSneaker).map((p) => row(p.brand, p.sameAs ?? `${p.brand}|${p.name}`, Math.max(1, p.sizes.length) * Math.max(1, p.colors.length), p.market)),
+  ],
   // As products from 2026-10-04: a row an offer, the product its own, its colors its variants.
   luggage: () => LUGGAGE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   // As products from 2026-10-05: a row an offer, each screen size its own product.
   televisions: () => TV_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   audio: () => AUDIO_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
+  // Bulbs and lamps (from 2026-10-05), each lamp's finishes its variants.
+  // Tires and mowers by make and model (from 2026-10-05).
+  tires: () => TIRE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, 1, o.market))),
+  garden: () => GARDEN_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, 1, o.market))),
+  lighting: () => LIGHTING_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   // Mattresses and frames (from 2026-10-05): IKEA's by name, makers' own by model, each size a variant of its model.
   mattresses: () => [
     ...Object.entries(BED_PARTS).flatMap(([market, parts]) => [...parts.frames, ...parts.mattresses].map((x) => row('IKEA', `IKEA|${x.name}`, 1, market))),

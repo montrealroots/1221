@@ -28,6 +28,9 @@
  * Brooklyn yard visit, about $100; Mexico City's basic visit for a small
  * garden, MX$350 to MX$700.
  *
+ * **A mower** (from 2026-10-05, `systems/mowers.ts`): mowing by hand needs one
+ * to push, and a robot rated for the lawn keeps it cut through the season.
+ *
  * **The rules.** Toronto's turfgrass by-law caps it at 20 cm (Chapter 489),
  * and New Haven's anti-blight ordinance at a foot. Over it, a notice; ten
  * days later, still over, the city does the work at the owner's expense
@@ -48,6 +51,7 @@ import { exchange } from '../content/currency';
 import { CITIES } from '../content/geography';
 import { spend } from './household';
 import type { OwnedHome } from './homes';
+import { robotFor } from './mowers';
 
 export const GROWS_CM_A_WEEK = 1;
 export const MOWN_CM = 5;
@@ -96,6 +100,8 @@ export function lawnDay(sim: Simulation, person: Person, owned: OwnedHome, at: I
   const place = LAWNS[owned.cityId]!;
   const mine = person.id === sim.universe.playerId;
   if (growing(owned.cityId, at)) lawn.cm += GROWS_CM_A_WEEK / 7;
+  // A robot rated for the lawn keeps it at its height through the season (`systems/mowers.ts`, from 2026-10-05).
+  if (growing(owned.cityId, at) && robotFor(person, owned)) { lawn.cm = MOWN_CM; lawn.lastCut = at; }
   const g = place.gardener;
   const month = zonedParts(at, CITIES.require(owned.cityId).timeZone).month;
   const working = !g.season || (month >= g.season[0] && month <= g.season[1]);

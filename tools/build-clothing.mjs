@@ -7,7 +7,7 @@
 // product whose page gave no care label takes its kind's usual care, said so.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
-const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json', 'research-clothing-fit.json', 'research-clothing-swimsleep.json', 'research-clothing-shoesbags.json', 'research-clothing-towels.json', 'research-clothing-accessories.json', 'research-clothing-cultural.json', 'research-clothing-cultural-2.json', 'research-clothing-swim-ie.json', 'research-clothing-cultural-3.json', 'research-clothing-bagswatches.json'].map((f) => `docs/research/world/${f}`);
+const FILES = ['research-clothing-us.json', 'research-clothing-ukie.json', 'research-clothing-camx.json', 'research-clothing-fit.json', 'research-clothing-swimsleep.json', 'research-clothing-shoesbags.json', 'research-clothing-towels.json', 'research-clothing-accessories.json', 'research-clothing-cultural.json', 'research-clothing-cultural-2.json', 'research-clothing-swim-ie.json', 'research-clothing-cultural-3.json', 'research-clothing-bagswatches.json', 'research-clothing-shoes-2.json', 'research-clothing-sneakers-a.json', 'research-clothing-sneakers-b.json'].map((f) => `docs/research/world/${f}`);
 const OUT = 'src/engine/content/clothingcatalog.ts';
 
 /** A retailer's department, as read: women's, men's or unisex, in English or Spanish; none where none was read. */
@@ -95,7 +95,9 @@ function wornAs(p, market) {
   if (category === 'formalwear' && kind === 'trousers') return ['bottom', 'suit'];
   if (category === 'formalwear' && kind === 'coat') return ['outer', 'suit'];
   if (category === 'sleepwear' && !worn) return ['sleep', 'pajamas'];
-  if (category === 'footwear' && !head) return ['shoes', 'shoes'];
+  // Footwear is worn on the feet whatever its name says (from 2026-10-05; until then a "Polo" loafer and a "Top"
+  // flip-flop were shirts, and an oxford, by "tie", an accessory).
+  if (category === 'footwear') return ['shoes', 'shoes'];
   return [slot, kind];
 }
 
@@ -289,11 +291,14 @@ if (existsSync(GAPS)) {
 }
 
 // A brand spelled two ways by its sellers ("UNIQLO", "Uniqlo") is one brand, written as most of its products are
-// (from 2026-10-05; until then it counted twice).
+// (from 2026-10-05; until then it counted twice). Its accents aside too ("AÉROPOSTALE", "AEROPOSTALE"), and of two
+// forms as common the one not all capitals.
 {
+  const keyOf = (b) => String(b).normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+  const shouts = (b) => (b === b.toUpperCase() && /\p{L}{2}/u.test(b) ? 1 : 0);
   const forms = new Map();
-  for (const p of products) { const k = String(p.brand).toLowerCase(); const m = forms.get(k) ?? new Map(); m.set(p.brand, (m.get(p.brand) ?? 0) + 1); forms.set(k, m); }
-  for (const p of products) { const m = forms.get(String(p.brand).toLowerCase()); p.brand = [...m.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0][0]; }
+  for (const p of products) { const k = keyOf(p.brand); const m = forms.get(k) ?? new Map(); m.set(p.brand, (m.get(p.brand) ?? 0) + 1); forms.set(k, m); }
+  for (const p of products) { const m = forms.get(keyOf(p.brand)); p.brand = [...m.entries()].sort((a, b) => b[1] - a[1] || shouts(a[0]) - shouts(b[0]) || a[0].localeCompare(b[0]))[0][0]; }
 }
 // A retailer with nothing on sale is left out: Hudson's Bay closed its stores on 2025-06-01, and some blocked every read.
 for (let i = retailers.length - 1; i >= 0; i -= 1) if (!products.some((p) => p.retailer === retailers[i].id)) retailers.splice(i, 1);

@@ -5,6 +5,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { HEATER_SHARE } from '@/engine/systems/hotwater';
+import { LIGHTING_NORM } from '@/engine/content/lighting';
 import { homePlace, machineUsd } from '@/engine/systems/dwelling';
 import { quickSave } from '@/engine';
 import { instantFromZoned } from '@/engine/core/time';
@@ -57,6 +58,10 @@ describe('the bills', () => {
     const share = HEATER_SHARE.us!;
     const was = share.electric;
     (share as { electric: number }).electric = 0;
+    // And no lighting (`systems/lighting.ts`, from 2026-10-05), whose January's long nights bill past the typical month's.
+    const lights = LIGHTING_NORM.us!;
+    const lit = lights.share;
+    (lights as { share: number }).share = 0;
     try {
       const sim = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'us-ny-newyork', livesWhereBorn: true });
       const flat = costsAt('us-ny-newyork', sim.player.home!.kind, saveCurrency(sim.universe), sim.now).bills;
@@ -68,7 +73,7 @@ describe('the bills', () => {
       expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 1, cooling)) + machines() - telecomPartOf(sim, sim.player));
       sim.advanceTo(instantFromZoned({ year: 2026, month: 2, day: 10, hour: 12 }, 'America/New_York'));
       expect(billsOf(sim, sim.player)).toBe(Math.round(flat * billsFactor('us-ny-newyork', 2, cooling)) + machines() - telecomPartOf(sim, sim.player));
-    } finally { (share as { electric: number }).electric = was; }
+    } finally { (share as { electric: number }).electric = was; (lights as { share: number }).share = lit; }
   });
 });
 

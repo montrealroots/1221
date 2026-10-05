@@ -31,7 +31,8 @@ import { homeOf } from '@/engine/systems/earnings';
 import { buyRefusal, glazed, kindOf, registers, insuranceBasis, insuranceCurrency, jurisdictionOf, kept, liabilityOffered, loanRate, modelById, monthlyInsurance, quote, valueOf, vehiclesOf, type OwnedVehicle } from '@/engine/systems/vehicles';
 import { DEPRECIATION_SOURCE, LOAN_RATES, US_LEASE } from '@/engine/content/vehiclefees';
 import type { CarModel, VehicleKind } from '@/engine/content/vehiclecatalog';
-import { TIRE_LIFE_KM, odometerOf, tireSetCost, tiresFittedAt, tiresRefusal, tiresWorn } from '@/engine/systems/tires';
+import { lifeOfTire, odometerOf, tireCatalog, tireLifeOf, tireOfferRefusal, tireSetCost, tiresFittedAt, tiresRefusal, tiresWorn } from '@/engine/systems/tires';
+import { DeviceShop, type DeviceRow } from '@/ui/components/DeviceShop';
 import { tintRefusal } from '@/engine/systems/tint';
 import { MOD_LABEL, modRefusal, type Mod } from '@/engine/systems/mods';
 import { faultCost, inShopNow, laidUp, repairRefusal, shopsFor } from '@/engine/systems/repairs';
@@ -152,7 +153,7 @@ export function VehiclesWorkspace() {
                             {(['rear', 'full'] as const).filter((k) => !tintRefusal(v, k, glazed(v))).map((k) => <Gated key={k} feature="vehicle.tint" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ paid: number; legal: boolean }>('vehicle.tint', { vehicleId: v.id, kind: k }); if (a.ok) toast(a.value!.legal ? `Tinted, within the law here, for ${money(a.value!.paid)}.` : `Tinted darker than the law here allows, for ${money(a.value!.paid)}.`, a.value!.legal ? 'positive' : 'neutral'); }}>{k === 'rear' ? 'Tint The Back' : 'Tint All Round'}</Gated>)}
                             <StereoControl v={v} />
                             <RoofControl v={v} />
-                            {tireSetCost(sim, v) !== undefined && kindOf(modelById(v.modelId)!) === 'car' && <Gated feature="vehicle.replace_tires" className="btn btn-sm btn-ghost" title={tiresWorn(v) ? 'Worn to the legal limit: a test that checks them fails them' : `${Math.round((TIRE_LIFE_KM - (odometerOf(v) - tiresFittedAt(v))) / 1000).toLocaleString('en-US')} thousand km of tread left`} onClick={() => { const a = run<{ paid: number }>('vehicle.replace_tires', { vehicleId: v.id }); if (a.ok) toast(`Four tires fitted, for ${money(a.value!.paid)}.`, 'positive'); }}>{`${tiresWorn(v) ? 'Replace The Worn Tires' : 'Fit New Tires'}, ${money(tireSetCost(sim, v)!)}`}</Gated>}
+                            {tireSetCost(sim, v) !== undefined && kindOf(modelById(v.modelId)!) === 'car' && <Gated feature="vehicle.replace_tires" className="btn btn-sm btn-ghost" title={tiresWorn(v) ? 'Worn to the legal limit: a test that checks them fails them' : `${Math.round((tireLifeOf(v) - (odometerOf(v) - tiresFittedAt(v))) / 1000).toLocaleString('en-US')} thousand km of tread left`} onClick={() => { const a = run<{ paid: number }>('vehicle.replace_tires', { vehicleId: v.id }); if (a.ok) toast(`Four tires fitted, for ${money(a.value!.paid)}.`, 'positive'); }}>{`${tiresWorn(v) ? 'Replace The Worn Tires' : 'Fit New Tires'}, ${money(tireSetCost(sim, v)!)}`}</Gated>}
                             <RepairControl v={v} />
                             <ServiceControl v={v} />
                             <WrapControl v={v} />
@@ -178,6 +179,8 @@ export function VehiclesWorkspace() {
         <FuelPanel cars={owned} />
 
         <InteriorWork />
+
+        <TireShop />
 
         <Panel title="Buy One" subtitle={j ? `Where you live: ${PLACE_NAME[j]}` : 'Where you live, SLATE sells no cars yet'}>
           <div className="col gap-3">
@@ -884,6 +887,57 @@ function ServiceControl({ v }: { v: OwnedVehicle }) {
 }
 
 /** The interior done to your own design at a shop in the car's town: what's done, in what, its colors, an itemized estimate, then the commission (`vehicle.interior`). */
+const SEASON_LABEL: Readonly<Record<string, string>> = { 'all-season': 'All-Season', 'all-weather': 'All-Weather', summer: 'Summer', winter: 'Winter' };
+/**
+ * Tires by make and model (`systems/tires.ts`, from 2026-10-05): a set of four
+ * of a model sold where the car is, fitted as its everyday set, or as its
+ * winter set where SLATE keeps winter tires, each lasting its own warranty.
+ */
+function TireShop() {
+  const { sim } = useGame();
+  const person = useWorld((s) => s.player);
+  const everyday = useFeature('vehicle.replace_tires');
+  const winterGate = useFeature('vehicle.winter_tires');
+  const cars = vehiclesOf(person).filter((v) => v.soldAt === undefined && !v.repossessed && kindOf(modelById(v.modelId)!) === 'car');
+  const [vehicleId, setVehicleId] = useState('');
+  const [winter, setWinter] = useState(false);
+  if (cars.length === 0) return null;
+  const v = cars.find((x) => x.id === vehicleId) ?? cars[0]!;
+  const winterOk = !tiresRefusal(v);
+  const asWinter = winter && winterOk;
+  const shop = tireCatalog(sim, v, asWinter);
+  const life = (r: DeviceRow) => `${typeof r.product.attrs.warrantyKm === 'number' ? '' : '≈'}${Math.round(lifeOfTire(r.product) / 1000).toLocaleString('en-US')} Thousand km`;
+  return (
+    <Panel title="Tires" subtitle="A set of four, by make and model">
+      <div className="col gap-2">
+        <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
+          {cars.length > 1 && <div className="field" style={{ margin: 0 }}><label htmlFor="tire-car">For</label><select id="tire-car" value={v.id} onChange={(e) => setVehicleId(e.target.value)}>{cars.map((c) => <option key={c.id} value={c.id}>{modelById(c.modelId)!.make} {modelById(c.modelId)!.model}</option>)}</select></div>}
+          {winterOk && <div className="field" style={{ margin: 0 }}><label htmlFor="tire-kind">Set</label><select id="tire-kind" value={asWinter ? 'winter' : 'everyday'} onChange={(e) => setWinter(e.target.value === 'winter')}><option value="everyday">Everyday</option><option value="winter">Winter</option></select></div>}
+        </div>
+        {shop.length === 0 ? <div className="small">No tire of that kind was read on sale where the car is.</div> : (
+          <DeviceShop list={asWinter ? 'tires-winter' : 'tires'} title={asWinter ? 'Winter Tires' : 'Everyday Tires'} shop={shop} refusal={(id) => tireOfferRefusal(v, id, asWinter)} command={asWinter ? 'vehicle.winter_tires' : 'vehicle.replace_tires'} gate={asWinter ? winterGate : everyday}
+            payload={{ vehicleId: v.id }} buyLabel="Fit A Set" bought={(label) => `Four ${label} tires fitted.`}
+            facets={{ brand: 'Maker', season: 'Season' }}
+            facetsOf={(r) => ({ brand: r.product.brand, season: SEASON_LABEL[String(r.product.attrs.season)] ?? 'All-Season' })}
+            columns={[
+              { head: 'Season', cell: (r) => SEASON_LABEL[String(r.product.attrs.season)] ?? '—' },
+              { head: 'Lasts', num: true, cell: life },
+              { head: 'Fitted', cell: (r) => (r.offer.code === 'fitted' ? 'Yes' : r.offer.market === 'us' ? 'Fitting Added' : 'Not Read') },
+            ]}
+            compare={[
+              { label: 'Season', value: (r) => SEASON_LABEL[String(r.product.attrs.season)] ?? '—' },
+              { label: 'Size', value: (r) => String(r.product.attrs.size) },
+              { label: 'Lasts', value: life },
+              { label: 'EU Label', value: (r) => String(r.product.attrs.euLabel ?? '—') },
+              { label: 'Load And Speed', value: (r) => String(r.product.attrs.loadSpeed ?? '—') },
+            ]}
+            fine="Four tires at the seller’s own price, America’s and Canada’s with the place’s sales tax, at 215/55 R17 or the nearest size the maker sells, the size SLATE prices every car’s set at. America’s sets add BJ’s $80 to fit; elsewhere a price not fitted has no fitting read, and none is added. A set lasts its warranty, or, marked ≈, the CrossClimate 2’s 60,000 miles (a winter tire the X-Ice Snow’s 40,000)." />
+        )}
+      </div>
+    </Panel>
+  );
+}
+
 function InteriorWork() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);

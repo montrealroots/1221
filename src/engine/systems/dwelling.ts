@@ -56,6 +56,7 @@ import { fittedModel } from './appliances';
 import { DISHWASHER_CYCLES_A_DAY, detergentFor, dishSoapFor, dishwasherRuns, laundryDetergent, restock, starterCleaning, starterSupplies } from './hygiene';
 import { amenitiesOf } from './hotels';
 import { machinesDay } from './appliancefaults';
+import { lightingDay, replaceBulbs, type Lights } from './lighting';
 import { starterLuggage } from './luggage';
 import { sunTimes } from '../core/sun';
 import { gymHere } from './gyms';
@@ -330,6 +331,10 @@ export interface Living {
   extraKwh?: number;
   /** The month's kilowatt-hours on a set of one's own, watched (from 2026-10-05): billed past the typical household's viewing, and cleared with the month's electricity. */
   tvKwh?: number;
+  /** The month's kilowatt-hours its lights drew (`systems/lighting.ts`, from 2026-10-05): billed against the typical household's lighting, and cleared with the month's electricity. */
+  lightKwh?: number;
+  /** The home's sockets and the bulb in each (from 2026-10-05). */
+  lights?: Lights;
   /** The month's days a guest has stayed (`systems/houseguests.ts`, from 2026-10-05), each a person's water. */
   guestDays?: number;
   /**
@@ -493,6 +498,8 @@ export function livingDay(sim: Simulation, person: Person): void {
   starterCleaning(sim, person, place.fixtures.dishwasher);
   // The home's machines: one mended, or one broken (`systems/appliancefaults.ts`, from 2026-10-02).
   machinesDay(sim, person);
+  // And its lights, burned for the hours somebody's home and up in the dark (`systems/lighting.ts`, from 2026-10-05).
+  lightingDay(sim, person);
   starterLuggage(sim, person);
   const w = person.wellbeing;
   // A free day keeps up where they've chosen the shortcut for it (from 2026-10-03, `systems/automation.ts`; until then
@@ -504,6 +511,8 @@ export function livingDay(sim: Simulation, person: Person): void {
   if (free && isOn(person, 'replaceClothes')) replaceWornOut(sim, person);
   // And toiletries run out (`systems/hygiene.ts`).
   if (free && isOn(person, 'restock')) restock(sim, person, place.fixtures.dishwasher);
+  // And a bulb gone out, from the spares or a pack bought (from 2026-10-05).
+  if (free && isOn(person, 'restock') && atHome(person)) replaceBulbs(sim, person);
   if (!wearOutfit(sim, person)) {
     w.morale = clamp(w.morale - WORN_CLOTHES.morale * personalityOf(person, 'moraleSwing'), 0, 100);
   }
