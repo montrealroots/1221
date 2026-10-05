@@ -35,6 +35,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { CITIES } from '../content/geography';
 import { inSaveMoney } from './banking';
 import { bagRuleFor, bagsGoing, checkedSize, packedIn } from './luggage';
+import { cheapestOf, productPrice } from './clothing';
 import { homeKeyOf, itemsOf, type Item } from './items';
 
 export const BAGGAGE = {
@@ -87,8 +88,17 @@ const capFor = (sim: Simulation, fromCity: string, toCity: string): Money => {
   return inSaveMoney(sim, (us ? BAGGAGE.usDomesticUsd : BAGGAGE.montrealUsd) * 100, 'USD');
 };
 
-/** A bag's worth with what's in it: what each was bought for. */
-const worth = (person: Person, bag: Item): Money => [bag, ...packedIn(person, bag)].reduce((n, i) => n + (i.paid ?? 0), 0);
+/**
+ * A bag's worth with what's in it: what each was bought for; from 2026-10-05 a garment with no price bought for it (a
+ * life's first clothes) at what the cheapest of its kind costs where they live, its replacement, SLATE's reading. Until
+ * then it counted nothing toward the claim.
+ */
+const worth = (sim: Simulation, person: Person, bag: Item): Money => [bag, ...packedIn(person, bag)].reduce((n, i) => n + (i.paid ?? replacementOf(sim, person, i)), 0);
+function replacementOf(sim: Simulation, person: Person, i: Item): Money {
+  if (!i.garment) return 0;
+  const c = cheapestOf(sim, person, i.garment.kind, i.garment.slot);
+  return c ? productPrice(sim, person.home?.cityId ?? person.currentLocationId, c.product) : 0;
+}
 
 /**
  * On landing with checked bags (`travel.arrive`): each drawn, and what's
@@ -110,7 +120,7 @@ export function landBags(sim: Simulation, person: Person, journeyId: string, fro
       const until = fate.kind === 'delayed' ? sim.now + fate.hours * 3_600_000 : sim.now + BAGGAGE.tracingDays * MS_DAY;
       bag.at = { kind: 'held', cityId: toCity, by: `${carrier}’s baggage service`, until };
       if (fate.kind === 'delayed') { claim.backAt = until; sim.schedule({ at: until, kind: BAG_BACK_KIND, label: 'Your Bag Comes Back', category: 'personal', priority: 27, payload: { personId: person.id, claimId: claim.id } }); }
-      else { claim.lostAt = until; claim.value = worth(person, bag); sim.schedule({ at: until, kind: BAG_LOST_KIND, label: 'A Bag Declared Lost', category: 'personal', priority: 27, payload: { personId: person.id, claimId: claim.id } }); }
+      else { claim.lostAt = until; claim.value = worth(sim, person, bag); sim.schedule({ at: until, kind: BAG_LOST_KIND, label: 'A Bag Declared Lost', category: 'personal', priority: 27, payload: { personId: person.id, claimId: claim.id } }); }
     }
     bagClaimsOf(person).push(claim);
     made.push(claim);
