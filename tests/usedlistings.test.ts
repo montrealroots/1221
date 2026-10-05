@@ -80,12 +80,16 @@ describe('a private seller', () => {
     const v = vehiclesOf(ca.sim.player)[0]!;
     expect(laidUp(v, ca.sim.now)).toBeUndefined();
     ca.sim.advanceBy(11 * MS_DAY);
-    expect(ca.sim.must<{ penalty: number }>({ kind: 'vehicle.transfer', payload: { vehicleId: v.id } }).penalty).toBe(inSaveMoney(ca.sim, 15_00, 'USD'));
+    const caDone = ca.sim.must<{ penalty: number; fee: number }>({ kind: 'vehicle.transfer', payload: { vehicleId: v.id } });
+    expect(caDone.penalty).toBe(inSaveMoney(ca.sim, 15_00, 'USD'));
+    expect(caDone.fee).toBe(0);
     const on = withSeller('ca-on-toronto', 'CA-ON', 'ca-honda-cr-v', 'private', 'ul-priv-on');
     on.sim.must({ kind: 'vehicle.buy', payload: { modelId: 'ca-honda-cr-v', age: on.l.age } });
     const w = vehiclesOf(on.sim.player)[0]!;
     expect(laidUp(w, on.sim.now + 5 * MS_DAY)).toBeUndefined();
     expect(laidUp(w, on.sim.now + 7 * MS_DAY)).toBe('Its transfer to you is overdue: it’s driven again once that’s done.');
+    // Done, at ServiceOntario's $32 vehicle permit (from 2026-10-05); California's has no fee kept.
+    expect(on.sim.must<{ fee: number }>({ kind: 'vehicle.transfer', payload: { vehicleId: w.id } }).fee).toBe(inSaveMoney(on.sim, 32_00, 'CAD'));
   });
 });
 

@@ -539,6 +539,9 @@ th { font-size: var(--size-xs); text-transform: uppercase; letter-spacing: .06em
 .side-by-side { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, 320px); gap: var(--s4); margin-top: var(--s3); }
 @media (max-width: 700px) { .side-by-side { grid-template-columns: 1fr; } }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* A cell of buttons laid out as a row stays a table cell, so its row's line and height are the row's (from 2026-10-05; as a flex box it drew its own line, off the row's where a neighbour wrapped). */
+td.row { display: table-cell; white-space: nowrap; vertical-align: middle; }
+td.row > * + * { margin-left: var(--s2); }
 .table-scroll { overflow-x: auto; }
 
 .empty {

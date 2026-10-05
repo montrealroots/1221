@@ -18,7 +18,7 @@ which never counts toward the target.
 | Apparel | Activewear | 50 | 100% | 302 | 1 / 3 / 55 | 0 | 11194 | 362 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Underwear, Lingerie And Socks | 65 | 100% | 203 | 1 / 2 / 15 | 0 | 2965 | 225 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Sleepwear | 60 | 100% | 214 | 1 / 3 / 13 | 0 | 3098 | 233 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Swimwear | 50 | 100% | 195 | 1 / 4 / 11 | 0 | 558 | 200 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Swimwear | 53 | 100% | 201 | 1 / 3 / 11 | 0 | 611 | 206 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Thermals, Shapewear, Hosiery And Slips | 106 | 100% | 413 | 1 / 4 / 15 | 0 | 1141 | 415 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Cultural Clothing | 46 | 92% | 98 | 1 / 2 / 3 | 0 | 420 | 98 | 0 | CA, GB, IE, MX, US | No |
 | Footwear | Shoes, Boots And Sandals | 52 | 100% | 161 | 1 / 2 / 15 | 0 | 1634 | 178 | 0 | CA, GB, IE, MX, US | No |
@@ -70,6 +70,6 @@ Counted by their own structure: providers, branches or listings, and the towns t
 | Restaurants | 105 | 107 | 8 |
 | Clubs And Lessons | 30 | 31 | 8 |
 | Clinics, Dentists And Opticians | 35 | 35 | 8 |
-| Stores And Chains | 421 | 145 | 8 |
+| Stores And Chains | 426 | 145 | 8 |
 | Barbers And Salons | 36 | 37 | 8 |
 

@@ -5,7 +5,7 @@
  * back finds the list as it was left.
  */
 import { useEffect, useState, type ReactNode } from 'react';
-import { SORT_LABEL, facetValues, favoritesIn, type CatalogEntry, type CatalogSort, type CatalogView } from '@/engine/systems/catalog';
+import { SORT_LABEL, arrange, facetValues, favoritesIn, type CatalogEntry, type CatalogSort, type CatalogView } from '@/engine/systems/catalog';
 import { useGame, useWorld } from '@/app/game-context';
 import { Gated } from '@/ui/guide/Guide';
 
@@ -27,6 +27,9 @@ export function useCatalogView(key: string): [CatalogView, (next: CatalogView) =
   return [view, update];
 }
 
+/** A facet's value as a label: a research word's hyphens as spaces, and each word capitalized, after a slash too (from 2026-10-05; until then "bath-towel" read "Bath-Towel" and "islamic/modest wear" "Islamic/modest Wear"). */
+export const facetLabel = (v: string): string => v.replace(/-/g, ' ').replace(/(^|[\s/(])(\p{L})/gu, (_m, s: string, c: string) => s + c.toUpperCase());
+
 /** The search, the filters by each facet named, and the sort. */
 export function CatalogControls({ id, entries, view, onChange, facets = {}, lead }: { id: string; entries: readonly CatalogEntry[]; view: CatalogView; onChange: (v: CatalogView) => void; facets?: Readonly<Record<string, string>>; lead?: ReactNode }) {
   const basis = entries[0]?.basis;
@@ -45,14 +48,18 @@ export function CatalogControls({ id, entries, view, onChange, facets = {}, lead
           <input id={`${id}-search`} value={view.query ?? ''} placeholder="A name or a word" onChange={(e) => onChange({ ...view, query: e.target.value })} />
         </div>
         {Object.entries(facets).map(([facet, label]) => {
-          const values = facetValues(entries, facet);
-          if (values.length < 2) return null;
+          // Each filter offers what's left by the others and the search (from 2026-10-05; until then every value, whatever else was chosen).
+          const { [facet]: _own, ...others } = view.filters ?? {};
+          const values = facetValues(arrange(entries, { ...view, filters: others }), facet);
+          const chosen = view.filters?.[facet];
+          if (chosen && !values.includes(chosen)) values.push(chosen);
+          if (values.length < 2 && !chosen) return null;
           return (
             <div key={facet} className="field">
               <label htmlFor={`${id}-${facet}`}>{label}</label>
               <select id={`${id}-${facet}`} value={view.filters?.[facet] ?? ''} onChange={(e) => onChange({ ...view, filters: { ...(view.filters ?? {}), [facet]: e.target.value } })}>
                 <option value="">Any</option>
-                {values.map((v) => <option key={v} value={v}>{v.replace(/(^|[\s-])(\w)/g, (_m, s: string, c: string) => s + c.toUpperCase())}</option>)}
+                {values.map((v) => <option key={v} value={v}>{facetLabel(v)}</option>)}
               </select>
             </div>
           );
