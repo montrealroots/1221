@@ -22,7 +22,7 @@ which never counts toward the target.
 | Apparel | Thermals, Shapewear, Hosiery And Slips | 106 | 100% | 413 | 1 / 4 / 15 | 0 | 1141 | 415 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Cultural Clothing | 8 | 16% | 11 | 1 / 1 / 2 | 0 | 11 | 11 | 0 | IE, MX | No |
 | Footwear | Shoes, Boots And Sandals | 52 | 100% | 161 | 1 / 2 / 15 | 0 | 1634 | 178 | 0 | CA, GB, IE, MX, US | No |
-| Footwear | Sneakers | 0 | 0% | 30 | — | 0 | 403 | 30 | 30 | — | No |
+| Footwear | Sneakers | 1 | 2% | 30 | 30 / 30 / 30 | 0 | 403 | 30 | 0 | — | No |
 | Accessories | Bags | 49 | 98% | 116 | 1 / 2 / 9 | 0 | 165 | 120 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Hats, Scarves, Belts And Small Accessories | 67 | 100% | 188 | 1 / 3 / 17 | 0 | 512 | 194 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Watches | 47 | 94% | 113 | 1 / 2 / 8 | 0 | 113 | 113 | 0 | CA, GB, IE, MX, US | No |
@@ -42,8 +42,8 @@ which never counts toward the target.
 | Personal Care | Toiletries And Grooming | 82 | 100% | 182 | 1 / 1 / 15 | 0 | 182 | 183 | 1 | CA, GB, IE, MX, US | No |
 | Personal Care | Cosmetics And Haircare | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Household | Cleaning Products And Consumables | 59 | 100% | 119 | 1 / 1 / 9 | 0 | 119 | 124 | 0 | CA, GB, IE, MX, US | No |
-| Food | Groceries | 183 | 100% | 500 | 1 / 1 / 62 | 0 | 500 | 512 | 42 | CA, GB, IE, MX, US | No |
-| Food | Beverages | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
+| Food | Groceries | 160 | 100% | 461 | 1 / 1 / 59 | 0 | 461 | 472 | 41 | CA, GB, IE, MX, US | No |
+| Food | Beverages | 28 | 56% | 39 | 1 / 1 / 3 | 0 | 39 | 40 | 1 | CA, GB, IE, MX, US | No |
 | Vehicles | Cars, Pickups And Vans | 74 | 100% | 481 | 1 / 4 / 22 | 0 | 481 | 829 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Motorcycles And Scooters | 66 | 100% | 580 | 1 / 7 / 44 | 0 | 580 | 691 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Bicycles, E-Bikes And ATVs | 72 | 100% | 354 | 1 / 4 / 17 | 0 | 354 | 372 | 0 | CA, GB, IE, MX, US | No |

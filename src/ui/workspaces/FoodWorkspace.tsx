@@ -22,7 +22,7 @@ import { CITIES } from '@/engine/content/geography';
 import { arrange } from '@/engine/systems/catalog';
 import { diningQuote, diningRefusal, menuCatalog, restaurantById, restaurantsIn, type DineHow } from '@/engine/systems/dining';
 import { bacAt, drinkRefusal, pintPrice } from '@/engine/systems/alcohol';
-import { gearOffers, gearRefusal, kitchenHas, cookRefusal, cookingClash, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice } from '@/engine/systems/kitchen';
+import { gearOffers, gearRefusal, kitchenHas, cookRefusal, cookingClash, groceryCatalog, groceryRefusal, kitchenStock, servingsRange, shortfall, unitPrice, cupOf } from '@/engine/systems/kitchen';
 import { MEAL_KEYS } from '@/engine/systems/pantry';
 import { RECIPES } from '@/engine/content/groceries';
 import { SPOT_LABEL } from '@/engine/systems/items';
@@ -265,6 +265,7 @@ function Kitchen() {
                   <td className="small">{i.food.expiresAt ? formatDate(i.food.expiresAt, sim.zone) : 'Keeps'}</td>
                   <td>
                     {MEAL_KEYS.has(i.food.key) && <button type="button" className="btn btn-sm btn-ghost" disabled={!eat.open} title={eat.reason} onClick={() => { if (run('food.eat_ready', { itemId: i.id }).ok) toast(`${i.label}, eaten.`, 'positive'); }}>Heat And Eat</button>}
+                    {cupOf(i) !== undefined && <button type="button" className="btn btn-sm btn-ghost" disabled={!drink.open} title={drink.reason} onClick={() => { if (run('food.drink_home', { itemId: i.id }).ok) toast(`A cup of ${i.label.split(',')[0]}.`, 'positive'); }}>Have A Cup</button>}
                     {(i.food.key === 'beer' || i.food.key === 'wine') && <button type="button" className="btn btn-sm btn-ghost" disabled={!drink.open} title={drink.reason} onClick={() => { if (run('food.drink_home', { itemId: i.id }).ok) toast(i.food.key === 'beer' ? 'A pint, at home.' : 'A glass, at home.', 'positive'); }}>{i.food.key === 'beer' ? 'Have A Pint' : 'Have A Glass'}</button>}
                   </td>
                 </tr>

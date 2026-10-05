@@ -52,6 +52,7 @@ const clothing = (cat) => CLOTHING_PRODUCTS.filter((p) => (CLOTHING_GROUP[p.cate
   .map((p) => row(p.brand, p.sameAs ?? `${p.brand}|${p.name}`, Math.max(1, p.sizes.length) * Math.max(1, p.colors.length), p.market));
 const cars = (list) => list.map((m) => row(m.make, `${m.make}|${m.model}`, 1, m.market));
 
+const DRINK = new Set(['beverage', 'alcohol']);
 /** What each category's rows are, where a catalog holds it. */
 const READ = {
   everyday: () => clothing('everyday'), formalwear: () => clothing('formalwear'), outerwear: () => clothing('outerwear'),
@@ -61,7 +62,8 @@ const READ = {
   bedding: () => clothing('towels'),
   footwear: () => clothing('footwear'), bags: () => clothing('bags'), accessories: () => clothing('accessories'),
   watches: () => clothing('watches'), jewelry: () => clothing('jewelry'),
-  sneakers: () => SNEAKERS.map((s) => row(null, s.styleCode, Math.max(1, ...SNEAKER_RETAIL.filter((o) => o.styleCode === s.styleCode).map((o) => o.sizes?.length ?? 1)), null)),
+  // Every one is Nike's Jordan Brand's, an Air Jordan or a Jordan signature shoe (from 2026-10-05 counted as its brand, not unbranded).
+  sneakers: () => SNEAKERS.map((s) => row(/Jordan/.test(`${s.name} ${s.line}`) ? 'Jordan' : null, s.styleCode, Math.max(1, ...SNEAKER_RETAIL.filter((o) => o.styleCode === s.styleCode).map((o) => o.sizes?.length ?? 1)), null)),
   // As products from 2026-10-04: a row an offer, the product its own, its colors its variants.
   luggage: () => LUGGAGE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   // As products from 2026-10-05: a row an offer, each screen size its own product.
@@ -78,7 +80,9 @@ const READ = {
   furniture: () => FURNITURE_CATALOG.map((p) => row(p.brand, `${p.brand}|${p.name}|${p.type ?? ''}`, 1, p.country)),
   toiletries: () => TOILETRIES.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
   cleaning: () => CLEANING.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
-  groceries: () => GROCERY_PRODUCTS.map((g) => row(g.brand ?? null, g.name, 1, g.market)),
+  // Drinks the grocers sell (coffee, tea, juice, water, beer, wine) count as beverages, from 2026-10-05; until then as groceries.
+  groceries: () => GROCERY_PRODUCTS.filter((g) => !DRINK.has(g.category)).map((g) => row(g.brand ?? null, g.name, 1, g.market)),
+  beverages: () => GROCERY_PRODUCTS.filter((g) => DRINK.has(g.category)).map((g) => row(g.brand ?? null, g.name, 1, g.market)),
   cars: () => cars([...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS]),
   motorcycles: () => cars([...BIKE_MODELS, ...MOTO_MODELS]),
   bicycles: () => cars([...RIDE_MODELS, ...RIDE_LINEUP]),

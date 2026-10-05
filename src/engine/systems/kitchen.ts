@@ -368,8 +368,34 @@ export function eatReady(sim: Simulation, person: Person, itemId: string): void 
 }
 
 /** A drink at home from what's in stock: a pint of beer or a 148 ml glass of wine (NIAAA's five ounces), at 12% (NIAAA's table wine). */
+/**
+ * A cup of something at home, from 2026-10-05: the coffee, tea, juice and water the grocers sell, which until then were
+ * bought and kept and nothing used. A cup is the USDA's 240 ml. Ground coffee at the Specialty Coffee Association's
+ * golden ratio, 55 g a liter; instant at Nescafé's own 1.8 g a 200 ml cup; tea by the bag, one a cup, or by weight at
+ * ISO 3103's 2 g a 100 ml; juice and water by the cup. Oranges sold by weight are fruit, not a drink.
+ */
+export const CUP_ML = 240;
+export const CUP = { groundCoffeeGPerL: 55, instantCoffeeGPerMl: 1.8 / 200, teaGPerMl: 2 / 100 } as const;
+const CUP_KEYS = new Set(['coffee', 'tea', 'juice', 'water', 'orange']);
+/** What a cup takes of a thing in the kitchen, in its own unit; nothing where it isn't a drink by the cup. */
+export function cupOf(item: Stocked): number | undefined {
+  const { key, unit } = item.food;
+  if (!CUP_KEYS.has(key)) return undefined;
+  if (key === 'coffee') return unit === 'g' ? (/instant|soluble/i.test(item.label) ? CUP_ML * CUP.instantCoffeeGPerMl : (CUP_ML * CUP.groundCoffeeGPerL) / 1000) : undefined;
+  if (key === 'tea') return unit === 'ct' ? 1 : unit === 'g' ? CUP_ML * CUP.teaGPerMl : undefined;
+  return unit === 'ml' ? CUP_ML : undefined;
+}
+
 export function drinkAtHome(sim: Simulation, person: Person, itemId: string): number {
   const item = itemById(person, itemId) as Stocked | undefined;
+  const cup = item?.food ? cupOf(item) : undefined;
+  if (item && cup !== undefined) {
+    if (!fresh(item, sim.now)) throw new CommandError('It’s gone off.');
+    if (item.food.left + 1e-9 < cup) throw new CommandError('There isn’t a cup’s worth left.');
+    item.food.left -= cup;
+    if (item.food.left <= 1e-9) person.items = (person.items ?? []).filter((x) => x.id !== item.id);
+    return CUP_ML;
+  }
   if (!item?.food || (item.food.key !== 'beer' && item.food.key !== 'wine') || !fresh(item, sim.now) || item.food.left <= 0) throw new CommandError('That isn’t a drink here.');
   if (yearsOld(person, sim.now) < drinkingAge(person.currentLocationId)) throw new CommandError(`You have to be ${drinkingAge(person.currentLocationId)}.`);
   const pint = PINT[drinkingMarketOf(person.currentLocationId) as keyof typeof PINT ?? 'US'] ?? PINT.US;

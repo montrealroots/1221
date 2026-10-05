@@ -260,7 +260,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `food.cook` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` `RoutinesWorkspace.tsx` | `connected-day.test.ts` `cooking-household.test.ts` `garden.test.ts` `kitchen.test.ts` `kitchengear.test.ts` | Rent And A Roof |
 | `food.dine` | `src/engine/systems/life.ts` | `FoodWorkspace.tsx` | `dining.test.ts` | Rent And A Roof |
 | `food.drink` | `src/engine/systems/alcohol.ts` | `FoodWorkspace.tsx` | `alcohol.test.ts` | Rent And A Roof |
-| `food.drink_home` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `kitchen.test.ts` | Rent And A Roof |
+| `food.drink_home` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` | `cups.test.ts` `kitchen.test.ts` | Rent And A Roof |
 | `food.eat_ready` | `src/engine/systems/kitchen.ts` | `FoodWorkspace.tsx` `RoutinesWorkspace.tsx` | `kitchen.test.ts` `looks.test.ts` | Rent And A Roof |
 | `food.reserve` | `src/engine/systems/reservations.ts` | `FoodWorkspace.tsx` | `reservations.test.ts` | Rent And A Roof |
 
