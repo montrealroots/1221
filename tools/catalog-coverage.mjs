@@ -16,6 +16,8 @@ import { PHONES } from '../src/engine/content/phones.ts';
 import { FURNITURE_CATALOG } from '../src/engine/content/furniturecatalog.ts';
 import { LUGGAGE_PRODUCTS } from '../src/engine/content/luggagecatalog.ts';
 import { TV_PRODUCTS } from '../src/engine/content/tvcatalog.ts';
+import { BRANDED_MATTRESSES } from '../src/engine/content/mattresscatalog.ts';
+import { BED_PARTS } from '../src/engine/content/beds.ts';
 import { AUDIO_PRODUCTS } from '../src/engine/content/audiocatalog.ts';
 import { TOILETRIES } from '../src/engine/content/hygiene.ts';
 import { GROCERY_PRODUCTS, GROCERY_CHAINS } from '../src/engine/content/groceries.ts';
@@ -59,6 +61,11 @@ const READ = {
   // As products from 2026-10-05: a row an offer, each screen size its own product.
   televisions: () => TV_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   audio: () => AUDIO_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
+  // Mattresses and frames (from 2026-10-05): IKEA's by name, makers' own by model, each size a variant of its model.
+  mattresses: () => [
+    ...Object.entries(BED_PARTS).flatMap(([market, parts]) => [...parts.frames, ...parts.mattresses].map((x) => row('IKEA', `IKEA|${x.name}`, 1, market))),
+    ...Object.entries(BRANDED_MATTRESSES).flatMap(([market, list]) => list.map((m) => row(m.brand, `${m.brand}|${m.name}|${market}`, 1, market))),
+  ],
   phones: () => PHONES.map((p) => row(p.maker, `${p.maker}|${p.model}`, Math.max(1, p.colors.length), p.market)),
   consoles: () => CONSOLES.map((c) => row(c.maker, `${c.maker}|${c.model}`, 1, c.market)),
   furniture: () => FURNITURE_CATALOG.map((p) => row('IKEA', `IKEA|${p.name}|${p.type ?? ''}`, 1, p.country)),

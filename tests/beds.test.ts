@@ -29,7 +29,10 @@ describe('a bed', () => {
     expect(bedQuote(sim, 'us-ny-newyork', 'uk-neiden-double', 'us-agotnes-twin')).toBe('Choose a frame and a mattress sold here.');
     // Only what fits is offered: every frame with every mattress of its own size.
     expect(bedsIn('us-ny-newyork').every((b) => b.frame.size === b.mattress.size)).toBe(true);
-    expect(bedsIn('us-ny-newyork').some((b) => b.frame.id === 'us-tarva-king')).toBe(false);
+    // IKEA sells no American king mattress, so until 2026-10-05 its TARVA king frame wasn't offered; makers' own kings now fit it.
+    const tarva = bedsIn('us-ny-newyork').filter((b) => b.frame.id === 'us-tarva-king');
+    expect(tarva.length).toBeGreaterThan(0);
+    expect(tarva.every((b) => 'brand' in b.mattress)).toBe(true);
   });
 
   it('is bought as chosen, and keeps its country and size', () => {

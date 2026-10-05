@@ -1,0 +1,581 @@
+{
+  "read": "2026-10-05",
+  "category": "mattresses",
+  "products": [
+    {
+      "brand": "Casper",
+      "model": "Original Mattress",
+      "market": "us",
+      "type": "foam",
+      "firmness": "medium-firm",
+      "heightIn": 11,
+      "trialNights": null,
+      "warrantyYears": null,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "twin", "price": 895, "currency": "USD", "taxIncluded": false },
+        { "size": "twin-xl", "price": 995, "currency": "USD", "taxIncluded": false },
+        { "size": "full", "price": 1195, "currency": "USD", "taxIncluded": false },
+        { "size": "queen", "price": 1295, "currency": "USD", "taxIncluded": false },
+        { "size": "king", "price": 1695, "currency": "USD", "taxIncluded": false },
+        { "size": "california-king", "price": 1695, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Casper",
+      "url": "https://casper.com/products/original-foam-v1",
+      "status": "verified"
+    },
+    {
+      "brand": "Purple",
+      "model": "The Purple Mattress",
+      "market": "us",
+      "type": "foam",
+      "firmness": "medium-firm",
+      "heightIn": 9.25,
+      "trialNights": 100,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "twin", "price": 1099, "currency": "USD", "taxIncluded": false },
+        { "size": "twin-xl", "price": 1299, "currency": "USD", "taxIncluded": false },
+        { "size": "full", "price": 1499, "currency": "USD", "taxIncluded": false },
+        { "size": "queen", "price": 1599, "currency": "USD", "taxIncluded": false },
+        { "size": "king", "price": 2199, "currency": "USD", "taxIncluded": false },
+        { "size": "california-king", "price": 2199, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Purple",
+      "url": "https://www.purple.com/mattresses/purple-mattress",
+      "status": "verified"
+    },
+    {
+      "brand": "Tempur-Pedic",
+      "model": "TEMPUR-Cloud Medium",
+      "market": "us",
+      "type": "foam",
+      "firmness": "medium",
+      "heightIn": 10,
+      "trialNights": 90,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "queen", "price": 1999, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Tempur-Pedic",
+      "url": "https://www.tempurpedic.com/shop-mattresses/tempur-cloud-mattress/",
+      "status": "verified"
+    },
+    {
+      "brand": "Saatva",
+      "model": "The Saatva Classic",
+      "market": "us",
+      "type": "innerspring",
+      "firmness": null,
+      "heightIn": 11.5,
+      "trialNights": 365,
+      "warrantyYears": null,
+      "deliveryFee": null,
+      "sizes": [
+        { "size": "queen", "price": 2229, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Saatva",
+      "url": "https://www.saatva.com/mattresses?sizes=queen",
+      "status": "verified"
+    },
+    {
+      "brand": "DreamCloud",
+      "model": "DreamCloud Premier Hybrid",
+      "market": "us",
+      "type": "hybrid",
+      "firmness": "medium-firm",
+      "heightIn": 13,
+      "trialNights": 365,
+      "warrantyYears": null,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "queen", "price": 1099, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "DreamCloud",
+      "url": "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress",
+      "status": "verified"
+    },
+    {
+      "brand": "Nectar",
+      "model": "Nectar Classic Memory Foam Mattress",
+      "market": "us",
+      "type": "foam",
+      "firmness": "firm",
+      "heightIn": 12,
+      "trialNights": 365,
+      "warrantyYears": null,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "queen", "price": 699, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Nectar",
+      "url": "https://www.nectarsleep.com/products/nectar-mattress",
+      "status": "verified"
+    },
+    {
+      "brand": "Serta",
+      "model": "Perfect Sleeper X Hybrid Mattress - Level One",
+      "market": "us",
+      "type": "hybrid",
+      "firmness": "medium",
+      "heightIn": null,
+      "trialNights": 100,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "queen", "price": 1299, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Serta",
+      "url": "https://www.serta.com/products/perfect-sleeper-x-hybrid",
+      "status": "verified"
+    },
+    {
+      "brand": "Sealy",
+      "model": "Sealy Posturepedic Spring",
+      "market": "us",
+      "type": "innerspring",
+      "firmness": "medium",
+      "heightIn": 13,
+      "trialNights": 90,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "queen", "price": 799, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Sealy",
+      "url": "https://www.sealy.com/mattresses/posturepedic-mattress/",
+      "status": "verified"
+    },
+    {
+      "brand": "Tuft & Needle",
+      "model": "T&N Original Mattress II",
+      "market": "us",
+      "type": "foam",
+      "firmness": "firm",
+      "heightIn": 12,
+      "trialNights": 100,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "twin", "price": 399, "currency": "USD", "taxIncluded": false },
+        { "size": "twin-xl", "price": 499, "currency": "USD", "taxIncluded": false },
+        { "size": "full", "price": 599, "currency": "USD", "taxIncluded": false },
+        { "size": "queen", "price": 699, "currency": "USD", "taxIncluded": false },
+        { "size": "king", "price": 899, "currency": "USD", "taxIncluded": false },
+        { "size": "california-king", "price": 899, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Tuft & Needle",
+      "url": "https://www.tuftandneedle.com/products/original-mattress",
+      "status": "verified"
+    },
+    {
+      "brand": "Helix",
+      "model": "Helix Midnight",
+      "market": "us",
+      "type": "hybrid",
+      "firmness": "medium",
+      "heightIn": null,
+      "trialNights": 100,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "twin", "price": 1374, "currency": "USD", "taxIncluded": false },
+        { "size": "twin-xl", "price": 1624, "currency": "USD", "taxIncluded": false },
+        { "size": "full", "price": 1999, "currency": "USD", "taxIncluded": false },
+        { "size": "queen", "price": 2374, "currency": "USD", "taxIncluded": false },
+        { "size": "king", "price": 2874, "currency": "USD", "taxIncluded": false },
+        { "size": "california-king", "price": 2874, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Helix Sleep",
+      "url": "https://helixsleep.com/products/midnight",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Leesa",
+      "model": "Leesa Original",
+      "market": "us",
+      "type": "foam",
+      "firmness": "medium",
+      "heightIn": 10,
+      "trialNights": 120,
+      "warrantyYears": null,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "twin", "price": 967, "currency": "USD", "taxIncluded": false },
+        { "size": "full", "price": 1246, "currency": "USD", "taxIncluded": false },
+        { "size": "queen", "price": 1332, "currency": "USD", "taxIncluded": false },
+        { "size": "king", "price": 1803, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Leesa",
+      "url": "https://www.leesa.com/products/leesa-mattress",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Brooklyn Bedding",
+      "model": "Signature Hybrid",
+      "market": "us",
+      "type": "hybrid",
+      "firmness": "soft/medium/firm",
+      "heightIn": 13.25,
+      "trialNights": 120,
+      "warrantyYears": null,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "twin", "price": 959, "currency": "USD", "taxIncluded": false },
+        { "size": "twin-xl", "price": 1165, "currency": "USD", "taxIncluded": false },
+        { "size": "full", "price": 1332, "currency": "USD", "taxIncluded": false },
+        { "size": "queen", "price": 1465, "currency": "USD", "taxIncluded": false },
+        { "size": "king", "price": 1865, "currency": "USD", "taxIncluded": false },
+        { "size": "california-king", "price": 1865, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Brooklyn Bedding",
+      "url": "https://www.brooklynbedding.com/products/signature-hybrid",
+      "status": "verified"
+    },
+    {
+      "brand": "Avocado",
+      "model": "Avocado Green Mattress",
+      "market": "us",
+      "type": "latex",
+      "firmness": null,
+      "heightIn": null,
+      "trialNights": null,
+      "warrantyYears": null,
+      "deliveryFee": null,
+      "sizes": [
+        { "size": "twin", "price": 1599, "currency": "USD", "taxIncluded": false },
+        { "size": "twin-xl", "price": 1599, "currency": "USD", "taxIncluded": false },
+        { "size": "full", "price": 1599, "currency": "USD", "taxIncluded": false },
+        { "size": "queen", "price": 1599, "currency": "USD", "taxIncluded": false },
+        { "size": "king", "price": 1599, "currency": "USD", "taxIncluded": false },
+        { "size": "california-king", "price": 1599, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Avocado Green Mattress",
+      "url": "https://www.avocadogreenmattress.com/products/green-natural-organic-mattress",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Zinus",
+      "model": "Original Green Tea Memory Foam Mattress",
+      "market": "us",
+      "type": "foam",
+      "firmness": null,
+      "heightIn": null,
+      "trialNights": null,
+      "warrantyYears": null,
+      "deliveryFee": null,
+      "sizes": [
+        { "size": "twin", "price": 499, "currency": "USD", "taxIncluded": false },
+        { "size": "full", "price": 549, "currency": "USD", "taxIncluded": false },
+        { "size": "queen", "price": 718, "currency": "USD", "taxIncluded": false },
+        { "size": "king", "price": 799, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Zinus",
+      "url": "https://www.zinus.com/products/original-green-tea-memory-foam-mattress",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Lucid",
+      "model": "LUCID 10 Inch Gel Memory Foam Mattress - Medium",
+      "market": "us",
+      "type": "foam",
+      "firmness": "medium",
+      "heightIn": 10,
+      "trialNights": 100,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "twin", "price": 339.99, "currency": "USD", "taxIncluded": false },
+        { "size": "twin-xl", "price": 339.99, "currency": "USD", "taxIncluded": false },
+        { "size": "full", "price": 339.99, "currency": "USD", "taxIncluded": false },
+        { "size": "queen", "price": 339.99, "currency": "USD", "taxIncluded": false },
+        { "size": "king", "price": 339.99, "currency": "USD", "taxIncluded": false },
+        { "size": "california-king", "price": 339.99, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Lucid Mattress",
+      "url": "https://lucidmattress.com/products/lucid-10-gel-foam-mattress-medium/",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Sleep Number",
+      "model": "c2 Smart Bed",
+      "market": "us",
+      "type": "airbed",
+      "firmness": "adjustable",
+      "heightIn": null,
+      "trialNights": null,
+      "warrantyYears": null,
+      "deliveryFee": null,
+      "sizes": [
+        { "size": "twin", "price": 799, "currency": "USD", "taxIncluded": false },
+        { "size": "full", "price": 1499, "currency": "USD", "taxIncluded": false },
+        { "size": "queen", "price": 1699, "currency": "USD", "taxIncluded": false }
+      ],
+      "seller": "Sleep Number",
+      "url": "https://www.sleepnumber.com/sn/en/beds/Classic-Series-Beds/p/c2",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Endy",
+      "model": "Endy Mattress",
+      "market": "ca",
+      "type": "foam",
+      "firmness": "medium-firm",
+      "heightIn": 10,
+      "trialNights": 365,
+      "warrantyYears": 15,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "twin", "price": 525, "currency": "CAD", "taxIncluded": false },
+        { "size": "twin-xl", "price": 595, "currency": "CAD", "taxIncluded": false },
+        { "size": "full", "price": 670, "currency": "CAD", "taxIncluded": false },
+        { "size": "queen", "price": 745, "currency": "CAD", "taxIncluded": false },
+        { "size": "king", "price": 845, "currency": "CAD", "taxIncluded": false },
+        { "size": "california-king", "price": 895, "currency": "CAD", "taxIncluded": false }
+      ],
+      "seller": "Endy",
+      "url": "https://endy.com/products/endy-mattress",
+      "status": "verified"
+    },
+    {
+      "brand": "Douglas",
+      "model": "Douglas Original",
+      "market": "ca",
+      "type": "foam",
+      "firmness": "medium-firm",
+      "heightIn": 10,
+      "trialNights": 365,
+      "warrantyYears": 15,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "twin", "price": 599, "currency": "CAD", "taxIncluded": false },
+        { "size": "twin-xl", "price": 649, "currency": "CAD", "taxIncluded": false },
+        { "size": "full", "price": 699, "currency": "CAD", "taxIncluded": false },
+        { "size": "queen", "price": 799, "currency": "CAD", "taxIncluded": false },
+        { "size": "king", "price": 899, "currency": "CAD", "taxIncluded": false },
+        { "size": "california-king", "price": 899, "currency": "CAD", "taxIncluded": false }
+      ],
+      "seller": "Douglas",
+      "url": "https://www.douglas.ca/en/product/douglas-mattress/",
+      "status": "verified"
+    },
+    {
+      "brand": "Silk & Snow",
+      "model": "S&S Mattress",
+      "market": "ca",
+      "type": "foam",
+      "firmness": "firm/medium-firm/plush",
+      "heightIn": null,
+      "trialNights": 365,
+      "warrantyYears": 15,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "twin", "price": 550, "currency": "CAD", "taxIncluded": false },
+        { "size": "full", "price": 630, "currency": "CAD", "taxIncluded": false },
+        { "size": "queen", "price": 785, "currency": "CAD", "taxIncluded": false }
+      ],
+      "seller": "Silk & Snow",
+      "url": "https://www.silkandsnow.com/en-ca/mattresses/",
+      "status": "verified"
+    },
+    {
+      "brand": "Novosbed",
+      "model": "Novosbed Memory Foam Mattress",
+      "market": "ca",
+      "type": "foam",
+      "firmness": "soft/medium/firm",
+      "heightIn": null,
+      "trialNights": 120,
+      "warrantyYears": null,
+      "deliveryFee": null,
+      "sizes": [
+        { "size": "queen", "price": 999, "currency": "CAD", "taxIncluded": false }
+      ],
+      "seller": "Novosbed",
+      "url": "https://www.novosbed.com/shop/mattress/novosbed-memory-foam/",
+      "status": "secondhand"
+    }
+    ,
+    {
+      "brand": "Simba",
+      "model": "Simba Hybrid Mattress",
+      "market": "uk",
+      "type": "hybrid",
+      "firmness": "medium-firm",
+      "heightIn": null,
+      "depthCm": 25,
+      "trialNights": 200,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "double", "price": 899, "currency": "GBP", "taxIncluded": true },
+        { "size": "king", "price": 999, "currency": "GBP", "taxIncluded": true },
+        { "size": "super-king", "price": 1099, "currency": "GBP", "taxIncluded": true }
+      ],
+      "seller": "Simba Sleep",
+      "url": "https://simbasleep.com/products/mattress",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Emma",
+      "model": "Emma Original Mattress",
+      "market": "uk",
+      "type": "foam",
+      "firmness": null,
+      "heightIn": null,
+      "depthCm": null,
+      "trialNights": null,
+      "warrantyYears": null,
+      "deliveryFee": null,
+      "sizes": [],
+      "seller": "Emma",
+      "url": "https://www.emma-sleep.co.uk/products/emma-original-mattress",
+      "status": "secondhand",
+      "notes": "page redirected to emma-sleep.co.uk; direct size/price table could not be fetched"
+    },
+    {
+      "brand": "eve",
+      "model": "The Original Mattress",
+      "market": "uk",
+      "type": "foam",
+      "firmness": "medium-firm",
+      "heightIn": null,
+      "depthCm": 24,
+      "trialNights": 200,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "single", "price": 599, "currency": "GBP", "taxIncluded": true },
+        { "size": "small-double", "price": 699, "currency": "GBP", "taxIncluded": true },
+        { "size": "double", "price": 699, "currency": "GBP", "taxIncluded": true },
+        { "size": "king", "price": 799, "currency": "GBP", "taxIncluded": true },
+        { "size": "super-king", "price": 899, "currency": "GBP", "taxIncluded": true }
+      ],
+      "seller": "eve sleep",
+      "url": "https://www.evesleep.co.uk/products/the-original-foam-mattress",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Silentnight",
+      "model": "Comfort Breathe 1200 Pocket Mattress",
+      "market": "uk",
+      "type": "innerspring",
+      "firmness": null,
+      "heightIn": null,
+      "depthCm": null,
+      "trialNights": null,
+      "warrantyYears": null,
+      "deliveryFee": null,
+      "sizes": [
+        { "size": "single", "price": 379, "currency": "GBP", "taxIncluded": true },
+        { "size": "small-double", "price": 499, "currency": "GBP", "taxIncluded": true },
+        { "size": "double", "price": 499, "currency": "GBP", "taxIncluded": true },
+        { "size": "king", "price": 599, "currency": "GBP", "taxIncluded": true },
+        { "size": "super-king", "price": 729, "currency": "GBP", "taxIncluded": true }
+      ],
+      "seller": "Silentnight",
+      "url": "https://www.silentnight.co.uk/silentnight-comfort-breathe-1200-pocket-mattress.html",
+      "status": "secondhand"
+    },
+    {
+      "brand": "Otty",
+      "model": "OTTY Original Hybrid Mattress",
+      "market": "uk",
+      "type": "hybrid",
+      "firmness": "7/10 medium-firm",
+      "heightIn": null,
+      "depthCm": 25,
+      "trialNights": 100,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "single", "price": 499.99, "currency": "GBP", "taxIncluded": true },
+        { "size": "small-double", "price": 599.99, "currency": "GBP", "taxIncluded": true },
+        { "size": "double", "price": 624.99, "currency": "GBP", "taxIncluded": true },
+        { "size": "king", "price": 699.99, "currency": "GBP", "taxIncluded": true },
+        { "size": "super-king", "price": 799.99, "currency": "GBP", "taxIncluded": true }
+      ],
+      "seller": "OTTY",
+      "url": "https://otty.com/products/the-otty-hybrid-mattress",
+      "status": "verified"
+    },
+    {
+      "brand": "Luuna",
+      "model": "Colchón Luuna Sky",
+      "market": "mx",
+      "type": "foam",
+      "firmness": "customizable (firm/soft)",
+      "heightIn": null,
+      "depthCm": 24,
+      "trialNights": 100,
+      "warrantyYears": 12,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "individual", "price": 15819, "currency": "MXN", "taxIncluded": true },
+        { "size": "matrimonial", "price": 21089, "currency": "MXN", "taxIncluded": true },
+        { "size": "queen", "price": 23719, "currency": "MXN", "taxIncluded": true },
+        { "size": "king", "price": 31629, "currency": "MXN", "taxIncluded": true }
+      ],
+      "seller": "Luuna",
+      "url": "https://luuna.mx/comprar/colchon-luuna-sky",
+      "status": "verified"
+    },
+    {
+      "brand": "Emma",
+      "model": "Emma Original Mattress",
+      "market": "ie",
+      "type": "hybrid",
+      "firmness": "balanced support",
+      "heightIn": null,
+      "depthCm": 25,
+      "trialNights": 200,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "single", "price": 589, "currency": "EUR", "taxIncluded": true }
+      ],
+      "seller": "Emma",
+      "url": "https://www.emma-sleep.ie/mattresses/emma-original-mattress/",
+      "status": "verified"
+    },
+    {
+      "brand": "Spring Air",
+      "model": "Colchón Spring Air Class",
+      "market": "mx",
+      "type": "innerspring",
+      "firmness": "soft/intermediate",
+      "heightIn": null,
+      "depthCm": 33,
+      "trialNights": 100,
+      "warrantyYears": 10,
+      "deliveryFee": 0,
+      "sizes": [
+        { "size": "individual", "price": 16750, "currency": "MXN", "taxIncluded": true }
+      ],
+      "seller": "Spring Air",
+      "url": "https://www.springair.com.mx/products/colchon-class",
+      "status": "verified"
+    }
+  ],
+  "notFound": [
+    { "brand": "Casper", "market": "ca", "reason": "casper.ca lists starting prices per model (e.g. The Casper Mattress from $999 CAD, Original Hybrid from $1,099 CAD) but not a confirmed full per-size price table" },
+    { "brand": "Hypnos", "market": "uk", "reason": "hypnosbeds.com product/category pages found but no price visible in fetched search snippets" },
+    { "brand": "Dormeo", "market": "uk", "reason": "dormeo.co.uk shows multiple colliding model/price snippets (S Plus vs Memory Classic) with no single reliable per-size table" },
+    { "brand": "Sleepeezee", "market": "uk", "reason": "no pricing found on sleepeezee.co.uk via search; mostly third-party eBay results returned" },
+    { "brand": "Dunlopillo", "market": "uk", "reason": "dunlopillo.co.uk collection pages found but no price data returned" },
+    { "brand": "Tempur", "market": "uk", "reason": "tempur.com/gb product pages are JS-rendered; fetch returned navigation only, no price data" },
+    { "brand": "Sealy", "market": "mx", "reason": "sealy.com.mx product pages (To Go 20cm/25cm) list price ranges by size in search snippets ($5,990-$9,990 / $8,090-$12,990) but the per-size breakdown could not be confirmed on the product page itself" },
+    { "brand": "Simmons", "market": "mx", "reason": "no results found from simmons.com.mx via search" },
+    { "brand": "Nuubo", "market": "mx", "reason": "nuubo.mx returned no search results" },
+    { "brand": "Restonic", "market": "mx", "reason": "not researched in this pass" },
+    { "brand": "América", "market": "mx", "reason": "not researched in this pass; brand/retailer identity not confirmed" },
+    { "brand": "Colchones Wendy", "market": "mx", "reason": "existence as a real brand not confirmed in this pass" },
+    { "brand": "Simmons", "market": "us", "reason": "beautyrest.com and simmons.com list collections (Beautyrest Select, Level One/Two, World Class, Black series) with price ranges but per-size price table not confirmed via direct page fetch" },
+    { "brand": "Mattress Firm (Sleepy's)", "market": "us", "reason": "not researched in this pass" },
+    { "brand": "Bensons for Beds house brands", "market": "uk", "reason": "not researched in this pass" },
+    { "brand": "Dormeo", "market": "ie", "reason": "not researched in this pass" },
+    { "brand": "Simba", "market": "ie", "reason": "simbasleep.com/ie search returned only UK press coverage, no direct IE pricing confirmed" }
+  ]
+}
