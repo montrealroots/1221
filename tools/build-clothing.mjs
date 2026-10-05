@@ -56,7 +56,9 @@ const WORDS = [
   [/\b(t-?shirts?|tees?|tanks?|tank tops?|camisoles?|camis?|vest tops?)\b/, 'top', 't-shirt'],
   [/\b(shirts?|blouses?|polos?|tops?|henleys?|button-?downs?|overshirts?|bodysuits?)\b/, 'top', 'shirt'],
   [/\b(jeans?)\b/, 'bottom', 'jeans'],
-  [/\b(trousers?|pants|chinos?|leggings?|shorts|joggers?|sweatpants|cargos?|slacks)\b/, 'bottom', 'trousers'],
+  // A pant in the singular too (from 2026-10-05): until then it named no garment, and a Relaxed Twill Dress Pant was a
+  // dress, a Sweater Pant or a Knit Pant a sweater, and Lane Bryant's Ponte Pull-On Boot Pant a boot.
+  [/\b(trousers?|pants?|chinos?|leggings?|shorts|joggers?|sweatpants|cargos?|slacks)\b/, 'bottom', 'trousers'],
   // A culture's garments by their own names (from 2026-10-05, for the cultural makers' stores): until then a saree, a
   // hijab, a poncho or a mukluk named no garment the list knew, and each was a shirt. A sharara or straight suit set,
   // an anarkali and a kurta set are a whole outfit, as a dress is; a shalwar is trousers; a stole, a shawl or a chal
@@ -92,7 +94,8 @@ function headOf(text, market) {
 const SUBTYPE_WORN = { swimwear: ['active', 'swimsuit'], shapewear: ['underwear', 'underwear'], slips: ['base', 'slip'], hosiery: ['socks', 'socks'] };
 // Thermals: long underwear, worn under the rest, as a base layer; socks and a pajama set are what they are. A pair of
 // thermal trousers is a bottom: until 2026-10-04 only leggings, tights and bottoms were.
-const thermalWorn = (name) => (/socks|calcet/i.test(name) ? ['socks', 'socks'] : /pijama/i.test(name) ? ['sleep', 'pajamas'] : /leggings|tights|pantal|bottoms?|trousers|pants|joggers|long johns/i.test(name) ? ['base', 'thermal-bottom'] : ['base', 'thermal-top']);
+// A thermal pant in the singular is a bottom too (from 2026-10-05: Duckworth's and Polarmax's had been tops).
+const thermalWorn = (name) => (/socks|calcet/i.test(name) ? ['socks', 'socks'] : /pijama/i.test(name) ? ['sleep', 'pajamas'] : /leggings|tights|pantal|bottoms?|trousers|\bpants?\b|joggers|long johns/i.test(name) ? ['base', 'thermal-bottom'] : ['base', 'thermal-top']);
 
 /** The slot and care kind a product is: its name's head noun, else its subcategory's, its category's where that says more. */
 /**
@@ -141,6 +144,9 @@ function wornAs(p, market) {
     ?? headOf(`${p.category ?? ''} ${p.subcategory ?? ''}`.toLowerCase(), market);
   const [slot, kind] = head ?? ['top', 'shirt'];
   const category = String(p.category ?? '').toLowerCase();
+  // A pant its retailer files under jeans is a pair of jeans (from 2026-10-05, when a pant became trousers): Reitmans'
+  // Barrel Pant and Penningtons' Denim Pants.
+  if (kind === 'trousers' && /\bjeans?\b/.test(String(p.subcategory ?? '').toLowerCase())) return ['bottom', 'jeans'];
   // A category that decides more than the word: sportswear is worn to exercise, a suit's parts are a suit's, sleepwear is slept in.
   const worn = slot === 'shoes' || slot === 'socks' || slot === 'accessory' || slot === 'underwear';
   if (category === 'activewear' && !worn) return ['active', 'active'];
@@ -237,6 +243,7 @@ const retailers = [];
 const products = [];
 const seen = new Set();
 let merged = 0;
+let seconds = 0;
 /**
  * The same garment read again (from 2026-10-04: the fit lines' research and the special kinds' each reread ones
  * already held): one product, its fit lines, sizes and colors together, under the id it had first, so a save's garment
@@ -272,6 +279,9 @@ for (const file of FILES) {
   }
   for (const p of j.products ?? []) {
     if (typeof p.price !== 'number' || !(p.price > 0)) continue;
+    // A factory second isn't new stock (from 2026-10-05): Thursday Boot Company's "[S]" listings are its seconds, tagged
+    // FinalSale and NoRefund on its own store, and until then they were sold on its ordinary terms beside the rest.
+    if (/^\[s\]\s/i.test(String(p.name))) { seconds += 1; continue; }
     const market = p.market ?? (file.includes('-us') ? 'US' : null);
     if (!market) continue;
     const retailer = retailers.find((r) => r.market === market && (r.key === p.retailer || slug(r.name) === slug(p.retailer)));
@@ -456,4 +466,4 @@ export const CLOTHING_PRODUCTS: readonly ClothingProduct[] = JSON.parse(${JSON.s
 writeFileSync(OUT, body);
 const by = {};
 for (const p of products) by[p.market] = (by[p.market] ?? 0) + 1;
-console.log('retailers', retailers.length, 'products', products.length, 'merged', merged, by);
+console.log('retailers', retailers.length, 'products', products.length, 'merged', merged, 'seconds left out', seconds, by);

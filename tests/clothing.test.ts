@@ -237,17 +237,19 @@ describe('returns', () => {
 
 describe('the dry cleaner', () => {
   it('takes what’s dry-clean-only at its prices, keeps it its days, and it’s collected in the town', () => {
-    const sim = life('dryclean');
-    const suit = CLOTHING_PRODUCTS.find((p) => p.market === 'US' && p.slot === 'suit' && retailerById(p.retailer)!.storesIn.includes('us-ny-newyork'))!;
+    // In Toronto, where Simons sells a whole suit: America's stores sell theirs as a jacket and trousers apart, and until
+    // 2026-10-05 this bought a pair of New York's suit trousers that the catalog had filed as a whole suit.
+    const sim = life('dryclean', 'ca-on-toronto');
+    const suit = CLOTHING_PRODUCTS.find((p) => p.market === 'CA' && p.slot === 'suit' && p.sizes.length > 0 && retailerById(p.retailer)!.storesIn.includes('ca-on-toronto'))!;
     sim.must({ kind: 'clothes.buy', payload: { productId: suit.id, how: 'store', size: suit.sizes[0], color: suit.colors[0] } });
     const item = purchaseItems(sim.player, sim.player.clothesBought![0]!.id)[0]! as Parameters<typeof dryCleanPrice>[2];
     item.garment.care = 'dry-clean';
     item.garment.dirty = true;
-    // Morris Cleaners, New York: $19 a two-piece suit.
-    expect(dryCleanPrice(sim, 'us-ny-newyork', item)).toEqual({ price: 1900, estimate: false });
+    // Exclusive Dry Cleaners, Toronto: C$12.99 a two-piece suit.
+    expect(dryCleanPrice(sim, 'ca-on-toronto', item)).toEqual({ price: 1299, estimate: false });
     const before = bank(sim);
     sim.must({ kind: 'clothes.dry_clean', payload: {} });
-    expect(before - bank(sim)).toBe(1900);
+    expect(before - bank(sim)).toBe(1299);
     expect(reachable(sim, sim.player, item.at)).toBe(false);
     expect(sim.execute({ kind: 'clothes.collect', payload: {} }).ok).toBe(false);
     sim.advanceBy(2 * MS_DAY + 60_000);
@@ -343,10 +345,13 @@ describe('what each rule refuses', () => {
     sim.must({ kind: 'clothes.buy', payload: { productId: dressP.id, how: 'store', size: dressP.sizes[0], color: dressP.colors[0] } });
     const dress = purchaseItems(sim.player, sim.player.clothesBought!.at(-1)!.id)[0]!;
     expect(sim.execute({ kind: 'clothes.dress', payload: { itemIds: [dress.id, top.id] } }).error).toBe('A dress is worn on its own.');
-    const suitP = CLOTHING_PRODUCTS.find((p) => p.market === 'US' && p.slot === 'suit' && retailerById(p.retailer)!.storesIn.includes('us-ny-newyork'))!;
-    sim.must({ kind: 'clothes.buy', payload: { productId: suitP.id, how: 'store', size: suitP.sizes[0], color: suitP.colors[0] } });
-    const whole = purchaseItems(sim.player, sim.player.clothesBought!.at(-1)!.id)[0]!;
-    expect(sim.execute({ kind: 'clothes.dress', payload: { itemIds: [whole.id, top.id] } }).error).toBe('A suit is worn on its own, with what goes under it.');
+    // A whole suit is Toronto's (Simons'): New York's stores sell a suit's jacket and trousers apart.
+    const there = life('rule-outfit-suit', 'ca-on-toronto');
+    const shirt = garmentsOf(there.player).find((x) => x.garment.slot === 'top')!;
+    const suitP = CLOTHING_PRODUCTS.find((p) => p.market === 'CA' && p.slot === 'suit' && p.sizes.length > 0 && retailerById(p.retailer)!.storesIn.includes('ca-on-toronto'))!;
+    there.must({ kind: 'clothes.buy', payload: { productId: suitP.id, how: 'store', size: suitP.sizes[0], color: suitP.colors[0] } });
+    const whole = purchaseItems(there.player, there.player.clothesBought!.at(-1)!.id)[0]!;
+    expect(there.execute({ kind: 'clothes.dress', payload: { itemIds: [whole.id, shirt.id] } }).error).toBe('A suit is worn on its own, with what goes under it.');
   });
 });
 
