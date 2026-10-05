@@ -5,9 +5,10 @@
  * catalog's 36 (`content/bikecatalog.ts`). Run: node tools/build-motorcycles.mjs
  *
  * A model already in the first catalog keeps its first reading. One without a
- * price read isn't sold. An electric one isn't taken yet: Britain and Ireland
- * license and tax an electric motorcycle by its power, not an engine's size,
- * and SLATE's two-wheel licenses, taxes and insurance read the engine's cc.
+ * price read isn't sold. Until 2026-10-05 an electric one wasn't taken; from
+ * then it is where its use is read (its maker's kWh a 100 km, or battery over
+ * range), with its continuous power, which makes a moped of one at 4 kW or
+ * less; where its taxes weren't read it isn't sold (`EV_BIKE_UNKEPT`).
  * Each tank a maker states goes to `MOTO_TANKS`; one not stated is the median
  * of its kind's (`capacityOf` in `systems/fueltank.ts`). A model whose engine
  * size wasn't read isn't taken either, until a later read finds it
@@ -43,6 +44,17 @@ function per100(e) {
 const OFF_ROAD = /^(?:.*\|GasGas\|MC .*|.*\|Husqvarna\|(?:TC|FC) .*|.*\|Honda\|CRF\d+F|US\|GasGas\|EC .*|MX\|Husqvarna\|(?:TE|FE) .*)$/;
 const MISREAD = new Set(['IE|Vespa|946 Snake']);
 
+/** An electric one's kWh a 100 km: its maker's own, or its battery over its rated range, and what it rests on. */
+function evUse(spec) {
+  if (!spec) return undefined;
+  if (typeof spec.kwhPer100km === 'number' && spec.kwhPer100km > 0) return { kwh: spec.kwhPer100km, basis: `${spec.kwhPer100km} kWh a 100 km, its maker’s figure` };
+  if (spec.batteryKwh > 0 && spec.rangeKm > 0) {
+    const kwh = Math.round((spec.batteryKwh / spec.rangeKm) * 100 * 100) / 100;
+    return { kwh, basis: `its ${spec.batteryKwh} kWh battery over its ${spec.rangeKm} km${spec.rangeCycle ? ` ${spec.rangeCycle}` : ''} range, its maker’s figures` };
+  }
+  return undefined;
+}
+
 const MARKETS = ['US', 'CA', 'MX', 'GB', 'IE'];
 const KINDS = ['motorcycle', 'scooter'];
 const models = [];
@@ -63,9 +75,13 @@ for (const f of files) {
     if (spec?.electric === true) continue;
     if (m.cc == null && typeof spec?.cc === 'number') m.cc = spec.cc;
     if (m.tankL == null && typeof spec?.tankL === 'number') m.tankL = spec.tankL;
-    if (m.fuel !== 'petrol') continue;
-    // Nor one whose engine size wasn't read: its tax, insurance and license are by cc, and none is guessed.
-    if (!(typeof m.cc === 'number' && m.cc > 0)) continue;
+    if (m.fuel !== 'petrol' && m.fuel !== 'ev') continue;
+    // An electric one from 2026-10-05, where what it uses was read: its maker's kWh a 100 km, or its battery over its
+    // rated range (`moto-ev-specs.json`); its continuous power decides whether it's a moped.
+    const ev = m.fuel === 'ev' ? evUse(spec) : undefined;
+    if (m.fuel === 'ev' && !ev) continue;
+    // A petrol one whose engine size wasn't read isn't taken: its tax, insurance and license are by cc, and none is guessed.
+    if (m.fuel === 'petrol' && !(typeof m.cc === 'number' && m.cc > 0)) continue;
     const p = m.basePrice;
     if (!p || typeof p.amount !== 'number' || !(p.amount > 0) || !p.currency || !p.url) continue;
     const id = `${m.market.toLowerCase()}-${slug(m.make)}-${slug(m.model)}`;
@@ -81,16 +97,18 @@ for (const f of files) {
       taxIncluded: p.includesTax === true,
       delivery: delivery ? Math.round(delivery.amount * 100) : 0,
       deliveryBasis: delivery ? String(delivery.basis ?? 'the charge its maker states') : 'no destination or delivery charge was published with it',
-      fuel: 'petrol',
-      per100km: economy,
-      economyBasis: economy !== null ? `${m.economy.value} ${m.economy.unit}, ${m.make}’s figure` : 'not published by its maker',
+      fuel: ev ? 'ev' : 'petrol',
+      per100km: ev ? null : economy,
+      ...(ev ? { kwhPer100km: ev.kwh, ...(typeof spec.continuousKw === 'number' && spec.continuousKw > 0 ? { kw: spec.continuousKw } : {}) } : {}),
+      economyBasis: ev ? ev.basis : economy !== null ? `${m.economy.value} ${m.economy.unit}, ${m.make}’s figure` : 'not published by its maker',
       co2: null,
       kerbKg: typeof m.kerbKg === 'number' && m.kerbKg > 0 ? m.kerbKg : null,
       ...(typeof m.cc === 'number' && m.cc > 0 ? { cc: Math.round(m.cc) } : {}),
       source: p.url,
       sourceType: p.sourceType === 'primary' ? 'read on the maker’s page' : 'read on a dealer’s or the trade press’s page',
     });
-    if (typeof m.tankL === 'number' && m.tankL > 0) tanks[id] = { tankL: Math.round(m.tankL * 10) / 10 };
+    if (!ev && typeof m.tankL === 'number' && m.tankL > 0) tanks[id] = { tankL: Math.round(m.tankL * 10) / 10 };
+    if (ev && typeof spec.batteryKwh === 'number' && spec.batteryKwh > 0) tanks[id] = { batteryKwh: spec.batteryKwh };
   }
 }
 models.sort((a, b) => a.market.localeCompare(b.market) || a.make.localeCompare(b.make) || a.price - b.price);

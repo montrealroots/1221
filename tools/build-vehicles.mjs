@@ -158,6 +158,8 @@ export interface CarModel {
   per100km: number | null;
   /** An electric car's consumption, kWh per 100 km (\`content/evcatalog.ts\`, from 2026-09-30). */
   kwhPer100km?: number;
+  /** An electric motorcycle's continuous motor power, kW (from 2026-10-05): a moped's at 4 or less. */
+  kw?: number;
   economyBasis: string;
   co2: number | null;
   kerbKg: number | null;

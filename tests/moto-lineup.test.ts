@@ -14,7 +14,8 @@ describe('the wider motorcycle lineup', () => {
   it('is on sale beside the first catalog’s, from many makers, each with its engine size and no model twice', () => {
     const makes = new Set(MOTO_MODELS.map((m) => m.make));
     expect(makes.size).toBeGreaterThanOrEqual(30);
-    expect(MOTO_MODELS.every((m) => typeof m.cc === 'number' && m.cc > 0 && m.fuel === 'petrol' && m.price > 0)).toBe(true);
+    // A petrol one with its engine size; an electric one, from 2026-10-05, with its use (`tests/electric-motorcycles.test.ts`).
+    expect(MOTO_MODELS.every((m) => m.price > 0 && (m.fuel === 'petrol' ? typeof m.cc === 'number' && m.cc > 0 : m.fuel === 'ev' && m.kwhPer100km! > 0))).toBe(true);
     const ids = BIKE_MODELS.map((m) => m.id);
     expect(new Set(ids).size).toBe(ids.length);
     expect(BIKE_MODELS.length).toBe(FIRST_BIKES.length + MOTO_MODELS.length);
@@ -24,7 +25,7 @@ describe('the wider motorcycle lineup', () => {
   });
 
   it('is quoted like any other, and holds its maker’s tank or the median of its kind’s', () => {
-    const withTank = MOTO_MODELS.find((m) => m.market === 'US' && MOTO_TANKS[m.id])!;
+    const withTank = MOTO_MODELS.find((m) => m.market === 'US' && m.fuel === 'petrol' && MOTO_TANKS[m.id]?.tankL)!;
     expect(capacityOf(withTank)).toEqual({ size: MOTO_TANKS[withTank.id]!.tankL, unit: 'L', estimated: false });
     const without = MOTO_MODELS.find((m) => m.market === 'MX' && !MOTO_TANKS[m.id])!;
     // Unrated, it still holds a tank and burns the mean of those rated (from 2026-10-05).
