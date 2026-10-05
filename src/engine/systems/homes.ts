@@ -1214,6 +1214,8 @@ export function marketRent(sim: Simulation, owned: Pick<OwnedHome, 'cityId' | 'f
 /** Why a unit can't be offered to let at a rent, or nothing where it can. */
 export function letRefusal(sim: Simulation, person: Person, owned: OwnedHome, unit: Tenancy['unit'], rent: Money): string | undefined {
   if (unit === 'adu' && !owned.facts.features.includes('adu')) return 'It has no backyard cottage.';
+  // Not while a guest is staying in it or coming to (`systems/houseguests.ts`, from 2026-10-05).
+  if (unit === 'adu' && (person.contacts ?? []).some((c) => c.stay?.roomId === 'cottage')) return 'A guest is staying in the cottage, or coming to.';
   if (unit === 'main' && livingIn(person)?.id === owned.id) return 'You live in it: move out first, or let the cottage.';
   if (owned.tenancies.some((t) => t.unit === unit)) return 'It’s let or offered already.';
   if (owned.selling) return 'It’s listed for sale.';

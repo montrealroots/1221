@@ -77,7 +77,7 @@ export const MORNING = { fromMinute: 6 * 60 + 30, spanMinutes: 120, showerMinute
 
 export interface Rooms { floorM2: number; closetL: number; flatmates: number; /** Its bathrooms: an owned home's count, else one (from 2026-10-03). */ bathrooms: number }
 
-export type RoomKind = 'bedroom' | 'bathroom' | 'kitchen' | 'living';
+export type RoomKind = 'bedroom' | 'bathroom' | 'kitchen' | 'living' | 'cottage';
 export type RoomUse = 'yours' | 'homeTheater' | 'danceStudio' | 'soundproofRoom' | 'library' | 'gym' | 'lodger' | 'storage' | 'guest' | 'spare';
 export interface Room { id: string; kind: RoomKind; label: string; use?: RoomUse; m2: number; access: 'yours' | 'shared'; fixtures: string[] }
 export const ROOM_USE_LABEL: Readonly<Record<RoomUse, string>> = {
@@ -87,6 +87,8 @@ export const ROOM_USE_LABEL: Readonly<Record<RoomUse, string>> = {
 /** The standard's single bedroom; a bathroom, SLATE's reading where the standard sets none; a storage room's usable share, SLATE's estimate. */
 export const SINGLE_M2 = 7.5;
 export const BATHROOM_M2 = 4;
+/** A backyard cottage's floor: the space standard's least for a one-bedroom, one-person home. SLATE's reading. */
+export const COTTAGE_M2 = 37;
 export const STORAGE_ROOM_SHARE = 0.5;
 const GIVEN: readonly RoomUse[] = ['homeTheater', 'danceStudio', 'soundproofRoom', 'library'];
 
@@ -122,6 +124,9 @@ export function roomList(sim: Simulation, person: Person): Room[] {
   if (shared) for (const r of rooms.slice(1)) r.use = undefined;
   for (let n = 0; n < baths; n += 1) rooms.push({ id: `bathroom-${n + 1}`, kind: 'bathroom', label: baths === 1 ? 'The Bathroom' : `Bathroom ${n + 1}`, m2: BATHROOM_M2 * scale, access: shared ? 'shared' : 'yours', fixtures: [place.fixtures.bathtub && n === 0 ? 'A Bathtub' : 'A Shower'] });
   rooms.push({ id: 'living', kind: 'living', label: place.type === 'studio' ? 'The Main Room' : 'The Living Room', m2: rest * 0.6 * scale, access: shared ? 'shared' : 'yours', fixtures: place.fixtures.cooling !== 'none' ? ['Air Conditioning'] : [] });
+  // A backyard cottage not let is a place for a guest (from 2026-10-05), its floor the space standard's least for a
+  // one-person home, 37 m², SLATE's reading, no cottage's own size being kept.
+  if (owned?.facts.features.includes('adu') && !owned.tenancies.some((t) => t.unit === 'adu')) rooms.push({ id: 'cottage', kind: 'cottage', label: 'The Backyard Cottage', use: 'guest', m2: COTTAGE_M2, access: 'yours', fixtures: [] });
   rooms.push({ id: 'kitchen', kind: 'kitchen', label: 'The Kitchen', m2: rest * 0.4 * scale, access: shared ? 'shared' : 'yours', fixtures: [...(place.fixtures.dishwasher ? ['A Dishwasher'] : []), ...(place.fixtures.laundry === 'in-unit' ? ['A Washer And Dryer'] : [])] });
   return rooms;
 }
@@ -142,8 +147,8 @@ export function roomFitRefusal(sim: Simulation, person: Person, item: Item, room
   const isBed = kind === 'furniture:bed' || /bed/i.test(pieceById(kind.slice(5))?.type ?? '');
   const isSofa = kind === 'furniture:sofa' || /sofa/i.test(pieceById(kind.slice(5))?.type ?? '');
   const isTable = kind === 'furniture:table' || /table/i.test(pieceById(kind.slice(5))?.type ?? '');
-  if (isBed && room.kind !== 'bedroom') return 'A bed goes in a bedroom.';
-  if (isSofa && room.kind !== 'living' && room.kind !== 'bedroom') return 'A sofa goes in a living room or a bedroom.';
+  if (isBed && room.kind !== 'bedroom' && room.kind !== 'cottage') return 'A bed goes in a bedroom.';
+  if (isSofa && room.kind !== 'living' && room.kind !== 'bedroom' && room.kind !== 'cottage') return 'A sofa goes in a living room or a bedroom.';
   if (isTable && room.kind === 'bathroom') return 'A table doesn’t go in a bathroom.';
   if (room.kind === 'bathroom') return 'Furniture doesn’t go in a bathroom.';
   const home = homeKeyOf(person.home);

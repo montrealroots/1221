@@ -11,7 +11,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, startOfDay } from '@/engine/core/time';
 import type { Fixtures } from '@/engine/content/homes';
 import { HALL, SOCIAL } from '@/engine/content/people';
-import { moveIntoOwned, ownBuilt, type HomeFacts } from '@/engine/systems/homes';
+import { letRefusal, moveIntoOwned, ownBuilt, type HomeFacts } from '@/engine/systems/homes';
 import { roomList, spareRooms } from '@/engine/systems/rooms';
 import { addItem, homeKeyOf } from '@/engine/systems/items';
 import { contactsOf, type Contact } from '@/engine/systems/people';
@@ -170,5 +170,26 @@ describe('a stay refused or changed', () => {
     sim.must({ kind: 'home.room_use', payload: { roomId: spare.id, use: 'storage' } });
     addItem(sim, sim.player, { kind: 'test:boxes', label: 'Boxes', quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(sim.player.home)!, spot: 'storage' }, acquiredAt: sim.now, volumeL: 1_000_000 } as never);
     expect(sim.execute({ kind: 'home.room_use', payload: { roomId: spare.id, use: 'guest' } }).error).toMatch(/^What’s stored wouldn’t fit/);
+  });
+});
+
+describe('a backyard cottage', () => {
+  it('is a place for a guest while it isn’t let, with a bed put in it, and isn’t let while one is coming', () => {
+    const sim = home('guest-cottage');
+    const owned = sim.player.homes![0]!;
+    owned.facts.features = [...owned.facts.features, 'adu'];
+    const cottage = roomList(sim, sim.player).find((r) => r.id === 'cottage')!;
+    expect(cottage).toMatchObject({ kind: 'cottage', use: 'guest', m2: 37 });
+    expect(guestRooms(sim, sim.player)).toHaveLength(0);
+    bedIn(sim, 'cottage');
+    expect(guestRooms(sim, sim.player).map((r) => r.id)).toEqual(['cottage']);
+    const c = friend(sim);
+    const r = sim.must<{ roomId: string }>({ kind: 'social.ask_to_stay', payload: { contactId: c.id, from: afternoon(sim, 3), nights: 2 } });
+    expect(r.roomId).toBe('cottage');
+    expect(letRefusal(sim, sim.player, owned, 'adu', 1_000_00)).toBe('A guest is staying in the cottage, or coming to.');
+    // Let, it's the tenant's, not a guest's.
+    sim.must({ kind: 'social.cancel_stay', payload: { contactId: c.id } });
+    owned.tenancies = [{ unit: 'adu', rent: 1_000_00, status: 'let', since: sim.now }];
+    expect(roomList(sim, sim.player).some((x) => x.id === 'cottage')).toBe(false);
   });
 });
