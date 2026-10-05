@@ -12,11 +12,42 @@ When this file and the tree disagree, the tree wins. Correct this file in the sa
 
 ---
 
-## Resume here: 2026-10-04, televisions and brands done
+## Resume here: 2026-10-05, the owner's restated expansion
 
 Run the four checks of CLAUDE.md's rules 2 and 3 first; the tree wins over this box.
 
-**Where things stand.** The working branch `claude/slate-cleanup-e4apmx` is pushed. The session that resumed on 2026-10-04, in the Linux cloud container (`session_01Na7AwFNze8QYVWFfuUXBhY`), finished the paused box's first two items:
+**The command.** On 2026-10-05 the owner restated the expansion of 2026-10-03, adding to the master plan and replacing nothing: every feature's whole lifecycle; manual control, with automation only as an explicit preference on the same rules; clubs and lessons, fuel and charging, shopping and unloading, packing and hotels, rooms and property, and pets finished as journeys; at least 50 real brands a category with at least 100 real products each where they exist (5,000 a category, a floor), shortfalls documented and never invented; separate brand, product, variant, offer and owned-item records; every catalog item usable; cheapest first on one price basis, with search, filters, favorites, comparison, kept context and lazy loading; the connected journeys tested with a save and load partway. Acting stays the career. Stage 14 and deployment stay last.
+
+**Done so far in this stretch** (each gated and pushed):
+- `085f0865`: phones from 27 makers' own stores.
+- `3e82f937`: the hierarchy as the owner names it (68 brand and narrow categories, 14 service directories) and the report's functional table, checked against the engine and the screens.
+- The audit (the commit after `3e82f937`): four readers checked the 66 rows still marked Done or Complete; 44 were reopened with what's missing (`docs/REQUIREMENTS.md`, "The 2026-10-05 audit").
+
+**What the audit found that is a fault, not a missing feature,** to fix first:
+- The Food screen lists 12 of the 44 recipes (`rows.slice(0, 12)` in `FoodWorkspace.tsx`).
+- A garment still on order can be altered and charged (`alterRefusal`).
+- A delivered order goes into a full wardrobe; a store's purchase spills to the floor.
+- A canceled credit-card order is refunded to the bank.
+- A receipt's total leaves out the delivery fee.
+- Away from home with no stay, a shower is free at hotel fixtures (`stayPlace`).
+- Belongings moved into a car by hand aren't held to its cargo.
+- A car package and an option it includes are both charged; a car on order can be sold; a financed order's loan and insurance start before delivery; a trade-in is taken from another town.
+
+**The midnight fallback (requirement E2).** Every night, with no preference behind it, the day's rollover buys groceries with the player's money, eats the fridge's ready meals, showers and brushes teeth, dresses for the day and for bed, and runs the dishwasher. The owner's rule makes each of these an explicit shortcut on the manual action's rules. Follow the pattern of `systems/automation.ts`: none on for a new life, every one on for a save from before, and the tests that play a hands-off year choosing them.
+
+**Next, in order:**
+1. The faults above, each with its test.
+2. E2: the midnight fallback as shortcuts.
+3. The owner's six modules, each against its reopened rows: clubs and lessons (a lesson's skill something reads; leaving a club), fuel (running dry and its recovery, never a secret refill), shopping (what a person can carry by weight; a full fridge), packing and hotels (a cabin bag's weight, liquids at security), rooms (the guesthouse's guests, a theater's own screen and seats, a library read in), pets (each flight's own carrier's rules, not the flag carrier's).
+4. The catalogs out of the main bundle (15.7 MB of JavaScript), loaded when a screen needs them, then the mechanical readers raised from 12 a category to 100 a brand, category by category (`docs/CATALOG-COVERAGE.md`).
+5. The journeys of the owner's §8, saved and loaded partway, with low money, full storage, a closed business and a changed town.
+6. Stage 14 and deployment, last.
+
+---
+
+## 2026-10-04 to 2026-10-05: televisions, brands and the catalog tranches
+
+**Where things stood.** The working branch `claude/slate-cleanup-e4apmx` is pushed. The session that resumed on 2026-10-04, in the Linux cloud container (`session_01Na7AwFNze8QYVWFfuUXBhY`), finished the paused box's first two items:
 - `213e8ed6`: groceries, toiletries and cleaning products by the brand each name states, spelled one way (`tools/brands.mjs`). Gated on its own tree: 312 files, 3,085 tests, exit 0.
 - `5be4c394`: a television of one's own (`systems/televisions.ts`).
   - `tv.buy` keeps the model as the home's TV.
@@ -117,7 +148,7 @@ The driver was rebuilt in this container (`probe/play-to-death.ts`, git-ignored,
 - The gate's tics check limits sentences opening "Nothing", and title-case reads `label:` fields as labels.
 - A generated catalog of real product names joins `NOT_OURS` in `tools/spelling.mjs`, and a name the sweep would change joins `REAL_NAMES`. Bang & Olufsen's Beovision Theatre did both.
 
-**Next, in order:**
+**Next, as it stood on 2026-10-05 before the owner restated the expansion (the box above supersedes it):**
 1. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`: 0 of 45 met, a category meeting it when 50 of its brands have 100 products each; appliances at 56 makers, televisions at 50, and 12 categories with no catalog yet), then the open rows in `docs/REQUIREMENTS.md`.
    - 41c's guest room is done (`202b7c42`); its office is held, the row saying why: an actor's work at home is a self-tape, which needs no room of its own, or a voice tape, which needs the soundproofed room an office isn't, and a home office's tax relief is a self-employed earner's, which no return here takes. A Canadian performer is self-employed here (`systems/eiself.ts`), but Canada's tax is withheld from each check and no Canadian return exists for a deduction to land in.
    - Televisions at 50 makers. Still unpriced, every reachable retailer refusing or not listing them: Hitachi, Grundig, Finlux, Blaupunkt, Techwood, Linsar and Ferguson in Britain; onn., Amazon Fire TV and Polaroid in America; Philips, Panasonic, Philco and Vizio in Mexico (the tranches' `notFound`).
