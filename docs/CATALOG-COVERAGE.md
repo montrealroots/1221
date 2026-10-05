@@ -43,7 +43,7 @@ which never counts toward the target.
 | Personal Care | Cosmetics And Haircare | 52 | 100% | 101 | 1 / 1 / 10 | 0 | 101 | 103 | 0 | CA, GB, IE, MX, US | No |
 | Household | Cleaning Products And Consumables | 59 | 100% | 119 | 1 / 1 / 9 | 0 | 119 | 124 | 0 | CA, GB, IE, MX, US | No |
 | Food | Groceries | 160 | 100% | 461 | 1 / 1 / 59 | 0 | 461 | 472 | 41 | CA, GB, IE, MX, US | No |
-| Food | Beverages | 57 | 100% | 71 | 1 / 1 / 3 | 0 | 71 | 74 | 1 | CA, GB, IE, MX, US | No |
+| Food | Beverages | 74 | 100% | 145 | 1 / 1 / 9 | 0 | 145 | 148 | 1 | CA, GB, IE, MX, US | No |
 | Vehicles | Cars, Pickups And Vans | 74 | 100% | 481 | 1 / 4 / 22 | 0 | 481 | 829 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Motorcycles And Scooters | 66 | 100% | 580 | 1 / 7 / 44 | 0 | 580 | 691 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Bicycles, E-Bikes And ATVs | 72 | 100% | 354 | 1 / 4 / 17 | 0 | 354 | 372 | 0 | CA, GB, IE, MX, US | No |
@@ -56,7 +56,7 @@ which never counts toward the target.
 | Building And Garden | Building Materials, Fixtures And Finishes | 60 | 100% | 83 | 1 / 1 / 4 | 0 | 83 | 84 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Garden Equipment | 52 | 100% | 117 | 1 / 2 / 6 | 0 | 117 | 118 | 0 | CA, GB, IE, MX, US | No |
 | Sport | Sports Equipment | 54 | 100% | 130 | 1 / 2 / 19 | 0 | 130 | 130 | 0 | CA, GB, IE, MX, US | No |
-| Pets | Pet Supplies | 57 | 100% | 85 | 1 / 1 / 3 | 0 | 85 | 88 | 11 | CA, GB, IE, MX, US | No |
+| Pets | Pet Supplies | 61 | 100% | 141 | 1 / 1 / 10 | 0 | 141 | 144 | 11 | CA, GB, IE, MX, US | No |
 
 0 of 45 brand and narrow categories meet the target.
 
