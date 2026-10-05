@@ -59,6 +59,8 @@ import { inSaveMoney } from './banking';
 import { payFromBank } from './household';
 import { HOTELS } from '../content/hotels';
 import { BAG_RULES, CARRY_ON_KG, COUNTED_G, GARMENT_G, UNKNOWN_KG_PER_L, type BagRule } from '../content/baggage';
+import { toiletryById } from './hygiene';
+import { GROCERY_PRODUCTS } from '../content/groceries';
 import { MS_DAY, formatDate } from '../core/time';
 
 export const CARRY_ON = { label: 'Carry-On Suitcase', holdsL: 45 } as const;
@@ -170,10 +172,12 @@ function packAWeek(person: Person, bag: Item, home: string): number {
     g.at = into;
     packed += 1;
   }
-  // One of each of the bathroom's things that's in use.
+  // One of each of the bathroom's things that's in use; in a bag that goes in the cabin, no liquid over security's 100 ml,
+  // which would be surrendered (`securityCheck`, from 2026-10-05): a careful packer leaves it, and buys one there.
   const kinds = new Set<string>();
+  const cabin = !checkedSize(bag);
   for (const s of suppliesOf(person).filter(atHome)) {
-    if (kinds.has(s.supply.kind) || !fits(s)) continue;
+    if (kinds.has(s.supply.kind) || (cabin && (containerMl(s) ?? 0) > 100) || !fits(s)) continue;
     kinds.add(s.supply.kind);
     s.at = into;
     packed += 1;
@@ -366,6 +370,64 @@ export function weighIn(sim: Simulation, person: Person, fromCity: string, toCit
   }
   if (taken.length) sim.schedule({ at: sim.now + HELD_DAYS * MS_DAY, kind: HELD_KIND, label: 'What Was Left Behind', category: 'system', priority: 20, payload: { personId: person.id, cityId: fromCity, until: sim.now + HELD_DAYS * MS_DAY } });
   return { fees: fees > 0 ? inSaveMoney(sim, Math.round(fees * 100), rule.currency) : 0, taken, rule };
+}
+
+/**
+ * At the gate, from 2026-10-05: the bags carried on, those going beyond the ones checked, weighed against the carrier's
+ * cabin limit as its own page states it (British Airways' 23 kg, Aer Lingus's and Aeroméxico's 10; Delta and Air Canada
+ * set none). One over has its heaviest things taken out until it's under, held by the airport as an overweight checked
+ * bag's are. What came out. Aer Lingus includes its 10 kg bag only with its Plus and Advantage fares; SLATE's fare
+ * carries one, and doesn't yet charge a Saver fare's bag.
+ */
+export function cabinCheck(sim: Simulation, person: Person, fromCity: string, toCity: string, checked: number): { taken: Item[]; rule?: BagRule } {
+  const rule = bagRuleFor(fromCity, toCity);
+  if (!rule?.cabinKg) return { taken: [] };
+  const carried = bagsGoing(person).sort((a, b) => Number(checkedSize(b)) - Number(checkedSize(a)) || bagKg(person, b) - bagKg(person, a)).slice(Math.max(0, checked));
+  const taken: Item[] = [];
+  for (const bag of carried) {
+    while (bagKg(person, bag) > rule.cabinKg + 1e-9) {
+      const heaviest = packedIn(person, bag).sort((a, b) => weightG(b) - weightG(a))[0];
+      if (!heaviest) break;
+      heaviest.at = { kind: 'held', cityId: fromCity, by: 'the airport', until: sim.now + HELD_DAYS * MS_DAY };
+      taken.push(heaviest);
+    }
+  }
+  if (taken.length) sim.schedule({ at: sim.now + HELD_DAYS * MS_DAY, kind: HELD_KIND, label: 'What Was Left Behind', category: 'system', priority: 20, payload: { personId: person.id, cityId: fromCity, until: sim.now + HELD_DAYS * MS_DAY } });
+  return { taken, rule };
+}
+
+/**
+ * Liquids at security, from 2026-10-05 (`research-baggage-weight.json`): each container carried on at most 100 ml, and
+ * all of them in one bag, the TSA's quart (946 ml) in America and a liter in Ireland, Canada and Mexico; Heathrow, London's
+ * airport, takes containers to 2 liters with no bag, its new scanners in. A container is its product's whole size, not
+ * what's left in it. One over is surrendered at the checkpoint, and gone; past the bag, the biggest go first. Liquids are
+ * the gels, creams, pastes and sprays a bathroom keeps (a stick of deodorant isn't one) and anything to drink.
+ */
+export const LIQUIDS: Readonly<Record<string, { containerMl: number; bagMl: number | null }>> = {
+  us: { containerMl: 100, bagMl: 946 }, ie: { containerMl: 100, bagMl: 1000 }, ca: { containerMl: 100, bagMl: 1000 }, mx: { containerMl: 100, bagMl: 1000 }, uk: { containerMl: 100, bagMl: 1000 },
+};
+const HEATHROW = { containerMl: 2000, bagMl: null } as const;
+const GROCERY_BY_ID = new Map(GROCERY_PRODUCTS.map((g) => [g.id, g]));
+const LIQUID_KINDS = new Set(['body-wash', 'shampoo', 'conditioner', 'toothpaste', 'shaving-cream', 'hair-styling', 'foundation', 'mascara']);
+/** A carried thing's container, ml, where it's a liquid; nothing where it isn't. */
+export function containerMl(item: Item): number | undefined {
+  if (item.supply && (LIQUID_KINDS.has(item.supply.kind) || (item.supply.kind === 'deodorant' && item.supply.unit === 'ml')) && item.supply.unit !== 'ct') return toiletryById(item.kind)?.sizeQty ?? item.supply.left;
+  if (item.food && item.food.unit === 'ml') return GROCERY_BY_ID.get(item.kind)?.sizeQty ?? item.food.left;
+  return undefined;
+}
+/** At security leaving a town: the liquids in what's carried on over the rule surrendered. What was taken. */
+export function securityCheck(person: Person, fromCity: string, checked: number): Item[] {
+  const rule = fromCity === 'uk-eng-london' ? HEATHROW : LIQUIDS[CITIES.get(fromCity)?.countryId ?? ''];
+  if (!rule) return [];
+  const carried = bagsGoing(person).sort((a, b) => Number(checkedSize(b)) - Number(checkedSize(a)) || bagKg(person, b) - bagKg(person, a)).slice(Math.max(0, checked));
+  const liquids = carried.flatMap((bag) => packedIn(person, bag)).filter((i) => containerMl(i) !== undefined);
+  const over = liquids.filter((i) => containerMl(i)! > rule.containerMl + 1e-9);
+  const kept = liquids.filter((i) => !over.includes(i)).sort((a, b) => containerMl(b)! - containerMl(a)!);
+  const past: Item[] = [];
+  if (rule.bagMl !== null) { let total = kept.reduce((n, i) => n + containerMl(i)!, 0); for (const i of kept) { if (total <= rule.bagMl + 1e-9) break; past.push(i); total -= containerMl(i)!; } }
+  const taken = [...over, ...past];
+  if (taken.length) person.items = itemsOf(person).filter((i) => !taken.includes(i));
+  return taken;
 }
 
 /** What's held for them in a town: what isn't collected is gone on its day (`HELD_KIND`). */

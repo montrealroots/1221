@@ -89,9 +89,14 @@ describe('a checked bag', () => {
     const bag = withBag(sim);
     const inIt = packedIn(sim.player, bag).map((i) => i.id);
     expect(inIt.length).toBeGreaterThan(0);
+    // A life's first clothes, bought for nothing, count at the cheapest of their kind here (from 2026-10-05).
+    const unpriced = packedIn(sim.player, bag).filter((i) => i.paid === undefined && i.garment);
+    expect(unpriced.length).toBeGreaterThan(0);
+    const paidSum = [bag, ...packedIn(sim.player, bag)].reduce((n, i) => n + (i.paid ?? 0), 0);
     const key = keyFor(sim, bag.id, 'lost', true);
     const [claim] = landBags(sim, sim.player, key, 'us-ny-newyork', 'uk-eng-london', 1);
     expect(claim!.cap).toBe(inSaveMoney(sim, BAGGAGE.montrealUsd * 100, 'USD'));
+    expect(claim!.value!).toBeGreaterThan(paidSum);
     expect(claimRefusal(sim, sim.player, claim!)).toMatch(/still being traced/);
     sim.advanceBy(BAGGAGE.tracingDays * MS_DAY + 60_000);
     expect(itemsOf(sim.player).some((i) => i.id === bag.id || inIt.includes(i.id))).toBe(false);

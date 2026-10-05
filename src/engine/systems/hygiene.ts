@@ -264,7 +264,10 @@ export function toiletryRefusal(person: Person, id: string, quantity: number, at
   if (!t) return 'That isn’t on sale.';
   if (!chainsHere(person.currentLocationId).has(t.chain)) return 'There’s no store of that chain here.';
   if (!(Number.isInteger(quantity) && quantity >= 1 && quantity <= 10)) return 'From one to ten.';
-  if (!(person.home && person.home.cityId === person.currentLocationId)) return 'Toiletries go home to your bathroom, here.';
+  // Away from home, from 2026-10-05, a toiletry is bought to carry, as a traveler buys one; cleaning things only for home.
+  // Until then toiletries could only be bought in the town where they lived.
+  const home = Boolean(person.home && person.home.cityId === person.currentLocationId);
+  if (!home && CLEANING.includes(t)) return 'Cleaning things go home to your cupboard, here.';
   // Only while the store is open, for a purchase made at a moment; the day's restocking is done in its open hours (`systems/errands.ts`).
   if (at !== undefined) { const shut = closedNow(t.chain, GROCERY_CHAINS.find((c) => c.id === t.chain)?.name ?? 'The store', person.currentLocationId, at); if (shut) return shut; }
   return undefined;
@@ -288,7 +291,8 @@ export function buyToiletries(sim: Simulation, person: Person, id: string, quant
 export function giveToiletry(sim: Simulation, person: Person, t: Toiletry, paid?: Money): void {
   // A toothbrush is one brush a count; anything else is its size.
   // Carried, or in the car, until a trip out is home (`stow`).
-  stow(person, addItem(sim, person, { kind: t.id, label: t.name, quantity: 1, condition: 1, at: { kind: 'home', home: homeKeyOf(person.home)!, spot: CLEANING.includes(t) ? 'storage' : 'bathroom' }, acquiredAt: sim.now, ...(paid !== undefined ? { paid } : {}), supply: { kind: t.kind, unit: t.sizeUnit, left: t.sizeQty } }), sim.now);
+  const home = person.home && person.home.cityId === person.currentLocationId ? homeKeyOf(person.home) : undefined;
+  stow(person, addItem(sim, person, { kind: t.id, label: t.name, quantity: 1, condition: 1, at: home ? { kind: 'home', home, spot: CLEANING.includes(t) ? 'storage' : 'bathroom' } : { kind: 'person' }, acquiredAt: sim.now, ...(paid !== undefined ? { paid } : {}), supply: { kind: t.kind, unit: t.sizeUnit, left: t.sizeQty } }), sim.now);
 }
 
 /** The cheapest of a kind, a gram or a brush: in a store in reach of the town, or anywhere in its market. Nothing where SLATE keeps none. */
@@ -388,11 +392,13 @@ export function registerShaving(sim: Simulation): void {
 }
 
 export function restock(sim: Simulation, person: Person, dishwasher = false): number {
-  if (!keepsSupplies(person) || !person.home || person.home.cityId !== person.currentLocationId) return 0;
+  if (!keepsSupplies(person) || !person.home) return 0;
+  // Away, from 2026-10-05, the personal things that run out are bought where they are and carried, not the cleaning.
+  const away = person.home.cityId !== person.currentLocationId;
   const worn = suppliesOf(person).filter((i) => i.supply.kind === 'toothbrush' && i.condition <= 0);
   if (worn.length) person.items = itemsOf(person).filter((i) => !worn.some((w) => w.id === i.id));
   let bought = 0;
-  const cleaning = keepsCleaning(person) ? CLEANING_KEPT.filter((k) => dishwasher || k !== 'dishwasher-detergent') : [];
+  const cleaning = !away && keepsCleaning(person) ? CLEANING_KEPT.filter((k) => dishwasher || k !== 'dishwasher-detergent') : [];
   // Razors and cream for someone who shaves (from 2026-10-03).
   const shaving = person.shaves ? (['razor', 'shaving-cream'] as const) : [];
   // The makeup worn and the hair styling, for someone who uses them (from 2026-10-05).

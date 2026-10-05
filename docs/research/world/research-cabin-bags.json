@@ -1,0 +1,40 @@
+{
+  "read": "2026-10-05",
+  "carriers": [
+    {
+      "carrier": "Delta",
+      "cabinKg": null,
+      "condition": "included in every economy fare",
+      "quote": "1 carry-on bag and 1 personal item free of charge, with size restrictions only (45 linear inches combined length + width + height); no weight limit specified",
+      "url": "https://www.delta.com/us/en/baggage/carry-on-baggage"
+    },
+    {
+      "carrier": "British Airways",
+      "cabinKg": 23,
+      "condition": "included in every economy fare",
+      "quote": "hand baggage and cabin baggage on British Airways can weigh up to 23 kg (51 pounds)",
+      "url": "https://www.ba.com/en-gb/baggage"
+    },
+    {
+      "carrier": "Aer Lingus",
+      "cabinKg": 10,
+      "condition": "Saver fares: must pay to carry on or check free; Plus/Advantage fares: included free",
+      "quote": "10kg carry-on bag; Customers who book a Saver fare can pay to take a bag on board or simply check it into the hold for free",
+      "url": "https://www.aerlingus.com/prepare/bags/carry-on-baggage/"
+    },
+    {
+      "carrier": "Air Canada",
+      "cabinKg": null,
+      "condition": "included in standard economy fare; Economy Basic may exclude carry-on",
+      "quote": "No weight limit applies to carry-on baggage, but it must be light enough that you can store it in the overhead bin without assistance",
+      "url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/carry-on.html"
+    },
+    {
+      "carrier": "Aeroméxico",
+      "cabinKg": 10,
+      "condition": "for Básica (economy) fare; combined weight of carry-on and personal item",
+      "quote": "carry-on and personal item combined cannot exceed 10 kg in economy (Básica fare)",
+      "url": "https://www.aeromexico.com/en-us/travel-information/baggage/carry-on-baggage"
+    }
+  ]
+}

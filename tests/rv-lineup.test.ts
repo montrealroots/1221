@@ -9,7 +9,8 @@ import { describe, expect, it } from 'vitest';
 import { RV_LINEUP } from '@/engine/content/rvlineup';
 import { kindOf, modelById, modelsFor, sleepsIn } from '@/engine/systems/vehicles';
 
-const research = (await import('../docs/research/catalog/rv-a.json')) as unknown as { models: { market: string; make: string; model: string; grossKg: number | null }[] };
+type Read = { models: { market: string; make: string; model: string; grossKg: number | null }[] };
+const research: Read = { models: [...((await import('../docs/research/catalog/rv-a.json')) as unknown as Read).models, ...((await import('../docs/research/catalog/rv-b.json')) as unknown as Read).models] };
 const CAP: Record<string, number> = { GB: 3500, IE: 3500, US: 26000 * 0.45359237, CA: 11000 };
 
 describe('the wider motorhome lineup', () => {

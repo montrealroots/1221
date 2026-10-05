@@ -39,6 +39,8 @@ export interface BagRule {
   /** A band's fee past the allowance, to its upper bound; or a rate a kilogram. */
   bands: readonly { toKg: number; fee: number }[]; perKg?: number;
   currency: string; status: 'verified' | 'secondhand';
+  /** The cabin bag's most, kg, the carrier's own page's; none where it sets no weight (`research-cabin-bags.json`, from 2026-10-05). */
+  cabinKg?: number;
 }
 
 /** The departure country's flag carrier's rule, by whether the flight stays in the country or crosses an ocean. */
@@ -48,19 +50,19 @@ export const BAG_RULES: Readonly<Record<string, { domestic: BagRule; abroad: Bag
     abroad: { carrier: 'Delta', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 100 }], currency: 'USD', status: 'secondhand' },
   },
   uk: {
-    domestic: { carrier: 'British Airways', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 65 }], currency: 'GBP', status: 'secondhand' },
-    abroad: { carrier: 'British Airways', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 65 }], currency: 'GBP', status: 'secondhand' },
+    domestic: { carrier: 'British Airways', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 65 }], currency: 'GBP', status: 'secondhand', cabinKg: 23 },
+    abroad: { carrier: 'British Airways', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 65 }], currency: 'GBP', status: 'secondhand', cabinKg: 23 },
   },
   ie: {
-    domestic: { carrier: 'Aer Lingus', allowanceKg: 20, maxKg: 32, bands: [], perKg: 10, currency: 'EUR', status: 'secondhand' },
-    abroad: { carrier: 'Aer Lingus', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 75 }], currency: 'EUR', status: 'secondhand' },
+    domestic: { carrier: 'Aer Lingus', allowanceKg: 20, maxKg: 32, bands: [], perKg: 10, currency: 'EUR', status: 'secondhand', cabinKg: 10 },
+    abroad: { carrier: 'Aer Lingus', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 75 }], currency: 'EUR', status: 'secondhand', cabinKg: 10 },
   },
   ca: {
     domestic: { carrier: 'Air Canada', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 100 }], currency: 'CAD', status: 'secondhand' },
     abroad: { carrier: 'Air Canada', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 100 }], currency: 'CAD', status: 'secondhand' },
   },
   mx: {
-    domestic: { carrier: 'Aeroméxico', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 800 }], currency: 'MXN', status: 'secondhand' },
-    abroad: { carrier: 'Aeroméxico', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 800 }], currency: 'MXN', status: 'secondhand' },
+    domestic: { carrier: 'Aeroméxico', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 800 }], currency: 'MXN', status: 'secondhand', cabinKg: 10 },
+    abroad: { carrier: 'Aeroméxico', allowanceKg: 23, maxKg: 32, bands: [{ toKg: 32, fee: 800 }], currency: 'MXN', status: 'secondhand', cabinKg: 10 },
   },
 };

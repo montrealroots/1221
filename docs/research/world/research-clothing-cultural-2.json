@@ -1,0 +1,481 @@
+{
+ "meta": {
+  "read": "2026-10-05",
+  "method": "Web search and direct page reads of brand/retailer product pages for cultural clothing brands not already in the catalog. Where a listing showed a struck-through MRP/original price alongside a sale price, the MRP/original (undiscounted) price was recorded. Brands with only vague estimate ranges and no single readable product price (Kyoto Kimono retailers, Modanisa as a marketplace of many sub-brands, Kente Gentlemen — no such brand was found to exist, only generic 'Kente dashiki' products) were skipped in favour of a brand or retailer with an actual confirmed product page.",
+  "checked": "2026-10-05: dropped by hand Biba (priced in INR for market IN); Shanghai Tang (priced in HKD for market HK); Eighth Generation (a blanket, not clothing); Section 35 (priced in USD for market CA)."
+ },
+ "retailers": [
+  {
+   "id": "scotland-kilt-company",
+   "name": "The Scotland Kilt Company",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "UK alpha/chest inches",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "fabindia",
+   "name": "Fabindia",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US alpha",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "biba",
+   "name": "Biba",
+   "market": "IN",
+   "kind": "mid",
+   "sizeSystem": "India numeric (32/34/36/38/42)",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "andaaz-fashion",
+   "name": "Andaaz Fashion",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US alpha / made-to-measure",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "mirraw",
+   "name": "Mirraw",
+   "market": "US",
+   "kind": "budget",
+   "sizeSystem": "US alpha / made-to-measure",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "shanghai-tang",
+   "name": "Shanghai Tang",
+   "market": "HK",
+   "kind": "luxury",
+   "sizeSystem": "HK/EU numeric",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "havanera",
+   "name": "Havanera Co. (via Walmart)",
+   "market": "US",
+   "kind": "budget",
+   "sizeSystem": "US alpha",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "alpenclassics",
+   "name": "Alpenclassics",
+   "market": "GB",
+   "kind": "mid",
+   "sizeSystem": "EU numeric",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "eighth-generation",
+   "name": "Eighth Generation",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "one size (blanket)",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "inayah",
+   "name": "INAYAH",
+   "market": "US",
+   "kind": "mid",
+   "sizeSystem": "US alpha",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "section-35",
+   "name": "Section 35",
+   "market": "CA",
+   "kind": "mid",
+   "sizeSystem": "US alpha",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  },
+  {
+   "id": "africa-imports",
+   "name": "Africa Imports",
+   "market": "US",
+   "kind": "budget",
+   "sizeSystem": "US alpha",
+   "storesIn": [],
+   "storesNote": null,
+   "online": {
+    "shippingFee": null,
+    "freeShippingThreshold": null,
+    "standardDeliveryDays": null,
+    "source": "not confirmed in this research pass"
+   },
+   "returns": {
+    "days": null,
+    "conditions": null,
+    "source": "not confirmed in this research pass"
+   }
+  }
+ ],
+ "products": [
+  {
+   "retailer": "scotland-kilt-company",
+   "market": "US",
+   "brand": "Harris Tweed Hebrides",
+   "name": "Men's Harris Tweed Jacket",
+   "gender": "men",
+   "category": "cultural",
+   "subcategory": "Scottish",
+   "price": 450,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "38",
+    "40",
+    "42",
+    "44",
+    "46",
+    "48"
+   ],
+   "colors": [
+    "brown herringbone",
+    "green herringbone",
+    "grey herringbone"
+   ],
+   "material": "100% Harris Tweed wool",
+   "care": null,
+   "careText": null,
+   "url": "https://www.thescotlandkiltcompany.us/collections/mens-harris-tweed-jackets",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "retailer product listing page"
+  },
+  {
+   "retailer": "fabindia",
+   "market": "US",
+   "brand": "Fabindia",
+   "name": "Offwhite Cotton Knee Length Kurta",
+   "gender": "women",
+   "category": "cultural",
+   "subcategory": "South Asian",
+   "price": 49,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "S",
+    "M",
+    "L",
+    "XL"
+   ],
+   "colors": [
+    "offwhite"
+   ],
+   "material": "cotton",
+   "care": null,
+   "careText": null,
+   "url": "https://www.fabindia.com/clothing/women-kurtis",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "brand product listing page"
+  },
+  {
+   "retailer": "andaaz-fashion",
+   "market": "US",
+   "brand": "Andaaz Fashion",
+   "name": "Cream Beige Georgette Sequins Embroidered Cocktail Saree",
+   "gender": "women",
+   "category": "cultural",
+   "subcategory": "South Asian",
+   "price": 163,
+   "salePrice": 124,
+   "currency": "USD",
+   "sizes": [
+    "one size (unstitched blouse piece)"
+   ],
+   "colors": [
+    "cream beige"
+   ],
+   "material": "georgette",
+   "care": null,
+   "careText": null,
+   "url": "https://www.andaazfashion.com/womens/sarees/fancy",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "retailer product listing page"
+  },
+  {
+   "retailer": "mirraw",
+   "market": "US",
+   "brand": "Mirraw",
+   "name": "Teal Color Jacquard Woven Lehenga Choli",
+   "gender": "women",
+   "category": "cultural",
+   "subcategory": "South Asian",
+   "price": 169.33,
+   "salePrice": 50.73,
+   "currency": "USD",
+   "sizes": [
+    "one size (unstitched/semi-stitched)"
+   ],
+   "colors": [
+    "teal"
+   ],
+   "material": "jacquard",
+   "care": null,
+   "careText": null,
+   "url": "https://www.mirraw.com/store/brocade-lehenga",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "retailer product listing page"
+  },
+  {
+   "retailer": "havanera",
+   "market": "US",
+   "brand": "Havanera Co.",
+   "name": "Men's and Big Men's Camp Collar Guayabera Short Sleeve Button-Down Shirt",
+   "gender": "men",
+   "category": "cultural",
+   "subcategory": "Cuban",
+   "price": 22.98,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "S",
+    "M",
+    "L",
+    "XL",
+    "2XL",
+    "3XL",
+    "4XL",
+    "5XL"
+   ],
+   "colors": [
+    "light blue",
+    "white",
+    "black"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://www.walmart.com/ip/HAVANERA/16050371069",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "retailer product page"
+  },
+  {
+   "retailer": "alpenclassics",
+   "market": "GB",
+   "brand": "Alpenclassics",
+   "name": "Trachten Lederhose FAY",
+   "gender": "women",
+   "category": "cultural",
+   "subcategory": "German/Austrian (Trachten)",
+   "price": 175.89,
+   "salePrice": null,
+   "currency": "GBP",
+   "sizes": [
+    "34",
+    "36",
+    "38",
+    "40",
+    "42"
+   ],
+   "colors": [
+    "brown leather"
+   ],
+   "material": "leather",
+   "care": null,
+   "careText": null,
+   "url": "https://www.alpenclassics.co.uk/women/trousers-skirts/tracht-lederhosen",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "brand product listing page"
+  },
+  {
+   "retailer": "inayah",
+   "market": "US",
+   "brand": "INAYAH",
+   "name": "Luxury Abaya",
+   "gender": "women",
+   "category": "cultural",
+   "subcategory": "Islamic/modest wear",
+   "price": 157.32,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "S",
+    "M",
+    "L",
+    "XL"
+   ],
+   "colors": [
+    "black"
+   ],
+   "material": "satin",
+   "care": null,
+   "careText": null,
+   "url": "https://www.inayah.com/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "brand homepage/collection"
+  },
+  {
+   "retailer": "africa-imports",
+   "market": "US",
+   "brand": "Africa Imports",
+   "name": "Luxurious Embroidered Kente Dashiki",
+   "gender": "men",
+   "category": "cultural",
+   "subcategory": "West African",
+   "price": 59.9,
+   "salePrice": null,
+   "currency": "USD",
+   "sizes": [
+    "M",
+    "L",
+    "XL",
+    "2XL",
+    "3XL"
+   ],
+   "colors": [
+    "kente multicolor"
+   ],
+   "material": null,
+   "care": null,
+   "careText": null,
+   "url": "https://africaimports.com/luxurious-embroidered-kente-dashiki/",
+   "date": "2026-10-05",
+   "confirmed": true,
+   "source": "retailer product page"
+  }
+ ]
+}

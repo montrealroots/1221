@@ -1,0 +1,376 @@
+{
+  "read": "2026-10-05",
+  "category": "televisions",
+  "products": [
+    {
+      "brand": "Konka",
+      "series": "H3",
+      "model": "40H33A",
+      "sizeIn": 40,
+      "panel": "LED",
+      "resolution": "1080p",
+      "refreshHz": null,
+      "year": null,
+      "smartOs": "Android TV",
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Walmart",
+          "price": 137.99,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://www.walmart.com/ip/KONKA-40-H3-SERIES-ANDROID-FHD-LED-TV/1372725921",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.walmart.com/ip/KONKA-40-H3-SERIES-ANDROID-FHD-LED-TV/1372725921",
+      "status": "verified"
+    },
+    {
+      "brand": "Sansui",
+      "series": "VA",
+      "model": "S32VAFW",
+      "sizeIn": 32,
+      "panel": "LED",
+      "resolution": "1080p",
+      "refreshHz": null,
+      "year": null,
+      "smartOs": "webOS",
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Walmart",
+          "price": 109.90,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://www.walmart.com/ip/Sansui-32-VA-Series-Full-HD-Frameless-Design-Smart-TV-with-Dolby-Vision-HDR-Dolby-Atmos-WebOS/14337862799",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.walmart.com/ip/Sansui-32-VA-Series-Full-HD-Frameless-Design-Smart-TV-with-Dolby-Vision-HDR-Dolby-Atmos-WebOS/14337862799",
+      "status": "verified"
+    },
+    {
+      "brand": "Naxa",
+      "series": null,
+      "model": "NT-1400",
+      "sizeIn": 14,
+      "panel": "LED",
+      "resolution": "720p",
+      "refreshHz": null,
+      "year": null,
+      "smartOs": null,
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": ["Black"],
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Best Buy",
+          "price": 135.99,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://www.bestbuy.com/product/naxa-portable-14-1-12-volt-acdc-tv-and-digital-multimedia-player-with-built-in-rechargeable-lithium-battery-dc-car-cord/J39QH94CFZ",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.bestbuy.com/product/naxa-portable-14-1-12-volt-acdc-tv-and-digital-multimedia-player-with-built-in-rechargeable-lithium-battery-dc-car-cord/J39QH94CFZ",
+      "status": "verified"
+    },
+    {
+      "brand": "iFFALCON",
+      "series": null,
+      "model": "32H55",
+      "sizeIn": 32,
+      "panel": "LED",
+      "resolution": "1080p",
+      "refreshHz": null,
+      "year": null,
+      "smartOs": "Google TV",
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Walmart",
+          "price": 199.99,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://theinventory.com/iffalcon-32in-1080p-fhd-smart-tv-with-google-tv-32h55-small-tv-hdr10-google-voic-763db63b",
+          "status": "verified"
+        }
+      ],
+      "url": "https://theinventory.com/iffalcon-32in-1080p-fhd-smart-tv-with-google-tv-32h55-small-tv-hdr10-google-voic-763db63b",
+      "status": "verified"
+    },
+    {
+      "brand": "Proscan",
+      "series": null,
+      "model": "PLED3274",
+      "sizeIn": 32,
+      "panel": "LED",
+      "resolution": "720p",
+      "refreshHz": null,
+      "year": null,
+      "smartOs": null,
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Walmart",
+          "price": 108.95,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://www.walmart.com/ip/Proscan-PLED3274-32-inch-Class-720p-HD-LED-TV/9829765206",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.walmart.com/ip/Proscan-PLED3274-32-inch-Class-720p-HD-LED-TV/9829765206",
+      "status": "verified"
+    },
+    {
+      "brand": "Supersonic",
+      "series": null,
+      "model": "SC-3216STV",
+      "sizeIn": 32,
+      "panel": "LED",
+      "resolution": "720p",
+      "refreshHz": null,
+      "year": null,
+      "smartOs": null,
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Walmart",
+          "price": 199.99,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://www.walmart.com/ip/SuperSonic-SC-3216STV-32-High-Definition-Smart-TV-Television/773120715",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.walmart.com/ip/SuperSonic-SC-3216STV-32-High-Definition-Smart-TV-Television/773120715",
+      "status": "verified"
+    },
+    {
+      "brand": "Furrion",
+      "series": null,
+      "model": "2021123749",
+      "sizeIn": 24,
+      "panel": "LED",
+      "resolution": "720p",
+      "refreshHz": null,
+      "year": null,
+      "smartOs": null,
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Walmart",
+          "price": 332.95,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://www.walmart.com/ip/Furrion-2021123749-HD-LED-RV-TV-24/475901524",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.walmart.com/ip/Furrion-2021123749-HD-LED-RV-TV-24/475901524",
+      "status": "verified"
+    },
+    {
+      "brand": "Pyle",
+      "series": null,
+      "model": "PTVLED18",
+      "sizeIn": 18.5,
+      "panel": "LED",
+      "resolution": "1080p",
+      "refreshHz": null,
+      "year": null,
+      "smartOs": null,
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Amazon.com",
+          "price": 191.35,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://www.amazon.com/Pyle-18-5-Inch-Widescreen-Streaming-PTVLED18/dp/B01LYFI8UF",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.amazon.com/Pyle-18-5-Inch-Widescreen-Streaming-PTVLED18/dp/B01LYFI8UF",
+      "status": "verified"
+    },
+    {
+      "brand": "Thomson",
+      "series": "Easy TV",
+      "model": "32HD2S13",
+      "sizeIn": 32,
+      "panel": "LED",
+      "resolution": "720p",
+      "refreshHz": null,
+      "year": null,
+      "smartOs": null,
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "uk",
+          "seller": "Amazon.co.uk",
+          "price": 202.99,
+          "currency": "GBP",
+          "taxIncluded": true,
+          "url": "https://www.amazon.co.uk/Thomson-Digital-Non-Smart-Multimedia-32HD2S13/dp/B0CGY4N1RF",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.amazon.co.uk/Thomson-Digital-Non-Smart-Multimedia-32HD2S13/dp/B0CGY4N1RF",
+      "status": "verified"
+    },
+    {
+      "brand": "Funai",
+      "series": null,
+      "model": "LF320FX4F",
+      "sizeIn": 32,
+      "panel": "LED",
+      "resolution": "720p",
+      "refreshHz": 60,
+      "year": null,
+      "smartOs": null,
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Walmart",
+          "price": 120.00,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://www.walmart.com/ip/Funai-LF320FX4F-32-60Hz-720p-LED-HDTV/33079312",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.walmart.com/ip/Funai-LF320FX4F-32-60Hz-720p-LED-HDTV/33079312",
+      "status": "verified"
+    },
+    {
+      "brand": "Caixun",
+      "series": null,
+      "model": "EC32S2N",
+      "sizeIn": 32,
+      "panel": "LED",
+      "resolution": "720p",
+      "refreshHz": null,
+      "year": 2021,
+      "smartOs": null,
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Amazon.com",
+          "price": 195.00,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://www.amazon.com/Caixun-32-Inch-720p-Smart-Built/dp/B08BBZ43C5",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.amazon.com/Caixun-32-Inch-720p-Smart-Built/dp/B08BBZ43C5",
+      "status": "verified"
+    },
+    {
+      "brand": "Sanyo",
+      "series": null,
+      "model": "FW32R19F",
+      "sizeIn": 32,
+      "panel": "LED",
+      "resolution": "720p",
+      "refreshHz": null,
+      "year": null,
+      "smartOs": "Roku",
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": null,
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Walmart",
+          "price": 148.00,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://www.walmart.com/ip/Sanyo-32-Class-2K-720P-Smart-Roku-TV-FW32R19F/577238694",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.walmart.com/ip/Sanyo-32-Class-2K-720P-Smart-Roku-TV-FW32R19F/577238694",
+      "status": "verified"
+    },
+    {
+      "brand": "Emerson",
+      "series": null,
+      "model": "ET-3200",
+      "sizeIn": 32,
+      "panel": "LED",
+      "resolution": "720p",
+      "refreshHz": null,
+      "year": null,
+      "smartOs": null,
+      "onModeWatts": null,
+      "powerBasis": null,
+      "powerUrl": null,
+      "colors": ["Black"],
+      "offers": [
+        {
+          "market": "us",
+          "seller": "Walmart",
+          "price": 179.98,
+          "currency": "USD",
+          "taxIncluded": false,
+          "url": "https://www.walmart.com/ip/Emerson-32-720P-LED-TV-with-Remote-Control-TV-Stand-ET-3200/1589481362",
+          "status": "verified"
+        }
+      ],
+      "url": "https://www.walmart.com/ip/Emerson-32-720P-LED-TV-with-Remote-Control-TV-Stand-ET-3200/1589481362",
+      "status": "verified"
+    }
+  ],
+  "notFound": [
+    "Vestel (UK listings found are commercial/interactive displays via Currys Business, not consumer retail TVs with a readable regular price)",
+    "Philco (only vintage/secondhand units on eBay/Etsy in us/ca/mx; no current new regular-price listing found)",
+    "Medion (amazon.de listings are DE-market, not within us/ca/mx/uk/ie; no amazon.co.uk product-level price confirmed)",
+    "Linsar, Ferguson, Manta, Technika, Kalley, Séura, Jensen, Konka-affiliated SkyVue (no readable regular-price page found in these markets)"
+  ]
+}
