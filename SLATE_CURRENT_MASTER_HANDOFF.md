@@ -60,11 +60,13 @@ The owner paused the session on 2026-10-04 to carry on in another and asked that
 - `e082d12a`: speakers, 156 from 35 makers, and `systems/devices.ts` with `ui/components/DeviceShop.tsx`, shared by TVs and speakers.
 - `b23ef24e`: shopping carried by hand stops at NIOSH's 23 kg.
 - `d3a13a6e`: makers' own mattresses beside IKEA's; a bed is chosen frame first.
-- A lives replay at `e1f1a34f` was clean (New York 89 on 2091-11-06, London 50 on 2052-09-08, 0 errors and 0 anomalies). One at `e082d12a` was running.
+- Lives replays at `e1f1a34f` and `e082d12a` were clean and alike: New York 89 on 2091-11-06, London 50 on 2052-09-08, 0 errors and 0 anomalies each.
+- `2302f566` and `a4591f36`: washers, dryers and dishwashers by make and model (55 from 28 makers), fitted through `home.fit` with an `offerId`, each load billed at its ENERGY STAR energy a cycle where its model is certified (12 of 55; ENERGY STAR writes a family with `*` for a color letter).
+- `main` was merged as `fa2094d5`, with `e082d12a`'s files. **Merging from now on:** `git merge-tree` against `main` reports conflicts that aren't real, because the scratched Account 1 merges left that session's branch head as the common ancestor. Check instead that `main`'s tree is an ancestor state of the commit being merged (it was exactly `fcbe73c2`'s, and is now `e082d12a`'s), then `git commit-tree <commit>^{tree} -p origin/main -p <commit>` and push as a fast-forward.
 
 **Next, in order:**
-1. Appliances by make and model: `appliance-a.json` and `appliance-power.json` were being read. Fit a model through `home.fit` with an `offerId`, keep it on the owned home, and bill each load at its rated kWh in `machineUsd` (`systems/dwelling.ts`) in place of the typical machine.
-2. Merge to `main` once a replay at the head is clean.
+1. A checked bag mishandled by the airline (row 27e): `research-lost-baggage.json` was being read (DOT and SITA rates, delayed against lost, tracing days, the Montreal and DOT limits, interim expenses).
+2. EU-label energy for the British and Irish appliance models, and a dishwasher's runs on the bill.
 3. More catalog breadth (`docs/CATALOG-COVERAGE.md`), then the open rows of `docs/REQUIREMENTS.md`.
 4. Carry on with the expansion: catalog tranches toward 50 brands a category (`docs/CATALOG-COVERAGE.md`, 0 of 45 met), then the open rows in `docs/REQUIREMENTS.md`.
    - Rows a player can act on, with no published rate needed: 41c, a guest room and an office, each with something real that reads it.
