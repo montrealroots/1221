@@ -61,7 +61,7 @@ const READ = {
   consoles: () => CONSOLES.map((c) => row(c.maker, `${c.maker}|${c.model}`, 1, c.market)),
   furniture: () => FURNITURE_CATALOG.map((p) => row('IKEA', `IKEA|${p.name}|${p.type ?? ''}`, 1, p.country)),
   toiletries: () => TOILETRIES.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
-  cleaning: () => CLEANING.map((t) => row(null, t.name, 1, t.market)),
+  cleaning: () => CLEANING.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
   groceries: () => GROCERY_PRODUCTS.map((g) => row(g.brand ?? null, g.name, 1, g.market)),
   cars: () => cars([...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS]),
   motorcycles: () => cars(BIKE_MODELS),
