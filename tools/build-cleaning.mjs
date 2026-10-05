@@ -16,7 +16,9 @@ const seen = new Set();
 const BRANDS = new Map(JSON.parse(readFileSync('docs/research/world/research-brands-cleaning.json', 'utf8')).items.map((i) => [`${i.chain}|${i.name}`, i.brand ?? null]));
 // And from 2026-10-05 more brands at the same chains (`research-household-supplies-2.json`), each with its brand read.
 const MORE = 'docs/research/world/research-household-supplies-2.json';
-const all = [...j.supplies, ...(existsSync(MORE) ? JSON.parse(readFileSync(MORE, 'utf8')).supplies ?? [] : [])];
+// And more products from the same brands (`research-household-supplies-3.json`, from 2026-10-05).
+const DEEPER = 'docs/research/world/research-household-supplies-3.json';
+const all = [...j.supplies, ...[MORE, DEEPER].flatMap((f) => (existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')).supplies ?? [] : []))];
 // The second file's sizes in the first's units: fluid ounces and liters in milliliters, kilograms in grams. A powder
 // detergent with no washes printed is left out: its grams aren't loads.
 const UNIT = { 'fl oz': ['ml', 29.5735], l: ['ml', 1000], kg: ['g', 1000] };
