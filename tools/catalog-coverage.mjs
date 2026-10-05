@@ -27,6 +27,7 @@ import { CAR_MODELS } from '../src/engine/content/vehiclecatalog.ts';
 import { PICKUP_MODELS } from '../src/engine/content/pickups.ts';
 import { EV_MODELS } from '../src/engine/content/evcatalog.ts';
 import { BIKE_MODELS } from '../src/engine/content/bikecatalog.ts';
+import { MOTO_MODELS } from '../src/engine/content/motocatalog.ts';
 import { RIDE_MODELS } from '../src/engine/content/ridecatalog.ts';
 import { RV_MODELS } from '../src/engine/content/rvcatalog.ts';
 import { CAR_OPTIONS } from '../src/engine/content/caroptions.ts';
@@ -75,7 +76,7 @@ const READ = {
   cleaning: () => CLEANING.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
   groceries: () => GROCERY_PRODUCTS.map((g) => row(g.brand ?? null, g.name, 1, g.market)),
   cars: () => cars([...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS]),
-  motorcycles: () => cars(BIKE_MODELS),
+  motorcycles: () => cars([...BIKE_MODELS, ...MOTO_MODELS]),
   bicycles: () => cars(RIDE_MODELS),
   rvs: () => cars(RV_MODELS),
   'car-options': () => { const make = new Map([...CAR_MODELS, ...EV_MODELS, ...PICKUP_MODELS].map((m) => [m.id, m.make])); return CAR_OPTIONS.map((o) => row(make.get(o.carId) ?? null, o.key, 1, o.carId.slice(0, 2))); },

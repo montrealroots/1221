@@ -46,12 +46,13 @@ import { CHARGING, EV_MODELS } from '../content/evcatalog';
 import { CAR_MODELS } from '../content/vehiclecatalog';
 import { PICKUP_MODELS } from '../content/pickups';
 import { BIKE_MODELS } from '../content/bikecatalog';
+import { MOTO_MODELS, MOTO_TANKS } from '../content/motocatalog';
 import { RV_MODELS } from '../content/rvcatalog';
 import { RIDE_MODELS } from '../content/ridecatalog';
 import { FUEL_STOP_MINUTES, STATIONS } from '../content/errandtrips';
-import { TANKS } from '../content/tanks';
+import { TANKS as FIRST_TANKS } from '../content/tanks';
 import { spend } from './household';
-import { jurisdictionOf, modelById, startDays, vehiclesOf, type OwnedVehicle } from './vehicles';
+import { BIKE_UNRATED_PER100, jurisdictionOf, modelById, onTwoWheels, startDays, vehiclesOf, type OwnedVehicle } from './vehicles';
 import { tintFuelFactor } from './tint';
 import { roofFuelFactor } from './roofbox';
 import { livingIn } from './homes';
@@ -70,6 +71,13 @@ export const FILL = { petrolAt: 0.25, petrolTo: 1, batteryAt: 0.2, batteryTo: 0.
  */
 export const PUBLIC_KW = 50;
 
+/**
+ * What a model burns a 100 km: its official economy, or for a motorcycle or scooter its maker doesn't rate the mean of
+ * those rated (`BIKE_UNRATED_PER100`), as its running cost already did. Until 2026-10-05 an unrated one held no tank
+ * here, so it never ran dry nor was filled.
+ */
+const per100Of = (m: CarModel): number | null => m.per100km ?? (onTwoWheels(m) ? BIKE_UNRATED_PER100 : null);
+
 /** What a model holds: its tank in liters or its battery in kWh, from its maker's figure, or SLATE's estimate where none was read. */
 export function capacityOf(m: CarModel): { size: number; unit: 'L' | 'kWh'; estimated: boolean } | undefined {
   const known = TANKS[m.id];
@@ -79,14 +87,16 @@ export function capacityOf(m: CarModel): { size: number; unit: 'L' | 'kWh'; esti
     const est = medianOf((x) => x.fuel === 'ev', 'batteryKwh');
     return est ? { size: est, unit: 'kWh', estimated: true } : undefined;
   }
-  if (m.per100km === null || m.per100km === undefined) return undefined;
+  if (per100Of(m) === null) return undefined;
   if (known?.tankL) return { size: known.tankL, unit: 'L', estimated: false };
   const kind = m.kind ?? 'car';
   const est = medianOf((x) => (x.kind ?? 'car') === kind && x.fuel !== 'ev', 'tankL');
   return est ? { size: est, unit: 'L', estimated: true } : undefined;
 }
 
-const models: readonly CarModel[] = [...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS, ...BIKE_MODELS, ...RV_MODELS, ...RIDE_MODELS];
+/** The tanks read, with the wider motorcycle lineup's (from 2026-10-05). */
+const TANKS = { ...FIRST_TANKS, ...MOTO_TANKS };
+const models: readonly CarModel[] = [...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS, ...BIKE_MODELS, ...MOTO_MODELS, ...RV_MODELS, ...RIDE_MODELS];
 function medianOf(match: (m: CarModel) => boolean, field: 'tankL' | 'batteryKwh'): number | undefined {
   const xs = models.filter(match).map((m) => TANKS[m.id]?.[field]).filter((x): x is number => typeof x === 'number' && x > 0).sort((a, b) => a - b);
   if (xs.length === 0) return undefined;
@@ -99,7 +109,8 @@ export function burnOf(m: CarModel, km: number, v?: OwnedVehicle): number | unde
   // And a roof box's drag where one's on (`systems/roofbox.ts`).
   const tint = v ? tintFuelFactor(v) * roofFuelFactor(v) : 1;
   if (m.fuel === 'ev') return m.kwhPer100km ? ((km * m.kwhPer100km) / 100) * tint : undefined;
-  return m.per100km ? ((km * m.per100km) / 100) * tint : undefined;
+  const per = per100Of(m);
+  return per ? ((km * per) / 100) * tint : undefined;
 }
 
 /** How full it is, 0 to 1: an older save's starts full. */

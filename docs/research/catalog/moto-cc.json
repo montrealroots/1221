@@ -1,0 +1,561 @@
+{
+ "read": "2026-10-05",
+ "specs": [
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CBR1000RR-R",
+   "cc": 999.9,
+   "tankL": 16.5,
+   "electric": false,
+   "url": "https://www.bikedekho.com/honda/cbr1000rr-r/specifications"
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CBR600RR",
+   "cc": 599,
+   "tankL": 18,
+   "electric": false,
+   "url": "https://honda-mideast.com/en/motorcycle/Super-Sport/cbr-600-rr"
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CBR650R E-Clutch",
+   "cc": 649,
+   "tankL": 15.53,
+   "electric": false,
+   "url": "https://hondanews.com/en-US/powersports/releases/release-0fe7cf05a3e4aa5bf7992876bd0162d6-2025-honda-cbr650r-e-clutch-specifications"
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "CBR500R",
+   "cc": 471,
+   "tankL": 17.1,
+   "electric": false,
+   "url": "https://www.honda.co.uk/motorcycles/range/super-sport/cbr500r/specifications.html"
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Rebel 1100",
+   "cc": 1084,
+   "tankL": 13.6,
+   "electric": false,
+   "url": "https://powersports.honda.com/motorcycle/cruiser/rebel-1100/2026/rebel-1100"
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Africa Twin",
+   "cc": 1084,
+   "tankL": 18.8,
+   "electric": false,
+   "url": "https://www.visordown.com/news/new-bikes/honda-crf1100l-africa-twin-spec-details-and-technical-information"
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "PCX",
+   "cc": 157,
+   "tankL": 7.95,
+   "electric": false,
+   "url": "https://powersports.honda.com/motorcycle/scooter/pcx/2025/pcx"
+  },
+  {
+   "market": "US",
+   "make": "Honda",
+   "model": "Ruckus",
+   "cc": 49,
+   "tankL": 4.92,
+   "electric": false,
+   "url": "https://powersports.honda.com/motorcycle/scooter/ruckus/2025/ruckus"
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "MT-03",
+   "cc": 321,
+   "tankL": 14,
+   "electric": false,
+   "url": "https://www.bikedekho.com/yamaha/mt-03/specifications"
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "MT-07",
+   "cc": 689,
+   "tankL": 14,
+   "electric": false,
+   "url": "https://www.webbikeworld.com/2022-yamaha-mt-07/"
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "MT-09",
+   "cc": 890,
+   "tankL": 14,
+   "electric": false,
+   "url": "https://www.yamahamotorsports.com/models/23-mt-09/specs"
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "MT-10",
+   "cc": 998,
+   "tankL": 17,
+   "electric": false,
+   "url": "https://www.bikedekho.com/yamaha/mt-10/specifications"
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "YZF-R3",
+   "cc": 320,
+   "tankL": 14,
+   "electric": false,
+   "url": "https://en.wikipedia.org/wiki/Yamaha_YZF-R3"
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "YZF-R7",
+   "cc": 689,
+   "tankL": 13,
+   "electric": false,
+   "url": "https://en.wikipedia.org/wiki/Yamaha_YZF-R7_(2022_bike)"
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "YZF-R1",
+   "cc": 998,
+   "tankL": 17,
+   "electric": false,
+   "url": "https://www.webbikeworld.com/2022-yamaha-yzf-r1-r1m/"
+  },
+  {
+   "market": "US",
+   "make": "Yamaha",
+   "model": "XMAX",
+   "cc": 292,
+   "tankL": 12.9,
+   "electric": false,
+   "url": "https://www.webbikeworld.com/2021-yamaha-xmax/"
+  },
+  {
+   "market": "US",
+   "make": "Kawasaki",
+   "model": "Ninja 650",
+   "cc": 649,
+   "tankL": 15,
+   "electric": false,
+   "url": "https://www.bikedekho.com/kawasaki/ninja-650/specifications"
+  },
+  {
+   "market": "US",
+   "make": "Kawasaki",
+   "model": "Ninja ZX-6R",
+   "cc": 636,
+   "tankL": 17,
+   "electric": false,
+   "url": "https://www.autoevolution.com/moto/kawasaki-ninja-zx-6r-2023.html"
+  },
+  {
+   "market": "US",
+   "make": "Kawasaki",
+   "model": "Z500",
+   "cc": 451,
+   "tankL": 14,
+   "electric": false,
+   "url": "https://en.wikipedia.org/wiki/Kawasaki_Z500/Z550",
+   "corrected": "Kawasaki’s Z500 is the 451 cc twin; 553 cc was the earlier Z550 the page also covered"
+  },
+  {
+   "market": "US",
+   "make": "Kawasaki",
+   "model": "Z900 ABS",
+   "cc": 948,
+   "tankL": 17,
+   "electric": false,
+   "url": "https://www.kawasaki.com/en-us/motorcycle/z/supernaked/z900/2025-z900-abs"
+  },
+  {
+   "market": "US",
+   "make": "Suzuki",
+   "model": "GSX-S1000",
+   "cc": 999,
+   "tankL": 19,
+   "electric": false,
+   "url": "https://suzukicycles.com/street/2024/gsx-s1000"
+  },
+  {
+   "market": "US",
+   "make": "Suzuki",
+   "model": "GSX-S1000GT+",
+   "cc": 999,
+   "tankL": 19,
+   "electric": false,
+   "url": "https://suzukicycles.com/sport-touring/2024/gsx-s1000gt-plus"
+  },
+  {
+   "market": "US",
+   "make": "Suzuki",
+   "model": "Hayabusa",
+   "cc": 1340,
+   "tankL": 20,
+   "electric": false,
+   "url": "https://www.zigwheels.com/suzuki-bikes/hayabusa/specifications/"
+  },
+  {
+   "market": "US",
+   "make": "Harley-Davidson",
+   "model": "Nightster",
+   "cc": 975,
+   "tankL": 11.7,
+   "electric": false,
+   "url": "https://www.bikedekho.com/harley-davidson/nightster/specifications"
+  },
+  {
+   "market": "US",
+   "make": "Harley-Davidson",
+   "model": "Sportster S",
+   "cc": 1252,
+   "tankL": 11.7,
+   "electric": false,
+   "url": "https://www.zigwheels.com/harley-davidson-bikes/sportster-s/specifications/"
+  },
+  {
+   "market": "US",
+   "make": "Harley-Davidson",
+   "model": "Street Bob",
+   "cc": 1923,
+   "tankL": 13.2,
+   "electric": false,
+   "url": "https://www.bikedekho.com/harley-davidson/street-bob/specifications"
+  },
+  {
+   "market": "US",
+   "make": "Harley-Davidson",
+   "model": "Fat Boy",
+   "cc": 1923,
+   "tankL": 18.9,
+   "electric": false,
+   "url": "https://www.zigwheels.com/harley-davidson-bikes/fat-boy/specifications/"
+  },
+  {
+   "market": "US",
+   "make": "Harley-Davidson",
+   "model": "Street Glide",
+   "cc": 1923,
+   "tankL": 22.7,
+   "electric": false,
+   "url": "https://www.zigwheels.com/harley-davidson-bikes/street-glide/specifications/"
+  },
+  {
+   "market": "US",
+   "make": "Harley-Davidson",
+   "model": "CVO Street Glide Limited",
+   "cc": 1977,
+   "tankL": 22.7,
+   "electric": false,
+   "url": "https://www.bikedekho.com/harley-davidson/cvo-street-glide/specifications",
+   "corrected": "the Milwaukee-Eight VVT 121, 1,977 cc"
+  },
+  {
+   "market": "US",
+   "make": "Indian",
+   "model": "Scout Bobber",
+   "cc": 1250,
+   "tankL": 13,
+   "electric": false,
+   "url": "https://www.indianmotorcycle.com/en-us/scout-motorcycles/scout-bobber/specs/"
+  },
+  {
+   "market": "US",
+   "make": "Indian",
+   "model": "Sport Scout Sixty",
+   "cc": 999,
+   "tankL": 12.88,
+   "electric": false,
+   "url": "https://www.indianmotorcycle.com/en-us/scout-motorcycles/scout-sixty-bobber/specs/"
+  },
+  {
+   "market": "US",
+   "make": "Indian",
+   "model": "Chief",
+   "cc": 1890,
+   "tankL": 15.1,
+   "electric": false,
+   "url": "https://www.indianmotorcycle.com/en-us/chief/specs/",
+   "corrected": "the Thunderstroke 116, 1,890 cc; 1,811 cc was the earlier 111"
+  },
+  {
+   "market": "US",
+   "make": "Indian",
+   "model": "Springfield",
+   "cc": 1890,
+   "tankL": 20.8,
+   "electric": false,
+   "url": "https://www.zigwheels.ph/new-motorcycles/indian/springfield/specifications"
+  },
+  {
+   "market": "US",
+   "make": "Indian",
+   "model": "Challenger",
+   "cc": 1768,
+   "tankL": 22.7,
+   "electric": false,
+   "url": "https://www.91wheels.com/bikes/indianmotorcycle/challenger/specifications"
+  },
+  {
+   "market": "US",
+   "make": "Indian",
+   "model": "Pursuit Dark Horse",
+   "cc": 1768,
+   "tankL": 22.7,
+   "electric": false,
+   "url": "https://www.indianmotorcycle.com/en-us/pursuit-motorcycles/pursuit/pursuit-dark-horse-specs/"
+  },
+  {
+   "market": "US",
+   "make": "Ducati",
+   "model": "Scrambler Icon",
+   "cc": 803,
+   "tankL": 13.5,
+   "electric": false,
+   "url": "https://www.bikedekho.com/ducati/scrambler-icon/specifications"
+  },
+  {
+   "market": "US",
+   "make": "Ducati",
+   "model": "Monster",
+   "cc": 937,
+   "tankL": 14,
+   "electric": false,
+   "url": "https://www.bikewale.com/ducati-bikes/monster/"
+  },
+  {
+   "market": "US",
+   "make": "Vespa",
+   "model": "946 Horse",
+   "cc": null,
+   "tankL": 8,
+   "electric": false,
+   "url": "https://wlassets.vespa.com/wlassets/vespa/master/tech_spec/2026/Vespa-946-Horse/Vespa-946-Horse-125-tec-spec-EN/original/Vespa-946-Horse-125-tec-spec-EN.pdf",
+   "corrected": "dropped: the page read was the European 125 cc sheet, and the American 946 has a 150-class engine"
+  },
+  {
+   "market": "US",
+   "make": "CFMoto",
+   "model": "300SS",
+   "cc": 292,
+   "tankL": 12,
+   "electric": false,
+   "url": "https://www.cfmotousa.com/inventory/unit/300ss",
+   "corrected": "CFMoto’s 292 cc single"
+  },
+  {
+   "market": "US",
+   "make": "CFMoto",
+   "model": "450NK",
+   "cc": 449,
+   "tankL": 14,
+   "electric": false,
+   "url": "https://www.cfmotousa.com/inventory/unit/450nk/2024"
+  },
+  {
+   "market": "US",
+   "make": "CFMoto",
+   "model": "450SS",
+   "cc": 449,
+   "tankL": 14,
+   "electric": false,
+   "url": "https://www.cfmotousa.com/inventory/unit/450ss/2024"
+  },
+  {
+   "market": "US",
+   "make": "CFMoto",
+   "model": "450CL-C",
+   "cc": 449,
+   "tankL": 12,
+   "electric": false,
+   "url": "https://www.cfmotousa.com/inventory/unit/450cl-c/2025"
+  },
+  {
+   "market": "US",
+   "make": "CFMoto",
+   "model": "Ibex 450",
+   "cc": 449,
+   "tankL": 17.4,
+   "electric": false,
+   "url": "https://www.cfmotousa.com/inventory/unit/ibex-450"
+  },
+  {
+   "market": "US",
+   "make": "CFMoto",
+   "model": "675NK",
+   "cc": 674,
+   "tankL": 15,
+   "electric": false,
+   "url": "https://cfmotobenelux.com/en/model/675nk/"
+  },
+  {
+   "market": "US",
+   "make": "CFMoto",
+   "model": "Ibex 800 E",
+   "cc": 799,
+   "tankL": 19,
+   "electric": false,
+   "url": "https://www.cfmotousa.com/inventory/unit/ibex-800-e"
+  },
+  {
+   "market": "CA",
+   "make": "Honda",
+   "model": "CRF300F",
+   "cc": 294,
+   "tankL": 6.06,
+   "electric": false,
+   "url": "https://hondanews.com/en-US/powersports/releases/release-c2809a3667c74c05c43dc33d8a102795-2026-honda-crf300f-specifications"
+  },
+  {
+   "market": "CA",
+   "make": "Honda",
+   "model": "Monkey ABS",
+   "cc": 124,
+   "tankL": 5.68,
+   "electric": false,
+   "url": "https://hondanews.com/en-US/powersports/releases/release-f8bfb43dd94cc82c09a8314c0b1c6a51-2022-honda-monkey-abs-specifications"
+  },
+  {
+   "market": "CA",
+   "make": "Honda",
+   "model": "Trail CT125",
+   "cc": 124,
+   "tankL": 5.3,
+   "electric": false,
+   "url": "https://hondanews.com/en-US/powersports/releases/release-a1b87e077480ca5300ff8f02cf06ed49-2025-honda-trail125-specifications"
+  },
+  {
+   "market": "CA",
+   "make": "Honda",
+   "model": "Rebel 500 ABS",
+   "cc": 471,
+   "tankL": 11.36,
+   "electric": false,
+   "url": "https://powersports.honda.com/motorcycle/cruiser/rebel-500/2025/rebel-500-abs"
+  },
+  {
+   "market": "CA",
+   "make": "Honda",
+   "model": "Rebel 1100 Touring",
+   "cc": 1084,
+   "tankL": 13.6,
+   "electric": false,
+   "url": "https://powersports.honda.com/motorcycle/cruiser/rebel-1100t"
+  },
+  {
+   "market": "CA",
+   "make": "Honda",
+   "model": "NT1100 DCT",
+   "cc": 1084,
+   "tankL": 20.4,
+   "electric": false,
+   "url": "https://powersports.honda.com/motorcycle/touring/nt1100/2026/nt1100-dct"
+  },
+  {
+   "market": "CA",
+   "make": "Kawasaki",
+   "model": "Ninja 300",
+   "cc": 296,
+   "tankL": 17,
+   "electric": false,
+   "url": "https://www.bikedekho.com/kawasaki/ninja/specifications"
+  },
+  {
+   "market": "CA",
+   "make": "Kawasaki",
+   "model": "Ninja 650 ABS",
+   "cc": 649,
+   "tankL": 15,
+   "electric": false,
+   "url": "https://www.autoevolution.com/moto/kawasaki-ninja-650-abs-2025.html"
+  },
+  {
+   "market": "CA",
+   "make": "Kawasaki",
+   "model": "Z900 SE",
+   "cc": 948,
+   "tankL": 17,
+   "electric": false,
+   "url": "https://www.91wheels.com/bikes/kawasaki/z900/specifications"
+  },
+  {
+   "market": "CA",
+   "make": "Kawasaki",
+   "model": "Ninja ZX-10R",
+   "cc": 998,
+   "tankL": 17,
+   "electric": false,
+   "url": "https://www.kawasaki.com/en-us/motorcycle/ninja/supersport/ninja-zx-10r/2026-ninja-zx-10r"
+  },
+  {
+   "market": "CA",
+   "make": "Suzuki",
+   "model": "GSX-S1000GT+",
+   "cc": 999,
+   "tankL": 19,
+   "electric": false,
+   "url": "https://suzukicycles.com/sport-touring/2024/gsx-s1000gt-plus"
+  },
+  {
+   "market": "CA",
+   "make": "Harley-Davidson",
+   "model": "Nightster",
+   "cc": 975,
+   "tankL": 11.7,
+   "electric": false,
+   "url": "https://www.bikedekho.com/harley-davidson/nightster/specifications"
+  },
+  {
+   "market": "CA",
+   "make": "Harley-Davidson",
+   "model": "Street Bob",
+   "cc": 1923,
+   "tankL": 13.2,
+   "electric": false,
+   "url": "https://www.bikedekho.com/harley-davidson/street-bob/specifications"
+  },
+  {
+   "market": "CA",
+   "make": "Harley-Davidson",
+   "model": "Fat Boy",
+   "cc": 1923,
+   "tankL": 18.9,
+   "electric": false,
+   "url": "https://www.zigwheels.com/harley-davidson-bikes/fat-boy/specifications/"
+  },
+  {
+   "market": "CA",
+   "make": "Harley-Davidson",
+   "model": "Street Glide",
+   "cc": 1923,
+   "tankL": 22.7,
+   "electric": false,
+   "url": "https://www.zigwheels.com/harley-davidson-bikes/street-glide/specifications/"
+  },
+  {
+   "market": "CA",
+   "make": "Harley-Davidson",
+   "model": "CVO Street Glide",
+   "cc": 1977,
+   "tankL": 22.7,
+   "electric": false,
+   "url": "https://www.bikedekho.com/harley-davidson/cvo-street-glide/specifications",
+   "corrected": "the Milwaukee-Eight VVT 121, 1,977 cc"
+  }
+ ],
+ "checked": "2026-10-05: checked by hand against the makers’ engine sizes; five corrected, each with corrected: saying why."
+}

@@ -34,11 +34,13 @@ for (const f of existsSync(TRANCHE_DIR) ? readdirSync(TRANCHE_DIR).filter((x) =>
 }
 // Official economy read afterwards for those tranche models (`cars-economy.json`, from 2026-10-05): the EPA's for America
 // and Canada, the VCA's WLTP figures for Britain and Ireland, and CO2 where given. A model read with its own keeps it.
-const ECONOMY = existsSync(`${TRANCHE_DIR}/cars-economy.json`) ? JSON.parse(readFileSync(`${TRANCHE_DIR}/cars-economy.json`, 'utf8')).economy ?? [] : [];
+// From 2026-10-05 also Mexico's, CONUEE's (`cars-economy-mx.json`), for its best-sellers as well as the rest: until
+// then only a model read from the wider lineup took a figure from these files.
+const ECONOMY = existsSync(TRANCHE_DIR) ? readdirSync(TRANCHE_DIR).filter((x) => /^cars-economy.*\.json$/.test(x)).sort().flatMap((f) => JSON.parse(readFileSync(`${TRANCHE_DIR}/${f}`, 'utf8')).economy ?? []) : [];
 for (const e of ECONOMY) {
   if (typeof e.value !== 'number' || !(e.value > 0)) continue;
   for (const market of e.market === 'GB' ? ['GB', 'IE'] : [e.market]) {
-    const m = (r.catalog[market] ?? []).find((x) => x.make === e.make && x.model === e.model && x.rank === null);
+    const m = (r.catalog[market] ?? []).find((x) => x.make === e.make && x.model === e.model);
     if (!m) continue;
     if (m.economy?.value == null) m.economy = { value: e.value, unit: e.unit, url: e.url, sourceType: 'primary', config: e.config };
     if (m.co2gkm?.value == null && typeof e.co2gkm === 'number') m.co2gkm = { value: e.co2gkm };

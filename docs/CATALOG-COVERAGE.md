@@ -45,7 +45,7 @@ which never counts toward the target.
 | Food | Groceries | 183 | 100% | 500 | 1 / 1 / 62 | 0 | 500 | 512 | 42 | CA, GB, IE, MX, US | No |
 | Food | Beverages | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | No catalog yet |
 | Vehicles | Cars, Pickups And Vans | 74 | 100% | 481 | 1 / 4 / 22 | 0 | 481 | 829 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Motorcycles And Scooters | 9 | 18% | 25 | 1 / 2 / 10 | 0 | 25 | 36 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Motorcycles And Scooters | 56 | 100% | 540 | 1 / 8 / 43 | 0 | 540 | 646 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Bicycles, E-Bikes And ATVs | 9 | 18% | 20 | 1 / 2 / 5 | 0 | 20 | 26 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Motorhomes And Campervans | 10 | 20% | 19 | 1 / 2 / 4 | 0 | 19 | 21 | 0 | CA, GB, IE, MX, US | No |
 | Vehicles | Boats | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: recreational boat makers number in the dozens, few publishing prices |
