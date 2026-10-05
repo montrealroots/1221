@@ -28,6 +28,7 @@ import { PICKUP_MODELS } from '../src/engine/content/pickups.ts';
 import { EV_MODELS } from '../src/engine/content/evcatalog.ts';
 import { BIKE_MODELS } from '../src/engine/content/bikecatalog.ts';
 import { MOTO_MODELS } from '../src/engine/content/motocatalog.ts';
+import { RIDE_LINEUP } from '../src/engine/content/ridelineup.ts';
 import { RIDE_MODELS } from '../src/engine/content/ridecatalog.ts';
 import { RV_MODELS } from '../src/engine/content/rvcatalog.ts';
 import { CAR_OPTIONS } from '../src/engine/content/caroptions.ts';
@@ -55,6 +56,8 @@ const READ = {
   everyday: () => clothing('everyday'), formalwear: () => clothing('formalwear'), outerwear: () => clothing('outerwear'),
   activewear: () => clothing('activewear'), underwear: () => clothing('underwear'), sleepwear: () => clothing('sleepwear'),
   swimwear: () => clothing('swimwear'), thermals: () => clothing('thermals'), cultural: () => clothing('cultural'),
+  // Bath towels, sold and kept as the clothes are (from 2026-10-05); bedding isn't sold yet.
+  bedding: () => clothing('towels'),
   footwear: () => clothing('footwear'), bags: () => clothing('bags'), accessories: () => clothing('accessories'),
   watches: () => clothing('watches'), jewelry: () => clothing('jewelry'),
   sneakers: () => SNEAKERS.map((s) => row(null, s.styleCode, Math.max(1, ...SNEAKER_RETAIL.filter((o) => o.styleCode === s.styleCode).map((o) => o.sizes?.length ?? 1)), null)),
@@ -71,13 +74,13 @@ const READ = {
   appliances: () => APPLIANCE_PRODUCTS.flatMap((p) => p.offers.map((o) => row(p.brand, p.id, Math.max(1, p.variants.length), o.market))),
   phones: () => PHONES.map((p) => row(p.maker, `${p.maker}|${p.model}`, Math.max(1, p.colors.length), p.market)),
   consoles: () => CONSOLES.map((c) => row(c.maker, `${c.maker}|${c.model}`, 1, c.market)),
-  furniture: () => FURNITURE_CATALOG.map((p) => row('IKEA', `IKEA|${p.name}|${p.type ?? ''}`, 1, p.country)),
+  furniture: () => FURNITURE_CATALOG.map((p) => row(p.brand, `${p.brand}|${p.name}|${p.type ?? ''}`, 1, p.country)),
   toiletries: () => TOILETRIES.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
   cleaning: () => CLEANING.map((t) => row(t.brand ?? null, t.name, 1, t.market)),
   groceries: () => GROCERY_PRODUCTS.map((g) => row(g.brand ?? null, g.name, 1, g.market)),
   cars: () => cars([...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS]),
   motorcycles: () => cars([...BIKE_MODELS, ...MOTO_MODELS]),
-  bicycles: () => cars(RIDE_MODELS),
+  bicycles: () => cars([...RIDE_MODELS, ...RIDE_LINEUP]),
   rvs: () => cars(RV_MODELS),
   'car-options': () => { const make = new Map([...CAR_MODELS, ...EV_MODELS, ...PICKUP_MODELS].map((m) => [m.id, m.make])); return CAR_OPTIONS.map((o) => row(make.get(o.carId) ?? null, o.key, 1, o.carId.slice(0, 2))); },
 };

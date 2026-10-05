@@ -49,6 +49,7 @@ import { BIKE_MODELS } from '../content/bikecatalog';
 import { MOTO_MODELS, MOTO_TANKS } from '../content/motocatalog';
 import { RV_MODELS } from '../content/rvcatalog';
 import { RIDE_MODELS } from '../content/ridecatalog';
+import { RIDE_LINEUP } from '../content/ridelineup';
 import { FUEL_STOP_MINUTES, STATIONS } from '../content/errandtrips';
 import { TANKS as FIRST_TANKS } from '../content/tanks';
 import { spend } from './household';
@@ -96,7 +97,7 @@ export function capacityOf(m: CarModel): { size: number; unit: 'L' | 'kWh'; esti
 
 /** The tanks read, with the wider motorcycle lineup's (from 2026-10-05). */
 const TANKS = { ...FIRST_TANKS, ...MOTO_TANKS };
-const models: readonly CarModel[] = [...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS, ...BIKE_MODELS, ...MOTO_MODELS, ...RV_MODELS, ...RIDE_MODELS];
+const models: readonly CarModel[] = [...CAR_MODELS, ...PICKUP_MODELS, ...EV_MODELS, ...BIKE_MODELS, ...MOTO_MODELS, ...RV_MODELS, ...RIDE_MODELS, ...RIDE_LINEUP];
 function medianOf(match: (m: CarModel) => boolean, field: 'tankL' | 'batteryKwh'): number | undefined {
   const xs = models.filter(match).map((m) => TANKS[m.id]?.[field]).filter((x): x is number => typeof x === 'number' && x > 0).sort((a, b) => a - b);
   if (xs.length === 0) return undefined;

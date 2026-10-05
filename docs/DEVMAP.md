@@ -169,7 +169,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `clothes.alter` | `src/engine/systems/tailoring.ts` | `ClothesWorkspace.tsx` | `tailoring.test.ts` | Rent And A Roof |
 | `clothes.basket_add` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `paywith.test.ts` | Rent And A Roof |
 | `clothes.basket_remove` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
-| `clothes.buy` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clickcollect.test.ts` `clothing.test.ts` `journeys.test.ts` `paywith.test.ts` `rooms.test.ts` `underway.test.ts` | Rent And A Roof |
+| `clothes.buy` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clickcollect.test.ts` `clothing.test.ts` `journeys.test.ts` `paywith.test.ts` `rooms.test.ts` `underway.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `clothes.cancel` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` | Rent And A Roof |
 | `clothes.change` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `connected-day.test.ts` `wardrobe.test.ts` | Rent And A Roof |
 | `clothes.checkout` | `src/engine/systems/clothing.ts` | `ClothesWorkspace.tsx` | `clothing.test.ts` `paywith.test.ts` | Rent And A Roof |
@@ -308,7 +308,7 @@ Each command the player can run: the engine file that handles it, the screens th
 | `home.alarm` | `src/engine/systems/alarm.ts` | `Home.tsx` | `alarm.test.ts` | Rent And A Roof |
 | `home.borrow` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |
 | `home.buy_game` | `src/engine/systems/homelife.ts` | `BelongingsWorkspace.tsx` | `homelife.test.ts` | Rent And A Roof |
-| `home.buy_piece` | `src/engine/systems/furnishings.ts` | `HomesWorkspace.tsx` | `assembly.test.ts` `hosting.test.ts` `journeys.test.ts` | Rent And A Roof |
+| `home.buy_piece` | `src/engine/systems/furnishings.ts` | `HomesWorkspace.tsx` | `assembly.test.ts` `furniture-makers.test.ts` `hosting.test.ts` `journeys.test.ts` | Rent And A Roof |
 | `home.buy_portable` | `src/engine/systems/appliances.ts` | `Home.tsx` | `appliances.test.ts` | Rent And A Roof |
 | `home.buy_units` | `src/engine/systems/appliances.ts` | `Home.tsx` | `appliances.test.ts` | Rent And A Roof |
 | `home.cancel` | `src/engine/systems/homes.ts` | `HomesWorkspace.tsx` | `homes.test.ts` | Rent And A Roof |

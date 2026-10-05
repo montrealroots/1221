@@ -52,7 +52,10 @@ export const isPickup = (m: CarModel): boolean => m.body === 'pickup';
 import { BIKE_MODELS as FIRST_BIKES } from '../content/bikecatalog';
 import { MOTO_MODELS } from '../content/motocatalog';
 import { RV_MODELS } from '../content/rvcatalog';
-import { RIDE_MODELS } from '../content/ridecatalog';
+import { RIDE_MODELS as FIRST_RIDES } from '../content/ridecatalog';
+import { RIDE_LINEUP } from '../content/ridelineup';
+/** The bicycles, e-bikes and ATVs on sale: the first catalog's, and from 2026-10-05 each market's wider lineup. */
+const RIDE_MODELS: readonly CarModel[] = [...FIRST_RIDES, ...RIDE_LINEUP];
 import { chargingRewards, homeShareOf, kwhPrice } from './charging';
 import { registerTint, tintAtInspection, tintFuelFactor, tintOnTheRoad, type TintKind } from './tint';
 import { burn, capacityOf, everydayFuel, fillingOf, levelOf, lowAt, rangeKm } from './fueltank';
