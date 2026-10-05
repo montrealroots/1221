@@ -8,7 +8,7 @@
 import { describe, expect, it } from 'vitest';
 import { quickSave } from '@/engine';
 import { MS_DAY } from '@/engine/core/time';
-import { RATION_G, VET_YEAR } from '@/engine/content/petcare';
+import { KCAL_A_DAY, RATION_G, RATION_KCAL_PER_KG, VET_YEAR } from '@/engine/content/petcare';
 import { foodLeftG, litterLeftKg, petShop, petsOf, vetPrice, walkerDay } from '@/engine/systems/pets';
 import { inSaveMoney } from '@/engine/systems/banking';
 import { moveTo } from '@/engine/systems/luggage';
@@ -29,7 +29,9 @@ describe('a pet’s food', () => {
     expect(foodLeftG(sim.player, 'dog')).toBeCloseTo(shop[0]!.kg * 1000, 6);
     const before = foodLeftG(sim.player, 'dog');
     sim.must({ kind: 'pets.feed', payload: {} });
-    expect(before - foodLeftG(sim.player, 'dog')).toBeCloseTo(RATION_G.dog, 6);
+    // A day's energy, Royal Canin's ration of its own food, at this food's kcal (from 2026-10-05).
+    expect(KCAL_A_DAY.dog).toBeCloseTo((RATION_G.dog * RATION_KCAL_PER_KG.dog) / 1000, 9);
+    expect(before - foodLeftG(sim.player, 'dog')).toBeCloseTo((KCAL_A_DAY.dog / (shop[0]!.kcalPerKg ?? RATION_KCAL_PER_KG.dog)) * 1000, 6);
     expect(sim.execute({ kind: 'pets.feed', payload: {} }).error).toBe('They’re fed for today.');
   });
 
@@ -46,7 +48,7 @@ describe('a pet’s food', () => {
     sim.must({ kind: 'life.set_automation', payload: { key: 'feedPets', on: true } });
     const left = foodLeftG(sim.player, 'cat');
     sim.advanceBy(3 * MS_DAY);
-    expect(left - foodLeftG(sim.player, 'cat')).toBeCloseTo(3 * RATION_G.cat, 6);
+    expect(left - foodLeftG(sim.player, 'cat')).toBeCloseTo((3 * KCAL_A_DAY.cat / (cat.kcalPerKg ?? RATION_KCAL_PER_KG.cat)) * 1000, 6);
     expect(mog.hungryDays).toBe(0);
   });
 });
@@ -102,5 +104,44 @@ describe('when there’s nobody but a sitter, or no food', () => {
     sim.advanceBy(2 * MS_DAY);
     expect(rex.hungryDays ?? 0).toBe(hungry);
     expect(rex.unwalkedDays ?? 0).toBeLessThanOrEqual(unwalked);
+  });
+});
+
+describe('a day fed by energy', () => {
+  it('takes a wet food’s grams by its label’s calories, then dry food for the rest, and a food with none read at Royal Canin’s', () => {
+    const sim = life('pc-energy');
+    sim.must({ kind: 'pets.adopt', payload: { shelterId: 'aspca-cat', name: 'Tib' } });
+    const shop = petShop(sim, sim.player).filter((x) => x.kind === 'food' && x.species === 'cat');
+    const wet = shop.find((x) => x.kcalPerKg && x.kg < 0.5)!;
+    const dry = shop.find((x) => x.kcalPerKg && x.kg > 1)!;
+    expect(wet.kcalPerKg!).toBeLessThan(dry.kcalPerKg!);
+    sim.must({ kind: 'pets.buy', payload: { productId: wet.id } });
+    sim.must({ kind: 'pets.buy', payload: { productId: dry.id } });
+    sim.advanceBy(2 * MS_DAY + 3_600_000);
+    const bags = () => sim.player.items!.filter((i) => i.petFood?.species === 'cat');
+    // The wet can, less left, goes first; its kcal can't make the day, so dry food makes the rest.
+    const wetKcal = (wet.kg * wet.kcalPerKg!);
+    expect(wetKcal).toBeLessThan(KCAL_A_DAY.cat);
+    const dryBefore = bags().find((i) => i.kind === `pet:${dry.id}`)!.petFood!.leftG;
+    sim.player.pets![0]!.fedOn = undefined;
+    sim.must({ kind: 'pets.feed', payload: {} });
+    expect(bags().some((i) => i.kind === `pet:${wet.id}`)).toBe(false);
+    const dryTaken = dryBefore - bags().find((i) => i.kind === `pet:${dry.id}`)!.petFood!.leftG;
+    expect(dryTaken).toBeCloseTo(((KCAL_A_DAY.cat - wetKcal) / dry.kcalPerKg!) * 1000, 6);
+    // A bag whose energy wasn't read is fed at Royal Canin's.
+    const bag = bags()[0]!;
+    delete bag.petFood!.kcalPerKg;
+    const before = bag.petFood!.leftG;
+    sim.player.pets![0]!.fedOn = undefined;
+    sim.must({ kind: 'pets.feed', payload: {} });
+    expect(before - bag.petFood!.leftG).toBeCloseTo(RATION_G.cat, 6);
+    // Short by energy, not by grams: 100 g of dry food is more than a day's.
+    for (const i of bags()) i.petFood!.leftG = 0;
+    const last = bags()[0]!;
+    last.petFood!.leftG = 100;
+    last.petFood!.kcalPerKg = dry.kcalPerKg!;
+    expect((100 * dry.kcalPerKg!) / 1000).toBeGreaterThan(KCAL_A_DAY.cat);
+    sim.player.pets![0]!.fedOn = undefined;
+    expect(sim.must<{ fed: string[] }>({ kind: 'pets.feed', payload: {} }).fed).toEqual(['Tib']);
   });
 });

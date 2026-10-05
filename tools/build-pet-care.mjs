@@ -6,17 +6,23 @@
  *
  * Run: node tools/build-pet-care.mjs
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 const R = JSON.parse(readFileSync('docs/research/world/research-pet-care.json', 'utf8'));
 const OUT = 'src/engine/content/petcare.ts';
 const market = (m) => (/^US/.test(m) ? 'us' : /^UK/.test(m) ? 'uk' : /^Ireland/.test(m) ? 'ie' : /^Canada/.test(m) ? 'ca' : /^Mexico/.test(m) ? 'mx' : undefined);
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
 
-// Dry food only: the daily ration is a dry food's grams. Wet foods wait for their energy per gram.
-const foods = R.feeding.products.filter((x) => /^dry /.test(x.type) && x.kg).map((x) => ({
+// Each food's energy as its label states it (`research-pet-food-energy.json`, from 2026-10-05): a day is fed by energy,
+// so a wet food is sold where its calories were read. Until then only dry foods were, by Royal Canin's grams.
+const ENERGY_FILE = 'docs/research/world/research-pet-food-energy.json';
+const ENERGY = new Map((existsSync(ENERGY_FILE) ? JSON.parse(readFileSync(ENERGY_FILE, 'utf8')).energy ?? [] : []).map((e) => [`${e.market}|${e.brand}|${e.product}`, e]));
+const kcalOf = (x) => { const e = ENERGY.get(`${x.market}|${x.brand}|${x.product}`); if (!e) return null; if (e.kcalPerKg > 0) return e.kcalPerKg; return e.kcalPerUnit > 0 && e.unitG > 0 ? Math.round((e.kcalPerUnit / e.unitG) * 1000) : null; };
+/** A pack's kilograms from its size where none was given: "32 x 5.5 oz", "40 x 85 g", "5.5 oz can", "85 g". */
+const kgOf = (x) => { if (x.kg) return x.kg; const m = String(x.size).match(/(?:(\d+)\s*x\s*)?([\d.]+)\s*(oz|g)\b/i); if (!m) return undefined; const each = Number(m[2]) * (m[3].toLowerCase() === 'oz' ? 28.349523125 : 1); return Math.round(((Number(m[1] ?? 1) * each) / 1000) * 10000) / 10000; };
+const foods = R.feeding.products.filter((x) => (/^dry /.test(x.type) || (/^wet /.test(x.type) && kcalOf(x))) && kgOf(x)).map((x) => ({
   id: `${market(x.market)}-${slug(`${x.brand} ${x.product}`)}`, market: market(x.market), species: /dog/.test(x.type) ? 'dog' : 'cat',
-  brand: x.brand, product: x.product, kg: x.kg, price: x.price, currency: x.currency, retailer: x.retailer.replace(/ \(.*\)$/, ''), url: x.url, status: x.status === 'verified' ? 'verified' : 'secondhand',
+  brand: x.brand, product: x.product, kg: kgOf(x), wet: /^wet /.test(x.type), kcalPerKg: kcalOf(x), price: x.price, currency: x.currency, retailer: x.retailer.replace(/ \(.*\)$/, ''), url: x.url, status: x.status === 'verified' ? 'verified' : 'secondhand',
 }));
 // A litter's kilograms where it's sold by the liter: Cat's Best's 20 liters to 8.6 kilograms, 0.43 a liter, SLATE's reading for the rest.
 const KG_PER_L = 8.6 / 20;
@@ -50,8 +56,11 @@ const head = `/**
  *   price (Walmart.com and Chewy in America, zooplus and Pets at Home in
  *   Britain, zooplus and Maxi Zoo in Ireland, PetSmart in Canada, Petco in
  *   Mexico). A day's ration is Royal Canin's own: 273 grams for a 20 kg dog
- *   at normal activity, 56 for a 4 kg cat. Wet foods are read but not sold:
- *   a day's ration is a dry food's grams, and their energy per gram wasn't.
+ *   at normal activity, 56 for a 4 kg cat, which at its 3,616 and 3,534 kcal
+ *   a kilogram is 987 and 198 kcal. From 2026-10-05 a day is fed by that
+ *   energy, each food at its label's own kcal a kilogram, so a wet food is
+ *   sold where its calories were read; a food whose figure wasn't read is
+ *   taken at Royal Canin's. Until then only dry foods were, by grams.
  * - **Litter**: 1.9 kg a week for one cat, the middle of the 15 to 20 pounds
  *   a month read secondhand, SLATE's reckoning; a litter sold by the liter at
  *   Cat's Best's 0.43 kg a liter.
@@ -62,11 +71,14 @@ const head = `/**
 `;
 const body = `
 export type PetMarket = 'us' | 'uk' | 'ie' | 'ca' | 'mx';
-export interface PetFood { id: string; market: PetMarket; species: 'dog' | 'cat'; brand: string; product: string; kg: number; price: number; currency: string; retailer: string; url: string; status: 'verified' | 'secondhand' }
+export interface PetFood { id: string; market: PetMarket; species: 'dog' | 'cat'; brand: string; product: string; kg: number; wet: boolean; kcalPerKg: number | null; price: number; currency: string; retailer: string; url: string; status: 'verified' | 'secondhand' }
 export interface Litter { id: string; market: PetMarket; product: string; kg: number; byLiters: boolean; price: number; currency: string; retailer: string; url: string; status: 'verified' | 'secondhand' }
 export interface VetYear { clinic: string; dog: number; cat: number; currency: string; basis: string; url: string; status: 'verified' | 'secondhand' }
 
 export const RATION_G = { dog: 273, cat: 56 } as const;
+/** Royal Canin's own foods' energy, kcal a kilogram, and so the day's need, kcal: its ration of its food (from 2026-10-05). */
+export const RATION_KCAL_PER_KG = { dog: 3616, cat: 3534 } as const;
+export const KCAL_A_DAY = { dog: (RATION_G.dog * RATION_KCAL_PER_KG.dog) / 1000, cat: (RATION_G.cat * RATION_KCAL_PER_KG.cat) / 1000 } as const;
 export const LITTER_KG_A_WEEK = 1.9;
 export const WALK = { minutes: 60, met: 3.0 } as const;
 export const PET_FOODS: readonly PetFood[] = ${JSON.stringify(foods)};
