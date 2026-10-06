@@ -11,10 +11,11 @@ import { LETS } from '@/engine/content/lets';
 import { Fragment, useState } from 'react';
 import { PREPAID_OFF, STAY_CLASS_LABEL, type RatePlan, type StayClass } from '@/engine/content/staytypes';
 import { useGame, useWorld } from '@/app/game-context';
+import { inLocalStay, localStayQuote } from '@/engine/systems/localstay';
 import { Panel, Stat, Fine } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { formatMoney, saveCurrency, centsFromTyped } from '@/engine/core/money';
-import { MS_DAY, dateKey, formatDateTime, formatTime, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
+import { MS_DAY, dateKey, formatDate, formatDateTime, formatTime, instantFromZoned, normalDate, zonedParts } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { STAYS } from '@/engine/content/stays';
@@ -163,11 +164,13 @@ export function TravelWorkspace() {
         <Panel title="Where You Are">
           <div className="grid grid-4">
             <Stat label="Town" value={here?.name ?? person.currentLocationId} note={sim.zone} look={at('place', person.currentLocationId)} />
-            <Stat label="Sleeping" value={person.home?.cityId === person.currentLocationId ? 'At Home' : stay?.kind === 'hotel' ? 'A Hotel' : stay?.kind === 'own' ? 'Your Own Place' : stay?.kind === 'sofa' ? 'A Friend’s Sofa' : 'Away'} />
+            <Stat label="Sleeping" value={inLocalStay(person) ? 'A Hotel Here' : person.home?.cityId === person.currentLocationId ? 'At Home' : stay?.kind === 'hotel' ? 'A Hotel' : stay?.kind === 'own' ? 'Your Own Place' : stay?.kind === 'sofa' ? 'A Friend’s Sofa' : 'Away'} />
             <Stat label="Journeys Booked" value={String(journeys.filter((j) => j.status === 'booked').length)} />
             <Stat label="Body Clock" value={Math.abs(lag) < 0.5 ? 'On Local Time' : `${Math.round(Math.abs(lag) * 10) / 10} Hours ${lag > 0 ? 'Behind' : 'Ahead'}`} note={Math.abs(lag) < 0.5 ? undefined : `Catching up ${lag > 0 ? 'an hour' : 'an hour and a half'} a day; nights sleep worse until then`} />
           </div>
         </Panel>
+
+        <StayHere />
 
         <Panel title="Book A Journey" subtitle={`From ${place(fromCity)}`}>
           <div className="col gap-3">
@@ -383,6 +386,43 @@ export function TravelWorkspace() {
 
 /** A car rented at the far end of a booked journey with its way home (`systems/rentals.ts`): its price, and why not where it can't be had. */
 /** Travel insurance for a trip booked, at the home market's price (`systems/travelinsurance.ts`). */
+/** A hotel booked on its own, where they are (`travel.stay_here`, from 2026-10-06): some nights from tonight, of a kind, paid now. */
+function StayHere() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const [nights, setNights] = useState(1);
+  const [cls, setCls] = useState<StayClass>('hotel');
+  const book = useFeature('travel.stay_here');
+  const out = useFeature('travel.check_out');
+  const cur = saveCurrency(sim.universe);
+  if (inLocalStay(person)) {
+    return (
+      <Panel title="A Hotel Here" subtitle={person.stay?.until ? `Until ${formatDate(person.stay.until, sim.zone)}` : undefined}>
+        <div><Gated feature="travel.check_out" className="btn btn-sm btn-ghost" title={out.reason ?? 'The nights booked are paid'} onClick={() => { if (run('travel.check_out', {}).ok) toast('Checked out, and home.', 'positive'); }}>Check Out</Gated></div>
+      </Panel>
+    );
+  }
+  const q = localStayQuote(sim, person, { nights, cls });
+  return (
+    <Panel title="A Hotel Here" subtitle="A room where you are, from tonight, paid when it’s booked">
+      <div className="row gap-2" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
+        <div className="field" style={{ margin: 0, maxWidth: '8rem' }}>
+          <label htmlFor="stay-here-nights">Nights</label>
+          <input id="stay-here-nights" inputMode="numeric" value={String(nights)} onChange={(e) => setNights(Math.max(0, Math.round(Number(e.target.value) || 0)))} />
+        </div>
+        <div className="field" style={{ margin: 0, maxWidth: '14rem' }}>
+          <label htmlFor="stay-here-kind">Kind Of Stay</label>
+          <select id="stay-here-kind" value={cls} onChange={(e) => setCls(e.target.value as StayClass)}>
+            {(['hostel', 'motel', 'budget', 'extended', 'hotel'] as StayClass[]).map((c) => <option key={c} value={c}>{STAY_CLASS_LABEL[c]}</option>)}
+          </select>
+        </div>
+        <Gated feature="travel.stay_here" className="btn btn-sm btn-ghost" disabled={typeof q === 'string'} title={typeof q === 'string' ? q : book.reason} onClick={() => { if (run('travel.stay_here', { nights, cls }).ok) toast('Booked, from tonight.', 'positive'); }}>Book It</Gated>
+      </div>
+      <div className="xs dim">{typeof q === 'string' ? q : `${formatMoney(q.price, cur)}, taxes in: ${q.basis}`}</div>
+    </Panel>
+  );
+}
+
 function InsureIt({ j }: { j: Journey }) {
   const { run, toast, sim } = useGame();
   if (j.insured) return <span className="xs dim">Insured</span>;

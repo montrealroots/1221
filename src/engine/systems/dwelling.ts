@@ -105,6 +105,9 @@ export interface Stay {
   readyAt?: number;
   /** The day breakfast was had at the hotel (`systems/hotelbreakfast.ts`, from 2026-10-02). */
   breakfastOn?: string;
+  /** A hotel booked on its own where they are (`systems/localstay.ts`, from 2026-10-06), and when it ends. */
+  local?: true;
+  until?: number;
 }
 
 /** A production's hotel room: a bath, central air, the hotel's gym, no kitchen of its own and the laundry sent out. */
@@ -230,7 +233,8 @@ const withFaults = (person: Person, f: Fixtures): Fixtures => {
 };
 
 /** Whether they're at home now: in its town. */
-export const atHome = (person: Person): boolean => Boolean(person.home && person.home.cityId === person.currentLocationId);
+/** At home: in their home's town, and not in a hotel booked there on its own (`systems/localstay.ts`, from 2026-10-06). */
+export const atHome = (person: Person): boolean => Boolean(person.home && person.home.cityId === person.currentLocationId && !(person.stay?.local && person.stay.cityId === person.currentLocationId));
 
 // ---------------------------------------------------------------------------
 // Clothes and the place's state

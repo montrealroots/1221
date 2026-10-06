@@ -145,6 +145,7 @@ import { registerDocuments, startingDocuments } from './systems/documents';
 import { registerLicensing } from './systems/licensing';
 import { registerPermission, scheduleUsStatus, US_STATUS_KIND } from './systems/permission';
 import { registerJourneys } from './systems/journey';
+import { registerLocalStays } from './systems/localstay';
 import { YALE_DRAMA } from './content/school';
 import { CARDS } from './content/cards';
 import { registerWorld } from './world/world';
@@ -313,6 +314,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerLicensing(sim);
   registerPermission(sim);
   registerJourneys(sim);
+  registerLocalStays(sim);
 }
 
 /** Recurring world processes every save needs running. */
