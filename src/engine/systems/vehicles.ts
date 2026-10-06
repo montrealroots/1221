@@ -610,11 +610,17 @@ export function sellVehicle(sim: Simulation, person: Person, v: OwnedVehicle, va
   return value - payoff;
 }
 
-/** A car's value now, in its money: its price new less what the curve says it's lost, and less a repair it needs (`systems/repairs.ts`). */
+/**
+ * A car's value now, in its money: its price new as it was built, less what the curve says it's lost, and less a
+ * repair it needs (`systems/repairs.ts`). Its factory options are in its price new and lose value with the car, as the
+ * valuation guides take them (from 2026-10-06; until then kept with the car and read by nothing, so a trade-in, a sale
+ * and California's value-based fee all took a car as if it had none).
+ */
 export function valueOf(v: OwnedVehicle, at: Instant): Money {
   // In Britain, a car whose servicing wasn't kept is worth less (`NO_HISTORY_GB`, from 2026-10-01).
   const history = v.jurisdiction === 'GB' && !servicingKept(v, modelById(v.modelId)!, at) ? 1 - NO_HISTORY_GB : 1;
-  return Math.max(0, Math.round(v.listPrice * kept(v.ageAtPurchase + (at - v.boughtAt) / YEAR_MS) * history) - faultCost(v, modelById(v.modelId)!.currency));
+  const built = v.listPrice + (v.options?.length ? optionsQuote(modelById(v.modelId)!, v.options).cents : 0);
+  return Math.max(0, Math.round(built * kept(v.ageAtPurchase + (at - v.boughtAt) / YEAR_MS) * history) - faultCost(v, modelById(v.modelId)!.currency));
 }
 
 /** A renewal's fee in the jurisdiction's money, cents, and when the next is due. */

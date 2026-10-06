@@ -256,8 +256,9 @@ function ErrandsPanel() {
   const car = cars.find((v) => v.id === vehicleId) ?? cars[0];
   // What a stop can be, cheapest first within each kind.
   const options: (Stop & { key: string; label: string })[] = [
-    ...arrange(groceryCatalog(sim, here)).slice(0, 40).map((e) => ({ key: `g:${e.id}`, label: `Buy ${e.label}`, kind: 'food.buy_groceries', payload: { productId: e.id, quantity: 1 }, leg: 'shopping' as const })),
-    ...arrange(toiletryCatalog(sim, here)).slice(0, 40).map((e) => ({ key: `t:${e.id}`, label: `Buy ${e.label}`, kind: 'hygiene.buy', payload: { productId: e.id, quantity: 1 }, leg: 'shopping' as const })),
+    // Every grocery and toiletry sold here (from 2026-10-06; until then the first 40 of each).
+    ...arrange(groceryCatalog(sim, here)).map((e) => ({ key: `g:${e.id}`, label: `Buy ${e.label}`, kind: 'food.buy_groceries', payload: { productId: e.id, quantity: 1 }, leg: 'shopping' as const })),
+    ...arrange(toiletryCatalog(sim, here)).map((e) => ({ key: `t:${e.id}`, label: `Buy ${e.label}`, kind: 'hygiene.buy', payload: { productId: e.id, quantity: 1 }, leg: 'shopping' as const })),
     ...salonsIn(here).flatMap((salon) => salon.services.filter((x) => x.price !== null).map((x) => ({ key: `s:${salon.id}:${x.service}`, label: `${x.label} At ${salon.name}`, kind: 'hygiene.groom', payload: { salonId: salon.id, service: x.service }, leg: 'errand' as const }))),
     { key: 'dry', label: 'Drop Off The Dry Cleaning', kind: 'clothes.dry_clean', payload: {}, leg: 'errand' },
     { key: 'collect', label: 'Collect The Dry Cleaning', kind: 'clothes.collect', payload: {}, leg: 'errand' },
