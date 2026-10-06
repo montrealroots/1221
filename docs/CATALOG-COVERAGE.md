@@ -20,7 +20,7 @@ which never counts toward the target.
 | Apparel | Sleepwear | 60 | 100% | 214 | 1 / 3 / 13 | 0 | 3098 | 233 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Swimwear | 53 | 100% | 201 | 1 / 3 / 11 | 0 | 611 | 206 | 0 | CA, GB, IE, MX, US | No |
 | Apparel | Thermals, Shapewear, Hosiery And Slips | 106 | 100% | 413 | 1 / 4 / 15 | 0 | 1141 | 415 | 0 | CA, GB, IE, MX, US | No |
-| Apparel | Cultural Clothing | 52 | 100% | 104 | 1 / 2 / 3 | 0 | 530 | 104 | 0 | CA, GB, IE, MX, US | No |
+| Apparel | Cultural Clothing | 52 | 100% | 122 | 1 / 3 / 4 | 0 | 629 | 122 | 0 | CA, GB, IE, MX, US | No |
 | Footwear | Shoes, Boots And Sandals | 61 | 100% | 148 | 1 / 2 / 12 | 0 | 1535 | 155 | 0 | CA, GB, IE, MX, US | No |
 | Footwear | Sneakers | 60 | 100% | 198 | 1 / 2 / 32 | 0 | 1110 | 219 | 0 | CA, GB, IE, MX, US | No |
 | Accessories | Bags | 56 | 100% | 171 | 1 / 2 / 15 | 0 | 233 | 176 | 0 | CA, GB, IE, MX, US | No |
@@ -30,12 +30,12 @@ which never counts toward the target.
 | Accessories | Luggage | 53 | 100% | 1745 | 1 / 26 / 100 | 2 | 6041 | 3241 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Phones | 53 | 100% | 127 | 1 / 2 / 18 | 0 | 253 | 414 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Game Consoles | 3 | 6% | 6 | 1 / 2 / 3 | 0 | 6 | 36 | 0 | CA, GB, IE, MX, US | Narrow market: three makers sell home consoles: Sony, Microsoft and Nintendo |
-| Electronics | Computers | 56 | 100% | 106 | 1 / 1 / 6 | 0 | 106 | 107 | 0 | CA, GB, IE, MX, US | No |
+| Electronics | Computers | 56 | 100% | 173 | 1 / 1 / 15 | 0 | 173 | 174 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Televisions | 51 | 100% | 271 | 1 / 2 / 40 | 0 | 273 | 328 | 0 | CA, GB, IE, MX, US | No |
 | Electronics | Audio Equipment | 68 | 100% | 215 | 1 / 2 / 18 | 0 | 279 | 259 | 0 | CA, GB, IE, MX, US | No |
 | Home | Furniture | 66 | 100% | 268 | 1 / 2 / 90 | 0 | 268 | 341 | 0 | CA, GB, IE, MX, US | No |
 | Home | Mattresses And Beds | 55 | 100% | 133 | 1 / 1 / 29 | 0 | 133 | 350 | 0 | CA, GB, IE, MX, US | No |
-| Home | Bedding And Towels | 61 | 100% | 102 | 1 / 2 / 5 | 0 | 117 | 102 | 0 | CA, GB, IE, MX, US | No |
+| Home | Bedding And Towels | 63 | 100% | 114 | 1 / 2 / 5 | 0 | 146 | 114 | 0 | CA, GB, IE, MX, US | No |
 | Home | Appliances | 59 | 100% | 135 | 1 / 2 / 7 | 0 | 137 | 135 | 0 | CA, GB, IE, MX, US | No |
 | Home | Lighting | 72 | 100% | 160 | 1 / 2 / 11 | 0 | 205 | 160 | 0 | CA, GB, IE, MX, US | No |
 | Home | Kitchenware | 54 | 100% | 120 | 1 / 2 / 9 | 0 | 120 | 121 | 0 | CA, GB, IE, MX, US | No |
@@ -51,9 +51,9 @@ which never counts toward the target.
 | Vehicles | Boats | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: recreational boat makers number in the dozens, few publishing prices |
 | Vehicles | Light Aircraft | 0 | 0% | 0 | — | 0 | 0 | 0 | 0 | — | Narrow market: a handful of makers build new light aircraft for private owners |
 | Vehicles | Factory Options | 63 | 100% | 976 | 1 / 7 / 136 | 1 | 976 | 976 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Tires And Wheels | 52 | 100% | 96 | 1 / 1 / 6 | 0 | 96 | 103 | 0 | CA, GB, IE, MX, US | No |
-| Vehicles | Car Audio | 55 | 100% | 98 | 1 / 1 / 7 | 0 | 98 | 102 | 0 | CA, GB, IE, MX, US | No |
-| Building And Garden | Building Materials, Fixtures And Finishes | 60 | 100% | 83 | 1 / 1 / 4 | 0 | 83 | 84 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Tires And Wheels | 52 | 100% | 120 | 1 / 1 / 9 | 0 | 120 | 143 | 0 | CA, GB, IE, MX, US | No |
+| Vehicles | Car Audio | 55 | 100% | 149 | 1 / 1 / 12 | 0 | 149 | 156 | 0 | CA, GB, IE, MX, US | No |
+| Building And Garden | Building Materials, Fixtures And Finishes | 60 | 100% | 128 | 1 / 1 / 11 | 0 | 128 | 134 | 0 | CA, GB, IE, MX, US | No |
 | Building And Garden | Garden Equipment | 52 | 100% | 168 | 1 / 2 / 15 | 0 | 168 | 169 | 0 | CA, GB, IE, MX, US | No |
 | Sport | Sports Equipment | 54 | 100% | 187 | 1 / 2 / 27 | 0 | 187 | 187 | 0 | CA, GB, IE, MX, US | No |
 | Pets | Pet Supplies | 61 | 100% | 141 | 1 / 1 / 10 | 0 | 141 | 144 | 11 | CA, GB, IE, MX, US | No |
@@ -70,6 +70,6 @@ Counted by their own structure: providers, branches or listings, and the towns t
 | Restaurants | 105 | 107 | 8 |
 | Clubs And Lessons | 30 | 31 | 8 |
 | Clinics, Dentists And Opticians | 35 | 35 | 8 |
-| Stores And Chains | 576 | 145 | 8 |
+| Stores And Chains | 582 | 145 | 8 |
 | Barbers And Salons | 36 | 37 | 8 |
 
