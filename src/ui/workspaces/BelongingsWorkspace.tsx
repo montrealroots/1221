@@ -31,7 +31,7 @@ import { cardRefusal, hasSomethingToRead, libraryIn, readingCatalog } from '@/en
 import { batteryOptions, batteryRefusal, batteryYears, makerServiceOf, serviceDue, servicePrice, stopped } from '@/engine/systems/watches';
 import { owedOn, pawnTermsIn, pawnsOf, pledgeQuote, pledgeRefusal } from '@/engine/systems/pawn';
 import { lockedAway, safeCatalog, safesAtHome, scheduleRefusal, scheduledPremium, valuablesOf } from '@/engine/systems/valuables';
-import { contactsOf } from '@/engine/systems/people';
+import { contactsOf, type Contact } from '@/engine/systems/people';
 import { facetsOf, passes, type FacetFilter } from '@/engine/systems/itemfacets';
 import { modelById, vehiclesOf } from '@/engine/systems/vehicles';
 import { COLD_CHAIN_HOURS, waitingShopping } from '@/engine/systems/trips';
@@ -308,6 +308,8 @@ export function BelongingsWorkspace() {
   const [target, setTarget] = useState<Record<string, string>>({});
   const [filter, setFilter] = useState<FacetFilter>({});
   const places = placesNow(sim, person, items);
+  // Who a thing can be handed to, once for the screen: somebody here who isn’t a rival (`giveRefusal`’s own reading).
+  const givable = contactsOf(person).filter((c) => !c.rival && c.cityId === person.currentLocationId);
   const toHandCount = items.filter((i) => reachable(sim, person, i.at)).length;
   const coming = ordersOf(person).filter((o) => o.status === 'placed');
   // Grouped by where each thing is, in the order a person thinks of them.
@@ -403,7 +405,7 @@ export function BelongingsWorkspace() {
                                     {options.map((o) => <option key={o.key} value={o.key}>{o.label}</option>)}
                                   </select>
                                   <button type="button" className="btn btn-sm btn-ghost" disabled={!move.open || !to} title={move.reason} onClick={() => { if (to && run('items.move', { itemId: item.id, to }).ok) toast(`The ${item.label}, moved.`, 'positive'); }}>Move It</button>
-                                  <GiveTo itemId={item.id} label={item.label} />
+                                  <GiveTo itemId={item.id} label={item.label} people={givable} />
                                   <Collected item={item} />
                                   {item.kind.startsWith('ikea:') && !buybackRefusal(person, item.id) && <button type="button" className="btn btn-sm btn-ghost" disabled={!sellBack.open} title={sellBack.reason ?? 'IKEA’s refund card, for the next piece'} onClick={() => { const r = run<{ credit: number }>('home.sell_back', { itemId: item.id }); if (r.ok) toast(`${formatMoney(r.value!.credit, saveCurrency(sim.universe))} of IKEA credit.`, 'positive'); }}>{`Sell It Back To IKEA, ${formatMoney(Math.round((item.paid ?? 0) * buybackShare(item.condition)), saveCurrency(sim.universe))}`}</button>}
                                   {item.flatPacked && <button type="button" className="btn btn-sm btn-ghost" disabled={!assemble.open || Boolean(assembleRefusal(person, item.id))} title={assembleRefusal(person, item.id) ?? assemble.reason ?? `About ${Math.round(assemblyMinutes(item.label))} minutes`} onClick={() => { if (run('items.assemble', { itemId: item.id }).ok) toast(`The ${item.label}, put together.`, 'positive'); }}>Put It Together</button>}
@@ -721,13 +723,17 @@ function PetPapers() {
 }
 
 /** Giving a thing to a friend here (`items.give`): theirs from then, and remembered. */
-function GiveTo({ itemId, label }: { itemId: string; label: string }) {
+function GiveTo({ itemId, label, people }: { itemId: string; label: string; people: readonly Contact[] }) {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
   const give = useFeature('items.give');
-  const here = contactsOf(person).filter((c) => !giveRefusal(sim, person, itemId, c.id));
   const [to, setTo] = useState('');
-  if (here.length === 0) return null;
+  // The list drawn only once asked for (from 2026-10-06): until then each row drew everybody known who's here, and a
+  // life at 60 with 339 people in town and 490 things drew 166,000 choices and took 8.9 seconds to open.
+  const [open, setOpen] = useState(false);
+  if (people.length === 0 || giveRefusal(sim, person, itemId, people[0]!.id)) return null;
+  if (!open) return <button type="button" className="btn btn-sm btn-ghost" disabled={!give.open} title={give.reason} onClick={() => setOpen(true)}>Give To…</button>;
+  const here = people;
   const chosen = here.find((c) => c.id === to) ?? here[0]!;
   return (
     <>
